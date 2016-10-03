@@ -80,12 +80,17 @@ def test_triangle_schemes():
         [0.6, 0.5]
         ])
 
-    for scheme in [quadrature.triangle.centroid, quadrature.triangle.vertex]:
-        f = _create_test_polynomial(order=1)
+    schemes = [
+        quadrature.triangle.Centroid(),
+        quadrature.triangle.Vertex()
+        ]
+
+    for scheme in schemes:
+        f = _create_test_polynomial(order=scheme.order)
 
         exact_val = _integrate_exact(f, triangle)
 
-        val = scheme(f, triangle)
+        val = quadrature.triangle.integrate(f, triangle, scheme)
 
         numpy.testing.assert_allclose(val, exact_val)
     return
