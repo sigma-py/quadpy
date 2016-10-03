@@ -109,3 +109,25 @@ def check_triangle_scheme(scheme, triangle):
     val = quadrature.triangle.integrate(f, triangle, scheme)
     numpy.testing.assert_allclose(val, exact_val)
     return
+
+
+def test_show():
+    triangle = numpy.array([
+        [0.0, 0.0],
+        [1.0, 0.0],
+        [0.7, 0.5],
+        ])
+    quadrature.triangle.show(
+        triangle,
+        # quadrature.triangle.Centroid()
+        # quadrature.triangle.Vertex()
+        # quadrature.triangle.SevenPoint()
+        quadrature.triangle.Strang10()
+        )
+    return
+
+
+if __name__ == '__main__':
+    from matplotlib import pyplot as plt
+    test_show()
+    plt.show()

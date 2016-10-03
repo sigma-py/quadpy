@@ -17,6 +17,33 @@ def volume(triangle):
     return 0.5 * numpy.sqrt(e0_dot_e0 * e1_dot_e1 - e0_dot_e1**2)
 
 
+def show(triangle, scheme):
+    '''Shows the quadrature points on a given triangle. The size of the circles
+    around the points coincides with their weights.
+    '''
+    from matplotlib import pyplot as plt
+
+    # triangle_vol = volume(triangle)
+
+    plt.plot(triangle[:, 0], triangle[:, 1], '-k')
+    plt.plot(
+        [triangle[-1, 0], triangle[0, 0]],
+        [triangle[-1, 1], triangle[0, 1]],
+        '-k')
+
+    transformed_pts = \
+        + numpy.outer(
+            (1.0 - scheme.points[:, 0] - scheme.points[:, 1]),
+            triangle[0]
+            ) \
+        + numpy.outer(scheme.points[:, 0], triangle[1]) \
+        + numpy.outer(scheme.points[:, 1], triangle[2])
+    plt.plot(transformed_pts[:, 0], transformed_pts[:, 1], 'or')
+
+    plt.axis('equal')
+    return
+
+
 def _transform_to_unit_triangle(f, triangle):
     '''Transformation
 
