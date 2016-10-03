@@ -72,22 +72,24 @@ def _create_test_polynomial(order):
     return f
 
 
-def test_centroid():
-
-    f = _create_test_polynomial(order=1)
+def test_triangle_schemes():
 
     triangle = numpy.array([
         [0.0, 0.0],
         [1.0, 0.0],
         [0.6, 0.5]
         ])
-    exact_val = _integrate_exact(f, triangle)
 
-    val = quadrature.triangle.centroid(f, triangle)
+    for scheme in [quadrature.triangle.centroid, quadrature.triangle.vertex]:
+        f = _create_test_polynomial(order=1)
 
-    numpy.testing.assert_allclose(val, exact_val)
+        exact_val = _integrate_exact(f, triangle)
+
+        val = scheme(f, triangle)
+
+        numpy.testing.assert_allclose(val, exact_val)
     return
 
 
 if __name__ == '__main__':
-    test_centroid()
+    test_triangle_schemes()

@@ -55,3 +55,19 @@ class Centroid(object):
 
 def centroid(f, triangle):
     return _integrate(f, triangle, Centroid())
+
+
+class Vertex(object):
+    def __init__(self):
+        self.weights = [1.0/3.0, 1.0/3.0, 1.0/3.0]
+        self.points = numpy.array([
+            [0.0, 0.0],
+            [1.0, 0.0],
+            [0.0, 1.0],
+            ])
+        self.order = 1
+        return
+
+
+def vertex(f, triangle):
+    return _integrate(f, triangle, Vertex())
