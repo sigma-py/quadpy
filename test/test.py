@@ -94,6 +94,7 @@ def test_generator():
         quadrature.triangle.Strang10(),
         quadrature.triangle.Toms584_19(),
         quadrature.triangle.Toms612_19(),
+        quadrature.triangle.Toms612_28(),
         quadrature.triangle.Gauss4x4(),
         quadrature.triangle.Gauss8x8(),
         ]
