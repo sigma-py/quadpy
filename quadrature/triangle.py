@@ -90,6 +90,17 @@ class SevenPoint(object):
 
 
 class Strang1(object):
+    '''
+    See
+    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+    and
+
+    Gilbert Strang, George Fix,
+    An Analysis of the Finite Element Method,
+    Cambridge, 1973,
+    ISBN: 096140888X,
+    LC: TA335.S77.
+    '''
     def __init__(self):
         self.weights = [1.0/3.0, 1.0/3.0, 1.0/3.0]
         self.points = numpy.array([
@@ -102,6 +113,17 @@ class Strang1(object):
 
 
 class Strang2(object):
+    '''
+    See
+    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+    and
+
+    Gilbert Strang, George Fix,
+    An Analysis of the Finite Element Method,
+    Cambridge, 1973,
+    ISBN: 096140888X,
+    LC: TA335.S77.
+    '''
     def __init__(self):
         self.weights = [1.0/3.0, 1.0/3.0, 1.0/3.0]
         self.points = numpy.array([
@@ -114,6 +136,17 @@ class Strang2(object):
 
 
 class Strang3(object):
+    '''
+    See
+    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+    and
+
+    Gilbert Strang, George Fix,
+    An Analysis of the Finite Element Method,
+    Cambridge, 1973,
+    ISBN: 096140888X,
+    LC: TA335.S77.
+    '''
     def __init__(self):
         self.weights = [
             -0.5625,
@@ -133,6 +166,17 @@ class Strang3(object):
 
 
 class Strang4(object):
+    '''
+    See
+    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+    and
+
+    Gilbert Strang, George Fix,
+    An Analysis of the Finite Element Method,
+    Cambridge, 1973,
+    ISBN: 096140888X,
+    LC: TA335.S77.
+    '''
     def __init__(self):
         self.weights = [
             1.0/6.0,
@@ -156,6 +200,17 @@ class Strang4(object):
 
 
 class Strang5(object):
+    '''
+    See
+    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+    and
+
+    Gilbert Strang, George Fix,
+    An Analysis of the Finite Element Method,
+    Cambridge, 1973,
+    ISBN: 096140888X,
+    LC: TA335.S77.
+    '''
     def __init__(self):
         self.weights = [
             0.109951743655322,
@@ -179,6 +234,17 @@ class Strang5(object):
 
 
 class Strang6(object):
+    '''
+    See
+    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+    and
+
+    Gilbert Strang, George Fix,
+    An Analysis of the Finite Element Method,
+    Cambridge, 1973,
+    ISBN: 096140888X,
+    LC: TA335.S77.
+    '''
     def __init__(self):
         self.weights = [
             0.375,
@@ -204,6 +270,17 @@ class Strang6(object):
 
 
 class Strang7(object):
+    '''
+    See
+    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+    and
+
+    Gilbert Strang, George Fix,
+    An Analysis of the Finite Element Method,
+    Cambridge, 1973,
+    ISBN: 096140888X,
+    LC: TA335.S77.
+    '''
     def __init__(self):
         self.weights = [
             0.225,
@@ -229,6 +306,17 @@ class Strang7(object):
 
 
 class Strang8(object):
+    '''
+    See
+    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+    and
+
+    Gilbert Strang, George Fix,
+    An Analysis of the Finite Element Method,
+    Cambridge, 1973,
+    ISBN: 096140888X,
+    LC: TA335.S77.
+    '''
     def __init__(self):
         self.weights = [
             0.205950504760887,
@@ -258,6 +346,17 @@ class Strang8(object):
 
 
 class Strang9(object):
+    '''
+    See
+    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+    and
+
+    Gilbert Strang, George Fix,
+    An Analysis of the Finite Element Method,
+    Cambridge, 1973,
+    ISBN: 096140888X,
+    LC: TA335.S77.
+    '''
     def __init__(self):
         self.weights = [
             0.050844906370207,
@@ -293,6 +392,17 @@ class Strang9(object):
 
 
 class Strang10(object):
+    '''
+    See
+    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+    and
+
+    Gilbert Strang, George Fix,
+    An Analysis of the Finite Element Method,
+    Cambridge, 1973,
+    ISBN: 096140888X,
+    LC: TA335.S77.
+    '''
     def __init__(self):
         self.weights = [
             -0.149570044467670,
@@ -330,6 +440,17 @@ class Strang10(object):
 
 
 class Toms584_19(object):
+    '''
+    See
+    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+    and
+
+    Laurie, D. P.,
+    Algorithm 584: CUBTRI: Automatic Cubature over a Triangle,
+    ACM Trans. Math. Softw.,
+    June 1982,
+    <http://dl.acm.org/citation.cfm?id=356001>.
+    '''
     def __init__(self):
         self.weights = [
             0.0378610912003147,
@@ -379,6 +500,18 @@ class Toms584_19(object):
 
 
 class Toms612_19(object):
+    '''
+    See
+    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+    and
+
+    E. de Doncker and I. Robinson,
+    Algorithm 612: TRIEX: Integration Over a TRIangle Using Nonlinear
+    EXtrapolation,
+    ACM Trans. Math. Softw.,
+    March 1984,
+    <http://dl.acm.org/citation.cfm?id=356070&CFID=836775288&CFTOKEN=89206835>.
+    '''
     def __init__(self):
         self.weights = [
             9.71357962827961025E-002,
@@ -428,6 +561,18 @@ class Toms612_19(object):
 
 
 class Toms612_28(object):
+    '''
+    See
+    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+    and
+
+    E. de Doncker and I. Robinson,
+    Algorithm 612: TRIEX: Integration Over a TRIangle Using Nonlinear
+    EXtrapolation,
+    ACM Trans. Math. Softw.,
+    March 1984,
+    <http://dl.acm.org/citation.cfm?id=356070&CFID=836775288&CFTOKEN=89206835>.
+    '''
     def __init__(self):
         self.weights = [
             0.08797730116222190,
@@ -495,6 +640,19 @@ class Toms612_28(object):
 
 
 class Toms706_37(object):
+    '''
+    See
+    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+    and
+
+    Berntsen and Espelid,
+    Algorithm 706: DCUTRI: An Algorithm for Adaptive Cubature over a Collection
+    of Triangles,
+    ACM Trans. Math. Softw.,
+    Sept. 1992,
+    10.1145/131766.131772,
+    <http://dl.acm.org/citation.cfm?id=131772>.
+    '''
     def __init__(self):
         self.weights = [
             0.051739766065744133555179145422,
@@ -580,7 +738,10 @@ class Toms706_37(object):
 
 
 class Gauss4x4(object):
-    # https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+    '''
+    Essentially a product of two 4 point 1D Gauss-Legendre rules.
+    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+    '''
     def __init__(self):
         self.weights = [
             0.04713673637581137,
@@ -625,7 +786,10 @@ class Gauss4x4(object):
 
 
 class Gauss8x8(object):
-    # https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+    '''
+    Essentially a product of two 8 point 1D Gauss-Legendre rules.
+    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+    '''
     def __init__(self):
         self.weights = [
             0.3335674062677772E-03,
