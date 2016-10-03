@@ -37,7 +37,7 @@ def _integrate_exact(f, triangle):
     return float(exact)
 
 
-def _create_test_polynomial(order):
+def _create_test_polynomial(degree):
     '''The k-th order terms in polynomial have the form
 
         alpha_{k,i} * x^{k-i} * y^k,
@@ -61,7 +61,7 @@ def _create_test_polynomial(order):
     '''
     def f(x):
         out = 0.0
-        for k in range(order+1):
+        for k in range(degree+1):
             i = 0
             for i in range(k+1):
                 # This relies on Python's 0.0**0=1.
@@ -80,14 +80,16 @@ def test_generator():
         ])
     schemes = [
         quadrature.triangle.Centroid(),
-        quadrature.triangle.Vertex()
+        quadrature.triangle.Vertex(),
+        quadrature.triangle.SevenPoint(),
+        quadrature.triangle.Gauss4x4(),
         ]
     for scheme in schemes:
         yield check_triangle_scheme, scheme, triangle
 
 
 def check_triangle_scheme(scheme, triangle):
-    f = _create_test_polynomial(order=scheme.order)
+    f = _create_test_polynomial(degree=scheme.degree)
     exact_val = _integrate_exact(f, triangle)
     val = quadrature.triangle.integrate(f, triangle, scheme)
     numpy.testing.assert_allclose(val, exact_val)
