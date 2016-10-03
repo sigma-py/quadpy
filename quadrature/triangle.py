@@ -89,6 +89,18 @@ class SevenPoint(object):
         return
 
 
+class Strang1(object):
+    def __init__(self):
+        self.weights = [1.0/3.0, 1.0/3.0, 1.0/3.0]
+        self.points = numpy.array([
+            [2.0/3.0, 1.0/6.0],
+            [1.0/6.0, 2.0/3.0],
+            [1.0/6.0, 1.0/6.0],
+            ])
+        self.degree = 2
+        return
+
+
 class Gauss4x4(object):
     # https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
     def __init__(self):
