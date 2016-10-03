@@ -17,13 +17,11 @@ def volume(triangle):
     return 0.5 * numpy.sqrt(e0_dot_e0 * e1_dot_e1 - e0_dot_e1**2)
 
 
-def show(triangle, scheme):
+def show(triangle, scheme, circle_scale=1.0):
     '''Shows the quadrature points on a given triangle. The size of the circles
     around the points coincides with their weights.
     '''
     from matplotlib import pyplot as plt
-
-    # triangle_vol = volume(triangle)
 
     plt.plot(triangle[:, 0], triangle[:, 1], '-k')
     plt.plot(
@@ -38,7 +36,19 @@ def show(triangle, scheme):
             ) \
         + numpy.outer(scheme.points[:, 0], triangle[1]) \
         + numpy.outer(scheme.points[:, 1], triangle[2])
-    plt.plot(transformed_pts[:, 0], transformed_pts[:, 1], 'or')
+
+    # plt.plot(transformed_pts[:, 0], transformed_pts[:, 1], 'or')
+    triangle_vol = volume(triangle)
+    for tp, weight in zip(transformed_pts, scheme.weights):
+        color = 'b' if weight >= 0 else 'r'
+        # highlight circle center
+        plt.plot(tp[0], tp[1], '.' + color)
+        # plot circle
+        # scale the circle volume according to the weight
+        radius = circle_scale \
+            * numpy.sqrt(triangle_vol * abs(weight) / numpy.pi)
+        circ = plt.Circle((tp[0], tp[1]), radius, color=color, alpha=0.5)
+        plt.gcf().gca().add_artist(circ)
 
     plt.axis('equal')
     return
