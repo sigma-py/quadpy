@@ -120,16 +120,16 @@ def check_triangle_scheme(scheme, triangle):
 
 def test_show():
     triangle = numpy.array([
-        [0.0, 0.0],
-        [1.0, 0.0],
-        [0.7, 0.5],
+        [numpy.cos(0.5*numpy.pi), numpy.sin(0.5*numpy.pi)],
+        [numpy.cos(7.0/6.0*numpy.pi), numpy.sin(7.0/6.0*numpy.pi)],
+        [numpy.cos(11.0/6.0*numpy.pi), numpy.sin(11.0/6.0*numpy.pi)],
         ])
     quadrature.triangle.show(
         triangle,
         # quadrature.triangle.Centroid()
         # quadrature.triangle.Vertex()
         # quadrature.triangle.SevenPoint()
-        quadrature.triangle.Strang10()
+        quadrature.triangle.Strang9()
         )
     return
 
