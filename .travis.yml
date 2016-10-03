@@ -16,6 +16,7 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y python-numpy python3-numpy
   - sudo apt-get install -y python-sympy python3-sympy
+  - sudo apt-get install -y python-matplotlib python3-matplotlib
 
 install:
   - pip install .
