@@ -35,7 +35,7 @@ def _transform_to_unit_triangle(f, triangle):
         )
 
 
-def _integrate(f, triangle, rule):
+def integrate(f, triangle, rule):
     g = _transform_to_unit_triangle(f, triangle)
     out = 0.0
     for point, weight in zip(rule.points, rule.weights):
@@ -53,10 +53,6 @@ class Centroid(object):
         return
 
 
-def centroid(f, triangle):
-    return _integrate(f, triangle, Centroid())
-
-
 class Vertex(object):
     def __init__(self):
         self.weights = [1.0/3.0, 1.0/3.0, 1.0/3.0]
@@ -67,7 +63,3 @@ class Vertex(object):
             ])
         self.order = 1
         return
-
-
-def vertex(f, triangle):
-    return _integrate(f, triangle, Vertex())
