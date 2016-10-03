@@ -83,6 +83,7 @@ def test_generator():
         quadrature.triangle.Vertex(),
         quadrature.triangle.SevenPoint(),
         quadrature.triangle.Gauss4x4(),
+        quadrature.triangle.Gauss8x8(),
         ]
     for scheme in schemes:
         yield check_triangle_scheme, scheme, triangle
