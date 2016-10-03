@@ -155,6 +155,29 @@ class Strang4(object):
         return
 
 
+class Strang5(object):
+    def __init__(self):
+        self.weights = [
+            0.109951743655322,
+            0.109951743655322,
+            0.109951743655322,
+            0.223381589678011,
+            0.223381589678011,
+            0.223381589678011,
+            ]
+
+        self.points = numpy.array([
+            [0.816847572980459, 0.091576213509771],
+            [0.091576213509771, 0.816847572980459],
+            [0.091576213509771, 0.091576213509771],
+            [0.108103018168070, 0.445948490915965],
+            [0.445948490915965, 0.108103018168070],
+            [0.445948490915965, 0.445948490915965],
+            ])
+        self.degree = 4
+        return
+
+
 class Gauss4x4(object):
     # https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
     def __init__(self):
