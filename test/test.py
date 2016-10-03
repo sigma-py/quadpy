@@ -72,29 +72,23 @@ def _create_test_polynomial(order):
     return f
 
 
-def test_triangle_schemes():
-
+def test_generator():
     triangle = numpy.array([
         [0.0, 0.0],
         [1.0, 0.0],
         [0.6, 0.5]
         ])
-
     schemes = [
         quadrature.triangle.Centroid(),
         quadrature.triangle.Vertex()
         ]
-
     for scheme in schemes:
-        f = _create_test_polynomial(order=scheme.order)
+        yield check_triangle_scheme, scheme, triangle
 
-        exact_val = _integrate_exact(f, triangle)
 
-        val = quadrature.triangle.integrate(f, triangle, scheme)
-
-        numpy.testing.assert_allclose(val, exact_val)
+def check_triangle_scheme(scheme, triangle):
+    f = _create_test_polynomial(order=scheme.order)
+    exact_val = _integrate_exact(f, triangle)
+    val = quadrature.triangle.integrate(f, triangle, scheme)
+    numpy.testing.assert_allclose(val, exact_val)
     return
-
-
-if __name__ == '__main__':
-    test_triangle_schemes()
