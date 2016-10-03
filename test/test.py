@@ -5,6 +5,13 @@ import numpy.testing
 import quadrature
 import sympy
 
+import os
+import matplotlib as mpl
+if 'DISPLAY' not in os.environ:
+    # headless mode, for remote executions (and travis)
+    mpl.use('Agg')
+from matplotlib import pyplot as plt
+
 
 def _integrate_exact(f, triangle):
     #
@@ -128,6 +135,5 @@ def test_show():
 
 
 if __name__ == '__main__':
-    from matplotlib import pyplot as plt
     test_show()
     plt.show()
