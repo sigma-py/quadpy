@@ -6,6 +6,8 @@
 [![PyPi Version](https://img.shields.io/pypi/v/quadrature.svg)](https://pypi.python.org/pypi/quadrature)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/quadrature.svg?style=social&label=Star&maxAge=2592000)](https://github.com/nschloe/quadrature)
 
+![](https://nschloe.github.io/quadrature/s9.png)
+
 Numerical integration schemes for triangles.
 
 ### Installation
