@@ -967,6 +967,16 @@ class Gauss8x8(object):
 
 
 class Dunavant(object):
+    '''
+    Triangle integration schemes from
+
+    D. A. Dunavant,
+    High Degree Efficient Symmetrical Gaussian Quadrature Rules for the
+    Triangle,
+    Article in International Journal for Numerical Methods in Engineering,
+    21(6):1129-1148, June 1985,
+    10.1002/nme.1620210612.
+    '''
     def __init__(self, index):
         if index == 1:
             self.weights = [1.0]
@@ -1102,6 +1112,58 @@ class Dunavant(object):
                     ),
                 ])
             self.degree = 10
+        elif index == 11:
+            self.weights = numpy.concatenate([
+                0.000927006328961 * numpy.ones(3),
+                0.077149534914813 * numpy.ones(3),
+                0.059322977380774 * numpy.ones(3),
+                0.036184540503418 * numpy.ones(3),
+                0.013659731002678 * numpy.ones(3),
+                0.052337111962204 * numpy.ones(6),
+                0.020707659639141 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                self.double_mix(-0.069222096541517, 0.534611048270758),
+                self.double_mix(0.202061394068290, 0.398969302965855),
+                self.double_mix(0.593380199137435, 0.203309900431282),
+                self.double_mix(0.761298175434837, 0.119350912282581),
+                self.double_mix(0.935270103777448, 0.032364948111276),
+                self.triple_mix(
+                    0.050178138310495, 0.356620648261293, 0.593201213428213
+                    ),
+                self.triple_mix(
+                    0.021022016536166, 0.171488980304042, 0.807489003159792
+                    ),
+                ])
+            self.degree = 11
+        elif index == 12:
+            self.weights = numpy.concatenate([
+                0.025731066440455 * numpy.ones(3),
+                0.043692544538038 * numpy.ones(3),
+                0.062858224217885 * numpy.ones(3),
+                0.034796112930709 * numpy.ones(3),
+                0.006166261051559 * numpy.ones(3),
+                0.040371557766381 * numpy.ones(6),
+                0.022356773202303 * numpy.ones(6),
+                0.017316231108659 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                self.double_mix(0.023565220452390, 0.488217389773805),
+                self.double_mix(0.120551215411079, 0.439724392294460),
+                self.double_mix(0.457579229975768, 0.271210385012116),
+                self.double_mix(0.744847708916828, 0.127576145541586),
+                self.double_mix(0.957365299093579, 0.021317350453210),
+                self.triple_mix(
+                    0.115343494534698, 0.275713269685514, 0.608943235779788
+                    ),
+                self.triple_mix(
+                    0.022838332222257, 0.281325580989940, 0.695836086787803
+                    ),
+                self.triple_mix(
+                    0.025734050548330, 0.116251915907597, 0.858014033544073
+                    ),
+                ])
+            self.degree = 12
         else:
             raise ValueError('Illegal Dunavant index')
 
