@@ -964,3 +964,164 @@ class Gauss8x8(object):
 
         self.degree = 15
         return
+
+
+class Dunavant(object):
+    def __init__(self, index):
+        if index == 1:
+            self.weights = [1.0]
+            bary = numpy.array([
+                [1.0/3.0, 1.0/3.0, 1.0/3.0]
+                ])
+            self.degree = 1
+        elif index == 2:
+            self.weights = 1.0/3.0 * numpy.ones(3)
+            bary = self.double_mix(2.0/3.0, 1.0/6.0)
+            self.degree = 2
+        elif index == 3:
+            self.weights = numpy.concatenate([
+                numpy.array([-0.5625]),
+                25.0 / 48.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                numpy.array([[1.0/3.0, 1.0/3.0, 1.0/3.0]]),
+                self.double_mix(0.6, 0.2),
+                ])
+            self.degree = 3
+        elif index == 4:
+            self.weights = numpy.concatenate([
+                0.223381589678011 * numpy.ones(3),
+                0.109951743655322 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self.double_mix(0.108103018168070, 0.445948490915965),
+                self.double_mix(0.816847572980459, 0.091576213509771),
+                ])
+            self.degree = 4
+        elif index == 5:
+            self.weights = numpy.concatenate([
+                0.225 * numpy.ones(1),
+                0.132394152788506 * numpy.ones(3),
+                0.125939180544827 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                numpy.array([[1.0/3.0, 1.0/3.0, 1.0/3.0]]),
+                self.double_mix(0.059715871789770, 0.4701420641051),
+                self.double_mix(0.797426985353087, 0.101286507323456),
+                ])
+            self.degree = 5
+        elif index == 6:
+            self.weights = numpy.concatenate([
+                0.116786275726379 * numpy.ones(3),
+                0.050844906370207 * numpy.ones(3),
+                0.082851075618374 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                self.double_mix(0.501426509658179, 0.249286745170910),
+                self.double_mix(0.873821971016996, 0.063089014491502),
+                self.triple_mix(
+                    0.053145049844817, 0.310352451033784, 0.636502499121399
+                    ),
+                ])
+            self.degree = 6
+        elif index == 7:
+            self.weights = numpy.concatenate([
+                -0.149570044467682 * numpy.ones(1),
+                0.175615257433208 * numpy.ones(3),
+                0.053347235608838 * numpy.ones(3),
+                0.077113760890257 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                numpy.array([[1.0/3.0, 1.0/3.0, 1.0/3.0]]),
+                self.double_mix(0.479308067841920, 0.260345966079040),
+                self.double_mix(0.869739794195568, 0.065130102902216),
+                self.triple_mix(
+                    0.048690315425316, 0.312865496004874, 0.638444188569810
+                    ),
+                ])
+            self.degree = 7
+        elif index == 8:
+            self.weights = numpy.concatenate([
+                0.144315607677787 * numpy.ones(1),
+                0.095091634267285 * numpy.ones(3),
+                0.103217370534718 * numpy.ones(3),
+                0.032458497623198 * numpy.ones(3),
+                0.027230314174435 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                numpy.array([[1.0/3.0, 1.0/3.0, 1.0/3.0]]),
+                self.double_mix(0.081414823414554, 0.459292588292723),
+                self.double_mix(0.658861384496480, 0.170569307751760),
+                self.double_mix(0.898905543365938, 0.050547228317031),
+                self.triple_mix(
+                    0.008394777409958, 0.263112829634638, 0.728492392955404
+                    ),
+                ])
+            self.degree = 8
+        elif index == 9:
+            self.weights = numpy.concatenate([
+                0.097135796282799 * numpy.ones(1),
+                0.031334700227139 * numpy.ones(3),
+                0.077827541004774 * numpy.ones(3),
+                0.079647738927210 * numpy.ones(3),
+                0.025577675658698 * numpy.ones(3),
+                0.043283539377289 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                numpy.array([[1.0/3.0, 1.0/3.0, 1.0/3.0]]),
+                self.double_mix(0.020634961602525, 0.489682519198738),
+                self.double_mix(0.125820817014127, 0.437089591492937),
+                self.double_mix(0.623592928761935, 0.188203535619033),
+                self.double_mix(0.910540973211095, 0.044729513394453),
+                self.triple_mix(
+                    0.036838412054736, 0.221962989160766, 0.741198598784498
+                    ),
+                ])
+            self.degree = 9
+        elif index == 10:
+            self.weights = numpy.concatenate([
+                0.090817990382754 * numpy.ones(1),
+                0.036725957756467 * numpy.ones(3),
+                0.045321059435528 * numpy.ones(3),
+                0.072757916845420 * numpy.ones(6),
+                0.028327242531057 * numpy.ones(6),
+                0.009421666963733 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                numpy.array([[1.0/3.0, 1.0/3.0, 1.0/3.0]]),
+                self.double_mix(0.028844733232685, 0.485577633383657),
+                self.double_mix(0.781036849029926, 0.109481575485037),
+                self.triple_mix(
+                    0.141707219414880, 0.307939838764121, 0.550352941820999
+                    ),
+                self.triple_mix(
+                    0.025003534762686, 0.246672560639903, 0.728323904597411
+                    ),
+                self.triple_mix(
+                    0.009540815400299, 0.066803251012200, 0.923655933587500
+                    ),
+                ])
+            self.degree = 10
+        else:
+            raise ValueError('Illegal Dunavant index')
+
+        # convert barycentric coordinates to reference triangle
+        self.points = bary[:, [1, 2]]
+        return
+
+    def double_mix(self, a, b):
+        return numpy.array([
+            [a, b, b],
+            [b, a, b],
+            [b, b, a],
+            ])
+
+    def triple_mix(self, a, b, c):
+        return numpy.array([
+            [a, b, c],
+            [c, a, b],
+            [b, c, a],
+            [a, c, b],
+            [b, a, c],
+            [c, b, a],
+            ])
