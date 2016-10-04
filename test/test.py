@@ -115,6 +115,8 @@ def test_generator():
         quadrature.triangle.Dunavant(8),
         quadrature.triangle.Dunavant(9),
         quadrature.triangle.Dunavant(10),
+        quadrature.triangle.Dunavant(11),
+        quadrature.triangle.Dunavant(12),
         ]
     for scheme in schemes:
         yield check_triangle_scheme, scheme, triangle
@@ -139,7 +141,8 @@ def test_show():
         # quadrature.triangle.Centroid()
         # quadrature.triangle.Vertex()
         # quadrature.triangle.SevenPoint()
-        quadrature.triangle.Strang9()
+        # quadrature.triangle.Strang9()
+        quadrature.triangle.Dunavant(12)
         )
     return
 
