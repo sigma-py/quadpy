@@ -5,6 +5,13 @@ import numpy.testing
 import quadrature
 import sympy
 
+import os
+import matplotlib as mpl
+if 'DISPLAY' not in os.environ:
+    # headless mode, for remote executions (and travis)
+    mpl.use('Agg')
+from matplotlib import pyplot as plt
+
 
 def _integrate_exact(f, a, b):
     x = sympy.Symbol('x')
@@ -81,3 +88,19 @@ def check_triangle_scheme(scheme, a, b):
     val = quadrature.line.integrate(f, a, b, scheme)
     numpy.testing.assert_allclose(val, exact_val)
     return
+
+
+def test_show():
+    quadrature.line.show(
+        0.0, 1.0,
+        # quadrature.line.NewtonCotesOpen(4)
+        # quadrature.line.GaussLegendre(31)
+        # quadrature.line.GaussPatterson(31)
+        quadrature.line.ClenshawCurtis(33)
+        )
+    return
+
+
+if __name__ == '__main__':
+    test_show()
+    plt.show()
