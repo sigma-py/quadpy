@@ -1,0 +1,7 @@
+*.pyc
+*.swp
+*.prof
+MANIFEST
+README.rst
+dist/
+build/
