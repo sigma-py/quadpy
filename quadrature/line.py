@@ -1901,16 +1901,17 @@ class NewtonCotesClosed(object):
     <https://en.wikipedia.org/wiki/Newton%E2%80%93Cotes_formulas#Closed_Newton.E2.80.93Cotes_formulae>
     '''
     def __init__(self, degree):
-        self.degree = degree
         self.points = numpy.linspace(-1.0, 1.0, degree+1)
         if degree == 1:
             self.weights = [1.0, 1.0]
+            self.degree = 1
         elif degree == 2:
             self.weights = numpy.array([
                 1.0/3.0,
                 4.0/3.0,
                 1.0/3.0,
                 ])
+            self.degree = 3
         elif degree == 3:
             self.weights = numpy.array([
                 1.0/4.0,
@@ -1918,6 +1919,7 @@ class NewtonCotesClosed(object):
                 3.0/4.0,
                 1.0/4.0,
                 ])
+            self.degree = 3
         elif degree == 4:
             self.weights = numpy.array([
                 7.0/45.0,
@@ -1926,5 +1928,41 @@ class NewtonCotesClosed(object):
                 32.0/45.0,
                 7.0/45.0,
                 ])
+            self.degree = 5
         else:
-            raise ValueError('Illegal closed Newton-Cotes order')
+            raise ValueError('Illegal closed Newton-Cotes degree')
+
+
+class NewtonCotesOpen(object):
+    '''
+    Open Newton-Cotes formulae.
+    <https://en.wikipedia.org/wiki/Newton%E2%80%93Cotes_formulas#Open_Newton.E2.80.93Cotes_formulae>
+    '''
+    def __init__(self, degree):
+        self.points = numpy.linspace(-1.0, 1.0, degree+1)[1:-1]
+        if degree == 2:
+            self.weights = [2.0]
+            self.degree = 1
+        elif degree == 3:
+            self.weights = numpy.array([
+                1.0,
+                1.0,
+                ])
+            self.degree = 1
+        elif degree == 4:
+            self.weights = numpy.array([
+                4.0/3.0,
+                -2.0/3.0,
+                4.0/3.0,
+                ])
+            self.degree = 3
+        elif degree == 5:
+            self.weights = numpy.array([
+                11.0/12.0,
+                1.0/12.0,
+                1.0/12.0,
+                11.0/12.0,
+                ])
+            self.degree = 3
+        else:
+            raise ValueError('Illegal open Newton-Cotes degree')
