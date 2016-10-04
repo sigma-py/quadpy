@@ -1893,3 +1893,38 @@ class ClenshawCurtis(object):
             self.degree = 65
         else:
             raise ValueError('Illegal Clenshaw-Curtis order')
+
+
+class NewtonCotesClosed(object):
+    '''
+    Closed Newton-Cotes formulae.
+    <https://en.wikipedia.org/wiki/Newton%E2%80%93Cotes_formulas#Closed_Newton.E2.80.93Cotes_formulae>
+    '''
+    def __init__(self, degree):
+        self.degree = degree
+        self.points = numpy.linspace(-1.0, 1.0, degree+1)
+        if degree == 1:
+            self.weights = [1.0, 1.0]
+        elif degree == 2:
+            self.weights = numpy.array([
+                1.0/3.0,
+                4.0/3.0,
+                1.0/3.0,
+                ])
+        elif degree == 3:
+            self.weights = numpy.array([
+                1.0/4.0,
+                3.0/4.0,
+                3.0/4.0,
+                1.0/4.0,
+                ])
+        elif degree == 4:
+            self.weights = numpy.array([
+                7.0/45.0,
+                32.0/45.0,
+                12.0/45.0,
+                32.0/45.0,
+                7.0/45.0,
+                ])
+        else:
+            raise ValueError('Illegal closed Newton-Cotes order')

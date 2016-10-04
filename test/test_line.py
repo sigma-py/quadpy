@@ -62,6 +62,10 @@ def test_generator():
         quadrature.line.ClenshawCurtis(17),
         quadrature.line.ClenshawCurtis(33),
         quadrature.line.ClenshawCurtis(65),
+        quadrature.line.NewtonCotesClosed(1),
+        quadrature.line.NewtonCotesClosed(2),
+        quadrature.line.NewtonCotesClosed(3),
+        quadrature.line.NewtonCotesClosed(4),
         ]
     for scheme in schemes:
         yield check_triangle_scheme, scheme, a, b
