@@ -89,16 +89,16 @@ def test_generator():
         quadrature.triangle.Centroid(),
         quadrature.triangle.Vertex(),
         quadrature.triangle.SevenPoint(),
-        quadrature.triangle.Strang1(),
-        quadrature.triangle.Strang2(),
-        quadrature.triangle.Strang3(),
-        quadrature.triangle.Strang4(),
-        quadrature.triangle.Strang5(),
-        quadrature.triangle.Strang6(),
-        quadrature.triangle.Strang7(),
-        quadrature.triangle.Strang8(),
-        quadrature.triangle.Strang9(),
-        quadrature.triangle.Strang10(),
+        quadrature.triangle.Strang(1),
+        quadrature.triangle.Strang(2),
+        quadrature.triangle.Strang(3),
+        quadrature.triangle.Strang(4),
+        quadrature.triangle.Strang(5),
+        quadrature.triangle.Strang(6),
+        quadrature.triangle.Strang(7),
+        quadrature.triangle.Strang(8),
+        quadrature.triangle.Strang(9),
+        quadrature.triangle.Strang(10),
         quadrature.triangle.Toms584_19(),
         quadrature.triangle.Toms612_19(),
         quadrature.triangle.Toms612_28(),
@@ -146,7 +146,7 @@ def test_show():
         # quadrature.triangle.Centroid()
         # quadrature.triangle.Vertex()
         # quadrature.triangle.SevenPoint()
-        # quadrature.triangle.Strang9()
+        # quadrature.triangle.Strang(9)
         quadrature.triangle.Dunavant(17)
         )
     return
