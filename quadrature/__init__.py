@@ -10,4 +10,5 @@ __version__ = '0.1.1'
 __maintainer__ = 'Nico Schlömer'
 __status__ = 'Beta'
 
+from . import line
 from . import triangle
