@@ -53,6 +53,15 @@ def test_generator():
         quadrature.line.GaussPatterson(31),
         quadrature.line.GaussPatterson(63),
         quadrature.line.GaussPatterson(127),
+        quadrature.line.ClenshawCurtis(1),
+        quadrature.line.ClenshawCurtis(2),
+        quadrature.line.ClenshawCurtis(3),
+        quadrature.line.ClenshawCurtis(4),
+        quadrature.line.ClenshawCurtis(5),
+        quadrature.line.ClenshawCurtis(9),
+        quadrature.line.ClenshawCurtis(17),
+        quadrature.line.ClenshawCurtis(33),
+        quadrature.line.ClenshawCurtis(65),
         ]
     for scheme in schemes:
         yield check_triangle_scheme, scheme, a, b
