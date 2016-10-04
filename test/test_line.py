@@ -27,10 +27,25 @@ def _create_test_polynomial(degree):
 
 
 def test_generator():
-    a = 1.0
-    b = 2.0
+    a = -0.3
+    b = 0.5
     schemes = [
         quadrature.line.Midpoint(),
+        quadrature.line.Trapezoidal(),
+        quadrature.line.GaussLegendre(1),
+        quadrature.line.GaussLegendre(2),
+        quadrature.line.GaussLegendre(3),
+        quadrature.line.GaussLegendre(4),
+        quadrature.line.GaussLegendre(7),
+        quadrature.line.GaussLegendre(8),
+        quadrature.line.GaussLegendre(15),
+        quadrature.line.GaussLegendre(16),
+        quadrature.line.GaussLegendre(31),
+        quadrature.line.GaussLegendre(32),
+        quadrature.line.GaussLegendre(63),
+        quadrature.line.GaussLegendre(64),
+        quadrature.line.GaussLegendre(65),
+        quadrature.line.GaussLegendre(127),
         ]
     for scheme in schemes:
         yield check_triangle_scheme, scheme, a, b
