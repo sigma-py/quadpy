@@ -127,6 +127,8 @@ def test_generator():
         quadrature.tetrahedron.NewtonCotesOpen(4),
         quadrature.tetrahedron.NewtonCotesOpen(5),
         quadrature.tetrahedron.NewtonCotesOpen(6),
+        quadrature.tetrahedron.Zienkiewicz(4),
+        quadrature.tetrahedron.Zienkiewicz(5),
         ]
     for scheme in schemes:
         yield check_tetrahedron_scheme, scheme, tetrahedron
