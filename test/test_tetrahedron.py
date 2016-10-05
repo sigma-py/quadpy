@@ -104,6 +104,10 @@ def test_generator():
         ])
     schemes = [
         quadrature.tetrahedron.Keast(0),
+        quadrature.tetrahedron.Keast(1),
+        quadrature.tetrahedron.Keast(2),
+        quadrature.tetrahedron.Keast(3),
+        quadrature.tetrahedron.Keast(4),
         ]
     for scheme in schemes:
         yield check_tetrahedron_scheme, scheme, tetrahedron
