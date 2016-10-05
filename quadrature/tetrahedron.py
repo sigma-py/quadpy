@@ -1437,3 +1437,47 @@ class NewtonCotesOpen(object):
         else:
             raise ValueError('Illegal closed Newton-Cotes index')
         return
+
+
+class Zienkiewicz(object):
+    '''
+    Olgierd Zienkiewicz,
+    The Finite Element Method,
+    Sixth Edition,
+    Butterworth-Heinemann, 2005,
+    ISBN: 0750663200,
+    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tet/quadrature_rules_tet.html
+    '''
+    def __init__(self, index):
+        if index == 4:
+            self.weights = numpy.array([
+                0.25,
+                0.25,
+                0.25,
+                0.25
+                ])
+            self.points = numpy.array([
+                [0.5854101966249685, 0.1381966011250105, 0.1381966011250105],
+                [0.1381966011250105, 0.5854101966249685, 0.1381966011250105],
+                [0.1381966011250105, 0.1381966011250105, 0.5854101966249685],
+                [0.1381966011250105, 0.1381966011250105, 0.1381966011250105],
+                ])
+            self.degree = 2
+        elif index == 5:
+            self.weights = numpy.array([
+                -0.8,
+                0.45,
+                0.45,
+                0.45,
+                0.45,
+                ])
+            self.points = numpy.array([
+                [0.25, 0.25, 0.25],
+                [0.5, 1.0/6.0, 1.0/6.0],
+                [1.0/6.0, 0.5,1.0/6.0],
+                [1.0/6.0, 1.0/6.0, 0.5],
+                [1.0/6.0, 1.0/6.0, 1.0/6.0],
+                ])
+            self.degree = 3
+        else:
+            raise ValueError('Illegal closed Newton-Cotes index')
