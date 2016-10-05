@@ -113,6 +113,13 @@ def test_generator():
         quadrature.tetrahedron.Keast(7),
         quadrature.tetrahedron.Keast(8),
         quadrature.tetrahedron.Keast(9),
+        quadrature.tetrahedron.NewtonCotesClosed(0),
+        quadrature.tetrahedron.NewtonCotesClosed(1),
+        quadrature.tetrahedron.NewtonCotesClosed(2),
+        quadrature.tetrahedron.NewtonCotesClosed(3),
+        quadrature.tetrahedron.NewtonCotesClosed(4),
+        quadrature.tetrahedron.NewtonCotesClosed(5),
+        quadrature.tetrahedron.NewtonCotesClosed(6),
         ]
     for scheme in schemes:
         yield check_tetrahedron_scheme, scheme, tetrahedron
