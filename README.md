@@ -1,5 +1,7 @@
 # quadrature
 
+Your one-stop shop for numerical integration in Python.
+
 [![Build Status](https://travis-ci.org/nschloe/quadrature.svg?branch=master)](https://travis-ci.org/nschloe/quadrature)
 [![Code Health](https://landscape.io/github/nschloe/quadrature/master/landscape.png)](https://landscape.io/github/nschloe/quadrature/master)
 [![codecov](https://codecov.io/gh/nschloe/quadrature/branch/master/graph/badge.svg)](https://codecov.io/gh/nschloe/quadrature)
@@ -8,7 +10,7 @@
 
 ![](https://nschloe.github.io/quadrature/s9.png)
 
-Numerical integration schemes for lines and triangles.
+Numerical integration schemes for lines, triangles, and tetrahedra.
 
 To numerically integrate any function over any given triangle, do
 ```python
