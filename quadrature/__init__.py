@@ -12,3 +12,4 @@ __status__ = 'Beta'
 
 from . import line
 from . import triangle
+from . import tetrahedron
