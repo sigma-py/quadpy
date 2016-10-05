@@ -120,6 +120,13 @@ def test_generator():
         quadrature.tetrahedron.NewtonCotesClosed(4),
         quadrature.tetrahedron.NewtonCotesClosed(5),
         quadrature.tetrahedron.NewtonCotesClosed(6),
+        quadrature.tetrahedron.NewtonCotesOpen(0),
+        quadrature.tetrahedron.NewtonCotesOpen(1),
+        quadrature.tetrahedron.NewtonCotesOpen(2),
+        quadrature.tetrahedron.NewtonCotesOpen(3),
+        quadrature.tetrahedron.NewtonCotesOpen(4),
+        quadrature.tetrahedron.NewtonCotesOpen(5),
+        quadrature.tetrahedron.NewtonCotesOpen(6),
         ]
     for scheme in schemes:
         yield check_tetrahedron_scheme, scheme, tetrahedron
@@ -131,3 +138,24 @@ def check_tetrahedron_scheme(scheme, tetrahedron):
     val = quadrature.tetrahedron.integrate(f, tetrahedron, scheme)
     numpy.testing.assert_allclose(val, exact_val)
     return
+
+
+def test_show():
+    tet = numpy.array([
+        [numpy.cos(0.5*numpy.pi), numpy.sin(0.5*numpy.pi), -0.5],
+        [numpy.cos(7.0/6.0*numpy.pi), numpy.sin(7.0/6.0*numpy.pi), -0.5],
+        [numpy.cos(11.0/6.0*numpy.pi), numpy.sin(11.0/6.0*numpy.pi), -0.5],
+        [0.0, 0.0, 1.0]
+        ])
+    quadrature.tetrahedron.show(
+        tet,
+        # quadrature.tetrahedron.Keast(0)
+        # quadrature.tetrahedron.Keast(7)
+        quadrature.tetrahedron.NewtonCotesClosed(6)
+        )
+    return
+
+
+if __name__ == '__main__':
+    test_show()
+    plt.show()

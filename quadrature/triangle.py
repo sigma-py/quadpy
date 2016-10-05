@@ -42,7 +42,7 @@ def show(triangle, scheme, circle_scale=1.0):
     for tp, weight in zip(transformed_pts, scheme.weights):
         color = 'b' if weight >= 0 else 'r'
         # highlight circle center
-        plt.plot(tp[0], tp[1], '.' + color)
+        plt.plot([tp[0]], [tp[1]], '.' + color)
         # plot circle
         # scale the circle volume according to the weight
         radius = circle_scale \
