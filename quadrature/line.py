@@ -69,6 +69,7 @@ class GaussLegendre(object):
     <https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_legendre/quadrature_rules_legendre.html>
     '''
     def __init__(self, order):
+        self.degree = 2*order - 1
         if order == 1:
             self.weights = numpy.array([
                 2.0
@@ -76,7 +77,6 @@ class GaussLegendre(object):
             self.points = numpy.array([
                 0.0
                 ])
-            self.degree = 1
         elif order == 2:
             self.weights = numpy.array([
                 1.0,
@@ -86,7 +86,6 @@ class GaussLegendre(object):
                 -numpy.sqrt(1.0/3.0),
                 numpy.sqrt(1.0/3.0),
                 ])
-            self.degree = 2
         elif order == 3:
             self.weights = numpy.array([
                 5.0/9.0,
@@ -98,7 +97,6 @@ class GaussLegendre(object):
                 0.0,
                 numpy.sqrt(3.0/5.0),
                 ])
-            self.degree = 3
         elif order == 4:
             self.weights = numpy.array([
                 0.3478548451374538,
@@ -112,7 +110,6 @@ class GaussLegendre(object):
                 0.3399810435848563,
                 0.8611363115940526,
                 ])
-            self.degree = 4
         elif order == 7:
             self.weights = numpy.array([
                 0.129484966168869693270611432679,
@@ -132,7 +129,6 @@ class GaussLegendre(object):
                 0.741531185599394439863864773281,
                 0.949107912342758524526189684048,
                 ])
-            self.degree = 7
         elif order == 8:
             self.weights = numpy.array([
                 0.1012285362903761,
@@ -154,7 +150,6 @@ class GaussLegendre(object):
                 0.7966664774136267,
                 0.9602898564975363,
                 ])
-            self.degree = 8
         elif order == 15:
             self.weights = numpy.array([
                 0.3075324199611714E-01,
@@ -190,7 +185,6 @@ class GaussLegendre(object):
                 0.9372733924007058,
                 0.9879925180204855,
                 ])
-            self.degree = 15
         elif order == 16:
             self.weights = numpy.array([
                 0.2715245941175407E-01,
@@ -228,7 +222,6 @@ class GaussLegendre(object):
                 0.9445750230732326,
                 0.9894009349916499,
                 ])
-            self.degree = 16
         elif order == 31:
             self.weights = numpy.array([
                 0.7470831579248783E-02,
@@ -296,7 +289,6 @@ class GaussLegendre(object):
                 0.9846859096651525,
                 0.9970874818194770,
                 ])
-            self.degree = 31
         elif order == 32:
             self.weights = numpy.array([
                 0.7018610009470076E-02,
@@ -366,7 +358,6 @@ class GaussLegendre(object):
                 0.9856115115452684,
                 0.9972638618494816,
                 ])
-            self.degree = 32
         elif order == 63:
             self.weights = numpy.array([
                 0.1839874595577162E-02,
@@ -498,7 +489,6 @@ class GaussLegendre(object):
                 0.9962240127779701,
                 0.9992829840291237,
                 ])
-            self.degree = 63
         elif order == 64:
             self.weights = numpy.array([
                 0.1783280721696354E-02,
@@ -632,7 +622,6 @@ class GaussLegendre(object):
                 0.9963401167719553,
                 0.9993050417357722,
                 ])
-            self.degree = 64
         elif order == 65:
             self.weights = numpy.array([
                 0.0017292582513002508983395851463,
@@ -768,7 +757,6 @@ class GaussLegendre(object):
                 0.9964509480618491630557949,
                 0.9993260970754128772656936,
                 ])
-            self.degree = 65
         elif order == 127:
             self.weights = numpy.array([
                 0.00045645726109586662791936519265,
@@ -1028,7 +1016,6 @@ class GaussLegendre(object):
                 0.999062934355311895138316,
                 0.999822130415306146267351,
                 ])
-            self.degree = 127
         else:
             raise ValueError('Illegal Gauss-Legendre order')
         return
