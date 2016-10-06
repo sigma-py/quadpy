@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import math
 import numpy
 
 
@@ -101,9 +102,10 @@ def _transform_to_unit_tetrahedron(f, tetrahedron):
 
 def integrate(f, tetrahedron, rule):
     g = _transform_to_unit_tetrahedron(f, tetrahedron)
-    out = 0.0
-    for point, weight in zip(rule.points, rule.weights):
-        out += weight * g(point)
+    out = math.fsum([
+        weight * g(point)
+        for point, weight in zip(rule.points, rule.weights)
+        ])
     return volume(tetrahedron) * out
 
 
