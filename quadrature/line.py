@@ -78,16 +78,16 @@ class GaussLegendre(object):
         elif order == 2:
             self.weights = [1.0, 1.0]
             self.points = numpy.array([
-                -0.5773502691896257,
-                0.5773502691896257,
+                -numpy.sqrt(1.0/3.0),
+                numpy.sqrt(1.0/3.0),
                 ])
             self.degree = 2
         elif order == 3:
             self.weights = [5.0/9.0, 8.0/9.0, 5.0/9.0]
             self.points = numpy.array([
-                -0.774596669241483377035853079956,
+                -numpy.sqrt(3.0/5.0),
                 0.0,
-                0.774596669241483377035853079956,
+                numpy.sqrt(3.0/5.0),
                 ])
             self.degree = 3
         elif order == 4:
