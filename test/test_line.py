@@ -13,15 +13,7 @@ if 'DISPLAY' not in os.environ:
 from matplotlib import pyplot as plt
 
 
-def _integrate_exact(f, a, b):
-    x = sympy.Symbol('x')
-    exact = sympy.integrate(f(x), (x, a, b))
-    return float(exact)
-
-
 def test_generator():
-    a = -0.3
-    b = 0.5
     schemes = [
         quadrature.line.Midpoint(),
         quadrature.line.Trapezoidal(),
@@ -39,13 +31,13 @@ def test_generator():
         quadrature.line.GaussLegendre(64),
         quadrature.line.GaussLegendre(65),
         quadrature.line.GaussLegendre(127),
+        quadrature.line.GaussPatterson(0),
         quadrature.line.GaussPatterson(1),
+        quadrature.line.GaussPatterson(2),
         quadrature.line.GaussPatterson(3),
-        quadrature.line.GaussPatterson(7),
-        quadrature.line.GaussPatterson(15),
-        quadrature.line.GaussPatterson(31),
-        quadrature.line.GaussPatterson(63),
-        quadrature.line.GaussPatterson(127),
+        quadrature.line.GaussPatterson(4),
+        quadrature.line.GaussPatterson(5),
+        quadrature.line.GaussPatterson(6),
         quadrature.line.ClenshawCurtis(1),
         quadrature.line.ClenshawCurtis(2),
         quadrature.line.ClenshawCurtis(3),
@@ -65,21 +57,26 @@ def test_generator():
         quadrature.line.NewtonCotesOpen(5),
         ]
     for scheme in schemes:
-        yield check_scheme, scheme, a, b
+        yield check_scheme, scheme
 
 
-def check_scheme(scheme, a, b):
+def check_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
     # longer be integrated exactly. The scheme's degree is `d-1`.
     degree = 0
     while True:
         def poly(x): return x**degree
-        exact_val = _integrate_exact(poly, a, b)
+        # Set bounds such that the values are between 0.5 and 1.5.
+        a = 0.5**(1.0/(degree+1))
+        b = 1.5**(1.0/(degree+1))
+        exact_val = 1.0/(degree+1)
         val = quadrature.line.integrate(poly, a, b, scheme)
-        if abs(exact_val - val) > 1.0e-10:
+        if abs(exact_val - val) / abs(exact_val) > 1.0e-12:
+            break
+        if degree >= scheme.degree:
             break
         degree += 1
-    numpy.testing.assert_equal(degree-1, scheme.degree)
+    assert degree >= scheme.degree
     return
 
 
@@ -88,12 +85,14 @@ def test_show():
         0.0, 1.0,
         # quadrature.line.NewtonCotesOpen(4)
         # quadrature.line.GaussLegendre(31)
-        # quadrature.line.GaussPatterson(31)
+        # quadrature.line.GaussPatterson(4)
         quadrature.line.ClenshawCurtis(33)
         )
     return
 
 
 if __name__ == '__main__':
-    test_show()
-    plt.show()
+    # test_show()
+    # plt.show()
+    scheme = quadrature.line.GaussLegendre(7)
+    check_scheme(scheme)
