@@ -70,20 +70,29 @@ class GaussLegendre(object):
     '''
     def __init__(self, order):
         if order == 1:
-            self.weights = [2.0]
+            self.weights = numpy.array([
+                2.0
+                ])
             self.points = numpy.array([
                 0.0
                 ])
             self.degree = 1
         elif order == 2:
-            self.weights = [1.0, 1.0]
+            self.weights = numpy.array([
+                1.0,
+                1.0
+                ])
             self.points = numpy.array([
                 -numpy.sqrt(1.0/3.0),
                 numpy.sqrt(1.0/3.0),
                 ])
             self.degree = 2
         elif order == 3:
-            self.weights = [5.0/9.0, 8.0/9.0, 5.0/9.0]
+            self.weights = numpy.array([
+                5.0/9.0,
+                8.0/9.0,
+                5.0/9.0
+                ])
             self.points = numpy.array([
                 -numpy.sqrt(3.0/5.0),
                 0.0,
