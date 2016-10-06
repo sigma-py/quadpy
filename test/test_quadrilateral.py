@@ -36,11 +36,11 @@ def _integrate_exact(f, quadrilateral):
     return float(exact)
 
 
-def _create_test_monomials(max_degree):
+def _create_test_monomials(degree):
     '''Returns a list of all monomials up to degree :max_degree:.
     '''
     monomials = []
-    for k in range(max_degree+1):
+    for k in range(degree+1):
         for i in range(k+1):
             monomials.append(lambda x: x[0]**(k-i) * x[1]**i)
     return monomials
@@ -75,10 +75,23 @@ def test_generator():
 
 
 def check_quadrilateral_scheme(scheme, quadrilateral):
-    for poly in _create_test_monomials(max_degree=scheme.degree):
-        exact_val = _integrate_exact(poly, quadrilateral)
-        val = quadrature.quadrilateral.integrate(poly, quadrilateral, scheme)
-        numpy.testing.assert_allclose(val, exact_val, rtol=1.0, atol=1.0e-10)
+    # Test integration until we get to a polynomial degree `d` that can no
+    # longer be integrated exactly. The scheme's degree is `d-1`.
+    success = True
+    degree = 0
+    while success:
+        for poly in _create_test_monomials(degree):
+            exact_val = _integrate_exact(poly, quadrilateral)
+            val = quadrature.quadrilateral.integrate(
+                    poly, quadrilateral, scheme
+                    )
+            if abs(exact_val - val) > 1.0e-10:
+                success = False
+                break
+        if not success:
+            break
+        degree += 1
+    numpy.testing.assert_equal(degree-1, scheme.degree)
     return
 
 
