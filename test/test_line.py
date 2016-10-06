@@ -19,20 +19,6 @@ def _integrate_exact(f, a, b):
     return float(exact)
 
 
-def _create_test_polynomial(degree):
-    '''Return polynomials of the form
-
-      p0(x) = 1,
-      p1(x) = 1 + 1/2 * x
-      p2(x) = 1 + 1/2 * x + 1/3 * x**2
-
-    etc.
-    '''
-    def f(x):
-        return numpy.sum([1.0/(k+1) * x**k for k in range(degree+1)])
-    return f
-
-
 def test_generator():
     a = -0.3
     b = 0.5
@@ -79,14 +65,21 @@ def test_generator():
         quadrature.line.NewtonCotesOpen(5),
         ]
     for scheme in schemes:
-        yield check_triangle_scheme, scheme, a, b
+        yield check_scheme, scheme, a, b
 
 
-def check_triangle_scheme(scheme, a, b):
-    f = _create_test_polynomial(degree=scheme.degree)
-    exact_val = _integrate_exact(f, a, b)
-    val = quadrature.line.integrate(f, a, b, scheme)
-    numpy.testing.assert_allclose(val, exact_val)
+def check_scheme(scheme, a, b):
+    # Test integration until we get to a polynomial degree `d` that can no
+    # longer be integrated exactly. The scheme's degree is `d-1`.
+    degree = 0
+    while True:
+        def poly(x): return x**degree
+        exact_val = _integrate_exact(poly, a, b)
+        val = quadrature.line.integrate(poly, a, b, scheme)
+        if abs(exact_val - val) > 1.0e-10:
+            break
+        degree += 1
+    numpy.testing.assert_equal(degree-1, scheme.degree)
     return
 
 
