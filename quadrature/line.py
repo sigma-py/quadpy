@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import math
 import numpy
 
 
@@ -22,9 +23,10 @@ def _transform_to_unit_triangle(f, triangle):
 
 
 def integrate(f, a, b, rule):
-    out = 0.0
-    for point, weight in zip(rule.points, rule.weights):
-        out += weight * f(0.5 * (point + 1) * (b-a) + a)
+    out = math.fsum([
+        weight * f(0.5 * (point + 1) * (b-a) + a)
+        for point, weight in zip(rule.points, rule.weights)
+        ])
     return 0.5 * (b - a) * out
 
 
