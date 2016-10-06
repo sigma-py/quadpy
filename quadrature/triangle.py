@@ -73,6 +73,7 @@ def _transform_to_unit_triangle(f, triangle):
 
 
 def integrate(f, triangle, rule):
+    # w * f(x(xi)) * |det(J)|
     g = _transform_to_unit_triangle(f, triangle)
     out = 0.0
     for point, weight in zip(rule.points, rule.weights):

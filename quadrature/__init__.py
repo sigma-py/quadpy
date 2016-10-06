@@ -11,5 +11,6 @@ __maintainer__ = 'Nico Schlömer'
 __status__ = 'Beta'
 
 from . import line
+from . import quadrilateral
 from . import triangle
 from . import tetrahedron
