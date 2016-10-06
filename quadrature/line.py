@@ -1028,14 +1028,15 @@ class GaussPatterson(object):
     Gauß-Patterson quadrature.
     <https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_patterson/quadrature_rules_patterson.html>
     '''
-    def __init__(self, order):
-        if order == 1:
+    def __init__(self, index):
+        self.degree = 3*2**index - 1
+        if index == 0:
+            self.degree = 1  # override degree
             self.weights = [2.0]
             self.points = numpy.array([
                 0.0
                 ])
-            self.degree = 1
-        elif order == 3:
+        elif index == 1:
             self.weights = numpy.array([
                 5.0 / 9.0,
                 8.0 / 9.0,
@@ -1046,8 +1047,7 @@ class GaussPatterson(object):
                 0.0,
                 0.7745966692414834,
                 ])
-            self.degree = 3
-        elif order == 7:
+        elif index == 2:
             self.weights = numpy.array([
                 0.1046562260264673,
                 0.2684880898683334,
@@ -1066,8 +1066,7 @@ class GaussPatterson(object):
                 0.7745966692414834,
                 0.9604912687080203,
                 ])
-            self.degree = 7
-        elif order == 15:
+        elif index == 3:
             self.weights = numpy.array([
                 0.1700171962994026E-01,
                 0.5160328299707974E-01,
@@ -1102,8 +1101,7 @@ class GaussPatterson(object):
                 0.9604912687080203,
                 0.9938319632127550,
                 ])
-            self.degree = 15
-        elif order == 31:
+        elif index == 4:
             self.weights = numpy.array([
                 0.2544780791561875E-02,
                 0.8434565739321106E-02,
@@ -1170,8 +1168,7 @@ class GaussPatterson(object):
                 0.9938319632127550,
                 0.9990981249676676,
                 ])
-            self.degree = 31
-        elif order == 63:
+        elif index == 5:
             self.weights = numpy.array([
                 0.3632214818455306E-03,
                 0.1265156556230068E-02,
@@ -1302,8 +1299,7 @@ class GaussPatterson(object):
                 0.9990981249676676,
                 0.9998728881203576,
                 ])
-            self.degree = 63
-        elif order == 127:
+        elif index == 6:
             self.weights = numpy.array([
                 0.5053609520786252E-04,
                 0.1807395644453884E-03,
@@ -1562,7 +1558,6 @@ class GaussPatterson(object):
                 0.9998728881203576,
                 0.9999824303548916,
                 ])
-            self.degree = 127
         else:
             raise ValueError('Illegal Gauss-Patterson order')
 
