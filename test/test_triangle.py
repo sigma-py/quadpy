@@ -44,7 +44,7 @@ def _integrate_exact(f, triangle):
     return float(exact)
 
 
-def _create_test_monomials(degree):
+def _create_monomials(degree):
     '''Returns a list of all monomials of degree :degree:.
     '''
     return [
@@ -111,7 +111,7 @@ def check_scheme(scheme, triangle):
     degree = 0
     max_degree = 100
     while success:
-        for poly in _create_test_monomials(degree):
+        for poly in _create_monomials(degree):
             exact_val = _integrate_exact(poly, triangle)
             val = quadrature.triangle.integrate(
                     poly, triangle, scheme
