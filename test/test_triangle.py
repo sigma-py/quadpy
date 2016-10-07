@@ -45,13 +45,12 @@ def _integrate_exact(f, triangle):
 
 
 def _create_test_monomials(degree):
-    '''Returns a list of all monomials up to degree :max_degree:.
+    '''Returns a list of all monomials of degree :degree:.
     '''
-    monomials = []
-    for k in range(degree+1):
-        for i in range(k+1):
-            monomials.append(lambda x: x[0]**(k-i) * x[1]**i)
-    return monomials
+    return [
+        lambda x: x[0]**(degree-k) * x[1]**k
+        for k in range(degree+1)
+        ]
 
 
 def test_generator():
