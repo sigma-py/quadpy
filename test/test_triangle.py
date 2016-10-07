@@ -44,39 +44,14 @@ def _integrate_exact(f, triangle):
     return float(exact)
 
 
-def _create_test_polynomial(degree):
-    '''The k-th order terms in polynomial have the form
-
-        alpha_{k,i} * x^{k-i} * y^k,
-
-    with i in {0,...,k}. Take
-
-      alpha_{k, i} = (i+1) / (k+2)
-
-    such that
-
-      p0(x) = 1/2,
-
-      p1(x) = 1/2 \
-            + 1/3 * x + 2/3 * y,
-
-      p1(x) = 1/2 \
-            + 1/3 * x + 2/3 * y \
-            + 1/4 * x^2 + 1/2 * x*y + 3/4 * y^2
-
-    etc.
+def _create_test_monomials(degree):
+    '''Returns a list of all monomials up to degree :max_degree:.
     '''
-    def f(x):
-        out = 0.0
-        for k in range(degree+1):
-            i = 0
-            for i in range(k+1):
-                # This relies on Python's 0.0**0=1.
-                alpha = (i+1) / float(k+2) * x[0]**(k-i) * x[1]**i
-                out += alpha
-        return out
-
-    return f
+    monomials = []
+    for k in range(degree+1):
+        for i in range(k+1):
+            monomials.append(lambda x: x[0]**(k-i) * x[1]**i)
+    return monomials
 
 
 def test_generator():
@@ -127,14 +102,30 @@ def test_generator():
         quadrature.triangle.Dunavant(20),
         ]
     for scheme in schemes:
-        yield check_triangle_scheme, scheme, triangle
+        yield check_scheme, scheme, triangle
 
 
-def check_triangle_scheme(scheme, triangle):
-    f = _create_test_polynomial(degree=scheme.degree)
-    exact_val = _integrate_exact(f, triangle)
-    val = quadrature.triangle.integrate(f, triangle, scheme)
-    numpy.testing.assert_allclose(val, exact_val)
+def check_scheme(scheme, triangle):
+    # Test integration until we get to a polynomial degree `d` that can no
+    # longer be integrated exactly. The scheme's degree is `d-1`.
+    success = True
+    degree = 0
+    max_degree = 100
+    while success:
+        for poly in _create_test_monomials(degree):
+            exact_val = _integrate_exact(poly, triangle)
+            val = quadrature.triangle.integrate(
+                    poly, triangle, scheme
+                    )
+            if abs(exact_val - val) > 1.0e-10:
+                success = False
+                break
+        if not success:
+            break
+        if degree >= max_degree:
+            break
+        degree += 1
+    numpy.testing.assert_equal(degree-1, scheme.degree)
     return
 
 
