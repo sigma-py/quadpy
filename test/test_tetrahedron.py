@@ -100,7 +100,7 @@ def check_scheme(scheme, tetrahedron):
     # longer be integrated exactly. The scheme's degree is `d-1`.
     success = True
     degree = 0
-    max_degree = 100
+    max_degree = scheme.degree + 1
     while success:
         for poly in _create_monomials(degree):
             exact_val = _integrate_exact(poly, tetrahedron)
