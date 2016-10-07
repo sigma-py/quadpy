@@ -29,18 +29,15 @@ def _integrate_exact(f, triangle):
     # the triangle. (See, e.g.,
     # <http://math2.uncc.edu/~shaodeng/TEACHING/math5172/Lectures/Lect_15.PDF>).
     #
-    def g(xi):
-        pxi = triangle[0] * (1 - xi[0] - xi[1]) \
-            + triangle[1] * xi[0] \
-            + triangle[2] * xi[1]
-        return f(pxi)
-
-    x = sympy.DeferredVector('x')
-    exact = 2 * quadrature.triangle.volume(triangle) \
-        * sympy.integrate(
-            sympy.integrate(g(x), (x[1], 0, 1-x[0])),
-            (x[0], 0, 1)
-            )
+    xi = sympy.DeferredVector('xi')
+    x_xi = triangle[0] * (1 - xi[0] - xi[1]) \
+        + triangle[1] * xi[0] \
+        + triangle[2] * xi[1]
+    abs_det_J = 2 * quadrature.triangle.volume(triangle)
+    exact = sympy.integrate(
+        sympy.integrate(abs_det_J * f(x_xi), (xi[1], 0, 1-xi[0])),
+        (xi[0], 0, 1)
+        )
     return float(exact)
 
 
