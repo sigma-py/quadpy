@@ -5,7 +5,7 @@ import numpy.testing
 import quadrature
 import sympy
 
-from test_triangle import _create_test_monomials
+from test_triangle import _create_monomials
 
 import os
 import matplotlib as mpl
@@ -73,7 +73,7 @@ def check_scheme(scheme, quadrilateral):
     degree = 0
     max_degree = 100
     while success:
-        for poly in _create_test_monomials(degree):
+        for poly in _create_monomials(degree):
             exact_val = _integrate_exact(poly, quadrilateral)
             val = quadrature.quadrilateral.integrate(
                     poly, quadrilateral, scheme

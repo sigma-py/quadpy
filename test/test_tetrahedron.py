@@ -59,45 +59,19 @@ def _get_sum_tuples(a):
     return tuples
 
 
-def _create_test_polynomial(degree):
-    '''The k-th order terms in polynomial have the form
-
-        alpha_{k,i} * x^k0 * y^k1 * z^k2,
-
-    with k0 + k1 + k2 = k. Take
-
-      alpha_{k, i} = (i+1) / (k+2)
-
-    such that
-
-      p0(x) = 1/3,
-
-      p1(x) = 1/3 \
-            + 1/4 * x + 2/4 * y + 3/4 * z,
-
-      p2(x) = 1/3 \
-            + 1/4 * x + 2/4 * y + 3/4 * z,
-            + 1/4 * x^2 + 1/2 * x*y + 3/4 * y^2 + ...
-
-    etc.
+def _create_monomials(degree):
+    '''Returns a list of all monomials of degree :degree:.
     '''
-    def f(x):
-        out = 0.0
-        for k in range(degree+1):
-            i = 0
-            tuples = _get_sum_tuples(k)
-            for tup in tuples:
-                # This relies on Python's 0.0**0=1.
-                alpha = (i+1) / float(k+2) * x[0]**(k-i) * x[1]**i
-                out += alpha
-        return out
-
-    return f
+    return [
+        lambda x: x[0]**(degree-i-j) * x[1]**i * x[2]**j
+        for i in range(degree+1)
+        for j in range(degree-i+1)
+        ]
 
 
 def test_generator():
     tetrahedron = numpy.array([
-        [-1.0, -1.0, -1.0],
+        [-1.0, -2.0, -0.0],
         [1.0, 0.0, 0.0],
         [0.0, 1.0, 0.0],
         [0.0, 0.0, 2.0],
@@ -131,14 +105,30 @@ def test_generator():
         quadrature.tetrahedron.Zienkiewicz(5),
         ]
     for scheme in schemes:
-        yield check_tetrahedron_scheme, scheme, tetrahedron
+        yield check_scheme, scheme, tetrahedron
 
 
-def check_tetrahedron_scheme(scheme, tetrahedron):
-    f = _create_test_polynomial(degree=scheme.degree)
-    exact_val = _integrate_exact(f, tetrahedron)
-    val = quadrature.tetrahedron.integrate(f, tetrahedron, scheme)
-    numpy.testing.assert_allclose(val, exact_val)
+def check_scheme(scheme, tetrahedron):
+    # Test integration until we get to a polynomial degree `d` that can no
+    # longer be integrated exactly. The scheme's degree is `d-1`.
+    success = True
+    degree = 0
+    max_degree = 100
+    while success:
+        for poly in _create_monomials(degree):
+            exact_val = _integrate_exact(poly, tetrahedron)
+            val = quadrature.tetrahedron.integrate(
+                    poly, tetrahedron, scheme
+                    )
+            if abs(exact_val - val) > 1.0e-10:
+                success = False
+                break
+        if not success:
+            break
+        if degree >= max_degree:
+            break
+        degree += 1
+    numpy.testing.assert_equal(degree-1, scheme.degree)
     return
 
 
