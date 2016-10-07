@@ -29,34 +29,21 @@ def _integrate_exact(f, tetrahedron):
     # the tetrahedron. (See, e.g.,
     # <http://math2.uncc.edu/~shaodeng/TEACHING/math5172/Lectures/Lect_15.PDF>).
     #
-    def g(xi):
-        pxi = tetrahedron[0] * (1 - xi[0] - xi[1] - xi[2]) \
-            + tetrahedron[1] * xi[0] \
-            + tetrahedron[2] * xi[1] \
-            + tetrahedron[3] * xi[2]
-        return f(pxi)
-
-    x = sympy.DeferredVector('x')
-    exact = 6 * quadrature.tetrahedron.volume(tetrahedron) \
-        * sympy.integrate(
-            sympy.integrate(
-              sympy.integrate(g(x), (x[2], 0, 1-x[0]-x[1])),
-              (x[1], 0, 1-x[0])
-              ),
-            (x[0], 0, 1)
-          )
+    xi = sympy.DeferredVector('xi')
+    x_xi = \
+        + tetrahedron[0] * (1 - xi[0] - xi[1] - xi[2]) \
+        + tetrahedron[1] * xi[0] \
+        + tetrahedron[2] * xi[1] \
+        + tetrahedron[3] * xi[2]
+    abs_det_J = 6 * quadrature.tetrahedron.volume(tetrahedron)
+    exact = sympy.integrate(
+        sympy.integrate(
+          sympy.integrate(abs_det_J * f(x_xi), (xi[2], 0, 1-xi[0]-xi[1])),
+          (xi[1], 0, 1-xi[0])
+          ),
+        (xi[0], 0, 1)
+      )
     return float(exact)
-
-
-def _get_sum_tuples(a):
-    '''Returns the list of 3-tuples with sum a.
-    '''
-    tuples = []
-    for i in range(a+1):
-        for j in range(a+1-i):
-            k = a - i - j
-            tuples.append((i, j, k))
-    return tuples
 
 
 def _create_monomials(degree):
