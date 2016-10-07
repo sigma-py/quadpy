@@ -30,7 +30,7 @@ def integrate(f, a, b, rule):
     return 0.5 * (b - a) * out
 
 
-def show(a, b, scheme):
+def show(a, b, scheme, render=True):
     from matplotlib import pyplot as plt
     pts = 0.5 * (scheme.points + 1) * (b-a) + a
     plt.plot([0.0, 1.0], [0.0, 0.0], '-k')
@@ -41,6 +41,8 @@ def show(a, b, scheme):
         width=(b-a) / len(scheme.weights)
         )
     # plt.axis('equal')
+    if render:
+        plt.show()
     return
 
 

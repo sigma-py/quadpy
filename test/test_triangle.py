@@ -30,7 +30,8 @@ def _integrate_exact(f, triangle):
     # <http://math2.uncc.edu/~shaodeng/TEACHING/math5172/Lectures/Lect_15.PDF>).
     #
     xi = sympy.DeferredVector('xi')
-    x_xi = triangle[0] * (1 - xi[0] - xi[1]) \
+    x_xi = \
+        + triangle[0] * (1 - xi[0] - xi[1]) \
         + triangle[1] * xi[0] \
         + triangle[2] * xi[1]
     abs_det_J = 2 * quadrature.triangle.volume(triangle)
@@ -106,7 +107,7 @@ def check_scheme(scheme, triangle):
     # longer be integrated exactly. The scheme's degree is `d-1`.
     success = True
     degree = 0
-    max_degree = 100
+    max_degree = scheme.degree + 1
     while success:
         for poly in _create_monomials(degree):
             exact_val = _integrate_exact(poly, triangle)
