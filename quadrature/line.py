@@ -2,6 +2,7 @@
 #
 import math
 import numpy
+import sympy
 
 
 def _transform_to_unit_triangle(f, triangle):
@@ -961,37 +962,29 @@ class NewtonCotesClosed(object):
     Closed Newton-Cotes formulae.
     <https://en.wikipedia.org/wiki/Newton%E2%80%93Cotes_formulas#Closed_Newton.E2.80.93Cotes_formulae>
     '''
-    def __init__(self, degree):
-        self.points = numpy.linspace(-1.0, 1.0, degree+1)
-        if degree == 1:
-            self.weights = [1.0, 1.0]
-            self.degree = 1
-        elif degree == 2:
-            self.weights = numpy.array([
-                1.0/3.0,
-                4.0/3.0,
-                1.0/3.0,
-                ])
-            self.degree = 3
-        elif degree == 3:
-            self.weights = numpy.array([
-                1.0/4.0,
-                3.0/4.0,
-                3.0/4.0,
-                1.0/4.0,
-                ])
-            self.degree = 3
-        elif degree == 4:
-            self.weights = numpy.array([
-                7.0/45.0,
-                32.0/45.0,
-                12.0/45.0,
-                32.0/45.0,
-                7.0/45.0,
-                ])
-            self.degree = 5
-        else:
-            raise ValueError('Illegal closed Newton-Cotes degree')
+    def __init__(self, index):
+        self.points = numpy.linspace(-1.0, 1.0, index+1)
+
+        # Formula (26) from
+        # <http://mathworld.wolfram.com/Newton-CotesFormulas.html>.
+        # Note that, while general, this formulation isn't too pleasing
+        # numerically. Noticable round-off errors in the weights will be
+        # present for indices as low as 10. Check math.fsum(weights).
+        n = index
+        self.weights = numpy.empty(n+1)
+        for r in range(index+1):
+            t = sympy.Symbol('t')
+            f = 1.0
+            for i in range(n+1):
+                if i != r:
+                    f *= (t - i)
+            self.weights[r] = 2 * \
+                (-1)**(n-r) * sympy.integrate(f, (t, 0, n)) \
+                / (math.factorial(r) * math.factorial(n-r)) \
+                / index
+        self.degree = index + 1
+
+        return
 
 
 class NewtonCotesOpen(object):
