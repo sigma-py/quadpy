@@ -37,6 +37,7 @@ def show(hexa, scheme, ball_scale=1.0, alpha=0.3):
 
     fig = plt.figure()
     ax = fig.gca(projection='3d')
+    ax.set_aspect('equal')
 
     edges = numpy.array([
         [hexa[0], hexa[1]],
@@ -94,8 +95,21 @@ def show(hexa, scheme, ball_scale=1.0, alpha=0.3):
             linewidth=0
             )
 
-    plt.axis('equal')
-    plt.tight_layout()
+    # http://stackoverflow.com/a/21765085/353337
+    alpha = 1.3
+    max_range = alpha * 0.5 * numpy.array([
+        hexa[:, 0].max() - hexa[:, 0].min(),
+        hexa[:, 1].max() - hexa[:, 1].min(),
+        hexa[:, 2].max() - hexa[:, 2].min(),
+        ]).max()
+    mid_x = 0.5 * (hexa[:, 0].max() + hexa[:, 0].min())
+    mid_y = 0.5 * (hexa[:, 1].max() + hexa[:, 1].min())
+    mid_z = 0.5 * (hexa[:, 2].max() + hexa[:, 2].min())
+    #
+    ax.set_xlim(mid_x - max_range, mid_x + max_range)
+    ax.set_ylim(mid_y - max_range, mid_y + max_range)
+    ax.set_zlim(mid_z - max_range, mid_z + max_range)
+
     return
 
 
