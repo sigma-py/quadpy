@@ -976,10 +976,10 @@ class NewtonCotesOpen(object):
     <http://math.stackexchange.com/a/1959071/36678>
     '''
     def __init__(self, index):
-        self.points = numpy.linspace(-1.0, 1.0, index+1)[1:-1]
-        self.degree = index - 1 if index % 2 == 0 else index - 2
+        self.points = numpy.linspace(-1.0, 1.0, index+2)[1:-1]
+        self.degree = index if (index+1) % 2 == 0 else index - 1
         #
-        n = index
+        n = index+1
         self.weights = numpy.empty(n-1)
         for r in range(1, n):
             t = sympy.Symbol('t')
