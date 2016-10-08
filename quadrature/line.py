@@ -967,21 +967,19 @@ class NewtonCotesClosed(object):
 
         # Formula (26) from
         # <http://mathworld.wolfram.com/Newton-CotesFormulas.html>.
-        # Note that, while general, this formulation isn't too pleasing
-        # numerically. Noticable round-off errors in the weights will be
-        # present for indices as low as 10. Check math.fsum(weights).
         n = index
         self.weights = numpy.empty(n+1)
         for r in range(index+1):
             t = sympy.Symbol('t')
-            f = 1.0
+            f = 1
             for i in range(n+1):
                 if i != r:
                     f *= (t - i)
-            self.weights[r] = 2 * \
+            alpha = 2 * \
                 (-1)**(n-r) * sympy.integrate(f, (t, 0, n)) \
                 / (math.factorial(r) * math.factorial(n-r)) \
                 / index
+            self.weights[r] = alpha
         self.degree = index + 1
 
         return
