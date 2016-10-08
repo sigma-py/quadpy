@@ -947,6 +947,7 @@ class NewtonCotesClosed(object):
     '''
     def __init__(self, index):
         self.points = numpy.linspace(-1.0, 1.0, index+1)
+        self.degree = index + 1
 
         # Formula (26) from
         # <http://mathworld.wolfram.com/Newton-CotesFormulas.html>.
@@ -954,7 +955,7 @@ class NewtonCotesClosed(object):
         # _exactly_. Only at the end, the rational is converted into a float.
         n = index
         self.weights = numpy.empty(n+1)
-        for r in range(index+1):
+        for r in range(n+1):
             t = sympy.Symbol('t')
             f = 1
             for i in range(n+1):
@@ -965,7 +966,6 @@ class NewtonCotesClosed(object):
                 / (math.factorial(r) * math.factorial(n-r)) \
                 / index
             self.weights[r] = alpha
-        self.degree = index + 1
 
         return
 
@@ -973,33 +973,23 @@ class NewtonCotesClosed(object):
 class NewtonCotesOpen(object):
     '''
     Open Newton-Cotes formulae.
-    <https://en.wikipedia.org/wiki/Newton%E2%80%93Cotes_formulas#Open_Newton.E2.80.93Cotes_formulae>
+    <http://math.stackexchange.com/a/1959071/36678>
     '''
-    def __init__(self, degree):
-        self.points = numpy.linspace(-1.0, 1.0, degree+1)[1:-1]
-        if degree == 2:
-            self.weights = [2.0]
-            self.degree = 1
-        elif degree == 3:
-            self.weights = numpy.array([
-                1.0,
-                1.0,
-                ])
-            self.degree = 1
-        elif degree == 4:
-            self.weights = numpy.array([
-                4.0/3.0,
-                -2.0/3.0,
-                4.0/3.0,
-                ])
-            self.degree = 3
-        elif degree == 5:
-            self.weights = numpy.array([
-                11.0/12.0,
-                1.0/12.0,
-                1.0/12.0,
-                11.0/12.0,
-                ])
-            self.degree = 3
-        else:
-            raise ValueError('Illegal open Newton-Cotes degree')
+    def __init__(self, index):
+        self.points = numpy.linspace(-1.0, 1.0, index+1)[1:-1]
+        self.degree = index + 1
+        #
+        n = index
+        self.weights = numpy.empty(n-1)
+        for r in range(1, n):
+            t = sympy.Symbol('t')
+            f = 1
+            for i in range(1, n):
+                if i != r:
+                    f *= (t - i)
+            alpha = 2 * \
+                (-1)**(n-r+1) * sympy.integrate(f, (t, 0, n)) \
+                / (math.factorial(r-1) * math.factorial(n-1-r)) \
+                / n
+            self.weights[r-1] = alpha
+        return
