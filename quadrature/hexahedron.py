@@ -82,8 +82,10 @@ def show(hexa, scheme, ball_scale=1.0, alpha=0.3):
 
         # plot ball
         # scale the circle volume according to the weight
-        r = ball_scale \
-            * (hexa_vol * abs(weight) / (4.0/3.0 * numpy.pi))**(1.0/3.0)
+        ref_vol = 8.0
+        r = ball_scale * (
+            hexa_vol * abs(weight) / ref_vol / (4.0/3.0 * numpy.pi)
+            )**(1.0/3.0)
 
         ax.plot_surface(
             r*x + tp[0], r*y + tp[1], r*z + tp[2],
@@ -151,5 +153,15 @@ class From1d(object):
         self.points = numpy.dstack(numpy.meshgrid(
             scheme1d.points, scheme1d.points, scheme1d.points
             )).reshape(-1, 3)
+        # the order, yeah...
+        y, z, x = numpy.meshgrid(
+            scheme1d.points, scheme1d.points, scheme1d.points
+            )
+        self.points = numpy.vstack([
+            x.flatten(),
+            y.flatten(),
+            z.flatten(),
+            ]).T
+
         self.degree = scheme1d.degree
         return
