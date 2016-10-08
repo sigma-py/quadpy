@@ -977,7 +977,7 @@ class NewtonCotesOpen(object):
     '''
     def __init__(self, index):
         self.points = numpy.linspace(-1.0, 1.0, index+1)[1:-1]
-        self.degree = index + 1
+        self.degree = index
         #
         n = index
         self.weights = numpy.empty(n-1)
