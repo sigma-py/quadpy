@@ -5,6 +5,8 @@ import numpy.testing
 import quadrature
 import sympy
 
+from test_triangle import _create_monomials
+
 import os
 import matplotlib as mpl
 if 'DISPLAY' not in os.environ:
@@ -36,16 +38,6 @@ def _integrate_exact(f, quadrilateral):
     return float(exact)
 
 
-def _create_test_monomials(degree):
-    '''Returns a list of all monomials up to degree :max_degree:.
-    '''
-    monomials = []
-    for k in range(degree+1):
-        for i in range(k+1):
-            monomials.append(lambda x: x[0]**(k-i) * x[1]**i)
-    return monomials
-
-
 def test_generator():
     from quadrature.quadrilateral import From1d
     quadrilateral = numpy.array([
@@ -71,16 +63,17 @@ def test_generator():
         From1d(quadrature.line.NewtonCotesOpen(5)),
         ]
     for scheme in schemes:
-        yield check_quadrilateral_scheme, scheme, quadrilateral
+        yield check_scheme, scheme, quadrilateral
 
 
-def check_quadrilateral_scheme(scheme, quadrilateral):
+def check_scheme(scheme, quadrilateral):
     # Test integration until we get to a polynomial degree `d` that can no
     # longer be integrated exactly. The scheme's degree is `d-1`.
     success = True
     degree = 0
+    max_degree = scheme.degree + 1
     while success:
-        for poly in _create_test_monomials(degree):
+        for poly in _create_monomials(degree):
             exact_val = _integrate_exact(poly, quadrilateral)
             val = quadrature.quadrilateral.integrate(
                     poly, quadrilateral, scheme
@@ -89,6 +82,8 @@ def check_quadrilateral_scheme(scheme, quadrilateral):
                 success = False
                 break
         if not success:
+            break
+        if degree >= max_degree:
             break
         degree += 1
     numpy.testing.assert_equal(degree-1, scheme.degree)

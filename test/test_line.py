@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
-import numpy.testing
 import quadrature
-import sympy
 
 import os
 import matplotlib as mpl
@@ -21,16 +18,7 @@ def test_generator():
         quadrature.line.GaussLegendre(2),
         quadrature.line.GaussLegendre(3),
         quadrature.line.GaussLegendre(4),
-        quadrature.line.GaussLegendre(7),
-        quadrature.line.GaussLegendre(8),
-        quadrature.line.GaussLegendre(15),
-        quadrature.line.GaussLegendre(16),
-        quadrature.line.GaussLegendre(31),
-        quadrature.line.GaussLegendre(32),
-        quadrature.line.GaussLegendre(63),
-        quadrature.line.GaussLegendre(64),
-        quadrature.line.GaussLegendre(65),
-        quadrature.line.GaussLegendre(127),
+        quadrature.line.GaussLegendre(5),
         quadrature.line.GaussPatterson(0),
         quadrature.line.GaussPatterson(1),
         quadrature.line.GaussPatterson(2),
@@ -83,16 +71,18 @@ def check_scheme(scheme):
 def test_show():
     quadrature.line.show(
         0.0, 1.0,
-        # quadrature.line.NewtonCotesOpen(4)
-        # quadrature.line.GaussLegendre(31)
-        # quadrature.line.GaussPatterson(4)
-        quadrature.line.ClenshawCurtis(33)
+        quadrature.line.NewtonCotesOpen(6),
+        # quadrature.line.NewtonCotesClosed(15),
+        # quadrature.line.GaussLegendre(31),
+        # quadrature.line.GaussPatterson(4),
+        # quadrature.line.ClenshawCurtis(33),
+        render=False
         )
     return
 
 
 if __name__ == '__main__':
-    # test_show()
+    test_show()
     # plt.show()
-    scheme = quadrature.line.GaussLegendre(7)
-    check_scheme(scheme)
+    # scheme = quadrature.line.GaussLegendre(7)
+    # check_scheme(scheme)
