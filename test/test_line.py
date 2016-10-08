@@ -71,8 +71,8 @@ def check_scheme(scheme):
 def test_show():
     quadrature.line.show(
         0.0, 1.0,
-        # quadrature.line.NewtonCotesOpen(2),
-        quadrature.line.NewtonCotesClosed(15),
+        quadrature.line.NewtonCotesOpen(6),
+        # quadrature.line.NewtonCotesClosed(15),
         # quadrature.line.GaussLegendre(31),
         # quadrature.line.GaussPatterson(4),
         # quadrature.line.ClenshawCurtis(33),
