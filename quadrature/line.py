@@ -2,24 +2,7 @@
 #
 import math
 import numpy
-
-
-def _transform_to_unit_triangle(f, triangle):
-    '''Transformation
-
-      x = x0 * N0(xi, eta) + x1 * N1(xi, eta) + x2 * N2(xi, eta)
-
-    with
-
-      N0(xi, eta) = 1 - xi - eta,
-      N1(xi, eta) = xi,
-      N2(xi, eta) = eta.
-    '''
-    return lambda xi: f(
-        + triangle[0] * (1.0 - xi[0] - xi[1])
-        + triangle[1] * xi[0]
-        + triangle[2] * xi[1]
-        )
+import sympy
 
 
 def integrate(f, a, b, rule):
@@ -30,7 +13,7 @@ def integrate(f, a, b, rule):
     return 0.5 * (b - a) * out
 
 
-def show(a, b, scheme):
+def show(a, b, scheme, render=True):
     from matplotlib import pyplot as plt
     pts = 0.5 * (scheme.points + 1) * (b-a) + a
     plt.plot([0.0, 1.0], [0.0, 0.0], '-k')
@@ -41,6 +24,8 @@ def show(a, b, scheme):
         width=(b-a) / len(scheme.weights)
         )
     # plt.axis('equal')
+    if render:
+        plt.show()
     return
 
 
@@ -957,71 +942,54 @@ class ClenshawCurtis(object):
 class NewtonCotesClosed(object):
     '''
     Closed Newton-Cotes formulae.
-    <https://en.wikipedia.org/wiki/Newton%E2%80%93Cotes_formulas#Closed_Newton.E2.80.93Cotes_formulae>
+    <https://en.wikipedia.org/wiki/Newton%E2%80%93Cotes_formulas#Closed_Newton.E2.80.93Cotes_formulae>,
+    <http://mathworld.wolfram.com/Newton-CotesFormulas.html>.
     '''
-    def __init__(self, degree):
-        self.points = numpy.linspace(-1.0, 1.0, degree+1)
-        if degree == 1:
-            self.weights = [1.0, 1.0]
-            self.degree = 1
-        elif degree == 2:
-            self.weights = numpy.array([
-                1.0/3.0,
-                4.0/3.0,
-                1.0/3.0,
-                ])
-            self.degree = 3
-        elif degree == 3:
-            self.weights = numpy.array([
-                1.0/4.0,
-                3.0/4.0,
-                3.0/4.0,
-                1.0/4.0,
-                ])
-            self.degree = 3
-        elif degree == 4:
-            self.weights = numpy.array([
-                7.0/45.0,
-                32.0/45.0,
-                12.0/45.0,
-                32.0/45.0,
-                7.0/45.0,
-                ])
-            self.degree = 5
-        else:
-            raise ValueError('Illegal closed Newton-Cotes degree')
+    def __init__(self, index):
+        self.points = numpy.linspace(-1.0, 1.0, index+1)
+        self.degree = index + 1 if index % 2 == 0 else index
+
+        # Formula (26) from
+        # <http://mathworld.wolfram.com/Newton-CotesFormulas.html>.
+        # Note that Sympy carries out all operations in rationals, i.e.,
+        # _exactly_. Only at the end, the rational is converted into a float.
+        n = index
+        self.weights = numpy.empty(n+1)
+        for r in range(n+1):
+            t = sympy.Symbol('t')
+            f = 1
+            for i in range(n+1):
+                if i != r:
+                    f *= (t - i)
+            alpha = 2 * \
+                (-1)**(n-r) * sympy.integrate(f, (t, 0, n)) \
+                / (math.factorial(r) * math.factorial(n-r)) \
+                / index
+            self.weights[r] = alpha
+
+        return
 
 
 class NewtonCotesOpen(object):
     '''
     Open Newton-Cotes formulae.
-    <https://en.wikipedia.org/wiki/Newton%E2%80%93Cotes_formulas#Open_Newton.E2.80.93Cotes_formulae>
+    <http://math.stackexchange.com/a/1959071/36678>
     '''
-    def __init__(self, degree):
-        self.points = numpy.linspace(-1.0, 1.0, degree+1)[1:-1]
-        if degree == 2:
-            self.weights = [2.0]
-            self.degree = 1
-        elif degree == 3:
-            self.weights = numpy.array([
-                1.0,
-                1.0,
-                ])
-            self.degree = 1
-        elif degree == 4:
-            self.weights = numpy.array([
-                4.0/3.0,
-                -2.0/3.0,
-                4.0/3.0,
-                ])
-            self.degree = 3
-        elif degree == 5:
-            self.weights = numpy.array([
-                11.0/12.0,
-                1.0/12.0,
-                1.0/12.0,
-                11.0/12.0,
-                ])
-            self.degree = 3
-        else:
-            raise ValueError('Illegal open Newton-Cotes degree')
+    def __init__(self, index):
+        self.points = numpy.linspace(-1.0, 1.0, index+1)[1:-1]
+        self.degree = index - 1 if index % 2 == 0 else index - 2
+        #
+        n = index
+        self.weights = numpy.empty(n-1)
+        for r in range(1, n):
+            t = sympy.Symbol('t')
+            f = 1
+            for i in range(1, n):
+                if i != r:
+                    f *= (t - i)
+            alpha = 2 * \
+                (-1)**(n-r+1) * sympy.integrate(f, (t, 0, n)) \
+                / (math.factorial(r-1) * math.factorial(n-1-r)) \
+                / n
+            self.weights[r-1] = alpha
+        return

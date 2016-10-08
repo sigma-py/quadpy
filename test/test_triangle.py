@@ -29,54 +29,26 @@ def _integrate_exact(f, triangle):
     # the triangle. (See, e.g.,
     # <http://math2.uncc.edu/~shaodeng/TEACHING/math5172/Lectures/Lect_15.PDF>).
     #
-    def g(xi):
-        pxi = triangle[0] * (1 - xi[0] - xi[1]) \
-            + triangle[1] * xi[0] \
-            + triangle[2] * xi[1]
-        return f(pxi)
-
-    x = sympy.DeferredVector('x')
-    exact = 2 * quadrature.triangle.volume(triangle) \
-        * sympy.integrate(
-            sympy.integrate(g(x), (x[1], 0, 1-x[0])),
-            (x[0], 0, 1)
-            )
+    xi = sympy.DeferredVector('xi')
+    x_xi = \
+        + triangle[0] * (1 - xi[0] - xi[1]) \
+        + triangle[1] * xi[0] \
+        + triangle[2] * xi[1]
+    abs_det_J = 2 * quadrature.triangle.volume(triangle)
+    exact = sympy.integrate(
+        sympy.integrate(abs_det_J * f(x_xi), (xi[1], 0, 1-xi[0])),
+        (xi[0], 0, 1)
+        )
     return float(exact)
 
 
-def _create_test_polynomial(degree):
-    '''The k-th order terms in polynomial have the form
-
-        alpha_{k,i} * x^{k-i} * y^k,
-
-    with i in {0,...,k}. Take
-
-      alpha_{k, i} = (i+1) / (k+2)
-
-    such that
-
-      p0(x) = 1/2,
-
-      p1(x) = 1/2 \
-            + 1/3 * x + 2/3 * y,
-
-      p1(x) = 1/2 \
-            + 1/3 * x + 2/3 * y \
-            + 1/4 * x^2 + 1/2 * x*y + 3/4 * y^2
-
-    etc.
+def _create_monomials(degree):
+    '''Returns a list of all monomials of degree :degree:.
     '''
-    def f(x):
-        out = 0.0
-        for k in range(degree+1):
-            i = 0
-            for i in range(k+1):
-                # This relies on Python's 0.0**0=1.
-                alpha = (i+1) / float(k+2) * x[0]**(k-i) * x[1]**i
-                out += alpha
-        return out
-
-    return f
+    return [
+        lambda x: x[0]**(degree-k) * x[1]**k
+        for k in range(degree+1)
+        ]
 
 
 def test_generator():
@@ -127,14 +99,31 @@ def test_generator():
         quadrature.triangle.Dunavant(20),
         ]
     for scheme in schemes:
-        yield check_triangle_scheme, scheme, triangle
+        yield check_scheme, scheme, triangle
 
 
-def check_triangle_scheme(scheme, triangle):
-    f = _create_test_polynomial(degree=scheme.degree)
-    exact_val = _integrate_exact(f, triangle)
-    val = quadrature.triangle.integrate(f, triangle, scheme)
-    numpy.testing.assert_allclose(val, exact_val)
+def check_scheme(scheme, triangle):
+    # Test integration until we get to a polynomial degree `d` that can no
+    # longer be integrated exactly. The scheme's degree is `d-1`.
+    success = True
+    degree = 0
+    max_degree = scheme.degree + 1
+    while success:
+        for poly in _create_monomials(degree):
+            exact_val = _integrate_exact(poly, triangle)
+            val = quadrature.triangle.integrate(
+                    poly, triangle, scheme
+                    )
+            if abs(exact_val - val) > 1.0e-10:
+                success = False
+                break
+        if not success:
+            break
+        if degree >= max_degree:
+            break
+        degree += 1
+    assert degree-1 >= scheme.degree
+    # numpy.testing.assert_equal(degree-1, scheme.degree)
     return
 
 

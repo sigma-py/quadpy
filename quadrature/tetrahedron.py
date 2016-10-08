@@ -111,15 +111,22 @@ def integrate(f, tetrahedron, rule):
 
 class Keast(object):
     '''
+    P. Keast,
+    Moderate degree tetrahedral quadrature formulas,
+    CMAME 55: 339-348
+    (1986)
+
     https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tet/quadrature_rules_tet.html
     '''
     def __init__(self, index):
         if index == 0:
-            self.weights = numpy.array([1.0])
+            self.weights = numpy.array([
+                1.0
+                ])
             self.points = numpy.array([
                 [0.25, 0.25, 0.25]
                 ])
-            self.degree = 0
+            self.degree = 1
         elif index == 1:
             self.weights = numpy.array([
                 0.25,
@@ -133,7 +140,7 @@ class Keast(object):
                 [0.1381966011250105, 0.1381966011250105, 0.5854101966249685],
                 [0.1381966011250105, 0.5854101966249685, 0.1381966011250105],
                 ])
-            self.degree = 1
+            self.degree = 2
         elif index == 2:
             self.weights = numpy.array([
                 -0.8,
@@ -149,7 +156,7 @@ class Keast(object):
                 [1.0/6.0, 1.0/6.0, 0.5],
                 [1.0/6.0, 0.5, 1.0/6.0],
                 ])
-            self.degree = 2
+            self.degree = 3
         elif index == 3:
             self.weights = numpy.array([
                 0.2177650698804054,
@@ -491,7 +498,7 @@ class Keast(object):
                 [0.7303134278075384, 0.0379700484718286, 0.1937464752488044],
                 [0.1937464752488044, 0.7303134278075384, 0.0379700484718286],
                 ])
-            self.degree = 8
+            self.degree = 7
         else:
             raise ValueError('Illegal Keast index')
         return
@@ -509,7 +516,7 @@ class NewtonCotesClosed(object):
             self.points = numpy.array([
                 [0.25, 0.25, 0.25],
                 ])
-            self.degree = 0
+            self.degree = 1
         elif index == 1:
             self.weights = numpy.array([
                 0.25,
@@ -981,7 +988,7 @@ class NewtonCotesOpen(object):
             self.points = numpy.array([
                 [0.25, 0.25, 0.25],
                 ])
-            self.degree = 0
+            self.degree = 1
         elif index == 1:
             self.weights = numpy.array([
                 0.25,
