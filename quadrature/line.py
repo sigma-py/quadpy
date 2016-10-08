@@ -5,24 +5,6 @@ import numpy
 import sympy
 
 
-def _transform_to_unit_triangle(f, triangle):
-    '''Transformation
-
-      x = x0 * N0(xi, eta) + x1 * N1(xi, eta) + x2 * N2(xi, eta)
-
-    with
-
-      N0(xi, eta) = 1 - xi - eta,
-      N1(xi, eta) = xi,
-      N2(xi, eta) = eta.
-    '''
-    return lambda xi: f(
-        + triangle[0] * (1.0 - xi[0] - xi[1])
-        + triangle[1] * xi[0]
-        + triangle[2] * xi[1]
-        )
-
-
 def integrate(f, a, b, rule):
     out = math.fsum([
         weight * f(0.5 * (point + 1) * (b-a) + a)
@@ -960,13 +942,16 @@ class ClenshawCurtis(object):
 class NewtonCotesClosed(object):
     '''
     Closed Newton-Cotes formulae.
-    <https://en.wikipedia.org/wiki/Newton%E2%80%93Cotes_formulas#Closed_Newton.E2.80.93Cotes_formulae>
+    <https://en.wikipedia.org/wiki/Newton%E2%80%93Cotes_formulas#Closed_Newton.E2.80.93Cotes_formulae>,
+    <http://mathworld.wolfram.com/Newton-CotesFormulas.html>.
     '''
     def __init__(self, index):
         self.points = numpy.linspace(-1.0, 1.0, index+1)
 
         # Formula (26) from
         # <http://mathworld.wolfram.com/Newton-CotesFormulas.html>.
+        # Note that Sympy carries out all operations in rationals, i.e.,
+        # _exactly_. Only at the end, the rational is converted into a float.
         n = index
         self.weights = numpy.empty(n+1)
         for r in range(index+1):
