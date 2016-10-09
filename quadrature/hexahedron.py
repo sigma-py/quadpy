@@ -160,13 +160,15 @@ def integrate(f, hexa, scheme):
 
 class From1d(object):
     def __init__(self, scheme1d):
-        weights = numpy.dstack(numpy.meshgrid(
+        wy, wz, wx = numpy.meshgrid(
             scheme1d.weights, scheme1d.weights, scheme1d.weights
-            )).reshape(-1, 3)
+            )
+        weights = numpy.vstack([
+            wx.flatten(),
+            wy.flatten(),
+            wz.flatten()
+            ]).T
         self.weights = numpy.prod(weights, axis=1)
-        self.points = numpy.dstack(numpy.meshgrid(
-            scheme1d.points, scheme1d.points, scheme1d.points
-            )).reshape(-1, 3)
         # the order, yeah...
         y, z, x = numpy.meshgrid(
             scheme1d.points, scheme1d.points, scheme1d.points
