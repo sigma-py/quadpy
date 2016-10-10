@@ -112,11 +112,11 @@ def _transform_to_unit_tetrahedron(f, tetrahedron):
         )
 
 
-def integrate(f, tetrahedron, rule):
+def integrate(f, tetrahedron, scheme):
     g = _transform_to_unit_tetrahedron(f, tetrahedron)
     out = math.fsum([
         weight * g(point)
-        for point, weight in zip(rule.points, rule.weights)
+        for point, weight in zip(scheme.points, scheme.weights)
         ])
     return volume(tetrahedron) * out
 
@@ -1495,10 +1495,106 @@ class Zienkiewicz(object):
             self.points = numpy.array([
                 [0.25, 0.25, 0.25],
                 [0.5, 1.0/6.0, 1.0/6.0],
-                [1.0/6.0, 0.5,1.0/6.0],
+                [1.0/6.0, 0.5, 1.0/6.0],
                 [1.0/6.0, 1.0/6.0, 0.5],
                 [1.0/6.0, 1.0/6.0, 1.0/6.0],
                 ])
             self.degree = 3
         else:
             raise ValueError('Illegal closed Newton-Cotes index')
+
+
+class ShunnHam(object):
+    '''
+    Lee Shunn, Frank Ham,
+    Symmetric quadrature rules for tetrahedra based on a cubic
+    close-packed lattice arrangement,
+    <http://dx.doi.org/10.1016/j.cam.2012.03.032>.
+
+    Abstract:
+    A family of quadrature rules for integration over tetrahedral volumes is
+    developed. The underlying structure of the rules is based on the cubic
+    close-packed (CCP) lattice arrangement using 1, 4, 10, 20, 35, and 56
+    quadrature points. The rules are characterized by rapid convergence,
+    positive weights, and symmetry. Each rule is an optimal approximation in
+    the sense that lower-order terms have zero contribution to the truncation
+    error and the leading-order error term is minimized. Quadrature formulas up
+    to order 9 are presented with relevant numerical examples.
+    '''
+    def __init__(self, index):
+        if index == 1:
+            self.weights = numpy.array([
+                1.0
+                ])
+            bary = numpy.array([
+                [0.25, 0.25, 0.25, 0.25]
+                ])
+            self.degree = 1
+        elif index == 2:
+            self.weights = 0.25 * numpy.ones(4)
+            bary = self.mix_1_3(0.5854101966249680, 0.1381966011250110)
+            self.degree = 2
+        elif index == 3:
+            self.weights = numpy.concatenate([
+                0.0476331348432089 * numpy.ones(4),
+                0.1349112434378610 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                self.mix_1_3(0.7784952948213300, 0.0738349017262234),
+                self.mix_2_2(0.4062443438840510, 0.0937556561159491),
+                ])
+            self.degree = 3
+        elif index == 4:
+            self.weights = numpy.concatenate([
+                0.0070670747944695 * numpy.ones(4),
+                0.0469986689718877 * numpy.ones(12),
+                0.1019369182898680 * numpy.ones(4),
+                ])
+            bary = numpy.concatenate([
+                self.mix_1_3(0.9029422158182680, 0.0323525947272439),
+                self.mix_1_1_2(
+                    0.6165965330619370, 0.2626825838877790, 0.0603604415251421
+                    ),
+                self.mix_1_3(0.0706920871814129, 0.3097693042728620),
+                ])
+            self.degree = 5
+        else:
+            raise ValueError('Illegal Shunn-Ham index')
+
+        self.points = bary[:, 1:]
+
+        return
+
+    def mix_1_3(self, a, b):
+        return numpy.array([
+            [a, b, b, b],
+            [b, a, b, b],
+            [b, b, a, b],
+            [b, b, b, a],
+            ])
+
+    def mix_2_2(self, a, b):
+        return numpy.array([
+            [a, a, b, b],
+            [a, b, a, b],
+            [a, b, b, a],
+            [b, a, a, b],
+            [b, a, b, a],
+            [b, b, a, a],
+            ])
+
+    def mix_1_1_2(self, a, b, c):
+        return numpy.array([
+            [a, b, c, c],
+            [b, a, c, c],
+            [a, c, b, c],
+            [b, c, a, c],
+            [a, c, c, b],
+            [b, c, c, a],
+            [c, a, c, b],
+            [c, b, c, a],
+            [c, c, a, b],
+            [c, c, b, a],
+            [c, a, b, c],
+            [c, b, a, c],
+            ])
