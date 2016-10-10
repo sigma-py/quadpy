@@ -8,41 +8,34 @@ def area(radius):
     return 4*numpy.pi*radius**2
 
 
-# def show(sphere, scheme, circle_scale=1.0):
-#     '''Shows the quadrature points on a given sphere. The size of the circles
-#     around the points coincides with their weights.
-#     '''
-#     from matplotlib import pyplot as plt
-#
-#     plt.plot(sphere[:, 0], sphere[:, 1], '-k')
-#     plt.plot(
-#         [sphere[-1, 0], sphere[0, 0]],
-#         [sphere[-1, 1], sphere[0, 1]],
-#         '-k')
-#
-#     transformed_pts = \
-#         + numpy.outer(
-#             (1.0 - scheme.points[:, 0] - scheme.points[:, 1]),
-#             sphere[0]
-#             ) \
-#         + numpy.outer(scheme.points[:, 0], sphere[1]) \
-#         + numpy.outer(scheme.points[:, 1], sphere[2])
-#
-#     # plt.plot(transformed_pts[:, 0], transformed_pts[:, 1], 'or')
-#     sphere_vol = volume(sphere)
-#     for tp, weight in zip(transformed_pts, scheme.weights):
-#         color = 'b' if weight >= 0 else 'r'
-#         # highlight circle center
-#         plt.plot([tp[0]], [tp[1]], '.' + color)
-#         # plot circle
-#         # scale the circle volume according to the weight
-#         radius = circle_scale \
-#             * numpy.sqrt(sphere_vol * abs(weight) / numpy.pi)
-#         circ = plt.Circle((tp[0], tp[1]), radius, color=color, alpha=0.5)
-#         plt.gcf().gca().add_artist(circ)
-#
-#     plt.axis('equal')
-#     return
+def show(scheme):
+    from matplotlib import pyplot as plt
+    from mpl_toolkits.mplot3d import Axes3D
+
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+    ax.set_aspect('equal')
+
+    phi, theta = numpy.mgrid[0.0:numpy.pi:100j, 0.0:2.0*numpy.pi:100j]
+    x = numpy.sin(phi) * numpy.cos(theta)
+    y = numpy.sin(phi) * numpy.sin(theta)
+    z = numpy.cos(phi)
+    ax.plot_surface(
+            x, y, z,
+            rstride=3, cstride=3,
+            color='0.9',
+            alpha=1.0,
+            linewidth=0
+            )
+
+    ax.scatter(
+        1.05 * scheme.points[:, 0],
+        1.05 * scheme.points[:, 1],
+        1.05 * scheme.points[:, 2],
+        color='k',
+        s=60
+        )
+    return
 
 
 def integrate(f, midpoint, radius, rule):
