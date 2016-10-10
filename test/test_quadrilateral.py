@@ -2,7 +2,9 @@
 #
 import numpy
 import numpy.testing
+import pytest
 import quadrature
+from quadrature.quadrilateral import From1d
 import sympy
 
 from test_triangle import _create_monomials
@@ -38,37 +40,31 @@ def _integrate_exact(f, quadrilateral):
     return float(exact)
 
 
-def test_generator():
-    from quadrature.quadrilateral import From1d
+@pytest.mark.parametrize('scheme', [
+    From1d(quadrature.line.Midpoint()),
+    From1d(quadrature.line.Trapezoidal()),
+    From1d(quadrature.line.GaussLegendre(1)),
+    From1d(quadrature.line.GaussLegendre(2)),
+    From1d(quadrature.line.GaussLegendre(3)),
+    From1d(quadrature.line.GaussLegendre(4)),
+    From1d(quadrature.line.NewtonCotesClosed(1)),
+    From1d(quadrature.line.NewtonCotesClosed(2)),
+    From1d(quadrature.line.NewtonCotesClosed(3)),
+    From1d(quadrature.line.NewtonCotesClosed(4)),
+    From1d(quadrature.line.NewtonCotesOpen(2)),
+    From1d(quadrature.line.NewtonCotesOpen(3)),
+    From1d(quadrature.line.NewtonCotesOpen(4)),
+    From1d(quadrature.line.NewtonCotesOpen(5)),
+    ])
+def test_scheme(scheme):
+    # Test integration until we get to a polynomial degree `d` that can no
+    # longer be integrated exactly. The scheme's degree is `d-1`.
     quadrilateral = numpy.array([
         [-2, -1],
         [+1, -1],
         [+1, +1],
         [-2, +1],
         ])
-    schemes = [
-        From1d(quadrature.line.Midpoint()),
-        From1d(quadrature.line.Trapezoidal()),
-        From1d(quadrature.line.GaussLegendre(1)),
-        From1d(quadrature.line.GaussLegendre(2)),
-        From1d(quadrature.line.GaussLegendre(3)),
-        From1d(quadrature.line.GaussLegendre(4)),
-        From1d(quadrature.line.NewtonCotesClosed(1)),
-        From1d(quadrature.line.NewtonCotesClosed(2)),
-        From1d(quadrature.line.NewtonCotesClosed(3)),
-        From1d(quadrature.line.NewtonCotesClosed(4)),
-        From1d(quadrature.line.NewtonCotesOpen(2)),
-        From1d(quadrature.line.NewtonCotesOpen(3)),
-        From1d(quadrature.line.NewtonCotesOpen(4)),
-        From1d(quadrature.line.NewtonCotesOpen(5)),
-        ]
-    for scheme in schemes:
-        yield check_scheme, scheme, quadrilateral
-
-
-def check_scheme(scheme, quadrilateral):
-    # Test integration until we get to a polynomial degree `d` that can no
-    # longer be integrated exactly. The scheme's degree is `d-1`.
     success = True
     degree = 0
     max_degree = scheme.degree + 1

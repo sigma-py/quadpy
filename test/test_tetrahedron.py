@@ -2,6 +2,7 @@
 #
 import numpy
 import numpy.testing
+import pytest
 import quadrature
 import sympy
 
@@ -56,48 +57,43 @@ def _create_monomials(degree):
         ]
 
 
-def test_generator():
+@pytest.mark.parametrize('scheme', [
+    quadrature.tetrahedron.Keast(0),
+    quadrature.tetrahedron.Keast(1),
+    quadrature.tetrahedron.Keast(2),
+    quadrature.tetrahedron.Keast(3),
+    quadrature.tetrahedron.Keast(4),
+    quadrature.tetrahedron.Keast(5),
+    quadrature.tetrahedron.Keast(6),
+    quadrature.tetrahedron.Keast(7),
+    quadrature.tetrahedron.Keast(8),
+    quadrature.tetrahedron.Keast(9),
+    quadrature.tetrahedron.NewtonCotesClosed(0),
+    quadrature.tetrahedron.NewtonCotesClosed(1),
+    quadrature.tetrahedron.NewtonCotesClosed(2),
+    quadrature.tetrahedron.NewtonCotesClosed(3),
+    quadrature.tetrahedron.NewtonCotesClosed(4),
+    quadrature.tetrahedron.NewtonCotesClosed(5),
+    quadrature.tetrahedron.NewtonCotesClosed(6),
+    quadrature.tetrahedron.NewtonCotesOpen(0),
+    quadrature.tetrahedron.NewtonCotesOpen(1),
+    quadrature.tetrahedron.NewtonCotesOpen(2),
+    quadrature.tetrahedron.NewtonCotesOpen(3),
+    quadrature.tetrahedron.NewtonCotesOpen(4),
+    quadrature.tetrahedron.NewtonCotesOpen(5),
+    quadrature.tetrahedron.NewtonCotesOpen(6),
+    quadrature.tetrahedron.Zienkiewicz(4),
+    quadrature.tetrahedron.Zienkiewicz(5),
+    ])
+def test_scheme(scheme):
+    # Test integration until we get to a polynomial degree `d` that can no
+    # longer be integrated exactly. The scheme's degree is `d-1`.
     tetrahedron = numpy.array([
         [-1.0, -2.0, -0.0],
         [1.0, 0.0, 0.0],
         [0.0, 1.0, 0.0],
         [0.0, 0.0, 2.0],
         ])
-    schemes = [
-        quadrature.tetrahedron.Keast(0),
-        quadrature.tetrahedron.Keast(1),
-        quadrature.tetrahedron.Keast(2),
-        quadrature.tetrahedron.Keast(3),
-        quadrature.tetrahedron.Keast(4),
-        quadrature.tetrahedron.Keast(5),
-        quadrature.tetrahedron.Keast(6),
-        quadrature.tetrahedron.Keast(7),
-        quadrature.tetrahedron.Keast(8),
-        quadrature.tetrahedron.Keast(9),
-        quadrature.tetrahedron.NewtonCotesClosed(0),
-        quadrature.tetrahedron.NewtonCotesClosed(1),
-        quadrature.tetrahedron.NewtonCotesClosed(2),
-        quadrature.tetrahedron.NewtonCotesClosed(3),
-        quadrature.tetrahedron.NewtonCotesClosed(4),
-        quadrature.tetrahedron.NewtonCotesClosed(5),
-        quadrature.tetrahedron.NewtonCotesClosed(6),
-        quadrature.tetrahedron.NewtonCotesOpen(0),
-        quadrature.tetrahedron.NewtonCotesOpen(1),
-        quadrature.tetrahedron.NewtonCotesOpen(2),
-        quadrature.tetrahedron.NewtonCotesOpen(3),
-        quadrature.tetrahedron.NewtonCotesOpen(4),
-        quadrature.tetrahedron.NewtonCotesOpen(5),
-        quadrature.tetrahedron.NewtonCotesOpen(6),
-        quadrature.tetrahedron.Zienkiewicz(4),
-        quadrature.tetrahedron.Zienkiewicz(5),
-        ]
-    for scheme in schemes:
-        yield check_scheme, scheme, tetrahedron
-
-
-def check_scheme(scheme, tetrahedron):
-    # Test integration until we get to a polynomial degree `d` that can no
-    # longer be integrated exactly. The scheme's degree is `d-1`.
     success = True
     degree = 0
     max_degree = scheme.degree + 1

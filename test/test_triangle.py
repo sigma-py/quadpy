@@ -2,6 +2,7 @@
 #
 import numpy
 import numpy.testing
+import pytest
 import quadrature
 import sympy
 
@@ -51,60 +52,55 @@ def _create_monomials(degree):
         ]
 
 
-def test_generator():
+@pytest.mark.parametrize('scheme', [
+    quadrature.triangle.Centroid(),
+    quadrature.triangle.Vertex(),
+    quadrature.triangle.SevenPoint(),
+    quadrature.triangle.Strang(1),
+    quadrature.triangle.Strang(2),
+    quadrature.triangle.Strang(3),
+    quadrature.triangle.Strang(4),
+    quadrature.triangle.Strang(5),
+    quadrature.triangle.Strang(6),
+    quadrature.triangle.Strang(7),
+    quadrature.triangle.Strang(8),
+    quadrature.triangle.Strang(9),
+    quadrature.triangle.Strang(10),
+    quadrature.triangle.Toms584_19(),
+    quadrature.triangle.Toms612_19(),
+    quadrature.triangle.Toms612_28(),
+    quadrature.triangle.Toms706_37(),
+    quadrature.triangle.Gauss4x4(),
+    quadrature.triangle.Gauss8x8(),
+    quadrature.triangle.Dunavant(1),
+    quadrature.triangle.Dunavant(2),
+    quadrature.triangle.Dunavant(3),
+    quadrature.triangle.Dunavant(4),
+    quadrature.triangle.Dunavant(5),
+    quadrature.triangle.Dunavant(6),
+    quadrature.triangle.Dunavant(7),
+    quadrature.triangle.Dunavant(8),
+    quadrature.triangle.Dunavant(9),
+    quadrature.triangle.Dunavant(10),
+    quadrature.triangle.Dunavant(11),
+    quadrature.triangle.Dunavant(12),
+    quadrature.triangle.Dunavant(13),
+    quadrature.triangle.Dunavant(14),
+    quadrature.triangle.Dunavant(15),
+    quadrature.triangle.Dunavant(16),
+    quadrature.triangle.Dunavant(17),
+    # quadrature.triangle.Dunavant(18),
+    quadrature.triangle.Dunavant(19),
+    quadrature.triangle.Dunavant(20),
+    ])
+def test_scheme(scheme):
+    # Test integration until we get to a polynomial degree `d` that can no
+    # longer be integrated exactly. The scheme's degree is `d-1`.
     triangle = numpy.array([
         [0.0, 0.0],
         [1.0, 0.0],
         [0.6, 0.5]
         ])
-    schemes = [
-        quadrature.triangle.Centroid(),
-        quadrature.triangle.Vertex(),
-        quadrature.triangle.SevenPoint(),
-        quadrature.triangle.Strang(1),
-        quadrature.triangle.Strang(2),
-        quadrature.triangle.Strang(3),
-        quadrature.triangle.Strang(4),
-        quadrature.triangle.Strang(5),
-        quadrature.triangle.Strang(6),
-        quadrature.triangle.Strang(7),
-        quadrature.triangle.Strang(8),
-        quadrature.triangle.Strang(9),
-        quadrature.triangle.Strang(10),
-        quadrature.triangle.Toms584_19(),
-        quadrature.triangle.Toms612_19(),
-        quadrature.triangle.Toms612_28(),
-        quadrature.triangle.Toms706_37(),
-        quadrature.triangle.Gauss4x4(),
-        quadrature.triangle.Gauss8x8(),
-        quadrature.triangle.Dunavant(1),
-        quadrature.triangle.Dunavant(2),
-        quadrature.triangle.Dunavant(3),
-        quadrature.triangle.Dunavant(4),
-        quadrature.triangle.Dunavant(5),
-        quadrature.triangle.Dunavant(6),
-        quadrature.triangle.Dunavant(7),
-        quadrature.triangle.Dunavant(8),
-        quadrature.triangle.Dunavant(9),
-        quadrature.triangle.Dunavant(10),
-        quadrature.triangle.Dunavant(11),
-        quadrature.triangle.Dunavant(12),
-        quadrature.triangle.Dunavant(13),
-        quadrature.triangle.Dunavant(14),
-        quadrature.triangle.Dunavant(15),
-        quadrature.triangle.Dunavant(16),
-        quadrature.triangle.Dunavant(17),
-        # quadrature.triangle.Dunavant(18),
-        quadrature.triangle.Dunavant(19),
-        quadrature.triangle.Dunavant(20),
-        ]
-    for scheme in schemes:
-        yield check_scheme, scheme, triangle
-
-
-def check_scheme(scheme, triangle):
-    # Test integration until we get to a polynomial degree `d` that can no
-    # longer be integrated exactly. The scheme's degree is `d-1`.
     success = True
     degree = 0
     max_degree = scheme.degree + 1
