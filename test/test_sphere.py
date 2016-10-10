@@ -39,6 +39,7 @@ def _integrate_exact(f, midpoint, radius):
     quadrature.sphere.Lebedev(1),
     quadrature.sphere.Lebedev(2),
     quadrature.sphere.Lebedev(3),
+    quadrature.sphere.Lebedev(4),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
