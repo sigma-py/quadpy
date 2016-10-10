@@ -166,6 +166,26 @@ class Lebedev(object):
                 self.llm(3.9568947305594182e-01, 8.2876998125259227e-01),
                 ])
             self.degree = 17
+        elif index == 9:
+            self.weights = numpy.concatenate([
+                5.9963136886199996e-04 * numpy.ones(6),
+                7.3729997186210003e-03 * numpy.ones(12),
+                7.2105153601440004e-03 * numpy.ones(8),
+                7.1163554931180000e-03 * numpy.ones(24),
+                6.7538294863139997e-03 * numpy.ones(24),
+                7.5743941590539999e-03 * numpy.ones(24),
+                6.9910873533029997e-03 * numpy.ones(48),
+                ])
+            self.points = numpy.concatenate([
+                self.a1(),
+                self.a2(),
+                self.a3(),
+                self.llm(6.7644104001142624e-01, 2.9129888220952688e-01),
+                self.llm(4.1749612279654530e-01, 8.0708981835958249e-01),
+                self.llm(1.5746766720390826e-01, 9.7488864367717321e-01),
+                self.rsw(1.4035538117131835e-01, 4.4933283232695570e-01, 8.8227001126032267e-01),
+                ])
+            self.degree = 19
         else:
             raise ValueError('Illegal Lebedev index')
 
@@ -265,4 +285,64 @@ class Lebedev(object):
             [-l, -l, -m],
             [-l, -m, -l],
             [-m, -l, -l],
+            ])
+
+    def rsw(self, r, s, w):
+        assert abs(r**2 + s**2 + w**2 - 1.0) < 1.0e-12
+        return numpy.array([
+            [+r, +s, +w],
+            [+w, +r, +s],
+            [+s, +w, +r],
+            [+s, +r, +w],
+            [+w, +s, +r],
+            [+r, +w, +s],
+            #
+            [-r, +s, +w],
+            [+w, -r, +s],
+            [+s, +w, -r],
+            [+s, -r, +w],
+            [+w, +s, -r],
+            [-r, +w, +s],
+            #
+            [+r, -s, +w],
+            [+w, +r, -s],
+            [-s, +w, +r],
+            [-s, +r, +w],
+            [+w, -s, +r],
+            [+r, +w, -s],
+            #
+            [+r, +s, -w],
+            [-w, +r, +s],
+            [+s, -w, +r],
+            [+s, +r, -w],
+            [-w, +s, +r],
+            [+r, -w, +s],
+            #
+            [-r, -s, +w],
+            [+w, -r, -s],
+            [-s, +w, -r],
+            [-s, -r, +w],
+            [+w, -s, -r],
+            [-r, +w, -s],
+            #
+            [-r, +s, -w],
+            [-w, -r, +s],
+            [+s, -w, -r],
+            [+s, -r, -w],
+            [-w, +s, -r],
+            [-r, -w, +s],
+            #
+            [+r, -s, -w],
+            [-w, +r, -s],
+            [-s, -w, +r],
+            [-s, +r, -w],
+            [-w, -s, +r],
+            [+r, -w, -s],
+            #
+            [-r, -s, -w],
+            [-w, -r, -s],
+            [-s, -w, -r],
+            [-s, -r, -w],
+            [-w, -s, -r],
+            [-r, -w, -s],
             ])
