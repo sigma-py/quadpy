@@ -8,12 +8,12 @@ import sympy
 
 from test_tetrahedron import _create_monomials
 
-# import os
-# import matplotlib as mpl
-# if 'DISPLAY' not in os.environ:
-#     # headless mode, for remote executions (and travis)
-#     mpl.use('Agg')
-# from matplotlib import pyplot as plt
+import os
+import matplotlib as mpl
+if 'DISPLAY' not in os.environ:
+    # headless mode, for remote executions (and travis)
+    mpl.use('Agg')
+from matplotlib import pyplot as plt
 
 
 def _integrate_exact(f, midpoint, radius):
@@ -71,25 +71,13 @@ def test_scheme(scheme):
     return
 
 
-# def test_show():
-#     sphere = numpy.array([
-#         [numpy.cos(0.5*numpy.pi), numpy.sin(0.5*numpy.pi)],
-#         [numpy.cos(7.0/6.0*numpy.pi), numpy.sin(7.0/6.0*numpy.pi)],
-#         [numpy.cos(11.0/6.0*numpy.pi), numpy.sin(11.0/6.0*numpy.pi)],
-#         ])
-#     quadrature.sphere.show(
-#         sphere,
-#         # quadrature.sphere.Centroid()
-#         # quadrature.sphere.Vertex()
-#         # quadrature.sphere.SevenPoint()
-#         # quadrature.sphere.Strang(9)
-#         quadrature.sphere.Dunavant(20)
-#         )
-#     return
-#
-#
+def test_show():
+    quadrature.sphere.show(
+        quadrature.sphere.Lebedev(5)
+        )
+    return
+
+
 if __name__ == '__main__':
-    # test_show()
-    # plt.show()
-    scheme = quadrature.sphere.Lebedev(3)
-    test_scheme(scheme)
+    test_show()
+    plt.show()
