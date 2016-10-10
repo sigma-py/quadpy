@@ -40,6 +40,7 @@ def _integrate_exact(f, midpoint, radius):
     quadrature.sphere.Lebedev(2),
     quadrature.sphere.Lebedev(3),
     quadrature.sphere.Lebedev(4),
+    quadrature.sphere.Lebedev(5),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
@@ -55,6 +56,8 @@ def test_scheme(scheme):
             val = quadrature.sphere.integrate(
                     poly, midpoint, radius, scheme
                     )
+            print(exact_val)
+            print(val)
             if abs(exact_val - val) > 1.0e-10:
                 success = False
                 break
