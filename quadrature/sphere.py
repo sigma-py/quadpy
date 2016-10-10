@@ -116,6 +116,22 @@ class Lebedev(object):
                 self.llm(3.0151134457776357367e-01, 9.0453403373329088755e-01)
                 ])
             self.degree = 11
+        elif index == 6:
+            self.weights = numpy.concatenate([
+                5.1306717973400001e-04 * numpy.ones(6),
+                1.6604069565742001e-02 * numpy.ones(12),
+                -2.9586038961039000e-02 * numpy.ones(8),
+                1.6522170993716001e-02 * numpy.ones(24),
+                2.6576207082158999e-02 * numpy.ones(24),
+                ])
+            self.points = numpy.concatenate([
+                self.a1(),
+                self.a2(),
+                self.a3(),
+                self.pq0(3.2077264898077640e-01, 9.4715622136258792e-01),
+                self.llm(4.8038446141526142e-01, 7.3379938570534264e-01),
+                ])
+            self.degree = 13
         else:
             raise ValueError('Illegal Lebedev index')
 
