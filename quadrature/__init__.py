@@ -13,5 +13,6 @@ __status__ = 'Beta'
 from . import hexahedron
 from . import line
 from . import quadrilateral
+from . import sphere
 from . import triangle
 from . import tetrahedron
