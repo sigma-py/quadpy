@@ -6,3 +6,4 @@ README.rst
 dist/
 build/
 .coverage
+.cache/
