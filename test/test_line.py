@@ -4,51 +4,47 @@ import quadrature
 
 import os
 import matplotlib as mpl
+import pytest
 if 'DISPLAY' not in os.environ:
     # headless mode, for remote executions (and travis)
     mpl.use('Agg')
 from matplotlib import pyplot as plt
 
 
-def test_generator():
-    schemes = [
-        quadrature.line.Midpoint(),
-        quadrature.line.Trapezoidal(),
-        quadrature.line.GaussLegendre(1),
-        quadrature.line.GaussLegendre(2),
-        quadrature.line.GaussLegendre(3),
-        quadrature.line.GaussLegendre(4),
-        quadrature.line.GaussLegendre(5),
-        quadrature.line.GaussPatterson(0),
-        quadrature.line.GaussPatterson(1),
-        quadrature.line.GaussPatterson(2),
-        quadrature.line.GaussPatterson(3),
-        quadrature.line.GaussPatterson(4),
-        quadrature.line.GaussPatterson(5),
-        quadrature.line.GaussPatterson(6),
-        quadrature.line.ClenshawCurtis(1),
-        quadrature.line.ClenshawCurtis(2),
-        quadrature.line.ClenshawCurtis(3),
-        quadrature.line.ClenshawCurtis(4),
-        quadrature.line.ClenshawCurtis(5),
-        quadrature.line.ClenshawCurtis(9),
-        quadrature.line.ClenshawCurtis(17),
-        quadrature.line.ClenshawCurtis(33),
-        quadrature.line.ClenshawCurtis(65),
-        quadrature.line.NewtonCotesClosed(1),
-        quadrature.line.NewtonCotesClosed(2),
-        quadrature.line.NewtonCotesClosed(3),
-        quadrature.line.NewtonCotesClosed(4),
-        quadrature.line.NewtonCotesOpen(1),
-        quadrature.line.NewtonCotesOpen(2),
-        quadrature.line.NewtonCotesOpen(3),
-        quadrature.line.NewtonCotesOpen(4),
-        ]
-    for scheme in schemes:
-        yield check_scheme, scheme
-
-
-def check_scheme(scheme):
+@pytest.mark.parametrize('scheme', [
+    quadrature.line.Midpoint(),
+    quadrature.line.Trapezoidal(),
+    quadrature.line.GaussLegendre(1),
+    quadrature.line.GaussLegendre(2),
+    quadrature.line.GaussLegendre(3),
+    quadrature.line.GaussLegendre(4),
+    quadrature.line.GaussLegendre(5),
+    quadrature.line.GaussPatterson(0),
+    quadrature.line.GaussPatterson(1),
+    quadrature.line.GaussPatterson(2),
+    quadrature.line.GaussPatterson(3),
+    quadrature.line.GaussPatterson(4),
+    quadrature.line.GaussPatterson(5),
+    quadrature.line.GaussPatterson(6),
+    quadrature.line.ClenshawCurtis(1),
+    quadrature.line.ClenshawCurtis(2),
+    quadrature.line.ClenshawCurtis(3),
+    quadrature.line.ClenshawCurtis(4),
+    quadrature.line.ClenshawCurtis(5),
+    quadrature.line.ClenshawCurtis(9),
+    quadrature.line.ClenshawCurtis(17),
+    quadrature.line.ClenshawCurtis(33),
+    quadrature.line.ClenshawCurtis(65),
+    quadrature.line.NewtonCotesClosed(1),
+    quadrature.line.NewtonCotesClosed(2),
+    quadrature.line.NewtonCotesClosed(3),
+    quadrature.line.NewtonCotesClosed(4),
+    quadrature.line.NewtonCotesOpen(1),
+    quadrature.line.NewtonCotesOpen(2),
+    quadrature.line.NewtonCotesOpen(3),
+    quadrature.line.NewtonCotesOpen(4),
+    ])
+def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
     # longer be integrated exactly. The scheme's degree is `d-1`.
     degree = 0
