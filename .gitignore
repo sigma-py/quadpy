@@ -5,3 +5,4 @@ MANIFEST
 README.rst
 dist/
 build/
+.coverage
