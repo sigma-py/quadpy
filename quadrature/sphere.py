@@ -132,6 +132,40 @@ class Lebedev(object):
                 self.llm(4.8038446141526142e-01, 7.3379938570534264e-01),
                 ])
             self.degree = 13
+        elif index == 7:
+            self.weights = numpy.concatenate([
+                1.1544011544012000e-02 * numpy.ones(6),
+                1.1943909085856000e-02 * numpy.ones(8),
+                1.1812303746904000e-02 * numpy.ones(24),
+                1.1110555710602999e-02 * numpy.ones(24),
+                1.1876501294537000e-02 * numpy.ones(24),
+                ])
+            self.points = numpy.concatenate([
+                self.a1(),
+                self.a3(),
+                self.pq0(3.7424303909034118e-01, 9.2733065715117247e-01),
+                self.llm(3.6960284645415015e-01, 8.5251831170126768e-01),
+                self.llm(6.9435400660266633e-01, 1.8906355288539489e-01),
+                ])
+            self.degree = 15
+        elif index == 8:
+            self.weights = numpy.concatenate([
+                3.8282704949370002e-03 * numpy.ones(6),
+                9.7937375124880002e-03 * numpy.ones(8),
+                9.6949963616630008e-03 * numpy.ones(24),
+                8.2117372831910004e-03 * numpy.ones(24),
+                9.9428148911780007e-03 * numpy.ones(24),
+                9.5954713360710004e-03 * numpy.ones(24),
+                ])
+            self.points = numpy.concatenate([
+                self.a1(),
+                self.a3(),
+                self.pq0(4.7836902881215021e-01, 8.7815891060406615e-01),
+                self.llm(1.8511563534473630e-01, 9.6512403508659406e-01),
+                self.llm(6.9042104838229212e-01, 2.1595729184584847e-01),
+                self.llm(3.9568947305594182e-01, 8.2876998125259227e-01),
+                ])
+            self.degree = 17
         else:
             raise ValueError('Illegal Lebedev index')
 
