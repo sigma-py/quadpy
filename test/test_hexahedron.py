@@ -7,7 +7,7 @@ from quadrature.hexahedron import From1d
 import pytest
 import sympy
 
-from test_triangle import _create_monomials
+from test_tetrahedron import _create_monomials
 
 import os
 import matplotlib as mpl
