@@ -38,6 +38,7 @@ def chunk_data(weights):
         k += 1
     return chunks
 
+
 def sort_into_symmetry_classes(weights, X):
     data = {
         'a1': [],
@@ -88,7 +89,7 @@ def sort_into_symmetry_classes(weights, X):
                 l, m
                 ))
         elif len(c) == 48:
-            data['llm'].append((
+            data['rSW'].append((
                 weights[c[0]],
                 X[c[0], 0], X[c[0], 1], X[c[0], 2]
                 ))
@@ -96,6 +97,7 @@ def sort_into_symmetry_classes(weights, X):
             raise RuntimeError('')
 
     return data
+
 
 def generate_python_code(data):
     # generate the code à la
@@ -115,38 +117,50 @@ def generate_python_code(data):
     # ```
     print('self.weights = numpy.concatenate([')
     for d in data['a1']:
-        print('    %0.16e * numpy.ones(6)' % d)
+        print('    %0.16e * numpy.ones(6),' % d)
     for d in data['a2']:
-        print('    %0.16e * numpy.ones(12)' % d)
+        print('    %0.16e * numpy.ones(12),' % d)
     for d in data['a3']:
-        print('    %0.16e * numpy.ones(8)' % d)
+        print('    %0.16e * numpy.ones(8),' % d)
     for d in data['pq0']:
-        print('    %0.16e * numpy.ones(24)' % d[0])
+        print('    %0.16e * numpy.ones(24),' % d[0])
     for d in data['llm']:
-        print('    %0.16e * numpy.ones(24)' % d[0])
+        print('    %0.16e * numpy.ones(24),' % d[0])
     for d in data['rSW']:
-        print('    %0.16e * numpy.ones(24)' % d[0])
+        print('    %0.16e * numpy.ones(48),' % d[0])
     print('    ])')
     # points
     print('self.points = numpy.concatenate([')
     for d in data['a1']:
-        print('    self.a1()')
+        print('    self.a1(),')
     for d in data['a2']:
-        print('    self.a2()')
+        print('    self.a2(),')
     for d in data['a3']:
-        print('    self.a3()')
+        print('    self.a3(),')
     for d in data['pq0']:
-        print('    self.pq0(%0.16e, %0.16e)' % (d[1], d[2]))
+        print('    self.pq0(%0.16e, %0.16e),' % (d[1], d[2]))
     for d in data['llm']:
-        print('    self.llm(%0.16e, %0.16e)' % (d[1], d[2]))
+        print('    self.llm(%0.16e, %0.16e),' % (d[1], d[2]))
     for d in data['rSW']:
-        print('    self.rsw(%0.16e, %0.16e, %0.16e)' % (d[1], d[2], d[3]))
+        print('    self.rsw(%0.16e, %0.16e, %0.16e),' % (d[1], d[2], d[3]))
     print('    ])')
     return
 
 
 if __name__ == '__main__':
-    X, weights = read('lebedev_013.txt')
+    import argparse
+    parser = argparse.ArgumentParser(
+        description='Generate code from Lebedev data.'
+        )
+    parser.add_argument(
+            'filename',
+            metavar='FILE',
+            type=str,
+            help='Lebedev data file'
+            )
+    args = parser.parse_args()
+
+    X, weights = read(args.filename)
     chunks = chunk_data(weights)
     data = sort_into_symmetry_classes(weights, X)
     generate_python_code(data)
