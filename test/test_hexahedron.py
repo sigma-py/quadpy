@@ -3,6 +3,8 @@
 import numpy
 import numpy.testing
 import quadrature
+from quadrature.hexahedron import From1d
+import pytest
 import sympy
 
 from test_triangle import _create_monomials
@@ -53,8 +55,19 @@ def _integrate_exact(f, hexa):
     return float(exact)
 
 
-def test_generator():
-    from quadrature.hexahedron import From1d
+@pytest.mark.parametrize('scheme', [
+    From1d(quadrature.line.Midpoint()),
+    From1d(quadrature.line.Trapezoidal()),
+    From1d(quadrature.line.GaussLegendre(1)),
+    From1d(quadrature.line.GaussLegendre(2)),
+    From1d(quadrature.line.NewtonCotesClosed(1)),
+    From1d(quadrature.line.NewtonCotesClosed(2)),
+    From1d(quadrature.line.NewtonCotesOpen(1)),
+    From1d(quadrature.line.NewtonCotesOpen(2)),
+    ])
+def test_scheme(scheme):
+    # Test integration until we get to a polynomial degree `d` that can no
+    # longer be integrated exactly. The scheme's degree is `d-1`.
     hexa = numpy.array([
         [-1, -1, -1],
         [+1, -1, -1],
@@ -65,23 +78,6 @@ def test_generator():
         [+1, +1, +1],
         [-1, +1, +1],
         ])
-    schemes = [
-        From1d(quadrature.line.Midpoint()),
-        From1d(quadrature.line.Trapezoidal()),
-        From1d(quadrature.line.GaussLegendre(1)),
-        From1d(quadrature.line.GaussLegendre(2)),
-        From1d(quadrature.line.NewtonCotesClosed(1)),
-        From1d(quadrature.line.NewtonCotesClosed(2)),
-        From1d(quadrature.line.NewtonCotesOpen(1)),
-        From1d(quadrature.line.NewtonCotesOpen(2)),
-        ]
-    for scheme in schemes:
-        yield check_scheme, scheme, hexa
-
-
-def check_scheme(scheme, hexa):
-    # Test integration until we get to a polynomial degree `d` that can no
-    # longer be integrated exactly. The scheme's degree is `d-1`.
     success = True
     degree = 0
     max_degree = scheme.degree + 1

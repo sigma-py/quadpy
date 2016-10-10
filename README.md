@@ -51,7 +51,7 @@ python setup.py install
 
 To run the tests, just check out this repository and type
 ```
-nosetests
+pytest
 ```
 
 ### Distribution

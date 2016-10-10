@@ -17,14 +17,14 @@ before_install:
   - sudo apt-get install -y python-numpy python3-numpy
   - sudo apt-get install -y python-sympy python3-sympy
   - sudo apt-get install -y python-matplotlib python3-matplotlib
+  - pip install pytest pytest-cov
 
 install:
   - pip install .
-  - pip install coverage
 
 script:
   - cd test
-  - nosetests --with-coverage --cover-package=quadrature
+  - pytest --cov quadrature
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
