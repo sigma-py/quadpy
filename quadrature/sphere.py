@@ -97,6 +97,18 @@ class Lebedev(object):
                 self.a3(),
                 ])
             self.degree = 7
+        elif index == 4:
+            self.weights = numpy.concatenate([
+                1.0/105.0 * numpy.ones(6),
+                9.0/280.0 * numpy.ones(8),
+                1.0/35.0 * numpy.ones(24),
+                ])
+            self.points = numpy.concatenate([
+                self.a1(),
+                self.a3(),
+                self.pq0(8.8807383397711525674e-01, 4.5970084338098304855e-01)
+                ])
+            self.degree = 9
         else:
             raise ValueError('Illegal Lebedev index')
 
@@ -139,3 +151,32 @@ class Lebedev(object):
             [-1.0, -1.0, +1.0],
             [-1.0, -1.0, -1.0],
             ]) / numpy.sqrt(3.0)
+
+    def pq0(self, p, q):
+        assert abs(p**2 + q**2 - 1.0) < 1.0e-12
+        return numpy.array([
+            [+p, +q, 0.0],
+            [+p, 0.0, +q],
+            [0.0, +p, +q],
+            [+q, +p, 0.0],
+            [+q, 0.0, +p],
+            [0.0, +q, +p],
+            [-p, +q, 0.0],
+            [-p, 0.0, +q],
+            [0.0, -p, +q],
+            [+q, -p, 0.0],
+            [+q, 0.0, -p],
+            [0.0, +q, -p],
+            [+p, -q, 0.0],
+            [+p, 0.0, -q],
+            [0.0, +p, -q],
+            [-q, +p, 0.0],
+            [-q, 0.0, +p],
+            [0.0, -q, +p],
+            [-p, -q, 0.0],
+            [-p, 0.0, -q],
+            [0.0, -p, -q],
+            [-q, -p, 0.0],
+            [-q, 0.0, -p],
+            [0.0, -q, -p],
+            ])
