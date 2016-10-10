@@ -4,7 +4,7 @@ import math
 import numpy
 
 
-def volume(radius):
+def area(radius):
     return 4*numpy.pi*radius**2
 
 
@@ -51,7 +51,7 @@ def integrate(f, midpoint, radius, rule):
         weight * radius**3 * f(radius*xi + midpoint)
         for xi, weight in zip(rule.points, rule.weights)
         ])
-    return out
+    return area(radius) * out
 
 
 class Lebedev(object):
@@ -88,8 +88,8 @@ class Lebedev(object):
         elif index == 3:
             self.weights = numpy.concatenate([
                 1.0/21.0 * numpy.ones(6),
-                0.038095238095238 * numpy.ones(12),
-                0.032142857142857 * numpy.ones(8),
+                4.0/105.0 * numpy.ones(12),
+                9.0/280.0 * numpy.ones(8),
                 ])
             self.points = numpy.concatenate([
                 self.a1(),
