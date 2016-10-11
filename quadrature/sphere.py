@@ -39,11 +39,9 @@ def show(scheme):
 
 
 def integrate(f, midpoint, radius, rule):
-    # w * f(x(xi)) * |det(J)|
-    out = math.fsum([
-        weight * radius**3 * f(radius*xi + midpoint)
-        for xi, weight in zip(rule.points, rule.weights)
-        ])
+    out = math.fsum(
+        rule.weights * f((radius*rule.points + midpoint).T)
+        )
     return area(radius) * out
 
 
