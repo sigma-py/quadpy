@@ -28,6 +28,11 @@ def _integrate_exact(f, hexa):
         + hexa[5] * 0.125*(1.0 + xi[0])*(1.0 - xi[1])*(1.0 + xi[2]) \
         + hexa[6] * 0.125*(1.0 + xi[0])*(1.0 + xi[1])*(1.0 + xi[2]) \
         + hexa[7] * 0.125*(1.0 - xi[0])*(1.0 + xi[1])*(1.0 + xi[2])
+    pxi = [
+        sympy.expand(pxi[0]),
+        sympy.expand(pxi[1]),
+        sympy.expand(pxi[2]),
+        ]
     # determinant of the transformation matrix
     J = sympy.Matrix([
         [sympy.diff(pxi[0], xi[0]),
@@ -127,5 +132,6 @@ def test_show():
 if __name__ == '__main__':
     # test_show()
     # plt.show()
-    scheme = From1d(quadrature.line.NewtonCotesOpen(2))
+    # scheme = From1d(quadrature.line.NewtonCotesOpen(2))
+    scheme = From1d(quadrature.line.GaussLegendre(5))
     test_scheme(scheme)
