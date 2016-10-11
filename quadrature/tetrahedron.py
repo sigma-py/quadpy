@@ -202,19 +202,19 @@ class Keast(object):
             self.degree = 3
         elif index == 4:
             self.weights = numpy.concatenate([
-                -0.0789333333333333 * numpy.ones(1),
-                0.0457333333333333 * numpy.ones(4),
-                0.1493333333333333 * numpy.ones(6),
+                -148.0 / 1875.0 * numpy.ones(1),
+                343.0 / 7500.0 * numpy.ones(4),
+                56.0 / 375.0 * numpy.ones(6),
                 ])
             bary = numpy.concatenate([
                 numpy.array([[0.25, 0.25, 0.25, 0.25]]),
-                _mix_1_3(0.7857142857142857, 0.0714285714285714),
+                _mix_1_3(11.0/14.0, 1.0/14.0),
                 _mix_2_2(0.1005964238332008, 0.3994035761667992),
                 ])
             self.degree = 4
         elif index == 5:
             self.weights = numpy.concatenate([
-                0.0190476190476190 * numpy.ones(6),
+                2.0/105.0 * numpy.ones(6),
                 0.0885898247429807 * numpy.ones(4),
                 0.1328387466855907 * numpy.ones(4),
                 ])
@@ -226,10 +226,10 @@ class Keast(object):
             self.degree = 4
         elif index == 6:
             self.weights = numpy.concatenate([
-                0.1817020685825351 * numpy.ones(1),
-                0.0361607142857143 * numpy.ones(4),
-                0.0698714945161738 * numpy.ones(4),
-                0.0656948493683187 * numpy.ones(6),
+                6544.0 / 36015.0 * numpy.ones(1),
+                81.0 / 2240.0 * numpy.ones(4),
+                161051.0 / 2304960.0 * numpy.ones(4),
+                338.0 / 5145.0 * numpy.ones(6),
                 ])
             bary = numpy.concatenate([
                 numpy.array([[0.25, 0.25, 0.25, 0.25]]),
@@ -243,7 +243,7 @@ class Keast(object):
                 0.0399227502581679 * numpy.ones(4),
                 0.0100772110553207 * numpy.ones(4),
                 0.0553571815436544 * numpy.ones(4),
-                0.0482142857142857 * numpy.ones(12),
+                27.0/560.0 * numpy.ones(12),
                 ])
             bary = numpy.concatenate([
                 _mix_1_3(0.3561913862225449, 0.2146028712591517),
