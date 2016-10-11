@@ -78,6 +78,23 @@ def _integrate_exact(f, midpoint, radius):
     quadrature.sphere.Lebedev(13),
     quadrature.sphere.Lebedev(14),
     quadrature.sphere.Lebedev(15),
+    quadrature.sphere.Lebedev(16),
+    quadrature.sphere.Lebedev(17),
+    quadrature.sphere.Lebedev(18),
+    quadrature.sphere.Lebedev(19),
+    quadrature.sphere.Lebedev(20),
+    quadrature.sphere.Lebedev(21),
+    quadrature.sphere.Lebedev(22),
+    quadrature.sphere.Lebedev(23),
+    quadrature.sphere.Lebedev(24),
+    quadrature.sphere.Lebedev(25),
+    quadrature.sphere.Lebedev(26),
+    quadrature.sphere.Lebedev(27),
+    quadrature.sphere.Lebedev(28),
+    quadrature.sphere.Lebedev(29),
+    quadrature.sphere.Lebedev(30),
+    quadrature.sphere.Lebedev(31),
+    quadrature.sphere.Lebedev(32),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
@@ -86,7 +103,8 @@ def test_scheme(scheme):
     radius = 1.0
     success = True
     degree = 0
-    max_degree = scheme.degree + 1
+    # cap max degree -- tests will otherwise last too long
+    max_degree = min(30, scheme.degree + 1)
     while success:
         for k in _create_monomial_exponents(degree):
             def poly(x):
@@ -118,5 +136,5 @@ def test_show():
 if __name__ == '__main__':
     # test_show()
     # plt.show()
-    scheme = quadrature.sphere.Lebedev(10)
+    scheme = quadrature.sphere.Lebedev(32)
     test_scheme(scheme)
