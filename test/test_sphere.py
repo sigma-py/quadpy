@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import math
 import numpy
 import numpy.testing
 import pytest
@@ -16,6 +17,32 @@ if 'DISPLAY' not in os.environ:
 from matplotlib import pyplot as plt
 
 
+def _integral_monomial_over_unit_sphere(alpha):
+    '''
+    Gerald B. Folland,
+    How to Integrate a Polynomial over a Sphere,
+    The American Mathematical Monthly,
+    Vol. 108, No. 5 (May, 2001), pp. 446-448.
+    '''
+    if any(alpha % 2 == 1):
+        return 0.0
+
+    def gamma2(kk):
+        '''Gamma function with the half argument, i.e.,
+        gamma2(k) = gamma(k/2)
+        '''
+        if kk % 2 == 0:
+            return math.factorial(kk/2 - 1)
+
+        k = int(kk / 2.0)
+        return numpy.sqrt(numpy.pi) \
+            * numpy.prod([(i + 0.5) for i in range(k)])
+
+    num = 2 * numpy.prod([gamma2(a + 1) for a in alpha])
+
+    return num / gamma2(sum(alpha) + len(alpha))
+
+
 def _integrate_exact(f, midpoint, radius):
     #
     # New coordinates: phi, theta.
@@ -29,8 +56,8 @@ def _integrate_exact(f, midpoint, radius):
         ]
     rtheta_x_rphi = sympy.sin(phi) * radius**2
     exact = sympy.integrate(
-        sympy.integrate(rtheta_x_rphi * f(x_xi), (phi, 0.0, numpy.pi)),
-        (theta, 0, 2*numpy.pi)
+        sympy.integrate(rtheta_x_rphi * f(x_xi), (phi, 0.0, sympy.pi)),
+        (theta, 0, 2*sympy.pi)
         )
     return float(exact)
 
@@ -83,9 +110,9 @@ def test_scheme(scheme):
     while success:
         for k in _create_monomial_exponents(degree):
             def poly(x):
-                return x[0]**k[0] + x[1]**k[1] + x[2]**k[2]
-            print(k)
-            exact_val = _integrate_exact(poly, midpoint, radius)
+                return x[0]**k[0] * x[1]**k[1] * x[2]**k[2]
+            # exact_val = _integrate_exact(poly, midpoint, radius)
+            exact_val = _integral_monomial_over_unit_sphere(k)
             val = quadrature.sphere.integrate(
                     poly, midpoint, radius, scheme
                     )
