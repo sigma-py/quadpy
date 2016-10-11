@@ -88,6 +88,8 @@ def _create_monomials(degree):
     quadrature.tetrahedron.ShunnHam(2),
     quadrature.tetrahedron.ShunnHam(3),
     quadrature.tetrahedron.ShunnHam(4),
+    quadrature.tetrahedron.ShunnHam(5),
+    quadrature.tetrahedron.ShunnHam(6),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
