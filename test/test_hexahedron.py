@@ -40,10 +40,10 @@ def _integrate_exact(f, hexa):
          sympy.diff(pxi[2], xi[1]),
          sympy.diff(pxi[2], xi[2])],
         ])
-    det_J = sympy.simplify(sympy.det(J))
+    det_J = sympy.det(J)
     # we cannot use abs(), see <https://github.com/sympy/sympy/issues/4212>.
     abs_det_J = sympy.Piecewise((det_J, det_J >= 0), (-det_J, det_J < 0))
-    g_xi = sympy.simplify(f(pxi))
+    g_xi = f(pxi)
     exact = \
         sympy.integrate(
             sympy.integrate(
@@ -125,5 +125,7 @@ def test_show():
 
 
 if __name__ == '__main__':
-    test_show()
-    plt.show()
+    # test_show()
+    # plt.show()
+    scheme = From1d(quadrature.line.NewtonCotesOpen(2))
+    test_scheme(scheme)
