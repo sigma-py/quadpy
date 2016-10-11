@@ -165,6 +165,12 @@ class Keast(object):
     CMAME 55: 339-348
     (1986)
 
+    Abstract:
+    Quadrature formulas of degrees 4 to 8 for numerical integration over the
+    tetrahedron are constructed. The formulas are fully symmetric with respect
+    to the tetrahedron, and in some cases are the minimum point rules with this
+    symmetry.
+
     https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tet/quadrature_rules_tet.html
     '''
     def __init__(self, index):
@@ -1295,6 +1301,8 @@ class ShunnHam(object):
     Lee Shunn, Frank Ham,
     Symmetric quadrature rules for tetrahedra based on a cubic
     close-packed lattice arrangement,
+    Journal of Computational and Applied Mathematics,
+    2012,
     <http://dx.doi.org/10.1016/j.cam.2012.03.032>.
 
     Abstract:
