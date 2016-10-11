@@ -6,7 +6,7 @@ import pytest
 import quadrature
 import sympy
 
-from test_tetrahedron import _create_monomials
+from test_tetrahedron import _create_monomial_exponents
 
 import os
 import matplotlib as mpl
@@ -81,7 +81,10 @@ def test_scheme(scheme):
     # TODO come up with a better solution here
     max_degree = min(10, scheme.degree + 1)
     while success:
-        for poly in _create_monomials(degree):
+        for k in _create_monomial_exponents(degree):
+            def poly(x):
+                return x[0]**k[0] + x[1]**k[1] + x[2]**k[2]
+            print(k)
             exact_val = _integrate_exact(poly, midpoint, radius)
             val = quadrature.sphere.integrate(
                     poly, midpoint, radius, scheme
@@ -107,5 +110,7 @@ def test_show():
 
 
 if __name__ == '__main__':
-    test_show()
-    plt.show()
+    # test_show()
+    # plt.show()
+    scheme = quadrature.sphere.Lebedev(1)
+    test_scheme(scheme)

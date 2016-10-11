@@ -57,15 +57,6 @@ def _create_monomial_exponents(degree):
         ]
 
 
-def _create_monomials(degree):
-    '''Returns a list of all monomials of degree :degree:.
-    '''
-    return [
-        lambda x: x[0]**ex[0] * x[1]**ex[1] * x[2]**ex[2]
-        for ex in _create_monomial_exponents(degree)
-        ]
-
-
 @pytest.mark.parametrize('scheme', [
     quadrature.tetrahedron.Keast(0),
     quadrature.tetrahedron.Keast(1),
@@ -113,7 +104,9 @@ def test_scheme(scheme):
     degree = 0
     max_degree = scheme.degree + 1
     while success:
-        for poly in _create_monomials(degree):
+        for k in _create_monomial_exponentss(degree):
+            def poly(x):
+                return x[0]**k[0] + x[1]**k[1] + x[2]**k[2]
             exact_val = _integrate_exact(poly, tetrahedron)
             val = quadrature.tetrahedron.integrate(
                     poly, tetrahedron, scheme
