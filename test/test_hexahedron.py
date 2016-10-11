@@ -65,10 +65,19 @@ def _integrate_exact(f, hexa):
     From1d(quadrature.line.Trapezoidal()),
     From1d(quadrature.line.GaussLegendre(1)),
     From1d(quadrature.line.GaussLegendre(2)),
+    From1d(quadrature.line.GaussLegendre(3)),
+    From1d(quadrature.line.GaussLegendre(4)),
+    From1d(quadrature.line.GaussLegendre(5)),
+    From1d(quadrature.line.NewtonCotesClosed(0)),
     From1d(quadrature.line.NewtonCotesClosed(1)),
     From1d(quadrature.line.NewtonCotesClosed(2)),
+    From1d(quadrature.line.NewtonCotesClosed(3)),
+    From1d(quadrature.line.NewtonCotesClosed(4)),
+    From1d(quadrature.line.NewtonCotesOpen(0)),
     From1d(quadrature.line.NewtonCotesOpen(1)),
     From1d(quadrature.line.NewtonCotesOpen(2)),
+    From1d(quadrature.line.NewtonCotesOpen(3)),
+    From1d(quadrature.line.NewtonCotesOpen(4)),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
