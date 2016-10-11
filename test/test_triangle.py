@@ -43,13 +43,10 @@ def _integrate_exact(f, triangle):
     return float(exact)
 
 
-def _create_monomials(degree):
+def _create_monomial_exponents(degree):
     '''Returns a list of all monomials of degree :degree:.
     '''
-    return [
-        lambda x: x[0]**(degree-k) * x[1]**k
-        for k in range(degree+1)
-        ]
+    return [(degree-k, k) for k in range(degree+1)]
 
 
 @pytest.mark.parametrize('scheme', [
@@ -105,7 +102,9 @@ def test_scheme(scheme):
     degree = 0
     max_degree = scheme.degree + 1
     while success:
-        for poly in _create_monomials(degree):
+        for k in _create_monomial_exponents(degree):
+            def poly(x):
+                return x[0]**k[0] * x[1]**k[1]
             exact_val = _integrate_exact(poly, triangle)
             val = quadrature.triangle.integrate(
                     poly, triangle, scheme
