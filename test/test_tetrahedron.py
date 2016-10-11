@@ -47,13 +47,22 @@ def _integrate_exact(f, tetrahedron):
     return float(exact)
 
 
+def _create_monomial_exponents(degree):
+    '''Returns a list of all monomial exponents of degree :degree:.
+    '''
+    return [
+        numpy.array([degree-i-j, i, j])
+        for i in range(degree+1)
+        for j in range(degree-i+1)
+        ]
+
+
 def _create_monomials(degree):
     '''Returns a list of all monomials of degree :degree:.
     '''
     return [
-        lambda x: x[0]**(degree-i-j) * x[1]**i * x[2]**j
-        for i in range(degree+1)
-        for j in range(degree-i+1)
+        lambda x: x[0]**ex[0] * x[1]**ex[1] * x[2]**ex[2]
+        for ex in _create_monomial_exponents(degree)
         ]
 
 
