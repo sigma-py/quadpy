@@ -7,7 +7,7 @@ import quadrature
 from quadrature.quadrilateral import From1d
 import sympy
 
-from test_triangle import _create_monomials
+from test_triangle import _create_monomial_exponents
 
 import os
 import matplotlib as mpl
@@ -23,15 +23,18 @@ def _integrate_exact(f, quadrilateral):
         + quadrilateral[1] * 0.25*(1.0 - xi[0])*(1.0 + xi[1]) \
         + quadrilateral[2] * 0.25*(1.0 - xi[0])*(1.0 - xi[1]) \
         + quadrilateral[3] * 0.25*(1.0 + xi[0])*(1.0 - xi[1])
+    pxi = [
+        sympy.expand(pxi[0]),
+        sympy.expand(pxi[1]),
+        ]
     # determinant of the transformation matrix
-    det_J = sympy.simplify(
-        + sympy.diff(pxi[0], xi[0]) * sympy.diff(pxi[1], xi[1])
+    det_J = \
+        + sympy.diff(pxi[0], xi[0]) * sympy.diff(pxi[1], xi[1]) \
         - sympy.diff(pxi[1], xi[0]) * sympy.diff(pxi[0], xi[1])
-        )
     # we cannot use abs(), see <https://github.com/sympy/sympy/issues/4212>.
     abs_det_J = sympy.Piecewise((det_J, det_J >= 0), (-det_J, det_J < 0))
 
-    g_xi = sympy.simplify(f(pxi))
+    g_xi = f(pxi)
 
     exact = sympy.integrate(
         sympy.integrate(abs_det_J * g_xi, (xi[1], -1, 1)),
@@ -69,7 +72,9 @@ def test_scheme(scheme):
     degree = 0
     max_degree = scheme.degree + 1
     while success:
-        for poly in _create_monomials(degree):
+        for k in _create_monomial_exponents(degree):
+            def poly(x):
+                return x[0]**k[0] * x[1]**k[1]
             exact_val = _integrate_exact(poly, quadrilateral)
             val = quadrature.quadrilateral.integrate(
                     poly, quadrilateral, scheme
@@ -109,5 +114,7 @@ def test_show():
 
 
 if __name__ == '__main__':
-    test_show()
-    plt.show()
+    # test_show()
+    # plt.show()
+    scheme = From1d(quadrature.line.NewtonCotesClosed(15))
+    test_scheme(scheme)

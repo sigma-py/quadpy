@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import math
 import numpy
 from . import tetrahedron
 
@@ -11,8 +12,8 @@ def volume(hexa):
     #
     #     7___6
     #    /    /|
-    #  4/___5/ |2
-    #   |    | /
+    #  4/___5/ |
+    #   |    | /2
     #   |____|/
     #  0      1
     #
@@ -114,48 +115,47 @@ def show(hexa, scheme, ball_scale=1.0, alpha=0.3):
 
 
 def integrate(f, hexa, scheme):
-    out = 0.0
-    for xi, weight in zip(scheme.points, scheme.weights):
-        x = \
-            + hexa[0] * 0.125*(1.0 - xi[0])*(1.0 - xi[1])*(1.0 - xi[2]) \
-            + hexa[1] * 0.125*(1.0 + xi[0])*(1.0 - xi[1])*(1.0 - xi[2]) \
-            + hexa[2] * 0.125*(1.0 + xi[0])*(1.0 + xi[1])*(1.0 - xi[2]) \
-            + hexa[3] * 0.125*(1.0 - xi[0])*(1.0 + xi[1])*(1.0 - xi[2]) \
-            + hexa[4] * 0.125*(1.0 - xi[0])*(1.0 - xi[1])*(1.0 + xi[2]) \
-            + hexa[5] * 0.125*(1.0 + xi[0])*(1.0 - xi[1])*(1.0 + xi[2]) \
-            + hexa[6] * 0.125*(1.0 + xi[0])*(1.0 + xi[1])*(1.0 + xi[2]) \
-            + hexa[7] * 0.125*(1.0 - xi[0])*(1.0 + xi[1])*(1.0 + xi[2])
-        J0 = \
-            - hexa[0] * 0.125*(1 - xi[1])*(1.0 - xi[2]) \
-            + hexa[1] * 0.125*(1 - xi[1])*(1.0 - xi[2]) \
-            + hexa[2] * 0.125*(1 + xi[1])*(1.0 - xi[2]) \
-            - hexa[3] * 0.125*(1 + xi[1])*(1.0 - xi[2]) \
-            - hexa[4] * 0.125*(1 - xi[1])*(1.0 + xi[2]) \
-            + hexa[5] * 0.125*(1 - xi[1])*(1.0 + xi[2]) \
-            + hexa[6] * 0.125*(1 + xi[1])*(1.0 + xi[2]) \
-            - hexa[7] * 0.125*(1 + xi[1])*(1.0 + xi[2])
-        J1 = \
-            - hexa[0] * 0.125*(1 - xi[0])*(1.0 - xi[2]) \
-            - hexa[1] * 0.125*(1 + xi[0])*(1.0 - xi[2]) \
-            + hexa[2] * 0.125*(1 + xi[0])*(1.0 - xi[2]) \
-            + hexa[3] * 0.125*(1 - xi[0])*(1.0 - xi[2]) \
-            - hexa[4] * 0.125*(1 - xi[0])*(1.0 + xi[2]) \
-            - hexa[5] * 0.125*(1 + xi[0])*(1.0 + xi[2]) \
-            + hexa[6] * 0.125*(1 + xi[0])*(1.0 + xi[2]) \
-            + hexa[7] * 0.125*(1 - xi[0])*(1.0 + xi[2])
-        J2 = \
-            - hexa[0] * 0.125*(1.0 - xi[0])*(1.0 - xi[1]) \
-            - hexa[1] * 0.125*(1.0 + xi[0])*(1.0 - xi[1]) \
-            - hexa[2] * 0.125*(1.0 + xi[0])*(1.0 + xi[1]) \
-            - hexa[3] * 0.125*(1.0 - xi[0])*(1.0 + xi[1]) \
-            + hexa[4] * 0.125*(1.0 - xi[0])*(1.0 - xi[1]) \
-            + hexa[5] * 0.125*(1.0 + xi[0])*(1.0 - xi[1]) \
-            + hexa[6] * 0.125*(1.0 + xi[0])*(1.0 + xi[1]) \
-            + hexa[7] * 0.125*(1.0 - xi[0])*(1.0 + xi[1])
+    xi = scheme.points.T
+    x = \
+        + numpy.outer(hexa[0], 0.125*(1.0-xi[0])*(1.0-xi[1])*(1.0-xi[2])) \
+        + numpy.outer(hexa[1], 0.125*(1.0+xi[0])*(1.0-xi[1])*(1.0-xi[2])) \
+        + numpy.outer(hexa[2], 0.125*(1.0+xi[0])*(1.0+xi[1])*(1.0-xi[2])) \
+        + numpy.outer(hexa[3], 0.125*(1.0-xi[0])*(1.0+xi[1])*(1.0-xi[2])) \
+        + numpy.outer(hexa[4], 0.125*(1.0-xi[0])*(1.0-xi[1])*(1.0+xi[2])) \
+        + numpy.outer(hexa[5], 0.125*(1.0+xi[0])*(1.0-xi[1])*(1.0+xi[2])) \
+        + numpy.outer(hexa[6], 0.125*(1.0+xi[0])*(1.0+xi[1])*(1.0+xi[2])) \
+        + numpy.outer(hexa[7], 0.125*(1.0-xi[0])*(1.0+xi[1])*(1.0+xi[2]))
+    J0 = \
+        - numpy.outer(hexa[0], 0.125*(1 - xi[1])*(1.0 - xi[2])) \
+        + numpy.outer(hexa[1], 0.125*(1 - xi[1])*(1.0 - xi[2])) \
+        + numpy.outer(hexa[2], 0.125*(1 + xi[1])*(1.0 - xi[2])) \
+        - numpy.outer(hexa[3], 0.125*(1 + xi[1])*(1.0 - xi[2])) \
+        - numpy.outer(hexa[4], 0.125*(1 - xi[1])*(1.0 + xi[2])) \
+        + numpy.outer(hexa[5], 0.125*(1 - xi[1])*(1.0 + xi[2])) \
+        + numpy.outer(hexa[6], 0.125*(1 + xi[1])*(1.0 + xi[2])) \
+        - numpy.outer(hexa[7], 0.125*(1 + xi[1])*(1.0 + xi[2]))
+    J1 = \
+        - numpy.outer(hexa[0], 0.125*(1 - xi[0])*(1.0 - xi[2])) \
+        - numpy.outer(hexa[1], 0.125*(1 + xi[0])*(1.0 - xi[2])) \
+        + numpy.outer(hexa[2], 0.125*(1 + xi[0])*(1.0 - xi[2])) \
+        + numpy.outer(hexa[3], 0.125*(1 - xi[0])*(1.0 - xi[2])) \
+        - numpy.outer(hexa[4], 0.125*(1 - xi[0])*(1.0 + xi[2])) \
+        - numpy.outer(hexa[5], 0.125*(1 + xi[0])*(1.0 + xi[2])) \
+        + numpy.outer(hexa[6], 0.125*(1 + xi[0])*(1.0 + xi[2])) \
+        + numpy.outer(hexa[7], 0.125*(1 - xi[0])*(1.0 + xi[2]))
+    J2 = \
+        - numpy.outer(hexa[0], 0.125*(1.0 - xi[0])*(1.0 - xi[1])) \
+        - numpy.outer(hexa[1], 0.125*(1.0 + xi[0])*(1.0 - xi[1])) \
+        - numpy.outer(hexa[2], 0.125*(1.0 + xi[0])*(1.0 + xi[1])) \
+        - numpy.outer(hexa[3], 0.125*(1.0 - xi[0])*(1.0 + xi[1])) \
+        + numpy.outer(hexa[4], 0.125*(1.0 - xi[0])*(1.0 - xi[1])) \
+        + numpy.outer(hexa[5], 0.125*(1.0 + xi[0])*(1.0 - xi[1])) \
+        + numpy.outer(hexa[6], 0.125*(1.0 + xi[0])*(1.0 + xi[1])) \
+        + numpy.outer(hexa[7], 0.125*(1.0 - xi[0])*(1.0 + xi[1]))
+    det = J0[0]*J1[1]*J2[2] + J1[0]*J2[1]*J0[2] + J2[0]*J0[1]*J1[2] \
+        - J0[2]*J1[1]*J2[0] - J1[2]*J2[1]*J0[0] - J2[2]*J0[1]*J1[0]
 
-        J = numpy.c_[J0, J1, J2]
-        out += weight * f(x) * abs(numpy.linalg.det(J))
-    return out
+    return math.fsum(scheme.weights * f(x).T * abs(det))
 
 
 class From1d(object):

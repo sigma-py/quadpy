@@ -7,7 +7,7 @@ from quadrature.hexahedron import From1d
 import pytest
 import sympy
 
-from test_tetrahedron import _create_monomials
+from test_tetrahedron import _create_monomial_exponents
 
 import os
 import matplotlib as mpl
@@ -28,6 +28,11 @@ def _integrate_exact(f, hexa):
         + hexa[5] * 0.125*(1.0 + xi[0])*(1.0 - xi[1])*(1.0 + xi[2]) \
         + hexa[6] * 0.125*(1.0 + xi[0])*(1.0 + xi[1])*(1.0 + xi[2]) \
         + hexa[7] * 0.125*(1.0 - xi[0])*(1.0 + xi[1])*(1.0 + xi[2])
+    pxi = [
+        sympy.expand(pxi[0]),
+        sympy.expand(pxi[1]),
+        sympy.expand(pxi[2]),
+        ]
     # determinant of the transformation matrix
     J = sympy.Matrix([
         [sympy.diff(pxi[0], xi[0]),
@@ -40,10 +45,10 @@ def _integrate_exact(f, hexa):
          sympy.diff(pxi[2], xi[1]),
          sympy.diff(pxi[2], xi[2])],
         ])
-    det_J = sympy.simplify(sympy.det(J))
+    det_J = sympy.det(J)
     # we cannot use abs(), see <https://github.com/sympy/sympy/issues/4212>.
     abs_det_J = sympy.Piecewise((det_J, det_J >= 0), (-det_J, det_J < 0))
-    g_xi = sympy.simplify(f(pxi))
+    g_xi = f(pxi)
     exact = \
         sympy.integrate(
             sympy.integrate(
@@ -60,10 +65,19 @@ def _integrate_exact(f, hexa):
     From1d(quadrature.line.Trapezoidal()),
     From1d(quadrature.line.GaussLegendre(1)),
     From1d(quadrature.line.GaussLegendre(2)),
+    From1d(quadrature.line.GaussLegendre(3)),
+    From1d(quadrature.line.GaussLegendre(4)),
+    From1d(quadrature.line.GaussLegendre(5)),
+    From1d(quadrature.line.NewtonCotesClosed(0)),
     From1d(quadrature.line.NewtonCotesClosed(1)),
     From1d(quadrature.line.NewtonCotesClosed(2)),
+    From1d(quadrature.line.NewtonCotesClosed(3)),
+    From1d(quadrature.line.NewtonCotesClosed(4)),
+    From1d(quadrature.line.NewtonCotesOpen(0)),
     From1d(quadrature.line.NewtonCotesOpen(1)),
     From1d(quadrature.line.NewtonCotesOpen(2)),
+    From1d(quadrature.line.NewtonCotesOpen(3)),
+    From1d(quadrature.line.NewtonCotesOpen(4)),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
@@ -82,7 +96,9 @@ def test_scheme(scheme):
     degree = 0
     max_degree = scheme.degree + 1
     while success:
-        for poly in _create_monomials(degree):
+        for k in _create_monomial_exponents(degree):
+            def poly(x):
+                return x[0]**k[0] + x[1]**k[1] + x[2]**k[2]
             exact_val = _integrate_exact(poly, hexa)
             val = quadrature.hexahedron.integrate(
                     poly, hexa, scheme
@@ -123,5 +139,8 @@ def test_show():
 
 
 if __name__ == '__main__':
-    test_show()
-    plt.show()
+    # test_show()
+    # plt.show()
+    # scheme = From1d(quadrature.line.NewtonCotesOpen(2))
+    scheme = From1d(quadrature.line.GaussLegendre(5))
+    test_scheme(scheme)
