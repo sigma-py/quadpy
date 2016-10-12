@@ -86,8 +86,6 @@ def _create_monomial_exponents(degree):
     quadrature.triangle.Toms612_19(),
     quadrature.triangle.Toms612_28(),
     quadrature.triangle.Toms706_37(),
-    quadrature.triangle.Gauss4x4(),
-    quadrature.triangle.Gauss8x8(),
     quadrature.triangle.Dunavant(1),
     quadrature.triangle.Dunavant(2),
     quadrature.triangle.Dunavant(3),
