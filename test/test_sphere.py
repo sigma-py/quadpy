@@ -27,20 +27,12 @@ def _integral_monomial_over_unit_sphere(alpha):
     if any(alpha % 2 == 1):
         return 0.0
 
-    def gamma2(kk):
-        '''Gamma function with the half argument, i.e.,
-        gamma2(k) = gamma(k/2)
-        '''
-        if kk % 2 == 0:
-            return math.factorial(kk/2 - 1)
-
-        k = int(kk / 2.0)
-        return numpy.sqrt(numpy.pi) \
-            * numpy.prod([(i + 0.5) for i in range(k)])
-
-    num = 2 * numpy.prod([gamma2(a + 1) for a in alpha])
-
-    return num / gamma2(sum(alpha) + len(alpha))
+    # Use lgamma since other with ordinary gamma, numerator and denominator
+    # might overflow.
+    return 2.0 * math.exp(
+        math.fsum([math.lgamma(0.5*(a+1)) for a in alpha])
+        - math.lgamma(math.fsum([0.5*(a+1) for a in alpha]))
+        )
 
 
 def _integrate_exact(f, midpoint, radius):
