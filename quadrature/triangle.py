@@ -1452,6 +1452,26 @@ class WandzuraXiao(object):
                 self.s21(1.01286507323456370644e-01),
                 ])
             self.degree = 5
+        elif index == 2:
+            self.weights = numpy.concatenate([
+                0.8352339980519638E-01 * numpy.ones(1),
+                0.7229850592056743E-02 * numpy.ones(3),
+                0.7449217792098051E-01 * numpy.ones(3),
+                0.7864647340310853E-01 * numpy.ones(3),
+                0.6928323087107504E-02 * numpy.ones(3),
+                0.2951832033477940E-01 * numpy.ones(6),
+                0.3957936719606124E-01 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                self.s3(),
+                self.s21(4.978654329544749e-01),
+                self.s21(4.280124497290562e-01),
+                self.s21(1.847564127432246e-01),
+                self.s21(2.048121857167755e-02),
+                self.s111(1.365735762560334e-01, 3.500298989727198e-02),
+                self.s111(3.327436005886387e-01, 3.754907025844267e-02),
+                ])
+            self.degree = 10
         else:
             raise ValueError('Illegal Wandzura index')
 
@@ -1469,4 +1489,15 @@ class WandzuraXiao(object):
             [a, a, b],
             [a, b, a],
             [b, a, a],
+            ])
+
+    def s111(self, a, b):
+        c = 1.0 - a - b
+        return numpy.array([
+            [a, b, c],
+            [c, a, b],
+            [b, c, a],
+            [b, a, c],
+            [c, b, a],
+            [a, c, b],
             ])
