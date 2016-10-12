@@ -1418,3 +1418,55 @@ class ZhangCuiLiu(object):
             [c, b, a],
             [a, c, b],
             ])
+
+
+class WandzuraXiao(object):
+    '''
+    S. Wandzurat, H. Xiao,
+    Symmetric quadrature rules on a triangle,
+    Computers & Mathematics with Applications
+    Volume 45, Issue 12, June 2003, Pages 1829-1840,
+    doi:10.1016/S0898-1221(03)90004-6.
+
+    Abstract:
+    We present a class of quadrature rules on triangles in R2 which, somewhat
+    similar to Gaussian rules on intervals in R1, have rapid convergence,
+    positive weights, and symmetry. By a scheme combining simple group theory
+    and numerical optimization, we obtain quadrature rules of this kind up to
+    the order 30 on triangles. This scheme, essentially a formalization and
+    generalization of the approach used by Lyness and Jespersen over 25 years
+    ago, can be easily extended to other regions in R2 and surfaces in higher
+    dimensions, such as squares, spheres. We present example formulae and
+    relevant numerical results.
+    '''
+    def __init__(self, index):
+        if index == 1:
+            self.weights = numpy.concatenate([
+                0.2250000000000000E+00 * numpy.ones(1),
+                0.13239415278850623+00 * numpy.ones(3),
+                0.12593918054482713+00 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self.s3(),
+                self.s21(4.70142064105115109474e-01),
+                self.s21(1.01286507323456370644e-01),
+                ])
+            self.degree = 5
+        else:
+            raise ValueError('Illegal Wandzura index')
+
+        self.points = bary[:, [1, 2]]
+        return
+
+    def s3(self):
+        return numpy.array([
+            [1.0/3.0, 1.0/3.0, 1.0/3.0]
+            ])
+
+    def s21(self, a):
+        b = 1.0 - 2*a
+        return numpy.array([
+            [a, a, b],
+            [a, b, a],
+            [b, a, a],
+            ])
