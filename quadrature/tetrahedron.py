@@ -1404,3 +1404,118 @@ class ShunnHam(object):
         self.points = bary[:, 1:]
 
         return
+
+
+class ZhangCuiLiu(object):
+    '''
+    Linbo Zhang, Tao Cui and Hui Liu,
+    A set of symmetric quadrature rules on triangles and tetrahedra,
+    Journal of Computational Mathematics
+    Vol. 27, No. 1 (January 2009), pp. 89-96.
+
+    Abstract:
+    We present a program for computing symmetric quadrature rules on triangles
+    and tetrahedra. A set of rules are obtained by using this program.
+    Quadrature rules up to order 21 on triangles and up to order 14 on
+    tetrahedra have been obtained which are useful for use in finite element
+    computations. All rules presented here have positive weights with points
+    lying within the integration domain.
+    '''
+    def __init__(self, index):
+        if index == 1:
+            self.weights = numpy.concatenate([
+                0.0063971477799023213214514203351730 * numpy.ones(4),
+                0.0401904480209661724881611584798178 * numpy.ones(4),
+                0.0243079755047703211748691087719226 * numpy.ones(4),
+                0.0548588924136974404669241239903914 * numpy.ones(4),
+                0.0357196122340991824649509689966176 * numpy.ones(6),
+                0.0071831906978525394094511052198038 * numpy.ones(12),
+                0.0163721819453191175409381397561191 * numpy.ones(12),
+                ])
+            bary = numpy.concatenate([
+                self.s31(.0396754230703899012650713295393895),
+                self.s31(.3144878006980963137841605626971483),
+                self.s31(.1019866930627033000000000000000000),
+                self.s31(.1842036969491915122759464173489092),
+                self.s22(.0634362877545398924051412387018983),
+                self.s211(
+                    .0216901620677280048026624826249302,
+                    .7199319220394659358894349533527348
+                    ),
+                self.s211(
+                    .2044800806367957142413355748727453,
+                    .5805771901288092241753981713906204
+                    ),
+                ])
+            self.degree = 8
+        else:
+            raise ValueError('Illegal Zhang index')
+
+        self.points = bary[:, [1, 2, 3]]
+        return
+
+    def s31(self, a):
+        b = 1.0 - 3*a
+        return numpy.array([
+            [a, a, a, b],
+            [a, a, b, a],
+            [a, b, a, a],
+            [b, a, a, a],
+            ])
+
+    def s22(self, a):
+        b = 0.5 - a
+        return numpy.array([
+            [a, a, b, b],
+            [a, b, a, b],
+            [b, a, a, b],
+            [a, b, b, a],
+            [b, a, b, a],
+            [b, b, a, a],
+            ])
+
+    def s211(self, a, b):
+        c = 1.0 - 2*a - b
+        return numpy.array([
+            [a, a, b, c],
+            [a, b, a, c],
+            [b, a, a, c],
+            [a, b, c, a],
+            [b, a, c, a],
+            [b, c, a, a],
+            [a, a, c, b],
+            [a, c, a, b],
+            [c, a, a, b],
+            [a, c, b, a],
+            [c, a, b, a],
+            [c, b, a, a],
+            ])
+
+    def s1111(self, a, b, c):
+        d = 1.0 - a - b - c
+        return numpy.array([
+            [a, b, c, d],
+            [a, b, d, c],
+            [a, c, b, d],
+            [a, c, d, b],
+            [a, d, b, c],
+            [a, d, c, b],
+            [b, a, c, d],
+            [b, a, d, c],
+            [b, c, a, d],
+            [b, c, d, a],
+            [b, d, a, c],
+            [b, d, c, a],
+            [c, a, b, d],
+            [c, a, d, b],
+            [c, b, a, d],
+            [c, b, d, a],
+            [c, d, a, b],
+            [c, d, b, a],
+            [d, a, b, c],
+            [d, a, c, b],
+            [d, b, a, c],
+            [d, b, c, a],
+            [d, c, a, b],
+            [d, c, b, a],
+            ])

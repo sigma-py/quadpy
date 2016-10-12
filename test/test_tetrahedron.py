@@ -77,6 +77,7 @@ def _create_monomial_exponents(degree):
 
 
 @pytest.mark.parametrize('scheme', [
+    quadrature.tetrahedron.ZhangCuiLiu(1),
     quadrature.tetrahedron.Keast(0),
     quadrature.tetrahedron.Keast(1),
     quadrature.tetrahedron.Keast(2),
