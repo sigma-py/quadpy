@@ -109,6 +109,8 @@ def _create_monomial_exponents(degree):
     quadrature.tetrahedron.ShunnHam(4),
     quadrature.tetrahedron.ShunnHam(5),
     quadrature.tetrahedron.ShunnHam(6),
+    quadrature.tetrahedron.ZhangCuiLiu(1),
+    quadrature.tetrahedron.ZhangCuiLiu(2),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no

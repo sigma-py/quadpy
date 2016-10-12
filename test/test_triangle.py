@@ -106,6 +106,9 @@ def _create_monomial_exponents(degree):
     # quadrature.triangle.Dunavant(18),
     quadrature.triangle.Dunavant(19),
     quadrature.triangle.Dunavant(20),
+    quadrature.triangle.ZhangCuiLiu(1),
+    quadrature.triangle.ZhangCuiLiu(2),
+    quadrature.triangle.ZhangCuiLiu(3),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
