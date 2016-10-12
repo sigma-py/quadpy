@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import math
 import numpy
 import numpy.testing
 import pytest
@@ -45,6 +46,24 @@ def _integrate_exact(f, tetrahedron):
         (xi[0], 0, 1)
       )
     return float(exact)
+
+
+def _integrate_monomial_over_standard_tet(k):
+    '''The integral of monomials over the standard tetrahedron is given by
+
+    \int_T x_0^k0 * x1^k1 * x2^k2 = (k0!*k1!*k2!) / (3+k0+k1+k2)!,
+
+    see, e.g.,
+    A set of symmetric quadrature rules on triangles and tetrahedra,
+    Linbo Zhang, Tao Cui and Hui Liu,
+    Journal of Computational Mathematics,
+    Vol. 27, No. 1 (January 2009), pp. 89-96
+    '''
+    # exp-log to account for large values in numerator and denominator
+    return math.exp(
+        math.fsum([math.lgamma(kk+1) for kk in k])
+        - math.lgamma(4 + sum(k))
+        )
 
 
 def _create_monomial_exponents(degree):
@@ -95,10 +114,10 @@ def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
     # longer be integrated exactly. The scheme's degree is `d-1`.
     tetrahedron = numpy.array([
-        [-1.0, -2.0, -0.0],
+        [0.0, 0.0, 0.0],
         [1.0, 0.0, 0.0],
         [0.0, 1.0, 0.0],
-        [0.0, 0.0, 2.0],
+        [0.0, 0.0, 1.0],
         ])
     success = True
     degree = 0
@@ -106,8 +125,9 @@ def test_scheme(scheme):
     while success:
         for k in _create_monomial_exponents(degree):
             def poly(x):
-                return x[0]**k[0] + x[1]**k[1] + x[2]**k[2]
-            exact_val = _integrate_exact(poly, tetrahedron)
+                return x[0]**k[0] * x[1]**k[1] * x[2]**k[2]
+            # exact_val = _integrate_exact(poly, tetrahedron)
+            exact_val = _integrate_monomial_over_standard_tet(k)
             val = quadrature.tetrahedron.integrate(
                     poly, tetrahedron, scheme
                     )
@@ -140,5 +160,7 @@ def test_show():
 
 
 if __name__ == '__main__':
-    test_show()
-    plt.show()
+    # test_show()
+    # plt.show()
+    scheme = quadrature.tetrahedron.ShunnHam(4)
+    test_scheme(scheme)
