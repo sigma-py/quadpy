@@ -1232,3 +1232,61 @@ class Dunavant(object):
             [b, a, c],
             [c, b, a],
             ])
+
+
+class ZhangCuiLiu(object):
+    '''
+    Linbo Zhang, Tao Cui and Hui Liu,
+    A set of symmetric quadrature rules on triangles and tetrahedra,
+    Journal of Computational Mathematics
+    Vol. 27, No. 1 (January 2009), pp. 89-96.
+    '''
+    def __init__(self, index):
+        if index == 1:
+            self.weights = numpy.concatenate([
+                0.1443156076777871682510911104890646 * numpy.ones(1),
+                0.1032173705347182502817915502921290 * numpy.ones(3),
+                0.0324584976231980803109259283417806 * numpy.ones(3),
+                0.0950916342672846247938961043885843 * numpy.ones(3),
+                0.0272303141744349942648446900739089 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                self.s3(),
+                self.s21(0.1705693077517602066222935014914645),
+                self.s21(0.0505472283170309754584235505965989),
+                self.s21(0.4592925882927231560288155144941693),
+                self.s111(
+                    0.2631128296346381134217857862846436,
+                    0.0083947774099576053372138345392944
+                    ),
+                ])
+            self.degree = 8
+        else:
+            raise ValueError('Illegal Strang index')
+
+        self.points = bary[:, [1, 2]]
+        return
+
+    def s3(self):
+        return numpy.array([
+            [1.0/3.0, 1.0/3.0, 1.0/3.0]
+            ])
+
+    def s21(self, a):
+        b = 1.0 - 2*a
+        return numpy.array([
+            [a, a, b],
+            [a, b, a],
+            [b, a, a],
+            ])
+
+    def s111(self, a, b):
+        c = 1.0 - a - b
+        return numpy.array([
+            [a, b, c],
+            [c, a, b],
+            [b, c, a],
+            [b, a, c],
+            [c, b, a],
+            [a, c, b],
+            ])

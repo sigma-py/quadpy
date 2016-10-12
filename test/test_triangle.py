@@ -69,6 +69,7 @@ def _create_monomial_exponents(degree):
 
 
 @pytest.mark.parametrize('scheme', [
+    quadrature.triangle.ZhangCuiLiu(1),
     quadrature.triangle.Centroid(),
     quadrature.triangle.Vertex(),
     quadrature.triangle.SevenPoint(),
