@@ -1438,6 +1438,10 @@ class WandzuraXiao(object):
     ago, can be easily extended to other regions in R2 and surfaces in higher
     dimensions, such as squares, spheres. We present example formulae and
     relevant numerical results.
+
+    Note that in the above article, the authors present the coordinates in the
+    symmetric triangle [[-0.5, -sqrt(3)/2], [-0.5, +sqrt(3)/2], [1, 0]]. These
+    have been transformed to barycentric coordinates here.
     '''
     def __init__(self, index):
         if index == 1:
@@ -1502,6 +1506,50 @@ class WandzuraXiao(object):
                 self.s111(2.818356680990846e-01, 1.684044181246992e-01),
                 ])
             self.degree = 15
+        elif index == 4:
+            self.weights = numpy.concatenate([
+                0.2761042699769952E-01 * numpy.ones(1),
+                0.1779029547326740E-02 * numpy.ones(3),
+                0.2011239811396117E-01 * numpy.ones(3),
+                0.2681784725933157E-01 * numpy.ones(3),
+                0.2452313380150201E-01 * numpy.ones(3),
+                0.1639457841069539E-01 * numpy.ones(3),
+                0.1479590739864960E-01 * numpy.ones(3),
+                0.4579282277704251E-02 * numpy.ones(3),
+                0.1651826515576217E-02 * numpy.ones(3),
+                0.2349170908575584E-02 * numpy.ones(6),
+                0.4465925754181793E-02 * numpy.ones(6),
+                0.6099566807907972E-02 * numpy.ones(6),
+                0.6891081327188203E-02 * numpy.ones(6),
+                0.7997475072478163E-02 * numpy.ones(6),
+                0.7386134285336024E-02 * numpy.ones(6),
+                0.1279933187864826E-01 * numpy.ones(6),
+                0.1725807117569655E-01 * numpy.ones(6),
+                0.1867294590293547E-01 * numpy.ones(6),
+                0.2281822405839526E-01 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                self.s3(),
+                self.s21(4.992496753377855e-01),
+                self.s21(4.529301240305246e-01),
+                self.s21(3.977639379552368e-01),
+                self.s21(2.645002025327873e-01),
+                self.s21(2.110189640920768e-01),
+                self.s21(1.077356071712713e-01),
+                self.s21(3.906908783780266e-02),
+                self.s21(1.117437972932958e-02),
+                self.s111(6.354966590835220e-02, 5.349618187337257e-03),
+                self.s111(1.571069189407070e-01, 7.954817066198938e-03),
+                self.s111(3.956421143643741e-01, 1.042239828126379e-02),
+                self.s111(2.731675707129105e-01, 1.096441479612335e-02),
+                self.s111(1.017853824850171e-01, 3.856671208546233e-02),
+                self.s111(4.466585491764138e-01, 3.558050781721819e-02),
+                self.s111(1.990107941495031e-01, 4.967081636276412e-02),
+                self.s111(3.242611836922827e-01, 5.851972508433175e-02),
+                self.s111(2.085313632101329e-01, 1.214977870043942e-01),
+                self.s111(3.231705665362575e-01, 1.407108449439387e-01),
+                ])
+            self.degree = 20
         else:
             raise ValueError('Illegal Wandzura index')
 
