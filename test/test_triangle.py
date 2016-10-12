@@ -72,6 +72,7 @@ def _create_monomial_exponents(degree):
     quadrature.triangle.WandzuraXiao(1),
     quadrature.triangle.WandzuraXiao(2),
     quadrature.triangle.WandzuraXiao(3),
+    quadrature.triangle.WandzuraXiao(4),
     quadrature.triangle.Centroid(),
     quadrature.triangle.Vertex(),
     quadrature.triangle.SevenPoint(),
