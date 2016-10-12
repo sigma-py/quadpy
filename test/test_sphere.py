@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 #
+import math
 import numpy
 import numpy.testing
 import pytest
 import quadrature
 import sympy
 
-from test_tetrahedron import _create_monomials
+from test_tetrahedron import _create_monomial_exponents
 
 import os
 import matplotlib as mpl
@@ -14,6 +15,24 @@ if 'DISPLAY' not in os.environ:
     # headless mode, for remote executions (and travis)
     mpl.use('Agg')
 from matplotlib import pyplot as plt
+
+
+def _integral_monomial_over_unit_sphere(alpha):
+    '''
+    Gerald B. Folland,
+    How to Integrate a Polynomial over a Sphere,
+    The American Mathematical Monthly,
+    Vol. 108, No. 5 (May, 2001), pp. 446-448.
+    '''
+    if any(alpha % 2 == 1):
+        return 0.0
+
+    # Use lgamma since other with ordinary gamma, numerator and denominator
+    # might overflow.
+    return 2.0 * math.exp(
+        math.fsum([math.lgamma(0.5*(a+1)) for a in alpha])
+        - math.lgamma(math.fsum([0.5*(a+1) for a in alpha]))
+        )
 
 
 def _integrate_exact(f, midpoint, radius):
@@ -29,8 +48,8 @@ def _integrate_exact(f, midpoint, radius):
         ]
     rtheta_x_rphi = sympy.sin(phi) * radius**2
     exact = sympy.integrate(
-        sympy.integrate(rtheta_x_rphi * f(x_xi), (phi, 0.0, numpy.pi)),
-        (theta, 0, 2*numpy.pi)
+        sympy.integrate(rtheta_x_rphi * f(x_xi), (phi, 0.0, sympy.pi)),
+        (theta, 0, 2*sympy.pi)
         )
     return float(exact)
 
@@ -76,13 +95,14 @@ def test_scheme(scheme):
     radius = 1.0
     success = True
     degree = 0
-    # Cap the tested degree. That's ugly, but otherwise tests just take
-    # forever.
-    # TODO come up with a better solution here
-    max_degree = min(10, scheme.degree + 1)
+    # cap max degree -- tests will otherwise last too long
+    max_degree = min(30, scheme.degree + 1)
     while success:
-        for poly in _create_monomials(degree):
-            exact_val = _integrate_exact(poly, midpoint, radius)
+        for k in _create_monomial_exponents(degree):
+            def poly(x):
+                return x[0]**k[0] * x[1]**k[1] * x[2]**k[2]
+            # exact_val = _integrate_exact(poly, midpoint, radius)
+            exact_val = _integral_monomial_over_unit_sphere(k)
             val = quadrature.sphere.integrate(
                     poly, midpoint, radius, scheme
                     )
@@ -95,17 +115,18 @@ def test_scheme(scheme):
             break
         degree += 1
     assert degree >= max_degree
-    # numpy.testing.assert_equal(degree-1, scheme.degree)
     return
 
 
 def test_show():
     quadrature.sphere.show(
-        quadrature.sphere.Lebedev(13)
+        quadrature.sphere.Lebedev(4)
         )
     return
 
 
 if __name__ == '__main__':
-    test_show()
-    plt.show()
+    # test_show()
+    # plt.show()
+    scheme = quadrature.sphere.Lebedev(32)
+    test_scheme(scheme)

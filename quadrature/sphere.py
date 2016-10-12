@@ -39,11 +39,9 @@ def show(scheme):
 
 
 def integrate(f, midpoint, radius, rule):
-    # w * f(x(xi)) * |det(J)|
-    out = math.fsum([
-        weight * radius**3 * f(radius*xi + midpoint)
-        for xi, weight in zip(rule.points, rule.weights)
-        ])
+    out = math.fsum(
+        rule.weights * f((radius*rule.points + midpoint).T)
+        )
     return area(radius) * out
 
 
@@ -104,16 +102,16 @@ class Lebedev(object):
             self.degree = 9
         elif index == 5:
             self.weights = numpy.concatenate([
-                4.0 / 315.0 * numpy.ones(6),
-                64.0 / 2835.0 * numpy.ones(12),
-                27.0 / 1280.0 * numpy.ones(8),
-                14641.0 / 725760.0 * numpy.ones(24),
+                1.2698412698413000e-02 * numpy.ones(6),
+                2.2574955908289000e-02 * numpy.ones(12),
+                2.1093750000000001e-02 * numpy.ones(8),
+                2.0173335537919002e-02 * numpy.ones(24),
                 ])
             self.points = numpy.concatenate([
                 self.a1(),
                 self.a2(),
                 self.a3(),
-                self.llm(3.0151134457776357367e-01, 9.0453403373329088755e-01)
+                self.llm(3.0151134457776352e-01, 9.0453403373329089e-01),
                 ])
             self.degree = 11
         elif index == 6:
@@ -2827,7 +2825,7 @@ class Lebedev(object):
                 ])
             self.degree = 131
         else:
-            raise ValueError('Illegal Lebedev index')
+            raise ValueError('Illegal Lebedev index %d' % index)
 
         return
 
@@ -2904,24 +2902,31 @@ class Lebedev(object):
             [+l, +l, +m],
             [+l, +m, +l],
             [+m, +l, +l],
+            #
             [-l, +l, +m],
             [-l, +m, +l],
             [+m, -l, +l],
+            #
             [+l, -l, +m],
             [+l, +m, -l],
             [+m, +l, -l],
+            #
             [+l, +l, -m],
             [+l, -m, +l],
             [-m, +l, +l],
+            #
             [-l, -l, +m],
             [-l, +m, -l],
-            [-m, -l, -l],
+            [+m, -l, -l],
+            #
             [-l, +l, -m],
             [-l, -m, +l],
             [-m, -l, +l],
+            #
             [+l, -l, -m],
             [+l, -m, -l],
             [-m, +l, -l],
+            #
             [-l, -l, -m],
             [-l, -m, -l],
             [-m, -l, -l],
