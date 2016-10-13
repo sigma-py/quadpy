@@ -1868,6 +1868,84 @@ class LynessJespersen(object):
                     ),
                 ])
             self.degree = 6
+        elif index == 12:
+            self.weights = numpy.concatenate([
+                 1.527089667883523E-01 * numpy.ones(1),
+                 2.944076042366762E-01 / 3.0 * numpy.ones(3),
+                 3.887052878418766E-01 / 3.0 * numpy.ones(3),
+                 1.641781411330949E-01 / 6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                self.s3(),
+                self.s21(4.738308139536513E-01),
+                self.s21(1.721176696308175E-01),
+                self.s111(0.0, 8.653073540834571E-01),
+                ])
+            self.degree = 6
+        elif index == 13:
+            self.weights = numpy.concatenate([
+                  -1.495700444677495E-01 * numpy.ones(1),
+                  5.268457722996328E-01 / 3.0 * numpy.ones(3),
+                  1.600417068265167E-01 / 3.0 * numpy.ones(3),
+                  4.626825653415500E-01 / 6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                self.s3(),
+                self.s21(2.603459660790466E-01),
+                self.s21(6.513010290221623E-02),
+                self.s111(6.384441885698096E-01, 4.869031542531756E-02),
+                ])
+            self.degree = 7
+        elif index == 14:
+            self.weights = numpy.concatenate([
+                  1.763126156005252E-01 * numpy.ones(1),
+                  1.210901532763310E-02 / 3.0 * numpy.ones(3),
+                  3.499561757697094E-01 / 3.0 * numpy.ones(3),
+                  3.195119754425220E-01 / 3.0 * numpy.ones(3),
+                  1.421102178595603E-01 / 6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                self.s3(),
+                self.s21(0.0),
+                self.s21(1.549360602237604E-01),
+                self.s21(4.691507461438120E-01),
+                self.s111(0.0, 8.392991722729236E-01),
+                ])
+            self.degree = 7
+        elif index == 15:
+            self.weights = numpy.concatenate([
+                  1.443156076777862E-01 * numpy.ones(1),
+                  2.852749028018549E-01 / 3.0 * numpy.ones(3),
+                  9.737549286959440E-02 / 3.0 * numpy.ones(3),
+                  3.096521116041552E-01 / 3.0 * numpy.ones(3),
+                  1.633818850466092E-01 / 6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                self.s3(),
+                self.s21(4.592925882927229E-01),
+                self.s21(5.054722831703103E-02),
+                self.s21(1.705693077517601E-01),
+                self.s111(8.394777409957211E-03, 7.284923929554041E-01),
+                ])
+            self.degree = 8
+        elif index == 16:
+            self.weights = numpy.concatenate([
+                   +1.207273935292775E-02 / 3.0 * numpy.ones(3),
+                   -8.491579879151455E-01 / 3.0 * numpy.ones(3),
+                   +1.042367468891334E+00 / 3.0 * numpy.ones(3),
+                   +1.947229791412260E-01 / 3.0 * numpy.ones(3),
+                   +4.511852767201322E-01 / 3.0 * numpy.ones(3),
+                   +1.488095238055238E-01 / 6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                self.s21(0.0),
+                self.s21(0.5),
+                self.s21(4.956813941755582E-01),
+                self.s21(9.032775751426533E-02),
+                self.s21(2.341547497073052E-01),
+                self.s111(0.0, 7.236067977499750E-01),
+                ])
+            self.degree = 8
         else:
             raise ValueError('Illegal Lyness-Jespersen index')
 

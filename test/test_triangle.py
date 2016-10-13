@@ -80,6 +80,11 @@ def _create_monomial_exponents(degree):
     quadrature.triangle.LynessJespersen(9),
     quadrature.triangle.LynessJespersen(10),
     quadrature.triangle.LynessJespersen(11),
+    quadrature.triangle.LynessJespersen(12),
+    quadrature.triangle.LynessJespersen(13),
+    quadrature.triangle.LynessJespersen(14),
+    quadrature.triangle.LynessJespersen(15),
+    quadrature.triangle.LynessJespersen(16),
     quadrature.triangle.Centroid(),
     quadrature.triangle.Vertex(),
     quadrature.triangle.SevenPoint(),
@@ -147,6 +152,7 @@ def test_scheme(scheme):
             val = quadrature.triangle.integrate(
                     poly, triangle, scheme
                     )
+            print(exact_val, val)
             if abs(exact_val - val) > 1.0e-10:
                 success = False
                 break
