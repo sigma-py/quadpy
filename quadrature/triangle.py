@@ -1742,11 +1742,142 @@ class LynessJespersen(object):
                 self.s21(0.5),
                 ])
             self.degree = 2
+        elif index == 2:
+            self.weights = numpy.concatenate([
+                0.75 * numpy.ones(1),
+                1.0/12.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self.s3(),
+                self.s21(0.0),
+                ])
+            self.degree = 2
+        elif index == 3:
+            self.weights = numpy.concatenate([
+                -9.0/16.0 * numpy.ones(1),
+                25.0/48.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self.s3(),
+                self.s21(0.2),
+                ])
+            self.degree = 3
+        elif index == 4:
+            self.weights = numpy.concatenate([
+                9.0/20.0 * numpy.ones(1),
+                1.0/20.0 * numpy.ones(3),
+                2.0/15.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self.s3(),
+                self.s21(0.0),
+                self.s21(0.5),
+                ])
+            self.degree = 3
+        elif index == 5:
+            self.weights = numpy.concatenate([
+                3.298552309659655E-01/3.0 * numpy.ones(3),
+                6.701447690340345E-01/3.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self.s21(9.157621350977073E-02),
+                self.s21(4.459484909159649E-01),
+                ])
+            self.degree = 4
+        elif index == 6:
+            self.weights = numpy.concatenate([
+                9.0/20.0 * numpy.ones(1),
+                -1.0/60.0 * numpy.ones(3),
+                1.0/10.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                self.s3(),
+                self.s21(0.0),
+                self.s111(
+                    (3.0 + numpy.sqrt(3.0)) / 6.0,
+                    (3.0 - numpy.sqrt(3.0)) / 6.0
+                    ),
+                ])
+            self.degree = 4
+        elif index == 7:
+            self.weights = numpy.concatenate([
+                (11.0 - numpy.sqrt(13.0)) / 360.0 * numpy.ones(3),
+                (10.0 - 2*numpy.sqrt(13.0)) / 45.0 * numpy.ones(3),
+                (29.0 + 17*numpy.sqrt(13.0)) / 360.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self.s21(0.0),
+                self.s21(0.5),
+                self.s21((7.0 - numpy.sqrt(13.0)) / 18.0),
+                ])
+            self.degree = 4
+        elif index == 8:
+            self.weights = numpy.concatenate([
+                9.0/40.0 * numpy.ones(1),
+                (155.0 - numpy.sqrt(15.0)) / 1200.0 * numpy.ones(3),
+                (155.0 + numpy.sqrt(15.0)) / 1200.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self.s3(),
+                self.s21((6.0 - numpy.sqrt(15.0))/21.0),
+                self.s21((6.0 + numpy.sqrt(15.0))/21.0),
+                ])
+            self.degree = 5
+        elif index == 9:
+            self.weights = numpy.concatenate([
+                81.0/320.0 * numpy.ones(1),
+                1.0/90.0 * numpy.ones(3),
+                16.0/225.0 * numpy.ones(3),
+                2401.0/14400.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self.s3(),
+                self.s21(0.0),
+                self.s21(0.5),
+                self.s21(1.0/7.0),
+                ])
+            self.degree = 5
+        elif index == 10:
+            self.weights = numpy.concatenate([
+                3.503588271790222E-01 / 3.0 * numpy.ones(3),
+                1.525347191106164E-01 / 3.0 * numpy.ones(3),
+                4.971064537103375E-01 / 6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                self.s21(2.492867451709329E-01),
+                self.s21(6.308901449150177E-02),
+                self.s111(6.365024991213939E-01, 5.314504984483216E-02),
+                ])
+            self.degree = 6
+        elif index == 11:
+            self.weights = numpy.concatenate([
+                -81.0/140.0 * numpy.ones(1),
+                -5.0/252.0 * numpy.ones(3),
+                17.0/315.0 * numpy.ones(3),
+                128.0/315.0 * numpy.ones(3),
+                9.0/210.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                self.s3(),
+                self.s21(0.0),
+                self.s21(0.5),
+                self.s21(0.25),
+                self.s111(
+                    (3.0 + numpy.sqrt(6.0)) / 6.0,
+                    (3.0 - numpy.sqrt(6.0)) / 6.0,
+                    ),
+                ])
+            self.degree = 6
         else:
             raise ValueError('Illegal Lyness-Jespersen index')
 
         self.points = bary[:, [1, 2]]
         return
+
+    def s3(self):
+        return numpy.array([
+            [1.0/3.0, 1.0/3.0, 1.0/3.0]
+            ])
 
     def s21(self, a):
         b = 1.0 - 2*a
@@ -1754,4 +1885,15 @@ class LynessJespersen(object):
             [a, a, b],
             [a, b, a],
             [b, a, a],
+            ])
+
+    def s111(self, a, b):
+        c = 1.0 - a - b
+        return numpy.array([
+            [a, b, c],
+            [c, a, b],
+            [b, c, a],
+            [b, a, c],
+            [c, b, a],
+            [a, c, b],
             ])
