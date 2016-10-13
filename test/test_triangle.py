@@ -157,7 +157,6 @@ def test_scheme(scheme):
             val = quadrature.triangle.integrate(
                     poly, triangle, scheme
                     )
-            print(exact_val, val)
             if abs(exact_val - val) > 1.0e-10:
                 success = False
                 break
