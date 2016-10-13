@@ -1715,3 +1715,43 @@ class WandzuraXiao(object):
             [c, b, a],
             [a, c, b],
             ])
+
+
+class LynessJespersen(object):
+    '''
+    J.N. Lyness, D. Jespersen,
+    Moderate Degree Symmetric Quadrature Rules for the Triangle,
+    J. Inst. Maths Applies (1975) 15, 19-32,
+    doi: 10.1093/imamat/15.1.19.
+
+    Abstract:
+    A variant formulation of the moment fitting equations for the construction
+    of D3 (triangularly symmetric) quadrature rules for the triangle is
+    derived. These equations are solved to produce weights and abscissas for
+    quadrature rules of polynomial degree up to 11 for the triangle, some of
+    which require fewer function evaluations than any presently available rule
+    of the same polynomial degree. Cytolic rules of degrees up to 9 are also
+    derived.
+    '''
+    def __init__(self, index):
+        if index == 1:
+            self.weights = numpy.concatenate([
+                1.0/3.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self.s21(0.5),
+                ])
+            self.degree = 2
+        else:
+            raise ValueError('Illegal Lyness-Jespersen index')
+
+        self.points = bary[:, [1, 2]]
+        return
+
+    def s21(self, a):
+        b = 1.0 - 2*a
+        return numpy.array([
+            [a, a, b],
+            [a, b, a],
+            [b, a, a],
+            ])
