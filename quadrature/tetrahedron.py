@@ -310,29 +310,35 @@ class Keast(object):
 
 class NewtonCotesClosed(object):
     '''
-    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tet/quadrature_rules_tet.html
+    Construction after
+
+    P. Silvester,
+    Symmetric quadrature formulae for simplexes
+    Math. Comp., 24, 95-100 (1970),
+    <http://www.ams.org/journals/mcom/1970-24-109/S0025-5718-1970-0258283-6/S0025-5718-1970-0258283-6.pdf>
     '''
     def __init__(self, index):
         self.degree = index
-        num_combinations = self._binom(index+3, 3)
+        # num_combinations = self._binom(index+3, 3)
+        n = index
+        num_combinations = (n+1) * (n**2 + 5*n+6) / 6
         bary = numpy.empty((num_combinations, 4))
         self.weights = numpy.empty(num_combinations)
         idx = 0
-        for i in range(index + 1):
-            for j in range(index + 1 - i):
-                for k in range(index + 1 - i - j):
-                    print(idx)
+        for i in range(n + 1):
+            for j in range(n + 1 - i):
+                for k in range(n + 1 - i - j):
                     l = index - i - j - k
-                    bary[idx] = numpy.array([i, j, k, l], dtype=float) / index
+                    bary[idx] = numpy.array([i, j, k, l], dtype=float) / n
                     # TODO replace integral by explicit expression
                     # barycentric to cartesian coordinates
                     x = sympy.Symbol('x')
                     y = sympy.Symbol('y')
                     z = sympy.Symbol('z')
-                    f = self.get_poly(1.0-x-y-z, i, index) \
-                        * self.get_poly(x, j, index) \
-                        * self.get_poly(y, k, index) \
-                        * self.get_poly(z, l, index)
+                    f = self.get_poly(1.0-x-y-z, i, n) \
+                        * self.get_poly(x, j, n) \
+                        * self.get_poly(y, k, n) \
+                        * self.get_poly(z, l, n)
                     alpha = 6.0 * \
                         sympy.integrate(
                             sympy.integrate(
@@ -353,10 +359,6 @@ class NewtonCotesClosed(object):
         for k in range(m):
             f *= (t - k/float(n)) / (m/float(n) - k/float(n))
         return f
-
-    def _binom(self, n, k):
-        return math.factorial(n) / math.factorial(k) / math.factorial(n-k)
-
 
 
 class NewtonCotesOpen(object):
