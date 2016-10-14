@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 #
+from helpers import create_monomial_exponents3
 import math
 import numpy
 import numpy.testing
 import pytest
 import quadrature
 import sympy
-
-from test_tetrahedron import _create_monomial_exponents
 
 import os
 import matplotlib as mpl
@@ -98,7 +97,7 @@ def test_scheme(scheme):
     # cap max degree -- tests will otherwise last too long
     max_degree = min(30, scheme.degree + 1)
     while success:
-        for k in _create_monomial_exponents(degree):
+        for k in create_monomial_exponents3(degree):
             def poly(x):
                 return x[0]**k[0] * x[1]**k[1] * x[2]**k[2]
             # exact_val = _integrate_exact(poly, midpoint, radius)
