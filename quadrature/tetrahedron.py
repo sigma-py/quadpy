@@ -323,7 +323,7 @@ def _newton_cotes(n, point_fun):
             f *= (t - point_fun(k, n)) / (point_fun(m, n) - point_fun(k, n))
         return f
     degree = n
-    num_points = (n+1) * (n**2 + 5*n+6) / 6
+    num_points = (n+1) * (n**2 + 5*n+6) // 6
     bary = numpy.empty((num_points, 4))
     weights = numpy.empty(num_points)
     idx = 0
