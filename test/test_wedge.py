@@ -97,31 +97,24 @@ def test_scheme(scheme):
     return
 
 
-# def test_show():
-#     wedge = numpy.array([
-#         [-1, -1, -1],
-#         [+1, -1, -1],
-#         [+1, +1, -1],
-#         [-1, +1, -1],
-#         [-1, -1, +1],
-#         [+1, -1, +1],
-#         [+1, +1, +1],
-#         [-1, +1, +1],
-#         ])
-#     quadrature.hexahedron.show(
-#         hexa,
-#         quadrature.hexahedron.From1d(
-#             # quadrature.line.Midpoint()
-#             # quadrature.line.Trapezoidal()
-#             # quadrature.line.NewtonCotesClosed(3)
-#             quadrature.line.NewtonCotesOpen(4)
-#             )
-#         )
-#     return
+def test_show():
+    wedge = numpy.array([
+        [0.0, 0.0, -1.0],
+        [1.0, 0.0, -1.0],
+        [0.0, 1.0, -1.0],
+        [0.0, 0.0, +1.0],
+        [1.0, 0.0, +1.0],
+        [0.0, 1.0, +1.0],
+        ])
+    quadrature.wedge.show(
+        wedge,
+        quadrature.wedge.Felippa(4)
+        )
+    return
 
 
 if __name__ == '__main__':
-    # test_show()
-    # plt.show()
-    scheme = quadrature.wedge.Felippa(1)
-    test_scheme(scheme)
+    test_show()
+    plt.show()
+    # scheme = quadrature.wedge.Felippa(1)
+    # test_scheme(scheme)

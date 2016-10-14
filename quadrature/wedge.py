@@ -2,7 +2,86 @@
 #
 import math
 import numpy
-from . import tetrahedron
+
+
+def show(wedge, scheme, ball_scale=1.0, alpha=0.3):
+    '''Shows the quadrature points on a given wedge. The size of the
+    balls around the points coincides with their weights.
+    '''
+    from matplotlib import pyplot as plt
+    from mpl_toolkits.mplot3d import Axes3D
+
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+    ax.set_aspect('equal')
+
+    edges = numpy.array([
+        [wedge[0], wedge[1]],
+        [wedge[1], wedge[2]],
+        [wedge[0], wedge[2]],
+        #
+        [wedge[3], wedge[4]],
+        [wedge[4], wedge[5]],
+        [wedge[5], wedge[3]],
+        #
+        [wedge[0], wedge[3]],
+        [wedge[1], wedge[4]],
+        [wedge[2], wedge[5]],
+        ])
+    for edge in edges:
+        plt.plot(edge[:, 0], edge[:, 1], edge[:, 2], '-k')
+
+    xi = scheme.points[:, 0]
+    eta = scheme.points[:, 1]
+    zeta = scheme.points[:, 2]
+    transformed_pts = \
+        + numpy.outer(0.5 * (1.0 - xi - eta)*(1.0 - zeta), wedge[0]) \
+        + numpy.outer(0.5 * xi * (1.0 - zeta), wedge[1]) \
+        + numpy.outer(0.5 * eta * (1.0 - zeta), wedge[2]) \
+        + numpy.outer(0.5 * (1.0 - xi - eta)*(1.0 - zeta), wedge[3]) \
+        + numpy.outer(0.5 * xi * (1.0 + zeta), wedge[4]) \
+        + numpy.outer(0.5 * eta * (1.0 + zeta), wedge[5])
+
+    wedge_vol = 1.0
+    phi, theta = numpy.mgrid[0:numpy.pi:101j, 0:2*numpy.pi:101j]
+    x = numpy.sin(phi)*numpy.cos(theta)
+    y = numpy.sin(phi)*numpy.sin(theta)
+    z = numpy.cos(phi)
+    for tp, weight in zip(transformed_pts, scheme.weights):
+        color = 'b' if weight >= 0 else 'r'
+        # highlight ball center
+        plt.plot([tp[0]], [tp[1]], [tp[2]], '.' + color)
+
+        # plot ball
+        # scale the circle volume according to the weight
+        ref_vol = 1.0
+        r = ball_scale * (
+            wedge_vol * abs(weight) / ref_vol / (4.0/3.0 * numpy.pi)
+            )**(1.0/3.0)
+
+        ax.plot_surface(
+            r*x + tp[0], r*y + tp[1], r*z + tp[2],
+            color=color,
+            alpha=alpha,
+            linewidth=0
+            )
+
+    # http://stackoverflow.com/a/21765085/353337
+    alpha = 1.3
+    max_range = alpha * 0.5 * numpy.array([
+        wedge[:, 0].max() - wedge[:, 0].min(),
+        wedge[:, 1].max() - wedge[:, 1].min(),
+        wedge[:, 2].max() - wedge[:, 2].min(),
+        ]).max()
+    mid_x = 0.5 * (wedge[:, 0].max() + wedge[:, 0].min())
+    mid_y = 0.5 * (wedge[:, 1].max() + wedge[:, 1].min())
+    mid_z = 0.5 * (wedge[:, 2].max() + wedge[:, 2].min())
+    #
+    ax.set_xlim(mid_x - max_range, mid_x + max_range)
+    ax.set_ylim(mid_y - max_range, mid_y + max_range)
+    ax.set_zlim(mid_z - max_range, mid_z + max_range)
+
+    return
 
 
 def integrate(f, wedge, scheme):
