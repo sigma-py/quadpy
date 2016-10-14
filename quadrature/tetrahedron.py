@@ -308,7 +308,7 @@ class Keast(object):
         return
 
 
-class NewtonCotesClosed(object):
+def _newton_cotes(n, point_fun):
     '''
     Construction after
 
@@ -317,100 +317,61 @@ class NewtonCotesClosed(object):
     Math. Comp., 24, 95-100 (1970),
     <http://www.ams.org/journals/mcom/1970-24-109/S0025-5718-1970-0258283-6/S0025-5718-1970-0258283-6.pdf>
     '''
-    def __init__(self, n):
-        self.degree = n
-        num_points = (n+1) * (n**2 + 5*n+6) / 6
-        bary = numpy.empty((num_points, 4))
-        self.weights = numpy.empty(num_points)
-        idx = 0
-        for i in range(n + 1):
-            for j in range(n + 1 - i):
-                for k in range(n + 1 - i - j):
-                    l = n - i - j - k
-                    bary[idx] = numpy.array([i, j, k, l], dtype=float) / n
-                    # Compute weight.
-                    # Define the polynomial which to integrate over the
-                    # tetrahedron.
-                    t = sympy.DeferredVector('t')
-                    g = sympy.expand(
-                        self.get_poly(t[0], i, n)
-                        * self.get_poly(t[1], j, n)
-                        * self.get_poly(t[2], k, n)
-                        * self.get_poly(t[3], l, n)
-                        )
-                    # tranform it into a polynomial class
-                    gpoly = sympy.poly_from_expr(
-                        g, (t[0], t[1], t[2], t[3])
-                        )[0]
-                    # The integral of monomials over a tetrahedron are
-                    # well-known, see Silvester.
-                    self.weights[idx] = numpy.sum([
-                         c * numpy.prod([math.factorial(k) for k in m]) * 6.0
-                         / math.factorial(numpy.sum(m) + 3)
-                         for m, c in zip(gpoly.monoms(), gpoly.coeffs())
-                         ])
-                    idx += 1
-        self.points = bary[:, [1, 2, 3]]
-        return
-
-    def get_poly(self, t, m, n):
+    def get_poly(t, m, n):
         f = 1
         for k in range(m):
-            f *= (t*n - k) / (m - k)
+            f *= (t - point_fun(k, n)) / (point_fun(m, n) - point_fun(k, n))
         return f
+    degree = n
+    num_points = (n+1) * (n**2 + 5*n+6) / 6
+    bary = numpy.empty((num_points, 4))
+    weights = numpy.empty(num_points)
+    idx = 0
+    for i in range(n + 1):
+        for j in range(n + 1 - i):
+            for k in range(n + 1 - i - j):
+                l = n - i - j - k
+                bary[idx] = point_fun(
+                    numpy.array([i, j, k, l], dtype=float), n
+                    )
+                # Compute weight.
+                # Define the polynomial which to integrate over the
+                # tetrahedron.
+                t = sympy.DeferredVector('t')
+                g = sympy.expand(
+                    get_poly(t[0], i, n)
+                    * get_poly(t[1], j, n)
+                    * get_poly(t[2], k, n)
+                    * get_poly(t[3], l, n)
+                    )
+                # tranform it into a polynomial class
+                gpoly = sympy.poly_from_expr(
+                    g, (t[0], t[1], t[2], t[3])
+                    )[0]
+                # The integral of monomials over a tetrahedron are well-known,
+                # see Silvester.
+                weights[idx] = numpy.sum([
+                     c * numpy.prod([math.factorial(k) for k in m]) * 6.0
+                     / math.factorial(numpy.sum(m) + 3)
+                     for m, c in zip(gpoly.monoms(), gpoly.coeffs())
+                     ])
+                idx += 1
+    points = bary[:, [1, 2, 3]]
+    return points, weights, degree
+
+
+class NewtonCotesClosed(object):
+    def __init__(self, n):
+        self.points, self.weights, self.degree = \
+            _newton_cotes(n, lambda k, n: k / float(n))
+        return
 
 
 class NewtonCotesOpen(object):
-    '''
-    Construction after
-
-    P. Silvester,
-    Symmetric quadrature formulae for simplexes
-    Math. Comp., 24, 95-100 (1970),
-    <http://www.ams.org/journals/mcom/1970-24-109/S0025-5718-1970-0258283-6/S0025-5718-1970-0258283-6.pdf>
-    '''
     def __init__(self, n):
-        self.degree = n
-        num_points = (n+1) * (n**2 + 5*n+6) / 6
-        bary = numpy.empty((num_points, 4))
-        self.weights = numpy.empty(num_points)
-        idx = 0
-        for i in range(n + 1):
-            for j in range(n + 1 - i):
-                for k in range(n + 1 - i - j):
-                    l = n - i - j - k
-                    bary[idx] = (numpy.array([i, j, k, l], dtype=float) + 1) \
-                        / (n+4)
-                    # Compute weight.
-                    # Define the polynomial which to integrate over the
-                    # tetrahedron.
-                    t = sympy.DeferredVector('t')
-                    g = sympy.expand(
-                        self.get_poly(t[0], i, n)
-                        * self.get_poly(t[1], j, n)
-                        * self.get_poly(t[2], k, n)
-                        * self.get_poly(t[3], l, n)
-                        )
-                    # tranform it into a polynomial class
-                    gpoly = sympy.poly_from_expr(
-                        g, (t[0], t[1], t[2], t[3])
-                        )[0]
-                    # The integral of monomials over a tetrahedron are
-                    # well-known, see Silvester.
-                    self.weights[idx] = numpy.sum([
-                         c * numpy.prod([math.factorial(k) for k in m]) * 6.0
-                         / math.factorial(numpy.sum(m) + 3)
-                         for m, c in zip(gpoly.monoms(), gpoly.coeffs())
-                         ])
-                    idx += 1
-        self.points = bary[:, [1, 2, 3]]
+        self.points, self.weights, self.degree = \
+            _newton_cotes(n, lambda k, n: (k+1) / float(n+4))
         return
-
-    def get_poly(self, t, m, n):
-        f = 1
-        for k in range(m):
-            f *= (t - (k+1)/float(n+4)) / ((m+1)/float(n+4) - (k+1)/float(n+4))
-        return f
 
 
 class Zienkiewicz(object):
