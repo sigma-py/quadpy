@@ -79,7 +79,7 @@ def test_scheme(scheme):
     while success:
         for k in create_monomial_exponents3(degree):
             def poly(x):
-                return x[0]**k[0] + x[1]**k[1] + x[2]**k[2]
+                return x[0]**int(k[0]) + x[1]**int(k[1]) + x[2]**int(k[2])
             exact_val = _integrate_exact(poly, wedge)
             val = quadrature.wedge.integrate(
                     poly, wedge, scheme
@@ -115,5 +115,5 @@ def test_show():
 if __name__ == '__main__':
     # test_show()
     # plt.show()
-    scheme = quadrature.wedge.Felippa(1)
+    scheme = quadrature.wedge.Felippa(2)
     test_scheme(scheme)
