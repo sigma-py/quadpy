@@ -16,3 +16,4 @@ from . import quadrilateral
 from . import sphere
 from . import triangle
 from . import tetrahedron
+from . import wedge
