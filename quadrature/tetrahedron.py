@@ -330,28 +330,29 @@ class NewtonCotesClosed(object):
                 for k in range(n + 1 - i - j):
                     l = index - i - j - k
                     bary[idx] = numpy.array([i, j, k, l], dtype=float) / n
-                    # TODO replace integral by explicit expression
-                    # barycentric to cartesian coordinates
-                    x = sympy.Symbol('x')
-                    y = sympy.Symbol('y')
-                    z = sympy.Symbol('z')
-                    f = self.get_poly(1.0-x-y-z, i, n) \
-                        * self.get_poly(x, j, n) \
-                        * self.get_poly(y, k, n) \
-                        * self.get_poly(z, l, n)
-                    alpha = 6.0 * \
-                        sympy.integrate(
-                            sympy.integrate(
-                                sympy.integrate(f, (z, 0.0, 1.0-x-y)),
-                                (y, 0.0, 1.0-x)
-                                ),
-                            (x, 0.0, 1.0)
-                            )
-                    self.weights[idx] = alpha
+                    # Compute weight.
+                    # Define the polynomial which to integrate over the
+                    # tetrahedron.
+                    t = sympy.DeferredVector('t')
+                    g = sympy.expand(
+                        self.get_poly(t[0], i, n)
+                        * self.get_poly(t[1], j, n)
+                        * self.get_poly(t[2], k, n)
+                        * self.get_poly(t[3], l, n)
+                        )
+                    # tranform it into a polynomial class
+                    gpoly = sympy.poly_from_expr(
+                        g, (t[0], t[1], t[2], t[3])
+                        )[0]
+                    # The integral of monomials over a tetrahedron are
+                    # well-known.
+                    self.weights[idx] = numpy.sum([
+                         c * numpy.prod([math.factorial(k) for k in m]) * 6.0
+                         / math.factorial(numpy.sum(m) + 3)
+                         for m, c in zip(gpoly.monoms(), gpoly.coeffs())
+                         ])
                     idx += 1
-
         self.points = bary[:, [1, 2, 3]]
-
         return
 
     def get_poly(self, t, m, n):
