@@ -60,6 +60,10 @@ def _integrate_exact(f, wedge):
 @pytest.mark.parametrize('scheme', [
     quadrature.wedge.Felippa(1),
     quadrature.wedge.Felippa(2),
+    quadrature.wedge.Felippa(3),
+    quadrature.wedge.Felippa(4),
+    quadrature.wedge.Felippa(5),
+    quadrature.wedge.Felippa(6),
     ])
 def test_scheme(scheme):
     wedge = numpy.array([
