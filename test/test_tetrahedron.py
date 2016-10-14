@@ -163,5 +163,7 @@ def test_show():
 if __name__ == '__main__':
     # test_show()
     # plt.show()
-    scheme = quadrature.tetrahedron.NewtonCotesClosed(2)
+    scheme = quadrature.tetrahedron.NewtonCotesOpen(3)
+    print(scheme.points)
+    print(scheme.weights)
     # test_scheme(scheme)
