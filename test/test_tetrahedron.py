@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+from helpers import create_monomial_exponents3
 import math
 import numpy
 import numpy.testing
@@ -66,16 +67,6 @@ def _integrate_monomial_over_standard_tet(k):
         )
 
 
-def _create_monomial_exponents(degree):
-    '''Returns a list of all monomial exponents of degree :degree:.
-    '''
-    return [
-        numpy.array([degree-i-j, i, j])
-        for i in range(degree+1)
-        for j in range(degree-i+1)
-        ]
-
-
 @pytest.mark.parametrize('scheme', [
     quadrature.tetrahedron.Keast(0),
     quadrature.tetrahedron.Keast(1),
@@ -124,7 +115,7 @@ def test_scheme(scheme):
     degree = 0
     max_degree = scheme.degree + 1
     while success:
-        for k in _create_monomial_exponents(degree):
+        for k in create_monomial_exponents3(degree):
             def poly(x):
                 return x[0]**k[0] * x[1]**k[1] * x[2]**k[2]
             # exact_val = _integrate_exact(poly, tetrahedron)
