@@ -114,7 +114,7 @@ def test_show():
 
 
 if __name__ == '__main__':
-    # test_show()
-    # plt.show()
-    scheme = quadrature.wedge.Felippa(1)
-    test_scheme(scheme)
+    test_show()
+    plt.show()
+    # scheme = quadrature.wedge.Felippa(1)
+    # test_scheme(scheme)
