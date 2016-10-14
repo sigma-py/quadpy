@@ -136,6 +136,17 @@ def _create_monomial_exponents(degree):
     quadrature.triangle.LynessJespersen(19),
     quadrature.triangle.LynessJespersen(20),
     quadrature.triangle.LynessJespersen(21),
+    quadrature.triangle.NewtonCotesClosed(1),
+    quadrature.triangle.NewtonCotesClosed(2),
+    quadrature.triangle.NewtonCotesClosed(3),
+    quadrature.triangle.NewtonCotesClosed(4),
+    quadrature.triangle.NewtonCotesClosed(5),
+    quadrature.triangle.NewtonCotesOpen(0),
+    quadrature.triangle.NewtonCotesOpen(1),
+    quadrature.triangle.NewtonCotesOpen(2),
+    quadrature.triangle.NewtonCotesOpen(3),
+    quadrature.triangle.NewtonCotesOpen(4),
+    quadrature.triangle.NewtonCotesOpen(5),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
