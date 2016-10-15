@@ -124,6 +124,28 @@ class Felippa(object):
                 self._s4(g2, g4),
                 ])
             self.degree = 2
+        elif index == 6:
+            w1 = 7.0*(11472415.0 - 70057.0*numpy.sqrt(2865.0)) / 130739500.0
+            w2 = 84091.0/68450.0 - w1
+            self.weights = numpy.concatenate([
+                w1 * numpy.ones(4),
+                w2 * numpy.ones(4),
+                3.6 * numpy.ones(1),
+                ])
+
+            g1 = 8 * numpy.sqrt(
+                (573 + 5*numpy.sqrt(2865.0))
+                / (109825 + 969*numpy.sqrt(2865.0))
+                )
+            g2 = numpy.sqrt(2*(8025 + numpy.sqrt(2865.0)) / 35.0) / 37.0
+            g3 = -(+87 + numpy.sqrt(2865.0)) / 168.0
+            g4 = +(-87 + numpy.sqrt(2865.0)) / 168.0
+            self.points = numpy.concatenate([
+                self._s4(g1, g3),
+                self._s4(g2, g4),
+                numpy.array([[0.0, 0.0, 2.0/3.0]])
+                ])
+            self.degree = 2
         else:
             raise ValueError('Illegal Felippa order')
 
