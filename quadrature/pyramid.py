@@ -39,7 +39,8 @@ class Felippa(object):
     Carlos Felippa,
     A compendium of FEM integration formulas for symbolic work,
     Engineering Computation,
-    Volume 21, Number 8, 2004, pages 867-890.
+    Volume 21, Number 8, 2004, pages 867-890,
+    <http://dx.doi.org/10.1108/02644400410554362>.
 
     Abstract:
     This paper presents a set of Mathematica modules that organizes numerical
@@ -196,6 +197,39 @@ class Felippa(object):
                 numpy.array([[0.0, 0.0, g3]])
                 ])
             self.degree = 3
+        elif index == 9:
+            g1 = numpy.sqrt(0.6)
+            g3 = -0.854011951853700535688324041975993416
+            g4 = -0.305992467923296230556472913192103090
+            g5 = +0.410004419776996766244796955168096505
+            self.points = numpy.concatenate([
+                self._s4(g1, g3),
+                self._s4_0(g1, g3),
+                numpy.array([[0.0, 0.0, g3]]),
+                self._s4(g1, g4),
+                self._s4_0(g1, g4),
+                numpy.array([[0.0, 0.0, g4]]),
+                self._s4(g1, g5),
+                self._s4_0(g1, g5),
+                numpy.array([[0.0, 0.0, g5]]),
+                ])
+
+            w1 = (4.0/15.0)*(4+5*(g4+g5)+10*g4*g5)/((g3-g4)*(g3-g5)*(1-g3)**2)
+            w2 = (4.0/15.0)*(4+5*(g3+g5)+10*g3*g5)/((g3-g4)*(g5-g4)*(1-g4)**2)
+            w3 = (4.0/15.0)*(4+5*(g3+g4)+10*g3*g4)/((g3-g5)*(g4-g5)*(1-g5)**2)
+            self.weights = numpy.concatenate([
+                w1*wg9[2] * numpy.ones(4),
+                w1*wg9[1] * numpy.ones(4),
+                w1*wg9[0] * numpy.ones(1),
+                w2*wg9[2] * numpy.ones(4),
+                w2*wg9[1] * numpy.ones(4),
+                w2*wg9[0] * numpy.ones(1),
+                w3*wg9[2] * numpy.ones(4),
+                w3*wg9[1] * numpy.ones(4),
+                w3*wg9[0] * numpy.ones(1),
+                ])
+
+            self.degree = 5
         else:
             raise ValueError('Illegal Felippa index')
 
