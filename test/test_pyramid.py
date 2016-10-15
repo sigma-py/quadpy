@@ -60,6 +60,8 @@ def _integrate_exact(f, pyra):
     quadrature.pyramid.Felippa(4),
     quadrature.pyramid.Felippa(5),
     quadrature.pyramid.Felippa(6),
+    quadrature.pyramid.Felippa(7),
+    quadrature.pyramid.Felippa(8),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no

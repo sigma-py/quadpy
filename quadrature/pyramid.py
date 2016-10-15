@@ -66,6 +66,8 @@ class Felippa(object):
     of FEM work, whether symbolic or numeric, has been published before.
     '''
     def __init__(self, index):
+        wg9 = numpy.array([64.0, 40.0, 25.0]) / 81.0
+
         if index == 1:
             self.weights = numpy.array([128.0/27.0])
             self.points = numpy.array([
@@ -146,8 +148,56 @@ class Felippa(object):
                 numpy.array([[0.0, 0.0, 2.0/3.0]])
                 ])
             self.degree = 2
+        elif index == 7:
+            w1 = 170569.0 / 331200.0
+            w2 = 276710106577408.0 / 1075923777052725.0
+            w3 = 12827693806929.0 / 30577384040000.0
+            w4 = 10663383340655070643544192.0 / 4310170528879365193704375.0
+            self.weights = numpy.concatenate([
+                w1 * numpy.ones(4),
+                w2 * numpy.ones(4),
+                w3 * numpy.ones(4),
+                w4 * numpy.ones(1),
+                ])
+
+            g1 = 7 * numpy.sqrt(35.0/59.0) / 8.0
+            g2 = 224 * numpy.sqrt(336633710.0/33088740423.0) / 37.0
+            g3 = numpy.sqrt(37043.0/35.0) / 56.0
+            g4 = -127.0/153.0
+            g5 = 1490761.0 / 2842826.0
+            self.points = numpy.concatenate([
+                self._s4(g1, -1.0/7.0),
+                self._s4_0(g2, -9.0/28.0),
+                self._s4(g3, g4),
+                numpy.array([[0.0, 0.0, g5]])
+                ])
+            self.degree = 2
+        elif index == 8:
+            w1 = 5 * (68.0 + 5.0*numpy.sqrt(10)) / 432.0
+            w2 = 85.0/54.0 - w1
+            self.weights = numpy.concatenate([
+                w1*wg9[2] * numpy.ones(4),
+                w1*wg9[1] * numpy.ones(4),
+                w1*wg9[0] * numpy.ones(1),
+                w2*wg9[2] * numpy.ones(4),
+                w2*wg9[1] * numpy.ones(4),
+                w2*wg9[0] * numpy.ones(1),
+                ])
+
+            g1 = numpy.sqrt(0.6)
+            g2 = 1.0 - 2*(10.0 - numpy.sqrt(10)) / 15.0
+            g3 = -2.0/3.0 - g2
+            self.points = numpy.concatenate([
+                self._s4(g1, g2),
+                self._s4_0(g1, g2),
+                numpy.array([[0.0, 0.0, g2]]),
+                self._s4(g1, g3),
+                self._s4_0(g1, g3),
+                numpy.array([[0.0, 0.0, g3]])
+                ])
+            self.degree = 3
         else:
-            raise ValueError('Illegal Felippa order')
+            raise ValueError('Illegal Felippa index')
 
         return
 
@@ -157,4 +207,12 @@ class Felippa(object):
             [-a, +a, z],
             [+a, -a, z],
             [-a, -a, z],
+            ])
+
+    def _s4_0(self, a, z):
+        return numpy.array([
+            [+a, 0.0, z],
+            [-a, 0.0, z],
+            [0.0, +a, z],
+            [0.0, -a, z],
             ])
