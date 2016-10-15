@@ -40,12 +40,14 @@ def show(pyra, scheme, ball_scale=1.0, alpha=0.3):
         + numpy.outer(pyra[4], 0.500*(1.0+zeta))
     transformed_pts = transformed_pts.T
 
+    weight_scale = abs(_get_det_J(pyra, scheme.points.T))
+
     s = 1.0
     phi, theta = numpy.mgrid[0:numpy.pi:101j, 0:2*numpy.pi:101j]
     x = numpy.sin(phi)*numpy.cos(theta)
     y = numpy.sin(phi)*numpy.sin(theta)
     z = numpy.cos(phi)
-    for tp, weight in zip(transformed_pts, scheme.weights):
+    for tp, weight, beta in zip(transformed_pts, scheme.weights, weight_scale):
         color = 'b' if weight >= 0 else 'r'
         # highlight ball center
         plt.plot([tp[0]], [tp[1]], [tp[2]], '.' + color)
@@ -53,7 +55,7 @@ def show(pyra, scheme, ball_scale=1.0, alpha=0.3):
         # plot ball
         # scale the circle volume according to the weight
         r = ball_scale * (
-            s * abs(weight) / (4.0/3.0 * numpy.pi)
+            s * abs(beta*weight) / (4.0/3.0 * numpy.pi)
             )**(1.0/3.0)
 
         ax.plot_surface(
@@ -81,14 +83,7 @@ def show(pyra, scheme, ball_scale=1.0, alpha=0.3):
     return
 
 
-def integrate(f, pyra, scheme):
-    xi = scheme.points.T
-    x = \
-        + numpy.outer(pyra[0], 0.125*(1.0-xi[0])*(1.0-xi[1])*(1-xi[2])) \
-        + numpy.outer(pyra[1], 0.125*(1.0+xi[0])*(1.0-xi[1])*(1-xi[2])) \
-        + numpy.outer(pyra[2], 0.125*(1.0+xi[0])*(1.0+xi[1])*(1-xi[2])) \
-        + numpy.outer(pyra[3], 0.125*(1.0-xi[0])*(1.0+xi[1])*(1-xi[2])) \
-        + numpy.outer(pyra[4], 0.500*(1.0+xi[2]))
+def _get_det_J(pyra, xi):
     J0 = \
         - numpy.outer(pyra[0], 0.125*(1.0-xi[1])*(1-xi[2])) \
         + numpy.outer(pyra[1], 0.125*(1.0-xi[1])*(1-xi[2])) \
@@ -107,7 +102,18 @@ def integrate(f, pyra, scheme):
         + numpy.outer(pyra[4], 0.500*numpy.ones(1))
     det = J0[0]*J1[1]*J2[2] + J1[0]*J2[1]*J0[2] + J2[0]*J0[1]*J1[2] \
         - J0[2]*J1[1]*J2[0] - J1[2]*J2[1]*J0[0] - J2[2]*J0[1]*J1[0]
+    return det
 
+
+def integrate(f, pyra, scheme):
+    xi = scheme.points.T
+    x = \
+        + numpy.outer(pyra[0], 0.125*(1.0-xi[0])*(1.0-xi[1])*(1-xi[2])) \
+        + numpy.outer(pyra[1], 0.125*(1.0+xi[0])*(1.0-xi[1])*(1-xi[2])) \
+        + numpy.outer(pyra[2], 0.125*(1.0+xi[0])*(1.0+xi[1])*(1-xi[2])) \
+        + numpy.outer(pyra[3], 0.125*(1.0-xi[0])*(1.0+xi[1])*(1-xi[2])) \
+        + numpy.outer(pyra[4], 0.500*(1.0+xi[2]))
+    det = _get_det_J(pyra, xi)
     return math.fsum(scheme.weights * f(x).T * abs(det))
 
 
