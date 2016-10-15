@@ -7,6 +7,13 @@ import quadrature
 import pytest
 import sympy
 
+import os
+import matplotlib as mpl
+if 'DISPLAY' not in os.environ:
+    # headless mode, for remote executions (and travis)
+    mpl.use('Agg')
+from matplotlib import pyplot as plt
+
 
 def _integrate_exact(f, pyra):
     # map the reference hexahedron [-1,1]^3 to the pyramid
@@ -95,3 +102,23 @@ def test_scheme(scheme):
         degree += 1
     numpy.testing.assert_equal(degree-1, scheme.degree)
     return
+
+
+def test_show():
+    pyra = numpy.array([
+        [-1, -1, -1],
+        [+1, -1, -1],
+        [+1, +1, -1],
+        [-1, +1, -1],
+        [0, 0, 1],
+        ])
+    quadrature.pyramid.show(
+        pyra,
+        quadrature.pyramid.Felippa(9),
+        )
+    return
+
+
+if __name__ == '__main__':
+    test_show()
+    plt.show()

@@ -4,6 +4,83 @@ import math
 import numpy
 
 
+def show(pyra, scheme, ball_scale=1.0, alpha=0.3):
+    '''Shows the quadrature points on a given pyramid. The size of the
+    balls around the points coincides with their weights.
+    '''
+    from matplotlib import pyplot as plt
+    from mpl_toolkits.mplot3d import Axes3D
+
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+    ax.set_aspect('equal')
+
+    edges = numpy.array([
+        [pyra[0], pyra[1]],
+        [pyra[1], pyra[2]],
+        [pyra[2], pyra[3]],
+        [pyra[3], pyra[0]],
+        #
+        [pyra[0], pyra[4]],
+        [pyra[1], pyra[4]],
+        [pyra[2], pyra[4]],
+        [pyra[3], pyra[4]],
+        ])
+    for edge in edges:
+        plt.plot(edge[:, 0], edge[:, 1], edge[:, 2], '-k')
+
+    xi = scheme.points[:, 0]
+    eta = scheme.points[:, 1]
+    zeta = scheme.points[:, 2]
+    transformed_pts = \
+        + numpy.outer(pyra[0], 0.125*(1.0-xi)*(1.0-eta)*(1-zeta)) \
+        + numpy.outer(pyra[1], 0.125*(1.0+xi)*(1.0-eta)*(1-zeta)) \
+        + numpy.outer(pyra[2], 0.125*(1.0+xi)*(1.0+eta)*(1-zeta)) \
+        + numpy.outer(pyra[3], 0.125*(1.0-xi)*(1.0+eta)*(1-zeta)) \
+        + numpy.outer(pyra[4], 0.500*(1.0+zeta))
+    transformed_pts = transformed_pts.T
+
+    s = 1.0
+    phi, theta = numpy.mgrid[0:numpy.pi:101j, 0:2*numpy.pi:101j]
+    x = numpy.sin(phi)*numpy.cos(theta)
+    y = numpy.sin(phi)*numpy.sin(theta)
+    z = numpy.cos(phi)
+    for tp, weight in zip(transformed_pts, scheme.weights):
+        color = 'b' if weight >= 0 else 'r'
+        # highlight ball center
+        plt.plot([tp[0]], [tp[1]], [tp[2]], '.' + color)
+
+        # plot ball
+        # scale the circle volume according to the weight
+        r = ball_scale * (
+            s * abs(weight) / (4.0/3.0 * numpy.pi)
+            )**(1.0/3.0)
+
+        ax.plot_surface(
+            r*x + tp[0], r*y + tp[1], r*z + tp[2],
+            color=color,
+            alpha=alpha,
+            linewidth=0
+            )
+
+    # http://stackoverflow.com/a/21765085/353337
+    alpha = 1.3
+    max_range = alpha * 0.5 * numpy.array([
+        pyra[:, 0].max() - pyra[:, 0].min(),
+        pyra[:, 1].max() - pyra[:, 1].min(),
+        pyra[:, 2].max() - pyra[:, 2].min(),
+        ]).max()
+    mid_x = 0.5 * (pyra[:, 0].max() + pyra[:, 0].min())
+    mid_y = 0.5 * (pyra[:, 1].max() + pyra[:, 1].min())
+    mid_z = 0.5 * (pyra[:, 2].max() + pyra[:, 2].min())
+    #
+    ax.set_xlim(mid_x - max_range, mid_x + max_range)
+    ax.set_ylim(mid_y - max_range, mid_y + max_range)
+    ax.set_zlim(mid_z - max_range, mid_z + max_range)
+
+    return
+
+
 def integrate(f, pyra, scheme):
     xi = scheme.points.T
     x = \
@@ -11,7 +88,7 @@ def integrate(f, pyra, scheme):
         + numpy.outer(pyra[1], 0.125*(1.0+xi[0])*(1.0-xi[1])*(1-xi[2])) \
         + numpy.outer(pyra[2], 0.125*(1.0+xi[0])*(1.0+xi[1])*(1-xi[2])) \
         + numpy.outer(pyra[3], 0.125*(1.0-xi[0])*(1.0+xi[1])*(1-xi[2])) \
-        + numpy.outer(pyra[4], 0.50*(1.0+xi[2]))
+        + numpy.outer(pyra[4], 0.500*(1.0+xi[2]))
     J0 = \
         - numpy.outer(pyra[0], 0.125*(1.0-xi[1])*(1-xi[2])) \
         + numpy.outer(pyra[1], 0.125*(1.0-xi[1])*(1-xi[2])) \
@@ -27,7 +104,7 @@ def integrate(f, pyra, scheme):
         - numpy.outer(pyra[1], 0.125*(1.0+xi[0])*(1.0-xi[1])) \
         - numpy.outer(pyra[2], 0.125*(1.0+xi[0])*(1.0+xi[1])) \
         - numpy.outer(pyra[3], 0.125*(1.0-xi[0])*(1.0+xi[1])) \
-        + numpy.outer(pyra[4], 0.50*numpy.ones(1))
+        + numpy.outer(pyra[4], 0.500*numpy.ones(1))
     det = J0[0]*J1[1]*J2[2] + J1[0]*J2[1]*J0[2] + J2[0]*J0[1]*J1[2] \
         - J0[2]*J1[1]*J2[0] - J1[2]*J2[1]*J0[0] - J2[2]*J0[1]*J1[0]
 
