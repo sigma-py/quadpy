@@ -1039,7 +1039,7 @@ class ZhangCuiLiu(object):
 
 class WandzuraXiao(object):
     '''
-    S. Wandzurat, H. Xiao,
+    S. Wandzurat (sic!), H. Xiao,
     Symmetric quadrature rules on a triangle,
     Computers & Mathematics with Applications
     Volume 45, Issue 12, June 2003, Pages 1829-1840,
