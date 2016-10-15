@@ -103,7 +103,7 @@ def _create_monomial_exponents(degree):
     quadrature.triangle.Dunavant(15),
     quadrature.triangle.Dunavant(16),
     quadrature.triangle.Dunavant(17),
-    # quadrature.triangle.Dunavant(18),
+    quadrature.triangle.Dunavant(18),
     quadrature.triangle.Dunavant(19),
     quadrature.triangle.Dunavant(20),
     quadrature.triangle.ZhangCuiLiu(1),
