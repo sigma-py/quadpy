@@ -147,6 +147,11 @@ def _create_monomial_exponents(degree):
     quadrature.triangle.NewtonCotesOpen(3),
     quadrature.triangle.NewtonCotesOpen(4),
     quadrature.triangle.NewtonCotesOpen(5),
+    quadrature.triangle.TaylorWingateBos(1),
+    quadrature.triangle.TaylorWingateBos(2),
+    quadrature.triangle.TaylorWingateBos(4),
+    quadrature.triangle.TaylorWingateBos(5),
+    quadrature.triangle.TaylorWingateBos(8),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
