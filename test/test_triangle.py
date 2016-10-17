@@ -161,6 +161,16 @@ def _create_monomial_exponents(degree):
     quadrature.triangle.HammerMarloweStroud(3),
     quadrature.triangle.HammerMarloweStroud(4),
     quadrature.triangle.HammerMarloweStroud(5),
+    quadrature.triangle.Cowper(1),
+    quadrature.triangle.Cowper(2),
+    quadrature.triangle.Cowper(3),
+    quadrature.triangle.Cowper(4),
+    quadrature.triangle.Cowper(5),
+    quadrature.triangle.Cowper(6),
+    quadrature.triangle.Cowper(7),
+    quadrature.triangle.Cowper(8),
+    quadrature.triangle.Cowper(9),
+    quadrature.triangle.Cowper(10),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
