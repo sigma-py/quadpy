@@ -107,6 +107,9 @@ def _integrate_monomial_over_standard_tet(k):
     quadrature.tetrahedron.Yu(3),
     quadrature.tetrahedron.Yu(4),
     quadrature.tetrahedron.Yu(5),
+    quadrature.tetrahedron.HammerMarloweStroud(1),
+    quadrature.tetrahedron.HammerMarloweStroud(2),
+    quadrature.tetrahedron.HammerMarloweStroud(3),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
