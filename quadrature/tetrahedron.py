@@ -4,6 +4,7 @@ import math
 import numpy
 import sympy
 
+
 def volume(tet):
     '''Computes the center of the circumsphere of
     '''
@@ -416,37 +417,24 @@ class Zienkiewicz(object):
     '''
     def __init__(self, index):
         if index == 4:
-            self.weights = numpy.array([
-                0.25,
-                0.25,
-                0.25,
-                0.25
-                ])
-            self.points = numpy.array([
-                [0.5854101966249685, 0.1381966011250105, 0.1381966011250105],
-                [0.1381966011250105, 0.5854101966249685, 0.1381966011250105],
-                [0.1381966011250105, 0.1381966011250105, 0.5854101966249685],
-                [0.1381966011250105, 0.1381966011250105, 0.1381966011250105],
-                ])
+            self.weights = 0.25 * numpy.ones(4)
+            bary = _s31(0.1381966011250105)
             self.degree = 2
         elif index == 5:
-            self.weights = numpy.array([
-                -0.8,
-                0.45,
-                0.45,
-                0.45,
-                0.45,
+            self.weights = numpy.concatenate([
+                -0.8 * numpy.ones(1),
+                0.45 * numpy.ones(4),
                 ])
-            self.points = numpy.array([
-                [0.25, 0.25, 0.25],
-                [0.5, 1.0/6.0, 1.0/6.0],
-                [1.0/6.0, 0.5, 1.0/6.0],
-                [1.0/6.0, 1.0/6.0, 0.5],
-                [1.0/6.0, 1.0/6.0, 1.0/6.0],
+            bary = numpy.concatenate([
+                _s4(),
+                _s31(1.0/6.0),
                 ])
             self.degree = 3
         else:
             raise ValueError('Illegal closed Newton-Cotes index')
+
+        self.points = bary[:, [1, 2, 3]]
+        return
 
 
 class ShunnHam(object):
@@ -473,9 +461,7 @@ class ShunnHam(object):
             self.weights = numpy.array([
                 1.0
                 ])
-            bary = numpy.array([
-                [0.25, 0.25, 0.25, 0.25]
-                ])
+            bary = _s4()
             self.degree = 1
         elif index == 2:
             self.weights = 0.25 * numpy.ones(4)
@@ -541,7 +527,6 @@ class ShunnHam(object):
             raise ValueError('Illegal Shunn-Ham index')
 
         self.points = bary[:, 1:]
-
         return
 
 
@@ -670,7 +655,6 @@ class ZhangCuiLiu(object):
 
         self.points = bary[:, [1, 2, 3]]
         return
-
 
 
 class Yu(object):
