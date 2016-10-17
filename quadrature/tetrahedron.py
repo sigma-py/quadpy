@@ -215,16 +215,19 @@ class Keast(object):
     '''
     def __init__(self, index):
         if index == 0:
+            # Does no appear in Keast's article.
             self.weights = numpy.array([
                 1.0
                 ])
             bary = _s4()
             self.degree = 1
         elif index == 1:
+            # Does no appear in Keast's article.
             self.weights = 0.25 * numpy.ones(4)
             bary = _s31(0.1381966011250105)
             self.degree = 2
         elif index == 2:
+            # Does no appear in Keast's article.
             self.weights = numpy.concatenate([
                 -0.8 * numpy.ones(1),
                 0.45 * numpy.ones(4),
@@ -235,6 +238,7 @@ class Keast(object):
                 ])
             self.degree = 3
         elif index == 3:
+            # Does no appear in Keast's article.
             self.weights = numpy.concatenate([
                 0.2177650698804054 * numpy.ones(4),
                 0.0214899534130631 * numpy.ones(6),
@@ -334,8 +338,31 @@ class Keast(object):
                 _s211(0.0379700484718286, 0.1937464752488044),
                 ])
             self.degree = 7
+        elif index == 10:
+            self.weights = 6 * numpy.concatenate([
+                # Note: In Keast's article, the first weight is incorrectly
+                # given with a positive sign.
+                -0.393270066412926145e-01 * numpy.ones(1),
+                +0.408131605934270525e-02 * numpy.ones(4),
+                +0.658086773304341943e-03 * numpy.ones(4),
+                +0.438425882512284693e-02 * numpy.ones(6),
+                +0.138300638425098166e-01 * numpy.ones(6),
+                +0.424043742468372453e-02 * numpy.ones(12),
+                +0.223873973961420164e-02 * numpy.ones(12),
+                ])
+            bary = numpy.concatenate([
+                _s4(),
+                _s31(0.127470936566639015e-00),
+                _s31(0.320788303926322960e-01),
+                _s22(0.497770956432810185e-01),
+                _s22(0.183730447398549945e-00),
+                _s211(0.231901089397150906e-00, 0.229177878448171174e-01),
+                _s211(0.379700484718286102e-01, 0.730313427807538396e-00),
+                ])
+            self.degree = 8
         else:
             raise ValueError('Illegal Keast index')
+
         self.points = bary[:, 1:]
         return
 
