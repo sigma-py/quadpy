@@ -78,6 +78,7 @@ def _integrate_monomial_over_standard_tet(k):
     quadrature.tetrahedron.Keast(7),
     quadrature.tetrahedron.Keast(8),
     quadrature.tetrahedron.Keast(9),
+    quadrature.tetrahedron.Keast(10),
     quadrature.tetrahedron.NewtonCotesClosed(1),
     quadrature.tetrahedron.NewtonCotesClosed(2),
     quadrature.tetrahedron.NewtonCotesClosed(3),
@@ -101,6 +102,11 @@ def _integrate_monomial_over_standard_tet(k):
     quadrature.tetrahedron.ShunnHam(6),
     quadrature.tetrahedron.ZhangCuiLiu(1),
     quadrature.tetrahedron.ZhangCuiLiu(2),
+    quadrature.tetrahedron.Yu(1),
+    quadrature.tetrahedron.Yu(2),
+    quadrature.tetrahedron.Yu(3),
+    quadrature.tetrahedron.Yu(4),
+    quadrature.tetrahedron.Yu(5),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
@@ -154,7 +160,5 @@ def test_show():
 if __name__ == '__main__':
     # test_show()
     # plt.show()
-    scheme = quadrature.tetrahedron.NewtonCotesOpen(3)
-    print(scheme.points)
-    print(scheme.weights)
-    # test_scheme(scheme)
+    scheme = quadrature.tetrahedron.Keast(10)
+    test_scheme(scheme)
