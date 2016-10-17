@@ -2234,3 +2234,116 @@ class Cowper(object):
 
         self.points = bary[:, 1:]
         return
+
+
+class LiuVinokur(object):
+    '''
+    Y. Liu and M. Vinokur,
+    Exact Integrations of Polynomials and Symmetric Quadrature Formulas over
+    Arbitrary Polyhedral Grids,
+    Journal of Computational Physics, 140, 122–147 (1998).
+    DOI: 10.1006/jcph.1998.5884
+    '''
+    def __init__(self, index):
+        if index == 1:
+            self.weights = numpy.concatenate([
+                1.0 * numpy.ones(1),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                ])
+            self.degree = 1
+        elif index == 2:
+            self.weights = numpy.concatenate([
+                1.0/3.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self._r_alpha(1.0),
+                ])
+            self.degree = 1
+        elif index == 3:
+            self.weights = numpy.concatenate([
+                1.0/3.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self._r_alpha(-0.5),
+                ])
+            self.degree = 2
+        elif index == 4:
+            self.weights = numpy.concatenate([
+                0.75 * numpy.ones(1),
+                1.0/12.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                self._r_alpha(1.0),
+                ])
+            self.degree = 2
+        elif index == 5:
+            self.weights = numpy.concatenate([
+                -9.0/16.0 * numpy.ones(1),
+                25.0/48.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                self._r_alpha(25.0),
+                ])
+            self.degree = 3
+        elif index == 6:
+            self.weights = numpy.concatenate([
+                (1.0 + numpy.sqrt(21.0)) / 10.0 * numpy.ones(3),
+                (39.0 - numpy.sqrt(21.0)) / 120.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self._r_alpha(1.0),
+                self._r_alpha((1.0 - numpy.sqrt(21.0)) / 10.0),
+                ])
+            self.degree = 3
+        elif index == 7:
+            self.weights = numpy.concatenate([
+                9.0/20.0 * numpy.ones(1),
+                1.0/20.0 * numpy.ones(3),
+                2.0/15.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                self._r_alpha(1.0),
+                self._r_alpha(-0.5),
+                ])
+            self.degree = 3
+        elif index == 8:
+            # TODO
+            pass
+        elif index == 9:
+            self.weights = numpy.concatenate([
+                27.0/80.0 * numpy.ones(1),
+                8.0/105.0 * numpy.ones(3),
+                81.0/560.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                self._r_alpha(-0.5),
+                self._r_alpha(2.0/3.0),
+                ])
+            self.degree = 4
+        else:
+            raise ValueError('Illegal Liu-Vinokur index')
+
+        self.points = bary[:, 1:]
+        return
+
+    def _r_alpha(self, alpha):
+        '''From the article:
+
+        mu_i = (1 + (n-1) alpha) / n,
+        mu_j = (1 - alpha) / n    for j!=i,
+
+        where n is the number of vertices
+        '''
+        a = (1.0 + 2*alpha) / 3.0
+        b = (1.0 - alpha) / 3.0
+        return numpy.array([
+            [a, b, b],
+            [b, a, b],
+            [b, b, a],
+            ])
