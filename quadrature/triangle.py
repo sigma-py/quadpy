@@ -1704,3 +1704,41 @@ class NewtonCotesOpen(object):
         self.points, self.weights, self.degree = \
             _newton_cotes(n, lambda k, n: (k+1) / float(n+3))
         return
+
+
+class TaylorWingateBos(object):
+    '''
+    Mark A. Taylor, Beth A. Wingate, Len P. Bos,
+    Several new quadrature formulas for polynomial integration in the triangle,
+    arXiv,
+    Submitted on 27 Jan 2005 (v1), last revised 8 Feb 2007 (this version, v2).
+
+    Abstract:
+    We present several new quadrature formulas in the triangle for exact
+    integration of polynomials. The points were computed numerically with a
+    cardinal function algorithm which imposes that the number of quadrature
+    points N be equal to the dimension of a lower dimensional polynomial space.
+    Quadrature forumulas are presented for up to degree d=25, all which have
+    positive weights and contain no points outside the triangle. Seven of these
+    quadrature formulas improve on previously known results.
+    '''
+    def __init__(self, index):
+        if index == 1:
+            self.weights = 1.0/3.0 * numpy.ones(3)
+            bary = _s21(1.0/6.0)
+            self.degree = 2
+        elif index == 2:
+            self.weights = 0.5 * numpy.concatenate([
+                0.2199034873106 * numpy.ones(3),
+                0.4467631793560 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s21(0.0915762135098),
+                _s21(0.4459484909160),
+                ])
+            self.degree = 4
+        else:
+            raise ValueError('Illegal Taylor-Wingate-Bos index')
+
+        self.points = bary[:, [1, 2]]
+        return
