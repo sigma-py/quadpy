@@ -152,6 +152,10 @@ def _create_monomial_exponents(degree):
     quadrature.triangle.TaylorWingateBos(4),
     quadrature.triangle.TaylorWingateBos(5),
     quadrature.triangle.TaylorWingateBos(8),
+    quadrature.triangle.BerntsenEspelid(1),
+    quadrature.triangle.BerntsenEspelid(2),
+    quadrature.triangle.BerntsenEspelid(3),
+    quadrature.triangle.BerntsenEspelid(4),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
@@ -206,5 +210,5 @@ def test_show():
 if __name__ == '__main__':
     # test_show()
     # plt.show()
-    scheme = quadrature.triangle.Dunavant(10)
+    scheme = quadrature.triangle.BerntsenEspelid(4)
     test_scheme(scheme)
