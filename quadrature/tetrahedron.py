@@ -752,3 +752,66 @@ class Yu(object):
 
         self.points = bary[:, [1, 2, 3]]
         return
+
+
+class HammerMarloweStroud(object):
+    '''
+    P.C. Hammer, O.J. Marlowe and A.H. Stroud,
+    Numerical Integration Over Simplexes and Cones,
+    Mathematical Tables and Other Aids to Computation,
+    Vol. 10, No. 55, Jul. 1956, pp. 130-137.
+
+    Abstract:
+    In this paper we develop numerical integration formulas for simplexes and
+    cones in n-space for n>=2. While several papers have been written on
+    numerical integration in higher spaces, most of these have dealt with
+    hyperrectangular regions. For certain exceptions see [3]. Hammer and Wymore
+    [1] have given a first general type theory designed through systematic use
+    of cartesian product regions and affine transformations to extend the
+    possible usefulness of formulas for each region.
+    '''
+    def __init__(self, index):
+        if index == 1:
+            self.weights = numpy.concatenate([
+                0.25 * numpy.ones(4),
+                ])
+            bary = numpy.concatenate([
+                self._r(1.0 / numpy.sqrt(5.0)),
+                ])
+            self.degree = 2
+        elif index == 2:
+            self.weights = numpy.concatenate([
+                0.25 * numpy.ones(4),
+                ])
+            bary = numpy.concatenate([
+                self._r(-1.0 / numpy.sqrt(5.0)),
+                ])
+            self.degree = 2
+        elif index == 3:
+            self.weights = numpy.concatenate([
+                -0.8 * numpy.ones(1),
+                9.0/20.0 * numpy.ones(4),
+                ])
+            bary = numpy.concatenate([
+                _s4(),
+                self._r(1.0 / 3.0),
+                ])
+            self.degree = 3
+        else:
+            raise ValueError('Illegal Hammer-Marlowe-Stroud index')
+
+        self.points = bary[:, 1:]
+        return
+
+    def _r(self, r):
+        '''Given $r$ (as appearing in the article), it returns the barycentric
+        coordinates of the three points.
+        '''
+        a = r + (1.0-r) / 4.0
+        b = (1.0 - a) / 3.0
+        return numpy.array([
+            [a, b, b, b],
+            [b, a, b, b],
+            [b, b, a, b],
+            [b, b, b, a],
+            ])
