@@ -2043,6 +2043,14 @@ class HammerMarloweStroud(object):
     [1] have given a first general type theory designed through systematic use
     of cartesian product regions and affine transformations to extend the
     possible usefulness of formulas for each region.
+
+    Two of the schemes also appear in
+
+    P.C. Hammer, Arthur H. Stroud,
+    Numerical Evaluation of Multiple Integrals II,
+    Mathematical Tables and Other Aids to Computation.
+    Vol. 12, No. 64 (Oct., 1958), pp. 272-280,
+    <http://www.jstor.org/stable/2002370>
     '''
     def __init__(self, index):
         if index == 1:
