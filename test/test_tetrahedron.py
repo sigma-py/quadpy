@@ -78,6 +78,7 @@ def _integrate_monomial_over_standard_tet(k):
     quadrature.tetrahedron.Keast(7),
     quadrature.tetrahedron.Keast(8),
     quadrature.tetrahedron.Keast(9),
+    quadrature.tetrahedron.Keast(10),
     quadrature.tetrahedron.NewtonCotesClosed(1),
     quadrature.tetrahedron.NewtonCotesClosed(2),
     quadrature.tetrahedron.NewtonCotesClosed(3),
@@ -159,5 +160,5 @@ def test_show():
 if __name__ == '__main__':
     # test_show()
     # plt.show()
-    scheme = quadrature.tetrahedron.Yu(3)
+    scheme = quadrature.tetrahedron.Keast(10)
     test_scheme(scheme)
