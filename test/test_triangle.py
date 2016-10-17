@@ -156,6 +156,11 @@ def _create_monomial_exponents(degree):
     quadrature.triangle.BerntsenEspelid(2),
     quadrature.triangle.BerntsenEspelid(3),
     quadrature.triangle.BerntsenEspelid(4),
+    quadrature.triangle.HammerMarloweStroud(1),
+    quadrature.triangle.HammerMarloweStroud(2),
+    quadrature.triangle.HammerMarloweStroud(3),
+    quadrature.triangle.HammerMarloweStroud(4),
+    quadrature.triangle.HammerMarloweStroud(5),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
