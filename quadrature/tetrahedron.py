@@ -956,8 +956,8 @@ class LiuVinokur(object):
         elif index == 11:
             self.weights = numpy.concatenate([
                 (11.0 - 4*numpy.sqrt(2.0)) / 840.0 * numpy.ones(4),
-                (243.0 - 108*numpy.sqrt(2.0)) / 1960.0* numpy.ones(4),
-                (62.0 + 44*numpy.sqrt(2.0)) /735.0 * numpy.ones(4),
+                (243.0 - 108*numpy.sqrt(2.0)) / 1960.0 * numpy.ones(4),
+                (62.0 + 44*numpy.sqrt(2.0)) / 735.0 * numpy.ones(4),
                 2.0/105.0 * numpy.ones(6),
                 ])
             bary = numpy.concatenate([
@@ -967,6 +967,62 @@ class LiuVinokur(object):
                 self._r_beta(0.5),
                 ])
             self.degree = 4
+        elif index == 12:
+            lmbda = 4.0/27.0 * (4.0 * numpy.sqrt(79.0)*numpy.cos(
+                (numpy.arccos(67*numpy.sqrt(79.0)/24964.0) + 2*numpy.pi) / 3.0
+                ) + 71.0
+                )
+            alpha1 = (
+                + numpy.sqrt(9*lmbda**2 - 248*lmbda + 1680) + 28.0 - 3*lmbda
+                ) / (112.0 - 10*lmbda)
+            alpha2 = (
+                - numpy.sqrt(9*lmbda**2 - 248*lmbda + 1680) + 28.0 - 3*lmbda
+                ) / (112.0 - 10*lmbda)
+            w1 = ((21.0 - lmbda)*alpha2 - 7.0) \
+                / (420.0*alpha1**2 * (alpha2 - alpha1))
+            w2 = ((21.0 - lmbda)*alpha1 - 7.0) \
+                / (420.0*alpha2**2 * (alpha1 - alpha2))
+            self.weights = numpy.concatenate([
+                w1 * numpy.ones(4),
+                w2 * numpy.ones(4),
+                lmbda**2/840.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                self._r_alpha(alpha1),
+                self._r_alpha(alpha2),
+                self._r_beta(1.0 / numpy.sqrt(lmbda)),
+                ])
+            self.degree = 5
+        elif index == 13:
+            self.weights = numpy.concatenate([
+                -16.0/21.0 * numpy.ones(1),
+                (2249.0 - 391.0*numpy.sqrt(13.0)) / 10920.0 * numpy.ones(4),
+                (2249.0 + 391.0*numpy.sqrt(13.0)) / 10920.0 * numpy.ones(4),
+                2.0 / 105.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s4(),
+                self._r_alpha((2.0 + numpy.sqrt(13.0)) / 9.0),
+                self._r_alpha((2.0 - numpy.sqrt(13.0)) / 9.0),
+                self._r_beta(0.5),
+                ])
+            self.degree = 5
+        elif index == 14:
+            self.weights = numpy.concatenate([
+                16.0/105.0 * numpy.ones(1),
+                1.0/280.0 * numpy.ones(4),
+                81.0/1400.0 * numpy.ones(4),
+                64.0/525.0 * numpy.ones(4),
+                2.0/105.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s4(),
+                self._r_alpha(1.0),
+                self._r_alpha(-1.0/3.0),
+                self._r_alpha(0.5),
+                self._r_beta(0.5),
+                ])
+            self.degree = 5
         else:
             raise ValueError('Illegal Liu-Vinokur index')
 
