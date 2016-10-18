@@ -888,6 +888,85 @@ class LiuVinokur(object):
                 self._r_alpha(-1.0/3.0),
                 ])
             self.degree = 3
+        elif index == 7:
+            self.weights = numpy.concatenate([
+                -148.0/1875.0 * numpy.ones(1),
+                343.0/7500.0 * numpy.ones(4),
+                56.0/375.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s4(),
+                self._r_alpha(5.0/7.0),
+                self._r_beta(numpy.sqrt(70.0)/28.0),
+                ])
+            self.degree = 4
+        elif index == 8:
+            alpha1 = (
+                + numpy.sqrt(65944.0 - 19446*numpy.sqrt(11))
+                + 51*numpy.sqrt(11) - 154.0
+                ) / 89.0
+            alpha2 = (
+                - numpy.sqrt(65944.0 - 19446*numpy.sqrt(11))
+                + 51*numpy.sqrt(11) - 154.0
+                ) / 89.0
+            self.weights = numpy.concatenate([
+                (17*alpha2 - 7.0)/(420.0*alpha1**2 * (alpha2 - alpha1))
+                * numpy.ones(4),
+                (17*alpha1 - 7.0)/(420.0*alpha2**2 * (alpha1 - alpha2))
+                * numpy.ones(4),
+                2.0/105.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                self._r_alpha(alpha1),
+                self._r_alpha(alpha2),
+                self._r_beta(0.5),
+                ])
+            self.degree = 4
+        elif index == 9:
+            self.weights = numpy.concatenate([
+                -32.0/15.0 * numpy.ones(1),
+                3.0/280.0 * numpy.ones(4),
+                125.0/168.0 * numpy.ones(4),
+                2.0/105.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s4(),
+                self._r_alpha(1),
+                self._r_alpha(0.2),
+                self._r_beta(0.5),
+                ])
+            self.degree = 4
+        elif index == 10:
+            self.weights = numpy.concatenate([
+                32.0/105.0 * numpy.ones(1),
+                -31.0/840.0 * numpy.ones(4),
+                27.0/280.0 * numpy.ones(4),
+                4.0/105.0 * numpy.ones(12),
+                ])
+            bary = numpy.concatenate([
+                _s4(),
+                self._r_alpha(1),
+                self._r_alpha(-1.0/3.0),
+                self._r_gamma_delta(
+                    (2 + numpy.sqrt(2.0)) / 4.0,
+                    (2 - numpy.sqrt(2.0)) / 4.0,
+                    ),
+                ])
+            self.degree = 4
+        elif index == 11:
+            self.weights = numpy.concatenate([
+                (11.0 - 4*numpy.sqrt(2.0)) / 840.0 * numpy.ones(4),
+                (243.0 - 108*numpy.sqrt(2.0)) / 1960.0* numpy.ones(4),
+                (62.0 + 44*numpy.sqrt(2.0)) /735.0 * numpy.ones(4),
+                2.0/105.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                self._r_alpha(1),
+                self._r_alpha(-1.0/3.0),
+                self._r_alpha(numpy.sqrt(2.0) - 1.0),
+                self._r_beta(0.5),
+                ])
+            self.degree = 4
         else:
             raise ValueError('Illegal Liu-Vinokur index')
 
@@ -909,6 +988,26 @@ class LiuVinokur(object):
             [b, a, b, b],
             [b, b, a, b],
             [b, b, b, a],
+            ])
+
+    def _r_beta(self, beta):
+        '''From the article:
+
+        mu_i = (1+(n-2)*beta) / n,
+        mu_j = mu_i,
+        mu_k = (1 - 2*beta) / n    for k!=i, k!=j,
+
+        where n is the number of vertices.
+        '''
+        a = (1.0 + 2*beta) / 4.0
+        b = (1.0 - 2*beta) / 4.0
+        return numpy.array([
+            [a, a, b, b],
+            [a, b, a, b],
+            [b, a, a, b],
+            [a, b, b, a],
+            [b, a, b, a],
+            [b, b, a, a],
             ])
 
     def _r_gamma_delta(self, gamma, delta):
