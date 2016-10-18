@@ -823,3 +823,117 @@ class HammerMarloweStroud(object):
             [b, b, a, b],
             [b, b, b, a],
             ])
+
+
+class LiuVinokur(object):
+    '''
+    Y. Liu and M. Vinokur,
+    Exact Integrations of Polynomials and Symmetric Quadrature Formulas over
+    Arbitrary Polyhedral Grids,
+    Journal of Computational Physics, 140, 122–147 (1998).
+    DOI: 10.1006/jcph.1998.5884
+    '''
+    def __init__(self, index):
+        if index == 1:
+            self.weights = numpy.concatenate([
+                1.0 * numpy.ones(1),
+                ])
+            bary = numpy.concatenate([
+                _s4(),
+                ])
+            self.degree = 1
+        elif index == 2:
+            self.weights = numpy.concatenate([
+                0.25 * numpy.ones(4),
+                ])
+            bary = numpy.concatenate([
+                self._r_alpha(1.0),
+                ])
+            self.degree = 1
+        elif index == 3:
+            self.weights = numpy.concatenate([
+                0.25 * numpy.ones(4),
+                ])
+            bary = numpy.concatenate([
+                self._r_alpha(1.0 / numpy.sqrt(5.0)),
+                ])
+            self.degree = 2
+        elif index == 4:
+            self.weights = numpy.concatenate([
+                0.8 * numpy.ones(1),
+                0.05 * numpy.ones(4),
+                ])
+            bary = numpy.concatenate([
+                _s4(),
+                self._r_alpha(1.0),
+                ])
+            self.degree = 2
+        elif index == 5:
+            self.weights = numpy.concatenate([
+                -0.8 * numpy.ones(1),
+                0.45 * numpy.ones(4),
+                ])
+            bary = numpy.concatenate([
+                _s4(),
+                self._r_alpha(1.0/3.0),
+                ])
+            self.degree = 3
+        elif index == 6:
+            self.weights = numpy.concatenate([
+                1.0/40.0 * numpy.ones(4),
+                9.0/40.0 * numpy.ones(4),
+                ])
+            bary = numpy.concatenate([
+                self._r_alpha(1.0),
+                self._r_alpha(-1.0/3.0),
+                ])
+            self.degree = 3
+        else:
+            raise ValueError('Illegal Liu-Vinokur index')
+
+        self.points = bary[:, 1:]
+        return
+
+    def _r_alpha(self, alpha):
+        '''From the article:
+
+        mu_i = (1 + (n-1) alpha) / n,
+        mu_j = (1 - alpha) / n    for j!=i,
+
+        where n is the number of vertices
+        '''
+        a = (1.0 + 3*alpha) / 4.0
+        b = (1.0 - alpha) / 4.0
+        return numpy.array([
+            [a, b, b, b],
+            [b, a, b, b],
+            [b, b, a, b],
+            [b, b, b, a],
+            ])
+
+    def _r_gamma_delta(self, gamma, delta):
+        '''From the article:
+
+        mu_i = (1 + (n-1) gamma - delta) / n,
+        mu_j = (1 + (n-1) delta - gamma) / n,
+        mu_k = (1 - gamma - delta) / n    for k!=i, k!=j,
+
+        where n is the number of vertices
+        '''
+        b = (1.0 + 3*gamma - delta) / 4.0
+        c = (1.0 + 3*delta - gamma) / 4.0
+        a = (1.0 - gamma - delta) / 4.0
+        return numpy.array([
+            [a, a, b, c],
+            [a, b, a, c],
+            [b, a, a, c],
+            [a, b, c, a],
+            [b, a, c, a],
+            [b, c, a, a],
+            [a, a, c, b],
+            [a, c, a, b],
+            [c, a, a, b],
+            [a, c, b, a],
+            [c, a, b, a],
+            [c, b, a, a],
+            ])
