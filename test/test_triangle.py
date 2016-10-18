@@ -184,6 +184,11 @@ def _create_monomial_exponents(degree):
     quadrature.triangle.LiuVinokur(11),
     quadrature.triangle.LiuVinokur(12),
     quadrature.triangle.LiuVinokur(13),
+    quadrature.triangle.Hillion(1),
+    quadrature.triangle.Hillion(2),
+    quadrature.triangle.Hillion(3),
+    quadrature.triangle.Hillion(4),
+    quadrature.triangle.Hillion(5),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
