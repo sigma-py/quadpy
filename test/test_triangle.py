@@ -69,15 +69,6 @@ def _create_monomial_exponents(degree):
 
 
 @pytest.mark.parametrize('scheme', [
-    quadrature.triangle.LiuVinokur(1),
-    quadrature.triangle.LiuVinokur(2),
-    quadrature.triangle.LiuVinokur(3),
-    quadrature.triangle.LiuVinokur(4),
-    quadrature.triangle.LiuVinokur(5),
-    quadrature.triangle.LiuVinokur(6),
-    quadrature.triangle.LiuVinokur(7),
-    quadrature.triangle.LiuVinokur(8),
-    quadrature.triangle.LiuVinokur(9),
     quadrature.triangle.Centroid(),
     quadrature.triangle.Vertex(),
     quadrature.triangle.SevenPoint(),
@@ -180,6 +171,19 @@ def _create_monomial_exponents(degree):
     quadrature.triangle.Cowper(8),
     quadrature.triangle.Cowper(9),
     quadrature.triangle.Cowper(10),
+    quadrature.triangle.LiuVinokur(1),
+    quadrature.triangle.LiuVinokur(2),
+    quadrature.triangle.LiuVinokur(3),
+    quadrature.triangle.LiuVinokur(4),
+    quadrature.triangle.LiuVinokur(5),
+    quadrature.triangle.LiuVinokur(6),
+    quadrature.triangle.LiuVinokur(7),
+    quadrature.triangle.LiuVinokur(8),
+    quadrature.triangle.LiuVinokur(9),
+    quadrature.triangle.LiuVinokur(10),
+    quadrature.triangle.LiuVinokur(11),
+    quadrature.triangle.LiuVinokur(12),
+    quadrature.triangle.LiuVinokur(13),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
