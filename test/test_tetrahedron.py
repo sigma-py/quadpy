@@ -68,17 +68,6 @@ def _integrate_monomial_over_standard_tet(k):
 
 
 @pytest.mark.parametrize('scheme', [
-    quadrature.tetrahedron.LiuVinokur(1),
-    quadrature.tetrahedron.LiuVinokur(2),
-    quadrature.tetrahedron.LiuVinokur(3),
-    quadrature.tetrahedron.LiuVinokur(4),
-    quadrature.tetrahedron.LiuVinokur(5),
-    quadrature.tetrahedron.LiuVinokur(6),
-    quadrature.tetrahedron.LiuVinokur(7),
-    quadrature.tetrahedron.LiuVinokur(8),
-    quadrature.tetrahedron.LiuVinokur(9),
-    quadrature.tetrahedron.LiuVinokur(10),
-    quadrature.tetrahedron.LiuVinokur(11),
     quadrature.tetrahedron.Keast(0),
     quadrature.tetrahedron.Keast(1),
     quadrature.tetrahedron.Keast(2),
@@ -121,6 +110,20 @@ def _integrate_monomial_over_standard_tet(k):
     quadrature.tetrahedron.HammerMarloweStroud(1),
     quadrature.tetrahedron.HammerMarloweStroud(2),
     quadrature.tetrahedron.HammerMarloweStroud(3),
+    quadrature.tetrahedron.LiuVinokur(1),
+    quadrature.tetrahedron.LiuVinokur(2),
+    quadrature.tetrahedron.LiuVinokur(3),
+    quadrature.tetrahedron.LiuVinokur(4),
+    quadrature.tetrahedron.LiuVinokur(5),
+    quadrature.tetrahedron.LiuVinokur(6),
+    quadrature.tetrahedron.LiuVinokur(7),
+    quadrature.tetrahedron.LiuVinokur(8),
+    quadrature.tetrahedron.LiuVinokur(9),
+    quadrature.tetrahedron.LiuVinokur(10),
+    quadrature.tetrahedron.LiuVinokur(11),
+    quadrature.tetrahedron.LiuVinokur(12),
+    quadrature.tetrahedron.LiuVinokur(13),
+    quadrature.tetrahedron.LiuVinokur(14),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
