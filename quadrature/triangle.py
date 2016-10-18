@@ -2434,3 +2434,72 @@ class LiuVinokur(object):
             [b, a, c],
             [c, b, a],
             ])
+
+
+class Hillion(object):
+    '''
+    P. Hillion,
+    Numerical Integration on a Triangle,
+    International Journal for Numerical Methods in Engineering,
+    Vol. 11, 797-815 (1977).
+    DOI:10.1002/nme.1620110504
+    '''
+    def __init__(self, index):
+        if index == 1:
+            self.weights = numpy.concatenate([
+                1.0 * numpy.ones(1),
+                ])
+            self.points = numpy.array([
+                [1.0/3.0, 1.0/3.0]
+                ])
+            self.degree = 1
+        elif index == 2:
+            self.weights = 2.0 * numpy.concatenate([
+                1.0/6.0 * numpy.ones(2),
+                1.0/6.0 * numpy.ones(1),
+                ])
+            self.points = numpy.concatenate([
+                self._symm(0.0, 0.5),
+                numpy.array([[0.5, 0.5]]),
+                ])
+            self.degree = 2
+        elif index == 3:
+            self.weights = 2.0 * numpy.concatenate([
+                1.0/6.0 * numpy.ones(2),
+                1.0/6.0 * numpy.ones(1),
+                ])
+            self.points = numpy.concatenate([
+                2.0/3.0 - self._symm(0.0, 0.5),
+                2.0/3.0 - numpy.array([[0.5, 0.5]]),
+                ])
+            self.degree = 2
+        elif index == 4:
+            self.weights = 2.0 * numpy.concatenate([
+                1.0/18.0 * numpy.ones(1),
+                2.0/9.0 * numpy.ones(2),
+                ])
+            self.points = numpy.concatenate([
+                numpy.array([[0.0, 0.0]]),
+                self._symm(0.591506351, 0.158493649),
+                ])
+            self.degree = 2
+        elif index == 5:
+            self.weights = 2.0 * numpy.concatenate([
+                1.0/18.0 * numpy.ones(1),
+                2.0/9.0 * numpy.ones(2),
+                ])
+            self.points = numpy.concatenate([
+                2.0/3.0 - numpy.array([[0.0, 0.0]]),
+                2.0/3.0 - self._symm(0.591506351, 0.158493649),
+                ])
+            self.degree = 2
+        else:
+            raise ValueError('Illegal Hillion index')
+
+        return
+
+    def _symm(self, a, b):
+        return numpy.array([
+            [a, b],
+            [b, a],
+            ])
