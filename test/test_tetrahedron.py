@@ -68,6 +68,12 @@ def _integrate_monomial_over_standard_tet(k):
 
 
 @pytest.mark.parametrize('scheme', [
+    quadrature.tetrahedron.LiuVinokur(1),
+    quadrature.tetrahedron.LiuVinokur(2),
+    quadrature.tetrahedron.LiuVinokur(3),
+    quadrature.tetrahedron.LiuVinokur(4),
+    quadrature.tetrahedron.LiuVinokur(5),
+    quadrature.tetrahedron.LiuVinokur(6),
     quadrature.tetrahedron.Keast(0),
     quadrature.tetrahedron.Keast(1),
     quadrature.tetrahedron.Keast(2),
