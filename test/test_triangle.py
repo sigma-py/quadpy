@@ -69,8 +69,6 @@ def _create_monomial_exponents(degree):
 
 
 @pytest.mark.parametrize('scheme', [
-    quadrature.triangle.CoolsHaegemans(1),
-    quadrature.triangle.CoolsHaegemans(2),
     quadrature.triangle.Centroid(),
     quadrature.triangle.Vertex(),
     quadrature.triangle.SevenPoint(),
@@ -191,6 +189,25 @@ def _create_monomial_exponents(degree):
     quadrature.triangle.Hillion(3),
     quadrature.triangle.Hillion(4),
     quadrature.triangle.Hillion(5),
+    quadrature.triangle.CoolsHaegemans(1),
+    quadrature.triangle.CoolsHaegemans(2),
+    quadrature.triangle.LaursenGellert('1'),
+    quadrature.triangle.LaursenGellert('2a'),
+    quadrature.triangle.LaursenGellert('2b'),
+    quadrature.triangle.LaursenGellert('3'),
+    quadrature.triangle.LaursenGellert('4'),
+    quadrature.triangle.LaursenGellert('5'),
+    quadrature.triangle.LaursenGellert('6'),
+    quadrature.triangle.LaursenGellert('7'),
+    quadrature.triangle.LaursenGellert('8'),
+    quadrature.triangle.LaursenGellert('9'),
+    quadrature.triangle.LaursenGellert('10'),
+    quadrature.triangle.LaursenGellert('11'),
+    quadrature.triangle.LaursenGellert('12'),
+    quadrature.triangle.LaursenGellert('13'),
+    quadrature.triangle.LaursenGellert('14'),
+    quadrature.triangle.LaursenGellert('15a'),
+    quadrature.triangle.LaursenGellert('15b'),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
