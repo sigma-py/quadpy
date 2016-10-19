@@ -69,6 +69,8 @@ def _create_monomial_exponents(degree):
 
 
 @pytest.mark.parametrize('scheme', [
+    quadrature.triangle.CoolsHaegemans(1),
+    quadrature.triangle.CoolsHaegemans(2),
     quadrature.triangle.Centroid(),
     quadrature.triangle.Vertex(),
     quadrature.triangle.SevenPoint(),
@@ -235,7 +237,8 @@ def test_show():
         # quadrature.triangle.Vertex()
         # quadrature.triangle.SevenPoint()
         # quadrature.triangle.Strang(9)
-        quadrature.triangle.Dunavant(20)
+        # quadrature.triangle.Dunavant(20)
+        quadrature.triangle.CoolsHaegemans(2)
         )
     return
 
@@ -243,5 +246,5 @@ def test_show():
 if __name__ == '__main__':
     # test_show()
     # plt.show()
-    scheme = quadrature.triangle.BerntsenEspelid(4)
+    scheme = quadrature.triangle.CoolsHaegemans(2)
     test_scheme(scheme)
