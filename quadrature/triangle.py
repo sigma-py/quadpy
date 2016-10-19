@@ -2566,3 +2566,58 @@ class Hillion(object):
             [a, b],
             [b, a],
             ])
+
+
+class CoolsHaegemans(object):
+    '''
+    R. Cools, A. Haegemans,
+    Construction of minimal cubature formulae for the square and the triangle
+    using invariant theory,
+    Department of Computer Science, K.U.Leuven,
+    TW Reports vol:TW96, Sept. 1987.
+    '''
+    def __init__(self, index):
+        if index == 1:
+            self.weights = 2.0 * numpy.concatenate([
+                0.16058343856681218798E-09 * numpy.ones(3),
+                0.26530624434780379347E-01 * numpy.ones(3),
+                0.29285717640155892159E-01 * numpy.ones(3),
+                0.43909556791220782402E-01 * numpy.ones(3),
+                0.66940767639916174192E-01 * numpy.ones(3),
+                ])
+            self.points = numpy.concatenate([
+                self._r3(
+                    0.34579201116826902882E+00,
+                    0.36231682215692616667E+01
+                    ),
+                self._r3(
+                    0.65101993458939166328E-01,
+                    0.87016510156356306078E+00
+                    ),
+                self._r3(
+                    0.65177530364879570754E+00,
+                    0.31347788752373300717E+00
+                    ),
+                self._r3(
+                    0.31325121067172530696E+00,
+                    0.63062143431895614010E+00
+                    ),
+                self._r3(
+                    0.51334692063945414949E+00,
+                    0.28104124731511039057E+00
+                    ),
+                ])
+            self.degree = 8
+        else:
+            raise ValueError('Illegal Cools-Haegemans index')
+
+        return
+
+    def _r3(self, a, b):
+        # rotation group R_3
+        c = 1.0 - a - b
+        return numpy.array([
+            [a, b, c],
+            [c, a, b],
+            [b, c, a],
+            ])
