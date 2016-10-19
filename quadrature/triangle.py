@@ -2675,6 +2675,17 @@ class LaursenGellert(object):
     International Journal for Numerical Methods in Engineering,
     Volume 12, Issue 1, 1978, Pages 67–76.
     DOI: 10.1002/nme.1620120107
+
+    Abstract:
+    For a wide class of finite element matrices integrated numerically rather
+    than exactly, a definable number of sampling points is found to be
+    sufficient for keeping their theoretical properties unchanged. A systematic
+    criterion limiting the number of possible point configurations for
+    numerical quadrature formulas on triangles is established. Some new high
+    order formulas are presented. Tables containing optimal formulas with
+    respect to minimum number of sampling points and required degrees of
+    accuracy are given. They are arranged so as to assist with selection of
+    suitable quadrature formulas for finite element computer programming.
     '''
     def __init__(self, index):
         if index == '1':
