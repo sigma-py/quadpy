@@ -2425,7 +2425,7 @@ class LiuVinokur(object):
         '''
         a = (1.0 + 2*gamma - delta) / 3.0
         b = (1.0 + 2*delta - gamma) / 3.0
-        c = (1.0 - gamma - delta ) / 3.0
+        c = (1.0 - gamma - delta) / 3.0
         return numpy.array([
             [a, b, c],
             [c, a, b],
@@ -2665,3 +2665,72 @@ class CoolsHaegemans(object):
             [c, a, b],
             [b, c, a],
             ])
+
+
+class LaursenGellert(object):
+    '''
+    M.E. Laursen, M. Gellert,
+    Some criteria for numerically integrated matrices and quadrature formulas
+    for triangles,
+    International Journal for Numerical Methods in Engineering,
+    Volume 12, Issue 1, 1978, Pages 67–76.
+    DOI: 10.1002/nme.1620120107
+    '''
+    def __init__(self, index):
+        if index == '1':
+            self.weights = numpy.concatenate([
+                1.0 * numpy.ones(1),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                ])
+            self.degree = 1
+        elif index == '2a':
+            self.weights = numpy.concatenate([
+                1.0/3.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s21(1.0/6.0),
+                ])
+            self.degree = 2
+        elif index == '2b':
+            self.weights = numpy.concatenate([
+                1.0/3.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s21(0.5),
+                ])
+            self.degree = 2
+        elif index == '3':
+            self.weights = numpy.concatenate([
+                -0.5625 * numpy.ones(1),
+                25.0/48.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.2),
+                ])
+            self.degree = 3
+        elif index == '4':
+            self.weights = numpy.concatenate([
+                1.0/6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s111(0.659027622374092, 0.231933368553031),
+                ])
+            self.degree = 4
+        elif index == '5':
+            self.weights = numpy.concatenate([
+                0.109951743655322 * numpy.ones(3),
+                0.223381589678011 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s21(0.091576213509771),
+                _s21(0.445948490915965),
+                ])
+            self.degree = 5
+        else:
+            raise ValueError('Illegal Laursen-Gellert index')
+
+        self.points = bary[:, 1:]
+        return
