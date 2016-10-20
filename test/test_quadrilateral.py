@@ -44,6 +44,12 @@ def _integrate_exact(f, quadrilateral):
 
 
 @pytest.mark.parametrize('scheme', [
+    quadrature.quadrilateral.Stroud(1),
+    quadrature.quadrilateral.Stroud(2),
+    quadrature.quadrilateral.Stroud(3),
+    quadrature.quadrilateral.Stroud(4),
+    quadrature.quadrilateral.Stroud(5),
+    quadrature.quadrilateral.Stroud(6),
     From1d(quadrature.line.Midpoint()),
     From1d(quadrature.line.Trapezoidal()),
     From1d(quadrature.line.GaussLegendre(1)),
