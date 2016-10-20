@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import math
 import numpy
 from . import line
 
@@ -60,28 +61,30 @@ def show(quad, scheme, circle_scale=1.0):
     return
 
 
-def integrate(f, quad, scheme):
-    out = 0.0
-    for xi, weight in zip(scheme.points, scheme.weights):
-        x = \
-            + quad[0] * 0.25*(1.0 - xi[0])*(1.0 - xi[1]) \
-            + quad[1] * 0.25*(1.0 + xi[0])*(1.0 - xi[1]) \
-            + quad[2] * 0.25*(1.0 + xi[0])*(1.0 + xi[1]) \
-            + quad[3] * 0.25*(1.0 - xi[0])*(1.0 + xi[1])
+def _get_det_J(quad, xi):
         J0 = \
-            - quad[0] * 0.25*(1-xi[1]) \
-            + quad[1] * 0.25*(1-xi[1]) \
-            + quad[2] * 0.25*(1+xi[1]) \
-            - quad[3] * 0.25*(1+xi[1])
+            - numpy.outer(quad[0], 0.25*(1-xi[1])) \
+            + numpy.outer(quad[1], 0.25*(1-xi[1])) \
+            + numpy.outer(quad[2], 0.25*(1+xi[1])) \
+            - numpy.outer(quad[3], 0.25*(1+xi[1]))
         J1 = \
-            - quad[0] * 0.25*(1-xi[0]) \
-            - quad[1] * 0.25*(1+xi[0]) \
-            + quad[2] * 0.25*(1+xi[0]) \
-            + quad[3] * 0.25*(1-xi[0])
+            - numpy.outer(quad[0], 0.25*(1-xi[0])) \
+            - numpy.outer(quad[1], 0.25*(1+xi[0])) \
+            + numpy.outer(quad[2], 0.25*(1+xi[0])) \
+            + numpy.outer(quad[3], 0.25*(1-xi[0]))
+        det = J0[0]*J1[1] - J1[0]*J0[1]
+        return det
 
-        det_J = J0[0]*J1[1] - J1[0]*J0[1]
-        out += weight * f(x) * abs(det_J)
-    return out
+
+def integrate(f, quad, scheme):
+    xi = scheme.points.T
+    x = \
+        + numpy.outer(quad[0], 0.25*(1.0-xi[0])*(1.0-xi[1])) \
+        + numpy.outer(quad[1], 0.25*(1.0+xi[0])*(1.0-xi[1])) \
+        + numpy.outer(quad[2], 0.25*(1.0+xi[0])*(1.0+xi[1])) \
+        + numpy.outer(quad[3], 0.25*(1.0-xi[0])*(1.0+xi[1]))
+    det = _get_det_J(quad, xi)
+    return math.fsum(scheme.weights * f(x).T * abs(det))
 
 
 class From1d(object):
