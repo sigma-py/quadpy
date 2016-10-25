@@ -109,7 +109,8 @@ def test_scheme(scheme):
 
 def test_show():
     quadrature.circle.show(
-        quadrature.circle.Lether(5)
+        quadrature.circle.Peirce(3)
+        # quadrature.circle.Lether(5)
         )
     return
 

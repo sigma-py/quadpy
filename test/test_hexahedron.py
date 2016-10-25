@@ -143,7 +143,7 @@ def test_show():
         quadrature.hexahedron.From1d(
             # quadrature.line.Midpoint()
             # quadrature.line.Trapezoidal()
-            quadrature.line.NewtonCotesClosed(3)
+            quadrature.line.NewtonCotesClosed(2)
             # quadrature.line.NewtonCotesOpen(2)
             )
         )
