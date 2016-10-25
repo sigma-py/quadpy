@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 #
+from helpers import create_monomial_exponents2
+
 import math
 import numpy
 import numpy.testing
@@ -60,12 +62,6 @@ def _integrate_monomial_over_standard_triangle(k):
         math.fsum([math.lgamma(kk+1) for kk in k])
         - math.lgamma(3 + sum(k))
         )
-
-
-def _create_monomial_exponents(degree):
-    '''Returns a list of all monomials of degree :degree:.
-    '''
-    return [(degree-k, k) for k in range(degree+1)]
 
 
 @pytest.mark.parametrize('scheme', [
@@ -221,7 +217,7 @@ def test_scheme(scheme):
     degree = 0
     max_degree = scheme.degree + 1
     while success:
-        for k in _create_monomial_exponents(degree):
+        for k in create_monomial_exponents2(degree):
             def poly(x):
                 return x[0]**k[0] * x[1]**k[1]
             # exact_val = _integrate_exact(poly, triangle)
