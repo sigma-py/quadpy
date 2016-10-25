@@ -78,6 +78,11 @@ def _integrate_exact(k):
     quadrature.circle.Peirce(3),
     quadrature.circle.Peirce(4),
     quadrature.circle.Peirce(5),
+    quadrature.circle.Lether(1),
+    quadrature.circle.Lether(2),
+    quadrature.circle.Lether(3),
+    quadrature.circle.Lether(4),
+    quadrature.circle.Lether(5),
     ])
 def test_scheme(scheme):
     success = True
@@ -104,7 +109,7 @@ def test_scheme(scheme):
 
 def test_show():
     quadrature.circle.show(
-        quadrature.circle.Peirce(6)
+        quadrature.circle.Lether(5)
         )
     return
 
@@ -112,5 +117,5 @@ if __name__ == '__main__':
     test_show()
     plt.show()
     # scheme = From1d(quadrature.line.NewtonCotesClosed(15))
-    scheme = quadrature.circle.Peirce(6)
+    scheme = quadrature.circle.Lether(5)
     test_scheme(scheme)
