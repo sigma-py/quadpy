@@ -59,6 +59,12 @@ def _integrate_exact(f, hexa):
     return float(exact)
 
 
+def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
+    return 1.0/(k[0] + 1) * (x1**(k[0]+1) - x0**(k[0]+1)) \
+        * 1.0/(k[1] + 1) * (y1**(k[1]+1) - y0**(k[1]+1)) \
+        * 1.0/(k[2] + 1) * (z1**(k[2]+1) - z0**(k[2]+1))
+
+
 @pytest.mark.parametrize('scheme', [
     From1d(quadrature.line.Midpoint()),
     From1d(quadrature.line.Trapezoidal()),
@@ -81,15 +87,21 @@ def _integrate_exact(f, hexa):
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
     # longer be integrated exactly. The scheme's degree is `d-1`.
+    x0 = -1
+    x1 = +1
+    y0 = -1
+    y1 = +1
+    z0 = -1
+    z1 = +1
     hexa = numpy.array([
-        [-1, -1, -1],
-        [+1, -1, -1],
-        [+1, +1, -1],
-        [-1, +1, -1],
-        [-1, -1, +1],
-        [+1, -1, +1],
-        [+1, +1, +1],
-        [-1, +1, +1],
+        [x0, y0, z0],
+        [x1, y0, z0],
+        [x1, y1, z0],
+        [x0, y1, z0],
+        [x0, y0, z1],
+        [x1, y0, z1],
+        [x1, y1, z1],
+        [x0, y1, z1],
         ])
     success = True
     degree = 0
@@ -98,7 +110,8 @@ def test_scheme(scheme):
         for k in create_monomial_exponents3(degree):
             def poly(x):
                 return x[0]**k[0] * x[1]**k[1] * x[2]**k[2]
-            exact_val = _integrate_exact(poly, hexa)
+            # exact_val = _integrate_exact(poly, hexa)
+            exact_val = _integrate_exact2(k, x0, x1, y0, y1, z0, z1)
             val = quadrature.hexahedron.integrate(
                     poly, hexa, scheme
                     )
