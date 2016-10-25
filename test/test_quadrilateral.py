@@ -55,20 +55,20 @@ def _integrate_exact2(k, x0, x1, y0, y1):
     quadrature.quadrilateral.Stroud(4),
     quadrature.quadrilateral.Stroud(5),
     quadrature.quadrilateral.Stroud(6),
-    From1d(quadrature.line.Midpoint()),
-    From1d(quadrature.line.Trapezoidal()),
-    From1d(quadrature.line.GaussLegendre(1)),
-    From1d(quadrature.line.GaussLegendre(2)),
-    From1d(quadrature.line.GaussLegendre(3)),
-    From1d(quadrature.line.GaussLegendre(4)),
-    From1d(quadrature.line.NewtonCotesClosed(1)),
-    From1d(quadrature.line.NewtonCotesClosed(2)),
-    From1d(quadrature.line.NewtonCotesClosed(3)),
-    From1d(quadrature.line.NewtonCotesClosed(4)),
-    From1d(quadrature.line.NewtonCotesOpen(2)),
-    From1d(quadrature.line.NewtonCotesOpen(3)),
-    From1d(quadrature.line.NewtonCotesOpen(4)),
-    From1d(quadrature.line.NewtonCotesOpen(5)),
+    From1d(quadrature.line_segment.Midpoint()),
+    From1d(quadrature.line_segment.Trapezoidal()),
+    From1d(quadrature.line_segment.GaussLegendre(1)),
+    From1d(quadrature.line_segment.GaussLegendre(2)),
+    From1d(quadrature.line_segment.GaussLegendre(3)),
+    From1d(quadrature.line_segment.GaussLegendre(4)),
+    From1d(quadrature.line_segment.NewtonCotesClosed(1)),
+    From1d(quadrature.line_segment.NewtonCotesClosed(2)),
+    From1d(quadrature.line_segment.NewtonCotesClosed(3)),
+    From1d(quadrature.line_segment.NewtonCotesClosed(4)),
+    From1d(quadrature.line_segment.NewtonCotesOpen(2)),
+    From1d(quadrature.line_segment.NewtonCotesOpen(3)),
+    From1d(quadrature.line_segment.NewtonCotesOpen(4)),
+    From1d(quadrature.line_segment.NewtonCotesOpen(5)),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
@@ -123,7 +123,7 @@ def test_show():
         quadrilateral,
         quadrature.quadrilateral.Stroud(6)
         # quadrature.quadrilateral.From1d(
-        #     quadrature.line.NewtonCotesClosed(4)
+        #     quadrature.line_segment.NewtonCotesClosed(4)
         #     )
         )
     return
@@ -132,6 +132,6 @@ def test_show():
 if __name__ == '__main__':
     test_show()
     plt.show()
-    # scheme = From1d(quadrature.line.NewtonCotesClosed(15))
+    # scheme = From1d(quadrature.line_segment.NewtonCotesClosed(15))
     scheme = quadrature.quadrilateral.Stroud(6)
     test_scheme(scheme)

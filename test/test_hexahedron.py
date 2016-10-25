@@ -66,23 +66,23 @@ def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
 
 
 @pytest.mark.parametrize('scheme', [
-    From1d(quadrature.line.Midpoint()),
-    From1d(quadrature.line.Trapezoidal()),
-    From1d(quadrature.line.GaussLegendre(1)),
-    From1d(quadrature.line.GaussLegendre(2)),
-    From1d(quadrature.line.GaussLegendre(3)),
-    From1d(quadrature.line.GaussLegendre(4)),
-    From1d(quadrature.line.GaussLegendre(5)),
-    From1d(quadrature.line.NewtonCotesClosed(0)),
-    From1d(quadrature.line.NewtonCotesClosed(1)),
-    From1d(quadrature.line.NewtonCotesClosed(2)),
-    From1d(quadrature.line.NewtonCotesClosed(3)),
-    From1d(quadrature.line.NewtonCotesClosed(4)),
-    From1d(quadrature.line.NewtonCotesOpen(0)),
-    From1d(quadrature.line.NewtonCotesOpen(1)),
-    From1d(quadrature.line.NewtonCotesOpen(2)),
-    From1d(quadrature.line.NewtonCotesOpen(3)),
-    From1d(quadrature.line.NewtonCotesOpen(4)),
+    From1d(quadrature.line_segment.Midpoint()),
+    From1d(quadrature.line_segment.Trapezoidal()),
+    From1d(quadrature.line_segment.GaussLegendre(1)),
+    From1d(quadrature.line_segment.GaussLegendre(2)),
+    From1d(quadrature.line_segment.GaussLegendre(3)),
+    From1d(quadrature.line_segment.GaussLegendre(4)),
+    From1d(quadrature.line_segment.GaussLegendre(5)),
+    From1d(quadrature.line_segment.NewtonCotesClosed(0)),
+    From1d(quadrature.line_segment.NewtonCotesClosed(1)),
+    From1d(quadrature.line_segment.NewtonCotesClosed(2)),
+    From1d(quadrature.line_segment.NewtonCotesClosed(3)),
+    From1d(quadrature.line_segment.NewtonCotesClosed(4)),
+    From1d(quadrature.line_segment.NewtonCotesOpen(0)),
+    From1d(quadrature.line_segment.NewtonCotesOpen(1)),
+    From1d(quadrature.line_segment.NewtonCotesOpen(2)),
+    From1d(quadrature.line_segment.NewtonCotesOpen(3)),
+    From1d(quadrature.line_segment.NewtonCotesOpen(4)),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
@@ -141,10 +141,10 @@ def test_show():
     quadrature.hexahedron.show(
         hexa,
         quadrature.hexahedron.From1d(
-            # quadrature.line.Midpoint()
-            # quadrature.line.Trapezoidal()
-            quadrature.line.NewtonCotesClosed(2)
-            # quadrature.line.NewtonCotesOpen(2)
+            # quadrature.line_segment.Midpoint()
+            # quadrature.line_segment.Trapezoidal()
+            quadrature.line_segment.NewtonCotesClosed(2)
+            # quadrature.line_segment.NewtonCotesOpen(2)
             )
         )
     return
@@ -153,6 +153,6 @@ def test_show():
 if __name__ == '__main__':
     test_show()
     plt.show()
-    # scheme = From1d(quadrature.line.NewtonCotesOpen(2))
-    scheme = From1d(quadrature.line.GaussLegendre(5))
+    # scheme = From1d(quadrature.line_segment.NewtonCotesOpen(2))
+    scheme = From1d(quadrature.line_segment.GaussLegendre(5))
     test_scheme(scheme)
