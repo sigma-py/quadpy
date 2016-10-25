@@ -8,9 +8,7 @@ Your one-stop shop for numerical integration in Python.
 [![PyPi Version](https://img.shields.io/pypi/v/quadrature.svg)](https://pypi.python.org/pypi/quadrature)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/quadrature.svg?style=social&label=Star&maxAge=2592000)](https://github.com/nschloe/quadrature)
 
-![](https://nschloe.github.io/quadrature/s9.png)
-
-Numerical integration schemes for lines, triangles, tetrahedra,
+Over 300 numerical integration schemes for lines, triangles, tetrahedra,
 quadrilaterals, hexahedra, wedges, pyramids, circles, and spheres.
 
 To numerically integrate any function over any given triangle, do
@@ -22,10 +20,9 @@ def f(x): return numpy.sin(x[0]) * numpy.sin(x[1])
 
 triangle = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.7, 0.5]])
 
-val = quadrature.triangle.integrate(f, triangle, quadrature.triangle.Strang9())
+val = quadrature.triangle.integrate(f, triangle, quadrature.triangle.Strang(9))
 ```
-This uses Strang's rule of degree 6 (see picture above); [many more are
-implemented](https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html).
+This uses Strang's rule of degree 6.
 
 ### Rules
 
