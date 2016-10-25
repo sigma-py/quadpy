@@ -4,6 +4,8 @@ import math
 import numpy
 import sympy
 
+from . import helpers
+
 
 def volume(triangle):
     # It doesn't matter much which cross product we take for computing the
@@ -29,7 +31,8 @@ def show(triangle, scheme):
     plt.plot(
         [triangle[-1, 0], triangle[0, 0]],
         [triangle[-1, 1], triangle[0, 1]],
-        '-k')
+        '-k'
+        )
 
     transformed_pts = \
         + numpy.outer(
@@ -39,17 +42,9 @@ def show(triangle, scheme):
         + numpy.outer(scheme.points[:, 0], triangle[1]) \
         + numpy.outer(scheme.points[:, 1], triangle[2])
 
-    # plt.plot(transformed_pts[:, 0], transformed_pts[:, 1], 'or')
-    triangle_vol = volume(triangle)
-    for tp, weight in zip(transformed_pts, scheme.weights):
-        color = 'b' if weight >= 0 else 'r'
-        # highlight circle center
-        plt.plot([tp[0]], [tp[1]], '.' + color)
-        # plot circle
-        # scale the circle volume according to the weight
-        radius = numpy.sqrt(triangle_vol * abs(weight) / numpy.pi)
-        circ = plt.Circle((tp[0], tp[1]), radius, color=color, alpha=0.5)
-        plt.gcf().gca().add_artist(circ)
+    helpers.plot_circles(
+        plt, transformed_pts, scheme.weights, volume(triangle)
+        )
 
     plt.axis('equal')
     return

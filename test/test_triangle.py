@@ -254,14 +254,14 @@ def test_show():
         # quadrature.triangle.Vertex()
         # quadrature.triangle.SevenPoint()
         # quadrature.triangle.Strang(9)
-        # quadrature.triangle.Dunavant(20)
-        quadrature.triangle.CoolsHaegemans(2)
+        quadrature.triangle.Dunavant(20)
+        # quadrature.triangle.CoolsHaegemans(2)
         )
     return
 
 
 if __name__ == '__main__':
-    # test_show()
-    # plt.show()
+    test_show()
+    plt.show()
     scheme = quadrature.triangle.CoolsHaegemans(2)
     test_scheme(scheme)
