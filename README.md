@@ -24,12 +24,12 @@ val = quadrature.triangle.integrate(f, triangle, quadrature.triangle.Strang(9))
 ```
 This uses Strang's rule of degree 6.
 
-### Rules
+## Rules
 
-#### Line segment
+### Line segment
 ![](https://nschloe.github.io/quadrature/line.png)
 
-#### Triangle
+### Triangle
 ![](https://nschloe.github.io/quadrature/tri.png)
 
  * [Strang's schemes](http://bookstore.siam.org/wc08/),
@@ -50,25 +50,25 @@ This uses Strang's rule of degree 6.
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131869),
  * [Laursen-Gellert](https://dx.doi.org/10.1002/nme.1620120107).
 
-#### Circle
+### Circle
 ![](https://nschloe.github.io/quadrature/circle.png)
 
-#### Quadrilateral
+### Quadrilateral
 ![](https://nschloe.github.io/quadrature/quad.png)
 
-#### Tetrahedron
+### Tetrahedron
 ![](https://nschloe.github.io/quadrature/tet.png)
 
-#### Hexahedron
+### Hexahedron
 ![](https://nschloe.github.io/quadrature/hexa.png)
 
-#### Pyramid
+### Pyramid
 ![](https://nschloe.github.io/quadrature/pyra.png)
 
-#### Sphere
+### Sphere
 ![](https://nschloe.github.io/quadrature/sphere.png)
 
-#### Wedge
+### Wedge
 ![](https://nschloe.github.io/quadrature/wedge.png)
 
 ### Installation
