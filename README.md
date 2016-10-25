@@ -8,7 +8,7 @@ Your one-stop shop for numerical integration in Python.
 [![PyPi Version](https://img.shields.io/pypi/v/quadrature.svg)](https://pypi.python.org/pypi/quadrature)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/quadrature.svg?style=social&label=Star&maxAge=2592000)](https://github.com/nschloe/quadrature)
 
-Over 300 numerical integration schemes for lines, triangles, tetrahedra,
+Over 300 numerical integration schemes for line segments, triangles, tetrahedra,
 quadrilaterals, hexahedra, wedges, pyramids, circles, and spheres.
 
 To numerically integrate any function over any given triangle, do

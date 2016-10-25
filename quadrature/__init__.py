@@ -14,7 +14,7 @@ from . import helpers
 
 from . import circle
 from . import hexahedron
-from . import line
+from . import line_segment
 from . import pyramid
 from . import quadrilateral
 from . import sphere
