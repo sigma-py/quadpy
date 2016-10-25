@@ -10,6 +10,7 @@ __version__ = '0.1.1'
 __maintainer__ = 'Nico Schlömer'
 __status__ = 'Beta'
 
+from . import circle
 from . import hexahedron
 from . import line
 from . import pyramid

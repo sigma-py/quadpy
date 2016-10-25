@@ -43,7 +43,18 @@ def _integrate_exact(f, quadrilateral):
     return float(exact)
 
 
+def _integrate_exact2(k, x0, x1, y0, y1):
+    return 1.0/(k[0] + 1) * (x1**(k[0]+1) - x0**(k[0]+1)) \
+        * 1.0/(k[1] + 1) * (y1**(k[1]+1) - y0**(k[1]+1))
+
+
 @pytest.mark.parametrize('scheme', [
+    quadrature.quadrilateral.Stroud(1),
+    quadrature.quadrilateral.Stroud(2),
+    quadrature.quadrilateral.Stroud(3),
+    quadrature.quadrilateral.Stroud(4),
+    quadrature.quadrilateral.Stroud(5),
+    quadrature.quadrilateral.Stroud(6),
     From1d(quadrature.line.Midpoint()),
     From1d(quadrature.line.Trapezoidal()),
     From1d(quadrature.line.GaussLegendre(1)),
@@ -62,11 +73,15 @@ def _integrate_exact(f, quadrilateral):
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
     # longer be integrated exactly. The scheme's degree is `d-1`.
+    x0 = -2.0
+    x1 = +1.0
+    y0 = -1.0
+    y1 = +1.0
     quadrilateral = numpy.array([
-        [-2, -1],
-        [+1, -1],
-        [+1, +1],
-        [-2, +1],
+        [x0, y0],
+        [x1, y0],
+        [x1, y1],
+        [x0, y1],
         ])
     success = True
     degree = 0
@@ -75,7 +90,7 @@ def test_scheme(scheme):
         for k in _create_monomial_exponents(degree):
             def poly(x):
                 return x[0]**k[0] * x[1]**k[1]
-            exact_val = _integrate_exact(poly, quadrilateral)
+            exact_val = _integrate_exact2(k, x0, x1, y0, y1)
             val = quadrature.quadrilateral.integrate(
                     poly, quadrilateral, scheme
                     )
@@ -116,5 +131,6 @@ def test_show():
 if __name__ == '__main__':
     # test_show()
     # plt.show()
-    scheme = From1d(quadrature.line.NewtonCotesClosed(15))
+    # scheme = From1d(quadrature.line.NewtonCotesClosed(15))
+    scheme = quadrature.quadrilateral.Stroud(6)
     test_scheme(scheme)
