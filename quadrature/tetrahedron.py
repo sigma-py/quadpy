@@ -4,22 +4,10 @@ import math
 import numpy
 import sympy
 
-
-def volume(tet):
-    '''Computes the center of the circumsphere of
-    '''
-    a = tet[1, :] - tet[0, :]
-    b = tet[2, :] - tet[0, :]
-    c = tet[3, :] - tet[0, :]
-
-    omega = numpy.dot(a, numpy.cross(b, c))
-
-    # https://en.wikipedia.org/wiki/Tetrahedron#Volume
-    cell_volumes = abs(omega) / 6.0
-    return cell_volumes
+from . import helpers
 
 
-def show(tet, scheme, ball_scale=1.0, alpha=0.3):
+def show(tet, scheme):
     '''Shows the quadrature points on a given tetrahedron. The size of the
     balls around the points coincides with their weights.
     '''
@@ -52,41 +40,13 @@ def show(tet, scheme, ball_scale=1.0, alpha=0.3):
         + numpy.outer(scheme.points[:, 1], tet[2]) \
         + numpy.outer(scheme.points[:, 2], tet[3])
 
-    tet_vol = volume(tet)
-    phi, theta = numpy.mgrid[0:numpy.pi:101j, 0:2*numpy.pi:101j]
-    x = numpy.sin(phi)*numpy.cos(theta)
-    y = numpy.sin(phi)*numpy.sin(theta)
-    z = numpy.cos(phi)
-    for tp, weight in zip(transformed_pts, scheme.weights):
-        color = 'b' if weight >= 0 else 'r'
-        # highlight ball center
-        plt.plot([tp[0]], [tp[1]], [tp[2]], '.' + color)
-
-        # plot ball
-        # scale the circle volume according to the weight
-        r = ball_scale \
-            * (tet_vol * abs(weight) / (4.0/3.0 * numpy.pi))**(1.0/3.0)
-
-        ax.plot_surface(
-            r*x + tp[0], r*y + tp[1], r*z + tp[2],
-            color=color,
-            alpha=alpha,
-            linewidth=0
-            )
-
-    # http://stackoverflow.com/a/21765085/353337
-    alpha = 1.3
-    max_range = alpha * 0.5 * numpy.array([
-        tet[:, 0].max() - tet[:, 0].min(),
-        tet[:, 1].max() - tet[:, 1].min(),
-        tet[:, 2].max() - tet[:, 2].min(),
-        ]).max()
-    mid_x = 0.5 * (tet[:, 0].max() + tet[:, 0].min())
-    mid_y = 0.5 * (tet[:, 1].max() + tet[:, 1].min())
-    mid_z = 0.5 * (tet[:, 2].max() + tet[:, 2].min())
-    ax.set_xlim(mid_x - max_range, mid_x + max_range)
-    ax.set_ylim(mid_y - max_range, mid_y + max_range)
-    ax.set_zlim(mid_z - max_range, mid_z + max_range)
+    vol = integrate(lambda x: numpy.ones(1), tet, Keast(0))
+    helpers.plot_balls(
+        plt, ax, transformed_pts, scheme.weights, vol,
+        tet[:, 0].min(), tet[:, 0].max(),
+        tet[:, 1].min(), tet[:, 1].max(),
+        tet[:, 2].min(), tet[:, 2].max(),
+        )
     return
 
 
@@ -113,13 +73,27 @@ def _transform_to_unit_tetrahedron(f, tetrahedron):
         )
 
 
+def _volume(tet):
+    '''Computes the center of the circumsphere of
+    '''
+    a = tet[1, :] - tet[0, :]
+    b = tet[2, :] - tet[0, :]
+    c = tet[3, :] - tet[0, :]
+
+    omega = numpy.dot(a, numpy.cross(b, c))
+
+    # https://en.wikipedia.org/wiki/Tetrahedron#Volume
+    cell_volumes = abs(omega) / 6.0
+    return cell_volumes
+
+
 def integrate(f, tetrahedron, scheme):
     g = _transform_to_unit_tetrahedron(f, tetrahedron)
     out = math.fsum([
         weight * g(point)
         for point, weight in zip(scheme.points, scheme.weights)
         ])
-    return volume(tetrahedron) * out
+    return _volume(tetrahedron) * out
 
 
 def _s4():

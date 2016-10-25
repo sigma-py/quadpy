@@ -143,16 +143,16 @@ def test_show():
         quadrature.hexahedron.From1d(
             # quadrature.line.Midpoint()
             # quadrature.line.Trapezoidal()
-            # quadrature.line.NewtonCotesClosed(3)
-            quadrature.line.NewtonCotesOpen(4)
+            quadrature.line.NewtonCotesClosed(3)
+            # quadrature.line.NewtonCotesOpen(2)
             )
         )
     return
 
 
 if __name__ == '__main__':
-    # test_show()
-    # plt.show()
+    test_show()
+    plt.show()
     # scheme = From1d(quadrature.line.NewtonCotesOpen(2))
     scheme = From1d(quadrature.line.GaussLegendre(5))
     test_scheme(scheme)
