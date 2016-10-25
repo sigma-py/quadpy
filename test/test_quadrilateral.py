@@ -107,30 +107,31 @@ def test_scheme(scheme):
 
 
 def test_show():
-    quadrilateral = numpy.array([
-        [0, 0],
-        [2, -0.5],
-        [1.5, 1.0],
-        [0.5, 0.7],
-        ])
     # quadrilateral = numpy.array([
-    #     [-1, -1],
-    #     [+1, -1],
-    #     [+1, +1],
-    #     [-1, +1],
+    #     [0, 0],
+    #     [2, -0.5],
+    #     [1.5, 1.0],
+    #     [0.5, 0.7],
     #     ])
+    quadrilateral = numpy.array([
+        [-1, -1],
+        [+1, -1],
+        [+1, +1],
+        [-1, +1],
+        ])
     quadrature.quadrilateral.show(
         quadrilateral,
-        quadrature.quadrilateral.From1d(
-            quadrature.line.NewtonCotesClosed(4)
-            )
+        quadrature.quadrilateral.Stroud(6)
+        # quadrature.quadrilateral.From1d(
+        #     quadrature.line.NewtonCotesClosed(4)
+        #     )
         )
     return
 
 
 if __name__ == '__main__':
-    # test_show()
-    # plt.show()
+    test_show()
+    plt.show()
     # scheme = From1d(quadrature.line.NewtonCotesClosed(15))
     scheme = quadrature.quadrilateral.Stroud(6)
     test_scheme(scheme)

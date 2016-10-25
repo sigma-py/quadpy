@@ -3,6 +3,8 @@
 import math
 import numpy
 
+from . import helpers
+
 
 def show(scheme):
     from matplotlib import pyplot as plt
@@ -15,14 +17,9 @@ def show(scheme):
     circle1 = plt.Circle((0, 0), 1, color='k', fill=False)
     ax.add_artist(circle1)
 
-    for tp, weight in zip(scheme.points, scheme.weights):
-        color = 'b' if weight >= 0 else 'r'
-        # highlight circle center
-        plt.plot([tp[0]], [tp[1]], '.' + color)
-        # choose radius such that sum(pi * radius**2) = pi
-        radius = numpy.sqrt(abs(weight)/sum(scheme.weights))
-        circ = plt.Circle((tp[0], tp[1]), radius, color=color, alpha=0.5)
-        ax.add_artist(circ)
+    helpers.plot_circles(
+        plt, scheme.points, scheme.weights, numpy.pi
+        )
     return
 
 

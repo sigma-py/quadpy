@@ -4,6 +4,8 @@ import math
 import numpy
 from . import line
 
+from . import helpers
+
 
 def volume(quad):
     # It doesn't matter much which cross product we take for computing the
@@ -35,7 +37,8 @@ def show(quad, scheme):
     plt.plot(
         [quad[-1, 0], quad[0, 0]],
         [quad[-1, 1], quad[0, 1]],
-        '-k')
+        '-k'
+        )
 
     xi = scheme.points[:, 0]
     eta = scheme.points[:, 1]
@@ -45,18 +48,9 @@ def show(quad, scheme):
         + numpy.outer(0.25 * (1.0 + xi)*(1.0 + eta), quad[2]) \
         + numpy.outer(0.25 * (1.0 - xi)*(1.0 + eta), quad[3])
 
-    quad_vol = volume(quad)
-    for tp, weight in zip(transformed_pts, scheme.weights):
-        color = 'b' if weight >= 0 else 'r'
-        # highlight circle center
-        plt.plot([tp[0]], [tp[1]], '.' + color)
-        # plot circle
-        # scale the circle volume according to the weight
-        radius = numpy.sqrt(
-            quad_vol * abs(weight)/sum(scheme.weights) / numpy.pi
-            )
-        circ = plt.Circle((tp[0], tp[1]), radius, color=color, alpha=0.5)
-        plt.gcf().gca().add_artist(circ)
+    helpers.plot_circles(
+        plt, transformed_pts, scheme.weights, volume(quad)
+        )
 
     plt.axis('equal')
     return
