@@ -11,7 +11,7 @@ Your one-stop shop for numerical integration in Python.
 ![](https://nschloe.github.io/quadrature/s9.png)
 
 Numerical integration schemes for lines, triangles, tetrahedra,
-quadrilaterals, hexahedra, wedges, pyramids, and spheres.
+quadrilaterals, hexahedra, wedges, pyramids, circles, and spheres.
 
 To numerically integrate any function over any given triangle, do
 ```python

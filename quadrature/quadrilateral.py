@@ -25,7 +25,7 @@ def volume(quad):
         )
 
 
-def show(quad, scheme, circle_scale=1.0):
+def show(quad, scheme):
     '''Shows the quadrature points on a given quad. The size of the circles
     around the points coincides with their weights.
     '''
@@ -52,8 +52,9 @@ def show(quad, scheme, circle_scale=1.0):
         plt.plot([tp[0]], [tp[1]], '.' + color)
         # plot circle
         # scale the circle volume according to the weight
-        radius = circle_scale * \
-            numpy.sqrt(quad_vol * abs(weight)/sum(scheme.weights) / numpy.pi)
+        radius = numpy.sqrt(
+            quad_vol * abs(weight)/sum(scheme.weights) / numpy.pi
+            )
         circ = plt.Circle((tp[0], tp[1]), radius, color=color, alpha=0.5)
         plt.gcf().gca().add_artist(circ)
 
