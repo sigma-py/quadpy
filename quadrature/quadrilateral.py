@@ -20,6 +20,8 @@ def show(quad, scheme):
         '-k'
         )
 
+    plt.axis('equal')
+
     xi = scheme.points[:, 0]
     eta = scheme.points[:, 1]
     transformed_pts = \
@@ -32,8 +34,6 @@ def show(quad, scheme):
     helpers.plot_circles(
         plt, transformed_pts, scheme.weights, vol
         )
-
-    plt.axis('equal')
     return
 
 
