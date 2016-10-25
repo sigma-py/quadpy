@@ -49,8 +49,8 @@ def _integrate_exact(k):
     if any(numpy.array(k) % 2 == 1):
         return 0.0
 
-    m = k[0] / 2
-    n = k[1] / 2
+    m = k[0] // 2
+    n = k[1] // 2
     return 1.0/(2 + k[0] + k[1]) \
         * 2*math.pi * sum([
             (-1)**i
