@@ -7,26 +7,6 @@ from . import line
 from . import helpers
 
 
-def volume(quad):
-    # It doesn't matter much which cross product we take for computing the
-    # quad volumes; deliberately take
-    #
-    #   <e0 x e1, e0 x e1> = <e0, e0> <e1, e1> - <e0, e1>^2.
-    #
-    e0 = quad[1] - quad[0]
-    e1 = quad[2] - quad[1]
-    e2 = quad[3] - quad[1]
-    e0_dot_e0 = numpy.dot(e0, e0)
-    e0_dot_e1 = numpy.dot(e0, e1)
-    e1_dot_e1 = numpy.dot(e1, e1)
-    e1_dot_e2 = numpy.dot(e1, e2)
-    e2_dot_e2 = numpy.dot(e2, e2)
-    return 0.5 * (
-        numpy.sqrt(e0_dot_e0 * e1_dot_e1 - e0_dot_e1**2) +
-        numpy.sqrt(e1_dot_e1 * e2_dot_e2 - e1_dot_e2**2)
-        )
-
-
 def show(quad, scheme):
     '''Shows the quadrature points on a given quad. The size of the circles
     around the points coincides with their weights.
@@ -48,30 +28,30 @@ def show(quad, scheme):
         + numpy.outer(0.25 * (1.0 + xi)*(1.0 + eta), quad[2]) \
         + numpy.outer(0.25 * (1.0 - xi)*(1.0 + eta), quad[3])
 
+    vol = integrate(lambda x: numpy.ones(1), quad, Stroud(1))
     helpers.plot_circles(
-        plt, transformed_pts, scheme.weights, volume(quad)
+        plt, transformed_pts, scheme.weights, vol
         )
 
     plt.axis('equal')
     return
 
 
-def _get_det_J(quad, xi):
-        J0 = \
-            - numpy.outer(quad[0], 0.25*(1-xi[1])) \
-            + numpy.outer(quad[1], 0.25*(1-xi[1])) \
-            + numpy.outer(quad[2], 0.25*(1+xi[1])) \
-            - numpy.outer(quad[3], 0.25*(1+xi[1]))
-        J1 = \
-            - numpy.outer(quad[0], 0.25*(1-xi[0])) \
-            - numpy.outer(quad[1], 0.25*(1+xi[0])) \
-            + numpy.outer(quad[2], 0.25*(1+xi[0])) \
-            + numpy.outer(quad[3], 0.25*(1-xi[0]))
-        det = J0[0]*J1[1] - J1[0]*J0[1]
-        return det
-
-
 def integrate(f, quad, scheme):
+    def _get_det_J(quad, xi):
+            J0 = \
+                - numpy.outer(quad[0], 0.25*(1-xi[1])) \
+                + numpy.outer(quad[1], 0.25*(1-xi[1])) \
+                + numpy.outer(quad[2], 0.25*(1+xi[1])) \
+                - numpy.outer(quad[3], 0.25*(1+xi[1]))
+            J1 = \
+                - numpy.outer(quad[0], 0.25*(1-xi[0])) \
+                - numpy.outer(quad[1], 0.25*(1+xi[0])) \
+                + numpy.outer(quad[2], 0.25*(1+xi[0])) \
+                + numpy.outer(quad[3], 0.25*(1-xi[0]))
+            det = J0[0]*J1[1] - J1[0]*J0[1]
+            return det
+
     xi = scheme.points.T
     x = \
         + numpy.outer(quad[0], 0.25*(1.0-xi[0])*(1.0-xi[1])) \
