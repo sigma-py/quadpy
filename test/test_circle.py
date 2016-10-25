@@ -59,12 +59,14 @@ def _integrate_exact(k):
             / (2**(i+n) * math.factorial(i+n))**2
             for i in range(m+1)
             ])
-    # return 1.0/(1 + k[0] + k[1]) \
+    # return 1.0/(2 + k[0] + k[1]) \
     #     * 2*math.pi * sum([
-    #         sympy.binomial(m, i) * math.exp(
+    #         (-1)**i
+    #         * sympy.binomial(m, i)
+    #         * math.exp(
     #             + math.lgamma(2*(i+n))
-    #             - 2*(i+n)*math.log(2.0)
     #             - 2*math.lgamma(i+n)
+    #             - 2*(i+n)*math.log(2.0)
     #             )
     #         ] for i in range(m+1)
     #         )
@@ -72,6 +74,10 @@ def _integrate_exact(k):
 
 @pytest.mark.parametrize('scheme', [
     quadrature.circle.Peirce(1),
+    quadrature.circle.Peirce(2),
+    quadrature.circle.Peirce(3),
+    quadrature.circle.Peirce(4),
+    quadrature.circle.Peirce(5),
     ])
 def test_scheme(scheme):
     success = True
@@ -83,7 +89,7 @@ def test_scheme(scheme):
                 return x[0]**k[0] * x[1]**k[1]
             exact_val = _integrate_exact(k)
             val = quadrature.circle.integrate(poly, scheme)
-            print('k, exact_val', k, exact_val, val)
+            # print('k, exact_val', k, exact_val, val)
             if abs(exact_val - val) > 1.0e-10:
                 success = False
                 break
@@ -98,13 +104,13 @@ def test_scheme(scheme):
 
 def test_show():
     quadrature.circle.show(
-        quadrature.circle.Peirce(1)
+        quadrature.circle.Peirce(6)
         )
     return
 
 if __name__ == '__main__':
-    # test_show()
-    # plt.show()
+    test_show()
+    plt.show()
     # scheme = From1d(quadrature.line.NewtonCotesClosed(15))
-    scheme = quadrature.circle.Peirce(1)
+    scheme = quadrature.circle.Peirce(6)
     test_scheme(scheme)
