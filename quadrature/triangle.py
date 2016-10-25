@@ -151,7 +151,8 @@ class Strang(object):
     An Analysis of the Finite Element Method,
     Cambridge, 1973,
     ISBN: 096140888X,
-    LC: TA335.S77.
+    LC: TA335.S77,
+    <http://bookstore.siam.org/wc08/>.
     '''
     def __init__(self, index):
         if index == 1:
@@ -422,7 +423,8 @@ class Dunavant(object):
     Triangle,
     Article in International Journal for Numerical Methods in Engineering,
     21(6):1129-1148, June 1985,
-    10.1002/nme.1620210612.
+    10.1002/nme.1620210612,
+    <https://dx.doi.org/10.1002/nme.1620210612>.
     '''
     def __init__(self, index):
         if index == 1:
@@ -875,7 +877,8 @@ class ZhangCuiLiu(object):
     Linbo Zhang, Tao Cui and Hui Liu,
     A set of symmetric quadrature rules on triangles and tetrahedra,
     Journal of Computational Mathematics
-    Vol. 27, No. 1 (January 2009), pp. 89-96.
+    Vol. 27, No. 1 (January 2009), pp. 89-96,
+    <http://www.jstor.org/stable/43693493>.
 
     Abstract:
     We present a program for computing symmetric quadrature rules on triangles
@@ -1038,7 +1041,8 @@ class WandzuraXiao(object):
     Symmetric quadrature rules on a triangle,
     Computers & Mathematics with Applications
     Volume 45, Issue 12, June 2003, Pages 1829-1840,
-    doi:10.1016/S0898-1221(03)90004-6.
+    doi:10.1016/S0898-1221(03)90004-6,
+    <https://dx.doi.org/10.1016/S0898-1221(03)90004-6>.
 
     Abstract:
     We present a class of quadrature rules on triangles in R2 which, somewhat
@@ -1310,7 +1314,8 @@ class LynessJespersen(object):
     J.N. Lyness, D. Jespersen,
     Moderate Degree Symmetric Quadrature Rules for the Triangle,
     J. Inst. Maths Applies (1975) 15, 19-32,
-    doi: 10.1093/imamat/15.1.19.
+    doi: 10.1093/imamat/15.1.19,
+    <https://dx.doi.org/10.1093/imamat/15.1.19>.
 
     Abstract:
     A variant formulation of the moment fitting equations for the construction
@@ -2028,7 +2033,8 @@ class HammerMarloweStroud(object):
     P.C. Hammer, O.J. Marlowe and A.H. Stroud,
     Numerical Integration Over Simplexes and Cones,
     Mathematical Tables and Other Aids to Computation,
-    Vol. 10, No. 55, Jul. 1956, pp. 130-137.
+    Vol. 10, No. 55, Jul. 1956, pp. 130-137,
+    <https://doi.org/10.1090/S0025-5718-1956-0086389-6>.
 
     Abstract:
     In this paper we develop numerical integration formulas for simplexes and
@@ -2119,7 +2125,8 @@ class Cowper(object):
     Gaussian quadrature formulas for triangles,
     Numerical Methods in Engineering,
     Volume 7, Issue 3, 1973, Pages 405–408.
-    DOI: 10.1002/nme.1620070316
+    DOI: 10.1002/nme.1620070316,
+    <https://dx.doi.org/10.1002/nme.1620070316>.
     '''
     def __init__(self, index):
         if index == 1:
@@ -2237,7 +2244,8 @@ class LiuVinokur(object):
     Exact Integrations of Polynomials and Symmetric Quadrature Formulas over
     Arbitrary Polyhedral Grids,
     Journal of Computational Physics, 140, 122–147 (1998).
-    DOI: 10.1006/jcph.1998.5884
+    DOI: 10.1006/jcph.1998.5884,
+    <https://dx.doi.org/10.1006/jcph.1998.5884>.
     '''
     def __init__(self, index):
         if index == 1:
@@ -2437,7 +2445,8 @@ class Hillion(object):
     Numerical Integration on a Triangle,
     International Journal for Numerical Methods in Engineering,
     Vol. 11, 797-815 (1977).
-    DOI:10.1002/nme.1620110504
+    DOI:10.1002/nme.1620110504,
+    <https://dx.doi.org/10.1002/nme.1620110504>.
 
     Note that the schemes here are not fully symmetric. Also note that in the
     article, the quadrature constants are specified with low precision such
@@ -2569,7 +2578,8 @@ class CoolsHaegemans(object):
     Construction of minimal cubature formulae for the square and the triangle
     using invariant theory,
     Department of Computer Science, K.U.Leuven,
-    TW Reports vol:TW96, Sept. 1987.
+    TW Reports vol:TW96, Sept. 1987,
+    <https://lirias.kuleuven.be/handle/123456789/131869>.
     '''
     def __init__(self, index):
         if index == 1:
@@ -2669,7 +2679,8 @@ class LaursenGellert(object):
     for triangles,
     International Journal for Numerical Methods in Engineering,
     Volume 12, Issue 1, 1978, Pages 67–76.
-    DOI: 10.1002/nme.1620120107
+    DOI: 10.1002/nme.1620120107,
+    <https://dx.doi.org/10.1002/nme.1620120107>.
 
     Abstract:
     For a wide class of finite element matrices integrated numerically rather

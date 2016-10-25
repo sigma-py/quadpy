@@ -27,6 +27,53 @@ val = quadrature.triangle.integrate(f, triangle, quadrature.triangle.Strang9())
 This uses Strang's rule of degree 6 (see picture above); [many more are
 implemented](https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html).
 
+### Rules
+
+##### Line segment
+![](https://nschloe.github.io/quadrature/line.png)
+
+##### Triangle
+![](https://nschloe.github.io/quadrature/tri.png)
+
+ * [Strang's schemes](http://bookstore.siam.org/wc08/),
+ * [CUBTRI](http://dl.acm.org/citation.cfm?id=356001),
+ * [TRIEX](http://dl.acm.org/citation.cfm?id=356070&CFID=836775288&CFTOKEN=89206835),
+ * [DCUTRI](http://dl.acm.org/citation.cfm?id=131772),
+ * [Dunavant's schemes](https://dx.doi.org/10.1002/nme.1620210612),
+ * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493),
+ * [Wandzura-Xiao](https://dx.doi.org/10.1016/S0898-1221(03)90004-6),
+ * [Lyness-Jespersen](https://dx.doi.org/10.1093/imamat/15.1.19),
+ * open and closed Newton-Cotes schemes (arbitrary degree),
+ * [Taylor-Wingate-Bos](https://arxiv.org/abs/math/0501496),
+ * Berntsen-Espelid (three degree-13 schemes),
+ * [Hammer-Marlowe-Stroud](https://doi.org/10.1090/S0025-5718-1956-0086389-6),
+ * [Cowper](https://dx.doi.org/10.1002/nme.1620070316),
+ * [Liu-Vinokur](https://dx.doi.org/10.1006/jcph.1998.5884),
+ * [Hillion](https://dx.doi.org/10.1002/nme.1620110504),
+ * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131869),
+ * [Laursen-Gellert](https://dx.doi.org/10.1002/nme.1620120107).
+
+##### Circle
+![](https://nschloe.github.io/quadrature/circle.png)
+
+##### Quadrilateral
+![](https://nschloe.github.io/quadrature/quad.png)
+
+##### Tetrahedron
+![](https://nschloe.github.io/quadrature/tet.png)
+
+##### Hexahedron
+![](https://nschloe.github.io/quadrature/hexa.png)
+
+##### Pyramid
+![](https://nschloe.github.io/quadrature/pyra.png)
+
+##### Sphere
+![](https://nschloe.github.io/quadrature/sphere.png)
+
+##### Wedge
+![](https://nschloe.github.io/quadrature/wedge.png)
+
 ### Installation
 
 #### Python Package Index
