@@ -24,7 +24,7 @@ val = quadrature.triangle.integrate(f, triangle, quadrature.triangle.Strang(9))
 ```
 This uses Strang's rule of degree 6.
 
-## Rules
+## Schemes
 
 ### Line segment
 ![](https://nschloe.github.io/quadrature/line.png)
@@ -42,9 +42,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * [Hammer-Marlowe-Stroud](https://doi.org/10.1090/S0025-5718-1956-0086389-6)
    (1956, 5 schemes up to degree 5),
  * open and closed Newton-Cotes schemes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6), arbitrary degree)
- * [Strang](http://bookstore.siam.org/wc08/) (1973, 10 schemes up to
-   degree 7),
- * [Cowper](https://dx.doi.org/10.1002/nme.1620070316) (1973, 10 schemes up to
+ * [Strang](http://bookstore.siam.org/wc08/)/[Cowper](https://dx.doi.org/10.1002/nme.1620070316) (1973, 10 schemes up to
    degree 7),
  * [Lyness-Jespersen](https://dx.doi.org/10.1093/imamat/15.1.19) (1975, 21
    schemes up to degree 11),
@@ -110,6 +108,9 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
 
 ### Wedge
 ![](https://nschloe.github.io/quadrature/wedge.png)
+
+ * [Felippa's schemes](http://dx.doi.org/10.1108/02644400410554362) (6 schemes
+   up to degree 6)
 
 ### Sphere
 ![](https://nschloe.github.io/quadrature/sphere.png)
