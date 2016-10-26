@@ -64,7 +64,9 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * [Taylor-Wingate-Bos](https://arxiv.org/abs/math/0501496) (2005, 5 schemes up
    to degree 14),
  * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2009, 3 schemes up to
-   degree 20).
+   degree 20),
+ * [Xiao-Gimbutas](http://dx.doi.org/10.1016/j.camwa.2009.10.027) (2010, 50
+   schemes up to degree 50).
 
 ### Disk
 ![](https://nschloe.github.io/quadrature/circle.png)
