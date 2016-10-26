@@ -2743,6 +2743,9 @@ class XiaoGimbutas(object):
     examples, and report quadrature rules for polynomials on triangles,
     squares, and cubes, up to degree 50. These formulae are near optimal in the
     number of nodes used, and many of them appear to be new.
+
+    Data adapted from
+    <https://people.sc.fsu.edu/~jburkardt/f_src/triangle_symq_rule/triangle_symq_rule.f90>.
     '''
     def __init__(self, index):
         if index == 1:

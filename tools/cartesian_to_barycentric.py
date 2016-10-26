@@ -19,7 +19,8 @@ def is_float(value):
         return False
 
 
-# read data from file
+# read data from file,
+# e.g., <https://people.sc.fsu.edu/~jburkardt/f_src/triangle_symq_rule/triangle_symq_rule.f90>
 data = []
 current_block = None
 next_block = 'x'
