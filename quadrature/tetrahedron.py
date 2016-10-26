@@ -234,22 +234,29 @@ def _newton_cotes(n, point_fun):
     <https://doi.org/10.1090/S0025-5718-1970-0258283-6>.
     '''
     def get_poly(t, m, n):
-        f = 1
-        for k in range(m):
-            f *= (t - point_fun(k, n)) / (point_fun(m, n) - point_fun(k, n))
-        return f
+        return sympy.prod([
+            (t - point_fun(k, n)) / (point_fun(m, n) - point_fun(k, n))
+            for k in range(m)
+            ])
     degree = n
-    num_points = (n+1) * (n**2 + 5*n+6) // 6
-    bary = numpy.empty((num_points, 4))
-    weights = numpy.empty(num_points)
+
+    # points
+    idx = numpy.array([
+        [i, j, k, n-i-j-k]
+        for i in range(n + 1)
+        for j in range(n + 1 - i)
+        for k in range(n + 1 - i - j)
+        ])
+    bary = point_fun(idx, n)
+    points = bary[:, [1, 2, 3]]
+
+    # weights
+    weights = numpy.empty(len(points))
     idx = 0
     for i in range(n + 1):
         for j in range(n + 1 - i):
             for k in range(n + 1 - i - j):
                 l = n - i - j - k
-                bary[idx] = point_fun(
-                    numpy.array([i, j, k, l], dtype=float), n
-                    )
                 # Compute weight.
                 # Define the polynomial which to integrate over the
                 # tetrahedron.
@@ -272,7 +279,6 @@ def _newton_cotes(n, point_fun):
                      for m, c in zip(gpoly.monoms(), gpoly.coeffs())
                      ])
                 idx += 1
-    points = bary[:, [1, 2, 3]]
     return points, weights, degree
 
 
