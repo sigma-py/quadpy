@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 #
+from helpers import create_monomial_exponents2
+
 import math
 import numpy
 import numpy.testing
 import pytest
 import quadrature
 import sympy
-
-from test_triangle import _create_monomial_exponents
 
 import os
 import matplotlib as mpl
@@ -89,7 +89,7 @@ def test_scheme(scheme):
     degree = 0
     max_degree = scheme.degree + 1
     while success:
-        for k in _create_monomial_exponents(degree):
+        for k in create_monomial_exponents2(degree):
             def poly(x):
                 return x[0]**k[0] * x[1]**k[1]
             exact_val = _integrate_exact(k)
@@ -109,13 +109,14 @@ def test_scheme(scheme):
 
 def test_show():
     quadrature.circle.show(
-        quadrature.circle.Lether(5)
+        quadrature.circle.Peirce(3)
+        # quadrature.circle.Lether(5)
         )
     return
 
 if __name__ == '__main__':
     test_show()
     plt.show()
-    # scheme = From1d(quadrature.line.NewtonCotesClosed(15))
+    # scheme = From1d(quadrature.line_segment.NewtonCotesClosed(15))
     scheme = quadrature.circle.Lether(5)
     test_scheme(scheme)

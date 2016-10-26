@@ -32,9 +32,11 @@ def show(scheme):
         1.05 * scheme.points[:, 0],
         1.05 * scheme.points[:, 1],
         1.05 * scheme.points[:, 2],
-        color='k',
+        color='b',
         s=60
         )
+
+    ax.set_axis_off()
     return
 
 

@@ -10,9 +10,11 @@ __version__ = '0.1.1'
 __maintainer__ = 'Nico Schlömer'
 __status__ = 'Beta'
 
+from . import helpers
+
 from . import circle
 from . import hexahedron
-from . import line
+from . import line_segment
 from . import pyramid
 from . import quadrilateral
 from . import sphere

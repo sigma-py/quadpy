@@ -114,7 +114,7 @@ def test_show():
         ])
     quadrature.pyramid.show(
         pyra,
-        quadrature.pyramid.Felippa(9),
+        quadrature.pyramid.Felippa(4),
         )
     return
 

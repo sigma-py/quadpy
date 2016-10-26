@@ -125,7 +125,7 @@ def test_show():
 
 
 if __name__ == '__main__':
-    # test_show()
-    # plt.show()
+    test_show()
+    plt.show()
     scheme = quadrature.sphere.Lebedev(32)
     test_scheme(scheme)

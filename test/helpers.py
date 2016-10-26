@@ -3,6 +3,12 @@
 import numpy
 
 
+def create_monomial_exponents2(degree):
+    '''Returns a list of all monomials exponents of degree :degree:.
+    '''
+    return [(degree-k, k) for k in range(degree+1)]
+
+
 def create_monomial_exponents3(degree):
     '''Returns a list of all monomial exponents of degree :degree:.
     '''

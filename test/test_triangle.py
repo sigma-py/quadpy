@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 #
+from helpers import create_monomial_exponents2
+
 import math
 import numpy
 import numpy.testing
@@ -62,16 +64,26 @@ def _integrate_monomial_over_standard_triangle(k):
         )
 
 
-def _create_monomial_exponents(degree):
-    '''Returns a list of all monomials of degree :degree:.
-    '''
-    return [(degree-k, k) for k in range(degree+1)]
-
-
 @pytest.mark.parametrize('scheme', [
     quadrature.triangle.Centroid(),
     quadrature.triangle.Vertex(),
     quadrature.triangle.SevenPoint(),
+    quadrature.triangle.HammerMarloweStroud(1),
+    quadrature.triangle.HammerMarloweStroud(2),
+    quadrature.triangle.HammerMarloweStroud(3),
+    quadrature.triangle.HammerMarloweStroud(4),
+    quadrature.triangle.HammerMarloweStroud(5),
+    quadrature.triangle.NewtonCotesClosed(1),
+    quadrature.triangle.NewtonCotesClosed(2),
+    quadrature.triangle.NewtonCotesClosed(3),
+    quadrature.triangle.NewtonCotesClosed(4),
+    quadrature.triangle.NewtonCotesClosed(5),
+    quadrature.triangle.NewtonCotesOpen(0),
+    quadrature.triangle.NewtonCotesOpen(1),
+    quadrature.triangle.NewtonCotesOpen(2),
+    quadrature.triangle.NewtonCotesOpen(3),
+    quadrature.triangle.NewtonCotesOpen(4),
+    quadrature.triangle.NewtonCotesOpen(5),
     quadrature.triangle.Strang(1),
     quadrature.triangle.Strang(2),
     quadrature.triangle.Strang(3),
@@ -82,39 +94,6 @@ def _create_monomial_exponents(degree):
     quadrature.triangle.Strang(8),
     quadrature.triangle.Strang(9),
     quadrature.triangle.Strang(10),
-    quadrature.triangle.Toms584_19(),
-    quadrature.triangle.Toms612_19(),
-    quadrature.triangle.Toms612_28(),
-    quadrature.triangle.Toms706_37(),
-    quadrature.triangle.Dunavant(1),
-    quadrature.triangle.Dunavant(2),
-    quadrature.triangle.Dunavant(3),
-    quadrature.triangle.Dunavant(4),
-    quadrature.triangle.Dunavant(5),
-    quadrature.triangle.Dunavant(6),
-    quadrature.triangle.Dunavant(7),
-    quadrature.triangle.Dunavant(8),
-    quadrature.triangle.Dunavant(9),
-    quadrature.triangle.Dunavant(10),
-    quadrature.triangle.Dunavant(11),
-    quadrature.triangle.Dunavant(12),
-    quadrature.triangle.Dunavant(13),
-    quadrature.triangle.Dunavant(14),
-    quadrature.triangle.Dunavant(15),
-    quadrature.triangle.Dunavant(16),
-    quadrature.triangle.Dunavant(17),
-    quadrature.triangle.Dunavant(18),
-    quadrature.triangle.Dunavant(19),
-    quadrature.triangle.Dunavant(20),
-    quadrature.triangle.ZhangCuiLiu(1),
-    quadrature.triangle.ZhangCuiLiu(2),
-    quadrature.triangle.ZhangCuiLiu(3),
-    quadrature.triangle.WandzuraXiao(1),
-    quadrature.triangle.WandzuraXiao(2),
-    quadrature.triangle.WandzuraXiao(3),
-    quadrature.triangle.WandzuraXiao(4),
-    quadrature.triangle.WandzuraXiao(5),
-    quadrature.triangle.WandzuraXiao(6),
     quadrature.triangle.LynessJespersen(1),
     quadrature.triangle.LynessJespersen(2),
     quadrature.triangle.LynessJespersen(3),
@@ -136,61 +115,11 @@ def _create_monomial_exponents(degree):
     quadrature.triangle.LynessJespersen(19),
     quadrature.triangle.LynessJespersen(20),
     quadrature.triangle.LynessJespersen(21),
-    quadrature.triangle.NewtonCotesClosed(1),
-    quadrature.triangle.NewtonCotesClosed(2),
-    quadrature.triangle.NewtonCotesClosed(3),
-    quadrature.triangle.NewtonCotesClosed(4),
-    quadrature.triangle.NewtonCotesClosed(5),
-    quadrature.triangle.NewtonCotesOpen(0),
-    quadrature.triangle.NewtonCotesOpen(1),
-    quadrature.triangle.NewtonCotesOpen(2),
-    quadrature.triangle.NewtonCotesOpen(3),
-    quadrature.triangle.NewtonCotesOpen(4),
-    quadrature.triangle.NewtonCotesOpen(5),
-    quadrature.triangle.TaylorWingateBos(1),
-    quadrature.triangle.TaylorWingateBos(2),
-    quadrature.triangle.TaylorWingateBos(4),
-    quadrature.triangle.TaylorWingateBos(5),
-    quadrature.triangle.TaylorWingateBos(8),
-    quadrature.triangle.BerntsenEspelid(1),
-    quadrature.triangle.BerntsenEspelid(2),
-    quadrature.triangle.BerntsenEspelid(3),
-    quadrature.triangle.BerntsenEspelid(4),
-    quadrature.triangle.HammerMarloweStroud(1),
-    quadrature.triangle.HammerMarloweStroud(2),
-    quadrature.triangle.HammerMarloweStroud(3),
-    quadrature.triangle.HammerMarloweStroud(4),
-    quadrature.triangle.HammerMarloweStroud(5),
-    quadrature.triangle.Cowper(1),
-    quadrature.triangle.Cowper(2),
-    quadrature.triangle.Cowper(3),
-    quadrature.triangle.Cowper(4),
-    quadrature.triangle.Cowper(5),
-    quadrature.triangle.Cowper(6),
-    quadrature.triangle.Cowper(7),
-    quadrature.triangle.Cowper(8),
-    quadrature.triangle.Cowper(9),
-    quadrature.triangle.Cowper(10),
-    quadrature.triangle.LiuVinokur(1),
-    quadrature.triangle.LiuVinokur(2),
-    quadrature.triangle.LiuVinokur(3),
-    quadrature.triangle.LiuVinokur(4),
-    quadrature.triangle.LiuVinokur(5),
-    quadrature.triangle.LiuVinokur(6),
-    quadrature.triangle.LiuVinokur(7),
-    quadrature.triangle.LiuVinokur(8),
-    quadrature.triangle.LiuVinokur(9),
-    quadrature.triangle.LiuVinokur(10),
-    quadrature.triangle.LiuVinokur(11),
-    quadrature.triangle.LiuVinokur(12),
-    quadrature.triangle.LiuVinokur(13),
     quadrature.triangle.Hillion(1),
     quadrature.triangle.Hillion(2),
     quadrature.triangle.Hillion(3),
     quadrature.triangle.Hillion(4),
     quadrature.triangle.Hillion(5),
-    quadrature.triangle.CoolsHaegemans(1),
-    quadrature.triangle.CoolsHaegemans(2),
     quadrature.triangle.LaursenGellert('1'),
     quadrature.triangle.LaursenGellert('2a'),
     quadrature.triangle.LaursenGellert('2b'),
@@ -208,6 +137,62 @@ def _create_monomial_exponents(degree):
     quadrature.triangle.LaursenGellert('14'),
     quadrature.triangle.LaursenGellert('15a'),
     quadrature.triangle.LaursenGellert('15b'),
+    quadrature.triangle.Cubtri(),
+    quadrature.triangle.Triex(19),
+    quadrature.triangle.Triex(28),
+    quadrature.triangle.Dunavant(1),
+    quadrature.triangle.Dunavant(2),
+    quadrature.triangle.Dunavant(3),
+    quadrature.triangle.Dunavant(4),
+    quadrature.triangle.Dunavant(5),
+    quadrature.triangle.Dunavant(6),
+    quadrature.triangle.Dunavant(7),
+    quadrature.triangle.Dunavant(8),
+    quadrature.triangle.Dunavant(9),
+    quadrature.triangle.Dunavant(10),
+    quadrature.triangle.Dunavant(11),
+    quadrature.triangle.Dunavant(12),
+    quadrature.triangle.Dunavant(13),
+    quadrature.triangle.Dunavant(14),
+    quadrature.triangle.Dunavant(15),
+    quadrature.triangle.Dunavant(16),
+    quadrature.triangle.Dunavant(17),
+    quadrature.triangle.Dunavant(18),
+    quadrature.triangle.Dunavant(19),
+    quadrature.triangle.Dunavant(20),
+    quadrature.triangle.CoolsHaegemans(1),
+    quadrature.triangle.CoolsHaegemans(2),
+    quadrature.triangle.BerntsenEspelid(1),
+    quadrature.triangle.BerntsenEspelid(2),
+    quadrature.triangle.BerntsenEspelid(3),
+    quadrature.triangle.BerntsenEspelid(4),
+    quadrature.triangle.LiuVinokur(1),
+    quadrature.triangle.LiuVinokur(2),
+    quadrature.triangle.LiuVinokur(3),
+    quadrature.triangle.LiuVinokur(4),
+    quadrature.triangle.LiuVinokur(5),
+    quadrature.triangle.LiuVinokur(6),
+    quadrature.triangle.LiuVinokur(7),
+    quadrature.triangle.LiuVinokur(8),
+    quadrature.triangle.LiuVinokur(9),
+    quadrature.triangle.LiuVinokur(10),
+    quadrature.triangle.LiuVinokur(11),
+    quadrature.triangle.LiuVinokur(12),
+    quadrature.triangle.LiuVinokur(13),
+    quadrature.triangle.WandzuraXiao(1),
+    quadrature.triangle.WandzuraXiao(2),
+    quadrature.triangle.WandzuraXiao(3),
+    quadrature.triangle.WandzuraXiao(4),
+    quadrature.triangle.WandzuraXiao(5),
+    quadrature.triangle.WandzuraXiao(6),
+    quadrature.triangle.TaylorWingateBos(1),
+    quadrature.triangle.TaylorWingateBos(2),
+    quadrature.triangle.TaylorWingateBos(4),
+    quadrature.triangle.TaylorWingateBos(5),
+    quadrature.triangle.TaylorWingateBos(8),
+    quadrature.triangle.ZhangCuiLiu(1),
+    quadrature.triangle.ZhangCuiLiu(2),
+    quadrature.triangle.ZhangCuiLiu(3),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
@@ -221,7 +206,7 @@ def test_scheme(scheme):
     degree = 0
     max_degree = scheme.degree + 1
     while success:
-        for k in _create_monomial_exponents(degree):
+        for k in create_monomial_exponents2(degree):
             def poly(x):
                 return x[0]**k[0] * x[1]**k[1]
             # exact_val = _integrate_exact(poly, triangle)
@@ -254,14 +239,14 @@ def test_show():
         # quadrature.triangle.Vertex()
         # quadrature.triangle.SevenPoint()
         # quadrature.triangle.Strang(9)
-        # quadrature.triangle.Dunavant(20)
-        quadrature.triangle.CoolsHaegemans(2)
+        quadrature.triangle.Dunavant(20)
+        # quadrature.triangle.CoolsHaegemans(2)
         )
     return
 
 
 if __name__ == '__main__':
-    # test_show()
-    # plt.show()
+    test_show()
+    plt.show()
     scheme = quadrature.triangle.CoolsHaegemans(2)
     test_scheme(scheme)
