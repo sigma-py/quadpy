@@ -72,18 +72,11 @@ def _integrate_exact(k):
     #         )
 
 
-@pytest.mark.parametrize('scheme', [
-    quadrature.circle.Peirce(1),
-    quadrature.circle.Peirce(2),
-    quadrature.circle.Peirce(3),
-    quadrature.circle.Peirce(4),
-    quadrature.circle.Peirce(5),
-    quadrature.circle.Lether(1),
-    quadrature.circle.Lether(2),
-    quadrature.circle.Lether(3),
-    quadrature.circle.Lether(4),
-    quadrature.circle.Lether(5),
-    ])
+@pytest.mark.parametrize(
+    'scheme',
+    [quadrature.disk.Peirce(k) for k in range(1, 6)]
+    + [quadrature.disk.Lether(k) for k in range(1, 6)]
+    )
 def test_scheme(scheme):
     success = True
     degree = 0
@@ -93,7 +86,7 @@ def test_scheme(scheme):
             def poly(x):
                 return x[0]**k[0] * x[1]**k[1]
             exact_val = _integrate_exact(k)
-            val = quadrature.circle.integrate(poly, scheme)
+            val = quadrature.disk.integrate(poly, scheme)
             # print('k, exact_val', k, exact_val, val)
             if abs(exact_val - val) > 1.0e-10:
                 success = False
@@ -108,9 +101,9 @@ def test_scheme(scheme):
 
 
 def test_show():
-    quadrature.circle.show(
-        quadrature.circle.Peirce(3)
-        # quadrature.circle.Lether(5)
+    quadrature.disk.show(
+        quadrature.disk.Peirce(3)
+        # quadrature.disk.Lether(5)
         )
     return
 
@@ -118,5 +111,5 @@ if __name__ == '__main__':
     test_show()
     plt.show()
     # scheme = From1d(quadrature.line_segment.NewtonCotesClosed(15))
-    scheme = quadrature.circle.Lether(5)
+    scheme = quadrature.disk.Lether(5)
     test_scheme(scheme)

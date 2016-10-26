@@ -56,14 +56,10 @@ def _integrate_exact(f, wedge):
     return float(exact)
 
 
-@pytest.mark.parametrize('scheme', [
-    quadrature.wedge.Felippa(1),
-    quadrature.wedge.Felippa(2),
-    quadrature.wedge.Felippa(3),
-    quadrature.wedge.Felippa(4),
-    quadrature.wedge.Felippa(5),
-    quadrature.wedge.Felippa(6),
-    ])
+@pytest.mark.parametrize(
+    'scheme',
+    [quadrature.wedge.Felippa(k) for k in range(1, 7)]
+    )
 def test_scheme(scheme):
     wedge = numpy.array([
         [0.0, 0.0, -1.0],

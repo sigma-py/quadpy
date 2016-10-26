@@ -9,15 +9,15 @@ from . import helpers
 def show(scheme):
     from matplotlib import pyplot as plt
     ax = plt.gca()
-    # change default range so that new circles will work
+    # change default range so that new disks will work
     plt.axis('equal')
     ax.set_xlim((-1.5, 1.5))
     ax.set_ylim((-1.5, 1.5))
 
-    circle1 = plt.Circle((0, 0), 1, color='k', fill=False)
-    ax.add_artist(circle1)
+    disk1 = plt.Circle((0, 0), 1, color='k', fill=False)
+    ax.add_artist(disk1)
 
-    helpers.plot_circles(
+    helpers.plot_disks(
         plt, scheme.points, scheme.weights, numpy.pi
         )
     return
@@ -50,7 +50,7 @@ class Peirce(object):
             ])
 
         # When integrating between 0 and 1, the weights are exactly the
-        # Gauss-Legendre weights, scaled according to the circle area.
+        # Gauss-Legendre weights, scaled according to the disk area.
         self.weights = numpy.tile(0.5 * numpy.pi / (k+1) * w, k+1)
         return
 

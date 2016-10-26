@@ -4,7 +4,7 @@ import math
 import numpy
 
 
-def plot_circles(plt, pts, weights, total_area):
+def plot_disks(plt, pts, weights, total_area):
     '''Plot a circles at quadrature points according to weights.
     '''
     sum_weights = math.fsum(weights)
