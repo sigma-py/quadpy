@@ -41,14 +41,14 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
 
  * [Hammer-Marlowe-Stroud](https://doi.org/10.1090/S0025-5718-1956-0086389-6)
    (1956, 5 schemes up to degree 5),
- * open and closed Newton-Cotes schemes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6), arbitrary degree)
+ * open and closed Newton-Cotes schemes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6), arbitrary degree),
  * [Strang](http://bookstore.siam.org/wc08/)/[Cowper](https://dx.doi.org/10.1002/nme.1620070316) (1973, 10 schemes up to
    degree 7),
  * [Lyness-Jespersen](https://dx.doi.org/10.1093/imamat/15.1.19) (1975, 21
    schemes up to degree 11),
  * [Hillion](https://dx.doi.org/10.1002/nme.1620110504) (1977),
  * [Laursen-Gellert](https://dx.doi.org/10.1002/nme.1620120107) (1978, 17
-   schemes up to degree 10)
+   schemes up to degree 10),
  * [CUBTRI](http://dl.acm.org/citation.cfm?id=356001) (1982, degree 8),
  * [TRIEX](http://dl.acm.org/citation.cfm?id=356070) (1984, degrees 9 and 11),
  * [Dunavant](https://dx.doi.org/10.1002/nme.1620210612) (1985, 20 schemes up
@@ -74,7 +74,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
 
 ### Quadrilateral
 ![](https://nschloe.github.io/quadrature/quad.png)
- 
+
  * Product schemes derived from line segment schemes
  * [Stroud's schemes](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (6 schemes up to degree 15)
 
@@ -82,17 +82,18 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
 ![](https://nschloe.github.io/quadrature/tet.png)
 
  * [Hammer-Marlowe-Stroud](https://doi.org/10.1090/S0025-5718-1956-0086389-6)
- * open and closed Newton-Cotes (after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6))
- * [Yu](http://dx.doi.org/10.1016/0045-7825(84)90072-0) (5 schemes up to degree 6)
- * [Keast](http://dx.doi.org/10.1016/0045-7825(86)90059-9) (11 schemes up to
+   (1956, 3 schemes up to degree 3)
+ * open and closed Newton-Cotes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6)) (arbitrary degree)
+ * [Yu](http://dx.doi.org/10.1016/0045-7825(84)90072-0) (1984, 5 schemes up to degree 6)
+ * [Keast](http://dx.doi.org/10.1016/0045-7825(86)90059-9) (1986, 11 schemes up to
    degree 8)
- * [Liu-Vinokur](http://dx.doi.org/10.1006/jcph.1998.5884) (14 schemes up to
+ * [Liu-Vinokur](http://dx.doi.org/10.1006/jcph.1998.5884) (1998, 14 schemes up to
    degree 5)
- * [Zienkiewicz](http://www.sciencedirect.com/science/book/9780750664318) (2
-   schemes up to order 3)
- * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2 schemes up to
+ * [Zienkiewicz](http://www.sciencedirect.com/science/book/9780750664318)
+   (2005, 2 schemes up to order 3)
+ * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2009, 2 schemes up to
    degree 14)
- * [Shunn-Ham](http://dx.doi.org/10.1016/j.cam.2012.03.032) (6 schemes up to
+ * [Shunn-Ham](http://dx.doi.org/10.1016/j.cam.2012.03.032) (2012, 6 schemes up to
    degree 7)
 
 ### Hexahedron
