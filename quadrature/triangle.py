@@ -232,7 +232,7 @@ def _newton_cotes(n, point_fun):
 
     # weights
     if n == 0:
-        weights = numpy.ones(1.0)
+        weights = numpy.ones(1)
         return points, weights, degree
 
     def get_poly(t, m, n):
