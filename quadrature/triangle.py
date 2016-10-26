@@ -141,6 +141,161 @@ class SevenPoint(object):
         return
 
 
+class HammerMarloweStroud(object):
+    '''
+    P.C. Hammer, O.J. Marlowe and A.H. Stroud,
+    Numerical Integration Over Simplexes and Cones,
+    Mathematical Tables and Other Aids to Computation,
+    Vol. 10, No. 55, Jul. 1956, pp. 130-137,
+    <https://doi.org/10.1090/S0025-5718-1956-0086389-6>.
+
+    Abstract:
+    In this paper we develop numerical integration formulas for simplexes and
+    cones in n-space for n>=2. While several papers have been written on
+    numerical integration in higher spaces, most of these have dealt with
+    hyperrectangular regions. For certain exceptions see [3]. Hammer and Wymore
+    [1] have given a first general type theory designed through systematic use
+    of cartesian product regions and affine transformations to extend the
+    possible usefulness of formulas for each region.
+
+    Two of the schemes also appear in
+
+    P.C. Hammer, Arthur H. Stroud,
+    Numerical Evaluation of Multiple Integrals II,
+    Mathematical Tables and Other Aids to Computation.
+    Vol. 12, No. 64 (Oct., 1958), pp. 272-280,
+    <http://www.jstor.org/stable/2002370>
+    '''
+    def __init__(self, index):
+        if index == 1:
+            self.weights = numpy.concatenate([
+                1.0 * numpy.ones(1),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                ])
+            self.degree = 1
+        elif index == 2:
+            self.weights = numpy.concatenate([
+                1.0/3.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self._r(0.5),
+                ])
+            self.degree = 2
+        elif index == 3:
+            self.weights = numpy.concatenate([
+                1.0/3.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self._r(-0.5),
+                ])
+            self.degree = 2
+        elif index == 4:
+            self.weights = numpy.concatenate([
+                -9.0/16.0 * numpy.ones(1),
+                25.0/48.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                self._r(0.4),
+                ])
+            self.degree = 3
+        elif index == 5:
+            self.weights = numpy.concatenate([
+                9.0/40.0 * numpy.ones(1),
+                (155.0 - numpy.sqrt(15.0)) / 1200.0 * numpy.ones(3),
+                (155.0 + numpy.sqrt(15.0)) / 1200.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                self._r((1 + numpy.sqrt(15)) / 7.0),
+                self._r((1 - numpy.sqrt(15)) / 7.0),
+                ])
+            self.degree = 5
+        else:
+            raise ValueError('Illegal Hammer-Marlowe-Stroud index')
+
+        self.points = bary[:, 1:]
+        return
+
+    def _r(self, r):
+        '''Given $r$ (as appearing in the article), it returns the barycentric
+        coordinates of the three points.
+        '''
+        a = r + (1.0-r) / 3.0
+        b = 0.5 * (1.0 - a)
+        return numpy.array([
+            [a, b, b],
+            [b, a, b],
+            [b, b, a],
+            ])
+
+
+def _newton_cotes(n, point_fun):
+    '''
+    Construction after
+
+    P. Silvester,
+    Symmetric quadrature formulae for simplexes
+    Math. Comp., 24, 95-100 (1970),
+    <http://www.ams.org/journals/mcom/1970-24-109/S0025-5718-1970-0258283-6/S0025-5718-1970-0258283-6.pdf>
+    '''
+    def get_poly(t, m, n):
+        f = 1
+        for k in range(m):
+            f *= (t - point_fun(k, n)) / (point_fun(m, n) - point_fun(k, n))
+        return f
+    degree = n
+    num_points = (n+1) * (n+2) / 2
+    bary = numpy.empty((num_points, 3))
+    weights = numpy.empty(num_points)
+    idx = 0
+    for i in range(n + 1):
+        for j in range(n + 1 - i):
+            k = n - i - j
+            bary[idx] = point_fun(
+                numpy.array([i, j, k], dtype=float), n
+                )
+            # Compute weight.
+            # Define the polynomial which to integrate over the
+            # tetrahedron.
+            t = sympy.DeferredVector('t')
+            g = sympy.expand(
+                get_poly(t[0], i, n)
+                * get_poly(t[1], j, n)
+                * get_poly(t[2], k, n)
+                )
+            # tranform it into a polynomial class
+            gpoly = sympy.poly_from_expr(
+                g, (t[0], t[1], t[2])
+                )[0]
+            # The integral of monomials over a tetrahedron are well-known,
+            # see Silvester.
+            weights[idx] = numpy.sum([
+                 c * numpy.prod([math.factorial(l) for l in m]) * 2
+                 / math.factorial(numpy.sum(m) + 2)
+                 for m, c in zip(gpoly.monoms(), gpoly.coeffs())
+                 ])
+            idx += 1
+    points = bary[:, [1, 2]]
+    return points, weights, degree
+
+
+class NewtonCotesClosed(object):
+    def __init__(self, n):
+        self.points, self.weights, self.degree = \
+            _newton_cotes(n, lambda k, n: k / float(n))
+        return
+
+
+class NewtonCotesOpen(object):
+    def __init__(self, n):
+        self.points, self.weights, self.degree = \
+            _newton_cotes(n, lambda k, n: (k+1) / float(n+3))
+        return
+
+
 class Strang(object):
     '''
     See
@@ -252,7 +407,829 @@ class Strang(object):
         return
 
 
-class Toms584_19(object):
+class Cowper(object):
+    '''
+    G.R. Cowper,
+    Gaussian quadrature formulas for triangles,
+    Numerical Methods in Engineering,
+    Volume 7, Issue 3, 1973, Pages 405–408.
+    DOI: 10.1002/nme.1620070316,
+    <https://dx.doi.org/10.1002/nme.1620070316>.
+    '''
+    def __init__(self, index):
+        if index == 1:
+            self.weights = numpy.concatenate([
+                1.0/3.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s21(1.0/6.0),
+                ])
+            self.degree = 2
+        elif index == 2:
+            self.weights = numpy.concatenate([
+                1.0/3.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s21(0.5),
+                ])
+            self.degree = 2
+        elif index == 3:
+            self.weights = numpy.concatenate([
+                -0.5625 * numpy.ones(1),
+                25.0/48.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.2),
+                ])
+            self.degree = 3
+        elif index == 4:
+            self.weights = numpy.concatenate([
+                1.0/6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s111(0.659027622374092, 0.231933368553031),
+                ])
+            self.degree = 3
+        elif index == 5:
+            self.weights = numpy.concatenate([
+                 0.109951743655322 * numpy.ones(3),
+                 0.223381589678011 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s21(0.091576213509771),
+                _s21(0.445948490915965),
+                ])
+            self.degree = 4
+        elif index == 6:
+            self.weights = numpy.concatenate([
+                 0.375 * numpy.ones(1),
+                 5.0/48.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s111(0.736712498968435, 0.237932366472434),
+                ])
+            self.degree = 4
+        elif index == 7:
+            self.weights = numpy.concatenate([
+                 0.225 * numpy.ones(1),
+                 0.125939180544827 * numpy.ones(3),
+                 0.132394152788506 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.101286507323456),
+                _s21(0.470142064105115),
+                ])
+            self.degree = 5
+        elif index == 8:
+            self.weights = numpy.concatenate([
+                0.205950504760887 * numpy.ones(3),
+                0.063691414286223 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s21(0.437525248383384),
+                _s111(0.797112651860071, 0.165409927389841),
+                ])
+            self.degree = 5
+        elif index == 9:
+            self.weights = numpy.concatenate([
+                0.050844906370207 * numpy.ones(3),
+                0.116786275726379 * numpy.ones(3),
+                0.082851075618374 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s21(0.063089014491502),
+                _s21(0.249286745170910),
+                _s111(0.636502499121399, 0.310352451033785),
+                ])
+            self.degree = 6
+        elif index == 10:
+            self.weights = numpy.concatenate([
+                -0.149570044467670 * numpy.ones(1),
+                +0.175615257433204 * numpy.ones(3),
+                +0.053347235608839 * numpy.ones(3),
+                +0.077113760890257 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.260345966079038),
+                _s21(0.065130102902216),
+                _s111(0.638444188569809, 0.312865496004875),
+                ])
+            self.degree = 7
+        else:
+            raise ValueError('Illegal Cowper index')
+
+        self.points = bary[:, 1:]
+        return
+
+
+class LynessJespersen(object):
+    '''
+    J.N. Lyness, D. Jespersen,
+    Moderate Degree Symmetric Quadrature Rules for the Triangle,
+    J. Inst. Maths Applies (1975) 15, 19-32,
+    doi: 10.1093/imamat/15.1.19,
+    <https://dx.doi.org/10.1093/imamat/15.1.19>.
+
+    Abstract:
+    A variant formulation of the moment fitting equations for the construction
+    of D3 (triangularly symmetric) quadrature rules for the triangle is
+    derived. These equations are solved to produce weights and abscissas for
+    quadrature rules of polynomial degree up to 11 for the triangle, some of
+    which require fewer function evaluations than any presently available rule
+    of the same polynomial degree. Cytolic rules of degrees up to 9 are also
+    derived.
+    '''
+    def __init__(self, index):
+        if index == 1:
+            self.weights = numpy.concatenate([
+                1.0/3.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s21(0.5),
+                ])
+            self.degree = 2
+        elif index == 2:
+            self.weights = numpy.concatenate([
+                0.75 * numpy.ones(1),
+                1.0/12.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.0),
+                ])
+            self.degree = 2
+        elif index == 3:
+            self.weights = numpy.concatenate([
+                -9.0/16.0 * numpy.ones(1),
+                25.0/48.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.2),
+                ])
+            self.degree = 3
+        elif index == 4:
+            self.weights = numpy.concatenate([
+                9.0/20.0 * numpy.ones(1),
+                1.0/20.0 * numpy.ones(3),
+                2.0/15.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.0),
+                _s21(0.5),
+                ])
+            self.degree = 3
+        elif index == 5:
+            self.weights = numpy.concatenate([
+                3.298552309659655E-01/3.0 * numpy.ones(3),
+                6.701447690340345E-01/3.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s21(9.157621350977073E-02),
+                _s21(4.459484909159649E-01),
+                ])
+            self.degree = 4
+        elif index == 6:
+            self.weights = numpy.concatenate([
+                9.0/20.0 * numpy.ones(1),
+                -1.0/60.0 * numpy.ones(3),
+                1.0/10.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.0),
+                _s111(
+                    (3.0 + numpy.sqrt(3.0)) / 6.0,
+                    (3.0 - numpy.sqrt(3.0)) / 6.0
+                    ),
+                ])
+            self.degree = 4
+        elif index == 7:
+            self.weights = numpy.concatenate([
+                (11.0 - numpy.sqrt(13.0)) / 360.0 * numpy.ones(3),
+                (10.0 - 2*numpy.sqrt(13.0)) / 45.0 * numpy.ones(3),
+                (29.0 + 17*numpy.sqrt(13.0)) / 360.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s21(0.0),
+                _s21(0.5),
+                _s21((7.0 - numpy.sqrt(13.0)) / 18.0),
+                ])
+            self.degree = 4
+        elif index == 8:
+            self.weights = numpy.concatenate([
+                9.0/40.0 * numpy.ones(1),
+                (155.0 - numpy.sqrt(15.0)) / 1200.0 * numpy.ones(3),
+                (155.0 + numpy.sqrt(15.0)) / 1200.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21((6.0 - numpy.sqrt(15.0))/21.0),
+                _s21((6.0 + numpy.sqrt(15.0))/21.0),
+                ])
+            self.degree = 5
+        elif index == 9:
+            self.weights = numpy.concatenate([
+                81.0/320.0 * numpy.ones(1),
+                1.0/90.0 * numpy.ones(3),
+                16.0/225.0 * numpy.ones(3),
+                2401.0/14400.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.0),
+                _s21(0.5),
+                _s21(1.0/7.0),
+                ])
+            self.degree = 5
+        elif index == 10:
+            self.weights = numpy.concatenate([
+                3.503588271790222E-01 / 3.0 * numpy.ones(3),
+                1.525347191106164E-01 / 3.0 * numpy.ones(3),
+                4.971064537103375E-01 / 6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s21(2.492867451709329E-01),
+                _s21(6.308901449150177E-02),
+                _s111(6.365024991213939E-01, 5.314504984483216E-02),
+                ])
+            self.degree = 6
+        elif index == 11:
+            self.weights = numpy.concatenate([
+                -81.0/140.0 * numpy.ones(1),
+                -5.0/252.0 * numpy.ones(3),
+                17.0/315.0 * numpy.ones(3),
+                128.0/315.0 * numpy.ones(3),
+                9.0/210.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.0),
+                _s21(0.5),
+                _s21(0.25),
+                _s111(
+                    (3.0 + numpy.sqrt(6.0)) / 6.0,
+                    (3.0 - numpy.sqrt(6.0)) / 6.0,
+                    ),
+                ])
+            self.degree = 6
+        elif index == 12:
+            self.weights = numpy.concatenate([
+                 1.527089667883523E-01 * numpy.ones(1),
+                 2.944076042366762E-01 / 3.0 * numpy.ones(3),
+                 3.887052878418766E-01 / 3.0 * numpy.ones(3),
+                 1.641781411330949E-01 / 6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(4.738308139536513E-01),
+                _s21(1.721176696308175E-01),
+                _s111(0.0, 8.653073540834571E-01),
+                ])
+            self.degree = 6
+        elif index == 13:
+            self.weights = numpy.concatenate([
+                  -1.495700444677495E-01 * numpy.ones(1),
+                  5.268457722996328E-01 / 3.0 * numpy.ones(3),
+                  1.600417068265167E-01 / 3.0 * numpy.ones(3),
+                  4.626825653415500E-01 / 6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(2.603459660790466E-01),
+                _s21(6.513010290221623E-02),
+                _s111(6.384441885698096E-01, 4.869031542531756E-02),
+                ])
+            self.degree = 7
+        elif index == 14:
+            self.weights = numpy.concatenate([
+                1.763126156005252E-01 * numpy.ones(1),
+                1.210901532763310E-02 / 3.0 * numpy.ones(3),
+                3.499561757697094E-01 / 3.0 * numpy.ones(3),
+                3.195119754425220E-01 / 3.0 * numpy.ones(3),
+                1.421102178595603E-01 / 6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.0),
+                _s21(1.549360602237604E-01),
+                _s21(4.691507461438120E-01),
+                _s111(0.0, 8.392991722729236E-01),
+                ])
+            self.degree = 7
+        elif index == 15:
+            self.weights = numpy.concatenate([
+                1.443156076777862E-01 * numpy.ones(1),
+                2.852749028018549E-01 / 3.0 * numpy.ones(3),
+                9.737549286959440E-02 / 3.0 * numpy.ones(3),
+                3.096521116041552E-01 / 3.0 * numpy.ones(3),
+                1.633818850466092E-01 / 6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(4.592925882927229E-01),
+                _s21(5.054722831703103E-02),
+                _s21(1.705693077517601E-01),
+                _s111(8.394777409957211E-03, 7.284923929554041E-01),
+                ])
+            self.degree = 8
+        elif index == 16:
+            self.weights = numpy.concatenate([
+                +1.207273935292775E-02 / 3.0 * numpy.ones(3),
+                -8.491579879151455E-01 / 3.0 * numpy.ones(3),
+                +1.042367468891334E+00 / 3.0 * numpy.ones(3),
+                +1.947229791412260E-01 / 3.0 * numpy.ones(3),
+                +4.511852767201322E-01 / 3.0 * numpy.ones(3),
+                +1.488095238055238E-01 / 6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s21(0.0),
+                _s21(0.5),
+                _s21(4.956813941755582E-01),
+                _s21(9.032775751426533E-02),
+                _s21(2.341547497073052E-01),
+                _s111(0.0, 7.236067977499750E-01),
+                ])
+            self.degree = 8
+        elif index == 17:
+            self.weights = numpy.concatenate([
+                -2.834183851113958E-01 * numpy.ones(1),
+                2.097208857979572E-01 / 3.0 * numpy.ones(3),
+                5.127273801480265E-02 / 3.0 * numpy.ones(3),
+                6.564896469913508E-01 / 3.0 * numpy.ones(3),
+                3.659351143072855E-01 / 6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(4.766654393821525E-01),
+                _s21(3.377184405448033E-02),
+                _s21(2.703478891654040E-01),
+                _s111(5.146433548666149E-02, 7.458294907672514E-01),
+                ])
+            self.degree = 8
+        elif index == 18:
+            self.weights = numpy.concatenate([
+                9.713579628279610E-02 * numpy.ones(1),
+                9.400410068141950E-02 / 3.0 * numpy.ones(3),
+                2.334826230143263E-01 / 3.0 * numpy.ones(3),
+                2.389432167816271E-01 / 3.0 * numpy.ones(3),
+                7.673302697609430E-02 / 3.0 * numpy.ones(3),
+                2.597012362637364E-01 / 6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(4.896825191987370E-01),
+                _s21(4.370895914929355E-01),
+                _s21(1.882035356190322E-01),
+                _s21(4.472951339445297E-02),
+                _s111(3.683841205473626E-02, 7.411985987844980E-01),
+                ])
+            self.degree = 9
+        elif index == 19:
+            self.weights = numpy.concatenate([
+                1.133624844599192E-01 * numpy.ones(1),
+                1.062573789846330E-03 / 3.0 * numpy.ones(3),
+                4.803411513859279E-02 / 3.0 * numpy.ones(3),
+                2.524243006337300E-01 / 3.0 * numpy.ones(3),
+                7.819254371487040E-02 / 3.0 * numpy.ones(3),
+                2.472227459993048E-01 / 3.0 * numpy.ones(3),
+                2.597012362637364E-01 / 6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.0),
+                _s21(0.5),
+                _s21(4.497793381870162E-01),
+                _s21(4.694744319909033E-02),
+                _s21(1.918719127374489E-01),
+                _s111(3.683841205473626E-02, 7.411985987844980E-01),
+                ])
+            self.degree = 9
+        elif index == 20:
+            self.weights = numpy.concatenate([
+                4.097919300803106E-02 / 3.0 * numpy.ones(3),
+                1.085536215102866E-01 / 3.0 * numpy.ones(3),
+                2.781018986881812E-03 / 3.0 * numpy.ones(3),
+                1.779689321422668E-01 / 3.0 * numpy.ones(3),
+                2.314486047444677E-01 / 3.0 * numpy.ones(3),
+                3.140226717732234E-01 / 6.0 * numpy.ones(6),
+                1.242459578348437E-01 / 6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s21(3.236494811127173E-02),
+                _s21(1.193509122825931E-01),
+                _s21(5.346110482707572E-01),
+                _s21(2.033099004312816E-01),
+                _s21(3.989693029658558E-01),
+                _s111(5.017813831049474E-02, 5.932012134282132E-01),
+                _s111(2.102201653616613E-02, 8.074890031597923E-01),
+                ])
+            self.degree = 11
+        elif index == 21:
+            self.weights = numpy.concatenate([
+                 8.797730116222190E-02 * numpy.ones(1),
+                 2.623293466120857E-02 / 3.0 * numpy.ones(3),
+                 1.142447159818060E-01 / 3.0 * numpy.ones(3),
+                 5.656634416839376E-02 / 3.0 * numpy.ones(3),
+                 2.164790926342230E-01 / 3.0 * numpy.ones(3),
+                 2.079874161166116E-01 / 3.0 * numpy.ones(3),
+                 4.417430269980344E-02 / 6.0 * numpy.ones(6),
+                 2.463378925757316E-01 / 6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(2.598914092828833E-02),
+                _s21(9.428750264792270E-02),
+                _s21(4.946367750172147E-01),
+                _s21(2.073433826145142E-01),
+                _s21(4.389078057004907E-01),
+                _s111(0.0, 8.588702812826364E-01),
+                _s111(4.484167758913055E-02, 6.779376548825902E-01),
+                ])
+            self.degree = 11
+        else:
+            raise ValueError('Illegal Lyness-Jespersen index')
+
+        self.points = bary[:, [1, 2]]
+        return
+
+
+class Hillion(object):
+    '''
+    P. Hillion,
+    Numerical Integration on a Triangle,
+    International Journal for Numerical Methods in Engineering,
+    Vol. 11, 797-815 (1977).
+    DOI:10.1002/nme.1620110504,
+    <https://dx.doi.org/10.1002/nme.1620110504>.
+
+    Note that the schemes here are not fully symmetric. Also note that in the
+    article, the quadrature constants are specified with low precision such
+    that the tests are failing. What is needed here is a reimplementation of
+    Hillion's method to retrieve more digits.
+    '''
+    def __init__(self, index):
+        if index == 1:
+            self.weights = numpy.concatenate([
+                1.0 * numpy.ones(1),
+                ])
+            self.points = numpy.array([
+                [1.0/3.0, 1.0/3.0]
+                ])
+            self.degree = 1
+        elif index == 2:
+            self.weights = 2.0 * numpy.concatenate([
+                1.0/6.0 * numpy.ones(2),
+                1.0/6.0 * numpy.ones(1),
+                ])
+            self.points = numpy.concatenate([
+                self._symm(0.0, 0.5),
+                numpy.array([[0.5, 0.5]]),
+                ])
+            self.degree = 2
+        elif index == 3:
+            self.weights = 2.0 * numpy.concatenate([
+                1.0/6.0 * numpy.ones(2),
+                1.0/6.0 * numpy.ones(1),
+                ])
+            self.points = numpy.concatenate([
+                2.0/3.0 - self._symm(0.0, 0.5),
+                2.0/3.0 - numpy.array([[0.5, 0.5]]),
+                ])
+            self.degree = 2
+        elif index == 4:
+            self.weights = 2.0 * numpy.concatenate([
+                1.0/18.0 * numpy.ones(1),
+                2.0/9.0 * numpy.ones(2),
+                ])
+            self.points = numpy.concatenate([
+                numpy.array([[0.0, 0.0]]),
+                self._symm(0.591506351, 0.158493649),
+                ])
+            self.degree = 2
+        elif index == 5:
+            self.weights = 2.0 * numpy.concatenate([
+                1.0/18.0 * numpy.ones(1),
+                2.0/9.0 * numpy.ones(2),
+                ])
+            self.points = numpy.concatenate([
+                2.0/3.0 - numpy.array([[0.0, 0.0]]),
+                2.0/3.0 - self._symm(0.591506351, 0.158493649),
+                ])
+            self.degree = 2
+        # elif index == 6:
+        #     self.weights = 2.0 * numpy.concatenate([
+        #         1.0/8.0 * numpy.ones(4),
+        #         ])
+        #     lmbda = 0.655308609
+        #     mu = 0.247060398
+        #     self.points = numpy.concatenate([
+        #         self._symm(lmbda, mu),
+        #         2.0/3.0 - self._symm(lmbda, mu),
+        #         ])
+        #     self.degree = 2
+        # elif index == 7:
+        #     self.weights = 2.0 * numpy.concatenate([
+        #         0.159020691 * numpy.ones(2),
+        #         0.090979309 * numpy.ones(2),
+        #         ])
+        #     self.points = numpy.concatenate([
+        #         self._symm(0.666390246, 0.280019915),
+        #         self._symm(0.178558728, 0.075031109),
+        #         ])
+        #     self.degree = 3
+        # elif index == 8:
+        #     self.weights = 2.0 * numpy.concatenate([
+        #         0.065104166 * numpy.ones(2),
+        #         0.192191138 * numpy.ones(1),
+        #         0.177600528 * numpy.ones(1),
+        #         ])
+        #     lambda2 = 0.433949142
+        #     lambda3 = 0.175574667
+        #     self.points = numpy.concatenate([
+        #         self._symm(0.0, 0.8),
+        #         numpy.array([[lambda2, lambda2]]),
+        #         numpy.array([[lambda3, lambda3]]),
+        #         ])
+        #     self.degree = 3
+        # elif index == 9:
+        #     self.weights = 2.0 * numpy.concatenate([
+        #         9.0/32.0 * numpy.ones(1),
+        #         25.0/96.0 * numpy.ones(3),
+        #         ])
+        #     self.points = numpy.concatenate([
+        #         numpy.array([[1.0/3.0, 1.0/3.0]]),
+        #         self._symm(0.2, 0.6),
+        #         numpy.array([[0.2, 0.2]]),
+        #         ])
+        #     self.degree = 3
+        # elif index == 10:
+        #     self.weights = 2.0 * numpy.concatenate([
+        #         0.036232077 * numpy.ones(2),
+        #         0.083559589 * numpy.ones(2),
+        #         25.0/96.0 * numpy.ones(1),
+        #         ])
+        #     self.points = numpy.concatenate([
+        #         self._symm(0.939332590, 0.0),
+        #         self._symm(0.0, 0.340667409),
+        #         numpy.array([[0.4, 0.4]]),
+        #         ])
+        #     self.degree = 3
+        else:
+            raise ValueError('Illegal Hillion index')
+
+        return
+
+    def _symm(self, a, b):
+        return numpy.array([
+            [a, b],
+            [b, a],
+            ])
+
+
+class LaursenGellert(object):
+    '''
+    M.E. Laursen, M. Gellert,
+    Some criteria for numerically integrated matrices and quadrature formulas
+    for triangles,
+    International Journal for Numerical Methods in Engineering,
+    Volume 12, Issue 1, 1978, Pages 67–76.
+    DOI: 10.1002/nme.1620120107,
+    <https://dx.doi.org/10.1002/nme.1620120107>.
+
+    Abstract:
+    For a wide class of finite element matrices integrated numerically rather
+    than exactly, a definable number of sampling points is found to be
+    sufficient for keeping their theoretical properties unchanged. A systematic
+    criterion limiting the number of possible point configurations for
+    numerical quadrature formulas on triangles is established. Some new high
+    order formulas are presented. Tables containing optimal formulas with
+    respect to minimum number of sampling points and required degrees of
+    accuracy are given. They are arranged so as to assist with selection of
+    suitable quadrature formulas for finite element computer programming.
+    '''
+    def __init__(self, index):
+        if index == '1':
+            self.weights = numpy.concatenate([
+                1.0 * numpy.ones(1),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                ])
+            self.degree = 1
+        elif index == '2a':
+            self.weights = numpy.concatenate([
+                1.0/3.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s21(1.0/6.0),
+                ])
+            self.degree = 2
+        elif index == '2b':
+            self.weights = numpy.concatenate([
+                1.0/3.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s21(0.5),
+                ])
+            self.degree = 2
+        elif index == '3':
+            self.weights = numpy.concatenate([
+                -0.5625 * numpy.ones(1),
+                25.0/48.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.2),
+                ])
+            self.degree = 3
+        elif index == '4':
+            self.weights = numpy.concatenate([
+                1.0/6.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s111(0.659027622374092, 0.231933368553031),
+                ])
+            self.degree = 3
+        elif index == '5':
+            self.weights = numpy.concatenate([
+                0.109951743655322 * numpy.ones(3),
+                0.223381589678011 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s21(0.091576213509771),
+                _s21(0.445948490915965),
+                ])
+            self.degree = 4
+        elif index == '6':
+            self.weights = numpy.concatenate([
+                0.375 * numpy.ones(1),
+                5.0/48.0 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s111(0.736712498968435, 0.237932366472434),
+                ])
+            self.degree = 4
+        elif index == '7':
+            self.weights = numpy.concatenate([
+                0.225 * numpy.ones(1),
+                0.125939180544827 * numpy.ones(3),
+                0.132394152788506 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.101286507323456),
+                _s21(0.470142064105115),
+                ])
+            self.degree = 5
+        elif index == '8':
+            self.weights = numpy.concatenate([
+                0.205950504760887 * numpy.ones(3),
+                0.063691414286223 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s21(0.437525248383384),
+                _s111(0.797112651860071, 0.165409927389841),
+                ])
+            self.degree = 5
+        elif index == '9':
+            self.weights = numpy.concatenate([
+                0.050844906370207 * numpy.ones(3),
+                0.116786275726379 * numpy.ones(3),
+                0.082851075618374 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s21(0.063089014491502),
+                _s21(0.249286745170910),
+                _s111(0.636502499121399, 0.310352451033785),
+                ])
+            self.degree = 6
+        elif index == '10':
+            self.weights = numpy.concatenate([
+                -0.149570044467670 * numpy.ones(1),
+                +0.175615257433204 * numpy.ones(3),
+                +0.053347235608839 * numpy.ones(3),
+                +0.077113760890257 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.260345966079038),
+                _s21(0.065130102902216),
+                _s111(0.638444188569809, 0.312865496004875),
+                ])
+            self.degree = 7
+        elif index == '11':
+            self.weights = numpy.concatenate([
+                0.053077801790233 * numpy.ones(3),
+                0.070853083692136 * numpy.ones(6),
+                0.069274682079415 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s21(0.064930513159165),
+                _s111(0.284575584249173, 0.517039939069325),
+                _s111(0.313559184384932, 0.043863471792371),
+                ])
+            self.degree = 7
+        elif index == '12':
+            self.weights = numpy.concatenate([
+                0.144315607677787 * numpy.ones(1),
+                0.103217370534718 * numpy.ones(3),
+                0.032458497623198 * numpy.ones(3),
+                0.095091634267284 * numpy.ones(3),
+                0.027230314174435 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.170569307751761),
+                _s21(0.050547228317031),
+                _s21(0.459292588292723),
+                _s111(0.008394777409958, 0.263112829634638),
+                ])
+            self.degree = 8
+        elif index == '13':
+            self.weights = numpy.concatenate([
+                0.097135796282799 * numpy.ones(1),
+                0.031334700227139 * numpy.ones(3),
+                0.077827541004774 * numpy.ones(3),
+                0.079647738927210 * numpy.ones(3),
+                0.025577675658698 * numpy.ones(3),
+                0.043283539377289 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.489682519198738),
+                _s21(0.437089591492937),
+                _s21(0.188203535619033),
+                _s21(0.044729513394453),
+                _s111(0.036838412054736, 0.221962989160766),
+                ])
+            self.degree = 9
+        elif index == '14':
+            self.weights = numpy.concatenate([
+                0.051617202569021 * numpy.ones(3),
+                0.094080073458356 * numpy.ones(3),
+                0.025993571032320 * numpy.ones(3),
+                0.045469538047619 * numpy.ones(6),
+                0.035351705089199 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s21(0.481519834783311),
+                _s21(0.403603979817940),
+                _s21(0.045189009784377),
+                _s111(0.136991201264904, 0.218290070971381),
+                _s111(0.030424361728820, 0.222063165537318),
+                ])
+            self.degree = 9
+        elif index == '15a':
+            self.weights = numpy.concatenate([
+                0.079894504741240 * numpy.ones(1),
+                0.071123802232377 * numpy.ones(3),
+                0.008223818690464 * numpy.ones(3),
+                0.045430592296170 * numpy.ones(6),
+                0.037359856234305 * numpy.ones(6),
+                0.030886656884564 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.425086210602091),
+                _s21(0.023308867510000),
+                _s111(0.147925626209534, 0.223766973576973),
+                _s111(0.029946031954171, 0.358740141864431),
+                _s111(0.035632559587504, 0.143295370426867),
+                ])
+            self.degree = 10
+        elif index == '15b':
+            self.weights = numpy.concatenate([
+                0.081743329146286 * numpy.ones(1),
+                0.045957963604745 * numpy.ones(3),
+                0.013352968813150 * numpy.ones(3),
+                0.063904906396424 * numpy.ones(6),
+                0.034184648162959 * numpy.ones(6),
+                0.025297757707288 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.142161101056564),
+                _s21(0.032055373216944),
+                _s111(0.148132885783821, 0.321812995288835),
+                _s111(0.029619889488730, 0.369146781827811),
+                _s111(0.028367665339938, 0.163701733737182),
+                ])
+            self.degree = 10
+        else:
+            raise ValueError('Illegal Laursen-Gellert index')
+
+        self.points = bary[:, 1:]
+        return
+
+
+class Cubtri(object):
     '''
     See
     https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
@@ -287,7 +1264,7 @@ class Toms584_19(object):
         return
 
 
-class Toms612_19(object):
+class Triex(object):
     '''
     See
     https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
@@ -300,117 +1277,51 @@ class Toms612_19(object):
     March 1984,
     <http://dl.acm.org/citation.cfm?id=356070&CFID=836775288&CFTOKEN=89206835>.
     '''
-    def __init__(self):
-        self.weights = numpy.concatenate([
-            9.71357962827961025E-002 * numpy.ones(1),
-            3.13347002271398278E-002 * numpy.ones(3),
-            7.78275410047754301E-002 * numpy.ones(3),
-            7.96477389272090969E-002 * numpy.ones(3),
-            2.55776756586981006E-002 * numpy.ones(3),
-            4.32835393772893970E-002 * numpy.ones(6),
-            ])
-        bary = numpy.concatenate([
-            _s3(),
-            _s21(0.48968251919873701),
-            _s21(0.43708959149293553),
-            _s21(0.18820353561903219),
-            _s21(4.47295133944529688E-002),
-            _s111(0.74119859878449801, 3.68384120547362581E-002),
-            ])
-        self.points = bary[:, [1, 2]]
-        self.degree = 9
-        return
-
-
-class Toms612_28(object):
-    '''
-    See
-    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
-    and
-
-    E. de Doncker and I. Robinson,
-    Algorithm 612: TRIEX: Integration Over a TRIangle Using Nonlinear
-    EXtrapolation,
-    ACM Trans. Math. Softw.,
-    March 1984,
-    <http://dl.acm.org/citation.cfm?id=356070&CFID=836775288&CFTOKEN=89206835>.
-    '''
-    def __init__(self):
-        self.weights = numpy.concatenate([
-            0.08797730116222190 * numpy.ones(1),
-            0.008744311553736190 * numpy.ones(3),
-            0.03808157199393533 * numpy.ones(3),
-            0.01885544805613125 * numpy.ones(3),
-            0.07215969754474100 * numpy.ones(3),
-            0.06932913870553720 * numpy.ones(3),
-            0.04105631542928860 * numpy.ones(6),
-            0.007362383783300573 * numpy.ones(6),
-            ])
-        bary = numpy.concatenate([
-            _s3(),
-            _s21(0.02598914092828833),
-            _s21(0.09428750264792270),
-            _s21(0.4946367750172147),
-            _s21(0.2073433826145142),
-            _s21(0.4389078057004907),
-            _s111(0.6779376548825902, 0.04484167758913055),
-            _s111(0.8588702812826364, 0.0),
-            ])
-        self.points = bary[:, [1, 2]]
-        self.degree = 11
-        return
-
-
-class Toms706_37(object):
-    '''
-    See
-    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
-    and
-
-    Berntsen and Espelid,
-    Algorithm 706: DCUTRI: An Algorithm for Adaptive Cubature over a Collection
-    of Triangles,
-    ACM Trans. Math. Softw.,
-    Sept. 1992,
-    10.1145/131766.131772,
-    <http://dl.acm.org/citation.cfm?id=131772>.
-    '''
-    def __init__(self):
-        self.weights = numpy.concatenate([
-            0.051739766065744133555179145422 * numpy.ones(1),
-            0.008007799555564801597804123460 * numpy.ones(3),
-            0.046868898981821644823226732071 * numpy.ones(3),
-            0.046590940183976487960361770070 * numpy.ones(3),
-            0.031016943313796381407646220131 * numpy.ones(3),
-            0.010791612736631273623178240136 * numpy.ones(3),
-            0.032195534242431618819414482205 * numpy.ones(3),
-            0.015445834210701583817692900053 * numpy.ones(6),
-            0.017822989923178661888748319485 * numpy.ones(6),
-            0.037038683681384627918546472190 * numpy.ones(6),
-            ])
-        bary = numpy.concatenate([
-            _s3(),
-            _s21(0.024862168537947217274823955239),
-            _s21(0.414192542538082326221847602214),
-            _s21(0.230293878161404779868453507244),
-            _s21(0.113919981661733719124857214943),
-            _s21(0.495457300025082323058213517632),
-            _s21(0.468861354847056503251458179727),
-            _s111(
-                0.022076289653624405142446876931,
-                0.851306504174348550389457672223
-                ),
-            _s111(
-                0.018620522802520968955913511549,
-                0.689441970728591295496647976487
-                ),
-            _s111(
-                0.096506481292159228736516560903,
-                0.635867859433872768286976979827
-                ),
-            ])
-        self.points = bary[:, [1, 2]]
-        self.degree = 13
+    def __init__(self, index):
+        if index == 19:
+            self.weights = numpy.concatenate([
+                9.71357962827961025E-002 * numpy.ones(1),
+                3.13347002271398278E-002 * numpy.ones(3),
+                7.78275410047754301E-002 * numpy.ones(3),
+                7.96477389272090969E-002 * numpy.ones(3),
+                2.55776756586981006E-002 * numpy.ones(3),
+                4.32835393772893970E-002 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.48968251919873701),
+                _s21(0.43708959149293553),
+                _s21(0.18820353561903219),
+                _s21(4.47295133944529688E-002),
+                _s111(0.74119859878449801, 3.68384120547362581E-002),
+                ])
+            self.points = bary[:, [1, 2]]
+            self.degree = 9
+        elif index == 28:
+            self.weights = numpy.concatenate([
+                0.08797730116222190 * numpy.ones(1),
+                0.008744311553736190 * numpy.ones(3),
+                0.03808157199393533 * numpy.ones(3),
+                0.01885544805613125 * numpy.ones(3),
+                0.07215969754474100 * numpy.ones(3),
+                0.06932913870553720 * numpy.ones(3),
+                0.04105631542928860 * numpy.ones(6),
+                0.007362383783300573 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.02598914092828833),
+                _s21(0.09428750264792270),
+                _s21(0.4946367750172147),
+                _s21(0.2073433826145142),
+                _s21(0.4389078057004907),
+                _s111(0.6779376548825902, 0.04484167758913055),
+                _s111(0.8588702812826364, 0.0),
+                ])
+            self.points = bary[:, [1, 2]]
+            self.degree = 11
+        else:
+            raise ValueError('Illegal TRIEX index')
         return
 
 
@@ -872,167 +1783,517 @@ class Dunavant(object):
         return
 
 
-class ZhangCuiLiu(object):
+class CoolsHaegemans(object):
     '''
-    Linbo Zhang, Tao Cui and Hui Liu,
-    A set of symmetric quadrature rules on triangles and tetrahedra,
-    Journal of Computational Mathematics
-    Vol. 27, No. 1 (January 2009), pp. 89-96,
-    <http://www.jstor.org/stable/43693493>.
-
-    Abstract:
-    We present a program for computing symmetric quadrature rules on triangles
-    and tetrahedra. A set of rules are obtained by using this program.
-    Quadrature rules up to order 21 on triangles and up to order 14 on
-    tetrahedra have been obtained which are useful for use in finite element
-    computations. All rules presented here have positive weights with points
-    lying within the integration domain.
+    R. Cools, A. Haegemans,
+    Construction of minimal cubature formulae for the square and the triangle
+    using invariant theory,
+    Department of Computer Science, K.U.Leuven,
+    TW Reports vol:TW96, Sept. 1987,
+    <https://lirias.kuleuven.be/handle/123456789/131869>.
     '''
     def __init__(self, index):
         if index == 1:
-            self.weights = numpy.concatenate([
-                0.1443156076777871682510911104890646 * numpy.ones(1),
-                0.1032173705347182502817915502921290 * numpy.ones(3),
-                0.0324584976231980803109259283417806 * numpy.ones(3),
-                0.0950916342672846247938961043885843 * numpy.ones(3),
-                0.0272303141744349942648446900739089 * numpy.ones(6),
+            self.weights = 2.0 * numpy.concatenate([
+                0.16058343856681218798E-09 * numpy.ones(3),
+                0.26530624434780379347E-01 * numpy.ones(3),
+                0.29285717640155892159E-01 * numpy.ones(3),
+                0.43909556791220782402E-01 * numpy.ones(3),
+                0.66940767639916174192E-01 * numpy.ones(3),
                 ])
             bary = numpy.concatenate([
-                _s3(),
-                _s21(0.1705693077517602066222935014914645),
-                _s21(0.0505472283170309754584235505965989),
-                _s21(0.4592925882927231560288155144941693),
-                _s111(
-                    0.2631128296346381134217857862846436,
-                    0.0083947774099576053372138345392944
+                self._r3(
+                    0.34579201116826902882E+00,
+                    0.36231682215692616667E+01
+                    ),
+                self._r3(
+                    0.65101993458939166328E-01,
+                    0.87016510156356306078E+00
+                    ),
+                self._r3(
+                    0.65177530364879570754E+00,
+                    0.31347788752373300717E+00
+                    ),
+                self._r3(
+                    0.31325121067172530696E+00,
+                    0.63062143431895614010E+00
+                    ),
+                self._r3(
+                    0.51334692063945414949E+00,
+                    0.28104124731511039057E+00
                     ),
                 ])
             self.degree = 8
         elif index == 2:
+            self.weights = 2.0 * numpy.concatenate([
+                0.15319130036758557631E-06 * numpy.ones(3),
+                0.13260526227928785221E-01 * numpy.ones(3),
+                0.15646439344539042136E-01 * numpy.ones(3),
+                0.21704258224807323311E-01 * numpy.ones(3),
+                0.21797613600129922367E-01 * numpy.ones(3),
+                0.38587913508193459468E-01 * numpy.ones(3),
+                0.39699584282594413022E-01 * numpy.ones(3),
+                0.47910534861520060665E-01 * numpy.ones(1),
+                ])
+            bary = numpy.concatenate([
+                self._r3(
+                    0.58469201683584513031E-01,
+                    -0.54887778772527519316E+00
+                    ),
+                self._r3(
+                    0.50849285064031410705E-01,
+                    0.90799059794957813439E+00
+                    ),
+                self._r3(
+                    0.51586732419949574487E+00,
+                    0.46312452842927062902E+00
+                    ),
+                self._r3(
+                    0.24311033191739048230E+00,
+                    0.72180595182371959467E-00
+                    ),
+                self._r3(
+                    0.75397765920922660134E-00,
+                    0.20647569839132397633E+00
+                    ),
+                self._r3(
+                    0.42209207910846960294E-00,
+                    0.12689533413411127327E+00
+                    ),
+                self._r3(
+                    0.19823878346663354068E+00,
+                    0.62124412566393319745E+00
+                    ),
+                numpy.array([[1.0/3.0, 1.0/3.0, 1.0/3.0]])
+                ])
+            self.degree = 10
+        else:
+            raise ValueError('Illegal Cools-Haegemans index')
+
+        self.points = bary[:, 1:]
+        return
+
+    def _r3(self, a, b):
+        # rotation group R_3
+        c = 1.0 - a - b
+        return numpy.array([
+            [a, b, c],
+            [c, a, b],
+            [b, c, a],
+            ])
+
+
+class BerntsenEspelid(object):
+    '''
+    J. Berntsen, T.O. Espelid,
+    Degree 13 symmetric quadrature rules for the triangle,
+    Reports in Informatics, Dept. of Informatics, University of Bergen,
+    (1990).
+
+    Abstract:
+    In this paper we develop some tools based on the theory of moments to be
+    used to construct triangur symmetric quadrature rules for the triangle. We
+    use this technique to construct rules of polynomial degree 13 focusing on
+    rules that have all evaluation points inside the triangle, and all weights
+    positive.
+    '''
+    def __init__(self, index):
+        if index == 1:
             self.weights = numpy.concatenate([
-                0.0585962852260285941278938063477560 * numpy.ones(1),
-                0.0017351512297252675680618638808094 * numpy.ones(3),
-                0.0261637825586145217778288591819783 * numpy.ones(3),
-                0.0039197292424018290965208275701454 * numpy.ones(3),
-                0.0122473597569408660972869899262505 * numpy.ones(3),
-                0.0281996285032579601073663071515657 * numpy.ones(3),
-                0.0508870871859594852960348275454540 * numpy.ones(3),
-                0.0504534399016035991910208971341189 * numpy.ones(3),
-                0.0170636442122334512900253993849472 * numpy.ones(6),
-                0.0096834664255066004075209630934194 * numpy.ones(6),
-                0.0363857559284850056220113277642717 * numpy.ones(6),
-                0.0069646633735184124253997225042413 * numpy.ones(6),
+                0.051739766065744133555179145422 * numpy.ones(1),
+                0.008007799555564801597804123460 * numpy.ones(3),
+                0.046868898981821644823226732071 * numpy.ones(3),
+                0.046590940183976487960361770070 * numpy.ones(3),
+                0.031016943313796381407646220131 * numpy.ones(3),
+                0.010791612736631273623178240136 * numpy.ones(3),
+                0.032195534242431618819414482205 * numpy.ones(3),
+                0.015445834210701583817692900053 * numpy.ones(6),
+                0.017822989923178661888748319485 * numpy.ones(6),
+                0.037038683681384627918546472190 * numpy.ones(6),
                 ])
             bary = numpy.concatenate([
                 _s3(),
-                _s21(0.0099797608064584324152935295820524),
-                _s21(0.4799778935211883898105528650883899),
-                _s21(0.1538119591769669000000000000000000),
-                _s21(0.0740234771169878100000000000000000),
-                _s21(0.1303546825033300000000000000000000),
-                _s21(0.2306172260266531342996053700983831),
-                _s21(0.4223320834191478241144087137913939),
+                _s21(0.024862168537947217274823955239),
+                _s21(0.414192542538082326221847602214),
+                _s21(0.230293878161404779868453507244),
+                _s21(0.113919981661733719124857214943),
+                _s21(0.495457300025082323058213517632),
+                _s21(0.468861354847056503251458179727),
                 _s111(
-                    0.7862373859346610033296221140330900,
-                    0.1906163600319009042461432828653034
+                    0.022076289653624405142446876931,
+                    0.851306504174348550389457672223
                     ),
                 _s111(
-                    0.6305521436606074416224090755688129,
-                    0.3623231377435471446183267343597729
+                    0.018620522802520968955913511549,
+                    0.689441970728591295496647976487
                     ),
                 _s111(
-                    0.6265773298563063142335123137534265,
-                    0.2907712058836674150248168174816732
-                    ),
-                _s111(
-                    0.9142099849296254122399670993850469,
-                    0.0711657108777507625475924502924336
+                    0.096506481292159228736516560903,
+                    0.635867859433372768286976979827
                     ),
                 ])
-            self.degree = 14
+        elif index == 2:
+            self.weights = numpy.concatenate([
+                0.058696079612719031799193912788 * numpy.ones(1),
+                0.007850768296100080327451819370 * numpy.ones(3),
+                0.050668953175886963421095258589 * numpy.ones(3),
+                0.050080326090509066160747699962 * numpy.ones(3),
+                0.031647114592298319035326893473 * numpy.ones(3),
+                0.005356903791090860889118181848 * numpy.ones(3),
+                0.031492563075968795690055730726 * numpy.ones(3),
+                0.015802532215260751359123743555 * numpy.ones(6),
+                0.015981637780928405322919308674 * numpy.ones(6),
+                0.036551502224097295256193503655 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                _s21(0.024607188643230218187849951620),
+                _s21(0.420308753101194683716920517937),
+                _s21(0.227900255506160619646298949779),
+                _s21(0.116213058883517905247155308064),
+                _s21(0.5),
+                _s21(0.476602980049079152951254192421),
+                _s111(
+                    0.022797894538248612547720754462,
+                    0.851775587145410469734660000132
+                    ),
+                _s111(
+                    0.016275770991088540943703616092,
+                    0.692797317566660854594116271938
+                    ),
+                _s111(
+                    0.089733060451605359079629076100,
+                    0.637955883864209538412552781228
+                    ),
+                ])
         elif index == 3:
             self.weights = numpy.concatenate([
-                 0.0125376079944966565735856367723948 * numpy.ones(1),
-                 0.0274718698764242137484535496073598 * numpy.ones(3),
-                 0.0097652722770514230413646914294237 * numpy.ones(3),
-                 0.0013984195353918235239233631597867 * numpy.ones(3),
-                 0.0092921026251851826304282034030330 * numpy.ones(3),
-                 0.0165778760323669253260236250351840 * numpy.ones(3),
-                 0.0206677623486650769614219700129729 * numpy.ones(6),
-                 0.0208222355211545073068785561993297 * numpy.ones(6),
-                 0.0095686384198490606888758450458320 * numpy.ones(6),
-                 0.0244527709689724638856439207024089 * numpy.ones(6),
-                 0.0031557306306305340038264003207296 * numpy.ones(6),
-                 0.0121367963653212969370133090807574 * numpy.ones(6),
-                 0.0149664801438864490365249118515707 * numpy.ones(6),
-                 0.0063275933217777395693240327504398 * numpy.ones(6),
-                 0.0013425603120636958849798512981433 * numpy.ones(6),
-                 0.0027760769163475540677293561558015 * numpy.ones(6),
-                 0.0107398444741849415551734474479517 * numpy.ones(6),
-                 0.0053678057381874532052474100212697 * numpy.ones(6),
+                -4.438917939249711e-15 * numpy.ones(3),
+                0.023875084055169335843543623613 * numpy.ones(3),
+                0.063189783598782833129430995388 * numpy.ones(3),
+                0.008045069816524589599830031859 * numpy.ones(3),
+                0.027856097113552204952023523591 * numpy.ones(3),
+                0.050685061067025767745642589150 * numpy.ones(3),
+                0.014867088321983380610493967543 * numpy.ones(6),
+                0.021575699816275772518477875728 * numpy.ones(6),
+                0.043398330702882367361429063273 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s21(-1.097321247106281159287766916114),
+                _s21(0.488287850733405315708960134736),
+                _s21(0.271000295524474716503595027679),
+                _s21(0.024788431033661361058352074973),
+                _s21(0.107120353118147709346761786284),
+                _s21(0.440323874478061332339068546065),
+                _s111(
+                    0.020821520846631616958730687380,
+                    0.850459062644356742678494398953
+                    ),
+                _s111(
+                    0.022919482804812809947480096117,
+                    0.683758575887968213394629723103
+                    ),
+                _s111(
+                    0.115458022821994138042223116054,
+                    0.631364930935447484201224031403
+                    ),
+                ])
+        elif index == 4:
+            self.weights = numpy.concatenate([
+                0.055141401445961668095892272765 * numpy.ones(1),
+                0.000011142520455322162070507537 * numpy.ones(3),
+                0.008019330681470505488363363198 * numpy.ones(3),
+                0.033429216779221783453803543232 * numpy.ones(3),
+                0.046966588930899169431852266167 * numpy.ones(3),
+                0.031079169485602998741093672276 * numpy.ones(3),
+                0.048947942555161210000640851464 * numpy.ones(3),
+                0.005884459601338707440236321752 * numpy.ones(3),
+                0.015445834210701583817692900053 * numpy.ones(6),
+                0.017822989923178661888748319485 * numpy.ones(6),
+                0.037038683681384627918546472190 * numpy.ones(6),
                 ])
             bary = numpy.concatenate([
                 _s3(),
-                _s21(0.2158743059329919731902545438401828),
-                _s21(0.0753767665297472780972854309459163),
-                _s21(0.0103008281372217921136862160096969),
-                _s21(0.4936022112987001655119208321450536),
-                _s21(0.4615509381069252967410487102915180),
+                _s21(0.0),
+                _s21(0.024978640633391274114293084881),
+                _s21(0.474489920436516855163277733910),
+                _s21(0.230836272600280459320993940175),
+                _s21(0.114080598593243463483923394518),
+                _s21(0.417965185286509715766771174230),
+                _s21(0.5),
                 _s111(
-                    .3286214064242369933034974609509133,
-                    .4293405702582103752139588004663984
+                    0.022076289653624405142446876931,
+                    0.851306504174348550389457672223
                     ),
                 _s111(
-                    .2604803617865687564195930170811535,
-                    .1015775342809694461687550061961797
+                    0.018620522802520968955913511549,
+                    0.689441970728591295496647976487
                     ),
                 _s111(
-                    .1370742358464553000000000000000000,
-                    .7100659730011301599879040745464079
-                    ),
-                _s111(
-                    .1467269458722997843041609884874530,
-                    .4985454776784148493896226967076119
-                    ),
-                _s111(
-                    .0269989777425532900000000000000000,
-                    .0491867226725820016197037125775872
-                    ),
-                _s111(
-                    .0618717859336170268417124700122339,
-                    .7796601465405693953603506190768108
-                    ),
-                _s111(
-                    .0477243674276219962083526801042934,
-                    .3704915391495476369201496202567388
-                    ),
-                _s111(
-                    .1206005151863643799672337870400794,
-                    .8633469487547526484979879960925217
-                    ),
-                _s111(
-                    .0026971477967097876716489145012827,
-                    .0561949381877455029878923019865887
-                    ),
-                _s111(
-                    .0030156332779423626572762598234710,
-                    .2086750067484213509575944630613577
-                    ),
-                _s111(
-                    .0299053757884570188069287738643386,
-                    .7211512409120340910281041502050941
-                    ),
-                _s111(
-                    .0067566542224609885399458175192278,
-                    .6400554419405418899040536682721647
+                    0.096506481292159228736516560903,
+                    0.635867859433872768286976979827
                     ),
                 ])
-            self.degree = 20
-        else:
-            raise ValueError('Illegal Zhang index')
 
+        else:
+            raise ValueError('Illegal Berntsen-Espelid index')
+        self.degree = 13
         self.points = bary[:, [1, 2]]
         return
+
+
+class Dcutri(object):
+    '''
+    See
+    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+    and
+
+    Berntsen and Espelid,
+    Algorithm 706: DCUTRI: An Algorithm for Adaptive Cubature over a Collection
+    of Triangles,
+    ACM Trans. Math. Softw.,
+    Sept. 1992,
+    10.1145/131766.131772,
+    <http://dl.acm.org/citation.cfm?id=131772>.
+    '''
+    def __init__(self):
+        self.weights = numpy.concatenate([
+            0.051739766065744133555179145422 * numpy.ones(1),
+            0.008007799555564801597804123460 * numpy.ones(3),
+            0.046868898981821644823226732071 * numpy.ones(3),
+            0.046590940183976487960361770070 * numpy.ones(3),
+            0.031016943313796381407646220131 * numpy.ones(3),
+            0.010791612736631273623178240136 * numpy.ones(3),
+            0.032195534242431618819414482205 * numpy.ones(3),
+            0.015445834210701583817692900053 * numpy.ones(6),
+            0.017822989923178661888748319485 * numpy.ones(6),
+            0.037038683681384627918546472190 * numpy.ones(6),
+            ])
+        bary = numpy.concatenate([
+            _s3(),
+            _s21(0.024862168537947217274823955239),
+            _s21(0.414192542538082326221847602214),
+            _s21(0.230293878161404779868453507244),
+            _s21(0.113919981661733719124857214943),
+            _s21(0.495457300025082323058213517632),
+            _s21(0.468861354847056503251458179727),
+            _s111(
+                0.022076289653624405142446876931,
+                0.851306504174348550389457672223
+                ),
+            _s111(
+                0.018620522802520968955913511549,
+                0.689441970728591295496647976487
+                ),
+            _s111(
+                0.096506481292159228736516560903,
+                0.635867859433872768286976979827
+                ),
+            ])
+        self.points = bary[:, [1, 2]]
+        self.degree = 13
+        return
+
+
+class LiuVinokur(object):
+    '''
+    Y. Liu and M. Vinokur,
+    Exact Integrations of Polynomials and Symmetric Quadrature Formulas over
+    Arbitrary Polyhedral Grids,
+    Journal of Computational Physics, 140, 122–147 (1998).
+    DOI: 10.1006/jcph.1998.5884,
+    <https://dx.doi.org/10.1006/jcph.1998.5884>.
+    '''
+    def __init__(self, index):
+        if index == 1:
+            self.weights = numpy.concatenate([
+                1.0 * numpy.ones(1),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                ])
+            self.degree = 1
+        elif index == 2:
+            self.weights = numpy.concatenate([
+                1.0/3.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self._r_alpha(1.0),
+                ])
+            self.degree = 1
+        elif index == 3:
+            self.weights = numpy.concatenate([
+                1.0/3.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self._r_alpha(-0.5),
+                ])
+            self.degree = 2
+        elif index == 4:
+            self.weights = numpy.concatenate([
+                0.75 * numpy.ones(1),
+                1.0/12.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                self._r_alpha(1.0),
+                ])
+            self.degree = 2
+        elif index == 5:
+            self.weights = numpy.concatenate([
+                -9.0/16.0 * numpy.ones(1),
+                25.0/48.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                # Wrongly specified in the article as 25 (instead of 2/5).
+                self._r_alpha(0.4),
+                ])
+            self.degree = 3
+        elif index == 6:
+            self.weights = numpy.concatenate([
+                (1.0 + numpy.sqrt(21.0)) / 120.0 * numpy.ones(3),
+                (39.0 - numpy.sqrt(21.0)) / 120.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self._r_alpha(1.0),
+                self._r_alpha((1.0 - numpy.sqrt(21.0)) / 10.0),
+                ])
+            self.degree = 3
+        elif index == 7:
+            self.weights = numpy.concatenate([
+                9.0/20.0 * numpy.ones(1),
+                1.0/20.0 * numpy.ones(3),
+                2.0/15.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                self._r_alpha(1.0),
+                self._r_alpha(-0.5),
+                ])
+            self.degree = 3
+        elif index == 8:
+            sqrt10 = numpy.sqrt(10)
+            alpha1 = (-10 + 5*sqrt10 + numpy.sqrt(950.0 - 220*sqrt10)) / 30.0
+            alpha2 = (-10 + 5*sqrt10 - numpy.sqrt(950.0 - 220*sqrt10)) / 30.0
+            self.weights = numpy.concatenate([
+                (5*alpha2-2) / (60*alpha1**2 * (alpha2 - alpha1))
+                * numpy.ones(3),
+                (5*alpha1-2) / (60*alpha2**2 * (alpha1 - alpha2))
+                * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self._r_alpha(alpha1),
+                self._r_alpha(alpha2),
+                ])
+            self.degree = 4
+        elif index == 9:
+            self.weights = numpy.concatenate([
+                27.0/80.0 * numpy.ones(1),
+                8.0/105.0 * numpy.ones(3),
+                81.0/560.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                self._r_alpha(-0.5),
+                self._r_alpha(2.0/3.0),
+                ])
+            self.degree = 4
+        elif index == 10:
+            self.weights = numpy.concatenate([
+                (11.0 - numpy.sqrt(13)) / 360.0 * numpy.ones(3),
+                (80.0 - 16*numpy.sqrt(13)) / 360.0 * numpy.ones(3),
+                (29.0 + 17*numpy.sqrt(13)) / 360.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                self._r_alpha(1.0),
+                self._r_alpha(-0.5),
+                self._r_alpha((-1.0 + numpy.sqrt(13.0)) / 6.0),
+                ])
+            self.degree = 4
+        elif index == 11:
+            self.weights = numpy.concatenate([
+                0.45 * numpy.ones(1),
+                -1.0 / 60.0 * numpy.ones(3),
+                0.1 * numpy.ones(6),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                self._r_alpha(1.0),
+                self._r_gamma_delta(
+                    (3.0 + numpy.sqrt(3.0)) / 6.0,
+                    (3.0 - numpy.sqrt(3.0)) / 6.0
+                    ),
+                ])
+            self.degree = 4
+        elif index == 12:
+            self.weights = numpy.concatenate([
+                9.0/40.0 * numpy.ones(1),
+                (155.0 - numpy.sqrt(15.0))/1200.0 * numpy.ones(3),
+                (155.0 + numpy.sqrt(15.0))/1200.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                self._r_alpha((1.0 + numpy.sqrt(15.0)) / 7.0),
+                self._r_alpha((1.0 - numpy.sqrt(15.0)) / 7.0),
+                ])
+            self.degree = 5
+        elif index == 13:
+            self.weights = numpy.concatenate([
+                81.0/320.0 * numpy.ones(1),
+                1.0/90.0 * numpy.ones(3),
+                16.0/225.0 * numpy.ones(3),
+                2401.0/14400.0 * numpy.ones(3),
+                ])
+            bary = numpy.concatenate([
+                _s3(),
+                self._r_alpha(1.0),
+                self._r_alpha(-0.5),
+                self._r_alpha(4.0/7.0),
+                ])
+            self.degree = 5
+        else:
+            raise ValueError('Illegal Liu-Vinokur index')
+
+        self.points = bary[:, 1:]
+        return
+
+    def _r_alpha(self, alpha):
+        '''From the article:
+
+        mu_i = (1 + (n-1) alpha) / n,
+        mu_j = (1 - alpha) / n    for j!=i,
+
+        where n is the number of vertices
+        '''
+        a = (1.0 + 2*alpha) / 3.0
+        b = (1.0 - alpha) / 3.0
+        return numpy.array([
+            [a, b, b],
+            [b, a, b],
+            [b, b, a],
+            ])
+
+    def _r_gamma_delta(self, gamma, delta):
+        '''From the article:
+
+        mu_i = (1 + (n-1) gamma - delta) / n,
+        mu_j = (1 + (n-1) delta - gamma) / n,
+        mu_k = (1 - gamma - delta) / n    for k!=i, k!=j,
+
+        where n is the number of vertices
+        '''
+        a = (1.0 + 2*gamma - delta) / 3.0
+        b = (1.0 + 2*delta - gamma) / 3.0
+        c = (1.0 - gamma - delta) / 3.0
+        return numpy.array([
+            [a, b, c],
+            [c, a, b],
+            [b, c, a],
+            [a, c, b],
+            [b, a, c],
+            [c, b, a],
+            ])
 
 
 class WandzuraXiao(object):
@@ -1309,403 +2570,6 @@ class WandzuraXiao(object):
         return
 
 
-class LynessJespersen(object):
-    '''
-    J.N. Lyness, D. Jespersen,
-    Moderate Degree Symmetric Quadrature Rules for the Triangle,
-    J. Inst. Maths Applies (1975) 15, 19-32,
-    doi: 10.1093/imamat/15.1.19,
-    <https://dx.doi.org/10.1093/imamat/15.1.19>.
-
-    Abstract:
-    A variant formulation of the moment fitting equations for the construction
-    of D3 (triangularly symmetric) quadrature rules for the triangle is
-    derived. These equations are solved to produce weights and abscissas for
-    quadrature rules of polynomial degree up to 11 for the triangle, some of
-    which require fewer function evaluations than any presently available rule
-    of the same polynomial degree. Cytolic rules of degrees up to 9 are also
-    derived.
-    '''
-    def __init__(self, index):
-        if index == 1:
-            self.weights = numpy.concatenate([
-                1.0/3.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s21(0.5),
-                ])
-            self.degree = 2
-        elif index == 2:
-            self.weights = numpy.concatenate([
-                0.75 * numpy.ones(1),
-                1.0/12.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(0.0),
-                ])
-            self.degree = 2
-        elif index == 3:
-            self.weights = numpy.concatenate([
-                -9.0/16.0 * numpy.ones(1),
-                25.0/48.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(0.2),
-                ])
-            self.degree = 3
-        elif index == 4:
-            self.weights = numpy.concatenate([
-                9.0/20.0 * numpy.ones(1),
-                1.0/20.0 * numpy.ones(3),
-                2.0/15.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(0.0),
-                _s21(0.5),
-                ])
-            self.degree = 3
-        elif index == 5:
-            self.weights = numpy.concatenate([
-                3.298552309659655E-01/3.0 * numpy.ones(3),
-                6.701447690340345E-01/3.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s21(9.157621350977073E-02),
-                _s21(4.459484909159649E-01),
-                ])
-            self.degree = 4
-        elif index == 6:
-            self.weights = numpy.concatenate([
-                9.0/20.0 * numpy.ones(1),
-                -1.0/60.0 * numpy.ones(3),
-                1.0/10.0 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(0.0),
-                _s111(
-                    (3.0 + numpy.sqrt(3.0)) / 6.0,
-                    (3.0 - numpy.sqrt(3.0)) / 6.0
-                    ),
-                ])
-            self.degree = 4
-        elif index == 7:
-            self.weights = numpy.concatenate([
-                (11.0 - numpy.sqrt(13.0)) / 360.0 * numpy.ones(3),
-                (10.0 - 2*numpy.sqrt(13.0)) / 45.0 * numpy.ones(3),
-                (29.0 + 17*numpy.sqrt(13.0)) / 360.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s21(0.0),
-                _s21(0.5),
-                _s21((7.0 - numpy.sqrt(13.0)) / 18.0),
-                ])
-            self.degree = 4
-        elif index == 8:
-            self.weights = numpy.concatenate([
-                9.0/40.0 * numpy.ones(1),
-                (155.0 - numpy.sqrt(15.0)) / 1200.0 * numpy.ones(3),
-                (155.0 + numpy.sqrt(15.0)) / 1200.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21((6.0 - numpy.sqrt(15.0))/21.0),
-                _s21((6.0 + numpy.sqrt(15.0))/21.0),
-                ])
-            self.degree = 5
-        elif index == 9:
-            self.weights = numpy.concatenate([
-                81.0/320.0 * numpy.ones(1),
-                1.0/90.0 * numpy.ones(3),
-                16.0/225.0 * numpy.ones(3),
-                2401.0/14400.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(0.0),
-                _s21(0.5),
-                _s21(1.0/7.0),
-                ])
-            self.degree = 5
-        elif index == 10:
-            self.weights = numpy.concatenate([
-                3.503588271790222E-01 / 3.0 * numpy.ones(3),
-                1.525347191106164E-01 / 3.0 * numpy.ones(3),
-                4.971064537103375E-01 / 6.0 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s21(2.492867451709329E-01),
-                _s21(6.308901449150177E-02),
-                _s111(6.365024991213939E-01, 5.314504984483216E-02),
-                ])
-            self.degree = 6
-        elif index == 11:
-            self.weights = numpy.concatenate([
-                -81.0/140.0 * numpy.ones(1),
-                -5.0/252.0 * numpy.ones(3),
-                17.0/315.0 * numpy.ones(3),
-                128.0/315.0 * numpy.ones(3),
-                9.0/210.0 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(0.0),
-                _s21(0.5),
-                _s21(0.25),
-                _s111(
-                    (3.0 + numpy.sqrt(6.0)) / 6.0,
-                    (3.0 - numpy.sqrt(6.0)) / 6.0,
-                    ),
-                ])
-            self.degree = 6
-        elif index == 12:
-            self.weights = numpy.concatenate([
-                 1.527089667883523E-01 * numpy.ones(1),
-                 2.944076042366762E-01 / 3.0 * numpy.ones(3),
-                 3.887052878418766E-01 / 3.0 * numpy.ones(3),
-                 1.641781411330949E-01 / 6.0 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(4.738308139536513E-01),
-                _s21(1.721176696308175E-01),
-                _s111(0.0, 8.653073540834571E-01),
-                ])
-            self.degree = 6
-        elif index == 13:
-            self.weights = numpy.concatenate([
-                  -1.495700444677495E-01 * numpy.ones(1),
-                  5.268457722996328E-01 / 3.0 * numpy.ones(3),
-                  1.600417068265167E-01 / 3.0 * numpy.ones(3),
-                  4.626825653415500E-01 / 6.0 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(2.603459660790466E-01),
-                _s21(6.513010290221623E-02),
-                _s111(6.384441885698096E-01, 4.869031542531756E-02),
-                ])
-            self.degree = 7
-        elif index == 14:
-            self.weights = numpy.concatenate([
-                1.763126156005252E-01 * numpy.ones(1),
-                1.210901532763310E-02 / 3.0 * numpy.ones(3),
-                3.499561757697094E-01 / 3.0 * numpy.ones(3),
-                3.195119754425220E-01 / 3.0 * numpy.ones(3),
-                1.421102178595603E-01 / 6.0 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(0.0),
-                _s21(1.549360602237604E-01),
-                _s21(4.691507461438120E-01),
-                _s111(0.0, 8.392991722729236E-01),
-                ])
-            self.degree = 7
-        elif index == 15:
-            self.weights = numpy.concatenate([
-                1.443156076777862E-01 * numpy.ones(1),
-                2.852749028018549E-01 / 3.0 * numpy.ones(3),
-                9.737549286959440E-02 / 3.0 * numpy.ones(3),
-                3.096521116041552E-01 / 3.0 * numpy.ones(3),
-                1.633818850466092E-01 / 6.0 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(4.592925882927229E-01),
-                _s21(5.054722831703103E-02),
-                _s21(1.705693077517601E-01),
-                _s111(8.394777409957211E-03, 7.284923929554041E-01),
-                ])
-            self.degree = 8
-        elif index == 16:
-            self.weights = numpy.concatenate([
-                +1.207273935292775E-02 / 3.0 * numpy.ones(3),
-                -8.491579879151455E-01 / 3.0 * numpy.ones(3),
-                +1.042367468891334E+00 / 3.0 * numpy.ones(3),
-                +1.947229791412260E-01 / 3.0 * numpy.ones(3),
-                +4.511852767201322E-01 / 3.0 * numpy.ones(3),
-                +1.488095238055238E-01 / 6.0 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s21(0.0),
-                _s21(0.5),
-                _s21(4.956813941755582E-01),
-                _s21(9.032775751426533E-02),
-                _s21(2.341547497073052E-01),
-                _s111(0.0, 7.236067977499750E-01),
-                ])
-            self.degree = 8
-        elif index == 17:
-            self.weights = numpy.concatenate([
-                -2.834183851113958E-01 * numpy.ones(1),
-                2.097208857979572E-01 / 3.0 * numpy.ones(3),
-                5.127273801480265E-02 / 3.0 * numpy.ones(3),
-                6.564896469913508E-01 / 3.0 * numpy.ones(3),
-                3.659351143072855E-01 / 6.0 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(4.766654393821525E-01),
-                _s21(3.377184405448033E-02),
-                _s21(2.703478891654040E-01),
-                _s111(5.146433548666149E-02, 7.458294907672514E-01),
-                ])
-            self.degree = 8
-        elif index == 18:
-            self.weights = numpy.concatenate([
-                9.713579628279610E-02 * numpy.ones(1),
-                9.400410068141950E-02 / 3.0 * numpy.ones(3),
-                2.334826230143263E-01 / 3.0 * numpy.ones(3),
-                2.389432167816271E-01 / 3.0 * numpy.ones(3),
-                7.673302697609430E-02 / 3.0 * numpy.ones(3),
-                2.597012362637364E-01 / 6.0 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(4.896825191987370E-01),
-                _s21(4.370895914929355E-01),
-                _s21(1.882035356190322E-01),
-                _s21(4.472951339445297E-02),
-                _s111(3.683841205473626E-02, 7.411985987844980E-01),
-                ])
-            self.degree = 9
-        elif index == 19:
-            self.weights = numpy.concatenate([
-                1.133624844599192E-01 * numpy.ones(1),
-                1.062573789846330E-03 / 3.0 * numpy.ones(3),
-                4.803411513859279E-02 / 3.0 * numpy.ones(3),
-                2.524243006337300E-01 / 3.0 * numpy.ones(3),
-                7.819254371487040E-02 / 3.0 * numpy.ones(3),
-                2.472227459993048E-01 / 3.0 * numpy.ones(3),
-                2.597012362637364E-01 / 6.0 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(0.0),
-                _s21(0.5),
-                _s21(4.497793381870162E-01),
-                _s21(4.694744319909033E-02),
-                _s21(1.918719127374489E-01),
-                _s111(3.683841205473626E-02, 7.411985987844980E-01),
-                ])
-            self.degree = 9
-        elif index == 20:
-            self.weights = numpy.concatenate([
-                4.097919300803106E-02 / 3.0 * numpy.ones(3),
-                1.085536215102866E-01 / 3.0 * numpy.ones(3),
-                2.781018986881812E-03 / 3.0 * numpy.ones(3),
-                1.779689321422668E-01 / 3.0 * numpy.ones(3),
-                2.314486047444677E-01 / 3.0 * numpy.ones(3),
-                3.140226717732234E-01 / 6.0 * numpy.ones(6),
-                1.242459578348437E-01 / 6.0 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s21(3.236494811127173E-02),
-                _s21(1.193509122825931E-01),
-                _s21(5.346110482707572E-01),
-                _s21(2.033099004312816E-01),
-                _s21(3.989693029658558E-01),
-                _s111(5.017813831049474E-02, 5.932012134282132E-01),
-                _s111(2.102201653616613E-02, 8.074890031597923E-01),
-                ])
-            self.degree = 11
-        elif index == 21:
-            self.weights = numpy.concatenate([
-                 8.797730116222190E-02 * numpy.ones(1),
-                 2.623293466120857E-02 / 3.0 * numpy.ones(3),
-                 1.142447159818060E-01 / 3.0 * numpy.ones(3),
-                 5.656634416839376E-02 / 3.0 * numpy.ones(3),
-                 2.164790926342230E-01 / 3.0 * numpy.ones(3),
-                 2.079874161166116E-01 / 3.0 * numpy.ones(3),
-                 4.417430269980344E-02 / 6.0 * numpy.ones(6),
-                 2.463378925757316E-01 / 6.0 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(2.598914092828833E-02),
-                _s21(9.428750264792270E-02),
-                _s21(4.946367750172147E-01),
-                _s21(2.073433826145142E-01),
-                _s21(4.389078057004907E-01),
-                _s111(0.0, 8.588702812826364E-01),
-                _s111(4.484167758913055E-02, 6.779376548825902E-01),
-                ])
-            self.degree = 11
-        else:
-            raise ValueError('Illegal Lyness-Jespersen index')
-
-        self.points = bary[:, [1, 2]]
-        return
-
-
-def _newton_cotes(n, point_fun):
-    '''
-    Construction after
-
-    P. Silvester,
-    Symmetric quadrature formulae for simplexes
-    Math. Comp., 24, 95-100 (1970),
-    <http://www.ams.org/journals/mcom/1970-24-109/S0025-5718-1970-0258283-6/S0025-5718-1970-0258283-6.pdf>
-    '''
-    def get_poly(t, m, n):
-        f = 1
-        for k in range(m):
-            f *= (t - point_fun(k, n)) / (point_fun(m, n) - point_fun(k, n))
-        return f
-    degree = n
-    num_points = (n+1) * (n+2) / 2
-    bary = numpy.empty((num_points, 3))
-    weights = numpy.empty(num_points)
-    idx = 0
-    for i in range(n + 1):
-        for j in range(n + 1 - i):
-            k = n - i - j
-            bary[idx] = point_fun(
-                numpy.array([i, j, k], dtype=float), n
-                )
-            # Compute weight.
-            # Define the polynomial which to integrate over the
-            # tetrahedron.
-            t = sympy.DeferredVector('t')
-            g = sympy.expand(
-                get_poly(t[0], i, n)
-                * get_poly(t[1], j, n)
-                * get_poly(t[2], k, n)
-                )
-            # tranform it into a polynomial class
-            gpoly = sympy.poly_from_expr(
-                g, (t[0], t[1], t[2])
-                )[0]
-            # The integral of monomials over a tetrahedron are well-known,
-            # see Silvester.
-            weights[idx] = numpy.sum([
-                 c * numpy.prod([math.factorial(l) for l in m]) * 2
-                 / math.factorial(numpy.sum(m) + 2)
-                 for m, c in zip(gpoly.monoms(), gpoly.coeffs())
-                 ])
-            idx += 1
-    points = bary[:, [1, 2]]
-    return points, weights, degree
-
-
-class NewtonCotesClosed(object):
-    def __init__(self, n):
-        self.points, self.weights, self.degree = \
-            _newton_cotes(n, lambda k, n: k / float(n))
-        return
-
-
-class NewtonCotesOpen(object):
-    def __init__(self, n):
-        self.points, self.weights, self.degree = \
-            _newton_cotes(n, lambda k, n: (k+1) / float(n+3))
-        return
-
-
 class TaylorWingateBos(object):
     '''
     Mark A. Taylor, Beth A. Wingate, Len P. Bos,
@@ -1869,1041 +2733,164 @@ class TaylorWingateBos(object):
         return
 
 
-class BerntsenEspelid(object):
+class ZhangCuiLiu(object):
     '''
-    J. Berntsen, T.O. Espelid,
-    Degree 13 symmetric quadrature rules for the triangle,
-    Reports in Informatics, Dept. of Informatics, University of Bergen,
-    (1990).
+    Linbo Zhang, Tao Cui and Hui Liu,
+    A set of symmetric quadrature rules on triangles and tetrahedra,
+    Journal of Computational Mathematics
+    Vol. 27, No. 1 (January 2009), pp. 89-96,
+    <http://www.jstor.org/stable/43693493>.
 
     Abstract:
-    In this paper we develop some tools based on the theory of moments to be
-    used to construct triangur symmetric quadrature rules for the triangle. We
-    use this technique to construct rules of polynomial degree 13 focusing on
-    rules that have all evaluation points inside the triangle, and all weights
-    positive.
+    We present a program for computing symmetric quadrature rules on triangles
+    and tetrahedra. A set of rules are obtained by using this program.
+    Quadrature rules up to order 21 on triangles and up to order 14 on
+    tetrahedra have been obtained which are useful for use in finite element
+    computations. All rules presented here have positive weights with points
+    lying within the integration domain.
     '''
     def __init__(self, index):
         if index == 1:
             self.weights = numpy.concatenate([
-                0.051739766065744133555179145422 * numpy.ones(1),
-                0.008007799555564801597804123460 * numpy.ones(3),
-                0.046868898981821644823226732071 * numpy.ones(3),
-                0.046590940183976487960361770070 * numpy.ones(3),
-                0.031016943313796381407646220131 * numpy.ones(3),
-                0.010791612736631273623178240136 * numpy.ones(3),
-                0.032195534242431618819414482205 * numpy.ones(3),
-                0.015445834210701583817692900053 * numpy.ones(6),
-                0.017822989923178661888748319485 * numpy.ones(6),
-                0.037038683681384627918546472190 * numpy.ones(6),
+                0.1443156076777871682510911104890646 * numpy.ones(1),
+                0.1032173705347182502817915502921290 * numpy.ones(3),
+                0.0324584976231980803109259283417806 * numpy.ones(3),
+                0.0950916342672846247938961043885843 * numpy.ones(3),
+                0.0272303141744349942648446900739089 * numpy.ones(6),
                 ])
             bary = numpy.concatenate([
                 _s3(),
-                _s21(0.024862168537947217274823955239),
-                _s21(0.414192542538082326221847602214),
-                _s21(0.230293878161404779868453507244),
-                _s21(0.113919981661733719124857214943),
-                _s21(0.495457300025082323058213517632),
-                _s21(0.468861354847056503251458179727),
+                _s21(0.1705693077517602066222935014914645),
+                _s21(0.0505472283170309754584235505965989),
+                _s21(0.4592925882927231560288155144941693),
                 _s111(
-                    0.022076289653624405142446876931,
-                    0.851306504174348550389457672223
-                    ),
-                _s111(
-                    0.018620522802520968955913511549,
-                    0.689441970728591295496647976487
-                    ),
-                _s111(
-                    0.096506481292159228736516560903,
-                    0.635867859433372768286976979827
+                    0.2631128296346381134217857862846436,
+                    0.0083947774099576053372138345392944
                     ),
                 ])
+            self.degree = 8
         elif index == 2:
             self.weights = numpy.concatenate([
-                0.058696079612719031799193912788 * numpy.ones(1),
-                0.007850768296100080327451819370 * numpy.ones(3),
-                0.050668953175886963421095258589 * numpy.ones(3),
-                0.050080326090509066160747699962 * numpy.ones(3),
-                0.031647114592298319035326893473 * numpy.ones(3),
-                0.005356903791090860889118181848 * numpy.ones(3),
-                0.031492563075968795690055730726 * numpy.ones(3),
-                0.015802532215260751359123743555 * numpy.ones(6),
-                0.015981637780928405322919308674 * numpy.ones(6),
-                0.036551502224097295256193503655 * numpy.ones(6),
+                0.0585962852260285941278938063477560 * numpy.ones(1),
+                0.0017351512297252675680618638808094 * numpy.ones(3),
+                0.0261637825586145217778288591819783 * numpy.ones(3),
+                0.0039197292424018290965208275701454 * numpy.ones(3),
+                0.0122473597569408660972869899262505 * numpy.ones(3),
+                0.0281996285032579601073663071515657 * numpy.ones(3),
+                0.0508870871859594852960348275454540 * numpy.ones(3),
+                0.0504534399016035991910208971341189 * numpy.ones(3),
+                0.0170636442122334512900253993849472 * numpy.ones(6),
+                0.0096834664255066004075209630934194 * numpy.ones(6),
+                0.0363857559284850056220113277642717 * numpy.ones(6),
+                0.0069646633735184124253997225042413 * numpy.ones(6),
                 ])
             bary = numpy.concatenate([
                 _s3(),
-                _s21(0.024607188643230218187849951620),
-                _s21(0.420308753101194683716920517937),
-                _s21(0.227900255506160619646298949779),
-                _s21(0.116213058883517905247155308064),
-                _s21(0.5),
-                _s21(0.476602980049079152951254192421),
+                _s21(0.0099797608064584324152935295820524),
+                _s21(0.4799778935211883898105528650883899),
+                _s21(0.1538119591769669000000000000000000),
+                _s21(0.0740234771169878100000000000000000),
+                _s21(0.1303546825033300000000000000000000),
+                _s21(0.2306172260266531342996053700983831),
+                _s21(0.4223320834191478241144087137913939),
                 _s111(
-                    0.022797894538248612547720754462,
-                    0.851775587145410469734660000132
+                    0.7862373859346610033296221140330900,
+                    0.1906163600319009042461432828653034
                     ),
                 _s111(
-                    0.016275770991088540943703616092,
-                    0.692797317566660854594116271938
+                    0.6305521436606074416224090755688129,
+                    0.3623231377435471446183267343597729
                     ),
                 _s111(
-                    0.089733060451605359079629076100,
-                    0.637955883864209538412552781228
+                    0.6265773298563063142335123137534265,
+                    0.2907712058836674150248168174816732
+                    ),
+                _s111(
+                    0.9142099849296254122399670993850469,
+                    0.0711657108777507625475924502924336
                     ),
                 ])
+            self.degree = 14
         elif index == 3:
             self.weights = numpy.concatenate([
-                -4.438917939249711e-15 * numpy.ones(3),
-                0.023875084055169335843543623613 * numpy.ones(3),
-                0.063189783598782833129430995388 * numpy.ones(3),
-                0.008045069816524589599830031859 * numpy.ones(3),
-                0.027856097113552204952023523591 * numpy.ones(3),
-                0.050685061067025767745642589150 * numpy.ones(3),
-                0.014867088321983380610493967543 * numpy.ones(6),
-                0.021575699816275772518477875728 * numpy.ones(6),
-                0.043398330702882367361429063273 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s21(-1.097321247106281159287766916114),
-                _s21(0.488287850733405315708960134736),
-                _s21(0.271000295524474716503595027679),
-                _s21(0.024788431033661361058352074973),
-                _s21(0.107120353118147709346761786284),
-                _s21(0.440323874478061332339068546065),
-                _s111(
-                    0.020821520846631616958730687380,
-                    0.850459062644356742678494398953
-                    ),
-                _s111(
-                    0.022919482804812809947480096117,
-                    0.683758575887968213394629723103
-                    ),
-                _s111(
-                    0.115458022821994138042223116054,
-                    0.631364930935447484201224031403
-                    ),
-                ])
-        elif index == 4:
-            self.weights = numpy.concatenate([
-                0.055141401445961668095892272765 * numpy.ones(1),
-                0.000011142520455322162070507537 * numpy.ones(3),
-                0.008019330681470505488363363198 * numpy.ones(3),
-                0.033429216779221783453803543232 * numpy.ones(3),
-                0.046966588930899169431852266167 * numpy.ones(3),
-                0.031079169485602998741093672276 * numpy.ones(3),
-                0.048947942555161210000640851464 * numpy.ones(3),
-                0.005884459601338707440236321752 * numpy.ones(3),
-                0.015445834210701583817692900053 * numpy.ones(6),
-                0.017822989923178661888748319485 * numpy.ones(6),
-                0.037038683681384627918546472190 * numpy.ones(6),
+                 0.0125376079944966565735856367723948 * numpy.ones(1),
+                 0.0274718698764242137484535496073598 * numpy.ones(3),
+                 0.0097652722770514230413646914294237 * numpy.ones(3),
+                 0.0013984195353918235239233631597867 * numpy.ones(3),
+                 0.0092921026251851826304282034030330 * numpy.ones(3),
+                 0.0165778760323669253260236250351840 * numpy.ones(3),
+                 0.0206677623486650769614219700129729 * numpy.ones(6),
+                 0.0208222355211545073068785561993297 * numpy.ones(6),
+                 0.0095686384198490606888758450458320 * numpy.ones(6),
+                 0.0244527709689724638856439207024089 * numpy.ones(6),
+                 0.0031557306306305340038264003207296 * numpy.ones(6),
+                 0.0121367963653212969370133090807574 * numpy.ones(6),
+                 0.0149664801438864490365249118515707 * numpy.ones(6),
+                 0.0063275933217777395693240327504398 * numpy.ones(6),
+                 0.0013425603120636958849798512981433 * numpy.ones(6),
+                 0.0027760769163475540677293561558015 * numpy.ones(6),
+                 0.0107398444741849415551734474479517 * numpy.ones(6),
+                 0.0053678057381874532052474100212697 * numpy.ones(6),
                 ])
             bary = numpy.concatenate([
                 _s3(),
-                _s21(0.0),
-                _s21(0.024978640633391274114293084881),
-                _s21(0.474489920436516855163277733910),
-                _s21(0.230836272600280459320993940175),
-                _s21(0.114080598593243463483923394518),
-                _s21(0.417965185286509715766771174230),
-                _s21(0.5),
+                _s21(0.2158743059329919731902545438401828),
+                _s21(0.0753767665297472780972854309459163),
+                _s21(0.0103008281372217921136862160096969),
+                _s21(0.4936022112987001655119208321450536),
+                _s21(0.4615509381069252967410487102915180),
                 _s111(
-                    0.022076289653624405142446876931,
-                    0.851306504174348550389457672223
+                    .3286214064242369933034974609509133,
+                    .4293405702582103752139588004663984
                     ),
                 _s111(
-                    0.018620522802520968955913511549,
-                    0.689441970728591295496647976487
+                    .2604803617865687564195930170811535,
+                    .1015775342809694461687550061961797
                     ),
                 _s111(
-                    0.096506481292159228736516560903,
-                    0.635867859433872768286976979827
+                    .1370742358464553000000000000000000,
+                    .7100659730011301599879040745464079
+                    ),
+                _s111(
+                    .1467269458722997843041609884874530,
+                    .4985454776784148493896226967076119
+                    ),
+                _s111(
+                    .0269989777425532900000000000000000,
+                    .0491867226725820016197037125775872
+                    ),
+                _s111(
+                    .0618717859336170268417124700122339,
+                    .7796601465405693953603506190768108
+                    ),
+                _s111(
+                    .0477243674276219962083526801042934,
+                    .3704915391495476369201496202567388
+                    ),
+                _s111(
+                    .1206005151863643799672337870400794,
+                    .8633469487547526484979879960925217
+                    ),
+                _s111(
+                    .0026971477967097876716489145012827,
+                    .0561949381877455029878923019865887
+                    ),
+                _s111(
+                    .0030156332779423626572762598234710,
+                    .2086750067484213509575944630613577
+                    ),
+                _s111(
+                    .0299053757884570188069287738643386,
+                    .7211512409120340910281041502050941
+                    ),
+                _s111(
+                    .0067566542224609885399458175192278,
+                    .6400554419405418899040536682721647
                     ),
                 ])
-
+            self.degree = 20
         else:
-            raise ValueError('Illegal Berntsen-Espelid index')
-        self.degree = 13
+            raise ValueError('Illegal Zhang index')
+
         self.points = bary[:, [1, 2]]
-        return
-
-
-class HammerMarloweStroud(object):
-    '''
-    P.C. Hammer, O.J. Marlowe and A.H. Stroud,
-    Numerical Integration Over Simplexes and Cones,
-    Mathematical Tables and Other Aids to Computation,
-    Vol. 10, No. 55, Jul. 1956, pp. 130-137,
-    <https://doi.org/10.1090/S0025-5718-1956-0086389-6>.
-
-    Abstract:
-    In this paper we develop numerical integration formulas for simplexes and
-    cones in n-space for n>=2. While several papers have been written on
-    numerical integration in higher spaces, most of these have dealt with
-    hyperrectangular regions. For certain exceptions see [3]. Hammer and Wymore
-    [1] have given a first general type theory designed through systematic use
-    of cartesian product regions and affine transformations to extend the
-    possible usefulness of formulas for each region.
-
-    Two of the schemes also appear in
-
-    P.C. Hammer, Arthur H. Stroud,
-    Numerical Evaluation of Multiple Integrals II,
-    Mathematical Tables and Other Aids to Computation.
-    Vol. 12, No. 64 (Oct., 1958), pp. 272-280,
-    <http://www.jstor.org/stable/2002370>
-    '''
-    def __init__(self, index):
-        if index == 1:
-            self.weights = numpy.concatenate([
-                1.0 * numpy.ones(1),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                ])
-            self.degree = 1
-        elif index == 2:
-            self.weights = numpy.concatenate([
-                1.0/3.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                self._r(0.5),
-                ])
-            self.degree = 2
-        elif index == 3:
-            self.weights = numpy.concatenate([
-                1.0/3.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                self._r(-0.5),
-                ])
-            self.degree = 2
-        elif index == 4:
-            self.weights = numpy.concatenate([
-                -9.0/16.0 * numpy.ones(1),
-                25.0/48.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                self._r(0.4),
-                ])
-            self.degree = 3
-        elif index == 5:
-            self.weights = numpy.concatenate([
-                9.0/40.0 * numpy.ones(1),
-                (155.0 - numpy.sqrt(15.0)) / 1200.0 * numpy.ones(3),
-                (155.0 + numpy.sqrt(15.0)) / 1200.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                self._r((1 + numpy.sqrt(15)) / 7.0),
-                self._r((1 - numpy.sqrt(15)) / 7.0),
-                ])
-            self.degree = 5
-        else:
-            raise ValueError('Illegal Hammer-Marlowe-Stroud index')
-
-        self.points = bary[:, 1:]
-        return
-
-    def _r(self, r):
-        '''Given $r$ (as appearing in the article), it returns the barycentric
-        coordinates of the three points.
-        '''
-        a = r + (1.0-r) / 3.0
-        b = 0.5 * (1.0 - a)
-        return numpy.array([
-            [a, b, b],
-            [b, a, b],
-            [b, b, a],
-            ])
-
-
-class Cowper(object):
-    '''
-    G.R. Cowper,
-    Gaussian quadrature formulas for triangles,
-    Numerical Methods in Engineering,
-    Volume 7, Issue 3, 1973, Pages 405–408.
-    DOI: 10.1002/nme.1620070316,
-    <https://dx.doi.org/10.1002/nme.1620070316>.
-    '''
-    def __init__(self, index):
-        if index == 1:
-            self.weights = numpy.concatenate([
-                1.0/3.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s21(1.0/6.0),
-                ])
-            self.degree = 2
-        elif index == 2:
-            self.weights = numpy.concatenate([
-                1.0/3.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s21(0.5),
-                ])
-            self.degree = 2
-        elif index == 3:
-            self.weights = numpy.concatenate([
-                -0.5625 * numpy.ones(1),
-                25.0/48.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(0.2),
-                ])
-            self.degree = 3
-        elif index == 4:
-            self.weights = numpy.concatenate([
-                1.0/6.0 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s111(0.659027622374092, 0.231933368553031),
-                ])
-            self.degree = 3
-        elif index == 5:
-            self.weights = numpy.concatenate([
-                 0.109951743655322 * numpy.ones(3),
-                 0.223381589678011 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s21(0.091576213509771),
-                _s21(0.445948490915965),
-                ])
-            self.degree = 4
-        elif index == 6:
-            self.weights = numpy.concatenate([
-                 0.375 * numpy.ones(1),
-                 5.0/48.0 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s111(0.736712498968435, 0.237932366472434),
-                ])
-            self.degree = 4
-        elif index == 7:
-            self.weights = numpy.concatenate([
-                 0.225 * numpy.ones(1),
-                 0.125939180544827 * numpy.ones(3),
-                 0.132394152788506 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(0.101286507323456),
-                _s21(0.470142064105115),
-                ])
-            self.degree = 5
-        elif index == 8:
-            self.weights = numpy.concatenate([
-                0.205950504760887 * numpy.ones(3),
-                0.063691414286223 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s21(0.437525248383384),
-                _s111(0.797112651860071, 0.165409927389841),
-                ])
-            self.degree = 5
-        elif index == 9:
-            self.weights = numpy.concatenate([
-                0.050844906370207 * numpy.ones(3),
-                0.116786275726379 * numpy.ones(3),
-                0.082851075618374 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s21(0.063089014491502),
-                _s21(0.249286745170910),
-                _s111(0.636502499121399, 0.310352451033785),
-                ])
-            self.degree = 6
-        elif index == 10:
-            self.weights = numpy.concatenate([
-                -0.149570044467670 * numpy.ones(1),
-                +0.175615257433204 * numpy.ones(3),
-                +0.053347235608839 * numpy.ones(3),
-                +0.077113760890257 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(0.260345966079038),
-                _s21(0.065130102902216),
-                _s111(0.638444188569809, 0.312865496004875),
-                ])
-            self.degree = 7
-        else:
-            raise ValueError('Illegal Cowper index')
-
-        self.points = bary[:, 1:]
-        return
-
-
-class LiuVinokur(object):
-    '''
-    Y. Liu and M. Vinokur,
-    Exact Integrations of Polynomials and Symmetric Quadrature Formulas over
-    Arbitrary Polyhedral Grids,
-    Journal of Computational Physics, 140, 122–147 (1998).
-    DOI: 10.1006/jcph.1998.5884,
-    <https://dx.doi.org/10.1006/jcph.1998.5884>.
-    '''
-    def __init__(self, index):
-        if index == 1:
-            self.weights = numpy.concatenate([
-                1.0 * numpy.ones(1),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                ])
-            self.degree = 1
-        elif index == 2:
-            self.weights = numpy.concatenate([
-                1.0/3.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                self._r_alpha(1.0),
-                ])
-            self.degree = 1
-        elif index == 3:
-            self.weights = numpy.concatenate([
-                1.0/3.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                self._r_alpha(-0.5),
-                ])
-            self.degree = 2
-        elif index == 4:
-            self.weights = numpy.concatenate([
-                0.75 * numpy.ones(1),
-                1.0/12.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                self._r_alpha(1.0),
-                ])
-            self.degree = 2
-        elif index == 5:
-            self.weights = numpy.concatenate([
-                -9.0/16.0 * numpy.ones(1),
-                25.0/48.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                # Wrongly specified in the article as 25 (instead of 2/5).
-                self._r_alpha(0.4),
-                ])
-            self.degree = 3
-        elif index == 6:
-            self.weights = numpy.concatenate([
-                (1.0 + numpy.sqrt(21.0)) / 120.0 * numpy.ones(3),
-                (39.0 - numpy.sqrt(21.0)) / 120.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                self._r_alpha(1.0),
-                self._r_alpha((1.0 - numpy.sqrt(21.0)) / 10.0),
-                ])
-            self.degree = 3
-        elif index == 7:
-            self.weights = numpy.concatenate([
-                9.0/20.0 * numpy.ones(1),
-                1.0/20.0 * numpy.ones(3),
-                2.0/15.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                self._r_alpha(1.0),
-                self._r_alpha(-0.5),
-                ])
-            self.degree = 3
-        elif index == 8:
-            sqrt10 = numpy.sqrt(10)
-            alpha1 = (-10 + 5*sqrt10 + numpy.sqrt(950.0 - 220*sqrt10)) / 30.0
-            alpha2 = (-10 + 5*sqrt10 - numpy.sqrt(950.0 - 220*sqrt10)) / 30.0
-            self.weights = numpy.concatenate([
-                (5*alpha2-2) / (60*alpha1**2 * (alpha2 - alpha1))
-                * numpy.ones(3),
-                (5*alpha1-2) / (60*alpha2**2 * (alpha1 - alpha2))
-                * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                self._r_alpha(alpha1),
-                self._r_alpha(alpha2),
-                ])
-            self.degree = 4
-        elif index == 9:
-            self.weights = numpy.concatenate([
-                27.0/80.0 * numpy.ones(1),
-                8.0/105.0 * numpy.ones(3),
-                81.0/560.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                self._r_alpha(-0.5),
-                self._r_alpha(2.0/3.0),
-                ])
-            self.degree = 4
-        elif index == 10:
-            self.weights = numpy.concatenate([
-                (11.0 - numpy.sqrt(13)) / 360.0 * numpy.ones(3),
-                (80.0 - 16*numpy.sqrt(13)) / 360.0 * numpy.ones(3),
-                (29.0 + 17*numpy.sqrt(13)) / 360.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                self._r_alpha(1.0),
-                self._r_alpha(-0.5),
-                self._r_alpha((-1.0 + numpy.sqrt(13.0)) / 6.0),
-                ])
-            self.degree = 4
-        elif index == 11:
-            self.weights = numpy.concatenate([
-                0.45 * numpy.ones(1),
-                -1.0 / 60.0 * numpy.ones(3),
-                0.1 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                self._r_alpha(1.0),
-                self._r_gamma_delta(
-                    (3.0 + numpy.sqrt(3.0)) / 6.0,
-                    (3.0 - numpy.sqrt(3.0)) / 6.0
-                    ),
-                ])
-            self.degree = 4
-        elif index == 12:
-            self.weights = numpy.concatenate([
-                9.0/40.0 * numpy.ones(1),
-                (155.0 - numpy.sqrt(15.0))/1200.0 * numpy.ones(3),
-                (155.0 + numpy.sqrt(15.0))/1200.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                self._r_alpha((1.0 + numpy.sqrt(15.0)) / 7.0),
-                self._r_alpha((1.0 - numpy.sqrt(15.0)) / 7.0),
-                ])
-            self.degree = 5
-        elif index == 13:
-            self.weights = numpy.concatenate([
-                81.0/320.0 * numpy.ones(1),
-                1.0/90.0 * numpy.ones(3),
-                16.0/225.0 * numpy.ones(3),
-                2401.0/14400.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                self._r_alpha(1.0),
-                self._r_alpha(-0.5),
-                self._r_alpha(4.0/7.0),
-                ])
-            self.degree = 5
-        else:
-            raise ValueError('Illegal Liu-Vinokur index')
-
-        self.points = bary[:, 1:]
-        return
-
-    def _r_alpha(self, alpha):
-        '''From the article:
-
-        mu_i = (1 + (n-1) alpha) / n,
-        mu_j = (1 - alpha) / n    for j!=i,
-
-        where n is the number of vertices
-        '''
-        a = (1.0 + 2*alpha) / 3.0
-        b = (1.0 - alpha) / 3.0
-        return numpy.array([
-            [a, b, b],
-            [b, a, b],
-            [b, b, a],
-            ])
-
-    def _r_gamma_delta(self, gamma, delta):
-        '''From the article:
-
-        mu_i = (1 + (n-1) gamma - delta) / n,
-        mu_j = (1 + (n-1) delta - gamma) / n,
-        mu_k = (1 - gamma - delta) / n    for k!=i, k!=j,
-
-        where n is the number of vertices
-        '''
-        a = (1.0 + 2*gamma - delta) / 3.0
-        b = (1.0 + 2*delta - gamma) / 3.0
-        c = (1.0 - gamma - delta) / 3.0
-        return numpy.array([
-            [a, b, c],
-            [c, a, b],
-            [b, c, a],
-            [a, c, b],
-            [b, a, c],
-            [c, b, a],
-            ])
-
-
-class Hillion(object):
-    '''
-    P. Hillion,
-    Numerical Integration on a Triangle,
-    International Journal for Numerical Methods in Engineering,
-    Vol. 11, 797-815 (1977).
-    DOI:10.1002/nme.1620110504,
-    <https://dx.doi.org/10.1002/nme.1620110504>.
-
-    Note that the schemes here are not fully symmetric. Also note that in the
-    article, the quadrature constants are specified with low precision such
-    that the tests are failing. What is needed here is a reimplementation of
-    Hillion's method to retrieve more digits.
-    '''
-    def __init__(self, index):
-        if index == 1:
-            self.weights = numpy.concatenate([
-                1.0 * numpy.ones(1),
-                ])
-            self.points = numpy.array([
-                [1.0/3.0, 1.0/3.0]
-                ])
-            self.degree = 1
-        elif index == 2:
-            self.weights = 2.0 * numpy.concatenate([
-                1.0/6.0 * numpy.ones(2),
-                1.0/6.0 * numpy.ones(1),
-                ])
-            self.points = numpy.concatenate([
-                self._symm(0.0, 0.5),
-                numpy.array([[0.5, 0.5]]),
-                ])
-            self.degree = 2
-        elif index == 3:
-            self.weights = 2.0 * numpy.concatenate([
-                1.0/6.0 * numpy.ones(2),
-                1.0/6.0 * numpy.ones(1),
-                ])
-            self.points = numpy.concatenate([
-                2.0/3.0 - self._symm(0.0, 0.5),
-                2.0/3.0 - numpy.array([[0.5, 0.5]]),
-                ])
-            self.degree = 2
-        elif index == 4:
-            self.weights = 2.0 * numpy.concatenate([
-                1.0/18.0 * numpy.ones(1),
-                2.0/9.0 * numpy.ones(2),
-                ])
-            self.points = numpy.concatenate([
-                numpy.array([[0.0, 0.0]]),
-                self._symm(0.591506351, 0.158493649),
-                ])
-            self.degree = 2
-        elif index == 5:
-            self.weights = 2.0 * numpy.concatenate([
-                1.0/18.0 * numpy.ones(1),
-                2.0/9.0 * numpy.ones(2),
-                ])
-            self.points = numpy.concatenate([
-                2.0/3.0 - numpy.array([[0.0, 0.0]]),
-                2.0/3.0 - self._symm(0.591506351, 0.158493649),
-                ])
-            self.degree = 2
-        # elif index == 6:
-        #     self.weights = 2.0 * numpy.concatenate([
-        #         1.0/8.0 * numpy.ones(4),
-        #         ])
-        #     lmbda = 0.655308609
-        #     mu = 0.247060398
-        #     self.points = numpy.concatenate([
-        #         self._symm(lmbda, mu),
-        #         2.0/3.0 - self._symm(lmbda, mu),
-        #         ])
-        #     self.degree = 2
-        # elif index == 7:
-        #     self.weights = 2.0 * numpy.concatenate([
-        #         0.159020691 * numpy.ones(2),
-        #         0.090979309 * numpy.ones(2),
-        #         ])
-        #     self.points = numpy.concatenate([
-        #         self._symm(0.666390246, 0.280019915),
-        #         self._symm(0.178558728, 0.075031109),
-        #         ])
-        #     self.degree = 3
-        # elif index == 8:
-        #     self.weights = 2.0 * numpy.concatenate([
-        #         0.065104166 * numpy.ones(2),
-        #         0.192191138 * numpy.ones(1),
-        #         0.177600528 * numpy.ones(1),
-        #         ])
-        #     lambda2 = 0.433949142
-        #     lambda3 = 0.175574667
-        #     self.points = numpy.concatenate([
-        #         self._symm(0.0, 0.8),
-        #         numpy.array([[lambda2, lambda2]]),
-        #         numpy.array([[lambda3, lambda3]]),
-        #         ])
-        #     self.degree = 3
-        # elif index == 9:
-        #     self.weights = 2.0 * numpy.concatenate([
-        #         9.0/32.0 * numpy.ones(1),
-        #         25.0/96.0 * numpy.ones(3),
-        #         ])
-        #     self.points = numpy.concatenate([
-        #         numpy.array([[1.0/3.0, 1.0/3.0]]),
-        #         self._symm(0.2, 0.6),
-        #         numpy.array([[0.2, 0.2]]),
-        #         ])
-        #     self.degree = 3
-        # elif index == 10:
-        #     self.weights = 2.0 * numpy.concatenate([
-        #         0.036232077 * numpy.ones(2),
-        #         0.083559589 * numpy.ones(2),
-        #         25.0/96.0 * numpy.ones(1),
-        #         ])
-        #     self.points = numpy.concatenate([
-        #         self._symm(0.939332590, 0.0),
-        #         self._symm(0.0, 0.340667409),
-        #         numpy.array([[0.4, 0.4]]),
-        #         ])
-        #     self.degree = 3
-        else:
-            raise ValueError('Illegal Hillion index')
-
-        return
-
-    def _symm(self, a, b):
-        return numpy.array([
-            [a, b],
-            [b, a],
-            ])
-
-
-class CoolsHaegemans(object):
-    '''
-    R. Cools, A. Haegemans,
-    Construction of minimal cubature formulae for the square and the triangle
-    using invariant theory,
-    Department of Computer Science, K.U.Leuven,
-    TW Reports vol:TW96, Sept. 1987,
-    <https://lirias.kuleuven.be/handle/123456789/131869>.
-    '''
-    def __init__(self, index):
-        if index == 1:
-            self.weights = 2.0 * numpy.concatenate([
-                0.16058343856681218798E-09 * numpy.ones(3),
-                0.26530624434780379347E-01 * numpy.ones(3),
-                0.29285717640155892159E-01 * numpy.ones(3),
-                0.43909556791220782402E-01 * numpy.ones(3),
-                0.66940767639916174192E-01 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                self._r3(
-                    0.34579201116826902882E+00,
-                    0.36231682215692616667E+01
-                    ),
-                self._r3(
-                    0.65101993458939166328E-01,
-                    0.87016510156356306078E+00
-                    ),
-                self._r3(
-                    0.65177530364879570754E+00,
-                    0.31347788752373300717E+00
-                    ),
-                self._r3(
-                    0.31325121067172530696E+00,
-                    0.63062143431895614010E+00
-                    ),
-                self._r3(
-                    0.51334692063945414949E+00,
-                    0.28104124731511039057E+00
-                    ),
-                ])
-            self.degree = 8
-        elif index == 2:
-            self.weights = 2.0 * numpy.concatenate([
-                0.15319130036758557631E-06 * numpy.ones(3),
-                0.13260526227928785221E-01 * numpy.ones(3),
-                0.15646439344539042136E-01 * numpy.ones(3),
-                0.21704258224807323311E-01 * numpy.ones(3),
-                0.21797613600129922367E-01 * numpy.ones(3),
-                0.38587913508193459468E-01 * numpy.ones(3),
-                0.39699584282594413022E-01 * numpy.ones(3),
-                0.47910534861520060665E-01 * numpy.ones(1),
-                ])
-            bary = numpy.concatenate([
-                self._r3(
-                    0.58469201683584513031E-01,
-                    -0.54887778772527519316E+00
-                    ),
-                self._r3(
-                    0.50849285064031410705E-01,
-                    0.90799059794957813439E+00
-                    ),
-                self._r3(
-                    0.51586732419949574487E+00,
-                    0.46312452842927062902E+00
-                    ),
-                self._r3(
-                    0.24311033191739048230E+00,
-                    0.72180595182371959467E-00
-                    ),
-                self._r3(
-                    0.75397765920922660134E-00,
-                    0.20647569839132397633E+00
-                    ),
-                self._r3(
-                    0.42209207910846960294E-00,
-                    0.12689533413411127327E+00
-                    ),
-                self._r3(
-                    0.19823878346663354068E+00,
-                    0.62124412566393319745E+00
-                    ),
-                numpy.array([[1.0/3.0, 1.0/3.0, 1.0/3.0]])
-                ])
-            self.degree = 10
-        else:
-            raise ValueError('Illegal Cools-Haegemans index')
-
-        self.points = bary[:, 1:]
-        return
-
-    def _r3(self, a, b):
-        # rotation group R_3
-        c = 1.0 - a - b
-        return numpy.array([
-            [a, b, c],
-            [c, a, b],
-            [b, c, a],
-            ])
-
-
-class LaursenGellert(object):
-    '''
-    M.E. Laursen, M. Gellert,
-    Some criteria for numerically integrated matrices and quadrature formulas
-    for triangles,
-    International Journal for Numerical Methods in Engineering,
-    Volume 12, Issue 1, 1978, Pages 67–76.
-    DOI: 10.1002/nme.1620120107,
-    <https://dx.doi.org/10.1002/nme.1620120107>.
-
-    Abstract:
-    For a wide class of finite element matrices integrated numerically rather
-    than exactly, a definable number of sampling points is found to be
-    sufficient for keeping their theoretical properties unchanged. A systematic
-    criterion limiting the number of possible point configurations for
-    numerical quadrature formulas on triangles is established. Some new high
-    order formulas are presented. Tables containing optimal formulas with
-    respect to minimum number of sampling points and required degrees of
-    accuracy are given. They are arranged so as to assist with selection of
-    suitable quadrature formulas for finite element computer programming.
-    '''
-    def __init__(self, index):
-        if index == '1':
-            self.weights = numpy.concatenate([
-                1.0 * numpy.ones(1),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                ])
-            self.degree = 1
-        elif index == '2a':
-            self.weights = numpy.concatenate([
-                1.0/3.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s21(1.0/6.0),
-                ])
-            self.degree = 2
-        elif index == '2b':
-            self.weights = numpy.concatenate([
-                1.0/3.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s21(0.5),
-                ])
-            self.degree = 2
-        elif index == '3':
-            self.weights = numpy.concatenate([
-                -0.5625 * numpy.ones(1),
-                25.0/48.0 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(0.2),
-                ])
-            self.degree = 3
-        elif index == '4':
-            self.weights = numpy.concatenate([
-                1.0/6.0 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s111(0.659027622374092, 0.231933368553031),
-                ])
-            self.degree = 3
-        elif index == '5':
-            self.weights = numpy.concatenate([
-                0.109951743655322 * numpy.ones(3),
-                0.223381589678011 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s21(0.091576213509771),
-                _s21(0.445948490915965),
-                ])
-            self.degree = 4
-        elif index == '6':
-            self.weights = numpy.concatenate([
-                0.375 * numpy.ones(1),
-                5.0/48.0 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s111(0.736712498968435, 0.237932366472434),
-                ])
-            self.degree = 4
-        elif index == '7':
-            self.weights = numpy.concatenate([
-                0.225 * numpy.ones(1),
-                0.125939180544827 * numpy.ones(3),
-                0.132394152788506 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(0.101286507323456),
-                _s21(0.470142064105115),
-                ])
-            self.degree = 5
-        elif index == '8':
-            self.weights = numpy.concatenate([
-                0.205950504760887 * numpy.ones(3),
-                0.063691414286223 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s21(0.437525248383384),
-                _s111(0.797112651860071, 0.165409927389841),
-                ])
-            self.degree = 5
-        elif index == '9':
-            self.weights = numpy.concatenate([
-                0.050844906370207 * numpy.ones(3),
-                0.116786275726379 * numpy.ones(3),
-                0.082851075618374 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s21(0.063089014491502),
-                _s21(0.249286745170910),
-                _s111(0.636502499121399, 0.310352451033785),
-                ])
-            self.degree = 6
-        elif index == '10':
-            self.weights = numpy.concatenate([
-                -0.149570044467670 * numpy.ones(1),
-                +0.175615257433204 * numpy.ones(3),
-                +0.053347235608839 * numpy.ones(3),
-                +0.077113760890257 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(0.260345966079038),
-                _s21(0.065130102902216),
-                _s111(0.638444188569809, 0.312865496004875),
-                ])
-            self.degree = 7
-        elif index == '11':
-            self.weights = numpy.concatenate([
-                0.053077801790233 * numpy.ones(3),
-                0.070853083692136 * numpy.ones(6),
-                0.069274682079415 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s21(0.064930513159165),
-                _s111(0.284575584249173, 0.517039939069325),
-                _s111(0.313559184384932, 0.043863471792371),
-                ])
-            self.degree = 7
-        elif index == '12':
-            self.weights = numpy.concatenate([
-                0.144315607677787 * numpy.ones(1),
-                0.103217370534718 * numpy.ones(3),
-                0.032458497623198 * numpy.ones(3),
-                0.095091634267284 * numpy.ones(3),
-                0.027230314174435 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(0.170569307751761),
-                _s21(0.050547228317031),
-                _s21(0.459292588292723),
-                _s111(0.008394777409958, 0.263112829634638),
-                ])
-            self.degree = 8
-        elif index == '13':
-            self.weights = numpy.concatenate([
-                0.097135796282799 * numpy.ones(1),
-                0.031334700227139 * numpy.ones(3),
-                0.077827541004774 * numpy.ones(3),
-                0.079647738927210 * numpy.ones(3),
-                0.025577675658698 * numpy.ones(3),
-                0.043283539377289 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(0.489682519198738),
-                _s21(0.437089591492937),
-                _s21(0.188203535619033),
-                _s21(0.044729513394453),
-                _s111(0.036838412054736, 0.221962989160766),
-                ])
-            self.degree = 9
-        elif index == '14':
-            self.weights = numpy.concatenate([
-                0.051617202569021 * numpy.ones(3),
-                0.094080073458356 * numpy.ones(3),
-                0.025993571032320 * numpy.ones(3),
-                0.045469538047619 * numpy.ones(6),
-                0.035351705089199 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s21(0.481519834783311),
-                _s21(0.403603979817940),
-                _s21(0.045189009784377),
-                _s111(0.136991201264904, 0.218290070971381),
-                _s111(0.030424361728820, 0.222063165537318),
-                ])
-            self.degree = 9
-        elif index == '15a':
-            self.weights = numpy.concatenate([
-                0.079894504741240 * numpy.ones(1),
-                0.071123802232377 * numpy.ones(3),
-                0.008223818690464 * numpy.ones(3),
-                0.045430592296170 * numpy.ones(6),
-                0.037359856234305 * numpy.ones(6),
-                0.030886656884564 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(0.425086210602091),
-                _s21(0.023308867510000),
-                _s111(0.147925626209534, 0.223766973576973),
-                _s111(0.029946031954171, 0.358740141864431),
-                _s111(0.035632559587504, 0.143295370426867),
-                ])
-            self.degree = 10
-        elif index == '15b':
-            self.weights = numpy.concatenate([
-                0.081743329146286 * numpy.ones(1),
-                0.045957963604745 * numpy.ones(3),
-                0.013352968813150 * numpy.ones(3),
-                0.063904906396424 * numpy.ones(6),
-                0.034184648162959 * numpy.ones(6),
-                0.025297757707288 * numpy.ones(6),
-                ])
-            bary = numpy.concatenate([
-                _s3(),
-                _s21(0.142161101056564),
-                _s21(0.032055373216944),
-                _s111(0.148132885783821, 0.321812995288835),
-                _s111(0.029619889488730, 0.369146781827811),
-                _s111(0.028367665339938, 0.163701733737182),
-                ])
-            self.degree = 10
-        else:
-            raise ValueError('Illegal Laursen-Gellert index')
-
-        self.points = bary[:, 1:]
         return
