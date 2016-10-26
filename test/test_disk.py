@@ -72,18 +72,11 @@ def _integrate_exact(k):
     #         )
 
 
-@pytest.mark.parametrize('scheme', [
-    quadrature.disk.Peirce(1),
-    quadrature.disk.Peirce(2),
-    quadrature.disk.Peirce(3),
-    quadrature.disk.Peirce(4),
-    quadrature.disk.Peirce(5),
-    quadrature.disk.Lether(1),
-    quadrature.disk.Lether(2),
-    quadrature.disk.Lether(3),
-    quadrature.disk.Lether(4),
-    quadrature.disk.Lether(5),
-    ])
+@pytest.mark.parametrize(
+    'scheme',
+    [quadrature.disk.Peirce(k) for k in range(1, 6)]
+    + [quadrature.disk.Lether(k) for k in range(1, 6)]
+    )
 def test_scheme(scheme):
     success = True
     degree = 0

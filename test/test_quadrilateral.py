@@ -48,28 +48,17 @@ def _integrate_exact2(k, x0, x1, y0, y1):
         * 1.0/(k[1] + 1) * (y1**(k[1]+1) - y0**(k[1]+1))
 
 
-@pytest.mark.parametrize('scheme', [
-    quadrature.quadrilateral.Stroud(1),
-    quadrature.quadrilateral.Stroud(2),
-    quadrature.quadrilateral.Stroud(3),
-    quadrature.quadrilateral.Stroud(4),
-    quadrature.quadrilateral.Stroud(5),
-    quadrature.quadrilateral.Stroud(6),
-    From1d(quadrature.line_segment.Midpoint()),
-    From1d(quadrature.line_segment.Trapezoidal()),
-    From1d(quadrature.line_segment.GaussLegendre(1)),
-    From1d(quadrature.line_segment.GaussLegendre(2)),
-    From1d(quadrature.line_segment.GaussLegendre(3)),
-    From1d(quadrature.line_segment.GaussLegendre(4)),
-    From1d(quadrature.line_segment.NewtonCotesClosed(1)),
-    From1d(quadrature.line_segment.NewtonCotesClosed(2)),
-    From1d(quadrature.line_segment.NewtonCotesClosed(3)),
-    From1d(quadrature.line_segment.NewtonCotesClosed(4)),
-    From1d(quadrature.line_segment.NewtonCotesOpen(2)),
-    From1d(quadrature.line_segment.NewtonCotesOpen(3)),
-    From1d(quadrature.line_segment.NewtonCotesOpen(4)),
-    From1d(quadrature.line_segment.NewtonCotesOpen(5)),
-    ])
+@pytest.mark.parametrize(
+    'scheme',
+    [From1d(quadrature.line_segment.Midpoint())]
+    + [From1d(quadrature.line_segment.Trapezoidal())]
+    + [quadrature.quadrilateral.Stroud(k) for k in range(1, 7)]
+    + [From1d(quadrature.line_segment.GaussLegendre(k)) for k in range(1, 5)]
+    + [From1d(quadrature.line_segment.NewtonCotesClosed(k))
+        for k in range(1, 5)
+       ]
+    + [From1d(quadrature.line_segment.NewtonCotesOpen(k)) for k in range(6)]
+    )
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
     # longer be integrated exactly. The scheme's degree is `d-1`.
