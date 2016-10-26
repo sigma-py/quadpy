@@ -53,40 +53,10 @@ def _integrate_exact(f, midpoint, radius):
     return float(exact)
 
 
-@pytest.mark.parametrize('scheme', [
-    quadrature.sphere.Lebedev(1),
-    quadrature.sphere.Lebedev(2),
-    quadrature.sphere.Lebedev(3),
-    quadrature.sphere.Lebedev(4),
-    quadrature.sphere.Lebedev(5),
-    quadrature.sphere.Lebedev(6),
-    quadrature.sphere.Lebedev(7),
-    quadrature.sphere.Lebedev(8),
-    quadrature.sphere.Lebedev(9),
-    quadrature.sphere.Lebedev(10),
-    quadrature.sphere.Lebedev(11),
-    quadrature.sphere.Lebedev(12),
-    quadrature.sphere.Lebedev(13),
-    quadrature.sphere.Lebedev(14),
-    quadrature.sphere.Lebedev(15),
-    quadrature.sphere.Lebedev(16),
-    quadrature.sphere.Lebedev(17),
-    quadrature.sphere.Lebedev(18),
-    quadrature.sphere.Lebedev(19),
-    quadrature.sphere.Lebedev(20),
-    quadrature.sphere.Lebedev(21),
-    quadrature.sphere.Lebedev(22),
-    quadrature.sphere.Lebedev(23),
-    quadrature.sphere.Lebedev(24),
-    quadrature.sphere.Lebedev(25),
-    quadrature.sphere.Lebedev(26),
-    quadrature.sphere.Lebedev(27),
-    quadrature.sphere.Lebedev(28),
-    quadrature.sphere.Lebedev(29),
-    quadrature.sphere.Lebedev(30),
-    quadrature.sphere.Lebedev(31),
-    quadrature.sphere.Lebedev(32),
-    ])
+@pytest.mark.parametrize(
+    'scheme',
+    [quadrature.sphere.Lebedev(k) for k in range(1, 33)]
+    )
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
     # longer be integrated exactly. The scheme's degree is `d-1`.
