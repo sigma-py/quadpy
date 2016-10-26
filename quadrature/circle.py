@@ -33,7 +33,8 @@ class Peirce(object):
     W.H. Peirce,
     Numerical integration over the planer annulus,
     J. Soc. Indust. Appl. Math.,
-    Vol. 5, No. 2, June, 1957.
+    Vol. 5, No. 2, June, 1957,
+    <http://www.jstor.org/stable/2098722>.
     '''
     def __init__(self, m):
         k = 4*m + 3

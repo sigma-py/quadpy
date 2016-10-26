@@ -29,6 +29,11 @@ This uses Strang's rule of degree 6.
 ### Line segment
 ![](https://nschloe.github.io/quadrature/line.png)
 
+ * open and closed Newton-Cotes (arbitray degree)
+ * Gauß-Legendre (arbitrary degree)
+ * Gauß-Patterson (7 schemes up to degree 191)
+ * Clenshaw-Curtis (9 schemes up to degree 65)
+
 ### Triangle
 ![](https://nschloe.github.io/quadrature/tri.png)
 
@@ -53,23 +58,51 @@ This uses Strang's rule of degree 6.
 ### Circle
 ![](https://nschloe.github.io/quadrature/circle.png)
 
+ * [Peirce](http://www.jstor.org/stable/2098722) (1957, arbitrary degree)
+ * [Lether](http://www.jstor.org/stable/2949473) (1971, arbitrary degree)
+
 ### Quadrilateral
 ![](https://nschloe.github.io/quadrature/quad.png)
+ 
+ * Product schemes derived from line segment schemes
+ * [Stroud's schemes](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (6 schemes up to degree 15)
 
 ### Tetrahedron
 ![](https://nschloe.github.io/quadrature/tet.png)
 
+ * [Hammer-Marlowe-Stroud](https://doi.org/10.1090/S0025-5718-1956-0086389-6)
+ * open and closed Newton-Cotes (after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6))
+ * [Yu](http://dx.doi.org/10.1016/0045-7825(84)90072-0) (5 schemes up to degree 6)
+ * [Keast](http://dx.doi.org/10.1016/0045-7825(86)90059-9) (11 schemes up to
+   degree 8)
+ * [Liu-Vinokur](http://dx.doi.org/10.1006/jcph.1998.5884) (14 schemes up to
+   degree 5)
+ * [Zienkiewicz](http://www.sciencedirect.com/science/book/9780750664318) (2
+   schemes up to order 3)
+ * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2 schemes up to
+   degree 14)
+ * [Shunn-Ham](http://dx.doi.org/10.1016/j.cam.2012.03.032) (6 schemes up to
+   degree 7)
+
 ### Hexahedron
 ![](https://nschloe.github.io/quadrature/hexa.png)
+
+ * Product schemes derived from line segment schemes
 
 ### Pyramid
 ![](https://nschloe.github.io/quadrature/pyra.png)
 
-### Sphere
-![](https://nschloe.github.io/quadrature/sphere.png)
+ * [Felippa's schemes](http://dx.doi.org/10.1108/02644400410554362) (9 schemes
+   up to degree 5)
 
 ### Wedge
 ![](https://nschloe.github.io/quadrature/wedge.png)
+
+### Sphere
+![](https://nschloe.github.io/quadrature/sphere.png)
+
+ * [Lebedev's schemes](https://en.wikipedia.org/wiki/Lebedev_quadrature) (32
+   schemes up to degree 131)
 
 ### Installation
 
