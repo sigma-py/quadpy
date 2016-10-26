@@ -198,6 +198,11 @@ def _integrate_monomial_over_standard_triangle(k):
     quadrature.triangle.XiaoGimbutas(3),
     quadrature.triangle.XiaoGimbutas(4),
     quadrature.triangle.XiaoGimbutas(5),
+    quadrature.triangle.XiaoGimbutas(6),
+    quadrature.triangle.XiaoGimbutas(7),
+    quadrature.triangle.XiaoGimbutas(8),
+    quadrature.triangle.XiaoGimbutas(9),
+    quadrature.triangle.XiaoGimbutas(10),
     ])
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
