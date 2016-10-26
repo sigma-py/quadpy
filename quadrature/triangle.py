@@ -1899,6 +1899,15 @@ class BerntsenEspelid(object):
     '''
     def __init__(self, index):
         if index == 1:
+            # This first schemes was separately published as
+            #
+            # Berntsen and Espelid,
+            # Algorithm 706: DCUTRI: An Algorithm for Adaptive Cubature over a Collection
+            # of Triangles,
+            # ACM Trans. Math. Softw.,
+            # Sept. 1992,
+            # 10.1145/131766.131772,
+            # <http://dl.acm.org/citation.cfm?id=131772>.
             self.weights = numpy.concatenate([
                 0.051739766065744133555179145422 * numpy.ones(1),
                 0.008007799555564801597804123460 * numpy.ones(3),
@@ -2039,59 +2048,6 @@ class BerntsenEspelid(object):
             raise ValueError('Illegal Berntsen-Espelid index')
         self.degree = 13
         self.points = bary[:, [1, 2]]
-        return
-
-
-class Dcutri(object):
-    '''
-    See
-    https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
-    and
-
-    Berntsen and Espelid,
-    Algorithm 706: DCUTRI: An Algorithm for Adaptive Cubature over a Collection
-    of Triangles,
-    ACM Trans. Math. Softw.,
-    Sept. 1992,
-    10.1145/131766.131772,
-    <http://dl.acm.org/citation.cfm?id=131772>.
-    '''
-    def __init__(self):
-        self.weights = numpy.concatenate([
-            0.051739766065744133555179145422 * numpy.ones(1),
-            0.008007799555564801597804123460 * numpy.ones(3),
-            0.046868898981821644823226732071 * numpy.ones(3),
-            0.046590940183976487960361770070 * numpy.ones(3),
-            0.031016943313796381407646220131 * numpy.ones(3),
-            0.010791612736631273623178240136 * numpy.ones(3),
-            0.032195534242431618819414482205 * numpy.ones(3),
-            0.015445834210701583817692900053 * numpy.ones(6),
-            0.017822989923178661888748319485 * numpy.ones(6),
-            0.037038683681384627918546472190 * numpy.ones(6),
-            ])
-        bary = numpy.concatenate([
-            _s3(),
-            _s21(0.024862168537947217274823955239),
-            _s21(0.414192542538082326221847602214),
-            _s21(0.230293878161404779868453507244),
-            _s21(0.113919981661733719124857214943),
-            _s21(0.495457300025082323058213517632),
-            _s21(0.468861354847056503251458179727),
-            _s111(
-                0.022076289653624405142446876931,
-                0.851306504174348550389457672223
-                ),
-            _s111(
-                0.018620522802520968955913511549,
-                0.689441970728591295496647976487
-                ),
-            _s111(
-                0.096506481292159228736516560903,
-                0.635867859433872768286976979827
-                ),
-            ])
-        self.points = bary[:, [1, 2]]
-        self.degree = 13
         return
 
 
