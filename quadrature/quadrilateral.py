@@ -38,27 +38,25 @@ def show(quad, scheme):
 
 
 def integrate(f, quad, scheme):
-    def _get_det_J(quad, xi):
-            J0 = \
-                - numpy.outer(quad[0], 0.25*(1-xi[1])) \
-                + numpy.outer(quad[1], 0.25*(1-xi[1])) \
-                + numpy.outer(quad[2], 0.25*(1+xi[1])) \
-                - numpy.outer(quad[3], 0.25*(1+xi[1]))
-            J1 = \
-                - numpy.outer(quad[0], 0.25*(1-xi[0])) \
-                - numpy.outer(quad[1], 0.25*(1+xi[0])) \
-                + numpy.outer(quad[2], 0.25*(1+xi[0])) \
-                + numpy.outer(quad[3], 0.25*(1-xi[0]))
-            det = J0[0]*J1[1] - J1[0]*J0[1]
-            return det
-
     xi = scheme.points.T
     x = \
         + numpy.outer(quad[0], 0.25*(1.0-xi[0])*(1.0-xi[1])) \
         + numpy.outer(quad[1], 0.25*(1.0+xi[0])*(1.0-xi[1])) \
         + numpy.outer(quad[2], 0.25*(1.0+xi[0])*(1.0+xi[1])) \
         + numpy.outer(quad[3], 0.25*(1.0-xi[0])*(1.0+xi[1]))
-    det = _get_det_J(quad, xi)
+
+    J0 = \
+        - numpy.outer(quad[0], 0.25*(1-xi[1])) \
+        + numpy.outer(quad[1], 0.25*(1-xi[1])) \
+        + numpy.outer(quad[2], 0.25*(1+xi[1])) \
+        - numpy.outer(quad[3], 0.25*(1+xi[1]))
+    J1 = \
+        - numpy.outer(quad[0], 0.25*(1-xi[0])) \
+        - numpy.outer(quad[1], 0.25*(1+xi[0])) \
+        + numpy.outer(quad[2], 0.25*(1+xi[0])) \
+        + numpy.outer(quad[3], 0.25*(1-xi[0]))
+    det = J0[0]*J1[1] - J1[0]*J0[1]
+
     return math.fsum(scheme.weights * f(x).T * abs(det))
 
 

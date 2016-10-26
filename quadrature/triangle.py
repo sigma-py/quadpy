@@ -7,20 +7,6 @@ import sympy
 from . import helpers
 
 
-def volume(triangle):
-    # It doesn't matter much which cross product we take for computing the
-    # triangle volumes; deliberately take
-    #
-    #   <e0 x e1, e0 x e1> = <e0, e0> <e1, e1> - <e0, e1>^2.
-    #
-    e0 = triangle[1] - triangle[0]
-    e1 = triangle[2] - triangle[1]
-    e0_dot_e0 = numpy.dot(e0, e0)
-    e0_dot_e1 = numpy.dot(e0, e1)
-    e1_dot_e1 = numpy.dot(e1, e1)
-    return 0.5 * numpy.sqrt(e0_dot_e0 * e1_dot_e1 - e0_dot_e1**2)
-
-
 def show(triangle, scheme):
     '''Shows the quadrature points on a given triangle. The size of the circles
     around the points coincides with their weights.
@@ -51,32 +37,24 @@ def show(triangle, scheme):
     return
 
 
-def _transform_to_unit_triangle(f, triangle):
-    '''Transformation
+def integrate(f, triangle, scheme):
+    xi = scheme.points.T
+    x = \
+        + numpy.outer(triangle[0], 1.0 - xi[0] - xi[1]) \
+        + numpy.outer(triangle[1], xi[0]) \
+        + numpy.outer(triangle[2], xi[1])
 
-      x = x0 * N0(xi, eta) + x1 * N1(xi, eta) + x2 * N2(xi, eta)
+    # det is the signed volume of the triangle
+    J0 = \
+        - numpy.outer(triangle[0], 1.0) \
+        + numpy.outer(triangle[1], 1.0)
+    J1 = \
+        - numpy.outer(triangle[0], 1.0) \
+        + numpy.outer(triangle[2], 1.0)
+    ref_vol = 0.5
+    det = ref_vol * (J0[0]*J1[1] - J1[0]*J0[1])
 
-    with
-
-      N0(xi, eta) = 1 - xi - eta,
-      N1(xi, eta) = xi,
-      N2(xi, eta) = eta.
-    '''
-    return lambda xi: f(
-        + triangle[0] * (1.0 - xi[0] - xi[1])
-        + triangle[1] * xi[0]
-        + triangle[2] * xi[1]
-        )
-
-
-def integrate(f, triangle, rule):
-    # w * f(x(xi)) * |det(J)|
-    g = _transform_to_unit_triangle(f, triangle)
-    out = math.fsum([
-        weight * g(point)
-        for point, weight in zip(rule.points, rule.weights)
-        ])
-    return volume(triangle) * out
+    return math.fsum(scheme.weights * f(x).T * abs(det))
 
 
 def _s3():
@@ -1792,8 +1770,8 @@ class BerntsenEspelid(object):
             # This first schemes was separately published as
             #
             # Berntsen and Espelid,
-            # Algorithm 706: DCUTRI: An Algorithm for Adaptive Cubature over a Collection
-            # of Triangles,
+            # Algorithm 706: DCUTRI: An Algorithm for Adaptive Cubature over a
+            # Collection of Triangles,
             # ACM Trans. Math. Softw.,
             # Sept. 1992,
             # 10.1145/131766.131772,
