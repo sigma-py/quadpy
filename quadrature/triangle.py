@@ -29,7 +29,7 @@ def show(triangle, scheme):
         + numpy.outer(scheme.points[:, 1], triangle[2])
 
     vol = integrate(lambda x: numpy.ones(1), triangle, Centroid())
-    helpers.plot_circles(
+    helpers.plot_disks(
         plt, transformed_pts, scheme.weights, vol
         )
 

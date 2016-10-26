@@ -12,7 +12,7 @@ __status__ = 'Beta'
 
 from . import helpers
 
-from . import circle
+from . import disk
 from . import hexahedron
 from . import line_segment
 from . import pyramid
