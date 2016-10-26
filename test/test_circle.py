@@ -117,6 +117,6 @@ def test_show():
 if __name__ == '__main__':
     test_show()
     plt.show()
-    # scheme = From1d(quadrature.line.NewtonCotesClosed(15))
+    # scheme = From1d(quadrature.line_segment.NewtonCotesClosed(15))
     scheme = quadrature.circle.Lether(5)
     test_scheme(scheme)

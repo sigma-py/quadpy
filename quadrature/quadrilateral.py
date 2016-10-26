@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 #
+from . import line_segment
+from . import helpers
+
 import math
 import numpy
-from . import line
-
-from . import helpers
 
 
 def show(quad, scheme):
@@ -149,7 +149,7 @@ class Stroud(object):
                 ])
             self.degree = 7
         elif index == 6:
-            scheme1d = line.GaussLegendre(8)
+            scheme1d = line_segment.GaussLegendre(8)
             self.weights = numpy.outer(
                 scheme1d.weights, scheme1d.weights
                 ).flatten()
