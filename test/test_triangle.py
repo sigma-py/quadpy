@@ -88,7 +88,7 @@ def _integrate_monomial_over_standard_triangle(k):
     + [quadrature.triangle.WandzuraXiao(k) for k in range(1, 7)]
     + [quadrature.triangle.TaylorWingateBos(k) for k in [1, 2, 4, 5, 8]]
     + [quadrature.triangle.ZhangCuiLiu(k) for k in [1, 2, 3]]
-    + [quadrature.triangle.XiaoGimbutas(k) for k in range(1, 14)]
+    + [quadrature.triangle.XiaoGimbutas(k) for k in range(1, 51)]
     )
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
