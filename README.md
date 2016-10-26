@@ -9,7 +9,7 @@ Your one-stop shop for numerical integration in Python.
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/quadrature.svg?style=social&label=Star&maxAge=2592000)](https://github.com/nschloe/quadrature)
 
 Over 300 numerical integration schemes for line segments, triangles, tetrahedra,
-quadrilaterals, hexahedra, wedges, pyramids, circles, and spheres.
+quadrilaterals, hexahedra, wedges, pyramids, disks, and spheres.
 
 To numerically integrate any function over any given triangle, do
 ```python
@@ -66,7 +66,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2009, 3 schemes up to
    degree 20).
 
-### Circle
+### Disk
 ![](https://nschloe.github.io/quadrature/circle.png)
 
  * [Peirce](http://www.jstor.org/stable/2098722) (1957, arbitrary degree)
