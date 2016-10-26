@@ -2722,3 +2722,68 @@ class ZhangCuiLiu(object):
 
         self.points = bary[:, [1, 2]]
         return
+
+
+class XiaoGimbutas(object):
+    '''
+    Hong Xiao, Zydrunas Gimbutas,
+    A numerical algorithm for the construction of efficient quadrature rules in
+    two and higher dimensions,
+    Computers & Mathematics with Applications,
+    Volume 59, Issue 2, January 2010, Pages 663–676,
+    <http://dx.doi.org/10.1016/j.camwa.2009.10.027>.
+
+    Abstract:
+    We present a numerical algorithm for the construction of efficient,
+    high-order quadratures in two and higher dimensions. Quadrature rules
+    constructed via this algorithm possess positive weights and interior nodes,
+    resembling the Gaussian quadratures in one dimension. In addition, rules
+    can be generated with varying degrees of symmetry, adaptable to individual
+    domains. We illustrate the performance of our method with numerical
+    examples, and report quadrature rules for polynomials on triangles,
+    squares, and cubes, up to degree 50. These formulae are near optimal in the
+    number of nodes used, and many of them appear to be new.
+    '''
+    def __init__(self, index):
+        if index == 1:
+            bary = _s3()
+            self.weights = numpy.array([1.0])
+        elif index == 2:
+            bary = _s21(1.0/6.0)
+            self.weights = 1.0/3.0 * numpy.ones(3)
+        elif index == 3:
+            bary = numpy.concatenate([
+                _s21(4.459484909159649e-01),
+                _s21(9.157621350977080e-02),
+                ])
+            self.weights = numpy.concatenate([
+                0.22338158967801147 * numpy.ones(3),
+                0.10995174365532188 * numpy.ones(3),
+                ])
+        elif index == 4:
+            # identical to index 3?!
+            bary = numpy.concatenate([
+                _s21(4.459484909159649e-01),
+                _s21(9.157621350977080e-02),
+                ])
+            self.weights = numpy.concatenate([
+                0.22338158967801147 * numpy.ones(3),
+                0.10995174365532188 * numpy.ones(3),
+                ])
+        elif index == 5:
+            bary = numpy.concatenate([
+                _s21(1.012865073234564e-01),
+                _s21(4.701420641051151e-01),
+                _s3()
+                ])
+            self.weights = numpy.concatenate([
+                1.259391805448271e-01 * numpy.ones(3),
+                1.323941527885062e-01 * numpy.ones(3),
+                2.250000000000000e-01 * numpy.ones(1),
+                ])
+        else:
+            raise ValueError('Illegal Xiao-Gimbutas index')
+
+        self.degree = index
+        self.points = bary[:, [1, 2]]
+        return
