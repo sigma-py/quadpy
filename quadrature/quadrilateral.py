@@ -8,7 +8,7 @@ import numpy
 
 
 def show(quad, scheme):
-    '''Shows the quadrature points on a given quad. The size of the circles
+    '''Shows the quadrature points on a given quad. The area of the disks
     around the points coincides with their weights.
     '''
     from matplotlib import pyplot as plt
@@ -31,7 +31,7 @@ def show(quad, scheme):
         + numpy.outer(0.25 * (1.0 - xi)*(1.0 + eta), quad[3])
 
     vol = integrate(lambda x: numpy.ones(1), quad, Stroud(1))
-    helpers.plot_circles(
+    helpers.plot_disks(
         plt, transformed_pts, scheme.weights, vol
         )
     return

@@ -64,136 +64,32 @@ def _integrate_monomial_over_standard_triangle(k):
         )
 
 
-@pytest.mark.parametrize('scheme', [
-    quadrature.triangle.Centroid(),
-    quadrature.triangle.Vertex(),
-    quadrature.triangle.SevenPoint(),
-    quadrature.triangle.HammerMarloweStroud(1),
-    quadrature.triangle.HammerMarloweStroud(2),
-    quadrature.triangle.HammerMarloweStroud(3),
-    quadrature.triangle.HammerMarloweStroud(4),
-    quadrature.triangle.HammerMarloweStroud(5),
-    quadrature.triangle.NewtonCotesClosed(1),
-    quadrature.triangle.NewtonCotesClosed(2),
-    quadrature.triangle.NewtonCotesClosed(3),
-    quadrature.triangle.NewtonCotesClosed(4),
-    quadrature.triangle.NewtonCotesClosed(5),
-    quadrature.triangle.NewtonCotesOpen(0),
-    quadrature.triangle.NewtonCotesOpen(1),
-    quadrature.triangle.NewtonCotesOpen(2),
-    quadrature.triangle.NewtonCotesOpen(3),
-    quadrature.triangle.NewtonCotesOpen(4),
-    quadrature.triangle.NewtonCotesOpen(5),
-    quadrature.triangle.Strang(1),
-    quadrature.triangle.Strang(2),
-    quadrature.triangle.Strang(3),
-    quadrature.triangle.Strang(4),
-    quadrature.triangle.Strang(5),
-    quadrature.triangle.Strang(6),
-    quadrature.triangle.Strang(7),
-    quadrature.triangle.Strang(8),
-    quadrature.triangle.Strang(9),
-    quadrature.triangle.Strang(10),
-    quadrature.triangle.LynessJespersen(1),
-    quadrature.triangle.LynessJespersen(2),
-    quadrature.triangle.LynessJespersen(3),
-    quadrature.triangle.LynessJespersen(4),
-    quadrature.triangle.LynessJespersen(5),
-    quadrature.triangle.LynessJespersen(6),
-    quadrature.triangle.LynessJespersen(7),
-    quadrature.triangle.LynessJespersen(8),
-    quadrature.triangle.LynessJespersen(9),
-    quadrature.triangle.LynessJespersen(10),
-    quadrature.triangle.LynessJespersen(11),
-    quadrature.triangle.LynessJespersen(12),
-    quadrature.triangle.LynessJespersen(13),
-    quadrature.triangle.LynessJespersen(14),
-    quadrature.triangle.LynessJespersen(15),
-    quadrature.triangle.LynessJespersen(16),
-    quadrature.triangle.LynessJespersen(17),
-    quadrature.triangle.LynessJespersen(18),
-    quadrature.triangle.LynessJespersen(19),
-    quadrature.triangle.LynessJespersen(20),
-    quadrature.triangle.LynessJespersen(21),
-    quadrature.triangle.Hillion(1),
-    quadrature.triangle.Hillion(2),
-    quadrature.triangle.Hillion(3),
-    quadrature.triangle.Hillion(4),
-    quadrature.triangle.Hillion(5),
-    quadrature.triangle.LaursenGellert('1'),
-    quadrature.triangle.LaursenGellert('2a'),
-    quadrature.triangle.LaursenGellert('2b'),
-    quadrature.triangle.LaursenGellert('3'),
-    quadrature.triangle.LaursenGellert('4'),
-    quadrature.triangle.LaursenGellert('5'),
-    quadrature.triangle.LaursenGellert('6'),
-    quadrature.triangle.LaursenGellert('7'),
-    quadrature.triangle.LaursenGellert('8'),
-    quadrature.triangle.LaursenGellert('9'),
-    quadrature.triangle.LaursenGellert('10'),
-    quadrature.triangle.LaursenGellert('11'),
-    quadrature.triangle.LaursenGellert('12'),
-    quadrature.triangle.LaursenGellert('13'),
-    quadrature.triangle.LaursenGellert('14'),
-    quadrature.triangle.LaursenGellert('15a'),
-    quadrature.triangle.LaursenGellert('15b'),
-    quadrature.triangle.Cubtri(),
-    quadrature.triangle.Triex(19),
-    quadrature.triangle.Triex(28),
-    quadrature.triangle.Dunavant(1),
-    quadrature.triangle.Dunavant(2),
-    quadrature.triangle.Dunavant(3),
-    quadrature.triangle.Dunavant(4),
-    quadrature.triangle.Dunavant(5),
-    quadrature.triangle.Dunavant(6),
-    quadrature.triangle.Dunavant(7),
-    quadrature.triangle.Dunavant(8),
-    quadrature.triangle.Dunavant(9),
-    quadrature.triangle.Dunavant(10),
-    quadrature.triangle.Dunavant(11),
-    quadrature.triangle.Dunavant(12),
-    quadrature.triangle.Dunavant(13),
-    quadrature.triangle.Dunavant(14),
-    quadrature.triangle.Dunavant(15),
-    quadrature.triangle.Dunavant(16),
-    quadrature.triangle.Dunavant(17),
-    quadrature.triangle.Dunavant(18),
-    quadrature.triangle.Dunavant(19),
-    quadrature.triangle.Dunavant(20),
-    quadrature.triangle.CoolsHaegemans(1),
-    quadrature.triangle.CoolsHaegemans(2),
-    quadrature.triangle.BerntsenEspelid(1),
-    quadrature.triangle.BerntsenEspelid(2),
-    quadrature.triangle.BerntsenEspelid(3),
-    quadrature.triangle.BerntsenEspelid(4),
-    quadrature.triangle.LiuVinokur(1),
-    quadrature.triangle.LiuVinokur(2),
-    quadrature.triangle.LiuVinokur(3),
-    quadrature.triangle.LiuVinokur(4),
-    quadrature.triangle.LiuVinokur(5),
-    quadrature.triangle.LiuVinokur(6),
-    quadrature.triangle.LiuVinokur(7),
-    quadrature.triangle.LiuVinokur(8),
-    quadrature.triangle.LiuVinokur(9),
-    quadrature.triangle.LiuVinokur(10),
-    quadrature.triangle.LiuVinokur(11),
-    quadrature.triangle.LiuVinokur(12),
-    quadrature.triangle.LiuVinokur(13),
-    quadrature.triangle.WandzuraXiao(1),
-    quadrature.triangle.WandzuraXiao(2),
-    quadrature.triangle.WandzuraXiao(3),
-    quadrature.triangle.WandzuraXiao(4),
-    quadrature.triangle.WandzuraXiao(5),
-    quadrature.triangle.WandzuraXiao(6),
-    quadrature.triangle.TaylorWingateBos(1),
-    quadrature.triangle.TaylorWingateBos(2),
-    quadrature.triangle.TaylorWingateBos(4),
-    quadrature.triangle.TaylorWingateBos(5),
-    quadrature.triangle.TaylorWingateBos(8),
-    quadrature.triangle.ZhangCuiLiu(1),
-    quadrature.triangle.ZhangCuiLiu(2),
-    quadrature.triangle.ZhangCuiLiu(3),
-    ])
+@pytest.mark.parametrize(
+    'scheme',
+    [quadrature.triangle.Centroid()]
+    + [quadrature.triangle.Vertex()]
+    + [quadrature.triangle.SevenPoint()]
+    + [quadrature.triangle.HammerMarloweStroud(k) for k in range(1, 6)]
+    + [quadrature.triangle.NewtonCotesClosed(k) for k in range(1, 6)]
+    + [quadrature.triangle.NewtonCotesOpen(k) for k in range(6)]
+    + [quadrature.triangle.Strang(k) for k in range(1, 11)]
+    + [quadrature.triangle.LynessJespersen(k) for k in range(1, 22)]
+    + [quadrature.triangle.Hillion(k) for k in range(1, 6)]
+    + [quadrature.triangle.LaursenGellert(key) for key in [
+        '1', '2a', '2b', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
+        '13', '14', '15a', '15b'
+        ]]
+    + [quadrature.triangle.Cubtri()]
+    + [quadrature.triangle.Triex(19), quadrature.triangle.Triex(28)]
+    + [quadrature.triangle.Dunavant(k) for k in range(1, 21)]
+    + [quadrature.triangle.CoolsHaegemans(k) for k in [1, 2]]
+    + [quadrature.triangle.BerntsenEspelid(k) for k in range(1, 5)]
+    + [quadrature.triangle.LiuVinokur(k) for k in range(1, 14)]
+    + [quadrature.triangle.WandzuraXiao(k) for k in range(1, 7)]
+    + [quadrature.triangle.TaylorWingateBos(k) for k in [1, 2, 4, 5, 8]]
+    + [quadrature.triangle.ZhangCuiLiu(k) for k in [1, 2, 3]]
+    + [quadrature.triangle.XiaoGimbutas(k) for k in range(1, 51)]
+    )
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
     # longer be integrated exactly. The scheme's degree is `d-1`.

@@ -11,39 +11,18 @@ if 'DISPLAY' not in os.environ:
 from matplotlib import pyplot as plt
 
 
-@pytest.mark.parametrize('scheme', [
-    quadrature.line_segment.Midpoint(),
-    quadrature.line_segment.Trapezoidal(),
-    quadrature.line_segment.GaussLegendre(1),
-    quadrature.line_segment.GaussLegendre(2),
-    quadrature.line_segment.GaussLegendre(3),
-    quadrature.line_segment.GaussLegendre(4),
-    quadrature.line_segment.GaussLegendre(5),
-    quadrature.line_segment.GaussPatterson(0),
-    quadrature.line_segment.GaussPatterson(1),
-    quadrature.line_segment.GaussPatterson(2),
-    quadrature.line_segment.GaussPatterson(3),
-    quadrature.line_segment.GaussPatterson(4),
-    quadrature.line_segment.GaussPatterson(5),
-    quadrature.line_segment.GaussPatterson(6),
-    quadrature.line_segment.ClenshawCurtis(1),
-    quadrature.line_segment.ClenshawCurtis(2),
-    quadrature.line_segment.ClenshawCurtis(3),
-    quadrature.line_segment.ClenshawCurtis(4),
-    quadrature.line_segment.ClenshawCurtis(5),
-    quadrature.line_segment.ClenshawCurtis(9),
-    quadrature.line_segment.ClenshawCurtis(17),
-    quadrature.line_segment.ClenshawCurtis(33),
-    quadrature.line_segment.ClenshawCurtis(65),
-    quadrature.line_segment.NewtonCotesClosed(1),
-    quadrature.line_segment.NewtonCotesClosed(2),
-    quadrature.line_segment.NewtonCotesClosed(3),
-    quadrature.line_segment.NewtonCotesClosed(4),
-    quadrature.line_segment.NewtonCotesOpen(1),
-    quadrature.line_segment.NewtonCotesOpen(2),
-    quadrature.line_segment.NewtonCotesOpen(3),
-    quadrature.line_segment.NewtonCotesOpen(4),
-    ])
+@pytest.mark.parametrize(
+    'scheme',
+    [quadrature.line_segment.Midpoint()]
+    + [quadrature.line_segment.Trapezoidal()]
+    + [quadrature.line_segment.GaussLegendre(k) for k in range(1, 6)]
+    + [quadrature.line_segment.GaussPatterson(0) for k in range(7)]
+    + [quadrature.line_segment.ClenshawCurtis(k) for k in [
+        1, 2, 3, 4, 5, 9, 17, 33, 65
+        ]]
+    + [quadrature.line_segment.NewtonCotesClosed(k) for k in range(1, 5)]
+    + [quadrature.line_segment.NewtonCotesOpen(k) for k in range(1, 5)]
+    )
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
     # longer be integrated exactly. The scheme's degree is `d-1`.

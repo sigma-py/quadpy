@@ -67,64 +67,18 @@ def _integrate_monomial_over_standard_tet(k):
         )
 
 
-@pytest.mark.parametrize('scheme', [
-    quadrature.tetrahedron.Keast(0),
-    quadrature.tetrahedron.Keast(1),
-    quadrature.tetrahedron.Keast(2),
-    quadrature.tetrahedron.Keast(3),
-    quadrature.tetrahedron.Keast(4),
-    quadrature.tetrahedron.Keast(5),
-    quadrature.tetrahedron.Keast(6),
-    quadrature.tetrahedron.Keast(7),
-    quadrature.tetrahedron.Keast(8),
-    quadrature.tetrahedron.Keast(9),
-    quadrature.tetrahedron.Keast(10),
-    quadrature.tetrahedron.NewtonCotesClosed(1),
-    quadrature.tetrahedron.NewtonCotesClosed(2),
-    quadrature.tetrahedron.NewtonCotesClosed(3),
-    quadrature.tetrahedron.NewtonCotesClosed(4),
-    quadrature.tetrahedron.NewtonCotesClosed(5),
-    quadrature.tetrahedron.NewtonCotesClosed(6),
-    quadrature.tetrahedron.NewtonCotesOpen(0),
-    quadrature.tetrahedron.NewtonCotesOpen(1),
-    quadrature.tetrahedron.NewtonCotesOpen(2),
-    quadrature.tetrahedron.NewtonCotesOpen(3),
-    quadrature.tetrahedron.NewtonCotesOpen(4),
-    quadrature.tetrahedron.NewtonCotesOpen(5),
-    quadrature.tetrahedron.NewtonCotesOpen(6),
-    quadrature.tetrahedron.Zienkiewicz(4),
-    quadrature.tetrahedron.Zienkiewicz(5),
-    quadrature.tetrahedron.ShunnHam(1),
-    quadrature.tetrahedron.ShunnHam(2),
-    quadrature.tetrahedron.ShunnHam(3),
-    quadrature.tetrahedron.ShunnHam(4),
-    quadrature.tetrahedron.ShunnHam(5),
-    quadrature.tetrahedron.ShunnHam(6),
-    quadrature.tetrahedron.ZhangCuiLiu(1),
-    quadrature.tetrahedron.ZhangCuiLiu(2),
-    quadrature.tetrahedron.Yu(1),
-    quadrature.tetrahedron.Yu(2),
-    quadrature.tetrahedron.Yu(3),
-    quadrature.tetrahedron.Yu(4),
-    quadrature.tetrahedron.Yu(5),
-    quadrature.tetrahedron.HammerMarloweStroud(1),
-    quadrature.tetrahedron.HammerMarloweStroud(2),
-    quadrature.tetrahedron.HammerMarloweStroud(3),
-    quadrature.tetrahedron.LiuVinokur(1),
-    quadrature.tetrahedron.LiuVinokur(2),
-    quadrature.tetrahedron.LiuVinokur(3),
-    quadrature.tetrahedron.LiuVinokur(4),
-    quadrature.tetrahedron.LiuVinokur(5),
-    quadrature.tetrahedron.LiuVinokur(6),
-    quadrature.tetrahedron.LiuVinokur(7),
-    quadrature.tetrahedron.LiuVinokur(8),
-    quadrature.tetrahedron.LiuVinokur(9),
-    quadrature.tetrahedron.LiuVinokur(10),
-    quadrature.tetrahedron.LiuVinokur(11),
-    quadrature.tetrahedron.LiuVinokur(12),
-    quadrature.tetrahedron.LiuVinokur(13),
-    quadrature.tetrahedron.LiuVinokur(14),
-    ])
+@pytest.mark.parametrize(
+    'scheme',
+    [quadrature.tetrahedron.Keast(k) for k in range(11)]
+    + [quadrature.tetrahedron.NewtonCotesClosed(k) for k in range(1, 7)]
+    + [quadrature.tetrahedron.NewtonCotesOpen(k) for k in range(7)]
+    + [quadrature.tetrahedron.Zienkiewicz(k) for k in [4, 5]]
+    + [quadrature.tetrahedron.ShunnHam(k) for k in range(1, 7)]
+    + [quadrature.tetrahedron.ZhangCuiLiu(k) for k in [1, 2]]
+    + [quadrature.tetrahedron.Yu(k) for k in range(1, 6)]
+    + [quadrature.tetrahedron.HammerMarloweStroud(k) for k in [1, 2, 3]]
+    + [quadrature.tetrahedron.LiuVinokur(k) for k in range(1, 15)]
+    )
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
     # longer be integrated exactly. The scheme's degree is `d-1`.
