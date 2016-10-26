@@ -217,25 +217,32 @@ def _newton_cotes(n, point_fun):
     P. Silvester,
     Symmetric quadrature formulae for simplexes
     Math. Comp., 24, 95-100 (1970),
-    <http://www.ams.org/journals/mcom/1970-24-109/S0025-5718-1970-0258283-6/S0025-5718-1970-0258283-6.pdf>
+    <https://doi.org/10.1090/S0025-5718-1970-0258283-6>.
     '''
     def get_poly(t, m, n):
-        f = 1
-        for k in range(m):
-            f *= (t - point_fun(k, n)) / (point_fun(m, n) - point_fun(k, n))
-        return f
+        return sympy.prod([
+            (t - point_fun(k, n)) / (point_fun(m, n) - point_fun(k, n))
+            for k in range(m)
+            ])
+
     degree = n
     num_points = (n+1) * (n+2) / 2
-    bary = numpy.empty((num_points, 3))
+
+    # points
+    idx = numpy.array([
+        [i, j, n-i-j]
+        for i in range(n + 1)
+        for j in range(n + 1 - i)
+        ])
+    bary = point_fun(idx, n)
+    points = bary[:, [1, 2]]
+
+    # weights
     weights = numpy.empty(num_points)
     idx = 0
     for i in range(n + 1):
         for j in range(n + 1 - i):
             k = n - i - j
-            bary[idx] = point_fun(
-                numpy.array([i, j, k], dtype=float), n
-                )
-            # Compute weight.
             # Define the polynomial which to integrate over the
             # tetrahedron.
             t = sympy.DeferredVector('t')
@@ -256,7 +263,6 @@ def _newton_cotes(n, point_fun):
                  for m, c in zip(gpoly.monoms(), gpoly.coeffs())
                  ])
             idx += 1
-    points = bary[:, [1, 2]]
     return points, weights, degree
 
 
