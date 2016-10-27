@@ -59,6 +59,20 @@ class ChebyshevGauss1(object):
         return
 
 
+class ChebyshevGauss2(object):
+    '''
+    Chebyshev-Gauß quadrature for \int_{-1}^1 f(x) * sqrt(1+x^2) dx.
+    '''
+    def __init__(self, n):
+        self.degree = n
+        self.points = numpy.cos(
+                numpy.pi * numpy.arange(1, n+1) / (n+1)
+                )
+        self.weights = numpy.pi / (n+1) \
+            * (numpy.sin(numpy.pi * numpy.arange(1, n+1) / (n+1)))**2
+        return
+
+
 class GaussLegendre(object):
     '''
     Gauß-Legendre quadrature.

@@ -51,7 +51,7 @@ def test_scheme(scheme):
     'scheme',
     [quadrature.line_segment.ChebyshevGauss1(k) for k in range(1, 10)]
     )
-def test_cheb_scheme(scheme):
+def test_cheb1_scheme(scheme):
     def integrate_exact(k):
         # \int_-1^1 x^k / sqrt(1 - x^2)
         if k == 0:
@@ -61,6 +61,33 @@ def test_cheb_scheme(scheme):
         return numpy.sqrt(numpy.pi) * ((-1)**k + 1) \
             * math.gamma(0.5*(k+1)) / math.gamma(0.5*k) \
             / k
+
+    degree = check_degree_1d(
+            lambda poly: quadrature.line_segment.integrate(
+                    poly, -1.0, 1.0, scheme
+                    ),
+            integrate_exact,
+            lambda degree: [[degree]],
+            scheme.degree + 1
+            )
+    assert degree >= scheme.degree
+    return
+
+
+@pytest.mark.parametrize(
+    'scheme',
+    [quadrature.line_segment.ChebyshevGauss2(k) for k in range(1, 10)]
+    )
+def test_cheb2_scheme(scheme):
+    def integrate_exact(k):
+        # \int_-1^1 x^k * sqrt(1 - x^2)
+        if k == 0:
+            return 0.5 * numpy.pi
+        if k % 2 == 1:
+            return 0.0
+        return numpy.sqrt(numpy.pi) * ((-1)**k + 1) \
+            * math.gamma(0.5*(k+1)) / math.gamma(0.5*k+2) \
+            / 4
 
     degree = check_degree_1d(
             lambda poly: quadrature.line_segment.integrate(
