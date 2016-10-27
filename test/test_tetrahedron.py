@@ -69,15 +69,16 @@ def _integrate_monomial_over_standard_tet(k):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.tetrahedron.Keast(k) for k in range(11)]
+    [quadrature.tetrahedron.HammerMarloweStroud(k) for k in [1, 2, 3]]
     + [quadrature.tetrahedron.NewtonCotesClosed(k) for k in range(1, 7)]
     + [quadrature.tetrahedron.NewtonCotesOpen(k) for k in range(7)]
-    + [quadrature.tetrahedron.Zienkiewicz(k) for k in [4, 5]]
-    + [quadrature.tetrahedron.ShunnHam(k) for k in range(1, 7)]
-    + [quadrature.tetrahedron.ZhangCuiLiu(k) for k in [1, 2]]
     + [quadrature.tetrahedron.Yu(k) for k in range(1, 6)]
-    + [quadrature.tetrahedron.HammerMarloweStroud(k) for k in [1, 2, 3]]
+    + [quadrature.tetrahedron.Keast(k) for k in range(11)]
     + [quadrature.tetrahedron.LiuVinokur(k) for k in range(1, 15)]
+    + [quadrature.tetrahedron.Zienkiewicz(k) for k in [4, 5]]
+    + [quadrature.tetrahedron.ZhangCuiLiu(k) for k in [1, 2]]
+    + [quadrature.tetrahedron.ShunnHam(k) for k in range(1, 7)]
+    + [quadrature.tetrahedron.XiaoGimbutas(k) for k in range(1, 16)]
     )
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
