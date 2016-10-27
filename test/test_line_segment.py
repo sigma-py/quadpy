@@ -103,6 +103,28 @@ def test_cheb2_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
+    [quadrature.line_segment.GaussLaguerre(k) for k in range(1, 10)]
+    )
+def test_laguerre_scheme(scheme):
+    def integrate_exact(k):
+        # \int_0^\infty x^k * exp(-x)
+        return math.gamma(k + 1)
+
+    degree = check_degree_1d(
+            lambda poly: quadrature.line_segment.integrate(
+                    poly, -1.0, 1.0, scheme
+                    ),
+            integrate_exact,
+            lambda degree: [[degree]],
+            scheme.degree + 1
+            )
+    print(degree, scheme.degree)
+    assert degree >= scheme.degree
+    return
+
+
+@pytest.mark.parametrize(
+    'scheme',
     [quadrature.line_segment.NewtonCotesClosed(5)]
     )
 def test_show(scheme):
@@ -111,7 +133,9 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme = quadrature.line_segment.ChebyshevGauss1(2)
-    test_cheb_scheme(scheme)
-    test_show(scheme)
-    plt.show()
+    scheme = quadrature.line_segment.GaussLaguerre(4)
+    print(scheme.points)
+    print(scheme.weights)
+    test_laguerre_scheme(scheme)
+    # test_show(scheme)
+    # plt.show()
