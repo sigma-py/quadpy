@@ -5,10 +5,10 @@ import numpy
 import sympy
 
 
-def integrate(f, a, b, rule):
+def integrate(f, a, b, scheme):
     out = math.fsum([
         weight * f(0.5 * (point + 1) * (b-a) + a)
-        for point, weight in zip(rule.points, rule.weights)
+        for point, weight in zip(scheme.points, scheme.weights)
         ])
     return 0.5 * (b - a) * out
 
@@ -44,6 +44,19 @@ class Trapezoidal(object):
             1.0
             ])
         self.degree = 1
+        return
+
+
+class ChebyshevGauss1(object):
+    '''
+    Chebyshev-Gauß quadrature for \int_{-1}^1 f(x) / sqrt(1+x^2) dx.
+    '''
+    def __init__(self, n):
+        self.degree = n
+        self.points = numpy.cos(
+                (2*numpy.arange(1, n+1) - 1.0) / (2*n) * numpy.pi
+                )
+        self.weights = numpy.pi / n * numpy.ones(n)
         return
 
 

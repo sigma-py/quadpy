@@ -5,9 +5,25 @@ import numpy
 import sympy
 
 
-def check_degree(quadrature, exact, exponents_creator, max_degree, tol=1.0e-10):
+def check_degree_1d(
+        quadrature, exact, exponents_creator, max_degree, tol=1.0e-12
+        ):
+    for degree in range(max_degree+1):
+        val = quadrature(lambda x: x**degree)
+        exact_val = exact(degree)
+        if abs(exact_val - val) > tol:
+            return degree - 1
+    return max_degree
+
+
+def check_degree(
+        quadrature, exact, exponents_creator, max_degree, tol=1.0e-10
+        ):
     for degree in range(max_degree+1):
         for k in exponents_creator(degree):
+            def ggg(x):
+                return sympy.prod([x[i]**k[i] for i in range(len(k))])
+            x = sympy.DeferredVector('x')
             val = quadrature(
                 lambda x: sympy.prod([x[i]**k[i] for i in range(len(k))])
                 )
