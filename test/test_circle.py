@@ -6,7 +6,6 @@ from helpers import \
         check_degree
 
 import numpy
-import numpy.testing
 import pytest
 import quadrature
 
@@ -26,9 +25,10 @@ def test_scheme(scheme):
     degree = check_degree(
             lambda poly: quadrature.circle.integrate(poly, scheme),
             integrate_monomial_over_unit_circle,
+            create_monomial_exponents2,
             scheme.degree + 1
             )
-    numpy.testing.assert_equal(degree, scheme.degree)
+    assert degree == scheme.degree
     return
 
 

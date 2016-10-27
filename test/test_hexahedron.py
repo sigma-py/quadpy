@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import create_monomial_exponents3
+from helpers import create_monomial_exponents3, check_degree
 import numpy
-import numpy.testing
 import quadrature
 from quadrature.hexahedron import From1d
 import pytest
@@ -76,8 +75,6 @@ def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
     + [From1d(quadrature.line_segment.NewtonCotesOpen(k)) for k in range(5)]
     )
 def test_scheme(scheme):
-    # Test integration until we get to a polynomial degree `d` that can no
-    # longer be integrated exactly. The scheme's degree is `d-1`.
     x0 = -1
     x1 = +1
     y0 = -1
@@ -94,27 +91,13 @@ def test_scheme(scheme):
         [x1, y1, z1],
         [x0, y1, z1],
         ])
-    success = True
-    degree = 0
-    max_degree = scheme.degree + 1
-    while success:
-        for k in create_monomial_exponents3(degree):
-            def poly(x):
-                return x[0]**k[0] * x[1]**k[1] * x[2]**k[2]
-            # exact_val = _integrate_exact(poly, hexa)
-            exact_val = _integrate_exact2(k, x0, x1, y0, y1, z0, z1)
-            val = quadrature.hexahedron.integrate(
-                    poly, hexa, scheme
-                    )
-            if abs(exact_val - val) > 1.0e-10:
-                success = False
-                break
-        if not success:
-            break
-        if degree >= max_degree:
-            break
-        degree += 1
-    numpy.testing.assert_equal(degree-1, scheme.degree)
+    degree = check_degree(
+            lambda poly: quadrature.hexahedron.integrate(poly, hexa, scheme),
+            lambda k: _integrate_exact2(k, x0, x1, y0, y1, z0, z1),
+            create_monomial_exponents3,
+            scheme.degree + 1
+            )
+    assert degree == scheme.degree
     return
 
 

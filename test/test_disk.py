@@ -36,9 +36,10 @@ def test_scheme(scheme):
     degree = check_degree(
             lambda poly: quadrature.disk.integrate(poly, scheme),
             _integrate_exact,
+            create_monomial_exponents2,
             scheme.degree + 1
             )
-    numpy.testing.assert_equal(degree, scheme.degree)
+    assert degree == scheme.degree
     return
 
 

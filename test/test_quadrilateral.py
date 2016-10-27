@@ -3,7 +3,6 @@
 from helpers import create_monomial_exponents2, check_degree
 
 import numpy
-import numpy.testing
 import pytest
 import quadrature
 from quadrature.quadrilateral import From1d
@@ -77,9 +76,10 @@ def test_scheme(scheme):
                 poly, quadrilateral, scheme
                 ),
             lambda k: _integrate_exact2(k, x0, x1, y0, y1),
+            create_monomial_exponents2,
             scheme.degree + 1
             )
-    numpy.testing.assert_equal(degree, scheme.degree)
+    assert degree == scheme.degree
     return
 
 

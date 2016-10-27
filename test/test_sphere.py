@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import create_monomial_exponents3
+from helpers import create_monomial_exponents3, check_degree
 import math
 import numpy
-import numpy.testing
 import pytest
 import quadrature
 import sympy
@@ -62,28 +61,15 @@ def test_scheme(scheme):
     # longer be integrated exactly. The scheme's degree is `d-1`.
     midpoint = numpy.array([0.0, 0.0, 0.0])
     radius = 1.0
-    success = True
-    degree = 0
-    # cap max degree -- tests will otherwise last too long
-    max_degree = min(30, scheme.degree + 1)
-    while success:
-        for k in create_monomial_exponents3(degree):
-            def poly(x):
-                return x[0]**k[0] * x[1]**k[1] * x[2]**k[2]
-            # exact_val = _integrate_exact(poly, midpoint, radius)
-            exact_val = _integral_monomial_over_unit_sphere(k)
-            val = quadrature.sphere.integrate(
-                    poly, midpoint, radius, scheme
-                    )
-            if abs(exact_val - val) > 1.0e-10:
-                success = False
-                break
-        if not success:
-            break
-        if degree >= max_degree:
-            break
-        degree += 1
-    assert degree >= max_degree
+    degree = check_degree(
+            lambda poly: quadrature.sphere.integrate(
+                poly, midpoint, radius, scheme
+                ),
+            _integral_monomial_over_unit_sphere,
+            create_monomial_exponents3,
+            scheme.degree + 1
+            )
+    assert degree >= scheme.degree
     return
 
 
