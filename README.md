@@ -34,6 +34,7 @@ This uses Strang's rule of degree 6.
  * Gauß-Hermite (arbitrary degree)
  * Gauß-Laguerre (arbitrary degree)
  * Gauß-Legendre (arbitrary degree)
+ * Gauß-Lobatto (arbitrary degree)
  * Gauß-Patterson (7 schemes up to degree 191)
  * open and closed Newton-Cotes (arbitray degree)
 

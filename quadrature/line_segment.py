@@ -103,6 +103,40 @@ class GaussLegendre(object):
         return
 
 
+class GaussLobatto(object):
+    '''
+    Gauß-Lobatto quadrature.
+    '''
+    def __init__(self, n):
+        assert n >= 2
+
+        self.degree = 2*n - 3
+
+        n_digits = 16
+
+        # The lazy approach: SymPy. Check out Golub-Welsch or
+        # <http://dx.doi.org/10.1137/120889873> for something better.
+        x = sympy.Dummy('x')
+        p = sympy.legendre_poly(n-1, x, polys=True)
+        pd = p.diff(x)
+        self.points = []
+        self.weights = []
+        for r in pd.real_roots():
+            if isinstance(r, sympy.RootOf):
+                r = r.eval_rational(sympy.S(1)/10**(n_digits+2))
+            self.points.append(r.n(n_digits))
+            self.weights.append((2/(n*(n-1) * p.subs(x, r)**2)).n(n_digits))
+
+        self.points.insert(0, -1)
+        self.points.append(1)
+        self.points = numpy.array(self.points)
+
+        self.weights.insert(0, (sympy.S(2)/(n*(n-1))).n(n_digits))
+        self.weights.append((sympy.S(2)/(n*(n-1))).n(n_digits))
+        self.weights = numpy.array(self.weights)
+        return
+
+
 class GaussPatterson(object):
     '''
     Gauß-Patterson quadrature.
