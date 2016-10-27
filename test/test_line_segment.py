@@ -118,7 +118,27 @@ def test_laguerre_scheme(scheme):
             lambda degree: [[degree]],
             scheme.degree + 1
             )
-    print(degree, scheme.degree)
+    assert degree >= scheme.degree
+    return
+
+
+@pytest.mark.parametrize(
+    'scheme',
+    [quadrature.line_segment.GaussHermite(k) for k in range(1, 10)]
+    )
+def test_hermite_scheme(scheme):
+    def integrate_exact(k):
+        # \int_-\infty^\infty x^k * exp(-x^2)
+        return 0.5 * ((-1)**k + 1) * math.gamma(0.5*(k + 1))
+
+    degree = check_degree_1d(
+            lambda poly: quadrature.line_segment.integrate(
+                    poly, -1.0, 1.0, scheme
+                    ),
+            integrate_exact,
+            lambda degree: [[degree]],
+            scheme.degree + 1
+            )
     assert degree >= scheme.degree
     return
 
@@ -134,8 +154,6 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     scheme = quadrature.line_segment.GaussLaguerre(4)
-    print(scheme.points)
-    print(scheme.weights)
     test_laguerre_scheme(scheme)
     # test_show(scheme)
     # plt.show()
