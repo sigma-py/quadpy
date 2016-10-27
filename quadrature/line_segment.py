@@ -6,10 +6,9 @@ import sympy
 
 
 def integrate(f, a, b, scheme):
-    out = math.fsum([
-        weight * f(0.5 * (point + 1) * (b-a) + a)
-        for point, weight in zip(scheme.points, scheme.weights)
-        ])
+    out = math.fsum(
+        scheme.weights * f(0.5 * (scheme.points.T + 1) * (b-a) + a)
+        )
     return 0.5 * (b - a) * out
 
 
