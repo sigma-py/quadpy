@@ -34,6 +34,11 @@ This uses Strang's rule of degree 6.
  * Gauß-Patterson (7 schemes up to degree 191)
  * Clenshaw-Curtis (9 schemes up to degree 65)
 
+### Circle
+![](https://nschloe.github.io/quadrature/circle.png)
+
+ * equidistant points
+
 ### Triangle
 ![](https://nschloe.github.io/quadrature/tri.png)
 
@@ -69,7 +74,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    schemes up to degree 50).
 
 ### Disk
-![](https://nschloe.github.io/quadrature/circle.png)
+![](https://nschloe.github.io/quadrature/disk.png)
 
  * [Peirce](http://www.jstor.org/stable/2098722) (1957, arbitrary degree)
  * [Lether](http://www.jstor.org/stable/2949473) (1971, arbitrary degree)
