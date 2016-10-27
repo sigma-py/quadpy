@@ -5,6 +5,16 @@ import numpy
 import sympy
 
 
+def check_degree(quadrature, exact, max_degree, tol=1.0e-10):
+    for degree in range(max_degree+1):
+        for k in create_monomial_exponents2(degree):
+            val = quadrature(lambda x: x[0]**k[0] * x[1]**k[1])
+            exact_val = exact(k)
+            if abs(exact_val - val) > 1.0e-10:
+                return degree - 1
+    return max_degree
+
+
 def create_monomial_exponents2(degree):
     '''Returns a list of all monomials exponents of degree :degree:.
     '''
