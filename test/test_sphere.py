@@ -67,7 +67,7 @@ def test_scheme(scheme):
                 ),
             _integral_monomial_over_unit_sphere,
             create_monomial_exponents3,
-            scheme.degree + 1
+            min(30, scheme.degree + 1)
             )
     assert degree >= scheme.degree
     return
