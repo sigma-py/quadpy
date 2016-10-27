@@ -40,46 +40,20 @@ def integrate_monomial_over_unit_circle(k):
 
     I = \int_0^2pi cos(phi)**k[0] sin(phi)**k[1]
 
-    equals 0 if any of k[0], k[1] is odd. If both are even, then
+    equals 0 if any of k[0], k[1] is odd. If both are even, we make use of
 
-    I = \int_0^2pi sin**2m * cos**2n
-      = \int_0^2pi (1-cos**2)**m * cos**2n
-      = \sum_k=0^m (m over k) \int cos**2(k+n).
+    I = 4 \int_0^pi/2 cos(phi)**k[0] sin(phi)**k[1]
+      = 2 B(0.5*(k[0]+1), 0.5*(k[1]+1))
 
-    With
-      \int cos**n = (n-1)/n \int cos**(n-2)
-    one gets
-        \int_0^2pi cos**n
-      = (n-1)!! / n!! * 2*pi
-      = (2n)! / (2**n * n!)**2 * 2*pi,
-    so
-      I = \sum_k=0^m (-1)^i (m over k) (2(k+n))!
-                     / (2**(k+n) * (k+n)!)**2 * 2*pi
+    with B(x, y) being the Beta function. It has the representation
 
-    The quotient can be computed via log-gamma, i.e.,
-
-      (2d)! / (2**d * d!)**2
-    = exp(lgamma(2d) - 2d log(2) - 2 lgamma(d)).
+    B(x, y) = Gamma(x) Gamma(y) / Gamma(x + y).
     '''
     if any(numpy.array(k) % 2 == 1):
         return 0.0
 
-    m = k[0] // 2
-    n = k[1] // 2
-    return 2*math.pi * sum([
-            (-1)**i
-            * sympy.binomial(m, i)
-            * math.factorial(2*(i+n))
-            / (2**(i+n) * math.factorial(i+n))**2
-            for i in range(m+1)
-            ])
-    # return 2*math.pi * sum([
-    #         (-1)**i
-    #         * sympy.binomial(m, i)
-    #         * math.exp(
-    #             + math.lgamma(2*(i+n))
-    #             - 2*math.lgamma(i+n)
-    #             - 2*(i+n)*math.log(2.0)
-    #             )
-    #         ] for i in range(m+1)
-    #         )
+    return 2 * math.exp(
+        + math.lgamma(0.5 * (k[0] + 1))
+        + math.lgamma(0.5 * (k[1] + 1))
+        - math.lgamma(0.5 * (k[0] + k[1]) + 1)
+        )
