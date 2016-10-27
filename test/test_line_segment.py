@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+from helpers import check_degree_1d
+
+import math
+import numpy
 import quadrature
 
 import os
@@ -24,21 +28,48 @@ from matplotlib import pyplot as plt
     + [quadrature.line_segment.NewtonCotesOpen(k) for k in range(1, 5)]
     )
 def test_scheme(scheme):
-    # Test integration until we get to a polynomial degree `d` that can no
-    # longer be integrated exactly. The scheme's degree is `d-1`.
     degree = 0
     while True:
-        def poly(x): return x**degree
         # Set bounds such that the values are between 0.5 and 1.5.
         a = 0.5**(1.0/(degree+1))
         b = 1.5**(1.0/(degree+1))
         exact_val = 1.0/(degree+1)
-        val = quadrature.line_segment.integrate(poly, a, b, scheme)
+        val = quadrature.line_segment.integrate(
+                lambda x: x**degree,
+                a, b, scheme
+                )
         if abs(exact_val - val) / abs(exact_val) > 1.0e-12:
             break
         if degree >= scheme.degree:
             break
         degree += 1
+    assert degree >= scheme.degree
+    return
+
+
+@pytest.mark.parametrize(
+    'scheme',
+    [quadrature.line_segment.ChebyshevGauss1(k) for k in range(1, 10)]
+    )
+def test_cheb_scheme(scheme):
+    def integrate_exact(k):
+        # \int_-1^1 x^k / sqrt(1 - x^2)
+        if k == 0:
+            return numpy.pi
+        if k % 2 == 1:
+            return 0.0
+        return numpy.sqrt(numpy.pi) * ((-1)**k + 1) \
+            * math.gamma(0.5*(k+1)) / math.gamma(0.5*k) \
+            / k
+
+    degree = check_degree_1d(
+            lambda poly: quadrature.line_segment.integrate(
+                    poly, -1.0, 1.0, scheme
+                    ),
+            integrate_exact,
+            lambda degree: [[degree]],
+            scheme.degree + 1
+            )
     assert degree >= scheme.degree
     return
 
@@ -53,7 +84,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme = quadrature.line_segment.GaussLegendre(7)
-    test_scheme(scheme)
+    scheme = quadrature.line_segment.ChebyshevGauss1(2)
+    test_cheb_scheme(scheme)
     test_show(scheme)
     plt.show()

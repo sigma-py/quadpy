@@ -2,7 +2,6 @@
 #
 from helpers import create_monomial_exponents3, check_degree
 import numpy
-import numpy.testing
 import quadrature
 import pytest
 import sympy
