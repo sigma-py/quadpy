@@ -20,6 +20,7 @@ from matplotlib import pyplot as plt
     [quadrature.line_segment.Midpoint()]
     + [quadrature.line_segment.Trapezoidal()]
     + [quadrature.line_segment.GaussLegendre(k) for k in range(1, 6)]
+    + [quadrature.line_segment.GaussLobatto(k) for k in range(2, 7)]
     + [quadrature.line_segment.GaussPatterson(k) for k in range(7)]
     + [quadrature.line_segment.ClenshawCurtis(k) for k in [
         1, 2, 3, 4, 5, 9, 17, 33, 65
@@ -153,7 +154,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme = quadrature.line_segment.GaussLaguerre(4)
-    test_laguerre_scheme(scheme)
-    # test_show(scheme)
-    # plt.show()
+    scheme = quadrature.line_segment.GaussLobatto(2)
+    test_scheme(scheme)
+    test_show(scheme)
+    plt.show()
