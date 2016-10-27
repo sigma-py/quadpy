@@ -107,7 +107,7 @@ def test_show(scheme):
     return
 
 if __name__ == '__main__':
-    scheme = quadrature.circle.Equidistant(20)
+    scheme = quadrature.circle.Equidistant(30)
     test_scheme(scheme)
     test_show(scheme)
     plt.show()

@@ -17,8 +17,12 @@ def show(scheme):
     disk1 = plt.Circle((0, 0), 1, color='k', fill=False)
     ax.add_artist(disk1)
 
+    # The total area is used to gauge the disk radii. This is only meaningful
+    # for 2D manifolds, not for the circle. What we do instead is choose the
+    # total_area such that the sum of the disk radii equals pi.
+    total_area = numpy.pi**3 / len(scheme.weights)
     helpers.plot_disks(
-        plt, scheme.points, scheme.weights, numpy.pi
+        plt, scheme.points, scheme.weights, total_area
         )
     return
 
