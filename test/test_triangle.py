@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import create_monomial_exponents2
+from helpers import create_monomial_exponents2, check_degree
 
 import math
 import numpy
@@ -91,41 +91,23 @@ def _integrate_monomial_over_standard_triangle(k):
     + [quadrature.triangle.XiaoGimbutas(k) for k in range(1, 51)]
     )
 def test_scheme(scheme):
-    # Test integration until we get to a polynomial degree `d` that can no
-    # longer be integrated exactly. The scheme's degree is `d-1`.
     triangle = numpy.array([
         [0.0, 0.0],
         [1.0, 0.0],
         [0.0, 1.0]
         ])
-    success = True
-    degree = 0
-    max_degree = scheme.degree + 1
-    while success:
-        for k in create_monomial_exponents2(degree):
-            def poly(x):
-                return x[0]**k[0] * x[1]**k[1]
-            # exact_val = _integrate_exact(poly, triangle)
-            exact_val = _integrate_monomial_over_standard_triangle(k)
-            val = quadrature.triangle.integrate(
-                    poly, triangle, scheme
-                    )
-            if abs(exact_val - val) > 1.0e-10:
-                success = False
-                break
-        if not success:
-            break
-        if degree >= max_degree:
-            break
-        degree += 1
-    assert degree-1 >= scheme.degree
-    # numpy.testing.assert_equal(degree-1, scheme.degree)
+    degree = check_degree(
+            lambda poly: quadrature.triangle.integrate(poly, triangle, scheme),
+            _integrate_monomial_over_standard_triangle,
+            scheme.degree + 1
+            )
+    assert degree >= scheme.degree
     return
 
 
 @pytest.mark.parametrize(
     'scheme',
-    quadrature.triangle.XiaoGimbutas(10)
+    [quadrature.triangle.XiaoGimbutas(10)]
     )
 def test_show(scheme):
     triangle = numpy.array([

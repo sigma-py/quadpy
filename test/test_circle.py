@@ -2,7 +2,8 @@
 #
 from helpers import \
         create_monomial_exponents2, \
-        integrate_monomial_over_unit_circle
+        integrate_monomial_over_unit_circle, \
+        check_degree
 
 import numpy
 import numpy.testing
@@ -22,25 +23,12 @@ from matplotlib import pyplot as plt
     [quadrature.circle.Equidistant(k) for k in range(1, 6)]
     )
 def test_scheme(scheme):
-    success = True
-    degree = 0
-    max_degree = scheme.degree + 1
-    while success:
-        for k in create_monomial_exponents2(degree):
-            def poly(x):
-                return x[0]**k[0] * x[1]**k[1]
-            exact_val = integrate_monomial_over_unit_circle(k)
-            val = quadrature.circle.integrate(poly, scheme)
-            # print('k, exact_val', k, exact_val, val)
-            if abs(exact_val - val) > 1.0e-10:
-                success = False
-                break
-        if not success:
-            break
-        if degree >= max_degree:
-            break
-        degree += 1
-    numpy.testing.assert_equal(degree-1, scheme.degree)
+    degree = check_degree(
+            lambda poly: quadrature.circle.integrate(poly, scheme),
+            integrate_monomial_over_unit_circle,
+            scheme.degree + 1
+            )
+    numpy.testing.assert_equal(degree, scheme.degree)
     return
 
 
