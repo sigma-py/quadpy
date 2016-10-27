@@ -4,7 +4,6 @@ from helpers import create_monomial_exponents2, check_degree
 
 import math
 import numpy
-import numpy.testing
 import pytest
 import quadrature
 import sympy
@@ -99,6 +98,7 @@ def test_scheme(scheme):
     degree = check_degree(
             lambda poly: quadrature.triangle.integrate(poly, triangle, scheme),
             _integrate_monomial_over_standard_triangle,
+            create_monomial_exponents2,
             scheme.degree + 1
             )
     assert degree >= scheme.degree

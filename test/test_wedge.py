@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import create_monomial_exponents3
+from helpers import create_monomial_exponents3, check_degree
 import numpy
-import numpy.testing
 import quadrature
 import pytest
 import sympy
@@ -15,7 +14,10 @@ if 'DISPLAY' not in os.environ:
 from matplotlib import pyplot as plt
 
 
-def _integrate_exact(f, wedge):
+def _integrate_exact(k, wedge):
+    def f(x):
+        return x[0]**int(k[0]) * x[1]**int(k[1]) * x[2]**int(k[2])
+
     xi = sympy.DeferredVector('xi')
     pxi = \
         + wedge[0] * 0.5 * (1.0-xi[0]-xi[1]) * (1.0-xi[2]) \
@@ -69,26 +71,15 @@ def test_scheme(scheme):
         [1.0, 0.0, +1.0],
         [0.0, 1.0, +1.0],
         ])
-    success = True
-    degree = 0
-    max_degree = scheme.degree + 1
-    while success:
-        for k in create_monomial_exponents3(degree):
-            def poly(x):
-                return x[0]**int(k[0]) * x[1]**int(k[1]) * x[2]**int(k[2])
-            exact_val = _integrate_exact(poly, wedge)
-            val = quadrature.wedge.integrate(
-                    poly, wedge, scheme
-                    )
-            if abs(exact_val - val) > 1.0e-10:
-                success = False
-                break
-        if not success:
-            break
-        if degree >= max_degree:
-            break
-        degree += 1
-    numpy.testing.assert_equal(degree-1, scheme.degree)
+    degree = check_degree(
+            lambda poly: quadrature.wedge.integrate(
+                poly, wedge, scheme
+                ),
+            lambda k: _integrate_exact(k, wedge),
+            create_monomial_exponents3,
+            scheme.degree + 1
+            )
+    assert degree == scheme.degree
     return
 
 
