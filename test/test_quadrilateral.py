@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import create_monomial_exponents2
+from helpers import create_monomial_exponents2, check_degree
 
 import numpy
-import numpy.testing
 import pytest
 import quadrature
 from quadrature.quadrilateral import From1d
@@ -72,30 +71,23 @@ def test_scheme(scheme):
         [x1, y1],
         [x0, y1],
         ])
-    success = True
-    degree = 0
-    max_degree = scheme.degree + 1
-    while success:
-        for k in create_monomial_exponents2(degree):
-            def poly(x):
-                return x[0]**k[0] * x[1]**k[1]
-            exact_val = _integrate_exact2(k, x0, x1, y0, y1)
-            val = quadrature.quadrilateral.integrate(
-                    poly, quadrilateral, scheme
-                    )
-            if abs(exact_val - val) > 1.0e-10:
-                success = False
-                break
-        if not success:
-            break
-        if degree >= max_degree:
-            break
-        degree += 1
-    numpy.testing.assert_equal(degree-1, scheme.degree)
+    degree = check_degree(
+            lambda poly: quadrature.quadrilateral.integrate(
+                poly, quadrilateral, scheme
+                ),
+            lambda k: _integrate_exact2(k, x0, x1, y0, y1),
+            create_monomial_exponents2,
+            scheme.degree + 1
+            )
+    assert degree == scheme.degree
     return
 
 
-def test_show():
+@pytest.mark.parametrize(
+    'scheme',
+    [From1d(quadrature.line_segment.GaussLegendre(5))]
+    )
+def test_show(scheme):
     # quadrilateral = numpy.array([
     #     [0, 0],
     #     [2, -0.5],
@@ -108,19 +100,13 @@ def test_show():
         [+1, +1],
         [-1, +1],
         ])
-    quadrature.quadrilateral.show(
-        quadrilateral,
-        quadrature.quadrilateral.Stroud(6)
-        # quadrature.quadrilateral.From1d(
-        #     quadrature.line_segment.NewtonCotesClosed(4)
-        #     )
-        )
+    quadrature.quadrilateral.show(quadrilateral, scheme)
     return
 
 
 if __name__ == '__main__':
-    test_show()
-    plt.show()
     # scheme = From1d(quadrature.line_segment.NewtonCotesClosed(15))
     scheme = quadrature.quadrilateral.Stroud(6)
     test_scheme(scheme)
+    test_show(scheme)
+    plt.show()

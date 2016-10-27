@@ -6,7 +6,6 @@ from helpers import \
         check_degree
 
 import numpy
-import numpy.testing
 import pytest
 import quadrature
 
@@ -18,24 +17,14 @@ if 'DISPLAY' not in os.environ:
 from matplotlib import pyplot as plt
 
 
-def _integrate_exact(k):
-    '''We have
-
-    I = \int_0^1 \int_0^2pi r * (r cos(phi))**k[0] (r sin(phi))**k[1]
-      = 1.0/(2+k[0]+k[1]) * \int_0^2pi cos(phi)**k[0] sin(phi)**k[1]
-    '''
-    return 1.0/(2 + k[0] + k[1]) * integrate_monomial_over_unit_circle(k)
-
-
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.disk.Peirce(k) for k in range(1, 6)]
-    + [quadrature.disk.Lether(k) for k in range(1, 6)]
+    [quadrature.circle.Equidistant(k) for k in range(1, 6)]
     )
 def test_scheme(scheme):
     degree = check_degree(
-            lambda poly: quadrature.disk.integrate(poly, scheme),
-            _integrate_exact,
+            lambda poly: quadrature.circle.integrate(poly, scheme),
+            integrate_monomial_over_unit_circle,
             create_monomial_exponents2,
             scheme.degree + 1
             )
@@ -45,15 +34,14 @@ def test_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.disk.Lether(3)]
+    [quadrature.circle.Equidistant(3)]
     )
 def test_show(scheme):
-    quadrature.disk.show(scheme)
+    quadrature.circle.show(scheme)
     return
 
 if __name__ == '__main__':
-    scheme = quadrature.disk.Lether(5)
-    # scheme = From1d(quadrature.line_segment.NewtonCotesClosed(15))
+    scheme = quadrature.circle.Equidistant(30)
     test_scheme(scheme)
-    # test_show(scheme)
-    # plt.show()
+    test_show(scheme)
+    plt.show()
