@@ -45,7 +45,7 @@ def test_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    quadrature.line_segment.NewtonCotesClosed(5)
+    [quadrature.line_segment.NewtonCotesClosed(5)]
     )
 def test_show(scheme):
     quadrature.line_segment.show(0.0, 1.0, scheme)
