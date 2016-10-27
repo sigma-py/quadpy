@@ -113,25 +113,23 @@ def test_scheme(scheme):
     return
 
 
-def test_show():
+@pytest.mark.parametrize(
+    'scheme',
+    quadrature.tetrahedron.HammerMarloweStroud(3)
+    )
+def test_show(scheme):
     tet = numpy.array([
         [numpy.cos(0.5*numpy.pi), numpy.sin(0.5*numpy.pi), -0.5],
         [numpy.cos(7.0/6.0*numpy.pi), numpy.sin(7.0/6.0*numpy.pi), -0.5],
         [numpy.cos(11.0/6.0*numpy.pi), numpy.sin(11.0/6.0*numpy.pi), -0.5],
         [0.0, 0.0, 1.0]
         ])
-    quadrature.tetrahedron.show(
-        tet,
-        # quadrature.tetrahedron.Keast(0)
-        # quadrature.tetrahedron.Keast(7)
-        quadrature.tetrahedron.XiaoGimbutas(15)
-        # quadrature.tetrahedron.NewtonCotesClosed(6)
-        )
+    quadrature.tetrahedron.show(tet, scheme)
     return
 
 
 if __name__ == '__main__':
-    # test_show()
-    # plt.show()
     scheme = quadrature.tetrahedron.XiaoGimbutas(15)
     test_scheme(scheme)
+    test_show(scheme)
+    plt.show()

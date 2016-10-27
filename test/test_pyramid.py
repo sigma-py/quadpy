@@ -97,7 +97,11 @@ def test_scheme(scheme):
     return
 
 
-def test_show():
+@pytest.mark.parametrize(
+    'scheme',
+    quadrature.pyramid.Felippa(5)
+    )
+def test_show(scheme):
     pyra = numpy.array([
         [-1, -1, -1],
         [+1, -1, -1],
@@ -105,13 +109,12 @@ def test_show():
         [-1, +1, -1],
         [0, 0, 1],
         ])
-    quadrature.pyramid.show(
-        pyra,
-        quadrature.pyramid.Felippa(4),
-        )
+    quadrature.pyramid.show(pyra, scheme)
     return
 
 
 if __name__ == '__main__':
-    test_show()
+    scheme = quadrature.pyramid.Felippa(5)
+    test_scheme(scheme)
+    test_show(scheme)
     plt.show()

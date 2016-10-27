@@ -87,15 +87,17 @@ def test_scheme(scheme):
     return
 
 
-def test_show():
-    quadrature.sphere.show(
-        quadrature.sphere.Lebedev(4)
-        )
+@pytest.mark.parametrize(
+    'scheme',
+    quadrature.sphere.Lebedev(4)
+    )
+def test_show(scheme):
+    quadrature.sphere.show(scheme)
     return
 
 
 if __name__ == '__main__':
-    test_show()
-    plt.show()
-    scheme = quadrature.sphere.Lebedev(32)
+    scheme = quadrature.sphere.Lebedev(4)
     test_scheme(scheme)
+    test_show(scheme)
+    plt.show()

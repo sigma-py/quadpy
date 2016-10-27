@@ -43,21 +43,17 @@ def test_scheme(scheme):
     return
 
 
-def test_show():
-    quadrature.line_segment.show(
-        0.0, 1.0,
-        # quadrature.line_segment.NewtonCotesOpen(6),
-        # quadrature.line_segment.NewtonCotesClosed(15),
-        # quadrature.line_segment.GaussLegendre(31),
-        # quadrature.line_segment.GaussPatterson(4),
-        quadrature.line_segment.ClenshawCurtis(33),
-        render=False
-        )
+@pytest.mark.parametrize(
+    'scheme',
+    quadrature.line_segment.NewtonCotesClosed(5)
+    )
+def test_show(scheme):
+    quadrature.line_segment.show(0.0, 1.0, scheme)
     return
 
 
 if __name__ == '__main__':
-    test_show()
+    scheme = quadrature.line_segment.GaussLegendre(7)
+    test_scheme(scheme)
+    test_show(scheme)
     plt.show()
-    # scheme = quadrature.line_segment.GaussLegendre(7)
-    # check_scheme(scheme)

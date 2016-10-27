@@ -95,7 +95,11 @@ def test_scheme(scheme):
     return
 
 
-def test_show():
+@pytest.mark.parametrize(
+    'scheme',
+    From1d(quadrature.line_segment.GaussLegendre(5))
+    )
+def test_show(scheme):
     # quadrilateral = numpy.array([
     #     [0, 0],
     #     [2, -0.5],
@@ -108,19 +112,13 @@ def test_show():
         [+1, +1],
         [-1, +1],
         ])
-    quadrature.quadrilateral.show(
-        quadrilateral,
-        quadrature.quadrilateral.Stroud(6)
-        # quadrature.quadrilateral.From1d(
-        #     quadrature.line_segment.NewtonCotesClosed(4)
-        #     )
-        )
+    quadrature.quadrilateral.show(quadrilateral, scheme)
     return
 
 
 if __name__ == '__main__':
-    test_show()
-    plt.show()
     # scheme = From1d(quadrature.line_segment.NewtonCotesClosed(15))
     scheme = quadrature.quadrilateral.Stroud(6)
     test_scheme(scheme)
+    test_show(scheme)
+    plt.show()

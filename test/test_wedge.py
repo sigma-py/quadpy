@@ -92,7 +92,11 @@ def test_scheme(scheme):
     return
 
 
-def test_show():
+@pytest.mark.parametrize(
+    'scheme',
+    quadrature.wedge.Felippa(4)
+    )
+def test_show(scheme):
     wedge = numpy.array([
         [0.0, 0.0, -1.0],
         [1.0, 0.0, -1.0],
@@ -101,15 +105,12 @@ def test_show():
         [1.0, 0.0, +1.0],
         [0.0, 1.0, +1.0],
         ])
-    quadrature.wedge.show(
-        wedge,
-        quadrature.wedge.Felippa(4)
-        )
+    quadrature.wedge.show(wedge, scheme)
     return
 
 
 if __name__ == '__main__':
-    test_show()
-    plt.show()
     scheme = quadrature.wedge.Felippa(2)
     test_scheme(scheme)
+    test_show(scheme)
+    plt.show()

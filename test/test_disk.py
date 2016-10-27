@@ -54,16 +54,17 @@ def test_scheme(scheme):
     return
 
 
-def test_show():
-    quadrature.disk.show(
-        quadrature.disk.Peirce(3)
-        # quadrature.disk.Lether(5)
-        )
+@pytest.mark.parametrize(
+    'scheme',
+    quadrature.disk.Lether(3)
+    )
+def test_show(scheme):
+    quadrature.disk.show(scheme)
     return
 
 if __name__ == '__main__':
-    test_show()
-    plt.show()
-    # scheme = From1d(quadrature.line_segment.NewtonCotesClosed(15))
     scheme = quadrature.disk.Lether(5)
+    # scheme = From1d(quadrature.line_segment.NewtonCotesClosed(15))
     test_scheme(scheme)
+    # test_show(scheme)
+    # plt.show()
