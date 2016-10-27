@@ -69,7 +69,7 @@ def test_scheme(scheme):
             create_monomial_exponents3,
             min(30, scheme.degree + 1)
             )
-    assert degree >= scheme.degree
+    assert degree >= min(30, scheme.degree)
     return
 
 
