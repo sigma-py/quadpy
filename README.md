@@ -29,12 +29,13 @@ This uses Strang's rule of degree 6.
 ### Line segment
 ![](https://nschloe.github.io/quadrature/line.png)
 
- * open and closed Newton-Cotes (arbitray degree)
- * Gauß-Legendre (arbitrary degree)
- * Gauß-Laguerre (arbitrary degree)
  * Chebyshev-Gauß (both variants, arbitrary degree)
- * Gauß-Patterson (7 schemes up to degree 191)
  * Clenshaw-Curtis (9 schemes up to degree 65)
+ * Gauß-Hermite (arbitrary degree)
+ * Gauß-Laguerre (arbitrary degree)
+ * Gauß-Legendre (arbitrary degree)
+ * Gauß-Patterson (7 schemes up to degree 191)
+ * open and closed Newton-Cotes (arbitray degree)
 
 ### Circle
 ![](https://nschloe.github.io/quadrature/circle.png)

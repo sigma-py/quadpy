@@ -73,6 +73,16 @@ class ChebyshevGauss2(object):
         return
 
 
+class GaussHermite(object):
+    '''
+    Gauß-Hermite quadrature.
+    '''
+    def __init__(self, n):
+        self.degree = 2*n - 1
+        self.points, self.weights = numpy.polynomial.hermite.hermgauss(n)
+        return
+
+
 class GaussLaguerre(object):
     '''
     Gauß-Laguerre quadrature.
