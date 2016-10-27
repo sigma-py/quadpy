@@ -123,27 +123,22 @@ def test_scheme(scheme):
     return
 
 
-def test_show():
+@pytest.mark.parametrize(
+    'scheme',
+    quadrature.triangle.XiaoGimbutas(10)
+    )
+def test_show(scheme):
     triangle = numpy.array([
         [numpy.cos(0.5*numpy.pi), numpy.sin(0.5*numpy.pi)],
         [numpy.cos(7.0/6.0*numpy.pi), numpy.sin(7.0/6.0*numpy.pi)],
         [numpy.cos(11.0/6.0*numpy.pi), numpy.sin(11.0/6.0*numpy.pi)],
         ])
-    quadrature.triangle.show(
-        triangle,
-        # quadrature.triangle.Centroid()
-        # quadrature.triangle.Vertex()
-        # quadrature.triangle.SevenPoint()
-        # quadrature.triangle.Strang(9)
-        # quadrature.triangle.Dunavant(20)
-        # quadrature.triangle.CoolsHaegemans(2)
-        quadrature.triangle.XiaoGimbutas(50)
-        )
+    quadrature.triangle.show(triangle, scheme)
     return
 
 
 if __name__ == '__main__':
-    test_show()
-    plt.show()
     scheme = quadrature.triangle.XiaoGimbutas(50)
     test_scheme(scheme)
+    test_show(scheme)
+    plt.show()

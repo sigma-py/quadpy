@@ -118,7 +118,11 @@ def test_scheme(scheme):
     return
 
 
-def test_show():
+@pytest.mark.parametrize(
+    'scheme',
+    From1d(quadrature.line_segment.NewtonCotesClosed(3))
+    )
+def test_show(scheme):
     hexa = numpy.array([
         [-1, -1, -1],
         [+1, -1, -1],
@@ -142,8 +146,8 @@ def test_show():
 
 
 if __name__ == '__main__':
-    test_show()
-    plt.show()
     # scheme = From1d(quadrature.line_segment.NewtonCotesOpen(2))
     scheme = From1d(quadrature.line_segment.GaussLegendre(5))
     test_scheme(scheme)
+    test_show(scheme)
+    plt.show()
