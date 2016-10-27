@@ -92,9 +92,11 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * [Liu-Vinokur](http://dx.doi.org/10.1006/jcph.1998.5884) (1998, 14 schemes up to
    degree 5)
  * [Zienkiewicz](http://www.sciencedirect.com/science/book/9780750664318)
-   (2005, 2 schemes up to order 3)
+   (2005, 2 schemes up to degree 3)
  * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2009, 2 schemes up to
    degree 14)
+ * [Xiao-Gimbutas](http://dx.doi.org/10.1016/j.camwa.2009.10.027) (2010, 15
+   schemes up to degree 15).
  * [Shunn-Ham](http://dx.doi.org/10.1016/j.cam.2012.03.032) (2012, 6 schemes up to
    degree 7)
 

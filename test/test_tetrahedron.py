@@ -122,14 +122,15 @@ def test_show():
     quadrature.tetrahedron.show(
         tet,
         # quadrature.tetrahedron.Keast(0)
-        quadrature.tetrahedron.Keast(7)
+        # quadrature.tetrahedron.Keast(7)
+        quadrature.tetrahedron.XiaoGimbutas(15)
         # quadrature.tetrahedron.NewtonCotesClosed(6)
         )
     return
 
 
 if __name__ == '__main__':
-    test_show()
-    plt.show()
-    scheme = quadrature.tetrahedron.Keast(10)
+    # test_show()
+    # plt.show()
+    scheme = quadrature.tetrahedron.XiaoGimbutas(15)
     test_scheme(scheme)
