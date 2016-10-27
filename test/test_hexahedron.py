@@ -120,7 +120,7 @@ def test_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    From1d(quadrature.line_segment.NewtonCotesClosed(3))
+    [From1d(quadrature.line_segment.NewtonCotesClosed(3))]
     )
 def test_show(scheme):
     hexa = numpy.array([

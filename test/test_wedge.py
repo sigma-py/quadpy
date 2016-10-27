@@ -94,7 +94,7 @@ def test_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    quadrature.wedge.Felippa(4)
+    [quadrature.wedge.Felippa(4)]
     )
 def test_show(scheme):
     wedge = numpy.array([

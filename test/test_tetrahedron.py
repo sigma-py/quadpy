@@ -115,7 +115,7 @@ def test_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    quadrature.tetrahedron.HammerMarloweStroud(3)
+    [quadrature.tetrahedron.HammerMarloweStroud(3)]
     )
 def test_show(scheme):
     tet = numpy.array([

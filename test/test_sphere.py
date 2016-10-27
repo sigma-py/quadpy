@@ -89,7 +89,7 @@ def test_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    quadrature.sphere.Lebedev(4)
+    [quadrature.sphere.Lebedev(4)]
     )
 def test_show(scheme):
     quadrature.sphere.show(scheme)

@@ -99,7 +99,7 @@ def test_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    quadrature.pyramid.Felippa(5)
+    [quadrature.pyramid.Felippa(5)]
     )
 def test_show(scheme):
     pyra = numpy.array([
