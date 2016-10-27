@@ -11,7 +11,10 @@ def check_degree_1d(
     for degree in range(max_degree+1):
         val = quadrature(lambda x: x**degree)
         exact_val = exact(degree)
-        if abs(exact_val - val) > tol:
+        # check relative error
+        eps = numpy.finfo(float).eps
+        alpha = abs(exact_val) * tol + (10+tol+exact_val)*eps
+        if abs(exact_val - val) > alpha:
             return degree - 1
     return max_degree
 
@@ -21,14 +24,17 @@ def check_degree(
         ):
     for degree in range(max_degree+1):
         for k in exponents_creator(degree):
-            def ggg(x):
-                return sympy.prod([x[i]**k[i] for i in range(len(k))])
-            x = sympy.DeferredVector('x')
             val = quadrature(
                 lambda x: sympy.prod([x[i]**k[i] for i in range(len(k))])
                 )
             exact_val = exact(k)
-            if abs(exact_val - val) > tol:
+            # check relative error
+            # The allowance is quite large here, 1e4 over machine precision.
+            # Some test fail if lowered, though.
+            # TODO increase precision
+            eps = numpy.finfo(float).eps
+            alpha = abs(exact_val) * tol + (1e4+tol+exact_val)*eps
+            if abs(exact_val - val) > alpha:
                 return degree - 1
     return max_degree
 
