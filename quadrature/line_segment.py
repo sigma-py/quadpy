@@ -16,11 +16,12 @@ def show(a, b, scheme):
     from matplotlib import pyplot as plt
     pts = 0.5 * (scheme.points + 1) * (b-a) + a
     plt.plot([0.0, 1.0], [0.0, 0.0], '-k')
+    bar_width = (b-a) / len(scheme.weights)
     plt.bar(
-        pts, scheme.weights,
+        pts - 0.5*bar_width, scheme.weights,
         color='b',
         alpha=0.5,
-        width=(b-a) / len(scheme.weights)
+        width=bar_width
         )
     return
 
@@ -195,6 +196,28 @@ def _lobatto(alpha, beta, xl1, xl2):
     return x, w
 
 
+def _radau(alpha, beta, xr):
+    '''From <http://www.scientificpython.net/pyblog/radau-quadrature>:
+    Compute the Radau nodes and weights with the preassigned node xr
+
+    Based on the section 7 of the paper 'Some modified matrix eigenvalue
+    problems' by Gene Golub, SIAM Review Vol 15, No. 2, April 1973,
+    pp.318--334
+    '''
+    from scipy.linalg import solve_banded
+
+    n = len(alpha)-1
+    f = numpy.zeros(n)
+    f[-1] = beta[-1]
+    A = numpy.vstack((numpy.sqrt(beta), alpha-xr))
+    J = numpy.vstack((A[:, 0:-1], A[0, 1:]))
+    delta = solve_banded((1, 1), J, f)
+    alphar = alpha.copy()
+    alphar[-1] = xr + delta[-1]
+    x, w = _gauss(alphar, beta)
+    return x, w
+
+
 class GaussLobatto(object):
     '''
     Gauß-Lobatto quadrature.
@@ -204,6 +227,18 @@ class GaussLobatto(object):
         self.degree = 2*n - 3
         alpha, beta = _jacobi_recursion_coefficients(n, a, b)
         self.points, self.weights = _lobatto(alpha, beta, -1.0, 1.0)
+        return
+
+
+class GaussRadau(object):
+    '''
+    Gauß-Radau quadrature.
+    '''
+    def __init__(self, n, a=0.0, b=0.0):
+        assert n >= 2
+        self.degree = 2*n - 1
+        alpha, beta = _jacobi_recursion_coefficients(n, a, b)
+        self.points, self.weights = _radau(alpha, beta, -1.0)
         return
 
 
