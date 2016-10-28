@@ -155,10 +155,10 @@ def _gauss(alpha, beta):
     http://www.scientificpython.net/pyblog/radau-quadrature
     '''
     from scipy.linalg import eig_banded
-    import scipy as sp
+    import scipy
     A = numpy.vstack((numpy.sqrt(beta), alpha))
     x, V = eig_banded(A, lower=False)
-    w = beta[0]*sp.real(sp.power(V[0, :], 2))
+    w = beta[0]*scipy.real(scipy.power(V[0, :], 2))
     return x, w
 
 
