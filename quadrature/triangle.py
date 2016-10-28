@@ -90,6 +90,7 @@ class Centroid(object):
         bary = _s3()
         self.points = bary[:, [1, 2]]
         self.degree = 1
+        self.name = 'centroid'
         return
 
 
@@ -99,6 +100,7 @@ class Vertex(object):
         bary = _s21(0.0)
         self.points = bary[:, [1, 2]]
         self.degree = 1
+        self.name = 'vertex'
         return
 
 
@@ -116,6 +118,7 @@ class SevenPoint(object):
             ])
         self.points = bary[:, [1, 2]]
         self.degree = 3
+        self.name = 'seven-point'
         return
 
 
@@ -145,6 +148,7 @@ class HammerMarloweStroud(object):
     <http://www.jstor.org/stable/2002370>
     '''
     def __init__(self, index):
+        self.name = 'HMS(%d)' % index
         if index == 1:
             self.weights = numpy.concatenate([
                 1.0 * numpy.ones(1),
@@ -268,6 +272,7 @@ class NewtonCotesClosed(object):
     def __init__(self, n):
         self.points, self.weights, self.degree = \
             _newton_cotes(n, lambda k, n: k / float(n))
+        self.name = 'NCC(%d)' % n
         return
 
 
@@ -275,6 +280,7 @@ class NewtonCotesOpen(object):
     def __init__(self, n):
         self.points, self.weights, self.degree = \
             _newton_cotes(n, lambda k, n: (k+1) / float(n+3))
+        self.name = 'NCO(%d)' % n
         return
 
 
@@ -301,6 +307,7 @@ class Strang(object):
     <https://dx.doi.org/10.1002/nme.1620070316>.
     '''
     def __init__(self, index):
+        self.name = 'Strang(%d)' % index
         if index == 1:
             self.weights = numpy.array([1.0/3.0, 1.0/3.0, 1.0/3.0])
             bary = _s21(1.0/6.0)
@@ -416,6 +423,7 @@ class LynessJespersen(object):
     derived.
     '''
     def __init__(self, index):
+        self.name = 'LJ(%d)' % index
         if index == 1:
             self.weights = numpy.concatenate([
                 1.0/3.0 * numpy.ones(3),
@@ -746,6 +754,7 @@ class Hillion(object):
     Hillion's method to retrieve more digits.
     '''
     def __init__(self, index):
+        self.name = 'Hillion(%d)' % index
         if index == 1:
             self.weights = numpy.concatenate([
                 1.0 * numpy.ones(1),
@@ -886,6 +895,7 @@ class LaursenGellert(object):
     suitable quadrature formulas for finite element computer programming.
     '''
     def __init__(self, index):
+        self.name = 'LG(%d)' % index
         if index == '1':
             self.weights = numpy.concatenate([
                 1.0 * numpy.ones(1),
@@ -1114,6 +1124,7 @@ class Cubtri(object):
     <http://dl.acm.org/citation.cfm?id=356001>.
     '''
     def __init__(self):
+        self.name = 'CUBTRI'
         self.weights = numpy.concatenate([
             0.0378610912003147 * numpy.ones(1),
             0.0376204254131829 * numpy.ones(3),
@@ -1150,6 +1161,7 @@ class Triex(object):
     <http://dl.acm.org/citation.cfm?id=356070&CFID=836775288&CFTOKEN=89206835>.
     '''
     def __init__(self, index):
+        self.name = 'TRIEX(%d)' % index
         if index == 19:
             self.weights = numpy.concatenate([
                 9.71357962827961025E-002 * numpy.ones(1),
@@ -1210,6 +1222,7 @@ class Dunavant(object):
     <https://dx.doi.org/10.1002/nme.1620210612>.
     '''
     def __init__(self, index):
+        self.name = 'Dunavant(%d)' % index
         if index == 1:
             self.weights = numpy.array([1.0])
             bary = _s3()
@@ -1665,6 +1678,7 @@ class CoolsHaegemans(object):
     <https://lirias.kuleuven.be/handle/123456789/131869>.
     '''
     def __init__(self, index):
+        self.name = 'CH(%d)' % index
         if index == 1:
             self.weights = 2.0 * numpy.concatenate([
                 0.16058343856681218798E-09 * numpy.ones(3),
@@ -1770,6 +1784,7 @@ class BerntsenEspelid(object):
     positive.
     '''
     def __init__(self, index):
+        self.name = 'BE(%d)' % index
         if index == 1:
             # This first schemes was separately published as
             #
@@ -1933,6 +1948,7 @@ class LiuVinokur(object):
     <https://dx.doi.org/10.1006/jcph.1998.5884>.
     '''
     def __init__(self, index):
+        self.name = 'LV(%d)' % index
         if index == 1:
             self.weights = numpy.concatenate([
                 1.0 * numpy.ones(1),
@@ -2149,6 +2165,7 @@ class WandzuraXiao(object):
     have been transformed to barycentric coordinates here.
     '''
     def __init__(self, index):
+        self.name = 'WX(%d)' % index
         if index == 1:
             self.weights = numpy.concatenate([
                 0.2250000000000000E+00 * numpy.ones(1),
@@ -2415,6 +2432,7 @@ class TaylorWingateBos(object):
     quadrature formulas improve on previously known results.
     '''
     def __init__(self, index):
+        self.name = 'TWB(%d)' % index
         if index == 1:
             self.weights = 1.0/3.0 * numpy.ones(3)
             bary = _s21(1.0/6.0)
@@ -2578,6 +2596,7 @@ class ZhangCuiLiu(object):
     lying within the integration domain.
     '''
     def __init__(self, index):
+        self.name = 'ZCL(%d)' % index
         if index == 1:
             self.weights = numpy.concatenate([
                 0.1443156076777871682510911104890646 * numpy.ones(1),
@@ -2748,6 +2767,7 @@ class XiaoGimbutas(object):
     <https://people.sc.fsu.edu/~jburkardt/f_src/triangle_symq_rule/triangle_symq_rule.f90>.
     '''
     def __init__(self, index):
+        self.name = 'XG(%d)' % index
         if index == 1:
             bary = numpy.concatenate([
                 _s3(),
