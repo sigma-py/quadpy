@@ -149,12 +149,12 @@ def test_hermite_scheme(scheme):
     [quadrature.line_segment.NewtonCotesClosed(5)]
     )
 def test_show(scheme):
-    quadrature.line_segment.show(0.0, 1.0, scheme)
+    quadrature.line_segment.show(-1.0, 1.0, scheme)
     return
 
 
 if __name__ == '__main__':
-    scheme = quadrature.line_segment.Fejer1(5)
+    scheme = quadrature.line_segment.GaussLobatto(3)
     test_scheme(scheme)
     test_show(scheme)
     plt.show()
