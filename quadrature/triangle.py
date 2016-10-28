@@ -895,7 +895,7 @@ class LaursenGellert(object):
     suitable quadrature formulas for finite element computer programming.
     '''
     def __init__(self, index):
-        self.name = 'LG(%d)' % index
+        self.name = 'LG(%s)' % index
         if index == '1':
             self.weights = numpy.concatenate([
                 1.0 * numpy.ones(1),
