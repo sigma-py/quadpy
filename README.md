@@ -32,6 +32,8 @@ This uses Strang's rule of degree 6.
  * Chebyshev-Gauß (both variants, arbitrary degree)
  * Clenshaw-Curtis (after
    [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
+ * Fejér-type-2 (after
+   [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
  * Gauß-Hermite (via
    [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.hermite.hermgauss.html), arbitrary degree)
  * Gauß-Laguerre (via
