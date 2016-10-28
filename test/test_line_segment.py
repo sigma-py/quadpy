@@ -23,6 +23,7 @@ from matplotlib import pyplot as plt
     + [quadrature.line_segment.GaussLobatto(k) for k in range(2, 7)]
     + [quadrature.line_segment.GaussPatterson(k) for k in range(7)]
     + [quadrature.line_segment.ClenshawCurtis(k) for k in range(2, 10)]
+    + [quadrature.line_segment.Fejer1(k) for k in range(1, 10)]
     + [quadrature.line_segment.Fejer2(k) for k in range(1, 10)]
     + [quadrature.line_segment.NewtonCotesClosed(k) for k in range(1, 5)]
     + [quadrature.line_segment.NewtonCotesOpen(k) for k in range(1, 5)]
@@ -153,9 +154,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme = quadrature.line_segment.Fejer2(1)
-    print(scheme.points)
-    print(scheme.weights)
+    scheme = quadrature.line_segment.Fejer1(5)
     test_scheme(scheme)
     test_show(scheme)
     plt.show()
