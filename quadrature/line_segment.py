@@ -103,37 +103,107 @@ class GaussLegendre(object):
         return
 
 
+def _jacobi_recursion_coefficients(n, a, b):
+    '''
+    Generate the recursion coefficients alpha_k, beta_k
+
+    P_{k+1}(x) = (x-alpha_k)*P_{k}(x) - beta_k P_{k-1}(x)
+
+    for the Jacobi polynomials which are orthogonal on [-1,1]
+    with respect to the weight w(x)=[(1-x)^a]*[(1+x)^b].
+
+    Adapted from the MATLAB code by Dirk Laurie and Walter Gautschi
+    http://www.cs.purdue.edu/archives/2002/wxg/codes/r_jacobi.m
+    and from Greg van Winckel's
+    https://github.com/gregvw/orthopoly-quadrature/blob/master/rec_jacobi.pyx
+    '''
+    assert a > -1.0 or b > -1.0
+    assert n >= 1
+
+    mu = 2.0**(a+b+1.0) \
+        * numpy.exp(
+            math.lgamma(a+1.0) + math.lgamma(b+1.0) - math.lgamma(a+b+2.0)
+            )
+    nu = (b-a) / (a+b+2.0)
+
+    if n == 1:
+        return nu, mu
+
+    N = numpy.arange(1, n)
+
+    nab = 2.0*N + a + b
+    alpha = numpy.hstack((nu, (b**2 - a**2) / (nab * (nab + 2.0))))
+    N = N[1:]
+    nab = nab[1:]
+    B1 = 4.0 * (a+1.0) * (b+1.0) / ((a+b+2.0)**2.0 * (a+b+3.0))
+    B = 4.0 * (N+a) * (N+b) * N * (N+a+b) / (nab**2.0 * (nab+1.0) * (nab-1.0))
+    beta = numpy.hstack((mu, B1, B))
+    return alpha, beta
+
+
+def _gauss(alpha, beta):
+    '''
+    Compute the Gauss nodes and weights from the recursion
+    coefficients associated with a set of orthogonal polynomials
+
+    Adapted from the MATLAB code by Walter Gautschi
+    http://www.cs.purdue.edu/archives/2002/wxg/codes/gauss.m
+
+    and
+
+    http://www.scientificpython.net/pyblog/radau-quadrature
+    '''
+    from scipy.linalg import eig_banded
+    import scipy as sp
+    A = numpy.vstack((numpy.sqrt(beta), alpha))
+    x, V = eig_banded(A, lower=False)
+    w = beta[0]*sp.real(sp.power(V[0, :], 2))
+    return x, w
+
+
+def _lobatto(alpha, beta, xl1, xl2):
+    ''' Compute the Lobatto nodes and weights with the preassigned
+        node xl1,xl2
+
+        Based on the section 7 of the paper 'Some modified matrix eigenvalue
+        problems' by Gene Golub, SIAM Review Vol 15, No. 2, April 1973,
+        pp.318--334
+
+        and
+
+        http://www.scientificpython.net/pyblog/radau-quadrature
+    '''
+    from scipy.linalg import solve_banded, solve
+    n = len(alpha)-1
+    en = numpy.zeros(n)
+    en[-1] = 1
+    A1 = numpy.vstack((numpy.sqrt(beta), alpha-xl1))
+    J1 = numpy.vstack((A1[:, 0:-1], A1[0, 1:]))
+    A2 = numpy.vstack((numpy.sqrt(beta), alpha-xl2))
+    J2 = numpy.vstack((A2[:, 0:-1], A2[0, 1:]))
+    g1 = solve_banded((1, 1), J1, en)
+    g2 = solve_banded((1, 1), J2, en)
+    C = numpy.array(((1, -g1[-1]), (1, -g2[-1])))
+    xl = numpy.array((xl1, xl2))
+    ab = solve(C, xl)
+
+    alphal = alpha
+    alphal[-1] = ab[0]
+    betal = beta
+    betal[-1] = ab[1]
+    x, w = _gauss(alphal, betal)
+    return x, w
+
+
 class GaussLobatto(object):
     '''
     Gauß-Lobatto quadrature.
     '''
-    def __init__(self, n):
+    def __init__(self, n, a=0.0, b=0.0):
         assert n >= 2
-
         self.degree = 2*n - 3
-
-        n_digits = 16
-
-        # The lazy approach: SymPy. Check out Golub-Welsch or
-        # <http://dx.doi.org/10.1137/120889873> for something better.
-        x = sympy.Dummy('x')
-        p = sympy.legendre_poly(n-1, x, polys=True)
-        pd = p.diff(x)
-        self.points = []
-        self.weights = []
-        for r in pd.real_roots():
-            if isinstance(r, sympy.RootOf):
-                r = r.eval_rational(sympy.S(1)/10**(n_digits+2))
-            self.points.append(r.n(n_digits))
-            self.weights.append((2/(n*(n-1) * p.subs(x, r)**2)).n(n_digits))
-
-        self.points.insert(0, -1)
-        self.points.append(1)
-        self.points = numpy.array(self.points)
-
-        self.weights.insert(0, (sympy.S(2)/(n*(n-1))).n(n_digits))
-        self.weights.append((sympy.S(2)/(n*(n-1))).n(n_digits))
-        self.weights = numpy.array(self.weights)
+        alpha, beta = _jacobi_recursion_coefficients(n, a, b)
+        self.points, self.weights = _lobatto(alpha, beta, -1.0, 1.0)
         return
 
 
