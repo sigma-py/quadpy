@@ -8,15 +8,16 @@ Your one-stop shop for numerical integration in Python.
 [![PyPi Version](https://img.shields.io/pypi/v/quadrature.svg)](https://pypi.python.org/pypi/quadrature)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/quadrature.svg?style=social&label=Star&maxAge=2592000)](https://github.com/nschloe/quadrature)
 
-Over 300 numerical integration schemes for line segments, circles, triangles,
-tetrahedra, quadrilaterals, hexahedra, wedges, pyramids, disks, and spheres.
+Hundreds of numerical integration schemes for line segments, circles, disks,
+triangles, quadrilaterals, spheres, tetrahedra, hexahedra, wedges, pyramids.
 
 To numerically integrate any function over any given triangle, do
 ```python
 import numpy
 import quadrature
 
-def f(x): return numpy.sin(x[0]) * numpy.sin(x[1])
+def f(x):
+    return numpy.sin(x[0]) * numpy.sin(x[1])
 
 triangle = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.7, 0.5]])
 
@@ -29,10 +30,24 @@ This uses Strang's rule of degree 6.
 ### Line segment
 ![](https://nschloe.github.io/quadrature/line.png)
 
- * open and closed Newton-Cotes (arbitray degree)
- * Gauß-Legendre (arbitrary degree)
+ * Chebyshev-Gauß (both variants, arbitrary order)
+ * Clenshaw-Curtis (after
+   [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary order)
+ * Fejér-type-1 (after
+   [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary order)
+ * Fejér-type-2 (after
+   [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary order)
+ * Gauß-Hermite (via
+   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.hermite.hermgauss.html), arbitrary order)
+ * Gauß-Laguerre (via
+   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.laguerre.laggauss.html), arbitrary order)
+ * Gauß-Legendre (via
+   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.legendre.leggauss.html), arbitrary order)
+ * Gauß-Lobatto (arbitrary order)
  * Gauß-Patterson (7 schemes up to degree 191)
- * Clenshaw-Curtis (9 schemes up to degree 65)
+ * Gauß-Radau (arbitrary order)
+ * closed Newton-Cotes (arbitray order)
+ * open Newton-Cotes (arbitray order)
 
 ### Circle
 ![](https://nschloe.github.io/quadrature/circle.png)
