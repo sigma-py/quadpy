@@ -29,20 +29,23 @@ This uses Strang's rule of degree 6.
 ### Line segment
 ![](https://nschloe.github.io/quadrature/line.png)
 
- * Chebyshev-Gauß (both variants, arbitrary degree)
+ * Chebyshev-Gauß (both variants, arbitrary order)
  * Clenshaw-Curtis (after
-   [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
+   [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary order)
+ * Fejér-type-1 (after
+   [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary order)
  * Fejér-type-2 (after
-   [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
+   [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary order)
  * Gauß-Hermite (via
-   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.hermite.hermgauss.html), arbitrary degree)
+   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.hermite.hermgauss.html), arbitrary order)
  * Gauß-Laguerre (via
-   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.laguerre.laggauss.html), arbitrary degree)
+   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.laguerre.laggauss.html), arbitrary order)
  * Gauß-Legendre (via
-   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.legendre.leggauss.html), arbitrary degree)
- * Gauß-Lobatto (arbitrary degree)
+   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.legendre.leggauss.html), arbitrary order)
+ * Gauß-Lobatto (arbitrary order)
  * Gauß-Patterson (7 schemes up to degree 191)
- * open and closed Newton-Cotes (arbitray degree)
+ * closed Newton-Cotes (arbitray order)
+ * open Newton-Cotes (arbitray order)
 
 ### Circle
 ![](https://nschloe.github.io/quadrature/circle.png)
