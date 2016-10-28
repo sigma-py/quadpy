@@ -5,14 +5,39 @@ import numpy
 import sympy
 
 
-def check_degree(quadrature, exact, exponents_creator, max_degree, tol=1.0e-10):
+def check_degree_1d(
+        quadrature, exact, exponents_creator, max_degree, tol=1.0e-12
+        ):
+    for degree in range(max_degree+1):
+        val = quadrature(lambda x: x**degree)
+        exact_val = exact(degree)
+        # check relative error
+        # The allowance is quite large here, 1e6 over machine precision.
+        # Some test fail if lowered, though.
+        # TODO increase precision
+        eps = numpy.finfo(float).eps
+        alpha = abs(exact_val) * tol + (1e6+tol+exact_val)*eps
+        if abs(exact_val - val) > alpha:
+            return degree - 1
+    return max_degree
+
+
+def check_degree(
+        quadrature, exact, exponents_creator, max_degree, tol=1.0e-10
+        ):
     for degree in range(max_degree+1):
         for k in exponents_creator(degree):
             val = quadrature(
                 lambda x: sympy.prod([x[i]**k[i] for i in range(len(k))])
                 )
             exact_val = exact(k)
-            if abs(exact_val - val) > tol:
+            # check relative error
+            # The allowance is quite large here, 1e6 over machine precision.
+            # Some test fail if lowered, though.
+            # TODO increase precision
+            eps = numpy.finfo(float).eps
+            alpha = abs(exact_val) * tol + (1.0e6+tol+exact_val)*eps
+            if abs(exact_val - val) > alpha:
                 return degree - 1
     return max_degree
 

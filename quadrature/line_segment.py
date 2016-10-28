@@ -5,11 +5,10 @@ import numpy
 import sympy
 
 
-def integrate(f, a, b, rule):
-    out = math.fsum([
-        weight * f(0.5 * (point + 1) * (b-a) + a)
-        for point, weight in zip(rule.points, rule.weights)
-        ])
+def integrate(f, a, b, scheme):
+    out = math.fsum(
+        scheme.weights * f(0.5 * (scheme.points.T + 1) * (b-a) + a)
+        )
     return 0.5 * (b - a) * out
 
 
@@ -17,11 +16,12 @@ def show(a, b, scheme):
     from matplotlib import pyplot as plt
     pts = 0.5 * (scheme.points + 1) * (b-a) + a
     plt.plot([0.0, 1.0], [0.0, 0.0], '-k')
+    bar_width = (b-a) / len(scheme.weights)
     plt.bar(
-        pts, scheme.weights,
+        pts - 0.5*bar_width, scheme.weights,
         color='b',
         alpha=0.5,
-        width=(b-a) / len(scheme.weights)
+        width=bar_width
         )
     return
 
@@ -47,13 +47,198 @@ class Trapezoidal(object):
         return
 
 
+class ChebyshevGauss1(object):
+    '''
+    Chebyshev-Gauß quadrature for \int_{-1}^1 f(x) / sqrt(1+x^2) dx.
+    '''
+    def __init__(self, n):
+        self.degree = n if n % 2 == 1 else n+1
+        self.points = numpy.cos(
+                (2*numpy.arange(1, n+1) - 1.0) / (2*n) * numpy.pi
+                )
+        self.weights = numpy.pi / n * numpy.ones(n)
+        return
+
+
+class ChebyshevGauss2(object):
+    '''
+    Chebyshev-Gauß quadrature for \int_{-1}^1 f(x) * sqrt(1+x^2) dx.
+    '''
+    def __init__(self, n):
+        self.degree = n if n % 2 == 1 else n+1
+        self.points = numpy.cos(
+                numpy.pi * numpy.arange(1, n+1) / (n+1)
+                )
+        self.weights = numpy.pi / (n+1) \
+            * (numpy.sin(numpy.pi * numpy.arange(1, n+1) / (n+1)))**2
+        return
+
+
+class GaussHermite(object):
+    '''
+    Gauß-Hermite quadrature.
+    '''
+    def __init__(self, n):
+        self.degree = 2*n - 1
+        self.points, self.weights = numpy.polynomial.hermite.hermgauss(n)
+        return
+
+
+class GaussLaguerre(object):
+    '''
+    Gauß-Laguerre quadrature.
+    '''
+    def __init__(self, n):
+        self.degree = 2*n - 1
+        self.points, self.weights = numpy.polynomial.laguerre.laggauss(n)
+        return
+
+
 class GaussLegendre(object):
     '''
     Gauß-Legendre quadrature.
     '''
-    def __init__(self, order):
-        self.degree = 2*order - 1
-        self.points, self.weights = numpy.polynomial.legendre.leggauss(order)
+    def __init__(self, n):
+        self.degree = 2*n - 1
+        self.points, self.weights = numpy.polynomial.legendre.leggauss(n)
+        return
+
+
+def _jacobi_recursion_coefficients(n, a, b):
+    '''
+    Generate the recursion coefficients alpha_k, beta_k
+
+    P_{k+1}(x) = (x-alpha_k)*P_{k}(x) - beta_k P_{k-1}(x)
+
+    for the Jacobi polynomials which are orthogonal on [-1,1]
+    with respect to the weight w(x)=[(1-x)^a]*[(1+x)^b].
+
+    Adapted from the MATLAB code by Dirk Laurie and Walter Gautschi
+    http://www.cs.purdue.edu/archives/2002/wxg/codes/r_jacobi.m
+    and from Greg van Winckel's
+    https://github.com/gregvw/orthopoly-quadrature/blob/master/rec_jacobi.pyx
+    '''
+    assert a > -1.0 or b > -1.0
+    assert n >= 1
+
+    mu = 2.0**(a+b+1.0) \
+        * numpy.exp(
+            math.lgamma(a+1.0) + math.lgamma(b+1.0) - math.lgamma(a+b+2.0)
+            )
+    nu = (b-a) / (a+b+2.0)
+
+    if n == 1:
+        return nu, mu
+
+    N = numpy.arange(1, n)
+
+    nab = 2.0*N + a + b
+    alpha = numpy.hstack((nu, (b**2 - a**2) / (nab * (nab + 2.0))))
+    N = N[1:]
+    nab = nab[1:]
+    B1 = 4.0 * (a+1.0) * (b+1.0) / ((a+b+2.0)**2.0 * (a+b+3.0))
+    B = 4.0 * (N+a) * (N+b) * N * (N+a+b) / (nab**2.0 * (nab+1.0) * (nab-1.0))
+    beta = numpy.hstack((mu, B1, B))
+    return alpha, beta
+
+
+def _gauss(alpha, beta):
+    '''
+    Compute the Gauss nodes and weights from the recursion
+    coefficients associated with a set of orthogonal polynomials
+
+    Adapted from the MATLAB code by Walter Gautschi
+    http://www.cs.purdue.edu/archives/2002/wxg/codes/gauss.m
+
+    and
+
+    http://www.scientificpython.net/pyblog/radau-quadrature
+    '''
+    from scipy.linalg import eig_banded
+    import scipy
+    A = numpy.vstack((numpy.sqrt(beta), alpha))
+    x, V = eig_banded(A, lower=False)
+    w = beta[0]*scipy.real(scipy.power(V[0, :], 2))
+    return x, w
+
+
+def _lobatto(alpha, beta, xl1, xl2):
+    ''' Compute the Lobatto nodes and weights with the preassigned
+        node xl1,xl2
+
+        Based on the section 7 of the paper 'Some modified matrix eigenvalue
+        problems' by Gene Golub, SIAM Review Vol 15, No. 2, April 1973,
+        pp.318--334
+
+        and
+
+        http://www.scientificpython.net/pyblog/radau-quadrature
+    '''
+    from scipy.linalg import solve_banded, solve
+    n = len(alpha)-1
+    en = numpy.zeros(n)
+    en[-1] = 1
+    A1 = numpy.vstack((numpy.sqrt(beta), alpha-xl1))
+    J1 = numpy.vstack((A1[:, 0:-1], A1[0, 1:]))
+    A2 = numpy.vstack((numpy.sqrt(beta), alpha-xl2))
+    J2 = numpy.vstack((A2[:, 0:-1], A2[0, 1:]))
+    g1 = solve_banded((1, 1), J1, en)
+    g2 = solve_banded((1, 1), J2, en)
+    C = numpy.array(((1, -g1[-1]), (1, -g2[-1])))
+    xl = numpy.array((xl1, xl2))
+    ab = solve(C, xl)
+
+    alphal = alpha
+    alphal[-1] = ab[0]
+    betal = beta
+    betal[-1] = ab[1]
+    x, w = _gauss(alphal, betal)
+    return x, w
+
+
+def _radau(alpha, beta, xr):
+    '''From <http://www.scientificpython.net/pyblog/radau-quadrature>:
+    Compute the Radau nodes and weights with the preassigned node xr
+
+    Based on the section 7 of the paper 'Some modified matrix eigenvalue
+    problems' by Gene Golub, SIAM Review Vol 15, No. 2, April 1973,
+    pp.318--334
+    '''
+    from scipy.linalg import solve_banded
+
+    n = len(alpha)-1
+    f = numpy.zeros(n)
+    f[-1] = beta[-1]
+    A = numpy.vstack((numpy.sqrt(beta), alpha-xr))
+    J = numpy.vstack((A[:, 0:-1], A[0, 1:]))
+    delta = solve_banded((1, 1), J, f)
+    alphar = alpha.copy()
+    alphar[-1] = xr + delta[-1]
+    x, w = _gauss(alphar, beta)
+    return x, w
+
+
+class GaussLobatto(object):
+    '''
+    Gauß-Lobatto quadrature.
+    '''
+    def __init__(self, n, a=0.0, b=0.0):
+        assert n >= 2
+        self.degree = 2*n - 3
+        alpha, beta = _jacobi_recursion_coefficients(n, a, b)
+        self.points, self.weights = _lobatto(alpha, beta, -1.0, 1.0)
+        return
+
+
+class GaussRadau(object):
+    '''
+    Gauß-Radau quadrature.
+    '''
+    def __init__(self, n, a=0.0, b=0.0):
+        assert n >= 2
+        self.degree = 2*n - 1
+        alpha, beta = _jacobi_recursion_coefficients(n, a, b)
+        self.points, self.weights = _radau(alpha, beta, -1.0)
         return
 
 
@@ -599,341 +784,134 @@ class GaussPatterson(object):
 class ClenshawCurtis(object):
     '''
     Clenshaw-Curtis quadrature.
-    <https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_clenshaw_curtis/quadrature_rules_clenshaw_curtis.html>
+
+    Weights are constructed after
+
+    J. Waldvogel,
+    Fast Construction of the Fejér and Clenshaw–Curtis Quadrature Rules,
+    BIT Numerical Mathematics, March 2006, Volume 46, Issue 1, pp 195–202,
+    DOI: 10.1007/s10543-006-0045-4,
+    <https://dx.doi.org/10.1007/s10543-006-0045-4>.
     '''
-    def __init__(self, order):
-        if order == 1:
-            self.weights = [2.0]
-            self.points = numpy.array([
-                0.0
+    def __init__(self, n):
+        self.degree = n
+
+        self.points = -numpy.cos((numpy.pi * numpy.arange(n)) / (n-1))
+
+        if n == 2:
+            self.weights = numpy.array([1.0, 1.0])
+            return
+
+        n -= 1
+        N = numpy.arange(1, n, 2)
+        l = len(N)
+        m = n - l
+        v0 = numpy.concatenate([
+            2.0 / N / (N-2),
+            numpy.array([1.0 / N[-1]]),
+            numpy.zeros(m),
+            ])
+        v2 = - v0[:-1] - v0[:0:-1]
+        g0 = -numpy.ones(n)
+        g0[l] += n
+        g0[m] += n
+        g = g0 / (n**2 - 1 + (n % 2))
+
+        w = numpy.fft.ihfft(v2 + g)
+        assert max(w.imag) < 1.0e-15
+        w = w.real
+
+        if n % 2 == 1:
+            self.weights = numpy.concatenate([
+                w,
+                w[::-1]
                 ])
-            self.degree = 1
-        elif order == 2:
-            self.weights = numpy.array([
-                1.0,
-                1.0
-                ])
-            self.points = numpy.array([
-                -1.0,
-                1.0
-                ])
-            self.degree = 1
-        elif order == 3:
-            self.weights = numpy.array([
-                1.0/3.0,
-                4.0/3.0,
-                1.0/3.0,
-                ])
-            self.points = numpy.array([
-                -1.0,
-                0.0,
-                1.0
-                ])
-            self.degree = 3
-        elif order == 4:
-            self.weights = numpy.array([
-                1.0/9.0,
-                8.0/9.0,
-                8.0/9.0,
-                1.0/9.0,
-                ])
-            self.points = numpy.array([
-                -1.0,
-                -0.5,
-                0.5,
-                1.0,
-                ])
-            self.degree = 3
-        elif order == 5:
-            self.weights = numpy.array([
-                1.0/15.0,
-                8.0/15.0,
-                0.8,
-                8.0/15.0,
-                1.0/15.0,
-                ])
-            self.points = numpy.array([
-                -1.0,
-                -numpy.sqrt(0.5),
-                0.0,
-                numpy.sqrt(0.5),
-                1.0
-                ])
-            self.degree = 5
-        elif order == 9:
-            self.weights = numpy.array([
-                0.1587301587301588E-01,
-                0.1462186492160182,
-                0.2793650793650794,
-                0.3617178587204897,
-                0.3936507936507936,
-                0.3617178587204898,
-                0.2793650793650794,
-                0.1462186492160182,
-                0.1587301587301588E-01,
-                ])
-            self.points = numpy.array([
-                -1.0,
-                -0.9238795325112867,
-                -numpy.sqrt(0.5),
-                -0.3826834323650897,
-                0.0,
-                0.3826834323650898,
-                numpy.sqrt(0.5),
-                0.9238795325112867,
-                1.0,
-                ])
-            self.degree = 9
-        elif order == 17:
-            self.weights = numpy.array([
-                0.3921568627450983E-02,
-                0.3736870283720560E-01,
-                0.7548233154315186E-01,
-                0.1089055525818909,
-                0.1389564683682331,
-                0.1631726642817033,
-                0.1814737842364934,
-                0.1925138646129257,
-                0.1964101258218905,
-                0.1925138646129257,
-                0.1814737842364934,
-                0.1631726642817033,
-                0.1389564683682331,
-                0.1089055525818909,
-                0.7548233154315184E-01,
-                0.3736870283720570E-01,
-                0.3921568627450983E-02,
-                ])
-            self.points = numpy.array([
-                -1.0000000000000000,
-                -0.9807852804032304,
-                -0.9238795325112867,
-                -0.8314696123025453,
-                -0.7071067811865475,
-                -0.5555702330196020,
-                -0.3826834323650897,
-                -0.1950903220161282,
-                0.00000000000000,
-                0.1950903220161283,
-                0.3826834323650898,
-                0.5555702330196023,
-                0.7071067811865475,
-                0.8314696123025452,
-                0.9238795325112867,
-                0.9807852804032304,
-                1.0000000000000000,
-                ])
-            self.degree = 17
-        elif order == 33:
-            self.weights = numpy.array([
-                0.9775171065493659E-03,
-                0.9393197962955013E-02,
-                0.1923424513268114E-01,
-                0.2845791667723369E-01,
-                0.3759434191404722E-01,
-                0.4626276283775175E-01,
-                0.5455501630398032E-01,
-                0.6227210954529399E-01,
-                0.6942757563043547E-01,
-                0.7588380044138848E-01,
-                0.8163481765493850E-01,
-                0.8657753844182743E-01,
-                0.9070611286772098E-01,
-                0.9394324443876872E-01,
-                0.9629232594548820E-01,
-                0.9769818820805558E-01,
-                0.9817857778176831E-01,
-                0.9769818820805558E-01,
-                0.9629232594548819E-01,
-                0.9394324443876871E-01,
-                0.9070611286772098E-01,
-                0.8657753844182743E-01,
-                0.8163481765493850E-01,
-                0.7588380044138850E-01,
-                0.6942757563043547E-01,
-                0.6227210954529399E-01,
-                0.5455501630398031E-01,
-                0.4626276283775177E-01,
-                0.3759434191404721E-01,
-                0.2845791667723370E-01,
-                0.1923424513268119E-01,
-                0.9393197962955048E-02,
-                0.9775171065493659E-03,
-                ])
-            self.points = numpy.array([
-                -1.0000000000000000,
-                -0.9951847266721968,
-                -0.9807852804032304,
-                -0.9569403357322088,
-                -0.9238795325112867,
-                -0.8819212643483549,
-                -0.8314696123025453,
-                -0.7730104533627370,
-                -0.7071067811865475,
-                -0.6343932841636454,
-                -0.5555702330196020,
-                -0.4713967368259977,
-                -0.3826834323650897,
-                -0.2902846772544622,
-                -0.1950903220161282,
-                -0.9801714032956065E-01,
-                0.000000000000000,
-                0.9801714032956077E-01,
-                0.1950903220161283,
-                0.2902846772544623,
-                0.3826834323650898,
-                0.4713967368259978,
-                0.5555702330196023,
-                0.6343932841636455,
-                0.7071067811865475,
-                0.7730104533627370,
-                0.8314696123025452,
-                0.8819212643483550,
-                0.9238795325112867,
-                0.9569403357322088,
-                0.9807852804032304,
-                0.9951847266721969,
-                1.0000000000000000,
-                ])
-            self.degree = 33
-        elif order == 65:
-            self.weights = numpy.array([
-                0.2442002442002449E-03,
-                0.2351490675311702E-02,
-                0.4831465448790911E-02,
-                0.7192693161736115E-02,
-                0.9582338795283791E-02,
-                0.1192339471421277E-01,
-                0.1425206043235199E-01,
-                0.1653498765728959E-01,
-                0.1878652974179578E-01,
-                0.2098627442973744E-01,
-                0.2314069493435819E-01,
-                0.2523506498175476E-01,
-                0.2727225714146840E-01,
-                0.2924065319746835E-01,
-                0.3114129710406762E-01,
-                0.3296454656997634E-01,
-                0.3471049818092511E-01,
-                0.3637092028663919E-01,
-                0.3794545992128482E-01,
-                0.3942698871295609E-01,
-                0.4081501340035782E-01,
-                0.4210333111141810E-01,
-                0.4329151496169082E-01,
-                0.4437417923925731E-01,
-                0.4535110955166067E-01,
-                0.4621766751092559E-01,
-                0.4697395904661415E-01,
-                0.4761604458525018E-01,
-                0.4814443257251221E-01,
-                0.4855584485714105E-01,
-                0.4885125664306610E-01,
-                0.4902801843102554E-01,
-                0.4908762351494248E-01,
-                0.4902801843102556E-01,
-                0.4885125664306610E-01,
-                0.4855584485714105E-01,
-                0.4814443257251221E-01,
-                0.4761604458525019E-01,
-                0.4697395904661414E-01,
-                0.4621766751092559E-01,
-                0.4535110955166067E-01,
-                0.4437417923925733E-01,
-                0.4329151496169082E-01,
-                0.4210333111141811E-01,
-                0.4081501340035782E-01,
-                0.3942698871295609E-01,
-                0.3794545992128483E-01,
-                0.3637092028663919E-01,
-                0.3471049818092511E-01,
-                0.3296454656997635E-01,
-                0.3114129710406762E-01,
-                0.2924065319746836E-01,
-                0.2727225714146839E-01,
-                0.2523506498175477E-01,
-                0.2314069493435821E-01,
-                0.2098627442973743E-01,
-                0.1878652974179578E-01,
-                0.1653498765728961E-01,
-                0.1425206043235200E-01,
-                0.1192339471421278E-01,
-                0.9582338795283809E-02,
-                0.7192693161736120E-02,
-                0.4831465448790926E-02,
-                0.2351490675311698E-02,
-                0.2442002442002449E-03,
-                ])
-            self.points = numpy.array([
-                -1.0000000000000000,
-                -0.9987954562051724,
-                -0.9951847266721968,
-                -0.9891765099647810,
-                -0.9807852804032304,
-                -0.9700312531945440,
-                -0.9569403357322088,
-                -0.9415440651830207,
-                -0.9238795325112867,
-                -0.9039892931234433,
-                -0.8819212643483549,
-                -0.8577286100002720,
-                -0.8314696123025453,
-                -0.8032075314806448,
-                -0.7730104533627370,
-                -0.7409511253549589,
-                -0.7071067811865475,
-                -0.6715589548470184,
-                -0.6343932841636454,
-                -0.5956993044924334,
-                -0.5555702330196020,
-                -0.5141027441932217,
-                -0.4713967368259977,
-                -0.4275550934302819,
-                -0.3826834323650897,
-                -0.3368898533922199,
-                -0.2902846772544622,
-                -0.2429801799032639,
-                -0.1950903220161282,
-                -0.1467304744553616,
-                -0.9801714032956065E-01,
-                -0.4906767432741801E-01,
-                0.0,
-                0.4906767432741813E-01,
-                0.9801714032956077E-01,
-                0.1467304744553617,
-                0.1950903220161283,
-                0.2429801799032640,
-                0.2902846772544623,
-                0.3368898533922201,
-                0.3826834323650898,
-                0.4275550934302822,
-                0.4713967368259978,
-                0.5141027441932218,
-                0.5555702330196023,
-                0.5956993044924335,
-                0.6343932841636455,
-                0.6715589548470184,
-                0.7071067811865475,
-                0.7409511253549592,
-                0.7730104533627370,
-                0.8032075314806448,
-                0.8314696123025452,
-                0.8577286100002721,
-                0.8819212643483550,
-                0.9039892931234433,
-                0.9238795325112867,
-                0.9415440651830208,
-                0.9569403357322088,
-                0.9700312531945440,
-                0.9807852804032304,
-                0.9891765099647810,
-                0.9951847266721969,
-                0.9987954562051724,
-                1.0000000000000000,
-                ])
-            self.degree = 65
         else:
-            raise ValueError('Illegal Clenshaw-Curtis order')
+            self.weights = numpy.concatenate([
+                w,
+                w[len(w)-2::-1]
+                ])
+
+        return
+
+
+class Fejer1(object):
+    '''
+    Fejér-type-1 quadrature.
+
+    Weights are constructed after
+
+    J. Waldvogel,
+    Fast Construction of the Fejér and Clenshaw–Curtis Quadrature Rules,
+    BIT Numerical Mathematics, March 2006, Volume 46, Issue 1, pp 195–202,
+    DOI: 10.1007/s10543-006-0045-4,
+    <https://dx.doi.org/10.1007/s10543-006-0045-4>.
+    '''
+    def __init__(self, n):
+        self.degree = n
+
+        self.points = -numpy.cos(numpy.pi * (numpy.arange(n) + 0.5) / n)
+
+        # n -= 1
+        N = numpy.arange(1, n, 2)
+        l = len(N)
+        m = n - l
+        K = numpy.arange(m)
+
+        v0 = numpy.concatenate([
+            2 * numpy.exp(1j*numpy.pi*K/n) / (1 - 4*K**2),
+            numpy.zeros(l+1)
+            ])
+        v1 = v0[:-1] + numpy.conjugate(v0[:0:-1])
+
+        w = numpy.fft.ifft(v1)
+        assert max(w.imag) < 1.0e-15
+        self.weights = w.real
+
+        return
+
+
+class Fejer2(object):
+    '''
+    Fejér-type-2 quadrature.
+
+    Weights are constructed after
+
+    J. Waldvogel,
+    Fast Construction of the Fejér and Clenshaw–Curtis Quadrature Rules,
+    BIT Numerical Mathematics, March 2006, Volume 46, Issue 1, pp 195–202,
+    DOI: 10.1007/s10543-006-0045-4,
+    <https://dx.doi.org/10.1007/s10543-006-0045-4>.
+    '''
+    def __init__(self, n):
+        self.degree = n
+
+        self.points = -numpy.cos((numpy.pi * numpy.arange(1, n+1)) / (n+1))
+
+        n += 1
+        N = numpy.arange(1, n, 2)
+        l = len(N)
+        m = n - l
+        v0 = numpy.concatenate([
+            2.0 / N / (N-2),
+            numpy.array([1.0 / N[-1]]),
+            numpy.zeros(m),
+            ])
+        v2 = - v0[:-1] - v0[:0:-1]
+
+        w = numpy.fft.ihfft(v2)
+        assert max(w.imag) < 1.0e-15
+        w = w.real
+
+        if n % 2 == 1:
+            self.weights = numpy.concatenate([w, w[::-1]])
+        else:
+            self.weights = numpy.concatenate([w, w[len(w)-2::-1]])
+
+        # cut off first and last
+        self.weights = self.weights[1:-1]
+
+        return
 
 
 class NewtonCotesClosed(object):
