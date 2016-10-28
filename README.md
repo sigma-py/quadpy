@@ -8,7 +8,7 @@ Your one-stop shop for numerical integration in Python.
 [![PyPi Version](https://img.shields.io/pypi/v/quadrature.svg)](https://pypi.python.org/pypi/quadrature)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/quadrature.svg?style=social&label=Star&maxAge=2592000)](https://github.com/nschloe/quadrature)
 
-Over 300 numerical integration schemes for line segments, circles, triangles,
+Over 400 numerical integration schemes for line segments, circles, triangles,
 tetrahedra, quadrilaterals, hexahedra, wedges, pyramids, disks, and spheres.
 
 To numerically integrate any function over any given triangle, do
@@ -44,6 +44,7 @@ This uses Strang's rule of degree 6.
    [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.legendre.leggauss.html), arbitrary order)
  * Gauß-Lobatto (arbitrary order)
  * Gauß-Patterson (7 schemes up to degree 191)
+ * Gauß-Radau (arbitrary order)
  * closed Newton-Cotes (arbitray order)
  * open Newton-Cotes (arbitray order)
 
