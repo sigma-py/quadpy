@@ -31,9 +31,12 @@ This uses Strang's rule of degree 6.
 
  * Chebyshev-Gauß (both variants, arbitrary degree)
  * Clenshaw-Curtis (9 schemes up to degree 65)
- * Gauß-Hermite (arbitrary degree)
- * Gauß-Laguerre (arbitrary degree)
- * Gauß-Legendre (arbitrary degree)
+ * Gauß-Hermite (via
+   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.hermite.hermgauss.html), arbitrary degree)
+ * Gauß-Laguerre (via
+   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.laguerre.laggauss.html), arbitrary degree)
+ * Gauß-Legendre (via
+   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.legendre.leggauss.html), arbitrary degree)
  * Gauß-Lobatto (arbitrary degree)
  * Gauß-Patterson (7 schemes up to degree 191)
  * open and closed Newton-Cotes (arbitray degree)
