@@ -155,7 +155,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme = quadrature.line_segment.GaussRadau(6)
+    scheme = quadrature.line_segment.Fejer2(20)
     print(scheme.points)
     print(scheme.weights)
     test_scheme(scheme)

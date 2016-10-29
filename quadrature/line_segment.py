@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 #
+from . import helpers
+
 import math
 import numpy
 import sympy
@@ -14,14 +16,23 @@ def integrate(f, a, b, scheme):
 
 def show(a, b, scheme):
     from matplotlib import pyplot as plt
-    pts = 0.5 * (scheme.points + 1) * (b-a) + a
-    plt.plot([0.0, 1.0], [0.0, 0.0], '-k')
-    bar_width = (b-a) / len(scheme.weights)
-    plt.bar(
-        pts - 0.5*bar_width, scheme.weights,
-        color='b',
-        alpha=0.5,
-        width=bar_width
+    # change default range so that new disks will work
+    plt.axis('equal')
+    # ax.set_xlim((-1.5, 1.5))
+    # ax.set_ylim((-1.5, 1.5))
+
+    plt.plot([a, b], [0, 0], color='k')
+
+    pts = numpy.column_stack([scheme.points, numpy.zeros(len(scheme.points))])
+
+    # The total area is used to gauge the disk radii. This is only meaningful
+    # for 2D manifolds, not for the circle. What we do instead is choose the
+    # total_area such that the sum of the disk radii equals b-a.
+    total_area = 0.25 * (b-a)**2 * numpy.pi * sum(scheme.weights) \
+        / sum(numpy.sqrt(abs(scheme.weights)))**2
+
+    helpers.plot_disks(
+        plt, pts, scheme.weights, total_area
         )
     return
 
