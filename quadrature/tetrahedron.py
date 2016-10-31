@@ -293,6 +293,8 @@ class NewtonCotesOpen(object):
     def __init__(self, n):
         self.points, self.weights, self.degree = \
             _newton_cotes(n, lambda k, n: (k+1) / float(n+4))
+        if n == 0:
+            self.degree = 1
         return
 
 
@@ -507,7 +509,7 @@ class Keast(object):
                 _s211(0.2319010893971509, 0.5132800333608811),
                 _s211(0.0379700484718286, 0.1937464752488044),
                 ])
-            self.degree = 7
+            self.degree = 8
         elif index == 10:
             self.weights = 6 * numpy.concatenate([
                 # Note: In Keast's article, the first weight is incorrectly
@@ -991,6 +993,9 @@ class XiaoGimbutas(object):
     <https://people.sc.fsu.edu/~jburkardt/f_src/triangle_symq_rule/triangle_symq_rule.f90>.
     '''
     def __init__(self, index):
+        # True most of the time, but overridden for some indices.
+        self.degree = index
+
         if index == 1:
             bary = numpy.array([
                 [
@@ -5087,6 +5092,7 @@ class XiaoGimbutas(object):
                 0.0190689583089531,
                 ])
         elif index == 15:
+            self.degree = 16
             bary = numpy.array([
                 [
                     0.402153395912455, 0.267805847317026,
@@ -6164,7 +6170,6 @@ class XiaoGimbutas(object):
         else:
             raise ValueError('Illegal Xiao-Gimbutas index')
 
-        self.degree = index
         self.points = bary[:, [1, 2, 3]]
         return
 
@@ -6254,7 +6259,7 @@ class ShunnHam(object):
                 _s211(0.3523052600879940, 0.0992057202494530),
                 _s31(0.1344783347929940)
                 ])
-            self.degree = 7
+            self.degree = 8
         else:
             raise ValueError('Illegal Shunn-Ham index')
 

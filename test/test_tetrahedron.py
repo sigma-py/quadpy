@@ -51,7 +51,7 @@ def _integrate_exact(f, tetrahedron):
 def _integrate_monomial_over_standard_tet(k):
     '''The integral of monomials over the standard tetrahedron is given by
 
-    \int_T x_0^k0 * x1^k1 * x2^k2 = (k0!*k1!*k2!) / (3+k0+k1+k2)!,
+    \int_T x_0^k0 * x1^k1 * x2^k2 = (k0!*k1!*k2!) / (4+k0+k1+k2)!,
 
     see, e.g.,
     A set of symmetric quadrature rules on triangles and tetrahedra,
@@ -96,7 +96,7 @@ def test_scheme(scheme):
             create_monomial_exponents3,
             scheme.degree + 1
             )
-    assert degree >= scheme.degree
+    assert degree == scheme.degree
     return
 
 
@@ -116,7 +116,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme = quadrature.tetrahedron.XiaoGimbutas(15)
+    scheme = quadrature.tetrahedron.ShunnHam(6)
     test_scheme(scheme)
     test_show(scheme)
     plt.show()
