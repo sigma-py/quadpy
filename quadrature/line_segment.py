@@ -9,7 +9,7 @@ import sympy
 
 def integrate(f, a, b, scheme):
     out = math.fsum(
-        scheme.weights * f(0.5 * (scheme.points.T + 1) * (b-a) + a)
+        scheme.weights * f(0.5*(b-a) * scheme.points.T + 0.5*(b+a))
         )
     return 0.5 * (b - a) * out
 
