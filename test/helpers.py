@@ -6,7 +6,7 @@ import sympy
 
 
 def check_degree_1d(
-        quadrature, exact, exponents_creator, max_degree, tol=1.0e-12
+        quadrature, exact, exponents_creator, max_degree, tol=1.0e-14
         ):
     for degree in range(max_degree+1):
         val = quadrature(lambda x: x**degree)
@@ -21,7 +21,7 @@ def check_degree_1d(
 
 
 def check_degree(
-        quadrature, exact, exponents_creator, max_degree, tol=1.0e-10
+        quadrature, exact, exponents_creator, max_degree, tol=1.0e-14
         ):
     for degree in range(max_degree+1):
         for k in exponents_creator(degree):
