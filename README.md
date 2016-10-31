@@ -28,7 +28,7 @@ This uses Strang's rule of degree 6.
 ## Schemes
 
 ### Line segment
-![](https://nschloe.github.io/quadrature/line.png)
+![](https://nschloe.github.io/quadrature/line.svg)
 
  * Chebyshev-Gauß (both variants, arbitrary order)
  * Clenshaw-Curtis (after
