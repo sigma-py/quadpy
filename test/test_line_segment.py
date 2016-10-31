@@ -45,7 +45,7 @@ def test_scheme(scheme):
         if degree >= scheme.degree:
             break
         degree += 1
-    assert degree >= scheme.degree
+    assert degree == scheme.degree
     return
 
 
@@ -120,7 +120,7 @@ def test_laguerre_scheme(scheme):
             lambda degree: [[degree]],
             scheme.degree + 1
             )
-    assert degree >= scheme.degree
+    assert degree == scheme.degree
     return
 
 
@@ -141,7 +141,7 @@ def test_hermite_scheme(scheme):
             lambda degree: [[degree]],
             scheme.degree + 1
             )
-    assert degree >= scheme.degree
+    assert degree == scheme.degree
     return
 
 
