@@ -73,7 +73,7 @@ def _integrate_monomial_over_standard_triangle(k):
     + [quadrature.triangle.NewtonCotesOpen(k) for k in range(6)]
     + [quadrature.triangle.Strang(k) for k in range(1, 11)]
     + [quadrature.triangle.LynessJespersen(k) for k in range(1, 22)]
-    + [quadrature.triangle.Hillion(k) for k in range(1, 6)]
+    + [quadrature.triangle.Hillion(k) for k in range(1, 4)]
     + [quadrature.triangle.LaursenGellert(key) for key in [
         '1', '2a', '2b', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
         '13', '14', '15a', '15b'
@@ -81,7 +81,7 @@ def _integrate_monomial_over_standard_triangle(k):
     + [quadrature.triangle.Cubtri()]
     + [quadrature.triangle.Triex(19), quadrature.triangle.Triex(28)]
     + [quadrature.triangle.Dunavant(k) for k in range(1, 21)]
-    + [quadrature.triangle.CoolsHaegemans(k) for k in [1, 2]]
+    + [quadrature.triangle.CoolsHaegemans(k) for k in [1]]
     + [quadrature.triangle.BerntsenEspelid(k) for k in range(1, 5)]
     + [quadrature.triangle.LiuVinokur(k) for k in range(1, 14)]
     + [quadrature.triangle.WandzuraXiao(k) for k in range(1, 7)]

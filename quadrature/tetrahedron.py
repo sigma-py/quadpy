@@ -961,7 +961,7 @@ class ZhangCuiLiu(object):
                     .0867217283322215394629438740085828
                     ),
                 ])
-            self.degree = 15
+            self.degree = 14
         else:
             raise ValueError('Illegal Zhang index')
 
@@ -3467,7 +3467,6 @@ class XiaoGimbutas(object):
                 0.0295049673779978,
                 ])
         elif index == 13:
-            self.degree = 14
             bary = numpy.array([
                 [
                     0.818026162194412, 0.013371428943564,
@@ -4203,7 +4202,6 @@ class XiaoGimbutas(object):
                 0.0258236446193837,
                 ])
         elif index == 14:
-            self.degree = 16
             bary = numpy.array([
                 [
                     0.215369322514279, 0.0716238048007973,
@@ -5094,7 +5092,7 @@ class XiaoGimbutas(object):
                 0.0190689583089531,
                 ])
         elif index == 15:
-            self.degree = 18
+            self.degree = 16
             bary = numpy.array([
                 [
                     0.402153395912455, 0.267805847317026,
