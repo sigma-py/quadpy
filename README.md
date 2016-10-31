@@ -28,7 +28,7 @@ This uses Strang's rule of degree 6.
 ## Schemes
 
 ### Line segment
-<img src="https://nschloe.github.io/quadrature/line.svg" width="30%">
+<img src="https://nschloe.github.io/quadrature/line.svg" width="50%">
 
  * Chebyshev-Gauß (both variants, arbitrary order)
  * Clenshaw-Curtis (after
@@ -50,12 +50,12 @@ This uses Strang's rule of degree 6.
  * open Newton-Cotes (arbitray order)
 
 ### Circle
-<img src="https://nschloe.github.io/quadrature/circle.svg" width="15%">
+<img src="https://nschloe.github.io/quadrature/circle.svg" width="25%">
 
  * equidistant points
 
 ### Triangle
-<img src="https://nschloe.github.io/quadrature/tri.svg" width="15%">
+<img src="https://nschloe.github.io/quadrature/triangle.svg" width="25%">
 
 Apart from the classical centroid, vertex, and seven-point schemes we have
 
@@ -89,19 +89,19 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    schemes up to degree 50).
 
 ### Disk
-<img src="https://nschloe.github.io/quadrature/disk.svg" width="15%">
+<img src="https://nschloe.github.io/quadrature/disk.svg" width="25%">
 
  * [Peirce](http://www.jstor.org/stable/2098722) (1957, arbitrary degree)
  * [Lether](http://www.jstor.org/stable/2949473) (1971, arbitrary degree)
 
 ### Quadrilateral
-<img src="https://nschloe.github.io/quadrature/quad.svg" width="15%">
+<img src="https://nschloe.github.io/quadrature/quad.svg" width="25%">
 
  * Product schemes derived from line segment schemes
  * [Stroud's schemes](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (6 schemes up to degree 15)
 
 ### Tetrahedron
-<img src="https://nschloe.github.io/quadrature/tet.svg" width="15%">
+<img src="https://nschloe.github.io/quadrature/tet.svg" width="25%">
 
  * [Hammer-Marlowe-Stroud](https://doi.org/10.1090/S0025-5718-1956-0086389-6)
    (1956, 3 schemes up to degree 3)
@@ -121,24 +121,24 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    degree 7)
 
 ### Hexahedron
-<img src="https://nschloe.github.io/quadrature/hexa.svg" width="15%">
+<img src="https://nschloe.github.io/quadrature/hexa.svg" width="25%">
 
  * Product schemes derived from line segment schemes
 
 ### Pyramid
-<img src="https://nschloe.github.io/quadrature/pyra.svg" width="15%">
+<img src="https://nschloe.github.io/quadrature/pyra.svg" width="25%">
 
  * [Felippa's schemes](http://dx.doi.org/10.1108/02644400410554362) (9 schemes
    up to degree 5)
 
 ### Wedge
-<img src="https://nschloe.github.io/quadrature/wedge.svg" width="15%">
+<img src="https://nschloe.github.io/quadrature/wedge.svg" width="10%">
 
  * [Felippa's schemes](http://dx.doi.org/10.1108/02644400410554362) (6 schemes
    up to degree 6)
 
 ### Sphere
-<img src="https://nschloe.github.io/quadrature/sphere.svg" width="15%">
+<img src="https://nschloe.github.io/quadrature/sphere.svg" width="25%">
 
  * [Lebedev's schemes](https://en.wikipedia.org/wiki/Lebedev_quadrature) (32
    schemes up to degree 131)
