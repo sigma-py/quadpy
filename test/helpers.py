@@ -30,11 +30,11 @@ def check_degree(
                 )
             exact_val = exact(k)
             # check relative error
-            # The allowance is quite large here, 1e6 over machine precision.
+            # The allowance is quite large here, 1e5 over machine precision.
             # Some test fail if lowered, though.
             # TODO increase precision
             eps = numpy.finfo(float).eps
-            alpha = abs(exact_val) * tol + (1.0e6+tol+exact_val)*eps
+            alpha = abs(exact_val) * tol + (1.0e5+tol+exact_val)*eps
             if abs(exact_val - val) > alpha:
                 return degree - 1
     return max_degree
