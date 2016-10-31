@@ -101,7 +101,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * [Stroud's schemes](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (6 schemes up to degree 15)
 
 ### Tetrahedron
-<img src="https://nschloe.github.io/quadrature/tet.svg" width="25%">
+<img src="https://nschloe.github.io/quadrature/tet.png" width="25%">
 
  * [Hammer-Marlowe-Stroud](https://doi.org/10.1090/S0025-5718-1956-0086389-6)
    (1956, 3 schemes up to degree 3)
@@ -121,24 +121,24 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    degree 7)
 
 ### Hexahedron
-<img src="https://nschloe.github.io/quadrature/hexa.svg" width="25%">
+<img src="https://nschloe.github.io/quadrature/hexa.png" width="25%">
 
  * Product schemes derived from line segment schemes
 
 ### Pyramid
-<img src="https://nschloe.github.io/quadrature/pyra.svg" width="25%">
+<img src="https://nschloe.github.io/quadrature/pyra.png" width="25%">
 
  * [Felippa's schemes](http://dx.doi.org/10.1108/02644400410554362) (9 schemes
    up to degree 5)
 
 ### Wedge
-<img src="https://nschloe.github.io/quadrature/wedge.svg" width="10%">
+<img src="https://nschloe.github.io/quadrature/wedge.png" width="10%">
 
  * [Felippa's schemes](http://dx.doi.org/10.1108/02644400410554362) (6 schemes
    up to degree 6)
 
 ### Sphere
-<img src="https://nschloe.github.io/quadrature/sphere.svg" width="25%">
+<img src="https://nschloe.github.io/quadrature/sphere.png" width="25%">
 
  * [Lebedev's schemes](https://en.wikipedia.org/wiki/Lebedev_quadrature) (32
    schemes up to degree 131)
