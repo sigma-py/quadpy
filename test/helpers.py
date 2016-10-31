@@ -13,8 +13,8 @@ def check_degree_1d(
         exact_val = exact(degree)
         # check relative error
         eps = numpy.finfo(float).eps
-        # Allow 1e1 over machine precision.
-        alpha = abs(exact_val) * tol + (1e1+tol+exact_val)*eps
+        # Allow 1e2 over machine precision.
+        alpha = abs(exact_val) * tol + (1e2+tol+exact_val)*eps
         if abs(exact_val - val) > alpha:
             return degree - 1
     return max_degree
