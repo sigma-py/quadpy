@@ -132,7 +132,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    up to degree 5)
 
 ### Wedge
-<img src="https://nschloe.github.io/quadrature/wedge.png" width="10%">
+<img src="https://nschloe.github.io/quadrature/wedge.png" width="15%">
 
  * [Felippa's schemes](http://dx.doi.org/10.1108/02644400410554362) (6 schemes
    up to degree 6)
