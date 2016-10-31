@@ -45,7 +45,7 @@ def test_scheme(scheme):
         if degree >= scheme.degree:
             break
         degree += 1
-    assert degree >= scheme.degree
+    assert degree == scheme.degree
     return
 
 
@@ -120,13 +120,13 @@ def test_laguerre_scheme(scheme):
             lambda degree: [[degree]],
             scheme.degree + 1
             )
-    assert degree >= scheme.degree
+    assert degree == scheme.degree
     return
 
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.line_segment.GaussHermite(k) for k in range(1, 10)]
+    [quadrature.line_segment.GaussHermite(k) for k in range(1, 8)]
     )
 def test_hermite_scheme(scheme):
     def integrate_exact(k):
@@ -141,7 +141,7 @@ def test_hermite_scheme(scheme):
             lambda degree: [[degree]],
             scheme.degree + 1
             )
-    assert degree >= scheme.degree
+    assert degree == scheme.degree
     return
 
 
