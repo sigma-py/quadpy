@@ -18,9 +18,9 @@ def plot_disks(plt, pts, weights, total_area):
         circ = plt.Circle((tp[0], tp[1]), radius, color=color, alpha=0.5)
         plt.gca().add_artist(circ)
 
-    # a = 1.3
-    # plt.gca().set_xlim(-a, +a)
-    # plt.gca().set_ylim(-a, +a)
+    a = 1.3
+    plt.gca().set_xlim(-a, +a)
+    plt.gca().set_ylim(-a, +a)
 
     return
 
