@@ -24,3 +24,9 @@ from . import sphere
 from . import triangle
 from . import tetrahedron
 from . import wedge
+
+import pipdated
+if pipdated.needs_checking(__name__):
+    msg = pipdated.check(__name__, __version__)
+    if msg:
+        print(msg)
