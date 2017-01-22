@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 #
 
-__author__ = 'Nico Schlömer'
-__email__ = 'nico.schloemer@gmail.com'
-__copyright__ = 'Copyright (c) 2016, %s <%s>' % (__author__, __email__)
-__credits__ = []
-__license__ = 'MIT License'
-__version__ = '0.2.2'
-__maintainer__ = 'Nico Schlömer'
-__status__ = 'Beta'
+from .__about__ import (
+    __author__,
+    __email__,
+    __copyright__,
+    __credits__,
+    __license__,
+    __version__,
+    __maintainer__,
+    __status__,
+    )
 
 from . import helpers
 
