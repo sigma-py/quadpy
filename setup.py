@@ -4,7 +4,11 @@ from distutils.core import setup
 import os
 import codecs
 
-from quadrature import __version__, __license__, __author__, __email__
+# https://packaging.python.org/single_source_version/
+base_dir = os.path.abspath(os.path.dirname(__file__))
+about = {}
+with open(os.path.join(base_dir, 'quadrature', '__about__.py')) as f:
+    exec(f.read(), about)
 
 
 def read(fname):
@@ -17,18 +21,24 @@ def read(fname):
         content = ''
     return content
 
+
 setup(
     name='quadrature',
-    version=__version__,
+    version=about['__version__'],
     packages=['quadrature'],
     url='https://github.com/nschloe/quadrature',
     download_url='https://pypi.python.org/pypi/quadrature',
-    author=__author__,
-    author_email=__email__,
-    requires=['numpy', 'scipy', 'sympy'],
+    author=about['__author__'],
+    author_email=about['__email__'],
+    install_requires=[
+        'numpy',
+        'pipdated',
+        'scipy',
+        'sympy'
+        ],
     description='numerical integration schemes',
     long_description=read('README.rst'),
-    license=__license__,
+    license=about['__license__'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
