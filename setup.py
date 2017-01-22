@@ -30,7 +30,12 @@ setup(
     download_url='https://pypi.python.org/pypi/quadrature',
     author=about['__author__'],
     author_email=about['__email__'],
-    install_requires=['numpy', 'scipy', 'sympy'],
+    install_requires=[
+        'numpy',
+        'pipdated',
+        'scipy',
+        'sympy'
+        ],
     description='numerical integration schemes',
     long_description=read('README.rst'),
     license=about['__license__'],
