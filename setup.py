@@ -37,7 +37,7 @@ setup(
         'scipy',
         'sympy'
         ],
-    description='numerical integration, quadrature',
+    description='numerical integration, quadrature for various domains',
     long_description=read('README.rst'),
     license=about['__license__'],
     classifiers=[
