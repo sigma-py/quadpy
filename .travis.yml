@@ -16,8 +16,6 @@ addons:
       - python3-numpy
       - python-scipy
       - python3-scipy
-      - python-matplotlib
-      - python3-matplotlib
 
 before_install:
   - pip install pytest pytest-cov
