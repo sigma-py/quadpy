@@ -1,18 +1,12 @@
 # -*- coding: utf-8 -*-
 #
 from helpers import create_monomial_exponents3, check_degree
+from matplotlib import pyplot as plt
 import numpy
-import quadrature
-from quadrature.hexahedron import From1d
+import quadpy
+from quadpy.hexahedron import From1d
 import pytest
 import sympy
-
-import os
-import matplotlib as mpl
-if 'DISPLAY' not in os.environ:
-    # headless mode, for remote executions (and travis)
-    mpl.use('Agg')
-from matplotlib import pyplot as plt
 
 
 def _integrate_exact(f, hexa):
@@ -66,13 +60,13 @@ def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
 
 @pytest.mark.parametrize(
     'scheme',
-    [From1d(quadrature.line_segment.Midpoint())]
-    + [From1d(quadrature.line_segment.Trapezoidal())]
-    + [From1d(quadrature.line_segment.GaussLegendre(k)) for k in range(1, 6)]
-    + [From1d(quadrature.line_segment.NewtonCotesClosed(k))
+    [From1d(quadpy.line_segment.Midpoint())]
+    + [From1d(quadpy.line_segment.Trapezoidal())]
+    + [From1d(quadpy.line_segment.GaussLegendre(k)) for k in range(1, 6)]
+    + [From1d(quadpy.line_segment.NewtonCotesClosed(k))
         for k in range(1, 5)
        ]
-    + [From1d(quadrature.line_segment.NewtonCotesOpen(k)) for k in range(5)]
+    + [From1d(quadpy.line_segment.NewtonCotesOpen(k)) for k in range(5)]
     )
 def test_scheme(scheme):
     x0 = -1
@@ -92,7 +86,7 @@ def test_scheme(scheme):
         [x0, y1, z1],
         ])
     degree = check_degree(
-            lambda poly: quadrature.hexahedron.integrate(poly, hexa, scheme),
+            lambda poly: quadpy.hexahedron.integrate(poly, hexa, scheme),
             lambda k: _integrate_exact2(k, x0, x1, y0, y1, z0, z1),
             create_monomial_exponents3,
             scheme.degree + 1
@@ -103,7 +97,7 @@ def test_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    [From1d(quadrature.line_segment.NewtonCotesClosed(3))]
+    [From1d(quadpy.line_segment.NewtonCotesClosed(3))]
     )
 def test_show(scheme):
     hexa = numpy.array([
@@ -116,21 +110,21 @@ def test_show(scheme):
         [+1, +1, +1],
         [-1, +1, +1],
         ])
-    quadrature.hexahedron.show(
+    quadpy.hexahedron.show(
         hexa,
-        quadrature.hexahedron.From1d(
-            # quadrature.line_segment.Midpoint()
-            # quadrature.line_segment.Trapezoidal()
-            quadrature.line_segment.NewtonCotesClosed(2)
-            # quadrature.line_segment.NewtonCotesOpen(2)
+        quadpy.hexahedron.From1d(
+            # quadpy.line_segment.Midpoint()
+            # quadpy.line_segment.Trapezoidal()
+            quadpy.line_segment.NewtonCotesClosed(2)
+            # quadpy.line_segment.NewtonCotesOpen(2)
             )
         )
     return
 
 
 if __name__ == '__main__':
-    # scheme = From1d(quadrature.line_segment.NewtonCotesOpen(2))
-    scheme = From1d(quadrature.line_segment.GaussLegendre(5))
+    # scheme = From1d(quadpy.line_segment.NewtonCotesOpen(2))
+    scheme = From1d(quadpy.line_segment.GaussLegendre(5))
     test_scheme(scheme)
     test_show(scheme)
     plt.show()

@@ -3,17 +3,11 @@
 from helpers import create_monomial_exponents2, check_degree
 
 import math
+from matplotlib import pyplot as plt
 import numpy
 import pytest
-import quadrature
+import quadpy
 import sympy
-
-import os
-import matplotlib as mpl
-if 'DISPLAY' not in os.environ:
-    # headless mode, for remote executions (and travis)
-    mpl.use('Agg')
-from matplotlib import pyplot as plt
 
 
 def _integrate_exact(f, triangle):
@@ -37,7 +31,7 @@ def _integrate_exact(f, triangle):
         + triangle[0] * (1 - xi[0] - xi[1]) \
         + triangle[1] * xi[0] \
         + triangle[2] * xi[1]
-    abs_det_J = 2 * quadrature.triangle.volume(triangle)
+    abs_det_J = 2 * quadpy.triangle.volume(triangle)
     exact = sympy.integrate(
         sympy.integrate(abs_det_J * f(x_xi), (xi[1], 0, 1-xi[0])),
         (xi[0], 0, 1)
@@ -65,29 +59,29 @@ def _integrate_monomial_over_standard_triangle(k):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.triangle.Centroid()]
-    + [quadrature.triangle.Vertex()]
-    + [quadrature.triangle.SevenPoint()]
-    + [quadrature.triangle.HammerMarloweStroud(k) for k in range(1, 6)]
-    + [quadrature.triangle.NewtonCotesClosed(k) for k in range(1, 6)]
-    + [quadrature.triangle.NewtonCotesOpen(k) for k in range(6)]
-    + [quadrature.triangle.Strang(k) for k in range(1, 11)]
-    + [quadrature.triangle.LynessJespersen(k) for k in range(1, 22)]
-    + [quadrature.triangle.Hillion(k) for k in range(1, 4)]
-    + [quadrature.triangle.LaursenGellert(key) for key in [
+    [quadpy.triangle.Centroid()]
+    + [quadpy.triangle.Vertex()]
+    + [quadpy.triangle.SevenPoint()]
+    + [quadpy.triangle.HammerMarloweStroud(k) for k in range(1, 6)]
+    + [quadpy.triangle.NewtonCotesClosed(k) for k in range(1, 6)]
+    + [quadpy.triangle.NewtonCotesOpen(k) for k in range(6)]
+    + [quadpy.triangle.Strang(k) for k in range(1, 11)]
+    + [quadpy.triangle.LynessJespersen(k) for k in range(1, 22)]
+    + [quadpy.triangle.Hillion(k) for k in range(1, 4)]
+    + [quadpy.triangle.LaursenGellert(key) for key in [
         '1', '2a', '2b', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
         '13', '14', '15a', '15b'
         ]]
-    + [quadrature.triangle.Cubtri()]
-    + [quadrature.triangle.Triex(19), quadrature.triangle.Triex(28)]
-    + [quadrature.triangle.Dunavant(k) for k in range(1, 21)]
-    + [quadrature.triangle.CoolsHaegemans(k) for k in [1]]
-    + [quadrature.triangle.BerntsenEspelid(k) for k in range(1, 5)]
-    + [quadrature.triangle.LiuVinokur(k) for k in range(1, 14)]
-    + [quadrature.triangle.WandzuraXiao(k) for k in range(1, 7)]
-    + [quadrature.triangle.TaylorWingateBos(k) for k in [1, 2, 4, 5, 8]]
-    + [quadrature.triangle.ZhangCuiLiu(k) for k in [1, 2, 3]]
-    + [quadrature.triangle.XiaoGimbutas(k) for k in range(1, 51)]
+    + [quadpy.triangle.Cubtri()]
+    + [quadpy.triangle.Triex(19), quadpy.triangle.Triex(28)]
+    + [quadpy.triangle.Dunavant(k) for k in range(1, 21)]
+    + [quadpy.triangle.CoolsHaegemans(k) for k in [1]]
+    + [quadpy.triangle.BerntsenEspelid(k) for k in range(1, 5)]
+    + [quadpy.triangle.LiuVinokur(k) for k in range(1, 14)]
+    + [quadpy.triangle.WandzuraXiao(k) for k in range(1, 7)]
+    + [quadpy.triangle.TaylorWingateBos(k) for k in [1, 2, 4, 5, 8]]
+    + [quadpy.triangle.ZhangCuiLiu(k) for k in [1, 2, 3]]
+    + [quadpy.triangle.XiaoGimbutas(k) for k in range(1, 51)]
     )
 def test_scheme(scheme):
     triangle = numpy.array([
@@ -96,7 +90,7 @@ def test_scheme(scheme):
         [0.0, 1.0]
         ])
     degree = check_degree(
-            lambda poly: quadrature.triangle.integrate(poly, triangle, scheme),
+            lambda poly: quadpy.triangle.integrate(poly, triangle, scheme),
             _integrate_monomial_over_standard_triangle,
             create_monomial_exponents2,
             scheme.degree + 1
@@ -107,7 +101,7 @@ def test_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.triangle.XiaoGimbutas(10)]
+    [quadpy.triangle.XiaoGimbutas(10)]
     )
 def test_show(scheme):
     triangle = numpy.array([
@@ -115,12 +109,12 @@ def test_show(scheme):
         [numpy.cos(7.0/6.0*numpy.pi), numpy.sin(7.0/6.0*numpy.pi)],
         [numpy.cos(11.0/6.0*numpy.pi), numpy.sin(11.0/6.0*numpy.pi)],
         ])
-    quadrature.triangle.show(triangle, scheme)
+    quadpy.triangle.show(triangle, scheme)
     return
 
 
 if __name__ == '__main__':
-    scheme = quadrature.triangle.XiaoGimbutas(50)
+    scheme = quadpy.triangle.XiaoGimbutas(50)
     test_scheme(scheme)
     test_show(scheme)
     plt.show()

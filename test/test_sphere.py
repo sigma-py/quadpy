@@ -2,17 +2,11 @@
 #
 from helpers import create_monomial_exponents3, check_degree
 import math
+from matplotlib import pyplot as plt
 import numpy
 import pytest
-import quadrature
+import quadpy
 import sympy
-
-import os
-import matplotlib as mpl
-if 'DISPLAY' not in os.environ:
-    # headless mode, for remote executions (and travis)
-    mpl.use('Agg')
-from matplotlib import pyplot as plt
 
 
 def _integral_monomial_over_unit_sphere(alpha):
@@ -54,7 +48,7 @@ def _integrate_exact(f, midpoint, radius):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.sphere.Lebedev(k) for k in range(1, 33)]
+    [quadpy.sphere.Lebedev(k) for k in range(1, 33)]
     )
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
@@ -62,7 +56,7 @@ def test_scheme(scheme):
     midpoint = numpy.array([0.0, 0.0, 0.0])
     radius = 1.0
     degree = check_degree(
-            lambda poly: quadrature.sphere.integrate(
+            lambda poly: quadpy.sphere.integrate(
                 poly, midpoint, radius, scheme
                 ),
             _integral_monomial_over_unit_sphere,
@@ -75,15 +69,15 @@ def test_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.sphere.Lebedev(4)]
+    [quadpy.sphere.Lebedev(4)]
     )
 def test_show(scheme):
-    quadrature.sphere.show(scheme)
+    quadpy.sphere.show(scheme)
     return
 
 
 if __name__ == '__main__':
-    scheme = quadrature.sphere.Lebedev(4)
+    scheme = quadpy.sphere.Lebedev(4)
     test_scheme(scheme)
     test_show(scheme)
     plt.show()
