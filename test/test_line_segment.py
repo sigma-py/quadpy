@@ -3,16 +3,10 @@
 from helpers import check_degree_1d
 
 import math
-import numpy
-import quadpy
-
-import os
-import matplotlib as mpl
-import pytest
-if 'DISPLAY' not in os.environ:
-    # headless mode, for remote executions (and travis)
-    mpl.use('Agg')
 from matplotlib import pyplot as plt
+import numpy
+import pytest
+import quadpy
 
 
 @pytest.mark.parametrize(
