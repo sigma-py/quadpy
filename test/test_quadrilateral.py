@@ -2,18 +2,12 @@
 #
 from helpers import create_monomial_exponents2, check_degree
 
+from matplotlib import pyplot as plt
 import numpy
 import pytest
-import quadrature
-from quadrature.quadrilateral import From1d
+import quadpy
+from quadpy.quadrilateral import From1d
 import sympy
-
-import os
-import matplotlib as mpl
-if 'DISPLAY' not in os.environ:
-    # headless mode, for remote executions (and travis)
-    mpl.use('Agg')
-from matplotlib import pyplot as plt
 
 
 def _integrate_exact(f, quadrilateral):
@@ -49,14 +43,14 @@ def _integrate_exact2(k, x0, x1, y0, y1):
 
 @pytest.mark.parametrize(
     'scheme',
-    [From1d(quadrature.line_segment.Midpoint())]
-    + [From1d(quadrature.line_segment.Trapezoidal())]
-    + [quadrature.quadrilateral.Stroud(k) for k in range(1, 7)]
-    + [From1d(quadrature.line_segment.GaussLegendre(k)) for k in range(1, 5)]
-    + [From1d(quadrature.line_segment.NewtonCotesClosed(k))
+    [From1d(quadpy.line_segment.Midpoint())]
+    + [From1d(quadpy.line_segment.Trapezoidal())]
+    + [quadpy.quadrilateral.Stroud(k) for k in range(1, 7)]
+    + [From1d(quadpy.line_segment.GaussLegendre(k)) for k in range(1, 5)]
+    + [From1d(quadpy.line_segment.NewtonCotesClosed(k))
         for k in range(1, 5)
        ]
-    + [From1d(quadrature.line_segment.NewtonCotesOpen(k)) for k in range(6)]
+    + [From1d(quadpy.line_segment.NewtonCotesOpen(k)) for k in range(6)]
     )
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
@@ -72,7 +66,7 @@ def test_scheme(scheme):
         [x0, y1],
         ])
     degree = check_degree(
-            lambda poly: quadrature.quadrilateral.integrate(
+            lambda poly: quadpy.quadrilateral.integrate(
                 poly, quadrilateral, scheme
                 ),
             lambda k: _integrate_exact2(k, x0, x1, y0, y1),
@@ -85,7 +79,7 @@ def test_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    [From1d(quadrature.line_segment.GaussLegendre(5))]
+    [From1d(quadpy.line_segment.GaussLegendre(5))]
     )
 def test_show(scheme):
     # quadrilateral = numpy.array([
@@ -100,13 +94,13 @@ def test_show(scheme):
         [+1, +1],
         [-1, +1],
         ])
-    quadrature.quadrilateral.show(quadrilateral, scheme)
+    quadpy.quadrilateral.show(quadrilateral, scheme)
     return
 
 
 if __name__ == '__main__':
-    # scheme = From1d(quadrature.line_segment.NewtonCotesClosed(15))
-    scheme = quadrature.quadrilateral.Stroud(6)
+    # scheme = From1d(quadpy.line_segment.NewtonCotesClosed(15))
+    scheme = quadpy.quadrilateral.Stroud(6)
     test_scheme(scheme)
     test_show(scheme)
     plt.show()

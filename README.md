@@ -1,12 +1,12 @@
-# quadrature
+# quadpy
 
 Your one-stop shop for numerical integration in Python.
 
-[![Build Status](https://travis-ci.org/nschloe/quadrature.svg?branch=master)](https://travis-ci.org/nschloe/quadrature)
-[![Code Health](https://landscape.io/github/nschloe/quadrature/master/landscape.png)](https://landscape.io/github/nschloe/quadrature/master)
-[![codecov](https://codecov.io/gh/nschloe/quadrature/branch/master/graph/badge.svg)](https://codecov.io/gh/nschloe/quadrature)
-[![PyPi Version](https://img.shields.io/pypi/v/quadrature.svg)](https://pypi.python.org/pypi/quadrature)
-[![GitHub stars](https://img.shields.io/github/stars/nschloe/quadrature.svg?style=social&label=Star&maxAge=2592000)](https://github.com/nschloe/quadrature)
+[![Build Status](https://travis-ci.org/nschloe/quadpy.svg?branch=master)](https://travis-ci.org/nschloe/quadpy)
+[![Code Health](https://landscape.io/github/nschloe/quadpy/master/landscape.png)](https://landscape.io/github/nschloe/quadpy/master)
+[![codecov](https://codecov.io/gh/nschloe/quadpy/branch/master/graph/badge.svg)](https://codecov.io/gh/nschloe/quadpy)
+[![PyPi Version](https://img.shields.io/pypi/v/quadpy.svg)](https://pypi.python.org/pypi/quadpy)
+[![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?style=social&label=Star&maxAge=2592000)](https://github.com/nschloe/quadpy)
 
 Hundreds of numerical integration schemes for line segments, circles, disks,
 triangles, quadrilaterals, spheres, tetrahedra, hexahedra, wedges, pyramids.
@@ -14,21 +14,21 @@ triangles, quadrilaterals, spheres, tetrahedra, hexahedra, wedges, pyramids.
 To numerically integrate any function over any given triangle, do
 ```python
 import numpy
-import quadrature
+import quadpy
 
 def f(x):
     return numpy.sin(x[0]) * numpy.sin(x[1])
 
 triangle = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.7, 0.5]])
 
-val = quadrature.triangle.integrate(f, triangle, quadrature.triangle.Strang(9))
+val = quadpy.triangle.integrate(f, triangle, quadpy.triangle.Strang(9))
 ```
 This uses Strang's rule of degree 6.
 
 ## Schemes
 
 ### Line segment
-<img src="https://nschloe.github.io/quadrature/line.svg" width="50%">
+<img src="https://nschloe.github.io/quadpy/line.png" width="50%">
 
  * Chebyshev-Gauß (both variants, arbitrary order)
  * Clenshaw-Curtis (after
@@ -50,12 +50,12 @@ This uses Strang's rule of degree 6.
  * open Newton-Cotes (arbitray order)
 
 ### Circle
-<img src="https://nschloe.github.io/quadrature/circle.svg" width="25%">
+<img src="https://nschloe.github.io/quadpy/circle.png" width="25%">
 
  * equidistant points
 
 ### Triangle
-<img src="https://nschloe.github.io/quadrature/triangle.svg" width="25%">
+<img src="https://nschloe.github.io/quadpy/triangle.png" width="25%">
 
 Apart from the classical centroid, vertex, and seven-point schemes we have
 
@@ -89,19 +89,19 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    schemes up to degree 50).
 
 ### Disk
-<img src="https://nschloe.github.io/quadrature/disk.svg" width="25%">
+<img src="https://nschloe.github.io/quadpy/disk.png" width="25%">
 
  * [Peirce](http://www.jstor.org/stable/2098722) (1957, arbitrary degree)
  * [Lether](http://www.jstor.org/stable/2949473) (1971, arbitrary degree)
 
 ### Quadrilateral
-<img src="https://nschloe.github.io/quadrature/quad.svg" width="25%">
+<img src="https://nschloe.github.io/quadpy/quad.png" width="25%">
 
  * Product schemes derived from line segment schemes
  * [Stroud's schemes](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (6 schemes up to degree 15)
 
 ### Tetrahedron
-<img src="https://nschloe.github.io/quadrature/tet.png" width="25%">
+<img src="https://nschloe.github.io/quadpy/tet.png" width="25%">
 
  * [Hammer-Marlowe-Stroud](https://doi.org/10.1090/S0025-5718-1956-0086389-6)
    (1956, 3 schemes up to degree 3)
@@ -121,43 +121,43 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    degree 7)
 
 ### Hexahedron
-<img src="https://nschloe.github.io/quadrature/hexa.png" width="25%">
+<img src="https://nschloe.github.io/quadpy/hexa.png" width="25%">
 
  * Product schemes derived from line segment schemes
 
 ### Pyramid
-<img src="https://nschloe.github.io/quadrature/pyra.png" width="25%">
+<img src="https://nschloe.github.io/quadpy/pyra.png" width="25%">
 
  * [Felippa's schemes](http://dx.doi.org/10.1108/02644400410554362) (9 schemes
    up to degree 5)
 
 ### Wedge
-<img src="https://nschloe.github.io/quadrature/wedge.png" width="15%">
+<img src="https://nschloe.github.io/quadpy/wedge.png" width="15%">
 
  * [Felippa's schemes](http://dx.doi.org/10.1108/02644400410554362) (6 schemes
    up to degree 6)
 
 ### Sphere
-<img src="https://nschloe.github.io/quadrature/sphere.png" width="25%">
+<img src="https://nschloe.github.io/quadpy/sphere.png" width="25%">
 
- * [Lebedev's schemes](https://en.wikipedia.org/wiki/Lebedev_quadrature) (32
+ * [Lebedev's schemes](https://en.wikipedia.org/wiki/Lebedev_quadpy) (32
    schemes up to degree 131)
 
 ### Installation
 
 #### Python Package Index
 
-quadrature is [available from the Python Package Index](https://pypi.python.org/pypi/quadrature/), so with
+quadpy is [available from the Python Package Index](https://pypi.python.org/pypi/quadpy/), so with
 ```
-pip install -U quadrature
+pip install -U quadpy
 ```
 you can install/upgrade.
 
 #### Manual installation
 
-Download quadrature from
-[the Python Package Index](https://pypi.python.org/pypi/quadrature/).
-Place the quadrature script in a directory where Python can find it (e.g.,
+Download quadpy from
+[the Python Package Index](https://pypi.python.org/pypi/quadpy/).
+Place the quadpy script in a directory where Python can find it (e.g.,
 `$PYTHONPATH`). You can install it system-wide with
 ```
 python setup.py install
@@ -182,4 +182,4 @@ To create a new release
     ```
 
 ### License
-quadrature is published under the [MIT license](https://en.wikipedia.org/wiki/MIT_License).
+quadpy is published under the [MIT license](https://en.wikipedia.org/wiki/MIT_License).
