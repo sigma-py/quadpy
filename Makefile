@@ -1,4 +1,4 @@
-VERSION=$(shell python -c "import quadrature; print(quadrature.__version__)")
+VERSION=$(shell python -c "import quadpy; print(quadpy.__version__)")
 
 # Make sure we're on the master branch
 ifneq "$(shell git rev-parse --abbrev-ref HEAD)" "master"
