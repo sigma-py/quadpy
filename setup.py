@@ -31,12 +31,13 @@ setup(
     author=about['__author__'],
     author_email=about['__email__'],
     install_requires=[
+        'matplotlib',
         'numpy',
         'pipdated',
         'scipy',
         'sympy'
         ],
-    description='numerical integration schemes',
+    description='numerical integration, quadrature',
     long_description=read('README.rst'),
     license=about['__license__'],
     classifiers=[
