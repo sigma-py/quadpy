@@ -4,7 +4,7 @@ from helpers import check_degree_1d
 
 import math
 import numpy
-import quadrature
+import quadpy
 
 import os
 import matplotlib as mpl
@@ -17,17 +17,17 @@ from matplotlib import pyplot as plt
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.line_segment.Midpoint()]
-    + [quadrature.line_segment.Trapezoidal()]
-    + [quadrature.line_segment.ClenshawCurtis(k) for k in range(2, 10)]
-    + [quadrature.line_segment.GaussLegendre(k) for k in range(1, 6)]
-    + [quadrature.line_segment.GaussLobatto(k) for k in range(2, 7)]
-    + [quadrature.line_segment.GaussPatterson(k) for k in range(7)]
-    + [quadrature.line_segment.GaussRadau(k) for k in range(2, 10)]
-    + [quadrature.line_segment.Fejer1(k) for k in range(1, 10)]
-    + [quadrature.line_segment.Fejer2(k) for k in range(1, 10)]
-    + [quadrature.line_segment.NewtonCotesClosed(k) for k in range(1, 5)]
-    + [quadrature.line_segment.NewtonCotesOpen(k) for k in range(1, 5)]
+    [quadpy.line_segment.Midpoint()]
+    + [quadpy.line_segment.Trapezoidal()]
+    + [quadpy.line_segment.ClenshawCurtis(k) for k in range(2, 10)]
+    + [quadpy.line_segment.GaussLegendre(k) for k in range(1, 6)]
+    + [quadpy.line_segment.GaussLobatto(k) for k in range(2, 7)]
+    + [quadpy.line_segment.GaussPatterson(k) for k in range(7)]
+    + [quadpy.line_segment.GaussRadau(k) for k in range(2, 10)]
+    + [quadpy.line_segment.Fejer1(k) for k in range(1, 10)]
+    + [quadpy.line_segment.Fejer2(k) for k in range(1, 10)]
+    + [quadpy.line_segment.NewtonCotesClosed(k) for k in range(1, 5)]
+    + [quadpy.line_segment.NewtonCotesOpen(k) for k in range(1, 5)]
     )
 def test_scheme(scheme):
     degree = 0
@@ -36,7 +36,7 @@ def test_scheme(scheme):
         a = 0.5**(1.0/(degree+1))
         b = 1.5**(1.0/(degree+1))
         exact_val = 1.0/(degree+1)
-        val = quadrature.line_segment.integrate(
+        val = quadpy.line_segment.integrate(
                 lambda x: x**degree,
                 a, b, scheme
                 )
@@ -51,7 +51,7 @@ def test_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.line_segment.ChebyshevGauss1(k) for k in range(1, 10)]
+    [quadpy.line_segment.ChebyshevGauss1(k) for k in range(1, 10)]
     )
 def test_cheb1_scheme(scheme):
     def integrate_exact(k):
@@ -65,7 +65,7 @@ def test_cheb1_scheme(scheme):
             / k
 
     degree = check_degree_1d(
-            lambda poly: quadrature.line_segment.integrate(
+            lambda poly: quadpy.line_segment.integrate(
                     poly, -1.0, 1.0, scheme
                     ),
             integrate_exact,
@@ -78,7 +78,7 @@ def test_cheb1_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.line_segment.ChebyshevGauss2(k) for k in range(1, 10)]
+    [quadpy.line_segment.ChebyshevGauss2(k) for k in range(1, 10)]
     )
 def test_cheb2_scheme(scheme):
     def integrate_exact(k):
@@ -92,7 +92,7 @@ def test_cheb2_scheme(scheme):
             / 4
 
     degree = check_degree_1d(
-            lambda poly: quadrature.line_segment.integrate(
+            lambda poly: quadpy.line_segment.integrate(
                     poly, -1.0, 1.0, scheme
                     ),
             integrate_exact,
@@ -105,7 +105,7 @@ def test_cheb2_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.line_segment.GaussLaguerre(k) for k in range(1, 10)]
+    [quadpy.line_segment.GaussLaguerre(k) for k in range(1, 10)]
     )
 def test_laguerre_scheme(scheme):
     def integrate_exact(k):
@@ -113,7 +113,7 @@ def test_laguerre_scheme(scheme):
         return math.gamma(k + 1)
 
     degree = check_degree_1d(
-            lambda poly: quadrature.line_segment.integrate(
+            lambda poly: quadpy.line_segment.integrate(
                     poly, -1.0, 1.0, scheme
                     ),
             integrate_exact,
@@ -126,7 +126,7 @@ def test_laguerre_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.line_segment.GaussHermite(k) for k in range(1, 8)]
+    [quadpy.line_segment.GaussHermite(k) for k in range(1, 8)]
     )
 def test_hermite_scheme(scheme):
     def integrate_exact(k):
@@ -134,7 +134,7 @@ def test_hermite_scheme(scheme):
         return 0.5 * ((-1)**k + 1) * math.gamma(0.5*(k + 1))
 
     degree = check_degree_1d(
-            lambda poly: quadrature.line_segment.integrate(
+            lambda poly: quadpy.line_segment.integrate(
                     poly, -1.0, 1.0, scheme
                     ),
             integrate_exact,
@@ -147,15 +147,15 @@ def test_hermite_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.line_segment.NewtonCotesClosed(5)]
+    [quadpy.line_segment.NewtonCotesClosed(5)]
     )
 def test_show(scheme):
-    quadrature.line_segment.show(-1.0, 1.0, scheme)
+    quadpy.line_segment.show(-1.0, 1.0, scheme)
     return
 
 
 if __name__ == '__main__':
-    scheme = quadrature.line_segment.Fejer2(20)
+    scheme = quadpy.line_segment.Fejer2(20)
     print(scheme.points)
     print(scheme.weights)
     test_scheme(scheme)

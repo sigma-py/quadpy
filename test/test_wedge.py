@@ -2,8 +2,8 @@
 #
 from helpers import create_monomial_exponents3, check_degree
 import numpy
-import quadrature
 import pytest
+import quadpy
 import sympy
 
 import os
@@ -60,7 +60,7 @@ def _integrate_exact(k, wedge):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.wedge.Felippa(k) for k in range(1, 7)]
+    [quadpy.wedge.Felippa(k) for k in range(1, 7)]
     )
 def test_scheme(scheme):
     wedge = numpy.array([
@@ -72,7 +72,7 @@ def test_scheme(scheme):
         [0.0, 1.0, +1.0],
         ])
     degree = check_degree(
-            lambda poly: quadrature.wedge.integrate(
+            lambda poly: quadpy.wedge.integrate(
                 poly, wedge, scheme
                 ),
             lambda k: _integrate_exact(k, wedge),
@@ -85,7 +85,7 @@ def test_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.wedge.Felippa(4)]
+    [quadpy.wedge.Felippa(4)]
     )
 def test_show(scheme):
     wedge = numpy.array([
@@ -96,12 +96,12 @@ def test_show(scheme):
         [1.0, 0.0, +1.0],
         [0.0, 1.0, +1.0],
         ])
-    quadrature.wedge.show(wedge, scheme)
+    quadpy.wedge.show(wedge, scheme)
     return
 
 
 if __name__ == '__main__':
-    scheme = quadrature.wedge.Felippa(2)
+    scheme = quadpy.wedge.Felippa(2)
     test_scheme(scheme)
     test_show(scheme)
     plt.show()

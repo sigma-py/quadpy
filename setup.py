@@ -7,7 +7,7 @@ import codecs
 # https://packaging.python.org/single_source_version/
 base_dir = os.path.abspath(os.path.dirname(__file__))
 about = {}
-with open(os.path.join(base_dir, 'quadrature', '__about__.py')) as f:
+with open(os.path.join(base_dir, 'quadpy', '__about__.py')) as f:
     exec(f.read(), about)
 
 
@@ -23,11 +23,11 @@ def read(fname):
 
 
 setup(
-    name='quadrature',
+    name='quadpy',
     version=about['__version__'],
-    packages=['quadrature'],
-    url='https://github.com/nschloe/quadrature',
-    download_url='https://pypi.python.org/pypi/quadrature',
+    packages=['quadpy'],
+    url='https://github.com/nschloe/quadpy',
+    download_url='https://pypi.python.org/pypi/quadpy',
     author=about['__author__'],
     author_email=about['__email__'],
     install_requires=[

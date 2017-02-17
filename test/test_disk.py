@@ -8,7 +8,7 @@ from helpers import \
 import numpy
 import numpy.testing
 import pytest
-import quadrature
+import quadpy
 
 import os
 import matplotlib as mpl
@@ -29,12 +29,12 @@ def _integrate_exact(k):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.disk.Peirce(k) for k in range(1, 6)]
-    + [quadrature.disk.Lether(k) for k in range(1, 6)]
+    [quadpy.disk.Peirce(k) for k in range(1, 6)]
+    + [quadpy.disk.Lether(k) for k in range(1, 6)]
     )
 def test_scheme(scheme):
     degree = check_degree(
-            lambda poly: quadrature.disk.integrate(poly, scheme),
+            lambda poly: quadpy.disk.integrate(poly, scheme),
             _integrate_exact,
             create_monomial_exponents2,
             scheme.degree + 1
@@ -45,15 +45,15 @@ def test_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.disk.Lether(3)]
+    [quadpy.disk.Lether(3)]
     )
 def test_show(scheme):
-    quadrature.disk.show(scheme)
+    quadpy.disk.show(scheme)
     return
 
 if __name__ == '__main__':
-    scheme = quadrature.disk.Lether(5)
-    # scheme = From1d(quadrature.line_segment.NewtonCotesClosed(15))
+    scheme = quadpy.disk.Lether(5)
+    # scheme = From1d(quadpy.line_segment.NewtonCotesClosed(15))
     test_scheme(scheme)
     # test_show(scheme)
     # plt.show()

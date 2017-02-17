@@ -2,8 +2,8 @@
 #
 from helpers import create_monomial_exponents3, check_degree
 import numpy
-import quadrature
 import pytest
+import quadpy
 import sympy
 
 import os
@@ -64,7 +64,7 @@ def _integrate_exact(k, pyra):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.pyramid.Felippa(k) for k in range(1, 10)]
+    [quadpy.pyramid.Felippa(k) for k in range(1, 10)]
     )
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
@@ -77,7 +77,7 @@ def test_scheme(scheme):
         [0, 0, 1],
         ])
     degree = check_degree(
-            lambda poly: quadrature.pyramid.integrate(poly, pyra, scheme),
+            lambda poly: quadpy.pyramid.integrate(poly, pyra, scheme),
             lambda k: _integrate_exact(k, pyra),
             create_monomial_exponents3,
             scheme.degree + 1
@@ -88,7 +88,7 @@ def test_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.pyramid.Felippa(5)]
+    [quadpy.pyramid.Felippa(5)]
     )
 def test_show(scheme):
     pyra = numpy.array([
@@ -98,12 +98,12 @@ def test_show(scheme):
         [-1, +1, -1],
         [0, 0, 1],
         ])
-    quadrature.pyramid.show(pyra, scheme)
+    quadpy.pyramid.show(pyra, scheme)
     return
 
 
 if __name__ == '__main__':
-    scheme = quadrature.pyramid.Felippa(5)
+    scheme = quadpy.pyramid.Felippa(5)
     test_scheme(scheme)
     test_show(scheme)
     plt.show()
