@@ -4,7 +4,7 @@ from helpers import create_monomial_exponents3, check_degree
 import math
 import numpy
 import pytest
-import quadrature
+import quadpy
 import sympy
 
 import os
@@ -37,7 +37,7 @@ def _integrate_exact(f, tetrahedron):
         + tetrahedron[1] * xi[0] \
         + tetrahedron[2] * xi[1] \
         + tetrahedron[3] * xi[2]
-    abs_det_J = 6 * quadrature.tetrahedron.volume(tetrahedron)
+    abs_det_J = 6 * quadpy.tetrahedron.volume(tetrahedron)
     exact = sympy.integrate(
         sympy.integrate(
           sympy.integrate(abs_det_J * f(x_xi), (xi[2], 0, 1-xi[0]-xi[1])),
@@ -68,16 +68,16 @@ def _integrate_monomial_over_standard_tet(k):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.tetrahedron.HammerMarloweStroud(k) for k in [1, 2, 3]]
-    + [quadrature.tetrahedron.NewtonCotesClosed(k) for k in range(1, 7)]
-    + [quadrature.tetrahedron.NewtonCotesOpen(k) for k in range(7)]
-    + [quadrature.tetrahedron.Yu(k) for k in range(1, 6)]
-    + [quadrature.tetrahedron.Keast(k) for k in range(11)]
-    + [quadrature.tetrahedron.LiuVinokur(k) for k in range(1, 15)]
-    + [quadrature.tetrahedron.Zienkiewicz(k) for k in [4, 5]]
-    + [quadrature.tetrahedron.ZhangCuiLiu(k) for k in [1, 2]]
-    + [quadrature.tetrahedron.ShunnHam(k) for k in range(1, 7)]
-    + [quadrature.tetrahedron.XiaoGimbutas(k) for k in range(1, 16)]
+    [quadpy.tetrahedron.HammerMarloweStroud(k) for k in [1, 2, 3]]
+    + [quadpy.tetrahedron.NewtonCotesClosed(k) for k in range(1, 7)]
+    + [quadpy.tetrahedron.NewtonCotesOpen(k) for k in range(7)]
+    + [quadpy.tetrahedron.Yu(k) for k in range(1, 6)]
+    + [quadpy.tetrahedron.Keast(k) for k in range(11)]
+    + [quadpy.tetrahedron.LiuVinokur(k) for k in range(1, 15)]
+    + [quadpy.tetrahedron.Zienkiewicz(k) for k in [4, 5]]
+    + [quadpy.tetrahedron.ZhangCuiLiu(k) for k in [1, 2]]
+    + [quadpy.tetrahedron.ShunnHam(k) for k in range(1, 7)]
+    + [quadpy.tetrahedron.XiaoGimbutas(k) for k in range(1, 16)]
     )
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
@@ -89,7 +89,7 @@ def test_scheme(scheme):
         [0.0, 0.0, 1.0],
         ])
     degree = check_degree(
-            lambda poly: quadrature.tetrahedron.integrate(
+            lambda poly: quadpy.tetrahedron.integrate(
                 poly, tetrahedron, scheme
                 ),
             _integrate_monomial_over_standard_tet,
@@ -102,7 +102,7 @@ def test_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadrature.tetrahedron.HammerMarloweStroud(3)]
+    [quadpy.tetrahedron.HammerMarloweStroud(3)]
     )
 def test_show(scheme):
     tet = numpy.array([
@@ -111,12 +111,12 @@ def test_show(scheme):
         [numpy.cos(11.0/6.0*numpy.pi), numpy.sin(11.0/6.0*numpy.pi), -0.5],
         [0.0, 0.0, 1.0]
         ])
-    quadrature.tetrahedron.show(tet, scheme)
+    quadpy.tetrahedron.show(tet, scheme)
     return
 
 
 if __name__ == '__main__':
-    scheme = quadrature.tetrahedron.ShunnHam(6)
+    scheme = quadpy.tetrahedron.ShunnHam(6)
     test_scheme(scheme)
     test_show(scheme)
     plt.show()
