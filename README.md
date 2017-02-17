@@ -28,7 +28,7 @@ This uses Strang's rule of degree 6.
 ## Schemes
 
 ### Line segment
-<img src="https://nschloe.github.io/quadpy/line.svg" width="50%">
+<img src="https://nschloe.github.io/quadpy/line.png" width="50%">
 
  * Chebyshev-Gauß (both variants, arbitrary order)
  * Clenshaw-Curtis (after
@@ -50,12 +50,12 @@ This uses Strang's rule of degree 6.
  * open Newton-Cotes (arbitray order)
 
 ### Circle
-<img src="https://nschloe.github.io/quadpy/circle.svg" width="25%">
+<img src="https://nschloe.github.io/quadpy/circle.png" width="25%">
 
  * equidistant points
 
 ### Triangle
-<img src="https://nschloe.github.io/quadpy/triangle.svg" width="25%">
+<img src="https://nschloe.github.io/quadpy/triangle.png" width="25%">
 
 Apart from the classical centroid, vertex, and seven-point schemes we have
 
@@ -89,13 +89,13 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    schemes up to degree 50).
 
 ### Disk
-<img src="https://nschloe.github.io/quadpy/disk.svg" width="25%">
+<img src="https://nschloe.github.io/quadpy/disk.png" width="25%">
 
  * [Peirce](http://www.jstor.org/stable/2098722) (1957, arbitrary degree)
  * [Lether](http://www.jstor.org/stable/2949473) (1971, arbitrary degree)
 
 ### Quadrilateral
-<img src="https://nschloe.github.io/quadpy/quad.svg" width="25%">
+<img src="https://nschloe.github.io/quadpy/quad.png" width="25%">
 
  * Product schemes derived from line segment schemes
  * [Stroud's schemes](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (6 schemes up to degree 15)
