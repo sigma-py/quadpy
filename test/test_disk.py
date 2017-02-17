@@ -5,17 +5,8 @@ from helpers import \
         integrate_monomial_over_unit_circle, \
         check_degree
 
-import numpy
-import numpy.testing
 import pytest
 import quadpy
-
-import os
-import matplotlib as mpl
-if 'DISPLAY' not in os.environ:
-    # headless mode, for remote executions (and travis)
-    mpl.use('Agg')
-from matplotlib import pyplot as plt
 
 
 def _integrate_exact(k):
@@ -50,6 +41,7 @@ def test_scheme(scheme):
 def test_show(scheme):
     quadpy.disk.show(scheme)
     return
+
 
 if __name__ == '__main__':
     scheme = quadpy.disk.Lether(5)

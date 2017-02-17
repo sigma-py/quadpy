@@ -2,18 +2,12 @@
 #
 from helpers import create_monomial_exponents2, check_degree
 
+from matplotlib import pyplot as plt
 import numpy
 import pytest
 import quadpy
 from quadpy.quadrilateral import From1d
 import sympy
-
-import os
-import matplotlib as mpl
-if 'DISPLAY' not in os.environ:
-    # headless mode, for remote executions (and travis)
-    mpl.use('Agg')
-from matplotlib import pyplot as plt
 
 
 def _integrate_exact(f, quadrilateral):
