@@ -34,6 +34,7 @@ def show(a, b, scheme):
     helpers.plot_disks(
         plt, pts, scheme.weights, total_area
         )
+    plt.show()
     return
 
 

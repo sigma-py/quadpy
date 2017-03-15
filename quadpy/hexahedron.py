@@ -57,6 +57,7 @@ def show(hexa, scheme):
         hexa[:, 2].min(), hexa[:, 2].max(),
         )
 
+    plt.show()
     return
 
 

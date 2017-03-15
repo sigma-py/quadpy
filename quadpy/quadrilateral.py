@@ -34,6 +34,7 @@ def show(quad, scheme):
     helpers.plot_disks(
         plt, transformed_pts, scheme.weights, vol
         )
+    plt.show()
     return
 
 

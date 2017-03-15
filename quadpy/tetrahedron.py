@@ -47,6 +47,7 @@ def show(tet, scheme):
         tet[:, 1].min(), tet[:, 1].max(),
         tet[:, 2].min(), tet[:, 2].max(),
         )
+    plt.show()
     return
 
 
