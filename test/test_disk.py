@@ -25,7 +25,9 @@ def _integrate_exact(k):
     )
 def test_scheme(scheme):
     degree = check_degree(
-            lambda poly: quadpy.disk.integrate(poly, scheme),
+            lambda poly: quadpy.disk.integrate(
+                poly, [0.0, 0.0], 1.0, scheme
+                ),
             _integrate_exact,
             create_monomial_exponents2,
             scheme.degree + 1

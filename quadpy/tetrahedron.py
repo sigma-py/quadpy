@@ -7,7 +7,16 @@ import sympy
 from . import helpers
 
 
-def show(tet, scheme):
+def show(
+        scheme,
+        tet=numpy.array([
+            [+1, 0, -1.0/numpy.sqrt(2.0)],
+            [-1, 0, -1.0/numpy.sqrt(2.0)],
+            [0, +1, +1.0/numpy.sqrt(2.0)],
+            [0, -1, +1.0/numpy.sqrt(2.0)],
+            ]),
+        show_axes=False
+        ):
     '''Shows the quadrature points on a given tetrahedron. The size of the
     balls around the points coincides with their weights.
     '''
@@ -17,6 +26,9 @@ def show(tet, scheme):
     fig = plt.figure()
     ax = fig.gca(projection='3d')
     ax.set_aspect('equal')
+
+    if not show_axes:
+        plt.gca().set_axis_off()
 
     edges = numpy.array([
         [tet[0], tet[1]],
@@ -47,6 +59,7 @@ def show(tet, scheme):
         tet[:, 1].min(), tet[:, 1].max(),
         tet[:, 2].min(), tet[:, 2].max(),
         )
+    plt.show()
     return
 
 

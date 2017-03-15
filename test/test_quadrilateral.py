@@ -82,19 +82,7 @@ def test_scheme(scheme):
     [From1d(quadpy.line_segment.GaussLegendre(5))]
     )
 def test_show(scheme):
-    # quadrilateral = numpy.array([
-    #     [0, 0],
-    #     [2, -0.5],
-    #     [1.5, 1.0],
-    #     [0.5, 0.7],
-    #     ])
-    quadrilateral = numpy.array([
-        [-1, -1],
-        [+1, -1],
-        [+1, +1],
-        [-1, +1],
-        ])
-    quadpy.quadrilateral.show(quadrilateral, scheme)
+    quadpy.quadrilateral.show(scheme)
     return
 
 

@@ -6,7 +6,7 @@ import numpy
 from . import helpers
 
 
-def show(scheme):
+def show(scheme, show_axes=False):
     from matplotlib import pyplot as plt
     ax = plt.gca()
     # change default range so that new disks will work
@@ -14,18 +14,24 @@ def show(scheme):
     ax.set_xlim((-1.5, 1.5))
     ax.set_ylim((-1.5, 1.5))
 
+    if not show_axes:
+        ax.set_axis_off()
+
     disk1 = plt.Circle((0, 0), 1, color='k', fill=False)
     ax.add_artist(disk1)
 
     helpers.plot_disks(
         plt, scheme.points, scheme.weights, numpy.pi
         )
+    plt.show()
     return
 
 
-def integrate(f, scheme):
-    x = scheme.points.T
-    return math.fsum(scheme.weights * f(x).T)
+def integrate(f, midpoint, radius, rule):
+    out = math.fsum(
+        rule.weights * f((radius*rule.points + midpoint).T)
+        )
+    return radius**2 * out
 
 
 class Peirce(object):

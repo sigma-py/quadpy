@@ -16,7 +16,9 @@ import quadpy
     )
 def test_scheme(scheme):
     degree = check_degree(
-            lambda poly: quadpy.circle.integrate(poly, scheme),
+            lambda poly: quadpy.circle.integrate(
+                poly, [0.0, 0.0], 1.0, scheme
+                ),
             integrate_monomial_over_unit_circle,
             create_monomial_exponents2,
             scheme.degree + 1

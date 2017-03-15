@@ -109,7 +109,7 @@ def test_show(scheme):
         [numpy.cos(7.0/6.0*numpy.pi), numpy.sin(7.0/6.0*numpy.pi)],
         [numpy.cos(11.0/6.0*numpy.pi), numpy.sin(11.0/6.0*numpy.pi)],
         ])
-    quadpy.triangle.show(triangle, scheme)
+    quadpy.triangle.show(scheme, triangle)
     return
 
 
