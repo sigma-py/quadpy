@@ -27,9 +27,11 @@ def show(scheme):
     return
 
 
-def integrate(f, scheme):
-    x = scheme.points.T
-    return math.fsum(scheme.weights * f(x).T)
+def integrate(f, midpoint, radius, rule):
+    out = math.fsum(
+        rule.weights * f((radius*rule.points + midpoint).T)
+        )
+    return radius * out
 
 
 class Equidistant(object):
