@@ -85,14 +85,7 @@ def test_scheme(scheme):
     [quadpy.pyramid.Felippa(5)]
     )
 def test_show(scheme):
-    pyra = numpy.array([
-        [-1, -1, -1],
-        [+1, -1, -1],
-        [+1, +1, -1],
-        [-1, +1, -1],
-        [0, 0, 1],
-        ])
-    quadpy.pyramid.show(pyra, scheme)
+    quadpy.pyramid.show(scheme)
     return
 
 

@@ -13,7 +13,7 @@ def show(
             [0, 0, 1], [1, 0, 1], [1, 1, 1],  [0, 1, 1],
             ]),
         show_axes=False
-            ):
+        ):
     '''Shows the quadrature points on a given hexahedron. The size of the
     balls around the points coincides with their weights.
     '''

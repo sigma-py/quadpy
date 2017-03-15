@@ -144,7 +144,7 @@ def test_hermite_scheme(scheme):
     [quadpy.line_segment.NewtonCotesClosed(5)]
     )
 def test_show(scheme):
-    quadpy.line_segment.show(-1.0, 1.0, scheme)
+    quadpy.line_segment.show(scheme)
     return
 
 
