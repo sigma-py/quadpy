@@ -7,7 +7,11 @@ import math
 import numpy
 
 
-def show(quad, scheme):
+def show(
+        scheme,
+        quad=numpy.array([[0, 0], [1, 0], [1, 1], [0, 1]]),
+        show_axes=False
+        ):
     '''Shows the quadrature points on a given quad. The area of the disks
     around the points coincides with their weights.
     '''
@@ -21,6 +25,9 @@ def show(quad, scheme):
         )
 
     plt.axis('equal')
+
+    if not show_axes:
+        plt.gca().set_axis_off()
 
     xi = scheme.points[:, 0]
     eta = scheme.points[:, 1]

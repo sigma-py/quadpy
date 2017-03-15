@@ -7,7 +7,15 @@ import sympy
 from . import helpers
 
 
-def show(triangle, scheme):
+def show(
+        scheme,
+        triangle=numpy.array([
+            [-0.5, 0.0],
+            [+0.5, 0.0],
+            [0, 0.5 * (numpy.sqrt(3))],
+            ]),
+        show_axes=False
+        ):
     '''Shows the quadrature points on a given triangle. The size of the circles
     around the points coincides with their weights.
     '''
@@ -19,6 +27,9 @@ def show(triangle, scheme):
         [triangle[-1, 1], triangle[0, 1]],
         '-k'
         )
+
+    if not show_axes:
+        plt.gca().set_axis_off()
 
     transformed_pts = \
         + numpy.outer(

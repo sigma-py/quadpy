@@ -6,7 +6,14 @@ import numpy
 from . import helpers
 
 
-def show(wedge, scheme):
+def show(
+        scheme,
+        wedge=numpy.array([
+            [0, 0, 0], [1, 0, 0], [0, 1, 0],
+            [0, 0, 1], [1, 0, 1], [0, 1, 1],
+            ]),
+        show_axes=False
+        ):
     '''Shows the quadrature points on a given wedge. The size of the
     balls around the points coincides with their weights.
     '''
@@ -16,6 +23,9 @@ def show(wedge, scheme):
     fig = plt.figure()
     ax = fig.gca(projection='3d')
     ax.set_aspect('equal')
+
+    if not show_axes:
+        ax.set_axis_off()
 
     edges = numpy.array([
         [wedge[0], wedge[1]],
