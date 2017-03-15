@@ -49,6 +49,7 @@ def show(pyra, scheme):
         pyra[:, 1].min(), pyra[:, 1].max(),
         pyra[:, 2].min(), pyra[:, 2].max(),
         )
+    plt.show()
     return
 
 

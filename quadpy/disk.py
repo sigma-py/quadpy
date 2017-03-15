@@ -20,6 +20,7 @@ def show(scheme):
     helpers.plot_disks(
         plt, scheme.points, scheme.weights, numpy.pi
         )
+    plt.show()
     return
 
 

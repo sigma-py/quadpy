@@ -51,6 +51,7 @@ def show(wedge, scheme):
         wedge[:, 1].min(), wedge[:, 1].max(),
         wedge[:, 2].min(), wedge[:, 2].max(),
         )
+    plt.show()
     return
 
 

@@ -37,6 +37,7 @@ def show(scheme):
         )
 
     ax.set_axis_off()
+    plt.show()
     return
 
 

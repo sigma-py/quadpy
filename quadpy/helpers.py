@@ -12,7 +12,10 @@ def plot_disks(plt, pts, weights, total_area):
         # use matplotlib 2.0's color scheme
         color = '#1f77b4' if weight >= 0 else '#d62728'
         # highlight circle center
-        plt.plot([tp[0]], [tp[1]], '.' + color)
+        plt.plot(
+            [tp[0]], [tp[1]],
+            linestyle='None', marker='.', color=color
+            )
         # Choose radius such that the sum of areas of the circles equals
         # total_area.
         radius = math.sqrt(abs(weight)/sum_weights * total_area/math.pi)
@@ -22,7 +25,6 @@ def plot_disks(plt, pts, weights, total_area):
     a = 1.3
     plt.gca().set_xlim(-a, +a)
     plt.gca().set_ylim(-a, +a)
-
     return
 
 
@@ -41,7 +43,10 @@ def plot_balls(
     for tp, weight in zip(pts, weights):
         color = '#1f77b4' if weight >= 0 else '#d62728'
         # highlight ball center
-        plt.plot([tp[0]], [tp[1]], [tp[2]], '.' + color)
+        plt.plot(
+            [tp[0]], [tp[1]], [tp[2]],
+            linestyle='None', marker='.', color=color
+            )
 
         # Choose radius such that the sum of volumes of the balls equals
         # total_volume.

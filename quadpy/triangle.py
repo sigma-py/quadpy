@@ -34,6 +34,7 @@ def show(triangle, scheme):
         )
 
     plt.axis('equal')
+    plt.show()
     return
 
 
