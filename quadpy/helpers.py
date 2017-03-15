@@ -4,6 +4,22 @@ import math
 import numpy
 
 
+def kahan_sum(a, axis=0):
+    '''Kahan summation of the numpy array a along axis k.
+    '''
+    # See <https://en.wikipedia.org/wiki/Kahan_summation_algorithm> for
+    # details.
+    s = numpy.zeros(a.shape[:axis] + a.shape[axis+1:])
+    c = numpy.zeros(s.shape)
+    for i in range(a.shape[axis]):
+        # http://stackoverflow.com/a/42817610/353337
+        y = a[(slice(None),) * axis + (i,)] - c
+        t = s + y
+        c = (t - s) - y
+        s = t.copy()
+    return s
+
+
 def plot_disks(plt, pts, weights, total_area):
     '''Plot a circles at quadrature points according to weights.
     '''
