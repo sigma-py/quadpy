@@ -27,12 +27,14 @@ def test_scheme(scheme):
     degree = 0
     while True:
         # Set bounds such that the values are between 0.5 and 1.5.
-        a = 0.5**(1.0/(degree+1))
-        b = 1.5**(1.0/(degree+1))
+        interval = [
+            0.5**(1.0/(degree+1)),
+            1.5**(1.0/(degree+1)),
+            ]
         exact_val = 1.0/(degree+1)
         val = quadpy.line_segment.integrate(
                 lambda x: x**degree,
-                a, b, scheme
+                interval, scheme
                 )
         if abs(exact_val - val) / abs(exact_val) > 1.0e-12:
             break
@@ -60,7 +62,7 @@ def test_cheb1_scheme(scheme):
 
     degree = check_degree_1d(
             lambda poly: quadpy.line_segment.integrate(
-                    poly, -1.0, 1.0, scheme
+                    poly, [-1.0, 1.0], scheme
                     ),
             integrate_exact,
             lambda degree: [[degree]],
@@ -87,7 +89,7 @@ def test_cheb2_scheme(scheme):
 
     degree = check_degree_1d(
             lambda poly: quadpy.line_segment.integrate(
-                    poly, -1.0, 1.0, scheme
+                    poly, [-1.0, 1.0], scheme
                     ),
             integrate_exact,
             lambda degree: [[degree]],
@@ -108,7 +110,7 @@ def test_laguerre_scheme(scheme):
 
     degree = check_degree_1d(
             lambda poly: quadpy.line_segment.integrate(
-                    poly, -1.0, 1.0, scheme
+                    poly, [-1.0, 1.0], scheme
                     ),
             integrate_exact,
             lambda degree: [[degree]],
@@ -129,7 +131,7 @@ def test_hermite_scheme(scheme):
 
     degree = check_degree_1d(
             lambda poly: quadpy.line_segment.integrate(
-                    poly, -1.0, 1.0, scheme
+                    poly, [-1.0, 1.0], scheme
                     ),
             integrate_exact,
             lambda degree: [[degree]],
