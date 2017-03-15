@@ -49,10 +49,28 @@ This uses Strang's rule of degree 6.
  * closed Newton-Cotes (arbitray order)
  * open Newton-Cotes (arbitray order)
 
+Example:
+```python
+val = quadpy.line_segment.integrate(
+    lambda x: numpy.exp(x[0]),
+    0.0, 1.0,
+    quadpy.line_segment.GaussPatterson(5)
+    )
+```
+
 ### Circle
 <img src="https://nschloe.github.io/quadpy/circle.png" width="25%">
 
  * equidistant points
+
+Example:
+```python
+val = quadpy.circle.integrate(
+    lambda x: numpy.exp(x[0]),
+    [0.0, 0.0], 1.0,
+    quadpy.circle.Equidistant(7)
+    )
+```
 
 ### Triangle
 <img src="https://nschloe.github.io/quadpy/triangle.png" width="25%">
@@ -88,17 +106,44 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * [Xiao-Gimbutas](http://dx.doi.org/10.1016/j.camwa.2009.10.027) (2010, 50
    schemes up to degree 50).
 
+Example:
+```python
+val = quadpy.triangle.integrate(
+    lambda x: numpy.exp(x[0]),
+    [[0.0, 0.0], [1.0, 0.0], [0.5, 0.7]],
+    quadpy.triangle.XiaoGimbutas(5)
+    )
+```
+
 ### Disk
 <img src="https://nschloe.github.io/quadpy/disk.png" width="25%">
 
  * [Peirce](http://www.jstor.org/stable/2098722) (1957, arbitrary degree)
  * [Lether](http://www.jstor.org/stable/2949473) (1971, arbitrary degree)
 
+Example:
+```python
+val = quadpy.disk.integrate(
+    lambda x: numpy.exp(x[0]),
+    [0.0, 0.0], 1.0,
+    quadpy.disk.Lether(6)
+    )
+```
+
 ### Quadrilateral
 <img src="https://nschloe.github.io/quadpy/quad.png" width="25%">
 
  * Product schemes derived from line segment schemes
  * [Stroud's schemes](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (6 schemes up to degree 15)
+
+Example:
+```python
+val = quadpy.quadrilateral.integrate(
+    lambda x: numpy.exp(x[0]),
+    [[0.0, 0.0], [1.0, 0.0], [0.5, 0.7], [0.3, 0.9]],
+    quadpy.quadrilateral.Stroud(6)
+    )
+```
 
 ### Tetrahedron
 <img src="https://nschloe.github.io/quadpy/tet.png" width="25%">
@@ -120,10 +165,31 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * [Shunn-Ham](http://dx.doi.org/10.1016/j.cam.2012.03.032) (2012, 6 schemes up to
    degree 7)
 
+Example:
+```python
+val = quadpy.tetrahedron.integrate(
+    lambda x: numpy.exp(x[0]),
+    [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.5, 0.7, 0.0], [0.3, 0.9, 1.0]],
+    quadpy.tetrahedron.Keast(10)
+    )
+```
+
 ### Hexahedron
 <img src="https://nschloe.github.io/quadpy/hexa.png" width="25%">
 
  * Product schemes derived from line segment schemes
+
+Example:
+```python
+val = quadpy.hexahedron.integrate(
+    lambda x: numpy.exp(x[0]),
+    [
+      [0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.5, 0.7, 0.0], [0.3, 0.9, 0.0],
+      [0.0, 0.1, 1.0], [0.7, 0.1, 1.0], [0.4, 0.6, 1.0], [0.2, 1.0, 1.0],
+    ],
+    quadpy.hexahedron.From1d(quadpy.line_segment.NewtonCotesClosed(3))
+    )
+```
 
 ### Pyramid
 <img src="https://nschloe.github.io/quadpy/pyra.png" width="25%">
@@ -131,17 +197,50 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * [Felippa's schemes](http://dx.doi.org/10.1108/02644400410554362) (9 schemes
    up to degree 5)
 
+Example:
+```python
+val = quadpy.pyramid.integrate(
+    lambda x: numpy.exp(x[0]),
+    [
+      [0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.5, 0.7, 0.0], [0.3, 0.9, 0.0],
+      [0.0, 0.1, 1.0],
+    ],
+    quadpy.pyramid.Felippa(5)
+    )
+```
+
 ### Wedge
 <img src="https://nschloe.github.io/quadpy/wedge.png" width="15%">
 
  * [Felippa's schemes](http://dx.doi.org/10.1108/02644400410554362) (6 schemes
    up to degree 6)
 
+Example:
+```python
+val = quadpy.wedge.integrate(
+    lambda x: numpy.exp(x[0]),
+    [
+      [0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.5, 0.7, 0.0],
+      [0.0, 0.0, 1.0], [1.0, 0.0, 1.0], [0.5, 0.7, 1.0],
+    ],
+    quadpy.wedge.Felippa(3)
+    )
+```
+
 ### Sphere
 <img src="https://nschloe.github.io/quadpy/sphere.png" width="25%">
 
  * [Lebedev's schemes](https://en.wikipedia.org/wiki/Lebedev_quadpy) (32
    schemes up to degree 131)
+
+Example:
+```python
+val = quadpy.sphere.integrate(
+    lambda x: numpy.exp(x[0]),
+    [0.0, 0.0, 0.0], 1.0,
+    quadpy.sphere.Lebedev(19)
+    )
+```
 
 ### Installation
 
