@@ -244,29 +244,17 @@ val = quadpy.sphere.integrate(
 
 ### Installation
 
-#### Python Package Index
-
 quadpy is [available from the Python Package Index](https://pypi.python.org/pypi/quadpy/), so with
 ```
 pip install -U quadpy
 ```
 you can install/upgrade.
 
-#### Manual installation
-
-Download quadpy from
-[the Python Package Index](https://pypi.python.org/pypi/quadpy/).
-Place the quadpy script in a directory where Python can find it (e.g.,
-`$PYTHONPATH`). You can install it system-wide with
-```
-python setup.py install
-```
-
 ### Testing
 
 To run the tests, just check out this repository and type
 ```
-pytest
+MPLBACKEND=Agg pytest
 ```
 
 ### Distribution

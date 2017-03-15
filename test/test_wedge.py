@@ -82,15 +82,7 @@ def test_scheme(scheme):
     [quadpy.wedge.Felippa(4)]
     )
 def test_show(scheme):
-    wedge = numpy.array([
-        [0.0, 0.0, -1.0],
-        [1.0, 0.0, -1.0],
-        [0.0, 1.0, -1.0],
-        [0.0, 0.0, +1.0],
-        [1.0, 0.0, +1.0],
-        [0.0, 1.0, +1.0],
-        ])
-    quadpy.wedge.show(wedge, scheme)
+    quadpy.wedge.show(scheme)
     return
 
 
