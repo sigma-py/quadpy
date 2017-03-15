@@ -9,7 +9,8 @@ def plot_disks(plt, pts, weights, total_area):
     '''
     sum_weights = math.fsum(weights)
     for tp, weight in zip(pts, weights):
-        color = 'b' if weight >= 0 else 'r'
+        # use matplotlib 2.0's color scheme
+        color = '1f77b4' if weight >= 0 else 'd62728'
         # highlight circle center
         plt.plot([tp[0]], [tp[1]], '.' + color)
         # Choose radius such that the sum of areas of the circles equals
@@ -38,7 +39,7 @@ def plot_balls(
 
     sum_weights = math.fsum(weights)
     for tp, weight in zip(pts, weights):
-        color = 'b' if weight >= 0 else 'r'
+        color = '1f77b4' if weight >= 0 else 'd62728'
         # highlight ball center
         plt.plot([tp[0]], [tp[1]], [tp[2]], '.' + color)
 
