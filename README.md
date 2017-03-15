@@ -52,8 +52,8 @@ This uses Strang's rule of degree 6.
 Example:
 ```python
 val = quadpy.line_segment.integrate(
-    lambda x: numpy.exp(x[0]),
-    0.0, 1.0,
+    lambda x: numpy.exp(x),
+    [0.0, 1.0],
     quadpy.line_segment.GaussPatterson(5)
     )
 ```
