@@ -100,18 +100,7 @@ def test_scheme(scheme):
     [From1d(quadpy.line_segment.NewtonCotesClosed(3))]
     )
 def test_show(scheme):
-    hexa = numpy.array([
-        [-1, -1, -1],
-        [+1, -1, -1],
-        [+1, +1, -1],
-        [-1, +1, -1],
-        [-1, -1, +1],
-        [+1, -1, +1],
-        [+1, +1, +1],
-        [-1, +1, +1],
-        ])
     quadpy.hexahedron.show(
-        hexa,
         quadpy.hexahedron.From1d(
             # quadpy.line_segment.Midpoint()
             # quadpy.line_segment.Trapezoidal()

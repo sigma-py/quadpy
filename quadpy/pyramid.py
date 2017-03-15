@@ -6,7 +6,13 @@ import numpy
 from . import helpers
 
 
-def show(pyra, scheme):
+def show(
+        scheme,
+        pyra=numpy.array([
+            [0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0],
+            [0.5, 0.5, 1.0],
+            ])
+        ):
     '''Shows the quadrature points on a given pyramid. The size of the
     balls around the points coincides with their weights.
     '''
@@ -49,6 +55,7 @@ def show(pyra, scheme):
         pyra[:, 1].min(), pyra[:, 1].max(),
         pyra[:, 2].min(), pyra[:, 2].max(),
         )
+    plt.show()
     return
 
 

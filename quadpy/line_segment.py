@@ -14,12 +14,15 @@ def integrate(f, a, b, scheme):
     return 0.5 * (b - a) * out
 
 
-def show(a, b, scheme):
+def show(scheme, a=-1.0, b=1.0, show_axes=False):
     from matplotlib import pyplot as plt
     # change default range so that new disks will work
     plt.axis('equal')
     # ax.set_xlim((-1.5, 1.5))
     # ax.set_ylim((-1.5, 1.5))
+
+    if not show_axes:
+        plt.gca().set_axis_off()
 
     plt.plot([a, b], [0, 0], color='k')
 
@@ -34,6 +37,7 @@ def show(a, b, scheme):
     helpers.plot_disks(
         plt, pts, scheme.weights, total_area
         )
+    plt.show()
     return
 
 

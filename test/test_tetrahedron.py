@@ -105,7 +105,7 @@ def test_show(scheme):
         [numpy.cos(11.0/6.0*numpy.pi), numpy.sin(11.0/6.0*numpy.pi), -0.5],
         [0.0, 0.0, 1.0]
         ])
-    quadpy.tetrahedron.show(tet, scheme)
+    quadpy.tetrahedron.show(scheme, tet)
     return
 
 

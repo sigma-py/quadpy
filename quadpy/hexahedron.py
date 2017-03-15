@@ -6,7 +6,14 @@ import numpy
 from . import helpers
 
 
-def show(hexa, scheme):
+def show(
+        scheme,
+        hexa=numpy.array([
+            [0, 0, 0], [1, 0, 0], [1, 1, 0],  [0, 1, 0],
+            [0, 0, 1], [1, 0, 1], [1, 1, 1],  [0, 1, 1],
+            ]),
+        show_axes=False
+        ):
     '''Shows the quadrature points on a given hexahedron. The size of the
     balls around the points coincides with their weights.
     '''
@@ -16,6 +23,9 @@ def show(hexa, scheme):
     fig = plt.figure()
     ax = fig.gca(projection='3d')
     ax.set_aspect('equal')
+
+    if not show_axes:
+        ax.set_axis_off()
 
     edges = numpy.array([
         [hexa[0], hexa[1]],
@@ -57,6 +67,7 @@ def show(hexa, scheme):
         hexa[:, 2].min(), hexa[:, 2].max(),
         )
 
+    plt.show()
     return
 
 
