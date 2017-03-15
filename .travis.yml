@@ -12,6 +12,8 @@ virtualenv:
 addons:
   apt:
     packages:
+      - python-matplotlib
+      - python3-matplotlib
       - python-numpy
       - python3-numpy
       - python-scipy
