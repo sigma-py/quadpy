@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-import math
 import numpy
 
 from . import helpers
@@ -113,115 +112,114 @@ class Felippa(object):
     '''
     def __init__(self, index):
         if index == 1:
-            self.weights = numpy.array([1.0])
-            self.points = numpy.array([
-                [1.0/3.0, 1.0/3.0, 0.0]
-                ])
+            self.weights = [1.0]
+            self.points = [[1.0/3.0, 1.0/3.0, 0.0]]
             self.degree = 1
         elif index == 2:
-            self.weights = 1.0/6.0 * numpy.ones(6)
+            self.weights = 6 * [1.0/6.0]
             self.points = self.s21_z(1.0/6.0, numpy.sqrt(1.0/3.0))
             self.degree = 2
         elif index == 3:
-            self.weights = 1.0/6.0 * numpy.ones(6)
+            self.weights = 6 * [1.0/6.0]
             self.points = self.s21_z(0.5, numpy.sqrt(1.0/3.0))
             self.degree = 2
         elif index == 4:
-            self.weights = numpy.concatenate([
-                0.6205044157722541E-01 * numpy.ones(6),
-                0.3054215101536719E-01 * numpy.ones(6),
-                0.9928070652356065E-01 * numpy.ones(3),
-                0.4886744162458750E-01 * numpy.ones(3),
-                ])
-            self.points = numpy.concatenate([
-                self.s21_z(0.4459484909159649, 0.7745966692414834),
-                self.s21_z(0.9157621350977074E-01, 0.7745966692414834),
-                self.s21(0.4459484909159649),
-                self.s21(0.9157621350977074E-01),
-                ])
+            self.weights = (
+                6 * [0.6205044157722541E-01] +
+                6 * [0.3054215101536719E-01] +
+                3 * [0.9928070652356065E-01] +
+                3 * [0.4886744162458750E-01]
+                )
+            self.points = (
+                self.s21_z(0.4459484909159649, 0.7745966692414834) +
+                self.s21_z(0.9157621350977074E-01, 0.7745966692414834) +
+                self.s21(0.4459484909159649) +
+                self.s21(0.9157621350977074E-01)
+                )
             self.degree = 4
         elif index == 5:
-            self.weights = numpy.concatenate([
-                0.3498310570689643E-01 * numpy.ones(6),
-                0.3677615355236283E-01 * numpy.ones(6),
-                0.6250000000000000E-01 * numpy.ones(2),
-                0.5597296913103428E-01 * numpy.ones(3),
-                0.5884184568378053E-01 * numpy.ones(3),
-                1.0000000000000000E-01 * numpy.ones(1),
-                ])
-            self.points = numpy.concatenate([
-                self.s21_z(0.1012865073234563, 0.7745966692414834),
-                self.s21_z(0.4701420641051151, 0.7745966692414834),
-                self.s3_z(0.7745966692414834),
-                self.s21(0.1012865073234563),
-                self.s21(0.4701420641051151),
-                self.s3(),
-                ])
+            self.weights = (
+                6 * [0.3498310570689643E-01] +
+                6 * [0.3677615355236283E-01] +
+                2 * [0.6250000000000000E-01] +
+                3 * [0.5597296913103428E-01] +
+                3 * [0.5884184568378053E-01] +
+                1 * [1.0000000000000000E-01]
+                )
+            self.points = (
+                self.s21_z(0.1012865073234563, 0.7745966692414834) +
+                self.s21_z(0.4701420641051151, 0.7745966692414834) +
+                self.s3_z(0.7745966692414834) +
+                self.s21(0.1012865073234563) +
+                self.s21(0.4701420641051151) +
+                self.s3()
+                )
             self.degree = 5
         else:
             assert index == 6
-            self.weights = numpy.concatenate([
-                0.8843323515718317E-02 * numpy.ones(6),
-                0.2031233592848984E-01 * numpy.ones(6),
-                0.1441007403935041E-01 * numpy.ones(12),
-                0.1657912966938509E-01 * numpy.ones(6),
-                0.3808080193469984E-01 * numpy.ones(6),
-                0.2701546376983638E-01 * numpy.ones(12),
-
-                ])
-            self.points = numpy.concatenate([
-                self.s21_z(0.6308901449150223E-01, -0.8611363115940526),
-                self.s21_z(0.2492867451709104, -0.8611363115940526),
+            self.weights = (
+                6 * [0.8843323515718317E-02] +
+                6 * [0.2031233592848984E-01] +
+                12 * [0.1441007403935041E-01] +
+                6 * [0.1657912966938509E-01] +
+                6 * [0.3808080193469984E-01] +
+                12 * [0.2701546376983638E-01]
+                )
+            self.points = (
+                self.s21_z(0.6308901449150223E-01, -0.8611363115940526) +
+                self.s21_z(0.2492867451709104, -0.8611363115940526) +
                 self.s111_z(
                     0.5314504984481695E-01,
                     0.3103524510337844,
                     0.8611363115940526
-                    ),
-                self.s21_z(0.6308901449150223E-01, 0.3399810435848563),
-                self.s21_z(0.2492867451709104, 0.3399810435848563),
+                    ) +
+                self.s21_z(0.6308901449150223E-01, 0.3399810435848563) +
+                self.s21_z(0.2492867451709104, 0.3399810435848563) +
                 self.s111_z(
                     0.5314504984481695E-01,
                     0.3103524510337844,
                     0.3399810435848563
-                    ),
-                ])
+                    )
+                )
             self.degree = 6
 
+        self.weights = numpy.array(self.weights)
+        self.points = numpy.array(self.points)
         return
 
     def s3(self):
-        return numpy.array([
+        return [
             [1.0/3.0, 1.0/3.0, 0.0],
-            ])
+            ]
 
     def s3_z(self, z):
-        return numpy.array([
+        return [
             [1.0/3.0, 1.0/3.0, +z],
             [1.0/3.0, 1.0/3.0, -z],
-            ])
+            ]
 
     def s21(self, a):
         b = 1.0 - 2*a
-        return numpy.array([
+        return [
             [a, b, 0.0],
             [b, a, 0.0],
             [a, a, 0.0],
-            ])
+            ]
 
     def s21_z(self, a, z):
         b = 1.0 - 2*a
-        return numpy.array([
+        return [
             [a, b, +z],
             [b, a, +z],
             [a, a, +z],
             [a, b, -z],
             [b, a, -z],
             [a, a, -z],
-            ])
+            ]
 
     def s111_z(self, a, b, z):
         c = 1.0 - a - b
-        return numpy.array([
+        return [
             [b, c, +z],
             [a, b, +z],
             [c, a, +z],
@@ -234,4 +232,4 @@ class Felippa(object):
             [c, b, -z],
             [a, c, -z],
             [b, a, -z],
-            ])
+            ]
