@@ -25,6 +25,8 @@ val = quadpy.triangle.integrate(f, triangle, quadpy.triangle.Strang(9))
 ```
 This uses Strang's rule of degree 6.
 
+More examples under [test/examples_test.py](https://github.com/nschloe/quadpy/blob/master/test/examples_test.py).
+
 ## Schemes
 
 ### Line segment
