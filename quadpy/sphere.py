@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import math
 import numpy
+
+from . import helpers
 
 
 def area(radius):
@@ -16,10 +17,13 @@ def show(scheme):
     ax = fig.gca(projection='3d')
     ax.set_aspect('equal')
 
-    phi, theta = numpy.mgrid[0.0:numpy.pi:100j, 0.0:2.0*numpy.pi:100j]
-    x = numpy.sin(phi) * numpy.cos(theta)
-    y = numpy.sin(phi) * numpy.sin(theta)
-    z = numpy.cos(phi)
+    # http://matplotlib.org/examples/mplot3d/surface3d_demo2.html
+    u = numpy.linspace(0, 2 * numpy.pi, 100)
+    v = numpy.linspace(0, numpy.pi, 100)
+    x = numpy.outer(numpy.cos(u), numpy.sin(v))
+    y = numpy.outer(numpy.sin(u), numpy.sin(v))
+    z = numpy.outer(numpy.ones(numpy.size(u)), numpy.cos(v))
+
     ax.plot_surface(
             x, y, z,
             rstride=3, cstride=3,
@@ -41,9 +45,14 @@ def show(scheme):
     return
 
 
-def integrate(f, midpoint, radius, rule):
-    out = math.fsum(
-        rule.weights * f((radius*rule.points + midpoint).T)
+def integrate(f, center, radius, rule, sum=helpers.kahan_sum):
+    center = numpy.array(center)
+    radius = numpy.array(radius)
+    #
+    rr = numpy.multiply.outer(rule.points.T, radius)
+    out = sum(
+        (rule.weights * f(rr + center.T[:, None]).T).T,
+        axis=0
         )
     return area(radius) * out
 
@@ -2533,7 +2542,8 @@ class Lebedev(object):
                 self.rsw(6.7472186763756803e-01, 6.1121857739830476e-02, 7.3553689223457985e-01),
                 ])
             self.degree = 125
-        elif index == 32:
+        else:
+            assert index == 32
             self.weights = numpy.concatenate([
                 9.7353479460000007e-06 * numpy.ones(6),
                 1.9075812417999999e-04 * numpy.ones(12),
@@ -2827,8 +2837,6 @@ class Lebedev(object):
                 self.rsw(6.7721357503953472e-01, 2.9199461358081776e-02, 7.3520688601139361e-01),
                 ])
             self.degree = 131
-        else:
-            raise ValueError('Illegal Lebedev index %d' % index)
 
         return
 

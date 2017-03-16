@@ -3,7 +3,6 @@
 from . import line_segment
 from . import helpers
 
-import math
 import numpy
 
 
@@ -37,7 +36,7 @@ def show(
         + numpy.outer(0.25 * (1.0 + xi)*(1.0 + eta), quad[2]) \
         + numpy.outer(0.25 * (1.0 - xi)*(1.0 + eta), quad[3])
 
-    vol = integrate(lambda x: numpy.ones(1), quad, Stroud(1))
+    vol = integrate(lambda x: 1.0, quad, Stroud(1))
     helpers.plot_disks(
         plt, transformed_pts, scheme.weights, vol
         )
@@ -45,27 +44,30 @@ def show(
     return
 
 
-def integrate(f, quad, scheme):
+def integrate(f, quad, scheme, sum=helpers.kahan_sum):
     xi = scheme.points.T
     x = \
-        + numpy.outer(quad[0], 0.25*(1.0-xi[0])*(1.0-xi[1])) \
-        + numpy.outer(quad[1], 0.25*(1.0+xi[0])*(1.0-xi[1])) \
-        + numpy.outer(quad[2], 0.25*(1.0+xi[0])*(1.0+xi[1])) \
-        + numpy.outer(quad[3], 0.25*(1.0-xi[0])*(1.0+xi[1]))
+        + numpy.multiply.outer(0.25*(1.0-xi[0])*(1.0-xi[1]), quad[0]) \
+        + numpy.multiply.outer(0.25*(1.0+xi[0])*(1.0-xi[1]), quad[1]) \
+        + numpy.multiply.outer(0.25*(1.0+xi[0])*(1.0+xi[1]), quad[2]) \
+        + numpy.multiply.outer(0.25*(1.0-xi[0])*(1.0+xi[1]), quad[3])
+    x = x.T
 
     J0 = \
-        - numpy.outer(quad[0], 0.25*(1-xi[1])) \
-        + numpy.outer(quad[1], 0.25*(1-xi[1])) \
-        + numpy.outer(quad[2], 0.25*(1+xi[1])) \
-        - numpy.outer(quad[3], 0.25*(1+xi[1]))
+        - numpy.multiply.outer(0.25*(1-xi[1]), quad[0]) \
+        + numpy.multiply.outer(0.25*(1-xi[1]), quad[1]) \
+        + numpy.multiply.outer(0.25*(1+xi[1]), quad[2]) \
+        - numpy.multiply.outer(0.25*(1+xi[1]), quad[3])
+    J0 = J0.T
     J1 = \
-        - numpy.outer(quad[0], 0.25*(1-xi[0])) \
-        - numpy.outer(quad[1], 0.25*(1+xi[0])) \
-        + numpy.outer(quad[2], 0.25*(1+xi[0])) \
-        + numpy.outer(quad[3], 0.25*(1-xi[0]))
-    det = J0[0]*J1[1] - J1[0]*J0[1]
+        - numpy.multiply.outer(0.25*(1-xi[0]), quad[0]) \
+        - numpy.multiply.outer(0.25*(1+xi[0]), quad[1]) \
+        + numpy.multiply.outer(0.25*(1+xi[0]), quad[2]) \
+        + numpy.multiply.outer(0.25*(1-xi[0]), quad[3])
+    J1 = J1.T
+    det = (J0[0]*J1[1] - J1[0]*J0[1]).T
 
-    return math.fsum(scheme.weights * f(x).T * abs(det))
+    return sum((scheme.weights * f(x)).T * abs(det), axis=0)
 
 
 class From1d(object):
@@ -154,7 +156,8 @@ class Stroud(object):
                 self._symm_s_t(s, t),
                 ])
             self.degree = 7
-        elif index == 6:
+        else:
+            assert index == 6
             scheme1d = line_segment.GaussLegendre(8)
             self.weights = numpy.outer(
                 scheme1d.weights, scheme1d.weights
@@ -164,8 +167,6 @@ class Stroud(object):
                 )).reshape(-1, 2)
             assert len(self.points) == 64
             self.degree = 15
-        else:
-            raise ValueError('Illegal Stroud index')
 
         return
 

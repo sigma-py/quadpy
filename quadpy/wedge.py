@@ -55,7 +55,7 @@ def show(
         + numpy.outer(0.5 * eta * (1.0 + zeta), wedge[5])
 
     vol = integrate(lambda x: numpy.ones(1), wedge, Felippa(1))
-    helpers.plot_balls(
+    helpers.plot_spheres(
         plt, ax, transformed_pts, scheme.weights, vol,
         wedge[:, 0].min(), wedge[:, 0].max(),
         wedge[:, 1].min(), wedge[:, 1].max(),
@@ -65,36 +65,41 @@ def show(
     return
 
 
-def integrate(f, wedge, scheme):
+def integrate(f, wedge, scheme, sum=helpers.kahan_sum):
     xi = scheme.points.T
+    mo = numpy.multiply.outer
     x = \
-        + numpy.outer(wedge[0], 0.5 * (1.0-xi[0]-xi[1]) * (1.0-xi[2])) \
-        + numpy.outer(wedge[1], 0.5 * xi[0] * (1.0-xi[2])) \
-        + numpy.outer(wedge[2], 0.5 * xi[1] * (1.0-xi[2])) \
-        + numpy.outer(wedge[3], 0.5 * (1.0-xi[0]-xi[1]) * (1.0+xi[2])) \
-        + numpy.outer(wedge[4], 0.5 * xi[0] * (1.0+xi[2])) \
-        + numpy.outer(wedge[5], 0.5 * xi[1] * (1.0+xi[2]))
+        + mo(0.5 * (1.0-xi[0]-xi[1]) * (1.0-xi[2]), wedge[0]) \
+        + mo(0.5 * xi[0] * (1.0-xi[2]), wedge[1]) \
+        + mo(0.5 * xi[1] * (1.0-xi[2]), wedge[2]) \
+        + mo(0.5 * (1.0-xi[0]-xi[1]) * (1.0+xi[2]), wedge[3]) \
+        + mo(0.5 * xi[0] * (1.0+xi[2]), wedge[4]) \
+        + mo(0.5 * xi[1] * (1.0+xi[2]), wedge[5])
+    x = x.T
     J0 = \
-        - numpy.outer(wedge[0], 0.5*(1.0 - xi[2])) \
-        + numpy.outer(wedge[2], 0.5*(1.0 - xi[2])) \
-        - numpy.outer(wedge[3], 0.5*(1.0 + xi[2])) \
-        + numpy.outer(wedge[5], 0.5*(1.0 + xi[2]))
+        - mo(0.5*(1.0 - xi[2]), wedge[0]) \
+        + mo(0.5*(1.0 - xi[2]), wedge[2]) \
+        - mo(0.5*(1.0 + xi[2]), wedge[3]) \
+        + mo(0.5*(1.0 + xi[2]), wedge[5])
+    J0 = J0.T
     J1 = \
-        - numpy.outer(wedge[0], 0.5*(1.0 - xi[2])) \
-        + numpy.outer(wedge[1], 0.5*(1.0 - xi[2])) \
-        - numpy.outer(wedge[3], 0.5*(1.0 + xi[2])) \
-        + numpy.outer(wedge[4], 0.5*(1.0 + xi[2]))
+        - mo(0.5*(1.0 - xi[2]), wedge[0]) \
+        + mo(0.5*(1.0 - xi[2]), wedge[1]) \
+        - mo(0.5*(1.0 + xi[2]), wedge[3]) \
+        + mo(0.5*(1.0 + xi[2]), wedge[4])
+    J1 = J1.T
     J2 = \
-        - numpy.outer(wedge[0], 0.5 * (1.0-xi[0]-xi[1])) \
-        - numpy.outer(wedge[1], 0.5 * xi[0]) \
-        - numpy.outer(wedge[2], 0.5 * xi[1]) \
-        + numpy.outer(wedge[3], 0.5 * (1.0-xi[0]-xi[1])) \
-        + numpy.outer(wedge[4], 0.5 * xi[0]) \
-        + numpy.outer(wedge[5], 0.5 * xi[1])
+        - mo(0.5 * (1.0-xi[0]-xi[1]), wedge[0]) \
+        - mo(0.5 * xi[0], wedge[1]) \
+        - mo(0.5 * xi[1], wedge[2]) \
+        + mo(0.5 * (1.0-xi[0]-xi[1]), wedge[3]) \
+        + mo(0.5 * xi[0], wedge[4]) \
+        + mo(0.5 * xi[1], wedge[5])
+    J2 = J2.T
     det = J0[0]*J1[1]*J2[2] + J1[0]*J2[1]*J0[2] + J2[0]*J0[1]*J1[2] \
         - J0[2]*J1[1]*J2[0] - J1[2]*J2[1]*J0[0] - J2[2]*J0[1]*J1[0]
 
-    return math.fsum(scheme.weights * f(x).T * abs(det))
+    return sum((scheme.weights * f(x)).T * abs(det.T))
 
 
 class Felippa(object):
@@ -153,7 +158,8 @@ class Felippa(object):
                 self.s3(),
                 ])
             self.degree = 5
-        elif index == 6:
+        else:
+            assert index == 6
             self.weights = numpy.concatenate([
                 0.8843323515718317E-02 * numpy.ones(6),
                 0.2031233592848984E-01 * numpy.ones(6),
@@ -180,8 +186,6 @@ class Felippa(object):
                     ),
                 ])
             self.degree = 6
-        else:
-            raise ValueError('Illegal Felippa order')
 
         return
 
