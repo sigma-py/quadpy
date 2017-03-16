@@ -19,7 +19,7 @@ def integrate(f, interval, scheme, sum=helpers.kahan_sum):
     return alpha * out
 
 
-def show(scheme, interval=[-1.0, 1.0], show_axes=False):
+def show(scheme, interval=numpy.array([-1.0, 1.0]), show_axes=False):
     from matplotlib import pyplot as plt
     # change default range so that new disks will work
     plt.axis('equal')
