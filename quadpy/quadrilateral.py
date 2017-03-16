@@ -104,11 +104,11 @@ class Stroud(object):
             self.points = self._symm_s(1.0/numpy.sqrt(3.0))
             self.degree = 3
         elif index == 3:
-            self.weights = numpy.concatenate([
-                64.0/81.0 * numpy.ones(1),
-                25.0/81.0 * numpy.ones(4),
-                40.0/81.0 * numpy.ones(4),
-                ])
+            self.weights = numpy.array(
+                [64.0/81.0] +
+                4 * [25.0/81.0] +
+                4 * [40.0/81.0]
+                )
             self.points = numpy.concatenate([
                 numpy.array([[0.0, 0.0]]),
                 self._symm_s(numpy.sqrt(0.6)),
@@ -125,11 +125,11 @@ class Stroud(object):
             w2 = 4.0 * (178981.0 + 923.0 * c) / 1888920.0
             w3 = 4.0 * (178981.0 - 923.0 * c) / 1888920.0
             #
-            self.weights = numpy.concatenate([
-                w1 * numpy.ones(4),
-                w2 * numpy.ones(4),
-                w3 * numpy.ones(4),
-                ])
+            self.weights = numpy.array(
+                4 * [w1] +
+                4 * [w2] +
+                4 * [w3]
+                )
             self.points = numpy.concatenate([
                 self._symm_r_0(r),
                 self._symm_s(s),
@@ -145,11 +145,11 @@ class Stroud(object):
             w1 = 8.0 / 162.0
             w2 = 98.0 / 162.0
             w3 = 31.0 / 162.0
-            self.weights = numpy.concatenate([
-                w1 * numpy.ones(1),
-                w2 * numpy.ones(4),
-                w3 * numpy.ones(8),
-                ])
+            self.weights = numpy.array(
+                [w1] +
+                4 * [w2] +
+                8 * [w3]
+                )
             self.points = numpy.concatenate([
                 numpy.array([[0.0, 0.0]]),
                 self._symm_r_0(r),

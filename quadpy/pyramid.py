@@ -139,21 +139,21 @@ class Felippa(object):
                 ])
             self.degree = 1
         elif index == 2:
-            self.weights = numpy.concatenate([
+            self.weights = numpy.array(
                 [0.81] * 4 +
                 [125.0/27.0]
-                ])
+                )
             self.points = numpy.concatenate([
                 self._s4(8 * numpy.sqrt(2.0/15.0) / 5, -2.0/3.0),
                 numpy.array([[0.0, 0.0, 0.4]]),
                 ])
             self.degree = 2
         elif index == 3:
-            self.weights = numpy.concatenate([
+            self.weights = numpy.array(
                 4 * [504.0/625.0] +
                 1 * [576.0/625.0] +
                 1 * [64.0/15.0]
-                ])
+                )
             self.points = numpy.concatenate([
                 self._s4(numpy.sqrt(12.0/35.0), -2.0/3.0),
                 numpy.array([[0.0, 0.0, 1.0/6.0]]),
@@ -163,10 +163,10 @@ class Felippa(object):
         elif index == 4:
             w1 = 5 * (68.0 + 5*numpy.sqrt(10.0)) / 432.0
             w2 = 85.0/54.0 - w1
-            self.weights = numpy.concatenate([
-                [w1] * 4 +
-                [w2] * 4
-                ])
+            self.weights = numpy.array(
+                4 * [w1]  +
+                4 * [w2]
+                )
             g1 = numpy.sqrt(1.0/3.0)
             g2 = (2*numpy.sqrt(10)-5) / 15.0
             self.points = numpy.concatenate([
@@ -177,10 +177,10 @@ class Felippa(object):
         elif index == 5:
             w1 = (11764.0 - 461.0*numpy.sqrt(51.0)) / 15300.0
             w2 = 346.0 / 225.0 - w1
-            self.weights = numpy.concatenate([
-                [w1] * 4 +
-                [w2] * 4
-                ])
+            self.weights = numpy.array(
+                4 * [w1] +
+                4 * [w2]
+                )
             g1 = numpy.sqrt(2.0/15.0 * (573 - 2*numpy.sqrt(51))) / 15.0
             g2 = numpy.sqrt(2.0/15.0 * (573 + 2*numpy.sqrt(51))) / 15.0
             g3 = -(2*numpy.sqrt(51.0) + 13) / 35.0
@@ -193,11 +193,11 @@ class Felippa(object):
         elif index == 6:
             w1 = 7.0*(11472415.0 - 70057.0*numpy.sqrt(2865.0)) / 130739500.0
             w2 = 84091.0/68450.0 - w1
-            self.weights = numpy.concatenate([
-                [w1] * 4 +
-                [w2] * 4 +
+            self.weights = numpy.array(
+                4 * [w1] +
+                4 * [w2] +
                 [3.6]
-                ])
+                )
 
             g1 = 8 * numpy.sqrt(
                 (573 + 5*numpy.sqrt(2865.0))
@@ -217,12 +217,12 @@ class Felippa(object):
             w2 = 276710106577408.0 / 1075923777052725.0
             w3 = 12827693806929.0 / 30577384040000.0
             w4 = 10663383340655070643544192.0 / 4310170528879365193704375.0
-            self.weights = numpy.concatenate([
+            self.weights = numpy.array(
                 [w1] * 4 +
                 [w2] * 4 +
                 [w3] * 4 +
                 [w4]
-                ])
+                )
 
             g1 = 7 * numpy.sqrt(35.0/59.0) / 8.0
             g2 = 224 * numpy.sqrt(336633710.0/33088740423.0) / 37.0
@@ -239,14 +239,14 @@ class Felippa(object):
         elif index == 8:
             w1 = 5 * (68.0 + 5.0*numpy.sqrt(10)) / 432.0
             w2 = 85.0/54.0 - w1
-            self.weights = numpy.concatenate([
-                [w1*wg9[2]] * 4 +
-                [w1*wg9[1]] * 4 +
+            self.weights = numpy.array(
+                4 * [w1*wg9[2]] +
+                4 * [w1*wg9[1]] +
                 [w1*wg9[0]] +
-                [w2*wg9[2]] * 4 +
-                [w2*wg9[1]] * 4 +
+                4 * [w2*wg9[2]] +
+                4 * [w2*wg9[1]] +
                 [w2*wg9[0]]
-                ])
+                )
 
             g1 = numpy.sqrt(0.6)
             g2 = 1.0 - 2*(10.0 - numpy.sqrt(10)) / 15.0
@@ -281,17 +281,17 @@ class Felippa(object):
             w1 = (4.0/15.0)*(4+5*(g4+g5)+10*g4*g5)/((g3-g4)*(g3-g5)*(1-g3)**2)
             w2 = (4.0/15.0)*(4+5*(g3+g5)+10*g3*g5)/((g3-g4)*(g5-g4)*(1-g4)**2)
             w3 = (4.0/15.0)*(4+5*(g3+g4)+10*g3*g4)/((g3-g5)*(g4-g5)*(1-g5)**2)
-            self.weights = numpy.concatenate([
-                [w1*wg9[2]] * 4 +
-                [w1*wg9[1]] * 4 +
+            self.weights = numpy.array(
+                4 * [w1*wg9[2]] +
+                4 * [w1*wg9[1]] +
                 [w1*wg9[0]] +
-                [w2*wg9[2]] * 4 +
-                [w2*wg9[1]] * 4 +
+                4 * [w2*wg9[2]] +
+                4 * [w2*wg9[1]] +
                 [w2*wg9[0]] +
-                [w3*wg9[2]] * 4 +
-                [w3*wg9[1]] * 4 +
+                4 * [w3*wg9[2]] +
+                4 * [w3*wg9[1]] +
                 [w3*wg9[0]]
-                ])
+                )
 
             self.degree = 5
 
