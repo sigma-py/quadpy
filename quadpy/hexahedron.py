@@ -60,7 +60,7 @@ def show(
         + numpy.outer(0.125 * (1.0 - xi)*(1.0 + eta)*(1.0 + zeta), hexa[7])
 
     vol = integrate(lambda x: 1.0, hexa, scheme)
-    helpers.plot_balls(
+    helpers.plot_spheres(
         plt, ax, transformed_pts, scheme.weights, vol,
         hexa[:, 0].min(), hexa[:, 0].max(),
         hexa[:, 1].min(), hexa[:, 1].max(),

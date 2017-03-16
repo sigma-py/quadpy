@@ -48,7 +48,7 @@ def show(
     transformed_pts = transformed_pts.T
 
     vol = integrate(lambda x: 1.0, pyra, Felippa(1))
-    helpers.plot_balls(
+    helpers.plot_spheres(
         plt, ax, transformed_pts, scheme.weights, vol,
         pyra[:, 0].min(), pyra[:, 0].max(),
         pyra[:, 1].min(), pyra[:, 1].max(),
