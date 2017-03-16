@@ -158,7 +158,8 @@ class Felippa(object):
                 self.s3(),
                 ])
             self.degree = 5
-        elif index == 6:
+        else:
+            assert index == 6
             self.weights = numpy.concatenate([
                 0.8843323515718317E-02 * numpy.ones(6),
                 0.2031233592848984E-01 * numpy.ones(6),
@@ -185,8 +186,6 @@ class Felippa(object):
                     ),
                 ])
             self.degree = 6
-        else:
-            raise ValueError('Illegal Felippa order')
 
         return
 

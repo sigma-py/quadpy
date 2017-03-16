@@ -202,7 +202,8 @@ class HammerMarloweStroud(object):
                 self._r(-1.0 / numpy.sqrt(5.0)),
                 ])
             self.degree = 2
-        elif index == 3:
+        else:
+            assert index == 3
             self.weights = numpy.concatenate([
                 -0.8 * numpy.ones(1),
                 9.0/20.0 * numpy.ones(4),
@@ -212,8 +213,6 @@ class HammerMarloweStroud(object):
                 self._r(1.0 / 3.0),
                 ])
             self.degree = 3
-        else:
-            raise ValueError('Illegal Hammer-Marlowe-Stroud index')
 
         self.points = bary[:, 1:]
         return
@@ -356,7 +355,8 @@ class Yu(object):
                 _s211(0.4214394310662522, 0.1325810999384657),
                 ])
             self.degree = 5
-        elif index == 5:
+        else:
+            assert index == 5
             self.weights = numpy.concatenate([
                 0.9040129046014750E-01 * numpy.ones(1),
                 0.1911983427899124E-01 * numpy.ones(4),
@@ -370,8 +370,6 @@ class Yu(object):
                 _s211(0.4756909881472290E-01, 0.2967538129690260),
                 ])
             self.degree = 6
-        else:
-            raise ValueError('Illegal closed Yu index')
 
         self.points = bary[:, [1, 2, 3]]
         return
@@ -518,7 +516,8 @@ class Keast(object):
                 _s211(0.0379700484718286, 0.1937464752488044),
                 ])
             self.degree = 8
-        elif index == 10:
+        else:
+            assert index == 10
             self.weights = 6 * numpy.concatenate([
                 # Note: In Keast's article, the first weight is incorrectly
                 # given with a positive sign.
@@ -540,8 +539,6 @@ class Keast(object):
                 _s211(0.379700484718286102e-01, 0.730313427807538396e-00),
                 ])
             self.degree = 8
-        else:
-            raise ValueError('Illegal Keast index')
 
         self.points = bary[:, 1:]
         return
@@ -730,7 +727,8 @@ class LiuVinokur(object):
                 self._r_beta(0.5),
                 ])
             self.degree = 5
-        elif index == 14:
+        else:
+            assert index == 14
             self.weights = numpy.concatenate([
                 16.0/105.0 * numpy.ones(1),
                 1.0/280.0 * numpy.ones(4),
@@ -746,8 +744,6 @@ class LiuVinokur(object):
                 self._r_beta(0.5),
                 ])
             self.degree = 5
-        else:
-            raise ValueError('Illegal Liu-Vinokur index')
 
         self.points = bary[:, 1:]
         return
@@ -832,7 +828,8 @@ class Zienkiewicz(object):
             self.weights = 0.25 * numpy.ones(4)
             bary = _s31(0.1381966011250105)
             self.degree = 2
-        elif index == 5:
+        else:
+            assert index == 5
             self.weights = numpy.concatenate([
                 -0.8 * numpy.ones(1),
                 0.45 * numpy.ones(4),
@@ -842,8 +839,6 @@ class Zienkiewicz(object):
                 _s31(1.0/6.0),
                 ])
             self.degree = 3
-        else:
-            raise ValueError('Illegal closed Newton-Cotes index')
 
         self.points = bary[:, [1, 2, 3]]
         return
@@ -892,7 +887,8 @@ class ZhangCuiLiu(object):
                     ),
                 ])
             self.degree = 8
-        elif index == 2:
+        else:
+            assert index == 2
             self.weights = numpy.concatenate([
                 .0040651136652707670436208836835636 * numpy.ones(4),
                 .0022145385334455781437599569500071 * numpy.ones(4),
@@ -970,8 +966,6 @@ class ZhangCuiLiu(object):
                     ),
                 ])
             self.degree = 14
-        else:
-            raise ValueError('Illegal Zhang index')
 
         self.points = bary[:, [1, 2, 3]]
         return
@@ -5099,7 +5093,8 @@ class XiaoGimbutas(object):
                 0.00287595285363191,
                 0.0190689583089531,
                 ])
-        elif index == 15:
+        else:
+            assert index == 15
             self.degree = 16
             bary = numpy.array([
                 [
@@ -6175,8 +6170,6 @@ class XiaoGimbutas(object):
                 0.00941098059566846,
                 0.00907033305470961,
                 ])
-        else:
-            raise ValueError('Illegal Xiao-Gimbutas index')
 
         self.points = bary[:, [1, 2, 3]]
         return
@@ -6250,7 +6243,8 @@ class ShunnHam(object):
                 numpy.array([[0.25, 0.25, 0.25, 0.25]]),
                 ])
             self.degree = 6
-        elif index == 6:
+        else:
+            assert index == 6
             self.weights = numpy.concatenate([
                 0.0010373112336140 * numpy.ones(4),
                 0.0096016645399480 * numpy.ones(12),
@@ -6268,8 +6262,6 @@ class ShunnHam(object):
                 _s31(0.1344783347929940)
                 ])
             self.degree = 8
-        else:
-            raise ValueError('Illegal Shunn-Ham index')
 
         self.points = bary[:, 1:]
         return

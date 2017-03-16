@@ -2539,7 +2539,8 @@ class Lebedev(object):
                 self.rsw(6.7472186763756803e-01, 6.1121857739830476e-02, 7.3553689223457985e-01),
                 ])
             self.degree = 125
-        elif index == 32:
+        else:
+            assert index == 32
             self.weights = numpy.concatenate([
                 9.7353479460000007e-06 * numpy.ones(6),
                 1.9075812417999999e-04 * numpy.ones(12),
@@ -2833,8 +2834,6 @@ class Lebedev(object):
                 self.rsw(6.7721357503953472e-01, 2.9199461358081776e-02, 7.3520688601139361e-01),
                 ])
             self.degree = 131
-        else:
-            raise ValueError('Illegal Lebedev index %d' % index)
 
         return
 

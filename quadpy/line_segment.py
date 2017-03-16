@@ -539,7 +539,8 @@ class GaussPatterson(object):
                 0.9990981249676676,
                 0.9998728881203576,
                 ])
-        elif index == 6:
+        else:
+            assert index == 6
             self.weights = numpy.array([
                 0.5053609520786252E-04,
                 0.1807395644453884E-03,
@@ -798,8 +799,6 @@ class GaussPatterson(object):
                 0.9998728881203576,
                 0.9999824303548916,
                 ])
-        else:
-            raise ValueError('Illegal Gauss-Patterson order')
 
 
 class ClenshawCurtis(object):
@@ -825,8 +824,8 @@ class ClenshawCurtis(object):
 
         n -= 1
         N = numpy.arange(1, n, 2)
-        l = len(N)
-        m = n - l
+        length = len(N)
+        m = n - length
         v0 = numpy.concatenate([
             2.0 / N / (N-2),
             numpy.array([1.0 / N[-1]]),
@@ -834,7 +833,7 @@ class ClenshawCurtis(object):
             ])
         v2 = - v0[:-1] - v0[:0:-1]
         g0 = -numpy.ones(n)
-        g0[l] += n
+        g0[length] += n
         g0[m] += n
         g = g0 / (n**2 - 1 + (n % 2))
 
@@ -875,13 +874,13 @@ class Fejer1(object):
 
         # n -= 1
         N = numpy.arange(1, n, 2)
-        l = len(N)
-        m = n - l
+        length = len(N)
+        m = n - length
         K = numpy.arange(m)
 
         v0 = numpy.concatenate([
             2 * numpy.exp(1j*numpy.pi*K/n) / (1 - 4*K**2),
-            numpy.zeros(l+1)
+            numpy.zeros(length+1)
             ])
         v1 = v0[:-1] + numpy.conjugate(v0[:0:-1])
 
@@ -911,8 +910,8 @@ class Fejer2(object):
 
         n += 1
         N = numpy.arange(1, n, 2)
-        l = len(N)
-        m = n - l
+        length = len(N)
+        m = n - length
         v0 = numpy.concatenate([
             2.0 / N / (N-2),
             numpy.array([1.0 / N[-1]]),

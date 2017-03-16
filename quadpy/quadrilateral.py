@@ -156,7 +156,8 @@ class Stroud(object):
                 self._symm_s_t(s, t),
                 ])
             self.degree = 7
-        elif index == 6:
+        else:
+            assert index == 6
             scheme1d = line_segment.GaussLegendre(8)
             self.weights = numpy.outer(
                 scheme1d.weights, scheme1d.weights
@@ -166,8 +167,6 @@ class Stroud(object):
                 )).reshape(-1, 2)
             assert len(self.points) == 64
             self.degree = 15
-        else:
-            raise ValueError('Illegal Stroud index')
 
         return
 
