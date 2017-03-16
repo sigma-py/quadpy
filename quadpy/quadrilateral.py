@@ -3,7 +3,6 @@
 from . import line_segment
 from . import helpers
 
-import math
 import numpy
 
 
@@ -48,24 +47,27 @@ def show(
 def integrate(f, quad, scheme):
     xi = scheme.points.T
     x = \
-        + numpy.outer(quad[0], 0.25*(1.0-xi[0])*(1.0-xi[1])) \
-        + numpy.outer(quad[1], 0.25*(1.0+xi[0])*(1.0-xi[1])) \
-        + numpy.outer(quad[2], 0.25*(1.0+xi[0])*(1.0+xi[1])) \
-        + numpy.outer(quad[3], 0.25*(1.0-xi[0])*(1.0+xi[1]))
+        + numpy.multiply.outer(0.25*(1.0-xi[0])*(1.0-xi[1]), quad[0]) \
+        + numpy.multiply.outer(0.25*(1.0+xi[0])*(1.0-xi[1]), quad[1]) \
+        + numpy.multiply.outer(0.25*(1.0+xi[0])*(1.0+xi[1]), quad[2]) \
+        + numpy.multiply.outer(0.25*(1.0-xi[0])*(1.0+xi[1]), quad[3])
+    x = x.T
 
     J0 = \
-        - numpy.outer(quad[0], 0.25*(1-xi[1])) \
-        + numpy.outer(quad[1], 0.25*(1-xi[1])) \
-        + numpy.outer(quad[2], 0.25*(1+xi[1])) \
-        - numpy.outer(quad[3], 0.25*(1+xi[1]))
+        - numpy.multiply.outer(0.25*(1-xi[1]), quad[0]) \
+        + numpy.multiply.outer(0.25*(1-xi[1]), quad[1]) \
+        + numpy.multiply.outer(0.25*(1+xi[1]), quad[2]) \
+        - numpy.multiply.outer(0.25*(1+xi[1]), quad[3])
+    J0 = J0.T
     J1 = \
-        - numpy.outer(quad[0], 0.25*(1-xi[0])) \
-        - numpy.outer(quad[1], 0.25*(1+xi[0])) \
-        + numpy.outer(quad[2], 0.25*(1+xi[0])) \
-        + numpy.outer(quad[3], 0.25*(1-xi[0]))
-    det = J0[0]*J1[1] - J1[0]*J0[1]
+        - numpy.multiply.outer(0.25*(1-xi[0]), quad[0]) \
+        - numpy.multiply.outer(0.25*(1+xi[0]), quad[1]) \
+        + numpy.multiply.outer(0.25*(1+xi[0]), quad[2]) \
+        + numpy.multiply.outer(0.25*(1-xi[0]), quad[3])
+    J1 = J1.T
+    det = (J0[0]*J1[1] - J1[0]*J0[1]).T
 
-    return math.fsum(scheme.weights * f(x).T * abs(det))
+    return helpers.kahan_sum((scheme.weights * f(x)).T * abs(det), axis=0)
 
 
 class From1d(object):
