@@ -63,7 +63,7 @@ def show(
     return
 
 
-def integrate(f, tetrahedron, scheme):
+def integrate(f, tetrahedron, scheme, sum=helpers.kahan_sum):
     xi = scheme.points.T
     x = \
         + numpy.multiply.outer(1.0 - xi[0] - xi[1] - xi[2], tetrahedron[0]) \
@@ -81,7 +81,7 @@ def integrate(f, tetrahedron, scheme):
     # reference volume
     det *= 1.0/6.0
 
-    return helpers.kahan_sum((scheme.weights * f(x)).T * abs(det), axis=0)
+    return sum((scheme.weights * f(x)).T * abs(det), axis=0)
 
 
 def _s4():

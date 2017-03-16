@@ -83,7 +83,7 @@ def _get_det_J(pyra, xi):
     return det.T
 
 
-def integrate(f, pyra, scheme):
+def integrate(f, pyra, scheme, sum=helpers.kahan_sum):
     xi = scheme.points.T
     mo = numpy.multiply.outer
     x = \
@@ -94,7 +94,7 @@ def integrate(f, pyra, scheme):
         + mo(0.500*(1.0+xi[2]), pyra[4])
     x = x.T
     det = _get_det_J(pyra, xi)
-    return helpers.kahan_sum((scheme.weights * f(x)).T * abs(det))
+    return sum((scheme.weights * f(x)).T * abs(det))
 
 
 class Felippa(object):
