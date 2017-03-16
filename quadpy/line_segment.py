@@ -7,14 +7,19 @@ import numpy
 import sympy
 
 
-def integrate(f, a, b, scheme):
-    out = math.fsum(
-        scheme.weights * f(0.5*(b-a) * scheme.points.T + 0.5*(b+a))
+def integrate(f, interval, scheme, sum=helpers.kahan_sum):
+    alpha = 0.5 * (interval[1] - interval[0])
+    beta = 0.5 * (interval[0] + interval[1])
+    # numpy.sum produces larger round-off errors here.
+    out = sum(
+        scheme.weights[..., None]
+        * f(numpy.outer(scheme.points, alpha) + beta),
+        axis=0
         )
-    return 0.5 * (b - a) * out
+    return alpha * out
 
 
-def show(scheme, a=-1.0, b=1.0, show_axes=False):
+def show(scheme, interval=[-1.0, 1.0], show_axes=False):
     from matplotlib import pyplot as plt
     # change default range so that new disks will work
     plt.axis('equal')
@@ -24,14 +29,15 @@ def show(scheme, a=-1.0, b=1.0, show_axes=False):
     if not show_axes:
         plt.gca().set_axis_off()
 
-    plt.plot([a, b], [0, 0], color='k')
+    plt.plot(interval, [0, 0], color='k')
 
     pts = numpy.column_stack([scheme.points, numpy.zeros(len(scheme.points))])
 
     # The total area is used to gauge the disk radii. This is only meaningful
     # for 2D manifolds, not for the circle. What we do instead is choose the
     # total_area such that the sum of the disk radii equals b-a.
-    total_area = 0.25 * (b-a)**2 * numpy.pi * sum(scheme.weights) \
+    length = interval[1] - interval[0]
+    total_area = 0.25 * length**2 * numpy.pi * sum(scheme.weights) \
         / sum(numpy.sqrt(abs(scheme.weights)))**2
 
     helpers.plot_disks(
@@ -43,7 +49,7 @@ def show(scheme, a=-1.0, b=1.0, show_axes=False):
 
 class Midpoint(object):
     def __init__(self):
-        self.weights = [2.0]
+        self.weights = numpy.array([2.0])
         self.points = numpy.array([
             0.0
             ])
@@ -53,7 +59,7 @@ class Midpoint(object):
 
 class Trapezoidal(object):
     def __init__(self):
-        self.weights = [1.0, 1.0]
+        self.weights = numpy.array([1.0, 1.0])
         self.points = numpy.array([
             -1.0,
             1.0
@@ -266,7 +272,7 @@ class GaussPatterson(object):
         self.degree = 3*2**index - 1
         if index == 0:
             self.degree = 1  # override degree
-            self.weights = [2.0]
+            self.weights = numpy.array([2.0])
             self.points = numpy.array([
                 0.0
                 ])
@@ -533,7 +539,8 @@ class GaussPatterson(object):
                 0.9990981249676676,
                 0.9998728881203576,
                 ])
-        elif index == 6:
+        else:
+            assert index == 6
             self.weights = numpy.array([
                 0.5053609520786252E-04,
                 0.1807395644453884E-03,
@@ -792,8 +799,6 @@ class GaussPatterson(object):
                 0.9998728881203576,
                 0.9999824303548916,
                 ])
-        else:
-            raise ValueError('Illegal Gauss-Patterson order')
 
 
 class ClenshawCurtis(object):
@@ -819,8 +824,8 @@ class ClenshawCurtis(object):
 
         n -= 1
         N = numpy.arange(1, n, 2)
-        l = len(N)
-        m = n - l
+        length = len(N)
+        m = n - length
         v0 = numpy.concatenate([
             2.0 / N / (N-2),
             numpy.array([1.0 / N[-1]]),
@@ -828,7 +833,7 @@ class ClenshawCurtis(object):
             ])
         v2 = - v0[:-1] - v0[:0:-1]
         g0 = -numpy.ones(n)
-        g0[l] += n
+        g0[length] += n
         g0[m] += n
         g = g0 / (n**2 - 1 + (n % 2))
 
@@ -869,13 +874,13 @@ class Fejer1(object):
 
         # n -= 1
         N = numpy.arange(1, n, 2)
-        l = len(N)
-        m = n - l
+        length = len(N)
+        m = n - length
         K = numpy.arange(m)
 
         v0 = numpy.concatenate([
             2 * numpy.exp(1j*numpy.pi*K/n) / (1 - 4*K**2),
-            numpy.zeros(l+1)
+            numpy.zeros(length+1)
             ])
         v1 = v0[:-1] + numpy.conjugate(v0[:0:-1])
 
@@ -905,8 +910,8 @@ class Fejer2(object):
 
         n += 1
         N = numpy.arange(1, n, 2)
-        l = len(N)
-        m = n - l
+        length = len(N)
+        m = n - length
         v0 = numpy.concatenate([
             2.0 / N / (N-2),
             numpy.array([1.0 / N[-1]]),

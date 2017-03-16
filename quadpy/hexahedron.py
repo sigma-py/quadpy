@@ -59,8 +59,8 @@ def show(
         + numpy.outer(0.125 * (1.0 + xi)*(1.0 + eta)*(1.0 + zeta), hexa[6]) \
         + numpy.outer(0.125 * (1.0 - xi)*(1.0 + eta)*(1.0 + zeta), hexa[7])
 
-    vol = integrate(lambda x: numpy.ones(1), hexa, scheme)
-    helpers.plot_balls(
+    vol = integrate(lambda x: 1.0, hexa, scheme)
+    helpers.plot_spheres(
         plt, ax, transformed_pts, scheme.weights, vol,
         hexa[:, 0].min(), hexa[:, 0].max(),
         hexa[:, 1].min(), hexa[:, 1].max(),
@@ -71,48 +71,54 @@ def show(
     return
 
 
-def integrate(f, hexa, scheme):
+def integrate(f, hexa, scheme, sum=helpers.kahan_sum):
     xi = scheme.points.T
+    mo = numpy.multiply.outer
     x = \
-        + numpy.outer(hexa[0], 0.125*(1.0-xi[0])*(1.0-xi[1])*(1.0-xi[2])) \
-        + numpy.outer(hexa[1], 0.125*(1.0+xi[0])*(1.0-xi[1])*(1.0-xi[2])) \
-        + numpy.outer(hexa[2], 0.125*(1.0+xi[0])*(1.0+xi[1])*(1.0-xi[2])) \
-        + numpy.outer(hexa[3], 0.125*(1.0-xi[0])*(1.0+xi[1])*(1.0-xi[2])) \
-        + numpy.outer(hexa[4], 0.125*(1.0-xi[0])*(1.0-xi[1])*(1.0+xi[2])) \
-        + numpy.outer(hexa[5], 0.125*(1.0+xi[0])*(1.0-xi[1])*(1.0+xi[2])) \
-        + numpy.outer(hexa[6], 0.125*(1.0+xi[0])*(1.0+xi[1])*(1.0+xi[2])) \
-        + numpy.outer(hexa[7], 0.125*(1.0-xi[0])*(1.0+xi[1])*(1.0+xi[2]))
+        + mo(0.125*(1.0-xi[0])*(1.0-xi[1])*(1.0-xi[2]), hexa[0]) \
+        + mo(0.125*(1.0+xi[0])*(1.0-xi[1])*(1.0-xi[2]), hexa[1]) \
+        + mo(0.125*(1.0+xi[0])*(1.0+xi[1])*(1.0-xi[2]), hexa[2]) \
+        + mo(0.125*(1.0-xi[0])*(1.0+xi[1])*(1.0-xi[2]), hexa[3]) \
+        + mo(0.125*(1.0-xi[0])*(1.0-xi[1])*(1.0+xi[2]), hexa[4]) \
+        + mo(0.125*(1.0+xi[0])*(1.0-xi[1])*(1.0+xi[2]), hexa[5]) \
+        + mo(0.125*(1.0+xi[0])*(1.0+xi[1])*(1.0+xi[2]), hexa[6]) \
+        + mo(0.125*(1.0-xi[0])*(1.0+xi[1])*(1.0+xi[2]), hexa[7])
+    x = x.T
+
     J0 = \
-        - numpy.outer(hexa[0], 0.125*(1 - xi[1])*(1.0 - xi[2])) \
-        + numpy.outer(hexa[1], 0.125*(1 - xi[1])*(1.0 - xi[2])) \
-        + numpy.outer(hexa[2], 0.125*(1 + xi[1])*(1.0 - xi[2])) \
-        - numpy.outer(hexa[3], 0.125*(1 + xi[1])*(1.0 - xi[2])) \
-        - numpy.outer(hexa[4], 0.125*(1 - xi[1])*(1.0 + xi[2])) \
-        + numpy.outer(hexa[5], 0.125*(1 - xi[1])*(1.0 + xi[2])) \
-        + numpy.outer(hexa[6], 0.125*(1 + xi[1])*(1.0 + xi[2])) \
-        - numpy.outer(hexa[7], 0.125*(1 + xi[1])*(1.0 + xi[2]))
+        - numpy.multiply.outer(0.125*(1 - xi[1])*(1.0 - xi[2]), hexa[0]) \
+        + numpy.multiply.outer(0.125*(1 - xi[1])*(1.0 - xi[2]), hexa[1]) \
+        + numpy.multiply.outer(0.125*(1 + xi[1])*(1.0 - xi[2]), hexa[2]) \
+        - numpy.multiply.outer(0.125*(1 + xi[1])*(1.0 - xi[2]), hexa[3]) \
+        - numpy.multiply.outer(0.125*(1 - xi[1])*(1.0 + xi[2]), hexa[4]) \
+        + numpy.multiply.outer(0.125*(1 - xi[1])*(1.0 + xi[2]), hexa[5]) \
+        + numpy.multiply.outer(0.125*(1 + xi[1])*(1.0 + xi[2]), hexa[6]) \
+        - numpy.multiply.outer(0.125*(1 + xi[1])*(1.0 + xi[2]), hexa[7])
+    J0 = J0.T
     J1 = \
-        - numpy.outer(hexa[0], 0.125*(1 - xi[0])*(1.0 - xi[2])) \
-        - numpy.outer(hexa[1], 0.125*(1 + xi[0])*(1.0 - xi[2])) \
-        + numpy.outer(hexa[2], 0.125*(1 + xi[0])*(1.0 - xi[2])) \
-        + numpy.outer(hexa[3], 0.125*(1 - xi[0])*(1.0 - xi[2])) \
-        - numpy.outer(hexa[4], 0.125*(1 - xi[0])*(1.0 + xi[2])) \
-        - numpy.outer(hexa[5], 0.125*(1 + xi[0])*(1.0 + xi[2])) \
-        + numpy.outer(hexa[6], 0.125*(1 + xi[0])*(1.0 + xi[2])) \
-        + numpy.outer(hexa[7], 0.125*(1 - xi[0])*(1.0 + xi[2]))
+        - numpy.multiply.outer(0.125*(1 - xi[0])*(1.0 - xi[2]), hexa[0]) \
+        - numpy.multiply.outer(0.125*(1 + xi[0])*(1.0 - xi[2]), hexa[1]) \
+        + numpy.multiply.outer(0.125*(1 + xi[0])*(1.0 - xi[2]), hexa[2]) \
+        + numpy.multiply.outer(0.125*(1 - xi[0])*(1.0 - xi[2]), hexa[3]) \
+        - numpy.multiply.outer(0.125*(1 - xi[0])*(1.0 + xi[2]), hexa[4]) \
+        - numpy.multiply.outer(0.125*(1 + xi[0])*(1.0 + xi[2]), hexa[5]) \
+        + numpy.multiply.outer(0.125*(1 + xi[0])*(1.0 + xi[2]), hexa[6]) \
+        + numpy.multiply.outer(0.125*(1 - xi[0])*(1.0 + xi[2]), hexa[7])
+    J1 = J1.T
     J2 = \
-        - numpy.outer(hexa[0], 0.125*(1.0 - xi[0])*(1.0 - xi[1])) \
-        - numpy.outer(hexa[1], 0.125*(1.0 + xi[0])*(1.0 - xi[1])) \
-        - numpy.outer(hexa[2], 0.125*(1.0 + xi[0])*(1.0 + xi[1])) \
-        - numpy.outer(hexa[3], 0.125*(1.0 - xi[0])*(1.0 + xi[1])) \
-        + numpy.outer(hexa[4], 0.125*(1.0 - xi[0])*(1.0 - xi[1])) \
-        + numpy.outer(hexa[5], 0.125*(1.0 + xi[0])*(1.0 - xi[1])) \
-        + numpy.outer(hexa[6], 0.125*(1.0 + xi[0])*(1.0 + xi[1])) \
-        + numpy.outer(hexa[7], 0.125*(1.0 - xi[0])*(1.0 + xi[1]))
+        - numpy.multiply.outer(0.125*(1.0 - xi[0])*(1.0 - xi[1]), hexa[0]) \
+        - numpy.multiply.outer(0.125*(1.0 + xi[0])*(1.0 - xi[1]), hexa[1]) \
+        - numpy.multiply.outer(0.125*(1.0 + xi[0])*(1.0 + xi[1]), hexa[2]) \
+        - numpy.multiply.outer(0.125*(1.0 - xi[0])*(1.0 + xi[1]), hexa[3]) \
+        + numpy.multiply.outer(0.125*(1.0 - xi[0])*(1.0 - xi[1]), hexa[4]) \
+        + numpy.multiply.outer(0.125*(1.0 + xi[0])*(1.0 - xi[1]), hexa[5]) \
+        + numpy.multiply.outer(0.125*(1.0 + xi[0])*(1.0 + xi[1]), hexa[6]) \
+        + numpy.multiply.outer(0.125*(1.0 - xi[0])*(1.0 + xi[1]), hexa[7])
+    J2 = J2.T
     det = J0[0]*J1[1]*J2[2] + J1[0]*J2[1]*J0[2] + J2[0]*J0[1]*J1[2] \
         - J0[2]*J1[1]*J2[0] - J1[2]*J2[1]*J0[0] - J2[2]*J0[1]*J1[0]
 
-    return math.fsum(scheme.weights * f(x).T * abs(det))
+    return sum((scheme.weights * f(x)).T * abs(det.T))
 
 
 class From1d(object):

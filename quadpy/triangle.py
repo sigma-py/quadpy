@@ -49,24 +49,21 @@ def show(
     return
 
 
-def integrate(f, triangle, scheme):
+def integrate(f, triangle, scheme, sum=helpers.kahan_sum):
     xi = scheme.points.T
     x = \
-        + numpy.outer(triangle[0], 1.0 - xi[0] - xi[1]) \
-        + numpy.outer(triangle[1], xi[0]) \
-        + numpy.outer(triangle[2], xi[1])
+        + numpy.multiply.outer(1.0 - xi[0] - xi[1], triangle[0]) \
+        + numpy.multiply.outer(xi[0], triangle[1]) \
+        + numpy.multiply.outer(xi[1], triangle[2])
+    x = x.T
 
     # det is the signed volume of the triangle
-    J0 = \
-        - numpy.outer(triangle[0], 1.0) \
-        + numpy.outer(triangle[1], 1.0)
-    J1 = \
-        - numpy.outer(triangle[0], 1.0) \
-        + numpy.outer(triangle[2], 1.0)
-    ref_vol = 0.5
-    det = ref_vol * (J0[0]*J1[1] - J1[0]*J0[1])
+    J0 = (triangle[1] - triangle[0]).T
+    J1 = (triangle[2] - triangle[0]).T
+    # The factor 0.5 is the volume of the reference triangle.
+    det = 0.5 * (J0[0]*J1[1] - J1[0]*J0[1])
 
-    return math.fsum(scheme.weights * f(x).T * abs(det))
+    return sum((scheme.weights * f(x)).T * abs(det), axis=0)
 
 
 def _s3():
@@ -195,7 +192,8 @@ class HammerMarloweStroud(object):
                 self._r(0.4),
                 ])
             self.degree = 3
-        elif index == 5:
+        else:
+            assert index == 5
             self.weights = numpy.concatenate([
                 9.0/40.0 * numpy.ones(1),
                 (155.0 - numpy.sqrt(15.0)) / 1200.0 * numpy.ones(3),
@@ -207,8 +205,6 @@ class HammerMarloweStroud(object):
                 self._r((1 - numpy.sqrt(15)) / 7.0),
                 ])
             self.degree = 5
-        else:
-            raise ValueError('Illegal Hammer-Marlowe-Stroud index')
 
         self.points = bary[:, 1:]
         return
@@ -396,7 +392,8 @@ class Strang(object):
                 _s111(0.636502499121399, 0.310352451033785),
                 ])
             self.degree = 6
-        elif index == 10:
+        else:
+            assert index == 10
             self.weights = numpy.concatenate([
                 -0.149570044467670 * numpy.ones(1),
                 0.175615257433204 * numpy.ones(3),
@@ -410,8 +407,6 @@ class Strang(object):
                 _s111(0.638444188569809, 0.312865496004875),
                 ])
             self.degree = 7
-        else:
-            raise ValueError('Illegal Strang index')
 
         self.points = bary[:, [1, 2]]
         return
@@ -722,7 +717,8 @@ class LynessJespersen(object):
                 _s111(2.102201653616613E-02, 8.074890031597923E-01),
                 ])
             self.degree = 11
-        elif index == 21:
+        else:
+            assert index == 21
             self.weights = numpy.concatenate([
                  8.797730116222190E-02 * numpy.ones(1),
                  2.623293466120857E-02 / 3.0 * numpy.ones(3),
@@ -744,8 +740,6 @@ class LynessJespersen(object):
                 _s111(4.484167758913055E-02, 6.779376548825902E-01),
                 ])
             self.degree = 11
-        else:
-            raise ValueError('Illegal Lyness-Jespersen index')
 
         self.points = bary[:, [1, 2]]
         return
@@ -785,7 +779,8 @@ class Hillion(object):
                 numpy.array([[0.5, 0.5]]),
                 ])
             self.degree = 2
-        elif index == 3:
+        else:
+            assert index == 3
             self.weights = 2.0 * numpy.concatenate([
                 1.0/6.0 * numpy.ones(2),
                 1.0/6.0 * numpy.ones(1),
@@ -873,8 +868,6 @@ class Hillion(object):
         #         numpy.array([[0.4, 0.4]]),
         #         ])
         #     self.degree = 3
-        else:
-            raise ValueError('Illegal Hillion index')
 
         return
 
@@ -1098,7 +1091,8 @@ class LaursenGellert(object):
                 _s111(0.035632559587504, 0.143295370426867),
                 ])
             self.degree = 10
-        elif index == '15b':
+        else:
+            assert index == '15b'
             self.weights = numpy.concatenate([
                 0.081743329146286 * numpy.ones(1),
                 0.045957963604745 * numpy.ones(3),
@@ -1116,8 +1110,6 @@ class LaursenGellert(object):
                 _s111(0.028367665339938, 0.163701733737182),
                 ])
             self.degree = 10
-        else:
-            raise ValueError('Illegal Laursen-Gellert index')
 
         self.points = bary[:, 1:]
         return
@@ -1193,7 +1185,8 @@ class Triex(object):
                 ])
             self.points = bary[:, [1, 2]]
             self.degree = 9
-        elif index == 28:
+        else:
+            assert index == 28
             self.weights = numpy.concatenate([
                 0.08797730116222190 * numpy.ones(1),
                 0.008744311553736190 * numpy.ones(3),
@@ -1216,8 +1209,7 @@ class Triex(object):
                 ])
             self.points = bary[:, [1, 2]]
             self.degree = 11
-        else:
-            raise ValueError('Illegal TRIEX index')
+
         return
 
 
@@ -1626,7 +1618,8 @@ class Dunavant(object):
                 _s111(0.065494628082938, 0.924344252620784),
                 ])
             self.degree = 19
-        elif index == 20:
+        else:
+            assert index == 20
             self.weights = numpy.concatenate([
                 0.033057055541624 * numpy.ones(1),
                 #
@@ -1672,8 +1665,6 @@ class Dunavant(object):
                 _s111(0.059696109149007, 0.929756171556853),
                 ])
             self.degree = 20
-        else:
-            raise ValueError('Illegal Dunavant index')
 
         # convert barycentric coordinates to reference triangle
         self.points = bary[:, [1, 2]]
@@ -1691,37 +1682,37 @@ class CoolsHaegemans(object):
     '''
     def __init__(self, index):
         self.name = 'CH(%d)' % index
-        if index == 1:
-            self.weights = 2.0 * numpy.concatenate([
-                0.16058343856681218798E-09 * numpy.ones(3),
-                0.26530624434780379347E-01 * numpy.ones(3),
-                0.29285717640155892159E-01 * numpy.ones(3),
-                0.43909556791220782402E-01 * numpy.ones(3),
-                0.66940767639916174192E-01 * numpy.ones(3),
-                ])
-            bary = numpy.concatenate([
-                self._r3(
-                    0.34579201116826902882E+00,
-                    0.36231682215692616667E+01
-                    ),
-                self._r3(
-                    0.65101993458939166328E-01,
-                    0.87016510156356306078E+00
-                    ),
-                self._r3(
-                    0.65177530364879570754E+00,
-                    0.31347788752373300717E+00
-                    ),
-                self._r3(
-                    0.31325121067172530696E+00,
-                    0.63062143431895614010E+00
-                    ),
-                self._r3(
-                    0.51334692063945414949E+00,
-                    0.28104124731511039057E+00
-                    ),
-                ])
-            self.degree = 8
+        assert index == 1
+        self.weights = 2.0 * numpy.concatenate([
+            0.16058343856681218798E-09 * numpy.ones(3),
+            0.26530624434780379347E-01 * numpy.ones(3),
+            0.29285717640155892159E-01 * numpy.ones(3),
+            0.43909556791220782402E-01 * numpy.ones(3),
+            0.66940767639916174192E-01 * numpy.ones(3),
+            ])
+        bary = numpy.concatenate([
+            self._r3(
+                0.34579201116826902882E+00,
+                0.36231682215692616667E+01
+                ),
+            self._r3(
+                0.65101993458939166328E-01,
+                0.87016510156356306078E+00
+                ),
+            self._r3(
+                0.65177530364879570754E+00,
+                0.31347788752373300717E+00
+                ),
+            self._r3(
+                0.31325121067172530696E+00,
+                0.63062143431895614010E+00
+                ),
+            self._r3(
+                0.51334692063945414949E+00,
+                0.28104124731511039057E+00
+                ),
+            ])
+        self.degree = 8
         # elif index == 2:
         #     self.weights = 2.0 * numpy.concatenate([
         #         0.15319130036758557631E-06 * numpy.ones(3),
@@ -1765,8 +1756,6 @@ class CoolsHaegemans(object):
         #         numpy.array([[1.0/3.0, 1.0/3.0, 1.0/3.0]])
         #         ])
         #     self.degree = 10
-        else:
-            raise ValueError('Illegal Cools-Haegemans index')
 
         self.points = bary[:, 1:]
         return
@@ -1906,7 +1895,8 @@ class BerntsenEspelid(object):
                     0.631364930935447484201224031403
                     ),
                 ])
-        elif index == 4:
+        else:
+            assert index == 4
             self.weights = numpy.concatenate([
                 0.055141401445961668095892272765 * numpy.ones(1),
                 0.000011142520455322162070507537 * numpy.ones(3),
@@ -1943,8 +1933,6 @@ class BerntsenEspelid(object):
                     ),
                 ])
 
-        else:
-            raise ValueError('Illegal Berntsen-Espelid index')
         self.degree = 13
         self.points = bary[:, [1, 2]]
         return
@@ -2094,7 +2082,8 @@ class LiuVinokur(object):
                 self._r_alpha((1.0 - numpy.sqrt(15.0)) / 7.0),
                 ])
             self.degree = 5
-        elif index == 13:
+        else:
+            assert index == 13
             self.weights = numpy.concatenate([
                 81.0/320.0 * numpy.ones(1),
                 1.0/90.0 * numpy.ones(3),
@@ -2108,8 +2097,6 @@ class LiuVinokur(object):
                 self._r_alpha(4.0/7.0),
                 ])
             self.degree = 5
-        else:
-            raise ValueError('Illegal Liu-Vinokur index')
 
         self.points = bary[:, 1:]
         return
@@ -2342,7 +2329,8 @@ class WandzuraXiao(object):
                 _s111(3.256181225959837e-01, 1.917718658673251e-01),
                 ])
             self.degree = 25
-        elif index == 6:
+        else:
+            assert index == 6
             self.weights = numpy.concatenate([
                 0.1557996020289920E-01 * numpy.ones(1),
                 0.3177233700534134E-02 * numpy.ones(3),
@@ -2420,8 +2408,6 @@ class WandzuraXiao(object):
                 _s111(3.219231812312984e-01, 1.899456528219787e-01),
                 ])
             self.degree = 30
-        else:
-            raise ValueError('Illegal Wandzura index')
 
         self.points = bary[:, [1, 2]]
         return
@@ -9150,7 +9136,8 @@ class XiaoGimbutas(object):
                 0.00078855516545326865646794205230635 * numpy.ones(3),
                 0.00016055847055223060984911012924419 * numpy.ones(6),
                 ])
-        elif index == 50:
+        else:
+            assert index == 50
             bary = numpy.concatenate([
                 _s21(0.25635586338479089235345337173654),
                 _s111(
@@ -9524,8 +9511,6 @@ class XiaoGimbutas(object):
                 0.0057736389035923078386875324785005 * numpy.ones(3),
                 0.00037050554881417209197128012650276 * numpy.ones(6),
                 ])
-        else:
-            raise ValueError('Illegal Xiao-Gimbutas index')
 
         self.degree = index
         self.points = bary[:, [1, 2]]

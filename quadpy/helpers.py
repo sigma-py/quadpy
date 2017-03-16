@@ -4,6 +4,22 @@ import math
 import numpy
 
 
+def kahan_sum(a, axis=0):
+    '''Kahan summation of the numpy array a along axis k.
+    '''
+    # See <https://en.wikipedia.org/wiki/Kahan_summation_algorithm> for
+    # details.
+    s = numpy.zeros(a.shape[:axis] + a.shape[axis+1:])
+    c = numpy.zeros(s.shape)
+    for i in range(a.shape[axis]):
+        # http://stackoverflow.com/a/42817610/353337
+        y = a[(slice(None),) * axis + (i,)] - c
+        t = s + y
+        c = (t - s) - y
+        s = t.copy()
+    return s
+
+
 def plot_disks(plt, pts, weights, total_area):
     '''Plot a circles at quadrature points according to weights.
     '''
@@ -28,14 +44,16 @@ def plot_disks(plt, pts, weights, total_area):
     return
 
 
-def plot_balls(
+def plot_spheres(
         plt, ax, pts, weights, total_volume,
         xmin, xmax, ymin, ymax, zmin, zmax
         ):
-    phi, theta = numpy.mgrid[0:numpy.pi:101j, 0:2*numpy.pi:101j]
-    x = numpy.sin(phi)*numpy.cos(theta)
-    y = numpy.sin(phi)*numpy.sin(theta)
-    z = numpy.cos(phi)
+    # http://matplotlib.org/examples/mplot3d/surface3d_demo2.html
+    u = numpy.linspace(0, 2 * numpy.pi, 100)
+    v = numpy.linspace(0, numpy.pi, 100)
+    x = numpy.outer(numpy.cos(u), numpy.sin(v))
+    y = numpy.outer(numpy.sin(u), numpy.sin(v))
+    z = numpy.outer(numpy.ones(numpy.size(u)), numpy.cos(v))
 
     alpha = 0.3
 

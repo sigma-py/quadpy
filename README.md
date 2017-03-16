@@ -25,6 +25,19 @@ val = quadpy.triangle.integrate(f, triangle, quadpy.triangle.Strang(9))
 ```
 This uses Strang's rule of degree 6.
 
+quadpy is fully vectorized, so if you like to compute the integral of a
+function on many domains at once, you can provide them all in one `integrate()`
+call, e.g.,
+```python
+triangles = numpy.array([
+    [[0.0, 0.0], [1.2, 0.6], [26.0, 31.0], [0.1, 0.3], [8.6, 6.0]],
+    [[1.0, 0.0], [1.3, 0.7], [24.0, 27.0], [0.4, 0.4], [9.4, 5.6]],
+    [[0.0, 1.0], [1.4, 0.8], [33.0, 28.0], [0.7, 0.1], [7.5, 7.4]],
+    ])
+```
+
+More examples under [test/examples_test.py](https://github.com/nschloe/quadpy/blob/master/test/examples_test.py).
+
 ## Schemes
 
 ### Line segment
@@ -52,8 +65,8 @@ This uses Strang's rule of degree 6.
 Example:
 ```python
 val = quadpy.line_segment.integrate(
-    lambda x: numpy.exp(x[0]),
-    0.0, 1.0,
+    lambda x: numpy.exp(x),
+    [0.0, 1.0],
     quadpy.line_segment.GaussPatterson(5)
     )
 ```

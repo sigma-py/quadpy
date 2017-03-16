@@ -31,9 +31,12 @@ def show(scheme, show_axes=False):
     return
 
 
-def integrate(f, midpoint, radius, rule):
-    out = math.fsum(
-        rule.weights * f((radius*rule.points + midpoint).T)
+def integrate(f, center, radius, rule, sum=helpers.kahan_sum):
+    center = numpy.array(center)
+    rr = numpy.multiply.outer(rule.points.T, radius)
+    out = sum(
+        (rule.weights * f(rr + center.T[:, None]).T).T,
+        axis=0
         )
     return radius * out
 
