@@ -92,26 +92,20 @@ class Stroud(object):
     '''
     def __init__(self, index):
         if index == 1:
-            self.weights = numpy.array([
-                4.0,
-                ])
-            self.points = numpy.array([
-                [0.0, 0.0]
-                ])
+            self.weights = [4.0]
+            self.points = [[0.0, 0.0]]
             self.degree = 1
         elif index == 2:
-            self.weights = numpy.ones(4)
-            self.points = numpy.array(
-                self._symm_s(1.0/numpy.sqrt(3.0))
-                )
+            self.weights = 4 * [1.0]
+            self.points = self._symm_s(1.0/numpy.sqrt(3.0))
             self.degree = 3
         elif index == 3:
-            self.weights = numpy.array(
+            self.weights = (
                 [64.0/81.0] +
                 4 * [25.0/81.0] +
                 4 * [40.0/81.0]
                 )
-            self.points = numpy.array(
+            self.points = (
                 [[0.0, 0.0]] +
                 self._symm_s(numpy.sqrt(0.6)) +
                 self._symm_r_0(numpy.sqrt(0.6))
@@ -127,12 +121,12 @@ class Stroud(object):
             w2 = 4.0 * (178981.0 + 923.0 * c) / 1888920.0
             w3 = 4.0 * (178981.0 - 923.0 * c) / 1888920.0
             #
-            self.weights = numpy.array(
+            self.weights = (
                 4 * [w1] +
                 4 * [w2] +
                 4 * [w3]
                 )
-            self.points = numpy.array(
+            self.points = (
                 self._symm_r_0(r) +
                 self._symm_s(s) +
                 self._symm_s(t)
@@ -147,12 +141,12 @@ class Stroud(object):
             w1 = 8.0 / 162.0
             w2 = 98.0 / 162.0
             w3 = 31.0 / 162.0
-            self.weights = numpy.array(
+            self.weights = (
                 [w1] +
                 4 * [w2] +
                 8 * [w3]
                 )
-            self.points = numpy.array(
+            self.points = (
                 [[0.0, 0.0]] +
                 self._symm_r_0(r) +
                 self._symm_s_t(s, t)
@@ -170,6 +164,8 @@ class Stroud(object):
             assert len(self.points) == 64
             self.degree = 15
 
+        self.weights = numpy.array(self.weights)
+        self.points = numpy.array(self.points)
         return
 
     def _symm_r_0(self, r):
