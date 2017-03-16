@@ -143,10 +143,10 @@ class Felippa(object):
                 [0.81] * 4 +
                 [125.0/27.0]
                 )
-            self.points = numpy.concatenate([
-                self._s4(8 * numpy.sqrt(2.0/15.0) / 5, -2.0/3.0),
-                numpy.array([[0.0, 0.0, 0.4]]),
-                ])
+            self.points = numpy.array(
+                self._s4(8 * numpy.sqrt(2.0/15.0) / 5, -2.0/3.0) +
+                [[0.0, 0.0, 0.4]]
+                )
             self.degree = 2
         elif index == 3:
             self.weights = numpy.array(
@@ -154,11 +154,11 @@ class Felippa(object):
                 1 * [576.0/625.0] +
                 1 * [64.0/15.0]
                 )
-            self.points = numpy.concatenate([
-                self._s4(numpy.sqrt(12.0/35.0), -2.0/3.0),
-                numpy.array([[0.0, 0.0, 1.0/6.0]]),
-                numpy.array([[0.0, 0.0, 0.5]]),
-                ])
+            self.points = numpy.array(
+                self._s4(numpy.sqrt(12.0/35.0), -2.0/3.0) +
+                [[0.0, 0.0, 1.0/6.0]] +
+                [[0.0, 0.0, 0.5]]
+                )
             self.degree = 2
         elif index == 4:
             w1 = 5 * (68.0 + 5*numpy.sqrt(10.0)) / 432.0
@@ -169,10 +169,10 @@ class Felippa(object):
                 )
             g1 = numpy.sqrt(1.0/3.0)
             g2 = (2*numpy.sqrt(10)-5) / 15.0
-            self.points = numpy.concatenate([
-                self._s4(g1, g2),
-                self._s4(g1, -2.0/3.0 - g2),
-                ])
+            self.points = numpy.array(
+                self._s4(g1, g2) +
+                self._s4(g1, -2.0/3.0 - g2)
+                )
             self.degree = 3
         elif index == 5:
             w1 = (11764.0 - 461.0*numpy.sqrt(51.0)) / 15300.0
@@ -185,10 +185,10 @@ class Felippa(object):
             g2 = numpy.sqrt(2.0/15.0 * (573 + 2*numpy.sqrt(51))) / 15.0
             g3 = -(2*numpy.sqrt(51.0) + 13) / 35.0
             g4 = +(2*numpy.sqrt(51.0) - 13) / 35.0
-            self.points = numpy.concatenate([
-                self._s4(g1, g3),
-                self._s4(g2, g4),
-                ])
+            self.points = numpy.array(
+                self._s4(g1, g3) +
+                self._s4(g2, g4)
+                )
             self.degree = 2
         elif index == 6:
             w1 = 7.0*(11472415.0 - 70057.0*numpy.sqrt(2865.0)) / 130739500.0
@@ -206,11 +206,11 @@ class Felippa(object):
             g2 = numpy.sqrt(2*(8025 + numpy.sqrt(2865.0)) / 35.0) / 37.0
             g3 = -(+87 + numpy.sqrt(2865.0)) / 168.0
             g4 = +(-87 + numpy.sqrt(2865.0)) / 168.0
-            self.points = numpy.concatenate([
-                self._s4(g1, g3),
-                self._s4(g2, g4),
-                numpy.array([[0.0, 0.0, 2.0/3.0]])
-                ])
+            self.points = numpy.array(
+                self._s4(g1, g3) +
+                self._s4(g2, g4) +
+                [[0.0, 0.0, 2.0/3.0]]
+                )
             self.degree = 2
         elif index == 7:
             w1 = 170569.0 / 331200.0
@@ -229,12 +229,12 @@ class Felippa(object):
             g3 = numpy.sqrt(37043.0/35.0) / 56.0
             g4 = -127.0/153.0
             g5 = 1490761.0 / 2842826.0
-            self.points = numpy.concatenate([
-                self._s4(g1, -1.0/7.0),
-                self._s4_0(g2, -9.0/28.0),
-                self._s4(g3, g4),
-                numpy.array([[0.0, 0.0, g5]])
-                ])
+            self.points = numpy.array(
+                self._s4(g1, -1.0/7.0) +
+                self._s4_0(g2, -9.0/28.0) +
+                self._s4(g3, g4) +
+                [[0.0, 0.0, g5]]
+                )
             self.degree = 2
         elif index == 8:
             w1 = 5 * (68.0 + 5.0*numpy.sqrt(10)) / 432.0
@@ -251,14 +251,14 @@ class Felippa(object):
             g1 = numpy.sqrt(0.6)
             g2 = 1.0 - 2*(10.0 - numpy.sqrt(10)) / 15.0
             g3 = -2.0/3.0 - g2
-            self.points = numpy.concatenate([
-                self._s4(g1, g2),
-                self._s4_0(g1, g2),
-                numpy.array([[0.0, 0.0, g2]]),
-                self._s4(g1, g3),
-                self._s4_0(g1, g3),
-                numpy.array([[0.0, 0.0, g3]])
-                ])
+            self.points = numpy.array(
+                self._s4(g1, g2) +
+                self._s4_0(g1, g2) +
+                [[0.0, 0.0, g2]] +
+                self._s4(g1, g3) +
+                self._s4_0(g1, g3) +
+                [[0.0, 0.0, g3]]
+                )
             self.degree = 3
         else:
             assert index == 9
@@ -266,17 +266,17 @@ class Felippa(object):
             g3 = -0.854011951853700535688324041975993416
             g4 = -0.305992467923296230556472913192103090
             g5 = +0.410004419776996766244796955168096505
-            self.points = numpy.concatenate([
-                self._s4(g1, g3),
-                self._s4_0(g1, g3),
-                numpy.array([[0.0, 0.0, g3]]),
-                self._s4(g1, g4),
-                self._s4_0(g1, g4),
-                numpy.array([[0.0, 0.0, g4]]),
-                self._s4(g1, g5),
-                self._s4_0(g1, g5),
-                numpy.array([[0.0, 0.0, g5]]),
-                ])
+            self.points = numpy.array(
+                self._s4(g1, g3) +
+                self._s4_0(g1, g3) +
+                [[0.0, 0.0, g3]] +
+                self._s4(g1, g4) +
+                self._s4_0(g1, g4) +
+                [[0.0, 0.0, g4]] +
+                self._s4(g1, g5) +
+                self._s4_0(g1, g5) +
+                [[0.0, 0.0, g5]]
+                )
 
             w1 = (4.0/15.0)*(4+5*(g4+g5)+10*g4*g5)/((g3-g4)*(g3-g5)*(1-g3)**2)
             w2 = (4.0/15.0)*(4+5*(g3+g5)+10*g3*g5)/((g3-g4)*(g5-g4)*(1-g4)**2)
@@ -298,17 +298,17 @@ class Felippa(object):
         return
 
     def _s4(self, a, z):
-        return numpy.array([
+        return [
             [+a, +a, z],
             [-a, +a, z],
             [+a, -a, z],
             [-a, -a, z],
-            ])
+            ]
 
     def _s4_0(self, a, z):
-        return numpy.array([
+        return [
             [+a, 0.0, z],
             [-a, 0.0, z],
             [0.0, +a, z],
             [0.0, -a, z],
-            ])
+            ]
