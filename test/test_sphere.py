@@ -57,7 +57,7 @@ def test_scheme(scheme):
     radius = 1.0
     degree = check_degree(
             lambda poly: quadpy.sphere.integrate(
-                poly, midpoint, radius, scheme, sum=numpy.sum
+                poly, midpoint, radius, scheme, sumfun=numpy.sum
                 ),
             _integral_monomial_over_unit_sphere,
             create_monomial_exponents3,

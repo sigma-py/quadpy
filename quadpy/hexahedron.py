@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-import math
 import numpy
 
 from . import helpers
@@ -71,7 +70,7 @@ def show(
     return
 
 
-def integrate(f, hexa, scheme, sum=helpers.kahan_sum):
+def integrate(f, hexa, scheme, sumfun=helpers.kahan_sum):
     xi = scheme.points.T
     mo = numpy.multiply.outer
     x = \
@@ -118,7 +117,7 @@ def integrate(f, hexa, scheme, sum=helpers.kahan_sum):
     det = J0[0]*J1[1]*J2[2] + J1[0]*J2[1]*J0[2] + J2[0]*J0[1]*J1[2] \
         - J0[2]*J1[1]*J2[0] - J1[2]*J2[1]*J0[0] - J2[2]*J0[1]*J1[0]
 
-    return sum((scheme.weights * f(x)).T * abs(det.T))
+    return sumfun((scheme.weights * f(x)).T * abs(det.T))
 
 
 class From1d(object):
