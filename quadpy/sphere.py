@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import math
 import numpy
+
+from . import helpers
 
 
 def area(radius):
@@ -41,9 +42,14 @@ def show(scheme):
     return
 
 
-def integrate(f, midpoint, radius, rule):
-    out = math.fsum(
-        rule.weights * f((radius*rule.points + midpoint).T)
+def integrate(f, center, radius, rule):
+    center = numpy.array(center)
+    radius = numpy.array(radius)
+    #
+    rr = numpy.multiply.outer(rule.points.T, radius)
+    out = helpers.kahan_sum(
+        (rule.weights * f(rr + center.T[:, None]).T).T,
+        axis=0
         )
     return area(radius) * out
 
