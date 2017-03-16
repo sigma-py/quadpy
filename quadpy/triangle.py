@@ -52,21 +52,23 @@ def show(
 def integrate(f, triangle, scheme):
     xi = scheme.points.T
     x = \
-        + numpy.outer(triangle[0], 1.0 - xi[0] - xi[1]) \
-        + numpy.outer(triangle[1], xi[0]) \
-        + numpy.outer(triangle[2], xi[1])
+        + numpy.multiply.outer(1.0 - xi[0] - xi[1], triangle[0]) \
+        + numpy.multiply.outer(xi[0], triangle[1]) \
+        + numpy.multiply.outer(xi[1], triangle[2])
+    x = x.T
 
     # det is the signed volume of the triangle
     J0 = \
-        - numpy.outer(triangle[0], 1.0) \
-        + numpy.outer(triangle[1], 1.0)
+        - numpy.multiply.outer(triangle[0], 1.0) \
+        + numpy.multiply.outer(triangle[1], 1.0)
+    J0 = J0.T
     J1 = \
-        - numpy.outer(triangle[0], 1.0) \
-        + numpy.outer(triangle[2], 1.0)
+        - numpy.multiply.outer(triangle[0], 1.0) \
+        + numpy.multiply.outer(triangle[2], 1.0)
+    J1 = J1.T
     ref_vol = 0.5
     det = ref_vol * (J0[0]*J1[1] - J1[0]*J0[1])
-
-    return math.fsum(scheme.weights * f(x).T * abs(det))
+    return helpers.kahan_sum((scheme.weights * f(x)).T * abs(det), axis=0)
 
 
 def _s3():
