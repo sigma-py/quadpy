@@ -44,7 +44,7 @@ def show(
     return
 
 
-def integrate(f, quad, scheme, sum=helpers.kahan_sum):
+def integrate(f, quad, scheme, sumfun=helpers.kahan_sum):
     xi = scheme.points.T
     x = \
         + numpy.multiply.outer(0.25*(1.0-xi[0])*(1.0-xi[1]), quad[0]) \
@@ -67,7 +67,7 @@ def integrate(f, quad, scheme, sum=helpers.kahan_sum):
     J1 = J1.T
     det = (J0[0]*J1[1] - J1[0]*J0[1]).T
 
-    return sum((scheme.weights * f(x)).T * abs(det), axis=0)
+    return sumfun((scheme.weights * f(x)).T * abs(det), axis=0)
 
 
 class From1d(object):
@@ -92,28 +92,24 @@ class Stroud(object):
     '''
     def __init__(self, index):
         if index == 1:
-            self.weights = numpy.array([
-                4.0,
-                ])
-            self.points = numpy.array([
-                [0.0, 0.0]
-                ])
+            self.weights = [4.0]
+            self.points = [[0.0, 0.0]]
             self.degree = 1
         elif index == 2:
-            self.weights = numpy.ones(4)
+            self.weights = 4 * [1.0]
             self.points = self._symm_s(1.0/numpy.sqrt(3.0))
             self.degree = 3
         elif index == 3:
-            self.weights = numpy.concatenate([
-                64.0/81.0 * numpy.ones(1),
-                25.0/81.0 * numpy.ones(4),
-                40.0/81.0 * numpy.ones(4),
-                ])
-            self.points = numpy.concatenate([
-                numpy.array([[0.0, 0.0]]),
-                self._symm_s(numpy.sqrt(0.6)),
-                self._symm_r_0(numpy.sqrt(0.6)),
-                ])
+            self.weights = (
+                [64.0/81.0] +
+                4 * [25.0/81.0] +
+                4 * [40.0/81.0]
+                )
+            self.points = (
+                [[0.0, 0.0]] +
+                self._symm_s(numpy.sqrt(0.6)) +
+                self._symm_r_0(numpy.sqrt(0.6))
+                )
             self.degree = 5
         elif index == 4:
             # Stroud number C2:7-1.
@@ -125,16 +121,16 @@ class Stroud(object):
             w2 = 4.0 * (178981.0 + 923.0 * c) / 1888920.0
             w3 = 4.0 * (178981.0 - 923.0 * c) / 1888920.0
             #
-            self.weights = numpy.concatenate([
-                w1 * numpy.ones(4),
-                w2 * numpy.ones(4),
-                w3 * numpy.ones(4),
-                ])
-            self.points = numpy.concatenate([
-                self._symm_r_0(r),
-                self._symm_s(s),
-                self._symm_s(t),
-                ])
+            self.weights = (
+                4 * [w1] +
+                4 * [w2] +
+                4 * [w3]
+                )
+            self.points = (
+                self._symm_r_0(r) +
+                self._symm_s(s) +
+                self._symm_s(t)
+                )
             self.degree = 7
         elif index == 5:
             # Stroud number C2:7-3.
@@ -145,16 +141,16 @@ class Stroud(object):
             w1 = 8.0 / 162.0
             w2 = 98.0 / 162.0
             w3 = 31.0 / 162.0
-            self.weights = numpy.concatenate([
-                w1 * numpy.ones(1),
-                w2 * numpy.ones(4),
-                w3 * numpy.ones(8),
-                ])
-            self.points = numpy.concatenate([
-                numpy.array([[0.0, 0.0]]),
-                self._symm_r_0(r),
-                self._symm_s_t(s, t),
-                ])
+            self.weights = (
+                [w1] +
+                4 * [w2] +
+                8 * [w3]
+                )
+            self.points = (
+                [[0.0, 0.0]] +
+                self._symm_r_0(r) +
+                self._symm_s_t(s, t)
+                )
             self.degree = 7
         else:
             assert index == 6
@@ -168,26 +164,28 @@ class Stroud(object):
             assert len(self.points) == 64
             self.degree = 15
 
+        self.weights = numpy.array(self.weights)
+        self.points = numpy.array(self.points)
         return
 
     def _symm_r_0(self, r):
-        return numpy.array([
+        return [
             [+r, 0.0],
             [-r, 0.0],
             [0.0, +r],
             [0.0, -r],
-            ])
+            ]
 
     def _symm_s(self, s):
-        return numpy.array([
+        return [
             [+s, +s],
             [-s, +s],
             [+s, -s],
             [-s, -s],
-            ])
+            ]
 
     def _symm_s_t(self, s, t):
-        return numpy.array([
+        return [
             [+s, +t],
             [-s, +t],
             [+s, -t],
@@ -196,4 +194,4 @@ class Stroud(object):
             [-t, +s],
             [+t, -s],
             [-t, -s],
-            ])
+            ]
