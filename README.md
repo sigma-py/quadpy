@@ -242,6 +242,27 @@ val = quadpy.sphere.integrate(
     )
 ```
 
+### Vectorization
+
+quadpy is fully vectorized. If you like to compute the integral of a
+function on many domains at once, you can provide them all in one `integrate()`
+call. Example for triangles:
+```python
+import numpy
+import quadpy
+
+def f(x):
+    return numpy.sin(x[0]) * numpy.sin(x[1])
+
+triangles = numpy.array([
+    [[0.0, 0.0], [1.2, 0.6], [26.0, 31.0], [0.1, 0.3], [8.6, 6.0]],
+    [[1.0, 0.0], [1.3, 0.7], [24.0, 27.0], [0.4, 0.4], [9.4, 5.6]],
+    [[0.0, 1.0], [1.4, 0.8], [33.0, 28.0], [0.7, 0.1], [7.5, 7.4]],
+    ])
+val = quadpy.triangle.integrate(f, triangles, quadpy.triangle.Strang(4))
+```
+
+
 ### Installation
 
 quadpy is [available from the Python Package Index](https://pypi.python.org/pypi/quadpy/), so with
