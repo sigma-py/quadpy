@@ -66,27 +66,22 @@ def show(
 def integrate(f, tetrahedron, scheme):
     xi = scheme.points.T
     x = \
-        + numpy.outer(tetrahedron[0], 1.0 - xi[0] - xi[1] - xi[2]) \
-        + numpy.outer(tetrahedron[1], xi[0]) \
-        + numpy.outer(tetrahedron[2], xi[1]) \
-        + numpy.outer(tetrahedron[3], xi[2])
+        + numpy.multiply.outer(1.0 - xi[0] - xi[1] - xi[2], tetrahedron[0]) \
+        + numpy.multiply.outer(xi[0], tetrahedron[1]) \
+        + numpy.multiply.outer(xi[1], tetrahedron[2]) \
+        + numpy.multiply.outer(xi[2], tetrahedron[3])
+    x = x.T
 
     # det is the signed volume of the tetrahedron
-    J0 = \
-        - numpy.outer(tetrahedron[0], 1.0) \
-        + numpy.outer(tetrahedron[1], 1.0)
-    J1 = \
-        - numpy.outer(tetrahedron[0], 1.0) \
-        + numpy.outer(tetrahedron[2], 1.0)
-    J2 = \
-        - numpy.outer(tetrahedron[0], 1.0) \
-        + numpy.outer(tetrahedron[3], 1.0)
+    J0 = (tetrahedron[1] - tetrahedron[0]).T
+    J1 = (tetrahedron[2] - tetrahedron[0]).T
+    J2 = (tetrahedron[3] - tetrahedron[0]).T
     det = J0[0]*J1[1]*J2[2] + J1[0]*J2[1]*J0[2] + J2[0]*J0[1]*J1[2] \
         - J0[2]*J1[1]*J2[0] - J1[2]*J2[1]*J0[0] - J2[2]*J0[1]*J1[0]
     # reference volume
     det *= 1.0/6.0
 
-    return math.fsum(scheme.weights * f(x).T * abs(det))
+    return helpers.kahan_sum((scheme.weights * f(x)).T * abs(det), axis=0)
 
 
 def _s4():
