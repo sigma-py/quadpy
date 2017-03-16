@@ -260,7 +260,8 @@ class Felippa(object):
                 numpy.array([[0.0, 0.0, g3]])
                 ])
             self.degree = 3
-        elif index == 9:
+        else:
+            assert index == 9
             g1 = numpy.sqrt(0.6)
             g3 = -0.854011951853700535688324041975993416
             g4 = -0.305992467923296230556472913192103090
@@ -293,8 +294,6 @@ class Felippa(object):
                 ])
 
             self.degree = 5
-        else:
-            raise ValueError('Illegal Felippa index')
 
         return
 
