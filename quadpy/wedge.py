@@ -55,7 +55,7 @@ def show(
         + numpy.outer(0.5 * eta * (1.0 + zeta), wedge[5])
 
     vol = integrate(lambda x: numpy.ones(1), wedge, Felippa(1))
-    helpers.plot_balls(
+    helpers.plot_spheres(
         plt, ax, transformed_pts, scheme.weights, vol,
         wedge[:, 0].min(), wedge[:, 0].max(),
         wedge[:, 1].min(), wedge[:, 1].max(),
