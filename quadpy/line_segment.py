@@ -7,11 +7,11 @@ import numpy
 import sympy
 
 
-def integrate(f, interval, scheme, sum=helpers.kahan_sum):
+def integrate(f, interval, scheme, sumfun=helpers.kahan_sum):
     alpha = 0.5 * (interval[1] - interval[0])
     beta = 0.5 * (interval[0] + interval[1])
     # numpy.sum produces larger round-off errors here.
-    out = sum(
+    out = sumfun(
         scheme.weights[..., None]
         * f(numpy.outer(scheme.points, alpha) + beta),
         axis=0

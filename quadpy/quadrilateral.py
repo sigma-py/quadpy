@@ -44,7 +44,7 @@ def show(
     return
 
 
-def integrate(f, quad, scheme, sum=helpers.kahan_sum):
+def integrate(f, quad, scheme, sumfun=helpers.kahan_sum):
     xi = scheme.points.T
     x = \
         + numpy.multiply.outer(0.25*(1.0-xi[0])*(1.0-xi[1]), quad[0]) \
@@ -67,7 +67,7 @@ def integrate(f, quad, scheme, sum=helpers.kahan_sum):
     J1 = J1.T
     det = (J0[0]*J1[1] - J1[0]*J0[1]).T
 
-    return sum((scheme.weights * f(x)).T * abs(det), axis=0)
+    return sumfun((scheme.weights * f(x)).T * abs(det), axis=0)
 
 
 class From1d(object):
