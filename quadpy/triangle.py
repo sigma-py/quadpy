@@ -58,16 +58,11 @@ def integrate(f, triangle, scheme):
     x = x.T
 
     # det is the signed volume of the triangle
-    J0 = \
-        - numpy.multiply.outer(triangle[0], 1.0) \
-        + numpy.multiply.outer(triangle[1], 1.0)
-    J0 = J0.T
-    J1 = \
-        - numpy.multiply.outer(triangle[0], 1.0) \
-        + numpy.multiply.outer(triangle[2], 1.0)
-    J1 = J1.T
-    ref_vol = 0.5
-    det = ref_vol * (J0[0]*J1[1] - J1[0]*J0[1])
+    J0 = (triangle[1] - triangle[0]).T
+    J1 = (triangle[2] - triangle[0]).T
+    # The factor 0.5 is the volume of the reference triangle.
+    det = 0.5 * (J0[0]*J1[1] - J1[0]*J0[1])
+
     return helpers.kahan_sum((scheme.weights * f(x)).T * abs(det), axis=0)
 
 
