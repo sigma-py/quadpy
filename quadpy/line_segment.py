@@ -165,8 +165,8 @@ def _jacobi_recursion_coefficients(n, a, b):
 
 def _gauss(alpha, beta):
     '''
-    Compute the Gauss nodes and weights from the recursion
-    coefficients associated with a set of orthogonal polynomials
+    Compute the Gauss nodes and weights from the recursion coefficients
+    associated with a set of orthogonal polynomials
 
     Adapted from the MATLAB code by Walter Gautschi
     http://www.cs.purdue.edu/archives/2002/wxg/codes/gauss.m
@@ -184,14 +184,14 @@ def _gauss(alpha, beta):
 
 
 def _lobatto(alpha, beta, xl1, xl2):
-    ''' Compute the Lobatto nodes and weights with the preassigned
-        node xl1,xl2
+    '''Compute the Lobatto nodes and weights with the preassigned node xl1, xl2.
+    Based on the section 7 of the paper
 
-        Based on the section 7 of the paper 'Some modified matrix eigenvalue
-        problems' by Gene Golub, SIAM Review Vol 15, No. 2, April 1973,
-        pp.318--334
+        Some modified matrix eigenvalue problems,
+        Gene Golub,
+        SIAM Review Vol 15, No. 2, April 1973, pp.318--334,
 
-        and
+    and
 
         http://www.scientificpython.net/pyblog/radau-quadrature
     '''
@@ -219,11 +219,13 @@ def _lobatto(alpha, beta, xl1, xl2):
 
 def _radau(alpha, beta, xr):
     '''From <http://www.scientificpython.net/pyblog/radau-quadrature>:
-    Compute the Radau nodes and weights with the preassigned node xr
+    Compute the Radau nodes and weights with the preassigned node xr.
 
-    Based on the section 7 of the paper 'Some modified matrix eigenvalue
-    problems' by Gene Golub, SIAM Review Vol 15, No. 2, April 1973,
-    pp.318--334
+    Based on the section 7 of the paper
+
+        Some modified matrix eigenvalue problems,
+        Gene Golub,
+        SIAM Review Vol 15, No. 2, April 1973, pp.318--334.
     '''
     from scipy.linalg import solve_banded
 
@@ -263,57 +265,69 @@ class GaussRadau(object):
         return
 
 
+def _get_weights(pts):
+    '''Given a number of points in [-1, 1], according to
+
+        On some Gauss and Lobatto based integration formulae,
+        T. N. L. Patterson,
+        Math. Comp. 22 (1968), 877-881,
+
+    one can compute the corresponding weights. One reads there:
+
+    > Thus the weights of an n-point integration formula [...] are given by
+    >
+    >     omega_i = int_{-1}^{1} L_i(x) dx,
+    >
+    > (where L_i is the Lagrange polynomial for the point x_i).
+    > These weights can be evaluated exactly in a numerically stable fashion
+    > using a Gauss formula with n/2 points when n is even and (n + 1)/2 points
+    > when n is odd.
+    '''
+    n = len(pts)
+
+    # Lagrange polynomial: Degree n, 1 at x_i, 0 at all other x_j.
+    def L(i, x):
+        return numpy.prod([
+            (x - pts[j]) / (pts[i] - pts[j]) for j in range(n) if j != i
+            ], axis=0)
+
+    degree = n / 2 if n % 2 == 0 else (n+1) / 2
+    return numpy.concatenate([
+        integrate(lambda x: L(i, x), [-1.0, 1.0], GaussLegendre(degree))
+        for i in range(n)
+        ]).T
+
+
 class GaussPatterson(object):
     '''
     Gauß-Patterson quadrature.
     <https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_patterson/quadrature_rules_patterson.html>
 
     The optimum addition of points to quadrature formulae,
-    T. N. L. Patterson,
+    T.N.L. Patterson,
     Math. Comp. 22 (1968), 847-856,
-    <http://www.ams.org/journals/mcom/1968-22-104/S0025-5718-68-99866-9/>.
+    <https://doi.org/10.1090/S0025-5718-68-99866-9>.
     '''
     def __init__(self, index):
         self.degree = 3*2**index - 1
         if index == 0:
             self.degree = 1  # override degree
-            self.weights = numpy.array([2.0])
-            self.points = numpy.array([
-                0.0
-                ])
+            self.points = numpy.array([0.0])
+            self.weights = _get_weights(self.points)
         elif index == 1:
-            self.weights = numpy.array(
-                [8.0 / 9.0] +
-                2 * [5.0 / 9.0]
-                )
-            self.points = numpy.array(
-                [0.0] +
+            self.points = numpy.concatenate([
+                GaussPatterson(0).points,
                 self._pm(0.7745966692414834)
-                )
+                ])
+            self.weights = _get_weights(self.points)
         elif index == 2:
-            self.weights = numpy.array(
-                [0.4509165386584741] +
-                2 * [0.4013974147759622] +
-                2 * [0.2684880898683334] +
-                2 * [0.1046562260264673]
-                )
-            self.points = numpy.array(
-                [0.0] +
+            self.points = numpy.concatenate([
+                GaussPatterson(1).points,
                 self._pm(0.4342437493468025) +
-                self._pm(0.7745966692414834) +
                 self._pm(0.9604912687080203)
-                )
+                ])
+            self.weights = _get_weights(self.points)
         elif index == 3:
-            self.weights = numpy.array(
-                [0.2255104997982067] +
-                2 * [0.2191568584015875] +
-                2 * [0.2006285293769890] +
-                2 * [0.1715119091363914] +
-                2 * [0.1344152552437842] +
-                2 * [0.9292719531512454E-01] +
-                2 * [0.5160328299707974E-01] +
-                2 * [0.1700171962994026E-01]
-                )
             self.points = numpy.array(
                 [0.0] +
                 self._pm(0.2233866864289669) +
@@ -324,25 +338,8 @@ class GaussPatterson(object):
                 self._pm(0.9604912687080203) +
                 self._pm(0.9938319632127550)
                 )
+            self.weights = _get_weights(self.points)
         elif index == 4:
-            self.weights = numpy.array(
-                [0.1127552567207687] +
-                2 * [0.1119568730209535] +
-                2 * [0.1095784210559246] +
-                2 * [0.1056698935802348] +
-                2 * [0.1003142786117956] +
-                2 * [0.9362710998126447E-01] +
-                2 * [0.8575592004999034E-01] +
-                2 * [0.7687962049900353E-01] +
-                2 * [0.6720775429599070E-01] +
-                2 * [0.5697950949412336E-01] +
-                2 * [0.4646289326175799E-01] +
-                2 * [0.3595710330712932E-01] +
-                2 * [0.2580759809617665E-01] +
-                2 * [0.1644604985438781E-01] +
-                2 * [0.8434565739321106E-02] +
-                2 * [0.2544780791561875E-02]
-                )
             self.points = numpy.array(
                 [0.0] +
                 self._pm(0.1124889431331866) +
@@ -361,41 +358,8 @@ class GaussPatterson(object):
                 self._pm(0.9938319632127550) +
                 self._pm(0.9990981249676676)
                 )
+            self.weights = _get_weights(self.points)
         elif index == 5:
-            self.weights = numpy.array(
-                [0.5637762836038471E-01] +
-                2 * [0.5627769983125430E-01] +
-                2 * [0.5597843651047632E-01] +
-                2 * [0.5548140435655936E-01] +
-                2 * [0.5478921052796287E-01] +
-                2 * [0.5390549933526606E-01] +
-                2 * [0.5283494679011652E-01] +
-                2 * [0.5158325395204846E-01] +
-                2 * [0.5015713930589954E-01] +
-                2 * [0.4856433040667320E-01] +
-                2 * [0.4681355499062801E-01] +
-                2 * [0.4491453165363220E-01] +
-                2 * [0.4287796002500773E-01] +
-                2 * [0.4071551011694432E-01] +
-                2 * [0.3843981024945553E-01] +
-                2 * [0.3606443278078257E-01] +
-                2 * [0.3360387714820773E-01] +
-                2 * [0.3107355111168797E-01] +
-                2 * [0.2848975474583355E-01] +
-                2 * [0.2586967932721475E-01] +
-                2 * [0.2323144663991027E-01] +
-                2 * [0.2059423391591271E-01] +
-                2 * [0.1797855156812827E-01] +
-                2 * [0.1540675046655950E-01] +
-                2 * [0.1290380010035127E-01] +
-                2 * [0.1049824690962132E-01] +
-                2 * [0.8223007957235930E-02] +
-                2 * [0.6115506822117246E-02] +
-                2 * [0.4217630441558855E-02] +
-                2 * [0.2579049794685688E-02] +
-                2 * [0.1265156556230068E-02] +
-                2 * [0.3632214818455306E-03]
-                )
             self.points = numpy.array(
                 [0.0] +
                 self._pm(0.5634431304659279E-01) +
@@ -430,6 +394,7 @@ class GaussPatterson(object):
                 self._pm(0.9990981249676676) +
                 self._pm(0.9998728881203576)
                 )
+            self.weights = _get_weights(self.points)
         else:
             assert index == 6
             self.weights = numpy.array(
@@ -564,6 +529,9 @@ class GaussPatterson(object):
                 self._pm(0.9998728881203576) +
                 self._pm(0.9999824303548916)
                 )
+            w = _get_weights(self.points)
+            print(w - self.weights)
+            exit(1)
         return
 
     def _pm(self, a):
