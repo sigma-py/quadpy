@@ -65,7 +65,7 @@ def show(
     return
 
 
-def integrate(f, wedge, scheme):
+def integrate(f, wedge, scheme, sum=helpers.kahan_sum):
     xi = scheme.points.T
     mo = numpy.multiply.outer
     x = \
@@ -99,7 +99,7 @@ def integrate(f, wedge, scheme):
     det = J0[0]*J1[1]*J2[2] + J1[0]*J2[1]*J0[2] + J2[0]*J0[1]*J1[2] \
         - J0[2]*J1[1]*J2[0] - J1[2]*J2[1]*J0[0] - J2[2]*J0[1]*J1[0]
 
-    return helpers.kahan_sum((scheme.weights * f(x)).T * abs(det.T))
+    return sum((scheme.weights * f(x)).T * abs(det.T))
 
 
 class Felippa(object):
