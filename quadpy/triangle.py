@@ -2484,7 +2484,8 @@ class TaylorWingateBos(object):
         # elif index == 7:
             # not symmetric?
             # self.degree = 13
-        elif index == 8:
+        else:
+            assert index == 8
             self.weights = 0.5 * numpy.concatenate([
                  0.0010616711990 * numpy.ones(3),
                  0.0131460236101 * numpy.ones(6),
@@ -2570,8 +2571,6 @@ class TaylorWingateBos(object):
         # elif index == 14:
             # not symmetric?
             # self.degree = 25
-        else:
-            raise ValueError('Illegal Taylor-Wingate-Bos index')
 
         self.points = bary[:, [1, 2]]
         return
@@ -2656,7 +2655,8 @@ class ZhangCuiLiu(object):
                     ),
                 ])
             self.degree = 14
-        elif index == 3:
+        else:
+            assert index == 3
             self.weights = numpy.concatenate([
                  0.0125376079944966565735856367723948 * numpy.ones(1),
                  0.0274718698764242137484535496073598 * numpy.ones(3),
@@ -2676,7 +2676,7 @@ class ZhangCuiLiu(object):
                  0.0027760769163475540677293561558015 * numpy.ones(6),
                  0.0107398444741849415551734474479517 * numpy.ones(6),
                  0.0053678057381874532052474100212697 * numpy.ones(6),
-                ])
+                 ])
             bary = numpy.concatenate([
                 _s3(),
                 _s21(0.2158743059329919731902545438401828),
@@ -2734,8 +2734,6 @@ class ZhangCuiLiu(object):
                     ),
                 ])
             self.degree = 20
-        else:
-            raise ValueError('Illegal Zhang index')
 
         self.points = bary[:, [1, 2]]
         return
