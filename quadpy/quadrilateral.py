@@ -36,7 +36,7 @@ def show(
         + numpy.outer(0.25 * (1.0 + xi)*(1.0 + eta), quad[2]) \
         + numpy.outer(0.25 * (1.0 - xi)*(1.0 + eta), quad[3])
 
-    vol = integrate(lambda x: numpy.ones(1), quad, Stroud(1))
+    vol = integrate(lambda x: 1.0, quad, Stroud(1))
     helpers.plot_disks(
         plt, transformed_pts, scheme.weights, vol
         )
