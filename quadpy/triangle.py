@@ -49,7 +49,7 @@ def show(
     return
 
 
-def integrate(f, triangle, scheme, sum=helpers.kahan_sum):
+def integrate(f, triangle, scheme, sumfun=helpers.kahan_sum):
     xi = scheme.points.T
     x = \
         + numpy.multiply.outer(1.0 - xi[0] - xi[1], triangle[0]) \
@@ -63,7 +63,7 @@ def integrate(f, triangle, scheme, sum=helpers.kahan_sum):
     # The factor 0.5 is the volume of the reference triangle.
     det = 0.5 * (J0[0]*J1[1] - J1[0]*J0[1])
 
-    return sum((scheme.weights * f(x)).T * abs(det), axis=0)
+    return sumfun((scheme.weights * f(x)).T * abs(det), axis=0)
 
 
 def _s3():
