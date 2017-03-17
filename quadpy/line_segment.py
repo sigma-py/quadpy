@@ -710,7 +710,7 @@ class GaussKronrod(object):
     formulas.
     '''
     def __init__(self, n, a=0.0, b=0.0):
-        length = int(numpy.ceil(3*n/2.0)) + 1
+        length = int(math.ceil(3*n/2.0)) + 1
         self.degree = 2*length + 1
         alpha, beta = _jacobi_recursion_coefficients(length, a, b)
         a, b = self.r_kronrod(n, alpha, beta)
@@ -722,18 +722,18 @@ class GaussKronrod(object):
         return
 
     def r_kronrod(self, n, a0, b0):
-        assert len(a0) == int(numpy.ceil(3*n/2.0)) + 1
-        assert len(b0) == int(numpy.ceil(3*n/2.0)) + 1
+        assert len(a0) == int(math.ceil(3*n/2.0)) + 1
+        assert len(b0) == int(math.ceil(3*n/2.0)) + 1
 
         a = numpy.zeros(2*n+1)
-        b = a.copy()
+        b = numpy.zeros(2*n+1)
 
-        k = numpy.arange(int(math.floor(3*n/2.0)) + 1)
-        a[k] = a0[k]
-        k = numpy.arange(int(math.ceil(3*n/2.0)) + 1)
-        b[k] = b0[k]
+        k = int(math.floor(3*n/2.0)) + 1
+        a[:k] = a0[:k]
+        k = int(math.ceil(3*n/2.0)) + 1
+        b[:k] = b0[:k]
         s = numpy.zeros(int(math.floor(n/2.0)) + 2)
-        t = s.copy()
+        t = numpy.zeros(int(math.floor(n/2.0)) + 2)
         t[1] = b[n+1]
         for m in range(n-1):
             k = numpy.arange(int(math.floor((m+1)/2.0)), -1, -1)
@@ -741,9 +741,7 @@ class GaussKronrod(object):
             s[k+1] = numpy.cumsum(
                 (a[k+n+1] - a[l])*t[k+1] + b[k+n+1]*s[k] - b[l]*s[k+1]
                 )
-            swap = s.copy()
-            s = t.copy()
-            t = swap.copy()
+            s, t = t, s
 
         j = numpy.arange(int(math.floor(n/2.0)), -1, -1)
         s[j+1] = s[j]
@@ -760,9 +758,7 @@ class GaussKronrod(object):
                 a[k+n+1] = a[k] + (s[j+1] - b[k+n+1]*s[j+2]) / t[j+2]
             else:
                 b[k+n+1] = s[j+1] / s[j+2]
-            swap = s.copy()
-            s = t.copy()
-            t = swap.copy()
+            s, t = t, s
 
         a[2*n] = a[n-1] - b[2*n] * s[1]/t[1]
         return a, b
