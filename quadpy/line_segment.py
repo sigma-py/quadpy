@@ -168,8 +168,14 @@ def _gauss(alpha, beta):
     Compute the Gauss nodes and weights from the recursion coefficients
     associated with a set of orthogonal polynomials
 
-    Adapted from the MATLAB code by Walter Gautschi
-    http://www.cs.purdue.edu/archives/2002/wxg/codes/gauss.m
+    Algorithm 726: ORTHPOL–a package of routines for generating orthogonal
+    polynomials and Gauss-type quadrature rules,
+    W. Gautschi,
+    ACM Transactions on Mathematical Software (TOMS),
+    Volume 20, Issue 1, March 1994,
+    Pages 21-62,
+    <http://doi.org/10.1145/174603.174605>,
+    <http://www.cs.purdue.edu/archives/2002/wxg/codes/gauss.m>,
 
     and
 
