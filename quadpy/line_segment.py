@@ -345,72 +345,46 @@ class GaussPatterson(object):
                 self._pm(0.9604912687080203)
                 ])
         elif index == 3:
-            self.points = numpy.array(
-                [0.0] +
+            self.points = numpy.concatenate([
+                GaussPatterson(2).points,
                 self._pm(0.2233866864289669) +
-                self._pm(0.4342437493468025) +
                 self._pm(0.6211029467372264) +
-                self._pm(0.7745966692414834) +
                 self._pm(0.8884592328722570) +
-                self._pm(0.9604912687080203) +
                 self._pm(0.9938319632127550)
-                )
-            self.weights = _get_weights(self.points)
+                ])
         elif index == 4:
-            self.points = numpy.array(
-                [0.0] +
+            self.points = numpy.concatenate([
+                GaussPatterson(3).points,
                 self._pm(0.1124889431331866) +
-                self._pm(0.2233866864289669) +
                 self._pm(0.3311353932579768) +
-                self._pm(0.4342437493468025) +
                 self._pm(0.5313197436443756) +
-                self._pm(0.6211029467372264) +
                 self._pm(0.7024962064915271) +
-                self._pm(0.7745966692414834) +
                 self._pm(0.8367259381688688) +
-                self._pm(0.8884592328722570) +
                 self._pm(0.9296548574297401) +
-                self._pm(0.9604912687080203) +
                 self._pm(0.9815311495537401) +
-                self._pm(0.9938319632127550) +
                 self._pm(0.9990981249676676)
-                )
+                ])
         else:
             assert index == 5
-            self.points = numpy.array(
-                [0.0] +
+            self.points = numpy.concatenate([
+                GaussPatterson(4).points,
                 self._pm(0.5634431304659279E-01) +
-                self._pm(0.1124889431331866) +
                 self._pm(0.1682352515522075) +
-                self._pm(0.2233866864289669) +
                 self._pm(0.2777498220218243) +
-                self._pm(0.3311353932579768) +
                 self._pm(0.3833593241987304) +
-                self._pm(0.4342437493468025) +
                 self._pm(0.4836180269458411) +
-                self._pm(0.5313197436443756) +
                 self._pm(0.5771957100520458) +
-                self._pm(0.6211029467372264) +
                 self._pm(0.6629096600247806) +
-                self._pm(0.7024962064915271) +
                 self._pm(0.7397560443526947) +
-                self._pm(0.7745966692414834) +
                 self._pm(0.8069405319502176) +
-                self._pm(0.8367259381688688) +
                 self._pm(0.8639079381936905) +
-                self._pm(0.8884592328722570) +
                 self._pm(0.9103711569570043) +
-                self._pm(0.9296548574297401) +
                 self._pm(0.9463428583734029) +
-                self._pm(0.9604912687080203) +
                 self._pm(0.9721828747485818) +
-                self._pm(0.9815311495537401) +
                 self._pm(0.9886847575474295) +
-                self._pm(0.9938319632127550) +
                 self._pm(0.9972062593722220) +
-                self._pm(0.9990981249676676) +
                 self._pm(0.9998728881203576)
-                )
+                ])
         # else:
         #     self.weights = numpy.array(
         #         [0.2818881418019236E-01] +
