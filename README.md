@@ -57,6 +57,7 @@ More examples under [test/examples_test.py](https://github.com/nschloe/quadpy/bl
  * Gauss-Legendre (via
    [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.legendre.leggauss.html), arbitrary order)
  * Gauss-Lobatto (arbitrary order)
+ * Gauss-Kronrod (after [Laurie](https://doi.org/10.1090/S0025-5718-97-00861-2), arbitrary order)
  * [Gauss-Patterson](https://doi.org/10.1090/S0025-5718-68-99866-9) (7 schemes up to degree 191)
  * Gauss-Radau (arbitrary order)
  * closed Newton-Cotes (arbitray order)
