@@ -70,7 +70,7 @@ class Trapezoidal(object):
 
 class ChebyshevGauss1(object):
     '''
-    Chebyshev-Gauß quadrature for \int_{-1}^1 f(x) / sqrt(1+x^2) dx.
+    Chebyshev-Gauss quadrature for \int_{-1}^1 f(x) / sqrt(1+x^2) dx.
     '''
     def __init__(self, n):
         self.degree = n if n % 2 == 1 else n+1
@@ -83,7 +83,7 @@ class ChebyshevGauss1(object):
 
 class ChebyshevGauss2(object):
     '''
-    Chebyshev-Gauß quadrature for \int_{-1}^1 f(x) * sqrt(1+x^2) dx.
+    Chebyshev-Gauss quadrature for \int_{-1}^1 f(x) * sqrt(1+x^2) dx.
     '''
     def __init__(self, n):
         self.degree = n if n % 2 == 1 else n+1
@@ -97,7 +97,7 @@ class ChebyshevGauss2(object):
 
 class GaussHermite(object):
     '''
-    Gauß-Hermite quadrature.
+    Gauss-Hermite quadrature.
     '''
     def __init__(self, n):
         self.degree = 2*n - 1
@@ -107,7 +107,7 @@ class GaussHermite(object):
 
 class GaussLaguerre(object):
     '''
-    Gauß-Laguerre quadrature.
+    Gauss-Laguerre quadrature.
     '''
     def __init__(self, n):
         self.degree = 2*n - 1
@@ -117,7 +117,7 @@ class GaussLaguerre(object):
 
 class GaussLegendre(object):
     '''
-    Gauß-Legendre quadrature.
+    Gauss-Legendre quadrature.
     '''
     def __init__(self, n):
         self.degree = 2*n - 1
@@ -249,7 +249,7 @@ def _radau(alpha, beta, xr):
 
 class GaussLobatto(object):
     '''
-    Gauß-Lobatto quadrature.
+    Gauss-Lobatto quadrature.
     '''
     def __init__(self, n, a=0.0, b=0.0):
         assert n >= 2
@@ -261,7 +261,7 @@ class GaussLobatto(object):
 
 class GaussRadau(object):
     '''
-    Gauß-Radau quadrature.
+    Gauss-Radau quadrature.
     '''
     def __init__(self, n, a=0.0, b=0.0):
         assert n >= 2
@@ -312,7 +312,7 @@ def _get_weights(pts):
 
 class GaussPatterson(object):
     '''
-    Gauß-Patterson quadrature.
+    Gauss-Patterson quadrature.
     <https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_patterson/quadrature_rules_patterson.html>
 
     The optimum addition of points to quadrature formulae,
