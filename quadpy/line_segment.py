@@ -70,7 +70,7 @@ class Trapezoidal(object):
 
 class ChebyshevGauss1(object):
     '''
-    Chebyshev-Gauß quadrature for \int_{-1}^1 f(x) / sqrt(1+x^2) dx.
+    Chebyshev-Gauss quadrature for \int_{-1}^1 f(x) / sqrt(1+x^2) dx.
     '''
     def __init__(self, n):
         self.degree = n if n % 2 == 1 else n+1
@@ -83,7 +83,7 @@ class ChebyshevGauss1(object):
 
 class ChebyshevGauss2(object):
     '''
-    Chebyshev-Gauß quadrature for \int_{-1}^1 f(x) * sqrt(1+x^2) dx.
+    Chebyshev-Gauss quadrature for \int_{-1}^1 f(x) * sqrt(1+x^2) dx.
     '''
     def __init__(self, n):
         self.degree = n if n % 2 == 1 else n+1
@@ -97,7 +97,7 @@ class ChebyshevGauss2(object):
 
 class GaussHermite(object):
     '''
-    Gauß-Hermite quadrature.
+    Gauss-Hermite quadrature.
     '''
     def __init__(self, n):
         self.degree = 2*n - 1
@@ -107,7 +107,7 @@ class GaussHermite(object):
 
 class GaussLaguerre(object):
     '''
-    Gauß-Laguerre quadrature.
+    Gauss-Laguerre quadrature.
     '''
     def __init__(self, n):
         self.degree = 2*n - 1
@@ -117,7 +117,7 @@ class GaussLaguerre(object):
 
 class GaussLegendre(object):
     '''
-    Gauß-Legendre quadrature.
+    Gauss-Legendre quadrature.
     '''
     def __init__(self, n):
         self.degree = 2*n - 1
@@ -166,7 +166,7 @@ def _jacobi_recursion_coefficients(n, a, b):
 def _gauss(alpha, beta):
     '''
     Compute the Gauss nodes and weights from the recursion coefficients
-    associated with a set of orthogonal polynomials
+    associated with a set of orthogonal polynomials.
 
     Algorithm 726: ORTHPOL–a package of routines for generating orthogonal
     polynomials and Gauss-type quadrature rules,
@@ -249,7 +249,7 @@ def _radau(alpha, beta, xr):
 
 class GaussLobatto(object):
     '''
-    Gauß-Lobatto quadrature.
+    Gauss-Lobatto quadrature.
     '''
     def __init__(self, n, a=0.0, b=0.0):
         assert n >= 2
@@ -261,7 +261,7 @@ class GaussLobatto(object):
 
 class GaussRadau(object):
     '''
-    Gauß-Radau quadrature.
+    Gauss-Radau quadrature.
     '''
     def __init__(self, n, a=0.0, b=0.0):
         assert n >= 2
@@ -312,7 +312,7 @@ def _get_weights(pts):
 
 class GaussPatterson(object):
     '''
-    Gauß-Patterson quadrature.
+    Gauss-Patterson quadrature.
     <https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_patterson/quadrature_rules_patterson.html>
 
     The optimum addition of points to quadrature formulae,
@@ -628,7 +628,6 @@ class Fejer2(object):
 
         # cut off first and last
         self.weights = self.weights[1:-1]
-
         return
 
 
@@ -681,3 +680,92 @@ class NewtonCotesOpen(object):
                 / n
             self.weights[r-1] = alpha
         return
+
+
+class GaussKronrod(object):
+    '''
+    Gauss-Kronrod quadrature; see
+    <https://en.wikipedia.org/wiki/Gauss%E2%80%93Kronrod_quadrature_formula>.
+
+    Besides points and weights, this class provides the weights of the
+    corresponding Gauss-Legendre scheme in self.gauss_weights.
+
+    Code adapted from
+    <https://www.cs.purdue.edu/archives/2002/wxg/codes/r_kronrod.m>,
+    <https://www.cs.purdue.edu/archives/2002/wxg/codes/kronrod.m>.
+    See
+
+    Calculation of Gauss-Kronrod quadrature rules,
+    Dirk P. Laurie,
+    Math. Comp. 66 (1997), 1133-1145,
+    <https://doi.org/10.1090/S0025-5718-97-00861-2>
+
+    Abstract:
+    The Jacobi matrix of the $(2n+1)$-point Gauss-Kronrod quadrature rule for a
+    given measure is calculated efficiently by a five-term recurrence relation.
+    The algorithm uses only rational operations and is therefore also useful
+    for obtaining the Jacobi-Kronrod matrix analytically. The nodes and weights
+    can then be computed directly by standard software for Gaussian quadrature
+    formulas.
+    '''
+    def __init__(self, n, a=0.0, b=0.0):
+        # The general scheme is:
+        # The the Jacobi recursion coefficients, get the Kronrod vectors alpha
+        # and beta, and hand those off to _gauss. There, the eigenproblem for a
+        # tridiagonal matrix with alpha and beta is solved to retrieve the
+        # points and weights.
+        length = int(math.ceil(3*n/2.0)) + 1
+        self.degree = 2*length + 1
+        alpha, beta = _jacobi_recursion_coefficients(length, a, b)
+        a, b = self.r_kronrod(n, alpha, beta)
+        x, w = _gauss(a, b)
+        # sort by x
+        i = numpy.argsort(x)
+        self.points = x[i]
+        self.weights = w[i]
+        return
+
+    def r_kronrod(self, n, a0, b0):
+        assert len(a0) == int(math.ceil(3*n/2.0)) + 1
+        assert len(b0) == int(math.ceil(3*n/2.0)) + 1
+
+        a = numpy.zeros(2*n+1)
+        b = numpy.zeros(2*n+1)
+
+        k = int(math.floor(3*n/2.0)) + 1
+        a[:k] = a0[:k]
+        k = int(math.ceil(3*n/2.0)) + 1
+        b[:k] = b0[:k]
+        s = numpy.zeros(int(math.floor(n/2.0)) + 2)
+        t = numpy.zeros(int(math.floor(n/2.0)) + 2)
+        t[1] = b[n+1]
+        for m in range(n-1):
+            k0 = int(math.floor((m+1)/2.0))
+            k = numpy.arange(k0, -1, -1)
+            l = m - k
+            s[k+1] = numpy.cumsum(
+                (a[k+n+1] - a[l])*t[k+1] + b[k+n+1]*s[k] - b[l]*s[k+1]
+                )
+            s, t = t, s
+
+        j = int(math.floor(n/2.0)) + 1
+        s[1:j+1] = s[:j]
+        for m in range(n-1, 2*n-2):
+            k0 = m+1-n
+            k1 = int(math.floor((m-1)/2.0))
+            k = numpy.arange(k0, k1 + 1)
+            l = m - k
+            j = n-1-l
+            s[j+1] = numpy.cumsum(
+                -(a[k+n+1] - a[l])*t[j+1] - b[k+n+1]*s[j+1] + b[l]*s[j+2]
+                )
+            j = j[-1]
+            k = int(math.floor((m+1)/2.0))
+            if m % 2 == 0:
+                a[k+n+1] = a[k] + (s[j+1] - b[k+n+1]*s[j+2]) / t[j+2]
+            else:
+                b[k+n+1] = s[j+1] / s[j+2]
+            s, t = t, s
+
+        a[2*n] = a[n-1] - b[2*n] * s[1]/t[1]
+        return a, b

@@ -16,6 +16,7 @@ import quadpy
     + [quadpy.line_segment.ClenshawCurtis(k) for k in range(2, 10)]
     + [quadpy.line_segment.GaussLegendre(k) for k in range(1, 6)]
     + [quadpy.line_segment.GaussLobatto(k) for k in range(2, 7)]
+    + [quadpy.line_segment.GaussKronrod(k) for k in range(2, 7)]
     + [quadpy.line_segment.GaussPatterson(k) for k in range(7)]
     + [quadpy.line_segment.GaussRadau(k) for k in range(2, 10)]
     + [quadpy.line_segment.Fejer1(k) for k in range(1, 10)]
@@ -152,8 +153,6 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     scheme = quadpy.line_segment.Fejer2(20)
-    print(scheme.points)
-    print(scheme.weights)
     test_scheme(scheme)
     test_show(scheme)
     plt.show()
