@@ -166,7 +166,7 @@ def _jacobi_recursion_coefficients(n, a, b):
 def _gauss(alpha, beta):
     '''
     Compute the Gauss nodes and weights from the recursion coefficients
-    associated with a set of orthogonal polynomials
+    associated with a set of orthogonal polynomials.
 
     Algorithm 726: ORTHPOL–a package of routines for generating orthogonal
     polynomials and Gauss-type quadrature rules,
@@ -628,7 +628,6 @@ class Fejer2(object):
 
         # cut off first and last
         self.weights = self.weights[1:-1]
-
         return
 
 
@@ -710,6 +709,11 @@ class GaussKronrod(object):
     formulas.
     '''
     def __init__(self, n, a=0.0, b=0.0):
+        # The general scheme is:
+        # The the Jacobi recursion coefficients, get the Kronrod vectors alpha
+        # and beta, and hand those off to _gauss. There, the eigenproblem for a
+        # tridiagonal matrix with alpha and beta is solved to retrieve the
+        # points and weights.
         length = int(math.ceil(3*n/2.0)) + 1
         self.degree = 2*length + 1
         alpha, beta = _jacobi_recursion_coefficients(length, a, b)
@@ -736,17 +740,20 @@ class GaussKronrod(object):
         t = numpy.zeros(int(math.floor(n/2.0)) + 2)
         t[1] = b[n+1]
         for m in range(n-1):
-            k = numpy.arange(int(math.floor((m+1)/2.0)), -1, -1)
+            k0 = int(math.floor((m+1)/2.0))
+            k = numpy.arange(k0, -1, -1)
             l = m - k
             s[k+1] = numpy.cumsum(
                 (a[k+n+1] - a[l])*t[k+1] + b[k+n+1]*s[k] - b[l]*s[k+1]
                 )
             s, t = t, s
 
-        j = numpy.arange(int(math.floor(n/2.0)), -1, -1)
-        s[j+1] = s[j]
+        j = int(math.floor(n/2.0)) + 1
+        s[1:j+1] = s[:j]
         for m in range(n-1, 2*n-2):
-            k = numpy.arange(m+1-n, int(math.floor((m-1)/2.0))+1)
+            k0 = m+1-n
+            k1 = int(math.floor((m-1)/2.0))
+            k = numpy.arange(k0, k1 + 1)
             l = m - k
             j = n-1-l
             s[j+1] = numpy.cumsum(
