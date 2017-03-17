@@ -310,20 +310,6 @@ def _get_weights(pts):
         ])
 
 
-# def _get_weights_symbolic(pts):
-#     # Symbolic integration of Lagrange polynomials for weight extraction from
-#     # points. Unfortunately, flawed by round-off errors.
-#     n = len(pts)
-#     weights = numpy.empty(n)
-#     x = sympy.Symbol('x')
-#     for i in range(n):
-#         diff = pts[i] - pts
-#         alpha = numpy.prod(diff[:i]) * numpy.prod(diff[i+1:])
-#         f = sympy.prod([x - pts[j] for j in range(n) if j != i])
-#         weights[i] = sympy.integrate(f, (x, -1, 1)) / alpha
-#     return weights
-
-
 class GaussPatterson(object):
     '''
     Gauß-Patterson quadrature.
