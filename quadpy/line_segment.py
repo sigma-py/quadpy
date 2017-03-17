@@ -712,41 +712,26 @@ class GaussKronrod(object):
     def __init__(self, n, a=0.0, b=0.0):
         length = int(numpy.ceil(3*n/2.0)) + 1
         self.degree = 2*length + 1
-        ab = _jacobi_recursion_coefficients(length, a, b)
-        ab = numpy.array(ab).T
-        self.points, self.weights = self.kronrod(n, ab)
+        alpha, beta = _jacobi_recursion_coefficients(length, a, b)
+        a, b = self.r_kronrod(n, alpha, beta)
+        x, w = _gauss(a, b)
+        # sort by x
+        i = numpy.argsort(x)
+        self.points = x[i]
+        self.weights = w[i]
         return
 
-    def kronrod(self, n, ab):
-        from scipy.linalg import eig
-        ab0 = self.r_kronrod(n, ab)
-        assert numpy.sum(ab0[:, 1] > 0) == 2*n+1
-        J = numpy.zeros((2*n+1, 2*n+1))
-        for k in range(2*n):
-            J[k, k] = ab0[k, 0]
-            J[k, k+1] = numpy.sqrt(ab0[k+1, 1])
-            J[k+1, k] = J[k, k+1]
-
-        J[2*n, 2*n] = ab0[2*n, 0]
-        d, V = eig(J)
-        assert all(numpy.imag(d) < 1.0e-14)
-        d = numpy.real(d)
-        e = ab0[0, 1] * V[0, :]**2
-        i = numpy.argsort(d)
-        x = d[i]
-        w = e[i].T
-        return x, w
-
-    def r_kronrod(self, n, ab0):
-        assert len(ab0) == int(numpy.ceil(3*n/2.0)) + 1
+    def r_kronrod(self, n, a0, b0):
+        assert len(a0) == int(numpy.ceil(3*n/2.0)) + 1
+        assert len(b0) == int(numpy.ceil(3*n/2.0)) + 1
 
         a = numpy.zeros(2*n+1)
         b = a.copy()
 
         k = numpy.arange(int(math.floor(3*n/2.0)) + 1)
-        a[k] = ab0[k, 0]
+        a[k] = a0[k]
         k = numpy.arange(int(math.ceil(3*n/2.0)) + 1)
-        b[k] = ab0[k, 1]
+        b[k] = b0[k]
         s = numpy.zeros(int(math.floor(n/2.0)) + 2)
         t = s.copy()
         t[1] = b[n+1]
@@ -780,4 +765,4 @@ class GaussKronrod(object):
             t = swap.copy()
 
         a[2*n] = a[n-1] - b[2*n] * s[1]/t[1]
-        return numpy.array([a, b]).T
+        return a, b
