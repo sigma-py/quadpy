@@ -152,8 +152,6 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     scheme = quadpy.line_segment.Fejer2(20)
-    print(scheme.points)
-    print(scheme.weights)
     test_scheme(scheme)
     test_show(scheme)
     plt.show()
