@@ -201,7 +201,7 @@ val = quadpy.hexahedron.integrate(
       [0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.5, 0.7, 0.0], [0.3, 0.9, 0.0],
       [0.0, 0.1, 1.0], [0.7, 0.1, 1.0], [0.4, 0.6, 1.0], [0.2, 1.0, 1.0],
     ],
-    quadpy.hexahedron.From1d(quadpy.line_segment.NewtonCotesClosed(3))
+    quadpy.hexahedron.Product(quadpy.line_segment.NewtonCotesClosed(3))
     )
 ```
 

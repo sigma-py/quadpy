@@ -39,7 +39,7 @@ def test_hexahedron():
                 [0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0],
                 [0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1],
                 ]),
-            quadpy.hexahedron.From1d(quadpy.line_segment.NewtonCotesClosed(3))
+            quadpy.hexahedron.Product(quadpy.line_segment.NewtonCotesClosed(3))
             )
     quadpy.hexahedron.integrate(
             lambda x: numpy.exp(x[0]),
@@ -54,7 +54,7 @@ def test_hexahedron():
                 [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1]],
                 [[0, 1, 1], [0, 1, 1], [0, 1, 1], [0, 1, 1], [0, 1, 1]],
                 ]),
-            quadpy.hexahedron.From1d(quadpy.line_segment.NewtonCotesClosed(3))
+            quadpy.hexahedron.Product(quadpy.line_segment.NewtonCotesClosed(3))
             )
     return
 

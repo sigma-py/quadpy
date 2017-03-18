@@ -47,7 +47,5 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     scheme = quadpy.disk.Lether(5)
-    # scheme = From1d(quadpy.line_segment.NewtonCotesClosed(15))
     test_scheme(scheme)
     # test_show(scheme)
-    # plt.show()
