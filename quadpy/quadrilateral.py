@@ -70,15 +70,21 @@ def integrate(f, quad, scheme, sumfun=helpers.kahan_sum):
     return sumfun((scheme.weights * f(x)).T * abs(det), axis=0)
 
 
-class From1d(object):
+class Product(object):
     def __init__(self, scheme1d):
+        if isinstance(scheme1d, list):
+            assert len(scheme1d) == 2
+            self.schemes = scheme1d
+        else:
+            self.schemes = 2 * [scheme1d]
+
         self.weights = numpy.outer(
-            scheme1d.weights, scheme1d.weights
+            self.schemes[0].weights, self.schemes[1].weights
             ).flatten()
         self.points = numpy.dstack(numpy.meshgrid(
-            scheme1d.points, scheme1d.points
+            self.schemes[0].points, self.schemes[1].points
             )).reshape(-1, 2)
-        self.degree = scheme1d.degree
+        self.degree = min([s.degree for s in self.schemes])
         return
 
 
