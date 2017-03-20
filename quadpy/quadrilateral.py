@@ -72,11 +72,9 @@ def integrate(f, quad, scheme, sumfun=helpers.kahan_sum):
 
 class Product(object):
     def __init__(self, scheme1d):
-        if isinstance(scheme1d, list):
-            assert len(scheme1d) == 2
-            self.schemes = scheme1d
-        else:
-            self.schemes = 2 * [scheme1d]
+        self.schemes = \
+            scheme1d if isinstance(scheme1d, list) \
+            else 2 * [scheme1d]
 
         self.weights = numpy.outer(
             self.schemes[0].weights, self.schemes[1].weights
