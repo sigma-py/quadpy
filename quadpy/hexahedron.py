@@ -122,11 +122,9 @@ def integrate(f, hexa, scheme, sumfun=helpers.kahan_sum):
 
 class Product(object):
     def __init__(self, scheme1d):
-        if isinstance(scheme1d, list):
-            assert len(scheme1d) == 3
-            self.schemes = scheme1d
-        else:
-            self.schemes = 3 * [scheme1d]
+        self.schemes = \
+            scheme1d if isinstance(scheme1d, list) \
+            else 3 * [scheme1d]
 
         wy, wz, wx = numpy.meshgrid(
             self.schemes[0].weights,
