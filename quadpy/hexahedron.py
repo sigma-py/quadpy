@@ -120,10 +120,16 @@ def integrate(f, hexa, scheme, sumfun=helpers.kahan_sum):
     return sumfun((scheme.weights * f(x)).T * abs(det.T))
 
 
-class From1d(object):
+class Product(object):
     def __init__(self, scheme1d):
+        self.schemes = \
+            scheme1d if isinstance(scheme1d, list) \
+            else 3 * [scheme1d]
+
         wy, wz, wx = numpy.meshgrid(
-            scheme1d.weights, scheme1d.weights, scheme1d.weights
+            self.schemes[0].weights,
+            self.schemes[1].weights,
+            self.schemes[2].weights,
             )
         weights = numpy.vstack([
             wx.flatten(),
@@ -133,7 +139,9 @@ class From1d(object):
         self.weights = numpy.prod(weights, axis=1)
         # the order, yeah...
         y, z, x = numpy.meshgrid(
-            scheme1d.points, scheme1d.points, scheme1d.points
+            self.schemes[0].points,
+            self.schemes[1].points,
+            self.schemes[2].points,
             )
         self.points = numpy.vstack([
             x.flatten(),
@@ -141,5 +149,5 @@ class From1d(object):
             z.flatten(),
             ]).T
 
-        self.degree = scheme1d.degree
+        self.degree = min([s.degree for s in self.schemes])
         return

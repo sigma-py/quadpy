@@ -4,7 +4,7 @@ from helpers import create_monomial_exponents3, check_degree
 from matplotlib import pyplot as plt
 import numpy
 import quadpy
-from quadpy.hexahedron import From1d
+from quadpy.hexahedron import Product
 import pytest
 import sympy
 
@@ -60,13 +60,13 @@ def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
 
 @pytest.mark.parametrize(
     'scheme',
-    [From1d(quadpy.line_segment.Midpoint())]
-    + [From1d(quadpy.line_segment.Trapezoidal())]
-    + [From1d(quadpy.line_segment.GaussLegendre(k)) for k in range(1, 6)]
-    + [From1d(quadpy.line_segment.NewtonCotesClosed(k))
+    [Product(quadpy.line_segment.Midpoint())]
+    + [Product(quadpy.line_segment.Trapezoidal())]
+    + [Product(quadpy.line_segment.GaussLegendre(k)) for k in range(1, 6)]
+    + [Product(quadpy.line_segment.NewtonCotesClosed(k))
         for k in range(1, 5)
        ]
-    + [From1d(quadpy.line_segment.NewtonCotesOpen(k)) for k in range(5)]
+    + [Product(quadpy.line_segment.NewtonCotesOpen(k)) for k in range(5)]
     )
 def test_scheme(scheme):
     x0 = -1
@@ -97,11 +97,11 @@ def test_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    [From1d(quadpy.line_segment.NewtonCotesClosed(3))]
+    [Product(quadpy.line_segment.NewtonCotesClosed(3))]
     )
 def test_show(scheme):
     quadpy.hexahedron.show(
-        quadpy.hexahedron.From1d(
+        quadpy.hexahedron.Product(
             # quadpy.line_segment.Midpoint()
             # quadpy.line_segment.Trapezoidal()
             quadpy.line_segment.NewtonCotesClosed(2)
@@ -112,8 +112,8 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    # scheme = From1d(quadpy.line_segment.NewtonCotesOpen(2))
-    scheme = From1d(quadpy.line_segment.GaussLegendre(5))
+    # scheme = Product(quadpy.line_segment.NewtonCotesOpen(2))
+    scheme = Product(quadpy.line_segment.GaussLegendre(5))
     test_scheme(scheme)
     test_show(scheme)
     plt.show()
