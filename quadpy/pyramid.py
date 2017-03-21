@@ -94,7 +94,7 @@ def integrate(f, pyra, scheme, sumfun=helpers.kahan_sum):
         + mo(0.500*(1.0+xi[2]), pyra[4])
     x = x.T
     det = _get_det_J(pyra, xi)
-    return sumfun((scheme.weights * f(x)).T * abs(det))
+    return sumfun(scheme.weights * f(x) * abs(det.T), axis=-1)
 
 
 class Felippa(object):
