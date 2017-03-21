@@ -12,9 +12,8 @@ def integrate(f, interval, scheme, sumfun=helpers.kahan_sum):
     beta = 0.5 * (interval[0] + interval[1])
     # numpy.sum produces larger round-off errors here.
     out = sumfun(
-        scheme.weights[..., None]
-        * f(numpy.outer(scheme.points, alpha) + beta),
-        axis=0
+        scheme.weights * f((numpy.outer(scheme.points, alpha) + beta).T),
+        axis=-1
         )
     return alpha * out
 
@@ -154,7 +153,7 @@ def _jacobi_recursion_coefficients(n, a, b):
     N = numpy.arange(1, n)
 
     nab = 2.0*N + a + b
-    alpha = numpy.hstack((nu, (b**2 - a**2) / (nab * (nab + 2.0))))
+    alpha = numpy.hstack([nu, (b**2 - a**2) / (nab * (nab + 2.0))])
     N = N[1:]
     nab = nab[1:]
     B1 = 4.0 * (a+1.0) * (b+1.0) / ((a+b+2.0)**2.0 * (a+b+3.0))
@@ -301,7 +300,7 @@ def _get_weights(pts):
     k = (n // 2) - 1 if n % 2 == 0 else (n+1) // 2
     return numpy.array([
         integrate(
-            lambda x: L(i, x), [-1.0, 1.0], GaussLegendre(k),
+            lambda x, i=i: L(i, x), [-1.0, 1.0], GaussLegendre(k),
             sumfun=lambda a, axis: numpy.array([math.fsum(a)])
             )[0]
         /
@@ -404,6 +403,7 @@ class GaussPatterson(object):
                 2 * [0.3777466463269846E-03] +
                 2 * [0.5053609520786252E-04]
                 )
+
         return
 
     def _get_points(self, index):
