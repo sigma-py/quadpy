@@ -35,6 +35,11 @@ triangles = numpy.array([
     [[0.0, 1.0], [1.4, 0.8], [33.0, 28.0], [0.7, 0.1], [7.5, 7.4]],
     ])
 ```
+The same goes for functions with vectorized output, e.g.,
+```python
+def f(x):
+    return [numpy.sin(x[0]), numpy.sin(x[1])]
+```
 
 More examples under [test/examples_test.py](https://github.com/nschloe/quadpy/blob/master/test/examples_test.py).
 
