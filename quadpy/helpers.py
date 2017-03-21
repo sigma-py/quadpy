@@ -9,11 +9,12 @@ def kahan_sum(a, axis=0):
     '''
     # See <https://en.wikipedia.org/wiki/Kahan_summation_algorithm> for
     # details.
-    s = numpy.zeros(a.shape[:axis] + a.shape[axis+1:])
+    k = axis % len(a.shape)
+    s = numpy.zeros(a.shape[:axis] + a.shape[k+1:])
     c = numpy.zeros(s.shape)
     for i in range(a.shape[axis]):
         # http://stackoverflow.com/a/42817610/353337
-        y = a[(slice(None),) * axis + (i,)] - c
+        y = a[(slice(None),) * k + (i,)] - c
         t = s + y
         c = (t - s) - y
         s = t.copy()
