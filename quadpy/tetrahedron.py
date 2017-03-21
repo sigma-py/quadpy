@@ -81,7 +81,7 @@ def integrate(f, tetrahedron, scheme, sumfun=helpers.kahan_sum):
     # reference volume
     det *= 1.0/6.0
 
-    return sumfun((scheme.weights * f(x)).T * abs(det), axis=0)
+    return sumfun(scheme.weights * f(x) * abs(det), axis=-1)
 
 
 def _s4():
