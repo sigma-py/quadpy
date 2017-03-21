@@ -31,10 +31,7 @@ def integrate(f, center, radius, rule, sumfun=helpers.kahan_sum):
     radius = numpy.array(radius)
     #
     rr = numpy.multiply.outer(rule.points.T, radius)
-    out = sumfun(
-        (rule.weights * f(rr + center.T[:, None]).T).T,
-        axis=0
-        )
+    out = sumfun(rule.weights * f(rr + center.T[:, None]), axis=-1)
     return radius**2 * out
 
 
