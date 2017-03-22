@@ -8,35 +8,37 @@ import sympy
 def check_degree_1d(
         quadrature, exact, exponents_creator, max_degree, tol=1.0e-14
         ):
-    for degree in range(max_degree+1):
-        val = quadrature(lambda x: x**degree)
-        exact_val = exact(degree)
-        # check relative error
-        eps = numpy.finfo(float).eps
-        # Allow 1e1 over machine precision.
-        alpha = abs(exact_val) * tol + (1e1+tol+exact_val)*eps
-        if abs(exact_val - val) > alpha:
-            return degree - 1
-    return max_degree
+    val = quadrature(lambda x: [x**degree for degree in range(max_degree+1)])
+    exact_val = numpy.array([exact(degree) for degree in range(max_degree+1)])
+    eps = numpy.finfo(float).eps
+    # check relative error
+    # Allow 1e1 over machine precision.
+    alpha = abs(exact_val) * tol + (1e1+tol+exact_val)*eps
+    # check where the error is larger than alpha
+    is_larger = (exact_val - val) > alpha
+    return numpy.where(is_larger)[0] - 1 if any(is_larger) else max_degree
 
 
 def check_degree(
         quadrature, exact, exponents_creator, max_degree, tol=1.0e-14
         ):
     for degree in range(max_degree+1):
-        for k in exponents_creator(degree):
-            val = quadrature(
-                lambda x: sympy.prod([x[i]**k[i] for i in range(len(k))])
-                )
-            exact_val = exact(k)
-            # check relative error
-            # The allowance is quite large here, 1e5 over machine precision.
-            # Some test fail if lowered, though.
-            # TODO increase precision
-            eps = numpy.finfo(float).eps
-            alpha = abs(exact_val) * tol + (1.0e5+tol+exact_val)*eps
-            if abs(exact_val - val) > alpha:
-                return degree - 1
+        val = quadrature(
+            lambda x: [
+                sympy.prod([x[i]**k[i] for i in range(len(k))])
+                for k in exponents_creator(degree)
+                ])
+        exact_val = numpy.array([exact(k) for k in exponents_creator(degree)])
+        eps = numpy.finfo(float).eps
+        # check relative error
+        # The allowance is quite large here, 1e5 over machine precision.
+        # Some test fail if lowered, though.
+        # TODO increase precision
+        alpha = abs(exact_val) * tol + (1.0e5+tol+exact_val)*eps
+        is_larger = abs(exact_val - val) > alpha
+        if any(is_larger):
+            return degree - 1
+
     return max_degree
 
 

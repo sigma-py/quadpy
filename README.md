@@ -35,6 +35,11 @@ triangles = numpy.array([
     [[0.0, 1.0], [1.4, 0.8], [33.0, 28.0], [0.7, 0.1], [7.5, 7.4]],
     ])
 ```
+The same goes for functions with vectorized output, e.g.,
+```python
+def f(x):
+    return [numpy.sin(x[0]), numpy.sin(x[1])]
+```
 
 More examples under [test/examples_test.py](https://github.com/nschloe/quadpy/blob/master/test/examples_test.py).
 
@@ -43,25 +48,25 @@ More examples under [test/examples_test.py](https://github.com/nschloe/quadpy/bl
 ### Line segment
 <img src="https://nschloe.github.io/quadpy/line.png" width="50%">
 
- * Chebyshev-Gauss (both variants, arbitrary order)
+ * Chebyshev-Gauss (both variants, arbitrary degree)
  * Clenshaw-Curtis (after
-   [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary order)
+   [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
  * Fejér-type-1 (after
-   [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary order)
+   [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
  * Fejér-type-2 (after
-   [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary order)
+   [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
  * Gauss-Hermite (via
-   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.hermite.hermgauss.html), arbitrary order)
+   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.hermite.hermgauss.html), arbitrary degree)
  * Gauss-Laguerre (via
-   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.laguerre.laggauss.html), arbitrary order)
+   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.laguerre.laggauss.html), arbitrary degree)
  * Gauss-Legendre (via
-   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.legendre.leggauss.html), arbitrary order)
- * Gauss-Lobatto (arbitrary order)
- * Gauss-Kronrod (after [Laurie](https://doi.org/10.1090/S0025-5718-97-00861-2), arbitrary order)
+   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.legendre.leggauss.html), arbitrary degree)
+ * Gauss-Lobatto (arbitrary degree)
+ * Gauss-Kronrod (after [Laurie](https://doi.org/10.1090/S0025-5718-97-00861-2), arbitrary degree)
  * [Gauss-Patterson](https://doi.org/10.1090/S0025-5718-68-99866-9) (7 schemes up to degree 191)
- * Gauss-Radau (arbitrary order)
- * closed Newton-Cotes (arbitray order)
- * open Newton-Cotes (arbitray order)
+ * Gauss-Radau (arbitrary degree)
+ * closed Newton-Cotes (arbitrary degree)
+ * open Newton-Cotes (arbitrary degree)
 
 Example:
 ```python

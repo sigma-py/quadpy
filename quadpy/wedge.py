@@ -98,7 +98,7 @@ def integrate(f, wedge, scheme, sumfun=helpers.kahan_sum):
     det = J0[0]*J1[1]*J2[2] + J1[0]*J2[1]*J0[2] + J2[0]*J0[1]*J1[2] \
         - J0[2]*J1[1]*J2[0] - J1[2]*J2[1]*J0[0] - J2[2]*J0[1]*J1[0]
 
-    return sumfun((scheme.weights * f(x)).T * abs(det.T))
+    return sumfun(scheme.weights * f(x) * abs(det), axis=-1)
 
 
 class Felippa(object):
