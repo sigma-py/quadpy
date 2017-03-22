@@ -63,7 +63,7 @@ def integrate(f, triangle, scheme, sumfun=helpers.kahan_sum):
     # The factor 0.5 is the volume of the reference triangle.
     det = 0.5 * (J0[0]*J1[1] - J1[0]*J0[1])
 
-    return sumfun((scheme.weights * f(x)).T * abs(det), axis=0)
+    return sumfun(((scheme.weights * f(x)).T * abs(det)).T, axis=-1)
 
 
 def _s3():

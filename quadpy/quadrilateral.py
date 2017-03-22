@@ -65,9 +65,9 @@ def integrate(f, quad, scheme, sumfun=helpers.kahan_sum):
         + numpy.multiply.outer(0.25*(1+xi[0]), quad[2]) \
         + numpy.multiply.outer(0.25*(1-xi[0]), quad[3])
     J1 = J1.T
-    det = (J0[0]*J1[1] - J1[0]*J0[1]).T
+    det = (J0[0]*J1[1] - J1[0]*J0[1])
 
-    return sumfun((scheme.weights * f(x)).T * abs(det), axis=0)
+    return sumfun(scheme.weights * f(x) * abs(det), axis=-1)
 
 
 class Product(object):

@@ -87,8 +87,8 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    # scheme = Product(quadpy.line_segment.NewtonCotesClosed(15))
-    scheme = quadpy.quadrilateral.Stroud(6)
+    scheme = Product(quadpy.line_segment.GaussLegendre(6))
+    # scheme = quadpy.quadrilateral.Stroud(6)
     test_scheme(scheme)
     test_show(scheme)
     plt.show()
