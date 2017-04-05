@@ -85,7 +85,7 @@ def adaptive_integrate(
         ):
     intervals = numpy.array(intervals)
     if len(intervals.shape) == 1:
-        intervals = numpy.array([intervals]).T
+        intervals = intervals[..., None]
 
     lengths = abs(intervals[1] - intervals[0])
     total_length = sumfun(lengths)
