@@ -19,7 +19,7 @@ def test():
     assert abs(exact - val) < 1.0e-10
 
 
-@pytest.mark.parametrize('k', range(1, 12))
+@pytest.mark.parametrize('k', range(4, 12))
 def test_sink(k):
     val, _ = quadpy.line_segment.adaptive_integrate(
             lambda x: numpy.sin(k*x),

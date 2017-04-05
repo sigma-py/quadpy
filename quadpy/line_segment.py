@@ -34,26 +34,44 @@ def _integrate(values, weights, interval_length, sumfun=helpers.kahan_sum):
 
 
 def _gauss_kronrod_integrate(k, f, interval, sumfun=helpers.kahan_sum):
+    # Compute the integral estimations according to Gauss and Gauss-Kronrod,
+    # sharing the function evaluations
     scheme = GaussKronrod(k)
     gauss_weights = GaussLegendre(k).weights
-    point_vals1 = f(_scale_points(scheme.points, interval))
-    point_vals2 = point_vals1[..., 1::2]
+    point_vals_gk = f(_scale_points(scheme.points, interval))
+    point_vals_g = point_vals_gk[..., 1::2]
     alpha = abs(interval[1] - interval[0])
     val_gauss_kronrod = \
-        _integrate(point_vals1, scheme.weights, alpha, sumfun=sumfun)
-    val_gauss = _integrate(point_vals2, gauss_weights, alpha, sumfun=sumfun)
-    return val_gauss_kronrod, val_gauss
+        _integrate(point_vals_gk, scheme.weights, alpha, sumfun=sumfun)
+    val_gauss = _integrate(point_vals_g, gauss_weights, alpha, sumfun=sumfun)
+
+    # Get an error estimate. According to
+    #
+    #   A Review of Error Estimation in Adaptive Quadrature
+    #   Pedro Gonnet,
+    #   ACM Computing Surveys (CSUR) Surveys,
+    #   Volume 44, Issue 4, August 2012
+    #   <https://doi.org/10.1145/2333112.2333117>,
+    #   <https://arxiv.org/pdf/1003.4629.pdf>
+    #
+    # the classicial QUADPACK still compares favorably with other approaches.
+    point_vals_abs = abs(point_vals_gk.T - val_gauss_kronrod / alpha).T
+    I_tilde = _integrate(point_vals_abs, scheme.weights, alpha, sumfun=sumfun)
+    error_estimate = \
+        I_tilde * numpy.minimum(
+            numpy.ones(I_tilde.shape),
+            (200 * abs(val_gauss_kronrod - val_gauss) / I_tilde)**1.5
+            )
+    return val_gauss_kronrod, val_gauss, error_estimate
 
 
 def adaptive_integrate(f, interval, eps, sumfun=helpers.kahan_sum):
     # Use Gauss-Kronrod 7/15 scheme for error estimation and adaptivity.
-    val_gk, val_g = _gauss_kronrod_integrate(7, f, interval, sumfun=sumfun)
+    val_gk, val_g, error_estimate = \
+        _gauss_kronrod_integrate(7, f, interval, sumfun=sumfun)
 
-    # TODO better error estimation
-    error_estimation = abs(val_gk - val_g)
-
-    if error_estimation < eps:
-        return val_g, error_estimation
+    if error_estimate < eps:
+        return val_g, error_estimate
 
     # mark the only interval as bad
     quad_sum = 0.0
@@ -72,10 +90,9 @@ def adaptive_integrate(f, interval, eps, sumfun=helpers.kahan_sum):
             numpy.column_stack([midpoints, intervals[is_bad, 1]]),
             ])
         # compute values and error estimates for the new intervals
-        val_gk, val_g = \
+        val_gk, val_g, error_estimates = \
             _gauss_kronrod_integrate(7, f, intervals.T, sumfun=sumfun)
         # mark bad intervals
-        error_estimates = abs(val_gk - val_g)
         lengths = abs(intervals[:, 1] - intervals[:, 0])
         is_bad = error_estimates > eps * lengths / original_interval_length
         # add values from good intervals to sum
