@@ -19,13 +19,17 @@ def test_simple():
     assert abs(exact - val) < 1.0e-10
 
 
-def test_vector_valued():
+@pytest.mark.parametrize('k', range(1, 6))
+def test_vector_valued(k):
     val, _ = quadpy.line_segment.adaptive_integrate(
-            lambda x: array([x * sin(x), x * cos(x)]),
+            lambda x: array([x * sin(k * x), x * cos(k * x)]),
             [0.0, pi],
             1.0e-10
             )
-    exact = [pi, -2.0]
+    exact = [
+        (sin(pi * k) - pi*k * cos(pi*k)) / k**2,
+        (cos(pi * k) + pi*k * sin(pi*k) - 1.0) / k**2,
+        ]
     assert (abs(exact - val) < 1.0e-10).all()
 
 
