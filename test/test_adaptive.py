@@ -46,5 +46,6 @@ def test_sink(k):
 
 
 if __name__ == '__main__':
-    test_predefined_intervals()
+    # test_predefined_intervals()
+    test()
     # test_sink(5)
