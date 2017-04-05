@@ -20,19 +20,40 @@ def integrate(f, interval, scheme, sumfun=helpers.kahan_sum):
     return alpha * out
 
 
+def _scale_points(points, interval):
+    alpha = 0.5 * (interval[1] - interval[0])
+    beta = 0.5 * (interval[0] + interval[1])
+    return (numpy.multiply.outer(points, alpha) + beta).T
+
+
+def _integrate(values, weights, interval_length, sumfun=helpers.kahan_sum):
+    '''Integration with point values explicitly specified.
+    '''
+    out = sumfun(weights * values, axis=-1)
+    return 0.5 * interval_length * out
+
+
+def _gauss_kronrod_integrate(k, f, interval, sumfun=helpers.kahan_sum):
+    scheme = GaussKronrod(k)
+    gauss_weights = GaussLegendre(k).weights
+    point_vals1 = f(_scale_points(scheme.points, interval))
+    point_vals2 = point_vals1[..., 1::2]
+    alpha = abs(interval[1] - interval[0])
+    val_gauss_kronrod = \
+        _integrate(point_vals1, scheme.weights, alpha, sumfun=sumfun)
+    val_gauss = _integrate(point_vals2, gauss_weights, alpha, sumfun=sumfun)
+    return val_gauss_kronrod, val_gauss
+
+
 def adaptive_integrate(f, interval, eps, sumfun=helpers.kahan_sum):
-    # Use Gauss-Kronrod 7/15 schemes for error estimation and adaptivity.
-    # TODO merge
-    scheme1 = GaussLegendre(7)
-    scheme2 = GaussKronrod(7)
-    val1 = integrate(f, interval, scheme1, sumfun=sumfun)
-    val2 = integrate(f, interval, scheme2, sumfun=sumfun)
+    # Use Gauss-Kronrod 7/15 scheme for error estimation and adaptivity.
+    val_gk, val_g = _gauss_kronrod_integrate(7, f, interval, sumfun=sumfun)
 
     # TODO better error estimation
-    error_estimation = abs(val1 - val2)
+    error_estimation = abs(val_gk - val_g)
 
     if error_estimation < eps:
-        return val1, error_estimation
+        return val_g, error_estimation
 
     # mark the only interval as bad
     quad_sum = 0.0
@@ -47,19 +68,19 @@ def adaptive_integrate(f, interval, eps, sumfun=helpers.kahan_sum):
         midpoints = \
             0.5 * (intervals[is_bad][:, 0] + intervals[is_bad][:, 1])
         intervals = numpy.concatenate([
-            numpy.column_stack([intervals[is_bad][:, 0], midpoints]),
-            numpy.column_stack([midpoints, intervals[is_bad][:, 1]]),
+            numpy.column_stack([intervals[is_bad, 0], midpoints]),
+            numpy.column_stack([midpoints, intervals[is_bad, 1]]),
             ])
         # compute values and error estimates for the new intervals
-        val1 = integrate(f, intervals.T, scheme1, sumfun=sumfun)
-        val2 = integrate(f, intervals.T, scheme2, sumfun=sumfun)
+        val_gk, val_g = \
+            _gauss_kronrod_integrate(7, f, intervals.T, sumfun=sumfun)
         # mark bad intervals
-        error_estimates = abs(val1 - val2)
+        error_estimates = abs(val_gk - val_g)
         lengths = abs(intervals[:, 1] - intervals[:, 0])
         is_bad = error_estimates > eps * lengths / original_interval_length
         # add values from good intervals to sum
         is_good = numpy.logical_not(is_bad)
-        quad_sum += sumfun(val1[is_good])
+        quad_sum += sumfun(val_g[is_good])
         global_error_estimate += sumfun(error_estimates[is_good])
 
     return quad_sum, global_error_estimate
@@ -789,9 +810,9 @@ class GaussKronrod(object):
         for m in range(n-1):
             k0 = int(math.floor((m+1)/2.0))
             k = numpy.arange(k0, -1, -1)
-            l = m - k
+            L = m - k
             s[k+1] = numpy.cumsum(
-                (a[k+n+1] - a[l])*t[k+1] + b[k+n+1]*s[k] - b[l]*s[k+1]
+                (a[k+n+1] - a[L])*t[k+1] + b[k+n+1]*s[k] - b[L]*s[k+1]
                 )
             s, t = t, s
 
@@ -801,10 +822,10 @@ class GaussKronrod(object):
             k0 = m+1-n
             k1 = int(math.floor((m-1)/2.0))
             k = numpy.arange(k0, k1 + 1)
-            l = m - k
-            j = n-1-l
+            L = m - k
+            j = n-1-L
             s[j+1] = numpy.cumsum(
-                -(a[k+n+1] - a[l])*t[j+1] - b[k+n+1]*s[j+1] + b[l]*s[j+2]
+                -(a[k+n+1] - a[L])*t[j+1] - b[k+n+1]*s[j+1] + b[L]*s[j+2]
                 )
             j = j[-1]
             k = int(math.floor((m+1)/2.0))

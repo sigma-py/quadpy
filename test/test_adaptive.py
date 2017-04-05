@@ -32,4 +32,4 @@ def test_sink(k):
 
 
 if __name__ == '__main__':
-    test()
+    test_sink(5)
