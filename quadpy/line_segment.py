@@ -20,20 +20,18 @@ def integrate(f, interval, scheme, sumfun=helpers.kahan_sum):
     return alpha * out
 
 
-def _scale_points(points, interval):
-    alpha = 0.5 * (interval[1] - interval[0])
-    beta = 0.5 * (interval[0] + interval[1])
-    return (numpy.multiply.outer(points, alpha) + beta).T
-
-
-def _integrate(values, weights, interval_length, sumfun=helpers.kahan_sum):
-    '''Integration with point values explicitly specified.
-    '''
-    out = sumfun(weights * values, axis=-1)
-    return 0.5 * interval_length * out
-
-
 def _gauss_kronrod_integrate(k, f, interval, sumfun=helpers.kahan_sum):
+    def _scale_points(points, interval):
+        alpha = 0.5 * (interval[1] - interval[0])
+        beta = 0.5 * (interval[0] + interval[1])
+        return (numpy.multiply.outer(points, alpha) + beta).T
+
+    def _integrate(values, weights, interval_length, sumfun=helpers.kahan_sum):
+        '''Integration with point values explicitly specified.
+        '''
+        out = sumfun(weights * values, axis=-1)
+        return 0.5 * interval_length * out
+
     # Compute the integral estimations according to Gauss and Gauss-Kronrod,
     # sharing the function evaluations
     scheme = GaussKronrod(k)
