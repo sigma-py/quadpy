@@ -75,19 +75,25 @@ def _gauss_kronrod_integrate(k, f, interval, sumfun=helpers.kahan_sum):
 def adaptive_integrate(
         f, intervals, eps,
         kronrod_degree=7,
+        minimum_interval_length=None,
         sumfun=helpers.kahan_sum
         ):
+    intervals = numpy.array(intervals)
+    if len(intervals.shape) == 1:
+        intervals = numpy.array([intervals]).T
+
+    lengths = abs(intervals[1] - intervals[0])
+    total_length = sumfun(lengths)
+
+    if minimum_interval_length is None:
+        minimum_interval_length = total_length / 2**10
+
     quad_sum = 0.0
     global_error_estimate = 0.0
-
-    intervals = numpy.array(intervals)
 
     # Use Gauss-Kronrod 7/15 scheme for error estimation and adaptivity.
     val_gk, val_g, error_estimate = \
         _gauss_kronrod_integrate(kronrod_degree, f, intervals, sumfun=sumfun)
-
-    lengths = abs(intervals[1] - intervals[0])
-    total_length = sumfun(lengths)
 
     # mark bad intervals
     is_bad = error_estimate > eps * lengths / total_length
@@ -110,6 +116,7 @@ def adaptive_integrate(
                 )
         # mark bad intervals
         lengths = abs(intervals[1] - intervals[0])
+        assert all(lengths > minimum_interval_length)
         is_bad = error_estimates > eps * lengths / total_length
         # add values from good intervals to sum
         is_good = numpy.logical_not(is_bad)
