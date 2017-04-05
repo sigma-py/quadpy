@@ -57,6 +57,13 @@ def _gauss_kronrod_integrate(k, f, interval, sumfun=helpers.kahan_sum):
     # the classicial QUADPACK still compares favorably with other approaches.
     point_vals_abs = abs(point_vals_gk.T - val_gauss_kronrod / alpha).T
     I_tilde = _integrate(point_vals_abs, scheme.weights, alpha, sumfun=sumfun)
+    # The exponent 1.5 is chosen such that (200*x)**1.5 is approximately x at
+    # 1.0e-6, the machine precision on IEEE 754 32-bit floating point
+    # arithmentic. This could be adapted to
+    #
+    #   eps = numpy.finfo(float).eps
+    #   exponent = numpy.log(eps) / numpy.log(200*eps)
+    #
     error_estimate = \
         I_tilde * numpy.minimum(
             numpy.ones(I_tilde.shape),
