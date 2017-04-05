@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 from .centroid import Centroid
+from .dunavant import Dunavant
 
 from .. import helpers
 
@@ -78,58 +79,81 @@ def _numpy_all_except(a, axis=-1):
     return numpy.all(a, axis=tuple(axes))
 
 
-# def adaptive_integrate(
-#         f, triangles, eps,
-#         minimum_triangle_area=None,
-#         scheme1=Dunavant(5),
-#         scheme2=Dunavant(10),
-#         sumfun=helpers.kahan_sum
-#         ):
-#     triangles = numpy.array(triangles)
-#
-#     areas = _area(triangles)
-#     total_area = sumfun(areas)
-#
-#     if minimum_triangle_area is None:
-#         minimum_interval_length = total_area * 0.25**10
-#
-#     val1 = integrate(f, triangles, scheme1, sumfun=sumfun)
-#     val2 = integrate(f, triangles, scheme2, sumfun=sumfun)
-#     error_estimate = abs(val1 - val2)
-#
-#     # Mark intervals with acceptable approximations. For this, take all()
-#     # across every dimension except the last one, which is the interval index.
-#     is_good = _numpy_all_except(
-#             error_estimate < eps * lengths / total_length,
-#             axis=-1
-#             )
-#     # add values from good intervals to sum
-#     quad_sum = sumfun(val_g[..., is_good], axis=-1)
-#     global_error_estimate = sumfun(error_estimate[..., is_good], axis=-1)
-#
-#     is_bad = numpy.logical_not(is_good)
-#     while any(is_bad):
-#         # split the bad intervals in half
-#         intervals = intervals[..., is_bad]
-#         midpoints = 0.5 * (intervals[0] + intervals[1])
-#         intervals = numpy.array([
-#             numpy.concatenate([intervals[0], midpoints]),
-#             numpy.concatenate([midpoints, intervals[1]]),
-#             ])
-#         # compute values and error estimates for the new intervals
-#         val_gk, val_g, error_estimate = _gauss_kronrod_integrate(
-#                 kronrod_degree, f, intervals, sumfun=sumfun
-#                 )
-#         # mark good intervals, gather values and error estimates
-#         areas = abs(intervals[1] - intervals[0])
-#         assert all(areas > minimum_interval_length)
-#         is_good = _numpy_all_except(
-#                 error_estimate < eps * lengths / total_length,
-#                 axis=-1
-#                 )
-#         # add values from good intervals to sum
-#         quad_sum += sumfun(val_g[..., is_good], axis=-1)
-#         global_error_estimate += sumfun(error_estimate[..., is_good], axis=-1)
-#         is_bad = numpy.logical_not(is_good)
-#
-#     return quad_sum, global_error_estimate
+def adaptive_integrate(
+        f, triangles, eps,
+        minimum_triangle_area=None,
+        scheme1=Dunavant(5),
+        scheme2=Dunavant(10),
+        sumfun=helpers.kahan_sum
+        ):
+    triangles = numpy.array(triangles)
+    if len(triangles.shape) == 2:
+        # add dimension in the second-to-last place
+        triangles = numpy.expand_dims(triangles, -2)
+
+    areas = _area(triangles)
+    total_area = sumfun(areas)
+
+    if minimum_triangle_area is None:
+        minimum_triangle_area = total_area * 0.25**10
+
+    val1 = integrate(f, triangles, scheme1, sumfun=sumfun)
+    val2 = integrate(f, triangles, scheme2, sumfun=sumfun)
+    error_estimate = abs(val1 - val2)
+
+    # Mark intervals with acceptable approximations. For this, take all()
+    # across every dimension except the last one, which is the interval index.
+    is_good = _numpy_all_except(
+            error_estimate < eps * areas / total_area,
+            axis=-1
+            )
+
+    # add values from good intervals to sum
+    quad_sum = sumfun(val1[..., is_good], axis=-1)
+    global_error_estimate = sumfun(error_estimate[..., is_good], axis=-1)
+
+    is_bad = numpy.logical_not(is_good)
+    while any(is_bad):
+        # split the bad triangles into four #triforce
+        #
+        #         /\
+        #        /__\
+        #       /\  /\
+        #      /__\/__\
+        #
+        triangles = triangles[..., is_bad, :]
+        midpoints = [
+            0.5 * (triangles[1] + triangles[2]),
+            0.5 * (triangles[2] + triangles[0]),
+            0.5 * (triangles[0] + triangles[1]),
+            ]
+        triangles = numpy.array([
+            numpy.concatenate([
+                triangles[0], triangles[1], triangles[2], midpoints[0]
+                ]),
+            numpy.concatenate([
+                midpoints[1], midpoints[2], midpoints[0], midpoints[1]
+                ]),
+            numpy.concatenate([
+                midpoints[2], midpoints[0], midpoints[1], midpoints[2]
+                ]),
+            ])
+
+        # compute values and error estimates for the new intervals
+        val1 = integrate(f, triangles, scheme1, sumfun=sumfun)
+        val2 = integrate(f, triangles, scheme2, sumfun=sumfun)
+        error_estimate = abs(val1 - val2)
+
+        # mark good intervals, gather values and error estimates
+        areas = _area(triangles)
+        assert all(areas > minimum_triangle_area)
+        is_good = _numpy_all_except(
+                error_estimate < eps * areas / total_area,
+                axis=-1
+                )
+        # add values from good intervals to sum
+        quad_sum += sumfun(val1[..., is_good], axis=-1)
+        global_error_estimate += sumfun(error_estimate[..., is_good], axis=-1)
+        is_bad = numpy.logical_not(is_good)
+
+    return quad_sum, global_error_estimate
