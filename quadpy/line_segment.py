@@ -98,18 +98,18 @@ def adaptive_integrate(
 
     while any(is_bad):
         # split the bad intervals in half
-        midpoints = \
-            0.5 * (intervals[is_bad][:, 0] + intervals[is_bad][:, 1])
+        intervals = intervals[..., is_bad]
+        midpoints = 0.5 * (intervals[0] + intervals[1])
         intervals = numpy.concatenate([
-            numpy.column_stack([intervals[is_bad, 0], midpoints]),
-            numpy.column_stack([midpoints, intervals[is_bad, 1]]),
-            ])
+            numpy.column_stack([intervals[0], midpoints]),
+            numpy.column_stack([midpoints, intervals[1]]),
+            ]).T
         # compute values and error estimates for the new intervals
         val_gk, val_g, error_estimates = _gauss_kronrod_integrate(
-                kronrod_degree, f, intervals.T, sumfun=sumfun
+                kronrod_degree, f, intervals, sumfun=sumfun
                 )
         # mark bad intervals
-        lengths = abs(intervals[:, 1] - intervals[:, 0])
+        lengths = abs(intervals[1] - intervals[0])
         is_bad = error_estimates > eps * lengths / total_length
         # add values from good intervals to sum
         is_good = numpy.logical_not(is_bad)

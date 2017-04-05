@@ -1,45 +1,46 @@
-import numpy
+from numpy import pi, sin, cos
 import pytest
 import quadpy
 
 
 def test():
     val, _ = quadpy.line_segment.adaptive_integrate(
-            numpy.sin, [0.0, numpy.pi], 1.0e-10
+            sin, [0.0, pi], 1.0e-10
             )
     exact = 2.0
     assert abs(exact - val) < 1.0e-10
 
     val, _ = quadpy.line_segment.adaptive_integrate(
-            lambda x: x * numpy.sin(x),
-            [0.0, numpy.pi],
+            lambda x: x * sin(x),
+            [0.0, pi],
             1.0e-10
             )
-    exact = numpy.pi
+    exact = pi
     assert abs(exact - val) < 1.0e-10
 
 
 def test_predefined_intervals():
+    k = 5
     val, _ = quadpy.line_segment.adaptive_integrate(
-            lambda x: x * numpy.sin(x),
+            lambda x: x * sin(k * x),
             [
-                [0.0, 0.3*numpy.pi, 0.5*numpy.pi],
-                [0.3*numpy.pi, 0.5*numpy.pi, numpy.pi],
+                [0.0, 0.3*pi, 0.5*pi],
+                [0.3*pi, 0.5*pi, pi],
             ],
             1.0e-10
             )
-    exact = numpy.pi
+    exact = (sin(pi * k) - pi*k * cos(pi*k)) / k**2
     assert abs(exact - val) < 1.0e-10
 
 
 @pytest.mark.parametrize('k', range(4, 12))
 def test_sink(k):
     val, _ = quadpy.line_segment.adaptive_integrate(
-            lambda x: numpy.sin(k*x),
-            [0.0, numpy.pi],
+            lambda x: sin(k*x),
+            [0.0, pi],
             1.0e-10
             )
-    exact = (1.0 - numpy.cos(k*numpy.pi)) / k
+    exact = (1.0 - cos(k*pi)) / k
     assert abs(exact - val) < 1.0e-10
     return
 
