@@ -20,6 +20,49 @@ def integrate(f, interval, scheme, sumfun=helpers.kahan_sum):
     return alpha * out
 
 
+def adaptive_integrate(f, interval, eps, sumfun=helpers.kahan_sum):
+    # Use Gauss-Kronrod 7/15 schemes for error estimation and adaptivity.
+    # TODO merge
+    scheme1 = GaussLegendre(7)
+    scheme2 = GaussKronrod(7)
+    val1 = integrate(f, interval, scheme1, sumfun=sumfun)
+    val2 = integrate(f, interval, scheme2, sumfun=sumfun)
+
+    # TODO better error estimation
+    error_estimation = abs(val1 - val2)
+
+    if error_estimation < eps:
+        return val1
+
+    # mark the only interval as bad
+    quad_sum = 0.0
+    intervals = numpy.array([interval])
+    is_bad = [True]
+
+    original_interval_length = abs(interval[1] - interval[0])
+
+    while any(is_bad):
+        # split the intervals in half
+        midpoints = \
+            0.5 * (intervals[is_bad][:, 0] + intervals[is_bad][:, 1])
+        intervals = numpy.concatenate([
+            numpy.column_stack([intervals[is_bad][:, 0], midpoints]),
+            numpy.column_stack([midpoints, intervals[is_bad][:, 1]]),
+            ])
+        # compute values and error estimates for the new intervals
+        val1 = integrate(f, intervals.T, scheme1, sumfun=sumfun)
+        val2 = integrate(f, intervals.T, scheme2, sumfun=sumfun)
+        # mark bad intervals
+        error_estimates = abs(val1 - val2)
+        lengths = abs(intervals[:, 1] - intervals[:, 0])
+        is_bad = error_estimates > eps * lengths / original_interval_length
+        # add values from good intervals to sum
+        is_good = numpy.logical_not(is_bad)
+        quad_sum += sumfun(val1[is_good])
+
+    return quad_sum
+
+
 def show(scheme, interval=numpy.array([-1.0, 1.0]), show_axes=False):
     from matplotlib import pyplot as plt
     # change default range so that new disks will work
@@ -712,7 +755,7 @@ class GaussKronrod(object):
     '''
     def __init__(self, n, a=0.0, b=0.0):
         # The general scheme is:
-        # The the Jacobi recursion coefficients, get the Kronrod vectors alpha
+        # Get the Jacobi recursion coefficients, get the Kronrod vectors alpha
         # and beta, and hand those off to _gauss. There, the eigenproblem for a
         # tridiagonal matrix with alpha and beta is solved to retrieve the
         # points and weights.
