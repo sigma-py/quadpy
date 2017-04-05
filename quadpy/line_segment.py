@@ -32,7 +32,7 @@ def adaptive_integrate(f, interval, eps, sumfun=helpers.kahan_sum):
     error_estimation = abs(val1 - val2)
 
     if error_estimation < eps:
-        return val1
+        return val1, error_estimation
 
     # mark the only interval as bad
     quad_sum = 0.0
@@ -40,9 +40,10 @@ def adaptive_integrate(f, interval, eps, sumfun=helpers.kahan_sum):
     is_bad = [True]
 
     original_interval_length = abs(interval[1] - interval[0])
+    global_error_estimate = 0.0
 
     while any(is_bad):
-        # split the intervals in half
+        # split the bad intervals in half
         midpoints = \
             0.5 * (intervals[is_bad][:, 0] + intervals[is_bad][:, 1])
         intervals = numpy.concatenate([
@@ -59,8 +60,9 @@ def adaptive_integrate(f, interval, eps, sumfun=helpers.kahan_sum):
         # add values from good intervals to sum
         is_good = numpy.logical_not(is_bad)
         quad_sum += sumfun(val1[is_good])
+        global_error_estimate += sumfun(error_estimates[is_good])
 
-    return quad_sum
+    return quad_sum, global_error_estimate
 
 
 def show(scheme, interval=numpy.array([-1.0, 1.0]), show_axes=False):
