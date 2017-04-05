@@ -72,21 +72,29 @@ def _gauss_kronrod_integrate(k, f, interval, sumfun=helpers.kahan_sum):
     return val_gauss_kronrod, val_gauss, error_estimate
 
 
-def adaptive_integrate(f, interval, eps, sumfun=helpers.kahan_sum):
+def adaptive_integrate(
+        f, intervals, eps,
+        kronrod_degree=7,
+        sumfun=helpers.kahan_sum
+        ):
+    quad_sum = 0.0
+    global_error_estimate = 0.0
+
+    intervals = numpy.array(intervals)
+
     # Use Gauss-Kronrod 7/15 scheme for error estimation and adaptivity.
     val_gk, val_g, error_estimate = \
-        _gauss_kronrod_integrate(7, f, interval, sumfun=sumfun)
+        _gauss_kronrod_integrate(kronrod_degree, f, intervals, sumfun=sumfun)
 
-    if error_estimate < eps:
-        return val_g, error_estimate
+    lengths = abs(intervals[1] - intervals[0])
+    total_length = sumfun(lengths)
 
-    # mark the only interval as bad
-    quad_sum = 0.0
-    intervals = numpy.array([interval])
-    is_bad = [True]
-
-    original_interval_length = abs(interval[1] - interval[0])
-    global_error_estimate = 0.0
+    # mark bad intervals
+    is_bad = error_estimate > eps * lengths / total_length
+    # add values from good intervals to sum
+    is_good = numpy.logical_not(is_bad)
+    quad_sum += sumfun(val_g[is_good])
+    global_error_estimate += sumfun(error_estimate[is_good])
 
     while any(is_bad):
         # split the bad intervals in half
@@ -97,11 +105,12 @@ def adaptive_integrate(f, interval, eps, sumfun=helpers.kahan_sum):
             numpy.column_stack([midpoints, intervals[is_bad, 1]]),
             ])
         # compute values and error estimates for the new intervals
-        val_gk, val_g, error_estimates = \
-            _gauss_kronrod_integrate(7, f, intervals.T, sumfun=sumfun)
+        val_gk, val_g, error_estimates = _gauss_kronrod_integrate(
+                kronrod_degree, f, intervals.T, sumfun=sumfun
+                )
         # mark bad intervals
         lengths = abs(intervals[:, 1] - intervals[:, 0])
-        is_bad = error_estimates > eps * lengths / original_interval_length
+        is_bad = error_estimates > eps * lengths / total_length
         # add values from good intervals to sum
         is_good = numpy.logical_not(is_bad)
         quad_sum += sumfun(val_g[is_good])
