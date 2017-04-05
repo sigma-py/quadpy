@@ -55,7 +55,8 @@ def _gauss_kronrod_integrate(k, f, interval, sumfun=helpers.kahan_sum):
     #   <https://arxiv.org/pdf/1003.4629.pdf>
     #
     # the classicial QUADPACK still compares favorably with other approaches.
-    point_vals_abs = abs(point_vals_gk.T - val_gauss_kronrod / alpha).T
+    average = val_gauss_kronrod / alpha
+    point_vals_abs = abs(point_vals_gk - average[..., None])
     I_tilde = _integrate(point_vals_abs, scheme.weights, alpha, sumfun=sumfun)
     # The exponent 1.5 is chosen such that (200*x)**1.5 is approximately x at
     # 1.0e-6, the machine precision on IEEE 754 32-bit floating point
@@ -70,6 +71,12 @@ def _gauss_kronrod_integrate(k, f, interval, sumfun=helpers.kahan_sum):
             (200 * abs(val_gauss_kronrod - val_gauss) / I_tilde)**1.5
             )
     return val_gauss_kronrod, val_gauss, error_estimate
+
+
+def _numpy_all_except(a, axis=-1):
+    axes = numpy.arange(a.ndim)
+    axes = numpy.delete(axes, axis)
+    return numpy.all(a, axis=tuple(axes))
 
 
 def adaptive_integrate(
@@ -88,20 +95,21 @@ def adaptive_integrate(
     if minimum_interval_length is None:
         minimum_interval_length = total_length / 2**10
 
-    quad_sum = 0.0
-    global_error_estimate = 0.0
-
     # Use Gauss-Kronrod 7/15 scheme for error estimation and adaptivity.
     val_gk, val_g, error_estimate = \
         _gauss_kronrod_integrate(kronrod_degree, f, intervals, sumfun=sumfun)
 
-    # mark bad intervals
-    is_bad = error_estimate > eps * lengths / total_length
+    # Mark intervals with acceptable approximations. For this, take all()
+    # across every dimension except the last one, which is the interval index.
+    is_good = _numpy_all_except(
+            error_estimate < eps * lengths / total_length,
+            axis=-1
+            )
     # add values from good intervals to sum
-    is_good = numpy.logical_not(is_bad)
-    quad_sum += sumfun(val_g[is_good])
-    global_error_estimate += sumfun(error_estimate[is_good])
+    quad_sum = sumfun(val_g[..., is_good], axis=-1)
+    global_error_estimate = sumfun(error_estimate[..., is_good], axis=-1)
 
+    is_bad = numpy.logical_not(is_good)
     while any(is_bad):
         # split the bad intervals in half
         intervals = intervals[..., is_bad]
@@ -111,17 +119,20 @@ def adaptive_integrate(
             numpy.concatenate([midpoints, intervals[1]]),
             ])
         # compute values and error estimates for the new intervals
-        val_gk, val_g, error_estimates = _gauss_kronrod_integrate(
+        val_gk, val_g, error_estimate = _gauss_kronrod_integrate(
                 kronrod_degree, f, intervals, sumfun=sumfun
                 )
-        # mark bad intervals
+        # mark good intervals, gather values and error estimates
         lengths = abs(intervals[1] - intervals[0])
         assert all(lengths > minimum_interval_length)
-        is_bad = error_estimates > eps * lengths / total_length
+        is_good = _numpy_all_except(
+                error_estimate < eps * lengths / total_length,
+                axis=-1
+                )
         # add values from good intervals to sum
-        is_good = numpy.logical_not(is_bad)
-        quad_sum += sumfun(val_g[is_good])
-        global_error_estimate += sumfun(error_estimates[is_good])
+        quad_sum += sumfun(val_g[..., is_good], axis=-1)
+        global_error_estimate += sumfun(error_estimate[..., is_good], axis=-1)
+        is_bad = numpy.logical_not(is_good)
 
     return quad_sum, global_error_estimate
 
