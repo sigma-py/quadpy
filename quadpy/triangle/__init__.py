@@ -4,7 +4,7 @@ import math
 import numpy
 import sympy
 
-from . import helpers
+from .. import helpers
 
 
 def show(
@@ -49,6 +49,15 @@ def show(
     return
 
 
+def _area(triangle):
+    # det is the signed volume of the triangle
+    J0 = (triangle[1] - triangle[0]).T
+    J1 = (triangle[2] - triangle[0]).T
+    # The factor 0.5 is the volume of the reference triangle.
+    det = J0[0]*J1[1] - J1[0]*J0[1]
+    return abs(det)
+
+
 def integrate(f, triangle, scheme, sumfun=helpers.kahan_sum):
     xi = scheme.points.T
     x = \
@@ -56,14 +65,74 @@ def integrate(f, triangle, scheme, sumfun=helpers.kahan_sum):
         + numpy.multiply.outer(xi[0], triangle[1]) \
         + numpy.multiply.outer(xi[1], triangle[2])
     x = x.T
-
-    # det is the signed volume of the triangle
-    J0 = (triangle[1] - triangle[0]).T
-    J1 = (triangle[2] - triangle[0]).T
     # The factor 0.5 is the volume of the reference triangle.
-    det = 0.5 * (J0[0]*J1[1] - J1[0]*J0[1])
+    return sumfun(
+        ((scheme.weights * f(x)).T * 0.5 * _area(triangle)).T,
+        axis=-1
+        )
 
-    return sumfun(((scheme.weights * f(x)).T * abs(det)).T, axis=-1)
+
+def _numpy_all_except(a, axis=-1):
+    axes = numpy.arange(a.ndim)
+    axes = numpy.delete(axes, axis)
+    return numpy.all(a, axis=tuple(axes))
+
+
+# def adaptive_integrate(
+#         f, triangles, eps,
+#         minimum_triangle_area=None,
+#         scheme1=Dunavant(5),
+#         scheme2=Dunavant(10),
+#         sumfun=helpers.kahan_sum
+#         ):
+#     triangles = numpy.array(triangles)
+#
+#     areas = _area(triangles)
+#     total_area = sumfun(areas)
+#
+#     if minimum_triangle_area is None:
+#         minimum_interval_length = total_area * 0.25**10
+#
+#     val1 = integrate(f, triangles, scheme1, sumfun=sumfun)
+#     val2 = integrate(f, triangles, scheme2, sumfun=sumfun)
+#     error_estimate = abs(val1 - val2)
+#
+#     # Mark intervals with acceptable approximations. For this, take all()
+#     # across every dimension except the last one, which is the interval index.
+#     is_good = _numpy_all_except(
+#             error_estimate < eps * lengths / total_length,
+#             axis=-1
+#             )
+#     # add values from good intervals to sum
+#     quad_sum = sumfun(val_g[..., is_good], axis=-1)
+#     global_error_estimate = sumfun(error_estimate[..., is_good], axis=-1)
+#
+#     is_bad = numpy.logical_not(is_good)
+#     while any(is_bad):
+#         # split the bad intervals in half
+#         intervals = intervals[..., is_bad]
+#         midpoints = 0.5 * (intervals[0] + intervals[1])
+#         intervals = numpy.array([
+#             numpy.concatenate([intervals[0], midpoints]),
+#             numpy.concatenate([midpoints, intervals[1]]),
+#             ])
+#         # compute values and error estimates for the new intervals
+#         val_gk, val_g, error_estimate = _gauss_kronrod_integrate(
+#                 kronrod_degree, f, intervals, sumfun=sumfun
+#                 )
+#         # mark good intervals, gather values and error estimates
+#         areas = abs(intervals[1] - intervals[0])
+#         assert all(areas > minimum_interval_length)
+#         is_good = _numpy_all_except(
+#                 error_estimate < eps * lengths / total_length,
+#                 axis=-1
+#                 )
+#         # add values from good intervals to sum
+#         quad_sum += sumfun(val_g[..., is_good], axis=-1)
+#         global_error_estimate += sumfun(error_estimate[..., is_good], axis=-1)
+#         is_bad = numpy.logical_not(is_good)
+#
+#     return quad_sum, global_error_estimate
 
 
 def _s3():
