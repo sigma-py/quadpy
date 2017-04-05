@@ -1,9 +1,9 @@
-from numpy import pi, sin, cos
+from numpy import pi, sin, cos, array
 import pytest
 import quadpy
 
 
-def test():
+def test_simple():
     val, _ = quadpy.line_segment.adaptive_integrate(
             sin, [0.0, pi], 1.0e-10
             )
@@ -17,6 +17,16 @@ def test():
             )
     exact = pi
     assert abs(exact - val) < 1.0e-10
+
+
+def test_vector_valued():
+    val, _ = quadpy.line_segment.adaptive_integrate(
+            lambda x: array([x * sin(x), x * cos(x)]),
+            [0.0, pi],
+            1.0e-10
+            )
+    exact = [pi, -2.0]
+    assert (abs(exact - val) < 1.0e-10).all()
 
 
 def test_predefined_intervals():
@@ -46,6 +56,7 @@ def test_sink(k):
 
 
 if __name__ == '__main__':
-    test_predefined_intervals()
-    # test()
+    # test_predefined_intervals()
+    test_vector_valued()
+    # test_simple()
     # test_sink(5)
