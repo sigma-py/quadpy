@@ -20,6 +20,121 @@ def integrate(f, interval, scheme, sumfun=helpers.kahan_sum):
     return alpha * out
 
 
+def _gauss_kronrod_integrate(k, f, interval, sumfun=helpers.kahan_sum):
+    def _scale_points(points, interval):
+        alpha = 0.5 * (interval[1] - interval[0])
+        beta = 0.5 * (interval[0] + interval[1])
+        return (numpy.multiply.outer(points, alpha) + beta).T
+
+    def _integrate(values, weights, interval_length, sumfun=helpers.kahan_sum):
+        '''Integration with point values explicitly specified.
+        '''
+        out = sumfun(weights * values, axis=-1)
+        return 0.5 * interval_length * out
+
+    # Compute the integral estimations according to Gauss and Gauss-Kronrod,
+    # sharing the function evaluations
+    scheme = GaussKronrod(k)
+    gauss_weights = GaussLegendre(k).weights
+    point_vals_gk = f(_scale_points(scheme.points, interval))
+    point_vals_g = point_vals_gk[..., 1::2]
+    alpha = abs(interval[1] - interval[0])
+    val_gauss_kronrod = \
+        _integrate(point_vals_gk, scheme.weights, alpha, sumfun=sumfun)
+    val_gauss = _integrate(point_vals_g, gauss_weights, alpha, sumfun=sumfun)
+
+    # Get an error estimate. According to
+    #
+    #   A Review of Error Estimation in Adaptive Quadrature
+    #   Pedro Gonnet,
+    #   ACM Computing Surveys (CSUR) Surveys,
+    #   Volume 44, Issue 4, August 2012
+    #   <https://doi.org/10.1145/2333112.2333117>,
+    #   <https://arxiv.org/pdf/1003.4629.pdf>
+    #
+    # the classicial QUADPACK still compares favorably with other approaches.
+    average = val_gauss_kronrod / alpha
+    point_vals_abs = abs(point_vals_gk - average[..., None])
+    I_tilde = _integrate(point_vals_abs, scheme.weights, alpha, sumfun=sumfun)
+    # The exponent 1.5 is chosen such that (200*x)**1.5 is approximately x at
+    # 1.0e-6, the machine precision on IEEE 754 32-bit floating point
+    # arithmentic. This could be adapted to
+    #
+    #   eps = numpy.finfo(float).eps
+    #   exponent = numpy.log(eps) / numpy.log(200*eps)
+    #
+    error_estimate = \
+        I_tilde * numpy.minimum(
+            numpy.ones(I_tilde.shape),
+            (200 * abs(val_gauss_kronrod - val_gauss) / I_tilde)**1.5
+            )
+    return val_gauss_kronrod, val_gauss, error_estimate
+
+
+def _numpy_all_except(a, axis=-1):
+    axes = numpy.arange(a.ndim)
+    axes = numpy.delete(axes, axis)
+    return numpy.all(a, axis=tuple(axes))
+
+
+def adaptive_integrate(
+        f, intervals, eps,
+        kronrod_degree=7,
+        minimum_interval_length=None,
+        sumfun=helpers.kahan_sum
+        ):
+    intervals = numpy.array(intervals)
+    if len(intervals.shape) == 1:
+        intervals = intervals[..., None]
+
+    lengths = abs(intervals[1] - intervals[0])
+    total_length = sumfun(lengths)
+
+    if minimum_interval_length is None:
+        minimum_interval_length = total_length / 2**10
+
+    # Use Gauss-Kronrod 7/15 scheme for error estimation and adaptivity.
+    val_gk, val_g, error_estimate = \
+        _gauss_kronrod_integrate(kronrod_degree, f, intervals, sumfun=sumfun)
+
+    # Mark intervals with acceptable approximations. For this, take all()
+    # across every dimension except the last one, which is the interval index.
+    is_good = _numpy_all_except(
+            error_estimate < eps * lengths / total_length,
+            axis=-1
+            )
+    # add values from good intervals to sum
+    quad_sum = sumfun(val_g[..., is_good], axis=-1)
+    global_error_estimate = sumfun(error_estimate[..., is_good], axis=-1)
+
+    is_bad = numpy.logical_not(is_good)
+    while any(is_bad):
+        # split the bad intervals in half
+        intervals = intervals[..., is_bad]
+        midpoints = 0.5 * (intervals[0] + intervals[1])
+        intervals = numpy.array([
+            numpy.concatenate([intervals[0], midpoints]),
+            numpy.concatenate([midpoints, intervals[1]]),
+            ])
+        # compute values and error estimates for the new intervals
+        val_gk, val_g, error_estimate = _gauss_kronrod_integrate(
+                kronrod_degree, f, intervals, sumfun=sumfun
+                )
+        # mark good intervals, gather values and error estimates
+        lengths = abs(intervals[1] - intervals[0])
+        assert all(lengths > minimum_interval_length)
+        is_good = _numpy_all_except(
+                error_estimate < eps * lengths / total_length,
+                axis=-1
+                )
+        # add values from good intervals to sum
+        quad_sum += sumfun(val_g[..., is_good], axis=-1)
+        global_error_estimate += sumfun(error_estimate[..., is_good], axis=-1)
+        is_bad = numpy.logical_not(is_good)
+
+    return quad_sum, global_error_estimate
+
+
 def show(scheme, interval=numpy.array([-1.0, 1.0]), show_axes=False):
     from matplotlib import pyplot as plt
     # change default range so that new disks will work
@@ -712,7 +827,7 @@ class GaussKronrod(object):
     '''
     def __init__(self, n, a=0.0, b=0.0):
         # The general scheme is:
-        # The the Jacobi recursion coefficients, get the Kronrod vectors alpha
+        # Get the Jacobi recursion coefficients, get the Kronrod vectors alpha
         # and beta, and hand those off to _gauss. There, the eigenproblem for a
         # tridiagonal matrix with alpha and beta is solved to retrieve the
         # points and weights.
@@ -744,9 +859,9 @@ class GaussKronrod(object):
         for m in range(n-1):
             k0 = int(math.floor((m+1)/2.0))
             k = numpy.arange(k0, -1, -1)
-            l = m - k
+            L = m - k
             s[k+1] = numpy.cumsum(
-                (a[k+n+1] - a[l])*t[k+1] + b[k+n+1]*s[k] - b[l]*s[k+1]
+                (a[k+n+1] - a[L])*t[k+1] + b[k+n+1]*s[k] - b[L]*s[k+1]
                 )
             s, t = t, s
 
@@ -756,10 +871,10 @@ class GaussKronrod(object):
             k0 = m+1-n
             k1 = int(math.floor((m-1)/2.0))
             k = numpy.arange(k0, k1 + 1)
-            l = m - k
-            j = n-1-l
+            L = m - k
+            j = n-1-L
             s[j+1] = numpy.cumsum(
-                -(a[k+n+1] - a[l])*t[j+1] - b[k+n+1]*s[j+1] + b[l]*s[j+2]
+                -(a[k+n+1] - a[L])*t[j+1] - b[k+n+1]*s[j+1] + b[L]*s[j+2]
                 )
             j = j[-1]
             k = int(math.floor((m+1)/2.0))

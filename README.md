@@ -43,6 +43,32 @@ def f(x):
 
 More examples under [test/examples_test.py](https://github.com/nschloe/quadpy/blob/master/test/examples_test.py).
 
+### Adaptive quadrature
+
+quadpy can do adaptive quadrature for certain domains.
+Again, everything is fully vectorized, so you can provide multiple intervals
+and vector-valued functions.
+
+#### Line segments
+```python
+val, error_estimate = quadpy.line_segment.adaptive_integrate(
+        lambda x: x * sin(5 * x),
+        [0.0, pi],
+        1.0e-10
+        )
+```
+
+#### Triangles
+```python
+val, error_estimate = quadpy.triangle.adaptive_integrate(
+        lambda x: x[0] * sin(5 * x[1]),
+        [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
+        1.0e-10
+        )
+```
+_ProTip:_ You can provide many triangles that together form a domain to get an
+approximation of the integral over the domain.
+
 ## Schemes
 
 ### Line segment

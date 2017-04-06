@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from distutils.core import setup
+from setuptools import setup, find_packages
 import os
 import codecs
 
@@ -25,7 +25,7 @@ def read(fname):
 setup(
     name='quadpy',
     version=about['__version__'],
-    packages=['quadpy'],
+    packages=find_packages(),
     url='https://github.com/nschloe/quadpy',
     download_url='https://pypi.python.org/pypi/quadpy',
     author=about['__author__'],
