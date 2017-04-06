@@ -13,8 +13,12 @@ README.rst: README.md
 	pandoc /tmp/README.md -o README.rst
 	python setup.py check -r -s || exit 1
 
+# https://packaging.python.org/distributing/#id72
 upload: setup.py README.rst
-	python setup.py sdist upload --sign
+	rm -f dist/*
+	python setup.py bdist_wheel --universal
+	gpg --detach-sign -a dist/*
+	twine upload dist/*
 
 tag:
 	@echo "Tagging v$(VERSION)..."
