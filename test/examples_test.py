@@ -24,7 +24,7 @@ def test_disk():
         quadpy.disk.Peirce(5)
         )
     quadpy.disk.integrate(
-        lambda x: numpy.exp(x[0]),
+        lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         numpy.array([[1.0, 1.0], [0.0, 0.3], [2.0, 2.0]]),
         [1.0, 0.7, 0.333],
         quadpy.disk.Peirce(5)
@@ -42,7 +42,7 @@ def test_hexahedron():
             quadpy.hexahedron.Product(quadpy.line_segment.NewtonCotesClosed(3))
             )
     quadpy.hexahedron.integrate(
-            lambda x: numpy.exp(x[0]),
+            lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
             numpy.array([
                 [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],
                 [[1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0]],
@@ -87,7 +87,7 @@ def test_pyramid():
             )
 
     quadpy.pyramid.integrate(
-            lambda x: numpy.exp(x[0]),
+            lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
             numpy.array([
                 [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],
                 [[1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0]],
@@ -108,7 +108,7 @@ def test_quadrilateral():
             )
 
     quadpy.quadrilateral.integrate(
-            lambda x: numpy.exp(x[0]),
+            lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
             numpy.array([
                 [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0], [0.0, 0.0], [0.0, 0.0]],
                 [[1.0, 0.0], [1.0, 0.0], [1.0, 0.0], [1.0, 0.0], [1.0, 0.0]],
@@ -128,7 +128,7 @@ def test_sphere():
             )
 
     quadpy.sphere.integrate(
-            lambda x: numpy.exp(x[0]),
+            lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
             numpy.array([[1.0, 1.0, 0.0], [0.0, 0.3, 0.0], [2.0, 2.0, 0.0]]),
             [1.0, 0.7, 0.333],
             quadpy.sphere.Lebedev(3)
@@ -146,7 +146,7 @@ def test_tetrahedron():
             )
 
     quadpy.tetrahedron.integrate(
-            lambda x: numpy.exp(x[0]),
+            lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
             numpy.array([
                 [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],
                 [[1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0]],
@@ -166,7 +166,7 @@ def test_triangle():
             )
 
     quadpy.triangle.integrate(
-            lambda x: numpy.exp(x[0]),
+            lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
             numpy.array([
                 [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0], [0.0, 0.0], [0.0, 0.0]],
                 [[1.0, 0.0], [1.0, 0.0], [1.0, 0.0], [1.0, 0.0], [1.0, 0.0]],
@@ -188,7 +188,7 @@ def test_wedge():
             )
 
     quadpy.wedge.integrate(
-            lambda x: numpy.exp(x[0]),
+            lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
             numpy.array([
                 [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],
                 [[1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0]],
