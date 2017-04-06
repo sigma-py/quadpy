@@ -12,18 +12,18 @@ from .__about__ import (
     __status__,
     )
 
-import quadpy.helpers
+from . import helpers
 
-import quadpy.circle
-import quadpy.disk
-import quadpy.hexahedron
-import quadpy.line_segment
-import quadpy.pyramid
-import quadpy.quadrilateral
-import quadpy.sphere
-import quadpy.triangle
-import quadpy.tetrahedron
-import quadpy.wedge
+from . import circle
+from . import disk
+from . import hexahedron
+from . import line_segment
+from . import pyramid
+from . import quadrilateral
+from . import sphere
+from . import triangle
+from . import tetrahedron
+from . import wedge
 
 import pipdated
 if pipdated.needs_checking(__name__):
