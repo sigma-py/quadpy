@@ -68,8 +68,7 @@ def integrate(f, triangle, scheme, sumfun=helpers.kahan_sum):
     x = x.T
     # The factor 0.5 is the volume of the reference triangle.
     return sumfun(
-        ((scheme.weights * f(x)).T * 0.5 * _area(triangle)).T,
-        axis=-1
+        numpy.rollaxis(scheme.weights * f(x), -1) * 0.5 * _area(triangle)
         )
 
 
@@ -140,6 +139,14 @@ def adaptive_integrate(
             ])
 
         # compute values and error estimates for the new intervals
+        print(triangles.shape)
+        t = numpy.array([
+            [[0.0, 0.0], [1.2, 0.6], [26.0, 31.0], [0.1, 0.3], [8.6, 6.0]],
+            [[1.0, 0.0], [1.3, 0.7], [24.0, 27.0], [0.4, 0.4], [9.4, 5.6]],
+            [[0.0, 1.0], [1.4, 0.8], [33.0, 28.0], [0.7, 0.1], [7.5, 7.4]],
+            ])
+        print(t.shape)
+        exit(1)
         val1 = integrate(f, triangles, scheme1, sumfun=sumfun)
         val2 = integrate(f, triangles, scheme2, sumfun=sumfun)
         error_estimate = abs(val1 - val2)
