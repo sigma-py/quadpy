@@ -137,23 +137,15 @@ def adaptive_integrate(
                 midpoints[2], midpoints[0], midpoints[1], midpoints[2]
                 ]),
             ])
+        areas = _area(triangles)
+        assert all(areas > minimum_triangle_area)
 
         # compute values and error estimates for the new intervals
-        print(triangles.shape)
-        t = numpy.array([
-            [[0.0, 0.0], [1.2, 0.6], [26.0, 31.0], [0.1, 0.3], [8.6, 6.0]],
-            [[1.0, 0.0], [1.3, 0.7], [24.0, 27.0], [0.4, 0.4], [9.4, 5.6]],
-            [[0.0, 1.0], [1.4, 0.8], [33.0, 28.0], [0.7, 0.1], [7.5, 7.4]],
-            ])
-        print(t.shape)
-        exit(1)
         val1 = integrate(f, triangles, scheme1, sumfun=sumfun)
         val2 = integrate(f, triangles, scheme2, sumfun=sumfun)
         error_estimate = abs(val1 - val2)
 
         # mark good intervals, gather values and error estimates
-        areas = _area(triangles)
-        assert all(areas > minimum_triangle_area)
         is_good = _numpy_all_except(
                 error_estimate < eps * areas / total_area,
                 axis=-1
