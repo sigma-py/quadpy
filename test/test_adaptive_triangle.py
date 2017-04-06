@@ -35,4 +35,5 @@ def test_vector(k=1):
 
 
 if __name__ == '__main__':
-    test_vector(1.1)
+    test_simple(1.1)
+    # test_vector(1.1)
