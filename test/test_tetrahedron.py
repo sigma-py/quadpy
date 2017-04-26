@@ -71,6 +71,7 @@ def _integrate_monomial_over_standard_tet(k):
     + [quadpy.tetrahedron.Zienkiewicz(k) for k in [4, 5]]
     + [quadpy.tetrahedron.ZhangCuiLiu(k) for k in [1, 2]]
     + [quadpy.tetrahedron.ShunnHam(k) for k in range(1, 7)]
+    + [quadpy.tetrahedron.WilliamsShunnJameson()]
     + [quadpy.tetrahedron.XiaoGimbutas(k) for k in range(1, 16)]
     )
 def test_scheme(scheme):
