@@ -9,5 +9,6 @@ from .xiao_gimbutas import *
 from .yu import *
 from .zhang_cui_liu import *
 from .zienkiewicz import *
+from .williams_shunn_jameson import *
 
 from .tools import *
