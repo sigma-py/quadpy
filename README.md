@@ -149,7 +149,9 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2009, 3 schemes up to
    degree 20),
  * [Xiao-Gimbutas](http://dx.doi.org/10.1016/j.camwa.2009.10.027) (2010, 50
-   schemes up to degree 50).
+   schemes up to degree 50),
+ * [Willams-Shunn-Jameson](https://doi.org/10.1016/j.cam.2014.01.007) (2014, 8
+   schemes up to degree 12).
 
 Example:
 ```python
