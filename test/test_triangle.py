@@ -79,6 +79,7 @@ def _integrate_monomial_over_standard_triangle(k):
     + [quadpy.triangle.BerntsenEspelid(k) for k in range(1, 5)]
     + [quadpy.triangle.LiuVinokur(k) for k in range(1, 14)]
     + [quadpy.triangle.WandzuraXiao(k) for k in range(1, 7)]
+    + [quadpy.triangle.WilliamsShunnJameson(k) for k in range(1, 9)]
     + [quadpy.triangle.TaylorWingateBos(k) for k in [1, 2, 4, 5, 8]]
     + [quadpy.triangle.ZhangCuiLiu(k) for k in [1, 2, 3]]
     + [quadpy.triangle.XiaoGimbutas(k) for k in range(1, 51)]
