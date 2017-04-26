@@ -17,6 +17,7 @@ from .taylor_wingate_bos import *
 from .triex import *
 from .vertex import *
 from .wandzura_xiao import *
+from .williams_shunn_jameson import *
 from .xiao_gimbutas import *
 from .zhang_cui_liu import *
 
