@@ -1,100 +1,7 @@
 # -*- coding: utf-8 -*-
 #
+from .helpers import _s4, _s4_0
 import numpy
-
-from . import helpers
-
-
-def show(
-        scheme,
-        pyra=numpy.array([
-            [0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0],
-            [0.5, 0.5, 1.0],
-            ])
-        ):
-    '''Shows the quadrature points on a given pyramid. The size of the
-    balls around the points coincides with their weights.
-    '''
-    from matplotlib import pyplot as plt
-    from mpl_toolkits.mplot3d import Axes3D
-
-    fig = plt.figure()
-    ax = fig.gca(projection='3d')
-    ax.set_aspect('equal')
-
-    edges = numpy.array([
-        [pyra[0], pyra[1]],
-        [pyra[1], pyra[2]],
-        [pyra[2], pyra[3]],
-        [pyra[3], pyra[0]],
-        #
-        [pyra[0], pyra[4]],
-        [pyra[1], pyra[4]],
-        [pyra[2], pyra[4]],
-        [pyra[3], pyra[4]],
-        ])
-    for edge in edges:
-        plt.plot(edge[:, 0], edge[:, 1], edge[:, 2], '-k')
-
-    xi = scheme.points[:, 0]
-    eta = scheme.points[:, 1]
-    zeta = scheme.points[:, 2]
-    transformed_pts = \
-        + numpy.outer(pyra[0], 0.125*(1.0-xi)*(1.0-eta)*(1-zeta)) \
-        + numpy.outer(pyra[1], 0.125*(1.0+xi)*(1.0-eta)*(1-zeta)) \
-        + numpy.outer(pyra[2], 0.125*(1.0+xi)*(1.0+eta)*(1-zeta)) \
-        + numpy.outer(pyra[3], 0.125*(1.0-xi)*(1.0+eta)*(1-zeta)) \
-        + numpy.outer(pyra[4], 0.500*(1.0+zeta))
-    transformed_pts = transformed_pts.T
-
-    vol = integrate(lambda x: 1.0, pyra, Felippa(1))
-    helpers.plot_spheres(
-        plt, ax, transformed_pts, scheme.weights, vol,
-        pyra[:, 0].min(), pyra[:, 0].max(),
-        pyra[:, 1].min(), pyra[:, 1].max(),
-        pyra[:, 2].min(), pyra[:, 2].max(),
-        )
-    plt.show()
-    return
-
-
-def _get_det_J(pyra, xi):
-    J0 = \
-        - numpy.multiply.outer(0.125*(1.0-xi[1])*(1-xi[2]), pyra[0]) \
-        + numpy.multiply.outer(0.125*(1.0-xi[1])*(1-xi[2]), pyra[1]) \
-        + numpy.multiply.outer(0.125*(1.0+xi[1])*(1-xi[2]), pyra[2]) \
-        - numpy.multiply.outer(0.125*(1.0+xi[1])*(1-xi[2]), pyra[3])
-    J0 = J0.T
-    J1 = \
-        - numpy.multiply.outer(0.125*(1.0-xi[0])*(1-xi[2]), pyra[0]) \
-        - numpy.multiply.outer(0.125*(1.0+xi[0])*(1-xi[2]), pyra[1]) \
-        + numpy.multiply.outer(0.125*(1.0+xi[0])*(1-xi[2]), pyra[2]) \
-        + numpy.multiply.outer(0.125*(1.0-xi[0])*(1-xi[2]), pyra[3])
-    J1 = J1.T
-    J2 = \
-        - numpy.multiply.outer(0.125*(1.0-xi[0])*(1.0-xi[1]), pyra[0]) \
-        - numpy.multiply.outer(0.125*(1.0+xi[0])*(1.0-xi[1]), pyra[1]) \
-        - numpy.multiply.outer(0.125*(1.0+xi[0])*(1.0+xi[1]), pyra[2]) \
-        - numpy.multiply.outer(0.125*(1.0-xi[0])*(1.0+xi[1]), pyra[3]) \
-        + numpy.multiply.outer(0.500*numpy.ones(1), pyra[4])
-    J2 = J2.T
-    det = J0[0]*J1[1]*J2[2] + J1[0]*J2[1]*J0[2] + J2[0]*J0[1]*J1[2] \
-        - J0[2]*J1[1]*J2[0] - J1[2]*J2[1]*J0[0] - J2[2]*J0[1]*J1[0]
-    return det.T
-
-
-def integrate(f, pyra, scheme, sumfun=helpers.kahan_sum):
-    xi = scheme.points.T
-    mo = numpy.multiply.outer
-    x = \
-        + mo(0.125*(1.0-xi[0])*(1.0-xi[1])*(1-xi[2]), pyra[0]) \
-        + mo(0.125*(1.0+xi[0])*(1.0-xi[1])*(1-xi[2]), pyra[1]) \
-        + mo(0.125*(1.0+xi[0])*(1.0+xi[1])*(1-xi[2]), pyra[2]) \
-        + mo(0.125*(1.0-xi[0])*(1.0+xi[1])*(1-xi[2]), pyra[3]) \
-        + mo(0.500*(1.0+xi[2]), pyra[4])
-    x = x.T
-    det = _get_det_J(pyra, xi)
-    return sumfun(scheme.weights * f(x) * abs(det.T), axis=-1)
 
 
 class Felippa(object):
@@ -138,11 +45,11 @@ class Felippa(object):
             self.degree = 1
         elif index == 2:
             self.weights = (
-                [0.81] * 4 +
-                [125.0/27.0]
+                4 * [0.81] +
+                1 * [125.0/27.0]
                 )
             self.points = (
-                self._s4(8 * numpy.sqrt(2.0/15.0) / 5, -2.0/3.0) +
+                _s4(8 * numpy.sqrt(2.0/15.0) / 5, -2.0/3.0) +
                 [[0.0, 0.0, 0.4]]
                 )
             self.degree = 2
@@ -153,7 +60,7 @@ class Felippa(object):
                 1 * [64.0/15.0]
                 )
             self.points = (
-                self._s4(numpy.sqrt(12.0/35.0), -2.0/3.0) +
+                _s4(numpy.sqrt(12.0/35.0), -2.0/3.0) +
                 [[0.0, 0.0, 1.0/6.0]] +
                 [[0.0, 0.0, 0.5]]
                 )
@@ -168,8 +75,8 @@ class Felippa(object):
             g1 = numpy.sqrt(1.0/3.0)
             g2 = (2*numpy.sqrt(10)-5) / 15.0
             self.points = (
-                self._s4(g1, g2) +
-                self._s4(g1, -2.0/3.0 - g2)
+                _s4(g1, g2) +
+                _s4(g1, -2.0/3.0 - g2)
                 )
             self.degree = 3
         elif index == 5:
@@ -184,8 +91,8 @@ class Felippa(object):
             g3 = -(2*numpy.sqrt(51.0) + 13) / 35.0
             g4 = +(2*numpy.sqrt(51.0) - 13) / 35.0
             self.points = (
-                self._s4(g1, g3) +
-                self._s4(g2, g4)
+                _s4(g1, g3) +
+                _s4(g2, g4)
                 )
             self.degree = 2
         elif index == 6:
@@ -205,8 +112,8 @@ class Felippa(object):
             g3 = -(+87 + numpy.sqrt(2865.0)) / 168.0
             g4 = +(-87 + numpy.sqrt(2865.0)) / 168.0
             self.points = (
-                self._s4(g1, g3) +
-                self._s4(g2, g4) +
+                _s4(g1, g3) +
+                _s4(g2, g4) +
                 [[0.0, 0.0, 2.0/3.0]]
                 )
             self.degree = 2
@@ -228,9 +135,9 @@ class Felippa(object):
             g4 = -127.0/153.0
             g5 = 1490761.0 / 2842826.0
             self.points = (
-                self._s4(g1, -1.0/7.0) +
-                self._s4_0(g2, -9.0/28.0) +
-                self._s4(g3, g4) +
+                _s4(g1, -1.0/7.0) +
+                _s4_0(g2, -9.0/28.0) +
+                _s4(g3, g4) +
                 [[0.0, 0.0, g5]]
                 )
             self.degree = 2
@@ -250,11 +157,11 @@ class Felippa(object):
             g2 = 1.0 - 2*(10.0 - numpy.sqrt(10)) / 15.0
             g3 = -2.0/3.0 - g2
             self.points = (
-                self._s4(g1, g2) +
-                self._s4_0(g1, g2) +
+                _s4(g1, g2) +
+                _s4_0(g1, g2) +
                 [[0.0, 0.0, g2]] +
-                self._s4(g1, g3) +
-                self._s4_0(g1, g3) +
+                _s4(g1, g3) +
+                _s4_0(g1, g3) +
                 [[0.0, 0.0, g3]]
                 )
             self.degree = 3
@@ -265,14 +172,14 @@ class Felippa(object):
             g4 = -0.305992467923296230556472913192103090
             g5 = +0.410004419776996766244796955168096505
             self.points = (
-                self._s4(g1, g3) +
-                self._s4_0(g1, g3) +
+                _s4(g1, g3) +
+                _s4_0(g1, g3) +
                 [[0.0, 0.0, g3]] +
-                self._s4(g1, g4) +
-                self._s4_0(g1, g4) +
+                _s4(g1, g4) +
+                _s4_0(g1, g4) +
                 [[0.0, 0.0, g4]] +
-                self._s4(g1, g5) +
-                self._s4_0(g1, g5) +
+                _s4(g1, g5) +
+                _s4_0(g1, g5) +
                 [[0.0, 0.0, g5]]
                 )
 
@@ -296,19 +203,3 @@ class Felippa(object):
         self.weights = numpy.array(self.weights)
         self.points = numpy.array(self.points)
         return
-
-    def _s4(self, a, z):
-        return [
-            [+a, +a, z],
-            [-a, +a, z],
-            [+a, -a, z],
-            [-a, -a, z],
-            ]
-
-    def _s4_0(self, a, z):
-        return [
-            [+a, 0.0, z],
-            [-a, 0.0, z],
-            [0.0, +a, z],
-            [0.0, -a, z],
-            ]

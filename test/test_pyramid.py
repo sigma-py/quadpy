@@ -91,6 +91,6 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     scheme = quadpy.pyramid.Felippa(5)
-    test_scheme(scheme)
+    # test_scheme(scheme)
     test_show(scheme)
     plt.show()
