@@ -12,8 +12,8 @@ import quadpy
 def _integrate_exact(k):
     '''We have
 
-    I = \int_0^1 \int_0^2pi r * (r cos(phi))**k[0] (r sin(phi))**k[1]
-      = 1.0/(2+k[0]+k[1]) * \int_0^2pi cos(phi)**k[0] sin(phi)**k[1]
+    I = \\int_0^1 \\int_0^2pi r * (r cos(phi))**k[0] (r sin(phi))**k[1]
+      = 1.0/(2+k[0]+k[1]) * \\int_0^2pi cos(phi)**k[0] sin(phi)**k[1]
     '''
     return 1.0/(2 + k[0] + k[1]) * integrate_monomial_over_unit_circle(k)
 
@@ -46,6 +46,6 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme = quadpy.disk.Lether(5)
-    test_scheme(scheme)
-    # test_show(scheme)
+    scheme_ = quadpy.disk.Lether(5)
+    test_scheme(scheme_)
+    # test_show(scheme_)

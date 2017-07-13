@@ -3,10 +3,9 @@
 Your one-stop shop for numerical integration in Python.
 
 [![Build Status](https://travis-ci.org/nschloe/quadpy.svg?branch=master)](https://travis-ci.org/nschloe/quadpy)
-[![Code Health](https://landscape.io/github/nschloe/quadpy/master/landscape.png)](https://landscape.io/github/nschloe/quadpy/master)
 [![codecov](https://codecov.io/gh/nschloe/quadpy/branch/master/graph/badge.svg)](https://codecov.io/gh/nschloe/quadpy)
 [![PyPi Version](https://img.shields.io/pypi/v/quadpy.svg)](https://pypi.python.org/pypi/quadpy)
-[![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?style=social&label=Star&maxAge=2592000)](https://github.com/nschloe/quadpy)
+[![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?style=social&label=Stars&maxAge=2592000)](https://github.com/nschloe/quadpy)
 
 Hundreds of numerical integration schemes for line segments, circles, disks,
 triangles, quadrilaterals, spheres, tetrahedra, hexahedra, wedges, pyramids.

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+# pylint: disable=wildcard-import
 from .centroid import *
 from .cools_haegemans import *
 from .cubtri import *

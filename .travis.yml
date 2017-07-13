@@ -17,12 +17,14 @@ addons:
       - python3-scipy
 
 before_install:
-  - pip install pytest pytest-cov
+  - pip install pytest pytest-cov pylint
 
 install:
   - pip install .
 
 script:
+  - pylint quadpy/
+  - pylint test/*.py
   - cd test && MPLBACKEND=Agg pytest --cov quadpy
 
 after_success:

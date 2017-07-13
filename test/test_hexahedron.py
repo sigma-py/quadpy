@@ -52,6 +52,7 @@ def _integrate_exact(f, hexa):
     return float(exact)
 
 
+# pylint: disable=too-many-arguments
 def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
     return 1.0/(k[0] + 1) * (x1**(k[0]+1) - x0**(k[0]+1)) \
         * 1.0/(k[1] + 1) * (y1**(k[1]+1) - y0**(k[1]+1)) \
@@ -100,20 +101,13 @@ def test_scheme(scheme):
     [Product(quadpy.line_segment.NewtonCotesClosed(3))]
     )
 def test_show(scheme):
-    quadpy.hexahedron.show(
-        quadpy.hexahedron.Product(
-            # quadpy.line_segment.Midpoint()
-            # quadpy.line_segment.Trapezoidal()
-            quadpy.line_segment.NewtonCotesClosed(2)
-            # quadpy.line_segment.NewtonCotesOpen(2)
-            )
-        )
+    quadpy.hexahedron.show(scheme)
     return
 
 
 if __name__ == '__main__':
-    # scheme = Product(quadpy.line_segment.NewtonCotesOpen(2))
-    scheme = Product(quadpy.line_segment.GaussLegendre(5))
-    test_scheme(scheme)
-    test_show(scheme)
+    # scheme_ = Product(quadpy.line_segment.NewtonCotesOpen(2))
+    scheme_ = Product(quadpy.line_segment.GaussLegendre(5))
+    test_scheme(scheme_)
+    test_show(scheme_)
     plt.show()

@@ -87,8 +87,8 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme = Product(quadpy.line_segment.GaussLegendre(6))
-    # scheme = quadpy.quadrilateral.Stroud(6)
-    test_scheme(scheme)
-    test_show(scheme)
+    scheme_ = Product(quadpy.line_segment.GaussLegendre(6))
+    # scheme_ = quadpy.quadrilateral.Stroud(6)
+    test_scheme(scheme_)
+    test_show(scheme_)
     plt.show()

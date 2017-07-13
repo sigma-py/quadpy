@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+import numpy
+
 from .felippa import Felippa
 from .. import helpers
-
-import numpy
 
 
 def show(
@@ -17,6 +17,7 @@ def show(
     balls around the points coincides with their weights.
     '''
     from matplotlib import pyplot as plt
+    # pylint: disable=relative-import, unused-variable
     from mpl_toolkits.mplot3d import Axes3D
 
     fig = plt.figure()
@@ -50,10 +51,7 @@ def show(
 
     vol = integrate(lambda x: 1.0, pyra, Felippa(1))
     helpers.plot_spheres(
-        plt, ax, transformed_pts, scheme.weights, vol,
-        pyra[:, 0].min(), pyra[:, 0].max(),
-        pyra[:, 1].min(), pyra[:, 1].max(),
-        pyra[:, 2].min(), pyra[:, 2].max(),
+        plt, ax, transformed_pts, scheme.weights, vol
         )
     plt.show()
     return
