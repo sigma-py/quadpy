@@ -8,7 +8,9 @@ import sympy
 def check_degree_1d(
         quadrature, exact, exponents_creator, max_degree, tol=1.0e-14
         ):
-    val = quadrature(lambda x: [x**degree for degree in range(max_degree+1)])
+    val = quadrature(
+        lambda x: [x**degree for degree in range(max_degree+1)]
+        ).flatten()
     exact_val = numpy.array([exact(degree) for degree in range(max_degree+1)])
     eps = numpy.finfo(float).eps
     # check relative error
