@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _s21, _s111
 import numpy
+from .helpers import _s21, _s111
 
 
 class TaylorWingateBos(object):

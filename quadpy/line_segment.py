@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-from . import helpers
-
 import math
 import numpy
 import sympy
+
+from . import helpers
 
 
 def integrate(f, interval, scheme, sumfun=helpers.kahan_sum):
@@ -20,6 +20,7 @@ def integrate(f, interval, scheme, sumfun=helpers.kahan_sum):
     return alpha * out
 
 
+# pylint: disable=too-many-locals
 def _gauss_kronrod_integrate(k, f, interval, sumfun=helpers.kahan_sum):
     def _scale_points(points, interval):
         alpha = 0.5 * (interval[1] - interval[0])
@@ -77,6 +78,8 @@ def _numpy_all_except(a, axis=-1):
     return numpy.all(a, axis=tuple(axes))
 
 
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-locals
 def adaptive_integrate(
         f, intervals, eps,
         kronrod_degree=7,
@@ -94,7 +97,7 @@ def adaptive_integrate(
         minimum_interval_length = total_length / 2**10
 
     # Use Gauss-Kronrod 7/15 scheme for error estimation and adaptivity.
-    val_gk, val_g, error_estimate = \
+    _, val_g, error_estimate = \
         _gauss_kronrod_integrate(kronrod_degree, f, intervals, sumfun=sumfun)
 
     # Mark intervals with acceptable approximations. For this, take all()
@@ -117,7 +120,7 @@ def adaptive_integrate(
             numpy.concatenate([midpoints, intervals[1]]),
             ])
         # compute values and error estimates for the new intervals
-        val_gk, val_g, error_estimate = _gauss_kronrod_integrate(
+        _, val_g, error_estimate = _gauss_kronrod_integrate(
                 kronrod_degree, f, intervals, sumfun=sumfun
                 )
         # mark good intervals, gather values and error estimates
@@ -186,7 +189,7 @@ class Trapezoidal(object):
 
 class ChebyshevGauss1(object):
     '''
-    Chebyshev-Gauss quadrature for \int_{-1}^1 f(x) / sqrt(1+x^2) dx.
+    Chebyshev-Gauss quadrature for \\int_{-1}^1 f(x) / sqrt(1+x^2) dx.
     '''
     def __init__(self, n):
         self.degree = n if n % 2 == 1 else n+1
@@ -199,7 +202,7 @@ class ChebyshevGauss1(object):
 
 class ChebyshevGauss2(object):
     '''
-    Chebyshev-Gauss quadrature for \int_{-1}^1 f(x) * sqrt(1+x^2) dx.
+    Chebyshev-Gauss quadrature for \\int_{-1}^1 f(x) * sqrt(1+x^2) dx.
     '''
     def __init__(self, n):
         self.degree = n if n % 2 == 1 else n+1
@@ -842,6 +845,7 @@ class GaussKronrod(object):
         self.weights = w[i]
         return
 
+    # pylint: disable=no-self-use
     def r_kronrod(self, n, a0, b0):
         assert len(a0) == int(math.ceil(3*n/2.0)) + 1
         assert len(b0) == int(math.ceil(3*n/2.0)) + 1

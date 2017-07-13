@@ -33,7 +33,7 @@ class Hillion(object):
                 1.0/6.0 * numpy.ones(1),
                 ])
             self.points = numpy.concatenate([
-                self._symm(0.0, 0.5),
+                _symm(0.0, 0.5),
                 numpy.array([[0.5, 0.5]]),
                 ])
             self.degree = 2
@@ -44,7 +44,7 @@ class Hillion(object):
                 1.0/6.0 * numpy.ones(1),
                 ])
             self.points = numpy.concatenate([
-                2.0/3.0 - self._symm(0.0, 0.5),
+                2.0/3.0 - _symm(0.0, 0.5),
                 2.0/3.0 - numpy.array([[0.5, 0.5]]),
                 ])
             self.degree = 2
@@ -55,7 +55,7 @@ class Hillion(object):
         #         ])
         #     self.points = numpy.concatenate([
         #         numpy.array([[0.0, 0.0]]),
-        #         self._symm(0.591506351, 0.158493649),
+        #         _symm(0.591506351, 0.158493649),
         #         ])
         #     self.degree = 2
         # elif index == 5:
@@ -65,7 +65,7 @@ class Hillion(object):
         #         ])
         #     self.points = numpy.concatenate([
         #         2.0/3.0 - numpy.array([[0.0, 0.0]]),
-        #         2.0/3.0 - self._symm(0.591506351, 0.158493649),
+        #         2.0/3.0 - _symm(0.591506351, 0.158493649),
         #         ])
         #     self.degree = 2
         # elif index == 6:
@@ -75,8 +75,8 @@ class Hillion(object):
         #     lmbda = 0.655308609
         #     mu = 0.247060398
         #     self.points = numpy.concatenate([
-        #         self._symm(lmbda, mu),
-        #         2.0/3.0 - self._symm(lmbda, mu),
+        #         _symm(lmbda, mu),
+        #         2.0/3.0 - _symm(lmbda, mu),
         #         ])
         #     self.degree = 2
         # elif index == 7:
@@ -85,8 +85,8 @@ class Hillion(object):
         #         0.090979309 * numpy.ones(2),
         #         ])
         #     self.points = numpy.concatenate([
-        #         self._symm(0.666390246, 0.280019915),
-        #         self._symm(0.178558728, 0.075031109),
+        #         _symm(0.666390246, 0.280019915),
+        #         _symm(0.178558728, 0.075031109),
         #         ])
         #     self.degree = 3
         # elif index == 8:
@@ -98,7 +98,7 @@ class Hillion(object):
         #     lambda2 = 0.433949142
         #     lambda3 = 0.175574667
         #     self.points = numpy.concatenate([
-        #         self._symm(0.0, 0.8),
+        #         _symm(0.0, 0.8),
         #         numpy.array([[lambda2, lambda2]]),
         #         numpy.array([[lambda3, lambda3]]),
         #         ])
@@ -110,7 +110,7 @@ class Hillion(object):
         #         ])
         #     self.points = numpy.concatenate([
         #         numpy.array([[1.0/3.0, 1.0/3.0]]),
-        #         self._symm(0.2, 0.6),
+        #         _symm(0.2, 0.6),
         #         numpy.array([[0.2, 0.2]]),
         #         ])
         #     self.degree = 3
@@ -121,16 +121,16 @@ class Hillion(object):
         #         25.0/96.0 * numpy.ones(1),
         #         ])
         #     self.points = numpy.concatenate([
-        #         self._symm(0.939332590, 0.0),
-        #         self._symm(0.0, 0.340667409),
+        #         _symm(0.939332590, 0.0),
+        #         _symm(0.0, 0.340667409),
         #         numpy.array([[0.4, 0.4]]),
         #         ])
         #     self.degree = 3
 
         return
 
-    def _symm(self, a, b):
-        return numpy.array([
-            [a, b],
-            [b, a],
-            ])
+def _symm(a, b):
+    return numpy.array([
+        [a, b],
+        [b, a],
+        ])

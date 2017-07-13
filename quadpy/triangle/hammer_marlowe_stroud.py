@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _s3
 import numpy
+from .helpers import _s3
 
 
 class HammerMarloweStroud(object):
@@ -44,7 +44,7 @@ class HammerMarloweStroud(object):
                 1.0/3.0 * numpy.ones(3),
                 ])
             bary = numpy.concatenate([
-                self._r(0.5),
+                _r(0.5),
                 ])
             self.degree = 2
         elif index == 3:
@@ -52,7 +52,7 @@ class HammerMarloweStroud(object):
                 1.0/3.0 * numpy.ones(3),
                 ])
             bary = numpy.concatenate([
-                self._r(-0.5),
+                _r(-0.5),
                 ])
             self.degree = 2
         elif index == 4:
@@ -62,7 +62,7 @@ class HammerMarloweStroud(object):
                 ])
             bary = numpy.concatenate([
                 _s3(),
-                self._r(0.4),
+                _r(0.4),
                 ])
             self.degree = 3
         else:
@@ -74,22 +74,22 @@ class HammerMarloweStroud(object):
                 ])
             bary = numpy.concatenate([
                 _s3(),
-                self._r((1 + numpy.sqrt(15)) / 7.0),
-                self._r((1 - numpy.sqrt(15)) / 7.0),
+                _r((1 + numpy.sqrt(15)) / 7.0),
+                _r((1 - numpy.sqrt(15)) / 7.0),
                 ])
             self.degree = 5
 
         self.points = bary[:, 1:]
         return
 
-    def _r(self, r):
-        '''Given $r$ (as appearing in the article), it returns the barycentric
-        coordinates of the three points.
-        '''
-        a = r + (1.0-r) / 3.0
-        b = 0.5 * (1.0 - a)
-        return numpy.array([
-            [a, b, b],
-            [b, a, b],
-            [b, b, a],
-            ])
+def _r(r):
+    '''Given $r$ (as appearing in the article), it returns the barycentric
+    coordinates of the three points.
+    '''
+    a = r + (1.0-r) / 3.0
+    b = 0.5 * (1.0 - a)
+    return numpy.array([
+        [a, b, b],
+        [b, a, b],
+        [b, b, a],
+        ])

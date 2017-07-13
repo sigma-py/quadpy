@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _s3, _s21
 import numpy
+from .helpers import _s3, _s21
 
 
 class SevenPoint(object):

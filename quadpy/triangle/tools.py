@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 #
+import numpy
+
 from .centroid import Centroid
 from .dunavant import Dunavant
 
 from .. import helpers
-
-import numpy
 
 
 def show(
@@ -78,6 +78,8 @@ def _numpy_all_except(a, axis=-1):
     return numpy.all(a, axis=tuple(axes))
 
 
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-locals
 def adaptive_integrate(
         f, triangles, eps,
         minimum_triangle_area=None,

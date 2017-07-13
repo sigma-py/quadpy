@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _s4, _s31, _s22, _s211
-
 import numpy
+
+from .helpers import _s4, _s31, _s22, _s211
 
 
 class Keast(object):

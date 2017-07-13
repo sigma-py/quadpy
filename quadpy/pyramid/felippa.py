@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _s4, _s4_0
 import numpy
+from .helpers import _s4, _s4_0
 
 
 class Felippa(object):

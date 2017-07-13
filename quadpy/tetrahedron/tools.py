@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 #
+import numpy
+
 from .keast import Keast
 
 from .. import helpers
-
-import numpy
 
 
 def show(
@@ -21,6 +21,7 @@ def show(
     balls around the points coincides with their weights.
     '''
     from matplotlib import pyplot as plt
+    # pylint: disable=relative-import, unused-variable
     from mpl_toolkits.mplot3d import Axes3D
 
     fig = plt.figure()
