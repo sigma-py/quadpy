@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _s3
 import numpy
+from .helpers import _s3
 
 
 class LiuVinokur(object):
@@ -28,7 +28,7 @@ class LiuVinokur(object):
                 1.0/3.0 * numpy.ones(3),
                 ])
             bary = numpy.concatenate([
-                self._r_alpha(1.0),
+                _r_alpha(1.0),
                 ])
             self.degree = 1
         elif index == 3:
@@ -36,7 +36,7 @@ class LiuVinokur(object):
                 1.0/3.0 * numpy.ones(3),
                 ])
             bary = numpy.concatenate([
-                self._r_alpha(-0.5),
+                _r_alpha(-0.5),
                 ])
             self.degree = 2
         elif index == 4:
@@ -46,7 +46,7 @@ class LiuVinokur(object):
                 ])
             bary = numpy.concatenate([
                 _s3(),
-                self._r_alpha(1.0),
+                _r_alpha(1.0),
                 ])
             self.degree = 2
         elif index == 5:
@@ -57,7 +57,7 @@ class LiuVinokur(object):
             bary = numpy.concatenate([
                 _s3(),
                 # Wrongly specified in the article as 25 (instead of 2/5).
-                self._r_alpha(0.4),
+                _r_alpha(0.4),
                 ])
             self.degree = 3
         elif index == 6:
@@ -66,8 +66,8 @@ class LiuVinokur(object):
                 (39.0 - numpy.sqrt(21.0)) / 120.0 * numpy.ones(3),
                 ])
             bary = numpy.concatenate([
-                self._r_alpha(1.0),
-                self._r_alpha((1.0 - numpy.sqrt(21.0)) / 10.0),
+                _r_alpha(1.0),
+                _r_alpha((1.0 - numpy.sqrt(21.0)) / 10.0),
                 ])
             self.degree = 3
         elif index == 7:
@@ -78,8 +78,8 @@ class LiuVinokur(object):
                 ])
             bary = numpy.concatenate([
                 _s3(),
-                self._r_alpha(1.0),
-                self._r_alpha(-0.5),
+                _r_alpha(1.0),
+                _r_alpha(-0.5),
                 ])
             self.degree = 3
         elif index == 8:
@@ -93,8 +93,8 @@ class LiuVinokur(object):
                 * numpy.ones(3),
                 ])
             bary = numpy.concatenate([
-                self._r_alpha(alpha1),
-                self._r_alpha(alpha2),
+                _r_alpha(alpha1),
+                _r_alpha(alpha2),
                 ])
             self.degree = 4
         elif index == 9:
@@ -105,8 +105,8 @@ class LiuVinokur(object):
                 ])
             bary = numpy.concatenate([
                 _s3(),
-                self._r_alpha(-0.5),
-                self._r_alpha(2.0/3.0),
+                _r_alpha(-0.5),
+                _r_alpha(2.0/3.0),
                 ])
             self.degree = 4
         elif index == 10:
@@ -116,9 +116,9 @@ class LiuVinokur(object):
                 (29.0 + 17*numpy.sqrt(13)) / 360.0 * numpy.ones(3),
                 ])
             bary = numpy.concatenate([
-                self._r_alpha(1.0),
-                self._r_alpha(-0.5),
-                self._r_alpha((-1.0 + numpy.sqrt(13.0)) / 6.0),
+                _r_alpha(1.0),
+                _r_alpha(-0.5),
+                _r_alpha((-1.0 + numpy.sqrt(13.0)) / 6.0),
                 ])
             self.degree = 4
         elif index == 11:
@@ -129,8 +129,8 @@ class LiuVinokur(object):
                 ])
             bary = numpy.concatenate([
                 _s3(),
-                self._r_alpha(1.0),
-                self._r_gamma_delta(
+                _r_alpha(1.0),
+                _r_gamma_delta(
                     (3.0 + numpy.sqrt(3.0)) / 6.0,
                     (3.0 - numpy.sqrt(3.0)) / 6.0
                     ),
@@ -144,8 +144,8 @@ class LiuVinokur(object):
                 ])
             bary = numpy.concatenate([
                 _s3(),
-                self._r_alpha((1.0 + numpy.sqrt(15.0)) / 7.0),
-                self._r_alpha((1.0 - numpy.sqrt(15.0)) / 7.0),
+                _r_alpha((1.0 + numpy.sqrt(15.0)) / 7.0),
+                _r_alpha((1.0 - numpy.sqrt(15.0)) / 7.0),
                 ])
             self.degree = 5
         else:
@@ -158,48 +158,48 @@ class LiuVinokur(object):
                 ])
             bary = numpy.concatenate([
                 _s3(),
-                self._r_alpha(1.0),
-                self._r_alpha(-0.5),
-                self._r_alpha(4.0/7.0),
+                _r_alpha(1.0),
+                _r_alpha(-0.5),
+                _r_alpha(4.0/7.0),
                 ])
             self.degree = 5
 
         self.points = bary[:, 1:]
         return
 
-    def _r_alpha(self, alpha):
-        '''From the article:
+def _r_alpha(alpha):
+    '''From the article:
 
-        mu_i = (1 + (n-1) alpha) / n,
-        mu_j = (1 - alpha) / n    for j!=i,
+    mu_i = (1 + (n-1) alpha) / n,
+    mu_j = (1 - alpha) / n    for j!=i,
 
-        where n is the number of vertices
-        '''
-        a = (1.0 + 2*alpha) / 3.0
-        b = (1.0 - alpha) / 3.0
-        return numpy.array([
-            [a, b, b],
-            [b, a, b],
-            [b, b, a],
-            ])
+    where n is the number of vertices
+    '''
+    a = (1.0 + 2*alpha) / 3.0
+    b = (1.0 - alpha) / 3.0
+    return numpy.array([
+        [a, b, b],
+        [b, a, b],
+        [b, b, a],
+        ])
 
-    def _r_gamma_delta(self, gamma, delta):
-        '''From the article:
+def _r_gamma_delta(gamma, delta):
+    '''From the article:
 
-        mu_i = (1 + (n-1) gamma - delta) / n,
-        mu_j = (1 + (n-1) delta - gamma) / n,
-        mu_k = (1 - gamma - delta) / n    for k!=i, k!=j,
+    mu_i = (1 + (n-1) gamma - delta) / n,
+    mu_j = (1 + (n-1) delta - gamma) / n,
+    mu_k = (1 - gamma - delta) / n    for k!=i, k!=j,
 
-        where n is the number of vertices
-        '''
-        a = (1.0 + 2*gamma - delta) / 3.0
-        b = (1.0 + 2*delta - gamma) / 3.0
-        c = (1.0 - gamma - delta) / 3.0
-        return numpy.array([
-            [a, b, c],
-            [c, a, b],
-            [b, c, a],
-            [a, c, b],
-            [b, a, c],
-            [c, b, a],
-            ])
+    where n is the number of vertices
+    '''
+    a = (1.0 + 2*gamma - delta) / 3.0
+    b = (1.0 + 2*delta - gamma) / 3.0
+    c = (1.0 - gamma - delta) / 3.0
+    return numpy.array([
+        [a, b, c],
+        [c, a, b],
+        [b, c, a],
+        [a, c, b],
+        [b, a, c],
+        [c, b, a],
+        ])

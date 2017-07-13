@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _s4
-
 import numpy
+
+from .helpers import _s4
 
 
 class HammerMarloweStroud(object):
@@ -36,7 +36,7 @@ class HammerMarloweStroud(object):
                 0.25 * numpy.ones(4),
                 ])
             bary = numpy.concatenate([
-                self._r(1.0 / numpy.sqrt(5.0)),
+                _r(1.0 / numpy.sqrt(5.0)),
                 ])
             self.degree = 2
         elif index == 2:
@@ -44,7 +44,7 @@ class HammerMarloweStroud(object):
                 0.25 * numpy.ones(4),
                 ])
             bary = numpy.concatenate([
-                self._r(-1.0 / numpy.sqrt(5.0)),
+                _r(-1.0 / numpy.sqrt(5.0)),
                 ])
             self.degree = 2
         else:
@@ -55,22 +55,23 @@ class HammerMarloweStroud(object):
                 ])
             bary = numpy.concatenate([
                 _s4(),
-                self._r(1.0 / 3.0),
+                _r(1.0 / 3.0),
                 ])
             self.degree = 3
 
         self.points = bary[:, 1:]
         return
 
-    def _r(self, r):
-        '''Given $r$ (as appearing in the article), it returns the barycentric
-        coordinates of the three points.
-        '''
-        a = r + (1.0-r) / 4.0
-        b = (1.0 - a) / 3.0
-        return numpy.array([
-            [a, b, b, b],
-            [b, a, b, b],
-            [b, b, a, b],
-            [b, b, b, a],
-            ])
+
+def _r(r):
+    '''Given $r$ (as appearing in the article), it returns the barycentric
+    coordinates of the three points.
+    '''
+    a = r + (1.0-r) / 4.0
+    b = (1.0 - a) / 3.0
+    return numpy.array([
+        [a, b, b, b],
+        [b, a, b, b],
+        [b, b, a, b],
+        [b, b, b, a],
+        ])

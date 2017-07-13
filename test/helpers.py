@@ -6,9 +6,11 @@ import sympy
 
 
 def check_degree_1d(
-        quadrature, exact, exponents_creator, max_degree, tol=1.0e-14
+        quadrature, exact, max_degree, tol=1.0e-14
         ):
-    val = quadrature(lambda x: [x**degree for degree in range(max_degree+1)])
+    val = quadrature(
+        lambda x: [x**degree for degree in range(max_degree+1)]
+        ).flatten()
     exact_val = numpy.array([exact(degree) for degree in range(max_degree+1)])
     eps = numpy.finfo(float).eps
     # check relative error
@@ -24,9 +26,9 @@ def check_degree(
         ):
     for degree in range(max_degree+1):
         val = quadrature(
-            lambda x: [
+            lambda x, deg=degree: [
                 sympy.prod([x[i]**k[i] for i in range(len(k))])
-                for k in exponents_creator(degree)
+                for k in exponents_creator(deg)
                 ])
         exact_val = numpy.array([exact(k) for k in exponents_creator(degree)])
         eps = numpy.finfo(float).eps
@@ -63,11 +65,11 @@ def create_monomial_exponents3(degree):
 def integrate_monomial_over_unit_circle(k):
     '''The integral
 
-    I = \int_0^2pi cos(phi)**k[0] sin(phi)**k[1]
+    I = \\int_0^2pi \\cos(phi)**k[0] \\sin(phi)**k[1]
 
     equals 0 if any of k[0], k[1] is odd. If both are even, we make use of
 
-    I = 4 \int_0^pi/2 cos(phi)**k[0] sin(phi)**k[1]
+    I = 4 \\int_0^pi/2 \\cos(phi)**k[0] \\sin(phi)**k[1]
       = 2 B(0.5*(k[0]+1), 0.5*(k[1]+1))
 
     with B(x, y) being the Beta function. It has the representation

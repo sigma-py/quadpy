@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _s3
 import numpy
+from .helpers import _s3
 
 
 class Centroid(object):

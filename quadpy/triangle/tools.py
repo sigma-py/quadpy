@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 #
+import numpy
+
 from .centroid import Centroid
 from .dunavant import Dunavant
 
 from .. import helpers
-
-import numpy
 
 
 def show(
@@ -51,12 +51,17 @@ def show(
 
 
 def _area(triangle):
-    # det is the signed volume of the triangle
-    J0 = (triangle[1] - triangle[0]).T
-    J1 = (triangle[2] - triangle[0]).T
-    # The factor 0.5 is the volume of the reference triangle.
-    det = J0[0]*J1[1] - J1[0]*J0[1]
-    return abs(det)
+    edges = triangle[[1, 2, 0]] - triangle
+    ei_dot_ej = numpy.einsum(
+            '...k, ...k->...',
+            edges[[1, 2, 0]],
+            edges[[2, 0, 1]]
+            )
+    return 0.5 * numpy.sqrt(
+        + ei_dot_ej[2] * ei_dot_ej[0]
+        + ei_dot_ej[0] * ei_dot_ej[1]
+        + ei_dot_ej[1] * ei_dot_ej[2]
+        )
 
 
 def integrate(f, triangle, scheme, sumfun=helpers.kahan_sum):
@@ -66,10 +71,7 @@ def integrate(f, triangle, scheme, sumfun=helpers.kahan_sum):
         + numpy.multiply.outer(xi[0], triangle[1]) \
         + numpy.multiply.outer(xi[1], triangle[2])
     x = x.T
-    # The factor 0.5 is the volume of the reference triangle.
-    return sumfun(
-        numpy.rollaxis(scheme.weights * f(x), -1) * 0.5 * _area(triangle)
-        )
+    return sumfun(numpy.rollaxis(scheme.weights * f(x), -1) * _area(triangle))
 
 
 def _numpy_all_except(a, axis=-1):
@@ -78,6 +80,8 @@ def _numpy_all_except(a, axis=-1):
     return numpy.all(a, axis=tuple(axes))
 
 
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-locals
 def adaptive_integrate(
         f, triangles, eps,
         minimum_triangle_area=None,

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import create_monomial_exponents3, check_degree
 import math
+
+from helpers import create_monomial_exponents3, check_degree
+
 from matplotlib import pyplot as plt
 import numpy
 import pytest
@@ -77,7 +79,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme = quadpy.sphere.Lebedev(4)
-    test_scheme(scheme)
-    test_show(scheme)
+    scheme_ = quadpy.sphere.Lebedev(4)
+    test_scheme(scheme_)
+    test_show(scheme_)
     plt.show()

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 #
+import numpy
+
 from .keast import Keast
 
 from .. import helpers
-
-import numpy
 
 
 def show(
@@ -21,6 +21,7 @@ def show(
     balls around the points coincides with their weights.
     '''
     from matplotlib import pyplot as plt
+    # pylint: disable=relative-import, unused-variable
     from mpl_toolkits.mplot3d import Axes3D
 
     fig = plt.figure()
@@ -53,12 +54,7 @@ def show(
         + numpy.outer(scheme.points[:, 2], tet[3])
 
     vol = integrate(lambda x: numpy.ones(1), tet, Keast(0))
-    helpers.plot_spheres(
-        plt, ax, transformed_pts, scheme.weights, vol,
-        tet[:, 0].min(), tet[:, 0].max(),
-        tet[:, 1].min(), tet[:, 1].max(),
-        tet[:, 2].min(), tet[:, 2].max(),
-        )
+    helpers.plot_spheres(plt, ax, transformed_pts, scheme.weights, vol)
     plt.show()
     return
 

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _s4
-
 import numpy
+
+from .helpers import _s4
 
 
 class LiuVinokur(object):
@@ -28,7 +28,7 @@ class LiuVinokur(object):
                 0.25 * numpy.ones(4),
                 ])
             bary = numpy.concatenate([
-                self._r_alpha(1.0),
+                _r_alpha(1.0),
                 ])
             self.degree = 1
         elif index == 3:
@@ -36,7 +36,7 @@ class LiuVinokur(object):
                 0.25 * numpy.ones(4),
                 ])
             bary = numpy.concatenate([
-                self._r_alpha(1.0 / numpy.sqrt(5.0)),
+                _r_alpha(1.0 / numpy.sqrt(5.0)),
                 ])
             self.degree = 2
         elif index == 4:
@@ -46,7 +46,7 @@ class LiuVinokur(object):
                 ])
             bary = numpy.concatenate([
                 _s4(),
-                self._r_alpha(1.0),
+                _r_alpha(1.0),
                 ])
             self.degree = 2
         elif index == 5:
@@ -56,7 +56,7 @@ class LiuVinokur(object):
                 ])
             bary = numpy.concatenate([
                 _s4(),
-                self._r_alpha(1.0/3.0),
+                _r_alpha(1.0/3.0),
                 ])
             self.degree = 3
         elif index == 6:
@@ -65,8 +65,8 @@ class LiuVinokur(object):
                 9.0/40.0 * numpy.ones(4),
                 ])
             bary = numpy.concatenate([
-                self._r_alpha(1.0),
-                self._r_alpha(-1.0/3.0),
+                _r_alpha(1.0),
+                _r_alpha(-1.0/3.0),
                 ])
             self.degree = 3
         elif index == 7:
@@ -77,8 +77,8 @@ class LiuVinokur(object):
                 ])
             bary = numpy.concatenate([
                 _s4(),
-                self._r_alpha(5.0/7.0),
-                self._r_beta(numpy.sqrt(70.0)/28.0),
+                _r_alpha(5.0/7.0),
+                _r_beta(numpy.sqrt(70.0)/28.0),
                 ])
             self.degree = 4
         elif index == 8:
@@ -98,9 +98,9 @@ class LiuVinokur(object):
                 2.0/105.0 * numpy.ones(6),
                 ])
             bary = numpy.concatenate([
-                self._r_alpha(alpha1),
-                self._r_alpha(alpha2),
-                self._r_beta(0.5),
+                _r_alpha(alpha1),
+                _r_alpha(alpha2),
+                _r_beta(0.5),
                 ])
             self.degree = 4
         elif index == 9:
@@ -112,9 +112,9 @@ class LiuVinokur(object):
                 ])
             bary = numpy.concatenate([
                 _s4(),
-                self._r_alpha(1),
-                self._r_alpha(0.2),
-                self._r_beta(0.5),
+                _r_alpha(1),
+                _r_alpha(0.2),
+                _r_beta(0.5),
                 ])
             self.degree = 4
         elif index == 10:
@@ -126,9 +126,9 @@ class LiuVinokur(object):
                 ])
             bary = numpy.concatenate([
                 _s4(),
-                self._r_alpha(1),
-                self._r_alpha(-1.0/3.0),
-                self._r_gamma_delta(
+                _r_alpha(1),
+                _r_alpha(-1.0/3.0),
+                _r_gamma_delta(
                     (2 + numpy.sqrt(2.0)) / 4.0,
                     (2 - numpy.sqrt(2.0)) / 4.0,
                     ),
@@ -142,10 +142,10 @@ class LiuVinokur(object):
                 2.0/105.0 * numpy.ones(6),
                 ])
             bary = numpy.concatenate([
-                self._r_alpha(1),
-                self._r_alpha(-1.0/3.0),
-                self._r_alpha(numpy.sqrt(2.0) - 1.0),
-                self._r_beta(0.5),
+                _r_alpha(1),
+                _r_alpha(-1.0/3.0),
+                _r_alpha(numpy.sqrt(2.0) - 1.0),
+                _r_beta(0.5),
                 ])
             self.degree = 4
         elif index == 12:
@@ -169,9 +169,9 @@ class LiuVinokur(object):
                 lmbda**2/840.0 * numpy.ones(6),
                 ])
             bary = numpy.concatenate([
-                self._r_alpha(alpha1),
-                self._r_alpha(alpha2),
-                self._r_beta(1.0 / numpy.sqrt(lmbda)),
+                _r_alpha(alpha1),
+                _r_alpha(alpha2),
+                _r_beta(1.0 / numpy.sqrt(lmbda)),
                 ])
             self.degree = 5
         elif index == 13:
@@ -183,9 +183,9 @@ class LiuVinokur(object):
                 ])
             bary = numpy.concatenate([
                 _s4(),
-                self._r_alpha((2.0 + numpy.sqrt(13.0)) / 9.0),
-                self._r_alpha((2.0 - numpy.sqrt(13.0)) / 9.0),
-                self._r_beta(0.5),
+                _r_alpha((2.0 + numpy.sqrt(13.0)) / 9.0),
+                _r_alpha((2.0 - numpy.sqrt(13.0)) / 9.0),
+                _r_beta(0.5),
                 ])
             self.degree = 5
         else:
@@ -199,76 +199,76 @@ class LiuVinokur(object):
                 ])
             bary = numpy.concatenate([
                 _s4(),
-                self._r_alpha(1.0),
-                self._r_alpha(-1.0/3.0),
-                self._r_alpha(0.5),
-                self._r_beta(0.5),
+                _r_alpha(1.0),
+                _r_alpha(-1.0/3.0),
+                _r_alpha(0.5),
+                _r_beta(0.5),
                 ])
             self.degree = 5
 
         self.points = bary[:, 1:]
         return
 
-    def _r_alpha(self, alpha):
-        '''From the article:
+def _r_alpha(alpha):
+    '''From the article:
 
-        mu_i = (1 + (n-1) alpha) / n,
-        mu_j = (1 - alpha) / n    for j!=i,
+    mu_i = (1 + (n-1) alpha) / n,
+    mu_j = (1 - alpha) / n    for j!=i,
 
-        where n is the number of vertices
-        '''
-        a = (1.0 + 3*alpha) / 4.0
-        b = (1.0 - alpha) / 4.0
-        return numpy.array([
-            [a, b, b, b],
-            [b, a, b, b],
-            [b, b, a, b],
-            [b, b, b, a],
-            ])
+    where n is the number of vertices
+    '''
+    a = (1.0 + 3*alpha) / 4.0
+    b = (1.0 - alpha) / 4.0
+    return numpy.array([
+        [a, b, b, b],
+        [b, a, b, b],
+        [b, b, a, b],
+        [b, b, b, a],
+        ])
 
-    def _r_beta(self, beta):
-        '''From the article:
+def _r_beta(beta):
+    '''From the article:
 
-        mu_i = (1+(n-2)*beta) / n,
-        mu_j = mu_i,
-        mu_k = (1 - 2*beta) / n    for k!=i, k!=j,
+    mu_i = (1+(n-2)*beta) / n,
+    mu_j = mu_i,
+    mu_k = (1 - 2*beta) / n    for k!=i, k!=j,
 
-        where n is the number of vertices.
-        '''
-        a = (1.0 + 2*beta) / 4.0
-        b = (1.0 - 2*beta) / 4.0
-        return numpy.array([
-            [a, a, b, b],
-            [a, b, a, b],
-            [b, a, a, b],
-            [a, b, b, a],
-            [b, a, b, a],
-            [b, b, a, a],
-            ])
+    where n is the number of vertices.
+    '''
+    a = (1.0 + 2*beta) / 4.0
+    b = (1.0 - 2*beta) / 4.0
+    return numpy.array([
+        [a, a, b, b],
+        [a, b, a, b],
+        [b, a, a, b],
+        [a, b, b, a],
+        [b, a, b, a],
+        [b, b, a, a],
+        ])
 
-    def _r_gamma_delta(self, gamma, delta):
-        '''From the article:
+def _r_gamma_delta(gamma, delta):
+    '''From the article:
 
-        mu_i = (1 + (n-1) gamma - delta) / n,
-        mu_j = (1 + (n-1) delta - gamma) / n,
-        mu_k = (1 - gamma - delta) / n    for k!=i, k!=j,
+    mu_i = (1 + (n-1) gamma - delta) / n,
+    mu_j = (1 + (n-1) delta - gamma) / n,
+    mu_k = (1 - gamma - delta) / n    for k!=i, k!=j,
 
-        where n is the number of vertices
-        '''
-        b = (1.0 + 3*gamma - delta) / 4.0
-        c = (1.0 + 3*delta - gamma) / 4.0
-        a = (1.0 - gamma - delta) / 4.0
-        return numpy.array([
-            [a, a, b, c],
-            [a, b, a, c],
-            [b, a, a, c],
-            [a, b, c, a],
-            [b, a, c, a],
-            [b, c, a, a],
-            [a, a, c, b],
-            [a, c, a, b],
-            [c, a, a, b],
-            [a, c, b, a],
-            [c, a, b, a],
-            [c, b, a, a],
-            ])
+    where n is the number of vertices
+    '''
+    b = (1.0 + 3*gamma - delta) / 4.0
+    c = (1.0 + 3*delta - gamma) / 4.0
+    a = (1.0 - gamma - delta) / 4.0
+    return numpy.array([
+        [a, a, b, c],
+        [a, b, a, c],
+        [b, a, a, c],
+        [a, b, c, a],
+        [b, a, c, a],
+        [b, c, a, a],
+        [a, a, c, b],
+        [a, c, a, b],
+        [c, a, a, b],
+        [a, c, b, a],
+        [c, a, b, a],
+        [c, b, a, a],
+        ])

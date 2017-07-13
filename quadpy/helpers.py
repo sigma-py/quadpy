@@ -42,9 +42,9 @@ def plot_disks(plt, pts, weights, total_area):
     return
 
 
+# pylint: disable=too-many-locals
 def plot_spheres(
-        plt, ax, pts, weights, total_volume,
-        xmin, xmax, ymin, ymax, zmin, zmax
+        plt, ax, pts, weights, total_volume
         ):
     # http://matplotlib.org/examples/mplot3d/surface3d_demo2.html
     u = numpy.linspace(0, 2 * numpy.pi, 100)

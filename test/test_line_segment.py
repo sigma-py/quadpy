@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+import math
+
 from helpers import check_degree_1d
 
-import math
 from matplotlib import pyplot as plt
 import numpy
 import pytest
@@ -28,16 +29,26 @@ def test_scheme(scheme):
     degree = 0
     while True:
         # Set bounds such that the values are between 0.5 and 1.5.
-        interval = [
-            0.5**(1.0/(degree+1)),
-            1.5**(1.0/(degree+1)),
-            ]
         exact_val = 1.0/(degree+1)
+        interval = numpy.array([
+            [0.5**(1.0/(degree+1)), 0.0, 0.0],
+            [1.5**(1.0/(degree+1)), 0.0, 0.0],
+            ])
+        interval = numpy.array([[0.3], [0.5]])
         val = quadpy.line_segment.integrate(
-                lambda x: x**degree,
+                lambda x: x[0]**degree,
                 interval, scheme
                 )
-        if abs(exact_val - val) / abs(exact_val) > 1.0e-12:
+        # same test with line embedded in R^2
+        interval = numpy.array([
+            [0.5**(1.0/(degree+1)), 0.0],
+            [1.5**(1.0/(degree+1)), 0.0],
+            ])
+        val = quadpy.line_segment.integrate(
+                lambda x: x[0]**degree,
+                interval, scheme
+                )
+        if abs(exact_val - val) > 1.0e-12 * abs(exact_val):
             break
         if degree >= scheme.degree:
             break
@@ -63,10 +74,9 @@ def test_cheb1_scheme(scheme):
 
     degree = check_degree_1d(
             lambda poly: quadpy.line_segment.integrate(
-                    poly, [-1.0, 1.0], scheme
+                    poly, numpy.array([[-1.0], [1.0]]), scheme
                     ),
             integrate_exact,
-            lambda degree: [[degree]],
             scheme.degree + 1
             )
     assert degree >= scheme.degree
@@ -90,10 +100,9 @@ def test_cheb2_scheme(scheme):
 
     degree = check_degree_1d(
             lambda poly: quadpy.line_segment.integrate(
-                    poly, [-1.0, 1.0], scheme
+                    poly, numpy.array([[-1.0], [1.0]]), scheme
                     ),
             integrate_exact,
-            lambda degree: [[degree]],
             scheme.degree + 1
             )
     assert degree >= scheme.degree
@@ -111,10 +120,9 @@ def test_laguerre_scheme(scheme):
 
     degree = check_degree_1d(
             lambda poly: quadpy.line_segment.integrate(
-                    poly, [-1.0, 1.0], scheme
+                    poly, numpy.array([[-1.0], [1.0]]), scheme
                     ),
             integrate_exact,
-            lambda degree: [[degree]],
             scheme.degree + 1
             )
     assert degree == scheme.degree
@@ -132,10 +140,9 @@ def test_hermite_scheme(scheme):
 
     degree = check_degree_1d(
             lambda poly: quadpy.line_segment.integrate(
-                    poly, [-1.0, 1.0], scheme
+                    poly, numpy.array([[-1.0], [1.0]]), scheme
                     ),
             integrate_exact,
-            lambda degree: [[degree]],
             scheme.degree + 1
             )
     assert degree == scheme.degree
@@ -152,7 +159,8 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme = quadpy.line_segment.Fejer2(20)
-    test_scheme(scheme)
-    test_show(scheme)
+    scheme_ = quadpy.line_segment.Fejer2(20)
+    # scheme_ = quadpy.line_segment.Midpoint()
+    test_scheme(scheme_)
+    test_show(scheme_)
     plt.show()
