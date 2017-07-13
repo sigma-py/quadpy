@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+import numpy
+
 from . import line_segment
 from . import helpers
-
-import numpy
 
 
 def show(
@@ -101,7 +101,7 @@ class Stroud(object):
             self.degree = 1
         elif index == 2:
             self.weights = 4 * [1.0]
-            self.points = self._symm_s(1.0/numpy.sqrt(3.0))
+            self.points = _symm_s(1.0/numpy.sqrt(3.0))
             self.degree = 3
         elif index == 3:
             self.weights = (
@@ -111,8 +111,8 @@ class Stroud(object):
                 )
             self.points = (
                 [[0.0, 0.0]] +
-                self._symm_s(numpy.sqrt(0.6)) +
-                self._symm_r_0(numpy.sqrt(0.6))
+                _symm_s(numpy.sqrt(0.6)) +
+                _symm_r_0(numpy.sqrt(0.6))
                 )
             self.degree = 5
         elif index == 4:
@@ -131,9 +131,9 @@ class Stroud(object):
                 4 * [w3]
                 )
             self.points = (
-                self._symm_r_0(r) +
-                self._symm_s(s) +
-                self._symm_s(t)
+                _symm_r_0(r) +
+                _symm_s(s) +
+                _symm_s(t)
                 )
             self.degree = 7
         elif index == 5:
@@ -152,8 +152,8 @@ class Stroud(object):
                 )
             self.points = (
                 [[0.0, 0.0]] +
-                self._symm_r_0(r) +
-                self._symm_s_t(s, t)
+                _symm_r_0(r) +
+                _symm_s_t(s, t)
                 )
             self.degree = 7
         else:
@@ -172,30 +172,33 @@ class Stroud(object):
         self.points = numpy.array(self.points)
         return
 
-    def _symm_r_0(self, r):
-        return [
-            [+r, 0.0],
-            [-r, 0.0],
-            [0.0, +r],
-            [0.0, -r],
-            ]
 
-    def _symm_s(self, s):
-        return [
-            [+s, +s],
-            [-s, +s],
-            [+s, -s],
-            [-s, -s],
-            ]
+def _symm_r_0(r):
+    return [
+        [+r, 0.0],
+        [-r, 0.0],
+        [0.0, +r],
+        [0.0, -r],
+        ]
 
-    def _symm_s_t(self, s, t):
-        return [
-            [+s, +t],
-            [-s, +t],
-            [+s, -t],
-            [-s, -t],
-            [+t, +s],
-            [-t, +s],
-            [+t, -s],
-            [-t, -s],
-            ]
+
+def _symm_s(s):
+    return [
+        [+s, +s],
+        [-s, +s],
+        [+s, -s],
+        [-s, -s],
+        ]
+
+
+def _symm_s_t(s, t):
+    return [
+        [+s, +t],
+        [-s, +t],
+        [+s, -t],
+        [-s, -t],
+        [+t, +s],
+        [-t, +s],
+        [+t, -s],
+        [-t, -s],
+        ]

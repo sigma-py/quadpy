@@ -17,6 +17,7 @@ def show(
     balls around the points coincides with their weights.
     '''
     from matplotlib import pyplot as plt
+    # pylint: disable=relative-import, unused-variable
     from mpl_toolkits.mplot3d import Axes3D
 
     fig = plt.figure()
@@ -55,10 +56,7 @@ def show(
 
     vol = integrate(lambda x: numpy.ones(1), wedge, Felippa(1))
     helpers.plot_spheres(
-        plt, ax, transformed_pts, scheme.weights, vol,
-        wedge[:, 0].min(), wedge[:, 0].max(),
-        wedge[:, 1].min(), wedge[:, 1].max(),
-        wedge[:, 2].min(), wedge[:, 2].max(),
+        plt, ax, transformed_pts, scheme.weights, vol
         )
     plt.show()
     return
@@ -117,11 +115,11 @@ class Felippa(object):
             self.degree = 1
         elif index == 2:
             self.weights = 6 * [1.0/6.0]
-            self.points = self.s21_z(1.0/6.0, numpy.sqrt(1.0/3.0))
+            self.points = _s21_z(1.0/6.0, numpy.sqrt(1.0/3.0))
             self.degree = 2
         elif index == 3:
             self.weights = 6 * [1.0/6.0]
-            self.points = self.s21_z(0.5, numpy.sqrt(1.0/3.0))
+            self.points = _s21_z(0.5, numpy.sqrt(1.0/3.0))
             self.degree = 2
         elif index == 4:
             self.weights = (
@@ -131,10 +129,10 @@ class Felippa(object):
                 3 * [0.4886744162458750E-01]
                 )
             self.points = (
-                self.s21_z(0.4459484909159649, 0.7745966692414834) +
-                self.s21_z(0.9157621350977074E-01, 0.7745966692414834) +
-                self.s21(0.4459484909159649) +
-                self.s21(0.9157621350977074E-01)
+                _s21_z(0.4459484909159649, 0.7745966692414834) +
+                _s21_z(0.9157621350977074E-01, 0.7745966692414834) +
+                _s21(0.4459484909159649) +
+                _s21(0.9157621350977074E-01)
                 )
             self.degree = 4
         elif index == 5:
@@ -147,12 +145,12 @@ class Felippa(object):
                 1 * [1.0000000000000000E-01]
                 )
             self.points = (
-                self.s21_z(0.1012865073234563, 0.7745966692414834) +
-                self.s21_z(0.4701420641051151, 0.7745966692414834) +
-                self.s3_z(0.7745966692414834) +
-                self.s21(0.1012865073234563) +
-                self.s21(0.4701420641051151) +
-                self.s3()
+                _s21_z(0.1012865073234563, 0.7745966692414834) +
+                _s21_z(0.4701420641051151, 0.7745966692414834) +
+                _s3_z(0.7745966692414834) +
+                _s21(0.1012865073234563) +
+                _s21(0.4701420641051151) +
+                _s3()
                 )
             self.degree = 5
         else:
@@ -166,16 +164,16 @@ class Felippa(object):
                 12 * [0.2701546376983638E-01]
                 )
             self.points = (
-                self.s21_z(0.6308901449150223E-01, -0.8611363115940526) +
-                self.s21_z(0.2492867451709104, -0.8611363115940526) +
-                self.s111_z(
+                _s21_z(0.6308901449150223E-01, -0.8611363115940526) +
+                _s21_z(0.2492867451709104, -0.8611363115940526) +
+                _s111_z(
                     0.5314504984481695E-01,
                     0.3103524510337844,
                     0.8611363115940526
                     ) +
-                self.s21_z(0.6308901449150223E-01, 0.3399810435848563) +
-                self.s21_z(0.2492867451709104, 0.3399810435848563) +
-                self.s111_z(
+                _s21_z(0.6308901449150223E-01, 0.3399810435848563) +
+                _s21_z(0.2492867451709104, 0.3399810435848563) +
+                _s111_z(
                     0.5314504984481695E-01,
                     0.3103524510337844,
                     0.3399810435848563
@@ -187,49 +185,49 @@ class Felippa(object):
         self.points = numpy.array(self.points)
         return
 
-    def s3(self):
-        return [
-            [1.0/3.0, 1.0/3.0, 0.0],
-            ]
+def _s3():
+    return [
+        [1.0/3.0, 1.0/3.0, 0.0],
+        ]
 
-    def s3_z(self, z):
-        return [
-            [1.0/3.0, 1.0/3.0, +z],
-            [1.0/3.0, 1.0/3.0, -z],
-            ]
+def _s3_z(z):
+    return [
+        [1.0/3.0, 1.0/3.0, +z],
+        [1.0/3.0, 1.0/3.0, -z],
+        ]
 
-    def s21(self, a):
-        b = 1.0 - 2*a
-        return [
-            [a, b, 0.0],
-            [b, a, 0.0],
-            [a, a, 0.0],
-            ]
+def _s21(a):
+    b = 1.0 - 2*a
+    return [
+        [a, b, 0.0],
+        [b, a, 0.0],
+        [a, a, 0.0],
+        ]
 
-    def s21_z(self, a, z):
-        b = 1.0 - 2*a
-        return [
-            [a, b, +z],
-            [b, a, +z],
-            [a, a, +z],
-            [a, b, -z],
-            [b, a, -z],
-            [a, a, -z],
-            ]
+def _s21_z(a, z):
+    b = 1.0 - 2*a
+    return [
+        [a, b, +z],
+        [b, a, +z],
+        [a, a, +z],
+        [a, b, -z],
+        [b, a, -z],
+        [a, a, -z],
+        ]
 
-    def s111_z(self, a, b, z):
-        c = 1.0 - a - b
-        return [
-            [b, c, +z],
-            [a, b, +z],
-            [c, a, +z],
-            [c, b, +z],
-            [a, c, +z],
-            [b, a, +z],
-            [b, c, -z],
-            [a, b, -z],
-            [c, a, -z],
-            [c, b, -z],
-            [a, c, -z],
-            [b, a, -z],
-            ]
+def _s111_z(a, b, z):
+    c = 1.0 - a - b
+    return [
+        [b, c, +z],
+        [a, b, +z],
+        [c, a, +z],
+        [c, b, +z],
+        [a, c, +z],
+        [b, a, +z],
+        [b, c, -z],
+        [a, b, -z],
+        [c, a, -z],
+        [c, b, -z],
+        [a, c, -z],
+        [b, a, -z],
+        ]

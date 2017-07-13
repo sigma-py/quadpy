@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _s31, _s22, _s211, _s1111
-
 import numpy
+
+from .helpers import _s31, _s22, _s211, _s1111
 
 
 class WilliamsShunnJameson(object):

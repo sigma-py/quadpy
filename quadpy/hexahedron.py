@@ -8,8 +8,8 @@ from . import helpers
 def show(
         scheme,
         hexa=numpy.array([
-            [0, 0, 0], [1, 0, 0], [1, 1, 0],  [0, 1, 0],
-            [0, 0, 1], [1, 0, 1], [1, 1, 1],  [0, 1, 1],
+            [0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0],
+            [0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1],
             ]),
         show_axes=False
         ):
@@ -17,6 +17,7 @@ def show(
     balls around the points coincides with their weights.
     '''
     from matplotlib import pyplot as plt
+    # pylint: disable=relative-import, unused-variable
     from mpl_toolkits.mplot3d import Axes3D
 
     fig = plt.figure()
@@ -60,10 +61,7 @@ def show(
 
     vol = integrate(lambda x: 1.0, hexa, scheme)
     helpers.plot_spheres(
-        plt, ax, transformed_pts, scheme.weights, vol,
-        hexa[:, 0].min(), hexa[:, 0].max(),
-        hexa[:, 1].min(), hexa[:, 1].max(),
-        hexa[:, 2].min(), hexa[:, 2].max(),
+        plt, ax, transformed_pts, scheme.weights, vol
         )
 
     plt.show()

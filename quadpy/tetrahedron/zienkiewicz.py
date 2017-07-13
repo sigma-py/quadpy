@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _s4, _s31
-
 import numpy
+
+from .helpers import _s4, _s31
 
 
 class Zienkiewicz(object):
