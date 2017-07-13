@@ -8,16 +8,17 @@ from . import helpers
 
 
 def integrate(f, interval, scheme, sumfun=helpers.kahan_sum):
-    alpha = 0.5 * (interval[1] - interval[0])
-    beta = 0.5 * (interval[0] + interval[1])
-    out = sumfun(
-        # use multiply.outer instead of outer here. The handles floats in the
-        # second argument such that no extra dimension is produces.
-        scheme.weights *
-        f((numpy.multiply.outer(scheme.points, alpha) + beta).T),
-        axis=-1
+    xi = scheme.points
+    x = \
+        + numpy.multiply.outer(0.5 * (1.0 - xi), interval[0]) \
+        + numpy.multiply.outer(0.5 * (1.0 + xi), interval[1])
+    x = x.T
+    diff = interval[1] - interval[0]
+    len_intervals = numpy.sqrt(numpy.einsum('...j,...j->...', diff, diff))
+    # The factor 0.5 is from the length of the reference line [-1, 1].
+    return sumfun(
+        numpy.rollaxis(scheme.weights * f(x), -1) * 0.5 * len_intervals
         )
-    return alpha * out
 
 
 # pylint: disable=too-many-locals
@@ -138,7 +139,7 @@ def adaptive_integrate(
     return quad_sum, global_error_estimate
 
 
-def show(scheme, interval=numpy.array([-1.0, 1.0]), show_axes=False):
+def show(scheme, interval=numpy.array([[-1.0], [1.0]]), show_axes=False):
     from matplotlib import pyplot as plt
     # change default range so that new disks will work
     plt.axis('equal')
@@ -420,8 +421,10 @@ def _get_weights(pts):
     k = (n // 2) - 1 if n % 2 == 0 else (n+1) // 2
     return numpy.array([
         integrate(
-            lambda x, i=i: L(i, x), [-1.0, 1.0], GaussLegendre(k),
-            sumfun=lambda a, axis: numpy.array([math.fsum(a)])
+            lambda x, i=i: L(i, x[0]),
+            numpy.array([[-1.0], [1.0]]),
+            GaussLegendre(k),
+            sumfun=lambda a: numpy.array([math.fsum(a)])
             )[0]
         /
         numpy.prod([(pts[i] - pts[j]) for j in range(n) if j != i])

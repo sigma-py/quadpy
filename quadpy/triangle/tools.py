@@ -71,10 +71,7 @@ def integrate(f, triangle, scheme, sumfun=helpers.kahan_sum):
         + numpy.multiply.outer(xi[0], triangle[1]) \
         + numpy.multiply.outer(xi[1], triangle[2])
     x = x.T
-    # The factor 0.5 is the volume of the reference triangle.
-    return sumfun(
-        numpy.rollaxis(scheme.weights * f(x), -1) * _area(triangle)
-        )
+    return sumfun(numpy.rollaxis(scheme.weights * f(x), -1) * _area(triangle))
 
 
 def _numpy_all_except(a, axis=-1):
