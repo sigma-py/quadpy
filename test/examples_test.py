@@ -62,7 +62,7 @@ def test_hexahedron():
 def test_line_segment():
     quadpy.line_segment.integrate(
             lambda x: numpy.exp(x),
-            numpy.array([0.0, 1.0]),
+            numpy.array([[0.0], [1.0]]),
             quadpy.line_segment.NewtonCotesClosed(4)
             )
     quadpy.line_segment.integrate(
