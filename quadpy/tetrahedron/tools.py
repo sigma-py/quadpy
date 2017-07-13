@@ -54,12 +54,7 @@ def show(
         + numpy.outer(scheme.points[:, 2], tet[3])
 
     vol = integrate(lambda x: numpy.ones(1), tet, Keast(0))
-    helpers.plot_spheres(
-        plt, ax, transformed_pts, scheme.weights, vol,
-        tet[:, 0].min(), tet[:, 0].max(),
-        tet[:, 1].min(), tet[:, 1].max(),
-        tet[:, 2].min(), tet[:, 2].max(),
-        )
+    helpers.plot_spheres(plt, ax, transformed_pts, scheme.weights, vol)
     plt.show()
     return
 
