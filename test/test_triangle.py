@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+import math
+
 from helpers import create_monomial_exponents2, check_degree
 
-import math
 from matplotlib import pyplot as plt
 import numpy
 import pytest
@@ -42,7 +43,7 @@ def _integrate_exact(f, triangle):
 def _integrate_monomial_over_standard_triangle(k):
     '''The integral of monomials over the standard triangle is given by
 
-    \int_T x_0^k0 * x1^k1 = (k0!*k1!) / (2+k0+k1)!,
+    \\int_T x_0^k0 * x1^k1 = (k0!*k1!) / (2+k0+k1)!,
 
     see, e.g.,
     A set of symmetric quadrature rules on triangles and tetrahedra,
@@ -115,7 +116,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme = quadpy.triangle.XiaoGimbutas(50)
-    test_scheme(scheme)
-    test_show(scheme)
+    scheme_ = quadpy.triangle.XiaoGimbutas(50)
+    test_scheme(scheme_)
+    test_show(scheme_)
     plt.show()

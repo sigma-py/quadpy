@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import create_monomial_exponents3, check_degree
 import math
+
+from helpers import create_monomial_exponents3, check_degree
+
 from matplotlib import pyplot as plt
 import numpy
 import pytest
@@ -45,7 +47,7 @@ def _integrate_exact(f, tetrahedron):
 def _integrate_monomial_over_standard_tet(k):
     '''The integral of monomials over the standard tetrahedron is given by
 
-    \int_T x_0^k0 * x1^k1 * x2^k2 = (k0!*k1!*k2!) / (4+k0+k1+k2)!,
+    \\int_T x_0^k0 * x1^k1 * x2^k2 = (k0!*k1!*k2!) / (4+k0+k1+k2)!,
 
     see, e.g.,
     A set of symmetric quadrature rules on triangles and tetrahedra,
@@ -111,7 +113,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme = quadpy.tetrahedron.ShunnHam(2)
-    test_scheme(scheme)
-    test_show(scheme)
+    scheme_ = quadpy.tetrahedron.ShunnHam(2)
+    test_scheme(scheme_)
+    test_show(scheme_)
     plt.show()

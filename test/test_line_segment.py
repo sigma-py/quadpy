@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+import math
+
 from helpers import check_degree_1d
 
-import math
 from matplotlib import pyplot as plt
 import numpy
 import pytest
@@ -76,7 +77,6 @@ def test_cheb1_scheme(scheme):
                     poly, numpy.array([[-1.0], [1.0]]), scheme
                     ),
             integrate_exact,
-            lambda degree: [[degree]],
             scheme.degree + 1
             )
     assert degree >= scheme.degree
@@ -103,7 +103,6 @@ def test_cheb2_scheme(scheme):
                     poly, numpy.array([[-1.0], [1.0]]), scheme
                     ),
             integrate_exact,
-            lambda degree: [[degree]],
             scheme.degree + 1
             )
     assert degree >= scheme.degree
@@ -124,7 +123,6 @@ def test_laguerre_scheme(scheme):
                     poly, numpy.array([[-1.0], [1.0]]), scheme
                     ),
             integrate_exact,
-            lambda degree: [[degree]],
             scheme.degree + 1
             )
     assert degree == scheme.degree
@@ -145,7 +143,6 @@ def test_hermite_scheme(scheme):
                     poly, numpy.array([[-1.0], [1.0]]), scheme
                     ),
             integrate_exact,
-            lambda degree: [[degree]],
             scheme.degree + 1
             )
     assert degree == scheme.degree
@@ -162,8 +159,8 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme = quadpy.line_segment.Fejer2(20)
-    # scheme = quadpy.line_segment.Midpoint()
-    test_scheme(scheme)
-    test_show(scheme)
+    scheme_ = quadpy.line_segment.Fejer2(20)
+    # scheme_ = quadpy.line_segment.Midpoint()
+    test_scheme(scheme_)
+    test_show(scheme_)
     plt.show()

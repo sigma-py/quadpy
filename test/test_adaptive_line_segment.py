@@ -61,6 +61,6 @@ def test_sink(k):
 
 if __name__ == '__main__':
     # test_predefined_intervals()
-    test_vector_valued()
+    test_vector_valued(1)
     # test_simple()
     # test_sink(5)

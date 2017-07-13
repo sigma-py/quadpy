@@ -87,7 +87,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme = quadpy.wedge.Felippa(2)
-    test_scheme(scheme)
-    test_show(scheme)
+    scheme_ = quadpy.wedge.Felippa(2)
+    test_scheme(scheme_)
+    test_show(scheme_)
     plt.show()
