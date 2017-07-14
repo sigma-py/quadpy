@@ -29,7 +29,7 @@ class LaursenGellert(object):
         self.name = 'LG(%s)' % index
         if index == '1':
             self.weights = numpy.concatenate([
-                1.0 * numpy.ones(1),
+                numpy.full(1, 1.0),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -37,7 +37,7 @@ class LaursenGellert(object):
             self.degree = 1
         elif index == '2a':
             self.weights = numpy.concatenate([
-                1.0/3.0 * numpy.ones(3),
+                numpy.full(3, 1.0/3.0),
                 ])
             bary = numpy.concatenate([
                 _s21(1.0/6.0),
@@ -45,7 +45,7 @@ class LaursenGellert(object):
             self.degree = 2
         elif index == '2b':
             self.weights = numpy.concatenate([
-                1.0/3.0 * numpy.ones(3),
+                numpy.full(3, 1.0/3.0),
                 ])
             bary = numpy.concatenate([
                 _s21(0.5),
@@ -53,8 +53,8 @@ class LaursenGellert(object):
             self.degree = 2
         elif index == '3':
             self.weights = numpy.concatenate([
-                -0.5625 * numpy.ones(1),
-                25.0/48.0 * numpy.ones(3),
+                numpy.full(1, -0.5625),
+                numpy.full(3, 25.0/48.0),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -63,7 +63,7 @@ class LaursenGellert(object):
             self.degree = 3
         elif index == '4':
             self.weights = numpy.concatenate([
-                1.0/6.0 * numpy.ones(6),
+                numpy.full(6, 1.0/6.0),
                 ])
             bary = numpy.concatenate([
                 _s111(0.659027622374092, 0.231933368553031),
@@ -71,8 +71,8 @@ class LaursenGellert(object):
             self.degree = 3
         elif index == '5':
             self.weights = numpy.concatenate([
-                0.109951743655322 * numpy.ones(3),
-                0.223381589678011 * numpy.ones(3),
+                numpy.full(3, 0.109951743655322),
+                numpy.full(3, 0.223381589678011),
                 ])
             bary = numpy.concatenate([
                 _s21(0.091576213509771),
@@ -81,8 +81,8 @@ class LaursenGellert(object):
             self.degree = 4
         elif index == '6':
             self.weights = numpy.concatenate([
-                0.375 * numpy.ones(1),
-                5.0/48.0 * numpy.ones(6),
+                numpy.full(1, 0.375),
+                numpy.full(6, 5.0/48.0),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -91,9 +91,9 @@ class LaursenGellert(object):
             self.degree = 4
         elif index == '7':
             self.weights = numpy.concatenate([
-                0.225 * numpy.ones(1),
-                0.125939180544827 * numpy.ones(3),
-                0.132394152788506 * numpy.ones(3),
+                numpy.full(1, 0.225),
+                numpy.full(3, 0.125939180544827),
+                numpy.full(3, 0.132394152788506),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -103,8 +103,8 @@ class LaursenGellert(object):
             self.degree = 5
         elif index == '8':
             self.weights = numpy.concatenate([
-                0.205950504760887 * numpy.ones(3),
-                0.063691414286223 * numpy.ones(6),
+                numpy.full(3, 0.205950504760887),
+                numpy.full(6, 0.063691414286223),
                 ])
             bary = numpy.concatenate([
                 _s21(0.437525248383384),
@@ -113,9 +113,9 @@ class LaursenGellert(object):
             self.degree = 5
         elif index == '9':
             self.weights = numpy.concatenate([
-                0.050844906370207 * numpy.ones(3),
-                0.116786275726379 * numpy.ones(3),
-                0.082851075618374 * numpy.ones(6),
+                numpy.full(3, 0.050844906370207),
+                numpy.full(3, 0.116786275726379),
+                numpy.full(6, 0.082851075618374),
                 ])
             bary = numpy.concatenate([
                 _s21(0.063089014491502),
@@ -125,10 +125,10 @@ class LaursenGellert(object):
             self.degree = 6
         elif index == '10':
             self.weights = numpy.concatenate([
-                -0.149570044467670 * numpy.ones(1),
-                +0.175615257433204 * numpy.ones(3),
-                +0.053347235608839 * numpy.ones(3),
-                +0.077113760890257 * numpy.ones(6),
+                numpy.full(1, -0.149570044467670),
+                numpy.full(3, +0.175615257433204),
+                numpy.full(3, +0.053347235608839),
+                numpy.full(6, +0.077113760890257),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -139,9 +139,9 @@ class LaursenGellert(object):
             self.degree = 7
         elif index == '11':
             self.weights = numpy.concatenate([
-                0.053077801790233 * numpy.ones(3),
-                0.070853083692136 * numpy.ones(6),
-                0.069274682079415 * numpy.ones(6),
+                numpy.full(3, 0.053077801790233),
+                numpy.full(6, 0.070853083692136),
+                numpy.full(6, 0.069274682079415),
                 ])
             bary = numpy.concatenate([
                 _s21(0.064930513159165),
@@ -151,11 +151,11 @@ class LaursenGellert(object):
             self.degree = 7
         elif index == '12':
             self.weights = numpy.concatenate([
-                0.144315607677787 * numpy.ones(1),
-                0.103217370534718 * numpy.ones(3),
-                0.032458497623198 * numpy.ones(3),
-                0.095091634267284 * numpy.ones(3),
-                0.027230314174435 * numpy.ones(6),
+                numpy.full(1, 0.144315607677787),
+                numpy.full(3, 0.103217370534718),
+                numpy.full(3, 0.032458497623198),
+                numpy.full(3, 0.095091634267284),
+                numpy.full(6, 0.027230314174435),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -167,12 +167,12 @@ class LaursenGellert(object):
             self.degree = 8
         elif index == '13':
             self.weights = numpy.concatenate([
-                0.097135796282799 * numpy.ones(1),
-                0.031334700227139 * numpy.ones(3),
-                0.077827541004774 * numpy.ones(3),
-                0.079647738927210 * numpy.ones(3),
-                0.025577675658698 * numpy.ones(3),
-                0.043283539377289 * numpy.ones(6),
+                numpy.full(1, 0.097135796282799),
+                numpy.full(3, 0.031334700227139),
+                numpy.full(3, 0.077827541004774),
+                numpy.full(3, 0.079647738927210),
+                numpy.full(3, 0.025577675658698),
+                numpy.full(6, 0.043283539377289),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -185,11 +185,11 @@ class LaursenGellert(object):
             self.degree = 9
         elif index == '14':
             self.weights = numpy.concatenate([
-                0.051617202569021 * numpy.ones(3),
-                0.094080073458356 * numpy.ones(3),
-                0.025993571032320 * numpy.ones(3),
-                0.045469538047619 * numpy.ones(6),
-                0.035351705089199 * numpy.ones(6),
+                numpy.full(3, 0.051617202569021),
+                numpy.full(3, 0.094080073458356),
+                numpy.full(3, 0.025993571032320),
+                numpy.full(6, 0.045469538047619),
+                numpy.full(6, 0.035351705089199),
                 ])
             bary = numpy.concatenate([
                 _s21(0.481519834783311),
@@ -201,12 +201,12 @@ class LaursenGellert(object):
             self.degree = 9
         elif index == '15a':
             self.weights = numpy.concatenate([
-                0.079894504741240 * numpy.ones(1),
-                0.071123802232377 * numpy.ones(3),
-                0.008223818690464 * numpy.ones(3),
-                0.045430592296170 * numpy.ones(6),
-                0.037359856234305 * numpy.ones(6),
-                0.030886656884564 * numpy.ones(6),
+                numpy.full(1, 0.079894504741240),
+                numpy.full(3, 0.071123802232377),
+                numpy.full(3, 0.008223818690464),
+                numpy.full(6, 0.045430592296170),
+                numpy.full(6, 0.037359856234305),
+                numpy.full(6, 0.030886656884564),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -220,12 +220,12 @@ class LaursenGellert(object):
         else:
             assert index == '15b'
             self.weights = numpy.concatenate([
-                0.081743329146286 * numpy.ones(1),
-                0.045957963604745 * numpy.ones(3),
-                0.013352968813150 * numpy.ones(3),
-                0.063904906396424 * numpy.ones(6),
-                0.034184648162959 * numpy.ones(6),
-                0.025297757707288 * numpy.ones(6),
+                numpy.full(1, 0.081743329146286),
+                numpy.full(3, 0.045957963604745),
+                numpy.full(3, 0.013352968813150),
+                numpy.full(6, 0.063904906396424),
+                numpy.full(6, 0.034184648162959),
+                numpy.full(6, 0.025297757707288),
                 ])
             bary = numpy.concatenate([
                 _s3(),

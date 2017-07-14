@@ -17,7 +17,7 @@ class LiuVinokur(object):
     def __init__(self, index):
         if index == 1:
             self.weights = numpy.concatenate([
-                1.0 * numpy.ones(1),
+                numpy.full(1, 1.0),
                 ])
             bary = numpy.concatenate([
                 _s4(),
@@ -25,7 +25,7 @@ class LiuVinokur(object):
             self.degree = 1
         elif index == 2:
             self.weights = numpy.concatenate([
-                0.25 * numpy.ones(4),
+                numpy.full(4, 0.25),
                 ])
             bary = numpy.concatenate([
                 _r_alpha(1.0),
@@ -33,7 +33,7 @@ class LiuVinokur(object):
             self.degree = 1
         elif index == 3:
             self.weights = numpy.concatenate([
-                0.25 * numpy.ones(4),
+                numpy.full(4, 0.25),
                 ])
             bary = numpy.concatenate([
                 _r_alpha(1.0 / numpy.sqrt(5.0)),
@@ -41,8 +41,8 @@ class LiuVinokur(object):
             self.degree = 2
         elif index == 4:
             self.weights = numpy.concatenate([
-                0.8 * numpy.ones(1),
-                0.05 * numpy.ones(4),
+                numpy.full(1, 0.8),
+                numpy.full(4, 0.05),
                 ])
             bary = numpy.concatenate([
                 _s4(),
@@ -51,8 +51,8 @@ class LiuVinokur(object):
             self.degree = 2
         elif index == 5:
             self.weights = numpy.concatenate([
-                -0.8 * numpy.ones(1),
-                0.45 * numpy.ones(4),
+                numpy.full(1, -0.8),
+                numpy.full(4, 0.45),
                 ])
             bary = numpy.concatenate([
                 _s4(),
@@ -61,8 +61,8 @@ class LiuVinokur(object):
             self.degree = 3
         elif index == 6:
             self.weights = numpy.concatenate([
-                1.0/40.0 * numpy.ones(4),
-                9.0/40.0 * numpy.ones(4),
+                numpy.full(4, 1.0/40.0),
+                numpy.full(4, 9.0/40.0),
                 ])
             bary = numpy.concatenate([
                 _r_alpha(1.0),
@@ -71,9 +71,9 @@ class LiuVinokur(object):
             self.degree = 3
         elif index == 7:
             self.weights = numpy.concatenate([
-                -148.0/1875.0 * numpy.ones(1),
-                343.0/7500.0 * numpy.ones(4),
-                56.0/375.0 * numpy.ones(6),
+                numpy.full(1, -148.0/1875.0),
+                numpy.full(4, 343.0/7500.0),
+                numpy.full(6, 56.0/375.0),
                 ])
             bary = numpy.concatenate([
                 _s4(),
@@ -91,11 +91,13 @@ class LiuVinokur(object):
                 + 51*numpy.sqrt(11) - 154.0
                 ) / 89.0
             self.weights = numpy.concatenate([
-                (17*alpha2 - 7.0)/(420.0*alpha1**2 * (alpha2 - alpha1))
-                * numpy.ones(4),
-                (17*alpha1 - 7.0)/(420.0*alpha2**2 * (alpha1 - alpha2))
-                * numpy.ones(4),
-                2.0/105.0 * numpy.ones(6),
+                numpy.full(
+                    4, (17*alpha2 - 7.0)/(420.0*alpha1**2 * (alpha2 - alpha1))
+                    ),
+                numpy.full(
+                    4, (17*alpha1 - 7.0)/(420.0*alpha2**2 * (alpha1 - alpha2))
+                    ),
+                numpy.full(6, 2.0/105.0),
                 ])
             bary = numpy.concatenate([
                 _r_alpha(alpha1),
@@ -105,10 +107,10 @@ class LiuVinokur(object):
             self.degree = 4
         elif index == 9:
             self.weights = numpy.concatenate([
-                -32.0/15.0 * numpy.ones(1),
-                3.0/280.0 * numpy.ones(4),
-                125.0/168.0 * numpy.ones(4),
-                2.0/105.0 * numpy.ones(6),
+                numpy.full(1, -32.0/15.0),
+                numpy.full(4, 3.0/280.0),
+                numpy.full(4, 125.0/168.0),
+                numpy.full(6, 2.0/105.0),
                 ])
             bary = numpy.concatenate([
                 _s4(),
@@ -119,10 +121,10 @@ class LiuVinokur(object):
             self.degree = 4
         elif index == 10:
             self.weights = numpy.concatenate([
-                32.0/105.0 * numpy.ones(1),
-                -31.0/840.0 * numpy.ones(4),
-                27.0/280.0 * numpy.ones(4),
-                4.0/105.0 * numpy.ones(12),
+                numpy.full(1, 32.0/105.0),
+                numpy.full(4, -31.0/840.0),
+                numpy.full(4, 27.0/280.0),
+                numpy.full(12, 4.0/105.0),
                 ])
             bary = numpy.concatenate([
                 _s4(),
@@ -136,10 +138,10 @@ class LiuVinokur(object):
             self.degree = 4
         elif index == 11:
             self.weights = numpy.concatenate([
-                (11.0 - 4*numpy.sqrt(2.0)) / 840.0 * numpy.ones(4),
-                (243.0 - 108*numpy.sqrt(2.0)) / 1960.0 * numpy.ones(4),
-                (62.0 + 44*numpy.sqrt(2.0)) / 735.0 * numpy.ones(4),
-                2.0/105.0 * numpy.ones(6),
+                (11.0 - 4*numpy.sqrt(2.0)) / numpy.full(4, 840.0),
+                (243.0 - 108*numpy.sqrt(2.0)) / numpy.full(4, 1960.0),
+                (62.0 + 44*numpy.sqrt(2.0)) / numpy.full(4, 735.0),
+                numpy.full(6, 2.0/105.0),
                 ])
             bary = numpy.concatenate([
                 _r_alpha(1),
@@ -164,9 +166,9 @@ class LiuVinokur(object):
             w2 = ((21.0 - lmbda)*alpha1 - 7.0) \
                 / (420.0*alpha2**2 * (alpha1 - alpha2))
             self.weights = numpy.concatenate([
-                w1 * numpy.ones(4),
-                w2 * numpy.ones(4),
-                lmbda**2/840.0 * numpy.ones(6),
+                numpy.full(4, w1),
+                numpy.full(4, w2),
+                numpy.full(6, lmbda**2 / 840.0),
                 ])
             bary = numpy.concatenate([
                 _r_alpha(alpha1),
@@ -176,10 +178,10 @@ class LiuVinokur(object):
             self.degree = 5
         elif index == 13:
             self.weights = numpy.concatenate([
-                -16.0/21.0 * numpy.ones(1),
-                (2249.0 - 391.0*numpy.sqrt(13.0)) / 10920.0 * numpy.ones(4),
-                (2249.0 + 391.0*numpy.sqrt(13.0)) / 10920.0 * numpy.ones(4),
-                2.0 / 105.0 * numpy.ones(6),
+                numpy.full(1, -16.0/21.0),
+                (2249.0 - 391.0*numpy.sqrt(13.0)) / numpy.full(4, 10920.0),
+                (2249.0 + 391.0*numpy.sqrt(13.0)) / numpy.full(4, 10920.0),
+                2.0 / numpy.full(6, 105.0),
                 ])
             bary = numpy.concatenate([
                 _s4(),
@@ -191,11 +193,11 @@ class LiuVinokur(object):
         else:
             assert index == 14
             self.weights = numpy.concatenate([
-                16.0/105.0 * numpy.ones(1),
-                1.0/280.0 * numpy.ones(4),
-                81.0/1400.0 * numpy.ones(4),
-                64.0/525.0 * numpy.ones(4),
-                2.0/105.0 * numpy.ones(6),
+                numpy.full(1, 16.0/105.0),
+                numpy.full(4, 1.0/280.0),
+                numpy.full(4, 81.0/1400.0),
+                numpy.full(4, 64.0/525.0),
+                numpy.full(6, 2.0/105.0),
                 ])
             bary = numpy.concatenate([
                 _s4(),
@@ -208,6 +210,7 @@ class LiuVinokur(object):
 
         self.points = bary[:, 1:]
         return
+
 
 def _r_alpha(alpha):
     '''From the article:
@@ -225,6 +228,7 @@ def _r_alpha(alpha):
         [b, b, a, b],
         [b, b, b, a],
         ])
+
 
 def _r_beta(beta):
     '''From the article:
@@ -245,6 +249,7 @@ def _r_beta(beta):
         [b, a, b, a],
         [b, b, a, a],
         ])
+
 
 def _r_gamma_delta(gamma, delta):
     '''From the article:

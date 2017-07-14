@@ -21,7 +21,7 @@ class Hillion(object):
         self.name = 'Hillion(%d)' % index
         if index == 1:
             self.weights = numpy.concatenate([
-                1.0 * numpy.ones(1),
+                numpy.full(1, 1.0),
                 ])
             self.points = numpy.array([
                 [1.0/3.0, 1.0/3.0]
@@ -29,8 +29,8 @@ class Hillion(object):
             self.degree = 1
         elif index == 2:
             self.weights = 2.0 * numpy.concatenate([
-                1.0/6.0 * numpy.ones(2),
-                1.0/6.0 * numpy.ones(1),
+                numpy.full(2, 1.0/6.0),
+                numpy.full(1, 1.0/6.0),
                 ])
             self.points = numpy.concatenate([
                 _symm(0.0, 0.5),
@@ -40,8 +40,8 @@ class Hillion(object):
         else:
             assert index == 3
             self.weights = 2.0 * numpy.concatenate([
-                1.0/6.0 * numpy.ones(2),
-                1.0/6.0 * numpy.ones(1),
+                numpy.full(2, 1.0/6.0),
+                numpy.full(1, 1.0/6.0),
                 ])
             self.points = numpy.concatenate([
                 2.0/3.0 - _symm(0.0, 0.5),
@@ -50,8 +50,8 @@ class Hillion(object):
             self.degree = 2
         # elif index == 4:
         #     self.weights = 2.0 * numpy.concatenate([
-        #         1.0/18.0 * numpy.ones(1),
-        #         2.0/9.0 * numpy.ones(2),
+        #         numpy.full(1, 1.0/18.0),
+        #         numpy.full(2, 2.0/9.0),
         #         ])
         #     self.points = numpy.concatenate([
         #         numpy.array([[0.0, 0.0]]),
@@ -60,8 +60,8 @@ class Hillion(object):
         #     self.degree = 2
         # elif index == 5:
         #     self.weights = 2.0 * numpy.concatenate([
-        #         1.0/18.0 * numpy.ones(1),
-        #         2.0/9.0 * numpy.ones(2),
+        #         numpy.full(1, 1.0/18.0),
+        #         numpy.full(2, 2.0/9.0),
         #         ])
         #     self.points = numpy.concatenate([
         #         2.0/3.0 - numpy.array([[0.0, 0.0]]),
@@ -70,7 +70,7 @@ class Hillion(object):
         #     self.degree = 2
         # elif index == 6:
         #     self.weights = 2.0 * numpy.concatenate([
-        #         1.0/8.0 * numpy.ones(4),
+        #         numpy.full(4, 1.0/8.0),
         #         ])
         #     lmbda = 0.655308609
         #     mu = 0.247060398
@@ -81,8 +81,8 @@ class Hillion(object):
         #     self.degree = 2
         # elif index == 7:
         #     self.weights = 2.0 * numpy.concatenate([
-        #         0.159020691 * numpy.ones(2),
-        #         0.090979309 * numpy.ones(2),
+        #         numpy.full(2, 0.159020691),
+        #         numpy.full(2, 0.090979309),
         #         ])
         #     self.points = numpy.concatenate([
         #         _symm(0.666390246, 0.280019915),
@@ -91,9 +91,9 @@ class Hillion(object):
         #     self.degree = 3
         # elif index == 8:
         #     self.weights = 2.0 * numpy.concatenate([
-        #         0.065104166 * numpy.ones(2),
-        #         0.192191138 * numpy.ones(1),
-        #         0.177600528 * numpy.ones(1),
+        #         numpy.full(2, 0.065104166),
+        #         numpy.full(1, 0.192191138),
+        #         numpy.full(1, 0.177600528),
         #         ])
         #     lambda2 = 0.433949142
         #     lambda3 = 0.175574667
@@ -105,8 +105,8 @@ class Hillion(object):
         #     self.degree = 3
         # elif index == 9:
         #     self.weights = 2.0 * numpy.concatenate([
-        #         9.0/32.0 * numpy.ones(1),
-        #         25.0/96.0 * numpy.ones(3),
+        #         numpy.full(1, 9.0/32.0),
+        #         numpy.full(3, 25.0/96.0),
         #         ])
         #     self.points = numpy.concatenate([
         #         numpy.array([[1.0/3.0, 1.0/3.0]]),
@@ -116,9 +116,9 @@ class Hillion(object):
         #     self.degree = 3
         # elif index == 10:
         #     self.weights = 2.0 * numpy.concatenate([
-        #         0.036232077 * numpy.ones(2),
-        #         0.083559589 * numpy.ones(2),
-        #         25.0/96.0 * numpy.ones(1),
+        #         numpy.full(2, 0.036232077),
+        #         numpy.full(2, 0.083559589),
+        #         numpy.full(1, 25.0/96.0),
         #         ])
         #     self.points = numpy.concatenate([
         #         _symm(0.939332590, 0.0),

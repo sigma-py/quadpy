@@ -16,11 +16,11 @@ class CoolsHaegemans(object):
         self.name = 'CH(%d)' % index
         assert index == 1
         self.weights = 2.0 * numpy.concatenate([
-            0.16058343856681218798E-09 * numpy.ones(3),
-            0.26530624434780379347E-01 * numpy.ones(3),
-            0.29285717640155892159E-01 * numpy.ones(3),
-            0.43909556791220782402E-01 * numpy.ones(3),
-            0.66940767639916174192E-01 * numpy.ones(3),
+            numpy.full(3, 0.16058343856681218798E-09),
+            numpy.full(3, 0.26530624434780379347E-01),
+            numpy.full(3, 0.29285717640155892159E-01),
+            numpy.full(3, 0.43909556791220782402E-01),
+            numpy.full(3, 0.66940767639916174192E-01),
             ])
         bary = numpy.concatenate([
             _r3(
@@ -47,14 +47,14 @@ class CoolsHaegemans(object):
         self.degree = 8
         # elif index == 2:
         #     self.weights = 2.0 * numpy.concatenate([
-        #         0.15319130036758557631E-06 * numpy.ones(3),
-        #         0.13260526227928785221E-01 * numpy.ones(3),
-        #         0.15646439344539042136E-01 * numpy.ones(3),
-        #         0.21704258224807323311E-01 * numpy.ones(3),
-        #         0.21797613600129922367E-01 * numpy.ones(3),
-        #         0.38587913508193459468E-01 * numpy.ones(3),
-        #         0.39699584282594413022E-01 * numpy.ones(3),
-        #         0.47910534861520060665E-01 * numpy.ones(1),
+        #         numpy.full(3, 0.15319130036758557631E-06),
+        #         numpy.full(3, 0.13260526227928785221E-01),
+        #         numpy.full(3, 0.15646439344539042136E-01),
+        #         numpy.full(3, 0.21704258224807323311E-01),
+        #         numpy.full(3, 0.21797613600129922367E-01),
+        #         numpy.full(3, 0.38587913508193459468E-01),
+        #         numpy.full(3, 0.39699584282594413022E-01),
+        #         numpy.full(1, 0.47910534861520060665E-01),
         #         ])
         #     bary = numpy.concatenate([
         #         _r3(

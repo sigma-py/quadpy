@@ -32,13 +32,13 @@ class ShunnHam(object):
             bary = _s4()
             self.degree = 1
         elif index == 2:
-            self.weights = 0.25 * numpy.ones(4)
+            self.weights = numpy.full(4, 0.25)
             bary = _s31(0.1381966011250110)
             self.degree = 2
         elif index == 3:
             self.weights = numpy.concatenate([
-                0.0476331348432089 * numpy.ones(4),
-                0.1349112434378610 * numpy.ones(6),
+                numpy.full(4, 0.0476331348432089),
+                numpy.full(6, 0.1349112434378610),
                 ])
             bary = numpy.concatenate([
                 _s31(0.0738349017262234),
@@ -47,9 +47,9 @@ class ShunnHam(object):
             self.degree = 3
         elif index == 4:
             self.weights = numpy.concatenate([
-                0.0070670747944695 * numpy.ones(4),
-                0.0469986689718877 * numpy.ones(12),
-                0.1019369182898680 * numpy.ones(4),
+                numpy.full(4, 0.0070670747944695),
+                numpy.full(12, 0.0469986689718877),
+                numpy.full(4, 0.1019369182898680),
                 ])
             bary = numpy.concatenate([
                 _s31(0.0323525947272439),
@@ -59,11 +59,11 @@ class ShunnHam(object):
             self.degree = 5
         elif index == 5:
             self.weights = numpy.concatenate([
-                0.0021900463965388 * numpy.ones(4),
-                0.0143395670177665 * numpy.ones(12),
-                0.0250305395686746 * numpy.ones(6),
-                0.0479839333057554 * numpy.ones(12),
-                0.0931745731195340 * numpy.ones(1)
+                numpy.full(4, 0.0021900463965388),
+                numpy.full(12, 0.0143395670177665),
+                numpy.full(6, 0.0250305395686746),
+                numpy.full(12, 0.0479839333057554),
+                numpy.full(1, 0.0931745731195340)
                 ])
             bary = numpy.concatenate([
                 _s31(0.0267367755543735),
@@ -76,12 +76,12 @@ class ShunnHam(object):
         else:
             assert index == 6
             self.weights = numpy.concatenate([
-                0.0010373112336140 * numpy.ones(4),
-                0.0096016645399480 * numpy.ones(12),
-                0.0164493976798232 * numpy.ones(12),
-                0.0153747766513310 * numpy.ones(12),
-                0.0293520118375230 * numpy.ones(12),
-                0.0366291366405108 * numpy.ones(4),
+                numpy.full(4, 0.0010373112336140),
+                numpy.full(12, 0.0096016645399480),
+                numpy.full(12, 0.0164493976798232),
+                numpy.full(12, 0.0153747766513310),
+                numpy.full(12, 0.0293520118375230),
+                numpy.full(4, 0.0366291366405108),
                 ])
             bary = numpy.concatenate([
                 _s31(0.0149520651530592),
