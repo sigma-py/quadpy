@@ -17,14 +17,14 @@ class Zienkiewicz(object):
     '''
     def __init__(self, index):
         if index == 4:
-            self.weights = 0.25 * numpy.ones(4)
+            self.weights = numpy.full(4, 0.25)
             bary = _s31(0.1381966011250105)
             self.degree = 2
         else:
             assert index == 5
             self.weights = numpy.concatenate([
-                -0.8 * numpy.ones(1),
-                0.45 * numpy.ones(4),
+                numpy.full(1, -0.8),
+                numpy.full(4, 0.45),
                 ])
             bary = numpy.concatenate([
                 _s4(),

@@ -33,7 +33,7 @@ class HammerMarloweStroud(object):
     def __init__(self, index):
         if index == 1:
             self.weights = numpy.concatenate([
-                0.25 * numpy.ones(4),
+                numpy.full(4, 0.25),
                 ])
             bary = numpy.concatenate([
                 _r(1.0 / numpy.sqrt(5.0)),
@@ -41,7 +41,7 @@ class HammerMarloweStroud(object):
             self.degree = 2
         elif index == 2:
             self.weights = numpy.concatenate([
-                0.25 * numpy.ones(4),
+                numpy.full(4, 0.25),
                 ])
             bary = numpy.concatenate([
                 _r(-1.0 / numpy.sqrt(5.0)),
@@ -50,8 +50,8 @@ class HammerMarloweStroud(object):
         else:
             assert index == 3
             self.weights = numpy.concatenate([
-                -0.8 * numpy.ones(1),
-                9.0/20.0 * numpy.ones(4),
+                numpy.full(1, -0.8),
+                numpy.full(4, 9.0/20.0),
                 ])
             bary = numpy.concatenate([
                 _s4(),

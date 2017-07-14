@@ -7,9 +7,9 @@ from .helpers import _s3, _s21
 class SevenPoint(object):
     def __init__(self):
         self.weights = numpy.concatenate([
-            0.45 * numpy.ones(1),
-            0.05 * numpy.ones(3),
-            2.0 / 15.0 * numpy.ones(3),
+            numpy.full(1, 0.45),
+            numpy.full(3, 0.05),
+            2.0 / numpy.full(3, 15.0),
             ])
         bary = numpy.concatenate([
             _s3(),

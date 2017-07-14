@@ -41,7 +41,7 @@ def integrate(f, center, radius, rule, sumfun=helpers.kahan_sum):
 
 class Equidistant(object):
     def __init__(self, n):
-        self.weights = numpy.ones(n) * (2 * numpy.pi) / n
+        self.weights = numpy.full(n, 2 * numpy.pi / n)
         self.points = numpy.column_stack([
             numpy.cos(2*numpy.pi * numpy.arange(n) / n),
             numpy.sin(2*numpy.pi * numpy.arange(n) / n),

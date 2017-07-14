@@ -16,10 +16,10 @@ class CoolsHaegemans(object):
         if index == 1:
             self.degree = 9
             self.weights = 4.0 * numpy.concatenate([
-                0.361130558151e-01 * numpy.ones(8),
-                0.535500902317e-01 * numpy.ones(4),
-                0.106828079664e-01 * numpy.ones(4),
-                0.113540990172 * numpy.ones(4)
+                numpy.full(8, 0.361130558151e-01),
+                numpy.full(4, 0.535500902317e-01),
+                numpy.full(4, 0.106828079664e-01),
+                numpy.full(4, 0.113540990172)
                 ])
             self.points = numpy.concatenate([
                 _s8(0.344872025364, 0.918620441057),
@@ -30,12 +30,12 @@ class CoolsHaegemans(object):
         elif index == 2:
             self.degree = 13
             self.weights = 4.0 * numpy.concatenate([
-                0.348818790231e-01 * numpy.ones(8),
-                0.344998496602e-01 * numpy.ones(8),
-                0.987441946914e-02 * numpy.ones(8),
-                0.203490805188e-01 * numpy.ones(8),
-                0.475325029082e-01 * numpy.ones(4),
-                0.325703974952e-02 * numpy.ones(4),
+                numpy.full(8, 0.348818790231e-01),
+                numpy.full(8, 0.344998496602e-01),
+                numpy.full(8, 0.987441946914e-02),
+                numpy.full(8, 0.203490805188e-01),
+                numpy.full(4, 0.475325029082e-01),
+                numpy.full(4, 0.325703974952e-02),
                 ])
             self.points = numpy.concatenate([
                 _s8(0.266676738695e-01, 0.377724312590),
@@ -49,12 +49,12 @@ class CoolsHaegemans(object):
             assert index == 3
             self.degree = 13
             self.weights = 4.0 * numpy.concatenate([
-                0.197386321888e-01 * numpy.ones(8),
-                0.484363166325e-01 * numpy.ones(8),
-                0.421281899422e-02 * numpy.ones(8),
-                0.287255968895e-01 * numpy.ones(8),
-                0.361061434781e-01 * numpy.ones(4),
-                0.116671271121e-01 * numpy.ones(4),
+                numpy.full(8, 0.197386321888e-01),
+                numpy.full(8, 0.484363166325e-01),
+                numpy.full(8, 0.421281899422e-02),
+                numpy.full(8, 0.287255968895e-01),
+                numpy.full(4, 0.361061434781e-01),
+                numpy.full(4, 0.116671271121e-01),
                 ])
             self.points = numpy.concatenate([
                 _s8(0.168234947696, 0.914794463441),
