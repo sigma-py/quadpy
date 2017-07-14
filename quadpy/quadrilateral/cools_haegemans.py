@@ -28,6 +28,25 @@ class CoolsHaegemans(object):
                 _s4(0.939655258097),
                 _s40(0.488926856974),
                 ])
+        elif index == 2:
+            # The article claims degree 9, but tests really only show degree 6.
+            self.degree = 6
+            self.weights = 4.0 * numpy.concatenate([
+                0.348818790231e-01 * numpy.ones(8),
+                0.344998496602e-01 * numpy.ones(8),
+                0.987441946914e-02 * numpy.ones(8),
+                0.203490805188e-01 * numpy.ones(8),
+                0.475325029082e-01 * numpy.ones(4),
+                0.325703974952e-02 * numpy.ones(4),
+                ])
+            self.points = numpy.concatenate([
+                _s8(0.266676738695e-01, 0.377724312590),
+                _s8(0.235988332487, 0.793396171109),
+                _s8(0.265486560241, 0.978761747825),
+                _s8(0.702141598362, 0.913909457030),
+                _s4(0.551473280570),
+                _s4(0.968340720218),
+                ])
         else:
             assert False
         return
