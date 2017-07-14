@@ -4,7 +4,6 @@ import math
 
 from helpers import create_monomial_exponents3, check_degree
 
-from matplotlib import pyplot as plt
 import numpy
 import pytest
 import quadpy
@@ -65,16 +64,17 @@ def _integrate_monomial_over_standard_tet(k):
 @pytest.mark.parametrize(
     'scheme',
     [quadpy.tetrahedron.HammerMarloweStroud(k) for k in [1, 2, 3]]
-    + [quadpy.tetrahedron.NewtonCotesClosed(k) for k in range(1, 7)]
-    + [quadpy.tetrahedron.NewtonCotesOpen(k) for k in range(7)]
-    + [quadpy.tetrahedron.Yu(k) for k in range(1, 6)]
     + [quadpy.tetrahedron.Keast(k) for k in range(11)]
     + [quadpy.tetrahedron.LiuVinokur(k) for k in range(1, 15)]
-    + [quadpy.tetrahedron.Zienkiewicz(k) for k in [4, 5]]
-    + [quadpy.tetrahedron.ZhangCuiLiu(k) for k in [1, 2]]
+    + [quadpy.tetrahedron.MaeztuSainz()]
+    + [quadpy.tetrahedron.NewtonCotesClosed(k) for k in range(1, 7)]
+    + [quadpy.tetrahedron.NewtonCotesOpen(k) for k in range(7)]
     + [quadpy.tetrahedron.ShunnHam(k) for k in range(1, 7)]
     + [quadpy.tetrahedron.WilliamsShunnJameson()]
     + [quadpy.tetrahedron.XiaoGimbutas(k) for k in range(1, 16)]
+    + [quadpy.tetrahedron.Yu(k) for k in range(1, 6)]
+    + [quadpy.tetrahedron.ZhangCuiLiu(k) for k in [1, 2]]
+    + [quadpy.tetrahedron.Zienkiewicz(k) for k in [4, 5]]
     )
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
@@ -113,7 +113,8 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.tetrahedron.ShunnHam(2)
+    scheme_ = quadpy.tetrahedron.MaeztuSainz()
     test_scheme(scheme_)
-    test_show(scheme_)
-    plt.show()
+    # from matplotlib import pyplot as plt
+    # test_show(scheme_)
+    # plt.show()
