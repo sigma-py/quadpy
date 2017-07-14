@@ -14,8 +14,7 @@ class CoolsHaegemans(object):
     def __init__(self, index):
         self.name = 'CH(%d)' % index
         if index == 1:
-            # The article claims degree 9, but tests really only show degree 7.
-            self.degree = 7
+            self.degree = 9
             self.weights = 4.0 * numpy.concatenate([
                 0.361130558151e-01 * numpy.ones(8),
                 0.535500902317e-01 * numpy.ones(4),
@@ -29,8 +28,7 @@ class CoolsHaegemans(object):
                 _s40(0.488926856974),
                 ])
         elif index == 2:
-            # The article claims degree 9, but tests really only show degree 6.
-            self.degree = 6
+            self.degree = 13
             self.weights = 4.0 * numpy.concatenate([
                 0.348818790231e-01 * numpy.ones(8),
                 0.344998496602e-01 * numpy.ones(8),

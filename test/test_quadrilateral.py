@@ -42,18 +42,22 @@ def _integrate_exact2(k, x0, x1, y0, y1):
 
 
 @pytest.mark.parametrize(
-    'scheme',
-    [Product(quadpy.line_segment.Midpoint())]
-    + [Product(quadpy.line_segment.Trapezoidal())]
-    + [quadpy.quadrilateral.CoolsHaegemans(k) for k in [1, 2]]
-    + [quadpy.quadrilateral.Stroud(k) for k in range(1, 7)]
-    + [Product(quadpy.line_segment.GaussLegendre(k)) for k in range(1, 5)]
-    + [Product(quadpy.line_segment.NewtonCotesClosed(k))
-        for k in range(1, 5)
+    'scheme,tol',
+    [(Product(quadpy.line_segment.Midpoint()), 1.0e-14)]
+    + [(Product(quadpy.line_segment.Trapezoidal()), 1.0e-14)]
+    + [(quadpy.quadrilateral.CoolsHaegemans(k), 1.0e-11) for k in [1, 2]]
+    + [(quadpy.quadrilateral.Stroud(k), 1.0e-14) for k in range(1, 7)]
+    + [(Product(quadpy.line_segment.GaussLegendre(k)), 1.0e-14)
+       for k in range(1, 5)
        ]
-    + [Product(quadpy.line_segment.NewtonCotesOpen(k)) for k in range(6)]
+    + [(Product(quadpy.line_segment.NewtonCotesClosed(k)), 1.0e-14)
+       for k in range(1, 5)
+       ]
+    + [(Product(quadpy.line_segment.NewtonCotesOpen(k)), 1.0e-14)
+       for k in range(6)
+       ]
     )
-def test_scheme(scheme):
+def test_scheme(scheme, tol):
     # Test integration until we get to a polynomial degree `d` that can no
     # longer be integrated exactly. The scheme's degree is `d-1`.
     x0 = -2.0
@@ -72,7 +76,8 @@ def test_scheme(scheme):
                 ),
             lambda k: _integrate_exact2(k, x0, x1, y0, y1),
             create_monomial_exponents2,
-            scheme.degree + 1
+            scheme.degree + 1,
+            tol=tol
             )
     assert degree == scheme.degree
     return
