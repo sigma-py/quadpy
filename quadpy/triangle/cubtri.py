@@ -19,12 +19,12 @@ class Cubtri(object):
     def __init__(self):
         self.name = 'CUBTRI'
         self.weights = numpy.concatenate([
-            0.0378610912003147 * numpy.ones(1),
-            0.0376204254131829 * numpy.ones(3),
-            0.0783573522441174 * numpy.ones(3),
-            0.1162714796569659 * numpy.ones(3),
-            0.0134442673751655 * numpy.ones(3),
-            0.0375097224552317 * numpy.ones(6),
+            numpy.full(1, 0.0378610912003147),
+            numpy.full(3, 0.0376204254131829),
+            numpy.full(3, 0.0783573522441174),
+            numpy.full(3, 0.1162714796569659),
+            numpy.full(3, 0.0134442673751655),
+            numpy.full(6, 0.0375097224552317),
             ])
 
         bary = numpy.concatenate([

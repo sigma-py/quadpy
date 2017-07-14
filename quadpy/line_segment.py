@@ -197,7 +197,7 @@ class ChebyshevGauss1(object):
         self.points = numpy.cos(
                 (2*numpy.arange(1, n+1) - 1.0) / (2*n) * numpy.pi
                 )
-        self.weights = numpy.pi / n * numpy.ones(n)
+        self.weights = numpy.full(n, numpy.pi / n)
         return
 
 

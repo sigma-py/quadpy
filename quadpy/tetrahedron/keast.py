@@ -31,14 +31,14 @@ class Keast(object):
             self.degree = 1
         elif index == 1:
             # Does no appear in Keast's article.
-            self.weights = 0.25 * numpy.ones(4)
+            self.weights = numpy.full(4, 0.25)
             bary = _s31(0.1381966011250105)
             self.degree = 2
         elif index == 2:
             # Does no appear in Keast's article.
             self.weights = numpy.concatenate([
-                -0.8 * numpy.ones(1),
-                0.45 * numpy.ones(4),
+                numpy.full(1, -0.8),
+                numpy.full(4, 0.45),
                 ])
             bary = numpy.concatenate([
                 _s4(),
@@ -48,8 +48,8 @@ class Keast(object):
         elif index == 3:
             # Does no appear in Keast's article.
             self.weights = numpy.concatenate([
-                0.2177650698804054 * numpy.ones(4),
-                0.0214899534130631 * numpy.ones(6),
+                numpy.full(4, 0.2177650698804054),
+                numpy.full(6, 0.0214899534130631),
                 ])
             bary = numpy.concatenate([
                 _s31(0.1438564719343852),
@@ -58,9 +58,9 @@ class Keast(object):
             self.degree = 3
         elif index == 4:
             self.weights = numpy.concatenate([
-                -148.0 / 1875.0 * numpy.ones(1),
-                343.0 / 7500.0 * numpy.ones(4),
-                56.0 / 375.0 * numpy.ones(6),
+                -148.0 / numpy.full(1, 1875.0),
+                343.0 / numpy.full(4, 7500.0),
+                56.0 / numpy.full(6, 375.0),
                 ])
             bary = numpy.concatenate([
                 _s4(),
@@ -70,9 +70,9 @@ class Keast(object):
             self.degree = 4
         elif index == 5:
             self.weights = numpy.concatenate([
-                2.0/105.0 * numpy.ones(6),
-                0.0885898247429807 * numpy.ones(4),
-                0.1328387466855907 * numpy.ones(4),
+                numpy.full(6, 2.0/105.0),
+                numpy.full(4, 0.0885898247429807),
+                numpy.full(4, 0.1328387466855907),
                 ])
             bary = numpy.concatenate([
                 _s22(0.5),
@@ -82,10 +82,10 @@ class Keast(object):
             self.degree = 4
         elif index == 6:
             self.weights = numpy.concatenate([
-                6544.0 / 36015.0 * numpy.ones(1),
-                81.0 / 2240.0 * numpy.ones(4),
-                161051.0 / 2304960.0 * numpy.ones(4),
-                338.0 / 5145.0 * numpy.ones(6),
+                6544.0 / numpy.full(1, 36015.0),
+                81.0 / numpy.full(4, 2240.0),
+                161051.0 / numpy.full(4, 2304960.0),
+                338.0 / numpy.full(6, 5145.0),
                 ])
             bary = numpy.concatenate([
                 _s4(),
@@ -96,10 +96,10 @@ class Keast(object):
             self.degree = 5
         elif index == 7:
             self.weights = numpy.concatenate([
-                0.0399227502581679 * numpy.ones(4),
-                0.0100772110553207 * numpy.ones(4),
-                0.0553571815436544 * numpy.ones(4),
-                27.0/560.0 * numpy.ones(12),
+                numpy.full(4, 0.0399227502581679),
+                numpy.full(4, 0.0100772110553207),
+                numpy.full(4, 0.0553571815436544),
+                numpy.full(12, 27.0/560.0),
                 ])
             bary = numpy.concatenate([
                 _s31(0.2146028712591517),
@@ -110,12 +110,12 @@ class Keast(object):
             self.degree = 6
         elif index == 8:
             self.weights = numpy.concatenate([
-                0.1095853407966528 * numpy.ones(1),
-                0.0635996491464850 * numpy.ones(4),
-                -0.3751064406859797 * numpy.ones(4),
-                0.0293485515784412 * numpy.ones(4),
-                0.0058201058201058 * numpy.ones(6),
-                0.1653439153439105 * numpy.ones(12),
+                numpy.full(1, 0.1095853407966528),
+                numpy.full(4, 0.0635996491464850),
+                numpy.full(4, -0.3751064406859797),
+                numpy.full(4, 0.0293485515784412),
+                numpy.full(6, 0.0058201058201058),
+                numpy.full(12, 0.1653439153439105),
                 ])
             bary = numpy.concatenate([
                 _s4(),
@@ -128,13 +128,13 @@ class Keast(object):
             self.degree = 7
         elif index == 9:
             self.weights = numpy.concatenate([
-                -0.2359620398477557 * numpy.ones(1),
-                0.0244878963560562 * numpy.ones(4),
-                0.0039485206398261 * numpy.ones(4),
-                0.0263055529507371 * numpy.ones(6),
-                0.0829803830550589 * numpy.ones(6),
-                0.0254426245481023 * numpy.ones(12),
-                0.0134324384376852 * numpy.ones(12),
+                numpy.full(1, -0.2359620398477557),
+                numpy.full(4, 0.0244878963560562),
+                numpy.full(4, 0.0039485206398261),
+                numpy.full(6, 0.0263055529507371),
+                numpy.full(6, 0.0829803830550589),
+                numpy.full(12, 0.0254426245481023),
+                numpy.full(12, 0.0134324384376852),
                 ])
             bary = numpy.concatenate([
                 _s4(),
@@ -151,13 +151,13 @@ class Keast(object):
             self.weights = 6 * numpy.concatenate([
                 # Note: In Keast's article, the first weight is incorrectly
                 # given with a positive sign.
-                -0.393270066412926145e-01 * numpy.ones(1),
-                +0.408131605934270525e-02 * numpy.ones(4),
-                +0.658086773304341943e-03 * numpy.ones(4),
-                +0.438425882512284693e-02 * numpy.ones(6),
-                +0.138300638425098166e-01 * numpy.ones(6),
-                +0.424043742468372453e-02 * numpy.ones(12),
-                +0.223873973961420164e-02 * numpy.ones(12),
+                numpy.full(1, -0.393270066412926145e-01),
+                numpy.full(4, +0.408131605934270525e-02),
+                numpy.full(4, +0.658086773304341943e-03),
+                numpy.full(6, +0.438425882512284693e-02),
+                numpy.full(6, +0.138300638425098166e-01),
+                numpy.full(12, +0.424043742468372453e-02),
+                numpy.full(12, +0.223873973961420164e-02),
                 ])
             bary = numpy.concatenate([
                 _s4(),
