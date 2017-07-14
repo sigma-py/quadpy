@@ -23,13 +23,13 @@ class Dunavant(object):
             bary = _s3()
             self.degree = 1
         elif index == 2:
-            self.weights = 1.0/3.0 * numpy.ones(3)
+            self.weights = numpy.full(3, 1.0/3.0)
             bary = _s21(1.0/6.0)
             self.degree = 2
         elif index == 3:
             self.weights = numpy.concatenate([
-                -0.5625 * numpy.ones(1),
-                25.0 / 48.0 * numpy.ones(3),
+                numpy.full(1, -0.5625),
+                25.0 / numpy.full(3, 48.0),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -38,8 +38,8 @@ class Dunavant(object):
             self.degree = 3
         elif index == 4:
             self.weights = numpy.concatenate([
-                0.223381589678011 * numpy.ones(3),
-                0.109951743655322 * numpy.ones(3),
+                numpy.full(3, 0.223381589678011),
+                numpy.full(3, 0.109951743655322),
                 ])
             bary = numpy.concatenate([
                 _s21(0.445948490915965),
@@ -48,9 +48,9 @@ class Dunavant(object):
             self.degree = 4
         elif index == 5:
             self.weights = numpy.concatenate([
-                0.225 * numpy.ones(1),
-                0.132394152788506 * numpy.ones(3),
-                0.125939180544827 * numpy.ones(3),
+                numpy.full(1, 0.225),
+                numpy.full(3, 0.132394152788506),
+                numpy.full(3, 0.125939180544827),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -60,9 +60,9 @@ class Dunavant(object):
             self.degree = 5
         elif index == 6:
             self.weights = numpy.concatenate([
-                0.116786275726379 * numpy.ones(3),
-                0.050844906370207 * numpy.ones(3),
-                0.082851075618374 * numpy.ones(6),
+                numpy.full(3, 0.116786275726379),
+                numpy.full(3, 0.050844906370207),
+                numpy.full(6, 0.082851075618374),
                 ])
             bary = numpy.concatenate([
                 _s21(0.249286745170910),
@@ -72,10 +72,10 @@ class Dunavant(object):
             self.degree = 6
         elif index == 7:
             self.weights = numpy.concatenate([
-                -0.149570044467682 * numpy.ones(1),
-                0.175615257433208 * numpy.ones(3),
-                0.053347235608838 * numpy.ones(3),
-                0.077113760890257 * numpy.ones(6),
+                numpy.full(1, -0.149570044467682),
+                numpy.full(3, 0.175615257433208),
+                numpy.full(3, 0.053347235608838),
+                numpy.full(6, 0.077113760890257),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -86,11 +86,11 @@ class Dunavant(object):
             self.degree = 7
         elif index == 8:
             self.weights = numpy.concatenate([
-                0.144315607677787 * numpy.ones(1),
-                0.095091634267285 * numpy.ones(3),
-                0.103217370534718 * numpy.ones(3),
-                0.032458497623198 * numpy.ones(3),
-                0.027230314174435 * numpy.ones(6),
+                numpy.full(1, 0.144315607677787),
+                numpy.full(3, 0.095091634267285),
+                numpy.full(3, 0.103217370534718),
+                numpy.full(3, 0.032458497623198),
+                numpy.full(6, 0.027230314174435),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -102,12 +102,12 @@ class Dunavant(object):
             self.degree = 8
         elif index == 9:
             self.weights = numpy.concatenate([
-                0.097135796282799 * numpy.ones(1),
-                0.031334700227139 * numpy.ones(3),
-                0.077827541004774 * numpy.ones(3),
-                0.079647738927210 * numpy.ones(3),
-                0.025577675658698 * numpy.ones(3),
-                0.043283539377289 * numpy.ones(6),
+                numpy.full(1, 0.097135796282799),
+                numpy.full(3, 0.031334700227139),
+                numpy.full(3, 0.077827541004774),
+                numpy.full(3, 0.079647738927210),
+                numpy.full(3, 0.025577675658698),
+                numpy.full(6, 0.043283539377289),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -120,12 +120,12 @@ class Dunavant(object):
             self.degree = 9
         elif index == 10:
             self.weights = numpy.concatenate([
-                0.090817990382754 * numpy.ones(1),
-                0.036725957756467 * numpy.ones(3),
-                0.045321059435528 * numpy.ones(3),
-                0.072757916845420 * numpy.ones(6),
-                0.028327242531057 * numpy.ones(6),
-                0.009421666963733 * numpy.ones(6),
+                numpy.full(1, 0.090817990382754),
+                numpy.full(3, 0.036725957756467),
+                numpy.full(3, 0.045321059435528),
+                numpy.full(6, 0.072757916845420),
+                numpy.full(6, 0.028327242531057),
+                numpy.full(6, 0.009421666963733),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -138,13 +138,13 @@ class Dunavant(object):
             self.degree = 10
         elif index == 11:
             self.weights = numpy.concatenate([
-                0.000927006328961 * numpy.ones(3),
-                0.077149534914813 * numpy.ones(3),
-                0.059322977380774 * numpy.ones(3),
-                0.036184540503418 * numpy.ones(3),
-                0.013659731002678 * numpy.ones(3),
-                0.052337111962204 * numpy.ones(6),
-                0.020707659639141 * numpy.ones(6),
+                numpy.full(3, 0.000927006328961),
+                numpy.full(3, 0.077149534914813),
+                numpy.full(3, 0.059322977380774),
+                numpy.full(3, 0.036184540503418),
+                numpy.full(3, 0.013659731002678),
+                numpy.full(6, 0.052337111962204),
+                numpy.full(6, 0.020707659639141),
                 ])
             bary = numpy.concatenate([
                 _s21(0.534611048270758),
@@ -158,14 +158,14 @@ class Dunavant(object):
             self.degree = 11
         elif index == 12:
             self.weights = numpy.concatenate([
-                0.025731066440455 * numpy.ones(3),
-                0.043692544538038 * numpy.ones(3),
-                0.062858224217885 * numpy.ones(3),
-                0.034796112930709 * numpy.ones(3),
-                0.006166261051559 * numpy.ones(3),
-                0.040371557766381 * numpy.ones(6),
-                0.022356773202303 * numpy.ones(6),
-                0.017316231108659 * numpy.ones(6),
+                numpy.full(3, 0.025731066440455),
+                numpy.full(3, 0.043692544538038),
+                numpy.full(3, 0.062858224217885),
+                numpy.full(3, 0.034796112930709),
+                numpy.full(3, 0.006166261051559),
+                numpy.full(6, 0.040371557766381),
+                numpy.full(6, 0.022356773202303),
+                numpy.full(6, 0.017316231108659),
                 ])
             bary = numpy.concatenate([
                 _s21(0.488217389773805),
@@ -180,16 +180,16 @@ class Dunavant(object):
             self.degree = 12
         elif index == 13:
             self.weights = numpy.concatenate([
-                0.052520923400802 * numpy.ones(1),
-                0.011280145209330 * numpy.ones(3),
-                0.031423518362454 * numpy.ones(3),
-                0.047072502504194 * numpy.ones(3),
-                0.047363586536355 * numpy.ones(3),
-                0.031167529045794 * numpy.ones(3),
-                0.007975771465074 * numpy.ones(3),
-                0.036848402728732 * numpy.ones(6),
-                0.017401463303822 * numpy.ones(6),
-                0.015521786839045 * numpy.ones(6),
+                numpy.full(1, 0.052520923400802),
+                numpy.full(3, 0.011280145209330),
+                numpy.full(3, 0.031423518362454),
+                numpy.full(3, 0.047072502504194),
+                numpy.full(3, 0.047363586536355),
+                numpy.full(3, 0.031167529045794),
+                numpy.full(3, 0.007975771465074),
+                numpy.full(6, 0.036848402728732),
+                numpy.full(6, 0.017401463303822),
+                numpy.full(6, 0.015521786839045),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -206,16 +206,16 @@ class Dunavant(object):
             self.degree = 13
         elif index == 14:
             self.weights = numpy.concatenate([
-                0.021883581369429 * numpy.ones(3),
-                0.032788353544125 * numpy.ones(3),
-                0.051774104507292 * numpy.ones(3),
-                0.042162588736993 * numpy.ones(3),
-                0.014433699669777 * numpy.ones(3),
-                0.004923403602400 * numpy.ones(3),
-                0.024665753212564 * numpy.ones(6),
-                0.038571510787061 * numpy.ones(6),
-                0.014436308113534 * numpy.ones(6),
-                0.005010228838501 * numpy.ones(6),
+                numpy.full(3, 0.021883581369429),
+                numpy.full(3, 0.032788353544125),
+                numpy.full(3, 0.051774104507292),
+                numpy.full(3, 0.042162588736993),
+                numpy.full(3, 0.014433699669777),
+                numpy.full(3, 0.004923403602400),
+                numpy.full(6, 0.024665753212564),
+                numpy.full(6, 0.038571510787061),
+                numpy.full(6, 0.014436308113534),
+                numpy.full(6, 0.005010228838501),
                 ])
             bary = numpy.concatenate([
                 _s21(0.488963910362179),
@@ -232,17 +232,17 @@ class Dunavant(object):
             self.degree = 14
         elif index == 15:
             self.weights = numpy.concatenate([
-                0.001916875642849 * numpy.ones(3),
-                0.044249027271145 * numpy.ones(3),
-                0.051186548718852 * numpy.ones(3),
-                0.023687735870688 * numpy.ones(3),
-                0.013289775690021 * numpy.ones(3),
-                0.004748916608192 * numpy.ones(3),
-                0.038550072599593 * numpy.ones(6),
-                0.027215814320624 * numpy.ones(6),
-                0.002182077366797 * numpy.ones(6),
-                0.021505319847731 * numpy.ones(6),
-                0.007673942631049 * numpy.ones(6),
+                numpy.full(3, 0.001916875642849),
+                numpy.full(3, 0.044249027271145),
+                numpy.full(3, 0.051186548718852),
+                numpy.full(3, 0.023687735870688),
+                numpy.full(3, 0.013289775690021),
+                numpy.full(3, 0.004748916608192),
+                numpy.full(6, 0.038550072599593),
+                numpy.full(6, 0.027215814320624),
+                numpy.full(6, 0.002182077366797),
+                numpy.full(6, 0.021505319847731),
+                numpy.full(6, 0.007673942631049),
                 ])
             bary = numpy.concatenate([
                 _s21(0.506972916858243),
@@ -260,19 +260,19 @@ class Dunavant(object):
             self.degree = 15
         elif index == 16:
             self.weights = numpy.concatenate([
-                0.046875697427642 * numpy.ones(1),
-                0.006405878578585 * numpy.ones(3),
-                0.041710296739387 * numpy.ones(3),
-                0.026891484250064 * numpy.ones(3),
-                0.042132522761650 * numpy.ones(3),
-                0.030000266842773 * numpy.ones(3),
-                0.014200098925024 * numpy.ones(3),
-                0.003582462351273 * numpy.ones(3),
-                0.032773147460627 * numpy.ones(6),
-                0.015298306248441 * numpy.ones(6),
-                0.002386244192839 * numpy.ones(6),
-                0.019084792755899 * numpy.ones(6),
-                0.006850054546542 * numpy.ones(6),
+                numpy.full(1, 0.046875697427642),
+                numpy.full(3, 0.006405878578585),
+                numpy.full(3, 0.041710296739387),
+                numpy.full(3, 0.026891484250064),
+                numpy.full(3, 0.042132522761650),
+                numpy.full(3, 0.030000266842773),
+                numpy.full(3, 0.014200098925024),
+                numpy.full(3, 0.003582462351273),
+                numpy.full(6, 0.032773147460627),
+                numpy.full(6, 0.015298306248441),
+                numpy.full(6, 0.002386244192839),
+                numpy.full(6, 0.019084792755899),
+                numpy.full(6, 0.006850054546542),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -292,21 +292,21 @@ class Dunavant(object):
             self.degree = 16
         elif index == 17:
             self.weights = numpy.concatenate([
-                0.033437199290803 * numpy.ones(1),
-                0.005093415440507 * numpy.ones(3),
-                0.014670864527638 * numpy.ones(3),
-                0.024350878353672 * numpy.ones(3),
-                0.031107550868969 * numpy.ones(3),
-                0.031257111218620 * numpy.ones(3),
-                0.024815654339665 * numpy.ones(3),
-                0.014056073070557 * numpy.ones(3),
-                0.003194676173779 * numpy.ones(3),
-                0.008119655318993 * numpy.ones(6),
-                0.026805742283163 * numpy.ones(6),
-                0.018459993210822 * numpy.ones(6),
-                0.008476868534328 * numpy.ones(6),
-                0.018292796770025 * numpy.ones(6),
-                0.006665632004165 * numpy.ones(6),
+                numpy.full(1, 0.033437199290803),
+                numpy.full(3, 0.005093415440507),
+                numpy.full(3, 0.014670864527638),
+                numpy.full(3, 0.024350878353672),
+                numpy.full(3, 0.031107550868969),
+                numpy.full(3, 0.031257111218620),
+                numpy.full(3, 0.024815654339665),
+                numpy.full(3, 0.014056073070557),
+                numpy.full(3, 0.003194676173779),
+                numpy.full(6, 0.008119655318993),
+                numpy.full(6, 0.026805742283163),
+                numpy.full(6, 0.018459993210822),
+                numpy.full(6, 0.008476868534328),
+                numpy.full(6, 0.018292796770025),
+                numpy.full(6, 0.006665632004165),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -328,23 +328,23 @@ class Dunavant(object):
             self.degree = 17
         elif index == 18:
             self.weights = numpy.concatenate([
-                0.030809939937647 * numpy.ones(1),
-                0.009072436679404 * numpy.ones(3),
-                0.018761316939594 * numpy.ones(3),
-                0.019441097985477 * numpy.ones(3),
-                0.027753948610810 * numpy.ones(3),
-                0.032256225351457 * numpy.ones(3),
-                0.025074032616922 * numpy.ones(3),
-                0.015271927971832 * numpy.ones(3),
-                0.006793922022963 * numpy.ones(3),
-                -0.002223098729920 * numpy.ones(3),
-                0.006331914076406 * numpy.ones(6),
-                0.027257538049138 * numpy.ones(6),
-                0.017676785649465 * numpy.ones(6),
-                0.018379484638070 * numpy.ones(6),
-                0.008104732808192 * numpy.ones(6),
-                0.007634129070725 * numpy.ones(6),
-                0.000046187660794 * numpy.ones(6),
+                numpy.full(1, 0.030809939937647),
+                numpy.full(3, 0.009072436679404),
+                numpy.full(3, 0.018761316939594),
+                numpy.full(3, 0.019441097985477),
+                numpy.full(3, 0.027753948610810),
+                numpy.full(3, 0.032256225351457),
+                numpy.full(3, 0.025074032616922),
+                numpy.full(3, 0.015271927971832),
+                numpy.full(3, 0.006793922022963),
+                numpy.full(3, -0.002223098729920),
+                numpy.full(6, 0.006331914076406),
+                numpy.full(6, 0.027257538049138),
+                numpy.full(6, 0.017676785649465),
+                numpy.full(6, 0.018379484638070),
+                numpy.full(6, 0.008104732808192),
+                numpy.full(6, 0.007634129070725),
+                numpy.full(6, 0.000046187660794),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -369,25 +369,25 @@ class Dunavant(object):
             self.degree = 18
         elif index == 19:
             self.weights = numpy.concatenate([
-                0.032906331388919 * numpy.ones(1),
+                numpy.full(1, 0.032906331388919),
                 #
-                0.010330731891272 * numpy.ones(3),
-                0.022387247263016 * numpy.ones(3),
-                0.030266125869468 * numpy.ones(3),
-                0.030490967802198 * numpy.ones(3),
-                0.024159212741641 * numpy.ones(3),
-                0.016050803586801 * numpy.ones(3),
-                0.008084580261784 * numpy.ones(3),
-                0.002079362027485 * numpy.ones(3),
+                numpy.full(3, 0.010330731891272),
+                numpy.full(3, 0.022387247263016),
+                numpy.full(3, 0.030266125869468),
+                numpy.full(3, 0.030490967802198),
+                numpy.full(3, 0.024159212741641),
+                numpy.full(3, 0.016050803586801),
+                numpy.full(3, 0.008084580261784),
+                numpy.full(3, 0.002079362027485),
                 #
-                0.003884876904981 * numpy.ones(6),
-                0.025574160612022 * numpy.ones(6),
-                0.008880903573338 * numpy.ones(6),
-                0.016124546761731 * numpy.ones(6),
-                0.002491941817491 * numpy.ones(6),
-                0.018242840118951 * numpy.ones(6),
-                0.010258563736199 * numpy.ones(6),
-                0.003799928855302 * numpy.ones(6),
+                numpy.full(6, 0.003884876904981),
+                numpy.full(6, 0.025574160612022),
+                numpy.full(6, 0.008880903573338),
+                numpy.full(6, 0.016124546761731),
+                numpy.full(6, 0.002491941817491),
+                numpy.full(6, 0.018242840118951),
+                numpy.full(6, 0.010258563736199),
+                numpy.full(6, 0.003799928855302),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -412,27 +412,27 @@ class Dunavant(object):
         else:
             assert index == 20
             self.weights = numpy.concatenate([
-                0.033057055541624 * numpy.ones(1),
+                numpy.full(1, 0.033057055541624),
                 #
-                0.000867019185663 * numpy.ones(3),
-                0.011660052716448 * numpy.ones(3),
-                0.022876936356421 * numpy.ones(3),
-                0.030448982673938 * numpy.ones(3),
-                0.030624891725355 * numpy.ones(3),
-                0.024368057676800 * numpy.ones(3),
-                0.015997432032024 * numpy.ones(3),
-                0.007698301815602 * numpy.ones(3),
-                -0.000632060497488 * numpy.ones(3),
-                0.001751134301193 * numpy.ones(3),
+                numpy.full(3, 0.000867019185663),
+                numpy.full(3, 0.011660052716448),
+                numpy.full(3, 0.022876936356421),
+                numpy.full(3, 0.030448982673938),
+                numpy.full(3, 0.030624891725355),
+                numpy.full(3, 0.024368057676800),
+                numpy.full(3, 0.015997432032024),
+                numpy.full(3, 0.007698301815602),
+                numpy.full(3, -0.000632060497488),
+                numpy.full(3, 0.001751134301193),
                 #
-                0.016465839189576 * numpy.ones(6),
-                0.004839033540485 * numpy.ones(6),
-                0.025804906534650 * numpy.ones(6),
-                0.008471091054441 * numpy.ones(6),
-                0.018354914106280 * numpy.ones(6),
-                0.000704404677908 * numpy.ones(6),
-                0.010112684927462 * numpy.ones(6),
-                0.003573909385950 * numpy.ones(6),
+                numpy.full(6, 0.016465839189576),
+                numpy.full(6, 0.004839033540485),
+                numpy.full(6, 0.025804906534650),
+                numpy.full(6, 0.008471091054441),
+                numpy.full(6, 0.018354914106280),
+                numpy.full(6, 0.000704404677908),
+                numpy.full(6, 0.010112684927462),
+                numpy.full(6, 0.003573909385950),
                 ])
             bary = numpy.concatenate([
                 _s3(),

@@ -21,12 +21,12 @@ class Triex(object):
         self.name = 'TRIEX(%d)' % index
         if index == 19:
             self.weights = numpy.concatenate([
-                9.71357962827961025E-002 * numpy.ones(1),
-                3.13347002271398278E-002 * numpy.ones(3),
-                7.78275410047754301E-002 * numpy.ones(3),
-                7.96477389272090969E-002 * numpy.ones(3),
-                2.55776756586981006E-002 * numpy.ones(3),
-                4.32835393772893970E-002 * numpy.ones(6),
+                numpy.full(1, 9.71357962827961025E-002),
+                numpy.full(3, 3.13347002271398278E-002),
+                numpy.full(3, 7.78275410047754301E-002),
+                numpy.full(3, 7.96477389272090969E-002),
+                numpy.full(3, 2.55776756586981006E-002),
+                numpy.full(6, 4.32835393772893970E-002),
                 ])
             bary = numpy.concatenate([
                 _s3(),
@@ -41,14 +41,14 @@ class Triex(object):
         else:
             assert index == 28
             self.weights = numpy.concatenate([
-                0.08797730116222190 * numpy.ones(1),
-                0.008744311553736190 * numpy.ones(3),
-                0.03808157199393533 * numpy.ones(3),
-                0.01885544805613125 * numpy.ones(3),
-                0.07215969754474100 * numpy.ones(3),
-                0.06932913870553720 * numpy.ones(3),
-                0.04105631542928860 * numpy.ones(6),
-                0.007362383783300573 * numpy.ones(6),
+                numpy.full(1, 0.08797730116222190),
+                numpy.full(3, 0.008744311553736190),
+                numpy.full(3, 0.03808157199393533),
+                numpy.full(3, 0.01885544805613125),
+                numpy.full(3, 0.07215969754474100),
+                numpy.full(3, 0.06932913870553720),
+                numpy.full(6, 0.04105631542928860),
+                numpy.full(6, 0.007362383783300573),
                 ])
             bary = numpy.concatenate([
                 _s3(),

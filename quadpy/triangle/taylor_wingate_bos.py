@@ -23,13 +23,13 @@ class TaylorWingateBos(object):
     def __init__(self, index):
         self.name = 'TWB(%d)' % index
         if index == 1:
-            self.weights = 1.0/3.0 * numpy.ones(3)
+            self.weights = numpy.full(3, 1.0/3.0)
             bary = _s21(1.0/6.0)
             self.degree = 2
         elif index == 2:
             self.weights = 0.5 * numpy.concatenate([
-                0.2199034873106 * numpy.ones(3),
-                0.4467631793560 * numpy.ones(3),
+                numpy.full(3, 0.2199034873106),
+                numpy.full(3, 0.4467631793560),
                 ])
             bary = numpy.concatenate([
                 _s21(0.0915762135098),
@@ -41,10 +41,10 @@ class TaylorWingateBos(object):
             # self.degree = 5
         elif index == 4:
             self.weights = 0.5 * numpy.concatenate([
-                0.0102558174092 * numpy.ones(3),
-                0.1116047046647 * numpy.ones(6),
-                0.1679775595335 * numpy.ones(3),
-                0.2652238803946 * numpy.ones(3),
+                numpy.full(3, 0.0102558174092),
+                numpy.full(6, 0.1116047046647),
+                numpy.full(3, 0.1679775595335),
+                numpy.full(3, 0.2652238803946),
                 ])
             bary = numpy.concatenate([
                 _s21(0.0),
@@ -55,11 +55,11 @@ class TaylorWingateBos(object):
             self.degree = 7
         elif index == 5:
             self.weights = 0.5 * numpy.concatenate([
-                 0.0519871420646 * numpy.ones(3),
-                 0.0707034101784 * numpy.ones(6),
-                 0.0909390760952 * numpy.ones(6),
-                 0.1032344051380 * numpy.ones(3),
-                 0.1881601469167 * numpy.ones(3),
+                 numpy.full(3, 0.0519871420646),
+                 numpy.full(6, 0.0707034101784),
+                 numpy.full(6, 0.0909390760952),
+                 numpy.full(3, 0.1032344051380),
+                 numpy.full(3, 0.1881601469167),
                 ])
             bary = numpy.concatenate([
                 _s21(0.0451890097844),
@@ -78,16 +78,16 @@ class TaylorWingateBos(object):
         else:
             assert index == 8
             self.weights = 0.5 * numpy.concatenate([
-                 0.0010616711990 * numpy.ones(3),
-                 0.0131460236101 * numpy.ones(6),
-                 0.0242881926949 * numpy.ones(6),
-                 0.0316799866332 * numpy.ones(6),
-                 0.0349317947036 * numpy.ones(3),
-                 0.0383664533945 * numpy.ones(3),
-                 0.0578369491210 * numpy.ones(6),
-                 0.0725821687394 * numpy.ones(6),
-                 0.0897856524107 * numpy.ones(3),
-                 0.1034544533617 * numpy.ones(3),
+                 numpy.full(3, 0.0010616711990),
+                 numpy.full(6, 0.0131460236101),
+                 numpy.full(6, 0.0242881926949),
+                 numpy.full(6, 0.0316799866332),
+                 numpy.full(3, 0.0349317947036),
+                 numpy.full(3, 0.0383664533945),
+                 numpy.full(6, 0.0578369491210),
+                 numpy.full(6, 0.0725821687394),
+                 numpy.full(3, 0.0897856524107),
+                 numpy.full(3, 0.1034544533617),
                 ])
             bary = numpy.concatenate([
                 _s21(0.0),
@@ -114,25 +114,25 @@ class TaylorWingateBos(object):
         # elif index == 12:
         # Not working?
         #     self.weights = 0.5 * numpy.concatenate([
-        #         0.0006704436439 * numpy.ones(3),
-        #         0.0045472608074 * numpy.ones(6),
-        #         0.0052077585320 * numpy.ones(6),
-        #         0.0065435432887 * numpy.ones(3),
-        #         0.0092737841533 * numpy.ones(6),
-        #         0.0095937782623 * numpy.ones(6),
-        #         0.0114247809167 * numpy.ones(6),
-        #         0.0117216964174 * numpy.ones(6),
-        #         0.0188197155232 * numpy.ones(6),
-        #         0.0235260980271 * numpy.ones(3),
-        #         0.0235571466151 * numpy.ones(3),
-        #         0.0268246207430 * numpy.ones(6),
-        #         0.0314289776779 * numpy.ones(6),
-        #         0.0337196192159 * numpy.ones(6),
-        #         0.0427745294213 * numpy.ones(6),
-        #         0.0441138932737 * numpy.ones(3),
-        #         0.0461469594684 * numpy.ones(6),
-        #         0.0469152468624 * numpy.ones(3),
-        #         0.0551199980347 * numpy.ones(1),
+        #         numpy.full(3, 0.0006704436439),
+        #         numpy.full(6, 0.0045472608074),
+        #         numpy.full(6, 0.0052077585320),
+        #         numpy.full(3, 0.0065435432887),
+        #         numpy.full(6, 0.0092737841533),
+        #         numpy.full(6, 0.0095937782623),
+        #         numpy.full(6, 0.0114247809167),
+        #         numpy.full(6, 0.0117216964174),
+        #         numpy.full(6, 0.0188197155232),
+        #         numpy.full(3, 0.0235260980271),
+        #         numpy.full(3, 0.0235571466151),
+        #         numpy.full(6, 0.0268246207430),
+        #         numpy.full(6, 0.0314289776779),
+        #         numpy.full(6, 0.0337196192159),
+        #         numpy.full(6, 0.0427745294213),
+        #         numpy.full(3, 0.0441138932737),
+        #         numpy.full(6, 0.0461469594684),
+        #         numpy.full(3, 0.0469152468624),
+        #         numpy.full(1, 0.0551199980347),
         #         ])
         #     bary = numpy.concatenate([
         #         _s21(0.0035524391922),
