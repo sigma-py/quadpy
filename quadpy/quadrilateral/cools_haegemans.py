@@ -45,7 +45,8 @@ class CoolsHaegemans(object):
                 _s4(0.551473280570),
                 _s4(0.968340720218),
                 ])
-        elif index == 3:
+        else:
+            assert index == 3
             self.degree = 13
             self.weights = 4.0 * numpy.concatenate([
                 0.197386321888e-01 * numpy.ones(8),
@@ -63,8 +64,7 @@ class CoolsHaegemans(object):
                 _s4(0.178898689064),
                 _s4(0.914197956909),
                 ])
-        else:
-            assert False
+        # TODO There are three more schemes in the techincal report
         return
 
 

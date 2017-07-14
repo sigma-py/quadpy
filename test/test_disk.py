@@ -19,19 +19,20 @@ def _integrate_exact(k):
 
 
 @pytest.mark.parametrize(
-    'scheme',
-    [quadpy.disk.Peirce(k) for k in range(1, 6)]
-    + [quadpy.disk.Lether(k) for k in range(1, 6)]
-    + [quadpy.disk.CoolsHaegemans(k) for k in [1]]
+    'scheme,tol',
+    [(quadpy.disk.CoolsHaegemans(k), 1.0e-14) for k in [1]]
+    + [(quadpy.disk.Lether(k), 1.0e-14) for k in range(1, 6)]
+    + [(quadpy.disk.Peirce(k), 1.0e-14) for k in range(1, 6)]
     )
-def test_scheme(scheme):
+def test_scheme(scheme, tol):
     degree = check_degree(
             lambda poly: quadpy.disk.integrate(
                 poly, [0.0, 0.0], 1.0, scheme
                 ),
             _integrate_exact,
             create_monomial_exponents2,
-            scheme.degree + 1
+            scheme.degree + 1,
+            tol=tol
             )
     assert degree == scheme.degree
     return
