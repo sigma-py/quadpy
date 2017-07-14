@@ -45,6 +45,24 @@ class CoolsHaegemans(object):
                 _s4(0.551473280570),
                 _s4(0.968340720218),
                 ])
+        elif index == 3:
+            self.degree = 13
+            self.weights = 4.0 * numpy.concatenate([
+                0.197386321888e-01 * numpy.ones(8),
+                0.484363166325e-01 * numpy.ones(8),
+                0.421281899422e-02 * numpy.ones(8),
+                0.287255968895e-01 * numpy.ones(8),
+                0.361061434781e-01 * numpy.ones(4),
+                0.116671271121e-01 * numpy.ones(4),
+                ])
+            self.points = numpy.concatenate([
+                _s8(0.168234947696, 0.914794463441),
+                _s8(0.252666976106, 0.591294378163),
+                _s8(0.584047706043, 0.102139695463e+01),
+                _s8(0.586713014973, 0.826081709475),
+                _s4(0.178898689064),
+                _s4(0.914197956909),
+                ])
         else:
             assert False
         return
