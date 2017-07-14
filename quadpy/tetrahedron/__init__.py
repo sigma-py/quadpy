@@ -4,6 +4,7 @@
 from .hammer_marlowe_stroud import *
 from .keast import *
 from .liu_vinokur import *
+from .maeztu_sainz import *
 from .newton_cotes import *
 from .shunn_ham import *
 from .xiao_gimbutas import *
