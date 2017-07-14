@@ -22,6 +22,7 @@ def _integrate_exact(k):
     'scheme',
     [quadpy.disk.Peirce(k) for k in range(1, 6)]
     + [quadpy.disk.Lether(k) for k in range(1, 6)]
+    + [quadpy.disk.CoolsHaegemans(k) for k in [1]]
     )
 def test_scheme(scheme):
     degree = check_degree(
@@ -46,6 +47,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.disk.Lether(5)
-    test_scheme(scheme_)
-    # test_show(scheme_)
+    # scheme_ = quadpy.disk.Lether(5)
+    scheme_ = quadpy.disk.CoolsHaegemans(1)
+    # test_scheme(scheme_)
+    test_show(scheme_)
