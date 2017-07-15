@@ -141,6 +141,8 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    [DCUTRI](http://dl.acm.org/citation.cfm?id=131772)),
  * [Liu-Vinokur](https://dx.doi.org/10.1006/jcph.1998.5884) (1998, 13 schemes
    up to degree 5),
+ * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
+   (2000, 5 schemes up to degree 5),
  * [Wandzura-Xiao](https://dx.doi.org/10.1016/S0898-1221(03)90004-6) (2003, 6
    schemes up to degree 30),
  * [Taylor-Wingate-Bos](https://arxiv.org/abs/math/0501496) (2005, 5 schemes up
@@ -207,6 +209,8 @@ val = quadpy.quadrilateral.integrate(
    degree 8)
  * [Liu-Vinokur](http://dx.doi.org/10.1006/jcph.1998.5884) (1998, 14 schemes up to
    degree 5)
+ * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
+   (2000, 5 schemes up to degree 5),
  * [Zienkiewicz](http://www.sciencedirect.com/science/book/9780750664318)
    (2005, 2 schemes up to degree 3)
  * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2009, 2 schemes up to
