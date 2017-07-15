@@ -45,8 +45,7 @@ class Walkington(object):
                 _xi1(d, 1.0 / (d + 3.0))
                 ])
         elif index == 5:
-            # The article claims order 5, but tests really only show order 1.
-            self.degree = 1
+            self.degree = 5
             self.weights = numpy.concatenate([
                 numpy.full(
                     1,
@@ -58,7 +57,7 @@ class Walkington(object):
                     ),
                 numpy.full(
                     (d+1) + (d+1)*d//2,
-                    -(d+5)**5 / (16.0 * factorial(d+5))
+                    (d+5)**5 / (16.0 * factorial(d+5))
                     ),
                 ])
             bary = numpy.concatenate([
