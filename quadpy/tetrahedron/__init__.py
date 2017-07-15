@@ -6,6 +6,7 @@ from .keast import *
 from .liu_vinokur import *
 from .maeztu_sainz import *
 from .newton_cotes import *
+from .stroud import *
 from .shunn_ham import *
 from .xiao_gimbutas import *
 from .yu import *

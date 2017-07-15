@@ -201,6 +201,8 @@ val = quadpy.quadrilateral.integrate(
    (1956, 3 schemes up to degree 3)
  * open and closed Newton-Cotes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6)) (arbitrary degree)
  * [Yu](http://dx.doi.org/10.1016/0045-7825(84)90072-0) (1984, 5 schemes up to degree 6)
+ * [Stroud](https://cds.cern.ch/record/104291?ln=en) (1971, 2 schemes up to
+   degree 3)
  * [Keast](http://dx.doi.org/10.1016/0045-7825(86)90059-9) (1986, 11 schemes up to
    degree 8)
  * [Liu-Vinokur](http://dx.doi.org/10.1006/jcph.1998.5884) (1998, 14 schemes up to
