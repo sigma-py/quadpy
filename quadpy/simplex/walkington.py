@@ -116,12 +116,9 @@ def _xi1(d, a):
 
 
 def _xi11(d, a):
+    assert d > 1
     b = (1.0 - (d-1) * a) / 2.0
-    if d == 1:
-        out = numpy.array([
-            [b, b]
-            ])
-    elif d == 2:
+    if d == 2:
         out = numpy.array([
             [b, b, a],
             [b, a, b],
@@ -137,7 +134,6 @@ def _xi11(d, a):
             [a, a, b, b],
             [a, b, b, a],
             ])
-
     return out
 
 
@@ -158,17 +154,17 @@ def _xi21(d, a):
         assert d == 3
         out = numpy.array([
             [b, c, a, a],
-            [c, b, a, a],
-            [c, a, b, a],
             [b, a, c, a],
-            [a, b, c, a],
-            [a, c, b, a],
-            [a, b, c, a],
-            [a, c, b, a],
-            [a, c, a, b],
+            [b, a, a, c],
             [a, b, a, c],
             [a, a, b, c],
+            [a, b, c, a],
+            [c, b, a, a],
+            [c, a, b, a],
+            [c, a, a, b],
+            [a, c, a, b],
             [a, a, c, b],
+            [a, c, b, a],
             ])
 
     return out
