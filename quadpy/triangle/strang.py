@@ -29,11 +29,11 @@ class Strang(object):
     def __init__(self, index):
         self.name = 'Strang(%d)' % index
         if index == 1:
-            self.weights = numpy.array([1.0/3.0, 1.0/3.0, 1.0/3.0])
+            self.weights = numpy.full(3, 1.0/3.0)
             bary = _s21(1.0/6.0)
             self.degree = 2
         elif index == 2:
-            self.weights = numpy.array([1.0/3.0, 1.0/3.0, 1.0/3.0])
+            self.weights = numpy.full(3, 1.0/3.0)
             bary = _s21(0.5)
             self.degree = 2
         elif index == 3:
