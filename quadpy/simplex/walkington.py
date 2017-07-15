@@ -44,7 +44,8 @@ class Walkington(object):
                 _c(d),
                 _xi1(d, 1.0 / (d + 3.0))
                 ])
-        elif index == 5:
+        else:
+            assert index == 5
             self.degree = 5
             self.weights = numpy.concatenate([
                 numpy.full(
@@ -66,34 +67,36 @@ class Walkington(object):
                 _xi1(d, 1.0 / (d + 5.0)),
                 _xi11(d, 1.0 / (d + 5.0)),
                 ])
-        else:
-            assert index == 7
-            # The article claims order 7, but the tests only show order 0.
-            self.degree = 0
-            self.weights = numpy.concatenate([
-                numpy.full(1, -(d+1)**7 / (384.0 * factorial(d+4))),
-                numpy.full(d+1, +(d+3)**7 / (128.0 * factorial(d+5))),
-                numpy.full(
-                    d+1 + (d+1)*d//2,
-                    -(d+5)**7 / (64.0 * factorial(d+6))
-                    ),
-                numpy.full(
-                    d+1 + (d+1)*d + (d+1)*d*(d-1)//6,
-                    -(d+7)**7 / (64.0 * factorial(d+7))
-                    ),
-                ])
-            bary = numpy.concatenate([
-                _c(d),
-                #
-                _xi1(d, 1.0 / (d + 3)),
-                #
-                _xi1(d, 1.0 / (d + 5)),
-                _xi11(d, 1.0 / (d + 5)),
-                #
-                _xi1(d, 1.0 / (d + 7)),
-                _xi21(d, 1.0 / (d + 7)),
-                _xi111(d, 1.0 / (d + 7)),
-                ])
+        # For the degree-7-rule, the article apparently contains an error: The
+        # barycentric coordinates for Xi21 don't add up to 1.
+        # else:
+        #     assert index == 7
+        #     # The article claims order 7, but the tests only show order 0.
+        #     self.degree = 7
+        #     self.weights = numpy.concatenate([
+        #         numpy.full(1, -1.0/384.0 * (d+1)**7 / factorial(d+4)),
+        #         numpy.full(d+1, 1.0/128.0 * (d+3)**7 / factorial(d+5)),
+        #         numpy.full(
+        #             d+1 + (d+1)*d//2,
+        #             -1.0/64.0 * (d+5)**7 / factorial(d+6)
+        #             ),
+        #         numpy.full(
+        #             d+1 + (d+1)*d + (d+1)*d*(d-1)//6,
+        #             1.0/64.0 * (d+7)**7 / factorial(d+7)
+        #             ),
+        #         ])
+        #     bary = numpy.concatenate([
+        #         _c(d),
+        #         #
+        #         _xi1(d, 1.0 / (d + 3)),
+        #         #
+        #         _xi1(d, 1.0 / (d + 5)),
+        #         _xi11(d, 1.0 / (d + 5)),
+        #         #
+        #         _xi1(d, 1.0 / (d + 7)),
+        #         _xi21(d, 1.0 / (d + 7)),
+        #         _xi111(d, 1.0 / (d + 7)),
+        #         ])
 
         self.points = bary[:, 1:]
         # normalize weights
@@ -136,46 +139,46 @@ def _xi11(d, a):
     return out
 
 
-def _xi21(d, a):
-    assert d > 1
-    b = (1.0 - (d-2) * a) / 3.0
-    c = 1.0 - (d-2) * a - b
-    if d == 2:
-        out = numpy.array([
-            [b, c, a],
-            [c, b, a],
-            [c, a, b],
-            [b, a, c],
-            [a, b, c],
-            [a, c, b],
-            ])
-    else:
-        assert d == 3
-        out = numpy.array([
-            [b, c, a, a],
-            [b, a, c, a],
-            [b, a, a, c],
-            [a, b, a, c],
-            [a, a, b, c],
-            [a, b, c, a],
-            [c, b, a, a],
-            [c, a, b, a],
-            [c, a, a, b],
-            [a, c, a, b],
-            [a, a, c, b],
-            [a, c, b, a],
-            ])
-
-    return out
-
-
-def _xi111(d, a):
-    assert d == 3
-    b = (1.0 - (d-2) * a) / 3.0
-    out = numpy.array([
-        [b, b, b, a],
-        [b, b, a, b],
-        [b, a, b, b],
-        [a, b, b, b],
-        ])
-    return out
+# def _xi21(d, a):
+#     assert d > 1
+#     b = (1.0 - (d-2) * a) / 3.0
+#     c = 1.0 - (d-2) * a - b
+#     if d == 2:
+#         out = numpy.array([
+#             [b, c, a],
+#             [c, b, a],
+#             [c, a, b],
+#             [b, a, c],
+#             [a, b, c],
+#             [a, c, b],
+#             ])
+#     else:
+#         assert d == 3
+#         out = numpy.array([
+#             [b, c, a, a],
+#             [b, a, c, a],
+#             [b, a, a, c],
+#             [a, b, a, c],
+#             [a, a, b, c],
+#             [a, b, c, a],
+#             [c, b, a, a],
+#             [c, a, b, a],
+#             [c, a, a, b],
+#             [a, c, a, b],
+#             [a, a, c, b],
+#             [a, c, b, a],
+#             ])
+#
+#     return out
+#
+#
+# def _xi111(d, a):
+#     assert d == 3
+#     b = (1.0 - (d-2) * a) / 3.0
+#     out = numpy.array([
+#         [b, b, b, a],
+#         [b, b, a, b],
+#         [b, a, b, b],
+#         [a, b, b, b],
+#         ])
+#     return out
