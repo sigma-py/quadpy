@@ -2,6 +2,7 @@
 #
 # pylint: disable=wildcard-import
 from .beckers_haegemans import *
+from .gatermann import *
 from .hammer_marlowe_stroud import *
 from .keast import *
 from .liu_vinokur import *
