@@ -63,13 +63,16 @@ def _integrate_monomial_over_standard_tet(k):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadpy.tetrahedron.HammerMarloweStroud(k) for k in [1, 2, 3]]
+    [quadpy.tetrahedron.BeckersHaegemans(k) for k in [8, 9]]
+    + [quadpy.tetrahedron.HammerMarloweStroud(k) for k in [1, 2, 3]]
     + [quadpy.tetrahedron.Keast(k) for k in range(11)]
     + [quadpy.tetrahedron.LiuVinokur(k) for k in range(1, 15)]
     + [quadpy.tetrahedron.MaeztuSainz()]
     + [quadpy.tetrahedron.NewtonCotesClosed(k) for k in range(1, 7)]
     + [quadpy.tetrahedron.NewtonCotesOpen(k) for k in range(7)]
     + [quadpy.tetrahedron.ShunnHam(k) for k in range(1, 7)]
+    + [quadpy.tetrahedron.Stroud(k) for k in range(2)]
+    + [quadpy.tetrahedron.Walkington(k) for k in [1, 2, 3, 5, 'p5', 7]]
     + [quadpy.tetrahedron.WilliamsShunnJameson()]
     + [quadpy.tetrahedron.XiaoGimbutas(k) for k in range(1, 16)]
     + [quadpy.tetrahedron.Yu(k) for k in range(1, 6)]
@@ -113,8 +116,8 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.tetrahedron.MaeztuSainz()
+    scheme_ = quadpy.tetrahedron.BeckersHaegemans(9)
     test_scheme(scheme_)
-    # from matplotlib import pyplot as plt
-    # test_show(scheme_)
-    # plt.show()
+    from matplotlib import pyplot as plt
+    test_show(scheme_)
+    plt.show()
