@@ -207,6 +207,7 @@ val = quadpy.quadrilateral.integrate(
    degree 3)
  * [Keast](http://dx.doi.org/10.1016/0045-7825(86)90059-9) (1986, 11 schemes up to
    degree 8)
+ * [Beckers-Haegemans](https://lirias.kuleuven.be/handle/123456789/132648) (1990, degrees 8 and 9)
  * [Liu-Vinokur](http://dx.doi.org/10.1006/jcph.1998.5884) (1998, 14 schemes up to
    degree 5)
  * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
