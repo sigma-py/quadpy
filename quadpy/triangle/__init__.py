@@ -14,6 +14,7 @@ from .lyness_jespersen import *
 from .newton_cotes import *
 from .seven_point import *
 from .strang import *
+from .stroud import *
 from .taylor_wingate_bos import *
 from .triex import *
 from .vertex import *
