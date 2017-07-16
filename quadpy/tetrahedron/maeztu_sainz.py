@@ -30,7 +30,7 @@ class MaeztuSainz(object):
             numpy.full(12, 0.9319130804165715e-2),
             numpy.full(12, 0.1272850504266610e-1),
             ])
-        self.points = numpy.concatenate([
+        bary = numpy.concatenate([
             _s4(),
             _s31(0.3197881306061907),
             _s31(0.2745875432484354),
@@ -44,4 +44,5 @@ class MaeztuSainz(object):
             _s211(0.14550316358503807, 0.69267352508351802),
             _s211(0.43854531792695007e-1, 0.27759599714708815)
             ])
+        self.points = bary[:, 1:]
         return

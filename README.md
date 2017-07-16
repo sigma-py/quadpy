@@ -141,6 +141,8 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    [DCUTRI](http://dl.acm.org/citation.cfm?id=131772)),
  * [Liu-Vinokur](https://dx.doi.org/10.1006/jcph.1998.5884) (1998, 13 schemes
    up to degree 5),
+ * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
+   (2000, 5 schemes up to degree 5),
  * [Wandzura-Xiao](https://dx.doi.org/10.1016/S0898-1221(03)90004-6) (2003, 6
    schemes up to degree 30),
  * [Taylor-Wingate-Bos](https://arxiv.org/abs/math/0501496) (2005, 5 schemes up
@@ -200,11 +202,16 @@ val = quadpy.quadrilateral.integrate(
  * [Hammer-Marlowe-Stroud](https://doi.org/10.1090/S0025-5718-1956-0086389-6)
    (1956, 3 schemes up to degree 3)
  * open and closed Newton-Cotes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6)) (arbitrary degree)
+ * [Stroud](https://cds.cern.ch/record/104291?ln=en) (1971, 2 schemes up to
+   degree 3)
  * [Yu](http://dx.doi.org/10.1016/0045-7825(84)90072-0) (1984, 5 schemes up to degree 6)
  * [Keast](http://dx.doi.org/10.1016/0045-7825(86)90059-9) (1986, 11 schemes up to
    degree 8)
+ * [Beckers-Haegemans](https://lirias.kuleuven.be/handle/123456789/132648) (1990, degrees 8 and 9)
  * [Liu-Vinokur](http://dx.doi.org/10.1006/jcph.1998.5884) (1998, 14 schemes up to
    degree 5)
+ * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
+   (2000, 6 schemes up to degree 7),
  * [Zienkiewicz](http://www.sciencedirect.com/science/book/9780750664318)
    (2005, 2 schemes up to degree 3)
  * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2009, 2 schemes up to
