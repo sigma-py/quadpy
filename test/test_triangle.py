@@ -67,6 +67,7 @@ def _integrate_monomial_over_standard_triangle(k):
     + [quadpy.triangle.NewtonCotesClosed(k) for k in range(1, 6)]
     + [quadpy.triangle.NewtonCotesOpen(k) for k in range(6)]
     + [quadpy.triangle.Strang(k) for k in range(1, 11)]
+    + [quadpy.triangle.Stroud(k) for k in range(10)]
     + [quadpy.triangle.LynessJespersen(k) for k in range(1, 22)]
     + [quadpy.triangle.Hillion(k) for k in range(1, 4)]
     + [quadpy.triangle.LaursenGellert(key) for key in [
@@ -117,7 +118,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.triangle.Walkington('p5')
+    scheme_ = quadpy.triangle.Stroud(9)
     test_scheme(scheme_)
     test_show(scheme_)
     plt.show()
