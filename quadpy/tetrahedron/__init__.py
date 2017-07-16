@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # pylint: disable=wildcard-import
+from .beckers_haegemans import *
 from .hammer_marlowe_stroud import *
 from .keast import *
 from .liu_vinokur import *
