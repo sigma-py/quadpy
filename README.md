@@ -210,7 +210,7 @@ val = quadpy.quadrilateral.integrate(
  * [Liu-Vinokur](http://dx.doi.org/10.1006/jcph.1998.5884) (1998, 14 schemes up to
    degree 5)
  * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
-   (2000, 5 schemes up to degree 5),
+   (2000, 6 schemes up to degree 7),
  * [Zienkiewicz](http://www.sciencedirect.com/science/book/9780750664318)
    (2005, 2 schemes up to degree 3)
  * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2009, 2 schemes up to
