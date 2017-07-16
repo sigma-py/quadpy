@@ -75,6 +75,7 @@ def _integrate_monomial_over_standard_triangle(k):
         '13', '14', '15a', '15b'
         ]]
     + [quadpy.triangle.Cubtri()]
+    + [quadpy.triangle.Gatermann()]
     + [quadpy.triangle.Triex(19), quadpy.triangle.Triex(28)]
     + [quadpy.triangle.Dunavant(k) for k in range(1, 21)]
     + [quadpy.triangle.CoolsHaegemans(k) for k in [1]]
@@ -118,7 +119,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.triangle.Stroud(9)
+    scheme_ = quadpy.triangle.Gatermann()
     test_scheme(scheme_)
     test_show(scheme_)
     plt.show()
