@@ -131,8 +131,8 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * [Hillion](https://dx.doi.org/10.1002/nme.1620110504) (1977),
  * [Laursen-Gellert](https://dx.doi.org/10.1002/nme.1620120107) (1978, 17
    schemes up to degree 10),
- * [CUBTRI](http://dl.acm.org/citation.cfm?id=356001) (1982, degree 8),
- * [TRIEX](http://dl.acm.org/citation.cfm?id=356070) (1984, degrees 9 and 11),
+ * [CUBTRI](http://dl.acm.org/citation.cfm?id=356001) (Laurie, 1982, degree 8),
+ * [TRIEX](http://dl.acm.org/citation.cfm?id=356070) (de Doncker-Robinson, 1984, degrees 9 and 11),
  * [Dunavant](https://dx.doi.org/10.1002/nme.1620210612) (1985, 20 schemes up
    to degree 20),
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131869) (1987,
