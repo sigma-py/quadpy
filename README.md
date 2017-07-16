@@ -138,6 +138,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    to degree 20),
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131869) (1987,
    degrees 8 and 11),
+ * [Gatermann](https://dx.doi.org/10.1007/BF02251251) (1988, degree 7)
  * Berntsen-Espelid (1990, 4 schemes of degree 13, the first one being
    [DCUTRI](http://dl.acm.org/citation.cfm?id=131772)),
  * [Liu-Vinokur](https://dx.doi.org/10.1006/jcph.1998.5884) (1998, 13 schemes

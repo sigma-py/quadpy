@@ -6,6 +6,7 @@ from .cools_haegemans import *
 from .cubtri import *
 from .berntsen_espelid import *
 from .dunavant import *
+from .gatermann import *
 from .hammer_marlowe_stroud import *
 from .hillion import *
 from .laursen_gellert import *
