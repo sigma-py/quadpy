@@ -7,6 +7,7 @@ from .cubtri import *
 from .berntsen_espelid import *
 from .dunavant import *
 from .gatermann import *
+from .grundmann_moeller import *
 from .hammer_marlowe_stroud import *
 from .hillion import *
 from .laursen_gellert import *
