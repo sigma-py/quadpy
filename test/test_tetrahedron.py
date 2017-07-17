@@ -65,6 +65,7 @@ def _integrate_monomial_over_standard_tet(k):
     'scheme',
     [quadpy.tetrahedron.BeckersHaegemans(k) for k in [8, 9]]
     + [quadpy.tetrahedron.Gatermann()]
+    + [quadpy.tetrahedron.GrundmannMoeller(k) for k in range(8)]
     + [quadpy.tetrahedron.HammerMarloweStroud(k) for k in [1, 2, 3]]
     + [quadpy.tetrahedron.Keast(k) for k in range(11)]
     + [quadpy.tetrahedron.LiuVinokur(k) for k in range(1, 15)]
@@ -95,7 +96,7 @@ def test_scheme(scheme):
                 ),
             _integrate_monomial_over_standard_tet,
             create_monomial_exponents3,
-            scheme.degree + 1
+            scheme.degree + 1,
             )
     assert degree == scheme.degree
     return
@@ -117,7 +118,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.tetrahedron.Gatermann()
+    scheme_ = quadpy.tetrahedron.GrundmannMoeller(4)
     test_scheme(scheme_)
     from matplotlib import pyplot as plt
     test_show(scheme_)

@@ -60,33 +60,34 @@ def _integrate_monomial_over_standard_triangle(k):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadpy.triangle.Centroid()]
-    + [quadpy.triangle.Vertex()]
-    + [quadpy.triangle.SevenPoint()]
+    [quadpy.triangle.BerntsenEspelid(k) for k in range(1, 5)]
+    + [quadpy.triangle.Centroid()]
+    + [quadpy.triangle.CoolsHaegemans(k) for k in [1]]
+    + [quadpy.triangle.Cubtri()]
+    + [quadpy.triangle.Dunavant(k) for k in range(1, 21)]
+    + [quadpy.triangle.Gatermann()]
+    + [quadpy.triangle.GrundmannMoeller(k) for k in range(10)]
     + [quadpy.triangle.HammerMarloweStroud(k) for k in range(1, 6)]
-    + [quadpy.triangle.NewtonCotesClosed(k) for k in range(1, 6)]
-    + [quadpy.triangle.NewtonCotesOpen(k) for k in range(6)]
-    + [quadpy.triangle.Strang(k) for k in range(1, 11)]
-    + [quadpy.triangle.Stroud(k) for k in range(10)]
-    + [quadpy.triangle.LynessJespersen(k) for k in range(1, 22)]
     + [quadpy.triangle.Hillion(k) for k in range(1, 4)]
     + [quadpy.triangle.LaursenGellert(key) for key in [
         '1', '2a', '2b', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
         '13', '14', '15a', '15b'
         ]]
-    + [quadpy.triangle.Cubtri()]
-    + [quadpy.triangle.Gatermann()]
-    + [quadpy.triangle.Triex(19), quadpy.triangle.Triex(28)]
-    + [quadpy.triangle.Dunavant(k) for k in range(1, 21)]
-    + [quadpy.triangle.CoolsHaegemans(k) for k in [1]]
-    + [quadpy.triangle.BerntsenEspelid(k) for k in range(1, 5)]
     + [quadpy.triangle.LiuVinokur(k) for k in range(1, 14)]
+    + [quadpy.triangle.LynessJespersen(k) for k in range(1, 22)]
+    + [quadpy.triangle.NewtonCotesClosed(k) for k in range(1, 6)]
+    + [quadpy.triangle.NewtonCotesOpen(k) for k in range(6)]
+    + [quadpy.triangle.SevenPoint()]
+    + [quadpy.triangle.Strang(k) for k in range(1, 11)]
+    + [quadpy.triangle.Stroud(k) for k in range(10)]
+    + [quadpy.triangle.TaylorWingateBos(k) for k in [1, 2, 4, 5, 8]]
+    + [quadpy.triangle.Triex(19), quadpy.triangle.Triex(28)]
+    + [quadpy.triangle.Vertex()]
     + [quadpy.triangle.Walkington(k) for k in [1, 2, 3, 5, 'p5']]
     + [quadpy.triangle.WandzuraXiao(k) for k in range(1, 7)]
     + [quadpy.triangle.WilliamsShunnJameson(k) for k in range(1, 9)]
-    + [quadpy.triangle.TaylorWingateBos(k) for k in [1, 2, 4, 5, 8]]
-    + [quadpy.triangle.ZhangCuiLiu(k) for k in [1, 2, 3]]
     + [quadpy.triangle.XiaoGimbutas(k) for k in range(1, 51)]
+    + [quadpy.triangle.ZhangCuiLiu(k) for k in [1, 2, 3]]
     )
 def test_scheme(scheme):
     triangle = numpy.array([
@@ -119,7 +120,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.triangle.Gatermann()
+    scheme_ = quadpy.triangle.GrundmannMoeller(5)
     test_scheme(scheme_)
     test_show(scheme_)
     plt.show()
