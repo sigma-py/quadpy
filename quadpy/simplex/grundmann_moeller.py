@@ -8,7 +8,7 @@ class GrundmannMoeller(object):
     '''
     A. Grundmann and H.M. Moeller,
     Invariant integration formulas for the n-simplex by combinatorial methods,
-    SIAM J. Numer. Anal.  15 (1978), 282--290,
+    SIAM J. Numer. Anal. 15 (1978), 282-290,
     <http://dx.doi.org/10.1137/0715019>.
 
     Abstract:
