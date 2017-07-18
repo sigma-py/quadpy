@@ -227,6 +227,8 @@ val = quadpy.quadrilateral.integrate(
    schemes up to degree 15)
  * [Shunn-Ham](http://dx.doi.org/10.1016/j.cam.2012.03.032) (2012, 6 schemes up to
    degree 7)
+ * [Vioreanu-Rokhlin](https://doi.org/10.1137/110860082) (2014, 10
+   schemes up to degree 13),
  * [Willams-Shunn-Jameson](https://doi.org/10.1016/j.cam.2014.01.007) (2014, 1
    scheme with degree 9)
 
