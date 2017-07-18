@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
 from math import factorial
+import numpy
 
 
 class GrundmannMoeller(object):
