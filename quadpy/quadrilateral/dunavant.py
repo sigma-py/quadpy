@@ -51,8 +51,7 @@ class Dunavant(object):
                 _symm_s(0.380554433208316),
                 ])
         elif index == 4:
-            # TODO the article claims 9
-            self.degree = 1
+            self.degree = 9
             self.weights = numpy.concatenate([
                 numpy.full(4, 0.018475842507491),
                 numpy.full(4, 0.390052939160735),
@@ -63,7 +62,7 @@ class Dunavant(object):
                 _symm_r_0(1.121225763866564),
                 _symm_r_0(0.451773049920657),
                 _symm_s(0.891849420851512),
-                _symm_s_t(0.824396370149276, 0.411623426336542),
+                _symm_s_t(0.824396370749276, 0.411623426336542),
                 ])
         elif index == 5:
             self.degree = 11
