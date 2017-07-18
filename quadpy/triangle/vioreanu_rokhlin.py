@@ -7,8 +7,11 @@ from .helpers import _s3, _s21, _s111
 class VioreanuRokhlin(object):
     '''
     B. Vioreanu and V. Rokhlin,
-    Spectra of multiplicatio operators as a numerical tool,
-    Yale CS, Tech Report 1443, 2011,
+    Spectra of Multiplication Operators as a Numerical Tool,
+    Methods and Algorithms for Scientific Computing,
+    2014,
+    SIAM J. Sci. Comput., 36(1), A267–A288,
+    <https://doi.org/10.1137/110860082>,
     <http://www.cs.yale.edu/publications/techreports/tr1443.pdf>.
 
     Data adapted from modepy
