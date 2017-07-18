@@ -32,7 +32,7 @@ class Stroud(object):
             self.degree = 3
             self.weights = numpy.concatenate([
                 numpy.full(1, -0.28125),
-                numpy.full(3, 25 / 96)
+                numpy.full(3, 25.0/96.0)
                 ])
             bary = numpy.concatenate([
                 _s3(),
