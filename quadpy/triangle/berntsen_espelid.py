@@ -21,7 +21,7 @@ class BerntsenEspelid(object):
     def __init__(self, index):
         self.name = 'BE(%d)' % index
         if index == 1:
-            # This first schemes was separately published as
+            # This first scheme was published separately as
             #
             # Berntsen and Espelid,
             # Algorithm 706: DCUTRI: An Algorithm for Adaptive Cubature over a
@@ -42,7 +42,7 @@ class BerntsenEspelid(object):
                 numpy.full(6, 0.017822989923178661888748319485),
                 numpy.full(6, 0.037038683681384627918546472190),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.024862168537947217274823955239),
                 _s21(0.414192542538082326221847602214),
@@ -76,7 +76,7 @@ class BerntsenEspelid(object):
                 numpy.full(6, 0.015981637780928405322919308674),
                 numpy.full(6, 0.036551502224097295256193503655),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.024607188643230218187849951620),
                 _s21(0.420308753101194683716920517937),
@@ -109,7 +109,7 @@ class BerntsenEspelid(object):
                 numpy.full(6, 0.021575699816275772518477875728),
                 numpy.full(6, 0.043398330702882367361429063273),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(-1.097321247106281159287766916114),
                 _s21(0.488287850733405315708960134736),
                 _s21(0.271000295524474716503595027679),
@@ -144,7 +144,7 @@ class BerntsenEspelid(object):
                 numpy.full(6, 0.017822989923178661888748319485),
                 numpy.full(6, 0.037038683681384627918546472190),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.0),
                 _s21(0.024978640633391274114293084881),
@@ -168,5 +168,5 @@ class BerntsenEspelid(object):
                 ])
 
         self.degree = 13
-        self.points = bary[:, [1, 2]]
+        self.points = self.bary[:, 1:]
         return

@@ -28,7 +28,7 @@ class Triex(object):
                 numpy.full(3, 2.55776756586981006E-002),
                 numpy.full(6, 4.32835393772893970E-002),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.48968251919873701),
                 _s21(0.43708959149293553),
@@ -36,7 +36,6 @@ class Triex(object):
                 _s21(4.47295133944529688E-002),
                 _s111(0.74119859878449801, 3.68384120547362581E-002),
                 ])
-            self.points = bary[:, [1, 2]]
             self.degree = 9
         else:
             assert index == 28
@@ -50,7 +49,7 @@ class Triex(object):
                 numpy.full(6, 0.04105631542928860),
                 numpy.full(6, 0.007362383783300573),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.02598914092828833),
                 _s21(0.09428750264792270),
@@ -60,7 +59,7 @@ class Triex(object):
                 _s111(0.6779376548825902, 0.04484167758913055),
                 _s111(0.8588702812826364, 0.0),
                 ])
-            self.points = bary[:, [1, 2]]
             self.degree = 11
 
+        self.points = self.bary[:, 1:]
         return

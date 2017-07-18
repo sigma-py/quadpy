@@ -26,7 +26,7 @@ class WandzuraXiao(object):
 
     Note that in the above article, the authors present the coordinates in the
     symmetric triangle [[-0.5, -sqrt(3)/2], [-0.5, +sqrt(3)/2], [1, 0]]. These
-    have been transformed to barycentric coordinates here.
+    have been transformed to self.barycentric coordinates here.
     '''
     def __init__(self, index):
         self.name = 'WX(%d)' % index
@@ -36,7 +36,7 @@ class WandzuraXiao(object):
                 numpy.full(3, 0.13239415278850623+00),
                 numpy.full(3, 0.12593918054482713+00),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(4.70142064105115109474e-01),
                 _s21(1.01286507323456370644e-01),
@@ -52,7 +52,7 @@ class WandzuraXiao(object):
                 numpy.full(6, 0.2951832033477940E-01),
                 numpy.full(6, 0.3957936719606124E-01),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(4.978654329544749e-01),
                 _s21(4.280124497290562e-01),
@@ -77,7 +77,7 @@ class WandzuraXiao(object):
                 numpy.full(6, 0.2560734092126239E-01),
                 numpy.full(6, 0.3308819553164567E-01),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(4.582807963691251e-01),
                 _s21(4.036104645791306e-01),
                 _s21(2.931971679130254e-01),
@@ -114,7 +114,7 @@ class WandzuraXiao(object):
                 numpy.full(6, 0.1867294590293547E-01),
                 numpy.full(6, 0.2281822405839526E-01),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(4.992496753377855e-01),
                 _s21(4.529301240305246e-01),
@@ -165,7 +165,7 @@ class WandzuraXiao(object):
                 numpy.full(6, 0.1415444650522614E-01),
                 numpy.full(6, 0.1488137956116801E-01),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(4.860267584634129e-01),
                 _s21(4.344106993361743e-01),
                 _s21(3.898891352439638e-01),
@@ -234,7 +234,7 @@ class WandzuraXiao(object):
                 numpy.full(6, 0.1176111646760917E-01),
                 numpy.full(6, 0.1382470218216540E-01),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(4.963349417836173e-01),
                 _s21(4.585021620985177e-01),
@@ -274,5 +274,5 @@ class WandzuraXiao(object):
                 ])
             self.degree = 30
 
-        self.points = bary[:, [1, 2]]
+        self.points = self.bary[:, 1:]
         return

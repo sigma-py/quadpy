@@ -24,14 +24,14 @@ class TaylorWingateBos(object):
         self.name = 'TWB(%d)' % index
         if index == 1:
             self.weights = numpy.full(3, 1.0/3.0)
-            bary = _s21(1.0/6.0)
+            self.bary = _s21(1.0/6.0)
             self.degree = 2
         elif index == 2:
             self.weights = 0.5 * numpy.concatenate([
                 numpy.full(3, 0.2199034873106),
                 numpy.full(3, 0.4467631793560),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.0915762135098),
                 _s21(0.4459484909160),
                 ])
@@ -46,7 +46,7 @@ class TaylorWingateBos(object):
                 numpy.full(3, 0.1679775595335),
                 numpy.full(3, 0.2652238803946),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.0),
                 _s111(0.7839656651012, 0.0421382841642),
                 _s21(0.4743880861752),
@@ -61,7 +61,7 @@ class TaylorWingateBos(object):
                  numpy.full(3, 0.1032344051380),
                  numpy.full(3, 0.1881601469167),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.0451890097844),
                 _s111(0.7475124727339, 0.0304243617288),
                 _s111(0.1369912012649, 0.2182900709714),
@@ -89,7 +89,7 @@ class TaylorWingateBos(object):
                  numpy.full(3, 0.0897856524107),
                  numpy.full(3, 0.1034544533617),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.0),
                 _s111(0.0573330873026, 0.0151382269814),
                 _s111(0.8159625040711, 0.1659719969565),
@@ -134,7 +134,7 @@ class TaylorWingateBos(object):
         #         numpy.full(3, 0.0469152468624),
         #         numpy.full(1, 0.0551199980347),
         #         ])
-        #     bary = numpy.concatenate([
+        #     self.bary = numpy.concatenate([
         #         _s21(0.0035524391922),
         #         _s111(0.9553548273730, 0.0087898929093),
         #         _s111(0.8865264879047, 0.1082329745017),
@@ -163,5 +163,5 @@ class TaylorWingateBos(object):
             # not symmetric?
             # self.degree = 25
 
-        self.points = bary[:, [1, 2]]
+        self.points = self.bary[:, 1:]
         return

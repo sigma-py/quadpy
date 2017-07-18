@@ -22,7 +22,7 @@ class CoolsHaegemans(object):
             numpy.full(3, 0.43909556791220782402E-01),
             numpy.full(3, 0.66940767639916174192E-01),
             ])
-        bary = numpy.concatenate([
+        self.bary = numpy.concatenate([
             _r3(
                 0.34579201116826902882E+00,
                 0.36231682215692616667E+01
@@ -56,7 +56,7 @@ class CoolsHaegemans(object):
         #         numpy.full(3, 0.39699584282594413022E-01),
         #         numpy.full(1, 0.47910534861520060665E-01),
         #         ])
-        #     bary = numpy.concatenate([
+        #     self.bary = numpy.concatenate([
         #         _r3(
         #             +0.58469201683584513031E-01,
         #             -0.54887778772527519316E+00
@@ -89,8 +89,9 @@ class CoolsHaegemans(object):
         #         ])
         #     self.degree = 10
 
-        self.points = bary[:, 1:]
+        self.points = self.bary[:, 1:]
         return
+
 
 def _r3(a, b):
     # rotation group R_3
