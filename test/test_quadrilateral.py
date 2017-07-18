@@ -43,10 +43,11 @@ def _integrate_exact2(k, x0, x1, y0, y1):
 
 @pytest.mark.parametrize(
     'scheme,tol',
-    [(Product(quadpy.line_segment.Midpoint()), 1.0e-14)]
+    [(quadpy.quadrilateral.CoolsHaegemans(k), 1.0e-11) for k in range(1, 4)]
+    + [(quadpy.quadrilateral.Dunavant(k), 1.0e-14) for k in range(11)]
+    + [(quadpy.quadrilateral.Stroud(k), 1.0e-14) for k in range(11)]
+    + [(Product(quadpy.line_segment.Midpoint()), 1.0e-14)]
     + [(Product(quadpy.line_segment.Trapezoidal()), 1.0e-14)]
-    + [(quadpy.quadrilateral.CoolsHaegemans(k), 1.0e-11) for k in range(1, 4)]
-    + [(quadpy.quadrilateral.Stroud(k), 1.0e-14) for k in range(1, 7)]
     + [(Product(quadpy.line_segment.GaussLegendre(k)), 1.0e-14)
        for k in range(1, 5)
        ]
@@ -94,7 +95,7 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = Product(quadpy.line_segment.GaussLegendre(6))
-    scheme_ = quadpy.quadrilateral.CoolsHaegemans(3)
+    scheme_ = quadpy.quadrilateral.Dunavant(5)
     # test_scheme(scheme_)
     test_show(scheme_)
     plt.show()
