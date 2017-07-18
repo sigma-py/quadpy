@@ -191,7 +191,7 @@ val = quadpy.disk.integrate(
  * Product schemes derived from line segment schemes
  * [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971, 11 schemes up to degree 15)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 13)
- * [Dunavant](https://dx.doi.org/10.1002/nme.1620211004) (1985, 11 schemes up to degree 21)
+ * [Dunavant](https://dx.doi.org/10.1002/nme.1620211004) (1985, 11 schemes up to degree 19)
 
 Example:
 ```python
