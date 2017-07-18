@@ -20,6 +20,7 @@ from .stroud import *
 from .taylor_wingate_bos import *
 from .triex import *
 from .vertex import *
+from .vioreanu_rokhlin import *
 from .walkington import *
 from .wandzura_xiao import *
 from .williams_shunn_jameson import *

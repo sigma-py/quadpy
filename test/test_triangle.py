@@ -83,6 +83,7 @@ def _integrate_monomial_over_standard_triangle(k):
     + [quadpy.triangle.TaylorWingateBos(k) for k in [1, 2, 4, 5, 8]]
     + [quadpy.triangle.Triex(19), quadpy.triangle.Triex(28)]
     + [quadpy.triangle.Vertex()]
+    + [quadpy.triangle.VioreanuRokhlin(k) for k in range(20)]
     + [quadpy.triangle.Walkington(k) for k in [1, 2, 3, 5, 'p5']]
     + [quadpy.triangle.WandzuraXiao(k) for k in range(1, 7)]
     + [quadpy.triangle.WilliamsShunnJameson(k) for k in range(1, 9)]
@@ -120,7 +121,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.triangle.GrundmannMoeller(5)
+    scheme_ = quadpy.triangle.VioreanuRokhlin(0)
     test_scheme(scheme_)
     test_show(scheme_)
     plt.show()
