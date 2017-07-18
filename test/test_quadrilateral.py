@@ -46,7 +46,7 @@ def _integrate_exact2(k, x0, x1, y0, y1):
     [(Product(quadpy.line_segment.Midpoint()), 1.0e-14)]
     + [(Product(quadpy.line_segment.Trapezoidal()), 1.0e-14)]
     + [(quadpy.quadrilateral.CoolsHaegemans(k), 1.0e-11) for k in range(1, 4)]
-    + [(quadpy.quadrilateral.Stroud(k), 1.0e-14) for k in range(1, 7)]
+    + [(quadpy.quadrilateral.Stroud(k), 1.0e-14) for k in range(11)]
     + [(Product(quadpy.line_segment.GaussLegendre(k)), 1.0e-14)
        for k in range(1, 5)
        ]
