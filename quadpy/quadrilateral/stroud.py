@@ -12,29 +12,77 @@ class Stroud(object):
     Prentice Hall, 1971.
 
     <https://people.sc.fsu.edu/~jburkardt/m_src/stroud/square_unit_set.m>
+    <http://nines.cs.kuleuven.be/ecf/mtables.html>
     '''
     def __init__(self, index):
-        if index == 1:
+        if index == 0:
             self.weights = [4.0]
             self.points = [[0.0, 0.0]]
             self.degree = 1
-        elif index == 2:
+        elif index == 1:
             self.weights = 4 * [1.0]
             self.points = _symm_s(1.0/numpy.sqrt(3.0))
             self.degree = 3
+        elif index == 2:
+            self.weights = 4 * [1.0]
+            self.points = _symm_r_0(numpy.sqrt(2.0/3.0))
+            self.degree = 3
         elif index == 3:
             self.weights = (
-                [64.0/81.0] +
-                4 * [25.0/81.0] +
-                4 * [40.0/81.0]
+                4 * [2.0/3.0] +
+                [4.0/3.0]
+                )
+            self.points = (
+                _symm_r_0(1.0) +
+                [[0.0, 0.0]]
+                )
+            self.degree = 3
+        elif index == 4:
+            self.weights = (
+                4 * [1.0/3.0] +
+                [8.0/3.0]
+                )
+            self.points = (
+                _symm_s(1.0) +
+                [[0.0, 0.0]]
+                )
+            self.degree = 3
+        elif index == 5:
+            self.weights = (
+                4 * [40.0 / 49.0] +
+                4 * [9.0 / 49.0]
+                )
+            self.points = (
+                _symm_r_0(numpy.sqrt(7.0/15.0)) +
+                _symm_s(numpy.sqrt(7.0/9.0))
+                )
+            self.degree = 5
+        elif index == 6:
+            self.weights = (
+                4 * [1.0 / 9.0] +
+                1 * [-8.0 / 9.0] +
+                4 * [10.0 / 9.0]
+                )
+            self.points = (
+                _symm_s(1.0) +
+                [[0.0, 0.0]] +
+                _symm_r_0(numpy.sqrt(2.0 / 5.0))
+                )
+            self.degree = 5
+        elif index == 7:
+            self.weights = (
+                [8.0 / 7.0] +
+                8 * [5.0 / 14.0]
                 )
             self.points = (
                 [[0.0, 0.0]] +
-                _symm_s(numpy.sqrt(0.6)) +
-                _symm_r_0(numpy.sqrt(0.6))
+                _symm_s_t(
+                    0.846233119448533574334773553209421,
+                    0.466071712166418914664132375714293
+                    )
                 )
             self.degree = 5
-        elif index == 4:
+        elif index == 8:
             # Stroud number C2:7-1.
             r = numpy.sqrt(6.0 / 7.0)
             c = 3.0 * numpy.sqrt(583.0)
@@ -55,7 +103,7 @@ class Stroud(object):
                 _symm_s(t)
                 )
             self.degree = 7
-        elif index == 5:
+        elif index == 9:
             # Stroud number C2:7-3.
             r = numpy.sqrt(12.0 / 35.0)
             c = 3.0 * numpy.sqrt(186.0)
@@ -76,7 +124,7 @@ class Stroud(object):
                 )
             self.degree = 7
         else:
-            assert index == 6
+            assert index == 10
             scheme1d = line_segment.GaussLegendre(8)
             self.weights = numpy.outer(
                 scheme1d.weights, scheme1d.weights

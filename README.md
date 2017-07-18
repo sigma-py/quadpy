@@ -124,19 +124,22 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * [Hammer-Marlowe-Stroud](https://doi.org/10.1090/S0025-5718-1956-0086389-6)
    (1956, 5 schemes up to degree 5),
  * open and closed Newton-Cotes schemes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6), arbitrary degree),
+ * [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971, 10 schemes up to degree 5)
  * [Strang](http://bookstore.siam.org/wc08/)/[Cowper](https://dx.doi.org/10.1002/nme.1620070316) (1973, 10 schemes up to
    degree 7),
  * [Lyness-Jespersen](https://dx.doi.org/10.1093/imamat/15.1.19) (1975, 21
    schemes up to degree 11),
  * [Hillion](https://dx.doi.org/10.1002/nme.1620110504) (1977),
+ * [Grundmann-Möller](http://dx.doi.org/10.1137/0715019) (1978, arbitrary degree),
  * [Laursen-Gellert](https://dx.doi.org/10.1002/nme.1620120107) (1978, 17
    schemes up to degree 10),
- * [CUBTRI](http://dl.acm.org/citation.cfm?id=356001) (1982, degree 8),
- * [TRIEX](http://dl.acm.org/citation.cfm?id=356070) (1984, degrees 9 and 11),
+ * [CUBTRI](http://dl.acm.org/citation.cfm?id=356001) (Laurie, 1982, degree 8),
+ * [TRIEX](http://dl.acm.org/citation.cfm?id=356070) (de Doncker-Robinson, 1984, degrees 9 and 11),
  * [Dunavant](https://dx.doi.org/10.1002/nme.1620210612) (1985, 20 schemes up
    to degree 20),
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131869) (1987,
    degrees 8 and 11),
+ * [Gatermann](https://dx.doi.org/10.1007/BF02251251) (1988, degree 7)
  * Berntsen-Espelid (1990, 4 schemes of degree 13, the first one being
    [DCUTRI](http://dl.acm.org/citation.cfm?id=131772)),
  * [Liu-Vinokur](https://dx.doi.org/10.1006/jcph.1998.5884) (1998, 13 schemes
@@ -151,6 +154,8 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    degree 20),
  * [Xiao-Gimbutas](http://dx.doi.org/10.1016/j.camwa.2009.10.027) (2010, 50
    schemes up to degree 50),
+ * [Vioreanu-Rokhlin](https://doi.org/10.1137/110860082) (2014, 20
+   schemes up to degree 62),
  * [Willams-Shunn-Jameson](https://doi.org/10.1016/j.cam.2014.01.007) (2014, 8
    schemes up to degree 12).
 
@@ -184,8 +189,9 @@ val = quadpy.disk.integrate(
 <img src="https://nschloe.github.io/quadpy/quad.png" width="25%">
 
  * Product schemes derived from line segment schemes
- * [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971, 6 schemes up to degree 15)
+ * [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971, 11 schemes up to degree 15)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 13)
+ * [Dunavant](https://dx.doi.org/10.1002/nme.1620211004) (1985, 11 schemes up to degree 19)
 
 Example:
 ```python
@@ -204,9 +210,11 @@ val = quadpy.quadrilateral.integrate(
  * open and closed Newton-Cotes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6)) (arbitrary degree)
  * [Stroud](https://cds.cern.ch/record/104291?ln=en) (1971, 2 schemes up to
    degree 3)
+ * [Grundmann-Möller](http://dx.doi.org/10.1137/0715019) (1978, arbitrary degree),
  * [Yu](http://dx.doi.org/10.1016/0045-7825(84)90072-0) (1984, 5 schemes up to degree 6)
  * [Keast](http://dx.doi.org/10.1016/0045-7825(86)90059-9) (1986, 11 schemes up to
    degree 8)
+ * [Gatermann](https://dx.doi.org/10.1007/978-94-011-2646-5_2) (1992, degree 5)
  * [Beckers-Haegemans](https://lirias.kuleuven.be/handle/123456789/132648) (1990, degrees 8 and 9)
  * [Liu-Vinokur](http://dx.doi.org/10.1006/jcph.1998.5884) (1998, 14 schemes up to
    degree 5)
@@ -220,6 +228,8 @@ val = quadpy.quadrilateral.integrate(
    schemes up to degree 15)
  * [Shunn-Ham](http://dx.doi.org/10.1016/j.cam.2012.03.032) (2012, 6 schemes up to
    degree 7)
+ * [Vioreanu-Rokhlin](https://doi.org/10.1137/110860082) (2014, 10
+   schemes up to degree 13),
  * [Willams-Shunn-Jameson](https://doi.org/10.1016/j.cam.2014.01.007) (2014, 1
    scheme with degree 9)
 
