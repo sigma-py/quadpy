@@ -28,14 +28,14 @@ class Gatermann(object):
             numpy.full(3, 0.2877504278497528e-01),
             numpy.full(3, 0.6749318700980879e-01),
             ])
-        bary = numpy.concatenate([
+        self.bary = numpy.concatenate([
             _ro3(0.6238226509439084e-01, 0.6751786707392436e-01),
             _ro3(0.5522545665692000e-01, 0.3215024938520156),
             _ro3(0.3432430294509488e-01, 0.6609491961867980),
             _ro3(0.5158423343536001, 0.2777161669764050),
             ])
 
-        self.points = bary[:, 1:]
+        self.points = self.bary[:, 1:]
         return
 
 

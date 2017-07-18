@@ -11,12 +11,12 @@ class SevenPoint(object):
             numpy.full(3, 0.05),
             2.0 / numpy.full(3, 15.0),
             ])
-        bary = numpy.concatenate([
+        self.bary = numpy.concatenate([
             _s3(),
             _s21(0.0),
             _s21(0.5),
             ])
-        self.points = bary[:, [1, 2]]
+        self.points = self.bary[:, 1:]
         self.degree = 3
         self.name = 'seven-point'
         return

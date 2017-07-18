@@ -17,7 +17,7 @@ class Walkington(object):
         if index == 1:
             self.degree = 1
             self.weights = numpy.array([1.0 / factorial(d)])
-            bary = _c(d)
+            self.bary = _c(d)
         elif index == 2:
             # The article claims order 2, but tests really only show order 1.
             # Also, the article says:
@@ -31,7 +31,7 @@ class Walkington(object):
             self.weights = numpy.concatenate([
                 numpy.full(d+1, 1.0 / factorial(d+1))
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _xi1(d, 1.0 / numpy.sqrt(d + 1.0))
                 ])
         elif index == 3:
@@ -40,7 +40,7 @@ class Walkington(object):
                 numpy.full(1, (-1.0*(d+1)**3) / (4.0 * factorial(d+2))),
                 numpy.full(d+1, (d+3)**3 / (4.0 * factorial(d+3))),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _c(d),
                 _xi1(d, 1.0 / (d + 3.0))
                 ])
@@ -60,7 +60,7 @@ class Walkington(object):
                     (d+5)**5 / (16.0 * factorial(d+5))
                     ),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _c(d),
                 _xi1(d, 1.0 / (d + 3.0)),
                 _xi1(d, 1.0 / (d + 5.0)),
@@ -81,7 +81,7 @@ class Walkington(object):
                     1.0/64.0 * (d+7)**7 / factorial(d+7)
                     ),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _c(d),
                 #
                 _xi1(d, 1.0 / (d + 3)),
@@ -94,7 +94,7 @@ class Walkington(object):
                 _xi111(d, 1.0 / (d + 7)),
                 ])
 
-        self.points = bary[:, 1:]
+        self.points = self.bary[:, 1:]
         # normalize weights
         self.weights /= numpy.sum(self.weights)
         return

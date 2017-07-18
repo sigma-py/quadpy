@@ -27,7 +27,7 @@ class Cubtri(object):
             numpy.full(6, 0.0375097224552317),
             ])
 
-        bary = numpy.concatenate([
+        self.bary = numpy.concatenate([
             _s3(),
             _s21(0.1012865073234563),
             _s21(0.4701420641051151),
@@ -35,6 +35,6 @@ class Cubtri(object):
             _s21(0.0294808608844396),
             _s111(0.7384168123405100, 0.2321023267750504),
             ])
-        self.points = bary[:, [1, 2]]
+        self.points = self.bary[:, 1:]
         self.degree = 8
         return

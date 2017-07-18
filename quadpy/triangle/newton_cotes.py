@@ -24,12 +24,11 @@ def _newton_cotes(n, point_fun):
         for j in range(n + 1 - i)
         ])
     bary = point_fun(idx, n)
-    points = bary[:, [1, 2]]
 
     # weights
     if n == 0:
         weights = numpy.ones(1)
-        return points, weights, degree
+        return bary, weights, degree
 
     def get_poly(t, m, n):
         return sympy.prod([
@@ -38,7 +37,7 @@ def _newton_cotes(n, point_fun):
                 )
             for k in range(m)
             ])
-    weights = numpy.empty(len(points))
+    weights = numpy.empty(len(bary))
     idx = 0
     for i in range(n + 1):
         for j in range(n + 1 - i):
@@ -57,20 +56,22 @@ def _newton_cotes(n, point_fun):
                  for m, c in zip(g.monoms(), g.coeffs())
                  ])
             idx += 1
-    return points, weights, degree
+    return bary, weights, degree
 
 
 class NewtonCotesClosed(object):
     def __init__(self, n):
-        self.points, self.weights, self.degree = \
+        self.bary, self.weights, self.degree = \
             _newton_cotes(n, lambda k, n: k / float(n))
+        self.points = self.bary[:, 1:]
         self.name = 'NCC(%d)' % n
         return
 
 
 class NewtonCotesOpen(object):
     def __init__(self, n):
-        self.points, self.weights, self.degree = \
+        self.bary, self.weights, self.degree = \
             _newton_cotes(n, lambda k, n: (k+1) / float(n+3))
+        self.points = self.bary[:, 1:]
         self.name = 'NCO(%d)' % n
         return

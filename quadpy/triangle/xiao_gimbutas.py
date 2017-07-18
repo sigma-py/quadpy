@@ -30,21 +30,21 @@ class XiaoGimbutas(object):
     def __init__(self, index):
         self.name = 'XG(%d)' % index
         if index == 1:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 ])
             self.weights = numpy.concatenate([
                 numpy.full(1, 1.0),
                 ])
         elif index == 2:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.16666666666666666666666666666667),
                 ])
             self.weights = numpy.concatenate([
                 numpy.full(3, 0.33333333333333333333333333333333),
                 ])
         elif index == 3:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.44594849091596488631832925388305),
                 _s21(0.091576213509770743459571463402202),
                 ])
@@ -53,7 +53,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.10995174365532186763832632490021),
                 ])
         elif index == 4:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.44594849091596488631832925388305),
                 _s21(0.091576213509770743459571463402202),
                 ])
@@ -62,7 +62,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.10995174365532186763832632490021),
                 ])
         elif index == 5:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.10128650732345633880098736191512),
                 _s21(0.47014206410511508977044120951345),
                 _s3(),
@@ -73,7 +73,7 @@ class XiaoGimbutas(object):
                 numpy.full(1, 0.225),
                 ])
         elif index == 6:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.21942998254978296000012662922294),
                 _s21(0.4801379641122150440289415322955),
                 _s111(
@@ -87,7 +87,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.040634559793660662451761522156903),
                 ])
         elif index == 7:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.47319565368925105124001630452474),
                 _s21(0.057797640054506434529631658383363),
                 _s111(
@@ -103,7 +103,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.127725248561133836305458533062),
                 ])
         elif index == 8:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.17056930775176020662229350149146),
                 _s21(0.45929258829272315602881551449417),
                 _s3(),
@@ -121,7 +121,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.02723031417443499426484469007391),
                 ])
         elif index == 9:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.48968251919873762778370692483619),
                 _s3(),
                 _s21(0.18820353561903273024096128046734),
@@ -141,7 +141,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.025577675658698031261678798559),
                 ])
         elif index == 10:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.49517345980117049293764079093536),
                 _s21(0.019139415242841232124217710336254),
                 _s111(
@@ -166,7 +166,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.075247327968543982712381272722906),
                 ])
         elif index == 11:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.03084689563558803473172144500853),
                 _s21(0.49878016517846077698471569037401),
                 _s111(
@@ -193,7 +193,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.040642848655886470076514910219681),
                 ])
         elif index == 12:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.27146250701492608487799594802255),
                 _s21(0.10925782765935429058374731200431),
                 _s21(0.44011164865859311101345370307291),
@@ -223,7 +223,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.0079316425099736384593147879058598),
                 ])
         elif index == 13:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.49613589474104609045695539592253),
                 _s21(0.46960868965349191238533212311234),
                 _s21(0.23111028494908224276146574912332),
@@ -257,7 +257,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.0080293997952584213786147424748364),
                 ])
         elif index == 14:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.41764471934045392250944082218564),
                 _s111(
                     0.29837288213625775297083151805961,
@@ -294,7 +294,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.0050102288385006717698600930824892),
                 ])
         elif index == 15:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.12997822993307786699561917269956),
                 _s3(),
                 _s21(0.4600769492970597257053156775539),
@@ -338,7 +338,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.0024752660145579158559970517215904),
                 ])
         elif index == 16:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s111(
                     0.41376948582708518207145189607931,
                     0.0096649544036601953182082922101098
@@ -387,7 +387,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.0037891352382642220363020333223085),
                 ])
         elif index == 17:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.417103444361599201605122916372),
                 _s111(
                     0.072505470799002426274525642459242,
@@ -439,7 +439,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.025019450950497357797057530176382),
                 ])
         elif index == 18:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s111(
                     0.38504403441316367334400254247437,
                     0.090427040354340612427383113261328
@@ -498,7 +498,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.0137902866047669388014726908033),
                 ])
         elif index == 19:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s111(
                     0.14242228257112693843245883040253,
                     0.0050051423523504110778304506166263
@@ -561,7 +561,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.0032821375148397373168551337436636),
                 ])
         elif index == 20:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.18629499774454094277173250805763),
                 _s21(0.037310880598884693993503716287207),
                 _s21(0.47624561154049901321035187223259),
@@ -629,7 +629,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.015660461552149066842203501824447),
                 ])
         elif index == 21:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.29893623531498257064359772308441),
                 _s111(
                     0.28918949607859476265178213045511,
@@ -702,7 +702,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.0032654285840440852427074148200636),
                 ])
         elif index == 22:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.38518452462730214123319240996523),
                 _s21(0.45776941136767207640932772763919),
                 _s111(
@@ -783,7 +783,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.00064042853117142575882509442715151),
                 ])
         elif index == 23:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s111(
                     0.15950379892475727415245345439626,
                     0.023870253654353568145989397165732
@@ -870,7 +870,7 @@ class XiaoGimbutas(object):
                 numpy.full(1, 0.025253060323036207692073780850926),
                 ])
         elif index == 24:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.41889097491060276780569831520914),
                 _s21(0.16236063371692634521241934570799),
@@ -965,7 +965,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.01899458651735265609462072817133),
                 ])
         elif index == 25:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.38764203040456340905403082721048),
                 _s21(0.21100450806149663445070386542963),
                 _s111(
@@ -1065,7 +1065,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.0015117020784588803378981330586815),
                 ])
         elif index == 26:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s111(
                     0.080071654940316590838670809367462,
                     0.0047946609754366080496785851291657
@@ -1175,7 +1175,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.0011395489158682133180844934604399),
                 ])
         elif index == 27:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.38071402118118718796829089353041),
                 _s21(0.44666780370386460487281769646911),
                 _s21(0.41614137880541216728641979593873),
@@ -1292,7 +1292,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.00084660613576385057279842151172511),
                 ])
         elif index == 28:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.30398292251648411800214900044008),
                 _s111(
                     0.045505400558346431727807991781216,
@@ -1417,7 +1417,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.00072513459498608292483699650528074),
                 ])
         elif index == 29:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s111(
                     0.058942108840229254909367118374802,
                     0.0027287432479209962438792745425867
@@ -1549,7 +1549,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.00068867262504176093086598589556804),
                 ])
         elif index == 30:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s111(
                     0.25905388452106734346190162559017,
                     0.047835123140772525935707948872268
@@ -1691,7 +1691,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.00033562171146640224065236065543195),
                 ])
         elif index == 31:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.48615246791305980749502825684294),
                 _s111(
@@ -1842,7 +1842,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.0018212527841224722251057920612272),
                 ])
         elif index == 32:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.0014574454623699960928662778842528),
                 _s111(
                     0.20683168631590207728382782302181,
@@ -2003,7 +2003,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.00017008824774248790820827892340005),
                 ])
         elif index == 33:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.086684239934569733403885167143719),
                 _s21(0.40942796080264335789831473750982),
                 _s111(
@@ -2171,7 +2171,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.00064400177434743147186589300111156),
                 ])
         elif index == 34:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s111(
                     0.38512625183828101969680419254726,
                     0.021096760270101908015060797424162
@@ -2348,7 +2348,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.00028734535460813439989166698086861),
                 ])
         elif index == 35:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.3014351686173180200524148644439),
                 _s21(0.49164140398289072331460736357694),
                 _s21(0.35779313579859713973298277598186),
@@ -2535,7 +2535,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.00062758434107056451114671085808747),
                 ])
         elif index == 36:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s111(
                     0.25500233607541949512398192492591,
                     0.03229226397376931487287858188622
@@ -2737,7 +2737,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.0028959157634685651437667668557156),
                 ])
         elif index == 37:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.10230393215776038942336921827105),
                 _s111(
                     0.31602409649663992132444343586255,
@@ -2945,7 +2945,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.0082906132570537271501653427749507),
                 ])
         elif index == 38:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.45907213603176458246435226305336),
                 _s111(
                     0.28376551470174071081775285162444,
@@ -3166,7 +3166,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.00029228566318282656607634810127754),
                 ])
         elif index == 39:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s111(
                     0.23827520858455705038397719741145,
                     0.0043744824382612274196383751241506
@@ -3399,7 +3399,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.0001749077815533339416223108576126),
                 ])
         elif index == 40:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s111(
                     0.16717783835571051963376246575724,
                     0.0015279490490131733337319693917183
@@ -3643,7 +3643,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.00027856062504863362656153077290914),
                 ])
         elif index == 41:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.0018100550930816792181455727663449),
                 _s21(0.31460775138387783999446595468217),
                 _s21(0.37183245783943581904371856116814),
@@ -3899,7 +3899,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.0039695690393596122823616274127965),
                 ])
         elif index == 42:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.40237192510979328815564123689329),
                 _s21(0.0013653925759541381426100407060897),
                 _s111(
@@ -4166,7 +4166,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.007922044576591311385557734242534),
                 ])
         elif index == 43:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.41178017085993385194101544969374),
                 _s21(0.47557586709913148045619964597896),
                 _s111(
@@ -4445,7 +4445,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.0073142091431203385404764277288737),
                 ])
         elif index == 44:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.0017123075799638136895121702696589),
                 _s111(
                     0.01975516761571974351422857470556,
@@ -4737,7 +4737,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.0035554794715669390910633920101491),
                 ])
         elif index == 45:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s111(
                     0.01260480383073618169352002314306,
                     0.0072924295508433190860092162440195
@@ -5044,7 +5044,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.0030558057702988307263859691606889),
                 ])
         elif index == 46:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.47916270948102112963674655694901),
                 _s111(
                     0.39796976464070987374146326910061,
@@ -5363,7 +5363,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.000014095220135950496697652632292852),
                 ])
         elif index == 47:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.3491775041543909790546580008642),
                 _s111(
                     0.013218234774261483880563808729232,
@@ -5692,7 +5692,7 @@ class XiaoGimbutas(object):
                 numpy.full(3, 0.000089253661418059160787189703718929),
                 ])
         elif index == 48:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.34772445871080945921858087263637),
                 _s111(
                     0.36956729159016621347427614942414,
@@ -6042,7 +6042,7 @@ class XiaoGimbutas(object):
                 numpy.full(6, 0.00023987367893110875148858899312939),
                 ])
         elif index == 49:
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s111(
                     0.17470985430717311394573984855263,
                     0.040008155056936224332958516723801
@@ -6401,7 +6401,7 @@ class XiaoGimbutas(object):
                 ])
         else:
             assert index == 50
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.25635586338479089235345337173654),
                 _s111(
                     0.4433230868583420661077936032547,
@@ -6776,5 +6776,5 @@ class XiaoGimbutas(object):
                 ])
 
         self.degree = index
-        self.points = bary[:, [1, 2]]
+        self.points = self.bary[:, 1:]
         return

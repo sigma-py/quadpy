@@ -22,18 +22,18 @@ class VioreanuRokhlin(object):
         if index == 0:
             self.degree = 1
             self.weights = numpy.array([2.0])
-            bary = _s3()
+            self.bary = _s3()
         elif index == 1:
             self.degree = 2
             self.weights = numpy.full(3, 2.0/3.0)
-            bary = _s21(1.0 / 6.0)
+            self.bary = _s21(1.0 / 6.0)
         elif index == 2:
             self.degree = 4
             self.weights = numpy.concatenate([
                 numpy.full(3, 2.199034873106437e-01),
                 numpy.full(3, 4.467631793560229e-01),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(9.157621350977074e-02),
                 _s21(4.459484909159649e-01),
                 ])
@@ -44,7 +44,7 @@ class VioreanuRokhlin(object):
                 numpy.full(6, 2.067325627729806e-01),
                 numpy.full(1, 3.979307409192731e-01),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(7.111299453344100e-02),
                 _s111(6.149261666431255e-01, 3.139793976769810e-01),
                 _s3(),
@@ -57,7 +57,7 @@ class VioreanuRokhlin(object):
                 numpy.full(3, 1.297596750941034e-01),
                 numpy.full(3, 2.540178513886623e-01),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(5.125307984145178e-02),
                 _s111(7.184833008976065e-01, 2.333468929848689e-01),
                 _s21(4.741107940511352e-01),
@@ -72,7 +72,7 @@ class VioreanuRokhlin(object):
                 numpy.full(3, 1.487952180396637e-01),
                 numpy.full(3, 1.700290644290404e-01),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(3.140574880095148e-02),
                 _s111(7.876424102060766e-01, 1.711304246628439e-01),
                 _s111(5.846327565436199e-01, 3.760587715777944e-01),
@@ -90,7 +90,7 @@ class VioreanuRokhlin(object):
                 numpy.full(6, 1.183682929374979e-01),
                 numpy.full(1, 1.616325201016875e-01)
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(2.270664031285163e-02),
                 _s111(8.385517073803943e-01, 1.300534505181612e-01),
                 _s21(4.853481363747690e-01),
@@ -111,7 +111,7 @@ class VioreanuRokhlin(object):
                 numpy.full(3, 9.348331834201271e-02),
                 numpy.full(3, 1.249156510766090e-01)
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(1.936521090242771e-02),
                 _s111(8.693738668822796e-01, 1.064079463998051e-01),
                 _s111(5.622334423439250e-01, 4.142620534704672e-01),
@@ -135,7 +135,7 @@ class VioreanuRokhlin(object):
                 numpy.full(3, 9.077217553424359e-02),
                 numpy.full(3, 1.043845857523602e-01)
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(1.882509916959152e-02),
                 _s111(8.878227753643443e-01, 9.679127647080299e-02),
                 _s111(7.672861632419925e-01, 2.144781573208718e-01),
@@ -163,7 +163,7 @@ class VioreanuRokhlin(object):
                 numpy.full(6, 6.910551304563631e-02),
                 numpy.full(1, 8.955059638519497e-02)
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(1.765199295744602e-02),
                 _s111(9.034296997820290e-01, 8.351364433882746e-02),
                 _s111(8.103865759434584e-01, 1.707436491477080e-01),
@@ -195,7 +195,7 @@ class VioreanuRokhlin(object):
                 numpy.full(3, 6.253133910430890e-02),
                 numpy.full(3, 7.362530381554795e-02)
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(1.338044267375471e-02),
                 _s111(9.220321146106945e-01, 6.509382978126310e-02),
                 _s111(8.425600911514819e-01, 1.434190950622009e-01),
@@ -231,7 +231,7 @@ class VioreanuRokhlin(object):
                 numpy.full(3, 5.946555598510596e-02),
                 numpy.full(3, 6.379949836671749e-02)
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(1.190577007231675e-02),
                 _s111(9.337642883675498e-01, 5.690091065739300e-02),
                 _s111(8.655951061030167e-01, 1.215393132784824e-01),
@@ -272,7 +272,7 @@ class VioreanuRokhlin(object):
                 numpy.full(6, 5.118206871784994e-02),
                 numpy.full(1, 5.588291294116084e-02)
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(8.570772385299130e-03),
                 _s111(9.434081460978755e-01, 4.662176991883149e-02),
                 _s111(7.951998698231925e-01, 1.946139250445256e-01),
@@ -318,7 +318,7 @@ class VioreanuRokhlin(object):
                 numpy.full(3, 4.429134227342787e-02),
                 numpy.full(3, 4.810124266571171e-02)
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(5.819134670830062e-03),
                 _s111(9.603538056014904e-01, 3.243783612078988e-02),
                 _s111(9.127697021851261e-01, 7.964056379409012e-02),
@@ -369,7 +369,7 @@ class VioreanuRokhlin(object):
                 numpy.full(3, 4.012365449679097e-02),
                 numpy.full(3, 4.268474920907758e-02)
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(4.680447738470872e-03),
                 _s111(9.234552296982609e-01, 7.191876244981610e-02),
                 _s111(9.632582419356120e-01, 2.931017109737133e-02),
@@ -426,7 +426,7 @@ class VioreanuRokhlin(object):
                 numpy.full(6, 3.604773047889431e-02),
                 numpy.full(1, 3.826701851913514e-02)
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(5.714338858236023e-03),
                 _s111(9.687384811816084e-01, 2.643876732033090e-02),
                 _s111(9.359144655917663e-01, 5.824206555180034e-02),
@@ -489,7 +489,7 @@ class VioreanuRokhlin(object):
                 numpy.full(3, 3.174921632839665e-02),
                 numpy.full(3, 3.377920627522737e-02)
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s111(9.725775772197541e-01, 2.564112890385994e-02),
                 _s21(6.028725106885902e-03),
                 _s111(9.447574286566741e-01, 4.894785660284484e-02),
@@ -558,7 +558,7 @@ class VioreanuRokhlin(object):
                 numpy.full(3, 2.847258101994243e-02),
                 numpy.full(3, 2.982114065394350e-02)
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(3.527814686147823e-03),
                 _s111(9.764059455437145e-01, 1.906561164002463e-02),
                 _s111(9.496260390310843e-01, 4.575279206695970e-02),
@@ -634,7 +634,7 @@ class VioreanuRokhlin(object):
                 numpy.full(6, 2.641358054212290e-02),
                 numpy.full(1, 2.755469669500557e-02)
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(2.608491000431257e-03),
                 _s111(9.800308095795568e-01, 1.601681168443359e-02),
                 _s111(9.562102405858892e-01, 4.006532345029712e-02),
@@ -718,7 +718,7 @@ class VioreanuRokhlin(object):
                 numpy.full(3, 2.391851004568664e-02),
                 numpy.full(3, 2.498662415251629e-02)
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(3.191453506137143e-03),
                 _s111(9.783946048988972e-01, 1.787155606615631e-02),
                 _s111(9.573765994581499e-01, 3.947157915782751e-02),
@@ -761,7 +761,7 @@ class VioreanuRokhlin(object):
                 _s21(3.065470933749975e-01),
                 ])
 
-        self.points = bary[:, 1:]
+        self.points = self.bary[:, 1:]
 
         self.weights *= 0.5
         return
