@@ -74,6 +74,7 @@ def _integrate_monomial_over_standard_tet(k):
     + [quadpy.tetrahedron.NewtonCotesOpen(k) for k in range(7)]
     + [quadpy.tetrahedron.ShunnHam(k) for k in range(1, 7)]
     + [quadpy.tetrahedron.Stroud(k) for k in range(2)]
+    + [quadpy.tetrahedron.VioreanuRokhlin(k) for k in range(10)]
     + [quadpy.tetrahedron.Walkington(k) for k in [1, 2, 3, 5, 'p5', 7]]
     + [quadpy.tetrahedron.WilliamsShunnJameson()]
     + [quadpy.tetrahedron.XiaoGimbutas(k) for k in range(1, 16)]
@@ -118,8 +119,8 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.tetrahedron.GrundmannMoeller(4)
-    test_scheme(scheme_)
+    scheme_ = quadpy.tetrahedron.VioreanuRokhlin(3)
+    # test_scheme(scheme_)
     from matplotlib import pyplot as plt
     test_show(scheme_)
     plt.show()

@@ -11,6 +11,7 @@ from .maeztu_sainz import *
 from .newton_cotes import *
 from .stroud import *
 from .shunn_ham import *
+from .vioreanu_rokhlin import *
 from .xiao_gimbutas import *
 from .yu import *
 from .zhang_cui_liu import *
