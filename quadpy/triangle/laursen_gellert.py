@@ -31,7 +31,7 @@ class LaursenGellert(object):
             self.weights = numpy.concatenate([
                 numpy.full(1, 1.0),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 ])
             self.degree = 1
@@ -39,7 +39,7 @@ class LaursenGellert(object):
             self.weights = numpy.concatenate([
                 numpy.full(3, 1.0/3.0),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(1.0/6.0),
                 ])
             self.degree = 2
@@ -47,7 +47,7 @@ class LaursenGellert(object):
             self.weights = numpy.concatenate([
                 numpy.full(3, 1.0/3.0),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.5),
                 ])
             self.degree = 2
@@ -56,7 +56,7 @@ class LaursenGellert(object):
                 numpy.full(1, -0.5625),
                 numpy.full(3, 25.0/48.0),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.2),
                 ])
@@ -65,7 +65,7 @@ class LaursenGellert(object):
             self.weights = numpy.concatenate([
                 numpy.full(6, 1.0/6.0),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s111(0.659027622374092, 0.231933368553031),
                 ])
             self.degree = 3
@@ -74,7 +74,7 @@ class LaursenGellert(object):
                 numpy.full(3, 0.109951743655322),
                 numpy.full(3, 0.223381589678011),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.091576213509771),
                 _s21(0.445948490915965),
                 ])
@@ -84,7 +84,7 @@ class LaursenGellert(object):
                 numpy.full(1, 0.375),
                 numpy.full(6, 5.0/48.0),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s111(0.736712498968435, 0.237932366472434),
                 ])
@@ -95,7 +95,7 @@ class LaursenGellert(object):
                 numpy.full(3, 0.125939180544827),
                 numpy.full(3, 0.132394152788506),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.101286507323456),
                 _s21(0.470142064105115),
@@ -106,7 +106,7 @@ class LaursenGellert(object):
                 numpy.full(3, 0.205950504760887),
                 numpy.full(6, 0.063691414286223),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.437525248383384),
                 _s111(0.797112651860071, 0.165409927389841),
                 ])
@@ -117,7 +117,7 @@ class LaursenGellert(object):
                 numpy.full(3, 0.116786275726379),
                 numpy.full(6, 0.082851075618374),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.063089014491502),
                 _s21(0.249286745170910),
                 _s111(0.636502499121399, 0.310352451033785),
@@ -130,7 +130,7 @@ class LaursenGellert(object):
                 numpy.full(3, +0.053347235608839),
                 numpy.full(6, +0.077113760890257),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.260345966079038),
                 _s21(0.065130102902216),
@@ -143,7 +143,7 @@ class LaursenGellert(object):
                 numpy.full(6, 0.070853083692136),
                 numpy.full(6, 0.069274682079415),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.064930513159165),
                 _s111(0.284575584249173, 0.517039939069325),
                 _s111(0.313559184384932, 0.043863471792371),
@@ -157,7 +157,7 @@ class LaursenGellert(object):
                 numpy.full(3, 0.095091634267284),
                 numpy.full(6, 0.027230314174435),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.170569307751761),
                 _s21(0.050547228317031),
@@ -174,7 +174,7 @@ class LaursenGellert(object):
                 numpy.full(3, 0.025577675658698),
                 numpy.full(6, 0.043283539377289),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.489682519198738),
                 _s21(0.437089591492937),
@@ -191,7 +191,7 @@ class LaursenGellert(object):
                 numpy.full(6, 0.045469538047619),
                 numpy.full(6, 0.035351705089199),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.481519834783311),
                 _s21(0.403603979817940),
                 _s21(0.045189009784377),
@@ -208,7 +208,7 @@ class LaursenGellert(object):
                 numpy.full(6, 0.037359856234305),
                 numpy.full(6, 0.030886656884564),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.425086210602091),
                 _s21(0.023308867510000),
@@ -227,7 +227,7 @@ class LaursenGellert(object):
                 numpy.full(6, 0.034184648162959),
                 numpy.full(6, 0.025297757707288),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.142161101056564),
                 _s21(0.032055373216944),
@@ -237,5 +237,5 @@ class LaursenGellert(object):
                 ])
             self.degree = 10
 
-        self.points = bary[:, 1:]
+        self.points = self.bary[:, 1:]
         return

@@ -30,18 +30,18 @@ class WilliamsShunnJameson(object):
         self.name = 'WSJ(%d)' % index
         if index == 1:
             self.weights = [1.0]
-            bary = _s3()
+            self.bary = _s3()
             self.degree = 1
         elif index == 2:
             self.weights = 3 * [1.0 / 3.0]
-            bary = _s21(1.0 / 6.0)
+            self.bary = _s21(1.0 / 6.0)
             self.degree = 2
         elif index == 3:
             self.weights = (
                 3 * [0.109951743655333] +
                 3 * [0.223381589678000]
                 )
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.091576213509780),
                 _s21(0.445948490915964)
                 ])
@@ -52,7 +52,7 @@ class WilliamsShunnJameson(object):
                 6 * [0.112098412070887] +
                 [0.201542988584730]
                 )
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.055564052669793),
                 _s111(0.295533711735893, 0.634210747745723),
                 _s3(),
@@ -65,7 +65,7 @@ class WilliamsShunnJameson(object):
                 3 * [0.076206062385535] +
                 6 * [0.055749810027115]
                 )
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.035870877695734),
                 _s21(0.241729395767967),
                 _s21(0.474308787777079),
@@ -80,7 +80,7 @@ class WilliamsShunnJameson(object):
                 6 * [0.028969269372473] +
                 6 * [0.046046366595935]
                 )
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.028112952182664),
                 _s21(0.177139098469317),
                 _s21(0.405508595867433),
@@ -98,7 +98,7 @@ class WilliamsShunnJameson(object):
                 6 * [0.028205136280616] +
                 6 * [0.066995957127830]
                 )
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.019977187122193),
                 _s21(0.131721767529998),
                 _s3(),
@@ -120,7 +120,7 @@ class WilliamsShunnJameson(object):
                 6 * [0.016644570076736] +
                 6 * [0.044326238118914]
                 )
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.021171422779465),
                 _s21(0.100584397395888),
                 _s21(0.271038307711932),
@@ -133,6 +133,6 @@ class WilliamsShunnJameson(object):
             self.degree = 12
 
         self.weights = numpy.array(self.weights)
-        bary = numpy.array(bary)
-        self.points = bary[:, [1, 2]]
+        self.bary = numpy.array(self.bary)
+        self.points = self.bary[:, 1:]
         return

@@ -35,7 +35,7 @@ class HammerMarloweStroud(object):
             self.weights = numpy.concatenate([
                 numpy.full(1, 1.0),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 ])
             self.degree = 1
@@ -43,7 +43,7 @@ class HammerMarloweStroud(object):
             self.weights = numpy.concatenate([
                 numpy.full(3, 1.0/3.0),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _r(0.5),
                 ])
             self.degree = 2
@@ -51,7 +51,7 @@ class HammerMarloweStroud(object):
             self.weights = numpy.concatenate([
                 numpy.full(3, 1.0/3.0),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _r(-0.5),
                 ])
             self.degree = 2
@@ -60,7 +60,7 @@ class HammerMarloweStroud(object):
                 numpy.full(1, -9.0/16.0),
                 numpy.full(3, 25.0/48.0),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _r(0.4),
                 ])
@@ -72,15 +72,16 @@ class HammerMarloweStroud(object):
                 (155.0 - numpy.sqrt(15.0)) / numpy.full(3, 1200.0),
                 (155.0 + numpy.sqrt(15.0)) / numpy.full(3, 1200.0),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _r((1 + numpy.sqrt(15)) / 7.0),
                 _r((1 - numpy.sqrt(15)) / 7.0),
                 ])
             self.degree = 5
 
-        self.points = bary[:, 1:]
+        self.points = self.bary[:, 1:]
         return
+
 
 def _r(r):
     '''Given $r$ (as appearing in the article), it returns the barycentric

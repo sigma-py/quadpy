@@ -30,32 +30,32 @@ class Strang(object):
         self.name = 'Strang(%d)' % index
         if index == 1:
             self.weights = numpy.full(3, 1.0/3.0)
-            bary = _s21(1.0/6.0)
+            self.bary = _s21(1.0/6.0)
             self.degree = 2
         elif index == 2:
             self.weights = numpy.full(3, 1.0/3.0)
-            bary = _s21(0.5)
+            self.bary = _s21(0.5)
             self.degree = 2
         elif index == 3:
             self.weights = numpy.concatenate([
                 numpy.full(1, -0.5625),
                 25.0 / numpy.full(3, 48.0),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.2),
                 ])
             self.degree = 3
         elif index == 4:
             self.weights = numpy.full(6, 1.0/6.0)
-            bary = _s111(0.659027622374092, 0.231933368553031)
+            self.bary = _s111(0.659027622374092, 0.231933368553031)
             self.degree = 3
         elif index == 5:
             self.weights = numpy.concatenate([
                 numpy.full(3, 0.109951743655322),
                 numpy.full(3, 0.223381589678011),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.091576213509771),
                 _s21(0.445948490915965),
                 ])
@@ -65,7 +65,7 @@ class Strang(object):
                 numpy.full(1, 0.375),
                 5.0 / numpy.full(6, 48.0),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s111(0.736712498968435, 0.237932366472434),
                 ])
@@ -76,7 +76,7 @@ class Strang(object):
                 numpy.full(3, 0.12593918054482717),
                 numpy.full(3, 0.13239415278850616),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.10128650732345633),
                 _s21(0.47014206410511505),
@@ -87,7 +87,7 @@ class Strang(object):
                 numpy.full(3, 0.205950504760887),
                 numpy.full(6, 0.063691414286223),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.437525248383384),
                 _s111(0.797112651860071, 0.165409927389841),
                 ])
@@ -98,7 +98,7 @@ class Strang(object):
                 numpy.full(3, 0.116786275726379),
                 numpy.full(6, 0.082851075618374),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.063089014491502),
                 _s21(0.249286745170910),
                 _s111(0.636502499121399, 0.310352451033785),
@@ -112,7 +112,7 @@ class Strang(object):
                 numpy.full(3, 0.053347235608839),
                 numpy.full(6, 0.077113760890257),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.260345966079038),
                 _s21(0.065130102902216),
@@ -120,5 +120,5 @@ class Strang(object):
                 ])
             self.degree = 7
 
-        self.points = bary[:, [1, 2]]
+        self.points = self.bary[:, 1:]
         return

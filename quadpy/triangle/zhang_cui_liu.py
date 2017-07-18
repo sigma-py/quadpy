@@ -30,7 +30,7 @@ class ZhangCuiLiu(object):
                 numpy.full(3, 0.0950916342672846247938961043885843),
                 numpy.full(6, 0.0272303141744349942648446900739089),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.1705693077517602066222935014914645),
                 _s21(0.0505472283170309754584235505965989),
@@ -56,7 +56,7 @@ class ZhangCuiLiu(object):
                 numpy.full(6, 0.0363857559284850056220113277642717),
                 numpy.full(6, 0.0069646633735184124253997225042413),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.0099797608064584324152935295820524),
                 _s21(0.4799778935211883898105528650883899),
@@ -105,7 +105,7 @@ class ZhangCuiLiu(object):
                  numpy.full(6, 0.0107398444741849415551734474479517),
                  numpy.full(6, 0.0053678057381874532052474100212697),
                  ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.2158743059329919731902545438401828),
                 _s21(0.0753767665297472780972854309459163),
@@ -163,5 +163,5 @@ class ZhangCuiLiu(object):
                 ])
             self.degree = 20
 
-        self.points = bary[:, [1, 2]]
+        self.points = self.bary[:, 1:]
         return

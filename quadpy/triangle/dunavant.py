@@ -20,18 +20,18 @@ class Dunavant(object):
         self.name = 'Dunavant(%d)' % index
         if index == 1:
             self.weights = numpy.array([1.0])
-            bary = _s3()
+            self.bary = _s3()
             self.degree = 1
         elif index == 2:
             self.weights = numpy.full(3, 1.0/3.0)
-            bary = _s21(1.0/6.0)
+            self.bary = _s21(1.0/6.0)
             self.degree = 2
         elif index == 3:
             self.weights = numpy.concatenate([
                 numpy.full(1, -0.5625),
                 25.0 / numpy.full(3, 48.0),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.2),
                 ])
@@ -41,7 +41,7 @@ class Dunavant(object):
                 numpy.full(3, 0.223381589678011),
                 numpy.full(3, 0.109951743655322),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.445948490915965),
                 _s21(0.091576213509771),
                 ])
@@ -52,7 +52,7 @@ class Dunavant(object):
                 numpy.full(3, 0.132394152788506),
                 numpy.full(3, 0.125939180544827),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.4701420641051),
                 _s21(0.101286507323456),
@@ -64,7 +64,7 @@ class Dunavant(object):
                 numpy.full(3, 0.050844906370207),
                 numpy.full(6, 0.082851075618374),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.249286745170910),
                 _s21(0.063089014491502),
                 _s111(0.053145049844817, 0.310352451033784),
@@ -77,7 +77,7 @@ class Dunavant(object):
                 numpy.full(3, 0.053347235608838),
                 numpy.full(6, 0.077113760890257),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.260345966079040),
                 _s21(0.065130102902216),
@@ -92,7 +92,7 @@ class Dunavant(object):
                 numpy.full(3, 0.032458497623198),
                 numpy.full(6, 0.027230314174435),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.459292588292723),
                 _s21(0.170569307751760),
@@ -109,7 +109,7 @@ class Dunavant(object):
                 numpy.full(3, 0.025577675658698),
                 numpy.full(6, 0.043283539377289),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.489682519198738),
                 _s21(0.437089591492937),
@@ -127,7 +127,7 @@ class Dunavant(object):
                 numpy.full(6, 0.028327242531057),
                 numpy.full(6, 0.009421666963733),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.485577633383657),
                 _s21(0.109481575485037),
@@ -146,7 +146,7 @@ class Dunavant(object):
                 numpy.full(6, 0.052337111962204),
                 numpy.full(6, 0.020707659639141),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.534611048270758),
                 _s21(0.398969302965855),
                 _s21(0.203309900431282),
@@ -167,7 +167,7 @@ class Dunavant(object):
                 numpy.full(6, 0.022356773202303),
                 numpy.full(6, 0.017316231108659),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.488217389773805),
                 _s21(0.439724392294460),
                 _s21(0.271210385012116),
@@ -191,7 +191,7 @@ class Dunavant(object):
                 numpy.full(6, 0.017401463303822),
                 numpy.full(6, 0.015521786839045),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.495048184939705),
                 _s21(0.468716635109574),
@@ -217,7 +217,7 @@ class Dunavant(object):
                 numpy.full(6, 0.014436308113534),
                 numpy.full(6, 0.005010228838501),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.488963910362179),
                 _s21(0.417644719340454),
                 _s21(0.273477528308839),
@@ -244,7 +244,7 @@ class Dunavant(object):
                 numpy.full(6, 0.021505319847731),
                 numpy.full(6, 0.007673942631049),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s21(0.506972916858243),
                 _s21(0.431406354283023),
                 _s21(0.277693644847144),
@@ -274,7 +274,7 @@ class Dunavant(object):
                 numpy.full(6, 0.019084792755899),
                 numpy.full(6, 0.006850054546542),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.497380541948438),
                 _s21(0.413469438549352),
@@ -308,7 +308,7 @@ class Dunavant(object):
                 numpy.full(6, 0.018292796770025),
                 numpy.full(6, 0.006665632004165),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.497170540556774),
                 _s21(0.482176322624625),
@@ -346,7 +346,7 @@ class Dunavant(object):
                 numpy.full(6, 0.007634129070725),
                 numpy.full(6, 0.000046187660794),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.493344808630921),
                 _s21(0.469210594241957),
@@ -389,7 +389,7 @@ class Dunavant(object):
                 numpy.full(6, 0.010258563736199),
                 numpy.full(6, 0.003799928855302),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.489609987073006),
                 _s21(0.454536892697893),
@@ -434,7 +434,7 @@ class Dunavant(object):
                 numpy.full(6, 0.010112684927462),
                 numpy.full(6, 0.003573909385950),
                 ])
-            bary = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _s3(),
                 _s21(0.500950464352200),
                 _s21(0.488212957934729),
@@ -457,6 +457,6 @@ class Dunavant(object):
                 ])
             self.degree = 20
 
-        # convert barycentric coordinates to reference triangle
-        self.points = bary[:, [1, 2]]
+        # convert self.barycentric coordinates to reference triangle
+        self.points = self.bary[:, 1:]
         return
