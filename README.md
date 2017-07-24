@@ -216,8 +216,8 @@ val = quadpy.quadrilateral.integrate(
  * [Yu](http://dx.doi.org/10.1016/0045-7825(84)90072-0) (1984, 5 schemes up to degree 6)
  * [Keast](http://dx.doi.org/10.1016/0045-7825(86)90059-9) (1986, 11 schemes up to
    degree 8)
- * [Gatermann](https://dx.doi.org/10.1007/978-94-011-2646-5_2) (1992, degree 5)
  * [Beckers-Haegemans](https://lirias.kuleuven.be/handle/123456789/132648) (1990, degrees 8 and 9)
+ * [Gatermann](https://dx.doi.org/10.1007/978-94-011-2646-5_2) (1992, degree 5)
  * [Liu-Vinokur](http://dx.doi.org/10.1006/jcph.1998.5884) (1998, 14 schemes up to
    degree 5)
  * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
