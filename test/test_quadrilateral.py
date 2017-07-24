@@ -45,6 +45,7 @@ def _integrate_exact2(k, x0, x1, y0, y1):
     'scheme,tol',
     [(quadpy.quadrilateral.CoolsHaegemans(k), 1.0e-11) for k in range(1, 4)]
     + [(quadpy.quadrilateral.Dunavant(k), 1.0e-14) for k in range(11)]
+    + [(quadpy.quadrilateral.MorrowPatterson(k), 1.0e-7) for k in [1, 2]]
     + [(quadpy.quadrilateral.Stroud(k), 1.0e-14) for k in range(11)]
     + [(quadpy.quadrilateral.WissmannBecker(k), 1.0e-14) for k in [
         '4-1', '4-2', '6-1', '6-2', '8-1', '8-2',
@@ -98,7 +99,8 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = Product(quadpy.line_segment.GaussLegendre(6))
-    scheme_ = quadpy.quadrilateral.WissmannBecker('8-2')
-    test_scheme(scheme_, 1.0e-14)
+    scheme_ = quadpy.quadrilateral.MorrowPatterson(2)
+    print(sum(scheme_.weights))
+    # test_scheme(scheme_, 1.0e-5)
     test_show(scheme_)
     plt.show()
