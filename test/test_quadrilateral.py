@@ -46,6 +46,9 @@ def _integrate_exact2(k, x0, x1, y0, y1):
     [(quadpy.quadrilateral.CoolsHaegemans(k), 1.0e-11) for k in range(1, 4)]
     + [(quadpy.quadrilateral.Dunavant(k), 1.0e-14) for k in range(11)]
     + [(quadpy.quadrilateral.Stroud(k), 1.0e-14) for k in range(11)]
+    + [(quadpy.quadrilateral.WissmannBecker(k), 1.0e-14) for k in [
+        '4-1', '4-2', '6-1', '6-2', '8-1', '8-2',
+        ]]
     + [(Product(quadpy.line_segment.Midpoint()), 1.0e-14)]
     + [(Product(quadpy.line_segment.Trapezoidal()), 1.0e-14)]
     + [(Product(quadpy.line_segment.GaussLegendre(k)), 1.0e-14)
@@ -95,7 +98,7 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = Product(quadpy.line_segment.GaussLegendre(6))
-    scheme_ = quadpy.quadrilateral.Dunavant(5)
-    # test_scheme(scheme_)
+    scheme_ = quadpy.quadrilateral.WissmannBecker('8-2')
+    test_scheme(scheme_, 1.0e-14)
     test_show(scheme_)
     plt.show()
