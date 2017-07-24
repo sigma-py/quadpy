@@ -98,7 +98,7 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = Product(quadpy.line_segment.GaussLegendre(6))
-    scheme_ = quadpy.quadrilateral.WissmannBecker('8-1')
+    scheme_ = quadpy.quadrilateral.WissmannBecker('8-2')
     test_scheme(scheme_, 1.0e-14)
     test_show(scheme_)
     plt.show()
