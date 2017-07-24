@@ -3,7 +3,7 @@
 import numpy
 
 
-class CoolsHaegemans(object):
+class CoolsHaegemans1985(object):
     '''
     R. Cools, A. Haegemans,
     Construction of fully symmetric cubature formulae of degree 4k-3 for fully
@@ -12,7 +12,7 @@ class CoolsHaegemans(object):
     <https://lirias.kuleuven.be/bitstream/123456789/131870/1/TW71.pdf>.
     '''
     def __init__(self, index):
-        self.name = 'CH(%d)' % index
+        self.name = 'CH85(%d)' % index
         if index == 1:
             self.degree = 9
             self.weights = 4.0 * numpy.concatenate([
