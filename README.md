@@ -174,6 +174,7 @@ val = quadpy.triangle.integrate(
  * [Peirce](http://www.jstor.org/stable/2098722) (1957, arbitrary degree)
  * [Lether](http://www.jstor.org/stable/2949473) (1971, arbitrary degree)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 9)
+ * [Wissmann-Becker](https://dx.doi.org/10.1137/0723043) (1986, 3 schemes up to degree 8)
  * [Cools-Kim](https://link.springer.com/article/10.1007/BF03012263) (2000, 3 schemes up to degree 21)
 
 Example:
