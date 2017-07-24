@@ -106,15 +106,15 @@ class WissmannBecker(object):
             assert index == '8-2'
             self.degree = 8
             self.weights = numpy.concatenate([
-                numpy.full(1, 0.659560131960342),
-                numpy.full(1, -0.949142923043125),
-                numpy.full(2, 0.765051819557684),
-                numpy.full(2, 0.936975981088416),
-                numpy.full(2, 0.333656717735747),
-                numpy.full(2, -0.079583272377397),
-                numpy.full(2, -0.272240080612534),
-                numpy.full(2, -0.613735353398028),
-                numpy.full(2, -0.888477650535971),
+                numpy.full(1, 0.450276776305590),
+                numpy.full(1, 0.166570426777813),
+                numpy.full(2, 0.098869459933431),
+                numpy.full(2, 0.153696747140812),
+                numpy.full(2, 0.396686976072903),
+                numpy.full(2, 0.352014367945695),
+                numpy.full(2, 0.189589054577798),
+                numpy.full(2, 0.375101001147587),
+                numpy.full(2, 0.125618791640072),
                 ])
             self.points = numpy.concatenate([
                 _z(0.659560131960342),
