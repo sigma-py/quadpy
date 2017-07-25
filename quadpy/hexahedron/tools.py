@@ -2,7 +2,7 @@
 #
 import numpy
 
-from . import helpers
+from .. import helpers
 
 
 def show(
@@ -116,36 +116,3 @@ def integrate(f, hexa, scheme, sumfun=helpers.kahan_sum):
         - J0[2]*J1[1]*J2[0] - J1[2]*J2[1]*J0[0] - J2[2]*J0[1]*J1[0]
 
     return sumfun(scheme.weights * f(x) * abs(det), axis=-1)
-
-
-class Product(object):
-    def __init__(self, scheme1d):
-        self.schemes = \
-            scheme1d if isinstance(scheme1d, list) \
-            else 3 * [scheme1d]
-
-        wy, wz, wx = numpy.meshgrid(
-            self.schemes[0].weights,
-            self.schemes[1].weights,
-            self.schemes[2].weights,
-            )
-        weights = numpy.vstack([
-            wx.flatten(),
-            wy.flatten(),
-            wz.flatten()
-            ]).T
-        self.weights = numpy.prod(weights, axis=1)
-        # the order, yeah...
-        y, z, x = numpy.meshgrid(
-            self.schemes[0].points,
-            self.schemes[1].points,
-            self.schemes[2].points,
-            )
-        self.points = numpy.vstack([
-            x.flatten(),
-            y.flatten(),
-            z.flatten(),
-            ]).T
-
-        self.degree = min([s.degree for s in self.schemes])
-        return

@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import print_function
+
 from helpers import create_monomial_exponents2, check_degree
 
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 import numpy
 import pytest
 import quadpy
@@ -49,6 +51,12 @@ def _integrate_exact2(k, x0, x1, y0, y1):
     + [(quadpy.quadrilateral.Dunavant(k), 1.0e-14) for k in range(11)]
     + [(quadpy.quadrilateral.MorrowPatterson(k), 1.0e-7) for k in [1, 2]]
     + [(quadpy.quadrilateral.Stroud(k), 1.0e-14) for k in range(11)]
+    + [(quadpy.quadrilateral.StroudN(k), 1.0e-14) for k in [
+        'Cn 1-1', 'Cn 1-2',
+        'Cn 2-1', 'Cn 2-2',
+        'Cn 3-1', 'Cn 3-2', 'Cn 3-3', 'Cn 3-4', 'Cn 3-5', 'Cn 3-6',
+        'Cn 5-2', 'Cn 5-3', 'Cn 5-4', 'Cn 5-5', 'Cn 5-7'
+        ]]
     + [(quadpy.quadrilateral.WissmannBecker(k), 1.0e-14) for k in [
         '4-1', '4-2', '6-1', '6-2', '8-1', '8-2',
         ]]
@@ -64,7 +72,7 @@ def _integrate_exact2(k, x0, x1, y0, y1):
        for k in range(6)
        ]
     )
-def test_scheme(scheme, tol):
+def test_scheme(scheme, tol, print_degree=False):
     # Test integration until we get to a polynomial degree `d` that can no
     # longer be integrated exactly. The scheme's degree is `d-1`.
     x0 = -2.0
@@ -86,6 +94,10 @@ def test_scheme(scheme, tol):
             scheme.degree + 1,
             tol=tol
             )
+    if print_degree:
+        print('Detected degree {}, scheme degree {}.'.format(
+            degree, scheme.degree
+            ))
     assert degree == scheme.degree
     return
 
@@ -101,7 +113,9 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = Product(quadpy.line_segment.GaussLegendre(6))
-    scheme_ = quadpy.quadrilateral.CoolsHaegemans1988(1)
-    test_scheme(scheme_, 1.0e-5)
+    scheme_ = quadpy.quadrilateral.StroudN('Cn 5-8')
+    print(scheme_.weights)
+    print(scheme_.points)
     test_show(scheme_)
+    test_scheme(scheme_, 1.0e-14, print_degree=True)
     plt.show()
