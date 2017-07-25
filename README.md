@@ -194,8 +194,8 @@ val = quadpy.disk.integrate(
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 13)
  * [Dunavant](https://dx.doi.org/10.1002/nme.1620211004) (1985, 11 schemes up to degree 19)
  * [Morrow-Patterson](https://dx.doi.org/10.1137/0722071) (1985, 2 schemes up to degree 20)
- * [Cools-Haegemans](https://dx.doi.org/10.1007/BF02247942) (1988, 2 schemes up to degree 13)
  * [Wissmann-Becker](https://dx.doi.org/10.1137/0723043) (1986, 6 schemes up to degree 8)
+ * [Cools-Haegemans](https://dx.doi.org/10.1007/BF02247942) (1988, 2 schemes up to degree 13)
 
 Example:
 ```python
