@@ -83,7 +83,7 @@ class Stroud(object):
             self.degree = 3
             self.weights = numpy.full(2*n, reference_volume / (2*n))
             r = numpy.sqrt(n / 3.0)
-            self.points = _fs(n, r)
+            self.points = _fs1(n, r)
         elif index == 'Cn 3-3':
             # G.W. Tyler,
             # Numerical integration of functions of several variables,
@@ -97,7 +97,7 @@ class Stroud(object):
                 ])
             self.points = numpy.concatenate([
                 _z(n),
-                _fs(n, 1.0)
+                _fs1(n, 1.0)
                 ])
         elif index == 'Cn 3-4':
             # product Gauss formula
@@ -135,6 +135,26 @@ class Stroud(object):
                 ])
             pts = product([-1, 0, 1], repeat=n)
             self.points = numpy.array(list(pts))
+        # elif index == 'Cn 5-1':
+        # Cn 5-1 is not implemented because it's based on explicit values only
+        # given for n=4,5,6.
+        elif index == 'Cn 5-2':
+            # Preston C. Hammer and Arthur H. Stroud,
+            # Numerical Evaluation of Multiple Integrals II.
+            self.degree = 5
+            r = numpy.sqrt(3.0 / 5.0)
+            self.points = numpy.concatenate([
+                _z(n),
+                _fs1(n, r),
+                _fs2(n, r),
+                ])
+            self.weights = numpy.concatenate([
+                numpy.full(
+                    1, (25*n**2 - 115*n + 162)/162.0 * reference_volume
+                    ),
+                numpy.full(2*n, (70 - 25*n)/162.0 * reference_volume),
+                numpy.full(2*n*(n-1), 25.0/324.0 * reference_volume),
+                ])
         else:
             assert False
 
@@ -145,7 +165,7 @@ def _z(n):
     return numpy.zeros((1, n))
 
 
-def _fs(n, r):
+def _fs1(n, r):
     if n == 2:
         return numpy.array([
             [+r, 0.0],
@@ -161,6 +181,33 @@ def _fs(n, r):
         [-r, 0.0, 0.0],
         [0.0, -r, 0.0],
         [0.0, 0.0, -r],
+        ])
+
+
+def _fs2(n, r):
+    if n == 2:
+        return numpy.array([
+            [+r, +r],
+            [+r, -r],
+            [-r, +r],
+            [-r, -r],
+            ])
+    assert n == 3
+    return numpy.array([
+        [0.0, +r, +r],
+        [0.0, +r, -r],
+        [0.0, -r, +r],
+        [0.0, -r, -r],
+        #
+        [+r, 0.0, +r],
+        [+r, 0.0, -r],
+        [-r, 0.0, +r],
+        [-r, 0.0, -r],
+        #
+        [+r, +r, 0.0],
+        [+r, -r, 0.0],
+        [-r, +r, 0.0],
+        [-r, -r, 0.0],
         ])
 
 
