@@ -204,6 +204,21 @@ class Stroud(object):
                     ((5*n - 4.0) / (5*n + 4))**2 / 2**n * reference_volume
                     ),
                 ])
+        elif index == 'Cn 5-5':
+            # Mustard, Lyness, Blatt,
+            # Numerical quadrature in N dimensions.
+            self.degree = 5
+            r = numpy.sqrt(2.0 / 5.0)
+            self.points = numpy.concatenate([
+                _z(n),
+                _fs1(n, r),
+                _pm(n, 1.0),
+                ])
+            self.weights = numpy.concatenate([
+                numpy.full(1, (8 - 5*n)/9.0 * reference_volume),
+                numpy.full(2*n, 5.0/18.0 * reference_volume),
+                numpy.full(2**n, 1.0/9.0 / 2**n * reference_volume),
+                ])
         else:
             assert False
 
