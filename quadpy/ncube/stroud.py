@@ -8,6 +8,12 @@ import numpy
 #     Mathematical Tables and Other Aids to Computation,
 #     Vol. 11, No. 60 (Oct., 1957), pp. 257-261,
 #     <https://dx.doi.org/10.2307/2001945>.
+# Stroud [6] A.H. Stroud,
+#            Some Fifth Degree Integration Formulas for Symmetric Regions,
+#            Mathematics of Computation,
+#            Vol. 20, No. 93 (Jan., 1966), pp. 90-97,
+#            Published by: American Mathematical Society,
+#            DOI: 10.2307/2004272.
 
 
 class Stroud(object):
@@ -184,12 +190,7 @@ class Stroud(object):
                 numpy.full(4*n, -5*(n-2)/48.0 * reference_volume),
                 ])
         elif index == 'Cn 5-4':
-            # A.H. Stroud,
-            # Some Fifth Degree Integration Formulas for Symmetric Regions,
-            # Mathematics of Computation,
-            # Vol. 20, No. 93 (Jan., 1966), pp. 90-97,
-            # Published by: American Mathematical Society,
-            # DOI: 10.2307/2004272.
+            # Stroud [6]
             self.degree = 5
             r = numpy.sqrt((5*n + 4) / 30.0)
             s = numpy.sqrt((5*n + 4.0) / (15*n - 12.0))
@@ -219,6 +220,55 @@ class Stroud(object):
                 numpy.full(2*n, 5.0/18.0 * reference_volume),
                 numpy.full(2**n, 1.0/9.0 / 2**n * reference_volume),
                 ])
+        # TODO
+        # elif index == 'Cn 5-6':
+        #     # Stroud [6]
+        #     self.degree = 5
+        #     s = numpy.sqrt(1.0 / 3.0)
+
+        #     pts = [_z(n)]
+        #     wts = [[4.0 / (5*n + 4) * reference_volume]]
+        #     for k in range(1, n+1):
+        #         r = numpy.sqrt((5*k + 4) / 15.0)
+        #         pts.append(_rs0(n, r, s, k-1))
+        #         num_pts = len(pts[-1])
+        #         b = 5 * 2.0**(k-n+1) / (5*k-1) / (5*k+4) * reference_volume
+        #         wts.append(num_pts * [b])
+
+        #     self.points = numpy.vstack(pts)
+        #     self.weights = numpy.concatenate(wts)
+        elif index == 'Cn 5-7':
+            # Stroud [6]
+            self.degree = 5
+            r = numpy.sqrt((5*n + 4 + 2*(n-1)*numpy.sqrt(5*n+4)) / (15.0*n))
+            s = numpy.sqrt((5*n + 4 - 2*numpy.sqrt(5*n+4)) / (15.0*n))
+            self.points = numpy.concatenate([
+                _z(n),
+                _fs11(n, r, s),
+                ])
+            self.weights = numpy.concatenate([
+                numpy.full(1, 4.0/(5*n+4) * reference_volume),
+                numpy.full(n * 2**n, 5.0/(5*n+4) / 2**n * reference_volume),
+                ])
+        # TODO possible misprint
+        # elif index == 'Cn 5-8':
+        #     # Stroud [6]
+        #     self.degree = 5
+        #     r = numpy.sqrt(
+        #         (5*n - 2*numpy.sqrt(5.0) + 2*(n-1)*numpy.sqrt(5*n+5))
+        #         / (15.0*n)
+        #         )
+        #     # TODO misprint in Stroud? sqrt(a), a negative for n=2.
+        #     s = numpy.sqrt(
+        #         (5*n - 2*numpy.sqrt(5.0) - 2*numpy.sqrt(5*n+5)) / (15.0*n)
+        #         )
+        #     t = numpy.sqrt((5.0 + 2*numpy.sqrt(5)) / 15.0)
+        #     self.points = numpy.concatenate([
+        #         _fs11(n, r, s),
+        #         _pm(n, t)
+        #         ])
+        #     self.weights = \
+        #         numpy.full((n+1) * 2**n, reference_volume / 2**n / (n+1))
         else:
             assert False
 
@@ -227,6 +277,101 @@ class Stroud(object):
 
 def _z(n):
     return numpy.zeros((1, n))
+
+
+# def _rs0(n, r, s, num_zeros):
+#     # (0, ..., 0, +-r, +-s, ...., +-s)
+#     if n == 2:
+#         if num_zeros == 0:
+#             return numpy.array([
+#                 [+r, +s],
+#                 [+r, -s],
+#                 [-r, +s],
+#                 [-r, -s],
+#                 [+s, +r],
+#                 [+s, -r],
+#                 [-s, +r],
+#                 [-s, -r],
+#                 ])
+#         else:
+#             assert num_zeros == 1
+#             return numpy.array([
+#                 [0.0, +r],
+#                 [0.0, -r],
+#                 [+r, 0.0],
+#                 [-r, 0.0],
+#                 ])
+#     assert n == 3
+#     if num_zeros == 0:
+#         return numpy.array([
+#             [+r, +s, +s],
+#             [+s, +r, +s],
+#             [+s, +s, +r],
+#             [-r, +s, +s],
+#             [+s, -r, +s],
+#             [+s, +s, -r],
+#             #
+#             [+r, -s, +s],
+#             [-s, +r, +s],
+#             [-s, +s, +r],
+#             [-r, -s, +s],
+#             [-s, -r, +s],
+#             [-s, +s, -r],
+#             #
+#             [+r, +s, -s],
+#             [+s, +r, -s],
+#             [+s, -s, +r],
+#             [-r, +s, -s],
+#             [+s, -r, -s],
+#             [+s, -s, -r],
+#             #
+#             [+r, -s, -s],
+#             [-s, +r, -s],
+#             [-s, -s, +r],
+#             [-r, -s, -s],
+#             [-s, -r, -s],
+#             [-s, -s, -r],
+#             ])
+#     elif num_zeros == 1:
+#         return numpy.array([
+#             [0.0, +r, +s],
+#             [+s, 0.0, +r],
+#             [+r, +s, 0.0],
+#             [0.0, +s, +r],
+#             [+r, 0.0, +s],
+#             [+s, +r, 0.0],
+#             #
+#             [0.0, -r, +s],
+#             [+s, 0.0, -r],
+#             [-r, +s, 0.0],
+#             [0.0, +s, -r],
+#             [-r, 0.0, +s],
+#             [+s, -r, 0.0],
+#             #
+#             [0.0, +r, -s],
+#             [-s, 0.0, +r],
+#             [+r, -s, 0.0],
+#             [0.0, -s, +r],
+#             [+r, 0.0, -s],
+#             [-s, +r, 0.0],
+#             #
+#             [0.0, -r, -s],
+#             [-s, 0.0, -r],
+#             [-r, -s, 0.0],
+#             [0.0, -s, -r],
+#             [-r, 0.0, -s],
+#             [-s, -r, 0.0],
+#             ])
+#
+#     assert num_zeros == 2
+#     return numpy.array([
+#         [0.0, 0.0, +r],
+#         [0.0, +r, 0.0],
+#         [+r, 0.0, 0.0],
+#         [0.0, 0.0, -r],
+#         [0.0, -r, 0.0],
+#         [-r, 0.0, 0.0],
+#         ])
 
 
 def _fs1(n, r):
@@ -245,6 +390,55 @@ def _fs1(n, r):
         [-r, 0.0, 0.0],
         [0.0, -r, 0.0],
         [0.0, 0.0, -r],
+        ])
+
+
+def _fs11(n, r, s):
+    if n == 2:
+        return numpy.array([
+            [+r, +s],
+            [+r, -s],
+            [-r, +s],
+            [-r, -s],
+            #
+            [+s, +r],
+            [+s, -r],
+            [-s, +r],
+            [-s, -r],
+            ])
+    assert n == 3
+    return numpy.array([
+        [+r, +s, +s],
+        [+s, +r, +s],
+        [+s, +s, +r],
+        #
+        [-r, +s, +s],
+        [-s, +r, +s],
+        [-s, +s, +r],
+        #
+        [+r, -s, +s],
+        [+s, -r, +s],
+        [+s, -s, +r],
+        #
+        [-r, -s, +s],
+        [-s, -r, +s],
+        [-s, -s, +r],
+        #
+        [+r, +s, -s],
+        [+s, +r, -s],
+        [+s, +s, -r],
+        #
+        [-r, +s, -s],
+        [-s, +r, -s],
+        [-s, +s, -r],
+        #
+        [+r, -s, -s],
+        [+s, -r, -s],
+        [+s, -s, -r],
+        #
+        [-r, -s, -s],
+        [-s, -r, -s],
+        [-s, -s, -r],
         ])
 
 
