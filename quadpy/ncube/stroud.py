@@ -155,6 +155,34 @@ class Stroud(object):
                 numpy.full(2*n, (70 - 25*n)/162.0 * reference_volume),
                 numpy.full(2*n*(n-1), 25.0/324.0 * reference_volume),
                 ])
+        elif index == 'Cn 5-3':
+            # A. H. Stroud,
+            # Extensions of Symmetric Integration Formulas,
+            # Mathematics of Computation,
+            # Vol. 22, No. 102 (Apr., 1968), pp. 271-274,
+            # Published by: American Mathematical Society,
+            # DOI: 10.2307/2004655.
+            self.degree = 5
+            r = numpy.sqrt(7.0 / 15.0)
+            s = numpy.sqrt((7.0 + numpy.sqrt(24.0)) / 15.0)
+            t = numpy.sqrt((7.0 - numpy.sqrt(24.0)) / 15.0)
+            self.points = numpy.concatenate([
+                _z(n),
+                _s2(n, r),
+                _s2(n, -r),
+                _fs1(n, r),
+                _s11(n, +s, -t),
+                _s11(n, -s, +t),
+                _fs1(n, s),
+                _fs1(n, t),
+                ])
+            self.weights = numpy.concatenate([
+                numpy.full(1, (5*n**2 - 15*n+14)/14.0 * reference_volume),
+                numpy.full(n*(n-1), 25.0/168.0 * reference_volume),
+                numpy.full(2*n, -25*(n-2)/168.0 * reference_volume),
+                numpy.full(2*n*(n-1), 5.0/48.0 * reference_volume),
+                numpy.full(4*n, -5*(n-2)/48.0 * reference_volume),
+                ])
         else:
             assert False
 
@@ -222,6 +250,36 @@ def _s(n, a, b):
         [a, b, b],
         [b, a, b],
         [b, b, a],
+        ])
+
+
+def _s2(n, a):
+    if n == 2:
+        return numpy.array([
+            [a, a],
+            ])
+    assert n == 3
+    return numpy.array([
+        [a, a, 0.0],
+        [a, 0.0, a],
+        [0.0, a, a],
+        ])
+
+
+def _s11(n, a, b):
+    if n == 2:
+        return numpy.array([
+            [a, b],
+            [b, a],
+            ])
+    assert n == 3
+    return numpy.array([
+        [a, b, 0.0],
+        [a, 0.0, b],
+        [0.0, a, b],
+        [b, a, 0.0],
+        [b, 0.0, a],
+        [0.0, b, a],
         ])
 
 
