@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import print_function
+
 from helpers import create_monomial_exponents2, check_degree
 
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 import numpy
 import pytest
 import quadpy
