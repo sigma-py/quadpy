@@ -42,7 +42,7 @@ class Stroud(object):
             self.degree = 2
             self.weights = numpy.full(n+1, reference_volume / (n+1))
             i = numpy.arange(n+1)
-            n2 = n / 2 if n % 2 == 0 else (n-1)/2
+            n2 = n // 2 if n % 2 == 0 else (n-1)//2
             pts = [[
                 numpy.sqrt(2.0/3.0) * numpy.cos(2*i*k*numpy.pi / (n+1)),
                 numpy.sqrt(2.0/3.0) * numpy.sin(2*i*k*numpy.pi / (n+1))
@@ -74,7 +74,7 @@ class Stroud(object):
             self.degree = 3
             self.weights = numpy.full(2*n, reference_volume / (2*n))
             i = numpy.arange(1, 2*n+1)
-            n2 = n / 2 if n % 2 == 0 else (n-1)/2
+            n2 = n // 2 if n % 2 == 0 else (n-1)//2
             pts = [[
                 numpy.sqrt(2.0/3.0) * numpy.cos((2*k-1)*i*numpy.pi / n),
                 numpy.sqrt(2.0/3.0) * numpy.sin((2*k-1)*i*numpy.pi / n),
