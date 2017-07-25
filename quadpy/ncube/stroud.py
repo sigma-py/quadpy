@@ -48,7 +48,7 @@ class Stroud(object):
 
             self.points = numpy.vstack(pts).T
         elif index == 'Cn 2-2':
-            # Thatcher,
+            # Thacher,
             # An efficient composite formula for multidimensional quadrature,
             # Comm. A.C.M. 7, 1964, 23-25.
             self.degree = 2
@@ -79,10 +79,89 @@ class Stroud(object):
                 pts.append(sqrt3pm)
 
             self.points = numpy.vstack(pts).T
+        elif index == 'Cn 3-2':
+            self.degree = 3
+            self.weights = numpy.full(2*n, reference_volume / (2*n))
+            r = numpy.sqrt(n / 3.0)
+            self.points = _fs(n, r)
+        elif index == 'Cn 3-3':
+            # G.W. Tyler,
+            # Numerical integration of functions of several variables,
+            # Canad. J. Math. 5(1953), 393-412,
+            # <https://dx.doi.org/10.4153/CJM-1953-044-1>.
+            self.degree = 3
+            r = numpy.sqrt(n / 3.0)
+            self.weights = numpy.concatenate([
+                numpy.full(1, (3.0 - n)/3.0 * reference_volume),
+                numpy.full(2*n, reference_volume/6.0),
+                ])
+            self.points = numpy.concatenate([
+                _z(n),
+                _fs(n, 1.0)
+                ])
+        elif index == 'Cn 3-4':
+            # product Gauss formula
+            self.degree = 3
+            self.weights = numpy.concatenate([
+                numpy.full(2**n, reference_volume / 2**n),
+                ])
+            r = numpy.sqrt(3.0) / 3.0
+            self.points = _pm(n, r)
+        elif index == 'Cn 3-5':
+            # G.M. Ewing,
+            # On Approximate Cubature,
+            # The American Mathematical Monthly,
+            # Vol. 48, No. 2 (Feb., 1941), pp. 134-136,
+            # DOI: 10.2307/2303604.
+            self.degree = 3
+            self.weights = numpy.concatenate([
+                numpy.full(1, 2.0/3.0 * reference_volume),
+                numpy.full(2**n, 1.0/3.0 / 2**n * reference_volume),
+                ])
+            r = numpy.sqrt(3.0) / 3.0
+            self.points = numpy.concatenate([
+                _z(n),
+                _pm(n, 1.0),
+                ])
+        elif index == 'Cn 3-6':
+            # product Simpson's formula
+            from itertools import product
+            self.degree = 3
+            pts = product([-1, 0, 1], repeat=n)
+            A = {-1: 1.0/3.0, 0: 4.0/3.0, 1: 1.0/3.0}
+            self.weights = numpy.array([
+                numpy.product([A[p] for p in pt])
+                for pt in pts
+                ])
+            pts = product([-1, 0, 1], repeat=n)
+            self.points = numpy.array(list(pts))
         else:
             assert False
 
         return
+
+
+def _z(n):
+    return numpy.zeros((1, n))
+
+
+def _fs(n, r):
+    if n == 2:
+        return numpy.array([
+            [+r, 0.0],
+            [0.0, +r],
+            [-r, 0.0],
+            [0.0, -r],
+            ])
+    assert n == 3
+    return numpy.array([
+        [+r, 0.0, 0.0],
+        [0.0, +r, 0.0],
+        [0.0, 0.0, +r],
+        [-r, 0.0, 0.0],
+        [0.0, -r, 0.0],
+        [0.0, 0.0, -r],
+        ])
 
 
 def _s(n, a, b):
