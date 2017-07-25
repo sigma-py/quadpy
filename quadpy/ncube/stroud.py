@@ -183,6 +183,27 @@ class Stroud(object):
                 numpy.full(2*n*(n-1), 5.0/48.0 * reference_volume),
                 numpy.full(4*n, -5*(n-2)/48.0 * reference_volume),
                 ])
+        elif index == 'Cn 5-4':
+            # A.H. Stroud,
+            # Some Fifth Degree Integration Formulas for Symmetric Regions,
+            # Mathematics of Computation,
+            # Vol. 20, No. 93 (Jan., 1966), pp. 90-97,
+            # Published by: American Mathematical Society,
+            # DOI: 10.2307/2004272.
+            self.degree = 5
+            r = numpy.sqrt((5*n + 4) / 30.0)
+            s = numpy.sqrt((5*n + 4.0) / (15*n - 12.0))
+            self.points = numpy.concatenate([
+                _fs1(n, r),
+                _pm(n, s),
+                ])
+            self.weights = numpy.concatenate([
+                numpy.full(2*n, 40.0 / (5*n+4)**2 * reference_volume),
+                numpy.full(
+                    2**n,
+                    ((5*n - 4.0) / (5*n + 4))**2 / 2**n * reference_volume
+                    ),
+                ])
         else:
             assert False
 
