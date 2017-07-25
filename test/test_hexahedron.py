@@ -107,7 +107,9 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = Product(quadpy.line_segment.NewtonCotesOpen(2))
-    scheme_ = Product(quadpy.line_segment.GaussLegendre(5))
+    scheme_ = quadpy.hexahedron.StroudN('Cn 2-2')
+    print(scheme_.weights)
+    print(scheme_.points)
     test_scheme(scheme_)
     test_show(scheme_)
     plt.show()
