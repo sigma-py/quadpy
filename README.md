@@ -190,12 +190,12 @@ val = quadpy.disk.integrate(
 <img src="https://nschloe.github.io/quadpy/quad.png" width="25%">
 
  * Product schemes derived from line segment schemes
- * [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971, 11 schemes up to degree 15)
+ * [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971, 15 schemes up to degree 15)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 13)
  * [Dunavant](https://dx.doi.org/10.1002/nme.1620211004) (1985, 11 schemes up to degree 19)
  * [Morrow-Patterson](https://dx.doi.org/10.1137/0722071) (1985, 2 schemes up to degree 20)
- * [Cools-Haegemans](https://dx.doi.org/10.1007/BF02247942) (1988, 2 schemes up to degree 13)
  * [Wissmann-Becker](https://dx.doi.org/10.1137/0723043) (1986, 6 schemes up to degree 8)
+ * [Cools-Haegemans](https://dx.doi.org/10.1007/BF02247942) (1988, 2 schemes up to degree 13)
 
 Example:
 ```python
@@ -250,6 +250,7 @@ val = quadpy.tetrahedron.integrate(
 <img src="https://nschloe.github.io/quadpy/hexa.png" width="25%">
 
  * Product schemes derived from line segment schemes
+ * [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971, 15 schemes up to degree 5)
 
 Example:
 ```python

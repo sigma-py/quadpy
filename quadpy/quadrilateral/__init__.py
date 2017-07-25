@@ -7,6 +7,7 @@ from .dunavant import *
 from .morrow_patterson import *
 from .product import *
 from .stroud import *
+from .stroudn import *
 from .wissmann_becker import *
 
 from .tools import *
