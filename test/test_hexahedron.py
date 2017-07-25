@@ -69,7 +69,7 @@ def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
        ]
     + [Product(quadpy.line_segment.NewtonCotesOpen(k)) for k in range(5)]
     )
-def test_scheme(scheme):
+def test_scheme(scheme, print_degree=False):
     x0 = -1
     x1 = +1
     y0 = -1
@@ -92,6 +92,10 @@ def test_scheme(scheme):
             create_monomial_exponents3,
             scheme.degree + 1
             )
+    if print_degree:
+        print('Detected degree {}, scheme degree {}.'.format(
+            degree, scheme.degree
+            ))
     assert degree == scheme.degree
     return
 
@@ -107,9 +111,9 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = Product(quadpy.line_segment.NewtonCotesOpen(2))
-    scheme_ = quadpy.hexahedron.StroudN('Cn 5-4')
+    scheme_ = quadpy.hexahedron.StroudN('Cn 5-7')
     print(scheme_.weights)
     print(scheme_.points)
-    test_scheme(scheme_)
+    test_scheme(scheme_, print_degree=True)
     test_show(scheme_)
     plt.show()
