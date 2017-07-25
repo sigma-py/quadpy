@@ -22,6 +22,7 @@ class Stroud(object):
     Approximate Calculation of Multiple Integrals,
     Prentice Hall, 1971.
     '''
+    # pylint: disable=too-many-locals
     def __init__(self, n, index):
         self.name = 'Stroud({})'.format(index)
         reference_volume = 2.0**n
