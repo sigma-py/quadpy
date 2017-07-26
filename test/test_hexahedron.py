@@ -63,22 +63,28 @@ def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
 
 
 @pytest.mark.parametrize(
-    'scheme',
-    [Product(quadpy.line_segment.Midpoint())]
-    + [Product(quadpy.line_segment.Trapezoidal())]
-    + [Product(quadpy.line_segment.GaussLegendre(k)) for k in range(1, 6)]
-    + [Product(quadpy.line_segment.NewtonCotesClosed(k))
-        for k in range(1, 5)
+    'scheme, tol',
+    [(Product(quadpy.line_segment.Midpoint()), 1.0e-14)]
+    + [(Product(quadpy.line_segment.Trapezoidal()), 1.0e-14)]
+    + [(Product(quadpy.line_segment.GaussLegendre(k)), 1.0e-14)
+       for k in range(1, 6)
        ]
-    + [Product(quadpy.line_segment.NewtonCotesOpen(k)) for k in range(5)]
-    + [quadpy.hexahedron.StroudN(k) for k in [
+    + [(Product(quadpy.line_segment.NewtonCotesClosed(k)), 1.0e-14)
+       for k in range(1, 5)
+       ]
+    + [(Product(quadpy.line_segment.NewtonCotesOpen(k)), 1.0e-14)
+       for k in range(5)
+       ]
+    + [(quadpy.hexahedron.StroudN(k), 1.0e-14) for k in [
         'Cn 1-1', 'Cn 1-2',
         'Cn 2-1', 'Cn 2-2',
         'Cn 3-1', 'Cn 3-2', 'Cn 3-3', 'Cn 3-4', 'Cn 3-5', 'Cn 3-6',
-        'Cn 5-2', 'Cn 5-3', 'Cn 5-4', 'Cn 5-5', 'Cn 5-7'
+        'Cn 5-2', 'Cn 5-3', 'Cn 5-4', 'Cn 5-5', 'Cn 5-6', 'Cn 5-7', 'Cn 5-8',
+        'Cn 5-9'
         ]]
+    + [(quadpy.hexahedron.StroudN(k), 1.0e-7) for k in ['Cn 7-1']]
     )
-def test_scheme(scheme, print_degree=False):
+def test_scheme(scheme, tol, print_degree=False):
     x0 = -1
     x1 = +1
     y0 = -1
@@ -99,7 +105,8 @@ def test_scheme(scheme, print_degree=False):
             lambda poly: quadpy.hexahedron.integrate(poly, hexa, scheme),
             lambda k: _integrate_exact2(k, x0, x1, y0, y1, z0, z1),
             create_monomial_exponents3,
-            scheme.degree + 1
+            scheme.degree + 1,
+            tol=tol
             )
     if print_degree:
         print('Detected degree {}, scheme degree {}.'.format(
