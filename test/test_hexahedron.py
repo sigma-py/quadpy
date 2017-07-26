@@ -120,7 +120,7 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = Product(quadpy.line_segment.NewtonCotesOpen(5))
-    scheme_ = quadpy.hexahedron.StroudN('Cn 5-9')
+    scheme_ = quadpy.hexahedron.StroudN('Cn 7-1')
     print(scheme_.weights)
     print(scheme_.points)
     test_scheme(scheme_, print_degree=True)
