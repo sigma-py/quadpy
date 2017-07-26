@@ -134,14 +134,13 @@ class Stroud(object):
         elif index == 'Cn 3-6':
             # product Simpson's formula
             self.degree = 3
-            pts = itertools.product([-1, 0, 1], repeat=n)
-            A = {-1: 1.0/3.0, 0: 4.0/3.0, 1: 1.0/3.0}
-            self.weights = numpy.array([
-                numpy.product([A[p] for p in pt])
-                for pt in pts
-                ])
-            pts = itertools.product([-1, 0, 1], repeat=n)
-            self.points = numpy.array(list(pts))
+            lst = n * [[1.0/3.0, 4.0/3.0, 1.0/3.0]]
+            self.weights = numpy.product(
+                numpy.array(numpy.meshgrid(*lst)).T.reshape(-1, n),
+                axis=-1
+                )
+            lst = n * [[-1.0, 0.0, 1.0]]
+            self.points = numpy.array(numpy.meshgrid(*lst)).T.reshape(-1, n)
         # elif index == 'Cn 5-1':
         # Cn 5-1 is not implemented because it's based on explicit values only
         # given for n=4,5,6.
