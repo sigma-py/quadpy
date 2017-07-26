@@ -273,6 +273,17 @@ class Stroud(object):
                 ])
             self.weights = \
                 numpy.full((n+1) * 2**n, reference_volume / 2**n / (n+1))
+        elif index == 'Cn 5-9':
+            # product Gauss formula
+            self.degree = 5
+            lst = n * [[5.0/9.0, 8.0/9.0, 5.0/9.0]]
+            self.weights = numpy.product(
+                numpy.array(numpy.meshgrid(*lst)).T.reshape(-1, n),
+                axis=-1
+                )
+            sqrt35 = numpy.sqrt(3.0/5.0)
+            lst = n * [[-sqrt35, 0.0, sqrt35]]
+            self.points = numpy.array(numpy.meshgrid(*lst)).T.reshape(-1, n)
         else:
             assert False
 
