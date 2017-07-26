@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import itertools
 import numpy
 
 # [1] Remarks on the Disposition of Points in Numerical Integration
@@ -132,15 +133,14 @@ class Stroud(object):
                 ])
         elif index == 'Cn 3-6':
             # product Simpson's formula
-            from itertools import product
             self.degree = 3
-            pts = product([-1, 0, 1], repeat=n)
+            pts = itertools.product([-1, 0, 1], repeat=n)
             A = {-1: 1.0/3.0, 0: 4.0/3.0, 1: 1.0/3.0}
             self.weights = numpy.array([
                 numpy.product([A[p] for p in pt])
                 for pt in pts
                 ])
-            pts = product([-1, 0, 1], repeat=n)
+            pts = itertools.product([-1, 0, 1], repeat=n)
             self.points = numpy.array(list(pts))
         # elif index == 'Cn 5-1':
         # Cn 5-1 is not implemented because it's based on explicit values only
@@ -395,55 +395,23 @@ def _fs1(n, r):
 
 
 def _fs11(n, r, s):
-    if n == 2:
-        return numpy.array([
-            [+r, +s],
-            [+r, -s],
-            [-r, +s],
-            [-r, -s],
-            #
-            [+s, +r],
-            [+s, -r],
-            [-s, +r],
-            [-s, -r],
-            ])
-    assert n == 3
-    return numpy.array([
-        [+r, +s, +s],
-        [+s, +r, +s],
-        [+s, +s, +r],
-        #
-        [-r, +s, +s],
-        [-s, +r, +s],
-        [-s, +s, +r],
-        #
-        [+r, -s, +s],
-        [+s, -r, +s],
-        [+s, -s, +r],
-        #
-        [-r, -s, +s],
-        [-s, -r, +s],
-        [-s, -s, +r],
-        #
-        [+r, +s, -s],
-        [+s, +r, -s],
-        [+s, +s, -r],
-        #
-        [-r, +s, -s],
-        [-s, +r, -s],
-        [-s, +s, -r],
-        #
-        [+r, -s, -s],
-        [+s, -r, -s],
-        [+s, -s, -r],
-        #
-        [-r, -s, -s],
-        [-s, -r, -s],
-        [-s, -s, -r],
-        ])
+    '''Get all permutations of [+-r, +-s, ..., +-s] of length n.
+    len(out) == n * 2**n.
+    '''
+    # <https://stackoverflow.com/a/45321972/353337>
+    k1 = 1
+    k2 = n-1
+    idx = itertools.combinations(range(k1 + k2), k1)
+    vs = ((s if j not in i else r for j in range(k1 + k2)) for i in idx)
+    return numpy.array(list(itertools.chain(
+        *(itertools.product(*((+vij, -vij) for vij in vi)) for vi in vs)
+        )))
 
 
 def _fs2(n, r):
+    '''Get all permutations of [+-r, +-r, 0, ..., 0] of length n.
+    len(out) == 2 * n * (n-1).
+    '''
     if n == 2:
         return numpy.array([
             [+r, +r],
@@ -471,65 +439,34 @@ def _fs2(n, r):
 
 
 def _s(n, a, b):
-    if n == 2:
-        return numpy.array([
-            [a, b],
-            [b, a],
-            ])
-    assert n == 3
-    return numpy.array([
-        [a, b, b],
-        [b, a, b],
-        [b, b, a],
-        ])
+    '''Get all permutations of [a, b, ..., b] of length n.
+    len(out) == n.
+    '''
+    out = numpy.full((n, n), b)
+    numpy.fill_diagonal(out, a)
+    return out
 
 
 def _s2(n, a):
-    if n == 2:
-        return numpy.array([
-            [a, a],
-            ])
-    assert n == 3
-    return numpy.array([
-        [a, a, 0.0],
-        [a, 0.0, a],
-        [0.0, a, a],
-        ])
+    '''Get all permutations of [a, a, 0, 0, ..., 0] of length n.
+    len(out) == (n-1)*n / 2.
+    '''
+    return _s11(n, a, a)
 
 
 def _s11(n, a, b):
-    if n == 2:
-        return numpy.array([
-            [a, b],
-            [b, a],
-            ])
-    assert n == 3
-    return numpy.array([
-        [a, b, 0.0],
-        [a, 0.0, b],
-        [0.0, a, b],
-        [b, a, 0.0],
-        [b, 0.0, a],
-        [0.0, b, a],
-        ])
+    '''Get all permutations of [a, b, 0, 0, ..., 0] of length n.
+    len(out) == (n-1)*n.
+    '''
+    s = [a, b] + (n-2) * [0]
+    # First permutations, then set can be really inefficient if items are
+    # repeated. Check out <https://stackoverflow.com/q/6284396/353337> for
+    # improvements.
+    return numpy.array(list(set(itertools.permutations(s, n))))
 
 
 def _pm(n, a):
-    if n == 2:
-        return numpy.array([
-            [+a, +a],
-            [+a, -a],
-            [-a, +a],
-            [-a, -a],
-            ])
-    assert n == 3
-    return numpy.array([
-        [+a, +a, +a],
-        [+a, +a, -a],
-        [+a, -a, +a],
-        [+a, -a, -a],
-        [-a, +a, +a],
-        [-a, +a, -a],
-        [-a, -a, +a],
-        [-a, -a, -a],
-        ])
+    '''Return all combinations of [+a, -a] with length n (with repetition).
+    len(out) == 2**n.
+    '''
+    return numpy.array(list(itertools.product([+a, -a], repeat=n)))
