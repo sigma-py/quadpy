@@ -255,25 +255,25 @@ class Stroud(object):
                 numpy.full(1, 4.0/(5*n+4) * reference_volume),
                 numpy.full(n * 2**n, 5.0/(5*n+4) / 2**n * reference_volume),
                 ])
-        # TODO possible misprint
-        # elif index == 'Cn 5-8':
-        #     # Stroud [6]
-        #     self.degree = 5
-        #     r = numpy.sqrt(
-        #         (5*n - 2*numpy.sqrt(5.0) + 2*(n-1)*numpy.sqrt(5*n+5))
-        #         / (15.0*n)
-        #         )
-        #     # TODO misprint in Stroud? sqrt(a), a negative for n=2.
-        #     s = numpy.sqrt(
-        #         (5*n - 2*numpy.sqrt(5.0) - 2*numpy.sqrt(5*n+5)) / (15.0*n)
-        #         )
-        #     t = numpy.sqrt((5.0 + 2*numpy.sqrt(5)) / 15.0)
-        #     self.points = numpy.concatenate([
-        #         _fs11(n, r, s),
-        #         _pm(n, t)
-        #         ])
-        #     self.weights = \
-        #         numpy.full((n+1) * 2**n, reference_volume / 2**n / (n+1))
+        elif index == 'Cn 5-8':
+            # Stroud [6]
+            assert n >= 3
+            self.degree = 5
+            r = numpy.sqrt(
+                (5*n - 2*numpy.sqrt(5.0) + 2*(n-1)*numpy.sqrt(5*n+5))
+                / (15.0*n)
+                )
+            # This sqrt() is imaginary for negative for n=2.
+            s = numpy.sqrt(
+                (5*n - 2*numpy.sqrt(5.0) - 2*numpy.sqrt(5*n+5)) / (15.0*n)
+                )
+            t = numpy.sqrt((5.0 + 2*numpy.sqrt(5)) / 15.0)
+            self.points = numpy.concatenate([
+                _fs11(n, r, s),
+                _pm(n, t)
+                ])
+            self.weights = \
+                numpy.full((n+1) * 2**n, reference_volume / 2**n / (n+1))
         else:
             assert False
 
