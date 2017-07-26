@@ -376,22 +376,7 @@ def _z(n):
 
 
 def _fs1(n, r):
-    if n == 2:
-        return numpy.array([
-            [+r, 0.0],
-            [0.0, +r],
-            [-r, 0.0],
-            [0.0, -r],
-            ])
-    assert n == 3
-    return numpy.array([
-        [+r, 0.0, 0.0],
-        [0.0, +r, 0.0],
-        [0.0, 0.0, +r],
-        [-r, 0.0, 0.0],
-        [0.0, -r, 0.0],
-        [0.0, 0.0, -r],
-        ])
+    return _combi([[+r, -r]] + [[0.0]] * (n-1))
 
 
 def _fs11(n, r, s):
@@ -403,8 +388,8 @@ def _fs11(n, r, s):
     k2 = n-1
     idx = itertools.combinations(range(k1 + k2), k1)
     vs = ((s if j not in i else r for j in range(k1 + k2)) for i in idx)
-    return numpy.array(list(itertools.chain(
-        *(itertools.product(*((+vij, -vij) for vij in vi)) for vi in vs)
+    return numpy.array(list(itertools.chain.from_iterable(
+        itertools.product(*((+vij, -vij) for vij in vi)) for vi in vs
         )))
 
 
@@ -412,30 +397,24 @@ def _fs2(n, r):
     '''Get all permutations of [+-r, +-r, 0, ..., 0] of length n.
     len(out) == 2 * n * (n-1).
     '''
-    if n == 2:
-        return numpy.array([
-            [+r, +r],
-            [+r, -r],
-            [-r, +r],
-            [-r, -r],
-            ])
-    assert n == 3
-    return numpy.array([
-        [0.0, +r, +r],
-        [0.0, +r, -r],
-        [0.0, -r, +r],
-        [0.0, -r, -r],
-        #
-        [+r, 0.0, +r],
-        [+r, 0.0, -r],
-        [-r, 0.0, +r],
-        [-r, 0.0, -r],
-        #
-        [+r, +r, 0.0],
-        [+r, -r, 0.0],
-        [-r, +r, 0.0],
-        [-r, -r, 0.0],
-        ])
+    return _combi([[+r, -r]] * 2 + [[0.0]] * (n-2))
+
+
+def _combi(i):
+    '''Given an input array with lists of options, e.g.,
+
+    [[a, b], [c], [d]],
+
+    this methods returns all combinations with one element from each
+    subset, e.g.,
+
+    [a, c, d], [a, d, c], [c, d, a], ...
+    [b, c, d], [b, d, c], [c, d, b], ...
+    '''
+    # https://stackoverflow.com/a/45322199/353337
+    return numpy.array(list(set(itertools.chain.from_iterable([
+        itertools.permutations(x) for x in itertools.product(*i)
+        ]))))
 
 
 def _s(n, a, b):
