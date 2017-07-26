@@ -221,23 +221,27 @@ class Stroud(object):
                 numpy.full(2*n, 5.0/18.0 * reference_volume),
                 numpy.full(2**n, 1.0/9.0 / 2**n * reference_volume),
                 ])
-        # TODO
-        # elif index == 'Cn 5-6':
-        #     # Stroud [6]
-        #     self.degree = 5
-        #     s = numpy.sqrt(1.0 / 3.0)
+        elif index == 'Cn 5-6':
+            # Stroud [6]
+            self.degree = 5
+            s = numpy.sqrt(1.0 / 3.0)
 
-        #     pts = [_z(n)]
-        #     wts = [[4.0 / (5*n + 4) * reference_volume]]
-        #     for k in range(1, n+1):
-        #         r = numpy.sqrt((5*k + 4) / 15.0)
-        #         pts.append(_rs0(n, r, s, k-1))
-        #         num_pts = len(pts[-1])
-        #         b = 5 * 2.0**(k-n+1) / (5*k-1) / (5*k+4) * reference_volume
-        #         wts.append(num_pts * [b])
+            pts = [_z(n)]
+            wts = [[4.0 / (5*n + 4) * reference_volume]]
+            for k in range(1, n+1):
+                r = numpy.sqrt((5*k + 4) / 15.0)
+                arr = numpy.zeros((2**(n-k+1), n))
+                arr[:, k-1:] = _pm(n-k+1, 1.0)
+                arr[:, k-1] *= r
+                arr[:, k:] *= s
+                pts.append(arr)
+                num_pts = len(pts[-1])
+                b = 5.0 * 2.0**(k-n+1) / (5.0*k-1.0) / (5.0*k+4.0) \
+                    * reference_volume
+                wts.append(num_pts * [b])
 
-        #     self.points = numpy.vstack(pts)
-        #     self.weights = numpy.concatenate(wts)
+            self.points = numpy.vstack(pts)
+            self.weights = numpy.concatenate(wts)
         elif index == 'Cn 5-7':
             # Stroud [6]
             self.degree = 5
@@ -280,103 +284,8 @@ def _z(n):
     return numpy.zeros((1, n))
 
 
-# def _rs0(n, r, s, num_zeros):
-#     # (0, ..., 0, +-r, +-s, ...., +-s)
-#     if n == 2:
-#         if num_zeros == 0:
-#             return numpy.array([
-#                 [+r, +s],
-#                 [+r, -s],
-#                 [-r, +s],
-#                 [-r, -s],
-#                 [+s, +r],
-#                 [+s, -r],
-#                 [-s, +r],
-#                 [-s, -r],
-#                 ])
-#         else:
-#             assert num_zeros == 1
-#             return numpy.array([
-#                 [0.0, +r],
-#                 [0.0, -r],
-#                 [+r, 0.0],
-#                 [-r, 0.0],
-#                 ])
-#     assert n == 3
-#     if num_zeros == 0:
-#         return numpy.array([
-#             [+r, +s, +s],
-#             [+s, +r, +s],
-#             [+s, +s, +r],
-#             [-r, +s, +s],
-#             [+s, -r, +s],
-#             [+s, +s, -r],
-#             #
-#             [+r, -s, +s],
-#             [-s, +r, +s],
-#             [-s, +s, +r],
-#             [-r, -s, +s],
-#             [-s, -r, +s],
-#             [-s, +s, -r],
-#             #
-#             [+r, +s, -s],
-#             [+s, +r, -s],
-#             [+s, -s, +r],
-#             [-r, +s, -s],
-#             [+s, -r, -s],
-#             [+s, -s, -r],
-#             #
-#             [+r, -s, -s],
-#             [-s, +r, -s],
-#             [-s, -s, +r],
-#             [-r, -s, -s],
-#             [-s, -r, -s],
-#             [-s, -s, -r],
-#             ])
-#     elif num_zeros == 1:
-#         return numpy.array([
-#             [0.0, +r, +s],
-#             [+s, 0.0, +r],
-#             [+r, +s, 0.0],
-#             [0.0, +s, +r],
-#             [+r, 0.0, +s],
-#             [+s, +r, 0.0],
-#             #
-#             [0.0, -r, +s],
-#             [+s, 0.0, -r],
-#             [-r, +s, 0.0],
-#             [0.0, +s, -r],
-#             [-r, 0.0, +s],
-#             [+s, -r, 0.0],
-#             #
-#             [0.0, +r, -s],
-#             [-s, 0.0, +r],
-#             [+r, -s, 0.0],
-#             [0.0, -s, +r],
-#             [+r, 0.0, -s],
-#             [-s, +r, 0.0],
-#             #
-#             [0.0, -r, -s],
-#             [-s, 0.0, -r],
-#             [-r, -s, 0.0],
-#             [0.0, -s, -r],
-#             [-r, 0.0, -s],
-#             [-s, -r, 0.0],
-#             ])
-#
-#     assert num_zeros == 2
-#     return numpy.array([
-#         [0.0, 0.0, +r],
-#         [0.0, +r, 0.0],
-#         [+r, 0.0, 0.0],
-#         [0.0, 0.0, -r],
-#         [0.0, -r, 0.0],
-#         [-r, 0.0, 0.0],
-#         ])
-
-
 def _fs1(n, r):
-    return _combi([[+r, -r]] + [[0.0]] * (n-1))
+    return _combine([[+r, -r]] + [[0.0]] * (n-1))
 
 
 def _fs11(n, r, s):
@@ -397,10 +306,10 @@ def _fs2(n, r):
     '''Get all permutations of [+-r, +-r, 0, ..., 0] of length n.
     len(out) == 2 * n * (n-1).
     '''
-    return _combi([[+r, -r]] * 2 + [[0.0]] * (n-2))
+    return _combine([[+r, -r]] * 2 + [[0.0]] * (n-2))
 
 
-def _combi(i):
+def _combine(pools):
     '''Given an input array with lists of options, e.g.,
 
     [[a, b], [c], [d]],
@@ -413,7 +322,7 @@ def _combi(i):
     '''
     # https://stackoverflow.com/a/45322199/353337
     return numpy.array(list(set(itertools.chain.from_iterable([
-        itertools.permutations(x) for x in itertools.product(*i)
+        itertools.permutations(x) for x in itertools.product(*pools)
         ]))))
 
 
