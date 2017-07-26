@@ -117,5 +117,5 @@ if __name__ == '__main__':
     print(scheme_.weights)
     print(scheme_.points)
     test_show(scheme_)
-    test_scheme(scheme_, 1.0e-14, print_degree=True)
+    test_scheme(scheme_, 1.0e-8, print_degree=True)
     plt.show()

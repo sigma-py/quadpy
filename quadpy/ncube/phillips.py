@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 #
+import warnings
+
 import numpy
 
 from .helpers import _fsd, _z
@@ -16,6 +18,8 @@ class Phillips(object):
     Gaussian-type formulae are derived for all values of N >= 2.
     '''
     def __init__(self, n):
+        warnings.warn('The Phillips schemes are only single-precision.')
+
         self.name = 'Phillips'
         reference_volume = 2.0**n
 
