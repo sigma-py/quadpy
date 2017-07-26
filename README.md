@@ -303,7 +303,7 @@ val = quadpy.wedge.integrate(
 ### Sphere
 <img src="https://nschloe.github.io/quadpy/sphere.png" width="25%">
 
- * [Lebedev's schemes](https://en.wikipedia.org/wiki/Lebedev_quadpy) (32
+ * [Lebedev's schemes](https://en.wikipedia.org/wiki/Lebedev_quadrature) (32
    schemes up to degree 131)
 
 Example:
