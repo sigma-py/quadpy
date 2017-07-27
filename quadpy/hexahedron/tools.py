@@ -82,11 +82,9 @@ def _transform_to_hexa(xi, hexa):
     return
 
 
-def integrate(f, hexa, scheme, sumfun=helpers.kahan_sum):
-    xi = scheme.points.T
-    mo = numpy.multiply.outer
-    x = _transform_to_hexa(scheme.points.T, hexa).T
-
+def _get_detJ(xi, hexa):
+    '''Get the determinant of the transformation matrix.
+    '''
     J0 = \
         - numpy.multiply.outer(0.125*(1 - xi[1])*(1 - xi[2]), hexa[0, 0, 0]) \
         + numpy.multiply.outer(0.125*(1 - xi[1])*(1 - xi[2]), hexa[1, 0, 0]) \
@@ -117,7 +115,13 @@ def integrate(f, hexa, scheme, sumfun=helpers.kahan_sum):
         + numpy.multiply.outer(0.125*(1 + xi[0])*(1 + xi[1]), hexa[1, 1, 1]) \
         + numpy.multiply.outer(0.125*(1 - xi[0])*(1 + xi[1]), hexa[0, 1, 1])
     J2 = J2.T
-    det = J0[0]*J1[1]*J2[2] + J1[0]*J2[1]*J0[2] + J2[0]*J0[1]*J1[2] \
+    return (
+        + J0[0]*J1[1]*J2[2] + J1[0]*J2[1]*J0[2] + J2[0]*J0[1]*J1[2]
         - J0[2]*J1[1]*J2[0] - J1[2]*J2[1]*J0[0] - J2[2]*J0[1]*J1[0]
+        )
 
-    return sumfun(scheme.weights * f(x) * abs(det), axis=-1)
+
+def integrate(f, hexa, scheme, sumfun=helpers.kahan_sum):
+    x = _transform_to_hexa(scheme.points.T, hexa).T
+    detJ = _get_detJ(scheme.points.T, hexa)
+    return sumfun(scheme.weights * f(x) * abs(detJ), axis=-1)
