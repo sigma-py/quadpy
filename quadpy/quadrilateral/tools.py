@@ -52,27 +52,37 @@ def show(
     return
 
 
-def integrate(f, quad, scheme, sumfun=helpers.kahan_sum):
-    xi = scheme.points.T
-    x = \
-        + numpy.multiply.outer(0.25*(1.0-xi[0])*(1.0-xi[1]), quad[0, 0]) \
-        + numpy.multiply.outer(0.25*(1.0+xi[0])*(1.0-xi[1]), quad[1, 0]) \
-        + numpy.multiply.outer(0.25*(1.0+xi[0])*(1.0+xi[1]), quad[1, 1]) \
-        + numpy.multiply.outer(0.25*(1.0-xi[0])*(1.0+xi[1]), quad[0, 1])
-    x = x.T
+def _transform(xi, quad):
+    '''Transform the points xi from the reference quad to the quad `quad`.
+    '''
+    mo = numpy.multiply.outer
+    return (
+        + mo(0.25*(1.0-xi[0])*(1.0-xi[1]), quad[0, 0])
+        + mo(0.25*(1.0+xi[0])*(1.0-xi[1]), quad[1, 0])
+        + mo(0.25*(1.0+xi[0])*(1.0+xi[1]), quad[1, 1])
+        + mo(0.25*(1.0-xi[0])*(1.0+xi[1]), quad[0, 1])
+        )
 
-    J0 = \
-        - numpy.multiply.outer(0.25*(1-xi[1]), quad[0, 0]) \
-        + numpy.multiply.outer(0.25*(1-xi[1]), quad[1, 0]) \
-        + numpy.multiply.outer(0.25*(1+xi[1]), quad[1, 1]) \
+
+def _get_detJ(xi, quad):
+    '''Get the determinant of the transformation matrix.
+    '''
+    J0 = (
+        - numpy.multiply.outer(0.25*(1-xi[1]), quad[0, 0])
+        + numpy.multiply.outer(0.25*(1-xi[1]), quad[1, 0])
+        + numpy.multiply.outer(0.25*(1+xi[1]), quad[1, 1])
         - numpy.multiply.outer(0.25*(1+xi[1]), quad[0, 1])
-    J0 = J0.T
-    J1 = \
-        - numpy.multiply.outer(0.25*(1-xi[0]), quad[0, 0]) \
-        - numpy.multiply.outer(0.25*(1+xi[0]), quad[1, 0]) \
-        + numpy.multiply.outer(0.25*(1+xi[0]), quad[1, 1]) \
+        ).T
+    J1 = (
+        - numpy.multiply.outer(0.25*(1-xi[0]), quad[0, 0])
+        - numpy.multiply.outer(0.25*(1+xi[0]), quad[1, 0])
+        + numpy.multiply.outer(0.25*(1+xi[0]), quad[1, 1])
         + numpy.multiply.outer(0.25*(1-xi[0]), quad[0, 1])
-    J1 = J1.T
-    det = (J0[0]*J1[1] - J1[0]*J0[1])
+        ).T
+    return J0[0]*J1[1] - J1[0]*J0[1]
 
+
+def integrate(f, quad, scheme, sumfun=helpers.kahan_sum):
+    x = _transform(scheme.points.T, quad).T
+    det = _get_detJ(scheme.points.T, quad)
     return sumfun(scheme.weights * f(x) * abs(det), axis=-1)
