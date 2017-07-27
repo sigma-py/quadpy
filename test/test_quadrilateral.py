@@ -5,7 +5,6 @@ from __future__ import print_function
 from helpers import partition, check_degree
 
 import matplotlib.pyplot as plt
-import numpy
 import pytest
 import quadpy
 from quadpy.quadrilateral import Product
@@ -80,16 +79,9 @@ def test_scheme(scheme, tol, print_degree=False):
     x1 = +1.0
     y0 = -1.0
     y1 = +1.0
-    quadrilateral = numpy.array([
-        [x0, y0],
-        [x1, y0],
-        [x1, y1],
-        [x0, y1],
-        ])
+    quad = quadpy.quadrilateral.rectangle_points([-2.0, +1.0], [-1.0, +1.0])
     degree = check_degree(
-            lambda poly: quadpy.quadrilateral.integrate(
-                poly, quadrilateral, scheme
-                ),
+            lambda poly: quadpy.quadrilateral.integrate(poly, quad, scheme),
             lambda k: _integrate_exact2(k, x0, x1, y0, y1),
             lambda n: partition(n, 2),
             scheme.degree + 1,
