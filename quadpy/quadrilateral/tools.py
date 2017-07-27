@@ -36,13 +36,7 @@ def show(
     if not show_axes:
         plt.gca().set_axis_off()
 
-    xi = scheme.points[:, 0]
-    eta = scheme.points[:, 1]
-    transformed_pts = \
-        + numpy.outer(0.25 * (1.0 - xi)*(1.0 - eta), quad[0][0]) \
-        + numpy.outer(0.25 * (1.0 + xi)*(1.0 - eta), quad[1][0]) \
-        + numpy.outer(0.25 * (1.0 + xi)*(1.0 + eta), quad[1][1]) \
-        + numpy.outer(0.25 * (1.0 - xi)*(1.0 + eta), quad[0][1])
+    transformed_pts = _transform(scheme.points.T, quad)
 
     vol = integrate(lambda x: 1.0, quad, Stroud(1))
     helpers.plot_disks(

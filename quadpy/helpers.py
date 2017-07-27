@@ -5,7 +5,7 @@ import numpy
 
 
 def kahan_sum(a, axis=0):
-    '''Kahan summation of the numpy array a along axis k.
+    '''Kahan summation of the numpy array `a` along axis `axis`.
     '''
     # See <https://en.wikipedia.org/wiki/Kahan_summation_algorithm> for
     # details.
