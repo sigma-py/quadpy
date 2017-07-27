@@ -28,11 +28,13 @@ quadpy is fully vectorized, so if you like to compute the integral of a
 function on many domains at once, you can provide them all in one `integrate()`
 call, e.g.,
 ```python
-triangles = numpy.array([
-    [[0.0, 0.0], [1.2, 0.6], [26.0, 31.0], [0.1, 0.3], [8.6, 6.0]],
-    [[1.0, 0.0], [1.3, 0.7], [24.0, 27.0], [0.4, 0.4], [9.4, 5.6]],
-    [[0.0, 1.0], [1.4, 0.8], [33.0, 28.0], [0.7, 0.1], [7.5, 7.4]],
-    ])
+triangles = numpy.stack([
+    [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
+    [[1.2, 0.6], [1.3, 0.7], [1.4, 0.8]],
+    [[26.0, 31.0], [24.0, 27.0], [33.0, 28]],
+    [[0.1, 0.3], [0.4, 0.4], [0.7, 0.1]],
+    [[8.6, 6.0], [9.4, 5.6], [7.5, 7.4]]
+    ], axis=-2)
 ```
 The same goes for functions with vectorized output, e.g.,
 ```python
