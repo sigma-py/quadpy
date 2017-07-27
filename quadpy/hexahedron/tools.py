@@ -35,25 +35,25 @@ def show(
         ax.set_axis_off()
 
     edges = numpy.array([
-        [hexa[0][0][0], hexa[1, 0, 0]],
-        [hexa[1][0][0], hexa[1, 1, 0]],
-        [hexa[1][1][0], hexa[0, 1, 0]],
-        [hexa[0][1][0], hexa[0, 0, 0]],
+        [hexa[0, 0, 0], hexa[1, 0, 0]],
+        [hexa[1, 0, 0], hexa[1, 1, 0]],
+        [hexa[1, 1, 0], hexa[0, 1, 0]],
+        [hexa[0, 1, 0], hexa[0, 0, 0]],
         #
-        [hexa[0][0][1], hexa[1, 0, 1]],
-        [hexa[1][0][1], hexa[1, 1, 1]],
-        [hexa[1][1][1], hexa[0, 1, 1]],
-        [hexa[0][1][1], hexa[0, 0, 1]],
+        [hexa[0, 0, 1], hexa[1, 0, 1]],
+        [hexa[1, 0, 1], hexa[1, 1, 1]],
+        [hexa[1, 1, 1], hexa[0, 1, 1]],
+        [hexa[0, 1, 1], hexa[0, 0, 1]],
         #
-        [hexa[0][0][0], hexa[0, 0, 1]],
-        [hexa[1][0][0], hexa[1, 0, 1]],
-        [hexa[1][1][0], hexa[1, 1, 1]],
-        [hexa[0][1][0], hexa[0, 1, 1]],
+        [hexa[0, 0, 0], hexa[0, 0, 1]],
+        [hexa[1, 0, 0], hexa[1, 0, 1]],
+        [hexa[1, 1, 0], hexa[1, 1, 1]],
+        [hexa[0, 1, 0], hexa[0, 1, 1]],
         ])
     for edge in edges:
         plt.plot(edge[:, 0], edge[:, 1], edge[:, 2], '-k')
 
-    transformed_pts = _transform_to_hexa(scheme.points.T, hexa)
+    transformed_pts = _transform(scheme.points.T, hexa)
 
     vol = integrate(lambda x: 1.0, hexa, scheme)
     helpers.plot_spheres(
@@ -64,7 +64,7 @@ def show(
     return
 
 
-def _transform_to_hexa(xi, hexa):
+def _transform(xi, hexa):
     '''Transform the points xi from the reference hexahedron to the hexahedron
     `hexa`.
     '''
@@ -79,7 +79,6 @@ def _transform_to_hexa(xi, hexa):
         + mo(0.125*(1.0+xi[0])*(1.0+xi[1])*(1.0+xi[2]), hexa[1, 1, 1])
         + mo(0.125*(1.0-xi[0])*(1.0+xi[1])*(1.0+xi[2]), hexa[0, 1, 1])
         )
-    return
 
 
 def _get_detJ(xi, hexa):
@@ -122,6 +121,6 @@ def _get_detJ(xi, hexa):
 
 
 def integrate(f, hexa, scheme, sumfun=helpers.kahan_sum):
-    x = _transform_to_hexa(scheme.points.T, hexa).T
+    x = _transform(scheme.points.T, hexa).T
     detJ = _get_detJ(scheme.points.T, hexa)
     return sumfun(scheme.weights * f(x) * abs(detJ), axis=-1)
