@@ -201,7 +201,7 @@ Example:
 ```python
 val = quadpy.quadrilateral.integrate(
     lambda x: numpy.exp(x[0]),
-    [[0.0, 0.0], [1.0, 0.0], [0.5, 0.7], [0.3, 0.9]],
+    quadpy.quadrilateral.rectangle_points([0.0, 1.0], [-0.3, 0.6]),
     quadpy.quadrilateral.Stroud(6)
     )
 ```
