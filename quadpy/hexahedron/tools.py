@@ -53,18 +53,7 @@ def show(
     for edge in edges:
         plt.plot(edge[:, 0], edge[:, 1], edge[:, 2], '-k')
 
-    xi = scheme.points[:, 0]
-    eta = scheme.points[:, 1]
-    zeta = scheme.points[:, 2]
-    transformed_pts = \
-        + numpy.outer(0.125 * (1 - xi)*(1 - eta)*(1 - zeta), hexa[0, 0, 0]) \
-        + numpy.outer(0.125 * (1 + xi)*(1 - eta)*(1 - zeta), hexa[1, 0, 0]) \
-        + numpy.outer(0.125 * (1 + xi)*(1 + eta)*(1 - zeta), hexa[1, 1, 0]) \
-        + numpy.outer(0.125 * (1 - xi)*(1 + eta)*(1 - zeta), hexa[0, 1, 0]) \
-        + numpy.outer(0.125 * (1 - xi)*(1 - eta)*(1 + zeta), hexa[0, 0, 1]) \
-        + numpy.outer(0.125 * (1 + xi)*(1 - eta)*(1 + zeta), hexa[1, 0, 1]) \
-        + numpy.outer(0.125 * (1 + xi)*(1 + eta)*(1 + zeta), hexa[1, 1, 1]) \
-        + numpy.outer(0.125 * (1 - xi)*(1 + eta)*(1 + zeta), hexa[0, 1, 1])
+    transformed_pts = _transform_to_hexa(scheme.points.T, hexa)
 
     vol = integrate(lambda x: 1.0, hexa, scheme)
     helpers.plot_spheres(
@@ -75,19 +64,28 @@ def show(
     return
 
 
+def _transform_to_hexa(xi, hexa):
+    '''Transform the points xi from the reference hexahedron to the hexahedron
+    `hexa`.
+    '''
+    mo = numpy.multiply.outer
+    return (
+        + mo(0.125*(1.0-xi[0])*(1.0-xi[1])*(1.0-xi[2]), hexa[0, 0, 0])
+        + mo(0.125*(1.0+xi[0])*(1.0-xi[1])*(1.0-xi[2]), hexa[1, 0, 0])
+        + mo(0.125*(1.0+xi[0])*(1.0+xi[1])*(1.0-xi[2]), hexa[1, 1, 0])
+        + mo(0.125*(1.0-xi[0])*(1.0+xi[1])*(1.0-xi[2]), hexa[0, 1, 0])
+        + mo(0.125*(1.0-xi[0])*(1.0-xi[1])*(1.0+xi[2]), hexa[0, 0, 1])
+        + mo(0.125*(1.0+xi[0])*(1.0-xi[1])*(1.0+xi[2]), hexa[1, 0, 1])
+        + mo(0.125*(1.0+xi[0])*(1.0+xi[1])*(1.0+xi[2]), hexa[1, 1, 1])
+        + mo(0.125*(1.0-xi[0])*(1.0+xi[1])*(1.0+xi[2]), hexa[0, 1, 1])
+        )
+    return
+
+
 def integrate(f, hexa, scheme, sumfun=helpers.kahan_sum):
     xi = scheme.points.T
     mo = numpy.multiply.outer
-    x = \
-        + mo(0.125*(1.0-xi[0])*(1.0-xi[1])*(1.0-xi[2]), hexa[0, 0, 0]) \
-        + mo(0.125*(1.0+xi[0])*(1.0-xi[1])*(1.0-xi[2]), hexa[1, 0, 0]) \
-        + mo(0.125*(1.0+xi[0])*(1.0+xi[1])*(1.0-xi[2]), hexa[1, 1, 0]) \
-        + mo(0.125*(1.0-xi[0])*(1.0+xi[1])*(1.0-xi[2]), hexa[0, 1, 0]) \
-        + mo(0.125*(1.0-xi[0])*(1.0-xi[1])*(1.0+xi[2]), hexa[0, 0, 1]) \
-        + mo(0.125*(1.0+xi[0])*(1.0-xi[1])*(1.0+xi[2]), hexa[1, 0, 1]) \
-        + mo(0.125*(1.0+xi[0])*(1.0+xi[1])*(1.0+xi[2]), hexa[1, 1, 1]) \
-        + mo(0.125*(1.0-xi[0])*(1.0+xi[1])*(1.0+xi[2]), hexa[0, 1, 1])
-    x = x.T
+    x = _transform_to_hexa(scheme.points.T, hexa).T
 
     J0 = \
         - numpy.multiply.outer(0.125*(1 - xi[1])*(1 - xi[2]), hexa[0, 0, 0]) \
