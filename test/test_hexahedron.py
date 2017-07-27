@@ -5,7 +5,6 @@ from __future__ import print_function
 from helpers import partition, check_degree
 
 import matplotlib.pyplot as plt
-import numpy
 import quadpy
 from quadpy.hexahedron import Product
 import pytest
@@ -85,25 +84,13 @@ def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
     + [(quadpy.hexahedron.StroudN(k), 1.0e-7) for k in ['Cn 7-1']]
     )
 def test_scheme(scheme, tol, print_degree=False):
-    x0 = -1
-    x1 = +1
-    y0 = -1
-    y1 = +1
-    z0 = -1
-    z1 = +1
-    hexa = numpy.array([
-        [x0, y0, z0],
-        [x1, y0, z0],
-        [x1, y1, z0],
-        [x0, y1, z0],
-        [x0, y0, z1],
-        [x1, y0, z1],
-        [x1, y1, z1],
-        [x0, y1, z1],
-        ])
+    x = [-1.0, +1.0]
+    y = [-1.0, +1.0]
+    z = [-1.0, +1.0]
+    hexa = quadpy.hexahedron.cube_points(x, y, z)
     degree = check_degree(
             lambda poly: quadpy.hexahedron.integrate(poly, hexa, scheme),
-            lambda k: _integrate_exact2(k, x0, x1, y0, y1, z0, z1),
+            lambda k: _integrate_exact2(k, x[0], x[1], y[0], y[1], z[0], z[1]),
             lambda n: partition(n, 3),
             scheme.degree + 1,
             tol=tol
