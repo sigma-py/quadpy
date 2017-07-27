@@ -2,7 +2,7 @@
 #
 from __future__ import print_function
 
-from helpers import create_monomial_exponents2, check_degree
+from helpers import partition, check_degree
 
 import matplotlib.pyplot as plt
 import numpy
@@ -91,7 +91,7 @@ def test_scheme(scheme, tol, print_degree=False):
                 poly, quadrilateral, scheme
                 ),
             lambda k: _integrate_exact2(k, x0, x1, y0, y1),
-            create_monomial_exponents2,
+            lambda n: partition(n, 2),
             scheme.degree + 1,
             tol=tol
             )

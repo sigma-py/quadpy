@@ -2,7 +2,7 @@
 #
 import math
 
-from helpers import create_monomial_exponents3, check_degree
+from helpers import partition, check_degree
 
 import numpy
 import pytest
@@ -96,7 +96,7 @@ def test_scheme(scheme):
                 poly, tetrahedron, scheme
                 ),
             _integrate_monomial_over_standard_tet,
-            create_monomial_exponents3,
+            lambda n: partition(n, 3),
             scheme.degree + 1,
             )
     assert degree == scheme.degree
