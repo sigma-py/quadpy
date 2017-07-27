@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import create_monomial_exponents3, check_degree
+from helpers import partition, check_degree
 from matplotlib import pyplot as plt
 import numpy
 import pytest
@@ -70,7 +70,7 @@ def test_scheme(scheme):
                 poly, wedge, scheme
                 ),
             lambda k: _integrate_exact(k, wedge),
-            create_monomial_exponents3,
+            lambda n: partition(n, 3),
             scheme.degree + 1
             )
     assert degree == scheme.degree

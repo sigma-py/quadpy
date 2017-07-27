@@ -2,7 +2,7 @@
 #
 from __future__ import print_function
 
-from helpers import create_monomial_exponents3, check_degree
+from helpers import partition, check_degree
 
 import matplotlib.pyplot as plt
 import numpy
@@ -104,7 +104,7 @@ def test_scheme(scheme, tol, print_degree=False):
     degree = check_degree(
             lambda poly: quadpy.hexahedron.integrate(poly, hexa, scheme),
             lambda k: _integrate_exact2(k, x0, x1, y0, y1, z0, z1),
-            create_monomial_exponents3,
+            lambda n: partition(n, 3),
             scheme.degree + 1,
             tol=tol
             )

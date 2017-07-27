@@ -2,7 +2,7 @@
 #
 import math
 
-from helpers import create_monomial_exponents2, check_degree
+from helpers import partition, check_degree
 
 from matplotlib import pyplot as plt
 import numpy
@@ -99,7 +99,7 @@ def test_scheme(scheme):
     degree = check_degree(
             lambda poly: quadpy.triangle.integrate(poly, triangle, scheme),
             _integrate_monomial_over_standard_triangle,
-            create_monomial_exponents2,
+            lambda n: partition(n, 2),
             scheme.degree + 1
             )
     assert degree >= scheme.degree

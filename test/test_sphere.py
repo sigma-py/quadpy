@@ -2,7 +2,7 @@
 #
 import math
 
-from helpers import create_monomial_exponents3, check_degree
+from helpers import partition, check_degree
 
 from matplotlib import pyplot as plt
 import numpy
@@ -16,8 +16,10 @@ def _integral_monomial_over_unit_sphere(alpha):
     Gerald B. Folland,
     How to Integrate a Polynomial over a Sphere,
     The American Mathematical Monthly,
-    Vol. 108, No. 5 (May, 2001), pp. 446-448.
+    Vol. 108, No. 5 (May, 2001), pp. 446-448,
+    <https://dx.doi.org/10.2307/2695802>.
     '''
+    alpha = numpy.array(alpha)
     if any(alpha % 2 == 1):
         return 0.0
 
@@ -62,7 +64,7 @@ def test_scheme(scheme):
                 poly, midpoint, radius, scheme, sumfun=numpy.sum
                 ),
             _integral_monomial_over_unit_sphere,
-            create_monomial_exponents3,
+            lambda n: partition(n, 3),
             min(30, scheme.degree + 1)
             )
     assert degree >= min(30, scheme.degree)
