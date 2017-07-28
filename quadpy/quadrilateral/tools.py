@@ -66,7 +66,7 @@ def transform(xi, quad):
         0.5 * (1.0 - xi),
         0.5 * (1.0 + xi),
         ], axis=1)
-    a = helpers.cartesian(one_mp_xi)
+    a = helpers.n_outer(one_mp_xi)
 
     # TODO kahan tensordot
     # <https://stackoverflow.com/q/45372098/353337>

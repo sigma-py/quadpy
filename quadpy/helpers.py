@@ -4,16 +4,16 @@ import math
 import numpy
 
 
-def cartesian(a):
-    '''Given a list (tuple, array) of arrays, this method computes their
-    Cartesian product. If the dimension of the input arrays is larger than one,
-    the product is formed across the first dimension; all other dimensions must
+def n_outer(a):
+    '''Given a list (tuple, array) of arrays, this method computes their outer
+    product. If the dimension of the input arrays is larger than one, the
+    product is formed across the first dimension; all other dimensions must
     coincide in size.
 
     Examples:
-    cartesian([np.ones(4), np.ones(5)]).shape == (4, 5)
-    cartesian([np.ones(4), np.ones(5), np.ones(6)]).shape == (4, 5, 6)
-    cartesian([np.ones(4, 3, 7), np.ones(5, 3, 7)]).shape == (4, 5, 3, 7)
+    n_outer([np.ones(4), np.ones(5)]).shape == (4, 5)
+    n_outer([np.ones(4), np.ones(5), np.ones(6)]).shape == (4, 5, 6)
+    n_outer([np.ones(4, 3, 7), np.ones(5, 3, 7)]).shape == (4, 5, 3, 7)
     '''
     # <https://stackoverflow.com/a/45376730/353337>
     d = len(a)
