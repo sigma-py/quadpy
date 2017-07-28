@@ -50,27 +50,31 @@ def show(
 def transform(xi, quad):
     '''Transform the points xi from the reference quad to the quad `quad`.
     '''
-    # mo = numpy.multiply.outer
+    # For d==2, the result used to be computed with
+    #
     # out = (
-    #     + mo(0.25*(1.0-xi[0])*(1.0-xi[1]), quad[0, 0])
-    #     + mo(0.25*(1.0+xi[0])*(1.0-xi[1]), quad[1, 0])
-    #     + mo(0.25*(1.0+xi[0])*(1.0+xi[1]), quad[1, 1])
-    #     + mo(0.25*(1.0-xi[0])*(1.0+xi[1]), quad[0, 1])
+    #     + outer(0.25*(1.0-xi[0])*(1.0-xi[1]), quad[0, 0])
+    #     + outer(0.25*(1.0+xi[0])*(1.0-xi[1]), quad[1, 0])
+    #     + outer(0.25*(1.0-xi[0])*(1.0+xi[1]), quad[0, 1])
+    #     + outer(0.25*(1.0+xi[0])*(1.0+xi[1]), quad[1, 1])
     #     )
-    # Prepare everything for the big dot().
-    # numpy dot() documentation:
-    # > For N dimensions it is a sum product over the last axis of a and the
-    # > second-to-last of b.
-    one_mp_xi = 0.5 * numpy.stack([1.0 - xi, 1.0 + xi])
-    a = numpy.stack([
-        one_mp_xi[0, 0] * one_mp_xi[0, 1],
-        one_mp_xi[1, 0] * one_mp_xi[0, 1],
-        one_mp_xi[0, 0] * one_mp_xi[1, 1],
-        one_mp_xi[1, 0] * one_mp_xi[1, 1],
-        ], axis=-1)
-    order = [(0, 0), (1, 0), (0, 1), (1, 1)]
-    b = numpy.stack([quad[item] for item in order], axis=-2)
-    return numpy.dot(a, b)
+    #
+    # This array of multiplications and additions is reminiscent of dot(), and
+    # indeed tensordot() can handle the situation. We just need to compute the
+    # `1+-xi` products and align them with `quad`.
+
+    # one_mp_xi = 0.5 * numpy.stack([1.0 - xi, 1.0 + xi], axis=1)
+    one_m_xi = 0.5 * (1.0 - xi)
+    one_p_xi = 0.5 * (1.0 + xi)
+    a = numpy.array([
+        [one_m_xi[0] * one_m_xi[1], one_m_xi[0] * one_p_xi[1]],
+        [one_p_xi[0] * one_m_xi[1], one_p_xi[0] * one_p_xi[1]],
+        ])
+
+    # TODO kahan tensordot
+    # <https://stackoverflow.com/q/45372098/353337>
+    d = 2
+    return numpy.tensordot(a, quad, axes=(range(d), range(d)))
 
 
 def _get_detJ(xi, quad):
