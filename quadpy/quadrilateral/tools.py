@@ -62,14 +62,11 @@ def transform(xi, quad):
     # This array of multiplications and additions is reminiscent of dot(), and
     # indeed tensordot() can handle the situation. We just need to compute the
     # `1+-xi` products and align them with `quad`.
-
-    # one_mp_xi = 0.5 * numpy.stack([1.0 - xi, 1.0 + xi], axis=1)
-    one_m_xi = 0.5 * (1.0 - xi)
-    one_p_xi = 0.5 * (1.0 + xi)
-    a = numpy.array([
-        [one_m_xi[0] * one_m_xi[1], one_m_xi[0] * one_p_xi[1]],
-        [one_p_xi[0] * one_m_xi[1], one_p_xi[0] * one_p_xi[1]],
-        ])
+    one_mp_xi = numpy.stack([
+        0.5 * (1.0 - xi),
+        0.5 * (1.0 + xi),
+        ], axis=1)
+    a = helpers.cartesian(one_mp_xi)
 
     # TODO kahan tensordot
     # <https://stackoverflow.com/q/45372098/353337>
