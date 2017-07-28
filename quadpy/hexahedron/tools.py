@@ -3,6 +3,7 @@
 import numpy
 
 from .. import helpers
+from ..ncube import transform
 
 
 def cube_points(x, y, z):
@@ -53,7 +54,7 @@ def show(
     for edge in edges:
         plt.plot(edge[:, 0], edge[:, 1], edge[:, 2], '-k')
 
-    transformed_pts = _transform(scheme.points.T, hexa)
+    transformed_pts = transform(scheme.points.T, hexa)
 
     vol = integrate(lambda x: 1.0, hexa, scheme)
     helpers.plot_spheres(
@@ -62,23 +63,6 @@ def show(
 
     plt.show()
     return
-
-
-def _transform(xi, hexa):
-    '''Transform the points xi from the reference hexahedron to the hexahedron
-    `hexa`.
-    '''
-    mo = numpy.multiply.outer
-    return (
-        + mo(0.125*(1.0-xi[0])*(1.0-xi[1])*(1.0-xi[2]), hexa[0, 0, 0])
-        + mo(0.125*(1.0+xi[0])*(1.0-xi[1])*(1.0-xi[2]), hexa[1, 0, 0])
-        + mo(0.125*(1.0+xi[0])*(1.0+xi[1])*(1.0-xi[2]), hexa[1, 1, 0])
-        + mo(0.125*(1.0-xi[0])*(1.0+xi[1])*(1.0-xi[2]), hexa[0, 1, 0])
-        + mo(0.125*(1.0-xi[0])*(1.0-xi[1])*(1.0+xi[2]), hexa[0, 0, 1])
-        + mo(0.125*(1.0+xi[0])*(1.0-xi[1])*(1.0+xi[2]), hexa[1, 0, 1])
-        + mo(0.125*(1.0+xi[0])*(1.0+xi[1])*(1.0+xi[2]), hexa[1, 1, 1])
-        + mo(0.125*(1.0-xi[0])*(1.0+xi[1])*(1.0+xi[2]), hexa[0, 1, 1])
-        )
 
 
 def _get_detJ(xi, hexa):
@@ -121,6 +105,6 @@ def _get_detJ(xi, hexa):
 
 
 def integrate(f, hexa, scheme, sumfun=helpers.kahan_sum):
-    x = _transform(scheme.points.T, hexa).T
+    x = transform(scheme.points.T, hexa).T
     detJ = _get_detJ(scheme.points.T, hexa)
     return sumfun(scheme.weights * f(x) * abs(detJ), axis=-1)
