@@ -3,7 +3,7 @@
 import numpy
 
 from .. import helpers
-from ..ncube import transform
+from ..ncube import transform, get_detJ
 
 
 def cube_points(x, y, z):
@@ -65,46 +65,7 @@ def show(
     return
 
 
-def _get_detJ(xi, hexa):
-    '''Get the determinant of the transformation matrix.
-    '''
-    J0 = \
-        - numpy.multiply.outer(0.125*(1 - xi[1])*(1 - xi[2]), hexa[0, 0, 0]) \
-        + numpy.multiply.outer(0.125*(1 - xi[1])*(1 - xi[2]), hexa[1, 0, 0]) \
-        + numpy.multiply.outer(0.125*(1 + xi[1])*(1 - xi[2]), hexa[1, 1, 0]) \
-        - numpy.multiply.outer(0.125*(1 + xi[1])*(1 - xi[2]), hexa[0, 1, 0]) \
-        - numpy.multiply.outer(0.125*(1 - xi[1])*(1 + xi[2]), hexa[0, 0, 1]) \
-        + numpy.multiply.outer(0.125*(1 - xi[1])*(1 + xi[2]), hexa[1, 0, 1]) \
-        + numpy.multiply.outer(0.125*(1 + xi[1])*(1 + xi[2]), hexa[1, 1, 1]) \
-        - numpy.multiply.outer(0.125*(1 + xi[1])*(1 + xi[2]), hexa[0, 1, 1])
-    J0 = J0.T
-    J1 = \
-        - numpy.multiply.outer(0.125*(1 - xi[0])*(1 - xi[2]), hexa[0, 0, 0]) \
-        - numpy.multiply.outer(0.125*(1 + xi[0])*(1 - xi[2]), hexa[1, 0, 0]) \
-        + numpy.multiply.outer(0.125*(1 + xi[0])*(1 - xi[2]), hexa[1, 1, 0]) \
-        + numpy.multiply.outer(0.125*(1 - xi[0])*(1 - xi[2]), hexa[0, 1, 0]) \
-        - numpy.multiply.outer(0.125*(1 - xi[0])*(1 + xi[2]), hexa[0, 0, 1]) \
-        - numpy.multiply.outer(0.125*(1 + xi[0])*(1 + xi[2]), hexa[1, 0, 1]) \
-        + numpy.multiply.outer(0.125*(1 + xi[0])*(1 + xi[2]), hexa[1, 1, 1]) \
-        + numpy.multiply.outer(0.125*(1 - xi[0])*(1 + xi[2]), hexa[0, 1, 1])
-    J1 = J1.T
-    J2 = \
-        - numpy.multiply.outer(0.125*(1 - xi[0])*(1 - xi[1]), hexa[0, 0, 0]) \
-        - numpy.multiply.outer(0.125*(1 + xi[0])*(1 - xi[1]), hexa[1, 0, 0]) \
-        - numpy.multiply.outer(0.125*(1 + xi[0])*(1 + xi[1]), hexa[1, 1, 0]) \
-        - numpy.multiply.outer(0.125*(1 - xi[0])*(1 + xi[1]), hexa[0, 1, 0]) \
-        + numpy.multiply.outer(0.125*(1 - xi[0])*(1 - xi[1]), hexa[0, 0, 1]) \
-        + numpy.multiply.outer(0.125*(1 + xi[0])*(1 - xi[1]), hexa[1, 0, 1]) \
-        + numpy.multiply.outer(0.125*(1 + xi[0])*(1 + xi[1]), hexa[1, 1, 1]) \
-        + numpy.multiply.outer(0.125*(1 - xi[0])*(1 + xi[1]), hexa[0, 1, 1])
-    J2 = J2.T
-    return (
-        + J0[0]*J1[1]*J2[2] + J1[0]*J2[1]*J0[2] + J2[0]*J0[1]*J1[2]
-        - J0[2]*J1[1]*J2[0] - J1[2]*J2[1]*J0[0] - J2[2]*J0[1]*J1[0]
-        )
-
-
 def integrate(f, hexa, scheme, sumfun=helpers.kahan_sum):
     x = transform(scheme.points.T, hexa).T
-    detJ = _get_detJ(scheme.points.T, hexa)
+    detJ = get_detJ(scheme.points.T, hexa)
     return sumfun(scheme.weights * f(x) * abs(detJ), axis=-1)

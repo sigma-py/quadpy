@@ -30,3 +30,54 @@ def transform(xi, cube):
     # <https://stackoverflow.com/q/45372098/353337>
     d = xi.shape[0]
     return numpy.tensordot(a, cube, axes=(range(d), range(d)))
+
+
+def get_detJ(xi, cube):
+    '''Get the determinant of the transformation matrix.
+    '''
+    # For d==2, the result can be computed with
+    # ```
+    # J0 = (
+    #     - numpy.multiply.outer(0.25*(1-xi[1]), quad[0, 0])
+    #     + numpy.multiply.outer(0.25*(1-xi[1]), quad[1, 0])
+    #     - numpy.multiply.outer(0.25*(1+xi[1]), quad[0, 1])
+    #     + numpy.multiply.outer(0.25*(1+xi[1]), quad[1, 1])
+    #     ).T
+    # J1 = (
+    #     - numpy.multiply.outer(0.25*(1-xi[0]), quad[0, 0])
+    #     - numpy.multiply.outer(0.25*(1+xi[0]), quad[1, 0])
+    #     + numpy.multiply.outer(0.25*(1-xi[0]), quad[0, 1])
+    #     + numpy.multiply.outer(0.25*(1+xi[0]), quad[1, 1])
+    #     ).T
+    # out = J0[0]*J1[1] - J1[0]*J0[1]
+    # ```
+    # Like transform(), simplify here and form the determinant explicitly.
+    d = xi.shape[0]
+
+    one_mp_xi = numpy.stack([
+        0.5 * (1.0 - xi),
+        0.5 * (1.0 + xi),
+        ], axis=1)
+
+    # Build the Jacobi matrix row by row.
+    J = []
+    for k in range(d):
+        a = one_mp_xi.copy()
+        a[k, 0, :] = -0.5
+        a[k, 1, :] = +0.5
+        a0 = helpers.n_outer(a)
+        J.append(numpy.tensordot(a0, cube, axes=(range(d), range(d))).T)
+
+    # `det` needs the square at the end. Fortran...
+    # For d==2 or d==3, we could avoid this copy and compute the determinant
+    # with their elementary formulas, i.e.,
+    #
+    #     + J[0][0]*J[1][1] - J[1][0]*J[0][1];
+    #
+    #     + J0[0]*J1[1]*J2[2] + J1[0]*J2[1]*J0[2] + J2[0]*J0[1]*J1[2]
+    #     - J0[2]*J1[1]*J2[0] - J1[2]*J2[1]*J0[0] - J2[2]*J0[1]*J1[0].
+    #
+    J = numpy.array(J)
+    J = numpy.moveaxis(J, (0, 1), (-2, -1))
+    out = numpy.linalg.det(J)
+    return out
