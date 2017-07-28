@@ -4,24 +4,17 @@
 This little helper takes Lebedev point and weight data from [1] and produces
 Python code compatible with this library.
 
-[1] https://people.sc.fsu.edu/~jburkardt/datasets/sphere_lebedev_rule/sphere_lebedev_rule.html
+[1]
+https://people.sc.fsu.edu/~jburkardt/datasets/sphere_lebedev_rule/sphere_lebedev_rule.html
 '''
-import numpy as np
+import numpy
 
 
 def read(filename):
-    data = np.loadtxt(filename)
-
-    theta = data[:, 1] / 180.0 * np.pi
-    phi = data[:, 0] / 180.0 * np.pi
+    data = numpy.loadtxt(filename)
+    phi_theta = data[:, :2] / 180.0
     weights = data[:, 2]
-
-    X = np.c_[
-        np.sin(theta) * np.cos(phi),
-        np.sin(theta) * np.sin(phi),
-        np.cos(theta),
-        ]
-    return X, weights
+    return phi_theta, weights
 
 
 def chunk_data(weights):
@@ -39,7 +32,7 @@ def chunk_data(weights):
     return chunks
 
 
-def sort_into_symmetry_classes(weights, X):
+def sort_into_symmetry_classes(weights, phi_theta):
     data = {
         'a1': [],
         'a2': [],
@@ -55,46 +48,39 @@ def sort_into_symmetry_classes(weights, X):
             data['a2'].append(weights[c[0]])
         elif len(c) == 8:
             data['a3'].append(weights[c[0]])
-        elif len(c) == 24 and min(X[c[0]]) < 1.0e-12:
-            assert abs(np.linalg.norm(X[c[0]]) - 1.0) < 1.0e-12
-            if abs(X[c[0], 0]) < 1.0e-12:
-                p = X[c[0], 1]
-                q = X[c[0], 2]
-            elif abs(X[c[0], 1]) < 1.0e-12:
-                p = X[c[0], 2]
-                q = X[c[0], 0]
-            elif abs(X[c[0], 2]) < 1.0e-12:
-                p = X[c[0], 0]
-                q = X[c[0], 1]
-            else:
-                raise ValueError('')
-            data['pq0'].append((
-                weights[c[0]],
-                p, q
-                ))
         elif len(c) == 24:
-            if abs(X[c[0], 0] - X[c[0], 1]) < 1.0e-12:
-                l = X[c[0], 1]
-                m = X[c[0], 2]
-            elif abs(X[c[0], 1] - X[c[0], 2]) < 1.0e-12:
-                l = X[c[0], 2]
-                m = X[c[0], 0]
-            elif abs(X[c[0], 2] - X[c[0], 0]) < 1.0e-12:
-                l = X[c[0], 0]
-                m = X[c[0], 1]
+            if any(abs(phi_theta[c, 1] - 0.5) < 1.0e-12):
+                # theta == pi/2   =>   X == [p, q, 0].
+                # Find the smallest positive phi that's paired with `theta ==
+                # pi/2`; the symmetry is fully characterized by that phi.
+                k = numpy.where(abs(phi_theta[c, 1] - 0.5) < 1.0e-12)[0]
+                assert len(k) == 8
+                k2 = numpy.where(phi_theta[k, 0] > 0.0)[0]
+                phi_min = numpy.min(phi_theta[k2, 0])
+                data['pq0'].append((weights[c[0]], phi_min))
             else:
-                raise ValueError('')
-            data['llm'].append((
-                weights[c[0]],
-                l, m
-                ))
-        elif len(c) == 48:
-            data['rSW'].append((
-                weights[c[0]],
-                X[c[0], 0], X[c[0], 1], X[c[0], 2]
-                ))
+                # X = [l, l, m].
+                # In this case, there must by exactly two phi with the value
+                # pi/4. Take the value of the smaller corresponding `theta`;
+                # all points are characterized by it.
+                k = numpy.where(abs(phi_theta[c, 0] - 0.25) < 1.0e-12)[0]
+                assert len(k) == 2
+                k2 = numpy.where(phi_theta[k, 1] > 0.0)[0]
+                theta_min = numpy.min(phi_theta[k2, 1])
+                data['llm'].append((weights[c[0]], theta_min))
         else:
-            raise RuntimeError('')
+            assert len(c) == 48
+            # This most general symmetry is characterized by two angles; one
+            # could take any two here.
+            # To make things easier later on, out of the 6 smallest theta, take
+            # the one with the smallest positive phi.
+            min_theta = numpy.min(phi_theta[c, 1])
+            k = numpy.where(abs(phi_theta[c, 1] - min_theta) < 1.0e-12)[0]
+            k2 = numpy.where(phi_theta[k, 0] > 0.0)[0]
+            min_phi = numpy.min(phi_theta[k2, 0])
+            data['rSW'].append((
+                weights[c[0]], min_phi, min_theta
+                ))
 
     return data
 
@@ -117,20 +103,20 @@ def generate_python_code(data):
     # ```
     print('self.weights = numpy.concatenate([')
     for d in data['a1']:
-        print('    %0.16e * numpy.ones(6),' % d)
+        print('    numpy.full(6, %0.16e),' % d)
     for d in data['a2']:
-        print('    %0.16e * numpy.ones(12),' % d)
+        print('    numpy.full(12, %0.16e),' % d)
     for d in data['a3']:
-        print('    %0.16e * numpy.ones(8),' % d)
+        print('    numpy.full(8, %0.16e),' % d)
     for d in data['pq0']:
-        print('    %0.16e * numpy.ones(24),' % d[0])
+        print('    numpy.full(24, %0.16e),' % d[0])
     for d in data['llm']:
-        print('    %0.16e * numpy.ones(24),' % d[0])
+        print('    numpy.full(24, %0.16e),' % d[0])
     for d in data['rSW']:
-        print('    %0.16e * numpy.ones(48),' % d[0])
+        print('    numpy.full(48, %0.16e),' % d[0])
     print('    ])')
     # points
-    print('self.points = numpy.concatenate([')
+    print('self.phi_theta = numpy.concatenate([')
     for d in data['a1']:
         print('    self.a1(),')
     for d in data['a2']:
@@ -138,11 +124,11 @@ def generate_python_code(data):
     for d in data['a3']:
         print('    self.a3(),')
     for d in data['pq0']:
-        print('    self.pq0(%0.16e, %0.16e),' % (d[1], d[2]))
+        print('    self.pq0(%0.16e),' % d[1])
     for d in data['llm']:
-        print('    self.llm(%0.16e, %0.16e),' % (d[1], d[2]))
+        print('    self.llm(%0.16e),' % d[1])
     for d in data['rSW']:
-        print('    self.rsw(%0.16e, %0.16e, %0.16e),' % (d[1], d[2], d[3]))
+        print('    self.rsw(%0.16e, %0.16e),' % (d[1], d[2]))
     print('    ])')
     return
 
@@ -160,7 +146,7 @@ if __name__ == '__main__':
             )
     args = parser.parse_args()
 
-    X, weights = read(args.filename)
+    phi_theta, weights = read(args.filename)
     chunks = chunk_data(weights)
-    data = sort_into_symmetry_classes(weights, X)
+    data = sort_into_symmetry_classes(weights, phi_theta)
     generate_python_code(data)
