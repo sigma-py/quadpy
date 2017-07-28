@@ -4,6 +4,7 @@ import numpy
 
 from .. import helpers
 from .stroud import Stroud
+# from ..ncube import transform
 
 
 def rectangle_points(x, y):
@@ -36,7 +37,7 @@ def show(
     if not show_axes:
         plt.gca().set_axis_off()
 
-    transformed_pts = _transform(scheme.points.T, quad)
+    transformed_pts = transform(scheme.points.T, quad)
 
     vol = integrate(lambda x: 1.0, quad, Stroud(1))
     helpers.plot_disks(
@@ -46,16 +47,30 @@ def show(
     return
 
 
-def _transform(xi, quad):
+def transform(xi, quad):
     '''Transform the points xi from the reference quad to the quad `quad`.
     '''
-    mo = numpy.multiply.outer
-    return (
-        + mo(0.25*(1.0-xi[0])*(1.0-xi[1]), quad[0, 0])
-        + mo(0.25*(1.0+xi[0])*(1.0-xi[1]), quad[1, 0])
-        + mo(0.25*(1.0+xi[0])*(1.0+xi[1]), quad[1, 1])
-        + mo(0.25*(1.0-xi[0])*(1.0+xi[1]), quad[0, 1])
-        )
+    # mo = numpy.multiply.outer
+    # out = (
+    #     + mo(0.25*(1.0-xi[0])*(1.0-xi[1]), quad[0, 0])
+    #     + mo(0.25*(1.0+xi[0])*(1.0-xi[1]), quad[1, 0])
+    #     + mo(0.25*(1.0+xi[0])*(1.0+xi[1]), quad[1, 1])
+    #     + mo(0.25*(1.0-xi[0])*(1.0+xi[1]), quad[0, 1])
+    #     )
+    # Prepare everything for the big dot().
+    # numpy dot() documentation:
+    # > For N dimensions it is a sum product over the last axis of a and the
+    # > second-to-last of b.
+    one_mp_xi = 0.5 * numpy.stack([1.0 - xi, 1.0 + xi])
+    a = numpy.stack([
+        one_mp_xi[0, 0] * one_mp_xi[0, 1],
+        one_mp_xi[1, 0] * one_mp_xi[0, 1],
+        one_mp_xi[0, 0] * one_mp_xi[1, 1],
+        one_mp_xi[1, 0] * one_mp_xi[1, 1],
+        ], axis=-1)
+    order = [(0, 0), (1, 0), (0, 1), (1, 1)]
+    b = numpy.stack([quad[item] for item in order], axis=-2)
+    return numpy.dot(a, b)
 
 
 def _get_detJ(xi, quad):
@@ -77,6 +92,6 @@ def _get_detJ(xi, quad):
 
 
 def integrate(f, quad, scheme, sumfun=helpers.kahan_sum):
-    x = _transform(scheme.points.T, quad).T
+    x = transform(scheme.points.T, quad).T
     det = _get_detJ(scheme.points.T, quad)
     return sumfun(scheme.weights * f(x) * abs(det), axis=-1)

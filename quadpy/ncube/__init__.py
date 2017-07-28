@@ -10,4 +10,5 @@ from .stroud66 import *
 from .stroud68 import *
 from .stroud import *
 from .thacher import *
+from .tools import *
 from .tyler import *

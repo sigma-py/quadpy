@@ -51,7 +51,7 @@ class MorrowPatterson(object):
             assert index == 2
             # The article claims degree 31.
             # TODO check for errors
-            self.degree = 20
+            self.degree = 22
             self.weights = numpy.concatenate([
                 numpy.full(4, 0.153974824894e-1),
                 numpy.full(4, 0.342239043212e-1),
