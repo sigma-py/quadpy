@@ -33,29 +33,24 @@ def test_disk():
 
 
 def test_hexahedron():
-    quadpy.hexahedron.integrate(
+    val = quadpy.hexahedron.integrate(
             lambda x: numpy.exp(x[0]),
-            numpy.array([
-                [0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0],
-                [0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1],
-                ]),
+            quadpy.hexahedron.cube_points([0.0, 1.0], [0.0, 1.0], [0.0, 1.0]),
             quadpy.hexahedron.Product(quadpy.line_segment.NewtonCotesClosed(3))
             )
-    quadpy.hexahedron.integrate(
+
+    val = quadpy.hexahedron.integrate(
             lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
-            numpy.array([
-                [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],
-                [[1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0]],
-                [[1, 1, 0], [1, 1, 0], [1, 1, 0], [1, 1, 0], [1, 1, 0]],
-                [[0, 1, 0], [0, 1, 0], [0, 1, 0], [0, 1, 0], [0, 1, 0]],
-                #
-                [[0, 0, 1], [0, 0, 1], [0, 0, 1], [0, 0, 1], [0, 0, 1]],
-                [[1, 0, 1], [1, 0, 1], [1, 0, 1], [1, 0, 1], [1, 0, 1]],
-                [[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1]],
-                [[0, 1, 1], [0, 1, 1], [0, 1, 1], [0, 1, 1], [0, 1, 1]],
-                ]),
+            numpy.stack([
+                quadpy.hexahedron.cube_points([0, 1], [0, 1], [0, 1]),
+                quadpy.hexahedron.cube_points([0, 1], [0, 1], [0, 1]),
+                quadpy.hexahedron.cube_points([0, 1], [0, 1], [0, 1]),
+                quadpy.hexahedron.cube_points([0, 1], [0, 1], [0, 1]),
+                quadpy.hexahedron.cube_points([0, 1], [0, 1], [0, 1]),
+                ], axis=-2),
             quadpy.hexahedron.Product(quadpy.line_segment.NewtonCotesClosed(3))
             )
+    assert val.shape == (2, 5)
     return
 
 
@@ -103,20 +98,22 @@ def test_pyramid():
 def test_quadrilateral():
     quadpy.quadrilateral.integrate(
             lambda x: numpy.exp(x[0]),
-            numpy.array([[0.0, 0.0], [1.0, 0.0], [1.0, 1.0], [0.0, 1.0]]),
+            quadpy.quadrilateral.rectangle_points([0.0, 1.0], [0.0, 1.0]),
             quadpy.quadrilateral.Stroud(6)
             )
 
-    quadpy.quadrilateral.integrate(
+    val = quadpy.quadrilateral.integrate(
             lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
-            numpy.array([
-                [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0], [0.0, 0.0], [0.0, 0.0]],
-                [[1.0, 0.0], [1.0, 0.0], [1.0, 0.0], [1.0, 0.0], [1.0, 0.0]],
-                [[1.0, 1.0], [1.0, 1.0], [1.0, 1.0], [1.0, 1.0], [1.0, 1.0]],
-                [[0.0, 1.0], [0.0, 1.0], [0.0, 1.0], [0.0, 1.0], [0.0, 1.0]],
-                ]),
-            quadpy.quadrilateral.Stroud(6)
+            numpy.stack([
+                quadpy.quadrilateral.rectangle_points([0.0, 1.0], [0.0, 1.0]),
+                quadpy.quadrilateral.rectangle_points([0.0, 1.0], [0.0, 1.0]),
+                quadpy.quadrilateral.rectangle_points([0.0, 1.0], [0.0, 1.0]),
+                quadpy.quadrilateral.rectangle_points([0.0, 1.0], [0.0, 1.0]),
+                quadpy.quadrilateral.rectangle_points([0.0, 1.0], [0.0, 1.0]),
+                ], axis=-2),
+            quadpy.quadrilateral.Stroud(8)
             )
+    assert val.shape == (2, 5)
     return
 
 
@@ -147,12 +144,12 @@ def test_tetrahedron():
 
     quadpy.tetrahedron.integrate(
             lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
-            numpy.array([
-                [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]],
-                [[1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0]],
-                [[0, 1, 0], [0, 1, 0], [0, 1, 0], [0, 1, 0], [0, 1, 0]],
-                [[0, 0, 1], [0, 0, 1], [0, 0, 1], [0, 0, 1], [0, 0, 1]],
-                ], dtype=float),
+            numpy.stack([
+                [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0], [0.0, 0, 1]],
+                [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0], [0.0, 0, 1]],
+                [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0], [0.0, 0, 1]],
+                [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0], [0.0, 0, 1]],
+                ], axis=-2),
             quadpy.tetrahedron.ShunnHam(3)
             )
     return
@@ -165,15 +162,18 @@ def test_triangle():
             quadpy.triangle.Cubtri()
             )
 
-    quadpy.triangle.integrate(
+    val = quadpy.triangle.integrate(
             lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
-            numpy.array([
-                [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0], [0.0, 0.0], [0.0, 0.0]],
-                [[1.0, 0.0], [1.0, 0.0], [1.0, 0.0], [1.0, 0.0], [1.0, 0.0]],
-                [[0.0, 1.0], [0.0, 1.0], [0.0, 1.0], [0.0, 1.0], [0.0, 1.0]],
-                ]),
+            numpy.stack([
+                [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
+                [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
+                [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
+                [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
+                [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
+                ], axis=-2),
             quadpy.triangle.Cubtri()
             )
+    assert val.shape == (2, 5)
     return
 
 
