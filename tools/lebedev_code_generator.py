@@ -55,8 +55,8 @@ def sort_into_symmetry_classes(weights, phi_theta):
                 # pi/2`; the symmetry is fully characterized by that phi.
                 k = numpy.where(abs(phi_theta[c, 1] - 0.5) < 1.0e-12)[0]
                 assert len(k) == 8
-                k2 = numpy.where(phi_theta[k, 0] > 0.0)[0]
-                phi_min = numpy.min(phi_theta[k, 0][k2])
+                k2 = numpy.where(phi_theta[c, 0][k] > 0.0)[0]
+                phi_min = numpy.min(phi_theta[c, 0][k][k2])
                 data['pq0'].append((weights[c[0]], phi_min))
             else:
                 # X = [l, l, m].
@@ -65,8 +65,8 @@ def sort_into_symmetry_classes(weights, phi_theta):
                 # all points are characterized by it.
                 k = numpy.where(abs(phi_theta[c, 0] - 0.25) < 1.0e-12)[0]
                 assert len(k) == 2
-                k2 = numpy.where(phi_theta[k, 1] > 0.0)[0]
-                theta_min = numpy.min(phi_theta[k, 1][k2])
+                k2 = numpy.where(phi_theta[c, 1][k] > 0.0)[0]
+                theta_min = numpy.min(phi_theta[c, 1][k][k2])
                 data['llm'].append((weights[c[0]], theta_min))
         else:
             assert len(c) == 48
@@ -76,8 +76,8 @@ def sort_into_symmetry_classes(weights, phi_theta):
             # the one with the smallest positive phi.
             min_theta = numpy.min(phi_theta[c, 1])
             k = numpy.where(abs(phi_theta[c, 1] - min_theta) < 1.0e-12)[0]
-            k2 = numpy.where(phi_theta[k, 0] > 0.0)[0]
-            min_phi = numpy.min(phi_theta[k, 0][k2])
+            k2 = numpy.where(phi_theta[c, 0][k] > 0.0)[0]
+            min_phi = numpy.min(phi_theta[c, 0][k][k2])
             data['rSW'].append((
                 weights[c[0]], min_phi, min_theta
                 ))
