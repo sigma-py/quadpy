@@ -111,7 +111,7 @@ def test_quadrilateral():
                 quadpy.quadrilateral.rectangle_points([0.0, 1.0], [0.0, 1.0]),
                 quadpy.quadrilateral.rectangle_points([0.0, 1.0], [0.0, 1.0]),
                 ], axis=-2),
-            quadpy.quadrilateral.Stroud(6)
+            quadpy.quadrilateral.Stroud(8)
             )
     assert val.shape == (2, 5)
     return

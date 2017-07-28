@@ -186,7 +186,7 @@ class Dunavant(object):
         else:
             assert index == 10
             # TODO the article claims 21
-            self.degree = 19
+            self.degree = 20
             self.weights = numpy.concatenate([
                 numpy.full(4, 0.019503841092684),
                 numpy.full(4, 0.089012127744268),
