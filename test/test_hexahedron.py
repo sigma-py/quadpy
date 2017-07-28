@@ -2,10 +2,9 @@
 #
 from __future__ import print_function
 
-from helpers import create_monomial_exponents3, check_degree
+from helpers import partition, check_degree
 
 import matplotlib.pyplot as plt
-import numpy
 import quadpy
 from quadpy.hexahedron import Product
 import pytest
@@ -63,43 +62,38 @@ def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
 
 
 @pytest.mark.parametrize(
-    'scheme',
-    [Product(quadpy.line_segment.Midpoint())]
-    + [Product(quadpy.line_segment.Trapezoidal())]
-    + [Product(quadpy.line_segment.GaussLegendre(k)) for k in range(1, 6)]
-    + [Product(quadpy.line_segment.NewtonCotesClosed(k))
-        for k in range(1, 5)
+    'scheme, tol',
+    [(Product(quadpy.line_segment.Midpoint()), 1.0e-14)]
+    + [(Product(quadpy.line_segment.Trapezoidal()), 1.0e-14)]
+    + [(Product(quadpy.line_segment.GaussLegendre(k)), 1.0e-14)
+       for k in range(1, 6)
        ]
-    + [Product(quadpy.line_segment.NewtonCotesOpen(k)) for k in range(5)]
-    + [quadpy.hexahedron.StroudN(k) for k in [
+    + [(Product(quadpy.line_segment.NewtonCotesClosed(k)), 1.0e-14)
+       for k in range(1, 5)
+       ]
+    + [(Product(quadpy.line_segment.NewtonCotesOpen(k)), 1.0e-14)
+       for k in range(5)
+       ]
+    + [(quadpy.hexahedron.StroudN(k), 1.0e-14) for k in [
         'Cn 1-1', 'Cn 1-2',
         'Cn 2-1', 'Cn 2-2',
         'Cn 3-1', 'Cn 3-2', 'Cn 3-3', 'Cn 3-4', 'Cn 3-5', 'Cn 3-6',
-        'Cn 5-2', 'Cn 5-3', 'Cn 5-4', 'Cn 5-5', 'Cn 5-7'
+        'Cn 5-2', 'Cn 5-3', 'Cn 5-4', 'Cn 5-5', 'Cn 5-6', 'Cn 5-7', 'Cn 5-8',
+        'Cn 5-9'
         ]]
+    + [(quadpy.hexahedron.StroudN(k), 1.0e-7) for k in ['Cn 7-1']]
     )
-def test_scheme(scheme, print_degree=False):
-    x0 = -1
-    x1 = +1
-    y0 = -1
-    y1 = +1
-    z0 = -1
-    z1 = +1
-    hexa = numpy.array([
-        [x0, y0, z0],
-        [x1, y0, z0],
-        [x1, y1, z0],
-        [x0, y1, z0],
-        [x0, y0, z1],
-        [x1, y0, z1],
-        [x1, y1, z1],
-        [x0, y1, z1],
-        ])
+def test_scheme(scheme, tol, print_degree=False):
+    x = [-1.0, +1.0]
+    y = [-1.0, +1.0]
+    z = [-1.0, +1.0]
+    hexa = quadpy.hexahedron.cube_points(x, y, z)
     degree = check_degree(
             lambda poly: quadpy.hexahedron.integrate(poly, hexa, scheme),
-            lambda k: _integrate_exact2(k, x0, x1, y0, y1, z0, z1),
-            create_monomial_exponents3,
-            scheme.degree + 1
+            lambda k: _integrate_exact2(k, x[0], x[1], y[0], y[1], z[0], z[1]),
+            lambda n: partition(n, 3),
+            scheme.degree + 1,
+            tol=tol
             )
     if print_degree:
         print('Detected degree {}, scheme degree {}.'.format(
@@ -119,10 +113,10 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    # scheme_ = Product(quadpy.line_segment.NewtonCotesOpen(2))
-    scheme_ = quadpy.hexahedron.StroudN('Cn 5-7')
+    # scheme_ = Product(quadpy.line_segment.NewtonCotesOpen(5))
+    scheme_ = quadpy.hexahedron.StroudN('Cn 7-1')
     print(scheme_.weights)
     print(scheme_.points)
-    test_scheme(scheme_, print_degree=True)
+    test_scheme(scheme_, 1.0e-14, print_degree=True)
     test_show(scheme_)
     plt.show()

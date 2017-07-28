@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 from helpers import \
-        create_monomial_exponents2, \
+        partition, \
         integrate_monomial_over_unit_circle, \
         check_degree
 
@@ -32,7 +32,7 @@ def test_scheme(scheme, tol):
                 poly, [0.0, 0.0], 1.0, scheme
                 ),
             _integrate_exact,
-            create_monomial_exponents2,
+            lambda n: partition(n, 2),
             scheme.degree + 1,
             tol=tol
             )

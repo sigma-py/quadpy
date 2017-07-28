@@ -2,10 +2,9 @@
 #
 from __future__ import print_function
 
-from helpers import create_monomial_exponents2, check_degree
+from helpers import partition, check_degree
 
 import matplotlib.pyplot as plt
-import numpy
 import pytest
 import quadpy
 from quadpy.quadrilateral import Product
@@ -55,8 +54,9 @@ def _integrate_exact2(k, x0, x1, y0, y1):
         'Cn 1-1', 'Cn 1-2',
         'Cn 2-1', 'Cn 2-2',
         'Cn 3-1', 'Cn 3-2', 'Cn 3-3', 'Cn 3-4', 'Cn 3-5', 'Cn 3-6',
-        'Cn 5-2', 'Cn 5-3', 'Cn 5-4', 'Cn 5-5', 'Cn 5-7'
+        'Cn 5-2', 'Cn 5-3', 'Cn 5-4', 'Cn 5-5', 'Cn 5-6', 'Cn 5-7', 'Cn 5-9'
         ]]
+    + [(quadpy.quadrilateral.StroudN(k), 1.0e-8) for k in ['Cn 7-1']]
     + [(quadpy.quadrilateral.WissmannBecker(k), 1.0e-14) for k in [
         '4-1', '4-2', '6-1', '6-2', '8-1', '8-2',
         ]]
@@ -79,18 +79,11 @@ def test_scheme(scheme, tol, print_degree=False):
     x1 = +1.0
     y0 = -1.0
     y1 = +1.0
-    quadrilateral = numpy.array([
-        [x0, y0],
-        [x1, y0],
-        [x1, y1],
-        [x0, y1],
-        ])
+    quad = quadpy.quadrilateral.rectangle_points([-2.0, +1.0], [-1.0, +1.0])
     degree = check_degree(
-            lambda poly: quadpy.quadrilateral.integrate(
-                poly, quadrilateral, scheme
-                ),
+            lambda poly: quadpy.quadrilateral.integrate(poly, quad, scheme),
             lambda k: _integrate_exact2(k, x0, x1, y0, y1),
-            create_monomial_exponents2,
+            lambda n: partition(n, 2),
             scheme.degree + 1,
             tol=tol
             )
@@ -113,9 +106,9 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = Product(quadpy.line_segment.GaussLegendre(6))
-    scheme_ = quadpy.quadrilateral.StroudN('Cn 5-8')
+    scheme_ = quadpy.quadrilateral.StroudN('Cn 7-1')
     print(scheme_.weights)
     print(scheme_.points)
     test_show(scheme_)
-    test_scheme(scheme_, 1.0e-14, print_degree=True)
+    test_scheme(scheme_, 1.0e-8, print_degree=True)
     plt.show()
