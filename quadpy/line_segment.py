@@ -17,7 +17,7 @@ def integrate(f, interval, scheme, sumfun=helpers.kahan_sum):
     len_intervals = numpy.sqrt(numpy.einsum('...j,...j->...', diff, diff))
     # The factor 0.5 is from the length of the reference line [-1, 1].
     return sumfun(
-        numpy.rollaxis(scheme.weights * f(x), -1) * 0.5 * len_intervals
+        numpy.moveaxis(scheme.weights * f(x), -1, 0) * 0.5 * len_intervals
         )
 
 
