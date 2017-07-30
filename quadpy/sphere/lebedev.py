@@ -27,7 +27,7 @@ class Lebedev(object):
         elif degree == 5:
             self.weights = numpy.concatenate([
                 numpy.full(6, 1.0/15.0),
-                numpy.full(8, 7.4999999999999997e-02),
+                numpy.full(8, 3.0/40.0),
                 ])
             self.phi_theta = numpy.concatenate([
                 self.a1(),
@@ -35,9 +35,9 @@ class Lebedev(object):
                 ])
         elif degree == 7:
             self.weights = numpy.concatenate([
-                numpy.full(6, 4.7619047619047998e-02),
-                numpy.full(8, 3.2142857142857001e-02),
-                numpy.full(12, 3.8095238095238002e-02),
+                numpy.full(6, 1.0/21.0),
+                numpy.full(8, 9.0/280.0),
+                numpy.full(12, 4.0/105.0),
                 ])
             self.phi_theta = numpy.concatenate([
                 self.a1(),
@@ -46,9 +46,9 @@ class Lebedev(object):
                 ])
         elif degree == 9:
             self.weights = numpy.concatenate([
-                numpy.full(24, 2.8571428571429001e-02),
-                numpy.full(6, 9.5238095238100000e-03),
-                numpy.full(8, 3.2142857142857001e-02),
+                numpy.full(24, 1.0/35.0),
+                numpy.full(6, 1.0/105.0),
+                numpy.full(8, 9.0/280.0),
                 ])
             self.phi_theta = numpy.concatenate([
                 self.a1(),
@@ -57,9 +57,9 @@ class Lebedev(object):
                 ])
         elif degree == 11:
             self.weights = numpy.concatenate([
-                numpy.full(6, 1.2698412698413000e-02),
-                numpy.full(8, 2.1093750000000001e-02),
-                numpy.full(12, 2.2574955908289000e-02),
+                numpy.full(6, 4.0/315.0),
+                numpy.full(8, 27.0/1280.0),
+                numpy.full(12, 64.0/2835.0),
                 numpy.full(24, 2.0173335537919002e-02),
                 ])
             self.phi_theta = numpy.concatenate([
@@ -2752,6 +2752,7 @@ class Lebedev(object):
                 self.rsw(1.3716092309148088e-02, 2.3708499670410427e-01),
                 ])
 
+        self.phi_theta *= numpy.pi
         self.points = _spherical_to_cartesian(self.phi_theta)
         return
 
