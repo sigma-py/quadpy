@@ -2752,7 +2752,18 @@ class Lebedev(object):
                 self.rsw(1.3716092309148088e-02, 2.3708499670410427e-01),
                 ])
 
+        self.points = _spherical_to_cartesian(self.phi_theta)
         return
+
+
+def _spherical_to_cartesian(phi_theta):
+    sin_phi_theta = numpy.sin(phi_theta)
+    cos_phi_theta = numpy.cos(phi_theta)
+    return numpy.stack([
+        sin_phi_theta[:, 1] * cos_phi_theta[:, 0],
+        sin_phi_theta[:, 1] * sin_phi_theta[:, 0],
+        cos_phi_theta[:, 1],
+        ], axis=1)
 
 
 def _a1():
