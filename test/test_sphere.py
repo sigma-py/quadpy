@@ -88,9 +88,9 @@ def test_scheme_spherical(scheme):
     res = quadpy.sphere.integrate_spherical(
             lambda phi_theta: 1.0,
             radius=1.0,
-            rule=quadpy.sphere.Lebedev(11)
+            rule=scheme
             )
-    assert abs(res - 4*numpy.pi) < 1.0e-12
+    assert abs(res - 4*numpy.pi) < 1.0e-11
     return
 
 
