@@ -131,17 +131,17 @@ def generate_python_code(data):
     # points
     out += 'self.phi_theta = numpy.concatenate([\n'
     for d in data['a1']:
-        out += '    self.a1(),\n'
+        out += '    _a1(),\n'
     for d in data['a2']:
-        out += '    self.a2(),\n'
+        out += '    _a2(),\n'
     for d in data['a3']:
-        out += '    self.a3(),\n'
+        out += '    _a3(),\n'
     for d in data['pq0']:
-        out += '    self.pq0(%0.16e),\n' % d['val']
+        out += '    _pq0(%0.16e),\n' % d['val']
     for d in data['llm']:
-        out += '    self.llm(%0.16e),\n' % d['val']
+        out += '    _llm(%0.16e),\n' % d['val']
     for d in data['rSW']:
-        out += '    self.rsw(%0.16e, %0.16e),\n' % d['val']
+        out += '    _rsw(%0.16e, %0.16e),\n' % d['val']
     out += '    ])'
     return out
 

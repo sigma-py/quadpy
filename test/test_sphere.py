@@ -52,7 +52,10 @@ def _integrate_exact(f, midpoint, radius):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadpy.sphere.Lebedev(k) for k in range(1, 33)]
+    [quadpy.sphere.Lebedev(degree) for degree in [
+        3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 35, 41, 47, 53,
+        59, 65, 71, 77, 83, 89, 95, 101, 107, 113, 119, 125, 131
+        ]]
     )
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
@@ -73,7 +76,7 @@ def test_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadpy.sphere.Lebedev(4)]
+    [quadpy.sphere.Lebedev(7)]
     )
 def test_show(scheme):
     quadpy.sphere.show(scheme)
@@ -81,7 +84,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.sphere.Lebedev(4)
-    test_scheme(scheme_)
+    scheme_ = quadpy.sphere.Lebedev(5)
+    # test_scheme(scheme_)
     test_show(scheme_)
     plt.show()
