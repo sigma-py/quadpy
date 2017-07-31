@@ -47,9 +47,22 @@ def show(scheme):
 
 
 def integrate(f, center, radius, rule, sumfun=helpers.kahan_sum):
+    '''Quadrature where `f` is defined in Cartesian coordinates.
+    '''
     center = numpy.array(center)
     rr = numpy.multiply.outer(radius, rule.points)
     rr = numpy.swapaxes(rr, 0, -2)
     ff = numpy.array(f((rr + center).T))
-    out = sumfun(rule.weights * ff, axis=-1)
-    return area(radius) * out
+    return area(radius) * sumfun(rule.weights * ff, axis=-1)
+
+
+def integrate_spherical(f, radius, rule, sumfun=helpers.kahan_sum):
+    '''Quadrature where `f` is defined in spherical coordinates `phi`, `theta`.
+
+    This is using the ISO 31-11 convection of `theta` being the polar, `phi`
+    the azimuthal angle. Note that this meaning is often reversed in physics,
+    cf. <http://mathworld.wolfram.com/SphericalCoordinates.html>.
+    '''
+    rr = numpy.swapaxes(rule.phi_theta, 0, -2)
+    ff = numpy.array(f(rr.T))
+    return area(radius) * sumfun(rule.weights * ff, axis=-1)
