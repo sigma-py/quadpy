@@ -44,21 +44,14 @@ def chunk_data(weights):
 
 
 def sort_into_symmetry_classes(weights, phi_theta):
-    data = {
-        'a1': [],
-        'a2': [],
-        'a3': [],
-        'pq0': [],
-        'llm': [],
-        'rSW': [],
-        }
+    data = []
     for c in chunks:
         if len(c) == 6:
-            data['a1'].append({'weight': weights[c[0]]})
+            data.append({'type': 'a1', 'weight': weights[c[0]]})
         elif len(c) == 12:
-            data['a2'].append({'weight': weights[c[0]]})
+            data.append({'type': 'a2', 'weight': weights[c[0]]})
         elif len(c) == 8:
-            data['a3'].append({'weight': weights[c[0]]})
+            data.append({'type': 'a3', 'weight': weights[c[0]]})
         elif len(c) == 24:
             if any(abs(phi_theta[c, 1] - 0.5) < 1.0e-12):
                 # theta == pi/2   =>   X == [p, q, 0].
@@ -68,7 +61,9 @@ def sort_into_symmetry_classes(weights, phi_theta):
                 assert len(k) == 8
                 k2 = numpy.where(phi_theta[c, 0][k] > 0.0)[0]
                 phi_min = numpy.min(phi_theta[c, 0][k][k2])
-                data['pq0'].append({'weight': weights[c[0]], 'val': phi_min})
+                data.append({
+                    'type': 'pq0', 'weight': weights[c[0]], 'val': phi_min
+                    })
             else:
                 # X = [l, l, m].
                 # In this case, there must by exactly two phi with the value
@@ -78,7 +73,9 @@ def sort_into_symmetry_classes(weights, phi_theta):
                 assert len(k) == 2
                 k2 = numpy.where(phi_theta[c, 1][k] > 0.0)[0]
                 theta_min = numpy.min(phi_theta[c, 1][k][k2])
-                data['llm'].append({'weight': weights[c[0]], 'val': theta_min})
+                data.append({
+                    'type': 'llm', 'weight': weights[c[0]], 'val': theta_min
+                    })
         else:
             assert len(c) == 48
             # This most general symmetry is characterized by two angles; one
@@ -89,9 +86,11 @@ def sort_into_symmetry_classes(weights, phi_theta):
             k = numpy.where(abs(phi_theta[c, 1] - min_theta) < 1.0e-12)[0]
             k2 = numpy.where(phi_theta[c, 0][k] > 0.0)[0]
             min_phi = numpy.min(phi_theta[c, 0][k][k2])
-            data['rSW'].append((
-                {'weight': weights[c[0]], 'val': (min_phi, min_theta)}
-                ))
+            data.append({
+                'type': 'rSW',
+                'weight': weights[c[0]],
+                'val': (min_phi, min_theta)
+                })
 
     return data
 
@@ -120,29 +119,34 @@ def generate_python_code(data):
         'llm': 24,
         'rSW': 48,
         }
-    out = ''''''
+
+    weight_code = []
+    point_code = []
+    for item in data:
+        weight_code.append('numpy.full(%d, %0.16e)' % (
+            num_points[item['type']], item['weight']
+            ))
+        if item['type'] == 'a1':
+            point_code.append('_a1()')
+        elif item['type'] == 'a2':
+            point_code.append('_a2()')
+        elif item['type'] == 'a3':
+            point_code.append('_a3()')
+        elif item['type'] == 'pq0':
+            point_code.append('_pq0(%0.16e)' % item['val'])
+        elif item['type'] == 'llm':
+            point_code.append('_llm(%0.16e)' % item['val'])
+        else:
+            assert item['type'] == 'rSW'
+            point_code.append('_rsw(%0.16e, %0.16e)' % item['val'])
+
+    out = ''
     out += 'self.weights = numpy.concatenate([\n'
-    for key in data:
-        for d in data[key]:
-            out += '    numpy.full(%d, %0.16e),\n' % (
-                num_points[key], d['weight']
-                )
-    out += '    ])\n'
-    # points
+    out += indent(',\n'.join(weight_code), 4)
+    out += '\n    ])\n'
     out += 'self.phi_theta = numpy.concatenate([\n'
-    for d in data['a1']:
-        out += '    _a1(),\n'
-    for d in data['a2']:
-        out += '    _a2(),\n'
-    for d in data['a3']:
-        out += '    _a3(),\n'
-    for d in data['pq0']:
-        out += '    _pq0(%0.16e),\n' % d['val']
-    for d in data['llm']:
-        out += '    _llm(%0.16e),\n' % d['val']
-    for d in data['rSW']:
-        out += '    _rsw(%0.16e, %0.16e),\n' % d['val']
-    out += '    ])'
+    out += indent(',\n'.join(point_code), 4)
+    out += '\n    ])'
     return out
 
 
