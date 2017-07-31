@@ -226,7 +226,7 @@ Integration on the sphere can also be done for function defined in spherical
 coordinates:
 ```python
 val = quadpy.sphere.integrate_spherical(
-    lambda phi_theta: numpy.exp(x[0]),
+    lambda phi_theta: numpy.sin(phi_theta[0])**2 * numpy.sin(phi_theta[1]),
     radius=1.0,
     rule=quadpy.sphere.Lebedev(19)
     )
