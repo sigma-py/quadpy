@@ -15,11 +15,16 @@ class Lebedev(object):
     <https://en.wikipedia.org/wiki/Lebedev_quadrature>
     <https://people.sc.fsu.edu/~jburkardt/datasets/sphere_lebedev_rule/sphere_lebedev_rule.html>
     '''
+    # It's a little unclear how to beset store the original data. By Burkhardt,
+    # it is given in terms of phi and theta, however those angles are not well
+    # suited to express the symmetry. For that, this code converts the
+    # spherical coordinates into Cartesians, applies the symmetry
+    # transformations, and converts back.
     def __init__(self, degree):
         self.degree = degree
         if degree == 3:
             self.weights = numpy.concatenate([
-                numpy.full(6, 1.6666666666666699e-01)
+                numpy.full(6, 1.0 / 6.0)
                 ])
             self.phi_theta = numpy.concatenate([
                 _a1()
