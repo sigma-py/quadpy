@@ -208,6 +208,32 @@ val = quadpy.quadrilateral.integrate(
     )
 ```
 
+### Sphere
+<img src="https://nschloe.github.io/quadpy/sphere.png" width="25%">
+
+ * [Lebedev's schemes](https://en.wikipedia.org/wiki/Lebedev_quadrature) (32
+   schemes up to degree 131)
+
+Example:
+```python
+val = quadpy.sphere.integrate(
+    lambda x: numpy.exp(x[0]),
+    [0.0, 0.0, 0.0], 1.0,
+    quadpy.sphere.Lebedev(19)
+    )
+```
+Integration on the sphere can also be done for function defined in spherical
+coordinates:
+```python
+val = quadpy.sphere.integrate_spherical(
+    lambda phi_theta: numpy.exp(x[0]),
+    radius=1.0,
+    rule=quadpy.sphere.Lebedev(19)
+    )
+```
+Note that `phi_theta[0]` is the azimuthal, `phi_theta[1]` the polar angle here.
+
+
 ### Tetrahedron
 <img src="https://nschloe.github.io/quadpy/tet.png" width="25%">
 
@@ -296,21 +322,6 @@ val = quadpy.wedge.integrate(
       [0.0, 0.0, 1.0], [1.0, 0.0, 1.0], [0.5, 0.7, 1.0],
     ],
     quadpy.wedge.Felippa(3)
-    )
-```
-
-### Sphere
-<img src="https://nschloe.github.io/quadpy/sphere.png" width="25%">
-
- * [Lebedev's schemes](https://en.wikipedia.org/wiki/Lebedev_quadrature) (32
-   schemes up to degree 131)
-
-Example:
-```python
-val = quadpy.sphere.integrate(
-    lambda x: numpy.exp(x[0]),
-    [0.0, 0.0, 0.0], 1.0,
-    quadpy.sphere.Lebedev(19)
     )
 ```
 
