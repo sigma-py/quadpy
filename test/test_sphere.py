@@ -84,7 +84,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.sphere.Lebedev(5)
-    # test_scheme(scheme_)
+    scheme_ = quadpy.sphere.Lebedev(11)
     test_show(scheme_)
+    test_scheme(scheme_)
     plt.show()
