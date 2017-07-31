@@ -52,7 +52,10 @@ def _integrate_exact(f, midpoint, radius):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadpy.sphere.Lebedev(k) for k in range(1, 33)]
+    [quadpy.sphere.Lebedev(degree) for degree in [
+        3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 35, 41, 47, 53,
+        59, 65, 71, 77, 83, 89, 95, 101, 107, 113, 119, 125, 131
+        ]]
     )
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
@@ -71,9 +74,29 @@ def test_scheme(scheme):
     return
 
 
+# some basic sanity tests for integration_spherical
 @pytest.mark.parametrize(
     'scheme',
-    [quadpy.sphere.Lebedev(4)]
+    [quadpy.sphere.Lebedev(degree) for degree in [
+        3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 35, 41, 47, 53,
+        59, 65, 71, 77, 83, 89, 95, 101, 107, 113, 119, 125, 131
+        ]]
+    )
+def test_scheme_spherical(scheme):
+    # Test integration until we get to a polynomial degree `d` that can no
+    # longer be integrated exactly. The scheme's degree is `d-1`.
+    res = quadpy.sphere.integrate_spherical(
+            lambda phi_theta: 1.0,
+            radius=1.0,
+            rule=scheme
+            )
+    assert abs(res - 4*numpy.pi) < 1.0e-11
+    return
+
+
+@pytest.mark.parametrize(
+    'scheme',
+    [quadpy.sphere.Lebedev(7)]
     )
 def test_show(scheme):
     quadpy.sphere.show(scheme)
@@ -81,7 +104,8 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.sphere.Lebedev(4)
+    scheme_ = quadpy.sphere.Lebedev(3)
     test_scheme(scheme_)
+    test_scheme_spherical(scheme_)
     test_show(scheme_)
     plt.show()
