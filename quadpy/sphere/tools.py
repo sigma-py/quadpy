@@ -18,31 +18,48 @@ def show(scheme):
     ax = fig.gca(projection='3d')
     ax.set_aspect('equal')
 
-    # http://matplotlib.org/examples/mplot3d/surface3d_demo2.html
-    u = numpy.linspace(0, 2 * numpy.pi, 100)
-    v = numpy.linspace(0, numpy.pi, 100)
-    x = numpy.outer(numpy.cos(u), numpy.sin(v))
-    y = numpy.outer(numpy.sin(u), numpy.sin(v))
-    z = numpy.outer(numpy.ones(numpy.size(u)), numpy.cos(v))
-
-    ax.plot_surface(
-            x, y, z,
-            rstride=3, cstride=3,
-            color='0.9',
-            alpha=1.0,
-            linewidth=0
-            )
-
-    ax.scatter(
-        1.05 * scheme.points[:, 0],
-        1.05 * scheme.points[:, 1],
-        1.05 * scheme.points[:, 2],
-        color='#1f77b4',
-        s=60
-        )
+    for p, w in zip(scheme.points, scheme.weights):
+        # <https://en.wikipedia.org/wiki/Spherical_cap>
+        w *= 4 * numpy.pi
+        theta = numpy.arccos(1.0 - w / (2*numpy.pi))
+        _plot_spherical_cap(ax, p, theta)
 
     ax.set_axis_off()
     plt.show()
+    return
+
+
+def _plot_spherical_cap(ax, b, opening_angle, elevation=1.01):
+    r = elevation
+    phi = numpy.linspace(0, 2 * numpy.pi, 30)
+    theta = numpy.linspace(0, opening_angle, 20)
+    X = r * numpy.stack([
+        numpy.outer(numpy.cos(phi), numpy.sin(theta)),
+        numpy.outer(numpy.sin(phi), numpy.sin(theta)),
+        numpy.outer(numpy.ones(numpy.size(phi)), numpy.cos(theta)),
+        ], axis=-1)
+
+    # rotate X such that [0, 0, 1] gets rotated to `c`;
+    # <https://math.stackexchange.com/a/476311/36678>.
+    a = numpy.array([0.0, 0.0, 1.0])
+    a_x_b = numpy.cross(a, b)
+    a_dot_b = numpy.dot(a, b)
+    if a_dot_b == -1.0:
+        X_rot = -X
+    else:
+        X_rot = (
+            X +
+            numpy.cross(a_x_b, X) +
+            numpy.cross(a_x_b, numpy.cross(a_x_b, X)) / (1.0 + a_dot_b)
+            )
+
+    ax.plot_surface(
+            X_rot[..., 0], X_rot[..., 1], X_rot[..., 2],
+            rstride=3, cstride=3,
+            color='#1f77b4',
+            alpha=0.5,
+            linewidth=0
+            )
     return
 
 
