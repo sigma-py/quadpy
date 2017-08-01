@@ -2,7 +2,6 @@
 #
 import numpy
 
-from .centroid import Centroid
 from .dunavant import Dunavant
 
 from .. import helpers
@@ -33,15 +32,9 @@ def show(
     if not show_axes:
         plt.gca().set_axis_off()
 
-    transformed_pts = \
-        + numpy.outer(
-            (1.0 - scheme.points[:, 0] - scheme.points[:, 1]),
-            triangle[0]
-            ) \
-        + numpy.outer(scheme.points[:, 0], triangle[1]) \
-        + numpy.outer(scheme.points[:, 1], triangle[2])
+    transformed_pts = transform(scheme.points.T, triangle.T)
 
-    vol = integrate(lambda x: numpy.ones(1), triangle, Centroid())
+    vol = _area(triangle)
     helpers.plot_disks(
         plt, transformed_pts, scheme.weights, vol
         )
