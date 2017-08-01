@@ -121,7 +121,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.triangle.VioreanuRokhlin(0)
+    scheme_ = quadpy.triangle.VioreanuRokhlin(10)
     test_scheme(scheme_)
     test_show(scheme_)
     plt.show()
