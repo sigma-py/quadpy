@@ -5,6 +5,7 @@ import numpy
 from .keast import Keast
 
 from .. import helpers
+from ..simplex import transform
 
 
 def show(
@@ -60,20 +61,7 @@ def show(
 
 
 def integrate(f, tetrahedron, scheme, sumfun=helpers.kahan_sum):
-    xi = scheme.points.T
-    # x = (
-    #     + numpy.multiply.outer(tetrahedron[0].T, 1.0 - xi[0] - xi[1] - xi[2])
-    #     + numpy.multiply.outer(tetrahedron[1].T, xi[0])
-    #     + numpy.multiply.outer(tetrahedron[2].T, xi[1])
-    #     + numpy.multiply.outer(tetrahedron[3].T, xi[2])
-    #     )
-    shape_funs = numpy.stack([
-        1.0 - xi[0] - xi[1] - xi[2],
-        xi[0],
-        xi[1],
-        xi[2],
-        ])
-    x = numpy.dot(tetrahedron.T, shape_funs)
+    x = transform(scheme.points.T, tetrahedron.T)
 
     # det is the signed volume of the tetrahedron
     J0 = (tetrahedron[1] - tetrahedron[0]).T
