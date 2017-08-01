@@ -2,7 +2,7 @@
 #
 import numpy
 
-from . import helpers
+from .. import helpers
 
 
 def show(scheme, show_axes=False):
@@ -37,14 +37,3 @@ def integrate(f, center, radius, rule, sumfun=helpers.kahan_sum):
     ff = numpy.array(f((rr + center).T))
     out = sumfun(rule.weights * ff, axis=-1)
     return radius * out
-
-
-class Equidistant(object):
-    def __init__(self, n):
-        self.weights = numpy.full(n, 2 * numpy.pi / n)
-        self.points = numpy.column_stack([
-            numpy.cos(2*numpy.pi * numpy.arange(n) / n),
-            numpy.sin(2*numpy.pi * numpy.arange(n) / n),
-            ])
-        self.degree = n - 1
-        return
