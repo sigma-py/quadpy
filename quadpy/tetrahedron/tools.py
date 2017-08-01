@@ -2,10 +2,8 @@
 #
 import numpy
 
-from .keast import Keast
-
 from .. import helpers
-from ..simplex import transform
+from ..simplex import transform, get_vol
 
 
 def show(
@@ -43,18 +41,9 @@ def show(
     for edge in edges:
         plt.plot(edge[:, 0], edge[:, 1], edge[:, 2], '-k')
 
-    transformed_pts = \
-        + numpy.outer(
-            (1.0 - scheme.points[:, 0]
-                 - scheme.points[:, 1]
-                 - scheme.points[:, 2]),
-            tet[0]
-            ) \
-        + numpy.outer(scheme.points[:, 0], tet[1]) \
-        + numpy.outer(scheme.points[:, 1], tet[2]) \
-        + numpy.outer(scheme.points[:, 2], tet[3])
+    transformed_pts = transform(scheme.points.T, tet.T)
 
-    vol = integrate(lambda x: numpy.ones(1), tet, Keast(0))
+    vol = get_vol(tet)
     helpers.plot_spheres(plt, ax, transformed_pts, scheme.weights, vol)
     plt.show()
     return
@@ -62,14 +51,5 @@ def show(
 
 def integrate(f, tetrahedron, scheme, sumfun=helpers.kahan_sum):
     x = transform(scheme.points.T, tetrahedron.T)
-
-    # det is the signed volume of the tetrahedron
-    J0 = (tetrahedron[1] - tetrahedron[0]).T
-    J1 = (tetrahedron[2] - tetrahedron[0]).T
-    J2 = (tetrahedron[3] - tetrahedron[0]).T
-    det = J0[0]*J1[1]*J2[2] + J1[0]*J2[1]*J0[2] + J2[0]*J0[1]*J1[2] \
-        - J0[2]*J1[1]*J2[0] - J1[2]*J2[1]*J0[0] - J2[2]*J0[1]*J1[0]
-    # reference volume
-    det *= 1.0/6.0
-
-    return sumfun(numpy.moveaxis(scheme.weights * f(x), -1, 0) * abs(det))
+    vol = get_vol(tetrahedron)
+    return sumfun(numpy.moveaxis(scheme.weights * f(x), -1, 0) * vol)
