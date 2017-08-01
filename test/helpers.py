@@ -2,7 +2,6 @@
 #
 import math
 import numpy
-import sympy
 
 
 def check_degree_1d(
@@ -31,11 +30,36 @@ def check_degree(
 
     exact_vals = numpy.array([exact(k) for k in exponents])
 
+    # def fun(x):
+    #     # Naive evaluation of the monomials.
+    #     return numpy.prod([
+    #         numpy.power.outer(x[i], exponents[:, i]) for i in range(len(x))
+    #         ], axis=0).T
+
     def fun(x):
-        return [
-            sympy.prod([x[i]**k[i] for i in range(len(k))])
-            for k in exponents
-            ]
+        # <https://stackoverflow.com/a/45421128/353337>
+        # Evaluate many monomials `x^k y^l z^m` at many points. Note that `x^k
+        # y^l z^m = exp(log(x)*k  + log(y)*l + log(z)*m` , i.e., a dot-product,
+        # for positive x, y, z. With a correction for points with nonpositive
+        # components, this is used here.
+        k = exponents
+
+        out = numpy.exp(numpy.matmul(k, numpy.log(abs(x), where=abs(x) > 0.0)))
+
+        odd_k = numpy.zeros(k.shape, dtype=int)
+        odd_k[k % 2 == 1] = 1
+        neg_x = numpy.zeros(x.shape, dtype=int)
+        neg_x[x < 0.0] = 1
+        negative_count = numpy.dot(odd_k, neg_x)
+        out *= (-1)**negative_count
+
+        pos_k = numpy.zeros(k.shape, dtype=int)
+        pos_k[k > 0] = 1
+        zero_x = numpy.zeros(x.shape, dtype=int)
+        zero_x[x == 0.0] = 1
+        zero_count = numpy.dot(pos_k, zero_x)
+        out[zero_count > 0] = 0.0
+        return out
 
     vals = quadrature(fun)
 
@@ -45,12 +69,12 @@ def check_degree(
     # TODO increase precision
     eps = numpy.finfo(float).eps
     alpha = abs(exact_vals) * tol + (1.0e5+tol+exact_vals)*eps
-    is_larger = abs(exact_vals - vals) > alpha
+    is_smaller = abs(exact_vals - vals) < alpha
 
-    if not numpy.any(is_larger):
+    if numpy.all(is_smaller):
         return max_degree
 
-    k = numpy.where(is_larger)[0]
+    k = numpy.where(numpy.logical_not(is_smaller))[0]
     degree = numpy.sum(exponents[k[0]]) - 1
     return degree
 
