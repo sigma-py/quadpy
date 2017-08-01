@@ -87,7 +87,7 @@ def test_scheme(scheme):
                 poly, wedge, scheme
                 ),
             # lambda k: _integrate_exact(k, wedge),
-            lambda k: _integrate_monomial_over_unit_wedge(k),
+            _integrate_monomial_over_unit_wedge,
             lambda n: partition(n, 3),
             scheme.degree + 1
             )
