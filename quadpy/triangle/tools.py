@@ -66,11 +66,17 @@ def _area(triangle):
 
 def integrate(f, triangle, scheme, sumfun=helpers.kahan_sum):
     xi = scheme.points.T
-    x = \
-        + numpy.multiply.outer(1.0 - xi[0] - xi[1], triangle[0]) \
-        + numpy.multiply.outer(xi[0], triangle[1]) \
-        + numpy.multiply.outer(xi[1], triangle[2])
-    x = x.T
+    # x = (
+    #     + numpy.multiply.outer(triangle[0].T, 1.0 - xi[0] - xi[1])
+    #     + numpy.multiply.outer(triangle[1].T, xi[0])
+    #     + numpy.multiply.outer(triangle[2].T, xi[1])
+    #     )
+    shape_funs = numpy.stack([
+        1.0 - xi[0] - xi[1],
+        xi[0],
+        xi[1],
+        ])
+    x = numpy.dot(triangle.T, shape_funs)
     return sumfun(
         numpy.moveaxis(scheme.weights * f(x), -1, 0) * _area(triangle)
         )
