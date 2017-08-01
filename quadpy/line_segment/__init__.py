@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# import *lint: disable=wildcard-import
+# import pylint: disable=wildcard-import
 from .chebyshev_gauss import *
 from .clenshaw_curtis import *
 from .fejer import *
