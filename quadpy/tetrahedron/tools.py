@@ -47,7 +47,7 @@ def plot(
     for edge in edges:
         plt.plot(edge[:, 0], edge[:, 1], edge[:, 2], '-k')
 
-    transformed_pts = transform(scheme.points.T, tet.T)
+    transformed_pts = transform(scheme.points.T, tet.T).T
 
     vol = get_vol(tet)
     helpers.plot_spheres(plt, ax, transformed_pts, scheme.weights, vol)

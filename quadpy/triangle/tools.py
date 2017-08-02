@@ -37,7 +37,7 @@ def plot(
     if not show_axes:
         plt.gca().set_axis_off()
 
-    transformed_pts = transform(scheme.points.T, triangle.T)
+    transformed_pts = transform(scheme.points.T, triangle.T).T
 
     vol = get_vol(triangle)
     helpers.plot_disks(
