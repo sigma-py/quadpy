@@ -14,7 +14,12 @@ from helpers import (
     [quadpy.simplex.GrundmannMoeller(3, k) for k in range(5)] +
     [quadpy.simplex.GrundmannMoeller(4, k) for k in range(5)] +
     [quadpy.simplex.GrundmannMoeller(5, k) for k in range(5)] +
-    [quadpy.simplex.GrundmannMoeller(6, k) for k in range(5)]
+    [quadpy.simplex.GrundmannMoeller(6, k) for k in range(5)] +
+    #
+    [quadpy.simplex.Walkington(3, k) for k in [1, 2, 3, 5, 7]] +
+    [quadpy.simplex.Walkington(4, k) for k in [1, 2, 3]] +
+    [quadpy.simplex.Walkington(5, k) for k in [1, 2, 3]] +
+    [quadpy.simplex.Walkington(6, k) for k in [1, 2, 3]]
     )
 def test_scheme(scheme):
     n = scheme.dim

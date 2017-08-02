@@ -14,6 +14,7 @@ class Walkington(object):
     '''
     def __init__(self, d, index):
         self.name = 'Walkington({})'.format(index)
+        self.dim = d
         if index == 1:
             self.degree = 1
             self.weights = numpy.array([1.0 / factorial(d)])
