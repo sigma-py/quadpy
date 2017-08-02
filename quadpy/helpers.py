@@ -120,7 +120,7 @@ def plot_spheres(
     return
 
 
-def partition(balls, boxes, parent=tuple()):
+def partition(balls, boxes):
     '''Create all nonnegative tuples of length d which sum up to n.
     '''
     # <https://stackoverflow.com/a/36748940/353337>

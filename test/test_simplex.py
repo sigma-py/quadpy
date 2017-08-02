@@ -37,6 +37,6 @@ def test_scheme(scheme):
 
 
 if __name__ == '__main__':
-    n = 3
-    scheme_ = quadpy.simplex.GrundmannMoeller(n, 5)
+    n_ = 3
+    scheme_ = quadpy.simplex.GrundmannMoeller(n_, 5)
     test_scheme(scheme_)
