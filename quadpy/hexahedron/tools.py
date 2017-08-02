@@ -3,14 +3,8 @@
 import numpy
 
 from .. import helpers
-from ..ncube import transform, integrate, ncube_points
-
-
-def cube_points(*xyz):
-    '''Given the end points of a cube aligned with the coordinate axes, this
-    returns the corner points of the cube in the correct data structure.
-    '''
-    return ncube_points(*xyz)
+from ..ncube import transform, integrate
+from ..ncube import ncube_points as cube_points
 
 
 def show(
