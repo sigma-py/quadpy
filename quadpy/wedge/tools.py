@@ -7,6 +7,53 @@ from . import felippa
 from .. import helpers
 
 
+def integrate(f, wedge, scheme, sumfun=helpers.kahan_sum):
+    x = _transform(scheme.points.T, wedge)
+    det = _get_detJ(scheme.points.T, wedge)
+    return sumfun(scheme.weights * f(x) * abs(det), axis=-1)
+
+
+def _transform(xi, wedge):
+    mo = numpy.multiply.outer
+    return (
+        + mo(0.5 * (1.0-xi[0]-xi[1]) * (1.0-xi[2]), wedge[0])
+        + mo(0.5 * xi[0] * (1.0-xi[2]), wedge[1])
+        + mo(0.5 * xi[1] * (1.0-xi[2]), wedge[2])
+        + mo(0.5 * (1.0-xi[0]-xi[1]) * (1.0+xi[2]), wedge[3])
+        + mo(0.5 * xi[0] * (1.0+xi[2]), wedge[4])
+        + mo(0.5 * xi[1] * (1.0+xi[2]), wedge[5])
+        ).T
+
+
+def _get_detJ(xi, wedge):
+    mo = numpy.multiply.outer
+    J0 = (
+        - mo(0.5*(1.0 - xi[2]), wedge[0])
+        + mo(0.5*(1.0 - xi[2]), wedge[2])
+        - mo(0.5*(1.0 + xi[2]), wedge[3])
+        + mo(0.5*(1.0 + xi[2]), wedge[5])
+        ).T
+    J1 = (
+        - mo(0.5*(1.0 - xi[2]), wedge[0])
+        + mo(0.5*(1.0 - xi[2]), wedge[1])
+        - mo(0.5*(1.0 + xi[2]), wedge[3])
+        + mo(0.5*(1.0 + xi[2]), wedge[4])
+        ).T
+    J2 = (
+        - mo(0.5 * (1.0-xi[0]-xi[1]), wedge[0])
+        - mo(0.5 * xi[0], wedge[1])
+        - mo(0.5 * xi[1], wedge[2])
+        + mo(0.5 * (1.0-xi[0]-xi[1]), wedge[3])
+        + mo(0.5 * xi[0], wedge[4])
+        + mo(0.5 * xi[1], wedge[5])
+        ).T
+    det = (
+        + J0[0]*J1[1]*J2[2] + J1[0]*J2[1]*J0[2] + J2[0]*J0[1]*J1[2]
+        - J0[2]*J1[1]*J2[0] - J1[2]*J2[1]*J0[0] - J2[2]*J0[1]*J1[0]
+        )
+    return det
+
+
 def show(*args, **kwargs):
     plot(*args, **kwargs)
     plt.show()
@@ -50,56 +97,10 @@ def plot(
     for edge in edges:
         plt.plot(edge[:, 0], edge[:, 1], edge[:, 2], '-k')
 
-    xi = scheme.points[:, 0]
-    eta = scheme.points[:, 1]
-    zeta = scheme.points[:, 2]
-    transformed_pts = \
-        + numpy.outer(0.5 * (1.0 - xi - eta)*(1.0 - zeta), wedge[0]) \
-        + numpy.outer(0.5 * xi * (1.0 - zeta), wedge[1]) \
-        + numpy.outer(0.5 * eta * (1.0 - zeta), wedge[2]) \
-        + numpy.outer(0.5 * (1.0 - xi - eta)*(1.0 - zeta), wedge[3]) \
-        + numpy.outer(0.5 * xi * (1.0 + zeta), wedge[4]) \
-        + numpy.outer(0.5 * eta * (1.0 + zeta), wedge[5])
+    transformed_pts = _transform(scheme.points.T, wedge).T
 
     vol = integrate(lambda x: numpy.ones(1), wedge, felippa.Felippa(1))
     helpers.plot_spheres(
         plt, ax, transformed_pts, scheme.weights, vol
         )
     return
-
-
-def integrate(f, wedge, scheme, sumfun=helpers.kahan_sum):
-    xi = scheme.points.T
-    mo = numpy.multiply.outer
-    x = \
-        + mo(0.5 * (1.0-xi[0]-xi[1]) * (1.0-xi[2]), wedge[0]) \
-        + mo(0.5 * xi[0] * (1.0-xi[2]), wedge[1]) \
-        + mo(0.5 * xi[1] * (1.0-xi[2]), wedge[2]) \
-        + mo(0.5 * (1.0-xi[0]-xi[1]) * (1.0+xi[2]), wedge[3]) \
-        + mo(0.5 * xi[0] * (1.0+xi[2]), wedge[4]) \
-        + mo(0.5 * xi[1] * (1.0+xi[2]), wedge[5])
-    x = x.T
-    J0 = \
-        - mo(0.5*(1.0 - xi[2]), wedge[0]) \
-        + mo(0.5*(1.0 - xi[2]), wedge[2]) \
-        - mo(0.5*(1.0 + xi[2]), wedge[3]) \
-        + mo(0.5*(1.0 + xi[2]), wedge[5])
-    J0 = J0.T
-    J1 = \
-        - mo(0.5*(1.0 - xi[2]), wedge[0]) \
-        + mo(0.5*(1.0 - xi[2]), wedge[1]) \
-        - mo(0.5*(1.0 + xi[2]), wedge[3]) \
-        + mo(0.5*(1.0 + xi[2]), wedge[4])
-    J1 = J1.T
-    J2 = \
-        - mo(0.5 * (1.0-xi[0]-xi[1]), wedge[0]) \
-        - mo(0.5 * xi[0], wedge[1]) \
-        - mo(0.5 * xi[1], wedge[2]) \
-        + mo(0.5 * (1.0-xi[0]-xi[1]), wedge[3]) \
-        + mo(0.5 * xi[0], wedge[4]) \
-        + mo(0.5 * xi[1], wedge[5])
-    J2 = J2.T
-    det = J0[0]*J1[1]*J2[2] + J1[0]*J2[1]*J0[2] + J2[0]*J0[1]*J1[2] \
-        - J0[2]*J1[1]*J2[0] - J1[2]*J2[1]*J0[0] - J2[2]*J0[1]*J1[0]
-
-    return sumfun(scheme.weights * f(x) * abs(det), axis=-1)
