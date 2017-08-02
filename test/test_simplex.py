@@ -1,0 +1,38 @@
+# -*- coding: utf-8 -*-
+#
+import numpy
+import pytest
+import quadpy
+
+from helpers import (
+    check_degree, integrate_monomial_over_standard_simplex
+    )
+
+
+@pytest.mark.parametrize(
+    'scheme',
+    [quadpy.simplex.GrundmannMoeller(3, k) for k in range(7)] +
+    [quadpy.simplex.GrundmannMoeller(4, k) for k in range(7)] +
+    [quadpy.simplex.GrundmannMoeller(5, k) for k in range(7)] +
+    [quadpy.simplex.GrundmannMoeller(6, k) for k in range(7)]
+    )
+def test_scheme(scheme):
+    n = scheme.dim
+    simplex = numpy.zeros((n+1, n))
+    for k in range(n):
+        simplex[k+1, k] = 1.0
+    degree = check_degree(
+            lambda poly: quadpy.simplex.integrate(poly, simplex, scheme),
+            integrate_monomial_over_standard_simplex,
+            lambda k: quadpy.helpers.partition(k, n),
+            scheme.degree + 1
+            )
+    print(degree)
+    assert degree >= scheme.degree
+    return
+
+
+if __name__ == '__main__':
+    n = 3
+    scheme_ = quadpy.simplex.GrundmannMoeller(n, 5)
+    test_scheme(scheme_)
