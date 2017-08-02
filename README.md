@@ -8,7 +8,8 @@ Your one-stop shop for numerical integration in Python.
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?style=social&label=Stars&maxAge=2592000)](https://github.com/nschloe/quadpy)
 
 Hundreds of numerical integration schemes for line segments, circles, disks,
-triangles, quadrilaterals, spheres, tetrahedra, hexahedra, wedges, pyramids.
+triangles, quadrilaterals, spheres, tetrahedra, hexahedra, wedges, pyramids,
+n-simplices, and n-cubes.
 
 To numerically integrate any function over any given triangle, do
 ```python
