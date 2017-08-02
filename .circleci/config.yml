@@ -2,7 +2,8 @@ version: 2
 
 jobs:
 
-  python2:
+  # python2:
+  build:
     working_directory: ~/quadpy
     docker:
       - image: ubuntu:17.04
