@@ -97,3 +97,39 @@ def plot(
         plt, ax, transformed_pts, scheme.weights, vol
         )
     return
+
+
+def show_mayavi(
+        scheme,
+        pyra=numpy.array([
+            [0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0],
+            [0.5, 0.5, 1.0],
+            ])
+        ):
+    '''Shows the quadrature points on a given tetrahedron. The size of the
+    balls around the points coincides with their weights.
+    '''
+    import mayavi.mlab as mlab
+
+    edges = numpy.array([
+        [pyra[0], pyra[1]],
+        [pyra[1], pyra[2]],
+        [pyra[2], pyra[3]],
+        [pyra[3], pyra[0]],
+        #
+        [pyra[0], pyra[4]],
+        [pyra[1], pyra[4]],
+        [pyra[2], pyra[4]],
+        [pyra[3], pyra[4]],
+        ])
+    edges = numpy.moveaxis(edges, 1, 2)
+    for edge in edges:
+        mlab.plot3d(*edge, tube_radius=1.0e-2)
+
+    helpers.plot_spheres_mayavi(
+            _transform(scheme.points.T, pyra).T,
+            scheme.weights,
+            integrate(lambda x: 1.0, pyra, Felippa(1))
+            )
+    mlab.show()
+    return
