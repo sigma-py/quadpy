@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import math
-
-from helpers import partition, check_degree
+from helpers import (
+    partition, check_degree, integrate_monomial_over_standard_simplex
+    )
 
 import numpy
 import pytest
@@ -43,24 +43,6 @@ def _integrate_exact(f, tetrahedron):
     return float(exact)
 
 
-def _integrate_monomial_over_standard_tet(k):
-    '''The integral of monomials over the standard tetrahedron is given by
-
-    \\int_T x_0^k0 * x1^k1 * x2^k2 = (k0!*k1!*k2!) / (4+k0+k1+k2)!,
-
-    see, e.g.,
-    A set of symmetric quadrature rules on triangles and tetrahedra,
-    Linbo Zhang, Tao Cui and Hui Liu,
-    Journal of Computational Mathematics,
-    Vol. 27, No. 1 (January 2009), pp. 89-96
-    '''
-    # exp-log to account for large values in numerator and denominator
-    return math.exp(
-        math.fsum([math.lgamma(kk+1) for kk in k])
-        - math.lgamma(4 + sum(k))
-        )
-
-
 @pytest.mark.parametrize(
     'scheme',
     [quadpy.tetrahedron.BeckersHaegemans(k) for k in [8, 9]]
@@ -95,7 +77,7 @@ def test_scheme(scheme):
             lambda poly: quadpy.tetrahedron.integrate(
                 poly, tetrahedron, scheme
                 ),
-            _integrate_monomial_over_standard_tet,
+            integrate_monomial_over_standard_simplex,
             lambda n: partition(n, 3),
             scheme.degree + 1,
             )
