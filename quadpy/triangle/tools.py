@@ -2,10 +2,10 @@
 #
 import numpy
 
-from .centroid import Centroid
 from .dunavant import Dunavant
 
 from .. import helpers
+from ..simplex import transform, get_vol
 
 
 def show(
@@ -32,15 +32,9 @@ def show(
     if not show_axes:
         plt.gca().set_axis_off()
 
-    transformed_pts = \
-        + numpy.outer(
-            (1.0 - scheme.points[:, 0] - scheme.points[:, 1]),
-            triangle[0]
-            ) \
-        + numpy.outer(scheme.points[:, 0], triangle[1]) \
-        + numpy.outer(scheme.points[:, 1], triangle[2])
+    transformed_pts = transform(scheme.points.T, triangle.T)
 
-    vol = integrate(lambda x: numpy.ones(1), triangle, Centroid())
+    vol = get_vol(triangle)
     helpers.plot_disks(
         plt, transformed_pts, scheme.weights, vol
         )
@@ -50,29 +44,10 @@ def show(
     return
 
 
-def _area(triangle):
-    edges = triangle[[1, 2, 0]] - triangle
-    ei_dot_ej = numpy.einsum(
-            '...k, ...k->...',
-            edges[[1, 2, 0]],
-            edges[[2, 0, 1]]
-            )
-    return 0.5 * numpy.sqrt(
-        + ei_dot_ej[2] * ei_dot_ej[0]
-        + ei_dot_ej[0] * ei_dot_ej[1]
-        + ei_dot_ej[1] * ei_dot_ej[2]
-        )
-
-
 def integrate(f, triangle, scheme, sumfun=helpers.kahan_sum):
-    xi = scheme.points.T
-    x = \
-        + numpy.multiply.outer(1.0 - xi[0] - xi[1], triangle[0]) \
-        + numpy.multiply.outer(xi[0], triangle[1]) \
-        + numpy.multiply.outer(xi[1], triangle[2])
-    x = x.T
+    x = transform(scheme.points.T, triangle.T)
     return sumfun(
-        numpy.moveaxis(scheme.weights * f(x), -1, 0) * _area(triangle)
+        numpy.moveaxis(scheme.weights * f(x), -1, 0) * get_vol(triangle)
         )
 
 
@@ -96,7 +71,7 @@ def adaptive_integrate(
         # add dimension in the second-to-last place
         triangles = numpy.expand_dims(triangles, -2)
 
-    areas = _area(triangles)
+    areas = get_vol(triangles)
     total_area = sumfun(areas)
 
     if minimum_triangle_area is None:
@@ -143,7 +118,7 @@ def adaptive_integrate(
                 midpoints[2], midpoints[0], midpoints[1], midpoints[2]
                 ]),
             ])
-        areas = _area(triangles)
+        areas = get_vol(triangles)
         assert all(areas > minimum_triangle_area)
 
         # compute values and error estimates for the new intervals

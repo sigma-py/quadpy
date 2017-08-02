@@ -6,7 +6,7 @@ from .. import helpers
 
 
 def transform(xi, cube):
-    '''Transform the points xi from the reference cube to the cube `cube`.
+    '''Transform the points `xi` from the reference cube to `cube`.
     '''
     # For d==2, the result used to be computed with
     #
