@@ -45,7 +45,6 @@ def plot(
         )
 
     plt.axis('equal')
-    plt.show()
     return
 
 
