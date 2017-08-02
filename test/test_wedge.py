@@ -105,6 +105,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.wedge.Felippa(6)
+    scheme_ = quadpy.wedge.Felippa(2)
     test_scheme(scheme_)
-    # test_show(scheme_)
+    test_show(scheme_)
+    quadpy.wedge.show_mayavi(scheme_)
