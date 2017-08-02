@@ -36,17 +36,10 @@ def plot(
     if not show_axes:
         plt.gca().set_axis_off()
 
-    edges = numpy.array([
-        [tet[0], tet[1]],
-        [tet[0], tet[2]],
-        [tet[0], tet[3]],
-        [tet[1], tet[2]],
-        [tet[1], tet[3]],
-        [tet[2], tet[3]],
-        ])
+    edges = numpy.array([[tet[i], tet[j]] for i in range(4) for j in range(i)])
     edges = numpy.moveaxis(edges, 1, 2)
     for edge in edges:
-        plt.plot(*edge, '-k')
+        plt.plot(*edge, color='k', linestyle='-')
 
     transformed_pts = transform(scheme.points.T, tet.T).T
 
@@ -69,14 +62,7 @@ def show_mayavi(
     '''
     import mayavi.mlab as mlab
 
-    edges = numpy.stack([
-        [tet[0], tet[1]],
-        [tet[0], tet[2]],
-        [tet[0], tet[3]],
-        [tet[1], tet[2]],
-        [tet[1], tet[3]],
-        [tet[2], tet[3]],
-        ])
+    edges = numpy.array([[tet[i], tet[j]] for i in range(4) for j in range(i)])
     edges = numpy.moveaxis(edges, 1, 2)
     for edge in edges:
         mlab.plot3d(*edge, tube_radius=1.0e-2)
