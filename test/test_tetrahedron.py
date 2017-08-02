@@ -101,6 +101,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.tetrahedron.XiaoGimbutas(3)
+    scheme_ = quadpy.tetrahedron.Keast(6)
     # test_scheme(scheme_)
-    test_show(scheme_)
+    # test_show(scheme_)
+    quadpy.tetrahedron.show_mayavi(scheme_)
