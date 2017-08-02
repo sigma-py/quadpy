@@ -20,3 +20,5 @@ from .walkington import *
 from .williams_shunn_jameson import *
 
 from .tools import *
+
+from ..simplex import integrate

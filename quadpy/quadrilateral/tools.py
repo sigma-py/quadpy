@@ -2,14 +2,8 @@
 #
 from .. import helpers
 from .stroud import Stroud
-from ..ncube import transform, integrate, ncube_points
-
-
-def rectangle_points(*xy):
-    '''Given the end points of a rectangle aligned with the coordinate axes,
-    this returns the corner points of the cube in the correct data structure.
-    '''
-    return ncube_points(*xy)
+from ..ncube import transform, integrate
+from ..ncube import ncube_points as rectangle_points
 
 
 def show(
