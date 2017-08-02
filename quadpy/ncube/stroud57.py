@@ -15,6 +15,7 @@ class Stroud57(object):
     '''
     def __init__(self, n, index):
         reference_volume = 2.0**n
+        self.dim = n
         if index == 2:
             self.degree = 2
             r = numpy.sqrt(3.0) / 6.0
@@ -37,7 +38,7 @@ class Stroud57(object):
             pts = [[
                 numpy.sqrt(2.0/3.0) * numpy.cos((2*k-1)*i*numpy.pi / n),
                 numpy.sqrt(2.0/3.0) * numpy.sin((2*k-1)*i*numpy.pi / n),
-                ] for k in range(1, n2+1)][0]
+                ] for k in range(1, n2+1)]
             if n % 2 == 1:
                 sqrt3pm = numpy.full(2*n, 1.0 / numpy.sqrt(3.0))
                 sqrt3pm[1::2] *= -1
