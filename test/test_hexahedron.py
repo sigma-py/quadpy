@@ -4,7 +4,6 @@ from __future__ import print_function
 
 from helpers import check_degree
 
-import matplotlib.pyplot as plt
 import quadpy
 from quadpy.hexahedron import Product
 import pytest
@@ -119,4 +118,3 @@ if __name__ == '__main__':
     print(scheme_.points)
     test_scheme(scheme_, 1.0e-14, print_degree=True)
     test_show(scheme_)
-    plt.show()

@@ -4,7 +4,6 @@ from helpers import (
     check_degree, integrate_monomial_over_standard_simplex
     )
 
-from matplotlib import pyplot as plt
 import numpy
 import pytest
 import quadpy
@@ -126,4 +125,3 @@ if __name__ == '__main__':
     scheme_ = quadpy.triangle.VioreanuRokhlin(10)
     test_scheme(scheme_)
     test_show(scheme_)
-    plt.show()

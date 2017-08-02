@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
 #
+import matplotlib.pyplot as plt
 import numpy
 
 from .. import helpers
 
 
-def show(scheme, show_axes=False):
-    from matplotlib import pyplot as plt
+def show(*args, **kwargs):
+    plot(*args, **kwargs)
+    plt.show()
+    return
+
+
+def plot(scheme, show_axes=False):
     ax = plt.gca()
     # change default range so that new disks will work
     plt.axis('equal')
@@ -22,7 +28,6 @@ def show(scheme, show_axes=False):
     helpers.plot_disks(
         plt, scheme.points, scheme.weights, numpy.pi
         )
-    plt.show()
     return
 
 

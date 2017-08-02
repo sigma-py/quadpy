@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
 #
+import matplotlib.pyplot as plt
 import numpy
 
 from .. import helpers
 from ..simplex import transform, get_vol
 
 
-def show(
+def show(*args, **kwargs):
+    plot(*args, **kwargs)
+    plt.show()
+    return
+
+
+def plot(
         scheme,
         tet=numpy.array([
             [+1, 0, -1.0/numpy.sqrt(2.0)],
@@ -19,7 +26,6 @@ def show(
     '''Shows the quadrature points on a given tetrahedron. The size of the
     balls around the points coincides with their weights.
     '''
-    from matplotlib import pyplot as plt
     # pylint: disable=relative-import, unused-variable
     from mpl_toolkits.mplot3d import Axes3D
 
