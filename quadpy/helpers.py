@@ -120,6 +120,40 @@ def plot_spheres(
     return
 
 
+def plot_spheres_mayavi(
+        pts, weights, total_volume
+        ):
+    import mayavi.mlab as mlab
+
+    blue = (31./255., 119.0/255., 180./255.)
+    red = (84./255., 15.0/255., 16./255.)
+
+    h = 1.0e-2
+    sum_weights = math.fsum(weights)
+    for tp, weight in zip(pts, weights):
+        # Choose radius such that the sum of volumes of the balls equals
+        # total_volume.
+        r = (
+            abs(weight)/sum_weights * total_volume/(4.0/3.0 * numpy.pi)
+            )**(1.0/3.0)
+
+        # Create a sphere
+        u = numpy.linspace(0, 2 * numpy.pi, int(2*numpy.pi/h*r) + 1)
+        v = numpy.linspace(0, numpy.pi, int(numpy.pi/h*r) + 1)
+        sin_u, cos_u = numpy.sin(u), numpy.cos(u)
+        sin_v, cos_v = numpy.sin(v), numpy.cos(v)
+        x = numpy.outer(cos_u, sin_v)
+        y = numpy.outer(sin_u, sin_v)
+        z = numpy.outer(numpy.ones(numpy.size(u)), cos_v)
+
+        mlab.mesh(
+            r*x + tp[0], r*y + tp[1], r*z + tp[2],
+            color=blue if weight >= 0 else red,
+            opacity=0.3
+            )
+    return
+
+
 def partition(balls, boxes):
     '''Create all nonnegative tuples of length d which sum up to n.
     '''

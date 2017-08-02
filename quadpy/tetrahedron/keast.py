@@ -23,19 +23,19 @@ class Keast(object):
     '''
     def __init__(self, index):
         if index == 0:
-            # Does no appear in Keast's article.
+            # Does not appear in Keast's article.
             self.weights = numpy.array([
                 1.0
                 ])
             bary = _s4()
             self.degree = 1
         elif index == 1:
-            # Does no appear in Keast's article.
+            # Does not appear in Keast's article.
             self.weights = numpy.full(4, 0.25)
             bary = _s31(0.1381966011250105)
             self.degree = 2
         elif index == 2:
-            # Does no appear in Keast's article.
+            # Does not appear in Keast's article.
             self.weights = numpy.concatenate([
                 numpy.full(1, -0.8),
                 numpy.full(4, 0.45),
@@ -46,7 +46,7 @@ class Keast(object):
                 ])
             self.degree = 3
         elif index == 3:
-            # Does no appear in Keast's article.
+            # Does not appear in Keast's article.
             self.weights = numpy.concatenate([
                 numpy.full(4, 0.2177650698804054),
                 numpy.full(6, 0.0214899534130631),
