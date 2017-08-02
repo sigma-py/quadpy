@@ -2,7 +2,7 @@
 #
 import math
 
-from helpers import partition, check_degree
+from helpers import check_degree
 
 from matplotlib import pyplot as plt
 import numpy
@@ -67,7 +67,7 @@ def test_scheme(scheme):
                 poly, midpoint, radius, scheme, sumfun=numpy.sum
                 ),
             _integral_monomial_over_unit_sphere,
-            lambda n: partition(n, 3),
+            lambda n: quadpy.helpers.partition(n, 3),
             min(30, scheme.degree + 1)
             )
     assert degree >= min(30, scheme.degree)

@@ -5,7 +5,7 @@ import numpy
 from .dunavant import Dunavant
 
 from .. import helpers
-from ..simplex import transform, get_vol
+from ..simplex import transform, get_vol, integrate
 
 
 def show(
@@ -42,13 +42,6 @@ def show(
     plt.axis('equal')
     plt.show()
     return
-
-
-def integrate(f, triangle, scheme, sumfun=helpers.kahan_sum):
-    x = transform(scheme.points.T, triangle.T)
-    return sumfun(
-        numpy.moveaxis(scheme.weights * f(x), -1, 0) * get_vol(triangle)
-        )
 
 
 def _numpy_all_except(a, axis=-1):

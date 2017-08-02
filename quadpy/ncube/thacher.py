@@ -12,7 +12,7 @@ class Thacher(object):
     Communications of the ACM CACM,
     Volume 7 Issue 1, Jan. 1964, Pages 23-25,
     ACM New York, NY, USA,
-    doi 10.1145/363872.363897.
+    <https://dx.doi.org/10.1145/363872.363897>.
 
     Abstract:
     A (2s+1)-point, second-degree quadrature formula for integration over an

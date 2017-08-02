@@ -8,7 +8,8 @@ Your one-stop shop for numerical integration in Python.
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?style=social&label=Stars&maxAge=2592000)](https://github.com/nschloe/quadpy)
 
 Hundreds of numerical integration schemes for line segments, circles, disks,
-triangles, quadrilaterals, spheres, tetrahedra, hexahedra, wedges, pyramids.
+triangles, quadrilaterals, spheres, tetrahedra, hexahedra, wedges, pyramids,
+n-simplices, and n-cubes.
 
 To numerically integrate any function over any given triangle, do
 ```python
@@ -211,7 +212,7 @@ val = quadpy.quadrilateral.integrate(
 ### Sphere
 <img src="https://nschloe.github.io/quadpy/sphere.png" width="25%">
 
- * [Lebedev's schemes](https://en.wikipedia.org/wiki/Lebedev_quadrature) (32
+ * [Lebedev](https://en.wikipedia.org/wiki/Lebedev_quadrature) (32
    schemes up to degree 131)
 
 Example:
@@ -292,7 +293,7 @@ val = quadpy.hexahedron.integrate(
 ### Pyramid
 <img src="https://nschloe.github.io/quadpy/pyra.png" width="25%">
 
- * [Felippa's schemes](http://dx.doi.org/10.1108/02644400410554362) (9 schemes
+ * [Felippa](http://dx.doi.org/10.1108/02644400410554362) (9 schemes
    up to degree 5)
 
 Example:
@@ -310,7 +311,7 @@ val = quadpy.pyramid.integrate(
 ### Wedge
 <img src="https://nschloe.github.io/quadpy/wedge.png" width="15%">
 
- * [Felippa's schemes](http://dx.doi.org/10.1108/02644400410554362) (6 schemes
+ * [Felippa](http://dx.doi.org/10.1108/02644400410554362) (6 schemes
    up to degree 6)
 
 Example:
@@ -322,6 +323,50 @@ val = quadpy.wedge.integrate(
       [0.0, 0.0, 1.0], [1.0, 0.0, 1.0], [0.5, 0.7, 1.0],
     ],
     quadpy.wedge.Felippa(3)
+    )
+```
+
+### Simplex
+ * [Grundmann-Möller](http://dx.doi.org/10.1137/0715019) (1978, arbitrary degree)
+ * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/) (2000, 5 schemes up to degree 7)
+
+Example:
+```python
+dim = 4
+val = quadpy.simplex.integrate(
+    lambda x: numpy.exp(x[0]),
+    numpy.array([
+        [0.0, 0.0, 0.0, 0.0],
+        [1.0, 2.0, 0.0, 0.0],
+        [0.0, 1.0, 0.0, 0.0],
+        [0.0, 3.0, 1.0, 0.0],
+        [0.0, 0.0, 4.0, 1.0],
+        ]),
+    quadpy.simplex.GrundmannMoeller(dim, 3)
+    )
+```
+
+### n-cube
+ * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
+    - [Ewing](https://dx.doi.org/dx.doi.org/10.2307/2303604) (1941, degree 3)
+    - [Tyler](https://dx.doi.org/10.4153/CJM-1953-044-1) (1953, degree 3)
+    - [Stroud](https://dx.doi.org/10.2307/2001945) (1957, 2 schemes up to degree 3)
+    - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, degree 5)
+    - [Mustard-Lyness-Blatt](https://doi.org/10.1093/comjnl/6.1.75) (1963, degree 5)
+    - [Thacher](https://dx.doi.org/10.1145/363872.363897) (1964, degree 2)
+    - [Stroud](https://doi.org/10.1090/S0025-5718-1966-0191094-8) (1966, 4 schemes of degree 5)
+    - [Phillips](https://doi.org/10.1093/comjnl/10.3.297) (1967, degree 7, single precision)
+    - [Stroud](https://dx.doi.org/10.2307/2004655) (1968, degree 5)
+
+Example:
+```python
+dim = 4
+quadpy.ncube.integrate(
+    lambda x: numpy.exp(x[0]),
+    quadpy.ncube.ncube_points(
+        [0.0, 1.0], [0.1, 0.9], [-1.0, 1.0], [-1.0, -0.5]
+        ),
+    quadpy.ncube.Stroud(dim, 'Cn 3-3')
     )
 ```
 

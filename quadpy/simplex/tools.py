@@ -3,6 +3,14 @@
 import math
 import numpy
 
+from .. import helpers
+
+
+def integrate(f, simplex, scheme, sumfun=helpers.kahan_sum):
+    x = transform(scheme.points.T, simplex.T)
+    vol = get_vol(simplex)
+    return sumfun(numpy.moveaxis(scheme.weights * f(x), -1, 0) * vol)
+
 
 def transform(xi, simplex):
     '''Transform the points `xi` from the reference simplex onto `simplex`.

@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import \
-        partition, \
-        integrate_monomial_over_unit_circle, \
-        check_degree
+from helpers import (
+    integrate_monomial_over_unit_circle, check_degree
+    )
 
 import pytest
 import quadpy
@@ -32,7 +31,7 @@ def test_scheme(scheme, tol):
                 poly, [0.0, 0.0], 1.0, scheme
                 ),
             _integrate_exact,
-            lambda n: partition(n, 2),
+            lambda n: quadpy.helpers.partition(n, 2),
             scheme.degree + 1,
             tol=tol
             )

@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import partition, check_degree
 import matplotlib.pyplot as plt
 import numpy
 import pytest
 import quadpy
 import scipy.special
+
+from helpers import check_degree
 
 
 # def _integrate_exact(k, wedge):
@@ -88,7 +89,7 @@ def test_scheme(scheme):
                 ),
             # lambda k: _integrate_exact(k, wedge),
             _integrate_monomial_over_unit_wedge,
-            lambda n: partition(n, 3),
+            lambda n: quadpy.helpers.partition(n, 3),
             scheme.degree + 1
             )
     assert degree == scheme.degree
