@@ -345,6 +345,30 @@ val = quadpy.simplex.integrate(
     )
 ```
 
+### n-cube
+ * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
+    - [Ewing](https://dx.doi.org/dx.doi.org/10.2307/2303604) (1941, degree 3)
+    - [Tyler](https://dx.doi.org/10.4153/CJM-1953-044-1) (1953, degree 3)
+    - [Stroud](https://dx.doi.org/10.2307/2001945) (1957, 2 schemes up to degree 3)
+    - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, degree 5)
+    - [Mustard-Lyness-Blatt](https://doi.org/10.1093/comjnl/6.1.75) (1963, degree 5)
+    - [Thacher](https://dx.doi.org/10.1145/363872.363897) (1964, degree 2)
+    - [Stroud](https://doi.org/10.1090/S0025-5718-1966-0191094-8) (1966, 4 schemes of degree 5)
+    - [Phillips](https://doi.org/10.1093/comjnl/10.3.297) (1967, degree 7, single precision)
+    - [Stroud](https://dx.doi.org/10.2307/2004655) (1968, degree 5)
+
+Example:
+```python
+dim = 4
+quadpy.ncube.integrate(
+    lambda x: numpy.exp(x[0]),
+    quadpy.ncube.ncube_points(
+        [0.0, 1.0], [0.1, 0.9], [-1.0, 1.0], [-1.0, -0.5]
+        ),
+    quadpy.ncube.Stroud(dim, 'Cn 3-3')
+    )
+```
+
 ### Installation
 
 quadpy is [available from the Python Package Index](https://pypi.python.org/pypi/quadpy/), so with
