@@ -28,12 +28,13 @@ def get_vol(simplex):
     ei_dot_ej = numpy.einsum('...k,...k->...', edges, edges)
 
     j = simplex.shape[0] - 1
-    a = numpy.empty((j+2, j+2))
+    a = numpy.empty((j+2, j+2) + ei_dot_ej.shape[2:])
     a[1:, 1:] = ei_dot_ej
     a[0, 1:] = 1.0
     a[1:, 0] = 1.0
     a[0, 0] = 0.0
 
+    a = numpy.moveaxis(a, (0, 1), (-2, -1))
     det = numpy.linalg.det(a)
 
     vol = numpy.sqrt((-1.0)**(j+1) / 2**j / math.factorial(j)**2 * det)
