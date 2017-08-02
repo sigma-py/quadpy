@@ -1,12 +1,21 @@
 # -*- coding: utf-8 -*-
 #
-from .. import helpers
+import matplotlib.pyplot as plt
+
 from .stroud import Stroud
+
+from .. import helpers
 from ..ncube import transform, integrate
 from ..ncube import ncube_points as rectangle_points
 
 
-def show(
+def show(*args, **kwargs):
+    plot(*args, **kwargs)
+    plt.show()
+    return
+
+
+def plot(
         scheme,
         quad=rectangle_points([0.0, 1.0], [0.0, 1.0]),
         show_axes=False
@@ -14,7 +23,6 @@ def show(
     '''Shows the quadrature points on a given quad. The area of the disks
     around the points coincides with their weights.
     '''
-    from matplotlib import pyplot as plt
 
     plt.plot(quad[0][0], quad[1][0], '-k')
     plt.plot(quad[1][0], quad[1][1], '-k')
@@ -32,5 +40,4 @@ def show(
     helpers.plot_disks(
         plt, transformed_pts, scheme.weights, vol
         )
-    plt.show()
     return

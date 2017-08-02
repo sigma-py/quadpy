@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
 #
+import matplotlib.pyplot as plt
 import numpy
 
 from .felippa import Felippa
 from .. import helpers
 
 
-def show(
+def show(*args, **kwargs):
+    plot(*args, **kwargs)
+    plt.show()
+    return
+
+
+def plot(
         scheme,
         pyra=numpy.array([
             [0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0],
@@ -16,7 +23,6 @@ def show(
     '''Shows the quadrature points on a given pyramid. The size of the
     balls around the points coincides with their weights.
     '''
-    from matplotlib import pyplot as plt
     # pylint: disable=relative-import, unused-variable
     from mpl_toolkits.mplot3d import Axes3D
 
@@ -53,7 +59,6 @@ def show(
     helpers.plot_spheres(
         plt, ax, transformed_pts, scheme.weights, vol
         )
-    plt.show()
     return
 
 

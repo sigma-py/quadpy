@@ -103,6 +103,4 @@ def test_show(scheme):
 if __name__ == '__main__':
     scheme_ = quadpy.tetrahedron.VioreanuRokhlin(3)
     # test_scheme(scheme_)
-    from matplotlib import pyplot as plt
     test_show(scheme_)
-    plt.show()

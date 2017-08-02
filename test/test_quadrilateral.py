@@ -2,7 +2,6 @@
 #
 from __future__ import print_function
 
-import matplotlib.pyplot as plt
 import pytest
 import quadpy
 from quadpy.quadrilateral import Product
@@ -111,4 +110,3 @@ if __name__ == '__main__':
     print(scheme_.points)
     test_show(scheme_)
     test_scheme(scheme_, 1.0e-8, print_degree=True)
-    plt.show()

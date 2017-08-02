@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import matplotlib.pyplot as plt
 import numpy
 
 from .. import helpers
@@ -7,7 +8,13 @@ from ..ncube import transform, integrate
 from ..ncube import ncube_points as cube_points
 
 
-def show(
+def show(*args, **kwargs):
+    plot(*args, **kwargs)
+    plt.show()
+    return
+
+
+def plot(
         scheme,
         hexa=cube_points([0.0, 1.0], [0.0, 1.0], [0.0, 1.0]),
         show_axes=False
@@ -15,7 +22,6 @@ def show(
     '''Shows the quadrature points on a given hexahedron. The size of the
     balls around the points coincides with their weights.
     '''
-    from matplotlib import pyplot as plt
     # pylint: disable=relative-import, unused-variable
     from mpl_toolkits.mplot3d import Axes3D
 
@@ -51,6 +57,4 @@ def show(
     helpers.plot_spheres(
         plt, ax, transformed_pts, scheme.weights, vol
         )
-
-    plt.show()
     return

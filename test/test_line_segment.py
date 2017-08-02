@@ -4,7 +4,6 @@ import math
 
 from helpers import check_degree_1d
 
-from matplotlib import pyplot as plt
 import numpy
 import pytest
 import quadpy
@@ -163,4 +162,3 @@ if __name__ == '__main__':
     # scheme_ = quadpy.line_segment.Midpoint()
     test_scheme(scheme_)
     test_show(scheme_)
-    plt.show()
