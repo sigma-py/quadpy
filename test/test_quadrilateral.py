@@ -2,13 +2,13 @@
 #
 from __future__ import print_function
 
-from helpers import partition, check_degree
-
 import matplotlib.pyplot as plt
 import pytest
 import quadpy
 from quadpy.quadrilateral import Product
 import sympy
+
+from helpers import check_degree
 
 
 def _integrate_exact(f, quadrilateral):
@@ -83,7 +83,7 @@ def test_scheme(scheme, tol, print_degree=False):
     degree = check_degree(
             lambda poly: quadpy.quadrilateral.integrate(poly, quad, scheme),
             lambda k: _integrate_exact2(k, x0, x1, y0, y1),
-            lambda n: partition(n, 2),
+            lambda n: quadpy.helpers.partition(n, 2),
             scheme.degree + 1,
             tol=tol
             )

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 from helpers import (
-    partition, check_degree, integrate_monomial_over_standard_simplex
+    check_degree, integrate_monomial_over_standard_simplex
     )
 
 from matplotlib import pyplot as plt
@@ -81,7 +81,7 @@ def test_scheme(scheme):
     degree = check_degree(
             lambda poly: quadpy.triangle.integrate(poly, triangle, scheme),
             integrate_monomial_over_standard_simplex,
-            lambda n: partition(n, 2),
+            lambda n: quadpy.helpers.partition(n, 2),
             scheme.degree + 1
             )
     assert degree >= scheme.degree

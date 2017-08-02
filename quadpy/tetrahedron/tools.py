@@ -3,7 +3,7 @@
 import numpy
 
 from .. import helpers
-from ..simplex import transform, get_vol
+from ..simplex import transform, get_vol, integrate
 
 
 def show(
@@ -47,9 +47,3 @@ def show(
     helpers.plot_spheres(plt, ax, transformed_pts, scheme.weights, vol)
     plt.show()
     return
-
-
-def integrate(f, tetrahedron, scheme, sumfun=helpers.kahan_sum):
-    x = transform(scheme.points.T, tetrahedron.T)
-    vol = get_vol(tetrahedron)
-    return sumfun(numpy.moveaxis(scheme.weights * f(x), -1, 0) * vol)

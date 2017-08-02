@@ -118,3 +118,20 @@ def plot_spheres(
 
     ax.set_axis_off()
     return
+
+
+def partition(balls, boxes, parent=tuple()):
+    '''Create all nonnegative tuples of length d which sum up to n.
+    '''
+    # <https://stackoverflow.com/a/36748940/353337>
+    # See <https://stackoverflow.com/a/45348441/353337> for an alterantive
+    # solution.
+    def rec(boxes, balls, parent=tuple()):
+        if boxes > 1:
+            for i in range(balls + 1):
+                for x in rec(boxes - 1, i, parent + (balls - i,)):
+                    yield x
+        else:
+            yield parent + (balls,)
+
+    return list(rec(boxes, balls))
