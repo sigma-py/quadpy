@@ -10,19 +10,20 @@ from helpers import check_degree
 stroud_idx = [
     'Cn 1-1', 'Cn 1-2',
     'Cn 2-1', 'Cn 2-2',
-    'Cn 3-1', 'Cn 3-2', 'Cn 3-3', 'Cn 3-4', 'Cn 3-5', 'Cn 3-6',
+    'Cn 3-1',
+    'Cn 3-2', 'Cn 3-3', 'Cn 3-4', 'Cn 3-5', 'Cn 3-6',
     'Cn 5-2', 'Cn 5-3', 'Cn 5-4', 'Cn 5-5', 'Cn 5-6', 'Cn 5-7', 'Cn 5-8',
     'Cn 5-9',
-    'Cn 7-1',
+    # 'Cn 7-1',
     ]
 
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadpy.ncube.Stroud(3, k) for k in stroud_idx] +
-    [quadpy.ncube.Stroud(4, k) for k in stroud_idx] +
-    [quadpy.ncube.Stroud(5, k) for k in stroud_idx] +
-    [quadpy.ncube.Stroud(6, k) for k in stroud_idx]
+    [quadpy.ncube.Stroud(3, k) for k in stroud_idx]
+    + [quadpy.ncube.Stroud(4, k) for k in stroud_idx]
+    + [quadpy.ncube.Stroud(5, k) for k in stroud_idx]
+    + [quadpy.ncube.Stroud(6, k) for k in stroud_idx]
     )
 def test_scheme(scheme):
     n = scheme.dim
