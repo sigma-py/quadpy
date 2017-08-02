@@ -32,7 +32,6 @@ def test_scheme(scheme):
             lambda k: quadpy.helpers.partition(k, n),
             scheme.degree + 1
             )
-    print(degree)
     assert degree >= scheme.degree
     return
 

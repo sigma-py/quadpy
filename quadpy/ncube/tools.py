@@ -81,3 +81,9 @@ def get_detJ(xi, cube):
     J = numpy.moveaxis(J, (0, 1), (-2, -1))
     out = numpy.linalg.det(J)
     return out
+
+
+def integrate(f, ncube, scheme, sumfun=helpers.kahan_sum):
+    x = transform(scheme.points.T, ncube).T
+    detJ = get_detJ(scheme.points.T, ncube)
+    return sumfun(scheme.weights * f(x) * abs(detJ), axis=-1)
