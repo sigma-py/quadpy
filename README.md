@@ -211,7 +211,7 @@ val = quadpy.quadrilateral.integrate(
 ### Sphere
 <img src="https://nschloe.github.io/quadpy/sphere.png" width="25%">
 
- * [Lebedev's schemes](https://en.wikipedia.org/wiki/Lebedev_quadrature) (32
+ * [Lebedev](https://en.wikipedia.org/wiki/Lebedev_quadrature) (32
    schemes up to degree 131)
 
 Example:
@@ -292,7 +292,7 @@ val = quadpy.hexahedron.integrate(
 ### Pyramid
 <img src="https://nschloe.github.io/quadpy/pyra.png" width="25%">
 
- * [Felippa's schemes](http://dx.doi.org/10.1108/02644400410554362) (9 schemes
+ * [Felippa](http://dx.doi.org/10.1108/02644400410554362) (9 schemes
    up to degree 5)
 
 Example:
@@ -310,7 +310,7 @@ val = quadpy.pyramid.integrate(
 ### Wedge
 <img src="https://nschloe.github.io/quadpy/wedge.png" width="15%">
 
- * [Felippa's schemes](http://dx.doi.org/10.1108/02644400410554362) (6 schemes
+ * [Felippa](http://dx.doi.org/10.1108/02644400410554362) (6 schemes
    up to degree 6)
 
 Example:
@@ -322,6 +322,26 @@ val = quadpy.wedge.integrate(
       [0.0, 0.0, 1.0], [1.0, 0.0, 1.0], [0.5, 0.7, 1.0],
     ],
     quadpy.wedge.Felippa(3)
+    )
+```
+
+### Simplex
+ * [Grundmann-Möller](http://dx.doi.org/10.1137/0715019) (1978, arbitrary degree)
+ * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/) (2000, 5 schemes up to degree 7)
+
+Example:
+```python
+dim = 4
+val = quadpy.simplex.integrate(
+    lambda x: numpy.exp(x[0]),
+    numpy.array([
+        [0.0, 0.0, 0.0, 0.0],
+        [1.0, 2.0, 0.0, 0.0],
+        [0.0, 1.0, 0.0, 0.0],
+        [0.0, 3.0, 1.0, 0.0],
+        [0.0, 0.0, 4.0, 1.0],
+        ]),
+    quadpy.simplex.GrundmannMoeller(dim, 3)
     )
 ```
 
