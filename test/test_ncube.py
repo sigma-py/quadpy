@@ -50,6 +50,6 @@ def _integrate_monomial_over_ncube(ncube_limits, exp):
 
 
 if __name__ == '__main__':
-    n = 5
-    scheme_ = quadpy.ncube.Stroud(n, 'Cn 3-4')
-    test_scheme(scheme_)
+    n_ = 5
+    scheme_ = quadpy.ncube.Stroud(n_, 'Cn 3-4')
+    test_scheme(scheme_, 1.0e-14)
