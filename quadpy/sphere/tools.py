@@ -31,7 +31,6 @@ def plot(scheme):
         _plot_spherical_cap(ax, p, theta)
 
     ax.set_axis_off()
-    plt.show()
     return
 
 

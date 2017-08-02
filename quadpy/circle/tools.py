@@ -32,7 +32,6 @@ def plot(scheme, show_axes=False):
     helpers.plot_disks(
         plt, scheme.points, scheme.weights, total_area
         )
-    plt.show()
     return
 
 

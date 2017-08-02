@@ -65,7 +65,6 @@ def plot(
     helpers.plot_spheres(
         plt, ax, transformed_pts, scheme.weights, vol
         )
-    plt.show()
     return
 
 
