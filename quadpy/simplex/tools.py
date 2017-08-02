@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import math
 import numpy
 
 
@@ -17,12 +18,23 @@ def transform(xi, simplex):
 
 
 def get_vol(simplex):
-    n = simplex.shape[1]
-    return abs(get_detJ(simplex)) / numpy.math.factorial(n)
+    # Compute the volume via the Cayley-Menger determinant
+    # <http://mathworld.wolfram.com/Cayley-MengerDeterminant.html>. One
+    # advantage is that it can compute the volume of the simplex indenpendent
+    # of the dimension of the space where it's embedded.
 
+    # compute all edge lengths
+    edges = numpy.subtract(simplex[:, None], simplex[None, :])
+    ei_dot_ej = numpy.einsum('...k,...k->...', edges, edges)
 
-def get_detJ(simplex):
-    # det is the signed volume of the tetrahedron
-    # <https://en.wikipedia.org/wiki/Simplex#Volume>
-    J = simplex[1:] - simplex[0]
-    return numpy.linalg.det(numpy.moveaxis(J, 0, 1))
+    j = simplex.shape[0] - 1
+    a = numpy.empty((j+2, j+2))
+    a[1:, 1:] = ei_dot_ej
+    a[0, 1:] = 1.0
+    a[1:, 0] = 1.0
+    a[0, 0] = 0.0
+
+    det = numpy.linalg.det(a)
+
+    vol = numpy.sqrt((-1.0)**(j+1) / 2**j / math.factorial(j)**2 * det)
+    return vol
