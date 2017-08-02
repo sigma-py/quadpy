@@ -14,12 +14,13 @@ def _integrate_exact(k, pyra):
 
     # map the reference hexahedron [-1,1]^3 to the pyramid
     xi = sympy.DeferredVector('xi')
-    pxi = \
-        + pyra[0] * (1 - xi[0])*(1 - xi[1])*(1 - xi[2]) / 8 \
-        + pyra[1] * (1 + xi[0])*(1 - xi[1])*(1 - xi[2]) / 8 \
-        + pyra[2] * (1 + xi[0])*(1 + xi[1])*(1 - xi[2]) / 8 \
-        + pyra[3] * (1 - xi[0])*(1 + xi[1])*(1 - xi[2]) / 8 \
+    pxi = (
+        + pyra[0] * (1 - xi[0])*(1 - xi[1])*(1 - xi[2]) / 8
+        + pyra[1] * (1 + xi[0])*(1 - xi[1])*(1 - xi[2]) / 8
+        + pyra[2] * (1 + xi[0])*(1 + xi[1])*(1 - xi[2]) / 8
+        + pyra[3] * (1 - xi[0])*(1 + xi[1])*(1 - xi[2]) / 8
         + pyra[4] * (1 + xi[2]) / 2
+        )
 
     pxi = [
         sympy.expand(pxi[0]),

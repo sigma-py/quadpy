@@ -16,16 +16,18 @@ class Walkington(object):
                 numpy.full(4, 0.012248840519393658257),
                 numpy.full(6, 0.0070910034628469110730),
                 ])
-            self.points = numpy.concatenate([
+            self.bary = numpy.concatenate([
                 _xi1(0.31088591926330060980),
                 _xi1(0.092735250310891226402),
                 _xi11(0.045503704125649649492),
                 ])
+            self.points = self.bary[:, 1:]
             return
 
         # Default: scheme from general simplex
         w = walkington.Walkington(3, index)
         self.weights = w.weights
+        self.bary = w.bary
         self.points = w.points
         self.degree = w.degree
         return

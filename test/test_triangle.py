@@ -120,8 +120,28 @@ def test_show(scheme):
     return
 
 
+def test_volume():
+    # Assert computation of triangle volume in 3D is correct
+    triangle = numpy.array([
+        [0.0, 0.0, 0.0],
+        [1.0, 2.0, 3.0],
+        [0.7, 0.4, 1.1],
+        ])
+    ref = numpy.sqrt(3.0) / 2.0
+    assert abs(quadpy.triangle.get_vol(triangle) - ref) < 1.0e-14 * ref
+
+    triangle = numpy.array([
+        [0.0, 0.0, 0.0],
+        [0.3, 0.4, 0.5],
+        [0.7, 0.4, 1.1],
+        ])
+    ref = numpy.sqrt(0.0209)
+    assert abs(quadpy.triangle.get_vol(triangle) - ref) < 1.0e-14 * ref
+    return
+
+
 if __name__ == '__main__':
-    scheme_ = quadpy.triangle.VioreanuRokhlin(0)
+    scheme_ = quadpy.triangle.VioreanuRokhlin(10)
     test_scheme(scheme_)
     test_show(scheme_)
     plt.show()
