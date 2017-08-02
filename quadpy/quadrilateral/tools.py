@@ -4,7 +4,7 @@ import numpy
 
 from .. import helpers
 from .stroud import Stroud
-from ..ncube import transform, get_detJ
+from ..ncube import transform, integrate
 
 
 def rectangle_points(x, y):
@@ -45,9 +45,3 @@ def show(
         )
     plt.show()
     return
-
-
-def integrate(f, quad, scheme, sumfun=helpers.kahan_sum):
-    x = transform(scheme.points.T, quad).T
-    det = get_detJ(scheme.points.T, quad)
-    return sumfun(scheme.weights * f(x) * abs(det), axis=-1)

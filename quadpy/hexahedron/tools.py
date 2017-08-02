@@ -3,7 +3,7 @@
 import numpy
 
 from .. import helpers
-from ..ncube import transform, get_detJ
+from ..ncube import transform, integrate
 
 
 def cube_points(x, y, z):
@@ -63,9 +63,3 @@ def show(
 
     plt.show()
     return
-
-
-def integrate(f, hexa, scheme, sumfun=helpers.kahan_sum):
-    x = transform(scheme.points.T, hexa).T
-    detJ = get_detJ(scheme.points.T, hexa)
-    return sumfun(scheme.weights * f(x) * abs(detJ), axis=-1)

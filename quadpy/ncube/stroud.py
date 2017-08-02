@@ -23,6 +23,7 @@ class Stroud(object):
     # pylint: disable=too-many-locals
     def __init__(self, n, index):
         self.name = 'Stroud({})'.format(index)
+        self.dim = n
         reference_volume = 2.0**n
         if index == 'Cn 1-1':
             # centroid formula
