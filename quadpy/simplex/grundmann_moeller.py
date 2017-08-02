@@ -3,6 +3,8 @@
 from math import factorial
 import numpy
 
+from ..helpers import partition
+
 
 class GrundmannMoeller(object):
     '''
@@ -20,11 +22,13 @@ class GrundmannMoeller(object):
         self.name = 'GrundmannMöller(dim={}, {})'.format(n, s)
         d = 2*s + 1
         self.degree = d
+        self.dim = n
 
+        # TODO vectorize this
         bary = []
         weights = []
         for i in range(s+1):
-            beta = numpy.array(list(_weak_compositions(n+1, s-i)))
+            beta = numpy.array(partition(s-i, n+1))
             bary.append(
                 (2.0*beta + 1.0) / (d+n-2*i)
                 )
@@ -41,13 +45,3 @@ class GrundmannMoeller(object):
         self.bary = numpy.concatenate(bary)
         self.points = self.bary[:, 1:]
         return
-
-
-def _weak_compositions(boxes, balls, parent=tuple()):
-    # https://stackoverflow.com/a/36748940/353337
-    if boxes > 1:
-        for i in range(balls + 1):
-            for x in _weak_compositions(boxes - 1, i, parent + (balls - i,)):
-                yield x
-    else:
-        yield parent + (balls,)

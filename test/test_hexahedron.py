@@ -2,7 +2,7 @@
 #
 from __future__ import print_function
 
-from helpers import partition, check_degree
+from helpers import check_degree
 
 import matplotlib.pyplot as plt
 import quadpy
@@ -91,7 +91,7 @@ def test_scheme(scheme, tol, print_degree=False):
     degree = check_degree(
             lambda poly: quadpy.hexahedron.integrate(poly, hexa, scheme),
             lambda k: _integrate_exact2(k, x[0], x[1], y[0], y[1], z[0], z[1]),
-            lambda n: partition(n, 3),
+            lambda n: quadpy.helpers.partition(n, 3),
             scheme.degree + 1,
             tol=tol
             )

@@ -80,21 +80,6 @@ def check_degree(
     return degree
 
 
-def partition(n, d):
-    '''Create all nonnegative tuples of length d which sum up to n.
-    '''
-    # <https://stackoverflow.com/a/45348441/353337>
-    def rec(n, d, depth=0):
-        if d == depth:
-            return [[]]
-        return [
-            item + [i]
-            for i in range(n+1)
-            for item in rec(n-i, d, depth=depth+1)
-            ]
-    return [[n-sum(p)] + p for p in rec(n, d-1)]
-
-
 def integrate_monomial_over_unit_circle(k):
     '''The integral
 
