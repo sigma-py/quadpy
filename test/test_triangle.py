@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import math
-
-from helpers import partition, check_degree
+from helpers import (
+    partition, check_degree, integrate_monomial_over_standard_simplex
+    )
 
 from matplotlib import pyplot as plt
 import numpy
@@ -38,24 +38,6 @@ def _integrate_exact(f, triangle):
         (xi[0], 0, 1)
         )
     return float(exact)
-
-
-def _integrate_monomial_over_standard_triangle(k):
-    '''The integral of monomials over the standard triangle is given by
-
-    \\int_T x_0^k0 * x1^k1 = (k0!*k1!) / (2+k0+k1)!,
-
-    see, e.g.,
-    A set of symmetric quadrature rules on triangles and tetrahedra,
-    Linbo Zhang, Tao Cui and Hui Liu,
-    Journal of Computational Mathematics,
-    Vol. 27, No. 1 (January 2009), pp. 89-96
-    '''
-    # exp-log to account for large values in numerator and denominator
-    return math.exp(
-        math.fsum([math.lgamma(kk+1) for kk in k])
-        - math.lgamma(3 + sum(k))
-        )
 
 
 @pytest.mark.parametrize(
@@ -98,7 +80,7 @@ def test_scheme(scheme):
         ])
     degree = check_degree(
             lambda poly: quadpy.triangle.integrate(poly, triangle, scheme),
-            _integrate_monomial_over_standard_triangle,
+            integrate_monomial_over_standard_simplex,
             lambda n: partition(n, 2),
             scheme.degree + 1
             )
