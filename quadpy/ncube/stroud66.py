@@ -15,7 +15,7 @@ class Stroud66(object):
     <https://doi.org/10.1090/S0025-5718-1966-0191094-8>.
     '''
     def __init__(self, n, variant):
-        self.name = 'Stroud57{}'.format(variant)
+        self.name = 'Stroud66{}'.format(variant)
         reference_volume = 2.0**n
         self.degree = 5
         if variant == 'a':
@@ -64,7 +64,6 @@ class Stroud66(object):
         else:
             assert variant == 'd'
             assert n >= 3
-            self.degree = 5
             r = numpy.sqrt(
                 (5*n - 2*numpy.sqrt(5.0) + 2*(n-1)*numpy.sqrt(5*n+5))
                 / (15.0*n)

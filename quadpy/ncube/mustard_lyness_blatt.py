@@ -12,7 +12,7 @@ class MustardLynessBlatt(object):
     Comput J (1963) 6 (1): 75-87,
     <https://doi.org/10.1093/comjnl/6.1.75>.
 
-    Abstract
+    Abstract:
     We investigate a selection of integration rules based on the combination of
     third degree rules for elementary three-dimensional sub-domains. The
     practical problems associated with the application of these rules to

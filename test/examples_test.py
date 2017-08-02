@@ -216,3 +216,15 @@ def test_simplex():
         quadpy.simplex.GrundmannMoeller(dim, 3)
         )
     return
+
+
+def test_ncube():
+    dim = 4
+    quadpy.ncube.integrate(
+        lambda x: numpy.exp(x[0]),
+        quadpy.ncube.ncube_points(
+            [0.0, 1.0], [0.1, 0.9], [-1.0, 1.0], [-1.0, -0.5]
+            ),
+        quadpy.ncube.Stroud(dim, 'Cn 3-3')
+        )
+    return
