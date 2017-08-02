@@ -12,7 +12,7 @@ class Phillips(object):
     G.M. Phillips,
     Numerical integration over an N-dimensional rectangular region,
     Comput J (1967) 10 (3): 297-299,
-    DOI: https://doi.org/10.1093/comjnl/10.3.297.
+    <https://doi.org/10.1093/comjnl/10.3.297>.
 
     Abstract:
     Gaussian-type formulae are derived for all values of N >= 2.
@@ -52,7 +52,7 @@ class Phillips(object):
             B1 = 0.025082508
             B2 = 2.007240724
             B3 = -0.231481481
-            B4 = 0.0037037037
+            B4 = 0.037037037
         elif n == 5:
             r1 = 1.0
             r2 = 0.572478028

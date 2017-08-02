@@ -81,3 +81,19 @@ def get_detJ(xi, cube):
     J = numpy.moveaxis(J, (0, 1), (-2, -1))
     out = numpy.linalg.det(J)
     return out
+
+
+def integrate(f, ncube, scheme, sumfun=helpers.kahan_sum):
+    x = transform(scheme.points.T, ncube).T
+    detJ = get_detJ(scheme.points.T, ncube)
+    return sumfun(scheme.weights * f(x) * abs(detJ), axis=-1)
+
+
+def ncube_points(*xyz):
+    '''Given the end points of an n-cube aligned with the coordinate axes, this
+    returns the corner points of the cube in the correct data structure.
+    '''
+    return numpy.moveaxis(
+            numpy.array(numpy.meshgrid(*xyz, indexing='ij')),
+            0, -1
+            )

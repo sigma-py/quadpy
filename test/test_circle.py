@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import \
-        partition, \
-        integrate_monomial_over_unit_circle, \
-        check_degree
+from helpers import (
+    integrate_monomial_over_unit_circle, check_degree
+    )
 
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 import pytest
 import quadpy
 
@@ -20,7 +19,7 @@ def test_scheme(scheme):
                 poly, [0.0, 0.0], 1.0, scheme
                 ),
             integrate_monomial_over_unit_circle,
-            lambda n: partition(n, 2),
+            lambda n: quadpy.helpers.partition(n, 2),
             scheme.degree + 1
             )
     assert degree == scheme.degree

@@ -3,17 +3,8 @@
 import numpy
 
 from .. import helpers
-from ..ncube import transform, get_detJ
-
-
-def cube_points(x, y, z):
-    '''Given the end points of a cube aligned with the coordinate axes, this
-    returns the corner points of the cube in the correct data structure.
-    '''
-    return numpy.moveaxis(
-            numpy.array(numpy.meshgrid(x, y, z, indexing='ij')),
-            0, -1
-            )
+from ..ncube import transform, integrate
+from ..ncube import ncube_points as cube_points
 
 
 def show(
@@ -63,9 +54,3 @@ def show(
 
     plt.show()
     return
-
-
-def integrate(f, hexa, scheme, sumfun=helpers.kahan_sum):
-    x = transform(scheme.points.T, hexa).T
-    detJ = get_detJ(scheme.points.T, hexa)
-    return sumfun(scheme.weights * f(x) * abs(detJ), axis=-1)

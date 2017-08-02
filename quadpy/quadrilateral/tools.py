@@ -1,20 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
-
 from .. import helpers
 from .stroud import Stroud
-from ..ncube import transform, get_detJ
-
-
-def rectangle_points(x, y):
-    '''Given the end points of a rectangle aligned with the coordinate axes,
-    this returns the corner points of the cube in the correct data structure.
-    '''
-    return numpy.moveaxis(
-            numpy.array(numpy.meshgrid(x, y, indexing='ij')),
-            0, -1
-            )
+from ..ncube import transform, integrate
+from ..ncube import ncube_points as rectangle_points
 
 
 def show(
@@ -45,9 +34,3 @@ def show(
         )
     plt.show()
     return
-
-
-def integrate(f, quad, scheme, sumfun=helpers.kahan_sum):
-    x = transform(scheme.points.T, quad).T
-    det = get_detJ(scheme.points.T, quad)
-    return sumfun(scheme.weights * f(x) * abs(det), axis=-1)

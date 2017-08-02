@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import partition, check_degree
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 import numpy
 import pytest
 import quadpy
 import sympy
+
+from helpers import check_degree
 
 
 def _integrate_exact(k, pyra):
@@ -74,7 +75,7 @@ def test_scheme(scheme):
     degree = check_degree(
             lambda poly: quadpy.pyramid.integrate(poly, pyra, scheme),
             lambda k: _integrate_exact(k, pyra),
-            lambda n: partition(n, 3),
+            lambda n: quadpy.helpers.partition(n, 3),
             scheme.degree + 1
             )
     assert degree == scheme.degree
