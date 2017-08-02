@@ -11,10 +11,10 @@ from helpers import (
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadpy.simplex.GrundmannMoeller(3, k) for k in range(7)] +
-    [quadpy.simplex.GrundmannMoeller(4, k) for k in range(7)] +
-    [quadpy.simplex.GrundmannMoeller(5, k) for k in range(7)] +
-    [quadpy.simplex.GrundmannMoeller(6, k) for k in range(7)]
+    [quadpy.simplex.GrundmannMoeller(3, k) for k in range(5)] +
+    [quadpy.simplex.GrundmannMoeller(4, k) for k in range(5)] +
+    [quadpy.simplex.GrundmannMoeller(5, k) for k in range(5)] +
+    [quadpy.simplex.GrundmannMoeller(6, k) for k in range(5)]
     )
 def test_scheme(scheme):
     n = scheme.dim
