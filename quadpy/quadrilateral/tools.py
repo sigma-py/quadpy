@@ -1,20 +1,15 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
-
 from .. import helpers
 from .stroud import Stroud
-from ..ncube import transform, integrate
+from ..ncube import transform, integrate, ncube_points
 
 
-def rectangle_points(x, y):
+def rectangle_points(*xy):
     '''Given the end points of a rectangle aligned with the coordinate axes,
     this returns the corner points of the cube in the correct data structure.
     '''
-    return numpy.moveaxis(
-            numpy.array(numpy.meshgrid(x, y, indexing='ij')),
-            0, -1
-            )
+    return ncube_points(*xy)
 
 
 def show(

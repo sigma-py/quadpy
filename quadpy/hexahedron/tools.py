@@ -3,17 +3,14 @@
 import numpy
 
 from .. import helpers
-from ..ncube import transform, integrate
+from ..ncube import transform, integrate, ncube_points
 
 
-def cube_points(x, y, z):
+def cube_points(*xyz):
     '''Given the end points of a cube aligned with the coordinate axes, this
     returns the corner points of the cube in the correct data structure.
     '''
-    return numpy.moveaxis(
-            numpy.array(numpy.meshgrid(x, y, z, indexing='ij')),
-            0, -1
-            )
+    return ncube_points(*xyz)
 
 
 def show(
