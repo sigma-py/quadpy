@@ -11,6 +11,7 @@ from .maxwell import Maxwell
 from .meister import Meister
 from .miller import Miller
 from .phillips import Phillips
+from .rabinowitz_richter import RabinowitzRichter
 from .tyler import Tyler
 from .helpers import _symm_r_0, _symm_s, _symm_s_t, _z
 
@@ -110,6 +111,8 @@ class Stroud(object):
             self.set_data(Tyler(3))
         elif index == 'C2 7-6':
             self.set_data(Meister())
+        elif index == 'C2 9-1':
+            self.set_data(RabinowitzRichter(1))
 
         # assert index == 'C2 5-7', 'Illegal index \'{}\'.'.format(index)
 

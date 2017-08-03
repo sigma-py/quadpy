@@ -54,8 +54,6 @@ class AlbrechtCollatz(object):
 
         points, weights = zip(*data)
         self.points = numpy.concatenate(points)
-        self.weights = numpy.repeat(
-                weights, [len(group) for group in points]
-                )
+        self.weights = numpy.repeat(weights, [len(grp) for grp in points])
         self.weights *= 4.0
         return
