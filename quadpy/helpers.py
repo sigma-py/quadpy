@@ -54,6 +54,23 @@ def kahan_sum(a, axis=0):
     return s
 
 
+def partition(balls, boxes):
+    '''Create all nonnegative tuples of length d which sum up to n.
+    '''
+    # <https://stackoverflow.com/a/36748940/353337>
+    # See <https://stackoverflow.com/a/45348441/353337> for an alterantive
+    # solution.
+    def rec(boxes, balls, parent=tuple()):
+        if boxes > 1:
+            for i in range(balls + 1):
+                for x in rec(boxes - 1, i, parent + (balls - i,)):
+                    yield x
+        else:
+            yield parent + (balls,)
+
+    return list(rec(boxes, balls))
+
+
 def plot_disks(plt, pts, weights, total_area):
     '''Plot a circles at quadrature points according to weights.
     '''
@@ -75,66 +92,66 @@ def plot_disks(plt, pts, weights, total_area):
     return
 
 
-# pylint: disable=too-many-locals
-def plot_spheres(
-        plt, ax, pts, weights, total_volume
-        ):
-    h = 1.0e-2
+def show_mpl(points, weights, volume, edges):
+    import matplotlib.pyplot as plt
+    # pylint: disable=relative-import, unused-variable
+    from mpl_toolkits.mplot3d import Axes3D
 
-    sum_weights = math.fsum(weights)
-    for tp, weight in zip(pts, weights):
-        # Choose radius such that the sum of volumes of the balls equals
-        # total_volume.
-        r = (
-            abs(weight)/sum_weights * total_volume/(4.0/3.0 * numpy.pi)
-            )**(1.0/3.0)
+    # pylint: disable=too-many-locals
+    def plot_spheres(
+            plt, ax, pts, weights, total_volume
+            ):
+        h = 1.0e-2
 
-        # http://matplotlib.org/examples/mplot3d/surface3d_demo2.html
-        # Compute sphere for every point anew. This is more costly on the
-        # numerical side, but gives the flexibility of drawing sphere of
-        # different size with different number of points. Another options would
-        # be to precomoute x, y, z before the loop, but this can be heavy on
-        # the graphics output. See
-        # <https://stackoverflow.com/q/45324258/353337>.
-        u = numpy.linspace(0, 2 * numpy.pi, int(2*numpy.pi/h*r) + 1)
-        v = numpy.linspace(0, numpy.pi, int(numpy.pi/h*r) + 1)
-        x = numpy.outer(numpy.cos(u), numpy.sin(v))
-        y = numpy.outer(numpy.sin(u), numpy.sin(v))
-        z = numpy.outer(numpy.ones(numpy.size(u)), numpy.cos(v))
+        sum_weights = math.fsum(weights)
+        for tp, weight in zip(pts, weights):
+            # Choose radius such that the sum of volumes of the balls equals
+            # total_volume.
+            r = (
+                abs(weight)/sum_weights * total_volume/(4.0/3.0 * numpy.pi)
+                )**(1.0/3.0)
 
-        color = '#1f77b4' if weight >= 0 else '#d62728'
-        # highlight ball center
-        plt.plot(
-            [tp[0]], [tp[1]], [tp[2]],
-            linestyle='None', marker='.', color=color
-            )
+            # http://matplotlib.org/examples/mplot3d/surface3d_demo2.html
+            # Compute sphere for every point anew. This is more costly on the
+            # numerical side, but gives the flexibility of drawing sphere of
+            # different size with different number of points. Another options
+            # would be to precompute x, y, z before the loop, but this can be
+            # heavy on the graphics output. See
+            # <https://stackoverflow.com/q/45324258/353337>.
+            u = numpy.linspace(0, 2 * numpy.pi, int(2*numpy.pi/h*r) + 1)
+            v = numpy.linspace(0, numpy.pi, int(numpy.pi/h*r) + 1)
+            x = numpy.outer(numpy.cos(u), numpy.sin(v))
+            y = numpy.outer(numpy.sin(u), numpy.sin(v))
+            z = numpy.outer(numpy.ones(numpy.size(u)), numpy.cos(v))
 
-        ax.plot_surface(
-            r*x + tp[0], r*y + tp[1], r*z + tp[2],
-            color=color,
-            alpha=0.3,
-            linewidth=1
-            )
+            color = '#1f77b4' if weight >= 0 else '#d62728'
+            # highlight ball center
+            plt.plot(
+                [tp[0]], [tp[1]], [tp[2]],
+                linestyle='None', marker='.', color=color
+                )
 
+            ax.plot_surface(
+                r*x + tp[0], r*y + tp[1], r*z + tp[2],
+                color=color,
+                alpha=0.3,
+                linewidth=1
+                )
+
+        ax.set_axis_off()
+        return
+
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+    ax.set_aspect('equal')
     ax.set_axis_off()
+
+    for edge in edges:
+        plt.plot(*edge, color='k', linestyle='-')
+
+    plot_spheres(plt, ax, points, weights, volume)
+    plt.show()
     return
-
-
-def partition(balls, boxes):
-    '''Create all nonnegative tuples of length d which sum up to n.
-    '''
-    # <https://stackoverflow.com/a/36748940/353337>
-    # See <https://stackoverflow.com/a/45348441/353337> for an alterantive
-    # solution.
-    def rec(boxes, balls, parent=tuple()):
-        if boxes > 1:
-            for i in range(balls + 1):
-                for x in rec(boxes - 1, i, parent + (balls - i,)):
-                    yield x
-        else:
-            yield parent + (balls,)
-
-    return list(rec(boxes, balls))
 
 
 def show_mayavi(points, weights, volume, edges):
@@ -211,8 +228,7 @@ def show_vtk(points, weights, volume, edges):
         sphere_actor = vtk.vtkActor()
         sphere_actor.SetMapper(sphere_mapper)
         sphere_actor.GetProperty().SetColor(color)
-
-        # sphere_actor.GetProperty().LightingOn()
+        # sphere_actor.GetProperty().SetOpacity(0.9)
         return sphere_actor
 
     line_actors = [get_line_actor(edge[:, 0], edge[:, 1]) for edge in edges]
@@ -224,9 +240,7 @@ def show_vtk(points, weights, volume, edges):
     sphere_actors = [
         get_sphere_actor(
             pt,
-            (
-                abs(weight)/sum_weights * volume/(4.0/3.0 * numpy.pi)
-            )**(1.0/3.0),
+            numpy.cbrt(abs(weight)/sum_weights * volume/(4.0/3.0 * numpy.pi)),
             color=blue if weight > 0.0 else red
             )
         for pt, weight in zip(points, weights)
