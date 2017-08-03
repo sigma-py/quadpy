@@ -154,6 +154,7 @@ def show_mpl(points, weights, volume, edges):
     return
 
 
+# pylint: disable=too-many-locals
 def show_mayavi(points, weights, volume, edges):
     import mayavi.mlab as mlab
 
@@ -192,6 +193,7 @@ def show_mayavi(points, weights, volume, edges):
     return
 
 
+# pylint: disable=too-many-locals
 def show_vtk(points, weights, volume, edges):
     import vtk
 

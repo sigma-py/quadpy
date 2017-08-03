@@ -9,7 +9,7 @@ jobs:
       - image: ubuntu:17.04
     steps:
       - run: apt-get update
-      - run: apt-get install -y git python-pip python-matplotlib python-numpy python-scipy mayavi2
+      - run: apt-get install -y git python-pip python-matplotlib python-numpy python-scipy
       - run: pip2 install -U pytest pytest-cov pylint
       - checkout
       - run: LANG=C.UTF-8 pip2 install .
