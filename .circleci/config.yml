@@ -1,0 +1,50 @@
+version: 2
+
+jobs:
+
+  # python2:
+  build:
+    working_directory: ~/quadpy
+    docker:
+      - image: ubuntu:17.04
+    steps:
+      - run: apt-get update
+      - run: apt-get install -y git python-pip python-matplotlib python-numpy python-scipy
+      - run: pip2 install -U pytest pytest-cov pylint
+      - checkout
+      - run: LANG=C.UTF-8 pip2 install .
+      # lint
+      - run: pylint quadpy/
+      - run: pylint test/*.py
+      # The tests
+      - run: cd test/ && MPLBACKEND=Agg pytest --cov quadpy
+      # submit to codecov
+      - run: apt-get install -y curl
+      - run: bash <(curl -s https://codecov.io/bash)
+
+
+#   # python3:
+#   build:
+#     working_directory: ~/frentos
+#     docker:
+#       - image: ubuntu:17.04
+#     steps:
+#       - run: apt-get update
+#       - run: apt-get install -y libcgal-dev libeigen3-dev pandoc python3-numpy python3-pip
+#       - run: pip3 install -U pytest pytest-cov pylint meshio
+#       - checkout
+#       # install
+#       - run: LANG=C.UTF-8 pip3 install .
+#       # lint
+#       - run: pylint setup.py
+#       # The actual test
+#       - run: cd test/ && pytest
+
+# workflow builds don't support forked PRs yet, cf.
+# <https://circleci.com/docs/2.0/faq/#can-i-build-fork-prs-using-workflows>.
+# workflows:
+#   version: 2
+#   build-and-test:
+#     jobs:
+#       - python2
+#       - python3

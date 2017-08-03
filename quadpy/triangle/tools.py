@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import matplotlib.pyplot as plt
 import numpy
 
 from .dunavant import Dunavant
@@ -8,7 +9,13 @@ from .. import helpers
 from ..simplex import transform, get_vol, integrate
 
 
-def show(
+def show(*args, **kwargs):
+    plot(*args, **kwargs)
+    plt.show()
+    return
+
+
+def plot(
         scheme,
         triangle=numpy.array([
             [-0.5, 0.0],
@@ -20,8 +27,6 @@ def show(
     '''Shows the quadrature points on a given triangle. The size of the circles
     around the points coincides with their weights.
     '''
-    from matplotlib import pyplot as plt
-
     plt.plot(triangle[:, 0], triangle[:, 1], '-k')
     plt.plot(
         [triangle[-1, 0], triangle[0, 0]],
@@ -32,7 +37,7 @@ def show(
     if not show_axes:
         plt.gca().set_axis_off()
 
-    transformed_pts = transform(scheme.points.T, triangle.T)
+    transformed_pts = transform(scheme.points.T, triangle.T).T
 
     vol = get_vol(triangle)
     helpers.plot_disks(
@@ -40,7 +45,6 @@ def show(
         )
 
     plt.axis('equal')
-    plt.show()
     return
 
 

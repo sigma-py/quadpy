@@ -4,7 +4,6 @@ from __future__ import print_function
 
 from helpers import check_degree
 
-import matplotlib.pyplot as plt
 import quadpy
 from quadpy.hexahedron import Product
 import pytest
@@ -114,9 +113,10 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = Product(quadpy.line_segment.NewtonCotesOpen(5))
-    scheme_ = quadpy.hexahedron.StroudN('Cn 7-1')
-    print(scheme_.weights)
-    print(scheme_.points)
-    test_scheme(scheme_, 1.0e-14, print_degree=True)
-    test_show(scheme_)
-    plt.show()
+    scheme_ = quadpy.hexahedron.StroudN('Cn 5-4')
+    # test_scheme(scheme_, 1.0e-14, print_degree=True)
+    # test_show(scheme_)
+    quadpy.hexahedron.show(
+            scheme_,
+            backend='vtk'
+            )
