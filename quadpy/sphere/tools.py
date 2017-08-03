@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import matplotlib.pyplot as plt
 import numpy
 
 from .. import helpers
@@ -9,8 +10,13 @@ def area(radius):
     return 4*numpy.pi * numpy.array(radius)**2
 
 
-def show(scheme):
-    from matplotlib import pyplot as plt
+def show(*args, **kwargs):
+    plot(*args, **kwargs)
+    plt.show()
+    return
+
+
+def plot(scheme):
     # pylint: disable=relative-import, unused-variable
     from mpl_toolkits.mplot3d import Axes3D
 
@@ -25,7 +31,6 @@ def show(scheme):
         _plot_spherical_cap(ax, p, theta)
 
     ax.set_axis_off()
-    plt.show()
     return
 
 

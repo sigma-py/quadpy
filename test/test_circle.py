@@ -4,7 +4,6 @@ from helpers import (
     integrate_monomial_over_unit_circle, check_degree
     )
 
-import matplotlib.pyplot as plt
 import pytest
 import quadpy
 
@@ -39,4 +38,3 @@ if __name__ == '__main__':
     scheme_ = quadpy.circle.Equidistant(30)
     test_scheme(scheme_)
     test_show(scheme_)
-    plt.show()

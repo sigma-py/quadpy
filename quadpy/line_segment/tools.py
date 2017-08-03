@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import matplotlib.pyplot as plt
 import numpy
 
 from .. import helpers
@@ -86,8 +87,13 @@ def adaptive_integrate(
     return quad_sum, global_error_estimate
 
 
-def show(scheme, interval=numpy.array([[-1.0], [1.0]]), show_axes=False):
-    from matplotlib import pyplot as plt
+def show(*args, **kwargs):
+    plot(*args, **kwargs)
+    plt.show()
+    return
+
+
+def plot(scheme, interval=numpy.array([[-1.0], [1.0]]), show_axes=False):
     # change default range so that new disks will work
     plt.axis('equal')
     # ax.set_xlim((-1.5, 1.5))
@@ -110,5 +116,4 @@ def show(scheme, interval=numpy.array([[-1.0], [1.0]]), show_axes=False):
     helpers.plot_disks(
         plt, pts, scheme.weights, total_area
         )
-    plt.show()
     return
