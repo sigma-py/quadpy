@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 #
+import numpy
+
 
 def _z():
-    return numpy.array([0.0, 0.0])
+    return numpy.array([[0.0, 0.0]])
 
 
 def _symm_r_0(r):
@@ -33,4 +35,20 @@ def _symm_s_t(s, t):
         [-t, +s],
         [+t, -s],
         [-t, -s],
-        ]_
+        ])
+
+
+def _pm(s, t):
+    return numpy.array([
+        [+s, +t],
+        [-s, -t],
+        ])
+
+
+def _pm2(s, t):
+    return numpy.array([
+        [+s, +t],
+        [-s, +t],
+        [+s, -t],
+        [-s, -t],
+        ])

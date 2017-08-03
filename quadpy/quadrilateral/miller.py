@@ -27,4 +27,6 @@ class Miller(object):
             _symm_r_0(1.0),
             _symm_s(1.0)
             ])
+
+        self.weights *= 4.0
         return
