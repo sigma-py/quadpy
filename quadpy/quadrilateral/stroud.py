@@ -1,15 +1,19 @@
 # -*- coding: utf-8 -*-
 #
+import warnings
+
 import numpy
 
 from .albrecht_collatz import AlbrechtCollatz
 from .burnside import Burnside
 from .irwin import Irwin
+from .maxwell import Maxwell
+from .meister import Meister
 from .miller import Miller
+from .phillips import Phillips
 from .tyler import Tyler
 from .helpers import _symm_r_0, _symm_s, _symm_s_t, _z
 
-from .. import line_segment
 from .. import ncube
 
 
@@ -67,12 +71,47 @@ class Stroud(object):
                 _symm_s(r)
                 ])
         elif index == 'C2 5-5':
-            self.set_data(Tyler())
+            self.set_data(Tyler(1))
         elif index == 'C2 5-6':
             self.set_data(AlbrechtCollatz(4))
-        else:
-            assert index == 'C2 5-7', 'Illegal index \'{}\'.'.format(index)
+        elif index == 'C2 5-7':
             self.set_data(Irwin(2))
+        elif index == 'C2 7-1':
+            self.set_data(Tyler(2))
+        elif index == 'C2 7-2':
+            self.set_data(Phillips())
+        elif index == 'C2 7-3':
+            self.set_data(Maxwell())
+        elif index == 'C2 7-4':
+            # product Gauss
+            # TODO fix
+            warnings.warn('Formula {} only has degree 1!'.format(index))
+            self.degree = 1
+
+            r = numpy.sqrt((15.0 - 2.0*numpy.sqrt(30)) / 35.0)
+            s = numpy.sqrt((15.0 + 2.0*numpy.sqrt(30)) / 35.0)
+
+            B1 = (59.0 + 6.0*numpy.sqrt(30.0)) / 864.0
+            B2 = (59.0 - 6.0*numpy.sqrt(30.0)) / 864.0
+            B3 = 49.0 / 864.0
+
+            self.weights = reference_volume * numpy.concatenate([
+                numpy.full(4, B1),
+                numpy.full(4, B2),
+                numpy.full(8, B3)
+                ])
+            r = numpy.sqrt(3.0 / 5.0)
+            self.points = numpy.concatenate([
+                _symm_s(r),
+                _symm_s(s),
+                _symm_s_t(r, s),
+                ])
+        elif index == 'C2 7-5':
+            self.set_data(Tyler(3))
+        elif index == 'C2 7-6':
+            self.set_data(Meister())
+
+        # assert index == 'C2 5-7', 'Illegal index \'{}\'.'.format(index)
 
         # elif index == 2:
         #     self.weights = 4 * [1.0]
@@ -133,47 +172,6 @@ class Stroud(object):
         #             )
         #         )
         #     self.degree = 5
-        # elif index == 8:
-        #     # Stroud number C2:7-1.
-        #     r = numpy.sqrt(6.0 / 7.0)
-        #     c = 3.0 * numpy.sqrt(583.0)
-        #     s = numpy.sqrt((114.0 - c) / 287.0)
-        #     t = numpy.sqrt((114.0 + c) / 287.0)
-        #     w1 = 4.0 * 49.0 / 810.0
-        #     w2 = 4.0 * (178981.0 + 923.0 * c) / 1888920.0
-        #     w3 = 4.0 * (178981.0 - 923.0 * c) / 1888920.0
-        #     #
-        #     self.weights = (
-        #         4 * [w1] +
-        #         4 * [w2] +
-        #         4 * [w3]
-        #         )
-        #     self.points = (
-        #         _symm_r_0(r) +
-        #         _symm_s(s) +
-        #         _symm_s(t)
-        #         )
-        #     self.degree = 7
-        # elif index == 9:
-        #     # Stroud number C2:7-3.
-        #     r = numpy.sqrt(12.0 / 35.0)
-        #     c = 3.0 * numpy.sqrt(186.0)
-        #     s = numpy.sqrt((93.0 + c) / 155.0)
-        #     t = numpy.sqrt((93.0 - c) / 155.0)
-        #     w1 = 8.0 / 162.0
-        #     w2 = 98.0 / 162.0
-        #     w3 = 31.0 / 162.0
-        #     self.weights = (
-        #         [w1] +
-        #         4 * [w2] +
-        #         8 * [w3]
-        #         )
-        #     self.points = (
-        #         [[0.0, 0.0]] +
-        #         _symm_r_0(r) +
-        #         _symm_s_t(s, t)
-        #         )
-        #     self.degree = 7
         # else:
         #     assert index == 10
         #     scheme1d = line_segment.GaussLegendre(8)
