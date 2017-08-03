@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-import matplotlib.pyplot as plt
 import numpy
 
 from . import felippa
@@ -54,33 +53,14 @@ def _get_detJ(xi, wedge):
     return det
 
 
-def show(*args, **kwargs):
-    plot(*args, **kwargs)
-    plt.show()
-    return
-
-
-def plot(
+def show(
         scheme,
         wedge=numpy.array([
             [0, 0, 0], [1, 0, 0], [0, 1, 0],
             [0, 0, 1], [1, 0, 1], [0, 1, 1],
             ], dtype=float),
-        show_axes=False
+        backend='mpl'
         ):
-    '''Shows the quadrature points on a given wedge. The size of the
-    balls around the points coincides with their weights.
-    '''
-    # pylint: disable=relative-import, unused-variable
-    from mpl_toolkits.mplot3d import Axes3D
-
-    fig = plt.figure()
-    ax = fig.gca(projection='3d')
-    ax.set_aspect('equal')
-
-    if not show_axes:
-        ax.set_axis_off()
-
     edges = numpy.array([
         [wedge[0], wedge[1]],
         [wedge[1], wedge[2]],
@@ -95,50 +75,11 @@ def plot(
         [wedge[2], wedge[5]],
         ])
     edges = numpy.moveaxis(edges, 1, 2)
-    for edge in edges:
-        plt.plot(*edge, color='k')
 
-    transformed_pts = _transform(scheme.points.T, wedge).T
-
-    vol = integrate(lambda x: numpy.ones(1), wedge, felippa.Felippa(1))
-    helpers.plot_spheres(
-        plt, ax, transformed_pts, scheme.weights, vol
-        )
-    return
-
-
-def show_mayavi(
-        scheme,
-        wedge=numpy.array([
-            [0, 0, 0], [1, 0, 0], [0, 1, 0],
-            [0, 0, 1], [1, 0, 1], [0, 1, 1],
-            ], dtype=float),
-        ):
-    '''Shows the quadrature points on a given tetrahedron. The size of the
-    balls around the points coincides with their weights.
-    '''
-    import mayavi.mlab as mlab
-
-    edges = numpy.array([
-        [wedge[0], wedge[1]],
-        [wedge[1], wedge[2]],
-        [wedge[0], wedge[2]],
-        #
-        [wedge[3], wedge[4]],
-        [wedge[4], wedge[5]],
-        [wedge[5], wedge[3]],
-        #
-        [wedge[0], wedge[3]],
-        [wedge[1], wedge[4]],
-        [wedge[2], wedge[5]],
-        ])
-    for edge in edges:
-        mlab.plot3d(edge[:, 0], edge[:, 1], edge[:, 2], tube_radius=1.0e-2)
-
-    helpers.plot_spheres_mayavi(
+    helpers.backend_to_function[backend](
             _transform(scheme.points.T, wedge).T,
             scheme.weights,
-            integrate(lambda x: numpy.ones(1), wedge, felippa.Felippa(1))
+            integrate(lambda x: numpy.ones(1), wedge, felippa.Felippa(1)),
+            edges
             )
-    mlab.show()
     return
