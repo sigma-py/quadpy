@@ -2,6 +2,9 @@
 #
 import numpy
 
+from .miller import Miller
+from .helpers import _symm_r_0, _symm_s, _symm_s_t
+
 from .. import line_segment
 
 
@@ -15,14 +18,21 @@ class Stroud(object):
     <http://nines.cs.kuleuven.be/ecf/mtables.html>
     '''
     def __init__(self, index):
-        if index == 0:
-            self.weights = [4.0]
-            self.points = [[0.0, 0.0]]
+        if index == 'C2 1-1':
+            # Product trapezoidal
             self.degree = 1
-        elif index == 1:
-            self.weights = 4 * [1.0]
-            self.points = _symm_s(1.0/numpy.sqrt(3.0))
+            self.weights = numpy.full(4, 0.25)
+            self.points = _symm_s(1.0)
+        elif index == 'C2 1-2':
+            m = Miller()
+            self.degree = m.degree
+            self.weights = m.weights
+            self.points = m.points
+        elif index == 'C2 3-1':
+            # Product Gauss
             self.degree = 3
+            self.weights = numpy.full(4, 0.25)
+            self.points = _symm_s(1.0/numpy.sqrt(3.0))
         elif index == 2:
             self.weights = 4 * [1.0]
             self.points = _symm_r_0(numpy.sqrt(2.0/3.0))
@@ -138,34 +148,3 @@ class Stroud(object):
         self.weights = numpy.array(self.weights)
         self.points = numpy.array(self.points)
         return
-
-
-def _symm_r_0(r):
-    return [
-        [+r, 0.0],
-        [-r, 0.0],
-        [0.0, +r],
-        [0.0, -r],
-        ]
-
-
-def _symm_s(s):
-    return [
-        [+s, +s],
-        [-s, +s],
-        [+s, -s],
-        [-s, -s],
-        ]
-
-
-def _symm_s_t(s, t):
-    return [
-        [+s, +t],
-        [-s, +t],
-        [+s, -t],
-        [-s, -t],
-        [+t, +s],
-        [-t, +s],
-        [+t, -s],
-        [-t, -s],
-        ]
