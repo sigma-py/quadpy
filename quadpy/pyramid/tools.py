@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-import matplotlib.pyplot as plt
 import numpy
 
 from .felippa import Felippa
@@ -52,29 +51,14 @@ def _get_det_J(pyra, xi):
     return det.T
 
 
-def show(*args, **kwargs):
-    plot(*args, **kwargs)
-    plt.show()
-    return
-
-
-def plot(
+def show(
         scheme,
         pyra=numpy.array([
             [0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0],
             [0.5, 0.5, 1.0],
-            ])
+            ]),
+        backend='mpl'
         ):
-    '''Shows the quadrature points on a given pyramid. The size of the
-    balls around the points coincides with their weights.
-    '''
-    # pylint: disable=relative-import, unused-variable
-    from mpl_toolkits.mplot3d import Axes3D
-
-    fig = plt.figure()
-    ax = fig.gca(projection='3d')
-    ax.set_aspect('equal')
-
     edges = numpy.array([
         [pyra[0], pyra[1]],
         [pyra[1], pyra[2]],
@@ -87,49 +71,11 @@ def plot(
         [pyra[3], pyra[4]],
         ])
     edges = numpy.moveaxis(edges, 1, 2)
-    for edge in edges:
-        plt.plot(*edge, color='k')
 
-    transformed_pts = _transform(scheme.points.T, pyra).T
-
-    vol = integrate(lambda x: 1.0, pyra, Felippa(1))
-    helpers.plot_spheres(
-        plt, ax, transformed_pts, scheme.weights, vol
-        )
-    return
-
-
-def show_mayavi(
-        scheme,
-        pyra=numpy.array([
-            [0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0],
-            [0.5, 0.5, 1.0],
-            ])
-        ):
-    '''Shows the quadrature points on a given tetrahedron. The size of the
-    balls around the points coincides with their weights.
-    '''
-    import mayavi.mlab as mlab
-
-    edges = numpy.array([
-        [pyra[0], pyra[1]],
-        [pyra[1], pyra[2]],
-        [pyra[2], pyra[3]],
-        [pyra[3], pyra[0]],
-        #
-        [pyra[0], pyra[4]],
-        [pyra[1], pyra[4]],
-        [pyra[2], pyra[4]],
-        [pyra[3], pyra[4]],
-        ])
-    edges = numpy.moveaxis(edges, 1, 2)
-    for edge in edges:
-        mlab.plot3d(*edge, tube_radius=1.0e-2)
-
-    helpers.plot_spheres_mayavi(
+    helpers.backend_to_function[backend](
             _transform(scheme.points.T, pyra).T,
             scheme.weights,
-            integrate(lambda x: 1.0, pyra, Felippa(1))
+            integrate(lambda x: 1.0, pyra, Felippa(1)),
+            edges
             )
-    mlab.show()
     return

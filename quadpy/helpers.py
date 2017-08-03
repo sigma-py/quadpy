@@ -213,7 +213,7 @@ def show_vtk(points, weights, volume, edges):
         # Generate polygon data for a sphere
         sphere = vtk.vtkSphereSource()
 
-        sphere.SetCenter(*x0)
+        sphere.SetCenter(x0)
         sphere.SetRadius(r)
 
         sphere.SetPhiResolution(100)
@@ -266,3 +266,10 @@ def show_vtk(points, weights, volume, edges):
     render_window.Render()
     interactor.Start()
     return
+
+
+backend_to_function = {
+    'mayavi': show_mayavi,
+    'mpl': show_mpl,
+    'vtk': show_vtk,
+    }
