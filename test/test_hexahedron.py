@@ -116,4 +116,5 @@ if __name__ == '__main__':
     scheme_ = quadpy.hexahedron.StroudN('Cn 5-4')
     test_scheme(scheme_, 1.0e-14, print_degree=True)
     # test_show(scheme_)
-    quadpy.hexahedron.show_mayavi(scheme_)
+    # quadpy.hexahedron.show_mayavi(scheme_)
+    quadpy.hexahedron.show_vtk(scheme_)

@@ -120,40 +120,6 @@ def plot_spheres(
     return
 
 
-def plot_spheres_mayavi(
-        pts, weights, total_volume
-        ):
-    import mayavi.mlab as mlab
-
-    blue = (31./255., 119.0/255., 180./255.)
-    red = (84./255., 15.0/255., 16./255.)
-
-    h = 1.0e-2
-    sum_weights = math.fsum(weights)
-    for tp, weight in zip(pts, weights):
-        # Choose radius such that the sum of volumes of the balls equals
-        # total_volume.
-        r = (
-            abs(weight)/sum_weights * total_volume/(4.0/3.0 * numpy.pi)
-            )**(1.0/3.0)
-
-        # Create a sphere
-        u = numpy.linspace(0, 2 * numpy.pi, int(2*numpy.pi/h*r) + 1)
-        v = numpy.linspace(0, numpy.pi, int(numpy.pi/h*r) + 1)
-        sin_u, cos_u = numpy.sin(u), numpy.cos(u)
-        sin_v, cos_v = numpy.sin(v), numpy.cos(v)
-        x = numpy.outer(cos_u, sin_v)
-        y = numpy.outer(sin_u, sin_v)
-        z = numpy.outer(numpy.ones(numpy.size(u)), cos_v)
-
-        mlab.mesh(
-            r*x + tp[0], r*y + tp[1], r*z + tp[2],
-            color=blue if weight >= 0 else red,
-            opacity=0.3
-            )
-    return
-
-
 def partition(balls, boxes):
     '''Create all nonnegative tuples of length d which sum up to n.
     '''
@@ -169,3 +135,120 @@ def partition(balls, boxes):
             yield parent + (balls,)
 
     return list(rec(boxes, balls))
+
+
+def show_mayavi(points, weights, volume, edges):
+    import mayavi.mlab as mlab
+
+    mlab.figure(bgcolor=(1.0, 1.0, 1.0))
+
+    for edge in edges:
+        mlab.plot3d(*edge, tube_radius=0.5e-2, color=(0.0, 0.0, 0.0))
+
+    blue = (31./255., 119.0/255., 180./255.)
+    red = (84./255., 15.0/255., 16./255.)
+
+    h = 1.0e-2
+    sum_weights = math.fsum(weights)
+    for tp, weight in zip(points, weights):
+        # Choose radius such that the sum of volumes of the balls equals
+        # total_volume.
+        r = (
+            abs(weight)/sum_weights * volume/(4.0/3.0 * numpy.pi)
+            )**(1.0/3.0)
+
+        # Create a sphere
+        u = numpy.linspace(0, 2 * numpy.pi, int(2*numpy.pi/h*r) + 1)
+        v = numpy.linspace(0, numpy.pi, int(numpy.pi/h*r) + 1)
+        sin_u, cos_u = numpy.sin(u), numpy.cos(u)
+        sin_v, cos_v = numpy.sin(v), numpy.cos(v)
+        x = numpy.outer(cos_u, sin_v)
+        y = numpy.outer(sin_u, sin_v)
+        z = numpy.outer(numpy.ones(numpy.size(u)), cos_v)
+
+        mlab.mesh(
+            r*x + tp[0], r*y + tp[1], r*z + tp[2],
+            color=blue if weight >= 0 else red,
+            opacity=1.0
+            )
+    mlab.show()
+    return
+
+
+def show_vtk(points, weights, volume, edges):
+    import vtk
+
+    def get_line_actor(x0, x1):
+        source = vtk.vtkLineSource()
+        source.SetPoint1(x0)
+        source.SetPoint2(x1)
+        # mapper
+        mapper = vtk.vtkPolyDataMapper()
+        mapper.SetInputConnection(source.GetOutputPort())
+        # actor
+        actor = vtk.vtkActor()
+        actor.SetMapper(mapper)
+        # color actor
+        actor.GetProperty().SetColor(0, 0, 0)
+        return actor
+
+    def get_sphere_actor(x0, r, color):
+        # Generate polygon data for a sphere
+        sphere = vtk.vtkSphereSource()
+
+        sphere.SetCenter(*x0)
+        sphere.SetRadius(r)
+
+        sphere.SetPhiResolution(100)
+        sphere.SetThetaResolution(100)
+
+        # Create a mapper for the sphere data
+        sphere_mapper = vtk.vtkPolyDataMapper()
+        # sphere_mapper.SetInput(sphere.GetOutput())
+        sphere_mapper.SetInputConnection(sphere.GetOutputPort())
+
+        # Connect the mapper to an actor
+        sphere_actor = vtk.vtkActor()
+        sphere_actor.SetMapper(sphere_mapper)
+        sphere_actor.GetProperty().SetColor(color)
+
+        # sphere_actor.GetProperty().LightingOn()
+        return sphere_actor
+
+    line_actors = [get_line_actor(edge[:, 0], edge[:, 1]) for edge in edges]
+
+    blue = numpy.array([31.0, 119.0, 180.0]) / 255.0
+    red = numpy.array([84.0, 15.0, 16.0]) / 255.0
+
+    sum_weights = math.fsum(weights)
+    sphere_actors = [
+        get_sphere_actor(
+            pt,
+            (
+                abs(weight)/sum_weights * volume/(4.0/3.0 * numpy.pi)
+            )**(1.0/3.0),
+            color=blue if weight > 0.0 else red
+            )
+        for pt, weight in zip(points, weights)
+        ]
+
+    # Create a renderer and add the sphere actor to it
+    renderer = vtk.vtkRenderer()
+    renderer.SetBackground(1.0, 1.0, 1.0)
+    for sphere_actor in sphere_actors:
+        renderer.AddActor(sphere_actor)
+    for line_actor in line_actors:
+        renderer.AddActor(line_actor)
+
+    # Create a render window
+    render_window = vtk.vtkRenderWindow()
+    render_window.AddRenderer(renderer)
+
+    # Create an interactor
+    interactor = vtk.vtkRenderWindowInteractor()
+    interactor.SetRenderWindow(render_window)
+    # Initialize the interactor and start the rendering loop
+    interactor.Initialize()
+    render_window.Render()
+    interactor.Start()
+    return

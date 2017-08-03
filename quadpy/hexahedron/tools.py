@@ -32,23 +32,8 @@ def plot(
     if not show_axes:
         ax.set_axis_off()
 
-    edges = numpy.array([
-        [hexa[0, 0, 0], hexa[1, 0, 0]],
-        [hexa[1, 0, 0], hexa[1, 1, 0]],
-        [hexa[1, 1, 0], hexa[0, 1, 0]],
-        [hexa[0, 1, 0], hexa[0, 0, 0]],
-        #
-        [hexa[0, 0, 1], hexa[1, 0, 1]],
-        [hexa[1, 0, 1], hexa[1, 1, 1]],
-        [hexa[1, 1, 1], hexa[0, 1, 1]],
-        [hexa[0, 1, 1], hexa[0, 0, 1]],
-        #
-        [hexa[0, 0, 0], hexa[0, 0, 1]],
-        [hexa[1, 0, 0], hexa[1, 0, 1]],
-        [hexa[1, 1, 0], hexa[1, 1, 1]],
-        [hexa[0, 1, 0], hexa[0, 1, 1]],
-        ])
-    edges = numpy.moveaxis(edges, 1, 2)
+    edges = _get_edges(hexa)
+
     for edge in edges:
         plt.plot(*edge, color='k', linestyle='-')
 
@@ -65,11 +50,29 @@ def show_mayavi(
         scheme,
         hexa=cube_points([0.0, 1.0], [0.0, 1.0], [0.0, 1.0]),
         ):
-    '''Shows the quadrature points on a given tetrahedron. The size of the
-    balls around the points coincides with their weights.
-    '''
-    import mayavi.mlab as mlab
+    helpers.show_mayavi(
+            transform(scheme.points.T, hexa),
+            scheme.weights,
+            integrate(lambda x: 1.0, hexa, scheme),
+            _get_edges(hexa)
+            )
+    return
 
+
+def show_vtk(
+        scheme,
+        hexa=cube_points([0.0, 1.0], [0.0, 1.0], [0.0, 1.0]),
+        ):
+    helpers.show_vtk(
+            transform(scheme.points.T, hexa),
+            scheme.weights,
+            integrate(lambda x: 1.0, hexa, scheme),
+            _get_edges(hexa)
+            )
+    return
+
+
+def _get_edges(hexa):
     edges = numpy.array([
         [hexa[0, 0, 0], hexa[1, 0, 0]],
         [hexa[1, 0, 0], hexa[1, 1, 0]],
@@ -87,13 +90,4 @@ def show_mayavi(
         [hexa[0, 1, 0], hexa[0, 1, 1]],
         ])
     edges = numpy.moveaxis(edges, 1, 2)
-    for edge in edges:
-        mlab.plot3d(*edge, tube_radius=1.0e-2)
-
-    helpers.plot_spheres_mayavi(
-            transform(scheme.points.T, hexa),
-            scheme.weights,
-            integrate(lambda x: 1.0, hexa, scheme)
-            )
-    mlab.show()
-    return
+    return edges
