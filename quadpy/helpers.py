@@ -156,6 +156,7 @@ def show_mpl(points, weights, volume, edges):
 
 # pylint: disable=too-many-locals
 def show_mayavi(points, weights, volume, edges):
+    # pylint: disable=import-error
     import mayavi.mlab as mlab
 
     mlab.figure(bgcolor=(1.0, 1.0, 1.0))
@@ -195,6 +196,7 @@ def show_mayavi(points, weights, volume, edges):
 
 # pylint: disable=too-many-locals
 def show_vtk(points, weights, volume, edges):
+    # pylint: disable=import-error
     import vtk
 
     def get_line_actor(x0, x1):
