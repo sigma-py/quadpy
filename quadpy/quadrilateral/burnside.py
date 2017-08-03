@@ -14,16 +14,15 @@ class Burnside(object):
     def __init__(self):
         self.name = 'Burnside'
         self.degree = 5
-        self.weights = numpy.concatenate([
-            numpy.full(4, 10.0/49.0),
-            numpy.full(4, 9.0/196.0),
-            ])
         r = numpy.sqrt(7.0 / 15.0)
         s = numpy.sqrt(7.0 / 9.0)
-        self.points = numpy.concatenate([
-            _symm_r_0(r),
-            _symm_s(s)
-            ])
+        data = [
+            (_symm_r_0(r), 10.0/49.0),
+            (_symm_s(s), 9.0/196.0),
+            ]
 
+        points, weights = zip(*data)
+        self.points = numpy.concatenate(points)
+        self.weights = numpy.repeat(weights, [len(grp) for grp in points])
         self.weights *= 4.0
         return

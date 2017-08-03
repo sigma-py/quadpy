@@ -12,10 +12,12 @@ from .meister import *
 from .miller import *
 from .morrow_patterson import *
 from .phillips import *
-from .product import *
+from .rabinowitz_richter import *
 from .stroud import *
-from .stroudn import *
 from .tyler import *
 from .wissmann_becker import *
+
+from .product import *
+from .stroudn import *
 
 from .tools import *
