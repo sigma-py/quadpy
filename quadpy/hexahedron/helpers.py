@@ -34,7 +34,7 @@ def fs_rr0(a):
         ])
 
 
-def fs_rrr(a):
+def pm_rrr(a):
     return numpy.array([
         [+a, +a, +a],
         [-a, +a, +a],
