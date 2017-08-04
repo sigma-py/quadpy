@@ -205,9 +205,10 @@ val = quadpy.disk.integrate(
    - [Rabinowitz-Richter](https://dx.doi.org/10.2307/2004962) (1969, 6 schemes up to degree 15)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 13)
  * [Dunavant](https://dx.doi.org/10.1002/nme.1620211004) (1985, 11 schemes up to degree 19)
- * [Morrow-Patterson](https://dx.doi.org/10.1137/0722071) (1985, 2 schemes up to degree 20)
+ * [Morrow-Patterson](https://dx.doi.org/10.1137/0722071) (1985, 2 schemes up to degree 20, single precision)
  * [Wissmann-Becker](https://dx.doi.org/10.1137/0723043) (1986, 6 schemes up to degree 8)
  * [Cools-Haegemans](https://dx.doi.org/10.1007/BF02247942) (1988, 2 schemes up to degree 13)
+ * all formulas from the n-cube
 
 Example:
 ```python
@@ -288,7 +289,16 @@ val = quadpy.tetrahedron.integrate(
 <img src="https://nschloe.github.io/quadpy/hexa.png" width="25%">
 
  * Product schemes derived from line segment schemes
- * [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971, 15 schemes up to degree 5)
+ * via: [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
+   - [Sadowsky](https://dx.doi.org/10.2307/2303834) (1940, degree 5)
+   - [Tyler](https://dx.doi.org/10.4153/CJM-1953-044-1) (1953, 2 schemes up to degree 5)
+   - [Hammer-Wymore](https://doi.org/10.1090/S0025-5718-1957-0087220-6) (1957, degree 7)
+   - [Albrecht-Collatz](https://dx.doi.org/10.1002/zamm.19580380102) (1958, degree 3)
+   - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 2 schemes up to degree 7)
+   - [Mustard-Lyness-Blatt](https://doi.org/10.1093/comjnl/6.1.75) (1963, 6 schemes up to degree 5)
+   - [Stroud](https://dx.doi.org/10.1007/BF02162160) (1967, degree 5)
+   - [Sarma-Stroud](https://dx.doi.org/10.2307/2004963) (1969, degree 7)
+ * all formulas from the n-cube
 
 Example:
 ```python

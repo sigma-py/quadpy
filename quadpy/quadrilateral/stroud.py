@@ -24,9 +24,6 @@ class Stroud(object):
     Arthur Stroud,
     Approximate Calculation of Multiple Integrals,
     Prentice Hall, 1971.
-
-    <https://people.sc.fsu.edu/~jburkardt/m_src/stroud/square_unit_set.m>
-    <http://nines.cs.kuleuven.be/ecf/mtables.html>
     '''
     def __init__(self, index):
         reference_volume = 4.0
