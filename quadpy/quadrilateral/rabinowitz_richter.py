@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
-
 from .helpers import _symm_r_0, _symm_s, _symm_s_t
+
+from ..helpers import untangle
 
 
 class RabinowitzRichter(object):
@@ -29,20 +29,14 @@ class RabinowitzRichter(object):
             B3 = 0.0427846154667780
             B4 = 0.2157558036359328
 
-            # self.weights = numpy.concatenate([
-            #     numpy.full(4, B1),
-            #     numpy.full(4, B2),
-            #     numpy.full(4, B3),
-            #     numpy.full(8, B4),
-            #     ])
-            self.weights = numpy.repeat([B1, B2, B3, B4], [4, 4, 4, 8])
-            self.points = numpy.concatenate([
-                _symm_r_0(r1),
-                _symm_r_0(r2),
-                _symm_s(r3),
-                _symm_s_t(r4, s4),
-                ])
+            data = [
+                (B1, _symm_r_0(r1)),
+                (B2, _symm_r_0(r2)),
+                (B3, _symm_s(r3)),
+                (B4, _symm_s_t(r4, s4)),
+                ]
         else:
             assert False
 
+        self.points, self.weights = untangle(data)
         return

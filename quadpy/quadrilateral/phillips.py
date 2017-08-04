@@ -4,6 +4,8 @@ import numpy
 
 from .helpers import _symm_r_0, _pm2
 
+from ..helpers import untangle
+
 
 class Phillips(object):
     '''
@@ -29,16 +31,12 @@ class Phillips(object):
         B3 = 25.0 / 324.0
 
         self.degree = 7
-        self.weights = numpy.concatenate([
-            numpy.full(4, B1),
-            numpy.full(4, B2),
-            numpy.full(4, B3),
-            ])
-        self.points = numpy.concatenate([
-            _symm_r_0(r),
-            _symm_r_0(s),
-            _pm2(t, t)
-            ])
+        data = [
+            (B1, _symm_r_0(r)),
+            (B2, _symm_r_0(s)),
+            (B3, _pm2(t, t))
+            ]
 
+        self.points, self.weights = untangle(data)
         self.weights *= 4.0
         return
