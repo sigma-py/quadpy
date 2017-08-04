@@ -40,38 +40,39 @@ def _integrate_exact(f, triangle):
 
 
 @pytest.mark.parametrize(
-    'scheme',
-    [quadpy.triangle.BerntsenEspelid(k) for k in range(1, 5)]
-    + [quadpy.triangle.Centroid()]
-    + [quadpy.triangle.CoolsHaegemans(k) for k in [1]]
-    + [quadpy.triangle.Cubtri()]
-    + [quadpy.triangle.Dunavant(k) for k in range(1, 21)]
-    + [quadpy.triangle.Gatermann()]
-    + [quadpy.triangle.GrundmannMoeller(k) for k in range(10)]
-    + [quadpy.triangle.HammerMarloweStroud(k) for k in range(1, 6)]
-    + [quadpy.triangle.Hillion(k) for k in range(1, 4)]
-    + [quadpy.triangle.LaursenGellert(key) for key in [
+    'scheme,tol',
+    [(quadpy.triangle.BerntsenEspelid(k), 1.0e-14) for k in range(1, 5)]
+    + [(quadpy.triangle.Centroid(), 1.0e-14)]
+    + [(quadpy.triangle.CoolsHaegemans(k), 1.0e-14) for k in [1]]
+    + [(quadpy.triangle.Cubtri(), 1.0e-14)]
+    + [(quadpy.triangle.Dunavant(k), 1.0e-14) for k in range(1, 21)]
+    + [(quadpy.triangle.Gatermann(), 1.0e-14)]
+    + [(quadpy.triangle.GrundmannMoeller(k), 1.0e-14) for k in range(10)]
+    + [(quadpy.triangle.HammerMarloweStroud(k), 1.0e-14) for k in range(1, 6)]
+    + [(quadpy.triangle.Hillion(k), 1.0e-14) for k in range(1, 4)]
+    + [(quadpy.triangle.Hillion(k), 1.0e-6) for k in [4, 5, 6, 8, 10]]
+    + [(quadpy.triangle.LaursenGellert(key), 1.0e-14) for key in [
         '1', '2a', '2b', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
         '13', '14', '15a', '15b'
         ]]
-    + [quadpy.triangle.LiuVinokur(k) for k in range(1, 14)]
-    + [quadpy.triangle.LynessJespersen(k) for k in range(1, 22)]
-    + [quadpy.triangle.NewtonCotesClosed(k) for k in range(1, 6)]
-    + [quadpy.triangle.NewtonCotesOpen(k) for k in range(6)]
-    + [quadpy.triangle.SevenPoint()]
-    + [quadpy.triangle.Strang(k) for k in range(1, 11)]
-    + [quadpy.triangle.Stroud(k) for k in range(10)]
-    + [quadpy.triangle.TaylorWingateBos(k) for k in [1, 2, 4, 5, 8]]
-    + [quadpy.triangle.Triex(19), quadpy.triangle.Triex(28)]
-    + [quadpy.triangle.Vertex()]
-    + [quadpy.triangle.VioreanuRokhlin(k) for k in range(20)]
-    + [quadpy.triangle.Walkington(k) for k in [1, 2, 3, 5, 'p5']]
-    + [quadpy.triangle.WandzuraXiao(k) for k in range(1, 7)]
-    + [quadpy.triangle.WilliamsShunnJameson(k) for k in range(1, 9)]
-    + [quadpy.triangle.XiaoGimbutas(k) for k in range(1, 51)]
-    + [quadpy.triangle.ZhangCuiLiu(k) for k in [1, 2, 3]]
+    + [(quadpy.triangle.LiuVinokur(k), 1.0e-14) for k in range(1, 14)]
+    + [(quadpy.triangle.LynessJespersen(k), 1.0e-14) for k in range(1, 22)]
+    + [(quadpy.triangle.NewtonCotesClosed(k), 1.0e-14) for k in range(1, 6)]
+    + [(quadpy.triangle.NewtonCotesOpen(k), 1.0e-14) for k in range(6)]
+    + [(quadpy.triangle.SevenPoint(), 1.0e-14)]
+    + [(quadpy.triangle.Strang(k), 1.0e-14) for k in range(1, 11)]
+    + [(quadpy.triangle.Stroud(k), 1.0e-14) for k in range(10)]
+    + [(quadpy.triangle.TaylorWingateBos(k), 1.0e-14) for k in [1, 2, 4, 5, 8]]
+    + [(quadpy.triangle.Triex(k), 1.0e-14) for k in [19, 28]]
+    + [(quadpy.triangle.Vertex(), 1.0e-14)]
+    + [(quadpy.triangle.VioreanuRokhlin(k), 1.0e-14) for k in range(20)]
+    + [(quadpy.triangle.Walkington(k), 1.0e-14) for k in [1, 2, 3, 5, 'p5']]
+    + [(quadpy.triangle.WandzuraXiao(k), 1.0e-14) for k in range(1, 7)]
+    + [(quadpy.triangle.WilliamsShunnJameson(k), 1.0e-14) for k in range(1, 9)]
+    + [(quadpy.triangle.XiaoGimbutas(k), 1.0e-14) for k in range(1, 51)]
+    + [(quadpy.triangle.ZhangCuiLiu(k), 1.0e-14) for k in [1, 2, 3]]
     )
-def test_scheme(scheme):
+def test_scheme(scheme, tol):
     triangle = numpy.array([
         [0.0, 0.0],
         [1.0, 0.0],
@@ -81,7 +82,8 @@ def test_scheme(scheme):
             lambda poly: quadpy.triangle.integrate(poly, triangle, scheme),
             integrate_monomial_over_standard_simplex,
             lambda n: quadpy.helpers.partition(n, 2),
-            scheme.degree + 1
+            scheme.degree + 1,
+            tol=tol
             )
     assert degree >= scheme.degree
     return

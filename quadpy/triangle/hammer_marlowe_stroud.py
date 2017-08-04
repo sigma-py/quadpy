@@ -3,6 +3,8 @@
 import numpy
 from .helpers import _s3
 
+from ..helpers import untangle
+
 
 class HammerMarloweStroud(object):
     '''
@@ -32,53 +34,36 @@ class HammerMarloweStroud(object):
     def __init__(self, index):
         self.name = 'HMS(%d)' % index
         if index == 1:
-            self.weights = numpy.concatenate([
-                numpy.full(1, 1.0),
-                ])
-            self.bary = numpy.concatenate([
-                _s3(),
-                ])
             self.degree = 1
+            data = [(1.0, _s3())]
         elif index == 2:
-            self.weights = numpy.concatenate([
-                numpy.full(3, 1.0/3.0),
-                ])
-            self.bary = numpy.concatenate([
-                _r(0.5),
-                ])
             self.degree = 2
+            data = [
+                (1.0/3.0, _r(0.5))
+                ]
         elif index == 3:
-            self.weights = numpy.concatenate([
-                numpy.full(3, 1.0/3.0),
-                ])
-            self.bary = numpy.concatenate([
-                _r(-0.5),
-                ])
             self.degree = 2
+            data = [
+                (1.0/3.0, _r(-0.5)),
+                ]
         elif index == 4:
-            self.weights = numpy.concatenate([
-                numpy.full(1, -9.0/16.0),
-                numpy.full(3, 25.0/48.0),
-                ])
-            self.bary = numpy.concatenate([
-                _s3(),
-                _r(0.4),
-                ])
             self.degree = 3
+            data = [
+                (-9.0/16.0, _s3()),
+                (25.0/48.0, _r(0.4)),
+                ]
         else:
             assert index == 5
-            self.weights = numpy.concatenate([
-                numpy.full(1, 9.0/40.0),
-                (155.0 - numpy.sqrt(15.0)) / numpy.full(3, 1200.0),
-                (155.0 + numpy.sqrt(15.0)) / numpy.full(3, 1200.0),
-                ])
-            self.bary = numpy.concatenate([
-                _s3(),
-                _r((1 + numpy.sqrt(15)) / 7.0),
-                _r((1 - numpy.sqrt(15)) / 7.0),
-                ])
+            w1 = (155.0 - numpy.sqrt(15.0)) / 1200.0
+            w2 = (155.0 + numpy.sqrt(15.0)) / 1200.0
+            data = [
+                (9.0/40.0, _s3()),
+                (w1, _r((1 + numpy.sqrt(15)) / 7.0)),
+                (w2, _r((1 - numpy.sqrt(15)) / 7.0)),
+                ]
             self.degree = 5
 
+        self.bary, self.weights = untangle(data)
         self.points = self.bary[:, 1:]
         return
 
