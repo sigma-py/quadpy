@@ -2,6 +2,8 @@
 #
 import numpy
 
+from ..helpers import untangle
+
 
 class Dunavant(object):
     '''
@@ -77,9 +79,9 @@ class Dunavant(object):
                 (+0.210885452208801, _symm_r_0(0.327332998189723)),
                 (+0.006392720128215, _symm_s(0.967223740028505)),
                 (+0.104415680788580, _symm_s(0.732168901749711)),
-                (+0.168053047203816, _st(0.621974427996805, 0.321696694921009)),
-                (+0.076169694452294, _st(0.928618480068352, 0.455124178121179)),
-                (+0.028794154400064, _st(0.960457474887516, 0.809863684081217)),
+                (0.168053047203816, _st(0.621974427996805, 0.321696694921009)),
+                (0.076169694452294, _st(0.928618480068352, 0.455124178121179)),
+                (0.028794154400064, _st(0.960457474887516, 0.809863684081217)),
                 ]
         elif index == 8:
             self.degree = 17
@@ -132,9 +134,7 @@ class Dunavant(object):
                 (0.103507336515645, _st(0.469570217710647, 0.237333359193547)),
                 ]
 
-        weights, points = zip(*data)
-        self.points = numpy.concatenate(points)
-        self.weights = numpy.repeat(weights, [len(grp) for grp in points])
+        self.points, self.weights = untangle(data)
         return
 
 

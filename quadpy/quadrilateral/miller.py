@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
-
 from .helpers import _symm_r_0, _symm_s, _z
+
+from ..helpers import untangle
 
 
 class Miller(object):
@@ -17,16 +17,12 @@ class Miller(object):
     def __init__(self):
         self.name = 'Miller'
         self.degree = 1
-        self.weights = numpy.concatenate([
-            numpy.full(1, 250.0/225.0),
-            numpy.full(4, -8.0/225.0),
-            numpy.full(4, 7.0/900.0),
-            ])
-        self.points = numpy.concatenate([
-            _z(),
-            _symm_r_0(1.0),
-            _symm_s(1.0)
-            ])
+        data = [
+            (250.0/225.0, _z()),
+            (-8.0/225.0, _symm_r_0(1.0)),
+            (7.0/900.0, _symm_s(1.0)),
+            ]
 
+        self.points, self.weights = untangle(data)
         self.weights *= 4.0
         return

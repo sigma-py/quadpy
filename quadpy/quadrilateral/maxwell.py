@@ -4,6 +4,8 @@ import numpy
 
 from .helpers import _symm_r_0, _z, _symm_s_t
 
+from ..helpers import untangle
+
 
 class Maxwell(object):
     '''
@@ -22,17 +24,13 @@ class Maxwell(object):
         s = numpy.sqrt((93.0 + 3.0*numpy.sqrt(186.0)) / 155.0)
         t = numpy.sqrt((93.0 - 3.0*numpy.sqrt(186.0)) / 155.0)
 
-        self.weights = numpy.concatenate([
-            numpy.full(1, 1.0/81.0),
-            numpy.full(4, 49.0/324.0),
+        data = [
+            (1.0/81.0, _z()),
+            (49.0/324.0, _symm_r_0(r)),
             # typo in Stroud: 648 vs 649
-            numpy.full(8, 31.0/648.0),
-            ])
-        self.points = numpy.concatenate([
-            _z(),
-            _symm_r_0(r),
-            _symm_s_t(s, t)
-            ])
+            (31.0/648.0, _symm_s_t(s, t))
+            ]
 
+        self.points, self.weights = untangle(data)
         self.weights *= 4.0
         return

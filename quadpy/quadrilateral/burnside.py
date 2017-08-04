@@ -4,6 +4,8 @@ import numpy
 
 from .helpers import _symm_r_0, _symm_s
 
+from ..helpers import untangle
+
 
 class Burnside(object):
     '''
@@ -17,12 +19,10 @@ class Burnside(object):
         r = numpy.sqrt(7.0 / 15.0)
         s = numpy.sqrt(7.0 / 9.0)
         data = [
-            (_symm_r_0(r), 10.0/49.0),
-            (_symm_s(s), 9.0/196.0),
+            (10.0/49.0, _symm_r_0(r)),
+            (9.0/196.0, _symm_s(s)),
             ]
 
-        points, weights = zip(*data)
-        self.points = numpy.concatenate(points)
-        self.weights = numpy.repeat(weights, [len(grp) for grp in points])
+        self.points, self.weights = untangle(data)
         self.weights *= 4.0
         return
