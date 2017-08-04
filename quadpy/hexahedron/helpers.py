@@ -2,6 +2,7 @@
 #
 import numpy
 
+
 def z():
     return numpy.array([[0.0, 0.0, 0.0]])
 
@@ -31,6 +32,17 @@ def fs_rr0(a):
         [-a, -a, 0.0],
         [-a, 0.0, -a],
         [0.0, -a, -a],
+        ])
+
+
+def rss_pm(r, s):
+    return numpy.array([
+        [+r, +s, +s],
+        [+s, +r, +s],
+        [+s, +s, +r],
+        [-r, -s, -s],
+        [-s, -r, -s],
+        [-s, -s, -r],
         ])
 
 
