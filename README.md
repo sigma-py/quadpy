@@ -193,7 +193,16 @@ val = quadpy.disk.integrate(
 <img src="https://nschloe.github.io/quadpy/quad.png" width="25%">
 
  * Product schemes derived from line segment schemes
- * [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971, 15 schemes up to degree 15)
+ * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971, 15 schemes up to degree 15):
+   - [Maxwell](https://doi.org/10.1017/CBO9780511710377.061) (1890, degree 7)
+   - Burnside (1908, degree 5)
+   - [Irwin](https://books.google.de/books/about/On_quadrature_and_cubature.html?id=SuruAAAAMAAJ&redir_esc=y) (1923, 3 schemes up to degree 5)
+   - [Tyler](https://dx.doi.org/10.4153/CJM-1953-044-1) (1953, 3 schemes up to degree 7)
+   - [Albrecht-Collatz](https://dx.doi.org/10.1002/zamm.19580380102) (1958, 4 schemes up to degree 5)
+   - [Miller](https://dx.doi.org/10.2307/2003163) (1960, degree 1)
+   - [Meister](https://doi.org/10.1093/comjnl/8.4.368) (1966, degree 7)
+   - [Phillips](https://doi.org/10.1093/comjnl/10.2.202) (1967, degree 7)
+   - [Rabinowitz-Richter](https://dx.doi.org/10.2307/2004962) (1969, 6 schemes up to degree 15)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 13)
  * [Dunavant](https://dx.doi.org/10.1002/nme.1620211004) (1985, 11 schemes up to degree 19)
  * [Morrow-Patterson](https://dx.doi.org/10.1137/0722071) (1985, 2 schemes up to degree 20)

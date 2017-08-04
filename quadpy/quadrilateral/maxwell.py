@@ -14,6 +14,7 @@ class Maxwell(object):
     In W. Niven (Ed.), The Scientific Papers of James Clerk Maxwell,
     Cambridge Library Collection - Physical Sciences, pp. 604-611.
     Cambridge: Cambridge University Press.
+    First published in 1890.
     <https://doi.org/10.1017/CBO9780511710377.061>.
     '''
     def __init__(self):
