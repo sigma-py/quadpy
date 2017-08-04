@@ -4,6 +4,7 @@ import numpy
 
 from .albrecht_collatz import AlbrechtCollatz
 from .mustard_lyness_blatt import MustardLynessBlatt
+from .stroud1967 import Stroud1967
 from .tyler import Tyler
 
 from .helpers import pm_rrr
@@ -40,6 +41,8 @@ class Stroud(object):
             self.set_data(AlbrechtCollatz())
         elif index == 'C3 3-7':
             self.set_data(MustardLynessBlatt(3))
+        elif index == 'C3 5-1':
+            self.set_data(Stroud1967())
         else:
             assert False
 
