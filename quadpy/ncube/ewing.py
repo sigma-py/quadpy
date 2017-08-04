@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
-
 from .helpers import _z, _pm
+
+from ..helpers import untangle
 
 
 class Ewing(object):
@@ -16,12 +16,11 @@ class Ewing(object):
     def __init__(self, n):
         reference_volume = 2.0**n
         self.degree = 3
-        self.weights = numpy.concatenate([
-            numpy.full(1, 2.0/3.0 * reference_volume),
-            numpy.full(2**n, 1.0/3.0 / 2**n * reference_volume),
-            ])
-        self.points = numpy.concatenate([
-            _z(n),
-            _pm(n, 1.0),
-            ])
+        data = [
+            (2.0/3.0, _z(n)),
+            (1.0/3.0 / 2**n, _pm(n, 1.0)),
+            ]
+
+        self.points, self.weights = untangle(data)
+        self.weights *= reference_volume
         return

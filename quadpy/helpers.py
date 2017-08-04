@@ -4,6 +4,14 @@ import math
 import numpy
 
 
+def untangle(data):
+    weights, points = zip(*data)
+    return (
+        numpy.concatenate(points),
+        numpy.repeat(weights, [len(grp) for grp in points])
+        )
+
+
 def n_outer(a):
     '''Given a list (tuple, array) of arrays, this method computes their outer
     product. If the dimension of the input arrays is larger than one, the

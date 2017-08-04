@@ -3,6 +3,8 @@
 from math import factorial
 import numpy
 
+from ..helpers import untangle
+
 
 class Walkington(object):
     '''
@@ -17,8 +19,7 @@ class Walkington(object):
         self.dim = d
         if index == 1:
             self.degree = 1
-            self.weights = numpy.array([1.0 / factorial(d)])
-            self.bary = _c(d)
+            data = [(1.0 / factorial(d), _c(d))]
         elif index == 2:
             # The article claims order 2, but tests really only show order 1.
             # Also, the article says:
@@ -26,75 +27,47 @@ class Walkington(object):
             # > The points are inside the simplex when the positive square root
             # > is selected.
             #
-            # Not sure what this mean, but for d>=2, the points are outside the
-            # simplex.
+            # Not sure what this means, but for d>=2, the points are outside
+            # the simplex.
             self.degree = 1
-            self.weights = numpy.concatenate([
-                numpy.full(d+1, 1.0 / factorial(d+1))
-                ])
-            self.bary = numpy.concatenate([
-                _xi1(d, 1.0 / numpy.sqrt(d + 1.0))
-                ])
+            data = [
+                (1.0/factorial(d+1), _xi1(d, 1.0 / numpy.sqrt(d + 1.0)))
+                ]
         elif index == 3:
             self.degree = 3
-            self.weights = numpy.concatenate([
-                numpy.full(1, (-1.0*(d+1)**3) / (4.0 * factorial(d+2))),
-                numpy.full(d+1, (d+3)**3 / (4.0 * factorial(d+3))),
-                ])
-            self.bary = numpy.concatenate([
-                _c(d),
-                _xi1(d, 1.0 / (d + 3.0))
-                ])
+            data = [
+                ((-1.0*(d+1)**3) / (4.0 * factorial(d+2)), _c(d)),
+                ((d+3)**3 / (4.0 * factorial(d+3)), _xi1(d, 1.0 / (d + 3.0))),
+                ]
         elif index == 5:
             self.degree = 5
-            self.weights = numpy.concatenate([
-                numpy.full(
-                    1,
-                    (d+1)**5 / (32.0 * factorial(d+3))
-                    ),
-                numpy.full(
-                    d+1,
-                    -(d+3)**5 / (16.0 * factorial(d+4))
-                    ),
-                numpy.full(
-                    (d+1) + (d+1)*d//2,
-                    (d+5)**5 / (16.0 * factorial(d+5))
-                    ),
-                ])
-            self.bary = numpy.concatenate([
-                _c(d),
-                _xi1(d, 1.0 / (d + 3.0)),
-                _xi1(d, 1.0 / (d + 5.0)),
-                _xi11(d, 1.0 / (d + 5.0)),
-                ])
+            w0 = +(d+1)**5 / (32.0 * factorial(d+3))
+            w1 = -(d+3)**5 / (16.0 * factorial(d+4))
+            w2 = +(d+5)**5 / (16.0 * factorial(d+5))
+            data = [
+                (w0, _c(d)),
+                (w1, _xi1(d, 1.0 / (d + 3.0))),
+                (w2, _xi1(d, 1.0 / (d + 5.0))),
+                (w2, _xi11(d, 1.0 / (d + 5.0))),
+                ]
         else:
             assert index == 7
             self.degree = 7
-            self.weights = numpy.concatenate([
-                numpy.full(1, -1.0/384.0 * (d+1)**7 / factorial(d+4)),
-                numpy.full(d+1, 1.0/128.0 * (d+3)**7 / factorial(d+5)),
-                numpy.full(
-                    d+1 + (d+1)*d//2,
-                    -1.0/64.0 * (d+5)**7 / factorial(d+6)
-                    ),
-                numpy.full(
-                    d+1 + (d+1)*d + (d+1)*d*(d-1)//6,
-                    1.0/64.0 * (d+7)**7 / factorial(d+7)
-                    ),
-                ])
-            self.bary = numpy.concatenate([
-                _c(d),
-                #
-                _xi1(d, 1.0 / (d + 3)),
-                #
-                _xi1(d, 1.0 / (d + 5)),
-                _xi11(d, 1.0 / (d + 5)),
-                #
-                _xi1(d, 1.0 / (d + 7)),
-                _xi21(d, 1.0 / (d + 7)),
-                _xi111(d, 1.0 / (d + 7)),
-                ])
+            w0 = -1.0/384.0 * (d+1)**7 / factorial(d+4)
+            w1 = +1.0/128.0 * (d+3)**7 / factorial(d+5)
+            w2 = -1.0/64.0 * (d+5)**7 / factorial(d+6)
+            w3 = +1.0/64.0 * (d+7)**7 / factorial(d+7)
+            data = [
+                (w0, _c(d)),
+                (w1, _xi1(d, 1.0 / (d + 3))),
+                (w2, _xi1(d, 1.0 / (d + 5))),
+                (w2, _xi11(d, 1.0 / (d + 5))),
+                (w3, _xi1(d, 1.0 / (d + 7))),
+                (w3, _xi21(d, 1.0 / (d + 7))),
+                (w3, _xi111(d, 1.0 / (d + 7))),
+                ]
 
+        self.bary, self.weights = untangle(data)
         self.points = self.bary[:, 1:]
         # normalize weights
         self.weights /= numpy.sum(self.weights)

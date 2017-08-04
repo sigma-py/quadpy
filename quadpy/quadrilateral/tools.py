@@ -36,7 +36,7 @@ def plot(
 
     transformed_pts = transform(scheme.points.T, quad)
 
-    vol = integrate(lambda x: 1.0, quad, Stroud(1))
+    vol = integrate(lambda x: 1.0, quad, Stroud('C2 1-1'))
     helpers.plot_disks(
         plt, transformed_pts, scheme.weights, vol
         )

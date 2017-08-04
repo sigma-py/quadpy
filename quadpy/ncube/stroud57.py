@@ -4,6 +4,8 @@ import numpy
 
 from .helpers import _s
 
+from ..helpers import untangle
+
 
 class Stroud57(object):
     '''
@@ -19,20 +21,14 @@ class Stroud57(object):
         if index == 2:
             self.degree = 2
             r = numpy.sqrt(3.0) / 6.0
-            self.weights = numpy.concatenate([
-                numpy.full(1, reference_volume),
-                numpy.full(n, r*reference_volume),
-                numpy.full(n, -r*reference_volume),
-                ])
-            self.points = numpy.concatenate([
-                numpy.array([numpy.full(n, 2*r)]),
-                _s(n, -1.0, r),
-                _s(n, +1.0, r),
-                ])
+            data = [
+                (1.0, numpy.array([numpy.full(n, 2*r)])),
+                (+r, _s(n, -1.0, r)),
+                (-r, _s(n, +1.0, r)),
+                ]
         else:
             assert index == 3
             self.degree = 3
-            self.weights = numpy.full(2*n, reference_volume / (2*n))
             i = numpy.arange(1, 2*n+1)
             n2 = n // 2 if n % 2 == 0 else (n-1)//2
             pts = [[
@@ -43,6 +39,10 @@ class Stroud57(object):
                 sqrt3pm = numpy.full(2*n, 1.0 / numpy.sqrt(3.0))
                 sqrt3pm[1::2] *= -1
                 pts.append(sqrt3pm)
+            pts = numpy.vstack(pts).T
 
-            self.points = numpy.vstack(pts).T
+            data = [(1.0/(2*n), pts)]
+
+        self.points, self.weights = untangle(data)
+        self.weights *= reference_volume
         return
