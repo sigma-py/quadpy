@@ -208,6 +208,7 @@ val = quadpy.disk.integrate(
  * [Morrow-Patterson](https://dx.doi.org/10.1137/0722071) (1985, 2 schemes up to degree 20, single precision)
  * [Wissmann-Becker](https://dx.doi.org/10.1137/0723043) (1986, 6 schemes up to degree 8)
  * [Cools-Haegemans](https://dx.doi.org/10.1007/BF02247942) (1988, 2 schemes up to degree 13)
+ * all formulas from the n-cube
 
 Example:
 ```python
@@ -297,6 +298,7 @@ val = quadpy.tetrahedron.integrate(
    - [Mustard-Lyness-Blatt](https://doi.org/10.1093/comjnl/6.1.75) (1963, 6 schemes up to degree 5)
    - [Stroud](https://dx.doi.org/10.1007/BF02162160) (1967, degree 5)
    - [Sarma-Stroud](https://dx.doi.org/10.2307/2004963) (1969, degree 7)
+ * all formulas from the n-cube
 
 Example:
 ```python
