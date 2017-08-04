@@ -3,6 +3,7 @@
 import numpy
 
 from .albrecht_collatz import AlbrechtCollatz
+from .hammer_stroud import HammerStroud
 from .mustard_lyness_blatt import MustardLynessBlatt
 from .stroud1967 import Stroud1967
 from .tyler import Tyler
@@ -22,7 +23,7 @@ class Stroud(object):
     def __init__(self, index):
         reference_volume = 8.0
         if index == 'C3 3-1':
-            self.set_data(Tyler())
+            self.set_data(Tyler(1))
         elif index == 'C3 3-2':
             # product Gauss
             self.degree = 3
@@ -43,6 +44,18 @@ class Stroud(object):
             self.set_data(MustardLynessBlatt(3))
         elif index == 'C3 5-1':
             self.set_data(Stroud1967())
+        elif index == 'C3 5-2':
+            self.set_data(HammerStroud())
+        elif index == 'C3 5-3':
+            self.set_data(Tyler(2))
+        elif index == 'C3 5-4':
+            self.set_data(MustardLynessBlatt(4))
+        elif index == 'C3 5-5':
+            self.set_data(MustardLynessBlatt(5))
+        elif index == 'C3 5-6':
+            self.set_data(MustardLynessBlatt(6))
+        elif index == 'C3 5-7':
+            self.set_data(MustardLynessBlatt(7))
         else:
             assert False
 
