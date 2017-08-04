@@ -4,6 +4,8 @@ import numpy
 
 from .helpers import _s
 
+from ..helpers import untangle
+
 
 class Thacher(object):
     '''
@@ -26,14 +28,12 @@ class Thacher(object):
         reference_volume = 2.0**n
         self.degree = 2
         r = numpy.sqrt(3.0) / 6.0
-        self.weights = numpy.concatenate([
-            numpy.full(1, reference_volume),
-            numpy.full(n, r*reference_volume),
-            numpy.full(n, -r*reference_volume),
-            ])
-        self.points = numpy.concatenate([
-            numpy.array([numpy.full(n, 2*r)]),
-            _s(n, -1.0, r),
-            _s(n, +1.0, r),
-            ])
+        data = [
+            (1.0, numpy.array([numpy.full(n, 2*r)])),
+            (+r, _s(n, -1.0, r)),
+            (-r, _s(n, +1.0, r)),
+            ]
+
+        self.points, self.weights = untangle(data)
+        self.weights *= reference_volume
         return
