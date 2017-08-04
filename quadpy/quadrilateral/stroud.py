@@ -108,6 +108,17 @@ class Stroud(object):
             self.set_data(Meister())
         elif index == 'C2 9-1':
             self.set_data(RabinowitzRichter(1))
+        elif index == 'C2 11-1':
+            self.set_data(RabinowitzRichter(2))
+        elif index == 'C2 11-2':
+            self.set_data(RabinowitzRichter(3))
+        elif index == 'C2 13-1':
+            self.set_data(RabinowitzRichter(4))
+        elif index == 'C2 15-1':
+            self.set_data(RabinowitzRichter(5))
+        else:
+            assert index == 'C2 15-2'
+            self.set_data(RabinowitzRichter(6))
 
         # assert index == 'C2 5-7', 'Illegal index \'{}\'.'.format(index)
 
