@@ -181,9 +181,6 @@ class Stroud(object):
         #         )).reshape(-1, 2)
         #     assert len(self.points) == 64
         #     self.degree = 15
-
-        self.weights = numpy.array(self.weights)
-        self.points = numpy.array(self.points)
         return
 
     def set_data(self, scheme):
