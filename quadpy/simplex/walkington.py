@@ -26,7 +26,7 @@ class Walkington(object):
             # > The points are inside the simplex when the positive square root
             # > is selected.
             #
-            # Not sure what this mean, but for d>=2, the points are outside the
+            # Not sure what this means, but for d>=2, the points are outside the
             # simplex.
             self.degree = 1
             self.weights = numpy.concatenate([
