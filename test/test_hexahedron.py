@@ -73,6 +73,9 @@ def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
     + [(Product(quadpy.line_segment.NewtonCotesOpen(k)), 1.0e-14)
        for k in range(5)
        ]
+    + [(quadpy.hexahedron.Stroud(k), 1.0e-14) for k in [
+        'C3 3-1'
+        ]]
     + [(quadpy.hexahedron.StroudN(k), 1.0e-14) for k in [
         'Cn 1-1', 'Cn 1-2',
         'Cn 2-1', 'Cn 2-2',
