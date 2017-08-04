@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import fs00
+from .helpers import fs_r00
 
 from ..helpers import untangle
 
@@ -15,7 +15,7 @@ class Tyler(object):
     def __init__(self):
         self.degree = 3
         data = [
-            (1.0/6.0, fs00(1.0)),
+            (1.0/6.0, fs_r00(1.0)),
             ]
 
         self.points, self.weights = untangle(data)
