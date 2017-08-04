@@ -2,9 +2,9 @@
 #
 import warnings
 
-import numpy
-
 from .helpers import _fsd, _z
+
+from ..helpers import untangle
 
 
 class Phillips(object):
@@ -75,23 +75,16 @@ class Phillips(object):
             B3 = -0.094307270
             B4 = 0.021433471
 
-        pts = [
-            _z(n),
-            _fsd(n, r1, 1),
-            _fsd(n, r2, 1),
-            _fsd(n, s, 2),
-            ]
-        wgts = [
-            numpy.full(1, B0 * reference_volume),
-            numpy.full(2*n, B1 * reference_volume),
-            numpy.full(2*n, B2 * reference_volume),
-            numpy.full(2*n*(n-1), B3 * reference_volume),
+        data = [
+            (B0, _z(n)),
+            (B1, _fsd(n, r1, 1)),
+            (B2, _fsd(n, r2, 1)),
+            (B3, _fsd(n, s, 2)),
             ]
 
         if n > 2:
-            pts.append(_fsd(n, t, 3))
-            wgts.append(numpy.full(4*n*(n-1)*(n-2)//3, B4 * reference_volume))
+            data.append((B4, _fsd(n, t, 3)))
 
-        self.points = numpy.concatenate(pts)
-        self.weights = numpy.concatenate(wgts)
+        self.points, self.weights = untangle(data)
+        self.weights *= reference_volume
         return

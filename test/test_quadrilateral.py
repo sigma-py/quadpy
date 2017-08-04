@@ -48,7 +48,16 @@ def _integrate_exact2(k, x0, x1, y0, y1):
     + [(quadpy.quadrilateral.CoolsHaegemans1988(k), 1.0e-14) for k in [1, 2]]
     + [(quadpy.quadrilateral.Dunavant(k), 1.0e-14) for k in range(11)]
     + [(quadpy.quadrilateral.MorrowPatterson(k), 1.0e-7) for k in [1, 2]]
-    + [(quadpy.quadrilateral.Stroud(k), 1.0e-14) for k in range(11)]
+    + [(quadpy.quadrilateral.Stroud(k), 1.0e-14) for k in [
+        'C2 1-1', 'C2 1-2',
+        'C2 3-1', 'C2 3-2', 'C2 3-3', 'C2 3-4', 'C2 3-5',
+        'C2 5-1', 'C2 5-2', 'C2 5-3', 'C2 5-4', 'C2 5-5', 'C2 5-6', 'C2 5-7',
+        'C2 7-1', 'C2 7-2', 'C2 7-3', 'C2 7-4', 'C2 7-5', 'C2 7-6',
+        'C2 9-1',
+        'C2 11-1', 'C2 11-2',
+        'C2 13-1',
+        'C2 15-1', 'C2 15-2',
+        ]]
     + [(quadpy.quadrilateral.StroudN(k), 1.0e-14) for k in [
         'Cn 1-1', 'Cn 1-2',
         'Cn 2-1', 'Cn 2-2',

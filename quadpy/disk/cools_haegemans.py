@@ -2,6 +2,8 @@
 #
 import numpy
 
+from ..helpers import untangle
+
 
 class CoolsHaegemans(object):
     '''
@@ -15,44 +17,31 @@ class CoolsHaegemans(object):
         self.name = 'CH(%d)' % index
         if index == 1:
             self.degree = 5
-            self.weights = numpy.pi * numpy.concatenate([
-                numpy.full(4, 0.233253175473),
-                numpy.full(4, 0.167468245269e-01),
-                ])
-            self.points = numpy.concatenate([
-                _s4(0.459700843381),
-                _s40(0.125592606040e+01),
-                ])
+            data = [
+                (0.233253175473, _s4(0.459700843381)),
+                (0.167468245269e-01, _s40(0.125592606040e+01)),
+                ]
         elif index == 2:
             self.degree = 9
-            self.weights = numpy.pi * numpy.concatenate([
-                 numpy.full(8, 0.567209601536e-01),
-                 numpy.full(4, 0.109948866164),
-                 numpy.full(4, 0.261900192462e-01),
-                 numpy.full(4, 0.419194282996e-03),
-                ])
-            self.points = numpy.concatenate([
-                _s8(0.243244191752, 0.809458260086),
-                _s4(0.302217386264),
-                _s4(0.664341348594),
-                _s40(0.134279080737e+01),
-                ])
+            data = [
+                (0.567209601536e-01, _s8(0.243244191752, 0.809458260086)),
+                (0.109948866164e+00, _s4(0.302217386264)),
+                (0.261900192462e-01, _s4(0.664341348594)),
+                (0.419194282996e-03, _s40(0.134279080737e+01)),
+                ]
         else:
             assert index == 3
             self.degree = 9
-            self.weights = numpy.pi * numpy.concatenate([
-                 numpy.full(8, 0.123447696401e-01),
-                 numpy.full(4, 0.932719633554e-01),
-                 numpy.full(4, 0.589496783783e-01),
-                 numpy.full(4, 0.730888189861e-01),
-                ])
-            self.points = numpy.concatenate([
-                _s8(0.343855345294, 0.944778017142),
-                _s4(0.277496500297),
-                _s4(0.592355387396),
-                _s40(0.778610819923),
-                ])
+            data = [
+                (0.123447696401e-01, _s8(0.343855345294, 0.944778017142)),
+                (0.932719633554e-01, _s4(0.277496500297)),
+                (0.589496783783e-01, _s4(0.592355387396)),
+                (0.730888189861e-01, _s40(0.778610819923)),
+                ]
         # TODO There are more schemes in the techincal report
+
+        self.points, self.weights = untangle(data)
+        self.weights *= numpy.pi
         return
 
 

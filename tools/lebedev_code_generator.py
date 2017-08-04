@@ -98,55 +98,33 @@ def sort_into_symmetry_classes(weights, phi_theta):
 def generate_python_code(data):
     # generate the code à la
     # ```
-    # self.weights = numpy.concatenate([
-    #   0.00051306717973400001 * numpy.ones(6),
-    #   64.0 / 2835.0 * numpy.ones(12),
-    #   27.0 / 1280.0 * numpy.ones(8),
-    #   14641.0 / 725760.0 * numpy.ones(24),
-    #   ])
-    # self.points = numpy.concatenate([
-    #   self.a1(),
-    #   self.a2(),
-    #   self.a3(),
-    #   self.llm(3.0151134457776357367e-01, 9.0453403373329088755e-01)
-    #   ])
+    # data = [
+    #   (0.00051306717973400001, _a1()),
+    #   (64.0 / 2835.0, _a2()),
+    #   (27.0 / 1280.0, _a3()),
+    #   (14641.0 / 725760.0, _llm(3.01511344577e-01, 9.329088755e-01))
+    #   ]
     # ```
-    num_points = {
-        'a1': 6,
-        'a2': 12,
-        'a3': 8,
-        'pq0': 24,
-        'llm': 24,
-        'rSW': 48,
-        }
-
-    weight_code = []
-    point_code = []
+    data_code = []
     for item in data:
-        weight_code.append('numpy.full(%d, %0.16e)' % (
-            num_points[item['type']], item['weight']
-            ))
         if item['type'] == 'a1':
-            point_code.append('_a1()')
+            point_code = '_a1()'
         elif item['type'] == 'a2':
-            point_code.append('_a2()')
+            point_code = '_a2()'
         elif item['type'] == 'a3':
-            point_code.append('_a3()')
+            point_code = '_a3()'
         elif item['type'] == 'pq0':
-            point_code.append('_pq0(%0.16e)' % item['val'])
+            point_code = '_pq0(%0.16e)' % item['val']
         elif item['type'] == 'llm':
-            point_code.append('_llm(%0.16e)' % item['val'])
+            point_code = '_llm(%0.16e)' % item['val']
         else:
             assert item['type'] == 'rSW'
-            point_code.append('_rsw(%0.16e, %0.16e)' % item['val'])
+            point_code = '_rsw(%0.16e, %0.16e)' % item['val']
+        data_code.append('(%0.16e, %s)' % (item['weight'], point_code))
 
-    out = ''
-    out += 'self.weights = numpy.concatenate([\n'
-    out += indent(',\n'.join(weight_code), 4)
-    out += '\n    ])\n'
-    out += 'self.phi_theta = numpy.concatenate([\n'
-    out += indent(',\n'.join(point_code), 4)
-    out += '\n    ])'
+    out = 'data = [\n'
+    out += indent(',\n'.join(data_code), 4)
+    out += '\n    ]'
     return out
 
 
