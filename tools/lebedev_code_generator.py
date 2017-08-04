@@ -124,7 +124,7 @@ def generate_python_code(data):
 
     out = 'data = [\n'
     out += indent(',\n'.join(data_code), 4)
-    out += '\n    ])\n'
+    out += '\n    ]'
     return out
 
 
