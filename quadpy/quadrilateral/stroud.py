@@ -16,6 +16,7 @@ from .tyler import Tyler
 from .helpers import _symm_r_0, _symm_s, _symm_s_t, _z
 
 from .. import ncube
+from ..helpers import untangle
 
 
 class Stroud(object):
@@ -60,17 +61,14 @@ class Stroud(object):
         elif index == 'C2 5-4':
             # product Gauss
             self.degree = 5
-            self.weights = reference_volume * numpy.concatenate([
-                numpy.full(1, 16.0/81.0),
-                numpy.full(4, 10.0/81.0),
-                numpy.full(4, 25.0/324.0)
-                ])
             r = numpy.sqrt(3.0 / 5.0)
-            self.points = numpy.concatenate([
-                _z(),
-                _symm_r_0(r),
-                _symm_s(r)
-                ])
+            data = [
+                (16.0/81.0, _z()),
+                (10.0/81.0, _symm_r_0(r)),
+                (25.0/324.0, _symm_s(r)),
+                ]
+            self.points, self.weights = untangle(data)
+            self.weights *= reference_volume
         elif index == 'C2 5-5':
             self.set_data(Tyler(1))
         elif index == 'C2 5-6':
@@ -96,17 +94,14 @@ class Stroud(object):
             B2 = (59.0 - 6.0*numpy.sqrt(30.0)) / 864.0
             B3 = 49.0 / 864.0
 
-            self.weights = reference_volume * numpy.concatenate([
-                numpy.full(4, B1),
-                numpy.full(4, B2),
-                numpy.full(8, B3)
-                ])
             r = numpy.sqrt(3.0 / 5.0)
-            self.points = numpy.concatenate([
-                _symm_s(r),
-                _symm_s(s),
-                _symm_s_t(r, s),
-                ])
+            data = [
+                (B1, _symm_s(r)),
+                (B2, _symm_s(s)),
+                (B3, _symm_s_t(r, s)),
+                ]
+            self.points, self.weights = untangle(data)
+            self.weights *= reference_volume
         elif index == 'C2 7-5':
             self.set_data(Tyler(3))
         elif index == 'C2 7-6':
