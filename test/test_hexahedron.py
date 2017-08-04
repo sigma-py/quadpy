@@ -74,7 +74,7 @@ def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
        for k in range(5)
        ]
     + [(quadpy.hexahedron.Stroud(k), 1.0e-14) for k in [
-        'C3 3-1'
+        'C3 3-1', 'C3 3-2', 'C3 3-3', 'C3 3-4',
         ]]
     + [(quadpy.hexahedron.StroudN(k), 1.0e-14) for k in [
         'Cn 1-1', 'Cn 1-2',
