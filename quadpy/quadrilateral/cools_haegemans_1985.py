@@ -46,7 +46,6 @@ class CoolsHaegemans1985(object):
                 ]
         # TODO There are three more schemes in the technical report
 
-        print(data)
         self.points, self.weights = untangle(data)
         self.weights *= 4.0
         return
