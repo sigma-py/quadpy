@@ -5,6 +5,7 @@ import numpy
 from .albrecht_collatz import AlbrechtCollatz
 from .hammer_stroud import HammerStroud
 from .mustard_lyness_blatt import MustardLynessBlatt
+from .sadowsky import Sadowsky
 from .stroud1967 import Stroud1967
 from .tyler import Tyler
 
@@ -56,6 +57,8 @@ class Stroud(object):
             self.set_data(MustardLynessBlatt(6))
         elif index == 'C3 5-7':
             self.set_data(MustardLynessBlatt(7))
+        elif index == 'C3 5-8':
+            self.set_data(Sadowsky())
         else:
             assert False
 
