@@ -4,8 +4,10 @@ import numpy
 
 from .albrecht_collatz import AlbrechtCollatz
 from .hammer_stroud import HammerStroud
+from .hammer_wymore import HammerWymore
 from .mustard_lyness_blatt import MustardLynessBlatt
 from .sadowsky import Sadowsky
+from .sarma_stroud import SarmaStroud
 from .stroud1967 import Stroud1967
 from .tyler import Tyler
 
@@ -46,7 +48,7 @@ class Stroud(object):
         elif index == 'C3 5-1':
             self.set_data(Stroud1967())
         elif index == 'C3 5-2':
-            self.set_data(HammerStroud())
+            self.set_data(HammerStroud(1))
         elif index == 'C3 5-3':
             self.set_data(Tyler(2))
         elif index == 'C3 5-4':
@@ -59,9 +61,15 @@ class Stroud(object):
             self.set_data(MustardLynessBlatt(7))
         elif index == 'C3 5-8':
             self.set_data(Sadowsky())
+        elif index == 'C3 7-1a':
+            self.set_data(HammerStroud(2))
+        elif index == 'C3 7-1b':
+            self.set_data(HammerStroud(3))
+        elif index == 'C3 7-2':
+            self.set_data(HammerWymore())
         else:
-            assert False
-
+            assert index == 'C3 7-3'
+            self.set_data(SarmaStroud())
         return
 
     def set_data(self, scheme):
