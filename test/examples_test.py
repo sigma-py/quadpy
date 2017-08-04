@@ -99,7 +99,7 @@ def test_quadrilateral():
     quadpy.quadrilateral.integrate(
             lambda x: numpy.exp(x[0]),
             quadpy.quadrilateral.rectangle_points([0.0, 1.0], [0.0, 1.0]),
-            quadpy.quadrilateral.Stroud(6)
+            quadpy.quadrilateral.Stroud('C2 5-4')
             )
 
     val = quadpy.quadrilateral.integrate(
@@ -111,7 +111,7 @@ def test_quadrilateral():
                 quadpy.quadrilateral.rectangle_points([0.0, 1.0], [0.0, 1.0]),
                 quadpy.quadrilateral.rectangle_points([0.0, 1.0], [0.0, 1.0]),
                 ], axis=-2),
-            quadpy.quadrilateral.Stroud(8)
+            quadpy.quadrilateral.Stroud('C2 3-1')
             )
     assert val.shape == (2, 5)
     return
