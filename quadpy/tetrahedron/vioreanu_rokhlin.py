@@ -18,6 +18,7 @@ class VioreanuRokhlin(object):
     Data adapted from modepy
     <https://github.com/inducer/modepy/blob/master/modepy/quadrature/vr_quad_data_tet.py>.
     '''
+    # pylint: disable=line-too-long
     def __init__(self, index):
         self.name = 'VioreanuRokhlin({})'.format(index)
         if index == 0:
