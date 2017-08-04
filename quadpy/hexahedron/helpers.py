@@ -35,6 +35,35 @@ def fs_rr0(a):
         ])
 
 
+def fs_rrs(a, b):
+    return numpy.array([
+        [+a, +a, +b],
+        [+a, +b, +a],
+        [+b, +a, +a],
+        [+a, -a, +b],
+        [+a, +b, -a],
+        [+b, +a, -a],
+        [-a, +a, +b],
+        [-a, +b, +a],
+        [+b, -a, +a],
+        [-a, -a, +b],
+        [-a, +b, -a],
+        [+b, -a, -a],
+        [+a, +a, -b],
+        [+a, -b, +a],
+        [-b, +a, +a],
+        [+a, -a, -b],
+        [+a, -b, -a],
+        [-b, +a, -a],
+        [-a, +a, -b],
+        [-a, -b, +a],
+        [-b, -a, +a],
+        [-a, -a, -b],
+        [-a, -b, -a],
+        [-b, -a, -a],
+        ])
+
+
 def rss_pm(r, s):
     return numpy.array([
         [+r, +s, +s],
