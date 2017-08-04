@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
-
 from .helpers import _symm_s, _symm_s_t
+
+from ..helpers import untangle
 
 
 class Irwin(object):
@@ -16,29 +16,20 @@ class Irwin(object):
         self.name = 'Irwin({})'.format(index)
         if index == 1:
             self.degree = 3
-            self.weights = numpy.concatenate([
-                numpy.full(4, 14.0/48.0),
-                numpy.full(8, -1.0/48.0),
-                ])
-            self.points = numpy.concatenate([
-                _symm_s(1.0),
-                _symm_s_t(3.0, 1.0)
-                ])
+            data = [
+                (14.0/48.0, _symm_s(1.0)),
+                (-1.0/48.0, _symm_s_t(3.0, 1.0))
+                ]
         else:
             assert index == 2
             self.degree = 5
-            self.weights = numpy.concatenate([
-                numpy.full(4, 889.0/2880.0),
-                numpy.full(8, -98.0/2880.0),
-                numpy.full(4, 5.0/2880.0),
-                numpy.full(8, 11.0/2880.0),
-                ])
-            self.points = numpy.concatenate([
-                _symm_s(1.0),
-                _symm_s_t(3.0, 1.0),
-                _symm_s(3.0),
-                _symm_s_t(5.0, 1.0),
-                ])
+            data = [
+                (889.0/2880.0, _symm_s(1.0)),
+                (-98.0/2880.0, _symm_s_t(3.0, 1.0)),
+                (5.0/2880.0, _symm_s(3.0)),
+                (11.0/2880.0, _symm_s_t(5.0, 1.0)),
+                ]
 
+        self.points, self.weights = untangle(data)
         self.weights *= 4.0
         return

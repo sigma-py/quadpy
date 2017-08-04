@@ -2,6 +2,8 @@
 #
 import numpy
 
+from ..helpers import untangle
+
 
 class CoolsHaegemans1985(object):
     '''
@@ -42,11 +44,10 @@ class CoolsHaegemans1985(object):
                 (0.361061434781e-01, _s4(0.178898689064)),
                 (0.116671271121e-01, _s4(0.914197956909)),
                 ]
-        # TODO There are three more schemes in the techincal report
+        # TODO There are three more schemes in the technical report
 
-        weights, points = zip(*data)
-        self.points = numpy.concatenate(points)
-        self.weights = numpy.repeat(weights, [len(grp) for grp in points])
+        print(data)
+        self.points, self.weights = untangle(data)
         self.weights *= 4.0
         return
 
