@@ -80,30 +80,6 @@ def check_degree(
     return degree
 
 
-def integrate_monomial_over_unit_circle(k):
-    '''The integral
-
-    I = \\int_0^2pi \\cos(phi)**k[0] \\sin(phi)**k[1]
-
-    equals 0 if any of k[0], k[1] is odd. If both are even, we make use of
-
-    I = 4 \\int_0^pi/2 \\cos(phi)**k[0] \\sin(phi)**k[1]
-      = 2 B(0.5*(k[0]+1), 0.5*(k[1]+1))
-
-    with B(x, y) being the Beta function. It has the representation
-
-    B(x, y) = Gamma(x) Gamma(y) / Gamma(x + y).
-    '''
-    if any(numpy.array(k) % 2 == 1):
-        return 0.0
-
-    return 2 * math.exp(
-        + math.lgamma(0.5 * (k[0] + 1))
-        + math.lgamma(0.5 * (k[1] + 1))
-        - math.lgamma(0.5 * (k[0] + k[1]) + 1)
-        )
-
-
 def integrate_monomial_over_standard_simplex(k):
     '''The integrals of monomials over the standard triangle and tetrahedron are
     given by
@@ -126,3 +102,37 @@ def integrate_monomial_over_standard_simplex(k):
         math.fsum(scipy.special.gammaln(k+1))
         - scipy.special.gammaln(sum(k+1) + 1)
         )
+
+
+def integrate_monomial_over_unit_sphere(alpha):
+    '''
+    Gerald B. Folland,
+    How to Integrate a Polynomial over a Sphere,
+    The American Mathematical Monthly,
+    Vol. 108, No. 5 (May, 2001), pp. 446-448,
+    <https://dx.doi.org/10.2307/2695802>.
+    '''
+    alpha = numpy.array(alpha)
+    if any(alpha % 2 == 1):
+        return 0.0
+
+    # Use lgamma since other with ordinary gamma, numerator and denominator
+    # might overflow.
+    return 2.0 * math.exp(
+        math.fsum([math.lgamma(0.5*(a+1)) for a in alpha])
+        - math.lgamma(math.fsum([0.5*(a+1) for a in alpha]))
+        )
+
+
+def integrate_monomial_over_unit_nball(exp):
+    '''
+    Gerald B. Folland,
+    How to Integrate a Polynomial over a Sphere,
+    The American Mathematical Monthly,
+    Vol. 108, No. 5 (May, 2001), pp. 446-448,
+    <https://dx.doi.org/10.2307/2695802>.
+    '''
+    radius = 1.0
+    n = len(exp)
+    alpha = n + numpy.sum(exp)
+    return radius**alpha / alpha * integrate_monomial_over_unit_sphere(exp)
