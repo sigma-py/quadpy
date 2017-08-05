@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
-from .helpers import _s3, _s21, _s111
+from .helpers import _s3, _s21, _s111 as fs
+
+from ..helpers import untangle
 
 
 class Strang(object):
@@ -29,96 +30,64 @@ class Strang(object):
     def __init__(self, index):
         self.name = 'Strang(%d)' % index
         if index == 1:
-            self.weights = numpy.full(3, 1.0/3.0)
-            self.bary = _s21(1.0/6.0)
             self.degree = 2
+            data = [(1.0/3.0, _s21(1.0/6.0))]
         elif index == 2:
-            self.weights = numpy.full(3, 1.0/3.0)
-            self.bary = _s21(0.5)
             self.degree = 2
+            data = [(1.0/3.0, _s21(0.5))]
         elif index == 3:
-            self.weights = numpy.concatenate([
-                numpy.full(1, -0.5625),
-                25.0 / numpy.full(3, 48.0),
-                ])
-            self.bary = numpy.concatenate([
-                _s3(),
-                _s21(0.2),
-                ])
             self.degree = 3
+            data = [
+                (-0.5625, _s3()),
+                (25.0/48.0, _s21(0.2)),
+                ]
         elif index == 4:
-            self.weights = numpy.full(6, 1.0/6.0)
-            self.bary = _s111(0.659027622374092, 0.231933368553031)
             self.degree = 3
+            data = [
+                (1.0/6.0, fs(0.659027622374092, 0.231933368553031))
+                ]
         elif index == 5:
-            self.weights = numpy.concatenate([
-                numpy.full(3, 0.109951743655322),
-                numpy.full(3, 0.223381589678011),
-                ])
-            self.bary = numpy.concatenate([
-                _s21(0.091576213509771),
-                _s21(0.445948490915965),
-                ])
             self.degree = 4
+            data = [
+                (0.109951743655322, _s21(0.091576213509771)),
+                (0.223381589678011, _s21(0.445948490915965)),
+                ]
         elif index == 6:
-            self.weights = numpy.concatenate([
-                numpy.full(1, 0.375),
-                5.0 / numpy.full(6, 48.0),
-                ])
-            self.bary = numpy.concatenate([
-                _s3(),
-                _s111(0.736712498968435, 0.237932366472434),
-                ])
             self.degree = 4
+            data = [
+                (0.375, _s3()),
+                (5.0/48.0, fs(0.736712498968435, 0.237932366472434)),
+                ]
         elif index == 7:
-            self.weights = numpy.concatenate([
-                numpy.full(1, 0.225),
-                numpy.full(3, 0.12593918054482717),
-                numpy.full(3, 0.13239415278850616),
-                ])
-            self.bary = numpy.concatenate([
-                _s3(),
-                _s21(0.10128650732345633),
-                _s21(0.47014206410511505),
-                ])
             self.degree = 5
+            data = [
+                (0.225, _s3()),
+                (0.12593918054482717, _s21(0.10128650732345633)),
+                (0.13239415278850616, _s21(0.47014206410511505)),
+                ]
         elif index == 8:
-            self.weights = numpy.concatenate([
-                numpy.full(3, 0.205950504760887),
-                numpy.full(6, 0.063691414286223),
-                ])
-            self.bary = numpy.concatenate([
-                _s21(0.437525248383384),
-                _s111(0.797112651860071, 0.165409927389841),
-                ])
             self.degree = 5
+            data = [
+                (0.205950504760887, _s21(0.437525248383384)),
+                (0.063691414286223, fs(0.797112651860071, 0.165409927389841)),
+                ]
         elif index == 9:
-            self.weights = numpy.concatenate([
-                numpy.full(3, 0.050844906370207),
-                numpy.full(3, 0.116786275726379),
-                numpy.full(6, 0.082851075618374),
-                ])
-            self.bary = numpy.concatenate([
-                _s21(0.063089014491502),
-                _s21(0.249286745170910),
-                _s111(0.636502499121399, 0.310352451033785),
-                ])
             self.degree = 6
+            data = [
+                (0.050844906370207, _s21(0.063089014491502)),
+                (0.116786275726379, _s21(0.249286745170910)),
+                (0.082851075618374, fs(0.636502499121399, 0.310352451033785)),
+                ]
         else:
             assert index == 10
-            self.weights = numpy.concatenate([
-                numpy.full(1, -0.149570044467670),
-                numpy.full(3, 0.175615257433204),
-                numpy.full(3, 0.053347235608839),
-                numpy.full(6, 0.077113760890257),
-                ])
-            self.bary = numpy.concatenate([
-                _s3(),
-                _s21(0.260345966079038),
-                _s21(0.065130102902216),
-                _s111(0.638444188569809, 0.312865496004875),
-                ])
             self.degree = 7
+            data = [
+                (-0.149570044467670, _s3()),
+                (+0.175615257433204, _s21(0.260345966079038)),
+                (+0.053347235608839, _s21(0.065130102902216)),
+                (+0.077113760890257, fs(0.638444188569809, 0.312865496004875)),
+                ]
 
+        self.bary, self.weights = untangle(data)
         self.points = self.bary[:, 1:]
         return
