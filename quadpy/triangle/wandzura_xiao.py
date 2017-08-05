@@ -27,7 +27,7 @@ class WandzuraXiao(object):
 
     Note that in the above article, the authors present the coordinates in the
     symmetric triangle [[-0.5, -sqrt(3)/2], [-0.5, +sqrt(3)/2], [1, 0]]. These
-    have been transformed to self.barycentric coordinates here.
+    have been transformed to barycentric coordinates here.
     '''
     def __init__(self, index):
         self.name = 'WX(%d)' % index

@@ -114,8 +114,6 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = Product(quadpy.line_segment.GaussLegendre(6))
-    scheme_ = quadpy.quadrilateral.StroudN('Cn 7-1')
-    print(scheme_.weights)
-    print(scheme_.points)
+    scheme_ = quadpy.quadrilateral.Tyler(2)
     test_show(scheme_)
     test_scheme(scheme_, 1.0e-8, print_degree=True)

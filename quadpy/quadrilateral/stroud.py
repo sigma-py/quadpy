@@ -114,10 +114,8 @@ class Stroud(object):
         elif index == 'C2 15-1':
             self.set_data(RabinowitzRichter(5))
         else:
-            assert index == 'C2 15-2'
+            assert index == 'C2 15-2', 'Illegal index \'{}\'.'.format(index)
             self.set_data(RabinowitzRichter(6))
-
-        # assert index == 'C2 5-7', 'Illegal index \'{}\'.'.format(index)
 
         # elif index == 2:
         #     self.weights = 4 * [1.0]
@@ -143,16 +141,6 @@ class Stroud(object):
         #         [[0.0, 0.0]]
         #         )
         #     self.degree = 3
-        # elif index == 5:
-        #     self.weights = (
-        #         4 * [40.0 / 49.0] +
-        #         4 * [9.0 / 49.0]
-        #         )
-        #     self.points = (
-        #         _symm_r_0(numpy.sqrt(7.0/15.0)) +
-        #         _symm_s(numpy.sqrt(7.0/9.0))
-        #         )
-        #     self.degree = 5
         # elif index == 6:
         #     self.weights = (
         #         4 * [1.0 / 9.0] +
