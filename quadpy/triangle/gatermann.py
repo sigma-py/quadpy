@@ -2,6 +2,8 @@
 #
 import numpy
 
+from ..helpers import untangle
+
 
 class Gatermann(object):
     '''
@@ -22,19 +24,15 @@ class Gatermann(object):
     def __init__(self):
         self.name = 'Gatermann'
         self.degree = 7
-        self.weights = 2 * numpy.concatenate([
-            numpy.full(3, 0.2651702815743450e-01),
-            numpy.full(3, 0.4388140871444811e-01),
-            numpy.full(3, 0.2877504278497528e-01),
-            numpy.full(3, 0.6749318700980879e-01),
-            ])
-        self.bary = numpy.concatenate([
-            _ro3(0.6238226509439084e-01, 0.6751786707392436e-01),
-            _ro3(0.5522545665692000e-01, 0.3215024938520156),
-            _ro3(0.3432430294509488e-01, 0.6609491961867980),
-            _ro3(0.5158423343536001, 0.2777161669764050),
-            ])
+        data = [
+            (0.2651702815743450e-01, _ro3(0.6238226509439084e-01, 0.6751786707392436e-01)),
+            (0.4388140871444811e-01, _ro3(0.5522545665692000e-01, 0.3215024938520156)),
+            (0.2877504278497528e-01, _ro3(0.3432430294509488e-01, 0.6609491961867980)),
+            (0.6749318700980879e-01, _ro3(0.5158423343536001, 0.2777161669764050)),
+            ]
 
+        self.bary, self.weights = untangle(data)
+        self.weights *= 2.0
         self.points = self.bary[:, 1:]
         return
 
