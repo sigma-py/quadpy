@@ -14,6 +14,7 @@ class CoolsHaegemans(object):
     TW Reports vol:TW96, Sept. 1987,
     <https://lirias.kuleuven.be/handle/123456789/131869>.
     '''
+    # pylint: disable=line-too-long
     def __init__(self, index):
         self.name = 'CH(%d)' % index
         assert index == 1
