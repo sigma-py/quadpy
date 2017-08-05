@@ -3,6 +3,8 @@
 import numpy
 from .helpers import _s3
 
+from ..helpers import untangle
+
 
 class LiuVinokur(object):
     '''
@@ -16,156 +18,95 @@ class LiuVinokur(object):
     def __init__(self, index):
         self.name = 'LV(%d)' % index
         if index == 1:
-            self.weights = numpy.concatenate([
-                numpy.full(1, 1.0),
-                ])
-            self.bary = numpy.concatenate([
-                _s3(),
-                ])
             self.degree = 1
+            data = [(1.0, _s3())]
         elif index == 2:
-            self.weights = numpy.concatenate([
-                numpy.full(3, 1.0/3.0),
-                ])
-            self.bary = numpy.concatenate([
-                _r_alpha(1.0),
-                ])
             self.degree = 1
+            data = [(1.0/3.0, _r_alpha(1.0))]
         elif index == 3:
-            self.weights = numpy.concatenate([
-                numpy.full(3, 1.0/3.0),
-                ])
-            self.bary = numpy.concatenate([
-                _r_alpha(-0.5),
-                ])
             self.degree = 2
+            data = [
+                (1.0/3.0, _r_alpha(-0.5)),
+                ]
         elif index == 4:
-            self.weights = numpy.concatenate([
-                numpy.full(1, 0.75),
-                numpy.full(3, 1.0/12.0),
-                ])
-            self.bary = numpy.concatenate([
-                _s3(),
-                _r_alpha(1.0),
-                ])
             self.degree = 2
+            data = [
+                (0.75, _s3()),
+                (1.0/12.0, _r_alpha(1.0)),
+                ]
         elif index == 5:
-            self.weights = numpy.concatenate([
-                numpy.full(1, -9.0/16.0),
-                numpy.full(3, 25.0/48.0),
-                ])
-            self.bary = numpy.concatenate([
-                _s3(),
+            self.degree = 3
+            data = [
+                (-9.0/16.0, _s3()),
                 # Wrongly specified in the article as 25 (instead of 2/5).
-                _r_alpha(0.4),
-                ])
-            self.degree = 3
+                (25.0/48.0, _r_alpha(0.4)),
+                ]
         elif index == 6:
-            self.weights = numpy.concatenate([
-                (1.0 + numpy.sqrt(21.0)) / numpy.full(3, 120.0),
-                (39.0 - numpy.sqrt(21.0)) / numpy.full(3, 120.0),
-                ])
-            self.bary = numpy.concatenate([
-                _r_alpha(1.0),
-                _r_alpha((1.0 - numpy.sqrt(21.0)) / 10.0),
-                ])
             self.degree = 3
+            sqrt21 = numpy.sqrt(21.0)
+            data = [
+                ((1.00 + sqrt21)/120.0, _r_alpha(1.0)),
+                ((39.0 - sqrt21)/120.0, _r_alpha((1.0 - sqrt21) / 10.0)),
+                ]
         elif index == 7:
-            self.weights = numpy.concatenate([
-                numpy.full(1, 9.0/20.0),
-                numpy.full(3, 1.0/20.0),
-                numpy.full(3, 2.0/15.0),
-                ])
-            self.bary = numpy.concatenate([
-                _s3(),
-                _r_alpha(1.0),
-                _r_alpha(-0.5),
-                ])
             self.degree = 3
+            data = [
+                (9.0/20.0, _s3()),
+                (1.0/20.0, _r_alpha(1.0)),
+                (2.0/15.0, _r_alpha(-0.5)),
+                ]
         elif index == 8:
-            sqrt10 = numpy.sqrt(10)
-            alpha1 = (-10 + 5*sqrt10 + numpy.sqrt(950.0 - 220*sqrt10)) / 30.0
-            alpha2 = (-10 + 5*sqrt10 - numpy.sqrt(950.0 - 220*sqrt10)) / 30.0
-            self.weights = numpy.concatenate([
-                numpy.full(
-                    3, (5*alpha2-2) / (60*alpha1**2 * (alpha2 - alpha1))
-                    ),
-                numpy.full(
-                    3, (5*alpha1-2) / (60*alpha2**2 * (alpha1 - alpha2))
-                    ),
-                ])
-            self.bary = numpy.concatenate([
-                _r_alpha(alpha1),
-                _r_alpha(alpha2),
-                ])
             self.degree = 4
+            sqrt10 = numpy.sqrt(10.0)
+            sqrt_b = numpy.sqrt(950.0 - 220.0*sqrt10)
+            a1 = (-10.0 + 5.0*sqrt10 + sqrt_b) / 30.0
+            a2 = (-10.0 + 5.0*sqrt10 - sqrt_b) / 30.0
+            data = [
+                ((5*a2-2) / (60*a1**2 * (a2 - a1)), _r_alpha(a1)),
+                ((5*a1-2) / (60*a2**2 * (a1 - a2)), _r_alpha(a2)),
+                ]
         elif index == 9:
-            self.weights = numpy.concatenate([
-                numpy.full(1, 27.0/80.0),
-                numpy.full(3, 8.0/105.0),
-                numpy.full(3, 81.0/560.0),
-                ])
-            self.bary = numpy.concatenate([
-                _s3(),
-                _r_alpha(-0.5),
-                _r_alpha(2.0/3.0),
-                ])
             self.degree = 4
+            data = [
+                (27.0/80.00, _s3()),
+                (8.00/105.0, _r_alpha(-0.5)),
+                (81.0/560.0, _r_alpha(2.0/3.0)),
+                ]
         elif index == 10:
-            self.weights = numpy.concatenate([
-                (11.0 - numpy.sqrt(13)) / numpy.full(3, 360.0),
-                (80.0 - 16*numpy.sqrt(13)) / numpy.full(3, 360.0),
-                (29.0 + 17*numpy.sqrt(13)) / numpy.full(3, 360.0),
-                ])
-            self.bary = numpy.concatenate([
-                _r_alpha(1.0),
-                _r_alpha(-0.5),
-                _r_alpha((-1.0 + numpy.sqrt(13.0)) / 6.0),
-                ])
             self.degree = 4
+            sqrt13 = numpy.sqrt(13.0)
+            data = [
+                ((11.0 - 1.00*sqrt13)/360.0, _r_alpha(1.0)),
+                ((80.0 - 16.0*sqrt13)/360.0, _r_alpha(-0.5)),
+                ((29.0 + 17.0*sqrt13)/360.0, _r_alpha((-1.0 + sqrt13) / 6.0)),
+                ]
         elif index == 11:
-            self.weights = numpy.concatenate([
-                numpy.full(1, 0.45),
-                -1.0 / numpy.full(3, 60.0),
-                numpy.full(6, 0.1),
-                ])
-            self.bary = numpy.concatenate([
-                _s3(),
-                _r_alpha(1.0),
-                _r_gamma_delta(
-                    (3.0 + numpy.sqrt(3.0)) / 6.0,
-                    (3.0 - numpy.sqrt(3.0)) / 6.0
-                    ),
-                ])
             self.degree = 4
+            sqrt3 = numpy.sqrt(3.0)
+            data = [
+                (0.45, _s3()),
+                (-1.0/60.0, _r_alpha(1.0)),
+                (0.1, _r_gamma_delta((3.0 + sqrt3)/6.0, (3.0 - sqrt3)/6.0)),
+                ]
         elif index == 12:
-            self.weights = numpy.concatenate([
-                numpy.full(1, 9.0/40.0),
-                numpy.full(3, (155.0 - numpy.sqrt(15.0))/1200.0),
-                numpy.full(3, (155.0 + numpy.sqrt(15.0))/1200.0),
-                ])
-            self.bary = numpy.concatenate([
-                _s3(),
-                _r_alpha((1.0 + numpy.sqrt(15.0)) / 7.0),
-                _r_alpha((1.0 - numpy.sqrt(15.0)) / 7.0),
-                ])
             self.degree = 5
+            sqrt15 = numpy.sqrt(15.0)
+            data = [
+                (9.0/40.0, _s3()),
+                ((155.0 - sqrt15)/1200.0, _r_alpha((1.0 + sqrt15) / 7.0)),
+                ((155.0 + sqrt15)/1200.0, _r_alpha((1.0 - sqrt15) / 7.0)),
+                ]
         else:
             assert index == 13
-            self.weights = numpy.concatenate([
-                numpy.full(1, 81.0/320.0),
-                numpy.full(3, 1.0/90.0),
-                numpy.full(3, 16.0/225.0),
-                numpy.full(3, 2401.0/14400.0),
-                ])
-            self.bary = numpy.concatenate([
-                _s3(),
-                _r_alpha(1.0),
-                _r_alpha(-0.5),
-                _r_alpha(4.0/7.0),
-                ])
             self.degree = 5
+            data = [
+                (81.0/320.0, _s3()),
+                (1.0/90.0, _r_alpha(1.0)),
+                (16.0/225.0, _r_alpha(-0.5)),
+                (2401.0/14400.0, _r_alpha(4.0/7.0)),
+                ]
 
+        self.bary, self.weights = untangle(data)
         self.points = self.bary[:, 1:]
         return
 
