@@ -1,33 +1,11 @@
 # -*- coding: utf-8 -*-
 #
-import math
-
-from helpers import check_degree
+from helpers import check_degree, integrate_monomial_over_unit_sphere
 
 import numpy
 import pytest
 import quadpy
 import sympy
-
-
-def _integral_monomial_over_unit_sphere(alpha):
-    '''
-    Gerald B. Folland,
-    How to Integrate a Polynomial over a Sphere,
-    The American Mathematical Monthly,
-    Vol. 108, No. 5 (May, 2001), pp. 446-448,
-    <https://dx.doi.org/10.2307/2695802>.
-    '''
-    alpha = numpy.array(alpha)
-    if any(alpha % 2 == 1):
-        return 0.0
-
-    # Use lgamma since other with ordinary gamma, numerator and denominator
-    # might overflow.
-    return 2.0 * math.exp(
-        math.fsum([math.lgamma(0.5*(a+1)) for a in alpha])
-        - math.lgamma(math.fsum([0.5*(a+1) for a in alpha]))
-        )
 
 
 def _integrate_exact(f, midpoint, radius):
@@ -65,7 +43,7 @@ def test_scheme(scheme):
             lambda poly: quadpy.sphere.integrate(
                 poly, midpoint, radius, scheme, sumfun=numpy.sum
                 ),
-            _integral_monomial_over_unit_sphere,
+            integrate_monomial_over_unit_sphere,
             lambda n: quadpy.helpers.partition(n, 3),
             min(30, scheme.degree + 1)
             )

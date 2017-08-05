@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import (
-    integrate_monomial_over_unit_circle, check_degree
-    )
-
 import pytest
 import quadpy
+
+from helpers import integrate_monomial_over_unit_sphere, check_degree
 
 
 @pytest.mark.parametrize(
@@ -17,7 +15,7 @@ def test_scheme(scheme):
             lambda poly: quadpy.circle.integrate(
                 poly, [0.0, 0.0], 1.0, scheme
                 ),
-            integrate_monomial_over_unit_circle,
+            integrate_monomial_over_unit_sphere,
             lambda n: quadpy.helpers.partition(n, 2),
             scheme.degree + 1
             )
