@@ -125,5 +125,5 @@ def test_volume():
 
 if __name__ == '__main__':
     scheme_ = quadpy.triangle.VioreanuRokhlin(10)
-    test_scheme(scheme_)
+    test_scheme(scheme_, 1.0e-14)
     test_show(scheme_)
