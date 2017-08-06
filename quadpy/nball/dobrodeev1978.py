@@ -2,11 +2,11 @@
 #
 from __future__ import division
 
-import math
 from math import factorial as fact, sqrt
-import numpy
 
 from ..helpers import untangle, fsd, fsd2
+
+from .helpers import integrate_monomial_over_unit_nball
 
 
 class Dobrodeev1978(object):
@@ -56,10 +56,10 @@ class Dobrodeev1978(object):
 
         t = 1 if pm_type == 'I' else -1
 
-        I0 = _integrate_monomial_over_unit_nball(n * [0])
-        I2 = _integrate_monomial_over_unit_nball([2] + (n-1) * [0])
-        I22 = _integrate_monomial_over_unit_nball([2, 2] + (n-2) * [0])
-        I4 = _integrate_monomial_over_unit_nball([4] + (n-1) * [0])
+        I0 = integrate_monomial_over_unit_nball(n * [0])
+        I2 = integrate_monomial_over_unit_nball([2] + (n-1) * [0])
+        I22 = integrate_monomial_over_unit_nball([2, 2] + (n-2) * [0])
+        I4 = integrate_monomial_over_unit_nball([4] + (n-1) * [0])
 
         L = fact(n) // (fact(i) * fact(n-i)) * 2**i
         M = fact(n) // (fact(j) * fact(k) * fact(n-j-k)) * 2**(j+k)
@@ -86,36 +86,3 @@ class Dobrodeev1978(object):
 
         self.weights *= I0
         return
-
-
-def _integrate_monomial_over_unit_nball(exp):
-    '''
-    Gerald B. Folland,
-    How to Integrate a Polynomial over a Sphere,
-    The American Mathematical Monthly,
-    Vol. 108, No. 5 (May, 2001), pp. 446-448,
-    <https://dx.doi.org/10.2307/2695802>.
-    '''
-    radius = 1.0
-    n = len(exp)
-    alpha = n + sum(exp)
-    return radius**alpha / alpha * _integrate_monomial_over_unit_sphere(exp)
-
-
-def _integrate_monomial_over_unit_sphere(alpha):
-    '''
-    Gerald B. Folland,
-    How to Integrate a Polynomial over a Sphere,
-    The American Mathematical Monthly,
-    Vol. 108, No. 5 (May, 2001), pp. 446-448,
-    <https://dx.doi.org/10.2307/2695802>.
-    '''
-    alpha = numpy.array(alpha)
-    if any(alpha % 2 == 1):
-        return 0.0
-    # Use lgamma since other with ordinary gamma, numerator and denominator
-    # might overflow.
-    return 2.0 * math.exp(
-        math.fsum([math.lgamma(0.5*(a+1)) for a in alpha])
-        - math.lgamma(math.fsum([0.5*(a+1) for a in alpha]))
-        )

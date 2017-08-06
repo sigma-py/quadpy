@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import check_degree, integrate_monomial_over_unit_sphere
-
 import numpy
 import pytest
 import quadpy
+from quadpy.nball.helpers import integrate_monomial_over_unit_sphere
 import sympy
+
+from helpers import check_degree
 
 
 def _integrate_exact(f, midpoint, radius):
