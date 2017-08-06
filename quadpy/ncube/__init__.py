@@ -2,6 +2,7 @@
 #
 # pylint: disable=wildcard-import
 from .dobrodeev1970 import *
+from .dobrodeev1978 import *
 from .ewing import *
 from .hammer_stroud import *
 from .mustard_lyness_blatt import *

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 import itertools
 import math
 from math import sqrt, factorial as fact
