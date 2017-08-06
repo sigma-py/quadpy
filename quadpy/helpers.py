@@ -129,9 +129,9 @@ def show_mpl(points, weights, volume, edges):
             # <https://stackoverflow.com/q/45324258/353337>.
             u = numpy.linspace(0, 2 * numpy.pi, int(2*numpy.pi/h*r) + 1)
             v = numpy.linspace(0, numpy.pi, int(numpy.pi/h*r) + 1)
-            x = numpy.outer(numpy.cos(u), numpy.sin(v))
-            y = numpy.outer(numpy.sin(u), numpy.sin(v))
-            z = numpy.outer(numpy.ones(numpy.size(u)), numpy.cos(v))
+            _x = numpy.outer(numpy.cos(u), numpy.sin(v))
+            _y = numpy.outer(numpy.sin(u), numpy.sin(v))
+            _z = numpy.outer(numpy.ones(numpy.size(u)), numpy.cos(v))
 
             color = '#1f77b4' if weight >= 0 else '#d62728'
             # highlight ball center
@@ -141,7 +141,7 @@ def show_mpl(points, weights, volume, edges):
                 )
 
             ax.plot_surface(
-                r*x + tp[0], r*y + tp[1], r*z + tp[2],
+                r*_x + tp[0], r*_y + tp[1], r*_z + tp[2],
                 color=color,
                 alpha=0.3,
                 linewidth=1
@@ -190,12 +190,12 @@ def show_mayavi(points, weights, volume, edges):
         v = numpy.linspace(0, numpy.pi, int(numpy.pi/h*r) + 1)
         sin_u, cos_u = numpy.sin(u), numpy.cos(u)
         sin_v, cos_v = numpy.sin(v), numpy.cos(v)
-        x = numpy.outer(cos_u, sin_v)
-        y = numpy.outer(sin_u, sin_v)
-        z = numpy.outer(numpy.ones(numpy.size(u)), cos_v)
+        _x = numpy.outer(cos_u, sin_v)
+        _y = numpy.outer(sin_u, sin_v)
+        _z = numpy.outer(numpy.ones(numpy.size(u)), cos_v)
 
         mlab.mesh(
-            r*x + tp[0], r*y + tp[1], r*z + tp[2],
+            r*_x + tp[0], r*_y + tp[1], r*_z + tp[2],
             color=blue if weight >= 0 else red,
             opacity=1.0
             )
