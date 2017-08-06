@@ -231,7 +231,7 @@ def test_nball():
         lambda x: numpy.exp(x[0]),
         numpy.zeros(4),
         1.0,
-        quadpy.nball.Dobrodeev(dim)
+        quadpy.nball.Dobrodeev1970(dim)
         )
     return
 

@@ -7,7 +7,7 @@ from .helpers import _s2, _s11
 from ..helpers import untangle, fsd, z
 
 
-class Stroud68(object):
+class Stroud1968(object):
     '''
     A. H. Stroud,
     Extensions of Symmetric Integration Formulas,

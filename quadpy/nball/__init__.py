@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
 # pylint: disable=wildcard-import
-from .dobrodeev import *
+from .dobrodeev1970 import *
 
 from .tools import *
