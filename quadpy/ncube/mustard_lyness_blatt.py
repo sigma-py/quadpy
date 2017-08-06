@@ -2,9 +2,9 @@
 #
 import numpy
 
-from .helpers import _fsd, _z, _pm
+from .helpers import _pm
 
-from ..helpers import untangle
+from ..helpers import untangle, fsd, z
 
 
 class MustardLynessBlatt(object):
@@ -34,8 +34,8 @@ class MustardLynessBlatt(object):
         self.degree = 5
         r = numpy.sqrt(2.0 / 5.0)
         data = [
-            ((8 - 5*n)/9.0, _z(n)),
-            (5.0/18.0, _fsd(n, r, 1)),
+            ((8 - 5*n)/9.0, z(n)),
+            (5.0/18.0, fsd(n, r, 1)),
             (1.0/9.0 / 2**n, _pm(n, 1.0)),
             ]
 

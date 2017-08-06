@@ -21,8 +21,11 @@ from . import circle
 from . import disk
 from . import hexahedron
 from . import line_segment
+from . import nball
+from . import ncube
 from . import pyramid
 from . import quadrilateral
+from . import simplex
 from . import sphere
 from . import triangle
 from . import tetrahedron
