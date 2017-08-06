@@ -225,6 +225,17 @@ def test_simplex():
     return
 
 
+def test_nball():
+    dim = 4
+    quadpy.nball.integrate(
+        lambda x: numpy.exp(x[0]),
+        numpy.zeros(4),
+        1.0,
+        quadpy.nball.Dobrodeev(dim)
+        )
+    return
+
+
 def test_ncube():
     dim = 4
     quadpy.ncube.integrate(
