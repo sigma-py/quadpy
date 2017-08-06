@@ -26,9 +26,9 @@ def _fsd(n, r, d):
     '''Get all permutations of [+-r, +-r, 0, ..., 0] of length n, where +-r
     occurs d times.
     len(out) == 2**d * (n over d).
-    d==1:  2*n
-    d==2:  2*n*(n-1)
-    d==3:  4*n*(n-1)*(n-2) / 3
+    n==1:  2*n
+    n==2:  2*n*(n-1)
+    n==3:  4*n*(n-1)*(n-2) / 3
     '''
     assert 0 <= d <= n
     return _combine([[+r, -r]] * d + [[0.0]] * (n-d))
