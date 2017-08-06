@@ -4,6 +4,13 @@ import itertools
 import numpy
 
 
+def integrate_monomial_over_ncube(ncube_limits, exp):
+    return numpy.prod([
+            (a[1]**(k+1) - a[0]**(k+1)) / (k+1) for a, k in
+            zip(ncube_limits, exp)
+            ])
+
+
 def _fs11(n, r, s):
     '''Get all permutations of [+-r, +-s, ..., +-s] of length n.
     len(out) == n * 2**n.
