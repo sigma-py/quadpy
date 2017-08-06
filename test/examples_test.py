@@ -209,9 +209,9 @@ def test_wedge():
     return
 
 
-def test_simplex():
+def test_nsimplex():
     dim = 4
-    quadpy.simplex.integrate(
+    quadpy.nsimplex.integrate(
         lambda x: numpy.exp(x[0]),
         numpy.array([
             [0.0, 0.0, 0.0, 0.0],
@@ -220,7 +220,7 @@ def test_simplex():
             [0.0, 3.0, 1.0, 0.0],
             [0.0, 0.0, 4.0, 1.0],
             ]),
-        quadpy.simplex.GrundmannMoeller(dim, 3)
+        quadpy.nsimplex.GrundmannMoeller(dim, 3)
         )
     return
 

@@ -21,4 +21,4 @@ from .williams_shunn_jameson import *
 
 from .tools import *
 
-from ..simplex import integrate
+from ..nsimplex import integrate
