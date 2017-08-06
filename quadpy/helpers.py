@@ -304,6 +304,14 @@ def fsd(n, r, d):
     return combine([[+r, -r]] * d + [[0.0]] * (n-d))
 
 
+def fsd2(n, r, s, i, j):
+    '''Get all permutations of [+-r, +-r, +-s, +-s, 0, ..., 0] of length n,
+    with i times the number r and and j times the number s.
+    '''
+    assert 2 <= i+j <= n
+    return combine([[+r, -r]] * i + [[+s, -s]] * j + [[0.0]] * (n-i-j))
+
+
 def combine(pools):
     '''Given an input array with lists of options, e.g.,
 
