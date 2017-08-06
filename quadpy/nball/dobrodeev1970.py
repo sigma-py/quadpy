@@ -5,7 +5,7 @@ import numpy
 from ..helpers import untangle, fsd, z
 
 
-class Dobrodeev(object):
+class Dobrodeev1970(object):
     '''
     L.N. Dobrodeev,
     Cubature formulas of the seventh order of accuracy for a hypersphere and a

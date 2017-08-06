@@ -19,7 +19,7 @@ stroud_idx = [
 
 @pytest.mark.parametrize(
     'scheme, tol',
-    [(quadpy.ncube.Dobrodeev(dim), 1.0e-14) for dim in range(5, 10)]
+    [(quadpy.ncube.Dobrodeev1970(dim), 1.0e-14) for dim in range(5, 10)]
     + [(quadpy.ncube.Stroud(3, k), 1.0e-14) for k in stroud_idx]
     + [(quadpy.ncube.Stroud(4, k), 1.0e-14) for k in stroud_idx]
     + [(quadpy.ncube.Stroud(5, k), 1.0e-14) for k in stroud_idx]
