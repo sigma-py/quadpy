@@ -332,6 +332,7 @@ def combine(pools):
         ]))))
 
 
+# pylint: disable=too-many-arguments
 def compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k):
     '''Compute some helper quantities used in
 
