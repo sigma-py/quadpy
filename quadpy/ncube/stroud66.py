@@ -2,9 +2,9 @@
 #
 import numpy
 
-from .helpers import _fsd, _pm, _z, _fs11
+from .helpers import _pm, _fs11
 
-from ..helpers import untangle
+from ..helpers import untangle, fsd, z
 
 
 class Stroud66(object):
@@ -24,12 +24,12 @@ class Stroud66(object):
             r = numpy.sqrt((5*n + 4) / 30.0)
             s = numpy.sqrt((5*n + 4.0) / (15*n - 12.0))
             data = [
-                (40.0 / (5*n+4)**2, _fsd(n, r, 1)),
+                (40.0 / (5*n+4)**2, fsd(n, r, 1)),
                 (((5*n - 4.0) / (5*n + 4))**2 / 2**n, _pm(n, s)),
                 ]
         elif variant == 'b':
             s = numpy.sqrt(1.0 / 3.0)
-            data = [(4.0 / (5*n + 4), _z(n))]
+            data = [(4.0 / (5*n + 4), z(n))]
             for k in range(1, n+1):
                 r = numpy.sqrt((5*k + 4) / 15.0)
                 arr = numpy.zeros((2**(n-k+1), n))
@@ -42,7 +42,7 @@ class Stroud66(object):
             r = numpy.sqrt((5*n + 4 + 2*(n-1)*numpy.sqrt(5*n+4)) / (15.0*n))
             s = numpy.sqrt((5*n + 4 - 2*numpy.sqrt(5*n+4)) / (15.0*n))
             data = [
-                (4.0/(5*n+4), _z(n)),
+                (4.0/(5*n+4), z(n)),
                 (5.0/(5*n+4) / 2**n, _fs11(n, r, s)),
                 ]
         else:

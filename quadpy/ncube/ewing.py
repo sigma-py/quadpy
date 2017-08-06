@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _z, _pm
+from .helpers import _pm
 
-from ..helpers import untangle
+from ..helpers import untangle, z
 
 
 class Ewing(object):
@@ -17,7 +17,7 @@ class Ewing(object):
         reference_volume = 2.0**n
         self.degree = 3
         data = [
-            (2.0/3.0, _z(n)),
+            (2.0/3.0, z(n)),
             (1.0/3.0 / 2**n, _pm(n, 1.0)),
             ]
 

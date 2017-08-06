@@ -2,7 +2,7 @@
 #
 import numpy
 
-from .helpers import _fsd, _pm
+from .helpers import _pm
 from . import ewing
 from . import hammer_stroud
 from . import mustard_lyness_blatt
@@ -12,6 +12,8 @@ from . import stroud66
 from . import stroud68
 from . import thacher
 from . import tyler
+
+from ..helpers import fsd
 
 
 class Stroud(object):
@@ -56,7 +58,7 @@ class Stroud(object):
             self.degree = 3
             self.weights = numpy.full(2*n, reference_volume / (2*n))
             r = numpy.sqrt(n / 3.0)
-            self.points = _fsd(n, r, 1)
+            self.points = fsd(n, r, 1)
         elif index == 'Cn 3-3':
             scheme = tyler.Tyler(n)
             self.degree = scheme.degree

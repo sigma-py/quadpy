@@ -19,7 +19,8 @@ stroud_idx = [
 
 @pytest.mark.parametrize(
     'scheme, tol',
-    [(quadpy.ncube.Stroud(3, k), 1.0e-14) for k in stroud_idx]
+    [(quadpy.ncube.Dobrodeev(dim), 1.0e-14) for dim in range(5, 10)]
+    + [(quadpy.ncube.Stroud(3, k), 1.0e-14) for k in stroud_idx]
     + [(quadpy.ncube.Stroud(4, k), 1.0e-14) for k in stroud_idx]
     + [(quadpy.ncube.Stroud(5, k), 1.0e-14) for k in stroud_idx]
     + [(quadpy.ncube.Stroud(6, k), 1.0e-14) for k in stroud_idx]
@@ -51,5 +52,5 @@ def _integrate_monomial_over_ncube(ncube_limits, exp):
 
 if __name__ == '__main__':
     n_ = 5
-    scheme_ = quadpy.ncube.Stroud(n_, 'Cn 3-4')
+    scheme_ = quadpy.ncube.Dobrodeev(n_)
     test_scheme(scheme_, 1.0e-14)
