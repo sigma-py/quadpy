@@ -2,10 +2,7 @@
 #
 from __future__ import division
 
-from math import factorial as fact, sqrt
-
-from ..helpers import untangle, fsd, fsd2
-
+from ..helpers import untangle, fsd, fsd2, compute_dobrodeev
 from .helpers import integrate_monomial_over_unit_nball
 
 
@@ -26,6 +23,8 @@ class Dobrodeev1978(object):
     dimensionalities 2 <= n <= 20.
     '''
     def __init__(self, n):
+        assert 2 <= n <= 20
+
         self.name = 'Dobrodeev1978'
         self.degree = 5
         self.dim = n
@@ -52,30 +51,12 @@ class Dobrodeev1978(object):
             20: ('I', 20, 1, 3),
             }
 
-        pm_type, i, j, k = dim_config[n]
-
-        t = 1 if pm_type == 'I' else -1
-
         I0 = integrate_monomial_over_unit_nball(n * [0])
         I2 = integrate_monomial_over_unit_nball([2] + (n-1) * [0])
         I22 = integrate_monomial_over_unit_nball([2, 2] + (n-2) * [0])
         I4 = integrate_monomial_over_unit_nball([4] + (n-1) * [0])
-
-        L = fact(n) // (fact(i) * fact(n-i)) * 2**i
-        M = fact(n) // (fact(j) * fact(k) * fact(n-j-k)) * 2**(j+k)
-        N = L + M
-        F = I22/I0 - I2**2/I0**2 + (I4/I0 - I22/I0) / n
-        R = -(j+k-i) / i * I2**2/I0**2 + (j+k-1)/n * I4/I0 - (n-1)/n * I22/I0
-        H = 1/i * (
-            (j+k-i) * I2**2/I0**2 + (j+k)/n * ((i-1) * I4/I0 - (n-1)*I22/I0)
-            )
-        Q = L/M*R + H - t * 2*I2/I0 * (j+k-i)/i * sqrt(L/M*F)
-
-        G = 1/N
-
-        a = sqrt(n/i * (I2/I0 + t * sqrt(M/L*F)))
-        b = sqrt(n/(j+k) * (I2/I0 - t * sqrt(L/M*F) + t * sqrt(k/j*Q)))
-        c = sqrt(n/(j+k) * (I2/I0 - t * sqrt(L/M*F) - t * sqrt(j/k*Q)))
+        pm_type, i, j, k = dim_config[n]
+        G, a, b, c = compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k)
 
         data = [
             (G, fsd(n, a, i)),
@@ -83,6 +64,5 @@ class Dobrodeev1978(object):
             ]
 
         self.points, self.weights = untangle(data)
-
         self.weights *= I0
         return

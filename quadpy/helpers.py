@@ -2,6 +2,7 @@
 #
 import itertools
 import math
+from math import sqrt, factorial as fact
 import numpy
 
 
@@ -327,3 +328,32 @@ def combine(pools):
     return numpy.array(list(set(itertools.chain.from_iterable([
         itertools.permutations(x) for x in itertools.product(*pools)
         ]))))
+
+
+def compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k):
+    '''Compute some helper quantities used in
+
+    L.N. Dobrodeev,
+    Cubature rules with equal coefficients for integrating functions with
+    respect to symmetric domains,
+    USSR Computational Mathematics and Mathematical Physics,
+    Volume 18, Issue 4, 1978, Pages 27-34,
+    <https://doi.org/10.1016/0041-5553(78)90064-2>.
+    '''
+    t = 1 if pm_type == 'I' else -1
+
+    L = fact(n) // (fact(i) * fact(n-i)) * 2**i
+    M = fact(n) // (fact(j) * fact(k) * fact(n-j-k)) * 2**(j+k)
+    N = L + M
+    F = I22/I0 - I2**2/I0**2 + (I4/I0 - I22/I0) / n
+    R = -(j+k-i) / i * I2**2/I0**2 + (j+k-1)/n * I4/I0 - (n-1)/n * I22/I0
+    H = 1/i * (
+        (j+k-i) * I2**2/I0**2 + (j+k)/n * ((i-1) * I4/I0 - (n-1)*I22/I0)
+        )
+    Q = L/M*R + H - t * 2*I2/I0 * (j+k-i)/i * sqrt(L/M*F)
+
+    G = 1/N
+    a = sqrt(n/i * (I2/I0 + t * sqrt(M/L*F)))
+    b = sqrt(n/(j+k) * (I2/I0 - t * sqrt(L/M*F) + t * sqrt(k/j*Q)))
+    c = sqrt(n/(j+k) * (I2/I0 - t * sqrt(L/M*F) - t * sqrt(j/k*Q)))
+    return G, a, b, c
