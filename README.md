@@ -392,6 +392,7 @@ quadpy.nball.integrate(
     - [Stroud](https://doi.org/10.1090/S0025-5718-1966-0191094-8) (1966, 4 schemes of degree 5)
     - [Phillips](https://doi.org/10.1093/comjnl/10.3.297) (1967, degree 7, single precision)
     - [Stroud](https://dx.doi.org/10.2307/2004655) (1968, degree 5)
+ * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1978, n >= 2, degree 5)
 
 Example:
 ```python
