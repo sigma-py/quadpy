@@ -2,8 +2,7 @@
 #
 import numpy
 
-from .helpers import _fsd, _z
-from ..helpers import untangle
+from ..helpers import untangle, fsd, z
 
 
 class Dobrodeev(object):
@@ -29,11 +28,11 @@ class Dobrodeev(object):
 
         r = numpy.sqrt(3.0 / (n + 6.0))
         data = [
-            (A, _fsd(n, r, 3)),
-            (B, _fsd(n, r, 2)),
-            (C, _fsd(n, r, 1)),
-            (D, _fsd(n, 1.0, 1)),
-            (E, _z(n)),
+            (A, fsd(n, r, 3)),
+            (B, fsd(n, r, 2)),
+            (C, fsd(n, r, 1)),
+            (D, fsd(n, 1.0, 1)),
+            (E, z(n)),
             ]
 
         self.points, self.weights = untangle(data)

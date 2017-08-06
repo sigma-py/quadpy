@@ -2,9 +2,7 @@
 #
 import numpy
 
-from .helpers import _z, _fsd
-
-from ..helpers import untangle
+from ..helpers import untangle, fsd, z
 
 
 class HammerStroud(object):
@@ -19,9 +17,9 @@ class HammerStroud(object):
         self.degree = 5
         r = numpy.sqrt(3.0 / 5.0)
         data = [
-            ((25*n**2 - 115*n + 162)/162.0, _z(n)),
-            ((70 - 25*n)/162.0, _fsd(n, r, 1)),
-            (25.0/324.0, _fsd(n, r, 2)),
+            ((25*n**2 - 115*n + 162)/162.0, z(n)),
+            ((70 - 25*n)/162.0, fsd(n, r, 1)),
+            (25.0/324.0, fsd(n, r, 2)),
             ]
 
         self.points, self.weights = untangle(data)
