@@ -4,10 +4,6 @@ import itertools
 import numpy
 
 
-def _z(n):
-    return numpy.zeros((1, n))
-
-
 def _fs11(n, r, s):
     '''Get all permutations of [+-r, +-s, ..., +-s] of length n.
     len(out) == n * 2**n.
@@ -20,35 +16,6 @@ def _fs11(n, r, s):
     return numpy.array(list(itertools.chain.from_iterable(
         itertools.product(*((+vij, -vij) for vij in vi)) for vi in vs
         )))
-
-
-def _fsd(n, r, d):
-    '''Get all permutations of [+-r, +-r, 0, ..., 0] of length n, where +-r
-    occurs d times.
-    len(out) == 2**d * (n over d).
-    d==1:  2*n
-    d==2:  2*n*(n-1)
-    d==3:  4*n*(n-1)*(n-2) / 3
-    '''
-    assert 0 <= d <= n
-    return _combine([[+r, -r]] * d + [[0.0]] * (n-d))
-
-
-def _combine(pools):
-    '''Given an input array with lists of options, e.g.,
-
-    [[a, b], [c], [d]],
-
-    this methods returns all combinations with one element from each
-    subset, e.g.,
-
-    [a, c, d], [a, d, c], [c, d, a], ...
-    [b, c, d], [b, d, c], [c, d, b], ...
-    '''
-    # https://stackoverflow.com/a/45322199/353337
-    return numpy.array(list(set(itertools.chain.from_iterable([
-        itertools.permutations(x) for x in itertools.product(*pools)
-        ]))))
 
 
 def _s(n, a, b):

@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _z, _fsd
-
-from ..helpers import untangle
+from ..helpers import untangle, fsd, z
 
 
 class Tyler(object):
@@ -16,8 +14,8 @@ class Tyler(object):
         reference_volume = 2.0**n
         self.degree = 3
         data = [
-            ((3.0 - n)/3.0, _z(n)),
-            (1.0/6.0, _fsd(n, 1.0, 1)),
+            ((3.0 - n)/3.0, z(n)),
+            (1.0/6.0, fsd(n, 1.0, 1)),
             ]
 
         self.points, self.weights = untangle(data)
