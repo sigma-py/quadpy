@@ -10,6 +10,7 @@ from helpers import check_degree, integrate_monomial_over_unit_nball
 @pytest.mark.parametrize(
     'scheme',
     [quadpy.nball.Dobrodeev1970(n) for n in range(3, 10)]
+    + [quadpy.nball.Dobrodeev1978(n) for n in range(2, 7)]
     )
 def test_scheme(scheme):
     tol = 1.0e-14
@@ -29,6 +30,6 @@ def test_scheme(scheme):
 
 
 if __name__ == '__main__':
-    n_ = 3
-    scheme_ = quadpy.nball.Dobrodeev1970(n_)
+    n_ = 5
+    scheme_ = quadpy.nball.Dobrodeev1978(n_)
     test_scheme(scheme_)
