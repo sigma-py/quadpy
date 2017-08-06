@@ -3,7 +3,8 @@
 import pytest
 import quadpy
 
-from helpers import integrate_monomial_over_unit_nball, check_degree
+from helpers import check_degree
+from quadpy.nball.helpers import integrate_monomial_over_unit_nball
 
 
 @pytest.mark.parametrize(
