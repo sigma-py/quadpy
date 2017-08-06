@@ -9,7 +9,7 @@ Your one-stop shop for numerical integration in Python.
 
 Hundreds of numerical integration schemes for line segments, circles, disks,
 triangles, quadrilaterals, spheres, tetrahedra, hexahedra, wedges, pyramids,
-n-simplices, and n-cubes.
+n-balls, n-cubes, and n-simplices.
 
 To numerically integrate any function over any given triangle, do
 ```python
@@ -365,6 +365,11 @@ val = quadpy.simplex.integrate(
     quadpy.simplex.GrundmannMoeller(dim, 3)
     )
 ```
+
+
+### n-ball
+ * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1970, degree 7)
+
 
 ### n-cube
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
