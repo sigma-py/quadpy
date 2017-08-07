@@ -2,7 +2,6 @@
 #
 import numpy
 
-from .helpers import _pm
 from . import ewing
 from . import hammer_stroud
 from . import mustard_lyness_blatt
@@ -13,7 +12,7 @@ from . import stroud1968
 from . import thacher
 from . import tyler
 
-from ..helpers import fsd
+from ..helpers import fsd, pm
 
 
 class Stroud(object):
@@ -38,7 +37,7 @@ class Stroud(object):
             # product trapezoidal formula
             self.degree = 1
             self.weights = numpy.full(2**n, 1.0)
-            self.points = _pm(n, 1.0)
+            self.points = pm(n, 1.0)
         elif index == 'Cn 2-1':
             self.set_data(stroud1957.Stroud1957(n, 2))
         elif index == 'Cn 2-2':
@@ -59,7 +58,7 @@ class Stroud(object):
                 numpy.full(2**n, reference_volume / 2**n),
                 ])
             r = numpy.sqrt(3.0) / 3.0
-            self.points = _pm(n, r)
+            self.points = pm(n, r)
         elif index == 'Cn 3-5':
             self.set_data(ewing.Ewing(n))
         elif index == 'Cn 3-6':

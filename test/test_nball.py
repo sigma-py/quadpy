@@ -14,7 +14,7 @@ from helpers import check_degree
     + [quadpy.nball.Dobrodeev1978(n) for n in range(2, 7)]
     + [quadpy.nball.Stroud(dim, index) for dim in range(2, 10) for index in [
         'Sn 2-1',
-        'Sn 3-1',
+        'Sn 3-1', 'Sn 3-2',
         ]]
     )
 def test_scheme(scheme):
@@ -35,6 +35,6 @@ def test_scheme(scheme):
 
 
 if __name__ == '__main__':
-    n_ = 6
-    scheme_ = quadpy.nball.Stroud(n_, 'Sn 2-1')
+    n_ = 3
+    scheme_ = quadpy.nball.Stroud(n_, 'Sn 3-2')
     test_scheme(scheme_)

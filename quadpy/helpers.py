@@ -332,6 +332,13 @@ def combine(pools):
         ]))))
 
 
+def pm(n, a):
+    '''Return all combinations of [+a, -a] with length n (with repetition).
+    len(out) == 2**n.
+    '''
+    return numpy.array(list(itertools.product([+a, -a], repeat=n)))
+
+
 # pylint: disable=too-many-arguments
 def compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k):
     '''Compute some helper quantities used in
