@@ -311,7 +311,7 @@ def fsd2(n, r, s, i, j):
     '''Get all permutations of [+-r, +-r, +-s, +-s, 0, ..., 0] of length n,
     with i times the number r and and j times the number s.
     '''
-    assert 2 <= i+j <= n
+    assert i+j <= n
     return combine([[+r, -r]] * i + [[+s, -s]] * j + [[0.0]] * (n-i-j))
 
 
@@ -337,6 +337,15 @@ def pm(n, a):
     len(out) == 2**n.
     '''
     return numpy.array(list(itertools.product([+a, -a], repeat=n)))
+
+
+def pm_array(v):
+    '''Given an array `v = [v0, v1, ..., vn]`, this methods returns all
+    combinations of [+-v0, +-v1, ..., +-vn].
+    '''
+    n = len(v)
+    pm_one = numpy.array(list(itertools.product(*(n*[[+1, -1]]))))
+    return pm_one * v
 
 
 # pylint: disable=too-many-arguments
