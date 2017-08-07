@@ -40,7 +40,13 @@ class Stroud(object):
         elif index == 'Sn 5-2':
             self.set_data(hammer_stroud.HammerStroud(n, 'b', alpha=0.0))
         elif index == 'Sn 5-3':
-            self.set_data(stroud1966.Stroud1966(n))
+            self.set_data(stroud1966.Stroud1966(n, variant='a'))
+        elif index == 'Sn 5-4':
+            self.set_data(stroud1966.Stroud1966(n, variant='b'))
+        elif index == 'Sn 5-5':
+            self.set_data(stroud1966.Stroud1966(n, variant='c'))
+        elif index == 'Sn 5-6':
+            self.set_data(stroud1966.Stroud1966(n, variant='d'))
         else:
             assert False
 
