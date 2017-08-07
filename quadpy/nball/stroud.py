@@ -23,7 +23,7 @@ class Stroud(object):
         if index == 'Sn 2-1':
             self.set_data(stroud1957.Stroud1957(n))
         elif index == 'Sn 3-1':
-            self.set_data(hammer_stroud.HammerStroud(n, alpha=0.0))
+            self.set_data(hammer_stroud.HammerStroud(n, 'a', alpha=0.0))
         elif index == 'Sn 3-2':
             self.degree = 3
             r = numpy.sqrt(1.0 / (n+2))
@@ -36,6 +36,8 @@ class Stroud(object):
             self.set_data(stroud1967.Stroud1967(n, variant='a'))
         elif index == 'Sn 5-1b':
             self.set_data(stroud1967.Stroud1967(n, variant='b'))
+        elif index == 'Sn 5-2':
+            self.set_data(hammer_stroud.HammerStroud(n, 'b', alpha=0.0))
         else:
             assert False
 
