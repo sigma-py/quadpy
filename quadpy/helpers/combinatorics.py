@@ -31,13 +31,13 @@ def fsd2(n, r, s, i, j):
 def combine(*elems):
     '''Given an input array with lists of options, e.g.,
 
-    [[a, b], [c], [d]],
+    ((+r, -r), 2), ((+s, -s), 2), ((0.0,), 1)
 
-    this methods returns all combinations with one element from each
-    subset, e.g.,
+    this methods returns all combinations, i.e.,
 
-    [a, c, d], [a, d, c], [c, d, a], ...
-    [b, c, d], [b, d, c], [c, d, b], ...
+    (+r, 0.0, -s, +r, +s),
+    (0.0, -s, -r, +r, +s),
+    ...
     '''
     # https://stackoverflow.com/a/45321972/353337
 
