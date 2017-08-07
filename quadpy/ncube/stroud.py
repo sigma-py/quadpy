@@ -40,30 +40,18 @@ class Stroud(object):
             self.weights = numpy.full(2**n, 1.0)
             self.points = _pm(n, 1.0)
         elif index == 'Cn 2-1':
-            scheme = stroud1957.Stroud1957(n, 2)
-            self.degree = scheme.degree
-            self.points = scheme.points
-            self.weights = scheme.weights
+            self.set_data(stroud1957.Stroud1957(n, 2))
         elif index == 'Cn 2-2':
-            scheme = thacher.Thacher(n)
-            self.degree = scheme.degree
-            self.points = scheme.points
-            self.weights = scheme.weights
+            self.set_data(thacher.Thacher(n))
         elif index == 'Cn 3-1':
-            scheme = stroud1957.Stroud1957(n, 3)
-            self.degree = scheme.degree
-            self.points = scheme.points
-            self.weights = scheme.weights
+            self.set_data(stroud1957.Stroud1957(n, 3))
         elif index == 'Cn 3-2':
             self.degree = 3
             self.weights = numpy.full(2*n, reference_volume / (2*n))
             r = numpy.sqrt(n / 3.0)
             self.points = fsd(n, r, 1)
         elif index == 'Cn 3-3':
-            scheme = tyler.Tyler(n)
-            self.degree = scheme.degree
-            self.points = scheme.points
-            self.weights = scheme.weights
+            self.set_data(tyler.Tyler(n))
         elif index == 'Cn 3-4':
             # product Gauss formula
             self.degree = 3
@@ -73,10 +61,7 @@ class Stroud(object):
             r = numpy.sqrt(3.0) / 3.0
             self.points = _pm(n, r)
         elif index == 'Cn 3-5':
-            scheme = ewing.Ewing(n)
-            self.degree = scheme.degree
-            self.points = scheme.points
-            self.weights = scheme.weights
+            self.set_data(ewing.Ewing(n))
         elif index == 'Cn 3-6':
             # product Simpson's formula
             self.degree = 3
@@ -91,40 +76,19 @@ class Stroud(object):
         # Cn 5-1 is not implemented because it's based on explicit values only
         # given for n=4,5,6.
         elif index == 'Cn 5-2':
-            scheme = hammer_stroud.HammerStroud(n)
-            self.degree = scheme.degree
-            self.points = scheme.points
-            self.weights = scheme.weights
+            self.set_data(hammer_stroud.HammerStroud(n))
         elif index == 'Cn 5-3':
-            scheme = stroud1968.Stroud1968(n)
-            self.degree = scheme.degree
-            self.points = scheme.points
-            self.weights = scheme.weights
+            self.set_data(stroud1968.Stroud1968(n))
         elif index == 'Cn 5-4':
-            scheme = stroud1966.Stroud1966(n, 'a')
-            self.degree = scheme.degree
-            self.points = scheme.points
-            self.weights = scheme.weights
+            self.set_data(stroud1966.Stroud1966(n, 'a'))
         elif index == 'Cn 5-5':
-            scheme = mustard_lyness_blatt.MustardLynessBlatt(n)
-            self.degree = scheme.degree
-            self.points = scheme.points
-            self.weights = scheme.weights
+            self.set_data(mustard_lyness_blatt.MustardLynessBlatt(n))
         elif index == 'Cn 5-6':
-            scheme = stroud1966.Stroud1966(n, 'b')
-            self.degree = scheme.degree
-            self.points = scheme.points
-            self.weights = scheme.weights
+            self.set_data(stroud1966.Stroud1966(n, 'b'))
         elif index == 'Cn 5-7':
-            scheme = stroud1966.Stroud1966(n, 'c')
-            self.degree = scheme.degree
-            self.points = scheme.points
-            self.weights = scheme.weights
+            self.set_data(stroud1966.Stroud1966(n, 'c'))
         elif index == 'Cn 5-8':
-            scheme = stroud1966.Stroud1966(n, 'd')
-            self.degree = scheme.degree
-            self.points = scheme.points
-            self.weights = scheme.weights
+            self.set_data(stroud1966.Stroud1966(n, 'd'))
         elif index == 'Cn 5-9':
             # product Gauss formula
             self.degree = 5
@@ -138,9 +102,11 @@ class Stroud(object):
             self.points = numpy.array(numpy.meshgrid(*lst)).T.reshape(-1, n)
         else:
             assert index == 'Cn 7-1'
-            scheme = phillips.Phillips(n)
-            self.degree = scheme.degree
-            self.points = scheme.points
-            self.weights = scheme.weights
+            self.set_data(phillips.Phillips(n))
+        return
 
+    def set_data(self, scheme):
+        self.degree = scheme.degree
+        self.weights = scheme.weights
+        self.points = scheme.points
         return
