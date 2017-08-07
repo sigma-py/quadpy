@@ -6,7 +6,7 @@ import numpy
 from .dunavant import Dunavant
 
 from .. import helpers
-from ..simplex import transform, get_vol, integrate
+from ..nsimplex import transform, get_vol, integrate
 
 
 def show(*args, **kwargs):

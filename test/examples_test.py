@@ -209,9 +209,9 @@ def test_wedge():
     return
 
 
-def test_simplex():
+def test_nsimplex():
     dim = 4
-    quadpy.simplex.integrate(
+    quadpy.nsimplex.integrate(
         lambda x: numpy.exp(x[0]),
         numpy.array([
             [0.0, 0.0, 0.0, 0.0],
@@ -220,7 +220,7 @@ def test_simplex():
             [0.0, 3.0, 1.0, 0.0],
             [0.0, 0.0, 4.0, 1.0],
             ]),
-        quadpy.simplex.GrundmannMoeller(dim, 3)
+        quadpy.nsimplex.GrundmannMoeller(dim, 3)
         )
     return
 
@@ -231,7 +231,7 @@ def test_nball():
         lambda x: numpy.exp(x[0]),
         numpy.zeros(4),
         1.0,
-        quadpy.nball.Dobrodeev(dim)
+        quadpy.nball.Dobrodeev1970(dim)
         )
     return
 
@@ -244,5 +244,15 @@ def test_ncube():
             [0.0, 1.0], [0.1, 0.9], [-1.0, 1.0], [-1.0, -0.5]
             ),
         quadpy.ncube.Stroud(dim, 'Cn 3-3')
+        )
+    return
+
+
+def test_nsphere():
+    dim = 4
+    quadpy.nsphere.integrate(
+        lambda x: numpy.exp(x[0]),
+        numpy.zeros(dim), 1.0,
+        quadpy.nsphere.Dobrodeev1978(dim)
         )
     return

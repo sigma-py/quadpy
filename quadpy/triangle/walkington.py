@@ -2,7 +2,7 @@
 #
 import numpy
 
-from ..simplex import walkington
+from ..nsimplex import walkington
 
 
 class Walkington(object):

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from ..simplex import grundmann_moeller
+from ..nsimplex import grundmann_moeller
 
 
 class GrundmannMoeller(object):

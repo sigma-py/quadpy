@@ -7,7 +7,7 @@ from .helpers import _pm, _fs11
 from ..helpers import untangle, fsd, z
 
 
-class Stroud66(object):
+class Stroud1966(object):
     '''
     A.H. Stroud,
     Some Fifth Degree Integration Formulas for Symmetric Regions,
