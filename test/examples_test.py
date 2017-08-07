@@ -246,3 +246,13 @@ def test_ncube():
         quadpy.ncube.Stroud(dim, 'Cn 3-3')
         )
     return
+
+
+def test_nsphere():
+    dim = 4
+    quadpy.nsphere.integrate(
+        lambda x: numpy.exp(x[0]),
+        numpy.zeros(dim), 1.0,
+        quadpy.nsphere.Dobrodeev1978(dim)
+        )
+    return
