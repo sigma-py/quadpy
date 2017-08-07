@@ -3,7 +3,7 @@
 import numpy
 import pytest
 import quadpy
-from quadpy.nball.helpers import integrate_monomial_over_unit_sphere
+from quadpy.nball.helpers import integrate_monomial_over_unit_nsphere
 import sympy
 
 from helpers import check_degree
@@ -44,7 +44,7 @@ def test_scheme(scheme):
             lambda poly: quadpy.sphere.integrate(
                 poly, midpoint, radius, scheme, sumfun=numpy.sum
                 ),
-            integrate_monomial_over_unit_sphere,
+            integrate_monomial_over_unit_nsphere,
             lambda n: quadpy.helpers.partition(n, 3),
             min(30, scheme.degree + 1)
             )
