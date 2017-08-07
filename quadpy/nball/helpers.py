@@ -3,6 +3,10 @@
 from ..nsphere.helpers import integrate_monomial_over_unit_nsphere
 
 
+def volume_unit_ball(n):
+    return integrate_monomial_over_unit_nball(n * [0])
+
+
 def integrate_monomial_over_unit_nball(exp):
     '''
     Gerald B. Folland,
