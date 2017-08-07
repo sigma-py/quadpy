@@ -4,6 +4,7 @@ import numpy
 
 from . import hammer_stroud
 from . import stroud1957
+from . import stroud1967
 
 from .helpers import volume_unit_ball
 from ..helpers import pm, untangle
@@ -31,6 +32,10 @@ class Stroud(object):
                 ]
             self.points, self.weights = untangle(data)
             self.weights *= volume_unit_ball(n)
+        elif index == 'Sn 5-1a':
+            self.set_data(stroud1967.Stroud1967(n, variant='a'))
+        elif index == 'Sn 5-1b':
+            self.set_data(stroud1967.Stroud1967(n, variant='b'))
         else:
             assert False
 

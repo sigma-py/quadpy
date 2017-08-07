@@ -6,5 +6,6 @@ from .dobrodeev1978 import *
 from .hammer_stroud import *
 from .stroud import *
 from .stroud1957 import *
+from .stroud1967 import *
 
 from .tools import *
