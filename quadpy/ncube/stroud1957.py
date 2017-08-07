@@ -7,7 +7,7 @@ from .helpers import _s
 from ..helpers import untangle
 
 
-class Stroud57(object):
+class Stroud1957(object):
     '''
     A. H. Stroud,
     Remarks on the Disposition of Points in Numerical Integration Formulas,

@@ -7,9 +7,9 @@ from . import ewing
 from . import hammer_stroud
 from . import mustard_lyness_blatt
 from . import phillips
-from . import stroud57
-from . import stroud66
-from . import stroud68
+from . import stroud1957
+from . import stroud1966
+from . import stroud1968
 from . import thacher
 from . import tyler
 
@@ -40,7 +40,7 @@ class Stroud(object):
             self.weights = numpy.full(2**n, 1.0)
             self.points = _pm(n, 1.0)
         elif index == 'Cn 2-1':
-            scheme = stroud57.Stroud57(n, 2)
+            scheme = stroud1957.Stroud1957(n, 2)
             self.degree = scheme.degree
             self.points = scheme.points
             self.weights = scheme.weights
@@ -50,7 +50,7 @@ class Stroud(object):
             self.points = scheme.points
             self.weights = scheme.weights
         elif index == 'Cn 3-1':
-            scheme = stroud57.Stroud57(n, 3)
+            scheme = stroud1957.Stroud1957(n, 3)
             self.degree = scheme.degree
             self.points = scheme.points
             self.weights = scheme.weights
@@ -96,12 +96,12 @@ class Stroud(object):
             self.points = scheme.points
             self.weights = scheme.weights
         elif index == 'Cn 5-3':
-            scheme = stroud68.Stroud68(n)
+            scheme = stroud1968.Stroud1968(n)
             self.degree = scheme.degree
             self.points = scheme.points
             self.weights = scheme.weights
         elif index == 'Cn 5-4':
-            scheme = stroud66.Stroud66(n, 'a')
+            scheme = stroud1966.Stroud1966(n, 'a')
             self.degree = scheme.degree
             self.points = scheme.points
             self.weights = scheme.weights
@@ -111,17 +111,17 @@ class Stroud(object):
             self.points = scheme.points
             self.weights = scheme.weights
         elif index == 'Cn 5-6':
-            scheme = stroud66.Stroud66(n, 'b')
+            scheme = stroud1966.Stroud1966(n, 'b')
             self.degree = scheme.degree
             self.points = scheme.points
             self.weights = scheme.weights
         elif index == 'Cn 5-7':
-            scheme = stroud66.Stroud66(n, 'c')
+            scheme = stroud1966.Stroud1966(n, 'c')
             self.degree = scheme.degree
             self.points = scheme.points
             self.weights = scheme.weights
         elif index == 'Cn 5-8':
-            scheme = stroud66.Stroud66(n, 'd')
+            scheme = stroud1966.Stroud1966(n, 'd')
             self.degree = scheme.degree
             self.points = scheme.points
             self.weights = scheme.weights

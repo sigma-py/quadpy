@@ -3,24 +3,23 @@
 import numpy
 import pytest
 import quadpy
-from quadpy.nball.helpers import integrate_monomial_over_unit_nball
+from quadpy.nsphere.helpers import integrate_monomial_over_unit_nsphere
 
 from helpers import check_degree
 
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadpy.nball.Dobrodeev1970(n) for n in range(3, 10)]
-    + [quadpy.nball.Dobrodeev1978(n) for n in range(2, 7)]
+    [quadpy.nsphere.Dobrodeev1978(n) for n in range(2, 7)]
     )
 def test_scheme(scheme):
     tol = 1.0e-14
     n = scheme.dim
     center = numpy.zeros(n)
-    radius = 1.0
+    rad = 1.0
     degree = check_degree(
-            lambda poly: quadpy.nball.integrate(poly, center, radius, scheme),
-            integrate_monomial_over_unit_nball,
+            lambda poly: quadpy.nsphere.integrate(poly, center, rad, scheme),
+            integrate_monomial_over_unit_nsphere,
             lambda k: quadpy.helpers.partition(k, n),
             scheme.degree + 1,
             tol=tol
@@ -32,5 +31,5 @@ def test_scheme(scheme):
 
 if __name__ == '__main__':
     n_ = 5
-    scheme_ = quadpy.nball.Dobrodeev1978(n_)
+    scheme_ = quadpy.nsphere.Dobrodeev1978(n_)
     test_scheme(scheme_)

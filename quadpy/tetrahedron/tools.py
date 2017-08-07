@@ -3,7 +3,7 @@
 import numpy
 
 from .. import helpers
-from ..simplex import transform, get_vol
+from ..nsimplex import transform, get_vol
 
 
 def show(

@@ -9,7 +9,7 @@ Your one-stop shop for numerical integration in Python.
 
 Hundreds of numerical integration schemes for line segments, circles, disks,
 triangles, quadrilaterals, spheres, tetrahedra, hexahedra, wedges, pyramids,
-n-balls, n-cubes, and n-simplices.
+n-spheres, n-balls, n-cubes, and n-simplices.
 
 To numerically integrate any function over any given triangle, do
 ```python
@@ -346,7 +346,7 @@ val = quadpy.wedge.integrate(
     )
 ```
 
-### Simplex
+### n-Simplex
  * [Grundmann-Möller](http://dx.doi.org/10.1137/0715019) (1978, arbitrary degree)
  * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/) (2000, 5 schemes up to degree 7)
 
@@ -366,8 +366,21 @@ val = quadpy.simplex.integrate(
     )
 ```
 
+### n-Sphere
+ * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1978, n >= 2, degree 5)
 
-### n-ball
+Example:
+```python
+dim = 4
+quadpy.nsphere.integrate(
+    lambda x: numpy.exp(x[0]),
+    numpy.zeros(dim), 1.0,
+    quadpy.nsphere.Dobrodeev1978(dim)
+    )
+```
+
+
+### n-Ball
  * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1970, n >= 3, degree 7)
 
 Example:
@@ -376,11 +389,11 @@ dim = 4
 quadpy.nball.integrate(
     lambda x: numpy.exp(x[0]),
     numpy.zeros(dim), 1.0,
-    quadpy.nball.Dobrodeev(dim)
+    quadpy.nball.Dobrodeev1970(dim)
     )
 ```
 
-### n-cube
+### n-Cube
  * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1970, n >= 5, degree 7)
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
     - [Ewing](https://dx.doi.org/dx.doi.org/10.2307/2303604) (1941, degree 3)
@@ -392,6 +405,7 @@ quadpy.nball.integrate(
     - [Stroud](https://doi.org/10.1090/S0025-5718-1966-0191094-8) (1966, 4 schemes of degree 5)
     - [Phillips](https://doi.org/10.1093/comjnl/10.3.297) (1967, degree 7, single precision)
     - [Stroud](https://dx.doi.org/10.2307/2004655) (1968, degree 5)
+ * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1978, n >= 2, degree 5)
 
 Example:
 ```python
