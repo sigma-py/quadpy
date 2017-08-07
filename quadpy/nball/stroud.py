@@ -4,6 +4,7 @@ import numpy
 
 from . import hammer_stroud
 from . import stroud1957
+from . import stroud1966
 from . import stroud1967
 
 from .helpers import volume_unit_ball
@@ -38,6 +39,8 @@ class Stroud(object):
             self.set_data(stroud1967.Stroud1967(n, variant='b'))
         elif index == 'Sn 5-2':
             self.set_data(hammer_stroud.HammerStroud(n, 'b', alpha=0.0))
+        elif index == 'Sn 5-3':
+            self.set_data(stroud1966.Stroud1966(n))
         else:
             assert False
 
