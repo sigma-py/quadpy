@@ -4,7 +4,7 @@ import numpy
 
 from .helpers import volume_unit_ball
 
-from ..helpers import untangle, fsd, fsd2, pm, combine, z, pm_array
+from ..helpers import untangle, fsd, pm, combine, z, pm_array
 
 
 class Stroud1966(object):
@@ -62,7 +62,7 @@ class Stroud1966(object):
 
             data = [
                 (B0, z(n)),
-                (B1, combine([[+r, -r]] + [[+s, -s]] * (n-1))),
+                (B1, combine(((+r, -r), 1), ((+s, -s), (n-1)))),
                 ]
         elif variant == 'd':
             a = 2*numpy.sqrt(n + 4.0)
@@ -75,7 +75,7 @@ class Stroud1966(object):
             B = 1.0 / 2**n / (n+1)
 
             data = [
-                (B, combine([[+r, -r]] + [[+s, -s]] * (n-1))),
+                (B, combine(((+r, -r), 1), ((+s, -s), (n-1)))),
                 (B, pm(n, t)),
                 ]
 

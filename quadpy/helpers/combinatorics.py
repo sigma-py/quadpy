@@ -17,7 +17,7 @@ def fsd(n, r, d):
     n==3:  4*n*(n-1)*(n-2) / 3
     '''
     assert 0 <= d <= n
-    return combine([[+r, -r]] * d + [[0.0]] * (n-d))
+    return combine(((+r, -r), d), ((0.0,), n-d))
 
 
 def fsd2(n, r, s, i, j):
@@ -25,10 +25,10 @@ def fsd2(n, r, s, i, j):
     with i times the number r and and j times the number s.
     '''
     assert i+j <= n
-    return combine([[+r, -r]] * i + [[+s, -s]] * j + [[0.0]] * (n-i-j))
+    return combine(((+r, -r), i), ((+s, -s), j), ((0.0,), n-i-j))
 
 
-def combine(pools):
+def combine(*elems):
     '''Given an input array with lists of options, e.g.,
 
     [[a, b], [c], [d]],
@@ -39,10 +39,28 @@ def combine(pools):
     [a, c, d], [a, d, c], [c, d, a], ...
     [b, c, d], [b, d, c], [c, d, b], ...
     '''
-    # https://stackoverflow.com/a/45322199/353337
-    return numpy.array(list(set(itertools.chain.from_iterable([
-        itertools.permutations(x) for x in itertools.product(*pools)
-        ]))))
+    # https://stackoverflow.com/a/45321972/353337
+
+    # Could be replaced by Knuth's "Algorithm L"; see, e.g.,
+    # <https://stackoverflow.com/a/4250183/353337>.
+    def partitions(*sizes):
+        if not sizes or all(s <= 0 for s in sizes):
+            yield ()
+        for i_size, size in enumerate(sizes):
+            if size <= 0:
+                continue
+            next_sizes = \
+                sizes[:i_size] + (sizes[i_size] - 1,) + sizes[i_size + 1:]
+            for p in partitions(*next_sizes):
+                yield (i_size,) + p
+
+    values, sizes = zip(*elems)
+    templates = list(partitions(*sizes))
+    prod = [
+        list(itertools.product(*(values[ti] for ti in t))) for t in templates
+        ]
+    out = numpy.array(list(itertools.chain.from_iterable(prod)))
+    return out
 
 
 def pm(n, a):

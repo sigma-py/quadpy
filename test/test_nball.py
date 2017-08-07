@@ -15,10 +15,7 @@ from helpers import check_degree
     + [quadpy.nball.Stroud(dim, index) for dim in range(2, 10) for index in [
         'Sn 2-1',
         'Sn 3-1', 'Sn 3-2',
-        'Sn 5-2', 'Sn 5-3',
-        'Sn 5-4',
-        # 'Sn 5-5',
-        # 'Sn 5-6',
+        'Sn 5-2', 'Sn 5-3', 'Sn 5-4', 'Sn 5-5', 'Sn 5-6',
         ]]
     + [quadpy.nball.Stroud(dim, index) for dim in range(4, 8) for index in [
         'Sn 5-1a', 'Sn 5-1b',

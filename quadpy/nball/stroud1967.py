@@ -96,10 +96,10 @@ class Stroud1967(object):
                 C = B
 
         data = [
-            (B, combine([[+lmbda]] + (n-1)*[[+xi]])),
-            (B, combine([[-lmbda]] + (n-1)*[[-xi]])),
-            (C, combine(2*[[+mu]] + (n-2)*[[+gamma]])),
-            (C, combine(2*[[-mu]] + (n-2)*[[-gamma]])),
+            (B, combine(((+lmbda,), 1), ((+xi,), n-1))),
+            (B, combine(((-lmbda,), 1), ((-xi,), n-1))),
+            (C, combine(((+mu,), 2), ((+gamma,), n-2))),
+            (C, combine(((-mu,), 2), ((-gamma,), n-2))),
             ]
         if n == 7:
             data += [(A, numpy.full((1, n), 0.0))]
