@@ -13,7 +13,8 @@ from helpers import check_degree
     [quadpy.nball.Dobrodeev1970(n) for n in range(3, 10)]
     + [quadpy.nball.Dobrodeev1978(n) for n in range(2, 7)]
     + [quadpy.nball.Stroud(dim, index) for dim in range(2, 10) for index in [
-        'Sn 2-1'
+        'Sn 2-1',
+        'Sn 3-1',
         ]]
     )
 def test_scheme(scheme):
