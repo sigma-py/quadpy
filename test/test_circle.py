@@ -2,9 +2,9 @@
 #
 import pytest
 import quadpy
+from quadpy.nball.helpers import integrate_monomial_over_unit_nsphere
 
 from helpers import check_degree
-from quadpy.nball.helpers import integrate_monomial_over_unit_nsphere
 
 
 @pytest.mark.parametrize(

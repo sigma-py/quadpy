@@ -68,8 +68,6 @@ class Dobrodeev1978(object):
             I22 = integrate_monomial_over_unit_nsphere([2, 2] + (n-2) * [0])
             I4 = integrate_monomial_over_unit_nsphere([4] + (n-1) * [0])
 
-            print(n)
-            print(I2, I22, I4)
             G, a, b, c = \
                 _compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k)
 
@@ -100,7 +98,7 @@ def _generate_jk(n, pm_type, j, k):
     return G, b, c
 
 
-# pylint: disable=too-many-arguments
+# pylint: disable=too-many-arguments, too-many-locals
 def _compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k):
     '''Same as the helper function in ..helpers, making use of the fact that
     `F == 0` for the sphere
