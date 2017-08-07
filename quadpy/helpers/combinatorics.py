@@ -55,9 +55,9 @@ def combine(*elems):
                 yield (i_size,) + p
 
     values, sizes = zip(*elems)
-    templates = list(partitions(*sizes))
+    templates = partitions(*sizes)
     prod = [
-        list(itertools.product(*(values[ti] for ti in t))) for t in templates
+        itertools.product(*(values[ti] for ti in t)) for t in templates
         ]
     out = numpy.array(list(itertools.chain.from_iterable(prod)))
     return out
