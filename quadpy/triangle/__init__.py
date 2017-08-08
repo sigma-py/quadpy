@@ -14,6 +14,7 @@ from .laursen_gellert import *
 from .liu_vinokur import *
 from .lyness_jespersen import *
 from .newton_cotes import *
+from .papanicolopulos import *
 from .seven_point import *
 from .strang import *
 from .stroud import *
