@@ -59,6 +59,7 @@ def _integrate_exact(f, triangle):
     + [(quadpy.triangle.LynessJespersen(k), 1.0e-14) for k in range(1, 22)]
     + [(quadpy.triangle.NewtonCotesClosed(k), 1.0e-14) for k in range(1, 6)]
     + [(quadpy.triangle.NewtonCotesOpen(k), 1.0e-14) for k in range(6)]
+    + [(quadpy.triangle.Papanicolopulos(k), 1.0e-14) for k in range(9)]
     + [(quadpy.triangle.SevenPoint(), 1.0e-14)]
     + [(quadpy.triangle.Strang(k), 1.0e-14) for k in range(1, 11)]
     + [(quadpy.triangle.Stroud(k), 1.0e-14) for k in range(10)]
@@ -124,6 +125,6 @@ def test_volume():
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.triangle.VioreanuRokhlin(10)
+    scheme_ = quadpy.triangle.Papanicolopulos(0)
     test_scheme(scheme_, 1.0e-14)
     test_show(scheme_)
