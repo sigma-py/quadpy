@@ -50,10 +50,3 @@ def _s11(n, a, b):
     # repeated. Check out <https://stackoverflow.com/q/6284396/353337> for
     # improvements.
     return numpy.array(list(set(itertools.permutations(s, n))))
-
-
-def _pm(n, a):
-    '''Return all combinations of [+a, -a] with length n (with repetition).
-    len(out) == 2**n.
-    '''
-    return numpy.array(list(itertools.product([+a, -a], repeat=n)))

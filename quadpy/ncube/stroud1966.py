@@ -2,9 +2,9 @@
 #
 import numpy
 
-from .helpers import _pm, _fs11
+from .helpers import _fs11
 
-from ..helpers import untangle, fsd, z
+from ..helpers import untangle, fsd, z, pm
 
 
 class Stroud1966(object):
@@ -25,7 +25,7 @@ class Stroud1966(object):
             s = numpy.sqrt((5*n + 4.0) / (15*n - 12.0))
             data = [
                 (40.0 / (5*n+4)**2, fsd(n, r, 1)),
-                (((5*n - 4.0) / (5*n + 4))**2 / 2**n, _pm(n, s)),
+                (((5*n - 4.0) / (5*n + 4))**2 / 2**n, pm(n, s)),
                 ]
         elif variant == 'b':
             s = numpy.sqrt(1.0 / 3.0)
@@ -33,7 +33,7 @@ class Stroud1966(object):
             for k in range(1, n+1):
                 r = numpy.sqrt((5*k + 4) / 15.0)
                 arr = numpy.zeros((2**(n-k+1), n))
-                arr[:, k-1:] = _pm(n-k+1, 1.0)
+                arr[:, k-1:] = pm(n-k+1, 1.0)
                 arr[:, k-1] *= r
                 arr[:, k:] *= s
                 b = 5.0 * 2.0**(k-n+1) / (5.0*k-1.0) / (5.0*k+4.0)
@@ -60,7 +60,7 @@ class Stroud1966(object):
             w = 1.0 / 2**n / (n+1)
             data = [
                 (w, _fs11(n, r, s)),
-                (w, _pm(n, t)),
+                (w, pm(n, t)),
                 ]
 
         self.points, self.weights = untangle(data)
