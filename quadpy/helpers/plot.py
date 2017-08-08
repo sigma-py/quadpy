@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
 import math
+import numpy
 
 
 def plot_disks(plt, pts, weights, total_area):
