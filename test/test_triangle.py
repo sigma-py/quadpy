@@ -55,6 +55,7 @@ def _integrate_exact(f, triangle):
         '1', '2a', '2b', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
         '13', '14', '15a', '15b'
         ]]
+    + [(quadpy.triangle.Lether(k), 1.0e-14) for k in range(1, 14)]
     + [(quadpy.triangle.LiuVinokur(k), 1.0e-14) for k in range(1, 14)]
     + [(quadpy.triangle.LynessJespersen(k), 1.0e-14) for k in range(1, 22)]
     + [(quadpy.triangle.NewtonCotesClosed(k), 1.0e-14) for k in range(1, 6)]
@@ -87,7 +88,8 @@ def test_scheme(scheme, tol):
             scheme.degree + 1,
             tol=tol
             )
-    assert degree >= scheme.degree
+    assert degree >= scheme.degree, \
+        'Observed: {}, expected: {}'.format(degree, scheme.degree)
     return
 
 
@@ -126,6 +128,6 @@ def test_volume():
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.triangle.Papanicolopulos(variant='rot', index=0)
+    scheme_ = quadpy.triangle.Lether(10)
     test_scheme(scheme_, 1.0e-14)
     test_show(scheme_)
