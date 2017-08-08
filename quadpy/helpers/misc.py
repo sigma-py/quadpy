@@ -64,7 +64,7 @@ def kahan_sum(a, axis=0):
     return s
 
 
-# pylint: disable=too-many-arguments
+# pylint: disable=too-many-arguments, too-many-locals
 def compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k):
     '''Compute some helper quantities used in
 
