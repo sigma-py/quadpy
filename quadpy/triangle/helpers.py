@@ -28,3 +28,12 @@ def _s111(a, b):
         [c, b, a],
         [a, c, b],
         ])
+
+
+def _rot(a, b):
+    c = 1.0 - a - b
+    return numpy.array([
+        [a, b, c],
+        [c, a, b],
+        [b, c, a],
+        ])

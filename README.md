@@ -162,7 +162,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    schemes up to degree 62),
  * [Willams-Shunn-Jameson](https://doi.org/10.1016/j.cam.2014.01.007) (2014, 8
    schemes up to degree 12).
- * [Papanicolopulos](https://doi.org/10.1016/j.cam.2015.08.001) (2016, 9
+ * [Papanicolopulos](https://doi.org/10.1016/j.cam.2015.08.001) (2016, 27
    schemes up to degree 25).
 
 Example:
