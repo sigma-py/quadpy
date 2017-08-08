@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _pm
-
-from ..helpers import untangle, z
+from ..helpers import untangle, z, pm
 
 
 class Ewing(object):
@@ -18,7 +16,7 @@ class Ewing(object):
         self.degree = 3
         data = [
             (2.0/3.0, z(n)),
-            (1.0/3.0 / 2**n, _pm(n, 1.0)),
+            (1.0/3.0 / 2**n, pm(n, 1.0)),
             ]
 
         self.points, self.weights = untangle(data)

@@ -2,9 +2,7 @@
 #
 import numpy
 
-from .helpers import _pm
-
-from ..helpers import untangle, fsd, z
+from ..helpers import untangle, fsd, z, pm
 
 
 class MustardLynessBlatt(object):
@@ -36,7 +34,7 @@ class MustardLynessBlatt(object):
         data = [
             ((8 - 5*n)/9.0, z(n)),
             (5.0/18.0, fsd(n, r, 1)),
-            (1.0/9.0 / 2**n, _pm(n, 1.0)),
+            (1.0/9.0 / 2**n, pm(n, 1.0)),
             ]
 
         self.points, self.weights = untangle(data)
