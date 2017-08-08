@@ -15,6 +15,7 @@ class Papanicolopulos(object):
     <https://doi.org/10.1016/j.cam.2015.08.001>,
     <https://arxiv.org/abs/1411.5631>.
     '''
+    # pylint: disable=line-too-long
     def __init__(self, variant, index):
         self.name = 'Papanicolopulos({}, {})'.format(variant, index)
 
