@@ -48,6 +48,6 @@ def test_scheme(scheme):
 
 
 if __name__ == '__main__':
-    n_ = 3
-    scheme_ = quadpy.nball.Stroud(n_, 'Sn 7-3a')
+    n_ = 4
+    scheme_ = quadpy.nball.Stroud(n_, 'Sn 7-3b')
     test_scheme(scheme_)
