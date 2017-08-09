@@ -20,6 +20,12 @@ from helpers import check_degree
     + [quadpy.nball.Stroud(dim, index) for dim in range(4, 8) for index in [
         'Sn 5-1a', 'Sn 5-1b',
         ]]
+    + [quadpy.nball.Stroud(dim, index) for dim in range(3, 8) for index in [
+        'Sn 7-1a'
+        ]]
+    + [quadpy.nball.Stroud(dim, index) for dim in range(3, 7) for index in [
+        'Sn 7-1b',
+        ]]
     )
 def test_scheme(scheme):
     tol = 1.0e-14
