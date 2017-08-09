@@ -3,6 +3,7 @@
 import numpy
 
 from . import hammer_stroud
+from . import stenger
 from . import stroud1957
 from . import stroud1966
 from . import stroud1967
@@ -53,6 +54,13 @@ class Stroud(object):
             self.set_data(stroud9.Stroud9(n, variant='a'))
         elif index == 'Sn 7-1b':
             self.set_data(stroud9.Stroud9(n, variant='b'))
+        elif index == 'Sn 7-2':
+            # TODO
+            pass
+        elif index == 'Sn 7-3a':
+            self.set_data(stenger.Stenger(n, variant='a'))
+        elif index == 'Sn 7-3b':
+            self.set_data(stenger.Stenger(n, variant='b'))
         else:
             assert False
 
