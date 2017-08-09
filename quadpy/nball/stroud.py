@@ -6,6 +6,7 @@ from . import hammer_stroud
 from . import stroud1957
 from . import stroud1966
 from . import stroud1967
+from . import stroud9
 
 from .helpers import volume_unit_ball
 from ..helpers import pm, untangle
@@ -47,6 +48,11 @@ class Stroud(object):
             self.set_data(stroud1966.Stroud1966(n, variant='c'))
         elif index == 'Sn 5-6':
             self.set_data(stroud1966.Stroud1966(n, variant='d'))
+        # TODO check if there are more
+        elif index == 'Sn 7-1a':
+            self.set_data(stroud9.Stroud9(n, variant='a'))
+        elif index == 'Sn 7-1b':
+            self.set_data(stroud9.Stroud9(n, variant='b'))
         else:
             assert False
 
