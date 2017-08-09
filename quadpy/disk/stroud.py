@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 #
+import numpy
+from . import albrecht
 from . import albrecht_collatz
 from . import hammer_stroud
 from . import mysovskih
+
+from ..helpers import z, fsd, pm, untangle
 
 
 class Stroud(object):
@@ -20,6 +24,37 @@ class Stroud(object):
             self.set_data(albrecht_collatz.AlbrechtCollatz())
         elif index == 'S2 4-1':
             self.set_data(mysovskih.Mysovskih(0.0))
+        elif index == 'S2 5-2':
+            self.degree = 5
+            r = numpy.sqrt(0.5)
+            data = [
+                (1.0/6.0, z(2)),
+                (1.0/6.0, fsd(2, r, 1)),
+                (1.0/24.0, pm(2, r))
+                ]
+            self.points, self.weights = untangle(data)
+            self.weights *= numpy.pi
+        elif index == 'S2 7-2':
+            # spherical product Gauss
+            self.degree = 7
+
+            r1 = numpy.sqrt((3.0 - numpy.sqrt(3.0)) / 6.0)
+            r2 = numpy.sqrt((3.0 + numpy.sqrt(3.0)) / 6.0)
+
+            k = numpy.arange(1, 9)
+            x = numpy.array([
+                numpy.cos((2*k-1)*numpy.pi/8),
+                numpy.sin((2*k-1)*numpy.pi/8),
+                ]).T
+
+            data = [
+                (1.0/16.0, r1*x),
+                (1.0/16.0, r2*x),
+                ]
+            self.points, self.weights = untangle(data)
+            self.weights *= numpy.pi
+        elif index == 'S2 9-1':
+            self.set_data(albrecht.Albrecht())
         else:
             assert False
 
