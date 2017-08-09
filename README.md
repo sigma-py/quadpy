@@ -2,7 +2,7 @@
 
 Your one-stop shop for numerical integration in Python.
 
-[![Build Status](https://travis-ci.org/nschloe/quadpy.svg?branch=master)](https://travis-ci.org/nschloe/quadpy)
+[![CircleCI](https://img.shields.io/circleci/project/github/nschloe/quadpy/master.svg)](https://circleci.com/gh/nschloe/quadpy/tree/master)
 [![codecov](https://codecov.io/gh/nschloe/quadpy/branch/master/graph/badge.svg)](https://codecov.io/gh/nschloe/quadpy)
 [![PyPi Version](https://img.shields.io/pypi/v/quadpy.svg)](https://pypi.python.org/pypi/quadpy)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?style=social&label=Stars&maxAge=2592000)](https://github.com/nschloe/quadpy)
@@ -132,7 +132,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    degree 7),
  * [Lyness-Jespersen](https://dx.doi.org/10.1093/imamat/15.1.19) (1975, 21
    schemes up to degree 11),
- * [Lether](https://doi.org/10.1016/0771-050X(76)90008-5) (1976, degree 2n-1, arbitrary n, not symmetric)
+ * [Lether](https://doi.org/10.1016/0771-050X(76)90008-5) (1976, degree 2n-2, arbitrary n, not symmetric)
  * [Hillion](https://dx.doi.org/10.1002/nme.1620110504) (1977, 8 schemes up to
    degree 3),
  * [Grundmann-Möller](http://dx.doi.org/10.1137/0715019) (1978, arbitrary degree),
