@@ -51,6 +51,7 @@ def get_symmetry_code_tet(pts):
             if ct == 2:
                 return '_s211({:.15e}, {:.15e})'.format(pt0[k], pt0[k-1])
 
+    print(len(pts))
     assert len(pts) == 24
     pt0 = numpy.sort(pts[0])
     return '_s1111({:.15e}, {:.15e}, {:.15e})'.format(

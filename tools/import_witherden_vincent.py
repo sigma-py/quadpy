@@ -7,7 +7,7 @@ import re
 import import_helpers
 
 
-def read_data(filename):
+def read_data_tri(filename):
     data = numpy.loadtxt(filename)
     if len(data.shape) == 1:
         data = numpy.array([data])
@@ -25,6 +25,23 @@ def read_data(filename):
     return points, weights * 0.5
 
 
+def read_data_tet(filename):
+    data = numpy.loadtxt(filename)
+    if len(data.shape) == 1:
+        data = numpy.array([data])
+    points = data[:, :3]
+    weights = data[:, 3]
+    # Transform to barycentric coordinates.
+    points += 1.0
+    points *= 0.5
+    points = numpy.array([
+        points[:, 0],
+        points[:, 1],
+        1.0 - numpy.sum(points, axis=1)
+        ]).T
+    return points, weights * 0.75
+
+
 def data_to_code(points, weights):
     # identify groups of equal weights
     tol = 1.0e-12
@@ -39,7 +56,7 @@ def data_to_code(points, weights):
             kk += count
             print(
                 8*' ' + '(%.15e, %s),'
-                % (last_value, import_helpers.get_symmetry_code_tri(pts))
+                % (last_value, import_helpers.get_symmetry_code_tet(pts))
                 )
             last_value = w
             count = 1
@@ -47,12 +64,12 @@ def data_to_code(points, weights):
     pts = points[kk:kk+count]
     print(
         8*' ' + '(%.15e, %s),' %
-        (last_value, import_helpers.get_symmetry_code_tri(pts))
+        (last_value, import_helpers.get_symmetry_code_tet(pts))
         )
     return
 
 
-if __name__ == '__main__':
+def import_triangle():
     filenames = [
         '1-1.txt',
         '2-3.txt',
@@ -79,6 +96,33 @@ if __name__ == '__main__':
         strength = out.group(1)
         print('elif degree == {}:'.format(strength))
         print('    data = [')
-        x, weights = read_data(filename)
+        x, weights = read_data_tri(filename)
         data_to_code(x, weights)
         print(8*' ' + ']')
+
+
+def import_tet():
+    filenames = [
+        '1-1.txt',
+        '2-4.txt',
+        '3-8.txt',
+        '5-14.txt',
+        '6-24.txt',
+        '7-35.txt',
+        '8-46.txt',
+        '9-59.txt',
+        '10-81.txt',
+        ]
+    for k, filename in enumerate(filenames):
+        out = re.match('([0-9]+)-([0-9]+)\.txt', filename)
+        strength = out.group(1)
+        print('elif degree == {}:'.format(strength))
+        print('    data = [')
+        x, weights = read_data_tet(filename)
+        data_to_code(x, weights)
+        print(8*' ' + ']')
+
+
+if __name__ == '__main__':
+    # import_triangle()
+    import_tet()
