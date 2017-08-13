@@ -55,6 +55,30 @@ class Stroud(object):
             self.weights *= numpy.pi
         elif index == 'S2 9-1':
             self.set_data(albrecht.Albrecht())
+        elif index == 'S2 9-3':
+            # spherical product Gauss
+            self.degree = 9
+
+            r1 = numpy.sqrt((6.0 - numpy.sqrt(6.0)) / 10.0)
+            r2 = numpy.sqrt((6.0 + numpy.sqrt(6.0)) / 10.0)
+
+            k = numpy.arange(1, 11)
+            x = numpy.array([
+                numpy.cos(k*numpy.pi/5.0),
+                numpy.sin(k*numpy.pi/5.0),
+                ]).T
+
+            B0 = 1.0/9.0
+            B1 = (16.0 + numpy.sqrt(6.0)) / 360.0
+            B2 = (16.0 - numpy.sqrt(6.0)) / 360.0
+
+            data = [
+                (B0, z(2)),
+                (B1, r1*x),
+                (B2, r2*x),
+                ]
+            self.points, self.weights = untangle(data)
+            self.weights *= numpy.pi
         else:
             assert False
 
