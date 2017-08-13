@@ -16,6 +16,7 @@ class WitherdenVincent(object):
     '''
     def __init__(self, degree):
         self.name = 'WV({})'.format(degree)
+        self.degree = degree
         if degree == 1:
             data = [
                 (1.000000000000000e+00, _s3()),

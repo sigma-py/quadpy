@@ -66,7 +66,7 @@ class Albrecht(object):
                 (B3, fsd(2, r3)),
                 (C1, pm(2, s1)),
                 (C2, pm(2, s2)),
-                (D,
+                (D,),
                 ]
 
         self.points, self.weights = untangle(data)
