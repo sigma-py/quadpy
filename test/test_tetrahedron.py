@@ -59,6 +59,9 @@ def _integrate_exact(f, tetrahedron):
     + [quadpy.tetrahedron.VioreanuRokhlin(k) for k in range(10)]
     + [quadpy.tetrahedron.Walkington(k) for k in [1, 2, 3, 5, 'p5', 7]]
     + [quadpy.tetrahedron.WilliamsShunnJameson()]
+    + [quadpy.tetrahedron.WitherdenVincent(k) for k in [
+        1, 2, 3, 5, 6, 7, 8, 9, 10
+        ]]
     + [quadpy.tetrahedron.XiaoGimbutas(k) for k in range(1, 16)]
     + [quadpy.tetrahedron.Yu(k) for k in range(1, 6)]
     + [quadpy.tetrahedron.ZhangCuiLiu(k) for k in [1, 2]]
@@ -101,7 +104,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.tetrahedron.Keast(6)
-    # test_scheme(scheme_)
+    scheme_ = quadpy.tetrahedron.WitherdenVincent(6)
+    test_scheme(scheme_)
     # test_show(scheme_)
     quadpy.tetrahedron.show(scheme_, backend='vtk')
