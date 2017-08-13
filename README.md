@@ -268,7 +268,7 @@ Note that `phi_theta[0]` is the azimuthal, `phi_theta[1]` the polar angle here.
  * [Liu-Vinokur](http://dx.doi.org/10.1006/jcph.1998.5884) (1998, 14 schemes up to
    degree 5)
  * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
-   (2000, 6 schemes up to degree 7),
+   (2000, 6 schemes up to degree 7)
  * [Zienkiewicz](http://www.sciencedirect.com/science/book/9780750664318)
    (2005, 2 schemes up to degree 3)
  * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2009, 2 schemes up to
@@ -278,9 +278,11 @@ Note that `phi_theta[0]` is the azimuthal, `phi_theta[1]` the polar angle here.
  * [Shunn-Ham](http://dx.doi.org/10.1016/j.cam.2012.03.032) (2012, 6 schemes up to
    degree 7)
  * [Vioreanu-Rokhlin](https://doi.org/10.1137/110860082) (2014, 10
-   schemes up to degree 13),
+   schemes up to degree 13)
  * [Willams-Shunn-Jameson](https://doi.org/10.1016/j.cam.2014.01.007) (2014, 1
    scheme with degree 9)
+ * [Witherden-Vincent](https://doi.org/10.1016/j.camwa.2015.03.017) (2015, 9
+   schemes up to degree 10)
 
 Example:
 ```python
