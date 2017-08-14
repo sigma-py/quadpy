@@ -6,8 +6,12 @@ from ..helpers import untangle, fsd, z
 
 
 class Stenger(object):
-    # TODO look up citation
     '''
+    Review: Tabulation of Certain Fully Symmetric Numerical Integration
+    Formulas of Degree 7, 9 and 11 by Frank Stenger,
+    Mathematics of Computation,
+    Vol. 25, No. 116 (Oct., 1971), pp. 935+s58-s125,
+    <https://www.jstor.org/stable/2004361>.
     '''
     def __init__(self, n, variant):
         self.degree = 7
@@ -64,7 +68,8 @@ class Stenger(object):
                     ]
             else:
                 assert False
-        # TODO Stenger's original article has data up to n == 20.
+        # TODO According to Stroud,
+        #      Stenger's original article has data up to n == 20.
 
         data = [
             (B[0], z(n)),
