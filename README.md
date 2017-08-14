@@ -2,7 +2,7 @@
 
 Your one-stop shop for numerical integration in Python.
 
-[![Build Status](https://travis-ci.org/nschloe/quadpy.svg?branch=master)](https://travis-ci.org/nschloe/quadpy)
+[![CircleCI](https://img.shields.io/circleci/project/github/nschloe/quadpy/master.svg)](https://circleci.com/gh/nschloe/quadpy/tree/master)
 [![codecov](https://codecov.io/gh/nschloe/quadpy/branch/master/graph/badge.svg)](https://codecov.io/gh/nschloe/quadpy)
 [![PyPi Version](https://img.shields.io/pypi/v/quadpy.svg)](https://pypi.python.org/pypi/quadpy)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?style=social&label=Stars&maxAge=2592000)](https://github.com/nschloe/quadpy)
@@ -132,7 +132,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    degree 7),
  * [Lyness-Jespersen](https://dx.doi.org/10.1093/imamat/15.1.19) (1975, 21
    schemes up to degree 11),
- * [Lether](https://doi.org/10.1016/0771-050X(76)90008-5) (1976, degree 2n-1, arbitrary n, not symmetric)
+ * [Lether](https://doi.org/10.1016/0771-050X(76)90008-5) (1976, degree 2n-2, arbitrary n, not symmetric)
  * [Hillion](https://dx.doi.org/10.1002/nme.1620110504) (1977, 8 schemes up to
    degree 3),
  * [Grundmann-Möller](http://dx.doi.org/10.1137/0715019) (1978, arbitrary degree),
@@ -162,7 +162,9 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * [Vioreanu-Rokhlin](https://doi.org/10.1137/110860082) (2014, 20
    schemes up to degree 62),
  * [Willams-Shunn-Jameson](https://doi.org/10.1016/j.cam.2014.01.007) (2014, 8
-   schemes up to degree 12).
+   schemes up to degree 12),
+ * [Witherden-Vincent](https://doi.org/10.1016/j.camwa.2015.03.017) (2015, 19
+   schemes up to degree 20),
  * [Papanicolopulos](https://doi.org/10.1016/j.cam.2015.08.001) (2016, 27
    schemes up to degree 25).
 
@@ -179,6 +181,11 @@ val = quadpy.triangle.integrate(
 <img src="https://nschloe.github.io/quadpy/disk.png" width="25%">
 
  * [Peirce](http://www.jstor.org/stable/2098722) (1957, arbitrary degree)
+ * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y):
+   - [Albrecht-Collatz](https://dx.doi.org/10.1002/zamm.19580380102) (1958, degree 1)
+   - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, degree 1)
+   - [Albrecht](https://dx.doi.org/10.1002/zamm.19600401014) (1960, 2 schemes up to degree 11)
+   - Myskovskih (1964, degree 4)
  * [Lether](http://www.jstor.org/stable/2949473) (1971, arbitrary degree)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 9)
  * [Wissmann-Becker](https://dx.doi.org/10.1137/0723043) (1986, 3 schemes up to degree 8)
@@ -266,7 +273,7 @@ Note that `phi_theta[0]` is the azimuthal, `phi_theta[1]` the polar angle here.
  * [Liu-Vinokur](http://dx.doi.org/10.1006/jcph.1998.5884) (1998, 14 schemes up to
    degree 5)
  * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
-   (2000, 6 schemes up to degree 7),
+   (2000, 6 schemes up to degree 7)
  * [Zienkiewicz](http://www.sciencedirect.com/science/book/9780750664318)
    (2005, 2 schemes up to degree 3)
  * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2009, 2 schemes up to
@@ -276,9 +283,11 @@ Note that `phi_theta[0]` is the azimuthal, `phi_theta[1]` the polar angle here.
  * [Shunn-Ham](http://dx.doi.org/10.1016/j.cam.2012.03.032) (2012, 6 schemes up to
    degree 7)
  * [Vioreanu-Rokhlin](https://doi.org/10.1137/110860082) (2014, 10
-   schemes up to degree 13),
+   schemes up to degree 13)
  * [Willams-Shunn-Jameson](https://doi.org/10.1016/j.cam.2014.01.007) (2014, 1
    scheme with degree 9)
+ * [Witherden-Vincent](https://doi.org/10.1016/j.camwa.2015.03.017) (2015, 9
+   schemes up to degree 10)
 
 Example:
 ```python
@@ -389,7 +398,9 @@ quadpy.nsphere.integrate(
    - [Stroud](https://dx.doi.org/10.2307/2001945) (1957, degree 2)
    - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 2 schemes up to degree 5)
    - [Stroud](https://doi.org/10.1090/S0025-5718-1966-0191094-8) (1966, 4 schemes of degree 5)
-   - [Stroud](https://dx.doi.org/10.1007/BF02162160) (1967, 4 <= n <= 7, 2 schemes of degree 5),
+   - [Stroud](https://dx.doi.org/10.1007/BF02162160) (1967, 4 <= n <= 7, 2 schemes of degree 5)
+   - [Stroud](https://doi.org/10.1137/0704004) (1967, n >= 3, 3 schemes of degree 7)
+   - [Stenger](https://www.jstor.org/stable/2004361) (1967, 6 schemes up to degree 11)
  * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1978, 2 <= n <= 20, degree 5)
 
 Example:

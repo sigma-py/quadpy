@@ -26,6 +26,7 @@ from .vioreanu_rokhlin import *
 from .walkington import *
 from .wandzura_xiao import *
 from .williams_shunn_jameson import *
+from .witherden_vincent import *
 from .xiao_gimbutas import *
 from .zhang_cui_liu import *
 
