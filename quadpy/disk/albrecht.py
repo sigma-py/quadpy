@@ -6,12 +6,13 @@ from ..helpers import untangle, z, fsd
 
 
 class Albrecht(object):
-    # Look up citation
     '''
-    Albrecht [1]
+    J. Albrecht,
+    Formeln zur numerischen Integration über Kreisbereiche,
+    Volume 40, Issue 10-11, 1960, Pages 514–517,
+    <https://dx.doi.org/10.1002/zamm.19600401014>.
     '''
     def __init__(self, index):
-        # Stroud claims degree 3, but really it's only order 1.
         if index == 1:
             self.degree = 9
 
