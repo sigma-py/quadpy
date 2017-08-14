@@ -85,6 +85,8 @@ class Stroud(object):
                 ]
             self.points, self.weights = untangle(data)
             self.weights *= numpy.pi
+        elif index == 'S2 11-1':
+            self.set_data(albrecht.Albrecht(index=2))
         else:
             assert False
 

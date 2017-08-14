@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 #
+import warnings
+
 import numpy
 
-from ..helpers import untangle, z, fsd
+from ..helpers import untangle, z, fsd, fsd2, pm
 
 
 class Albrecht(object):
@@ -44,6 +46,9 @@ class Albrecht(object):
                 ]
         else:
             assert index == 2
+            warnings.warn('Albrecht\'s 2nd scheme is only single-precision.')
+            self.degree = 11
+
             r1 = 0.326655862701
             r2 = 0.720984642976
             r3 = 0.979798373636
@@ -52,7 +57,8 @@ class Albrecht(object):
             B2 = 0.0490399916287
             B3 = 0.0104912371962
 
-            s1 = numpy.sqrt((125.0 - 10.0*numpy.sqrt(10.0)) / 366.0)
+            # Stroud falsely lists sqrt(10) for s1.
+            s1 = numpy.sqrt((125.0 - 10.0*numpy.sqrt(19.0)) / 366.0)
             s2 = numpy.sqrt((125.0 + 10.0*numpy.sqrt(19.0)) / 366.0)
 
             C1 = (7494893.0 + 1053263.0*numpy.sqrt(19)) / 205200000.0
@@ -63,12 +69,12 @@ class Albrecht(object):
             v = numpy.sqrt(5.0/6.0) * numpy.sin(numpy.pi/8.0)
 
             data = [
-                (B1, fsd(2, r1)),
-                (B2, fsd(2, r2)),
-                (B3, fsd(2, r3)),
+                (B1, fsd(2, r1, 1)),
+                (B2, fsd(2, r2, 1)),
+                (B3, fsd(2, r3, 1)),
                 (C1, pm(2, s1)),
                 (C2, pm(2, s2)),
-                (D,),
+                (D, fsd2(2, u, v, 1, 1)),
                 ]
 
         self.points, self.weights = untangle(data)

@@ -184,7 +184,7 @@ val = quadpy.triangle.integrate(
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y):
    - [Albrecht-Collatz](https://dx.doi.org/10.1002/zamm.19580380102) (1958, degree 1)
    - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, degree 1)
-   - [Albrecht](https://dx.doi.org/10.1002/zamm.19600401014) (1960, 2 schemes of degree 9)
+   - [Albrecht](https://dx.doi.org/10.1002/zamm.19600401014) (1960, 2 schemes up to degree 11)
    - Myskovskih (1964, degree 4)
  * [Lether](http://www.jstor.org/stable/2949473) (1971, arbitrary degree)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 9)
