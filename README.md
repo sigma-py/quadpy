@@ -393,7 +393,9 @@ quadpy.nsphere.integrate(
    - [Stroud](https://dx.doi.org/10.2307/2001945) (1957, degree 2)
    - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 2 schemes up to degree 5)
    - [Stroud](https://doi.org/10.1090/S0025-5718-1966-0191094-8) (1966, 4 schemes of degree 5)
-   - [Stroud](https://dx.doi.org/10.1007/BF02162160) (1967, 4 <= n <= 7, 2 schemes of degree 5),
+   - [Stroud](https://dx.doi.org/10.1007/BF02162160) (1967, 4 <= n <= 7, 2 schemes of degree 5)
+   - [Stroud](https://doi.org/10.1137/0704004) (1967, n >= 3, 3 schemes of degree 7)
+   - [Stenger](https://www.jstor.org/stable/2004361) (1967, 6 schemes up to degree 11)
  * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1978, 2 <= n <= 20, degree 5)
 
 Example:
