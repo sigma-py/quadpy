@@ -21,13 +21,13 @@ def test_disk():
     quadpy.disk.integrate(
         lambda x: numpy.exp(x[0]),
         numpy.array([0.0, 0.3]), 0.7,
-        quadpy.disk.Peirce(5)
+        quadpy.disk.Peirce1957(5)
         )
     quadpy.disk.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         numpy.array([[1.0, 1.0], [0.0, 0.3], [2.0, 2.0]]),
         [1.0, 0.7, 0.333],
-        quadpy.disk.Peirce(5)
+        quadpy.disk.Peirce1957(5)
         )
     return
 
