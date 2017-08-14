@@ -7,9 +7,12 @@ from ..helpers import untangle, fsd, pm, z
 from .helpers import volume_unit_ball
 
 
-class Stroud9(object):
-    # TODO look up citation
+class Stroud1967b(object):
     '''
+    A.H. Stroud,
+    Some Seventh Degree Integration Formulas for Symmetric Regions,
+    SIAM J. Numer. Anal., 4(1), 37–44. (8 pages),
+    <https://doi.org/10.1137/0704004>.
     '''
     def __init__(self, n, variant):
         self.degree = 7
