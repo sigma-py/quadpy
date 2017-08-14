@@ -49,7 +49,6 @@ class Stroud(object):
             self.set_data(stroud1966.Stroud1966(n, variant='c'))
         elif index == 'Sn 5-6':
             self.set_data(stroud1966.Stroud1966(n, variant='d'))
-        # TODO check if there are more
         elif index == 'Sn 7-1a':
             self.set_data(stroud1967b.Stroud1967b(n, variant='a'))
         elif index == 'Sn 7-1b':
