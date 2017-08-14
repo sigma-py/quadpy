@@ -54,8 +54,7 @@ class Stroud(object):
         elif index == 'Sn 7-1b':
             self.set_data(stroud1967b.Stroud1967b(n, variant='b'))
         elif index == 'Sn 7-2':
-            # TODO
-            pass
+            self.set_data(stroud1967b.Stroud1967b(n, variant='c'))
         elif index == 'Sn 7-3a':
             self.set_data(stenger.Stenger(n, variant='a'))
         elif index == 'Sn 7-3b':
