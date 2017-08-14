@@ -9,6 +9,5 @@ from .stroud1957 import *
 from .stroud1966 import *
 from .stroud1967a import *
 from .stroud1967b import *
-from .stroud9 import *
 
 from .tools import *
