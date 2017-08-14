@@ -17,6 +17,7 @@ class Stroud1967b(object):
     SIAM J. Numer. Anal., 4(1), 37–44. (8 pages),
     <https://doi.org/10.1137/0704004>.
     '''
+    # pylint: disable=too-many-locals
     def __init__(self, n, variant):
         self.degree = 7
         self.dim = n
