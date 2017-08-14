@@ -63,9 +63,11 @@ class Stroud(object):
             self.set_data(stenger.Stenger(n, degree=9, variant='a'))
         elif index == 'Sn 9-1b':
             self.set_data(stenger.Stenger(n, degree=9, variant='b'))
+        elif index == 'Sn 11-1a':
+            self.set_data(stenger.Stenger(n, degree=11, variant='a'))
         else:
-            assert False
-
+            assert index == 'Sn 11-1b'
+            self.set_data(stenger.Stenger(n, degree=11, variant='b'))
         return
 
     def set_data(self, scheme):
