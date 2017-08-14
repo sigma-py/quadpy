@@ -11,6 +11,7 @@ from helpers import check_degree
 @pytest.mark.parametrize(
     'scheme',
     [quadpy.nsphere.Dobrodeev1978(n) for n in range(2, 7)]
+    + [quadpy.nsphere.Stroud1967(n) for n in range(2, 7)]
     )
 def test_scheme(scheme):
     tol = 1.0e-14
@@ -31,5 +32,5 @@ def test_scheme(scheme):
 
 if __name__ == '__main__':
     n_ = 5
-    scheme_ = quadpy.nsphere.Dobrodeev1978(n_)
+    scheme_ = quadpy.nsphere.Stroud1967(n_)
     test_scheme(scheme_)

@@ -3,9 +3,11 @@
 import numpy
 
 from . import hammer_stroud
+from . import stenger
 from . import stroud1957
 from . import stroud1966
-from . import stroud1967
+from . import stroud1967a
+from . import stroud1967b
 
 from .helpers import volume_unit_ball
 from ..helpers import pm, untangle
@@ -34,9 +36,9 @@ class Stroud(object):
             self.points, self.weights = untangle(data)
             self.weights *= volume_unit_ball(n)
         elif index == 'Sn 5-1a':
-            self.set_data(stroud1967.Stroud1967(n, variant='a'))
+            self.set_data(stroud1967a.Stroud1967a(n, variant='a'))
         elif index == 'Sn 5-1b':
-            self.set_data(stroud1967.Stroud1967(n, variant='b'))
+            self.set_data(stroud1967a.Stroud1967a(n, variant='b'))
         elif index == 'Sn 5-2':
             self.set_data(hammer_stroud.HammerStroud(n, 'b', alpha=0.0))
         elif index == 'Sn 5-3':
@@ -47,9 +49,25 @@ class Stroud(object):
             self.set_data(stroud1966.Stroud1966(n, variant='c'))
         elif index == 'Sn 5-6':
             self.set_data(stroud1966.Stroud1966(n, variant='d'))
+        elif index == 'Sn 7-1a':
+            self.set_data(stroud1967b.Stroud1967b(n, variant='a'))
+        elif index == 'Sn 7-1b':
+            self.set_data(stroud1967b.Stroud1967b(n, variant='b'))
+        elif index == 'Sn 7-2':
+            self.set_data(stroud1967b.Stroud1967b(n, variant='c'))
+        elif index == 'Sn 7-3a':
+            self.set_data(stenger.Stenger(n, degree=7, variant='a'))
+        elif index == 'Sn 7-3b':
+            self.set_data(stenger.Stenger(n, degree=7, variant='b'))
+        elif index == 'Sn 9-1a':
+            self.set_data(stenger.Stenger(n, degree=9, variant='a'))
+        elif index == 'Sn 9-1b':
+            self.set_data(stenger.Stenger(n, degree=9, variant='b'))
+        elif index == 'Sn 11-1a':
+            self.set_data(stenger.Stenger(n, degree=11, variant='a'))
         else:
-            assert False
-
+            assert index == 'Sn 11-1b'
+            self.set_data(stenger.Stenger(n, degree=11, variant='b'))
         return
 
     def set_data(self, scheme):
