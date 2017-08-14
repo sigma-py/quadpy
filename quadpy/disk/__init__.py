@@ -8,6 +8,7 @@ from .cools_kim import *
 from .hammer_stroud import *
 from .lether import *
 from .mysovskih import *
+from .peirce1956 import *
 from .peirce1957 import *
 from .stroud import *
 from .wissmann_becker import *
