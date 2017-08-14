@@ -16,6 +16,9 @@ from helpers import check_degree
     + [(quadpy.disk.Stroud(k), 1.0e-14) for k in [
         'S2 3-1', 'S2 3-2',
         'S2 4-1',
+        'S2 5-2',
+        'S2 7-2',
+        'S2 9-1', 'S2 9-3',
         ]]
     + [(quadpy.disk.WissmannBecker(k), 1.0e-14) for k in ['6-1', '6-2', '8-1']]
     )
