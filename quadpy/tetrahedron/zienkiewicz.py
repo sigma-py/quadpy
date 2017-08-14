@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
-
 from .helpers import _s4, _s31
+
+from ..helpers import untangle
 
 
 class Zienkiewicz(object):
@@ -17,20 +17,18 @@ class Zienkiewicz(object):
     '''
     def __init__(self, index):
         if index == 4:
-            self.weights = numpy.full(4, 0.25)
-            bary = _s31(0.1381966011250105)
             self.degree = 2
+            data = [
+                (0.25, _s31(0.1381966011250105))
+                ]
         else:
             assert index == 5
-            self.weights = numpy.concatenate([
-                numpy.full(1, -0.8),
-                numpy.full(4, 0.45),
-                ])
-            bary = numpy.concatenate([
-                _s4(),
-                _s31(1.0/6.0),
-                ])
             self.degree = 3
+            data = [
+                (-0.8, _s4()),
+                (0.45, _s31(1.0/6.0)),
+                ]
 
-        self.points = bary[:, [1, 2, 3]]
+        self.bary, self.weights = untangle(data)
+        self.points = self.bary[:, 1:]
         return
