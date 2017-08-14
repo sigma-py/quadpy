@@ -24,6 +24,9 @@ class Stroud(object):
             self.set_data(albrecht_collatz.AlbrechtCollatz())
         elif index == 'S2 4-1':
             self.set_data(mysovskih.Mysovskih(0.0))
+        elif index == 'S2 5-1':
+            # TODO
+            pass
         elif index == 'S2 5-2':
             self.degree = 5
             r = numpy.sqrt(0.5)
@@ -34,6 +37,9 @@ class Stroud(object):
                 ]
             self.points, self.weights = untangle(data)
             self.weights *= numpy.pi
+        elif index == 'S2 7-1':
+            # TODO
+            pass
         elif index == 'S2 7-2':
             # spherical product Gauss
             self.degree = 7

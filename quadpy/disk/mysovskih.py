@@ -6,9 +6,10 @@ from ..helpers import untangle, z
 
 
 class Mysovskih(object):
-    # Look up citation
     '''
-    Mysovskih [3]
+    I.P. Mysovskih,
+    On the construction of cubature formulas for the simplest regions,
+    Z. Vychisl. Mat. i. Mat. Fiz. 4, 3-14, 1964.
     '''
     def __init__(self, alpha):
         self.degree = 4
