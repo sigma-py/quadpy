@@ -5,6 +5,7 @@ from . import albrecht
 from . import albrecht_collatz
 from . import hammer_stroud
 from . import mysovskih
+from . import peirce1956
 from . import radon
 
 from ..helpers import z, fsd, pm, untangle
@@ -38,8 +39,7 @@ class Stroud(object):
             self.points, self.weights = untangle(data)
             self.weights *= numpy.pi
         elif index == 'S2 7-1':
-            # TODO
-            pass
+            self.set_data(peirce1956.Peirce1956())
         elif index == 'S2 7-2':
             # spherical product Gauss
             self.degree = 7

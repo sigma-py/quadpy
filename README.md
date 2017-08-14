@@ -182,6 +182,9 @@ val = quadpy.triangle.integrate(
 
  * [Peirce](http://www.jstor.org/stable/2098722) (1957, arbitrary degree)
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y):
+   - [Radon](https://eudml.org/doc/176796) (1948, degree 5)
+   - [Peirce](https://books.google.de/books/about/Numerical_integration_over_planar_region.html?id=WR9SAAAAMAAJ&redir_esc=y)
+     (1956, degree 7)
    - [Albrecht-Collatz](https://dx.doi.org/10.1002/zamm.19580380102) (1958, degree 1)
    - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, degree 1)
    - [Albrecht](https://dx.doi.org/10.1002/zamm.19600401014) (1960, 2 schemes up to degree 11)
