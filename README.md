@@ -207,6 +207,8 @@ val = quadpy.disk.integrate(
 <img src="https://nschloe.github.io/quadpy/quad.png" width="25%">
 
  * Product schemes derived from line segment schemes
+ * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 3
+   schemes up to degree 7)
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971, 15 schemes up to degree 15):
    - [Maxwell](https://doi.org/10.1017/CBO9780511710377.061) (1890, degree 7)
    - Burnside (1908, degree 5)
@@ -310,7 +312,7 @@ val = quadpy.tetrahedron.integrate(
    - [Tyler](https://dx.doi.org/10.4153/CJM-1953-044-1) (1953, 2 schemes up to degree 5)
    - [Hammer-Wymore](https://doi.org/10.1090/S0025-5718-1957-0087220-6) (1957, degree 7)
    - [Albrecht-Collatz](https://dx.doi.org/10.1002/zamm.19580380102) (1958, degree 3)
-   - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 2 schemes up to degree 7)
+   - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 6 schemes up to degree 7)
    - [Mustard-Lyness-Blatt](https://doi.org/10.1093/comjnl/6.1.75) (1963, 6 schemes up to degree 5)
    - [Stroud](https://dx.doi.org/10.1007/BF02162160) (1967, degree 5)
    - [Sarma-Stroud](https://dx.doi.org/10.2307/2004963) (1969, degree 7)
