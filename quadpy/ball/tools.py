@@ -16,7 +16,8 @@ def show(
             scheme.points,
             scheme.weights,
             volume=4.0/3.0*pi,
-            edges=[]
+            edges=[],
+            balls=[((0.0, 0.0, 0.0), 1.0)],
             )
     return
 
