@@ -21,6 +21,7 @@ class Keast(object):
 
     https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tet/quadrature_rules_tet.html
     '''
+    # pylint: disable=line-too-long
     def __init__(self, index):
         if index == 0:
             # Does not appear in Keast's article.
