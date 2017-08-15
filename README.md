@@ -261,6 +261,7 @@ val = quadpy.sphere.integrate_spherical(
 Note that `phi_theta[0]` is the azimuthal, `phi_theta[1]` the polar angle here.
 
 ### Ball
+<img src="https://nschloe.github.io/quadpy/ball.png" width="25%">
 
  * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (6 schemes up to degree 7)
 
