@@ -48,7 +48,7 @@ class Stroud(object):
         elif index == 'C3 5-1':
             self.set_data(Stroud1967())
         elif index == 'C3 5-2':
-            self.set_data(HammerStroud(1))
+            self.set_data(HammerStroud('2-3'))
         elif index == 'C3 5-3':
             self.set_data(Tyler(2))
         elif index == 'C3 5-4':
@@ -62,9 +62,9 @@ class Stroud(object):
         elif index == 'C3 5-8':
             self.set_data(Sadowsky())
         elif index == 'C3 7-1a':
-            self.set_data(HammerStroud(2))
+            self.set_data(HammerStroud('5-3a'))
         elif index == 'C3 7-1b':
-            self.set_data(HammerStroud(3))
+            self.set_data(HammerStroud('5-3b'))
         elif index == 'C3 7-2':
             self.set_data(HammerWymore())
         else:
