@@ -2,9 +2,7 @@
 #
 import numpy
 
-from .helpers import fs_r00, pm_rrr, fs_rr0, z
-
-from ..helpers import untangle
+from ..helpers import untangle, fsd, pm, z
 
 
 class HammerStroud(object):
@@ -18,8 +16,8 @@ class HammerStroud(object):
         if index == 1:
             self.degree = 5
             data = [
-                (40.0/361.0, fs_r00(numpy.sqrt(19.0/30.0))),
-                (121.0/2888.0, pm_rrr(numpy.sqrt(19.0/33.0)))
+                (40.0/361.0, fsd(3, numpy.sqrt(19.0/30.0), 1)),
+                (121.0/2888.0, pm(3, numpy.sqrt(19.0/33.0)))
                 ]
         else:
             assert index in [2, 3]
@@ -41,10 +39,10 @@ class HammerStroud(object):
             B0 = 1.0 - 6.0*B1 - 12.0*B2 - 8.0*B3
 
             data = [
-                (B0, z()),
-                (B1, fs_r00(r)),
-                (B2, fs_rr0(s)),
-                (B3, pm_rrr(t))
+                (B0, z(3)),
+                (B1, fsd(3, r, 1)),
+                (B2, fsd(3, s, 2)),
+                (B3, pm(3, t)),
                 ]
 
         self.points, self.weights = untangle(data)
