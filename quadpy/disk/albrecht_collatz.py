@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from math import pi, sqrt
-import warnings
+from math import pi
 
 from ..helpers import untangle, pm
 
@@ -15,10 +14,10 @@ class AlbrechtCollatz(object):
     '''
     def __init__(self):
         self.name = 'AlbrechtCollatz'
-        warnings.warn('Formula {} only has degree 1, not 3!'.format(self.name))
-        self.degree = 1
+        self.degree = 3
         data = [
-            (0.25, pm(2, sqrt(0.5))),
+            # ERR Wrongly stated in Stroud as sqrt(0.5) instead of 0.5
+            (0.25, pm(2, 0.5)),
             ]
         self.points, self.weights = untangle(data)
         self.weights *= pi
