@@ -10,7 +10,7 @@ from helpers import check_degree
 @pytest.mark.parametrize(
     'scheme,tol',
     [(quadpy.ball.HammerStroud(k), 1.0e-14) for k in [
-        '11-3', '12-3', '14-3a', '14-3b',
+        '11-3', '12-3', '14-3a', '14-3b', '15-3a', '15-3b',
         ]]
     )
 def test_scheme(scheme, tol):
@@ -38,6 +38,6 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.ball.HammerStroud('14-3b')
+    scheme_ = quadpy.ball.HammerStroud('15-3b')
     test_scheme(scheme_, 1.0e-14)
     test_show(scheme_)
