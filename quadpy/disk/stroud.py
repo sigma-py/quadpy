@@ -21,7 +21,7 @@ class Stroud(object):
     def __init__(self, index):
         self.name = 'Stroud({})'.format(index)
         if index == 'S2 3-1':
-            self.set_data(hammer_stroud.HammerStroud())
+            self.set_data(hammer_stroud.HammerStroud('11-2'))
         elif index == 'S2 3-2':
             self.set_data(albrecht_collatz.AlbrechtCollatz())
         elif index == 'S2 4-1':
