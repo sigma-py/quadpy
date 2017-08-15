@@ -28,19 +28,16 @@ class HammerStroud(object):
                 ]
         elif index in ['14-3a', '14-3b']:
             self.degree = 5
+
+            t = 1 if index == '14-3a' else -1
+
             sqrt14 = sqrt(14.0)
-            # TODO merge with +-
-            if index == '14-3a':
-                a1 = 4.0/375.0 * (9 + 2*sqrt14)
-                c1 = (71.0 - 12 * sqrt14) / 750.0
-                nu = sqrt((7.0 - sqrt14) / 7.0)
-                eta1 = sqrt(5.0 / (21.0 - 2*sqrt14))
-            else:
-                assert index == '14-3b'
-                a1 = 8.0/75.0 * (9.0 - 2*sqrt14)
-                c1 = (71.0 + 12 * sqrt14) / 750.0
-                nu = sqrt((7.0 + sqrt14) / 7.0)
-                eta1 = sqrt(5.0 / (21.0 + 2*sqrt14))
+            # ERR The article falsely gives 0.50824... instead of 0.050824...
+            a1 = 4.0/375.0 * (9 + t * 2*sqrt14)
+            c1 = (71.0 - t * 12 * sqrt14) / 750.0
+            nu = sqrt((7.0 - t * sqrt14) / 7.0)
+            eta1 = sqrt(5.0 / (21.0 - t * 2*sqrt14))
+
             data = [
                 (a1, fsd(3, nu, 1)),
                 (c1, pm(3, eta1)),
