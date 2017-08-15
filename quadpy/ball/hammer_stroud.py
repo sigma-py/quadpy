@@ -45,9 +45,34 @@ class HammerStroud(object):
         else:
             assert index in ['15-3a', '15-3b'], \
                 'Illegal index {}.'.format(index)
-            # TODO continue here
-            assert False
 
+            self.degree = 7
+
+            if index == '15-3a':
+                a0 = 0.4156003482691997 / pi
+                a1 = 0.1994483077968051 / pi
+                b1 = 0.0380676101171267 / pi
+                c1 = 0.2649610860413550 / pi
+            else:
+                assert index == '15-3b'
+                a0 = 0.4441396821009518 / pi
+                a1 = 0.0957384071760634 / pi
+                b1 = 0.2508385364520637 / pi
+                c1 = 0.0200197052755367 / pi
+
+            t = 1 if index == '15-3a' else - 1
+
+            sqrt30 = sqrt(30.0)
+            nu = sqrt((45.0 - t * sqrt30)/57.0)
+            xi = sqrt((18.0 + t * sqrt30)/42.0)
+            eta = sqrt(7.0 / (27.0 + t * 2*sqrt30))
+
+            data = [
+                (a0, z(3)),
+                (a1, fsd(3, nu, 1)),
+                (b1, fsd(3, xi, 2)),
+                (c1, pm(3, eta)),
+                ]
         self.points, self.weights = untangle(data)
         self.weights *= pi
         return
