@@ -75,7 +75,7 @@ class Stroud(object):
         # Cn 5-1 is not implemented because it's based on explicit values only
         # given for n=4,5,6.
         elif index == 'Cn 5-2':
-            self.set_data(hammer_stroud.HammerStroud(n))
+            self.set_data(hammer_stroud.HammerStroud(n, '2-n'))
         elif index == 'Cn 5-3':
             self.set_data(stroud1968.Stroud1968(n))
         elif index == 'Cn 5-4':

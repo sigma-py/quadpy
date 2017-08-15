@@ -11,6 +11,9 @@ from helpers import check_degree
     'scheme, tol',
     [(quadpy.ncube.Dobrodeev1970(dim), 1.0e-14) for dim in range(5, 10)]
     + [(quadpy.ncube.Dobrodeev1978(dim), 1.0e-14) for dim in range(2, 10)]
+    + [(quadpy.ncube.HammerStroud(n, k), 1.0e-14) for n in range(3, 7)
+       for k in ['1-n', '2-n']
+       ]
     + [(quadpy.ncube.Stroud(n, k), 1.0e-14) for n in range(3, 7)
        for k in [
         'Cn 1-1', 'Cn 1-2',
@@ -42,5 +45,5 @@ def test_scheme(scheme, tol):
 
 if __name__ == '__main__':
     n_ = 5
-    scheme_ = quadpy.ncube.Dobrodeev(n_)
+    scheme_ = quadpy.ncube.HammerStroud(n_, '2-n')
     test_scheme(scheme_, 1.0e-14)
