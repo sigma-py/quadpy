@@ -25,7 +25,7 @@ def plot_disks(plt, pts, weights, total_area):
     return
 
 
-def show_mpl(points, weights, volume, edges):
+def show_mpl(points, weights, volume, edges, balls=[]):
     import matplotlib.pyplot as plt
     # pylint: disable=relative-import, unused-variable
     from mpl_toolkits.mplot3d import Axes3D
@@ -88,7 +88,7 @@ def show_mpl(points, weights, volume, edges):
 
 
 # pylint: disable=too-many-locals
-def show_mayavi(points, weights, volume, edges):
+def show_mayavi(points, weights, volume, edges, balls=[]):
     # pylint: disable=import-error
     import mayavi.mlab as mlab
 
@@ -128,7 +128,7 @@ def show_mayavi(points, weights, volume, edges):
 
 
 # pylint: disable=too-many-locals
-def show_vtk(points, weights, volume, edges):
+def show_vtk(points, weights, volume, edges, balls=[]):
     # pylint: disable=import-error
     import vtk
 
@@ -146,7 +146,7 @@ def show_vtk(points, weights, volume, edges):
         actor.GetProperty().SetColor(0, 0, 0)
         return actor
 
-    def get_sphere_actor(x0, r, color):
+    def get_sphere_actor(x0, r, color, opacity=1.0):
         # Generate polygon data for a sphere
         sphere = vtk.vtkSphereSource()
 
@@ -165,7 +165,7 @@ def show_vtk(points, weights, volume, edges):
         sphere_actor = vtk.vtkActor()
         sphere_actor.SetMapper(sphere_mapper)
         sphere_actor.GetProperty().SetColor(color)
-        # sphere_actor.GetProperty().SetOpacity(0.9)
+        sphere_actor.GetProperty().SetOpacity(opacity)
         return sphere_actor
 
     line_actors = [get_line_actor(edge[:, 0], edge[:, 1]) for edge in edges]
@@ -173,15 +173,23 @@ def show_vtk(points, weights, volume, edges):
     blue = numpy.array([31.0, 119.0, 180.0]) / 255.0
     red = numpy.array([84.0, 15.0, 16.0]) / 255.0
 
-    sum_weights = math.fsum(weights)
+    radii = numpy.cbrt(
+        abs(weights)/math.fsum(weights) * volume/(4.0/3.0 * numpy.pi)
+        )
     sphere_actors = [
-        get_sphere_actor(
-            pt,
-            numpy.cbrt(abs(weight)/sum_weights * volume/(4.0/3.0 * numpy.pi)),
-            color=blue if weight > 0.0 else red
-            )
-        for pt, weight in zip(points, weights)
+        get_sphere_actor(pt, radius, color=blue if weight > 0.0 else red)
+        for pt, weight, radius in zip(points, weights, radii)
         ]
+
+    sphere_actors.extend([
+        get_sphere_actor(
+            numpy.array(ball[0]),
+            ball[1],
+            color=numpy.array([0.0, 0.0, 0.0]) / 255.0,
+            opacity=0.5
+            )
+        for ball in balls
+        ])
 
     # Create a renderer and add the sphere actor to it
     renderer = vtk.vtkRenderer()

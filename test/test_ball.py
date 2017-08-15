@@ -32,12 +32,12 @@ def test_scheme(scheme, tol):
     'scheme',
     [quadpy.ball.HammerStroud('11-3')]
     )
-def test_show(scheme):
-    quadpy.ball.show(scheme)
+def test_show(scheme, backend='mpl'):
+    quadpy.ball.show(scheme, backend=backend)
     return
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.ball.HammerStroud('15-3b')
+    scheme_ = quadpy.ball.HammerStroud('12-3')
     test_scheme(scheme_, 1.0e-14)
-    test_show(scheme_)
+    test_show(scheme_, backend='vtk')
