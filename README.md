@@ -8,8 +8,8 @@ Your one-stop shop for numerical integration in Python.
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?style=social&label=Stars&maxAge=2592000)](https://github.com/nschloe/quadpy)
 
 Hundreds of numerical integration schemes for line segments, circles, disks,
-triangles, quadrilaterals, spheres, tetrahedra, hexahedra, wedges, pyramids,
-n-spheres, n-balls, n-cubes, and n-simplices.
+triangles, quadrilaterals, spheres, balls, tetrahedra, hexahedra, wedges,
+pyramids, n-spheres, n-balls, n-cubes, and n-simplices.
 
 To numerically integrate any function over any given triangle, do
 ```python
@@ -259,6 +259,19 @@ val = quadpy.sphere.integrate_spherical(
     )
 ```
 Note that `phi_theta[0]` is the azimuthal, `phi_theta[1]` the polar angle here.
+
+### Ball
+
+ * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (6 schemes up to degree 7)
+
+Example:
+```python
+val = quadpy.ball.integrate(
+    lambda x: numpy.exp(x[0]),
+    [0.0, 0.0, 0.0], 1.0,
+    quadpy.ball.HammerStroud('14-3a')
+    )
+```
 
 
 ### Tetrahedron

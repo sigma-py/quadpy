@@ -133,6 +133,22 @@ def test_sphere():
     return
 
 
+def test_ball():
+    quadpy.ball.integrate(
+        lambda x: numpy.exp(x[0]),
+        [0.0, 0.0, 0.0], 1.0,
+        quadpy.ball.HammerStroud('14-3a')
+        )
+
+    quadpy.ball.integrate(
+            lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
+            numpy.array([[1.0, 1.0, 0.0], [0.0, 0.3, 0.0], [2.0, 2.0, 0.0]]),
+            [1.0, 0.7, 0.333],
+            quadpy.ball.HammerStroud('15-3b')
+            )
+    return
+
+
 def test_tetrahedron():
     quadpy.tetrahedron.integrate(
             lambda x: numpy.exp(x[0]),
