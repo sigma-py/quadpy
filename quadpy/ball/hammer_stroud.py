@@ -46,7 +46,8 @@ class HammerStroud(object):
                 (c1, pm(3, eta1)),
                 ]
         else:
-            assert index in ['15-3a', '15-3b']
+            assert index in ['15-3a', '15-3b'], \
+                'Illegal index {}.'.format(index)
             # TODO continue here
             assert False
 
