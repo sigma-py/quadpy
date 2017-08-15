@@ -15,6 +15,7 @@ from .__about__ import (
 
 from . import helpers
 
+from . import ball
 from . import circle
 from . import disk
 from . import hexahedron
