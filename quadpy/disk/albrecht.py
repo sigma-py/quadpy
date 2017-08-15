@@ -16,11 +16,12 @@ class Albrecht(object):
     '''
     # pylint: disable=too-many-locals
     def __init__(self, index):
+        t = numpy.array([1, -1])
         if index == 1:
             self.degree = 9
 
-            rho1 = numpy.sqrt((96.0 - 4*numpy.sqrt(111.0)) / 155.0)
-            rho2 = numpy.sqrt((96.0 + 4*numpy.sqrt(111.0)) / 155.0)
+            sqrt111 = numpy.sqrt(111.0)
+            rho1, rho2 = numpy.sqrt((96.0 - t * 4*sqrt111) / 155.0)
 
             k = numpy.arange(1, 7)
             x = numpy.array([
@@ -34,8 +35,7 @@ class Albrecht(object):
                 ]).T
 
             B0 = 251.0 / 2304.0
-            B1 = (110297.0 + 5713.0*numpy.sqrt(111.0)) / 2045952.0
-            B2 = (110297.0 - 5713.0*numpy.sqrt(111.0)) / 2045952.0
+            B1, B2 = (110297.0 + t * 5713.0*sqrt111) / 2045952.0
             C = 125.0 / 3072.0
 
             data = [
@@ -57,12 +57,12 @@ class Albrecht(object):
             B2 = 0.0490399916287
             B3 = 0.0104912371962
 
-            # Stroud falsely lists sqrt(10) for s1.
-            s1 = numpy.sqrt((125.0 - 10.0*numpy.sqrt(19.0)) / 366.0)
-            s2 = numpy.sqrt((125.0 + 10.0*numpy.sqrt(19.0)) / 366.0)
+            sqrt19 = numpy.sqrt(19.0)
 
-            C1 = (7494893.0 + 1053263.0*numpy.sqrt(19)) / 205200000.0
-            C2 = (7494893.0 - 1053263.0*numpy.sqrt(19)) / 205200000.0
+            # Stroud falsely lists sqrt(10) for s1.
+            s1, s2 = numpy.sqrt((125.0 - t * 10.0*sqrt19) / 366.0)
+
+            C1, C2 = (7494893.0 + t * 1053263.0*sqrt19) / 205200000.0
             D = 81.0 / 3125.0
 
             u = numpy.sqrt(5.0/6.0) * numpy.cos(numpy.pi/8.0)
