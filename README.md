@@ -161,7 +161,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    schemes up to degree 50),
  * [Vioreanu-Rokhlin](https://doi.org/10.1137/110860082) (2014, 20
    schemes up to degree 62),
- * [Willams-Shunn-Jameson](https://doi.org/10.1016/j.cam.2014.01.007) (2014, 8
+ * [Williams-Shunn-Jameson](https://doi.org/10.1016/j.cam.2014.01.007) (2014, 8
    schemes up to degree 12),
  * [Witherden-Vincent](https://doi.org/10.1016/j.camwa.2015.03.017) (2015, 19
    schemes up to degree 20),
@@ -289,7 +289,7 @@ Note that `phi_theta[0]` is the azimuthal, `phi_theta[1]` the polar angle here.
    degree 7)
  * [Vioreanu-Rokhlin](https://doi.org/10.1137/110860082) (2014, 10
    schemes up to degree 13)
- * [Willams-Shunn-Jameson](https://doi.org/10.1016/j.cam.2014.01.007) (2014, 1
+ * [Williams-Shunn-Jameson](https://doi.org/10.1016/j.cam.2014.01.007) (2014, 1
    scheme with degree 9)
  * [Witherden-Vincent](https://doi.org/10.1016/j.camwa.2015.03.017) (2015, 9
    schemes up to degree 10)
