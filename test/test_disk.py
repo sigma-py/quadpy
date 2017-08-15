@@ -11,6 +11,9 @@ from helpers import check_degree
     'scheme,tol',
     [(quadpy.disk.CoolsHaegemans(k), 1.0e-14) for k in range(1, 4)]
     + [(quadpy.disk.CoolsKim(k), 1.0e-14) for k in range(1, 4)]
+    + [(quadpy.disk.HammerStroud(k), 1.0e-14)
+       for k in ['11-2', '12-2', '13-2']
+       ]
     + [(quadpy.disk.Lether(k), 1.0e-14) for k in range(1, 6)]
     + [(quadpy.disk.Peirce1957(k), 1.0e-14) for k in range(1, 6)]
     + [(quadpy.disk.Stroud(k), 1.0e-14) for k in [
