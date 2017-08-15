@@ -2,8 +2,6 @@
 #
 from __future__ import print_function
 
-import pipdated
-
 from .__about__ import (
     __author__,
     __email__,
@@ -31,5 +29,10 @@ from . import triangle
 from . import tetrahedron
 from . import wedge
 
-if pipdated.needs_checking(__name__):
-    print(pipdated.check(__name__, __version__))
+try:
+    import pipdate
+except ImportError:
+    pass
+else:
+    if pipdate.needs_checking(__name__):
+        print(pipdate.check(__name__, __version__))
