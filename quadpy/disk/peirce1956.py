@@ -12,8 +12,8 @@ class Peirce1956(object):
     Numerical integration over planar regions,
     PhD thesis, University of Wisconsin--Madison, 1956,
     <https://books.google.de/books/about/Numerical_integration_over_planar_region.html?id=WR9SAAAAMAAJ&redir_esc=y>.
-
     '''
+    # pylint: disable=too-many-locals
     def __init__(self, index):
 
         if index == 1:
