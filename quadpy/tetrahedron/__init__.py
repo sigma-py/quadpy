@@ -5,6 +5,7 @@ from .beckers_haegemans import *
 from .gatermann import *
 from .grundmann_moeller import *
 from .hammer_marlowe_stroud import *
+from .hammer_stroud import *
 from .keast import *
 from .liu_vinokur import *
 from .maeztu_sainz import *

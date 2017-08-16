@@ -84,7 +84,8 @@ def test_scheme(scheme):
             lambda n: quadpy.helpers.partition(n, 3),
             scheme.degree + 1,
             )
-    assert degree == scheme.degree
+    assert degree == scheme.degree, \
+        'Observed: {}, expected: {}'.format(degree, scheme.degree)
     return
 
 
@@ -104,7 +105,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.tetrahedron.WitherdenVincent(6)
+    scheme_ = quadpy.tetrahedron.HammerStroud(3)
     test_scheme(scheme_)
     # test_show(scheme_)
     quadpy.tetrahedron.show(scheme_, backend='vtk')

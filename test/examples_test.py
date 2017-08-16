@@ -21,13 +21,13 @@ def test_disk():
     quadpy.disk.integrate(
         lambda x: numpy.exp(x[0]),
         numpy.array([0.0, 0.3]), 0.7,
-        quadpy.disk.Peirce(5)
+        quadpy.disk.Peirce1957(5)
         )
     quadpy.disk.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         numpy.array([[1.0, 1.0], [0.0, 0.3], [2.0, 2.0]]),
         [1.0, 0.7, 0.333],
-        quadpy.disk.Peirce(5)
+        quadpy.disk.Peirce1957(5)
         )
     return
 
@@ -129,6 +129,22 @@ def test_sphere():
             numpy.array([[1.0, 1.0, 0.0], [0.0, 0.3, 0.0], [2.0, 2.0, 0.0]]),
             [1.0, 0.7, 0.333],
             quadpy.sphere.Lebedev(3)
+            )
+    return
+
+
+def test_ball():
+    quadpy.ball.integrate(
+        lambda x: numpy.exp(x[0]),
+        [0.0, 0.0, 0.0], 1.0,
+        quadpy.ball.HammerStroud('14-3a')
+        )
+
+    quadpy.ball.integrate(
+            lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
+            numpy.array([[1.0, 1.0, 0.0], [0.0, 0.3, 0.0], [2.0, 2.0, 0.0]]),
+            [1.0, 0.7, 0.333],
+            quadpy.ball.HammerStroud('15-3b')
             )
     return
 

@@ -3,10 +3,10 @@
 import numpy
 
 
-class Peirce(object):
+class Peirce1957(object):
     '''
     W.H. Peirce,
-    Numerical integration over the planer annulus,
+    Numerical integration over the planar annulus,
     J. Soc. Indust. Appl. Math.,
     Vol. 5, No. 2, June, 1957,
     <http://www.jstor.org/stable/2098722>.
