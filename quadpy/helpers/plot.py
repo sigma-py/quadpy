@@ -31,19 +31,10 @@ def show_mpl(points, weights, volume, edges, balls=None):
     from mpl_toolkits.mplot3d import Axes3D
 
     # pylint: disable=too-many-locals
-    def plot_spheres(
-            plt, ax, pts, weights, total_volume
-            ):
+    def plot_spheres(plt, ax, pts, radii, colors):
         h = 1.0e-2
 
-        sum_weights = math.fsum(weights)
-        for tp, weight in zip(pts, weights):
-            # Choose radius such that the sum of volumes of the balls equals
-            # total_volume.
-            r = (
-                abs(weight)/sum_weights * total_volume/(4.0/3.0 * numpy.pi)
-                )**(1.0/3.0)
-
+        for tp, r, color in zip(pts, radii, colors):
             # http://matplotlib.org/examples/mplot3d/surface3d_demo2.html
             # Compute sphere for every point anew. This is more costly on the
             # numerical side, but gives the flexibility of drawing sphere of
@@ -57,7 +48,6 @@ def show_mpl(points, weights, volume, edges, balls=None):
             _y = numpy.outer(numpy.sin(u), numpy.sin(v))
             _z = numpy.outer(numpy.ones(numpy.size(u)), numpy.cos(v))
 
-            color = '#1f77b4' if weight >= 0 else '#d62728'
             # highlight ball center
             plt.plot(
                 [tp[0]], [tp[1]], [tp[2]],
@@ -74,6 +64,8 @@ def show_mpl(points, weights, volume, edges, balls=None):
         ax.set_axis_off()
         return
 
+    balls = [] if balls is None else balls
+
     fig = plt.figure()
     ax = fig.gca(projection='3d')
     ax.set_aspect('equal')
@@ -82,7 +74,20 @@ def show_mpl(points, weights, volume, edges, balls=None):
     for edge in edges:
         plt.plot(*edge, color='k', linestyle='-')
 
-    plot_spheres(plt, ax, points, weights, volume)
+    # Choose radius such that the sum of volumes of the balls equals
+    # total_volume.
+    radii = numpy.cbrt(
+        abs(weights)/math.fsum(weights) * volume/(4.0/3.0 * numpy.pi)
+        )
+    colors = [
+        '#1f77b4' if weight >= 0 else '#d62728'
+        for weight in weights
+        ]
+    plot_spheres(plt, ax, points, radii, colors)
+
+    for ball in balls:
+        plot_spheres(plt, ax, [ball[0]], [ball[1]], ['#dddddd'])
+
     plt.show()
     return
 
