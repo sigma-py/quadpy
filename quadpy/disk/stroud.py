@@ -96,6 +96,10 @@ class Stroud(object):
             self.set_data(mysovskih.Mysovskih(2))
         elif index == 'S2 11-2':
             self.set_data(albrecht.Albrecht(index=2))
+        elif index == 'S2 11-3':
+            self.set_data(rabinowitz_richter.RabinowitzRichter(4))
+        elif index == 'S2 11-4':
+            self.set_data(peirce1956.Peirce1956(3))
         else:
             assert False, index
 
