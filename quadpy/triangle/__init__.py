@@ -9,6 +9,7 @@ from .dunavant import *
 from .gatermann import *
 from .grundmann_moeller import *
 from .hammer_marlowe_stroud import *
+from .hammer_stroud import *
 from .hillion import *
 from .laursen_gellert import *
 from .lether import *
