@@ -9,7 +9,8 @@ Your one-stop shop for numerical integration in Python.
 
 Hundreds of numerical integration schemes for line segments, circles, disks,
 triangles, quadrilaterals, spheres, balls, tetrahedra, hexahedra, wedges,
-pyramids, n-spheres, n-balls, n-cubes, and n-simplices.
+pyramids, n-spheres, n-balls, n-cubes, n-simplices, and the 2D planes with
+weight functions exp(-r) and exp(-r^2).
 
 To numerically integrate any function over any given triangle, do
 ```python
@@ -190,6 +191,7 @@ val = quadpy.triangle.integrate(
    - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 8 schemes up to degree 15)
    - [Albrecht](https://dx.doi.org/10.1002/zamm.19600401014) (1960, 2 schemes up to degree 11)
    - Myskovskih (1964, degree 4)
+   - [Rabinowitz-Richter](https://dx.doi.org/10.2307/2004962) (6 schmes up to degree 15)
  * [Lether](http://www.jstor.org/stable/2949473) (1971, arbitrary degree)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 9)
  * [Wissmann-Becker](https://dx.doi.org/10.1137/0723043) (1986, 3 schemes up to degree 8)
@@ -235,6 +237,34 @@ val = quadpy.quadrilateral.integrate(
     quadpy.quadrilateral.Stroud(6)
     )
 ```
+
+### 2D plane with weight function exp(-r<sup>2</sup>)
+<img src="https://nschloe.github.io/quadpy/e2r2.png" width="25%">
+
+ * [Rabinowitz-Richter](https://dx.doi.org/10.2307/2004962) (5 schemes up to degree 15)
+
+Example:
+```python
+val = quadpy.e2r2.integrate(
+    lambda x: numpy.exp(x[0]),
+    quadpy.e2r2.RabinowitzRichter(3)
+    )
+```
+
+
+### 2D plane with weight function exp(-r)
+<img src="https://nschloe.github.io/quadpy/e2r.png" width="25%">
+
+ * [Rabinowitz-Richter](https://dx.doi.org/10.2307/2004962) (4 schemes up to degree 15)
+
+Example:
+```python
+val = quadpy.e2r.integrate(
+    lambda x: numpy.exp(x[0]),
+    quadpy.e2r.RabinowitzRichter(5)
+    )
+```
+
 
 ### Sphere
 <img src="https://nschloe.github.io/quadpy/sphere.png" width="25%">

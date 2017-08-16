@@ -10,6 +10,7 @@ from .lether import *
 from .mysovskih import *
 from .peirce1956 import *
 from .peirce1957 import *
+from .rabinowitz_richter import *
 from .stroud import *
 from .wissmann_becker import *
 
