@@ -35,8 +35,7 @@ class Peirce1956(object):
                 (B2, pm(2, s)),
                 (B3, pm(2, t)),
                 ]
-        else:
-            assert index == 2
+        elif index == 2:
             self.degree = 9
 
             sqrt15 = sqrt(15.0)
@@ -61,6 +60,36 @@ class Peirce1956(object):
                 (B2, fs_array([u1, v1])),
                 (B3, fs_array([u2, v2])),
                 (B4, fs_array([u3, v3])),
+                ]
+        else:
+            assert index == 3
+            self.degree = 11
+
+            sqrt15 = sqrt(15.0)
+
+            B1 = 5.0/144.0
+            B2 = (34.0 - 5*sqrt15) / 396.0
+            B3 = (4805.0 - 620*sqrt15) / 103824.0
+            C1 = (10.0 + 5*sqrt15) / 792.0
+            C2 = (2405.0 + 620*sqrt15) / 207648.0
+            D = B1
+
+            r1 = sqrt((5.0 - sqrt15) / 10)
+            r2 = sqrt(0.5)
+            r3 = sqrt((5.0 + sqrt15) / 10)
+            u1 = sqrt((5.0 + sqrt(45.0 - 10*sqrt15)) / 20.0)
+            v1 = sqrt((5.0 - sqrt(45.0 - 10*sqrt15)) / 20.0)
+            u2 = sqrt((5.0 + sqrt15 + 2*sqrt(40*sqrt15 - 150.0)) / 20.0)
+            v2 = sqrt((5.0 + sqrt15 - 2*sqrt(40*sqrt15 - 150.0)) / 20.0)
+            t = sqrt((5.0 - sqrt15) / 20.0)
+
+            data = [
+                (B1, fsd(2, r1, 1)),
+                (B2, fsd(2, r2, 1)),
+                (B3, fsd(2, r3, 1)),
+                (C1, fs_array([u1, v1])),
+                (C2, fs_array([u2, v2])),
+                (D, pm(2, t)),
                 ]
 
         self.points, self.weights = untangle(data)
