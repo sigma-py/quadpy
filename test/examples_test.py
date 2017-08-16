@@ -117,6 +117,22 @@ def test_quadrilateral():
     return
 
 
+def test_e2r2():
+    quadpy.e2r2.integrate(
+        lambda x: numpy.exp(x[0]),
+        quadpy.e2r2.RabinowitzRichter(3)
+        )
+    return
+
+
+def test_e2r():
+    quadpy.e2r.integrate(
+        lambda x: numpy.exp(x[0]),
+        quadpy.e2r.RabinowitzRichter(5)
+        )
+    return
+
+
 def test_sphere():
     quadpy.sphere.integrate(
             lambda x: numpy.exp(x[0]),
