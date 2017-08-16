@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _s40, _s8, _s4, _z
+from .helpers import _s40, _s8, _s4
 from ..helpers import untangle
 
 
