@@ -6,6 +6,7 @@ from .burnside import *
 from .cools_haegemans_1985 import *
 from .cools_haegemans_1988 import *
 from .dunavant import *
+from .hammer_stroud import *
 from .irwin import *
 from .maxwell import *
 from .meister import *

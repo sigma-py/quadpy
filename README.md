@@ -8,8 +8,8 @@ Your one-stop shop for numerical integration in Python.
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?style=social&label=Stars&maxAge=2592000)](https://github.com/nschloe/quadpy)
 
 Hundreds of numerical integration schemes for line segments, circles, disks,
-triangles, quadrilaterals, spheres, tetrahedra, hexahedra, wedges, pyramids,
-n-spheres, n-balls, n-cubes, and n-simplices.
+triangles, quadrilaterals, spheres, balls, tetrahedra, hexahedra, wedges,
+pyramids, n-spheres, n-balls, n-cubes, and n-simplices.
 
 To numerically integrate any function over any given triangle, do
 ```python
@@ -126,6 +126,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
 
  * [Hammer-Marlowe-Stroud](https://doi.org/10.1090/S0025-5718-1956-0086389-6)
    (1956, 5 schemes up to degree 5),
+ * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 2 schemes up to degree 3)
  * open and closed Newton-Cotes schemes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6), arbitrary degree),
  * [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971, 10 schemes up to degree 5)
  * [Strang](http://bookstore.siam.org/wc08/)/[Cowper](https://dx.doi.org/10.1002/nme.1620070316) (1973, 10 schemes up to
@@ -161,7 +162,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    schemes up to degree 50),
  * [Vioreanu-Rokhlin](https://doi.org/10.1137/110860082) (2014, 20
    schemes up to degree 62),
- * [Willams-Shunn-Jameson](https://doi.org/10.1016/j.cam.2014.01.007) (2014, 8
+ * [Williams-Shunn-Jameson](https://doi.org/10.1016/j.cam.2014.01.007) (2014, 8
    schemes up to degree 12),
  * [Witherden-Vincent](https://doi.org/10.1016/j.camwa.2015.03.017) (2015, 19
    schemes up to degree 20),
@@ -182,8 +183,11 @@ val = quadpy.triangle.integrate(
 
  * [Peirce](http://www.jstor.org/stable/2098722) (1957, arbitrary degree)
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y):
-   - [Albrecht-Collatz](https://dx.doi.org/10.1002/zamm.19580380102) (1958, degree 1)
-   - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, degree 1)
+   - [Radon](https://eudml.org/doc/176796) (1948, degree 5)
+   - [Peirce](https://books.google.de/books/about/Numerical_integration_over_planar_region.html?id=WR9SAAAAMAAJ&redir_esc=y)
+     (1956, degree 7)
+   - [Albrecht-Collatz](https://dx.doi.org/10.1002/zamm.19580380102) (1958, degree 3)
+   - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 8 schemes up to degree 15)
    - [Albrecht](https://dx.doi.org/10.1002/zamm.19600401014) (1960, 2 schemes up to degree 11)
    - Myskovskih (1964, degree 4)
  * [Lether](http://www.jstor.org/stable/2949473) (1971, arbitrary degree)
@@ -204,6 +208,8 @@ val = quadpy.disk.integrate(
 <img src="https://nschloe.github.io/quadpy/quad.png" width="25%">
 
  * Product schemes derived from line segment schemes
+ * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 3
+   schemes up to degree 7)
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971, 15 schemes up to degree 15):
    - [Maxwell](https://doi.org/10.1017/CBO9780511710377.061) (1890, degree 7)
    - Burnside (1908, degree 5)
@@ -255,12 +261,27 @@ val = quadpy.sphere.integrate_spherical(
 ```
 Note that `phi_theta[0]` is the azimuthal, `phi_theta[1]` the polar angle here.
 
+### Ball
+<img src="https://nschloe.github.io/quadpy/ball.png" width="25%">
+
+ * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (6 schemes up to degree 7)
+
+Example:
+```python
+val = quadpy.ball.integrate(
+    lambda x: numpy.exp(x[0]),
+    [0.0, 0.0, 0.0], 1.0,
+    quadpy.ball.HammerStroud('14-3a')
+    )
+```
+
 
 ### Tetrahedron
 <img src="https://nschloe.github.io/quadpy/tet.png" width="25%">
 
  * [Hammer-Marlowe-Stroud](https://doi.org/10.1090/S0025-5718-1956-0086389-6)
    (1956, 3 schemes up to degree 3)
+ * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 2 schemes up to degree 3)
  * open and closed Newton-Cotes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6)) (arbitrary degree)
  * [Stroud](https://cds.cern.ch/record/104291?ln=en) (1971, 2 schemes up to
    degree 3)
@@ -284,7 +305,7 @@ Note that `phi_theta[0]` is the azimuthal, `phi_theta[1]` the polar angle here.
    degree 7)
  * [Vioreanu-Rokhlin](https://doi.org/10.1137/110860082) (2014, 10
    schemes up to degree 13)
- * [Willams-Shunn-Jameson](https://doi.org/10.1016/j.cam.2014.01.007) (2014, 1
+ * [Williams-Shunn-Jameson](https://doi.org/10.1016/j.cam.2014.01.007) (2014, 1
    scheme with degree 9)
  * [Witherden-Vincent](https://doi.org/10.1016/j.camwa.2015.03.017) (2015, 9
    schemes up to degree 10)
@@ -307,7 +328,7 @@ val = quadpy.tetrahedron.integrate(
    - [Tyler](https://dx.doi.org/10.4153/CJM-1953-044-1) (1953, 2 schemes up to degree 5)
    - [Hammer-Wymore](https://doi.org/10.1090/S0025-5718-1957-0087220-6) (1957, degree 7)
    - [Albrecht-Collatz](https://dx.doi.org/10.1002/zamm.19580380102) (1958, degree 3)
-   - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 2 schemes up to degree 7)
+   - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 6 schemes up to degree 7)
    - [Mustard-Lyness-Blatt](https://doi.org/10.1093/comjnl/6.1.75) (1963, 6 schemes up to degree 5)
    - [Stroud](https://dx.doi.org/10.1007/BF02162160) (1967, degree 5)
    - [Sarma-Stroud](https://dx.doi.org/10.2307/2004963) (1969, degree 7)

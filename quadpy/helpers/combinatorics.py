@@ -28,6 +28,14 @@ def fsd2(n, r, s, i, j):
     return combine(((+r, -r), i), ((+s, -s), j), ((0.0,), n-i-j))
 
 
+def fs_array(v):
+    '''Given an array v = [v0, v1, ..., vn], this returns all permutation of v
+    with plus-minus, i.e., [+v0, +v1, ..., +vn], [-v1, +v0, ..., +vn], etc.
+    '''
+    elems = [((+vi, -vi), 1) for vi in v]
+    return combine(*elems)
+
+
 def combine(*elems):
     '''Given an input array with lists of options, e.g.,
 
@@ -77,6 +85,16 @@ def pm_array(v):
     n = len(v)
     pm_one = numpy.array(list(itertools.product(*(n*[[+1, -1]]))))
     return pm_one * v
+
+
+def pm_array0(n, v, idx):
+    '''Like pm_array, but put the plus-minused values in a larger array of
+    length n at indices idx with the rest filled up with zeros.
+    '''
+    pm_v = pm_array(v)
+    out = numpy.zeros((n, len(pm_v)))
+    out[idx] = pm_v.T
+    return out.T
 
 
 def partition(balls, boxes):

@@ -73,6 +73,9 @@ def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
     + [(Product(quadpy.line_segment.NewtonCotesOpen(k)), 1.0e-14)
        for k in range(5)
        ]
+    + [(quadpy.hexahedron.HammerStroud(k), 1.0e-14)
+       for k in ['1-3', '2-3', '4-3', '5-3a', '5-3b', '6-3']
+       ]
     + [(quadpy.hexahedron.Stroud(k), 1.0e-14) for k in [
         'C3 3-1', 'C3 3-2', 'C3 3-3', 'C3 3-4', 'C3 3-5', 'C3 3-6', 'C3 3-7',
         'C3 5-1', 'C3 5-2', 'C3 5-3', 'C3 5-4', 'C3 5-5', 'C3 5-6', 'C3 5-7',
@@ -121,8 +124,8 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = Product(quadpy.line_segment.NewtonCotesOpen(5))
-    scheme_ = quadpy.hexahedron.StroudN('Cn 5-4')
-    # test_scheme(scheme_, 1.0e-14, print_degree=True)
+    scheme_ = quadpy.hexahedron.HammerStroud('6-3')
+    test_scheme(scheme_, 1.0e-14, print_degree=True)
     # test_show(scheme_)
     quadpy.hexahedron.show(
             scheme_,

@@ -25,25 +25,16 @@ def plot_disks(plt, pts, weights, total_area):
     return
 
 
-def show_mpl(points, weights, volume, edges):
+def show_mpl(points, weights, volume, edges, balls=None):
     import matplotlib.pyplot as plt
     # pylint: disable=relative-import, unused-variable
     from mpl_toolkits.mplot3d import Axes3D
 
     # pylint: disable=too-many-locals
-    def plot_spheres(
-            plt, ax, pts, weights, total_volume
-            ):
+    def plot_spheres(plt, ax, pts, radii, colors):
         h = 1.0e-2
 
-        sum_weights = math.fsum(weights)
-        for tp, weight in zip(pts, weights):
-            # Choose radius such that the sum of volumes of the balls equals
-            # total_volume.
-            r = (
-                abs(weight)/sum_weights * total_volume/(4.0/3.0 * numpy.pi)
-                )**(1.0/3.0)
-
+        for tp, r, color in zip(pts, radii, colors):
             # http://matplotlib.org/examples/mplot3d/surface3d_demo2.html
             # Compute sphere for every point anew. This is more costly on the
             # numerical side, but gives the flexibility of drawing sphere of
@@ -57,7 +48,6 @@ def show_mpl(points, weights, volume, edges):
             _y = numpy.outer(numpy.sin(u), numpy.sin(v))
             _z = numpy.outer(numpy.ones(numpy.size(u)), numpy.cos(v))
 
-            color = '#1f77b4' if weight >= 0 else '#d62728'
             # highlight ball center
             plt.plot(
                 [tp[0]], [tp[1]], [tp[2]],
@@ -74,6 +64,8 @@ def show_mpl(points, weights, volume, edges):
         ax.set_axis_off()
         return
 
+    balls = [] if balls is None else balls
+
     fig = plt.figure()
     ax = fig.gca(projection='3d')
     ax.set_aspect('equal')
@@ -82,13 +74,26 @@ def show_mpl(points, weights, volume, edges):
     for edge in edges:
         plt.plot(*edge, color='k', linestyle='-')
 
-    plot_spheres(plt, ax, points, weights, volume)
+    # Choose radius such that the sum of volumes of the balls equals
+    # total_volume.
+    radii = numpy.cbrt(
+        abs(weights)/math.fsum(weights) * volume/(4.0/3.0 * numpy.pi)
+        )
+    colors = [
+        '#1f77b4' if weight >= 0 else '#d62728'
+        for weight in weights
+        ]
+    plot_spheres(plt, ax, points, radii, colors)
+
+    for ball in balls:
+        plot_spheres(plt, ax, [ball[0]], [ball[1]], ['#dddddd'])
+
     plt.show()
     return
 
 
 # pylint: disable=too-many-locals
-def show_mayavi(points, weights, volume, edges):
+def show_mayavi(points, weights, volume, edges, balls=None):
     # pylint: disable=import-error
     import mayavi.mlab as mlab
 
@@ -123,12 +128,33 @@ def show_mayavi(points, weights, volume, edges):
             color=blue if weight >= 0 else red,
             opacity=1.0
             )
+
+    balls = [] if balls is None else balls
+    for ball in balls:
+        tp = ball[0]
+        r = ball[1]
+
+        # Create a sphere
+        u = numpy.linspace(0, 2 * numpy.pi, int(2*numpy.pi/h*r) + 1)
+        v = numpy.linspace(0, numpy.pi, int(numpy.pi/h*r) + 1)
+        sin_u, cos_u = numpy.sin(u), numpy.cos(u)
+        sin_v, cos_v = numpy.sin(v), numpy.cos(v)
+        _x = numpy.outer(cos_u, sin_v)
+        _y = numpy.outer(sin_u, sin_v)
+        _z = numpy.outer(numpy.ones(numpy.size(u)), cos_v)
+
+        mlab.mesh(
+            r*_x + tp[0], r*_y + tp[1], r*_z + tp[2],
+            color=[0, 0, 0],
+            opacity=1.0
+            )
+
     mlab.show()
     return
 
 
 # pylint: disable=too-many-locals
-def show_vtk(points, weights, volume, edges):
+def show_vtk(points, weights, volume, edges, balls=None):
     # pylint: disable=import-error
     import vtk
 
@@ -146,7 +172,7 @@ def show_vtk(points, weights, volume, edges):
         actor.GetProperty().SetColor(0, 0, 0)
         return actor
 
-    def get_sphere_actor(x0, r, color):
+    def get_sphere_actor(x0, r, color, opacity=1.0):
         # Generate polygon data for a sphere
         sphere = vtk.vtkSphereSource()
 
@@ -165,23 +191,33 @@ def show_vtk(points, weights, volume, edges):
         sphere_actor = vtk.vtkActor()
         sphere_actor.SetMapper(sphere_mapper)
         sphere_actor.GetProperty().SetColor(color)
-        # sphere_actor.GetProperty().SetOpacity(0.9)
+        sphere_actor.GetProperty().SetOpacity(opacity)
         return sphere_actor
+
+    balls = [] if balls is None else balls
 
     line_actors = [get_line_actor(edge[:, 0], edge[:, 1]) for edge in edges]
 
     blue = numpy.array([31.0, 119.0, 180.0]) / 255.0
     red = numpy.array([84.0, 15.0, 16.0]) / 255.0
 
-    sum_weights = math.fsum(weights)
+    radii = numpy.cbrt(
+        abs(weights)/math.fsum(weights) * volume/(4.0/3.0 * numpy.pi)
+        )
     sphere_actors = [
-        get_sphere_actor(
-            pt,
-            numpy.cbrt(abs(weight)/sum_weights * volume/(4.0/3.0 * numpy.pi)),
-            color=blue if weight > 0.0 else red
-            )
-        for pt, weight in zip(points, weights)
+        get_sphere_actor(pt, radius, color=blue if weight > 0.0 else red)
+        for pt, weight, radius in zip(points, weights, radii)
         ]
+
+    sphere_actors.extend([
+        get_sphere_actor(
+            numpy.array(ball[0]),
+            ball[1],
+            color=numpy.array([0.0, 0.0, 0.0]) / 255.0,
+            opacity=0.5
+            )
+        for ball in balls
+        ])
 
     # Create a renderer and add the sphere actor to it
     renderer = vtk.vtkRenderer()

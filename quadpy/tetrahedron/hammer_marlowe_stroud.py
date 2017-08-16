@@ -4,6 +4,8 @@ import numpy
 
 from .helpers import _s4
 
+from ..helpers import untangle
+
 
 class HammerMarloweStroud(object):
     '''
@@ -32,34 +34,25 @@ class HammerMarloweStroud(object):
     '''
     def __init__(self, index):
         if index == 1:
-            self.weights = numpy.concatenate([
-                numpy.full(4, 0.25),
-                ])
-            bary = numpy.concatenate([
-                _r(1.0 / numpy.sqrt(5.0)),
-                ])
             self.degree = 2
+            data = [
+                (0.25, _r(1.0 / numpy.sqrt(5.0))),
+                ]
         elif index == 2:
-            self.weights = numpy.concatenate([
-                numpy.full(4, 0.25),
-                ])
-            bary = numpy.concatenate([
-                _r(-1.0 / numpy.sqrt(5.0)),
-                ])
             self.degree = 2
+            data = [
+                (0.25, _r(-1.0 / numpy.sqrt(5.0))),
+                ]
         else:
             assert index == 3
-            self.weights = numpy.concatenate([
-                numpy.full(1, -0.8),
-                numpy.full(4, 9.0/20.0),
-                ])
-            bary = numpy.concatenate([
-                _s4(),
-                _r(1.0 / 3.0),
-                ])
             self.degree = 3
+            data = [
+                (-0.8, _s4()),
+                (9.0/20.0, _r(1.0 / 3.0)),
+                ]
 
-        self.points = bary[:, 1:]
+        self.bary, self.weights = untangle(data)
+        self.points = self.bary[:, 1:]
         return
 
 

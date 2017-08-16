@@ -13,17 +13,17 @@ class HammerStroud(object):
     Math. Comp. 12 (1958), 272-280,
     <https://doi.org/10.1090/S0025-5718-1958-0102176-6>.
     '''
-    def __init__(self, n, variant, alpha):
+    def __init__(self, n, index, alpha):
         self.dim = n
 
-        if variant == 'a':
+        if index == '11-n':
             self.degree = 3
             r = numpy.sqrt((n + alpha) / (n + alpha + 2))
             data = [
                 (1.0/(2*n), fsd(n, r, 1))
                 ]
         else:
-            assert variant == 'b'
+            assert index == '12-n'
             self.degree = 5
             r = numpy.sqrt(3*(n+alpha+2) / (n+2) / (n+alpha+4))
             B1 = (4.0-n) * (n+2) * (n+alpha) * (n+alpha+4) \
