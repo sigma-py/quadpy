@@ -250,6 +250,21 @@ val = quadpy.e2r2.integrate(
     )
 ```
 
+
+### 2D plane with weight function exp(-r)
+<img src="https://nschloe.github.io/quadpy/e2r.png" width="25%">
+
+ * [Rabinowitz-Richter](https://dx.doi.org/10.2307/2004962) (4 schemes up to degree 15)
+
+Example:
+```python
+val = quadpy.e2r.integrate(
+    lambda x: numpy.exp(x[0]),
+    quadpy.e2r.RabinowitzRichter(5)
+    )
+```
+
+
 ### Sphere
 <img src="https://nschloe.github.io/quadpy/sphere.png" width="25%">
 
