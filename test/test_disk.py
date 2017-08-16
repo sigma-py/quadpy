@@ -25,6 +25,7 @@ from helpers import check_degree
         'S2 7-1', 'S2 7-2',
         'S2 9-1', 'S2 9-2', 'S2 9-3', 'S2 9-4', 'S2 9-5',
         'S2 11-1', 'S2 11-3', 'S2 11-4',
+        'S2 15-1',
         ]]
     + [(quadpy.disk.Stroud(k), 1.0e-6) for k in [
         'S2 11-2',
@@ -57,6 +58,6 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = quadpy.disk.Lether(5)
-    scheme_ = quadpy.disk.Stroud('S2 13-2')
-    test_scheme(scheme_, 1.0e-3)
+    scheme_ = quadpy.disk.Stroud('S2 15-1')
+    test_scheme(scheme_, 1.0e-14)
     test_show(scheme_)
