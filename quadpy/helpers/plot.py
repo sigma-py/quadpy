@@ -25,7 +25,7 @@ def plot_disks(plt, pts, weights, total_area):
     return
 
 
-def show_mpl(points, weights, volume, edges, balls=[]):
+def show_mpl(points, weights, volume, edges, balls=None):
     import matplotlib.pyplot as plt
     # pylint: disable=relative-import, unused-variable
     from mpl_toolkits.mplot3d import Axes3D
@@ -88,7 +88,7 @@ def show_mpl(points, weights, volume, edges, balls=[]):
 
 
 # pylint: disable=too-many-locals
-def show_mayavi(points, weights, volume, edges, balls=[]):
+def show_mayavi(points, weights, volume, edges, balls=None):
     # pylint: disable=import-error
     import mayavi.mlab as mlab
 
@@ -128,7 +128,7 @@ def show_mayavi(points, weights, volume, edges, balls=[]):
 
 
 # pylint: disable=too-many-locals
-def show_vtk(points, weights, volume, edges, balls=[]):
+def show_vtk(points, weights, volume, edges, balls=None):
     # pylint: disable=import-error
     import vtk
 
@@ -167,6 +167,8 @@ def show_vtk(points, weights, volume, edges, balls=[]):
         sphere_actor.GetProperty().SetColor(color)
         sphere_actor.GetProperty().SetOpacity(opacity)
         return sphere_actor
+
+    balls = [] if balls is None else balls
 
     line_actors = [get_line_actor(edge[:, 0], edge[:, 1]) for edge in edges]
 
