@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 #
+import math
+
 import matplotlib.pyplot as plt
 import numpy
 
@@ -19,7 +21,12 @@ def plot(scheme, show_axes=True):
     if not show_axes:
         ax.set_axis_off()
 
-    helpers.plot_disks(plt, scheme.points, scheme.weights, numpy.pi)
+    n = 2
+    I0 = 2*math.factorial(n-1)*math.pi**(0.5*n) / math.gamma(0.5*n)
+
+    helpers.plot_disks(
+        plt, scheme.points, scheme.weights, I0
+        )
     return
 
 
