@@ -17,6 +17,7 @@ from helpers import check_degree
         ]]
     + [(quadpy.disk.Lether(k), 1.0e-14) for k in range(1, 6)]
     + [(quadpy.disk.Peirce1957(k), 1.0e-14) for k in range(1, 6)]
+    + [(quadpy.disk.RabinowitzRichter(k), 1.0e-14) for k in range(1, 2)]
     + [(quadpy.disk.Stroud(k), 1.0e-14) for k in [
         'S2 3-1', 'S2 3-2',
         'S2 4-1',
@@ -55,6 +56,6 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = quadpy.disk.Lether(5)
-    scheme_ = quadpy.disk.HammerStroud('21')
+    scheme_ = quadpy.disk.RabinowitzRichter(1)
     test_scheme(scheme_, 1.0e-14)
     test_show(scheme_)

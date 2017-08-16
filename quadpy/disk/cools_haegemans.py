@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
+import math
 
+from .helpers import _s4, _s40, _s8
 from ..helpers import untangle
 
 
@@ -41,36 +42,5 @@ class CoolsHaegemans(object):
         # TODO There are more schemes in the techincal report
 
         self.points, self.weights = untangle(data)
-        self.weights *= numpy.pi
+        self.weights *= math.pi
         return
-
-
-def _s8(a, b):
-    return numpy.array([
-        [+a, +b],
-        [-a, +b],
-        [+a, -b],
-        [-a, -b],
-        [+b, +a],
-        [-b, +a],
-        [+b, -a],
-        [-b, -a],
-        ])
-
-
-def _s4(a):
-    return numpy.array([
-        [+a, +a],
-        [-a, +a],
-        [+a, -a],
-        [-a, -a],
-        ])
-
-
-def _s40(a):
-    return numpy.array([
-        [+a, 0.0],
-        [-a, 0.0],
-        [0.0, +a],
-        [0.0, -a],
-        ])
