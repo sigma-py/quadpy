@@ -57,6 +57,6 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = quadpy.disk.Lether(5)
-    scheme_ = quadpy.disk.Stroud('S2 11-1')
-    test_scheme(scheme_, 1.0e-14)
+    scheme_ = quadpy.disk.Stroud('S2 13-2')
+    test_scheme(scheme_, 1.0e-3)
     test_show(scheme_)
