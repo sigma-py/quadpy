@@ -61,7 +61,7 @@ class Stroud(object):
             self.points, self.weights = untangle(data)
             self.weights *= numpy.pi
         elif index == 'S2 9-1':
-            self.set_data(albrecht.Albrecht(index=1))
+            self.set_data(albrecht.Albrecht(1))
         elif index == 'S2 9-2':
             self.set_data(rabinowitz_richter.RabinowitzRichter(1))
         elif index == 'S2 9-3':
@@ -95,11 +95,15 @@ class Stroud(object):
         elif index == 'S2 11-1':
             self.set_data(mysovskih.Mysovskih(2))
         elif index == 'S2 11-2':
-            self.set_data(albrecht.Albrecht(index=2))
+            self.set_data(albrecht.Albrecht(2))
         elif index == 'S2 11-3':
             self.set_data(rabinowitz_richter.RabinowitzRichter(4))
         elif index == 'S2 11-4':
             self.set_data(peirce1956.Peirce1956(3))
+        elif index == 'S2 13-1':
+            self.set_data(rabinowitz_richter.RabinowitzRichter(5))
+        elif index == 'S2 13-2':
+            self.set_data(albrecht.Albrecht(3))
         else:
             assert False, index
 

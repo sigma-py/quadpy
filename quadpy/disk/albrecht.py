@@ -44,8 +44,7 @@ class Albrecht(object):
                 (B2, rho2 * x),
                 (C, uv),
                 ]
-        else:
-            assert index == 2
+        elif index == 2:
             warnings.warn('Albrecht\'s 2nd scheme is only single-precision.')
             self.degree = 11
 
@@ -75,6 +74,38 @@ class Albrecht(object):
                 (C1, pm(2, s1)),
                 (C2, pm(2, s2)),
                 (D, fsd2(2, u, v, 1, 1)),
+                ]
+        else:
+            assert index == 3
+            self.degree = 13
+
+            B0 = 2615.0 / 43632.0
+            B1 = 0.0314864413570
+            B2 = 0.0367783672793
+            B3 = 0.00773026675860
+            C = 16807.0 / 933120.0
+
+            rho1 = 0.451092736034
+            rho2 = 0.751189560011
+            rho3 = 0.978468015039
+
+            k = numpy.arange(1, 11)
+            rs = numpy.array([
+                numpy.cos(k*numpy.pi/5.0),
+                numpy.sin(k*numpy.pi/5.0),
+                ]).T
+
+            uv = numpy.array([
+                6.0/7.0 * numpy.cos((2*k-1)*numpy.pi/10.0),
+                6.0/7.0 * numpy.sin((2*k-1)*numpy.pi/10.0),
+                ]).T
+
+            data = [
+                (B0, z(2)),
+                (B1, rho1*rs),
+                (B2, rho2*rs),
+                (B3, rho3*rs),
+                (C, uv)
                 ]
 
         self.points, self.weights = untangle(data)
