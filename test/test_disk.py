@@ -23,7 +23,7 @@ from helpers import check_degree
         'S2 4-1',
         'S2 5-1', 'S2 5-2',
         'S2 7-1', 'S2 7-2',
-        'S2 9-1', 'S2 9-3',
+        'S2 9-1', 'S2 9-2', 'S2 9-3', 'S2 9-4', 'S2 9-5'
         ]]
     + [(quadpy.disk.Stroud(k), 1.0e-6) for k in [
         'S2 11-1',
