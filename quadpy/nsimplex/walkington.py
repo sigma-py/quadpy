@@ -112,7 +112,7 @@ def _xi11(d, a):
 def _xi21(d, a):
     assert d > 1
     b = (1.0 - (d-2) * a) / 3.0
-    # Note that the article wrongly states (d-2) the the expression for c.
+    # ERR Note that the article wrongly states (d-2) the the expression for c.
     c = 1.0 - (d-1) * a - b
     if d == 2:
         out = numpy.array([

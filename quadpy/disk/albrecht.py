@@ -59,7 +59,7 @@ class Albrecht(object):
 
             sqrt19 = numpy.sqrt(19.0)
 
-            # Stroud falsely lists sqrt(10) for s1.
+            # ERR Stroud falsely lists sqrt(10) for s1.
             s1, s2 = numpy.sqrt((125.0 - t * 10.0*sqrt19) / 366.0)
 
             C1, C2 = (7494893.0 + t * 1053263.0*sqrt19) / 205200000.0

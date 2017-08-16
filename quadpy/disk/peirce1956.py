@@ -24,7 +24,7 @@ class Peirce1956(object):
         t = math.sqrt((27 + 3 * sqrt29)/104.0)
 
         B1 = 2.0/27.0
-        # Stroud falsely lists 4 instead of 41 here.
+        # ERR Stroud falsely lists 4 instead of 41 here.
         B2 = (551.0 + 41*sqrt29) / 6264.0
         B3 = (551.0 - 41*sqrt29) / 6264.0
 

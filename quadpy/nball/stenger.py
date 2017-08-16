@@ -43,6 +43,7 @@ class Stenger(object):
                         +0.361018024911844e+01,
                         ]
                 elif n == 5:
+                    # TODO fix this
                     self.degree = 1
                     warnings.warn(
                         'Stenger\'s rule for n==5 is wrongly stated and'
