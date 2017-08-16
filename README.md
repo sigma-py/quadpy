@@ -190,7 +190,7 @@ val = quadpy.triangle.integrate(
    - [Albrecht-Collatz](https://dx.doi.org/10.1002/zamm.19580380102) (1958, degree 3)
    - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 8 schemes up to degree 15)
    - [Albrecht](https://dx.doi.org/10.1002/zamm.19600401014) (1960, 6 schemes up to degree 13)
-   - Myskovskih (1964, 3 schemes up to degree 15)
+   - Mysovskih (1964, 3 schemes up to degree 15)
    - [Rabinowitz-Richter](https://dx.doi.org/10.2307/2004962) (1969, 6 schemes up to degree 15)
  * [Lether](http://www.jstor.org/stable/2949473) (1971, arbitrary degree)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 9)
