@@ -128,6 +128,27 @@ def show_mayavi(points, weights, volume, edges, balls=None):
             color=blue if weight >= 0 else red,
             opacity=1.0
             )
+
+    balls = [] if balls is None else balls
+    for ball in balls:
+        tp = ball[0]
+        r = ball[1]
+
+        # Create a sphere
+        u = numpy.linspace(0, 2 * numpy.pi, int(2*numpy.pi/h*r) + 1)
+        v = numpy.linspace(0, numpy.pi, int(numpy.pi/h*r) + 1)
+        sin_u, cos_u = numpy.sin(u), numpy.cos(u)
+        sin_v, cos_v = numpy.sin(v), numpy.cos(v)
+        _x = numpy.outer(cos_u, sin_v)
+        _y = numpy.outer(sin_u, sin_v)
+        _z = numpy.outer(numpy.ones(numpy.size(u)), cos_v)
+
+        mlab.mesh(
+            r*_x + tp[0], r*_y + tp[1], r*_z + tp[2],
+            color=[0, 0, 0],
+            opacity=1.0
+            )
+
     mlab.show()
     return
 
