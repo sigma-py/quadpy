@@ -26,7 +26,7 @@ class Stroud(object):
         elif index == 'S2 3-2':
             self.set_data(albrecht_collatz.AlbrechtCollatz())
         elif index == 'S2 4-1':
-            self.set_data(mysovskih.Mysovskih(0.0))
+            self.set_data(mysovskih.Mysovskih(1))
         elif index == 'S2 5-1':
             self.set_data(radon.Radon(0.0))
         elif index == 'S2 5-2':
@@ -93,9 +93,11 @@ class Stroud(object):
         elif index == 'S2 9-5':
             self.set_data(peirce1956.Peirce1956(2))
         elif index == 'S2 11-1':
+            self.set_data(mysovskih.Mysovskih(2))
+        elif index == 'S2 11-2':
             self.set_data(albrecht.Albrecht(index=2))
         else:
-            assert False
+            assert False, index
 
         return
 
