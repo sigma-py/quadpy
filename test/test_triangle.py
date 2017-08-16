@@ -49,6 +49,7 @@ def _integrate_exact(f, triangle):
     + [(quadpy.triangle.Gatermann(), 1.0e-14)]
     + [(quadpy.triangle.GrundmannMoeller(k), 1.0e-14) for k in range(10)]
     + [(quadpy.triangle.HammerMarloweStroud(k), 1.0e-14) for k in range(1, 6)]
+    + [(quadpy.triangle.HammerStroud(k), 1.0e-14) for k in [2, 3]]
     + [(quadpy.triangle.Hillion(k), 1.0e-14) for k in range(1, 4)]
     + [(quadpy.triangle.Hillion(k), 1.0e-6) for k in [4, 5, 6, 8, 10]]
     + [(quadpy.triangle.LaursenGellert(key), 1.0e-14) for key in [
@@ -131,6 +132,6 @@ def test_volume():
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.triangle.Lether(10)
+    scheme_ = quadpy.triangle.HammerStroud(3)
     test_scheme(scheme_, 1.0e-14)
     test_show(scheme_)
