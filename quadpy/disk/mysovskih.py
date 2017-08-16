@@ -12,6 +12,7 @@ class Mysovskih(object):
     On the construction of cubature formulas for the simplest regions,
     Z. Vychisl. Mat. i. Mat. Fiz. 4, 3-14, 1964.
     '''
+    # pylint: disable=too-many-locals
     def __init__(self, index, alpha=0.0):
         if index == 1:
             self.degree = 4
