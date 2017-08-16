@@ -18,6 +18,7 @@ from . import helpers
 from . import ball
 from . import circle
 from . import disk
+from . import e2r2
 from . import hexahedron
 from . import line_segment
 from . import nball
