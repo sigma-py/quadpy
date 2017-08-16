@@ -9,7 +9,8 @@ Your one-stop shop for numerical integration in Python.
 
 Hundreds of numerical integration schemes for line segments, circles, disks,
 triangles, quadrilaterals, spheres, balls, tetrahedra, hexahedra, wedges,
-pyramids, n-spheres, n-balls, n-cubes, and n-simplices.
+pyramids, n-spheres, n-balls, n-cubes, n-simplices, and the 2D planes with
+weight functions exp(-r) and exp(-r^2).
 
 To numerically integrate any function over any given triangle, do
 ```python
