@@ -34,7 +34,9 @@ def _integrate_exact(f, midpoint, radius):
         3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 35, 41, 47, 53,
         59, 65, 71, 77, 83, 89, 95, 101, 107, 113, 119, 125, 131
         ]]
-    + [quadpy.sphere.McLaren()]
+    + [quadpy.sphere.Stroud(k) for k in [
+        'U3 14-1',
+        ]]
     )
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
