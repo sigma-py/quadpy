@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 #
+import numpy
+
 from .ditkin import Ditkin
 from .hammer_stroud import HammerStroud
 from .mysovskih import Mysovskih
+
+from ..helpers import untangle
 
 
 class Stroud(object):
@@ -27,6 +31,66 @@ class Stroud(object):
             self.set_data(Mysovskih())
         elif index == 'S3 7-3':
             self.set_data(Ditkin(3))
+        elif index == 'S3 7-4':
+            # Spherical product Gauss formula.
+            self.degree = 7
+
+            # Stroud only gives decimals, sophistacated guesswork gives the
+            # analytical expressions.
+            plus_minus = numpy.array([+1, -1])
+
+            rho = numpy.empty(4)
+            # 0.9061798459, 0.5384691101
+            rho[3], rho[2] = \
+                numpy.sqrt((35.0 + plus_minus * 2*numpy.sqrt(70.0)) / 63.0)
+            rho[0], rho[1] = -rho[3], -rho[2]
+
+            u = numpy.empty(4)
+            # 0.8611363116, 0.3399810436
+            u[3], u[2] = \
+                numpy.sqrt((15.0 + plus_minus * 2*numpy.sqrt(30.0)) / 35.0)
+            u[0], u[1] = -u[3], -u[2]
+
+            v = numpy.empty(4)
+            # 0.9238795325, 0.3826834324
+            v[3], v[2] = numpy.sqrt((2 + plus_minus * numpy.sqrt(2.0)) / 4.0)
+            v[0], v[1] = -v[3], -v[2]
+
+            # 0.1945553342, 0.1387779991
+            A = numpy.empty(4)
+            A[0], A[1] = (50.0 + plus_minus * numpy.sqrt(70.0)) / 300.0
+            A[2], A[3] = A[1], A[0]
+
+            # 0.3478548451, 0.6521451549
+            B = numpy.empty(4)
+            B[0], B[1] = (18.0 - plus_minus * numpy.sqrt(30.0)) / 36.0
+            B[2], B[3] = B[1], B[0]
+
+            C = numpy.full(4, numpy.pi / 4.0)
+
+            def outer3(a, b, c):
+                '''Given 3 1-dimensional vectors a, b, c, the output is of
+                shape (len(a), len(b), len(c)) and contains the values
+
+                   out[i, j, k] = a[i] * b[j] * c[k]
+                '''
+                return numpy.multiply.outer(numpy.multiply.outer(a, b), c)
+
+            r = outer3(rho, numpy.sqrt(1.0 - u**2), numpy.sqrt(1.0 - v**2))
+            s = outer3(rho, numpy.sqrt(1.0 - u**2), v)
+            t = outer3(rho, u, numpy.ones(4))
+
+            data = []
+            for i in range(4):
+                for j in range(4):
+                    for k in range(4):
+                        data.append((
+                            (A[i]*B[j]*C[k]), numpy.array([[
+                                r[i][j][k], s[i][j][k], t[i][j][k],
+                                ]])
+                            ))
+
+            self.points, self.weights = untangle(data)
         else:
             assert False
 
