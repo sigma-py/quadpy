@@ -108,10 +108,9 @@ class Stroud(object):
             self.set_data(mysovskih.Mysovskih(3))
         elif index == 'S2 15-2':
             self.set_data(albrecht.Albrecht(7))
-        elif index == 'S2 17-1':
-            self.set_data(albrecht.Albrecht(8))
         else:
-            assert False, index
+            assert index == 'S2 17-1'
+            self.set_data(albrecht.Albrecht(8))
 
         return
 
