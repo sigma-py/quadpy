@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# pylint: disable=wildcard-import
-from .hammer_stroud import *
-from .stroud import *
+from .ditkin import Ditkin
+from .hammer_stroud import HammerStroud
+from .stroud import Stroud
 
-from .tools import *
+from .tools import integrate, show
