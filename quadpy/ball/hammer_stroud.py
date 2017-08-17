@@ -15,17 +15,16 @@ class HammerStroud(object):
     def __init__(self, index):
         if index == '11-3':
             self.degree = 3
-            # ERR Stroud falsely list a weight of 1/6.
             data = [
-                (2.0/9.0, fsd(3, sqrt(0.6), 1)),
+                (1.0/6.0, fsd(3, sqrt(0.6), 1)),
                 ]
         elif index == '12-3':
             self.degree = 5
             alpha = sqrt(3.0/7.0)
             data = [
-                (4.0/45.0, z(3)),
-                (14.0/135.0, fsd(3, alpha, 1)),
-                (7.0/135.0, fsd(3, alpha, 2)),
+                (1.0/15.0, z(3)),
+                (7.0/90.0, fsd(3, alpha, 1)),
+                (7.0/180.0, fsd(3, alpha, 2)),
                 ]
         elif index in ['14-3a', '14-3b']:
             self.degree = 5
@@ -33,9 +32,11 @@ class HammerStroud(object):
             t = 1 if index == '14-3a' else -1
 
             sqrt14 = sqrt(14.0)
+
             # ERR The article falsely gives 0.50824... instead of 0.050824...
-            a1 = 4.0/375.0 * (9 + t * 2*sqrt14)
-            c1 = (71.0 - t * 12 * sqrt14) / 750.0
+            a1 = 1.0/125.0 * (9 + t * 2*sqrt14)
+            c1 = (71.0 - t * 12 * sqrt14) / 1000.0
+
             nu = sqrt((7.0 - t * sqrt14) / 7.0)
             eta1 = sqrt(5.0 / (21.0 - t * 2*sqrt14))
 
@@ -49,31 +50,25 @@ class HammerStroud(object):
 
             self.degree = 7
 
-            if index == '15-3a':
-                a0 = 0.4156003482691997 / pi
-                a1 = 0.1994483077968051 / pi
-                b1 = 0.0380676101171267 / pi
-                c1 = 0.2649610860413550 / pi
-            else:
-                assert index == '15-3b'
-                a0 = 0.4441396821009518 / pi
-                a1 = 0.0957384071760634 / pi
-                b1 = 0.2508385364520637 / pi
-                c1 = 0.0200197052755367 / pi
-
             t = 1 if index == '15-3a' else - 1
 
             sqrt30 = sqrt(30.0)
-            nu = sqrt((45.0 - t * sqrt30)/57.0)
-            xi = sqrt((18.0 + t * sqrt30)/42.0)
-            eta = sqrt(7.0 / (27.0 + t * 2*sqrt30))
+            nu2 = (45.0 - t * sqrt30)/57.0
+            xi2 = (18.0 + t * sqrt30)/42.0
+            eta2 = 7.0 / (27.0 + t * 2*sqrt30)
+
+            # The extract expressions are from Stroud's book.
+            a1 = 1.0 / 63.0 / nu2**3
+            b1 = 1.0 / 630.0 / xi2**3
+            c1 = 1.0 / 2520.0 / eta2**3
+            a0 = 1.0 - 6*a1 - 12*b1 - 8*c1
 
             data = [
                 (a0, z(3)),
-                (a1, fsd(3, nu, 1)),
-                (b1, fsd(3, xi, 2)),
-                (c1, pm(3, eta)),
+                (a1, fsd(3, sqrt(nu2), 1)),
+                (b1, fsd(3, sqrt(xi2), 2)),
+                (c1, pm(3, sqrt(eta2))),
                 ]
         self.points, self.weights = untangle(data)
-        self.weights *= pi
+        self.weights *= 4.0/3.0 * pi
         return

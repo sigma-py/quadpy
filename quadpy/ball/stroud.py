@@ -18,6 +18,10 @@ class Stroud(object):
             self.set_data(Ditkin(1))
         elif index == 'S3 5-2':
             self.set_data(Ditkin(2))
+        elif index == 'S3 7-1a':
+            self.set_data(HammerStroud('15-3a'))
+        elif index == 'S3 7-1b':
+            self.set_data(HammerStroud('15-3b'))
         elif index == 'S3 7-3':
             self.set_data(Ditkin(3))
         else:
