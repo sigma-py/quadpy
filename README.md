@@ -234,7 +234,7 @@ Example:
 val = quadpy.quadrilateral.integrate(
     lambda x: numpy.exp(x[0]),
     quadpy.quadrilateral.rectangle_points([0.0, 1.0], [-0.3, 0.6]),
-    quadpy.quadrilateral.Stroud(6)
+    quadpy.quadrilateral.Stroud('C2 7-2')
     )
 ```
 
