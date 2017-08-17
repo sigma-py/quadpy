@@ -49,10 +49,10 @@ class Stroud(object):
             r2 = numpy.sqrt((3.0 + numpy.sqrt(3.0)) / 6.0)
 
             k = numpy.arange(1, 9)
-            x = numpy.array([
+            x = numpy.column_stack([
                 numpy.cos((2*k-1)*numpy.pi/8),
                 numpy.sin((2*k-1)*numpy.pi/8),
-                ]).T
+                ])
 
             data = [
                 (1.0/16.0, r1*x),
@@ -72,10 +72,10 @@ class Stroud(object):
             r2 = numpy.sqrt((6.0 + numpy.sqrt(6.0)) / 10.0)
 
             k = numpy.arange(1, 11)
-            x = numpy.array([
+            x = numpy.column_stack([
                 numpy.cos(k*numpy.pi/5.0),
                 numpy.sin(k*numpy.pi/5.0),
-                ]).T
+                ])
 
             B0 = 1.0/9.0
             B1 = (16.0 + numpy.sqrt(6.0)) / 360.0

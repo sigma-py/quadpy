@@ -64,20 +64,20 @@ class McLaren(object):
             (B, pm_array0(3, [r, s], [1, 2])),
             (B, pm_array0(3, [r, s], [2, 0])),
             #
-            (C, numpy.array([+u, +v, +w]).T),
-            (C, numpy.array([+u, -v, -w]).T),
-            (C, numpy.array([-u, -v, +w]).T),
-            (C, numpy.array([-u, +v, -w]).T),
+            (C, numpy.column_stack([+u, +v, +w])),
+            (C, numpy.column_stack([+u, -v, -w])),
+            (C, numpy.column_stack([-u, -v, +w])),
+            (C, numpy.column_stack([-u, +v, -w])),
             #
-            (C, numpy.array([+v, +w, +u]).T),
-            (C, numpy.array([+v, -w, -u]).T),
-            (C, numpy.array([-v, -w, +u]).T),
-            (C, numpy.array([-v, +w, -u]).T),
+            (C, numpy.column_stack([+v, +w, +u])),
+            (C, numpy.column_stack([+v, -w, -u])),
+            (C, numpy.column_stack([-v, -w, +u])),
+            (C, numpy.column_stack([-v, +w, -u])),
             #
-            (C, numpy.array([+w, +u, +v]).T),
-            (C, numpy.array([+w, -u, -v]).T),
-            (C, numpy.array([-w, -u, +v]).T),
-            (C, numpy.array([-w, +u, -v]).T),
+            (C, numpy.column_stack([+w, +u, +v])),
+            (C, numpy.column_stack([+w, -u, -v])),
+            (C, numpy.column_stack([-w, -u, +v])),
+            (C, numpy.column_stack([-w, +u, -v])),
             ]
 
         self.points, self.weights = untangle(data)
