@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-import warnings
-
 import numpy
 
 from ..helpers import untangle, z, fsd, fsd2, pm
@@ -115,7 +113,7 @@ class Albrecht(object):
             # ERR Stroud falsely lists sqrt(10) for s1.
             s1, s2 = numpy.sqrt((125.0 - plus_minus * 10.0*sqrt19) / 366.0)
 
-            # TODO check if stroud has 7494893.0 instead of 7494892.0
+            # ERR Stroud falsely lists 7494893.0 instead of 7494892.0
             C1, C2 = (7494892.0 + plus_minus * 1053263.0*sqrt19) / 205200000.0
             D = 81.0 / 3125.0
 
@@ -133,15 +131,24 @@ class Albrecht(object):
         elif index == 6:
             self.degree = 13
 
-            B0 = 2615.0 / 43632.0
-            B1 = 0.0314864413570
-            B2 = 0.0367783672793
-            B3 = 0.00773026675860
-            C = 16807.0 / 933120.0
+            # The values are solutions of
+            # 11025*x^3 - 19020*x^2 + 9370*x - 1212 = 0
+            sigma2 = [
+                0.2034846565025736047446226,
+                0.5642857550696463424828808,
+                0.9573996564549909371262381
+                ]
 
-            rho1 = 0.451092736034
-            rho2 = 0.751189560011
-            rho3 = 0.978468015039
+            A = numpy.vander(sigma2, increasing=True).T
+            b = numpy.array([
+                 1432433.0 / 18849024.0,
+                 1075.0 / 31104.0,
+                 521.0 / 25920.0,
+                ])
+            B = numpy.linalg.solve(A, b)
+
+            B0 = 2615.0 / 43632.0
+            C = 16807.0 / 933120.0
 
             k = numpy.arange(10)
             rs = numpy.array([
@@ -156,9 +163,9 @@ class Albrecht(object):
 
             data = [
                 (B0, z(2)),
-                (B1, rho1*rs),
-                (B2, rho2*rs),
-                (B3, rho3*rs),
+                (B[0], numpy.sqrt(sigma2[0])*rs),
+                (B[1], numpy.sqrt(sigma2[1])*rs),
+                (B[2], numpy.sqrt(sigma2[2])*rs),
                 (C, numpy.sqrt(6.0/7.0) * uv)
                 ]
         elif index == 7:
@@ -179,27 +186,34 @@ class Albrecht(object):
             wt1, wt2 = (4998 + plus_minus * 343 * sqrt21) / 253125.0
             tau1, tau2 = numpy.sqrt((21.0 - plus_minus * sqrt21) / 28.0)
 
-            ws1 = 0.204136860290e-1
-            ws2 = 0.371360833569e-1
-            ws3 = 0.209029582465e-1
-            ws4 = 0.705690199725e-2
+            # The values are solutions of
+            # 4960228*x^4- 10267740*x^3 + 6746490*x^2 - 1476540*x + 70425 = 0
+            sigma2 = [
+                0.06530799472126887796787083,
+                0.3071576960209604329098429,
+                0.7363522053494293702057347,
+                0.9611958210197321662727617,
+                ]
 
-            sigma1 = 0.255554289186
-            sigma2 = 0.554218094274
-            sigma3 = 0.858109669768
-            sigma4 = 0.980405947054
+            A = numpy.vander(sigma2, increasing=True).T
+            b = numpy.array([
+                 57719.0 / 675000.0,
+                 9427.0 / 270000.0,
+                 193.0 / 9000.0,
+                 113.0 / 7200.0,
+                ])
+            ws = numpy.linalg.solve(A, b)
 
             data = [
-                (ws1, sigma1 * s),
-                (ws2, sigma2 * s),
-                (ws3, sigma3 * s),
-                (ws4, sigma4 * s),
+                (ws[0], numpy.sqrt(sigma2[0]) * s),
+                (ws[1], numpy.sqrt(sigma2[1]) * s),
+                (ws[2], numpy.sqrt(sigma2[2]) * s),
+                (ws[3], numpy.sqrt(sigma2[3]) * s),
                 (wt1, tau1 * t),
                 (wt2, tau2 * t),
                 ]
         else:
             assert index == 8
-            warnings.warn('Albrecht\'s scheme no. 8 is only single-precision.')
             self.degree = 17
 
             k = numpy.arange(10)
@@ -219,22 +233,31 @@ class Albrecht(object):
             wt1, wt2 = (125504.0 + plus_minus * 16054 * sqrt7) / 8751645.0
             tau1, tau2 = numpy.sqrt((14.0 - plus_minus * sqrt7) / 18.0)
 
-            ws1 = 0.206024726860e-1
-            ws2 = 0.277365659974e-1
-            ws3 = 0.150158249601e-1
-            ws4 = 0.424511227320e-2
+            # The values are solutions of
+            # 160901628*x^4 - 364759920*x^3 + 274856190*x^2 - 76570340*x
+            # + 6054195 = 0
+            sigma2 = [
+                0.12953711368067995173112945,
+                0.3813917897409179499603420,
+                0.7814925125193852533809405,
+                0.9745532848992097110929944,
+                ]
 
-            sigma1 = 0.359912647292
-            sigma2 = 0.617569259064
-            sigma3 = 0.884020651636
-            sigma4 = 0.987194654007
+            A = numpy.vander(sigma2, increasing=True).T
+            b = numpy.array([
+                121827491812.0 / 1802182496625.0,
+                48541.0 / 1666980.0,
+                977.0 / 55566.0,
+                671.0 / 52920.0,
+                ])
+            ws = numpy.linalg.solve(A, b)
 
             data = [
                 (m0, z(2)),
-                (ws1, sigma1 * s),
-                (ws2, sigma2 * s),
-                (ws3, sigma3 * s),
-                (ws4, sigma4 * s),
+                (ws[0], numpy.sqrt(sigma2[0]) * s),
+                (ws[1], numpy.sqrt(sigma2[1]) * s),
+                (ws[2], numpy.sqrt(sigma2[2]) * s),
+                (ws[3], numpy.sqrt(sigma2[3]) * s),
                 (wt1, tau1 * t),
                 (wt2, tau2 * t),
                 ]
