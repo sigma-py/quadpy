@@ -12,6 +12,9 @@ from helpers import check_degree
     [(quadpy.ball.HammerStroud(k), 1.0e-14) for k in [
         '11-3', '12-3', '14-3a', '14-3b', '15-3a', '15-3b',
         ]]
+    + [(quadpy.ball.Stroud(k), 1.0e-14) for k in [
+        'S3 3-1',
+        ]]
     )
 def test_scheme(scheme, tol):
     degree = check_degree(
@@ -38,6 +41,6 @@ def test_show(scheme, backend='mpl'):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.ball.HammerStroud('12-3')
+    scheme_ = quadpy.ball.HammerStroud('11-3')
     test_scheme(scheme_, 1.0e-14)
     test_show(scheme_, backend='vtk')

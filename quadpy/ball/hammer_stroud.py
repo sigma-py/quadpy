@@ -15,6 +15,7 @@ class HammerStroud(object):
     def __init__(self, index):
         if index == '11-3':
             self.degree = 3
+            # ERR Stroud falsely list a weight of 1/6.
             data = [
                 (2.0/9.0, fsd(3, sqrt(0.6), 1)),
                 ]
