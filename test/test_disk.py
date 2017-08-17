@@ -9,8 +9,9 @@ from helpers import check_degree
 
 @pytest.mark.parametrize(
     'scheme,tol',
-    [(quadpy.disk.Albrecht(k), 1.0e-14) for k in [1, 2, 3, 4, 6]]
+    [(quadpy.disk.Albrecht(k), 1.0e-14) for k in [1, 2, 3, 4, 6, 7]]
     + [(quadpy.disk.Albrecht(k), 1.0e-6) for k in [5]]
+    + [(quadpy.disk.Albrecht(k), 1.0e-7) for k in [8]]
     + [(quadpy.disk.CoolsHaegemans(k), 1.0e-14) for k in range(1, 4)]
     + [(quadpy.disk.CoolsKim(k), 1.0e-14) for k in range(1, 4)]
     + [(quadpy.disk.HammerStroud(k), 1.0e-14) for k in [
@@ -60,6 +61,6 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = quadpy.disk.Lether(5)
-    scheme_ = quadpy.disk.Albrecht(6)
-    test_scheme(scheme_, 1.0e-14)
+    scheme_ = quadpy.disk.Albrecht(8)
+    test_scheme(scheme_, 1.0e-7)
     test_show(scheme_)

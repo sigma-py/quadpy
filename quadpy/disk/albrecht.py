@@ -122,8 +122,7 @@ class Albrecht(object):
                 (C2, pm(2, s2)),
                 (D, fsd2(2, u, v, 1, 1)),
                 ]
-        else:
-            assert index == 6
+        elif index == 6:
             self.degree = 13
 
             B0 = 2615.0 / 43632.0
@@ -153,6 +152,83 @@ class Albrecht(object):
                 (B2, rho2*rs),
                 (B3, rho3*rs),
                 (C, numpy.sqrt(6.0/7.0) * uv)
+                ]
+        elif index == 7:
+            self.degree = 15
+
+            k = numpy.arange(8)
+            s = numpy.array([
+                numpy.cos(2*numpy.pi * k/8.0),
+                numpy.sin(2*numpy.pi * k/8.0),
+                ]).T
+
+            t = numpy.array([
+                numpy.cos((2*k+1)*numpy.pi / 8.0),
+                numpy.sin((2*k+1)*numpy.pi / 8.0),
+                ]).T
+
+            sqrt21 = numpy.sqrt(21.0)
+            wt1, wt2 = (4998 + plus_minus * 343 * sqrt21) / 253125.0
+            tau1, tau2 = numpy.sqrt((21.0 - plus_minus * sqrt21) / 28.0)
+
+            ws1 = 0.204136860290e-1
+            ws2 = 0.371360833569e-1
+            ws3 = 0.209029582465e-1
+            ws4 = 0.705690199725e-2
+
+            sigma1 = 0.255554289186
+            sigma2 = 0.554218094274
+            sigma3 = 0.858109669768
+            sigma4 = 0.980405947054
+
+            data = [
+                (ws1, sigma1 * s),
+                (ws2, sigma2 * s),
+                (ws3, sigma3 * s),
+                (ws4, sigma4 * s),
+                (wt1, tau1 * t),
+                (wt2, tau2 * t),
+                ]
+        else:
+            assert index == 8
+            warnings.warn('Albrecht\'s scheme no. 8 is only single-precision.')
+            self.degree = 17
+
+            k = numpy.arange(10)
+            s = numpy.array([
+                numpy.cos(2*numpy.pi * k/10.0),
+                numpy.sin(2*numpy.pi * k/10.0),
+                ]).T
+
+            t = numpy.array([
+                numpy.cos((2*k+1)*numpy.pi / 10.0),
+                numpy.sin((2*k+1)*numpy.pi / 10.0),
+                ]).T
+
+            m0 = 496439663.0 / 13349499975.0
+
+            sqrt7 = numpy.sqrt(7.0)
+            wt1, wt2 = (125504.0 + plus_minus * 16054 * sqrt7) / 8751645.0
+            tau1, tau2 = numpy.sqrt((14.0 - plus_minus * sqrt7) / 18.0)
+
+            ws1 = 0.206024726860e-1
+            ws2 = 0.277365659974e-1
+            ws3 = 0.150158249601e-1
+            ws4 = 0.424511227320e-2
+
+            sigma1 = 0.359912647292
+            sigma2 = 0.617569259064
+            sigma3 = 0.884020651636
+            sigma4 = 0.987194654007
+
+            data = [
+                (m0, z(2)),
+                (ws1, sigma1 * s),
+                (ws2, sigma2 * s),
+                (ws3, sigma3 * s),
+                (ws4, sigma4 * s),
+                (wt1, tau1 * t),
+                (wt2, tau2 * t),
                 ]
 
         self.points, self.weights = untangle(data)
