@@ -21,7 +21,7 @@ class Mysovskih(object):
 
             r = b * numpy.cos(0.4*i*pi)
             s = b * numpy.sin(0.4*i*pi)
-            x = numpy.array([r, s]).T
+            x = numpy.column_stack([r, s])
 
             B0 = 4.0 / (alpha + 4)**2
             B1 = (alpha + 2.0)*(alpha + 6.0) / 5.0 / (alpha + 4.0)**2
@@ -90,22 +90,22 @@ class Mysovskih(object):
             C4 = 0.531979391979623e-2
 
             ka = numpy.arange(1, 9)
-            xa = numpy.array([
+            xa = numpy.column_stack([
                 numpy.cos((2*ka-1) / 8.0 * numpy.pi),
                 numpy.sin((2*ka-1) / 8.0 * numpy.pi),
-                ]).T
+                ])
 
             kb = numpy.arange(1, 5)
-            xb = numpy.array([
+            xb = numpy.column_stack([
                 numpy.cos((2*kb-1) / 4.0 * numpy.pi),
                 numpy.sin((2*kb-1) / 4.0 * numpy.pi),
-                ]).T
+                ])
 
             kc = numpy.arange(1, 5)
-            xc = numpy.array([
+            xc = numpy.column_stack([
                 numpy.cos(kc / 2.0 * numpy.pi),
                 numpy.sin(kc / 2.0 * numpy.pi),
-                ]).T
+                ])
 
             data = [
                 (A1, rho1 * xa),
