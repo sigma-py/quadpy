@@ -5,7 +5,9 @@ import numpy
 
 class GaussHermite(object):
     '''
-    Gauss-Hermite quadrature.
+    Gauss-Hermite quadrature for integrals of the form
+
+        int_{-inf}^{+inf} exp(-x^2) f(x) dx.
     '''
     def __init__(self, n):
         self.degree = 2*n - 1

@@ -6,7 +6,7 @@ from .ditkin import Ditkin
 from .hammer_stroud import HammerStroud
 from .mysovskih import Mysovskih
 
-from ..sphere import mclaren
+from ..sphere import stroud as sphere_stroud
 from ..helpers import untangle
 
 
@@ -94,7 +94,8 @@ class Stroud(object):
             self.points, self.weights = untangle(data)
         else:
             assert index == 'S3 14-1'
-            spherical_scheme = mclaren.McLaren()
+            spherical_scheme = sphere_stroud.Stroud('U3 14-1')
+
 
 
 
