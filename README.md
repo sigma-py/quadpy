@@ -233,10 +233,19 @@ Example:
 ```python
 val = quadpy.quadrilateral.integrate(
     lambda x: numpy.exp(x[0]),
-    quadpy.quadrilateral.rectangle_points([0.0, 1.0], [-0.3, 0.6]),
+    [[[0.0, 0.0], [1.0, 0.0]], [[0.0, 1.0], [1.0, 1.0]]],
     quadpy.quadrilateral.Stroud('C2 7-2')
     )
 ```
+The points are specified in an array of shape (2, 2, ...) such that `arr[0][0]`
+is the lower left corner, `arr[1][1]` the upper right. If your quadrilateral
+has its sides aligned with the coordinate axes, you can use the convenience
+function
+```python
+quadpy.quadrilateral.rectangle_points([x0, x1], [y0, y1])
+```
+to generate the array.
+
 
 ### 2D plane with weight function exp(-r<sup>2</sup>)
 <img src="https://nschloe.github.io/quadpy/e2r2.png" width="25%">

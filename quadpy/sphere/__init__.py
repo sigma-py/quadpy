@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# pylint: disable=wildcard-import
-from .lebedev import *
+from .lebedev import Lebedev
+from .mclaren import McLaren
 
+# pylint: disable=wildcard-import
 from .tools import *

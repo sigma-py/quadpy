@@ -48,7 +48,8 @@ def test_scheme(scheme):
             lambda n: quadpy.helpers.partition(n, 3),
             min(30, scheme.degree + 1)
             )
-    assert degree >= min(30, scheme.degree)
+    assert degree >= min(30, scheme.degree), \
+        'Observed: {}, expected: {}'.format(degree, scheme.degree)
     return
 
 
@@ -82,7 +83,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.sphere.Lebedev(13)
-    test_scheme(scheme_)
+    scheme_ = quadpy.sphere.McLaren()
+    # test_scheme(scheme_)
     # test_scheme_spherical(scheme_)
     test_show(scheme_)
