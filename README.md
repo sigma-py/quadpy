@@ -294,7 +294,10 @@ Note that `phi_theta[0]` is the azimuthal, `phi_theta[1]` the polar angle here.
 ### Ball
 <img src="https://nschloe.github.io/quadpy/ball.png" width="25%">
 
- * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (6 schemes up to degree 7)
+ * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 6 schemes up to degree 7)
+ * via: [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
+   - Ditkin (1948, 3 schemes up to degreer 7)
+   - Mysovskih (1964, degree 7)
 
 Example:
 ```python
