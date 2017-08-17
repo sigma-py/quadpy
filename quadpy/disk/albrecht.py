@@ -92,32 +92,40 @@ class Albrecht(object):
                 (C, numpy.sqrt(0.8) * t),
                 ]
         elif index == 5:
-            warnings.warn('Albrecht\'s scheme no. 5 is only single-precision.')
             self.degree = 11
 
-            r1 = 0.326655862701
-            r2 = 0.720984642976
-            r3 = 0.979798373636
+            # The values are solutions of
+            # 6317094x^3- 10022245*x^2 + 4149900*x - 336375 = 0
+            sigma2 = [
+                0.10670405263689525737465523,
+                0.5198188554069141664267916,
+                0.9600048529804843416546315,
+                ]
 
-            B1 = 0.0655791415454
-            B2 = 0.0490399916287
-            B3 = 0.0104912371962
+            A = numpy.vander(sigma2, increasing=True).T
+            b = numpy.array([
+                168899.0 / 1350000.0,
+                7661.0 / 180000.0,
+                71.0 / 3000.0,
+                ])
+            B = numpy.linalg.solve(A, b)
 
             sqrt19 = numpy.sqrt(19.0)
 
             # ERR Stroud falsely lists sqrt(10) for s1.
             s1, s2 = numpy.sqrt((125.0 - plus_minus * 10.0*sqrt19) / 366.0)
 
-            C1, C2 = (7494893.0 + plus_minus * 1053263.0*sqrt19) / 205200000.0
+            # TODO check if stroud has 7494893.0 instead of 7494892.0
+            C1, C2 = (7494892.0 + plus_minus * 1053263.0*sqrt19) / 205200000.0
             D = 81.0 / 3125.0
 
             u = numpy.sqrt(5.0/6.0) * numpy.cos(numpy.pi/8.0)
             v = numpy.sqrt(5.0/6.0) * numpy.sin(numpy.pi/8.0)
 
             data = [
-                (B1, fsd(2, r1, 1)),
-                (B2, fsd(2, r2, 1)),
-                (B3, fsd(2, r3, 1)),
+                (B[0], fsd(2, numpy.sqrt(sigma2[0]), 1)),
+                (B[1], fsd(2, numpy.sqrt(sigma2[1]), 1)),
+                (B[2], fsd(2, numpy.sqrt(sigma2[2]), 1)),
                 (C1, pm(2, s1)),
                 (C2, pm(2, s2)),
                 (D, fsd2(2, u, v, 1, 1)),
