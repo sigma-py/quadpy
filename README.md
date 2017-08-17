@@ -10,7 +10,7 @@ Your one-stop shop for numerical integration in Python.
 Hundreds of numerical integration schemes for line segments, circles, disks,
 triangles, quadrilaterals, spheres, balls, tetrahedra, hexahedra, wedges,
 pyramids, n-spheres, n-balls, n-cubes, n-simplices, and the 2D planes with
-weight functions exp(-r) and exp(-r^2).
+weight functions exp(-r) and exp(-r<sup>2</sup>).
 
 To numerically integrate any function over any given triangle, do
 ```python
@@ -186,12 +186,12 @@ val = quadpy.triangle.integrate(
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y):
    - [Radon](https://eudml.org/doc/176796) (1948, degree 5)
    - [Peirce](https://books.google.de/books/about/Numerical_integration_over_planar_region.html?id=WR9SAAAAMAAJ&redir_esc=y)
-     (1956, degree 7)
+     (1956, 3 schemes up to degree 11)
    - [Albrecht-Collatz](https://dx.doi.org/10.1002/zamm.19580380102) (1958, degree 3)
    - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 8 schemes up to degree 15)
-   - [Albrecht](https://dx.doi.org/10.1002/zamm.19600401014) (1960, 2 schemes up to degree 11)
-   - Myskovskih (1964, degree 4)
-   - [Rabinowitz-Richter](https://dx.doi.org/10.2307/2004962) (6 schmes up to degree 15)
+   - [Albrecht](https://dx.doi.org/10.1002/zamm.19600401014) (1960, 8 schemes up to degree 17)
+   - Mysovskih (1964, 3 schemes up to degree 15)
+   - [Rabinowitz-Richter](https://dx.doi.org/10.2307/2004962) (1969, 6 schemes up to degree 15)
  * [Lether](http://www.jstor.org/stable/2949473) (1971, arbitrary degree)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 9)
  * [Wissmann-Becker](https://dx.doi.org/10.1137/0723043) (1986, 3 schemes up to degree 8)
@@ -209,7 +209,6 @@ val = quadpy.disk.integrate(
 ### Quadrilateral
 <img src="https://nschloe.github.io/quadpy/quad.png" width="25%">
 
- * Product schemes derived from line segment schemes
  * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 3
    schemes up to degree 7)
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971, 15 schemes up to degree 15):
@@ -227,6 +226,7 @@ val = quadpy.disk.integrate(
  * [Morrow-Patterson](https://dx.doi.org/10.1137/0722071) (1985, 2 schemes up to degree 20, single precision)
  * [Wissmann-Becker](https://dx.doi.org/10.1137/0723043) (1986, 6 schemes up to degree 8)
  * [Cools-Haegemans](https://dx.doi.org/10.1007/BF02247942) (1988, 2 schemes up to degree 13)
+ * products of line segment schemes
  * all formulas from the n-cube
 
 Example:

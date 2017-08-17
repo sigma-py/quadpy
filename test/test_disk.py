@@ -9,7 +9,8 @@ from helpers import check_degree
 
 @pytest.mark.parametrize(
     'scheme,tol',
-    [(quadpy.disk.CoolsHaegemans(k), 1.0e-14) for k in range(1, 4)]
+    [(quadpy.disk.Albrecht(k), 1.0e-14) for k in range(1, 9)]
+    + [(quadpy.disk.CoolsHaegemans(k), 1.0e-14) for k in range(1, 4)]
     + [(quadpy.disk.CoolsKim(k), 1.0e-14) for k in range(1, 4)]
     + [(quadpy.disk.HammerStroud(k), 1.0e-14) for k in [
         '11-2', '12-2', '13-2',
@@ -23,10 +24,11 @@ from helpers import check_degree
         'S2 4-1',
         'S2 5-1', 'S2 5-2',
         'S2 7-1', 'S2 7-2',
-        'S2 9-1', 'S2 9-3',
-        ]]
-    + [(quadpy.disk.Stroud(k), 1.0e-6) for k in [
-        'S2 11-1',
+        'S2 9-1', 'S2 9-2', 'S2 9-3', 'S2 9-4', 'S2 9-5',
+        'S2 11-1', 'S2 11-2', 'S2 11-3', 'S2 11-4',
+        'S2 13-1', 'S2 13-2',
+        'S2 15-1', 'S2 15-2',
+        'S2 17-1',
         ]]
     + [(quadpy.disk.WissmannBecker(k), 1.0e-14) for k in ['6-1', '6-2', '8-1']]
     )
@@ -56,6 +58,6 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = quadpy.disk.Lether(5)
-    scheme_ = quadpy.disk.RabinowitzRichter(6)
+    scheme_ = quadpy.disk.Albrecht(8)
     test_scheme(scheme_, 1.0e-14)
     test_show(scheme_)
