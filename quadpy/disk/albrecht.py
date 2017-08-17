@@ -93,7 +93,7 @@ class Albrecht(object):
             self.degree = 11
 
             # The values are solutions of
-            # 6317094x^3- 10022245*x^2 + 4149900*x - 336375 = 0
+            # 6317094x^3 - 10022245*x^2 + 4149900*x - 336375 = 0
             sigma2 = [
                 0.10670405263689525737465523,
                 0.5198188554069141664267916,
@@ -113,7 +113,7 @@ class Albrecht(object):
             # ERR Stroud falsely lists sqrt(10) for s1.
             s1, s2 = numpy.sqrt((125.0 - plus_minus * 10.0*sqrt19) / 366.0)
 
-            # ERR Stroud falsely lists 7494893.0 instead of 7494892.0
+            # ERR Stroud falsely lists 749489_3_.0 instead of 749489_2_.0
             C1, C2 = (7494892.0 + plus_minus * 1053263.0*sqrt19) / 205200000.0
             D = 81.0 / 3125.0
 
@@ -187,7 +187,7 @@ class Albrecht(object):
             tau1, tau2 = numpy.sqrt((21.0 - plus_minus * sqrt21) / 28.0)
 
             # The values are solutions of
-            # 4960228*x^4- 10267740*x^3 + 6746490*x^2 - 1476540*x + 70425 = 0
+            # 4960228*x^4 - 10267740*x^3 + 6746490*x^2 - 1476540*x + 70425 = 0
             sigma2 = [
                 0.06530799472126887796787083,
                 0.3071576960209604329098429,
