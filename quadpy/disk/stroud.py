@@ -6,6 +6,7 @@ from . import albrecht_collatz
 from . import hammer_stroud
 from . import mysovskih
 from . import peirce1956
+from . import rabinowitz_richter
 from . import radon
 
 from ..helpers import z, fsd, pm, untangle
@@ -25,7 +26,7 @@ class Stroud(object):
         elif index == 'S2 3-2':
             self.set_data(albrecht_collatz.AlbrechtCollatz())
         elif index == 'S2 4-1':
-            self.set_data(mysovskih.Mysovskih(0.0))
+            self.set_data(mysovskih.Mysovskih(1))
         elif index == 'S2 5-1':
             self.set_data(radon.Radon(0.0))
         elif index == 'S2 5-2':
@@ -39,7 +40,7 @@ class Stroud(object):
             self.points, self.weights = untangle(data)
             self.weights *= numpy.pi
         elif index == 'S2 7-1':
-            self.set_data(peirce1956.Peirce1956())
+            self.set_data(peirce1956.Peirce1956(1))
         elif index == 'S2 7-2':
             # spherical product Gauss
             self.degree = 7
@@ -60,7 +61,9 @@ class Stroud(object):
             self.points, self.weights = untangle(data)
             self.weights *= numpy.pi
         elif index == 'S2 9-1':
-            self.set_data(albrecht.Albrecht(index=1))
+            self.set_data(albrecht.Albrecht(4))
+        elif index == 'S2 9-2':
+            self.set_data(rabinowitz_richter.RabinowitzRichter(1))
         elif index == 'S2 9-3':
             # spherical product Gauss
             self.degree = 9
@@ -85,10 +88,30 @@ class Stroud(object):
                 ]
             self.points, self.weights = untangle(data)
             self.weights *= numpy.pi
+        elif index == 'S2 9-4':
+            self.set_data(rabinowitz_richter.RabinowitzRichter(2))
+        elif index == 'S2 9-5':
+            self.set_data(peirce1956.Peirce1956(2))
         elif index == 'S2 11-1':
-            self.set_data(albrecht.Albrecht(index=2))
+            self.set_data(mysovskih.Mysovskih(2))
+        elif index == 'S2 11-2':
+            self.set_data(albrecht.Albrecht(5))
+        elif index == 'S2 11-3':
+            self.set_data(rabinowitz_richter.RabinowitzRichter(4))
+        elif index == 'S2 11-4':
+            self.set_data(peirce1956.Peirce1956(3))
+        elif index == 'S2 13-1':
+            self.set_data(rabinowitz_richter.RabinowitzRichter(5))
+        elif index == 'S2 13-2':
+            self.set_data(albrecht.Albrecht(6))
+        elif index == 'S2 15-1':
+            self.set_data(mysovskih.Mysovskih(3))
+        elif index == 'S2 15-2':
+            self.set_data(albrecht.Albrecht(7))
+        elif index == 'S2 17-1':
+            self.set_data(albrecht.Albrecht(8))
         else:
-            assert False
+            assert False, index
 
         return
 

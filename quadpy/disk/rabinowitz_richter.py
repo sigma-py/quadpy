@@ -65,6 +65,7 @@ class RabinowitzRichter(object):
         else:
             assert index == 6
             self.degree = 15
+            # Myskovskih has the same, but with analytical points and weights.
             data = [
                 (.1252902085642858, _s40(.2528637970912295)),
                 (.1095003911263660, _s40(.5777289284448234)),
