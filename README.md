@@ -278,7 +278,8 @@ val = quadpy.e2r.integrate(
 ### Sphere
 <img src="https://nschloe.github.io/quadpy/sphere.png" width="25%">
 
- * [Lebedev](https://en.wikipedia.org/wiki/Lebedev_quadrature) (32
+ * [McLaren](https://doi.org/10.1090/S0025-5718-1963-0159418-2) (1963, degree 14)
+ * [Lebedev](https://en.wikipedia.org/wiki/Lebedev_quadrature) (1976, 32
    schemes up to degree 131)
 
 Example:
