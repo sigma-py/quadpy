@@ -6,13 +6,13 @@ def test_circle():
     quadpy.circle.integrate(
         lambda x: numpy.exp(x[0]),
         numpy.array([0.0, 0.3]), 0.7,
-        quadpy.circle.Equidistant(3)
+        quadpy.circle.Krylov(3)
         )
     quadpy.circle.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[0])],
         numpy.array([[1.0, 1.0], [0.0, 0.3], [2.0, 2.0]]),
         [1.0, 0.7, 0.333],
-        quadpy.circle.Equidistant(5)
+        quadpy.circle.Krylov(5)
         )
     return
 
