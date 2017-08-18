@@ -4,11 +4,10 @@ from __future__ import division
 
 import math
 
-import numpy
-
 from ..helpers import untangle, fsd, fsd2, pm_array0, pm
 
 from .stroud1967 import Stroud1967
+from .stroud1969 import Stroud1969
 from .helpers import integrate_monomial_over_unit_nsphere
 
 
@@ -112,27 +111,8 @@ class Stroud(object):
             self.points, self.weights = untangle(data)
             self.weights *= integrate_monomial_over_unit_nsphere(n * [0])
         else:
-            assert index == '11-1'
-            assert n >= 5
-            self.degree = 11
-
-            plus_minus = numpy.array([+1, -1])
-            sqrt3 = math.sqrt(3.0)
-
-            t = math.sqrt(1.0 / n)
-            r1, r2 = numpy.sqrt(
-                    (n + 6 - plus_minus*4*sqrt3) / (n**2 + 12*n - 12)
-                    )
-            s1, s2 = numpy.sqrt(
-                    (7*n - 6 + plus_minus*4*(n-1)*sqrt3) / (n**2 + 12*n - 12)
-                    )
-            u1, u2 = numpy.sqrt(
-                    (n + 12 + plus_minus*8*sqrt3) / (n**2 + 24*n - 48)
-                    )
-            v1, v2 = numpy.sqrt(
-                    (7*n - 12 - plus_minus*4*(n-2)*sqrt3) / (n**2 + 24*n - 48)
-                    )
-            # TODO continue here
+            assert index == 'Un 11-1'
+            self.set_data(Stroud1969(n))
 
         return
 
