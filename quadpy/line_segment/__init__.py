@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
 #
-# import pylint: disable=wildcard-import
-from .chebyshev_gauss import *
-from .clenshaw_curtis import *
-from .fejer import *
-from .gauss_hermite import *
-from .gauss_kronrod import *
-from .gauss_laguerre import *
-from .gauss_legendre import *
-from .gauss_lobatto import *
-from .gauss_patterson import *
-from .gauss_radau import *
-from .midpoint import *
-from .newton_cotes import *
-from .trapezoidal import *
+from .chebyshev_gauss import ChebyshevGauss1, ChebyshevGauss2
+from .clenshaw_curtis import ClenshawCurtis
+from .fejer import Fejer1, Fejer2
+from .gauss import Gauss
+from .gauss_hermite import GaussHermite
+from .gauss_kronrod import GaussKronrod
+from .gauss_laguerre import GaussLaguerre
+from .gauss_legendre import GaussLegendre
+from .gauss_lobatto import GaussLobatto
+from .gauss_patterson import GaussPatterson
+from .gauss_radau import GaussRadau
+from .midpoint import Midpoint
+from .newton_cotes import NewtonCotesOpen, NewtonCotesClosed
+from .trapezoidal import Trapezoidal
 
+# import pylint: disable=wildcard-import
 from .tools import *

@@ -6,6 +6,7 @@ from .ditkin import Ditkin
 from .hammer_stroud import HammerStroud
 from .mysovskih import Mysovskih
 
+from ..line_segment import Gauss
 from ..sphere import stroud as sphere_stroud
 from ..helpers import untangle
 
@@ -96,7 +97,20 @@ class Stroud(object):
             assert index == 'S3 14-1'
             spherical_scheme = sphere_stroud.Stroud('U3 14-1')
 
+            # Get the moment corresponding to the weight function omega(x) =
+            # x^2. The general formula is
+            #
+            #                                     / 0 if k is odd,
+            #    int_{-1}^{+1} |x^alpha| x^k dx ={
+            #                                     \ 2/(alpha+k+1) if k is even.
+            #
+            n = 5
+            alpha = 2.0
+            k = numpy.arange(2*n+1)
+            moments = (1.0 + (-1.0)**k) / (k + alpha + 1)
+            gauss = Gauss(n, moments)
 
+            exit(1)
 
 
         return
