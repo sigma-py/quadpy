@@ -290,7 +290,9 @@ val = quadpy.e2r.integrate(
 <img src="https://nschloe.github.io/quadpy/sphere.png" width="25%">
 
  * via: [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
-   - [McLaren](https://doi.org/10.1090/S0025-5718-1963-0159418-2) (1963, degree 14)
+   - [Albrecht-Collatz](https://dx.doi.org/10.1002/zamm.19580380102) (1958, 5
+     schemes up to degree 7)
+   - [McLaren](https://doi.org/10.1090/S0025-5718-1963-0159418-2) (1963, 10 schemes up to degree 14)
  * [Lebedev](https://en.wikipedia.org/wiki/Lebedev_quadrature) (1976, 32
    schemes up to degree 131)
 
@@ -458,7 +460,7 @@ val = quadpy.simplex.integrate(
 ### n-Sphere
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
    - [Stroud](https://doi.org/10.1137/0704004) (1967, degree 7)
-   - [Stroud](https://doi.org/10.1137/0706009) (1969, degree 11)
+   - [Stroud](https://doi.org/10.1137/0706009) (1969, 3 <= n <= 16, degree 11)
    - 6 schemes up to degree 5
  * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1978, n >= 2, degree 5)
 
