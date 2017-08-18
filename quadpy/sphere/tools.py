@@ -35,14 +35,15 @@ def _plot_mpl(scheme):
     for p, w in zip(scheme.points, scheme.weights):
         # <https://en.wikipedia.org/wiki/Spherical_cap>
         w *= 4 * numpy.pi
-        theta = numpy.arccos(1.0 - w / (2*numpy.pi))
-        _plot_spherical_cap_mpl(ax, p, theta)
+        theta = numpy.arccos(1.0 - abs(w) / (2*numpy.pi))
+        color = '#1f77b4' if w >= 0 else '#d62728'
+        _plot_spherical_cap_mpl(ax, p, theta, color)
 
     ax.set_axis_off()
     return
 
 
-def _plot_spherical_cap_mpl(ax, b, opening_angle, elevation=1.01):
+def _plot_spherical_cap_mpl(ax, b, opening_angle, color, elevation=1.01):
     r = elevation
     phi = numpy.linspace(0, 2 * numpy.pi, 30)
     theta = numpy.linspace(0, opening_angle, 20)
@@ -69,7 +70,7 @@ def _plot_spherical_cap_mpl(ax, b, opening_angle, elevation=1.01):
     ax.plot_surface(
             X_rot[..., 0], X_rot[..., 1], X_rot[..., 2],
             rstride=3, cstride=3,
-            color='#1f77b4',
+            color=color,
             alpha=0.5,
             linewidth=0
             )
