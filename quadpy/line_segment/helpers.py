@@ -10,7 +10,7 @@ def _jacobi_recursion_coefficients(n, a, b):
 
     P_{k+1}(x) = (x-alpha_k)*P_{k}(x) - beta_k P_{k-1}(x)
 
-    for the Jacobi polynomials which are orthogonal on [-1,1]
+    for the Jacobi polynomials which are orthogonal on [-1, 1]
     with respect to the weight w(x)=[(1-x)^a]*[(1+x)^b].
 
     Adapted from the MATLAB code by Dirk Laurie and Walter Gautschi

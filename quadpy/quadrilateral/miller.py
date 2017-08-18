@@ -15,6 +15,7 @@ class Miller(object):
     <https://dx.doi.org/10.2307/2003163>.
     '''
     def __init__(self):
+        # This scheme is exact for harmonic integrands of degree <= 11.
         self.name = 'Miller'
         self.degree = 1
         data = [

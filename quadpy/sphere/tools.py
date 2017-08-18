@@ -16,7 +16,15 @@ def show(*args, **kwargs):
     return
 
 
-def plot(scheme):
+def plot(scheme, backend='mpl'):
+    backend_to_function = {
+        'mpl': _plot_mpl
+        }
+    backend_to_function[backend](scheme)
+    return
+
+
+def _plot_mpl(scheme):
     # pylint: disable=relative-import, unused-variable
     from mpl_toolkits.mplot3d import Axes3D
 
@@ -28,13 +36,13 @@ def plot(scheme):
         # <https://en.wikipedia.org/wiki/Spherical_cap>
         w *= 4 * numpy.pi
         theta = numpy.arccos(1.0 - w / (2*numpy.pi))
-        _plot_spherical_cap(ax, p, theta)
+        _plot_spherical_cap_mpl(ax, p, theta)
 
     ax.set_axis_off()
     return
 
 
-def _plot_spherical_cap(ax, b, opening_angle, elevation=1.01):
+def _plot_spherical_cap_mpl(ax, b, opening_angle, elevation=1.01):
     r = elevation
     phi = numpy.linspace(0, 2 * numpy.pi, 30)
     theta = numpy.linspace(0, opening_angle, 20)
