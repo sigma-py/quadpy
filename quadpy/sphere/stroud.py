@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 #
+import math
+
 from .albrecht_collatz import AlbrechtCollatz
 from .mclaren import McLaren
+from ..nsphere.stroud1969 import Stroud1969
 
 
 class Stroud(object):
@@ -38,9 +41,14 @@ class Stroud(object):
             self.set_data(McLaren(7))
         elif index == 'U3 11-1':
             self.set_data(McLaren(8))
+        elif index == 'U3 11-2':
+            self.set_data(Stroud1969(3))
+            self.weights /= 4 * math.pi
+        elif index == 'U3 11-3':
+            self.set_data(McLaren(9))
         else:
             assert index == 'U3 14-1', 'Illegal index {}.'.format(index)
-            self.set_data(McLaren(9))
+            self.set_data(McLaren(10))
         return
 
     def set_data(self, scheme):

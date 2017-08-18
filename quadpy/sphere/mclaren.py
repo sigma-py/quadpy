@@ -173,8 +173,42 @@ class McLaren(object):
                 (B3, pm(3, t)),
                 (B4, fsd2(3, u, v, 2, 1)),
                 ]
+        elif index == 9:
+            self.degree = 11
+
+            plus_minus = numpy.array([+1, -1])
+            sqrt5 = math.sqrt(5.0)
+
+            p, q = numpy.sqrt((5.0 + plus_minus*sqrt5) / 10.0)
+            r, s = numpy.sqrt((3.0 - plus_minus*sqrt5) / 6.0)
+            t = math.sqrt(1.0/3.0)
+
+            u = 0.5
+            v, w = (math.sqrt(5) + plus_minus * 1) / 4.0
+
+            B = 625.0 / 27720.0
+            C = 243.0 / 27720.0
+            D = 512.0 / 27720.0
+
+            data = [
+                (B, pm_array0(3, [p, q], [0, 1])),
+                (B, pm_array0(3, [p, q], [1, 2])),
+                (B, pm_array0(3, [p, q], [2, 0])),
+                #
+                (C, pm_array0(3, [r, s], [0, 1])),
+                (C, pm_array0(3, [r, s], [1, 2])),
+                (C, pm_array0(3, [r, s], [2, 0])),
+                #
+                (C, pm(3, t)),
+                #
+                (D, fsd(3, 1.0, 1)),
+                #
+                (D, pm_array([u, v, w])),
+                (D, pm_array([w, u, v])),
+                (D, pm_array([v, w, u])),
+                ]
         else:
-            assert index == 9
+            assert index == 10
             self.degree = 14
 
             plus_minus = numpy.array([+1, -1])

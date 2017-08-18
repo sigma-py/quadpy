@@ -39,6 +39,8 @@ def _integrate_exact(f, midpoint, radius):
         'U3 5-1', 'U3 5-2', 'U3 5-3', 'U3 5-4', 'U3 5-5',
         'U3 7-1', 'U3 7-2',
         'U3 8-1',
+        'U3 9-1', 'U3 9-2', 'U3 9-3',
+        'U3 11-1', 'U3 11-2', 'U3 11-3',
         'U3 14-1',
         ]]
     )
@@ -90,7 +92,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.sphere.Stroud('U3 11-1')
+    scheme_ = quadpy.sphere.Stroud('U3 11-3')
     test_scheme(scheme_)
     # test_scheme_spherical(scheme_)
     test_show(scheme_)
