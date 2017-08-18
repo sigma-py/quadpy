@@ -19,10 +19,10 @@ class Albrecht(object):
             self.degree = 3
 
             k = numpy.arange(4)
-            t = numpy.array([
+            t = numpy.column_stack([
                 numpy.cos((2*k+1)*numpy.pi / 4.0),
                 numpy.sin((2*k+1)*numpy.pi / 4.0),
-                ]).T
+                ])
 
             data = [
                 (0.25, numpy.sqrt(0.5) * t),
@@ -44,14 +44,14 @@ class Albrecht(object):
             self.degree = 7
 
             k = numpy.arange(4)
-            s = numpy.array([
+            s = numpy.column_stack([
                 numpy.cos(2*numpy.pi * k/4.0),
                 numpy.sin(2*numpy.pi * k/4.0),
-                ]).T
-            t = numpy.array([
+                ])
+            t = numpy.column_stack([
                 numpy.cos((2*k+1)*numpy.pi / 4.0),
                 numpy.sin((2*k+1)*numpy.pi / 4.0),
-                ]).T
+                ])
 
             sqrt29 = numpy.sqrt(29.0)
             a1, a2 = (551.0 + plus_minus * 41 * sqrt29) / 6264.0
@@ -69,15 +69,15 @@ class Albrecht(object):
             rho1, rho2 = numpy.sqrt((96.0 - plus_minus * 4*sqrt111) / 155.0)
 
             k = numpy.arange(6)
-            s = numpy.array([
+            s = numpy.column_stack([
                 numpy.cos(2*numpy.pi * k/6.0),
                 numpy.sin(2*numpy.pi * k/6.0),
-                ]).T
+                ])
 
-            t = numpy.array([
+            t = numpy.column_stack([
                 numpy.cos((2*k+1)*numpy.pi / 6.0),
                 numpy.sin((2*k+1)*numpy.pi / 6.0),
-                ]).T
+                ])
 
             B0 = 251.0 / 2304.0
             B1, B2 = (110297.0 + plus_minus * 5713.0*sqrt111) / 2045952.0
@@ -151,15 +151,15 @@ class Albrecht(object):
             C = 16807.0 / 933120.0
 
             k = numpy.arange(10)
-            rs = numpy.array([
+            rs = numpy.column_stack([
                 numpy.cos(2*k*numpy.pi/10.0),
                 numpy.sin(2*k*numpy.pi/10.0),
-                ]).T
+                ])
 
-            uv = numpy.array([
+            uv = numpy.column_stack([
                 numpy.cos((2*k+1)*numpy.pi/10.0),
                 numpy.sin((2*k+1)*numpy.pi/10.0),
-                ]).T
+                ])
 
             data = [
                 (B0, z(2)),
@@ -172,15 +172,15 @@ class Albrecht(object):
             self.degree = 15
 
             k = numpy.arange(8)
-            s = numpy.array([
+            s = numpy.column_stack([
                 numpy.cos(2*numpy.pi * k/8.0),
                 numpy.sin(2*numpy.pi * k/8.0),
-                ]).T
+                ])
 
-            t = numpy.array([
+            t = numpy.column_stack([
                 numpy.cos((2*k+1)*numpy.pi / 8.0),
                 numpy.sin((2*k+1)*numpy.pi / 8.0),
-                ]).T
+                ])
 
             sqrt21 = numpy.sqrt(21.0)
             wt1, wt2 = (4998 + plus_minus * 343 * sqrt21) / 253125.0
@@ -217,15 +217,15 @@ class Albrecht(object):
             self.degree = 17
 
             k = numpy.arange(10)
-            s = numpy.array([
+            s = numpy.column_stack([
                 numpy.cos(2*numpy.pi * k/10.0),
                 numpy.sin(2*numpy.pi * k/10.0),
-                ]).T
+                ])
 
-            t = numpy.array([
+            t = numpy.column_stack([
                 numpy.cos((2*k+1)*numpy.pi / 10.0),
                 numpy.sin((2*k+1)*numpy.pi / 10.0),
-                ]).T
+                ])
 
             m0 = 496439663.0 / 13349499975.0
 

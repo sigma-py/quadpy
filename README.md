@@ -106,17 +106,27 @@ val = quadpy.line_segment.integrate(
     )
 ```
 
+Do you need Gauss points and weights with respect to your own special weight
+function? No problem: You simply need to provide the desired number of Gauss
+points `n` and the moments `integral(w(x) * x**k)` with `k` up to `2n+1`:
+```python
+my_gauss = quadpy.line_segment.Gauss(n, moments)
+```
+quadpy takes care of the rest (using the Golub-Wensch algorithm). The resulting
+scheme has degree `2n-1` and can be used like any other scheme in quadpy.
+
+
 ### Circle
 <img src="https://nschloe.github.io/quadpy/circle.png" width="25%">
 
- * equidistant points
+ * [Krylov](https://books.google.de/books/about/Approximate_Calculation_of_Integrals.html?id=ELeRwR27IRIC&redir_esc=y) (1959, arbitrary degree)
 
 Example:
 ```python
 val = quadpy.circle.integrate(
     lambda x: numpy.exp(x[0]),
     [0.0, 0.0], 1.0,
-    quadpy.circle.Equidistant(7)
+    quadpy.circle.Krylov(7)
     )
 ```
 
@@ -233,10 +243,19 @@ Example:
 ```python
 val = quadpy.quadrilateral.integrate(
     lambda x: numpy.exp(x[0]),
-    quadpy.quadrilateral.rectangle_points([0.0, 1.0], [-0.3, 0.6]),
-    quadpy.quadrilateral.Stroud(6)
+    [[[0.0, 0.0], [1.0, 0.0]], [[0.0, 1.0], [1.0, 1.0]]],
+    quadpy.quadrilateral.Stroud('C2 7-2')
     )
 ```
+The points are specified in an array of shape (2, 2, ...) such that `arr[0][0]`
+is the lower left corner, `arr[1][1]` the upper right. If your quadrilateral
+has its sides aligned with the coordinate axes, you can use the convenience
+function
+```python
+quadpy.quadrilateral.rectangle_points([x0, x1], [y0, y1])
+```
+to generate the array.
+
 
 ### 2D plane with weight function exp(-r<sup>2</sup>)
 <img src="https://nschloe.github.io/quadpy/e2r2.png" width="25%">
@@ -269,7 +288,9 @@ val = quadpy.e2r.integrate(
 ### Sphere
 <img src="https://nschloe.github.io/quadpy/sphere.png" width="25%">
 
- * [Lebedev](https://en.wikipedia.org/wiki/Lebedev_quadrature) (32
+ * via: [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
+   - [McLaren](https://doi.org/10.1090/S0025-5718-1963-0159418-2) (1963, degree 14)
+ * [Lebedev](https://en.wikipedia.org/wiki/Lebedev_quadrature) (1976, 32
    schemes up to degree 131)
 
 Example:
@@ -294,7 +315,11 @@ Note that `phi_theta[0]` is the azimuthal, `phi_theta[1]` the polar angle here.
 ### Ball
 <img src="https://nschloe.github.io/quadpy/ball.png" width="25%">
 
- * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (6 schemes up to degree 7)
+ * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 6 schemes up to degree 7)
+ * via: [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
+   - Ditkin (1948, 3 schemes up to degree 7)
+   - Mysovskih (1964, degree 7)
+   - 2 schemes up to degree 14
 
 Example:
 ```python
@@ -430,6 +455,10 @@ val = quadpy.simplex.integrate(
 ```
 
 ### n-Sphere
+ * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
+   - [Stroud](https://doi.org/10.1137/0704004) (1967, degree 7)
+   - [Stroud](https://doi.org/10.1137/0706009) (1969, degree 11)
+   - 6 schemes up to degree 5
  * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1978, n >= 2, degree 5)
 
 Example:

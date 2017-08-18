@@ -34,6 +34,9 @@ def _integrate_exact(f, midpoint, radius):
         3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 35, 41, 47, 53,
         59, 65, 71, 77, 83, 89, 95, 101, 107, 113, 119, 125, 131
         ]]
+    + [quadpy.sphere.Stroud(k) for k in [
+        'U3 14-1',
+        ]]
     )
 def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no
@@ -48,7 +51,8 @@ def test_scheme(scheme):
             lambda n: quadpy.helpers.partition(n, 3),
             min(30, scheme.degree + 1)
             )
-    assert degree >= min(30, scheme.degree)
+    assert degree >= min(30, scheme.degree), \
+        'Observed: {}, expected: {}'.format(degree, scheme.degree)
     return
 
 
@@ -82,7 +86,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.sphere.Lebedev(13)
+    scheme_ = quadpy.sphere.McLaren()
     test_scheme(scheme_)
     # test_scheme_spherical(scheme_)
     test_show(scheme_)
