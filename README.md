@@ -109,14 +109,14 @@ val = quadpy.line_segment.integrate(
 ### Circle
 <img src="https://nschloe.github.io/quadpy/circle.png" width="25%">
 
- * equidistant points
+ * [Krylov](https://books.google.de/books/about/Approximate_Calculation_of_Integrals.html?id=ELeRwR27IRIC&redir_esc=y) (1959, arbitrary degree)
 
 Example:
 ```python
 val = quadpy.circle.integrate(
     lambda x: numpy.exp(x[0]),
     [0.0, 0.0], 1.0,
-    quadpy.circle.Equidistant(7)
+    quadpy.circle.Krylov(7)
     )
 ```
 
