@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+from .albrecht_collatz import AlbrechtCollatz
 from .mclaren import McLaren
 
 
@@ -11,8 +12,19 @@ class Stroud(object):
     '''
     # pylint: disable=too-many-locals
     def __init__(self, index):
-        assert index == 'U3 14-1'
-        self.set_data(McLaren())
+        if index == 'U3 3-1':
+            self.set_data(McLaren(1))
+        elif index == 'U3 5-1':
+            self.set_data(AlbrechtCollatz(1))
+        elif index == 'U3 5-2':
+            self.set_data(AlbrechtCollatz(2))
+        elif index == 'U3 5-3':
+            self.set_data(AlbrechtCollatz(3))
+        elif index == 'U3 5-4':
+            self.set_data(AlbrechtCollatz(4))
+        else:
+            assert index == 'U3 14-1', 'Illegal index {}.'.format(index)
+            self.set_data(McLaren(9))
         return
 
     def set_data(self, scheme):
