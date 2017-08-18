@@ -90,7 +90,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.sphere.Stroud('U3 9-2')
+    scheme_ = quadpy.sphere.Stroud('U3 11-1')
     test_scheme(scheme_)
     # test_scheme_spherical(scheme_)
     test_show(scheme_)

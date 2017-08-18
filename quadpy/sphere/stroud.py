@@ -34,6 +34,10 @@ class Stroud(object):
             self.set_data(McLaren(5))
         elif index == 'U3 9-2':
             self.set_data(McLaren(6))
+        elif index == 'U3 9-3':
+            self.set_data(McLaren(7))
+        elif index == 'U3 11-1':
+            self.set_data(McLaren(8))
         else:
             assert index == 'U3 14-1', 'Illegal index {}.'.format(index)
             self.set_data(McLaren(9))
