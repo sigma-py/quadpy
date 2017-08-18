@@ -16,6 +16,9 @@ from helpers import check_degree
         'Un 5-1', 'Un 5-2', 'Un 5-3', 'Un 5-4',
         'Un 7-1', 'Un 7-2',
         ]]
+    + [quadpy.nsphere.Stroud(n, index) for n in range(5, 17) for index in [
+        'Un 11-1',
+        ]]
     + [quadpy.nsphere.Stroud1967(n) for n in range(2, 7)]
     )
 def test_scheme(scheme):
@@ -37,5 +40,5 @@ def test_scheme(scheme):
 
 if __name__ == '__main__':
     n_ = 5
-    scheme_ = quadpy.nsphere.Stroud(n_, 'Un 7-2')
+    scheme_ = quadpy.nsphere.Stroud(n_, 'Un 11-1')
     test_scheme(scheme_)
