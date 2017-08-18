@@ -3,7 +3,7 @@
 import math
 import numpy
 
-from ..helpers import untangle, pm_array0, fsd, pm_array, pm
+from ..helpers import untangle, pm_array0, fsd, pm_array, pm, fsd2
 
 
 class McLaren(object):
@@ -125,6 +125,53 @@ class McLaren(object):
                 (C, pm_array([u, v, w])),
                 (C, pm_array([w, u, v])),
                 (C, pm_array([v, w, u])),
+                ]
+        elif index == 7:
+            self.degree = 9
+
+            plus_minus = numpy.array([+1, -1])
+            r, s = numpy.sqrt((3.0 - plus_minus * math.sqrt(5.0)) / 6.0)
+            t = math.sqrt(1.0/3.0)
+            # ERR Stroud falsely gives sqrt(0.5)
+            u = 0.5
+            v, w = (math.sqrt(5.0) + plus_minus * 1) / 4.0
+
+            B = -9.0 / 140.0
+            C = 16.0 / 210.0
+
+            data = [
+                (B, pm_array0(3, [r, s], [0, 1])),
+                (B, pm_array0(3, [r, s], [1, 2])),
+                (B, pm_array0(3, [r, s], [2, 0])),
+                #
+                (B, pm(3, t)),
+                #
+                (C, fsd(3, 1.0, 1)),
+                #
+                (C, pm_array([u, v, w])),
+                (C, pm_array([w, u, v])),
+                (C, pm_array([v, w, u])),
+                ]
+        elif index == 8:
+            self.degree = 11
+
+            r = 1.0
+            s = math.sqrt(0.5)
+            t = math.sqrt(1.0/3.0)
+
+            u = math.sqrt(1.0/11.0)
+            v = math.sqrt(9.0/11.0)
+
+            B1 = 9216.0 / 725760.0
+            B2 = 16384.0 / 725760.0
+            B3 = 15309.0 / 725760.0
+            B4 = 14641.0 / 725760.0
+
+            data = [
+                (B1, fsd(3, r, 1)),
+                (B2, fsd(3, s, 2)),
+                (B3, pm(3, t)),
+                (B4, fsd2(3, u, v, 2, 1)),
                 ]
         else:
             assert index == 9
