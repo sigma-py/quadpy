@@ -106,13 +106,14 @@ val = quadpy.line_segment.integrate(
     )
 ```
 
+#### Bring your own weight function
 Do you need Gauss points and weights with respect to your own special weight
-function? No problem: You simply need to provide the desired number of Gauss
+function `w`? No problem: You simply need to provide the desired number of Gauss
 points `n` and the moments `integral(w(x) * x**k)` with `k` up to `2n+1`:
 ```python
 my_gauss = quadpy.line_segment.Gauss(n, moments)
 ```
-quadpy takes care of the rest (using the Golub-Wensch algorithm). The resulting
+quadpy takes care of the rest (using the Golub-Welsch algorithm). The resulting
 scheme has degree `2n-1` and can be used like any other scheme in quadpy.
 
 
