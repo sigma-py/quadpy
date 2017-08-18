@@ -3,7 +3,7 @@
 import math
 import numpy
 
-from ..helpers import untangle, pm_array0, fsd
+from ..helpers import untangle, pm_array0, fsd, pm_array, pm
 
 
 class McLaren(object):
@@ -19,6 +19,112 @@ class McLaren(object):
 
             data = [
                 (1.0/12.0, fsd(3, math.sqrt(0.5), 2))
+                ]
+        elif index == 2:
+            self.degree = 5
+
+            # Stroud doesn't mention u=1, but it's implied. (After all, this is
+            # integration on a sphere.)
+            u = 1.0
+
+            r = 0.5
+            plus_minus = numpy.array([+1, -1])
+            s, t = (math.sqrt(5.0) + plus_minus * 1) / 4.0
+
+            data = [
+                (1.0/30.0, fsd(3, u, 1)),
+                (1.0/30.0, pm_array([r, s, t])),
+                (1.0/30.0, pm_array([t, r, s])),
+                (1.0/30.0, pm_array([s, t, r])),
+                ]
+        elif index == 3:
+            self.degree = 7
+
+            # the positive roots of
+            #  z^6 - z^4 + 0.2*z^2 - 1/105 = 0,
+            # i.e., the squares of the roots of
+            #  z^3 - z^2 + 0.2*z^1 - 1/105 = 0,
+            r = math.sqrt(0.7503835498819236124134653)
+            s = math.sqrt(0.1785220127761020457111678)
+            t = math.sqrt(0.07109443734197434187536689)
+
+            u = numpy.array([+r, -r, +s, -s, +t, -t])
+            v = numpy.array([+s, +t, +t, +r, +r, +s])
+            w = numpy.array([+t, +s, +r, +t, +s, +r])
+
+            data = [
+                (1.0/24.0, numpy.column_stack([+u, +v, +w])),
+                (1.0/24.0, numpy.column_stack([+u, -v, -w])),
+                (1.0/24.0, numpy.column_stack([+u, +w, -v])),
+                (1.0/24.0, numpy.column_stack([+u, -w, +v])),
+                ]
+        elif index == 4:
+            self.degree = 8
+
+            # the positive roots of
+            #  z^6 - z^4 + 5/21 * z^2 - 5/441 = 0,
+            # i.e., the squares of the roots of
+            #  z^3 - z^2 + 5/21 * z^1 - 5/441 = 0,
+            r = math.sqrt(0.6697999083949878692486451)
+            s = math.sqrt(0.2667404813476434816325695)
+            t = math.sqrt(0.06345961025736864911878537)
+
+            u = numpy.array([+r, -r, +s, -s, +t, -t])
+            v = numpy.array([+s, +t, +t, +r, +r, +s])
+            w = numpy.array([+t, +s, +r, +t, +s, +r])
+
+            data = [
+                (16.0/600.0, fsd(3, 1.0, 1)),
+                (21.0/600.0, numpy.column_stack([+u, +v, +w])),
+                (21.0/600.0, numpy.column_stack([+u, -v, -w])),
+                (21.0/600.0, numpy.column_stack([+u, +w, -v])),
+                (21.0/600.0, numpy.column_stack([+u, -w, +v])),
+                ]
+        elif index == 5:
+            self.degree = 9
+
+            plus_minus = numpy.array([+1, -1])
+            r, s = numpy.sqrt((5.0 + plus_minus * math.sqrt(5.0)) / 10.0)
+            u, v = numpy.sqrt((3.0 - plus_minus * math.sqrt(5.0)) / 6.0)
+            t = math.sqrt(1.0/3.0)
+
+            B1 = 25.0 / 840.0
+            B2 = 27.0 / 840.0
+
+            data = [
+                (B1, pm_array0(3, [r, s], [0, 1])),
+                (B1, pm_array0(3, [r, s], [1, 2])),
+                (B1, pm_array0(3, [r, s], [2, 0])),
+                #
+                (B2, pm_array0(3, [u, v], [0, 1])),
+                (B2, pm_array0(3, [u, v], [1, 2])),
+                (B2, pm_array0(3, [u, v], [2, 0])),
+                #
+                (B2, pm(3, t)),
+                ]
+        elif index == 6:
+            self.degree = 9
+
+            plus_minus = numpy.array([+1, -1])
+            r, s = numpy.sqrt((5.0 + plus_minus * math.sqrt(5.0)) / 10.0)
+            t = 1.0
+            u = 0.5
+            v, w = (math.sqrt(5.0) + plus_minus * 1) / 4.0
+
+            B = 25.0 / 1260.0
+            C = 32.0 / 1260.0
+
+            data = [
+                # ERR Stroud is missing +- at the first r.
+                (B, pm_array0(3, [r, s], [0, 1])),
+                (B, pm_array0(3, [r, s], [1, 2])),
+                (B, pm_array0(3, [r, s], [2, 0])),
+                #
+                (C, fsd(3, t, 1)),
+                #
+                (C, pm_array([u, v, w])),
+                (C, pm_array([w, u, v])),
+                (C, pm_array([v, w, u])),
                 ]
         else:
             assert index == 9

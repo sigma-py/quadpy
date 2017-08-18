@@ -50,6 +50,18 @@ class AlbrechtCollatz(object):
                 (1.0/20.0, pm_array0(3, [r, s], [2, 0])),
                 (1.0/20.0, pm(3, t)),
                 ]
+        elif index == 5:
+            self.degree = 7
+
+            r = 1.0
+            s = math.sqrt(0.5)
+            t = math.sqrt(1.0/3.0)
+
+            data = [
+                (40.0/840.0, fsd(3, r, 1)),
+                (32.0/840.0, fsd(3, s, 2)),
+                (27/840.0, pm(3, t)),
+                ]
         else:
             assert False
 
