@@ -22,6 +22,18 @@ class Stroud(object):
             self.set_data(AlbrechtCollatz(3))
         elif index == 'U3 5-4':
             self.set_data(AlbrechtCollatz(4))
+        elif index == 'U3 5-5':
+            self.set_data(McLaren(2))
+        elif index == 'U3 7-1':
+            self.set_data(McLaren(3))
+        elif index == 'U3 7-2':
+            self.set_data(AlbrechtCollatz(5))
+        elif index == 'U3 8-1':
+            self.set_data(McLaren(4))
+        elif index == 'U3 9-1':
+            self.set_data(McLaren(5))
+        elif index == 'U3 9-2':
+            self.set_data(McLaren(6))
         else:
             assert index == 'U3 14-1', 'Illegal index {}.'.format(index)
             self.set_data(McLaren(9))
