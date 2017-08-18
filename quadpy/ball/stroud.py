@@ -95,7 +95,7 @@ class Stroud(object):
             self.points, self.weights = untangle(data)
         else:
             assert index == 'S3 14-1'
-            spherical_scheme = sphere_stroud.Stroud('U3 14-1')
+            self.degree = 14
 
             # Get the moment corresponding to the weight function omega(x) =
             # x^2. The general formula is
@@ -104,14 +104,27 @@ class Stroud(object):
             #    int_{-1}^{+1} |x^alpha| x^k dx ={
             #                                     \ 2/(alpha+k+1) if k is even.
             #
-            n = 5
+            n = 8
             alpha = 2.0
             k = numpy.arange(2*n+1)
             moments = (1.0 + (-1.0)**k) / (k + alpha + 1)
-            gauss = Gauss(n, moments)
+            gauss15 = Gauss(n, moments)
 
-            exit(1)
+            r = gauss15.points[-4:]
+            A = gauss15.weights[-4:]
 
+            spherical_scheme = sphere_stroud.Stroud('U3 14-1')
+            v = spherical_scheme.points
+            B = spherical_scheme.weights
+
+            data = [
+                (A[i]*B[j], r[i] * numpy.array([v[j]]))
+                for i in range(4)
+                for j in range(72)
+                ]
+
+            self.points, self.weights = untangle(data)
+            self.weights *= 4.0 * numpy.pi
 
         return
 

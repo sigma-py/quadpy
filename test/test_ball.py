@@ -15,7 +15,8 @@ from helpers import check_degree
     + [(quadpy.ball.Stroud(k), 1.0e-14) for k in [
         'S3 3-1',
         'S3 5-1', 'S3 5-2',
-        'S3 7-1a', 'S3 7-1b', 'S3 7-2', 'S3 7-3', 'S3 7-4'
+        'S3 7-1a', 'S3 7-1b', 'S3 7-2', 'S3 7-3', 'S3 7-4',
+        'S3 14-1',
         ]]
     )
 def test_scheme(scheme, tol):
