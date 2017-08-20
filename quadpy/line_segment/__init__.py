@@ -3,7 +3,6 @@
 from .chebyshev_gauss import ChebyshevGauss1, ChebyshevGauss2
 from .clenshaw_curtis import ClenshawCurtis
 from .fejer import Fejer1, Fejer2
-from .gauss import Gauss
 from .gauss_hermite import GaussHermite
 from .gauss_kronrod import GaussKronrod
 from .gauss_laguerre import GaussLaguerre

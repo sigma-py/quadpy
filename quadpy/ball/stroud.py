@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
+import orthopy
 
 from .ditkin import Ditkin
 from .hammer_stroud import HammerStroud
 from .mysovskih import Mysovskih
 
-from ..line_segment import Gauss
 from ..sphere import stroud as sphere_stroud
 from ..helpers import untangle
 
@@ -108,7 +108,7 @@ class Stroud(object):
             alpha = 2.0
             k = numpy.arange(2*n+1)
             moments = (1.0 + (-1.0)**k) / (k + alpha + 1)
-            gauss15 = Gauss(n, moments)
+            gauss15 = orthopy.Gauss(n, moments)
 
             r = gauss15.points[-4:]
             A = gauss15.weights[-4:]
