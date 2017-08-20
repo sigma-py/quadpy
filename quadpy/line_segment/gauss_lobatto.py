@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-
-from .helpers import _jacobi_recursion_coefficients, _gauss
+from orthopy import jacobi_recursion_coefficients, scheme_from_coefficients
 
 
 class GaussLobatto(object):
@@ -12,7 +11,7 @@ class GaussLobatto(object):
     def __init__(self, n, a=0.0, b=0.0):
         assert n >= 2
         self.degree = 2*n - 3
-        alpha, beta = _jacobi_recursion_coefficients(n, a, b)
+        alpha, beta = jacobi_recursion_coefficients(n, a, b)
         self.points, self.weights = _lobatto(alpha, beta, -1.0, 1.0)
         return
 
@@ -48,5 +47,5 @@ def _lobatto(alpha, beta, xl1, xl2):
     alphal[-1] = ab[0]
     betal = beta
     betal[-1] = ab[1]
-    x, w = _gauss(alphal, betal)
+    x, w = scheme_from_coefficients(alphal, betal)
     return x, w
