@@ -33,6 +33,7 @@ setup(
     install_requires=[
         'matplotlib',
         'numpy',
+        'orthopy',
         'pipdate',
         'scipy',
         'sympy'

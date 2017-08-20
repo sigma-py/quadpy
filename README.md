@@ -97,6 +97,9 @@ approximation of the integral over the domain.
  * closed Newton-Cotes (arbitrary degree)
  * open Newton-Cotes (arbitrary degree)
 
+You can use [orthopy](https://github.com/nschloe/orthopy) to generate Gauss
+formulas for your own weight functions.
+
 Example:
 ```python
 val = quadpy.line_segment.integrate(
@@ -105,17 +108,6 @@ val = quadpy.line_segment.integrate(
     quadpy.line_segment.GaussPatterson(5)
     )
 ```
-
-#### Bring your own weight function
-Do you need Gauss points and weights with respect to your own special weight
-function `w`? No problem: You simply need to provide the desired number of Gauss
-points `n` and the moments `integral(w(x) * x**k)` with `k` up to `2n+1`:
-```python
-my_gauss = quadpy.line_segment.Gauss(n, moments)
-```
-quadpy takes care of the rest (using the Golub-Welsch algorithm). The resulting
-scheme has degree `2n-1` and can be used like any other scheme in quadpy.
-
 
 ### Circle
 <img src="https://nschloe.github.io/quadpy/circle.png" width="25%">
