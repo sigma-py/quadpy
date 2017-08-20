@@ -5,6 +5,7 @@ import math
 from helpers import check_degree_1d
 
 import numpy
+import orthopy
 import pytest
 import quadpy
 
@@ -170,7 +171,7 @@ def test_custom_gauss():
     n = 5
     k = numpy.arange(2*n+1)
     moments = (1.0 + (-1.0)**k) / (k + alpha + 1)
-    scheme = quadpy.line_segment.Gauss(n, moments)
+    scheme = orthopy.Gauss(n, moments)
 
     degree = 0
     while True:
