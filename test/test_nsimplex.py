@@ -11,15 +11,21 @@ from helpers import (
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadpy.nsimplex.GrundmannMoeller(3, k) for k in range(5)] +
-    [quadpy.nsimplex.GrundmannMoeller(4, k) for k in range(5)] +
-    [quadpy.nsimplex.GrundmannMoeller(5, k) for k in range(5)] +
-    [quadpy.nsimplex.GrundmannMoeller(6, k) for k in range(5)] +
+    [quadpy.nsimplex.GrundmannMoeller(dim, k)
+     for dim in range(3, 7)
+     for k in range(5)
+     ]
     #
-    [quadpy.nsimplex.Walkington(3, k) for k in [1, 2, 3, 5, 7]] +
-    [quadpy.nsimplex.Walkington(4, k) for k in [1, 2, 3]] +
-    [quadpy.nsimplex.Walkington(5, k) for k in [1, 2, 3]] +
-    [quadpy.nsimplex.Walkington(6, k) for k in [1, 2, 3]]
+    + [quadpy.nsimplex.Stroud(dim, index)
+       for dim in range(3, 7)
+       for index in ['Tn 1-1']
+       ]
+    #
+    + [quadpy.nsimplex.Walkington(3, k) for k in [1, 2, 3, 5, 7]]
+    + [quadpy.nsimplex.Walkington(4, k)
+       for dim in range(4, 7)
+       for k in [1, 2, 3]
+       ]
     )
 def test_scheme(scheme):
     n = scheme.dim
@@ -32,11 +38,12 @@ def test_scheme(scheme):
             lambda k: quadpy.helpers.partition(k, n),
             scheme.degree + 1
             )
-    assert degree >= scheme.degree
+    assert degree >= scheme.degree, \
+        'Observed: {}, expected: {}'.format(degree, scheme.degree)
     return
 
 
 if __name__ == '__main__':
     n_ = 3
-    scheme_ = quadpy.nsimplex.GrundmannMoeller(n_, 5)
+    scheme_ = quadpy.nsimplex.Stroud(n_, 'Tn 1-2')
     test_scheme(scheme_)

@@ -8,6 +8,32 @@ def z(n):
     return numpy.zeros((1, n))
 
 
+def rd(n, items):
+    '''Items is an array of 2-tuples of type (value, number). This method
+    returns all all permutations of
+
+    [value1, value1, value2, 0, ..., 0]
+
+    of length n, where value_i occurs number_i times.
+    '''
+    sum_numbers = 0
+    for item in items:
+        _, number = item
+        assert number > 0
+        sum_numbers += number
+    assert 0 <= sum_numbers <= n
+
+    elems = [
+        ((item[0],), item[1])
+        for item in items
+        ]
+    elems += [
+        ((0.0,), n-sum_numbers)
+        ]
+
+    return combine(*elems)
+
+
 def fsd(n, r, d):
     '''Get all permutations of [+-r, +-r, 0, ..., 0] of length n, where +-r
     occurs d times.
