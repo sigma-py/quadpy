@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from orthopy import jacobi_recursion_coefficients, scheme_from_coefficients
+from orthopy import jacobi_recursion_coefficients, gauss_from_coefficients
 
 
 class GaussRadau(object):
@@ -36,5 +36,5 @@ def _radau(alpha, beta, xr):
     delta = solve_banded((1, 1), J, f)
     alphar = alpha.copy()
     alphar[-1] = xr + delta[-1]
-    x, w = scheme_from_coefficients(alphar, beta)
+    x, w = gauss_from_coefficients(alphar, beta)
     return x, w

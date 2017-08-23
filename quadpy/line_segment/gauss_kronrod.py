@@ -3,7 +3,7 @@
 import math
 
 import numpy
-from orthopy import jacobi_recursion_coefficients, scheme_from_coefficients
+from orthopy import jacobi_recursion_coefficients, gauss_from_coefficients
 
 from .. import helpers
 from .gauss_legendre import GaussLegendre
@@ -38,14 +38,14 @@ class GaussKronrod(object):
     def __init__(self, n, a=0.0, b=0.0):
         # The general scheme is:
         # Get the Jacobi recursion coefficients, get the Kronrod vectors alpha
-        # and beta, and hand those off to scheme_from_coefficients. There, the
+        # and beta, and hand those off to gauss_from_coefficients. There, the
         # eigenproblem for a tridiagonal matrix with alpha and beta is solved
         # to retrieve the points and weights.
         length = int(math.ceil(3*n/2.0)) + 1
         self.degree = 2*length + 1
         alpha, beta = jacobi_recursion_coefficients(length, a, b)
         a, b = self.r_kronrod(n, alpha, beta)
-        x, w = scheme_from_coefficients(a, b)
+        x, w = gauss_from_coefficients(a, b)
         # sort by x
         i = numpy.argsort(x)
         self.points = x[i]
