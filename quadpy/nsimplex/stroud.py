@@ -2,6 +2,7 @@
 #
 import numpy
 
+from .hammer_stroud import HammerStroud
 from .lauffer import Lauffer
 
 from ..helpers import untangle
@@ -27,6 +28,10 @@ class Stroud(object):
             self.points = self.bary[:, 1:]
         elif index == 'Tn 1-2':
             self.set_data(Lauffer(n, 1))
+        elif index == 'Tn 2-1a':
+            self.set_data(HammerStroud(n, '1a'))
+        elif index == 'Tn 2-1b':
+            self.set_data(HammerStroud(n, '1b'))
         else:
             assert False
         return

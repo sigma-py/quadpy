@@ -45,5 +45,5 @@ def test_scheme(scheme):
 
 if __name__ == '__main__':
     n_ = 3
-    scheme_ = quadpy.nsimplex.Stroud(n_, 'Tn 1-2')
+    scheme_ = quadpy.nsimplex.Stroud(n_, 'Tn 2-1b')
     test_scheme(scheme_)
