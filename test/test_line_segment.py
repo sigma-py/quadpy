@@ -5,7 +5,6 @@ import math
 from helpers import check_degree_1d
 
 import numpy
-import orthopy
 import pytest
 import quadpy
 
@@ -145,48 +144,6 @@ def test_hermite_scheme(scheme):
             integrate_exact,
             scheme.degree + 1
             )
-    assert degree == scheme.degree
-    return
-
-
-def test_custom_gauss():
-    '''Test the custom Gauss generator with the weight function x**2.
-    '''
-    alpha = 2.0
-
-    def integrate_exact(k):
-        # \int_{-1}^{+1} |x^alpha| x^k
-        return [
-            0.0 if kk % 2 == 1 else 2.0/(alpha+kk+1)
-            for kk in k
-            ]
-
-    # Get the moment corresponding to the weight function omega(x) =
-    # x^alpha:
-    #
-    #                                     / 0 if k is odd,
-    #    int_{-1}^{+1} |x^alpha| x^k dx ={
-    #                                     \ 2/(alpha+k+1) if k is even.
-    #
-    n = 5
-    k = numpy.arange(2*n+1)
-    moments = (1.0 + (-1.0)**k) / (k + alpha + 1)
-    scheme = orthopy.Gauss(n, moments)
-
-    degree = 0
-    while True:
-        exact_val = integrate_exact([degree])[0]
-        val = quadpy.line_segment.integrate(
-                lambda x: x[0]**degree,
-                numpy.array([[-1.0], [+1.0]]),
-                scheme
-                )
-        eps = 1.0e-12
-        if abs(exact_val - val) > 1.0e-12 * abs(exact_val) + eps:
-            break
-        if degree >= scheme.degree:
-            break
-        degree += 1
     assert degree == scheme.degree
     return
 
