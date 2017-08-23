@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 from ..helpers import untangle, rd
 
 
@@ -12,11 +14,23 @@ class Lauffer(object):
     '''
     def __init__(self, n, index):
         self.dim = n
-        assert index == 1
-        self.degree = 1
-        data = [
-            (1.0/(n+1), rd(n+1, [(1.0, 1)]))
-            ]
+        if index == 1:
+            self.degree = 1
+            data = [
+                (1.0/(n+1), rd(n+1, [(1.0, 1)]))
+                ]
+        else:
+            assert index == 2
+            self.degree = 2
+
+            B = (2-n) / (n+1) / (n+2)
+            C = 4 / (n+1) / (n+2)
+
+            data = [
+                (B, rd(n+1, [(1.0, 1)])),
+                (C, rd(n+1, [(0.5, 2)])),
+                ]
+
         self.bary, self.weights = untangle(data)
         self.points = self.bary[:, 1:]
         return
