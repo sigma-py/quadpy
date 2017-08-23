@@ -97,21 +97,23 @@ class Stroud(object):
             assert index == 'S3 14-1'
             self.degree = 14
 
-            # Get the moment corresponding to the weight function omega(x) =
-            # x^2. The general formula is
+            # Get the moments corresponding to the Legendre polynomials and the
+            # weight function omega(x) = x^2:
             #
-            #                                     / 0 if k is odd,
-            #    int_{-1}^{+1} |x^alpha| x^k dx ={
-            #                                     \ 2/(alpha+k+1) if k is even.
+            #                                        / 2/3   if k == 0,
+            #    int_{-1}^{+1} |x^alpha| P_k(x) dx ={  8/45  if k == 2,
+            #                                        \ 0     otherwise.
             #
             n = 8
-            alpha = 2.0
-            k = numpy.arange(2*n+1)
-            moments = (1.0 + (-1.0)**k) / (k + alpha + 1)
-            gauss15 = orthopy.Gauss(n, moments)
+            moments = numpy.zeros(2*n)
+            moments[0] = 2.0/3.0
+            moments[2] = 8.0/45.0
+            a, b = orthopy.jacobi_recursion_coefficients(2*n, 0.0, 0.0)
+            alpha, beta = orthopy.chebyshev_modified(moments, a, b)
+            points, weights = orthopy.gauss_from_coefficients(alpha, beta)
 
-            r = gauss15.points[-4:]
-            A = gauss15.weights[-4:]
+            r = points[-4:]
+            A = weights[-4:]
 
             spherical_scheme = sphere_stroud.Stroud('U3 14-1')
             v = spherical_scheme.points
