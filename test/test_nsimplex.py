@@ -18,7 +18,16 @@ from helpers import (
     #
     + [quadpy.nsimplex.Stroud(dim, index)
        for dim in range(3, 7)
-       for index in ['Tn 1-1']
+       for index in [
+           'Tn 1-1', 'Tn 1-2',
+           'Tn 2-1a', 'Tn 2-1b', 'Tn 2-2',
+           'Tn 3-1', 'Tn 3-2', 'Tn 3-3', 'Tn 3-4', 'Tn 3-5', 'Tn 3-6a',
+           'Tn 3-6b', 'Tn 3-7', 'Tn 3-8', 'Tn 3-9'
+           ]
+       ]
+    + [quadpy.nsimplex.Stroud(dim, index)
+       for dim in [3, 4, 6, 7]
+       for index in ['Tn 3-10', 'Tn 3-11']
        ]
     #
     + [quadpy.nsimplex.Walkington(3, k) for k in [1, 2, 3, 5, 7]]
@@ -44,6 +53,6 @@ def test_scheme(scheme):
 
 
 if __name__ == '__main__':
-    n_ = 4
-    scheme_ = quadpy.nsimplex.Stroud(n_, 'Tn 3-4')
+    n_ = 5
+    scheme_ = quadpy.nsimplex.Stroud(n_, 'Tn 3-9')
     test_scheme(scheme_)

@@ -5,6 +5,7 @@ import numpy
 from .hammer_stroud import HammerStroud
 from .lauffer import Lauffer
 from .stroud1961 import Stroud1961
+from .stroud1964 import Stroud1964
 from .stroud1966 import Stroud1966
 
 from ..helpers import untangle
@@ -39,13 +40,30 @@ class Stroud(object):
         elif index == 'Tn 3-1':
             self.set_data(HammerStroud(n, '2'))
         elif index == 'Tn 3-2':
-            self.set_data(Stroud1966(n, 1))
+            self.set_data(Stroud1966(n, 'I'))
         elif index == 'Tn 3-3':
             self.set_data(Stroud1961(n))
         elif index == 'Tn 3-4':
-            self.set_data(Stroud1966(n, 2))
+            self.set_data(Stroud1966(n, 'II'))
+        elif index == 'Tn 3-5':
+            self.set_data(Stroud1966(n, 'III'))
+        elif index == 'Tn 3-6a':
+            self.set_data(Stroud1964(n, variant='a'))
+        elif index == 'Tn 3-6b':
+            self.set_data(Stroud1964(n, variant='b'))
+        elif index == 'Tn 3-7':
+            self.set_data(Stroud1966(n, 'IV'))
+        elif index == 'Tn 3-8':
+            self.set_data(Stroud1966(n, 'V'))
+        elif index == 'Tn 3-9':
+            self.set_data(Lauffer(n, 3))
+        elif index == 'Tn 3-10':
+            self.set_data(Stroud1966(n, 'VI'))
+        elif index == 'Tn 3-11':
+            self.set_data(Stroud1966(n, 'VII'))
         else:
-            assert False
+            # TODO
+            assert False, index
         return
 
     def set_data(self, scheme):
