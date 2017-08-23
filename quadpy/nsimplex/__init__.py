@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-# pylint: disable=wildcard-import
-from .grundmann_moeller import *
-from .walkington import *
+from .grundmann_moeller import GrundmannMoeller
+from .stroud import Stroud
+from .walkington import Walkington
 
+# pylint: disable=wildcard-import
 from .tools import *
