@@ -4,6 +4,8 @@ from __future__ import division
 
 import math
 
+import numpy
+
 from ..helpers import untangle, rd
 
 
@@ -32,7 +34,20 @@ class HammerStroud(object):
                 (1.0/(n+1), rd(n+1, [(r, n), (s, 1)]))
                 ]
         else:
-            assert False
+            assert index == '2'
+            self.degree = 3
+
+            B = -(n+1)**2 / 4 / (n+2)
+            C = (n+3)**2 / 4 / (n+1) / (n+2)
+
+            r = 1 / (n+1)
+            s = 1 / (n+3)
+            t = 3 / (n+3)
+
+            data = [
+                (B, numpy.array([numpy.full(n+1, r)])),
+                (C, rd(n+1, [(t, 1), (s, n)])),
+                ]
 
         self.bary, self.weights = untangle(data)
         self.points = self.bary[:, 1:]

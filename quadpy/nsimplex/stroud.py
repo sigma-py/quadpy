@@ -4,6 +4,8 @@ import numpy
 
 from .hammer_stroud import HammerStroud
 from .lauffer import Lauffer
+from .stroud1961 import Stroud1961
+from .stroud1966 import Stroud1966
 
 from ..helpers import untangle
 
@@ -32,6 +34,16 @@ class Stroud(object):
             self.set_data(HammerStroud(n, '1a'))
         elif index == 'Tn 2-1b':
             self.set_data(HammerStroud(n, '1b'))
+        elif index == 'Tn 2-2':
+            self.set_data(Lauffer(n, 2))
+        elif index == 'Tn 3-1':
+            self.set_data(HammerStroud(n, '2'))
+        elif index == 'Tn 3-2':
+            self.set_data(Stroud1966(n, 1))
+        elif index == 'Tn 3-3':
+            self.set_data(Stroud1961(n))
+        elif index == 'Tn 3-4':
+            self.set_data(Stroud1966(n, 2))
         else:
             assert False
         return
