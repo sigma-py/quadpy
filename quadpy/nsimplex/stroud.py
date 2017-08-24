@@ -7,6 +7,7 @@ from .lauffer import Lauffer
 from .stroud1961 import Stroud1961
 from .stroud1964 import Stroud1964
 from .stroud1966 import Stroud1966
+from .stroud1969 import Stroud1969
 
 from ..helpers import untangle
 
@@ -61,9 +62,13 @@ class Stroud(object):
             self.set_data(Stroud1966(n, 'VI'))
         elif index == 'Tn 3-11':
             self.set_data(Stroud1966(n, 'VII'))
+        elif index == 'Tn 4-1':
+            self.set_data(Lauffer(n, 4))
+        elif index == 'Tn 5-1':
+            self.set_data(Stroud1969(n))
         else:
-            # TODO
-            assert False, index
+            assert index == 'Tn 5-2'
+            self.set_data(Lauffer(n, 5))
         return
 
     def set_data(self, scheme):
