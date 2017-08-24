@@ -2,6 +2,8 @@
 #
 import numpy
 
+from .helpers import cartesian_to_spherical
+
 from ..helpers import untangle
 
 
@@ -1260,7 +1262,8 @@ class Lebedev(object):
                 (2.0839958675400000e-04, _rsw(1.5088493795529350e-02, 2.2282021351432665e-01)),
                 (2.0905097128900001e-04, _rsw(2.8756638475066133e-02, 2.3692998731338194e-01))
                 ]
-        elif degree == 131:
+        else:
+            assert degree == 131, 'Illegal degree {}.'.format(degree)
             data = [
                 (9.7353479460000007e-06, _a1()),
                 (1.9075812417999999e-04, _a2()),
@@ -1423,13 +1426,6 @@ def _spherical_to_cartesian(phi_theta):
         ], axis=1)
 
 
-def _cartesian_to_spherical(X):
-    return numpy.stack([
-        numpy.arctan2(X[:, 1], X[:, 0]),
-        numpy.arccos(X[:, 2])
-        ], axis=1)
-
-
 def _a1():
     return numpy.array([
        [+0.0, 0.0],
@@ -1471,7 +1467,7 @@ def _a3():
         [-1.0, -1.0, +1.0],
         [-1.0, -1.0, -1.0],
         ]) / numpy.sqrt(3.0)
-    return _cartesian_to_spherical(X)
+    return cartesian_to_spherical(X)
 
 
 def _pq0(alpha):
@@ -1542,7 +1538,7 @@ def _llm(beta):
         [-m, -L, -L],
         ])
     # translate back to spherical coords
-    return _cartesian_to_spherical(X)
+    return cartesian_to_spherical(X)
 
 
 def _rsw(phi, theta):
@@ -1617,4 +1613,4 @@ def _rsw(phi, theta):
         [-r, -w, -s],
         ])
 
-    return _cartesian_to_spherical(X)
+    return cartesian_to_spherical(X)
