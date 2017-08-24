@@ -17,7 +17,7 @@ from .yu import Yu
 from .zhang_cui_liu import ZhangCuiLiu
 from .zienkiewicz import Zienkiewicz
 from .walkington import Walkington
-from .williams_shunn_jameson import WillansShunnJameson
+from .williams_shunn_jameson import WilliamsShunnJameson
 from .witherden_vincent import WitherdenVincent
 
 # pylint: disable=wildcard-import
