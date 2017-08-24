@@ -430,6 +430,11 @@ val = quadpy.wedge.integrate(
 ```
 
 ### n-Simplex
+ * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y):
+   - [Lauffer](https://doi.org/10.1007/BF01900222) (1955, 5 schemes up to degree 5)
+   - [Hammer-Stroud](https://doi.org/10.2307/2002484) (1956, 3 schemes up to degree 3)
+   - [Stroud](https://doi.org/10.1007/BF02165227) (1966, 7 schemes of degree 3)
+   - [Stroud](https://doi.org/10.1137/0706009) (1969, degree 5)
  * [Grundmann-Möller](http://dx.doi.org/10.1137/0715019) (1978, arbitrary degree)
  * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/) (2000, 5 schemes up to degree 7)
 
