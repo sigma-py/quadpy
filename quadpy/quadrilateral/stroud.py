@@ -38,7 +38,7 @@ class Stroud(object):
             # Product Gauss
             self.degree = 3
             self.weights = reference_volume * numpy.full(4, 0.25)
-            # misprint in Stroud: sqrt(1/3) vs 1/3
+            # ERR misprint in Stroud: sqrt(1/3) vs 1/3
             self.points = _symm_s(numpy.sqrt(1.0/3.0))
         elif index == 'C2 3-2':
             self.set_data(ncube.Ewing(2))
