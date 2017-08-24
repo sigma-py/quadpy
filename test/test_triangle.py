@@ -65,7 +65,10 @@ def _integrate_exact(f, triangle):
     + [(quadpy.triangle.Papanicolopulos('rot', k), 1.0e-14) for k in range(18)]
     + [(quadpy.triangle.SevenPoint(), 1.0e-14)]
     + [(quadpy.triangle.Strang(k), 1.0e-14) for k in range(1, 11)]
-    + [(quadpy.triangle.Stroud(k), 1.0e-14) for k in range(10)]
+    + [(quadpy.triangle.Stroud(k), 1.0e-14) for k in [
+        'T2 3-1', 'T2 5-1', 'T2 7-1'
+        ]
+       ]
     + [(quadpy.triangle.TaylorWingateBos(k), 1.0e-14) for k in [1, 2, 4, 5, 8]]
     + [(quadpy.triangle.Triex(k), 1.0e-14) for k in [19, 28]]
     + [(quadpy.triangle.Vertex(), 1.0e-14)]
@@ -132,6 +135,6 @@ def test_volume():
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.triangle.HammerStroud(3)
+    scheme_ = quadpy.triangle.Stroud('T2 7-1')
     test_scheme(scheme_, 1.0e-14)
     test_show(scheme_)

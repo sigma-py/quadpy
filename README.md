@@ -132,7 +132,9 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    (1956, 5 schemes up to degree 5),
  * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 2 schemes up to degree 3)
  * open and closed Newton-Cotes schemes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6), arbitrary degree),
- * [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971, 10 schemes up to degree 5)
+ * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
+   - [Albrecht-Collatz](https://dx.doi.org/10.1002/zamm.19580380102) (1958, degree 3)
+   - conical product scheme (degree 7)
  * [Strang](http://bookstore.siam.org/wc08/)/[Cowper](https://dx.doi.org/10.1002/nme.1620070316) (1973, 10 schemes up to
    degree 7),
  * [Lyness-Jespersen](https://dx.doi.org/10.1093/imamat/15.1.19) (1975, 21
@@ -333,8 +335,7 @@ val = quadpy.ball.integrate(
    (1956, 3 schemes up to degree 3)
  * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 2 schemes up to degree 3)
  * open and closed Newton-Cotes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6)) (arbitrary degree)
- * [Stroud](https://cds.cern.ch/record/104291?ln=en) (1971, 2 schemes up to
-   degree 3)
+ * [Stroud](https://cds.cern.ch/record/104291?ln=en) (1971, degree 7)
  * [Grundmann-Möller](http://dx.doi.org/10.1137/0715019) (1978, arbitrary degree),
  * [Yu](http://dx.doi.org/10.1016/0045-7825(84)90072-0) (1984, 5 schemes up to degree 6)
  * [Keast](http://dx.doi.org/10.1016/0045-7825(86)90059-9) (1986, 11 schemes up to
@@ -430,6 +431,11 @@ val = quadpy.wedge.integrate(
 ```
 
 ### n-Simplex
+ * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y):
+   - [Lauffer](https://doi.org/10.1007/BF01900222) (1955, 5 schemes up to degree 5)
+   - [Hammer-Stroud](https://doi.org/10.2307/2002484) (1956, 3 schemes up to degree 3)
+   - [Stroud](https://doi.org/10.1007/BF02165227) (1966, 7 schemes of degree 3)
+   - [Stroud](https://doi.org/10.1137/0706009) (1969, degree 5)
  * [Grundmann-Möller](http://dx.doi.org/10.1137/0715019) (1978, arbitrary degree)
  * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/) (2000, 5 schemes up to degree 7)
 
