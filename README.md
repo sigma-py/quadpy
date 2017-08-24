@@ -335,8 +335,7 @@ val = quadpy.ball.integrate(
    (1956, 3 schemes up to degree 3)
  * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 2 schemes up to degree 3)
  * open and closed Newton-Cotes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6)) (arbitrary degree)
- * [Stroud](https://cds.cern.ch/record/104291?ln=en) (1971, 2 schemes up to
-   degree 3)
+ * [Stroud](https://cds.cern.ch/record/104291?ln=en) (1971, degree 7)
  * [Grundmann-Möller](http://dx.doi.org/10.1137/0715019) (1978, arbitrary degree),
  * [Yu](http://dx.doi.org/10.1016/0045-7825(84)90072-0) (1984, 5 schemes up to degree 6)
  * [Keast](http://dx.doi.org/10.1016/0045-7825(86)90059-9) (1986, 11 schemes up to
