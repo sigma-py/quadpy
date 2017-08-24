@@ -16,6 +16,7 @@ class Stroud1969(object):
     SIAM J. Numer. Anal., 6(1), 90–98. (9 pages),
     <https://doi.org/10.1137/0706009>.
     '''
+    # pylint: disable=too-many-locals
     def __init__(self, n):
         assert n >= 3
         self.dim = n

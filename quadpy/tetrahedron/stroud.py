@@ -17,6 +17,7 @@ class Stroud(object):
     Englewood Cliffs, NJ : Prentice-Hall, c 1971. - XIII,
     ISBN 0-13-043893-6.
     '''
+    # pylint: disable=too-many-locals
     def __init__(self, index):
         self.name = 'Stroud({})'.format(index)
         if index == 'T3 5-1':
