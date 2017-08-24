@@ -55,7 +55,7 @@ def _integrate_exact(f, tetrahedron):
     + [quadpy.tetrahedron.NewtonCotesClosed(k) for k in range(1, 7)]
     + [quadpy.tetrahedron.NewtonCotesOpen(k) for k in range(7)]
     + [quadpy.tetrahedron.ShunnHam(k) for k in range(1, 7)]
-    + [quadpy.tetrahedron.Stroud(k) for k in range(2)]
+    + [quadpy.tetrahedron.Stroud(k) for k in ['T3 5-1', 'T3 7-1']]
     + [quadpy.tetrahedron.VioreanuRokhlin(k) for k in range(10)]
     + [quadpy.tetrahedron.Walkington(k) for k in [1, 2, 3, 5, 'p5', 7]]
     + [quadpy.tetrahedron.WilliamsShunnJameson()]
@@ -105,7 +105,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.tetrahedron.HammerStroud(3)
+    scheme_ = quadpy.tetrahedron.Stroud('T3 7-1')
     test_scheme(scheme_)
     # test_show(scheme_)
     quadpy.tetrahedron.show(scheme_, backend='vtk')

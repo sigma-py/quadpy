@@ -74,5 +74,6 @@ class Stroud(object):
     def set_data(self, scheme):
         self.degree = scheme.degree
         self.weights = scheme.weights
+        self.bary = scheme.bary
         self.points = scheme.points
         return
