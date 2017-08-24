@@ -48,7 +48,7 @@ class Stroud(object):
                 ]
 
             self.bary, self.weights = untangle(data)
-            self.points = self.bary[1:]
+            self.points = self.bary[:, 1:]
 
         return
 
