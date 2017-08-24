@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 import numpy
 
 from .helpers import _s4, _s31
 
+from ..nsimplex.stroud import Stroud as nsimplex
 
 class Stroud(object):
     '''
@@ -14,10 +17,8 @@ class Stroud(object):
     '''
     def __init__(self, index):
         self.name = 'Stroud({})'.format(index)
-        if index == 0:
-            self.degree = 2
-            self.weights = numpy.full(4, 1.0/4.0)
-            bary = _s31((5.0 - numpy.sqrt(5.0)) / 20.0)
+        if index == 'T3 5-1':
+            self.degree = 5
         else:
             assert index == 1
             self.degree = 3
