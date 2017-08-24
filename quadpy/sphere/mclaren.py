@@ -3,6 +3,7 @@
 import math
 import numpy
 
+from .helpers import cartesian_to_spherical
 from ..helpers import untangle, pm_array0, fsd, pm_array, pm, fsd2
 
 
@@ -279,4 +280,5 @@ class McLaren(object):
                 ]
 
         self.points, self.weights = untangle(data)
+        self.phi_theta = cartesian_to_spherical(self.points)
         return
