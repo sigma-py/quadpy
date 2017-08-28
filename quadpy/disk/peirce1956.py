@@ -31,7 +31,7 @@ class Peirce1956(object):
             B3 = (551.0 - 41*sqrt29) / 6264.0
 
             data = [
-                (B1, fsd(2, r, 1)),
+                (B1, fsd(2, (r, 1))),
                 (B2, pm(2, s)),
                 (B3, pm(2, t)),
                 ]
@@ -56,7 +56,7 @@ class Peirce1956(object):
             B4 = (5585.0 + 1440.0*sqrt15) / 508176.0
 
             data = [
-                (B1, fsd(2, r, 1)),
+                (B1, fsd(2, (r, 1))),
                 (B2, fs_array([u1, v1])),
                 (B3, fs_array([u2, v2])),
                 (B4, fs_array([u3, v3])),
@@ -84,9 +84,9 @@ class Peirce1956(object):
             t = sqrt((5.0 - sqrt15) / 20.0)
 
             data = [
-                (B1, fsd(2, r1, 1)),
-                (B2, fsd(2, r2, 1)),
-                (B3, fsd(2, r3, 1)),
+                (B1, fsd(2, (r1, 1))),
+                (B2, fsd(2, (r2, 1))),
+                (B3, fsd(2, (r3, 1))),
                 (C1, fs_array([u1, v1])),
                 (C2, fs_array([u2, v2])),
                 (D, pm(2, t)),

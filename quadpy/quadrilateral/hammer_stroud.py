@@ -17,14 +17,14 @@ class HammerStroud(object):
         if index == '1-2':
             self.degree = 3
             data = [
-                (1.0, fsd(2, math.sqrt(2.0/3.0), 1))
+                (1.0, fsd(2, (math.sqrt(2.0/3.0), 1)))
                 ]
         elif index == '2-2':
             self.degree = 5
             alpha = math.sqrt(3.0/5.0)
             data = [
                 (64.0/81.0, z(2)),
-                (40.0/81.0, fsd(2, alpha, 1)),
+                (40.0/81.0, fsd(2, (alpha, 1))),
                 (25.0/81.0, pm(2, alpha)),
                 ]
         else:
@@ -34,7 +34,7 @@ class HammerStroud(object):
             xi1 = math.sqrt(3.0/287.0 * (38.0 - math.sqrt(583.0)))
             xi2 = math.sqrt(3.0/287.0 * (38.0 + math.sqrt(583.0)))
             data = [
-                (98.0/405.0, fsd(2, math.sqrt(6.0/7.0), 1)),
+                (98.0/405.0, fsd(2, (math.sqrt(6.0/7.0), 1))),
                 (0.5205929166673945, pm(2, xi1)),
                 (0.2374317746906302, pm(2, xi2)),
                 ]

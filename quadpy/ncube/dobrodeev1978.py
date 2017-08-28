@@ -2,7 +2,7 @@
 #
 from __future__ import division
 
-from ..helpers import untangle, fsd, fsd2, compute_dobrodeev
+from ..helpers import untangle, fsd, compute_dobrodeev
 from .helpers import integrate_monomial_over_ncube
 
 
@@ -63,8 +63,8 @@ class Dobrodeev1978(object):
         G, a, b, c = compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k)
 
         data = [
-            (G, fsd(n, a, i)),
-            (G, fsd2(n, b, c, j, k)),
+            (G, fsd(n, (a, i))),
+            (G, fsd(n, (b, j), (c, k))),
             ]
 
         self.points, self.weights = untangle(data)

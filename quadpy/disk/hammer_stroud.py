@@ -18,13 +18,13 @@ class HammerStroud(object):
             self.degree = 3
             # ERR Wrongly stated in Stroud with 0.5 instead of sqrt(0.5)
             data = [
-                (0.25, fsd(2, sqrt(0.5), 1)),
+                (0.25, fsd(2, (sqrt(0.5), 1))),
                 ]
         elif index == '12-2':
             self.degree = 5
             data = [
                 (1.0/6.0, z(2)),
-                (1.0/6.0, fsd(2, sqrt(0.5), 1)),
+                (1.0/6.0, fsd(2, (sqrt(0.5), 1))),
                 (1.0/24.0, pm(2, sqrt(0.5))),
                 ]
         elif index == '13-2':
@@ -35,7 +35,7 @@ class HammerStroud(object):
             xi1 = sqrt(3.0 / 2 / (9 + sqrt29))
             xi2 = sqrt(3.0 / 2 / (9 - sqrt29))
             data = [
-                (2.0/27.0, fsd(2, sqrt(0.75), 1)),
+                (2.0/27.0, fsd(2, (sqrt(0.75), 1))),
                 (b1, pm(2, xi1)),
                 (b2, pm(2, xi2)),
                 ]
@@ -63,7 +63,7 @@ class HammerStroud(object):
             data = [
                 (1.0/9.0, z(2)),
                 (alpha1, fs_array([0.5505043204538557, 0.2280263556769715])),
-                (alpha2, fsd(2, 0.9192110607898046, 1)),
+                (alpha2, fsd(2, (0.9192110607898046, 1))),
                 (alpha3, fs_array([0.7932084745126058, 0.4645097310495256])),
                 ]
         elif index == '20':
@@ -79,12 +79,12 @@ class HammerStroud(object):
             x3 = sqrt((5.0 + sqrt15) / 10.0)
 
             data = [
-                (5.0/144.0, fsd(2, x1, 1)),
+                (5.0/144.0, fsd(2, (x1, 1))),
                 (5.0/144.0, pm(2, x2)),
-                (alpha1, fsd(2, sqrt(0.5), 1)),
+                (alpha1, fsd(2, (sqrt(0.5), 1))),
                 (alpha2, fs_array([0.6125369400823741, 0.3532683074300921])),
                 (alpha3, fs_array([0.8157480497746617, 0.4710132205252606])),
-                (0.0727346698565653/pi, fsd(2, x3, 1)),
+                (0.0727346698565653/pi, fsd(2, (x3, 1))),
                 ]
         else:
             assert index == '21'

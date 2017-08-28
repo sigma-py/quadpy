@@ -29,7 +29,7 @@ class AlbrechtCollatz(object):
             r = 1.0
             s = math.sqrt(1.0/3.0)
             data = [
-                (8.0/120.0, fsd(3, r, 1)),
+                (8.0/120.0, fsd(3, (r, 1))),
                 (9.0/120.0, pm(3, s)),
                 ]
         elif index == 3:
@@ -37,8 +37,8 @@ class AlbrechtCollatz(object):
             r = 1.0
             s = math.sqrt(1.0/2.0)
             data = [
-                (1.0/30.0, fsd(3, r, 1)),
-                (2.0/30.0, fsd(3, s, 2)),
+                (1.0/30.0, fsd(3, (r, 1))),
+                (2.0/30.0, fsd(3, (s, 2))),
                 ]
         elif index == 4:
             self.degree = 5
@@ -60,8 +60,8 @@ class AlbrechtCollatz(object):
             t = math.sqrt(1.0/3.0)
 
             data = [
-                (40.0/840.0, fsd(3, r, 1)),
-                (32.0/840.0, fsd(3, s, 2)),
+                (40.0/840.0, fsd(3, (r, 1))),
+                (32.0/840.0, fsd(3, (s, 2))),
                 (27/840.0, pm(3, t)),
                 ]
 
