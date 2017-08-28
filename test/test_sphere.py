@@ -65,9 +65,6 @@ def test_scheme_cartesian(scheme, tol):
     err = vals
     err[0, 0] -= numpy.sqrt(4.0 * numpy.pi)
 
-    print(err.shape)
-    print(numpy.vstack(numpy.where(abs(err) > tol)))
-
     # check in which level the first significant errors occur
     first_error_level = numpy.min(
         numpy.max(numpy.vstack(numpy.where(abs(err) > tol)), axis=0)
