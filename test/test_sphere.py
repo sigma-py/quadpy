@@ -21,12 +21,18 @@ def _cartesian_to_spherical(X):
 
 
 @pytest.mark.parametrize(
-    'scheme',
-    [quadpy.sphere.Lebedev(degree) for degree in [
+    'scheme,tol',
+    [(quadpy.sphere.HeoXu(index), 1.0e-6) for index in [
+        '13', '15', '17', '19-1', '19-2',
+        '21-1', '21-2', '21-3', '21-4', '21-5', '21-6',
+        '23-1', '23-2', '23-3', '25-1', '25-2', '27-1', '27-2',
+        '27-3', '29', '31', '33', '35', '37', '39-1', '39-2',
+        ]]
+    + [(quadpy.sphere.Lebedev(degree), 1.0e-11) for degree in [
         3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 35, 41, 47, 53,
         59, 65, 71, 77, 83, 89, 95, 101, 107, 113, 119, 125, 131
         ]]
-    + [quadpy.sphere.Stroud(k) for k in [
+    + [(quadpy.sphere.Stroud(k), 1.0e-14) for k in [
         'U3 3-1',
         'U3 5-1', 'U3 5-2', 'U3 5-3', 'U3 5-4', 'U3 5-5',
         'U3 7-1', 'U3 7-2',
@@ -36,7 +42,7 @@ def _cartesian_to_spherical(X):
         'U3 14-1',
         ]]
     )
-def test_scheme_cartesian(scheme, tol=1.0e-11):
+def test_scheme_cartesian(scheme, tol):
     exact_val = numpy.zeros(scheme.degree + 1)
     exact_val[0] = numpy.sqrt(4*numpy.pi)
 
@@ -59,6 +65,9 @@ def test_scheme_cartesian(scheme, tol=1.0e-11):
     err = vals
     err[0, 0] -= numpy.sqrt(4.0 * numpy.pi)
 
+    print(err.shape)
+    print(numpy.vstack(numpy.where(abs(err) > tol)))
+
     # check in which level the first significant errors occur
     first_error_level = numpy.min(
         numpy.max(numpy.vstack(numpy.where(abs(err) > tol)), axis=0)
@@ -74,11 +83,17 @@ def test_scheme_cartesian(scheme, tol=1.0e-11):
 # Test a few schemes with integrate_spherical. -- This is basically the same as
 # above, no need to repeat it all in detail.
 @pytest.mark.parametrize(
-    'scheme',
-    [quadpy.sphere.Lebedev(degree) for degree in [
+    'scheme,tol',
+    [(quadpy.sphere.HeoXu(index), 1.0e-6) for index in [
+        '13', '15', '17', '19-1', '19-2',
+        '21-1', '21-2', '21-3', '21-4', '21-5', '21-6',
+        '23-1', '23-2', '23-3', '25-1', '25-2', '27-1', '27-2',
+        '27-3', '29', '31', '33', '35', '37', '39-1', '39-2',
+        ]]
+    + [(quadpy.sphere.Lebedev(degree), 1.0e-11) for degree in [
         3, 5, 7, 9, 11, 13, 15, 17, 19,
         ]]
-    + [quadpy.sphere.Stroud(k) for k in [
+    + [(quadpy.sphere.Stroud(k), 1.0e-14) for k in [
         'U3 3-1',
         'U3 5-1', 'U3 5-2', 'U3 5-3', 'U3 5-4', 'U3 5-5',
         'U3 7-1', 'U3 7-2',
@@ -88,7 +103,7 @@ def test_scheme_cartesian(scheme, tol=1.0e-11):
         'U3 14-1',
         ]]
     )
-def test_scheme_spherical(scheme, tol=1.0e-11):
+def test_scheme_spherical(scheme, tol):
     exact_val = numpy.zeros(scheme.degree + 1)
     exact_val[0] = numpy.sqrt(4*numpy.pi)
 
@@ -129,7 +144,7 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = quadpy.sphere.Stroud('U3 11-3')
-    scheme_ = quadpy.sphere.HeoXu('19')
+    scheme_ = quadpy.sphere.HeoXu('35')
     # test_scheme(scheme_)
-    test_scheme_cartesian(scheme_, tol=1.0e-9)
+    test_scheme_cartesian(scheme_, tol=1.0e-7)
     # test_show(scheme_)
