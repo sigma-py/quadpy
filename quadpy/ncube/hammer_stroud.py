@@ -18,7 +18,7 @@ class HammerStroud(object):
         if index == '1-n':
             self.degree = 3
             data = [
-                (0.5/n, fsd(n, math.sqrt(n/3.0), 1)),
+                (0.5/n, fsd(n, (math.sqrt(n/3.0), 1))),
                 ]
         else:
             assert index == '2-n'
@@ -26,8 +26,8 @@ class HammerStroud(object):
             r = math.sqrt(3.0 / 5.0)
             data = [
                 ((25*n**2 - 115*n + 162)/162.0, z(n)),
-                ((70 - 25*n)/162.0, fsd(n, r, 1)),
-                (25.0/324.0, fsd(n, r, 2)),
+                ((70 - 25*n)/162.0, fsd(n, (r, 1))),
+                (25.0/324.0, fsd(n, (r, 2))),
                 ]
 
         self.points, self.weights = untangle(data)

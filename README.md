@@ -289,6 +289,8 @@ val = quadpy.e2r.integrate(
    - [McLaren](https://doi.org/10.1090/S0025-5718-1963-0159418-2) (1963, 10 schemes up to degree 14)
  * [Lebedev](https://en.wikipedia.org/wiki/Lebedev_quadrature) (1976, 32
    schemes up to degree 131)
+ * [Heo-Xu](https://doi.org/10.1090/S0025-5718-00-01198-4) (2001, 27 schemes up
+   to degree 39, single-precision)
 
 Example:
 ```python

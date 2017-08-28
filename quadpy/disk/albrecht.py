@@ -2,7 +2,7 @@
 #
 import numpy
 
-from ..helpers import untangle, z, fsd, fsd2, pm
+from ..helpers import untangle, z, fsd, pm
 
 
 class Albrecht(object):
@@ -121,12 +121,12 @@ class Albrecht(object):
             v = numpy.sqrt(5.0/6.0) * numpy.sin(numpy.pi/8.0)
 
             data = [
-                (B[0], fsd(2, numpy.sqrt(sigma2[0]), 1)),
-                (B[1], fsd(2, numpy.sqrt(sigma2[1]), 1)),
-                (B[2], fsd(2, numpy.sqrt(sigma2[2]), 1)),
+                (B[0], fsd(2, (numpy.sqrt(sigma2[0]), 1))),
+                (B[1], fsd(2, (numpy.sqrt(sigma2[1]), 1))),
+                (B[2], fsd(2, (numpy.sqrt(sigma2[2]), 1))),
                 (C1, pm(2, s1)),
                 (C2, pm(2, s2)),
-                (D, fsd2(2, u, v, 1, 1)),
+                (D, fsd(2, (u, 1), (v, 1))),
                 ]
         elif index == 6:
             self.degree = 13

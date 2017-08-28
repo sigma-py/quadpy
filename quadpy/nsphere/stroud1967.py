@@ -26,11 +26,11 @@ class Stroud1967(object):
         D = 4 / n / (n+2) / (n+4)
 
         data = [
-            (B, fsd(n, r, 1)),
+            (B, fsd(n, (r, 1))),
             (C, pm(n, s)),
             # ERR Stroud's book wrongly states (t, t,..., t)_FS instead of
             # (t, t, 0, ..., 0)_FS.
-            (D, fsd(n, t, 2)),
+            (D, fsd(n, (t, 2))),
             ]
 
         self.points, self.weights = untangle(data)

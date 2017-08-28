@@ -34,24 +34,18 @@ def rd(n, items):
     return combine(*elems)
 
 
-def fsd(n, r, d):
-    '''Get all permutations of [+-r, +-r, 0, ..., 0] of length n, where +-r
-    occurs d times.
-    len(out) == 2**d * (n over d).
-    n==1:  2*n
-    n==2:  2*n*(n-1)
-    n==3:  4*n*(n-1)*(n-2) / 3
+def fsd(n, *tuples):
+    '''tuples is a list of tuples (value, count). This method returns all
+    permutations of [+-r, +-r, +-s, +-s, 0, ..., 0] of length n, with `count`
+    times the number `value`.
     '''
-    assert 0 <= d <= n
-    return combine(((+r, -r), d), ((0.0,), n-d))
-
-
-def fsd2(n, r, s, i, j):
-    '''Get all permutations of [+-r, +-r, +-s, +-s, 0, ..., 0] of length n,
-    with i times the number r and and j times the number s.
-    '''
-    assert i+j <= n
-    return combine(((+r, -r), i), ((+s, -s), j), ((0.0,), n-i-j))
+    pm_tuples = [((+val, -val), count) for val, count in tuples]
+    total_count = sum([item[1] for item in tuples])
+    assert total_count <= n
+    pm_tuples += [
+        ((0.0,), n - total_count)
+        ]
+    return combine(*pm_tuples)
 
 
 def fs_array(v):
