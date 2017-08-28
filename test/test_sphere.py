@@ -41,7 +41,6 @@ def test_scheme_cartesian(scheme, tol=1.0e-11):
     exact_val[0] = numpy.sqrt(4*numpy.pi)
 
     def sph_tree_cartesian(x):
-        print(x.shape)
         phi_theta = _cartesian_to_spherical(x.T).T
         return specialpy.sph_tree(
             scheme.degree+1, phi_theta[1], phi_theta[0]
