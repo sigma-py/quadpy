@@ -51,7 +51,8 @@ class AlbrechtCollatz(object):
                 (1.0/20.0, pm_array0(3, [r, s], [2, 0])),
                 (1.0/20.0, pm(3, t)),
                 ]
-        elif index == 5:
+        else:
+            assert index == 5
             self.degree = 7
 
             r = 1.0
@@ -63,8 +64,6 @@ class AlbrechtCollatz(object):
                 (32.0/840.0, fsd(3, s, 2)),
                 (27/840.0, pm(3, t)),
                 ]
-        else:
-            assert False
 
         self.points, self.weights = untangle(data)
         self.phi_theta = cartesian_to_spherical(self.points)
