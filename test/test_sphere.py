@@ -129,7 +129,7 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = quadpy.sphere.Stroud('U3 11-3')
-    scheme_ = quadpy.sphere.HeoXu('13')
+    scheme_ = quadpy.sphere.HeoXu('19')
     # test_scheme(scheme_)
-    test_scheme_cartesian(scheme_, tol=1.0e-10)
+    test_scheme_cartesian(scheme_, tol=1.0e-9)
     # test_show(scheme_)
