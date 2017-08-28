@@ -50,9 +50,9 @@ class Stroud1967b(object):
 
             data = [
                 (A, z(n)),
-                (B, fsd(n, r, 1)),
+                (B, fsd(n, (r, 1))),
                 (C, pm(n, s)),
-                (D, fsd(n, t, 2)),
+                (D, fsd(n, (t, 2))),
                 ]
             self.points, self.weights = untangle(data)
         else:

@@ -33,7 +33,7 @@ class MustardLynessBlatt(object):
         r = numpy.sqrt(2.0 / 5.0)
         data = [
             ((8 - 5*n)/9.0, z(n)),
-            (5.0/18.0, fsd(n, r, 1)),
+            (5.0/18.0, fsd(n, (r, 1))),
             (1.0/9.0 / 2**n, pm(n, 1.0)),
             ]
 

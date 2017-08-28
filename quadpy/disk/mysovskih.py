@@ -52,9 +52,9 @@ class Mysovskih(object):
             s5 = sqrt((10.0 + sqrt10) / 60.0)
 
             data = [
-                (B1, fsd(2, r1, 1)),
-                (B2, fsd(2, r2, 1)),
-                (B3, fsd(2, r3, 1)),
+                (B1, fsd(2, (r1, 1))),
+                (B2, fsd(2, (r2, 1))),
+                (B3, fsd(2, (r3, 1))),
                 (B4, fs_array([r4, s4])),
                 (B5, fs_array([r5, s5])),
                 ]

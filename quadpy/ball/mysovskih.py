@@ -28,9 +28,9 @@ class Mysovskih(object):
         B4 = 2187.0 / 96040.0
 
         data = [
-            (B1, fsd(3, r, 1)),
-            (B2, fsd(3, s, 1)),
-            (B3, fsd(3, t, 2)),
+            (B1, fsd(3, (r, 1))),
+            (B2, fsd(3, (s, 1))),
+            (B3, fsd(3, (t, 2))),
             (B4, pm(3, u)),
             ]
 

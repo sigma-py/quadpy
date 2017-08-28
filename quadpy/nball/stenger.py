@@ -3,7 +3,7 @@
 from __future__ import division
 import warnings
 
-from ..helpers import untangle, fsd, fsd2, z
+from ..helpers import untangle, fsd, z
 
 
 class Stenger(object):
@@ -121,11 +121,11 @@ class Stenger(object):
 
             data = [
                 (B[0], z(n)),
-                (B[1], fsd(n, u, 1)),
-                (B[2], fsd(n, v, 1)),
-                (B[3], fsd(n, u, 2)),
-                (B[4], fsd(n, v, 2)),
-                (B[5], fsd(n, u, 3)),
+                (B[1], fsd(n, (u, 1))),
+                (B[2], fsd(n, (v, 1))),
+                (B[3], fsd(n, (u, 2))),
+                (B[4], fsd(n, (v, 2))),
+                (B[5], fsd(n, (u, 3))),
                 ]
         elif degree == 9:
             if variant == 'a':
@@ -233,17 +233,17 @@ class Stenger(object):
 
             data = [
                 (B[0], z(n)),
-                (B[1], fsd(n, u, 1)),
-                (B[2], fsd(n, v, 1)),
-                (B[3], fsd(n, u, 2)),
-                (B[4], fsd(n, v, 2)),
-                (B[5], fsd2(n, u, v, 1, 1)),
-                (B[6], fsd(n, u, 3)),
-                (B[7], fsd(n, v, 3)),
+                (B[1], fsd(n, (u, 1))),
+                (B[2], fsd(n, (v, 1))),
+                (B[3], fsd(n, (u, 2))),
+                (B[4], fsd(n, (v, 2))),
+                (B[5], fsd(n, (u, 1), (v, 1))),
+                (B[6], fsd(n, (u, 3))),
+                (B[7], fsd(n, (v, 3))),
                 ]
             if n > 3:
                 data += [
-                    (B[8], fsd(n, u, 4))
+                    (B[8], fsd(n, (u, 4)))
                     ]
 
         else:
@@ -383,27 +383,27 @@ class Stenger(object):
 
             data = [
                 (B[0], z(n)),
-                (B[1], fsd(n, u, 1)),
-                (B[2], fsd(n, v, 1)),
-                (B[3], fsd(n, w, 1)),
-                (B[4], fsd(n, u, 2)),
-                (B[5], fsd(n, v, 2)),
-                (B[6], fsd(n, w, 2)),
-                (B[7], fsd2(n, u, v, 1, 1)),
-                (B[8], fsd2(n, u, w, 1, 1)),
-                (B[9], fsd(n, u, 3)),
-                (B[10], fsd(n, v, 3)),
-                (B[11], fsd(n, w, 3)),
-                (B[12], fsd2(n, u, v, 2, 1)),
+                (B[1], fsd(n, (u, 1))),
+                (B[2], fsd(n, (v, 1))),
+                (B[3], fsd(n, (w, 1))),
+                (B[4], fsd(n, (u, 2))),
+                (B[5], fsd(n, (v, 2))),
+                (B[6], fsd(n, (w, 2))),
+                (B[7], fsd(n, (u, 1), (v, 1))),
+                (B[8], fsd(n, (u, 1), (w, 1))),
+                (B[9], fsd(n, (u, 3))),
+                (B[10], fsd(n, (v, 3))),
+                (B[11], fsd(n, (w, 3))),
+                (B[12], fsd(n, (u, 2), (v, 1))),
                 ]
             if n > 3:
                 data += [
-                    (B[13], fsd(n, u, 4)),
-                    (B[14], fsd(n, v, 4)),
+                    (B[13], fsd(n, (u, 4))),
+                    (B[14], fsd(n, (v, 4))),
                     ]
             if n > 4:
                 data += [
-                    (B[15], fsd(n, u, 5)),
+                    (B[15], fsd(n, (u, 5))),
                     ]
 
         # TODO According to Stroud,

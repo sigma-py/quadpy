@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 from .helpers import cartesian_to_spherical
-from ..helpers import untangle, fsd, fsd2
+from ..helpers import untangle, fsd
 
 
 class HeoXu(object):
@@ -25,16 +25,14 @@ class HeoXu(object):
         if index == '13':
             self.degree = 13
             data = [
-                (0.013866592105, fsd(3, 1.0, 1)),
-                (0.013050931863, fsd2(3, 0.286640146767, 0.914152532416, 2, 1)),
-                (0.013206423223, fsd2(3, 0.659905001656, 0.359236381200, 2, 1)),
-                (0.011942663555, fsd2(3, 0.539490098706, 0.841991943785, 1, 1)),
+                (0.013866592105, fsd(3, (1.0, 1))),
+                (0.013050931863, fsd(3, (0.286640146767, 2), (0.914152532416, 1))),
+                (0.013206423223, fsd(3, (0.659905001656, 2), (0.359236381200, 1))),
+                (0.011942663555, fsd(3, (0.539490098706, 1), (0.841991943785, 1))),
                 ]
         else:
             assert False
 
         self.points, self.weights = untangle(data)
-        print(len(self.weights))
-        print(sum(self.weights))
         self.phi_theta = cartesian_to_spherical(self.points)
         return

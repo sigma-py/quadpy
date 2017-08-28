@@ -28,10 +28,10 @@ class Dobrodeev1970(object):
 
         r = numpy.sqrt(3.0 / (n + 6.0))
         data = [
-            (A, fsd(n, r, 3)),
-            (B, fsd(n, r, 2)),
-            (C, fsd(n, r, 1)),
-            (D, fsd(n, 1.0, 1)),
+            (A, fsd(n, (r, 3))),
+            (B, fsd(n, (r, 2))),
+            (C, fsd(n, (r, 1))),
+            (D, fsd(n, (1.0, 1))),
             (E, z(n)),
             ]
 

@@ -34,7 +34,7 @@ class Stroud1966(object):
             s = numpy.sqrt(s2)
 
             data = [
-                (B1, fsd(n, r, 1)),
+                (B1, fsd(n, (r, 1))),
                 (B2, pm(n, s)),
                 ]
         elif variant == 'b':
