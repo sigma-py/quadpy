@@ -24,7 +24,7 @@ class Stroud1966(object):
             r = numpy.sqrt((5*n + 4) / 30.0)
             s = numpy.sqrt((5*n + 4.0) / (15*n - 12.0))
             data = [
-                (40.0 / (5*n+4)**2, fsd(n, r, 1)),
+                (40.0 / (5*n+4)**2, fsd(n, (r, 1))),
                 (((5*n - 4.0) / (5*n + 4))**2 / 2**n, pm(n, s)),
                 ]
         elif variant == 'b':

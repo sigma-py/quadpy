@@ -34,7 +34,7 @@ class Stroud(object):
             r = numpy.sqrt(0.5)
             data = [
                 (1.0/6.0, z(2)),
-                (1.0/6.0, fsd(2, r, 1)),
+                (1.0/6.0, fsd(2, (r, 1))),
                 (1.0/24.0, pm(2, r))
                 ]
             self.points, self.weights = untangle(data)

@@ -4,7 +4,7 @@ import math
 import numpy
 
 from .helpers import cartesian_to_spherical
-from ..helpers import untangle, pm_array0, fsd, pm_array, pm, fsd2
+from ..helpers import untangle, pm_array0, fsd, pm_array, pm
 
 
 class McLaren(object):
@@ -21,7 +21,7 @@ class McLaren(object):
             self.degree = 3
 
             data = [
-                (1.0/12.0, fsd(3, math.sqrt(0.5), 2))
+                (1.0/12.0, fsd(3, (math.sqrt(0.5), 2)))
                 ]
         elif index == 2:
             self.degree = 5
@@ -35,7 +35,7 @@ class McLaren(object):
             s, t = (math.sqrt(5.0) + plus_minus * 1) / 4.0
 
             data = [
-                (1.0/30.0, fsd(3, u, 1)),
+                (1.0/30.0, fsd(3, (u, 1))),
                 (1.0/30.0, pm_array([r, s, t])),
                 (1.0/30.0, pm_array([t, r, s])),
                 (1.0/30.0, pm_array([s, t, r])),
@@ -77,7 +77,7 @@ class McLaren(object):
             w = numpy.array([+t, +s, +r, +t, +s, +r])
 
             data = [
-                (16.0/600.0, fsd(3, 1.0, 1)),
+                (16.0/600.0, fsd(3, (1.0, 1))),
                 (21.0/600.0, numpy.column_stack([+u, +v, +w])),
                 (21.0/600.0, numpy.column_stack([+u, -v, -w])),
                 (21.0/600.0, numpy.column_stack([+u, +w, -v])),
@@ -123,7 +123,7 @@ class McLaren(object):
                 (B, pm_array0(3, [r, s], [1, 2])),
                 (B, pm_array0(3, [r, s], [2, 0])),
                 #
-                (C, fsd(3, t, 1)),
+                (C, fsd(3, (t, 1))),
                 #
                 (C, pm_array([u, v, w])),
                 (C, pm_array([w, u, v])),
@@ -149,7 +149,7 @@ class McLaren(object):
                 #
                 (B, pm(3, t)),
                 #
-                (C, fsd(3, 1.0, 1)),
+                (C, fsd(3, (1.0, 1))),
                 #
                 (C, pm_array([u, v, w])),
                 (C, pm_array([w, u, v])),
@@ -171,10 +171,10 @@ class McLaren(object):
             B4 = 14641.0 / 725760.0
 
             data = [
-                (B1, fsd(3, r, 1)),
-                (B2, fsd(3, s, 2)),
+                (B1, fsd(3, (r, 1))),
+                (B2, fsd(3, (s, 2))),
                 (B3, pm(3, t)),
-                (B4, fsd2(3, u, v, 2, 1)),
+                (B4, fsd(3, (u, 2), (v, 1))),
                 ]
         elif index == 9:
             self.degree = 11
@@ -204,7 +204,7 @@ class McLaren(object):
                 #
                 (C, pm(3, t)),
                 #
-                (D, fsd(3, 1.0, 1)),
+                (D, fsd(3, (1.0, 1))),
                 #
                 (D, pm_array([u, v, w])),
                 (D, pm_array([w, u, v])),

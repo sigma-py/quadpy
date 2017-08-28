@@ -17,15 +17,15 @@ class HammerStroud(object):
         if index == '11-3':
             self.degree = 3
             data = [
-                (1.0/6.0, fsd(3, sqrt(0.6), 1)),
+                (1.0/6.0, fsd(3, (sqrt(0.6), 1))),
                 ]
         elif index == '12-3':
             self.degree = 5
             alpha = sqrt(3.0/7.0)
             data = [
                 (1.0/15.0, z(3)),
-                (7.0/90.0, fsd(3, alpha, 1)),
-                (7.0/180.0, fsd(3, alpha, 2)),
+                (7.0/90.0, fsd(3, (alpha, 1))),
+                (7.0/180.0, fsd(3, (alpha, 2))),
                 ]
         elif index in ['14-3a', '14-3b']:
             self.degree = 5
@@ -42,7 +42,7 @@ class HammerStroud(object):
             eta1 = sqrt(5.0 / (21.0 - t * 2*sqrt14))
 
             data = [
-                (a1, fsd(3, nu, 1)),
+                (a1, fsd(3, (nu, 1))),
                 (c1, pm(3, eta1)),
                 ]
         else:
@@ -66,8 +66,8 @@ class HammerStroud(object):
 
             data = [
                 (a0, z(3)),
-                (a1, fsd(3, sqrt(nu2), 1)),
-                (b1, fsd(3, sqrt(xi2), 2)),
+                (a1, fsd(3, (sqrt(nu2), 1))),
+                (b1, fsd(3, (sqrt(xi2), 2))),
                 (c1, pm(3, sqrt(eta2))),
                 ]
         self.points, self.weights = untangle(data)

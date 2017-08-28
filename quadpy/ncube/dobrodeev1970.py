@@ -30,10 +30,10 @@ class Dobrodeev1970(object):
         b = a
         c = numpy.sqrt(3.0 / 5.0 * (alpha+1790.0) / (alpha+2114.0))
         data = [
-            (A, fsd(n, a, 3)),
-            (B, fsd(n, b, 2)),
-            (C, fsd(n, c, 1)),
-            (D, fsd(n, 1.0, 1)),
+            (A, fsd(n, (a, 3))),
+            (B, fsd(n, (b, 2))),
+            (C, fsd(n, (c, 1))),
+            (D, fsd(n, (1.0, 1))),
             (E, z(n)),
             ]
 

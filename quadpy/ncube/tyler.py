@@ -15,7 +15,7 @@ class Tyler(object):
         self.degree = 3
         data = [
             ((3.0 - n)/3.0, z(n)),
-            (1.0/6.0, fsd(n, 1.0, 1)),
+            (1.0/6.0, fsd(n, (1.0, 1))),
             ]
 
         self.points, self.weights = untangle(data)

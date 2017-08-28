@@ -4,7 +4,7 @@ from __future__ import division
 import math
 import numpy
 
-from ..helpers import untangle, pm, fsd2
+from ..helpers import untangle, pm, fsd
 from .helpers import integrate_monomial_over_unit_nsphere
 
 
@@ -119,16 +119,16 @@ class Stroud1969(object):
 
         data = [
             (A[n], pm(n, t)),
-            (B1[n], fsd2(n, s1, r1, 1, n-1)),
-            (B2[n], fsd2(n, s2, r2, 1, n-1)),
+            (B1[n], fsd(n, (s1, 1), (r1, n-1))),
+            (B2[n], fsd(n, (s2, 1), (r2, n-1))),
             ]
         if n >= 4:
             data += [
-                (C1[n], fsd2(n, v1, u1, 2, n-2))
+                (C1[n], fsd(n, (v1, 2), (u1, n-2)))
                 ]
         if n >= 5:
             data += [
-                (C2[n], fsd2(n, v2, u2, 2, n-2))
+                (C2[n], fsd(n, (v2, 2), (u2, n-2)))
                 ]
 
         self.points, self.weights = untangle(data)

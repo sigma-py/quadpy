@@ -75,13 +75,13 @@ class Phillips(object):
 
         data = [
             (B0, z(n)),
-            (B1, fsd(n, r1, 1)),
-            (B2, fsd(n, r2, 1)),
-            (B3, fsd(n, s, 2)),
+            (B1, fsd(n, (r1, 1))),
+            (B2, fsd(n, (r2, 1))),
+            (B3, fsd(n, (s, 2))),
             ]
 
         if n > 2:
-            data.append((B4, fsd(n, t, 3)))
+            data.append((B4, fsd(n, (t, 3))))
 
         self.points, self.weights = untangle(data)
         self.weights *= reference_volume

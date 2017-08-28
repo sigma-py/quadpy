@@ -48,7 +48,7 @@ class Stroud(object):
             self.degree = 3
             self.weights = numpy.full(2*n, reference_volume / (2*n))
             r = numpy.sqrt(n / 3.0)
-            self.points = fsd(n, r, 1)
+            self.points = fsd(n, (r, 1))
         elif index == 'Cn 3-3':
             self.set_data(tyler.Tyler(n))
         elif index == 'Cn 3-4':

@@ -3,7 +3,7 @@
 from __future__ import division
 from math import sqrt, factorial as fact
 
-from ..helpers import untangle, fsd, fsd2
+from ..helpers import untangle, fsd
 from .helpers import integrate_monomial_over_unit_nsphere
 
 
@@ -57,12 +57,12 @@ class Dobrodeev1978(object):
         I0 = integrate_monomial_over_unit_nsphere(n * [0])
         if i is None:
             G, b, c = _generate_jk(n, pm_type, j, k)
-            data = [(G, fsd2(n, b, c, j, k))]
+            data = [(G, fsd(n, (b, j), (c, k)))]
         elif j is None:
             assert k is None
             assert pm_type is None
             G, a = _generate_i(n, i)
-            data = [(G, fsd(n, a, i))]
+            data = [(G, fsd(n, (a, i)))]
         else:
             I2 = integrate_monomial_over_unit_nsphere([2] + (n-1) * [0])
             I22 = integrate_monomial_over_unit_nsphere([2, 2] + (n-2) * [0])
@@ -72,8 +72,8 @@ class Dobrodeev1978(object):
                 _compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k)
 
             data = [
-                (G, fsd(n, a, i)),
-                (G, fsd2(n, b, c, j, k)),
+                (G, fsd(n, (a, i))),
+                (G, fsd(n, (b, j), (c, k))),
                 ]
 
         self.points, self.weights = untangle(data)
