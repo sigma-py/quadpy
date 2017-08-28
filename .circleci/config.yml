@@ -12,7 +12,8 @@ jobs:
       - run: apt-get install -y git python-pip python-matplotlib python-numpy python-scipy
       - run: pip2 install -U pytest pytest-cov pylint
       - checkout
-      - run: LANG=C.UTF-8 pip2 install .
+      - run: pip2 install -r test_requirements.txt
+      - run: pip2 install .
       # lint
       - run: pylint quadpy/
       - run: pylint test/*.py
@@ -34,7 +35,7 @@ jobs:
 #       - run: pip3 install -U pytest pytest-cov pylint meshio
 #       - checkout
 #       # install
-#       - run: LANG=C.UTF-8 pip3 install .
+#       - run: pip3 install .
 #       # lint
 #       - run: pylint setup.py
 #       # The actual test

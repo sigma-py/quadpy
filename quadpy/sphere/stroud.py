@@ -2,6 +2,8 @@
 #
 import math
 
+from .helpers import cartesian_to_spherical
+
 from .albrecht_collatz import AlbrechtCollatz
 from .mclaren import McLaren
 from ..nsphere.stroud1969 import Stroud1969
@@ -42,8 +44,12 @@ class Stroud(object):
         elif index == 'U3 11-1':
             self.set_data(McLaren(8))
         elif index == 'U3 11-2':
-            self.set_data(Stroud1969(3))
+            scheme = Stroud1969(3)
+            self.degree = scheme.degree
+            self.weights = scheme.weights
             self.weights /= 4 * math.pi
+            self.points = scheme.points
+            self.phi_theta = cartesian_to_spherical(self.points)
         elif index == 'U3 11-3':
             self.set_data(McLaren(9))
         else:
@@ -55,4 +61,5 @@ class Stroud(object):
         self.degree = scheme.degree
         self.weights = scheme.weights
         self.points = scheme.points
+        self.phi_theta = scheme.phi_theta
         return
