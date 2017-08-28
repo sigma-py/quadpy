@@ -4,7 +4,7 @@ import numpy
 import pytest
 import quadpy
 from quadpy.nball.helpers import integrate_monomial_over_unit_nsphere
-from scipy.special import sph_harm
+import specialpy
 
 from helpers import check_degree
 
@@ -47,7 +47,7 @@ def test_scheme(scheme):
     'scheme',
     [quadpy.sphere.Lebedev(degree) for degree in [
         3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 35, 41, 47, 53,
-        # TODO speed up test
+        # TODO speed up
         # 59, 65, 71, 77, 83, 89, 95, 101, 107, 113, 119, 125, 131
         ]]
     + [quadpy.sphere.Stroud(k) for k in [
@@ -60,26 +60,36 @@ def test_scheme(scheme):
         'U3 14-1',
         ]]
     )
-def test_scheme_spherical(scheme):
-    exact_val = numpy.zeros(scheme.degree + 10)
+# Instead of testing exact integration against of all monomials of degree at
+# most l, one can instead test exact integration of all _spherical harmonics_
+# of degree at most l. While there are 2**l monomials, there are only l**2
+# spherical harmonics.
+def test_scheme_spherical(scheme, tol=1.0e-11):
+    exact_val = numpy.zeros(scheme.degree + 1)
     exact_val[0] = numpy.sqrt(4*numpy.pi)
 
-    for l in range(scheme.degree + 10):
-        values = numpy.empty(2*l+1, dtype=complex)
-        for m in range(-l, l+1):
-            def f(theta_phi):
-                theta, phi = theta_phi
-                return sph_harm(m, l, theta, phi)
-            values[m+l] = quadpy.sphere.integrate_spherical(
-                f, radius=1.0, rule=scheme, sumfun=numpy.sum
-                )
+    vals = quadpy.sphere.integrate_spherical(
+        lambda phi_theta: specialpy.sph_tree(
+            scheme.degree+1, phi_theta[1], phi_theta[0]
+            ),
+        radius=1.0, rule=scheme, sumfun=numpy.sum
+        )
 
-        errors = abs(values - exact_val[l])
-        if numpy.any(errors > 1.0e-12):
-            degree = l-1
-            break
+    exact = numpy.zeros((scheme.degree+2, scheme.degree+2))
+    exact[0, 0] = numpy.sqrt(4 * numpy.pi)
 
-    assert degree >= scheme.degree, \
+    # The exact value is sqrt(4*pi) for the Y_0^0, and 0 otherwise.
+    err = vals
+    err[0, 0] -= numpy.sqrt(4.0 * numpy.pi)
+
+    # check in which level the first significant errors occur
+    first_error_level = numpy.min(
+        numpy.max(numpy.vstack(numpy.where(abs(err) > tol)), axis=0)
+        )
+
+    degree = first_error_level - 1
+
+    assert degree == scheme.degree, \
         'Observed: {}, expected: {}'.format(degree, scheme.degree)
     return
 
@@ -95,7 +105,7 @@ def test_show(scheme):
 
 if __name__ == '__main__':
     # scheme_ = quadpy.sphere.Stroud('U3 11-3')
-    scheme_ = quadpy.sphere.Lebedev(95)
+    scheme_ = quadpy.sphere.Lebedev(131)
     # test_scheme(scheme_)
     test_scheme_spherical(scheme_)
     # test_show(scheme_)
