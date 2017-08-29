@@ -28,7 +28,7 @@ def test_scheme(scheme, tol):
 
 
 if __name__ == '__main__':
-    quadpy.e2r2.show(quadpy.enr2.StroudSecrest(2, 'I'))
-    dim_ = 2
+    dim_ = 3
+    quadpy.e3r2.show(quadpy.enr2.StroudSecrest(dim_, 'I'), backend='vtk')
     scheme_ = quadpy.enr2.StroudSecrest(dim_, 'I')
     test_scheme(scheme_, 1.0e-14)
