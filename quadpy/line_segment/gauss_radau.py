@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from orthopy import jacobi_recursion_coefficients, gauss_from_coefficients
+from orthopy import jacobi_recurrence_coefficients, gauss_from_coefficients
 
 
 class GaussRadau(object):
@@ -11,7 +11,7 @@ class GaussRadau(object):
     def __init__(self, n, a=0.0, b=0.0):
         assert n >= 2
         self.degree = 2*n - 1
-        alpha, beta = jacobi_recursion_coefficients(n, a, b)
+        alpha, beta = jacobi_recurrence_coefficients(n, a, b)
         self.points, self.weights = _radau(alpha, beta, -1.0)
         return
 
