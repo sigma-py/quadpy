@@ -1,6 +1,14 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
+import numpy
+import orthopy
+
 from .stroud_secrest import StroudSecrest
+
+from ..sphere import stroud as sphere_stroud
+from ..helpers import untangle
 
 
 class Stroud(object):
@@ -28,7 +36,44 @@ class Stroud(object):
         elif index == 'E3r2 7-2b':
             self.set_data(StroudSecrest('XIb'))
         else:
-            assert False
+            assert index == 'E3r2 14-1'
+            self.degree = 14
+            # Get the moments corresponding to monomials and the weight
+            # function omega(x) = x^2 * exp(-x^2):
+            #
+            #    int_{-infty}^{infty} x^2 exp(-x^2) x^k dx \
+            #
+            #           / 0 for k odd,
+            #        = {
+            #           \ Gamma((k+3)/2) if k even
+            #
+            # In this particular case, we don't need to compute the recurrence
+            # coefficients numerically, but they are given analytically.
+            n = 8
+            alpha = numpy.zeros(n)
+            beta = numpy.empty(n)
+            beta[0] = numpy.sqrt(numpy.pi)/2
+            beta[1::2] = numpy.arange(n//2) + 1.5
+            beta[2::2] = numpy.arange(n//2-1) + 1.0
+
+            points, weights = orthopy.gauss_from_coefficients(alpha, beta)
+
+            r = points[-4:]
+            A = weights[-4:]
+
+            spherical_scheme = sphere_stroud.Stroud('U3 14-1')
+            v = spherical_scheme.points
+            B = spherical_scheme.weights
+
+            data = [
+                (A[i]*B[j], r[i] * numpy.array([v[j]]))
+                for i in range(4)
+                for j in range(72)
+                ]
+
+            self.points, self.weights = untangle(data)
+            self.weights *= 4 * numpy.pi
+
         return
 
     def set_data(self, scheme):

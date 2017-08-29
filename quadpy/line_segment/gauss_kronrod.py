@@ -3,7 +3,7 @@
 import math
 
 import numpy
-from orthopy import jacobi_recursion_coefficients, gauss_from_coefficients
+from orthopy import jacobi_recurrence_coefficients, gauss_from_coefficients
 
 from .. import helpers
 from .gauss_legendre import GaussLegendre
@@ -43,7 +43,7 @@ class GaussKronrod(object):
         # to retrieve the points and weights.
         length = int(math.ceil(3*n/2.0)) + 1
         self.degree = 2*length + 1
-        alpha, beta = jacobi_recursion_coefficients(length, a, b)
+        alpha, beta = jacobi_recurrence_coefficients(length, a, b)
         a, b = self.r_kronrod(n, alpha, beta)
         x, w = gauss_from_coefficients(a, b)
         # sort by x
