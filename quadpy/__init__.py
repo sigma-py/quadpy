@@ -20,6 +20,7 @@ from . import circle
 from . import disk
 from . import e2r
 from . import e2r2
+from . import e3r2
 from . import enr2
 from . import hexahedron
 from . import line_segment
