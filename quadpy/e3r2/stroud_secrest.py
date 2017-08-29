@@ -14,6 +14,7 @@ class StroudSecrest(object):
     Math. Comp. 17 (1963), 105-135,
     <https://doi.org/10.1090/S0025-5718-1963-0161473-0>.
     '''
+    # pylint: disable=too-many-locals
     def __init__(self, index):
         if index == 'VII':
             self.degree = 5
