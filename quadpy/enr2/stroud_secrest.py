@@ -24,13 +24,17 @@ class StroudSecrest(object):
             # construct the regular n-simplex points with 0 center
             pts = [
                 numpy.concatenate([
-                    -(n + 1) / (n+1-numpy.arange(i)) / (n-numpy.arange(i)),
-                    [(n+1) * (n-i) / (n+1-i)],
+                    -numpy.sqrt(
+                        (n + 1) / (n+1-numpy.arange(i)) / (n-numpy.arange(i))
+                        ),
+                    [numpy.sqrt((n+1) * (n-i) / (n+1-i))],
                     numpy.zeros(n-i-1)
                     ])
                 for i in range(n)
                 ] + [
-                -(n + 1) / (n+1-numpy.arange(n)) / (n-numpy.arange(n))
+                -numpy.sqrt(
+                    (n + 1) / (n+1-numpy.arange(n)) / (n-numpy.arange(n))
+                    )
                 ]
             pts = sqrt(0.5) * numpy.array(pts)
 
@@ -47,7 +51,7 @@ class StroudSecrest(object):
             self.degree = 3
             nu = sqrt(0.5)
             data = [
-                (1/(2*n), pm(n, nu))
+                (1/(2**n), pm(n, nu))
                 ]
         else:
             assert False
