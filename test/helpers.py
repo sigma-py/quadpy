@@ -102,3 +102,9 @@ def integrate_monomial_over_standard_simplex(k):
         math.fsum(scipy.special.gammaln(k+1))
         - scipy.special.gammaln(sum(k+1) + 1)
         )
+
+
+def integrate_monomial_over_enr2(k):
+    if numpy.any(k % 2 == 1):
+        return 0
+    return numpy.prod([math.gamma((kk+1) / 2.0) for kk in k])

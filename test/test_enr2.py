@@ -8,13 +8,17 @@ from helpers import check_degree, integrate_monomial_over_enr2
 
 @pytest.mark.parametrize(
     'scheme,tol',
-    [(quadpy.e2r2.RabinowitzRichter(k), 1.0e-14) for k in range(1, 6)]
+    [(quadpy.enr2.StroudSecrest(n, index), 1.0e-14) for n in range(2, 6)
+        for index in [
+        'I', 'II', 'III',
+        ]]
     )
 def test_scheme(scheme, tol):
+    n = scheme.dim
     degree = check_degree(
-            lambda poly: quadpy.e2r2.integrate(poly, scheme),
+            lambda poly: quadpy.enr2.integrate(poly, scheme),
             integrate_monomial_over_enr2,
-            lambda n: quadpy.helpers.partition(n, 2),
+            lambda k: quadpy.helpers.partition(k, n),
             scheme.degree + 1,
             tol=tol
             )
@@ -23,16 +27,8 @@ def test_scheme(scheme, tol):
     return
 
 
-@pytest.mark.parametrize(
-    'scheme',
-    [quadpy.e2r2.RabinowitzRichter(1)]
-    )
-def test_show(scheme):
-    quadpy.e2r2.show(scheme)
-    return
-
-
 if __name__ == '__main__':
-    scheme_ = quadpy.e2r2.RabinowitzRichter(5)
+    quadpy.e2r2.show(quadpy.enr2.StroudSecrest(2, 'I'))
+    dim_ = 2
+    scheme_ = quadpy.enr2.StroudSecrest(dim_, 'I')
     test_scheme(scheme_, 1.0e-14)
-    test_show(scheme_)
