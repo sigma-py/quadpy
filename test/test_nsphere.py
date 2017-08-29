@@ -24,8 +24,7 @@ from helpers import check_degree
         ]]
     + [quadpy.nsphere.Stroud1967(n) for n in range(2, 7)]
     )
-def test_scheme(scheme):
-    tol = 1.0e-14
+def test_scheme(scheme, tol=1.0e-14):
     n = scheme.dim
     center = numpy.zeros(n)
     rad = 1.0
