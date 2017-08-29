@@ -9,7 +9,7 @@ Your one-stop shop for numerical integration in Python.
 
 Hundreds of numerical integration schemes for line segments, circles, disks,
 triangles, quadrilaterals, spheres, balls, tetrahedra, hexahedra, wedges,
-pyramids, n-spheres, n-balls, n-cubes, n-simplices, and the 2D planes with
+pyramids, n-spheres, n-balls, n-cubes, n-simplices, and the 2D/3D spaces with
 weight functions exp(-r) and exp(-r<sup>2</sup>).
 
 To numerically integrate any function over any given triangle, do
@@ -252,7 +252,7 @@ quadpy.quadrilateral.rectangle_points([x0, x1], [y0, y1])
 to generate the array.
 
 
-### 2D plane with weight function exp(-r<sup>2</sup>)
+### 2D space with weight function exp(-r<sup>2</sup>)
 <img src="https://nschloe.github.io/quadpy/e2r2.png" width="25%">
 
  * [Rabinowitz-Richter](https://dx.doi.org/10.2307/2004962) (5 schemes up to degree 15)
@@ -266,7 +266,7 @@ val = quadpy.e2r2.integrate(
 ```
 
 
-### 2D plane with weight function exp(-r)
+### 2D space with weight function exp(-r)
 <img src="https://nschloe.github.io/quadpy/e2r.png" width="25%">
 
  * [Rabinowitz-Richter](https://dx.doi.org/10.2307/2004962) (4 schemes up to degree 15)
@@ -283,7 +283,7 @@ val = quadpy.e2r.integrate(
 ### Sphere
 <img src="https://nschloe.github.io/quadpy/sphere.png" width="25%">
 
- * via: [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
+ * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
    - [Albrecht-Collatz](https://dx.doi.org/10.1002/zamm.19580380102) (1958, 5
      schemes up to degree 7)
    - [McLaren](https://doi.org/10.1090/S0025-5718-1963-0159418-2) (1963, 10 schemes up to degree 14)
@@ -429,6 +429,22 @@ val = quadpy.wedge.integrate(
       [[0.0, 0.0, 1.0], [1.0, 0.0, 1.0], [0.5, 0.7, 1.0]],
     ],
     quadpy.wedge.Felippa(3)
+    )
+```
+
+
+### 3D space with weight function exp(-r<sup>2</sup>)
+<img src="https://nschloe.github.io/quadpy/e3r2.png" width="25%">
+
+ * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
+   - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 7 schemes up to degree 7)
+   - scheme of degree 14
+
+Example:
+```python
+val = quadpy.e2r2.integrate(
+    lambda x: numpy.exp(x[0]),
+    quadpy.e2r2.RabinowitzRichter(3)
     )
 ```
 
