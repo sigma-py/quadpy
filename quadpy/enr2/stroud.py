@@ -6,6 +6,7 @@ from math import sqrt, pi
 
 import numpy
 
+from .stenger import Stenger
 from .stroud1967a import Stroud1967a
 from .stroud1967b import Stroud1967b
 from .stroud_secrest import StroudSecrest
@@ -107,16 +108,19 @@ class Stroud(object):
             self.set_data(Stroud1967b('2b', n))
         elif index == '7-2':
             self.set_data(Stroud1967b('4', n))
-        elif index == '7-3':
-            # TODO
-            pass
-        elif index == '9-1':
-            # TODO
-            pass
+        elif index == '7-3a':
+            self.set_data(Stenger(n, 7, 'a'))
+        elif index == '7-3b':
+            self.set_data(Stenger(n, 7, 'b'))
+        elif index == '9-1a':
+            self.set_data(Stenger(n, 9, 'a'))
+        elif index == '9-1b':
+            self.set_data(Stenger(n, 9, 'b'))
+        elif index == '11-1a':
+            self.set_data(Stenger(n, 11, 'a'))
         else:
-            assert index == '11-1'
-            # TODO
-            pass
+            assert index == '11-1b'
+            self.set_data(Stenger(n, 11, 'b'))
         return
 
     def set_data(self, scheme):
