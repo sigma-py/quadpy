@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+from .stenger import Stenger
 from .stroud import Stroud
 from .stroud1967a import Stroud1967a
 from .stroud1967b import Stroud1967b
