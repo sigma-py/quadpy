@@ -403,6 +403,4 @@ class Stenger(object):
         #      Stenger's original article has data up to n == 20.
 
         self.points, self.weights = untangle(data)
-
-        print(sum(self.weights))
         return
