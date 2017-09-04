@@ -56,7 +56,7 @@ class Stroud(object):
             beta[1::2] = numpy.arange(n//2) + 1.5
             beta[2::2] = numpy.arange(n//2-1) + 1.0
 
-            points, weights = orthopy.gauss_from_coefficients(alpha, beta)
+            points, weights = orthopy.schemes.custom(alpha, beta, mode='numpy')
 
             r = points[-4:]
             A = weights[-4:]

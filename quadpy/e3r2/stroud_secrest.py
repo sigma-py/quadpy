@@ -95,13 +95,13 @@ class StroudSecrest(object):
 
             p_m = +1 if index == 'Xa' else -1
 
-            r = (25 + p_m * 15*sqrt2 + 5*sqrt5 + p_m * 3*sqrt10) / 4
-            s = (25 + p_m * 15*sqrt2 - 5*sqrt5 - p_m * 3*sqrt10) / 4
-            t = (3 - p_m * sqrt2) / 2
-            u = (9 - p_m * 3*sqrt2 - 3*sqrt5 + p_m * sqrt10) / 4
-            v = (9 - p_m * 3*sqrt2 + 3*sqrt5 - p_m * sqrt10) / 4
+            r = numpy.sqrt((25 + p_m * 15*sqrt2 + 5*sqrt5 + p_m * 3*sqrt10)/4)
+            s = numpy.sqrt((25 + p_m * 15*sqrt2 - 5*sqrt5 - p_m * 3*sqrt10)/4)
+            t = numpy.sqrt((3 - p_m * sqrt2) / 2)
+            u = numpy.sqrt((9 - p_m * 3*sqrt2 - 3*sqrt5 + p_m * sqrt10) / 4)
+            v = numpy.sqrt((9 - p_m * 3*sqrt2 + 3*sqrt5 - p_m * sqrt10) / 4)
 
-            A = (80 + p_m * sqrt2) / 245
+            A = (80 + p_m * 8*sqrt2) / 245
             B = (395 - p_m * 279*sqrt2) / 13720
             C = (45 + p_m * 29*sqrt2) / 2744
 
