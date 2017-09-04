@@ -54,7 +54,20 @@ class StroudSecrest(object):
                 (1/(2**n), pm(n, nu))
                 ]
         else:
-            assert False
+            assert index == 'IV'
+            self.degree = 5
+
+            nu = sqrt((n+2) / 2)
+            xi = sqrt((n+2) / 4)
+            A = 2 / (n+2)
+            B = (4-n) / 2 / (n+2)**2
+            C = 1 / (n+2)**2
+
+            data = [
+                (A, numpy.array([numpy.full(n, 0.0)])),
+                (B, fsd(n, (nu, 1))),
+                (C, fsd(n, (xi, 2))),
+                ]
 
         self.points, self.weights = untangle(data)
         self.weights *= sqrt(pi)**n

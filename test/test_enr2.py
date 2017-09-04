@@ -10,7 +10,7 @@ from helpers import check_degree, integrate_monomial_over_enr2
     'scheme,tol',
     [(quadpy.enr2.StroudSecrest(n, index), 1.0e-14) for n in range(2, 6)
         for index in [
-        'I', 'II', 'III',
+        'I', 'II', 'III', 'IV',
         ]]
     )
 def test_scheme(scheme, tol):
@@ -29,6 +29,6 @@ def test_scheme(scheme, tol):
 
 if __name__ == '__main__':
     dim_ = 3
-    quadpy.e3r2.show(quadpy.enr2.StroudSecrest(dim_, 'I'), backend='vtk')
+    quadpy.e3r2.show(quadpy.enr2.StroudSecrest(dim_, 'IV'), backend='vtk')
     scheme_ = quadpy.enr2.StroudSecrest(dim_, 'I')
     test_scheme(scheme_, 1.0e-14)
