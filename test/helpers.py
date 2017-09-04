@@ -31,36 +31,38 @@ def check_degree(
 
     exact_vals = numpy.array([exact(k) for k in exponents])
 
-    # def fun(x):
-    #     # Naive evaluation of the monomials.
-    #     return numpy.prod([
-    #         numpy.power.outer(x[i], exponents[:, i]) for i in range(len(x))
-    #         ], axis=0).T
-
     def fun(x):
-        # <https://stackoverflow.com/a/45421128/353337>
-        # Evaluate many monomials `x^k y^l z^m` at many points. Note that `x^k
-        # y^l z^m = exp(log(x)*k  + log(y)*l + log(z)*m` , i.e., a dot-product,
-        # for positive x, y, z. With a correction for points with nonpositive
-        # components, this is used here.
-        k = exponents
+        # Naive evaluation of the monomials.
+        # There's a more complex, faster implementation using matmul, exp, log.
+        # However, this only works for strictly positive `x`, and requires some
+        # tinkering. See below and
+        # <https://stackoverflow.com/a/45421128/353337>.
+        return numpy.prod([
+            numpy.power.outer(x[i], exponents[:, i]) for i in range(len(x))
+            ], axis=0).T
 
-        out = numpy.exp(numpy.matmul(k, numpy.log(abs(x), where=abs(x) > 0.0)))
-
-        odd_k = numpy.zeros(k.shape, dtype=int)
-        odd_k[k % 2 == 1] = 1
-        neg_x = numpy.zeros(x.shape, dtype=int)
-        neg_x[x < 0.0] = 1
-        negative_count = numpy.dot(odd_k, neg_x)
-        out *= (-1)**negative_count
-
-        pos_k = numpy.zeros(k.shape, dtype=int)
-        pos_k[k > 0] = 1
-        zero_x = numpy.zeros(x.shape, dtype=int)
-        zero_x[x == 0.0] = 1
-        zero_count = numpy.dot(pos_k, zero_x)
-        out[zero_count > 0] = 0.0
-        return out
+    # def fun(x):
+    #     # Evaluate many monomials `x^k y^l z^m` at many points. Note that
+    #     # `x^k y^l z^m = exp(log(x)*k  + log(y)*l + log(z)*m` , i.e., a
+    #     # dot-product, for positive x, y, z. With a correction for points
+    #     # with nonpositive components, this is used here.
+    #     k = exponents
+    #     eps = 1.0e-12
+    #     out = \
+    #        numpy.exp(numpy.matmul(k, numpy.log(abs(x), where=abs(x) > eps)))
+    #     odd_k = numpy.zeros(k.shape, dtype=int)
+    #     odd_k[k % 2 == 1] = 1
+    #     neg_x = numpy.zeros(x.shape, dtype=int)
+    #     neg_x[x < 0.0] = 1
+    #     negative_count = numpy.dot(odd_k, neg_x)
+    #     out *= (-1)**negative_count
+    #     pos_k = numpy.zeros(k.shape, dtype=int)
+    #     pos_k[k > 0] = 1
+    #     zero_x = numpy.zeros(x.shape, dtype=int)
+    #     zero_x[x == 0.0] = 1
+    #     zero_count = numpy.dot(pos_k, zero_x)
+    #     out[zero_count > 0] = 0.0
+    #     return out
 
     vals = quadrature(fun)
 
