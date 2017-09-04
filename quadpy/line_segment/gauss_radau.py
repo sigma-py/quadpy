@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from orthopy import jacobi_recurrence_coefficients, gauss_from_coefficients
+import orthopy
 
 
 class GaussRadau(object):
@@ -11,7 +11,8 @@ class GaussRadau(object):
     def __init__(self, n, a=0.0, b=0.0):
         assert n >= 2
         self.degree = 2*n - 1
-        alpha, beta = jacobi_recurrence_coefficients(n, a, b)
+        alpha, beta = \
+            orthopy.recurrence_coefficients.jacobi(n, a, b, mode='numpy')
         self.points, self.weights = _radau(alpha, beta, -1.0)
         return
 
@@ -36,5 +37,5 @@ def _radau(alpha, beta, xr):
     delta = solve_banded((1, 1), J, f)
     alphar = alpha.copy()
     alphar[-1] = xr + delta[-1]
-    x, w = gauss_from_coefficients(alphar, beta)
+    x, w = orthopy.schemes.custom(alphar, beta, mode='numpy')
     return x, w

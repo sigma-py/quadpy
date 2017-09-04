@@ -115,7 +115,7 @@ class Stroud(object):
             beta[0] = 2/3
             beta[1::2] = (k[1::2]+2)**2 / ((2*k[1::2]+2)**2 - 1)
             beta[2::2] = k[2::2]**2 / ((2*k[2::2]+2)**2 - 1)
-            points, weights = orthopy.gauss_from_coefficients(alpha, beta)
+            points, weights = orthopy.schemes.custom(alpha, beta, mode='numpy')
 
             r = points[-4:]
             A = weights[-4:]

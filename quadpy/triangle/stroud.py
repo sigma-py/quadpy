@@ -37,7 +37,7 @@ class Stroud(object):
             k = numpy.arange(8)
             moments = 1 / (k**2 + 3*k + 2)
             alpha, beta = orthopy.chebyshev(moments)
-            s, B = orthopy.gauss_from_coefficients(alpha, beta)
+            s, B = orthopy.schemes.custom(alpha, beta, mode='numpy')
 
             data = [
                 (2*A[i]*B[j], numpy.array([[
