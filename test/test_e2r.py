@@ -22,6 +22,7 @@ def integrate_monomial_over_enr(k):
 @pytest.mark.parametrize(
     'scheme,tol',
     [(quadpy.e2r.RabinowitzRichter(k), 1.0e-14) for k in [1, 2, 3, 5]]
+    + [(quadpy.e2r.StroudSecrest(k), 1.0e-14) for k in ['V', 'VI']]
     )
 def test_scheme(scheme, tol):
     degree = check_degree(
