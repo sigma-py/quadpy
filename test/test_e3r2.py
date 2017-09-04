@@ -11,6 +11,7 @@ from helpers import check_degree, integrate_monomial_over_enr2
     [(quadpy.e3r2.Stroud(index), 1.0e-14) for index in [
         'E3r2 5-1', 'E3r2 5-2a', 'E3r2 5-2b', 'E3r2 5-3',
         'E3r2 7-1a', 'E3r2 7-1b',
+        'E3r2 7-2a', 'E3r2 7-2b',
         ]]
     )
 def test_scheme(scheme, tol):
@@ -36,6 +37,6 @@ def test_show(scheme, backend='mpl'):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.e3r2.Stroud('E3r2 14-1')
+    scheme_ = quadpy.e3r2.Stroud('E3r2 7-1b')
     test_scheme(scheme_, 1.0e-14)
     test_show(scheme_, backend='vtk')
