@@ -20,26 +20,8 @@ class StroudSecrest(object):
         self.dim = n
         if index == 'I':
             self.degree = 2
-
-            # construct the regular n-simplex points with 0 center
-            pts = [
-                numpy.concatenate([
-                    -numpy.sqrt(
-                        (n + 1) / (n+1-numpy.arange(i)) / (n-numpy.arange(i))
-                        ),
-                    [numpy.sqrt((n+1) * (n-i) / (n+1-i))],
-                    numpy.zeros(n-i-1)
-                    ])
-                for i in range(n)
-                ] + [
-                -numpy.sqrt(
-                    (n + 1) / (n+1-numpy.arange(n)) / (n-numpy.arange(n))
-                    )
-                ]
-            pts = sqrt(0.5) * numpy.array(pts)
-
             data = [
-                (1/(n+1), pts)
+                (1/(n+1), sqrt(0.5) * _nsimplex(n))
                 ]
         elif index == 'II':
             self.degree = 3
@@ -72,3 +54,21 @@ class StroudSecrest(object):
         self.points, self.weights = untangle(data)
         self.weights *= sqrt(pi)**n
         return
+
+
+def _nsimplex(n):
+    # construct the regular n-simplex points with 0 center
+    return numpy.array([
+        numpy.concatenate([
+            -numpy.sqrt(
+                (n + 1) / (n+1-numpy.arange(i)) / (n-numpy.arange(i))
+                ),
+            [numpy.sqrt((n+1) * (n-i) / (n+1-i))],
+            numpy.zeros(n-i-1)
+            ])
+        for i in range(n)
+        ] + [
+        -numpy.sqrt(
+            (n + 1) / (n+1-numpy.arange(n)) / (n-numpy.arange(n))
+            )
+        ])

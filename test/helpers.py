@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 import math
 import numpy
+
 import scipy.special
 
 
@@ -110,3 +113,12 @@ def integrate_monomial_over_enr2(k):
     if numpy.any(k % 2 == 1):
         return 0
     return numpy.prod([math.gamma((kk+1) / 2.0) for kk in k])
+
+
+def integrate_monomial_over_enr(k):
+    if numpy.any(k % 2 == 1):
+        return 0
+    n = len(k)
+    return 2 * math.factorial(sum(k) + n - 1) * numpy.prod([
+        math.gamma((kk+1) / 2.0) for kk in k
+        ]) / math.gamma((sum(k) + n) / 2)
