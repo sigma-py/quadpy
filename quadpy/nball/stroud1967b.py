@@ -55,37 +55,27 @@ class Stroud1967b(object):
                 (D, fsd(n, (t, 2))),
                 ]
             self.points, self.weights = untangle(data)
+
+            self.weights *= volume_unit_ball(n)
         else:
             assert variant == 'c'
             assert n >= 3
 
             alpha = math.sqrt(2*(n+2)*(n+4))
 
-            def r(n, t):
-                return math.sqrt(((n+2)*(n+4) + t*2*alpha) / (n+4) / (n+6))
-
-            def A(n, t):
-                return (2*(n+2)**2 + t*(n-2)*alpha) / (4*n*(n+2)**2)
-
-            r1 = r(n, -1)
-            r2 = r(n, +1)
-
-            A1 = A(n, -1)
-            A2 = A(n, +1)
+            p_m = numpy.array([+1, -1])
+            r1, r2 = numpy.sqrt(((n+2)*(n+4) + p_m*2*alpha) / (n+4) / (n+6))
+            A1, A2 = (2*(n+2)**2 + p_m*(n-2)*alpha) / (4*n*(n+2)**2)
 
             s = nsphere.Stroud1967(n)
-            u = s.points
-            B = s.weights / math.fsum(s.weights) * n
 
             self.points = numpy.concatenate([
-                r1 * u,
-                r2 * u,
+                r1 * s.points,
+                r2 * s.points,
                 ])
 
             self.weights = numpy.concatenate([
-                A1 * B,
-                A2 * B,
+                A1 * s.weights,
+                A2 * s.weights,
                 ])
-
-        self.weights *= volume_unit_ball(n)
         return
