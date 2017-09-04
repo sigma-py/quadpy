@@ -11,7 +11,7 @@ jobs:
       - run: apt-get update
       # don't install sympy with apt: it pulls in texlive which takes for ever
       # to download and install
-      - run: apt-get install -y git python-pip python-matplotlib python-numpy python-scipy
+      - run: apt-get install -y git python-pip
       - run: pip2 install -U pytest pytest-cov pylint
       - checkout
       - run: pip2 install -r test_requirements.txt
