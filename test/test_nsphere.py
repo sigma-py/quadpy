@@ -16,10 +16,10 @@ from helpers import check_degree
         'Un 5-1', 'Un 5-2', 'Un 5-3', 'Un 5-4',
         'Un 7-1', 'Un 7-2',
         ]]
-    # The scheme has degree 11, so don't push it too far with n. Frist of all,
+    # The scheme has degree 11, so don't push it too far with n. First of all,
     # the number of points increases exponentially, and so does the number of
     # polynomials of degree at most 11.
-    + [quadpy.nsphere.Stroud(n, index) for n in range(3, 7) for index in [
+    + [quadpy.nsphere.Stroud(n, index) for n in range(3, 6) for index in [
         'Un 11-1',
         ]]
     + [quadpy.nsphere.Stroud1967(n) for n in range(2, 7)]
