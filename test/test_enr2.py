@@ -35,7 +35,7 @@ def test_scheme(scheme, tol):
 
 
 if __name__ == '__main__':
-    dim_ = 7
+    dim_ = 5
     # quadpy.e3r2.show(quadpy.enr2.Stroud(dim_, '5-1a'), backend='vtk')
-    scheme_ = quadpy.enr2.Stroud(dim_, '5-1a')
+    scheme_ = quadpy.enr2.Stroud(dim_, '5-5a')
     test_scheme(scheme_, 1.0e-14)
