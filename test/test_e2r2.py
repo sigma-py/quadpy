@@ -8,7 +8,15 @@ from helpers import check_degree, integrate_monomial_over_enr2
 
 @pytest.mark.parametrize(
     'scheme,tol',
-    [(quadpy.e2r2.RabinowitzRichter(k), 1.0e-14) for k in range(1, 6)]
+    [(quadpy.e2r2.Stroud(index), 1.0e-14) for index in [
+        '4-1',
+        '5-1', '5-2',
+        '7-1', '7-2',
+        '9-1',
+        '11-1', '11-2',
+        '13-1',
+        '15-1',
+        ]]
     + [(quadpy.e2r2.StroudSecrest(k), 1.0e-14) for k in ['V', 'VI']]
     )
 def test_scheme(scheme, tol):
@@ -34,6 +42,6 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.e2r2.StroudSecrest('VI')
+    scheme_ = quadpy.e2r2.Stroud('7-2')
     test_scheme(scheme_, 1.0e-14)
     test_show(scheme_)
