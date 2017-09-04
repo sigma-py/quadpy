@@ -7,7 +7,7 @@ import numpy
 from ..helpers import untangle, rd
 
 
-class Stroud1967(object):
+class Stroud1967a(object):
     '''
     A.H. Stroud,
     Some fifth degree integration formulas for symmetric regions II,

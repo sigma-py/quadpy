@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 from .stroud import Stroud
-from .stroud1967 import Stroud1967
+from .stroud1967a import Stroud1967a
+from .stroud1967b import Stroud1967b
 from .stroud_secrest import StroudSecrest
 
 # pylint: disable=wildcard-import

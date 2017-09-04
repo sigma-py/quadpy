@@ -6,7 +6,8 @@ from math import sqrt, pi
 
 import numpy
 
-from .stroud1967 import Stroud1967
+from .stroud1967a import Stroud1967a
+from .stroud1967b import Stroud1967b
 from .stroud_secrest import StroudSecrest
 
 from ..helpers import untangle, fsd, pm, pm_array0
@@ -27,9 +28,9 @@ class Stroud(object):
         elif index == '3-2':
             self.set_data(StroudSecrest(n, 'III'))
         elif index == '5-1a':
-            self.set_data(Stroud1967(n, 'a'))
+            self.set_data(Stroud1967a(n, 'a'))
         elif index == '5-1b':
-            self.set_data(Stroud1967(n, 'b'))
+            self.set_data(Stroud1967a(n, 'b'))
         elif index == '5-2':
             self.set_data(StroudSecrest(n, 'IV'))
         elif index == '5-3':
@@ -100,12 +101,12 @@ class Stroud(object):
 
             self.points, self.weights = untangle(data)
             self.weights *= sqrt(pi)**n
-        elif index == '7-1':
-            # TODO
-            pass
+        elif index == '7-1a':
+            self.set_data(Stroud1967b('2a', n))
+        elif index == '7-1b':
+            self.set_data(Stroud1967b('2b', n))
         elif index == '7-2':
-            # TODO
-            pass
+            self.set_data(Stroud1967b('4', n))
         elif index == '7-3':
             # TODO
             pass
