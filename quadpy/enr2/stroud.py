@@ -72,6 +72,7 @@ class Stroud(object):
 
             p_m = +1 if index == '5-5a' else -1
 
+            # r is complex-valued for n >= 3
             r = sqrt((n + 2 + p_m * (n-1) * sqrt(2*(n+2))) / (2*n))
             s = sqrt((n + 2 - p_m * sqrt(2*(n+2))) / (2*n))
             A = 2 / (n+2)
