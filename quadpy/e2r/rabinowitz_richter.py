@@ -7,13 +7,11 @@ Numbers of Points,
 Mathematics of Computation, Vol. 23, No. 108 (Oct., 1969), pp. 765-779,
 <https://dx.doi.org/10.2307/2004962>.
 '''
-import numpy
-
 from .helpers import _s40, _s8, _s4
 from ..helpers import untangle
 
 
-def _gen1():
+def gen1():
     data = [
         (.3380228176732269e-1, _s40(6.822859174233539)),
         (.1467201651910359e+1, _s40(1.901350903458987)),
@@ -23,7 +21,7 @@ def _gen1():
     return 9, data
 
 
-def _gen2():
+def gen2():
     data = [
         (.1528937836199174e-3, _s40(12.74800100302598)),
         (.2460475747386993e-1, _s40(6.548756194884845)),
@@ -34,7 +32,7 @@ def _gen2():
     return 11, data
 
 
-def _gen3():
+def gen3():
     data = [
         (.1020154285801705e-3, _s40(13.23694157142503)),
         (.5959360016181913e-1, _s40(5.858647139727296)),
@@ -50,7 +48,7 @@ def _gen3():
 # When replacing -.1010440929995067e+1 by -.1010440929995067e+3,
 # the scheme has order 3.
 # TODO find out what's going wrong
-# def _gen4():
+# def gen4():
 #     data = [
 #         (+.3497776022412480e+1, numpy.array([[0.0, 0.0]])),
 #         (+.4425802565915590e-6, _s40(19.67638186041246)),
@@ -64,7 +62,7 @@ def _gen3():
 #     return 13, data
 
 
-def _gen5():
+def gen5():
     data = [
         (.1783029629694328e-6, _s40(19.97643084360520)),
         (.3075756711058412e-3, _s40(11.52881449694446)),
@@ -80,11 +78,11 @@ def _gen5():
 
 
 _gen = {
-    1: _gen1,
-    2: _gen2,
-    3: _gen3,
-    # 4: _gen4,
-    5: _gen5,
+    1: gen1,
+    2: gen2,
+    3: gen3,
+    # 4: gen4,
+    5: gen5,
     }
 
 

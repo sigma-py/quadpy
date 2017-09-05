@@ -13,7 +13,7 @@ import numpy
 
 from . import stroud_secrest
 
-from ..helpers import untangle, pm_array0, fsd, pm
+from ..helpers import untangle, pm_array0, fsd
 
 # ERR
 # TODO find mistake
@@ -66,16 +66,17 @@ def _gen5_4(n):
     return 5, data
 
 
-def _gen5_5(n):
-    r = sqrt((n*(n+1) - sqrt((n+1)*(4*n+6)) + (n-1)*(n+1)*sqrt(4*n+6)) / n)
-    s = sqrt((n*(n+1) - sqrt((n+1)*(4*n+6)) - (n+1)*sqrt(4*n+6)) / n)
-    t = n + 1 + sqrt((n+1)*(4*n+6))
-    A = 1 / (n+1) / 2**n
-    data = [
-        (A, fsd(n, (r, 1), (s, n-1))),
-        (A, pm(n, t)),
-        ]
-    return 5, data
+# math domain error
+# def _gen5_5(n):
+#     r = sqrt((n*(n+1) - sqrt((n+1)*(4*n+6)) + (n-1)*(n+1)*sqrt(4*n+6)) / n)
+#     s = sqrt((n*(n+1) - sqrt((n+1)*(4*n+6)) - (n+1)*sqrt(4*n+6)) / n)
+#     t = n + 1 + sqrt((n+1)*(4*n+6))
+#     A = 1 / (n+1) / 2**n
+#     data = [
+#         (A, fsd(n, (r, 1), (s, n-1))),
+#         (A, pm(n, t)),
+#         ]
+#     return 5, data
 
 
 # TODO find out what's wrong
@@ -109,13 +110,13 @@ def _gen5_5(n):
 
 
 _gen = {
-    '3-1': stroud_secrest._ii,
-    '3-2': stroud_secrest._iii,
-    '5-1': stroud_secrest._iv,
+    '3-1': stroud_secrest.ii,
+    '3-2': stroud_secrest.iii,
+    '5-1': stroud_secrest.iv,
     # '5-2': _gen5_2,
     '5-3': _gen5_3,
     '5-4': _gen5_4,
-    '5-5': _gen5_5,
+    # '5-5': _gen5_5,
     # '7-1': _gen7_1,
     }
 

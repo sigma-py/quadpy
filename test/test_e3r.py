@@ -33,6 +33,6 @@ def test_show(scheme, backend='mpl'):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.e3r.StroudSecrest('VII')
+    scheme_ = quadpy.e3r.Stroud('5-1')
     test_scheme(scheme_, 1.0e-14)
     test_show(scheme_, backend='vtk')

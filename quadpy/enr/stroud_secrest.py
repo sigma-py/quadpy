@@ -16,14 +16,14 @@ from ..helpers import untangle, fsd, pm
 from ..enr2.stroud_secrest import _nsimplex
 
 
-def _i(n):
+def i(n):
     data = [
         (1/(n+1), sqrt(n+1) * _nsimplex(n))
         ]
     return 2, data
 
 
-def _ii(n):
+def ii(n):
     nu = sqrt(n * (n+1))
     data = [
         (1/(2*n), fsd(n, (nu, 1))),
@@ -31,7 +31,7 @@ def _ii(n):
     return 3, data
 
 
-def _iii(n):
+def iii(n):
     nu = sqrt(n+1)
     data = [
         (1/2**n, pm(n, nu)),
@@ -39,7 +39,7 @@ def _iii(n):
     return 3, data
 
 
-def _iv(n):
+def iv(n):
     nu = sqrt((n+2) * (n+3))
     xi = sqrt((n+2) * (n+3) / 2)
     A = 2*(2*n+3) / (n+2) / (n+3)
@@ -55,10 +55,10 @@ def _iv(n):
 
 
 _gen = {
-    'I': _i,
-    'II': _ii,
-    'III': _iii,
-    'IV': _iv,
+    'I': i,
+    'II': ii,
+    'III': iii,
+    'IV': iv,
     }
 
 

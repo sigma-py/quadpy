@@ -16,7 +16,7 @@ import numpy
 from ..helpers import untangle, pm, fsd, pm_roll
 
 
-def _vii():
+def vii():
     p_m = numpy.array([+1, -1])
 
     nu, xi = numpy.sqrt(15 - p_m * 3 * sqrt(5))
@@ -30,7 +30,7 @@ def _vii():
     return 5, data
 
 
-def _viii():
+def viii():
     nu = sqrt(30)
     eta = sqrt(10)
     A = 3/5
@@ -45,7 +45,7 @@ def _viii():
     return 5, data
 
 
-def _ix():
+def ix():
     p_m = numpy.array([+1, -1])
 
     eta = sqrt(10)
@@ -61,7 +61,7 @@ def _ix():
     return 5, data
 
 
-def _x():
+def x():
     sqrt130 = sqrt(130.0)
 
     nu = sqrt((720 - 24*sqrt130) / 11)
@@ -86,7 +86,7 @@ def _x():
     return 3, data
 
 
-def _xi():
+def xi():
     p_m = numpy.array([+1, -1])
     sqrt5 = sqrt(5.0)
     sqrt39 = sqrt(39.0)
@@ -111,11 +111,11 @@ def _xi():
 
 
 _gen = {
-    'VII': _vii,
-    'VIII': _viii,
-    'IX': _ix,
-    'X': _x,
-    'XI': _xi,
+    'VII': vii,
+    'VIII': viii,
+    'IX': ix,
+    'X': x,
+    'XI': xi,
     }
 
 

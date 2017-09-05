@@ -15,7 +15,7 @@ import numpy
 from ..helpers import untangle, pm_array, pm, fsd
 
 
-def _v():
+def v():
     nu = 2 * sqrt(5)
     xi = sqrt(5)
     eta = sqrt(15)
@@ -28,7 +28,7 @@ def _v():
     return 5, data
 
 
-def _vi():
+def vi():
     p_m = numpy.array([+1, -1])
     sqrt74255 = sqrt(74255)
 
@@ -46,8 +46,8 @@ def _vi():
 
 
 _gen = {
-    'V': _v,
-    'VI': _vi,
+    'V': v,
+    'VI': vi,
     }
 
 

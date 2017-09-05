@@ -32,14 +32,14 @@ def _gen4_1():
 
 _gen = {
     '4-1': _gen4_1,
-    '5-1': stroud_secrest._v,
-    '7-1': stroud_secrest._vi,
-    '9-1': rabinowitz_richter._gen1,
-    '11-1': rabinowitz_richter._gen2,
-    '11-2': rabinowitz_richter._gen3,
+    '5-1': stroud_secrest.v,
+    '7-1': stroud_secrest.vi,
+    '9-1': rabinowitz_richter.gen1,
+    '11-1': rabinowitz_richter.gen2,
+    '11-2': rabinowitz_richter.gen3,
     # ERR misprint in Stroud copied from original article
-    # '13-1': rabinowitz_richter._gen4,
-    '15-1': rabinowitz_richter._gen5,
+    # '13-1': rabinowitz_richter.gen4,
+    '15-1': rabinowitz_richter.gen5,
     }
 
 
