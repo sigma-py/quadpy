@@ -7,10 +7,23 @@ Your one-stop shop for numerical integration in Python.
 [![PyPi Version](https://img.shields.io/pypi/v/quadpy.svg)](https://pypi.python.org/pypi/quadpy)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?style=social&label=Stars&maxAge=2592000)](https://github.com/nschloe/quadpy)
 
-Hundreds of numerical integration schemes for line segments, circles, disks,
-triangles, quadrilaterals, spheres, balls, tetrahedra, hexahedra, wedges,
-pyramids, n-spheres, n-balls, n-cubes, n-simplices, and the 2D/3D/nD spaces with
-weight functions exp(-r) and exp(-r<sup>2</sup>).
+Hundreds of numerical integration schemes for
+[line segments](#line-segment),
+[circles](#circle),
+[disks](#disk),
+[triangles](#triangle),
+[quadrilaterals](#quadrilateral),
+[spheres](#sphere),
+[balls](#ball),
+[tetrahedra](#tetrahedron),
+[hexahedra](#hexahedron),
+[wedges](#wedge),
+[pyramids](#pyramid),
+[n-spheres](#n-sphere),
+[n-balls](#n-ball),
+[n-cubes](#n-cube),
+[n-simplices](#n-simplex), and the
+2D/3D/nD spaces with weight functions exp(-r) and exp(-r<sup>2</sup>).
 
 To numerically integrate any function over any given triangle, do
 ```python
