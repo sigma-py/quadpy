@@ -8,8 +8,13 @@ from helpers import check_degree, integrate_monomial_over_enr
 
 @pytest.mark.parametrize(
     'scheme,tol',
-    [(quadpy.e2r.RabinowitzRichter(k), 1.0e-14) for k in [1, 2, 3, 5]]
-    + [(quadpy.e2r.StroudSecrest(k), 1.0e-14) for k in ['V', 'VI']]
+    [(quadpy.e2r.RabinowitzRichter(k), 1.0e-14)
+     for k in quadpy.e2r.RabinowitzRichter.keys
+     ]
+    + [(quadpy.e2r.Stroud(key), 1.0e-14) for key in quadpy.e2r.Stroud.keys]
+    + [(quadpy.e2r.StroudSecrest(key), 1.0e-14)
+       for key in quadpy.e2r.StroudSecrest.keys
+       ]
     )
 def test_scheme(scheme, tol):
     degree = check_degree(
