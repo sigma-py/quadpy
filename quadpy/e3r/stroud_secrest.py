@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 #
+'''
+A.H. Stroud and D. Secrest,
+Approximate integration formulas for certain spherically symmetric regions,
+Math. Comp. 17 (1963), 105-135,
+<https://doi.org/10.1090/S0025-5718-1963-0161473-0>.
+'''
 from __future__ import division
 
 from math import sqrt, pi
@@ -8,27 +14,6 @@ import warnings
 import numpy
 
 from ..helpers import untangle, pm, fsd, pm_roll
-
-
-class StroudSecrest(object):
-    '''
-    A.H. Stroud and D. Secrest,
-    Approximate integration formulas for certain spherically symmetric regions,
-    Math. Comp. 17 (1963), 105-135,
-    <https://doi.org/10.1090/S0025-5718-1963-0161473-0>.
-    '''
-    def __init__(self, index):
-        gen = {
-            'VII': _vii,
-            'VIII': _viii,
-            'IX': _ix,
-            'X': _x,
-            'XI': _xi,
-            }
-        self.degree, data = gen[index]()
-        self.points, self.weights = untangle(data)
-        self.weights *= 8 * pi
-        return
 
 
 def _vii():
@@ -85,6 +70,7 @@ def _x():
     A = (5175 - 13*sqrt130) / 8820
     B = (3870 + 283*sqrt130) / 493920
     C = (3204 - 281*sqrt130) / 197568
+    # ERR in Stroud's book: 917568 vs. 197568
     D = (4239 + 373*sqrt130) / 197568
 
     data = [
@@ -122,3 +108,22 @@ def _xi():
         (C, pm_roll(3, [lmbda, mu])),
         ]
     return 7, data
+
+
+_gen = {
+    'VII': _vii,
+    'VIII': _viii,
+    'IX': _ix,
+    'X': _x,
+    'XI': _xi,
+    }
+
+
+class StroudSecrest(object):
+    keys = _gen.keys()
+
+    def __init__(self, key):
+        self.degree, data = _gen[key]()
+        self.points, self.weights = untangle(data)
+        self.weights *= 8 * pi
+        return
