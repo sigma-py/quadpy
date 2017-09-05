@@ -9,8 +9,9 @@ from helpers import check_degree, integrate_monomial_over_enr2
 @pytest.mark.parametrize(
     'scheme,tol',
     [(quadpy.e3r2.Stroud(index), 1.0e-14) for index in [
-        'E3r2 5-1', 'E3r2 5-2a', 'E3r2 5-2b', 'E3r2 5-3',
-        'E3r2 7-1a', 'E3r2 7-1b', 'E3r2 7-2a', 'E3r2 7-2b',
+        '5-1', '5-2a', '5-2b', '5-3',
+        '7-1a', '7-1b', '7-2a', '7-2b',
+        '14-1',
         ]]
     )
 def test_scheme(scheme, tol):
@@ -28,7 +29,7 @@ def test_scheme(scheme, tol):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadpy.e3r2.Stroud('E3r2 5-1')]
+    [quadpy.e3r2.Stroud('5-1')]
     )
 def test_show(scheme, backend='mpl'):
     quadpy.e3r2.show(scheme, backend=backend)
@@ -36,6 +37,6 @@ def test_show(scheme, backend='mpl'):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.e3r2.Stroud('E3r2 7-2b')
+    scheme_ = quadpy.e3r2.Stroud('7-2b')
     test_scheme(scheme_, 1.0e-14)
     test_show(scheme_, backend='vtk')
