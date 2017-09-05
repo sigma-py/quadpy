@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 import math
 import numpy
+
 import scipy.special
 
 
@@ -31,36 +34,38 @@ def check_degree(
 
     exact_vals = numpy.array([exact(k) for k in exponents])
 
-    # def fun(x):
-    #     # Naive evaluation of the monomials.
-    #     return numpy.prod([
-    #         numpy.power.outer(x[i], exponents[:, i]) for i in range(len(x))
-    #         ], axis=0).T
-
     def fun(x):
-        # <https://stackoverflow.com/a/45421128/353337>
-        # Evaluate many monomials `x^k y^l z^m` at many points. Note that `x^k
-        # y^l z^m = exp(log(x)*k  + log(y)*l + log(z)*m` , i.e., a dot-product,
-        # for positive x, y, z. With a correction for points with nonpositive
-        # components, this is used here.
-        k = exponents
+        # Naive evaluation of the monomials.
+        # There's a more complex, faster implementation using matmul, exp, log.
+        # However, this only works for strictly positive `x`, and requires some
+        # tinkering. See below and
+        # <https://stackoverflow.com/a/45421128/353337>.
+        return numpy.prod([
+            numpy.power.outer(x[i], exponents[:, i]) for i in range(len(x))
+            ], axis=0).T
 
-        out = numpy.exp(numpy.matmul(k, numpy.log(abs(x), where=abs(x) > 0.0)))
-
-        odd_k = numpy.zeros(k.shape, dtype=int)
-        odd_k[k % 2 == 1] = 1
-        neg_x = numpy.zeros(x.shape, dtype=int)
-        neg_x[x < 0.0] = 1
-        negative_count = numpy.dot(odd_k, neg_x)
-        out *= (-1)**negative_count
-
-        pos_k = numpy.zeros(k.shape, dtype=int)
-        pos_k[k > 0] = 1
-        zero_x = numpy.zeros(x.shape, dtype=int)
-        zero_x[x == 0.0] = 1
-        zero_count = numpy.dot(pos_k, zero_x)
-        out[zero_count > 0] = 0.0
-        return out
+    # def fun(x):
+    #     # Evaluate many monomials `x^k y^l z^m` at many points. Note that
+    #     # `x^k y^l z^m = exp(log(x)*k  + log(y)*l + log(z)*m` , i.e., a
+    #     # dot-product, for positive x, y, z. With a correction for points
+    #     # with nonpositive components, this is used here.
+    #     k = exponents
+    #     eps = 1.0e-12
+    #     out = \
+    #        numpy.exp(numpy.matmul(k, numpy.log(abs(x), where=abs(x) > eps)))
+    #     odd_k = numpy.zeros(k.shape, dtype=int)
+    #     odd_k[k % 2 == 1] = 1
+    #     neg_x = numpy.zeros(x.shape, dtype=int)
+    #     neg_x[x < 0.0] = 1
+    #     negative_count = numpy.dot(odd_k, neg_x)
+    #     out *= (-1)**negative_count
+    #     pos_k = numpy.zeros(k.shape, dtype=int)
+    #     pos_k[k > 0] = 1
+    #     zero_x = numpy.zeros(x.shape, dtype=int)
+    #     zero_x[x == 0.0] = 1
+    #     zero_count = numpy.dot(pos_k, zero_x)
+    #     out[zero_count > 0] = 0.0
+    #     return out
 
     vals = quadrature(fun)
 
@@ -102,3 +107,18 @@ def integrate_monomial_over_standard_simplex(k):
         math.fsum(scipy.special.gammaln(k+1))
         - scipy.special.gammaln(sum(k+1) + 1)
         )
+
+
+def integrate_monomial_over_enr2(k):
+    if numpy.any(k % 2 == 1):
+        return 0
+    return numpy.prod([math.gamma((kk+1) / 2.0) for kk in k])
+
+
+def integrate_monomial_over_enr(k):
+    if numpy.any(k % 2 == 1):
+        return 0
+    n = len(k)
+    return 2 * math.factorial(sum(k) + n - 1) * numpy.prod([
+        math.gamma((kk+1) / 2.0) for kk in k
+        ]) / math.gamma((sum(k) + n) / 2)

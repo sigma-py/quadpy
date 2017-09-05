@@ -288,3 +288,20 @@ def test_nsphere():
         quadpy.nsphere.Dobrodeev1978(dim)
         )
     return
+
+
+def test_enr2():
+    dim = 4
+    quadpy.enr2.integrate(
+        lambda x: numpy.exp(x[0]),
+        quadpy.enr2.Stroud(dim, '5-2')
+        )
+    return
+
+
+def test_e3r():
+    quadpy.e2r.integrate(
+        lambda x: numpy.exp(x[0]),
+        quadpy.e3r.StroudSecrest('IX')
+        )
+    return

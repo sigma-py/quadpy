@@ -9,8 +9,8 @@ from helpers import check_degree
 
 @pytest.mark.parametrize(
     'scheme, tol',
-    [(quadpy.ncube.Dobrodeev1970(dim), 1.0e-14) for dim in range(5, 10)]
-    + [(quadpy.ncube.Dobrodeev1978(dim), 1.0e-14) for dim in range(2, 10)]
+    [(quadpy.ncube.Dobrodeev1970(dim), 1.0e-14) for dim in range(5, 8)]
+    + [(quadpy.ncube.Dobrodeev1978(dim), 1.0e-14) for dim in range(2, 8)]
     + [(quadpy.ncube.HammerStroud(n, k), 1.0e-14) for n in range(3, 7)
        for k in ['1-n', '2-n']
        ]

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-# pylint: disable=wildcard-import
-from .rabinowitz_richter import *
+from .rabinowitz_richter import RabinowitzRichter
+from .stroud import Stroud
+from .stroud_secrest import StroudSecrest
 
+# pylint: disable=wildcard-import
 from .tools import *

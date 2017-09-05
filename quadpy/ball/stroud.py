@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 import numpy
 import orthopy
 
@@ -104,13 +106,16 @@ class Stroud(object):
             #    int_{-1}^{+1} |x^alpha| P_k(x) dx ={  8/45  if k == 2,
             #                                        \ 0     otherwise.
             #
+            # In this case, the recurrence coefficients can be determined
+            # analytically.
             n = 8
-            moments = numpy.zeros(2*n)
-            moments[0] = 2.0/3.0
-            moments[2] = 8.0/45.0
-            a, b = orthopy.jacobi_recursion_coefficients(2*n, 0.0, 0.0)
-            alpha, beta = orthopy.chebyshev_modified(moments, a, b)
-            points, weights = orthopy.gauss_from_coefficients(alpha, beta)
+            alpha = numpy.zeros(n)
+            k = numpy.arange(n)
+            beta = numpy.empty(n)
+            beta[0] = 2/3
+            beta[1::2] = (k[1::2]+2)**2 / ((2*k[1::2]+2)**2 - 1)
+            beta[2::2] = k[2::2]**2 / ((2*k[2::2]+2)**2 - 1)
+            points, weights = orthopy.schemes.custom(alpha, beta, mode='numpy')
 
             r = points[-4:]
             A = weights[-4:]

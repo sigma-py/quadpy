@@ -8,19 +8,13 @@ from helpers import check_degree, integrate_monomial_over_enr
 
 @pytest.mark.parametrize(
     'scheme,tol',
-    [(quadpy.e2r.RabinowitzRichter(k), 1.0e-14)
-     for k in quadpy.e2r.RabinowitzRichter.keys
-     ]
-    + [(quadpy.e2r.Stroud(key), 1.0e-14) for key in quadpy.e2r.Stroud.keys]
-    + [(quadpy.e2r.StroudSecrest(key), 1.0e-14)
-       for key in quadpy.e2r.StroudSecrest.keys
-       ]
+    [(quadpy.e3r.Stroud(key), 1.0e-14) for key in quadpy.e3r.Stroud.keys]
     )
 def test_scheme(scheme, tol):
     degree = check_degree(
-            lambda poly: quadpy.e2r.integrate(poly, scheme),
+            lambda poly: quadpy.e3r.integrate(poly, scheme),
             integrate_monomial_over_enr,
-            lambda n: quadpy.helpers.partition(n, 2),
+            lambda n: quadpy.helpers.partition(n, 3),
             scheme.degree + 1,
             tol=tol
             )
@@ -31,14 +25,14 @@ def test_scheme(scheme, tol):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadpy.e2r.RabinowitzRichter(1)]
+    [quadpy.e3r.StroudSecrest('X')]
     )
-def test_show(scheme):
-    quadpy.e2r.show(scheme)
+def test_show(scheme, backend='mpl'):
+    quadpy.e3r.show(scheme, backend=backend)
     return
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.e2r.RabinowitzRichter(5)
+    scheme_ = quadpy.e3r.Stroud('5-1')
     test_scheme(scheme_, 1.0e-14)
-    test_show(scheme_)
+    test_show(scheme_, backend='vtk')
