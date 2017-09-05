@@ -52,10 +52,9 @@ def _integrate_exact(f, triangle):
     + [(quadpy.triangle.HammerStroud(k), 1.0e-14) for k in [2, 3]]
     + [(quadpy.triangle.Hillion(k), 1.0e-14) for k in range(1, 4)]
     + [(quadpy.triangle.Hillion(k), 1.0e-6) for k in [4, 5, 6, 8, 10]]
-    + [(quadpy.triangle.LaursenGellert(key), 1.0e-14) for key in [
-        '1', '2a', '2b', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
-        '13', '14', '15a', '15b'
-        ]]
+    + [(quadpy.triangle.LaursenGellert(key), 1.0e-14)
+       for key in quadpy.triangle.LaursenGellert.keys
+       ]
     + [(quadpy.triangle.Lether(k), 1.0e-14) for k in range(1, 14)]
     + [(quadpy.triangle.LiuVinokur(k), 1.0e-14) for k in range(1, 14)]
     + [(quadpy.triangle.LynessJespersen(k), 1.0e-14) for k in range(1, 22)]

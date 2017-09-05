@@ -8,10 +8,12 @@ from helpers import check_degree, integrate_monomial_over_enr
 
 @pytest.mark.parametrize(
     'scheme,tol',
-    [(quadpy.enr.StroudSecrest(n, index), 1.0e-14) for n in range(2, 6)
-        for index in [
-            'I', 'II', 'III', 'IV',
-            ]]
+    [(quadpy.enr.Stroud(n, key), 1.0e-14) for n in range(4, 6)
+     for key in quadpy.enr.Stroud.keys
+     ]
+    + [(quadpy.enr.StroudSecrest(n, key), 1.0e-14) for n in range(2, 6)
+       for key in quadpy.enr.StroudSecrest.keys
+       ]
     )
 def test_scheme(scheme, tol):
     n = scheme.dim
@@ -30,5 +32,5 @@ def test_scheme(scheme, tol):
 if __name__ == '__main__':
     dim_ = 2
     # quadpy.e3r2.show(quadpy.enr.Stroud(dim_, '5-1a'), backend='vtk')
-    scheme_ = quadpy.enr.StroudSecrest(dim_, 'I')
+    scheme_ = quadpy.enr.Stroud(dim_, '5-3')
     test_scheme(scheme_, 1.0e-14)
