@@ -265,6 +265,23 @@ quadpy.quadrilateral.rectangle_points([x0, x1], [y0, y1])
 to generate the array.
 
 
+### 2D space with weight function exp(-r)
+<img src="https://nschloe.github.io/quadpy/e2r.png" width="25%">
+
+ * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
+   - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 2 schemes up to degree 7)
+   - [Rabinowitz-Richter](https://dx.doi.org/10.2307/2004962) (1969, 4 schemes up to degree 15)
+   - a scheme of degree 4
+
+Example:
+```python
+val = quadpy.e2r.integrate(
+    lambda x: numpy.exp(x[0]),
+    quadpy.e2r.RabinowitzRichter(5)
+    )
+```
+
+
 ### 2D space with weight function exp(-r<sup>2</sup>)
 <img src="https://nschloe.github.io/quadpy/e2r2.png" width="25%">
 
@@ -278,20 +295,6 @@ Example:
 val = quadpy.e2r2.integrate(
     lambda x: numpy.exp(x[0]),
     quadpy.e2r2.RabinowitzRichter(3)
-    )
-```
-
-
-### 2D space with weight function exp(-r)
-<img src="https://nschloe.github.io/quadpy/e2r.png" width="25%">
-
- * [Rabinowitz-Richter](https://dx.doi.org/10.2307/2004962) (4 schemes up to degree 15)
-
-Example:
-```python
-val = quadpy.e2r.integrate(
-    lambda x: numpy.exp(x[0]),
-    quadpy.e2r.RabinowitzRichter(5)
     )
 ```
 
@@ -566,6 +569,39 @@ quadpy.ncube.integrate(
         [0.0, 1.0], [0.1, 0.9], [-1.0, 1.0], [-1.0, -0.5]
         ),
     quadpy.ncube.Stroud(dim, 'Cn 3-3')
+    )
+```
+
+### nD space with weight function exp(-r<sup>2</sup>)
+
+ * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
+   - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 4 schemes up to degree 5)
+   - [Stroud](https://dx.doi.org/10.1007/BF02162160) (1967, 2 schemes of degree 5)
+   - [Stroud](https://doi.org/10.1137/0704004) (1967, 3 schemes of degree 7)
+   - [Stenger](https://www.jstor.org/stable/2004361) (1971, 6 schemes up to degree 11, varying dimensionality restrictions)
+   - 5 schemes up to degree 5
+
+Example:
+```python
+dim = 4
+val = quadpy.enr2.integrate(
+    lambda x: numpy.exp(x[0]),
+    quadpy.enr2.Stroud(dim, '5-2')
+    )
+```
+
+### nD space with weight function exp(-r)
+
+ * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
+   - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 4 schemes up to degree 5)
+   - 2 schemes up to degree 5
+
+Example:
+```python
+dim = 4
+val = quadpy.enr.integrate(
+    lambda x: numpy.exp(x[0]),
+    quadpy.enr.Stroud(dim, '5-4')
     )
 ```
 
