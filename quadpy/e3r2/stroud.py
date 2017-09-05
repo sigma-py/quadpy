@@ -19,24 +19,24 @@ class Stroud(object):
     '''
     # pylint: disable=too-many-locals
     def __init__(self, index):
-        if index == 'E3r2 5-1':
+        if index == '5-1':
             self.set_data(StroudSecrest('VII'))
-        elif index == 'E3r2 5-2a':
+        elif index == '5-2a':
             self.set_data(StroudSecrest('VIIIa'))
-        elif index == 'E3r2 5-2b':
+        elif index == '5-2b':
             self.set_data(StroudSecrest('VIIIb'))
-        elif index == 'E3r2 5-3':
+        elif index == '5-3':
             self.set_data(StroudSecrest('IX'))
-        elif index == 'E3r2 7-1a':
+        elif index == '7-1a':
             self.set_data(StroudSecrest('Xa'))
-        elif index == 'E3r2 7-1b':
+        elif index == '7-1b':
             self.set_data(StroudSecrest('Xb'))
-        elif index == 'E3r2 7-2a':
+        elif index == '7-2a':
             self.set_data(StroudSecrest('XIa'))
-        elif index == 'E3r2 7-2b':
+        elif index == '7-2b':
             self.set_data(StroudSecrest('XIb'))
         else:
-            assert index == 'E3r2 14-1'
+            assert index == '14-1', index
             self.degree = 14
             # Get the moments corresponding to monomials and the weight
             # function omega(x) = x^2 * exp(-x^2):
