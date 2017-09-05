@@ -98,7 +98,7 @@ class Dunavant(object):
                 (0.021922559481864, _st(0.981321179805452, 0.706000287798646)),
                 ]
         elif index == 9:
-            # TODO the article claims 19
+            # TODO ERR the article claims 19
             self.degree = 16
             data = [
                 (0.038205406871462, _symm_r_0(0.943962831808239)),

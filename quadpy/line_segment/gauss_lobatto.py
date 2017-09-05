@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from orthopy import jacobi_recursion_coefficients, gauss_from_coefficients
+import orthopy
 
 
 class GaussLobatto(object):
@@ -11,7 +11,8 @@ class GaussLobatto(object):
     def __init__(self, n, a=0.0, b=0.0):
         assert n >= 2
         self.degree = 2*n - 3
-        alpha, beta = jacobi_recursion_coefficients(n, a, b)
+        alpha, beta = \
+            orthopy.recurrence_coefficients.jacobi(n, a, b, mode='numpy')
         self.points, self.weights = _lobatto(alpha, beta, -1.0, 1.0)
         return
 
@@ -47,5 +48,5 @@ def _lobatto(alpha, beta, xl1, xl2):
     alphal[-1] = ab[0]
     betal = beta
     betal[-1] = ab[1]
-    x, w = gauss_from_coefficients(alphal, betal)
+    x, w = orthopy.schemes.custom(alphal, betal, mode='numpy')
     return x, w

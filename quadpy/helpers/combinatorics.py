@@ -117,6 +117,30 @@ def pm_array0(n, v, idx):
     return out.T
 
 
+def pm_roll(n, v):
+    '''Returns `2**k * n` number of points of dimension `n` such that
+
+    p[0] = [+-v[0], ..., +-v[k], 0, ..., 0]
+    p[1] = [0, +-v[0], ..., +-v[k], 0, ..., 0]
+    ...
+    p[n-1] = [+-v[1], ..., +-v[k], 0, ..., 0, +-v[0]]
+
+    with all +- configurations.
+    '''
+    k = len(v)
+    assert k <= n
+
+    pm_v = pm_array(v)
+
+    r0 = numpy.zeros((len(pm_v), n))
+    r0[:, :k] = pm_v
+
+    return numpy.concatenate([
+        numpy.roll(r0, i, axis=1)
+        for i in range(n)
+        ])
+
+
 def partition(balls, boxes):
     '''Create all nonnegative tuples of length d which sum up to n.
     '''
