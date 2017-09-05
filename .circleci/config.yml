@@ -11,7 +11,7 @@ jobs:
       - run: apt-get update
       # don't install sympy with apt: it pulls in texlive which takes for ever
       # to download and install
-      - run: apt-get install -y git python-pip
+      - run: apt-get install -y git python-pip pandoc
       - run: pip2 install -U pytest pytest-cov pylint
       - checkout
       - run: pip2 install -r test_requirements.txt
@@ -19,6 +19,11 @@ jobs:
       # lint
       - run: pylint quadpy/
       - run: pylint test/*.py
+      # make sure that rst converts correctly
+      - run: cat README.md | sed 's_<img src="\([^"]*\)" width="\([^"]*\)">_![](\1){width="\2"}_g' > /tmp/README.md
+      - run: pandoc /tmp/README.md -o README.rst
+      - run: pip2 install docutils pygments
+      - run: python setup.py check -r -s
       # The tests
       - run: cd test/ && MPLBACKEND=Agg pytest --cov quadpy
       # submit to codecov
