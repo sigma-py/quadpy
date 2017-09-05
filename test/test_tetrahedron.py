@@ -48,6 +48,7 @@ def _integrate_exact(f, tetrahedron):
     [quadpy.tetrahedron.BeckersHaegemans(k) for k in [8, 9]]
     + [quadpy.tetrahedron.Gatermann()]
     + [quadpy.tetrahedron.GrundmannMoeller(k) for k in range(8)]
+    + [quadpy.tetrahedron.HammerStroud(k) for k in [2, 3]]
     + [quadpy.tetrahedron.HammerMarloweStroud(k) for k in [1, 2, 3]]
     + [quadpy.tetrahedron.Keast(k) for k in range(11)]
     + [quadpy.tetrahedron.LiuVinokur(k) for k in range(1, 15)]

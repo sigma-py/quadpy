@@ -58,7 +58,7 @@ class Stroud1967b(object):
             self.points, self.weights = untangle(data)
             self.weights *= math.sqrt(math.pi)**n
         else:
-            assert index in '4'
+            assert index == '4'
             assert n >= 3
             p_m = numpy.array([+1, -1])
 
