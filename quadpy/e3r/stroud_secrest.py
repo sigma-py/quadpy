@@ -86,7 +86,7 @@ def x():
     return 3, data
 
 
-def xi():
+def xi_():
     p_m = numpy.array([+1, -1])
     sqrt5 = sqrt(5.0)
     sqrt39 = sqrt(39.0)
@@ -115,7 +115,7 @@ _gen = {
     'VIII': viii,
     'IX': ix,
     'X': x,
-    'XI': xi,
+    'XI': xi_,
     }
 
 

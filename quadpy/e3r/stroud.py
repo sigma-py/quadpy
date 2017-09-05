@@ -19,7 +19,7 @@ _gen = {
     '5-2': stroud_secrest.viii,
     '5-3': stroud_secrest.ix,
     # '7-1': stroud_secrest.x,
-    '7-2': stroud_secrest.xi,
+    '7-2': stroud_secrest.xi_,
     }
 
 
