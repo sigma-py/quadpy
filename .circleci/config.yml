@@ -22,7 +22,8 @@ jobs:
       # make sure that rst converts correctly
       - run: cat README.md | sed 's_<img src="\([^"]*\)" width="\([^"]*\)">_![](\1){width="\2"}_g' > /tmp/README.md
       - run: pandoc /tmp/README.md -o README.rst
-      - run: python setup.py check -r -s || exit 1
+      - run: pip2 install docutils
+      - run: python setup.py check -r -s
       # The tests
       - run: cd test/ && MPLBACKEND=Agg pytest --cov quadpy
       # submit to codecov
