@@ -436,6 +436,21 @@ val = quadpy.wedge.integrate(
 ```
 
 
+### 3D space with weight function exp(-r)
+<img src="https://nschloe.github.io/quadpy/e3r.png" width="25%">
+
+ * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
+   - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 5 schemes up to degree 7)
+
+Example:
+```python
+val = quadpy.e2r.integrate(
+    lambda x: numpy.exp(x[0]),
+    quadpy.e2r.StroudSecrest('IX')
+    )
+```
+
+
 ### 3D space with weight function exp(-r<sup>2</sup>)
 <img src="https://nschloe.github.io/quadpy/e3r2.png" width="25%">
 
