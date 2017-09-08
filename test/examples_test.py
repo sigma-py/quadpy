@@ -299,8 +299,16 @@ def test_enr2():
     return
 
 
+def test_e1r():
+    quadpy.e1r.integrate(
+        lambda x: x[0]**x,
+        quadpy.e1r.GaussLaguerre(5)
+        )
+    return
+
+
 def test_e3r():
-    quadpy.e2r.integrate(
+    quadpy.e3r.integrate(
         lambda x: numpy.exp(x[0]),
         quadpy.e3r.StroudSecrest('IX')
         )
