@@ -106,14 +106,6 @@ def plot(scheme, interval=numpy.array([[-1.0], [1.0]]), show_axes=False):
 
     pts = numpy.column_stack([scheme.points, numpy.zeros(len(scheme.points))])
 
-    # The total area is used to gauge the disk radii. This is only meaningful
-    # for 2D manifolds, not for the circle. What we do instead is choose the
-    # total_area such that the sum of the disk radii equals b-a.
-    length = interval[1] - interval[0]
-    total_area = 0.25 * length**2 * numpy.pi * sum(scheme.weights) \
-        / sum(numpy.sqrt(abs(scheme.weights)))**2
-
-    helpers.plot_disks(
-        plt, pts, scheme.weights, total_area
-        )
+    total_area = interval[1] - interval[0]
+    helpers.plot_disks_1d(plt, pts, scheme.weights, total_area)
     return
