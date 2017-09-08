@@ -25,6 +25,16 @@ def test_scheme(scheme, tol):
     return
 
 
+@pytest.mark.parametrize(
+    'scheme',
+    [quadpy.e1r.GaussLaguerre(1)]
+    )
+def test_show(scheme):
+    quadpy.e1r.show(scheme)
+    return
+
+
 if __name__ == '__main__':
-    scheme_ = quadpy.e1r.GaussLaguerre(5)
+    scheme_ = quadpy.e1r.GaussLaguerre(3)
     test_scheme(scheme_, 1.0e-14)
+    test_show(scheme_)

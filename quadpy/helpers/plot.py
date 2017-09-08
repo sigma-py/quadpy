@@ -4,16 +4,34 @@ import math
 import numpy
 
 
-def plot_disks(plt, pts, weights, total_area):
-    '''Plot a circles at quadrature points according to weights.
+def plot_disks_1d(plt, pts, weights, total_area):
+    '''Plot a circles at quadrature points according to weights. The diameters
+    sum up to the total area.
     '''
-    sum_weights = math.fsum(weights)
-    radii = numpy.sqrt(abs(weights)/sum_weights * total_area/math.pi)
+    radii = 0.5 * abs(weights)/math.fsum(weights) * total_area
     colors = [
         # use matplotlib 2.0's color scheme
         '#1f77b4' if weight >= 0 else '#d62728'
         for weight in weights
         ]
+    _plot_disks_helpers(plt, pts, radii, colors)
+    return
+
+
+def plot_disks(plt, pts, weights, total_area):
+    '''Plot a circles at quadrature points according to weights.
+    '''
+    radii = numpy.sqrt(abs(weights)/math.fsum(weights) * total_area/math.pi)
+    colors = [
+        # use matplotlib 2.0's color scheme
+        '#1f77b4' if weight >= 0 else '#d62728'
+        for weight in weights
+        ]
+    _plot_disks_helpers(plt, pts, radii, colors)
+    return
+
+
+def _plot_disks_helpers(plt, pts, radii, colors):
     for tp, radius, color in zip(pts, radii, colors):
         # highlight circle center
         plt.plot(
