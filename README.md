@@ -88,7 +88,7 @@ approximation of the integral over the domain.
 ## Schemes
 
 ### Line segment
-<img src="https://nschloe.github.io/quadpy/line.png" width="50%">
+<img src="https://nschloe.github.io/quadpy/line_segment.png" width="50%">
 
  * Chebyshev-Gauss (both variants, arbitrary degree)
  * Clenshaw-Curtis (after
@@ -97,8 +97,6 @@ approximation of the integral over the domain.
    [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
  * Fejér-type-2 (after
    [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
- * Gauss-Hermite (via
-   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.hermite.hermgauss.html), arbitrary degree)
  * Gauss-Legendre (via
    [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.legendre.leggauss.html), arbitrary degree)
  * Gauss-Lobatto (arbitrary degree)
@@ -131,6 +129,21 @@ Example:
 val = quadpy.e1r.integrate(
     lambda x: x**2,
     quadpy.e1r.GaussLaguerre(5)
+    )
+```
+
+
+### 1D space with weight function exp(-r<sup>2</sup>)
+<img src="https://nschloe.github.io/quadpy/e1r2.png" width="50%">
+
+ * Gauss-Hermite (via
+   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.hermite.hermgauss.html), arbitrary degree)
+
+Example:
+```python
+val = quadpy.e1r2.integrate(
+    lambda x: x**2,
+    quadpy.e1r2.GaussHermite(5)
     )
 ```
 
