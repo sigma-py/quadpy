@@ -37,7 +37,7 @@ triangle = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.7, 0.5]])
 
 val = quadpy.triangle.integrate(f, triangle, quadpy.triangle.Strang(9))
 ```
-This uses Strang's rule of degree 6.
+This uses Strang's rule of degree 9.
 
 quadpy is fully vectorized, so if you like to compute the integral of a
 function on many domains at once, you can provide them all in one `integrate()`
