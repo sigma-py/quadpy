@@ -23,7 +23,7 @@ Hundreds of numerical integration schemes for
 [n-balls](#n-ball),
 [n-cubes](#n-cube),
 [n-simplices](#n-simplex), and the
-2D/3D/nD spaces with weight functions exp(-r) and exp(-r<sup>2</sup>).
+1D/2D/3D/nD spaces with weight functions exp(-r) and exp(-r<sup>2</sup>).
 
 To numerically integrate any function over any given triangle, do
 ```python
@@ -99,8 +99,6 @@ approximation of the integral over the domain.
    [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
  * Gauss-Hermite (via
    [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.hermite.hermgauss.html), arbitrary degree)
- * Gauss-Laguerre (via
-   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.laguerre.laggauss.html), arbitrary degree)
  * Gauss-Legendre (via
    [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.legendre.leggauss.html), arbitrary degree)
  * Gauss-Lobatto (arbitrary degree)
@@ -119,6 +117,20 @@ val = quadpy.line_segment.integrate(
     lambda x: numpy.exp(x),
     [0.0, 1.0],
     quadpy.line_segment.GaussPatterson(5)
+    )
+```
+
+### 1D half-space with weight function exp(-r)
+<img src="https://nschloe.github.io/quadpy/e1r.png" width="50%">
+
+ * Gauss-Laguerre (via
+   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.laguerre.laggauss.html), arbitrary degree)
+
+Example:
+```python
+val = quadpy.e1r.integrate(
+    lambda x: x**2,
+    quadpy.e1r.GaussLaguerre(5)
     )
 ```
 
@@ -276,7 +288,7 @@ to generate the array.
 Example:
 ```python
 val = quadpy.e2r.integrate(
-    lambda x: numpy.exp(x[0]),
+    lambda x: x[0]**2,
     quadpy.e2r.RabinowitzRichter(5)
     )
 ```
@@ -293,7 +305,7 @@ val = quadpy.e2r.integrate(
 Example:
 ```python
 val = quadpy.e2r2.integrate(
-    lambda x: numpy.exp(x[0]),
+    lambda x: x[0]**2,
     quadpy.e2r2.RabinowitzRichter(3)
     )
 ```
@@ -461,7 +473,7 @@ val = quadpy.wedge.integrate(
 Example:
 ```python
 val = quadpy.e2r.integrate(
-    lambda x: numpy.exp(x[0]),
+    lambda x: x[0]**2,
     quadpy.e2r.StroudSecrest('IX')
     )
 ```
@@ -477,7 +489,7 @@ val = quadpy.e2r.integrate(
 Example:
 ```python
 val = quadpy.e2r2.integrate(
-    lambda x: numpy.exp(x[0]),
+    lambda x: x[0]**2,
     quadpy.e2r2.RabinowitzRichter(3)
     )
 ```
@@ -582,7 +594,7 @@ Example:
 ```python
 dim = 4
 val = quadpy.enr.integrate(
-    lambda x: numpy.exp(x[0]),
+    lambda x: x[0]**2,
     quadpy.enr.Stroud(dim, '5-4')
     )
 ```
@@ -600,7 +612,7 @@ Example:
 ```python
 dim = 4
 val = quadpy.enr2.integrate(
-    lambda x: numpy.exp(x[0]),
+    lambda x: x[0]**2,
     quadpy.enr2.Stroud(dim, '5-2')
     )
 ```
