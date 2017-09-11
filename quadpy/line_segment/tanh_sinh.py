@@ -25,14 +25,16 @@ def tanh_sinh_quadrature(f, a, b, eps, max_steps=10, f_derivatives=None):
     # <http://www.davidhbailey.com/dhbpapers/dhb-tanh-sinh.pdf>.
     assert a < b
 
+    ab2 = (mp.mpf(b) - a) / 2
+
     def fun(t):
-        return f(a + 0.5*(b-a) * (t+1))
+        return f(a + ab2 * (t+1))
 
     fun_derivatives = None
     if f_derivatives:
         fun_derivatives = {
-            k: lambda t: fp(a + 0.5*(b-a) * (t+1))
-            for k, fp in f_derivatives.items()
+            1: (lambda t: ab2**1 * f_derivatives[1](a + ab2*(t+1))),
+            2: (lambda t: ab2**2 * f_derivatives[2](a + ab2*(t+1))),
             }
 
     num_digits = int(-mp.log10(eps) + 1)
@@ -97,13 +99,11 @@ def tanh_sinh_quadrature(f, a, b, eps, max_steps=10, f_derivatives=None):
 
         # error estimation
         if fun_derivatives:
-            error_estimate = _error_estimate1(h, j, f, fun_derivatives)
+            error_estimate = _error_estimate1(h, j, fun, fun_derivatives, ab2)
         else:
             error_estimate = _error_estimate2(
                 level, value_estimates, summands, eps
                 )
-
-        print(mp.mpf(2)/3 - value_estimates[-1], error_estimate)
 
         if abs(error_estimate) < eps:
             success = True
@@ -113,7 +113,7 @@ def tanh_sinh_quadrature(f, a, b, eps, max_steps=10, f_derivatives=None):
     return value_estimates[-1], error_estimate
 
 
-def _error_estimate1(h, j, f, f_derivatives):
+def _error_estimate1(h, j, f, f_derivatives, ab2):
     # Pretty accurate error estimation:
     #
     #   E(h) = h * (h/2/pi)**2 * sum_{-N}^{+N} F''(h*j)
@@ -150,19 +150,23 @@ def _error_estimate1(h, j, f, f_derivatives):
             - 6 * mp.pi * mp.sinh(t) * sinh_sinh
             ) / cosh_sinh**3
 
-    s = 0
-    for jj in range(-j, +j+1):
-        t = h*jj
-        gt = g(t)
-        g1 = dg_dt(t)
-        g2 = d2g_dt2(t)
-        g3 = d3g_dt3(t)
-        s += (
+    def F2(jj):
+        '''Second derivative of F(t) = f(g(t)) * g'(t).
+        '''
+        gt = g(h*jj)
+        g1 = dg_dt(h*jj)
+        g2 = d2g_dt2(h*jj)
+        g3 = d3g_dt3(h*jj)
+        return (
             + g1**3 * f_derivatives[2](gt)
             + 3 * g1 * g2 * f_derivatives[1](gt)
             + g3 * f(gt)
             )
-    return s * h * (h/2/mp.pi)**2
+
+    out = ab2 \
+        * h * (h/2/mp.pi)**2 * mp.fsum([F2(jj) for jj in range(-j, +j+1)])
+
+    return out
 
 
 def _error_estimate2(level, value_estimates, summands, eps):
