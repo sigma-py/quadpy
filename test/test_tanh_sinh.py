@@ -11,16 +11,16 @@ def test_tanh_sinh():
         return 1
         # return t * mpmath.log(1 + t)
 
+    tol = 1.0e-50
     value, error_estimate = \
         quadpy.line_segment.tanh_sinh_quadrature(
-                f, 0, 1, 1.0e-50,
+                f, -1, +1, tol,
                 f_derivatives={
                     1: lambda t: 0,
                     2: lambda t: 0,
                     }
                 )
-    print(value)
-    print(error_estimate)
+    assert abs(value - 2) < tol
     return
 
 

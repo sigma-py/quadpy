@@ -190,5 +190,4 @@ def tanh_sinh_quadrature(f, a, b, eps, f_derivatives=None):
 
         level += 1
 
-    exit(1)
     return value_estimates[-1], error_estimate
