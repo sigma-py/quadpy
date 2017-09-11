@@ -19,6 +19,11 @@ import sympy
         2: lambda t: 0
         }, 0, +1, 1)]
     + [({
+        0: lambda t: t,
+        1: lambda t: 1,
+        2: lambda t: 0,
+        }, -0, +1, sympy.Rational(1, 2))]
+    + [({
         0: lambda t: t**2,
         1: lambda t: 2*t,
         2: lambda t: 2,
@@ -51,16 +56,36 @@ def test_tanh_sinh(f, a, b, exact):
 
 if __name__ == '__main__':
     # test_tanh_sinh(
-    #     {0: lambda t: 1, 1: lambda t: 0, 2: lambda t: 0}, -0, +1, 1
+    #     {
+    #         0: lambda t: 1,
+    #         1: lambda t: 0,
+    #         2: lambda t: 0
+    #     }, -0, +1, 1
+    #     )
+    # test_tanh_sinh(
+    #     {
+    #         0: lambda t: (t+1)/2,
+    #         1: lambda t: sympy.Rational(1)/2,
+    #         2: lambda t: 0,
+    #     },
+    #     -1, +1, 1
     #     )
     test_tanh_sinh(
         {
-            0: lambda t: t**2,
-            1: lambda t: 2*t,
-            2: lambda t: 2,
+            0: lambda t: t,
+            1: lambda t: 1,
+            2: lambda t: 0,
         },
-        -1, +1, sympy.Rational(2, 3)
+        0, +1, sympy.Rational(1, 2)
         )
+    # test_tanh_sinh(
+    #     {
+    #         0: lambda t: t**2,
+    #         1: lambda t: 2*t,
+    #         2: lambda t: 2,
+    #     },
+    #     -1, +1, sympy.Rational(2, 3)
+    #     )
     # test_tanh_sinh(
     #     lambda t: t * mp.log(1+t), {
     #         1: lambda t: t/(t+1) + mp.log(t+1),
