@@ -4,7 +4,7 @@ import mpmath
 from mpmath import mp
 
 
-# pylint: too-many-arguments, too-many-locals
+# pylint: disable=too-many-arguments, too-many-locals
 def tanh_sinh_quadrature(f, a, b, eps, max_steps=10, f_derivatives=None):
     '''Integrate a function `f` between `a` and `b` with accuracy `eps`.
 
