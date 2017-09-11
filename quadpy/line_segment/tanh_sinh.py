@@ -4,7 +4,7 @@ import mpmath
 from mpmath import mp
 
 
-def tanh_sinh_quadrature(f, a, b, eps):
+def tanh_sinh_quadrature(f, a, b, eps, f_derivatives=None):
     '''Integrate a function `f` between `a` and `b` with accuracy `eps`.
 
 
@@ -78,9 +78,12 @@ def tanh_sinh_quadrature(f, a, b, eps):
 
     value_estimates = []
     error_estimate = mp.mpf(1)
-    h = 1
+    h = mp.mpf(1)
     level = 1
-    while error_estimate > eps:
+    while abs(error_estimate) > eps:
+        # For h=1, the error estimate is too optimistic. Hence, start with
+        # h=1/2 right away.
+        h /= 2
         # Compute all weights until w < eps**2
         weights = [h * mp.pi/2]
         j = 0
@@ -110,26 +113,81 @@ def tanh_sinh_quadrature(f, a, b, eps):
         # print(value_estimates[-1])
         # print
 
-        # error estimation after Bailey
-        if level <= 2:
-            error_estimate = 1.0
-        elif value_estimates[0] == value_estimates[-1]:
-            error_estimate = 0.0
-        else:
-            d1 = mp.log10(abs(value_estimates[0] - value_estimates[-1]))
-            d2 = mp.log10(abs(value_estimates[0] - value_estimates[-2]))
-            d3 = mp.log10(eps * max([abs(x) for x in summands]))
-            d4 = mp.log10(max(summands[0], summands[-1]))
-            d = int(max(d1**2 / d2, 2*d1, d3, d4))
-            # print(d1)
-            # print(d2)
-            # print(d3)
-            # print(d4)
-            # print(d)
-            # print
-            error_estimate = 10**d
+        if f_derivatives:
+            # Pretty accurate error estimation:
+            #
+            #   E(h) = h * (h/2/pi)**2 * sum_{-N}^{+N} F''(h*j)
+            #
+            # with
+            #
+            #   F(t) = f(g(t)) * g'(t),
+            #   g(t) = tanh(pi/2 sinh(t)).
+            #
+            assert 1 in f_derivatives
+            assert 2 in f_derivatives
 
-        h /= 2.0
+            def g(t):
+                return mp.tanh(mp.pi/2 * mp.sinh(t))
+
+            def dg_dt(t):
+                return mp.pi/2 * mp.cosh(t) / mp.cosh(mp.pi/2 * mp.sinh(t))**2
+
+            def d2g_dt2(t):
+                return mp.pi/2 * (
+                    + mp.sinh(t)
+                    - mp.pi * mp.cosh(t)**2 * mp.tanh(mp.pi/2 * mp.sinh(t))
+                    ) / mp.cosh(mp.pi/2 * mp.sinh(t))**2
+
+            def d3g_dt3(t):
+                sinh_sinh = mp.sinh(mp.pi/2 * mp.sinh(t))
+                cosh_sinh = mp.cosh(mp.pi/2 * mp.sinh(t))
+                tanh_sinh = mp.tanh(mp.pi/2 * mp.sinh(t))
+                return mp.pi/4 * mp.cosh(t) * (
+                    + 2 * cosh_sinh
+                    - 2 * mp.pi**2 * mp.cosh(t)**2 / cosh_sinh
+                    + mp.pi**2 * mp.cosh(t)**2 * cosh_sinh
+                    + mp.pi**2 * mp.cosh(t)**2 * tanh_sinh * sinh_sinh
+                    - 6 * mp.pi * mp.sinh(t) * sinh_sinh
+                    ) / cosh_sinh**3
+
+            s = 0
+            for jj in range(-j, +j+1):
+                t = h*jj
+                gt = g(t)
+                g1 = dg_dt(t)
+                g2 = d2g_dt2(t)
+                g3 = d3g_dt3(t)
+                s += (
+                    + g1**3 * f_derivatives[2](gt)
+                    + 3 * g1 * g2 * f_derivatives[1](gt)
+                    + g3 * f(gt)
+                    )
+            error_estimate = s * h * (h/2/mp.pi)**2
+        else:
+            # more crude error estimation after Bailey
+            if level <= 2:
+                error_estimate = 1.0
+            elif value_estimates[0] == value_estimates[-1]:
+                error_estimate = 0.0
+            else:
+                d1 = mp.log10(abs(value_estimates[0] - value_estimates[-1]))
+                d2 = mp.log10(abs(value_estimates[0] - value_estimates[-2]))
+                d3 = mp.log10(eps * max([abs(x) for x in summands]))
+                d4 = mp.log10(max(summands[0], summands[-1]))
+                d = int(max(d1**2 / d2, 2*d1, d3, d4))
+                # print(d1)
+                # print(d2)
+                # print(d3)
+                # print(d4)
+                # print(d)
+                # print
+                error_estimate = 10**d
+
+        print
+        print('error estimate:')
+        print(j, 2 - mp.fsum(weights), error_estimate)
+        print
+
         level += 1
 
     exit(1)

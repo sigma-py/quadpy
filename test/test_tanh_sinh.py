@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-import mpmath
 import quadpy
 
 
@@ -13,7 +12,13 @@ def test_tanh_sinh():
         # return t * mpmath.log(1 + t)
 
     value, error_estimate = \
-        quadpy.line_segment.tanh_sinh_quadrature(f, 0, 1, 1.0e-50)
+        quadpy.line_segment.tanh_sinh_quadrature(
+                f, 0, 1, 1.0e-50,
+                f_derivatives={
+                    1: lambda t: 0,
+                    2: lambda t: 0,
+                    }
+                )
     print(value)
     print(error_estimate)
     return
