@@ -78,11 +78,14 @@ def tanh_sinh_quadrature(f, a, b, eps, max_steps=10, f_derivatives=None):
         # The summand are listed such that the points are in ascending order.
         # (The slice expression [-1:0:-1] cuts the first entry and reverses the
         # array.)
+        def t(x):
+            return a + (b-a)/2 * (x+1)
+
         summands = (
-            [f(yy-1) * w for yy, w in zip(y[-1:0:-1], weights[-1:0:-1])]
-            + [f(1-yy) * w for yy, w in zip(y, weights)]
+            [f(t(yy-1)) * w for yy, w in zip(y[-1:0:-1], weights[-1:0:-1])]
+            + [f(t(1-yy)) * w for yy, w in zip(y, weights)]
             )
-        value_estimates.append(mp.fsum(summands))
+        value_estimates.append(mp.fsum(summands) * (b - a)/2)
 
         # error estimation
         if f_derivatives:
