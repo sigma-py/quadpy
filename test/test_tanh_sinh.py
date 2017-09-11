@@ -15,10 +15,10 @@ def test_tanh_sinh():
     value, error_estimate = \
         quadpy.line_segment.tanh_sinh_quadrature(
                 f, -1, +1, tol,
-                f_derivatives={
-                    1: lambda t: 0,
-                    2: lambda t: 0,
-                    }
+                # f_derivatives={
+                #     1: lambda t: 0,
+                #     2: lambda t: 0,
+                #     }
                 )
     assert abs(value - 2) < tol
     return
