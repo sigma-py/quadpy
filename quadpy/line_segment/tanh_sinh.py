@@ -151,17 +151,23 @@ def _error_estimate1(h, j, f, f_derivatives):
 
 
 def _error_estimate2(level, value_estimates, summands, eps):
-    # "less formal" error estimation after Bailey
+    # "less formal" error estimation after Bailey,
+    # <http://www.davidhbailey.com/dhbpapers/dhb-tanh-sinh.pdf>
     if level <= 1:
         error_estimate = 1
     elif value_estimates[0] == value_estimates[-1]:
         error_estimate = 0
     else:
-        d1 = mp.log10(abs(value_estimates[-1] - value_estimates[-2]))
-        d2 = mp.log10(abs(value_estimates[-1] - value_estimates[-3]))
-        d3 = mp.log10(eps * max([abs(x) for x in summands]))
-        d4 = mp.log10(max(summands[0], summands[-1]))
-        d = max(d1**2 / d2, 2*d1, d3, d4)
-        error_estimate = 10**d
+        # d1 = mp.log10(abs(value_estimates[-1] - value_estimates[-2]))
+        # d2 = mp.log10(abs(value_estimates[-1] - value_estimates[-3]))
+        # d3 = mp.log10(eps * max([abs(x) for x in summands]))
+        # d4 = mp.log10(max(abs(summands[0]), abs(summands[-1])))
+        # d = max(d1**2 / d2, 2*d1, d3, d4)
+        # error_estimate = 10**d
+        e1 = abs(value_estimates[-1] - value_estimates[-2])
+        e2 = abs(value_estimates[-1] - value_estimates[-3])
+        e3 = eps * max([abs(x) for x in summands])
+        e4 = max(abs(summands[0]), abs(summands[-1]))
+        error_estimate = max(e1**(mp.log(e1)/mp.log(e2)), e1**2, e3, e4)
 
     return error_estimate
