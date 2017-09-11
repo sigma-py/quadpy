@@ -14,5 +14,7 @@ from .midpoint import Midpoint
 from .newton_cotes import NewtonCotesOpen, NewtonCotesClosed
 from .trapezoidal import Trapezoidal
 
+from .tanh_sinh import tanh_sinh_quadrature
+
 # import pylint: disable=wildcard-import
 from .tools import *
