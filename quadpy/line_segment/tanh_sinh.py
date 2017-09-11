@@ -25,11 +25,22 @@ def tanh_sinh_quadrature(f, a, b, eps, max_steps=10, f_derivatives=None):
     # <http://www.davidhbailey.com/dhbpapers/dhb-tanh-sinh.pdf>.
     assert a < b
 
+    def fun(t):
+        return f(a + 0.5*(b-a) * (t+1))
+
+    fun_derivatives = None
+    if f_derivatives:
+        fun_derivatives = {
+            k: lambda t: fp(a + 0.5*(b-a) * (t+1))
+            for k, fp in f_derivatives.items()
+            }
+
     num_digits = int(-mp.log10(eps) + 1)
     mpmath.mp.dps = num_digits
 
     value_estimates = []
     h = mp.mpf(1)
+    success = False
     for level in range(max_steps):
         # For h=1, the error estimate is too optimistic. Hence, start with
         # h=1/2 right away.
@@ -71,33 +82,34 @@ def tanh_sinh_quadrature(f, a, b, eps, max_steps=10, f_derivatives=None):
             ]
 
         # y = 1 - x
-        # x = [0] + [mp.tanh(v) for v in u2]
-        y = [1] + [1 / (mp.exp(v) * c) for v, c in zip(u2, cosh_u2)]
+        # x = [mp.tanh(v) for v in u2]
+        y = [1 / (mp.exp(v) * c) for v, c in zip(u2, cosh_u2)]
 
         # Perform the integration.
-        # The summand are listed such that the points are in ascending order.
+        # The summands are listed such that the points are in ascending order.
         # (The slice expression [-1:0:-1] cuts the first entry and reverses the
         # array.)
-        def t(x):
-            return a + (b-a)/2 * (x+1)
-
         summands = (
-            [f(t(yy-1)) * w for yy, w in zip(y[-1:0:-1], weights[-1:0:-1])]
-            + [f(t(1-yy)) * w for yy, w in zip(y, weights)]
+            [fun(yy-1) * w for yy, w in zip(y[-1:0:-1], weights[-1:0:-1])]
+            + [fun(1-yy) * w for yy, w in zip(y, weights)]
             )
-        value_estimates.append(mp.fsum(summands) * (b - a)/2)
+        value_estimates.append(mp.fsum(summands) * (b - a)*0.5)
 
         # error estimation
-        if f_derivatives:
-            error_estimate = _error_estimate1(h, j, f, f_derivatives)
+        if fun_derivatives:
+            error_estimate = _error_estimate1(h, j, f, fun_derivatives)
         else:
             error_estimate = _error_estimate2(
                 level, value_estimates, summands, eps
                 )
 
+        print(mp.mpf(2)/3 - value_estimates[-1], error_estimate)
+
         if abs(error_estimate) < eps:
+            success = True
             break
 
+    assert success
     return value_estimates[-1], error_estimate
 
 
