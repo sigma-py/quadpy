@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-from math import fsum
-
 import matplotlib.pyplot as plt
 import numpy
 
