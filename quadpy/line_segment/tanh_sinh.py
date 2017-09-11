@@ -50,11 +50,11 @@ def tanh_sinh_quadrature(f, a, b, eps, max_steps=10, f_derivatives=None):
         #
         #     tau > h * pi/2 * exp(h*j) / exp(pi/2 * exp(h*j)).
         #
-        # Calling z = pi/2 * exp(h*j), one gets
+        # Calling z = - pi/2 * exp(h*j), one gets
         #
-        #     tau > h*z / exp(z)
+        #     tau > -h*z / exp(-z)
         #
-        # This inequality is fulfilled exactly if z > -W(-tau/h) with W being
+        # This inequality is fulfilled exactly if z < W(-tau/h) with W being
         # the (-1)-branch of the Lambert-W function IF e*tau < h (which we can
         # assume since `tau` will generally be small). We finally get
         #
@@ -65,49 +65,33 @@ def tanh_sinh_quadrature(f, a, b, eps, max_steps=10, f_derivatives=None):
 
         u2 = [mp.pi/2 * mp.sinh(h*jj) for jj in range(j+1)]
         cosh_u2 = [mp.cosh(v) for v in u2]
-        weights = (
-            [h * mp.pi/2]
-            + [h * mp.pi/2 * mp.cosh(h*j) / v**2
-               for jj, v in zip(range(j+1), cosh_u2)
-               ]
-            )
+        weights = [
+            h * mp.pi/2 * mp.cosh(h*jj) / v**2
+            for jj, v in zip(range(j+1), cosh_u2)
+            ]
 
-        if level == 3:
-            exit(1)
-
-        x = [0] + [mp.tanh(v) for v in u2]
-        print(x)
-        print
         # y = 1 - x
+        # x = [0] + [mp.tanh(v) for v in u2]
         y = [1] + [1 / (mp.exp(v) * c) for v, c in zip(u2, cosh_u2)]
-        print(y)
-        print
-        # y = [yy-1 for yy in y[1:]][::-1] + y
-        # print(y)
-        # print
 
-        print([yy - 1 for yy in y[::-1]])
-
-        # perform the integration
+        # Perform the integration.
+        # The summand are listed such that the points are in ascending order.
+        # (The slice expression [-1:0:-1] cuts the first entry and reverses the
+        # array.)
         summands = (
-            [f(1 - yy) * weight for yy, weight in zip(y, weights)]
-            + [f(yy - 1) * weight for yy, weight in zip(y, weights)]
+            [f(yy-1) * w for yy, w in zip(y[-1:0:-1], weights[-1:0:-1])]
+            + [f(1-yy) * w for yy, w in zip(y, weights)]
             )
-
         value_estimates.append(mp.fsum(summands))
 
         # error estimation
         if f_derivatives:
             error_estimate = _error_estimate1(h, j, f, f_derivatives)
         else:
-            error_estimate = 1
-            # error_estimate = _error_estimate2(
-            #     level, value_estimates, summands, eps
-            #     )
+            error_estimate = _error_estimate2(
+                level, value_estimates, summands, eps
+                )
 
-        print('error estimate:')
-        print(j, 2 - mp.fsum(weights), error_estimate)
-        print
         if abs(error_estimate) < eps:
             break
 
@@ -168,25 +152,16 @@ def _error_estimate1(h, j, f, f_derivatives):
 
 def _error_estimate2(level, value_estimates, summands, eps):
     # "less formal" error estimation after Bailey
-    print(level)
     if level <= 1:
         error_estimate = 1
     elif value_estimates[0] == value_estimates[-1]:
         error_estimate = 0
     else:
-        d1 = mp.log10(abs(value_estimates[0] - value_estimates[-1]))
-        d2 = mp.log10(abs(value_estimates[0] - value_estimates[-2]))
+        d1 = mp.log10(abs(value_estimates[-1] - value_estimates[-2]))
+        d2 = mp.log10(abs(value_estimates[-1] - value_estimates[-3]))
         d3 = mp.log10(eps * max([abs(x) for x in summands]))
-        i0 = mp.argmax(points)
-        exit(1)
         d4 = mp.log10(max(summands[0], summands[-1]))
-        d = int(max(d1**2 / d2, 2*d1, d3, d4))
-        print(d1**2/d2)
-        print(2*d1)
-        print(d3)
-        print(d4)
-        print(d)
-        print
+        d = max(d1**2 / d2, 2*d1, d3, d4)
         error_estimate = 10**d
 
     return error_estimate
