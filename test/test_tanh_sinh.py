@@ -7,7 +7,7 @@ import sympy
 
 
 @pytest.mark.parametrize(
-    'f, f_derivatives, a, b, exact',
+    'f, a, b, exact',
     [({
         0: lambda t: 1,
         1: lambda t: 0,
@@ -27,7 +27,7 @@ import sympy
         0: lambda t: t**2,
         1: lambda t: 2*t,
         2: lambda t: 2,
-        }, -1, +1, mp.mpf(2)/3)]
+        }, -1, +1, sympy.Rational(2, 3))]
     # Some test problems from
     # <http://crd-legacy.lbl.gov/~dhbailey/dhbpapers/quadrature.pdf>
     # Test problem 1:
@@ -35,7 +35,7 @@ import sympy
         0: lambda t: t * mp.log(1+t),
         1: lambda t: t/(t+1) + mp.log(t+1),
         2: lambda t: (t+2) / (t+1)**2,
-        }, 0, +1, 0.25)]
+        }, 0, +1, sympy.Rational(1, 4))]
     )
 def test_tanh_sinh(f, a, b, exact):
     # test fine error estimate
@@ -70,14 +70,14 @@ if __name__ == '__main__':
     #     },
     #     -1, +1, 1
     #     )
-    test_tanh_sinh(
-        {
-            0: lambda t: t,
-            1: lambda t: 1,
-            2: lambda t: 0,
-        },
-        0, +1, sympy.Rational(1, 2)
-        )
+    # test_tanh_sinh(
+    #     {
+    #         0: lambda t: t,
+    #         1: lambda t: 1,
+    #         2: lambda t: 0,
+    #     },
+    #     0, +1, sympy.Rational(1, 2)
+    #     )
     # test_tanh_sinh(
     #     {
     #         0: lambda t: t**2,
@@ -86,9 +86,10 @@ if __name__ == '__main__':
     #     },
     #     -1, +1, sympy.Rational(2, 3)
     #     )
-    # test_tanh_sinh(
-    #     lambda t: t * mp.log(1+t), {
-    #         1: lambda t: t/(t+1) + mp.log(t+1),
-    #         2: lambda t: (t+2) / (t+1)**2,
-    #     }, 0, +1, 0.25
-    #     )
+    test_tanh_sinh(
+        {
+            0: lambda t: t * mp.log(1+t),
+            1: lambda t: t/(t+1) + mp.log(t+1),
+            2: lambda t: (t+2) / (t+1)**2,
+        }, 0, +1, 0.25
+        )
