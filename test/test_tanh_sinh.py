@@ -54,8 +54,7 @@ def test_tanh_sinh(f, a, b, exact):
 
     # test crude error estimate
     tol = 1.0e-50
-    value, error_estimate = \
-        quadpy.line_segment.tanh_sinh_quadrature(f[0], a, b, tol)
+    value, _ = quadpy.line_segment.tanh_sinh_quadrature(f[0], a, b, tol)
     assert abs(value - exact) < tol
     return
 
