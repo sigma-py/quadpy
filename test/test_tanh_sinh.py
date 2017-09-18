@@ -31,28 +31,26 @@ mp.dps = 50
         2: lambda t: 2,
         }, -1, +1, sympy.Rational(2, 3))]
     )
-def test_tanh_sinh_both_estimates(f, a, b, exact):
+def test_tanh_sinh_good_estimate(f, a, b, exact):
     # test fine error estimate
     tol = 10**(-mp.dps)
-    value, _ = quadpy.line_segment.tanh_sinh_quadrature(
+    value, _ = quadpy.line_segment.tanh_sinh_regular(
                 f[0], a, b, tol,
                 f_derivatives={1: f[1], 2: f[2]}
                 )
-    assert abs(value - exact) < tol
-
-    # test crude error estimate
-    tol = 10**(-mp.dps)
-    value, _ = quadpy.line_segment.tanh_sinh_quadrature(f[0], a, b, tol)
     assert abs(value - exact) < tol
     return
 
 
 @pytest.mark.parametrize(
     'f, a, b, exact',
+    [(lambda t: mp.exp(t) / mp.sqrt(1-t**2),
+      0, 1, mp.pi/2 * (mp.besseli(0, 1) + mp.struvel(0, 1))
+      )]
     # Some test problems from
     # <http://crd-legacy.lbl.gov/~dhbailey/dhbpapers/quadrature.pdf>
     # Test problem 1:
-    [(lambda t: t * mp.log(1+t), 0, +1, sympy.Rational(1, 4))]
+    + [(lambda t: t * mp.log(1+t), 0, +1, sympy.Rational(1, 4))]
     # Test problem 2:
     + [(lambda t: t**2 * mp.atan(t), 0, 1, (sympy.pi - 2 + 2*sympy.log(2))/12)]
     # Test problem 3:
@@ -63,7 +61,7 @@ def test_tanh_sinh_both_estimates(f, a, b, exact):
         0, 1, 5*mp.pi**2/96
       )]
     # Test problem 5:
-    # + [(lambda t: mp.sqrt(t) * mp.log(t), 0, 1, -sympy.Rational(4, 9))]
+    + [(lambda t: mp.sqrt(t) * mp.log(t), 0, 1, -sympy.Rational(4, 9))]
     # Test problem 6:
     + [(lambda t: mp.sqrt(1 - t**2), 0, 1, sympy.pi/4)]
     # Test problem 7:
@@ -98,13 +96,43 @@ def test_tanh_sinh_both_estimates(f, a, b, exact):
     )
 def test_tanh_sinh_crude_estimate(f, a, b, exact):
     tol = 10**(-mp.dps)
-    value, _ = quadpy.line_segment.tanh_sinh_quadrature(f, a, b, tol)
+    value, _ = quadpy.line_segment.tanh_sinh_regular(f, a, b, tol)
     tol2 = 10**(-mp.dps+2)
     assert abs(value - sympy.N(exact, mp.dps)) < tol2
     return
 
 
 if __name__ == '__main__':
-    test_tanh_sinh_crude_estimate(
-        lambda t: mp.sqrt(mp.tan(t)), 0, mp.pi/2, sympy.pi/sympy.sqrt(2)
+    test_tanh_sinh_good_estimate(
+        # {
+        #     0: lambda t: 1,
+        #     1: lambda t: 0,
+        #     2: lambda t: 0,
+        # }, 0, 1, sympy.Rational(1, 2)
+        {
+            0: lambda t: t**2,
+            1: lambda t: 2*t,
+            2: lambda t: 2,
+        }, 0, 1, sympy.Rational(1, 3)
         )
+    # test_tanh_sinh_crude_estimate(
+    #     # lambda t: 1, 0, 1, sympy.Rational(1, 2)
+    #     #
+    #     # lambda t: t**2, 0, 1, sympy.Rational(1, 3)
+    #     #
+    #     # lambda t: t * mp.log(1+t), 0, 1, sympy.Rational(1, 4)
+    #     #
+    #     lambda t: mp.exp(t) * mp.cos(t),
+    #     0, mp.pi/2, (sympy.exp(sympy.pi/2) - 1)/2
+    #     #
+    #     # lambda t: mp.sqrt(t) * mp.log(t), 0, 1, -sympy.Rational(4, 9)
+    #     #
+    #     # lambda t: mp.exp(t) / mp.sqrt(1-t**2),
+    #     # 0, 1, mp.pi/2 * (mp.besseli(0, 1) + mp.struvel(0, 1))
+    #     #
+    #     # lambda t: mp.exp(1-t) / mp.sqrt(2*t-t**2),
+    #     # 0, 1, mp.pi/2 * (mp.besseli(0, 1) + mp.struvel(0, 1)),
+    #     # '1-s'
+    #     #
+    #     # lambda t: 1/mp.sqrt(t), 0, 1, 2
+    #     )
