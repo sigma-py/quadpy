@@ -47,36 +47,26 @@ def tanh_sinh_regular(f, a, b, eps, max_steps=10, f_derivatives=None):
 
     ba2 = (b-a) / mp.mpf(2)
 
-    def f_left(s):
-        return f(a + s*ba2)
-
-    def f_right(s):
-        return f(b - s*ba2)
-
-    f_left_derivatives = {
+    f_left = {
+        0: lambda s: ba2**0 * f(a + s*ba2),
         1: lambda s: ba2**1 * f_derivatives[1](a + s*ba2),
         2: lambda s: ba2**2 * f_derivatives[2](a + s*ba2),
         }
-    f_right_derivatives = {
+    f_right = {
+        0: lambda s: (-ba2)**0 * f(b - s*ba2),
         1: lambda s: (-ba2)**1 * f_derivatives[1](b - s*ba2),
         2: lambda s: (-ba2)**2 * f_derivatives[2](b - s*ba2),
         }
 
     value_estimate, error_estimate = _tanh_sinh(
         f_left, f_right, eps,
-        max_steps=max_steps,
-        f_left_derivatives=f_left_derivatives,
-        f_right_derivatives=f_right_derivatives,
+        max_steps=max_steps
         )
     return value_estimate * ba2, error_estimate * ba2
 
 
 # pylint: disable=too-many-arguments, too-many-locals
-def _tanh_sinh(
-        f_left, f_right, eps, max_steps=10,
-        f_left_derivatives=None,
-        f_right_derivatives=None,
-        ):
+def _tanh_sinh(f_left, f_right, eps, max_steps=10):
     '''Integrate a function `f` between `a` and `b` with accuracy `eps`. The
     function `f` is given in terms of two functions `f_left` and `f_right`
     where `f_left(s) = f(a - s*(a-b)/2)`, i.e., `f` linearly scaled such that
@@ -153,18 +143,15 @@ def _tanh_sinh(
         # (The slice expression [-1:0:-1] cuts the first entry and reverses the
         # array.)
         summands = (
-            [f_left(yy) * w for yy, w in zip(y[-1:0:-1], weights[-1:0:-1])]
-            + [f_right(yy) * w for yy, w in zip(y, weights)]
+            [f_left[0](yy) * w for yy, w in zip(y[-1:0:-1], weights[-1:0:-1])]
+            + [f_right[0](yy) * w for yy, w in zip(y, weights)]
             )
         value_estimates.append(mp.fsum(summands))
 
         # error estimation
-        if f_left_derivatives:
-            assert f_right_derivatives is not None
-            error_estimate = _error_estimate1(
-                    h, j, f_left, f_right,
-                    f_left_derivatives, f_right_derivatives
-                    )
+        if 1 in f_left and 2 in f_left:
+            assert 1 in f_right and 2 in f_right
+            error_estimate = _error_estimate1(h, j, f_left, f_right)
         else:
             error_estimate = _error_estimate2(
                 level, value_estimates, summands, eps
@@ -186,10 +173,7 @@ def _tanh_sinh(
     return value_estimates[-1], error_estimate
 
 
-def _error_estimate1(
-        h, j, f_left, f_right,
-        f_left_derivatives, f_right_derivatives
-        ):
+def _error_estimate1(h, j, f_left, f_right):
     # Pretty accurate error estimation:
     #
     #   E(h) = h * (h/2/pi)**2 * sum_{-N}^{+N} F''(h*j)
@@ -199,10 +183,6 @@ def _error_estimate1(
     #   F(t) = f(g(t)) * g'(t),
     #   g(t) = tanh(pi/2 sinh(t)).
     #
-    assert 1 in f_left_derivatives
-    assert 2 in f_left_derivatives
-    assert 1 in f_right_derivatives
-    assert 2 in f_right_derivatives
 
     # def g(t):
     #     return mp.tanh(mp.pi/2 * mp.sinh(t))
@@ -233,22 +213,17 @@ def _error_estimate1(
             ) / cosh_sinh**3
 
     # TODO reuse yt, g*
-    def F2(f, fd, t):
+    def F2(f, t):
         '''Second derivative of F(t) = f(g(t)) * g'(t).
         '''
         yt = y(t)
         y1 = dy_dt(t)
         y2 = d2y_dt2(t)
         y3 = d3y_dt3(t)
-        return y1**3 * fd[2](yt) + 3*y1*y2 * fd[1](yt) + y3 * f(yt)
+        return y1**3 * f[2](yt) + 3*y1*y2 * f[1](yt) + y3 * f[0](yt)
 
     t = [h * jj for jj in range(j+1)]
-
-    summands = (
-        [F2(f_left, f_left_derivatives, tt) for tt in t[1:]]
-        + [F2(f_right, f_right_derivatives, tt) for tt in t]
-        )
-
+    summands = [F2(f_left, tt) for tt in t[1:]] + [F2(f_right, tt) for tt in t]
     return h * (h/2/mp.pi)**2 * mp.fsum(summands)
 
 
