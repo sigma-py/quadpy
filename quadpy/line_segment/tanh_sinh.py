@@ -5,7 +5,7 @@ from mpmath import mp
 
 
 # pylint: disable=too-many-arguments
-def tanh_sinh(f, a, b, eps, max_steps=10, f_derivatives=None):
+def tanh_sinh_quadrature(f, a, b, eps, max_steps=10, f_derivatives=None):
     if f_derivatives is None:
         f_derivatives = {}
 

@@ -68,7 +68,7 @@ mp.dps = 50
     + [(
         {
             0: lambda t: mp.log(mp.sin(t)),
-            1: lambda t: mp.cot(t),
+            1: mp.cot,
             2: lambda t: -mp.csc(t)**2,
         }, 0, mp.pi/2, -mp.pi * mp.log(2) / 2
         )]
@@ -87,7 +87,7 @@ mp.dps = 50
 def test_tanh_sinh_good_estimate(f, a, b, exact):
     # test fine error estimate
     tol = 10**(-mp.dps)
-    value, _ = quadpy.line_segment.tanh_sinh(
+    value, _ = quadpy.line_segment.tanh_sinh_quadrature(
                 f[0], a, b, tol,
                 f_derivatives={1: f[1], 2: f[2]}
                 )
