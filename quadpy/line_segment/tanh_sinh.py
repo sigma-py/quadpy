@@ -59,7 +59,7 @@ def tanh_sinh_regular(f, a, b, eps, max_steps=10, f_derivatives=None):
         }
 
     value_estimate, error_estimate = _tanh_sinh(
-        f_left, f_right, eps,
+        f_left, f_right, eps / ba2,
         max_steps=max_steps
         )
     return value_estimate * ba2, error_estimate * ba2
@@ -156,14 +156,6 @@ def _tanh_sinh(f_left, f_right, eps, max_steps=10):
             error_estimate = _error_estimate2(
                 level, value_estimates, summands, eps
                 )
-
-        # exact = (mp.exp(mp.pi/2) - 1)/2
-        exact = mp.pi/4
-        print(value_estimates[-1] * 0.5, exact)
-        print(value_estimates[-1] * 0.5 - exact, error_estimate * 0.5)
-        print
-        if level == 2:
-            exit(1)
 
         if abs(error_estimate) < eps:
             success = True

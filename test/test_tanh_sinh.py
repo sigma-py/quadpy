@@ -124,16 +124,21 @@ if __name__ == '__main__':
         #     1: lambda t: t / (t+1) + mp.log(t+1),
         #     2: lambda t: (t+2) / (t+1)**2,
         # }, 0, 1, sympy.Rational(1, 4)
-        {
-            0: lambda t: t,
-            1: lambda t: 1,
-            2: lambda t: 0,
-        }, 0, mp.pi/2, mp.pi/4
         # {
-        #     0: lambda t: mp.exp(t) * mp.cos(t),
-        #     1: lambda t: mp.exp(t) * (mp.cos(t) - mp.sin(t)),
-        #     2: lambda t: -2*mp.exp(t) * mp.sin(t),
-        # }, 0, mp.pi/2, (sympy.exp(sympy.pi/2) - 1)/2
+        #     0: lambda t: 1,
+        #     1: lambda t: 0,
+        #     2: lambda t: 0,
+        # }, 0, 5, 5
+        # {
+        #     0: lambda t: t,
+        #     1: lambda t: 1,
+        #     2: lambda t: 0,
+        # }, 0, 5, mp.mpf(25)/2
+        {
+            0: lambda t: mp.exp(t) * mp.cos(t),
+            1: lambda t: mp.exp(t) * (mp.cos(t) - mp.sin(t)),
+            2: lambda t: -2*mp.exp(t) * mp.sin(t),
+        }, 0, mp.pi/2, (sympy.exp(sympy.pi/2) - 1)/2
         )
     # test_tanh_sinh_crude_estimate(
     #     # lambda t: 1, 0, 1, sympy.Rational(1, 2)
