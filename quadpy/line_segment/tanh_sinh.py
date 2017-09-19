@@ -100,21 +100,6 @@ def _tanh_sinh(
     # Tanh-Sinh High-Precision Quadrature,
     # 2006,
     # <http://www.davidhbailey.com/dhbpapers/dhb-tanh-sinh.pdf>.
-
-    # assert a < b
-
-    # ba2 = (mp.mpf(b) - a) / 2
-
-    # def fun(t):
-    #     return f(a + ba2 * (t+1))
-
-    # fun_derivatives = None
-    # if f_derivatives:
-    #     fun_derivatives = {
-    #         1: (lambda t: ba2**1 * f_derivatives[1](a + ba2*(t+1))),
-    #         2: (lambda t: ba2**2 * f_derivatives[2](a + ba2*(t+1))),
-    #         }
-
     num_digits = int(-mp.log10(eps) + 1)
     mpmath.mp.dps = num_digits
 
@@ -224,28 +209,12 @@ def _error_estimate1(
     assert 1 in f_right_derivatives
     assert 2 in f_right_derivatives
 
-    # TODO
+    # def g(t):
+    #     return mp.tanh(mp.pi/2 * mp.sinh(t))
     # y = 1 - g(t)
     def y(t):
         u2 = mp.pi/2 * mp.sinh(t)
         return 1 / (mp.exp(u2) * mp.cosh(u2))
-
-    # def dy_dt(t):
-    #     u2 = mp.pi/2 * mp.sinh(t)
-    #     return (
-    #         mp.pi/2 / mp.exp(u2) * mp.cosh(t) / mp.cosh(u2) * (mp.tanh(u2) - 1)
-    #         )
-
-    # def d2y_dt2(t):
-    #     u2 = mp.pi/2 * mp.sinh(t)
-    #     return (
-    #         mp.pi/2 / mp.exp(u2) * (mp.tanh(u2) + 1) / mp.cosh(u2) * (
-    #             mp.pi * mp.cosh(t)**2 * mp.tanh(u2) - mp.sinh(t)
-    #             )
-
-    # TODO transform to Y
-    def g(t):
-        return mp.tanh(mp.pi/2 * mp.sinh(t))
 
     def dg_dt(t):
         return mp.pi/2 * mp.cosh(t) / mp.cosh(mp.pi/2 * mp.sinh(t))**2
@@ -277,23 +246,13 @@ def _error_estimate1(
         g1 = dg_dt(t)
         g2 = d2g_dt2(t)
         g3 = d3g_dt3(t)
-        return g1**3 * fd[2](yt) + 3 * g1 * g2 * fd[1](yt) + g3 * f(yt)
-
-    # The sign on the first derivative needs to be flipped.
-    fld = {
-        1: lambda s: -f_left_derivatives[1](s),
-        2: lambda s: +f_left_derivatives[2](s),
-        }
-    frd = {
-        1: lambda s: -f_right_derivatives[1](s),
-        2: lambda s: +f_right_derivatives[2](s),
-        }
+        return g1**3 * fd[2](yt) - 3 * g1 * g2 * fd[1](yt) + g3 * f(yt)
 
     t = [h * jj for jj in range(j+1)]
 
     summands = (
-        [F2(f_left, fld, tt) for tt in t[1:]]
-        + [F2(f_right, frd, tt) for tt in t]
+        [F2(f_left, f_left_derivatives, tt) for tt in t[1:]]
+        + [F2(f_right, f_right_derivatives, tt) for tt in t]
         )
 
     return h * (h/2/mp.pi)**2 * mp.fsum(summands)
