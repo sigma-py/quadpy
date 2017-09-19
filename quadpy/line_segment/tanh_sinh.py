@@ -45,13 +45,15 @@ def tanh_sinh_regular(f, a, b, eps, max_steps=10, f_derivatives=None):
     if f_derivatives is None:
         f_derivatives = {}
 
-    ba2 = (b-a) / mp.mpf(2)
+    alpha = mp.mpf(1)
+    ba2 = (b-a) / alpha
 
     f_left = {
         0: lambda s: ba2**0 * f(a + s*ba2),
         1: lambda s: ba2**1 * f_derivatives[1](a + s*ba2),
         2: lambda s: ba2**2 * f_derivatives[2](a + s*ba2),
         }
+
     f_right = {
         0: lambda s: (-ba2)**0 * f(b - s*ba2),
         1: lambda s: (-ba2)**1 * f_derivatives[1](b - s*ba2),
@@ -59,14 +61,32 @@ def tanh_sinh_regular(f, a, b, eps, max_steps=10, f_derivatives=None):
         }
 
     value_estimate, error_estimate = _tanh_sinh(
-        f_left, f_right, eps / ba2,
+        f_left, f_right, alpha, eps / ba2,
         max_steps=max_steps
         )
     return value_estimate * ba2, error_estimate * ba2
 
 
+def tanh_sinh0(
+        f, eps, max_steps=10,
+        f_derivatives=None
+        ):
+
+    f_left = {
+        0: lambda s: +f_right(2 - s),
+        1: lambda s: -f_right_derivatives[1](2 - s),
+        2: lambda s: +f_right_derivatives[2](2 - s),
+        }
+
+    value_estimate, error_estimate = _tanh_sinh(
+        f_left, f_right, eps,
+        max_steps=max_steps
+        )
+    return value_estimate, error_estimate
+
+
 # pylint: disable=too-many-arguments, too-many-locals
-def _tanh_sinh(f_left, f_right, eps, max_steps=10):
+def _tanh_sinh(f_left, f_right, alpha, eps, max_steps=10):
     '''Integrate a function `f` between `a` and `b` with accuracy `eps`. The
     function `f` is given in terms of two functions `f_left` and `f_right`
     where `f_left(s) = f(a - s*(a-b)/2)`, i.e., `f` linearly scaled such that
@@ -130,13 +150,13 @@ def _tanh_sinh(f_left, f_right, eps, max_steps=10):
         u2 = [mp.pi/2 * mp.sinh(h*jj) for jj in range(j+1)]
         cosh_u2 = [mp.cosh(v) for v in u2]
         weights = [
-            h * mp.pi/2 * mp.cosh(h*jj) / v**2
+            alpha/2 * h * mp.pi/2 * mp.cosh(h*jj) / v**2
             for jj, v in zip(range(j+1), cosh_u2)
             ]
 
-        # y = 1 - x
+        # y = alpha/2 * (1 - x)
         # x = [mp.tanh(v) for v in u2]
-        y = [1 / (mp.exp(v) * c) for v, c in zip(u2, cosh_u2)]
+        y = [alpha/2 / (mp.exp(v) * c) for v, c in zip(u2, cosh_u2)]
 
         # Perform the integration.
         # The summands are listed such that the points are in ascending order.
@@ -151,11 +171,13 @@ def _tanh_sinh(f_left, f_right, eps, max_steps=10):
         # error estimation
         if 1 in f_left and 2 in f_left:
             assert 1 in f_right and 2 in f_right
-            error_estimate = _error_estimate1(h, j, f_left, f_right)
+            error_estimate = _error_estimate1(h, j, f_left, f_right, alpha)
         else:
             error_estimate = _error_estimate2(
                 level, value_estimates, summands, eps
                 )
+
+        print(value_estimates[-1], error_estimate)
 
         if abs(error_estimate) < eps:
             success = True
@@ -165,7 +187,7 @@ def _tanh_sinh(f_left, f_right, eps, max_steps=10):
     return value_estimates[-1], error_estimate
 
 
-def _error_estimate1(h, j, f_left, f_right):
+def _error_estimate1(h, j, f_left, f_right, alpha):
     # Pretty accurate error estimation:
     #
     #   E(h) = h * (h/2/pi)**2 * sum_{-N}^{+N} F''(h*j)
@@ -208,11 +230,15 @@ def _error_estimate1(h, j, f_left, f_right):
     def F2(f, t):
         '''Second derivative of F(t) = f(g(t)) * g'(t).
         '''
-        yt = y(t)
-        y1 = dy_dt(t)
-        y2 = d2y_dt2(t)
-        y3 = d3y_dt3(t)
-        return y1**3 * f[2](yt) + 3*y1*y2 * f[1](yt) + y3 * f[0](yt)
+        yt = alpha/2 * y(t)
+        y1 = alpha/2 * dy_dt(t)
+        y2 = alpha/2 * d2y_dt2(t)
+        y3 = alpha/2 * d3y_dt3(t)
+        return (
+            + y1**3 * f[2](yt)
+            + 3*y1*y2 * f[1](yt)
+            + y3 * f[0](yt)
+            )
 
     t = [h * jj for jj in range(j+1)]
     summands = [F2(f_left, tt) for tt in t[1:]] + [F2(f_right, tt) for tt in t]
