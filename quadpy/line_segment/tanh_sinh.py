@@ -216,20 +216,20 @@ def _error_estimate1(
         u2 = mp.pi/2 * mp.sinh(t)
         return 1 / (mp.exp(u2) * mp.cosh(u2))
 
-    def dg_dt(t):
-        return mp.pi/2 * mp.cosh(t) / mp.cosh(mp.pi/2 * mp.sinh(t))**2
+    def dy_dt(t):
+        return -mp.pi/2 * mp.cosh(t) / mp.cosh(mp.pi/2 * mp.sinh(t))**2
 
-    def d2g_dt2(t):
-        return mp.pi/2 * (
+    def d2y_dt2(t):
+        return -mp.pi/2 * (
             + mp.sinh(t)
             - mp.pi * mp.cosh(t)**2 * mp.tanh(mp.pi/2 * mp.sinh(t))
             ) / mp.cosh(mp.pi/2 * mp.sinh(t))**2
 
-    def d3g_dt3(t):
+    def d3y_dt3(t):
         sinh_sinh = mp.sinh(mp.pi/2 * mp.sinh(t))
         cosh_sinh = mp.cosh(mp.pi/2 * mp.sinh(t))
         tanh_sinh = mp.tanh(mp.pi/2 * mp.sinh(t))
-        return mp.pi/4 * mp.cosh(t) * (
+        return -mp.pi/4 * mp.cosh(t) * (
             + 2 * cosh_sinh
             - 2 * mp.pi**2 * mp.cosh(t)**2 / cosh_sinh
             + mp.pi**2 * mp.cosh(t)**2 * cosh_sinh
@@ -241,12 +241,11 @@ def _error_estimate1(
     def F2(f, fd, t):
         '''Second derivative of F(t) = f(g(t)) * g'(t).
         '''
-        # gt = g(t)
         yt = y(t)
-        g1 = dg_dt(t)
-        g2 = d2g_dt2(t)
-        g3 = d3g_dt3(t)
-        return g1**3 * fd[2](yt) - 3 * g1 * g2 * fd[1](yt) + g3 * f(yt)
+        y1 = dy_dt(t)
+        y2 = d2y_dt2(t)
+        y3 = d3y_dt3(t)
+        return y1**3 * fd[2](yt) + 3 * y1 * y2 * fd[1](yt) + y3 * f(yt)
 
     t = [h * jj for jj in range(j+1)]
 
