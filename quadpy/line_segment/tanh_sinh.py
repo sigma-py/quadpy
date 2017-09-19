@@ -41,45 +41,24 @@ from mpmath import mp
 #     return value, error
 
 
-def tanh_sinh_regular(f, a, b, eps, max_steps=10, f_derivatives=None):
+def tanh_sinh(f, a, b, eps, max_steps=10, f_derivatives=None):
     if f_derivatives is None:
         f_derivatives = {}
 
-    alpha = mp.mpf(1)
-    ba2 = (b-a) / alpha
-
     f_left = {
-        0: lambda s: ba2**0 * f(a + s*ba2),
-        1: lambda s: ba2**1 * f_derivatives[1](a + s*ba2),
-        2: lambda s: ba2**2 * f_derivatives[2](a + s*ba2),
+        0: lambda s: f(a + s),
+        1: lambda s: f_derivatives[1](a + s),
+        2: lambda s: f_derivatives[2](a + s),
         }
 
     f_right = {
-        0: lambda s: (-ba2)**0 * f(b - s*ba2),
-        1: lambda s: (-ba2)**1 * f_derivatives[1](b - s*ba2),
-        2: lambda s: (-ba2)**2 * f_derivatives[2](b - s*ba2),
+        0: lambda s: +f(b - s),
+        1: lambda s: -f_derivatives[1](b - s),
+        2: lambda s: +f_derivatives[2](b - s),
         }
 
     value_estimate, error_estimate = _tanh_sinh(
-        f_left, f_right, alpha, eps / ba2,
-        max_steps=max_steps
-        )
-    return value_estimate * ba2, error_estimate * ba2
-
-
-def tanh_sinh0(
-        f, eps, max_steps=10,
-        f_derivatives=None
-        ):
-
-    f_left = {
-        0: lambda s: +f_right(2 - s),
-        1: lambda s: -f_right_derivatives[1](2 - s),
-        2: lambda s: +f_right_derivatives[2](2 - s),
-        }
-
-    value_estimate, error_estimate = _tanh_sinh(
-        f_left, f_right, eps,
+        f_left, f_right, b-a, eps,
         max_steps=max_steps
         )
     return value_estimate, error_estimate
@@ -150,13 +129,13 @@ def _tanh_sinh(f_left, f_right, alpha, eps, max_steps=10):
         u2 = [mp.pi/2 * mp.sinh(h*jj) for jj in range(j+1)]
         cosh_u2 = [mp.cosh(v) for v in u2]
         weights = [
-            alpha/2 * h * mp.pi/2 * mp.cosh(h*jj) / v**2
+            alpha/mp.mpf(2) * h * mp.pi/2 * mp.cosh(h*jj) / v**2
             for jj, v in zip(range(j+1), cosh_u2)
             ]
 
         # y = alpha/2 * (1 - x)
         # x = [mp.tanh(v) for v in u2]
-        y = [alpha/2 / (mp.exp(v) * c) for v, c in zip(u2, cosh_u2)]
+        y = [alpha/mp.mpf(2) / (mp.exp(v) * c) for v, c in zip(u2, cosh_u2)]
 
         # Perform the integration.
         # The summands are listed such that the points are in ascending order.
@@ -198,18 +177,20 @@ def _error_estimate1(h, j, f_left, f_right, alpha):
     #   g(t) = tanh(pi/2 sinh(t)).
     #
 
+    alpha2 = alpha / mp.mpf(2)
+
     # def g(t):
     #     return mp.tanh(mp.pi/2 * mp.sinh(t))
     # y = 1 - g(t)
     def y(t):
         u2 = mp.pi/2 * mp.sinh(t)
-        return 1 / (mp.exp(u2) * mp.cosh(u2))
+        return alpha2 / (mp.exp(u2) * mp.cosh(u2))
 
     def dy_dt(t):
-        return -mp.pi/2 * mp.cosh(t) / mp.cosh(mp.pi/2 * mp.sinh(t))**2
+        return -alpha2*mp.pi/2 * mp.cosh(t) / mp.cosh(mp.pi/2 * mp.sinh(t))**2
 
     def d2y_dt2(t):
-        return -mp.pi/2 * (
+        return -alpha2 * mp.pi/2 * (
             + mp.sinh(t)
             - mp.pi * mp.cosh(t)**2 * mp.tanh(mp.pi/2 * mp.sinh(t))
             ) / mp.cosh(mp.pi/2 * mp.sinh(t))**2
@@ -218,7 +199,7 @@ def _error_estimate1(h, j, f_left, f_right, alpha):
         sinh_sinh = mp.sinh(mp.pi/2 * mp.sinh(t))
         cosh_sinh = mp.cosh(mp.pi/2 * mp.sinh(t))
         tanh_sinh = mp.tanh(mp.pi/2 * mp.sinh(t))
-        return -mp.pi/4 * mp.cosh(t) * (
+        return -alpha2 * mp.pi/4 * mp.cosh(t) * (
             + 2 * cosh_sinh
             - 2 * mp.pi**2 * mp.cosh(t)**2 / cosh_sinh
             + mp.pi**2 * mp.cosh(t)**2 * cosh_sinh
@@ -230,10 +211,10 @@ def _error_estimate1(h, j, f_left, f_right, alpha):
     def F2(f, t):
         '''Second derivative of F(t) = f(g(t)) * g'(t).
         '''
-        yt = alpha/2 * y(t)
-        y1 = alpha/2 * dy_dt(t)
-        y2 = alpha/2 * d2y_dt2(t)
-        y3 = alpha/2 * d3y_dt3(t)
+        yt = y(t)
+        y1 = dy_dt(t)
+        y2 = d2y_dt2(t)
+        y3 = d3y_dt3(t)
         return (
             + y1**3 * f[2](yt)
             + 3*y1*y2 * f[1](yt)

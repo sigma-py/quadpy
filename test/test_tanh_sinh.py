@@ -49,22 +49,10 @@ mp.dps = 50
 def test_tanh_sinh_good_estimate(f, a, b, exact):
     # test fine error estimate
     tol = 10**(-mp.dps)
-    value, _ = quadpy.line_segment.tanh_sinh_regular(
+    value, _ = quadpy.line_segment.tanh_sinh(
                 f[0], a, b, tol,
                 f_derivatives={1: f[1], 2: f[2]}
                 )
-    assert abs(value - exact) < tol
-    return
-
-
-def test_tanh_sinh_good_estimate_0(f, a, b, exact):
-    tol = 10**(-mp.dps)
-    ba2 = (b - a) / mp.mpf(2)
-    value, _ = quadpy.line_segment.tanh_sinh_singular_right(
-                f[0], tol / ba2,
-                f_right_derivatives={1: f[1], 2: f[2]}
-                )
-    value *= ba2
     assert abs(value - exact) < tol
     return
 
@@ -123,28 +111,29 @@ def test_tanh_sinh_good_estimate_0(f, a, b, exact):
 #     )
 # def test_tanh_sinh_crude_estimate(f, a, b, exact):
 #     tol = 10**(-mp.dps)
-#     value, _ = quadpy.line_segment.tanh_sinh_regular(f, a, b, tol)
+#     value, _ = quadpy.line_segment.tanh_sinh(f, a, b, tol)
 #     tol2 = 10**(-mp.dps+2)
 #     assert abs(value - sympy.N(exact, mp.dps)) < tol2
 #     return
 
 
 if __name__ == '__main__':
-    test_tanh_sinh_good_estimate(
-        {
-            0: lambda t: t * mp.log(1+t),
-            1: lambda t: t / (t+1) + mp.log(t+1),
-            2: lambda t: (t+2) / (t+1)**2,
-        }, 0, 1, sympy.Rational(1, 4)
-        )
-    # test_tanh_sinh_good_estimate_singular_right(
-    #     # sqrt(1 - t**2)
+    # test_tanh_sinh_good_estimate(
     #     {
-    #         0: lambda t: mp.sqrt(t - t**2/4),
-    #         1: lambda t: (1 - t/2) / mp.sqrt(t - t**2/4),
-    #         2: lambda t: -1 / mp.sqrt(t - t**2/4)**3,
-    #     }, 0, mp.pi/2, sympy.pi / 4
+    #         0: lambda t: t * mp.log(1+t),
+    #         1: lambda t: t / (t+1) + mp.log(t+1),
+    #         2: lambda t: (t+2) / (t+1)**2,
+    #     }, 0, 1, sympy.Rational(1, 4)
     #     )
+    test_tanh_sinh_good_estimate(
+        # If there are singularities, make sure they are at 0.
+        # sqrt(1 - t**2)
+        {
+            0: lambda t: mp.sqrt(2*t - t**2),
+            1: lambda t: (1 - t) / mp.sqrt(2*t - t**2),
+            2: lambda t: -1 / mp.sqrt(2*t - t**2)**3,
+        }, 0, 1, sympy.pi / 4
+        )
     # test_tanh_sinh_crude_estimate(
     #     # lambda t: 1, 0, 1, sympy.Rational(1, 2)
     #     #
