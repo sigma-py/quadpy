@@ -4,43 +4,7 @@ import mpmath
 from mpmath import mp
 
 
-# def tanh_sinh_singular(
-#         f_left=None,
-#         f_right=None,
-#         ab=None,
-#         eps=None,
-#         max_steps=10
-#         ):
-#     '''Tanh-sinh quadrature for integrands with singularities at the
-#     endpoints.
-#
-#     Background:
-#     Since tanh-sinh places its nodes very close to the interval boundaries,
-#     it is important to evaluate them with some accuracy. This may become a
-#     problem if there are singularities at the boundaries, i.e., if the values
-#     change very rapidly. To avoid round-off errors, the user must provide the
-#     integrand in terms of distance the left or right hade boundary,
-#     respectively. For example, if your integrand is f(t) = sqrt(t / (1-t^2))
-#     between 0 and 1, you'll have to provide g(s) = sqrt((1-s) / (2*s - s^2))
-#     (where s varies between 0 and 1).
-#     If there are singularities on both sides, you can provide both f_left and
-#     f_right and it will split the integral in two.
-#     '''
-#     if f_left and not f_right:
-#         value, error = _tanh_sinh(f_left, eps, max_steps=max_steps)
-#     elif f_right and not f_left:
-#         value, error = _tanh_sinh(f_right, eps, max_steps=max_steps)
-#     else:
-#         assert f_left and f_right
-#         value0, error0 = \
-#             _tanh_sinh(f_left, 0, ab/2, eps, max_steps=max_steps)
-#         value1, error1 = \
-#             _tanh_sinh(f_right, 0, ab/2, eps, max_steps=max_steps)
-#         value = value0 + value1
-#         error = error0 + error1
-#     return value, error
-
-
+# pylint: disable=too-many-arguments
 def tanh_sinh(f, a, b, eps, max_steps=10, f_derivatives=None):
     if f_derivatives is None:
         f_derivatives = {}
@@ -155,8 +119,6 @@ def _tanh_sinh(f_left, f_right, alpha, eps, max_steps=10):
             error_estimate = _error_estimate2(
                 level, value_estimates, summands, eps
                 )
-
-        print(value_estimates[-1], error_estimate)
 
         if abs(error_estimate) < eps:
             success = True
