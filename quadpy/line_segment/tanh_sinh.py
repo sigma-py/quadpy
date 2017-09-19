@@ -45,32 +45,36 @@ def tanh_sinh_regular(f, a, b, eps, max_steps=10, f_derivatives=None):
     if f_derivatives is None:
         f_derivatives = {}
 
+    ba2 = (b-a) / mp.mpf(2)
+
     def f_left(s):
-        return f(a + s*(b-a)/mp.mpf(2))
+        return f(a + s*ba2)
 
     def f_right(s):
-        return f(b + s*(a-b)/mp.mpf(2))
+        return f(b - s*ba2)
 
     f_left_derivatives = {
-        k: lambda s: ((b-a)/2)**k * fd(a + s*(b-a)/2)
-        for k, fd in f_derivatives.items()
+        1: lambda s: ba2**1 * f_derivatives[1](a + s*ba2),
+        2: lambda s: ba2**2 * f_derivatives[2](a + s*ba2),
         }
     f_right_derivatives = {
-        k: lambda s: ((a-b)/2)**k * fd(a + s*(a-b)/2)
-        for k, fd in f_derivatives.items()
+        1: lambda s: (-ba2)**1 * f_derivatives[1](b - s*ba2),
+        2: lambda s: (-ba2)**2 * f_derivatives[2](b - s*ba2),
         }
 
     value_estimate, error_estimate = _tanh_sinh(
+        f, f_derivatives,
         f_left, f_right, eps,
         max_steps=max_steps,
         f_left_derivatives=f_left_derivatives,
         f_right_derivatives=f_right_derivatives,
         )
-    return value_estimate * (b-a)/2, error_estimate * (b-a)/2
+    return value_estimate * ba2, error_estimate * ba2
 
 
 # pylint: disable=too-many-arguments, too-many-locals
 def _tanh_sinh(
+        f, f_derivatives,
         f_left, f_right, eps, max_steps=10,
         f_left_derivatives=None,
         f_right_derivatives=None,
@@ -99,16 +103,16 @@ def _tanh_sinh(
 
     # assert a < b
 
-    # ab2 = (mp.mpf(b) - a) / 2
+    # ba2 = (mp.mpf(b) - a) / 2
 
     # def fun(t):
-    #     return f(a + ab2 * (t+1))
+    #     return f(a + ba2 * (t+1))
 
     # fun_derivatives = None
     # if f_derivatives:
     #     fun_derivatives = {
-    #         1: (lambda t: ab2**1 * f_derivatives[1](a + ab2*(t+1))),
-    #         2: (lambda t: ab2**2 * f_derivatives[2](a + ab2*(t+1))),
+    #         1: (lambda t: ba2**1 * f_derivatives[1](a + ba2*(t+1))),
+    #         2: (lambda t: ba2**2 * f_derivatives[2](a + ba2*(t+1))),
     #         }
 
     num_digits = int(-mp.log10(eps) + 1)
@@ -139,16 +143,16 @@ def _tanh_sinh(
         #
         # Calling z = - pi/2 * exp(h*j), one gets
         #
-        #     tau > -2*h*z / exp(-z)
+        #     tau > -2*h*z * exp(z)
         #
-        # This inequality is fulfilled exactly if z < W(-tau/h/2) with W being
-        # the (-1)-branch of the Lambert-W function IF 2*exp(1)*tau < h (which
+        # This inequality is fulfilled exactly if z = W(-tau/h/2) with W being
+        # the (-1)-branch of the Lambert-W function IF exp(1)*tau < 2*h (which
         # we can assume since `tau` will generally be small). We finally get
         #
-        #     j > ln(-W(-tau/h/2) * 2 / pi) / h.
+        #     j > ln(-2/pi * W(-tau/h/2)) / h.
         #
-        assert 2*mp.exp(1)*eps**2 < h
-        j = int(mp.ln(-mp.lambertw(-eps**2/h/2, -1) * 2 / mp.pi) / h) + 1
+        assert mp.exp(1)*eps**2 < 2*h
+        j = int(mp.ln(-2/mp.pi * mp.lambertw(-eps**2/h/2, -1)) / h) + 1
 
         u2 = [mp.pi/2 * mp.sinh(h*jj) for jj in range(j+1)]
         cosh_u2 = [mp.cosh(v) for v in u2]
@@ -176,6 +180,7 @@ def _tanh_sinh(
         if f_left_derivatives:
             assert f_right_derivatives is not None
             error_estimate = _error_estimate1(
+                    f, f_derivatives,
                     h, j, f_left, f_right,
                     f_left_derivatives, f_right_derivatives
                     )
@@ -201,6 +206,7 @@ def _tanh_sinh(
 
 
 def _error_estimate1(
+        f, f_derivatives,
         h, j, f_left, f_right,
         f_left_derivatives, f_right_derivatives
         ):
@@ -219,16 +225,15 @@ def _error_estimate1(
     assert 2 in f_right_derivatives
 
     # TODO
-    # # y = 1 - g(t)
-    # def y(t):
-    #     u2 = mp.pi/2 * mp.sinh(t)
-    #     return 1 / (mp.exp(u2) * mp.cosh(u2))
+    # y = 1 - g(t)
+    def y(t):
+        u2 = mp.pi/2 * mp.sinh(t)
+        return 1 / (mp.exp(u2) * mp.cosh(u2))
 
     # def dy_dt(t):
     #     u2 = mp.pi/2 * mp.sinh(t)
     #     return (
-    #         mp.pi/2 / mp.exp(u2) * mp.cosh(t) / mp.cosh(u2)
-    #         * (mp.tanh(u2) - 1)
+    #         mp.pi/2 / mp.exp(u2) * mp.cosh(t) / mp.cosh(u2) * (mp.tanh(u2) - 1)
     #         )
 
     # def d2y_dt2(t):
@@ -238,6 +243,7 @@ def _error_estimate1(
     #             mp.pi * mp.cosh(t)**2 * mp.tanh(u2) - mp.sinh(t)
     #             )
 
+    # TODO transform to Y
     def g(t):
         return mp.tanh(mp.pi/2 * mp.sinh(t))
 
@@ -262,26 +268,32 @@ def _error_estimate1(
             - 6 * mp.pi * mp.sinh(t) * sinh_sinh
             ) / cosh_sinh**3
 
-    # TODO reuse g*
+    # TODO reuse yt, g*
     def F2(f, fd, t):
         '''Second derivative of F(t) = f(g(t)) * g'(t).
         '''
-        gt = g(t)
+        # gt = g(t)
+        yt = y(t)
         g1 = dg_dt(t)
         g2 = d2g_dt2(t)
         g3 = d3g_dt3(t)
-        return (
-            - g1**3 * fd[2](1 - gt)
-            - 3 * g1 * g2 * fd[1](1 - gt)
-            - g3 * f(1 - gt)
-            )
+        return g1**3 * fd[2](yt) + 3 * g1 * g2 * fd[1](yt) + g3 * f(yt)
+
+    # The sign on the first derivative needs to be flipped.
+    fld = {
+        1: lambda s: -f_left_derivatives[1](s),
+        2: lambda s: +f_left_derivatives[2](s),
+        }
+    frd = {
+        1: lambda s: -f_right_derivatives[1](s),
+        2: lambda s: +f_right_derivatives[2](s),
+        }
 
     t = [h * jj for jj in range(j+1)]
-    # print(f_left(1))
-    # print(f_right(1))
+
     summands = (
-        [F2(f_left, f_left_derivatives, tt) for tt in t[1:]]
-        + [F2(f_right, f_right_derivatives, tt) for tt in t]
+        [F2(f_left, fld, tt) for tt in t[1:]]
+        + [F2(f_right, frd, tt) for tt in t]
         )
 
     return h * (h/2/mp.pi)**2 * mp.fsum(summands)
