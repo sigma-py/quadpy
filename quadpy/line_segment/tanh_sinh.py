@@ -63,7 +63,6 @@ def tanh_sinh_regular(f, a, b, eps, max_steps=10, f_derivatives=None):
         }
 
     value_estimate, error_estimate = _tanh_sinh(
-        f, f_derivatives,
         f_left, f_right, eps,
         max_steps=max_steps,
         f_left_derivatives=f_left_derivatives,
@@ -74,7 +73,6 @@ def tanh_sinh_regular(f, a, b, eps, max_steps=10, f_derivatives=None):
 
 # pylint: disable=too-many-arguments, too-many-locals
 def _tanh_sinh(
-        f, f_derivatives,
         f_left, f_right, eps, max_steps=10,
         f_left_derivatives=None,
         f_right_derivatives=None,
@@ -161,11 +159,9 @@ def _tanh_sinh(
         value_estimates.append(mp.fsum(summands))
 
         # error estimation
-        # TODO
         if f_left_derivatives:
             assert f_right_derivatives is not None
             error_estimate = _error_estimate1(
-                    f, f_derivatives,
                     h, j, f_left, f_right,
                     f_left_derivatives, f_right_derivatives
                     )
@@ -175,7 +171,7 @@ def _tanh_sinh(
                 )
 
         # exact = (mp.exp(mp.pi/2) - 1)/2
-        exact = mp.mpf(1) / 3
+        exact = mp.pi/4
         print(value_estimates[-1] * 0.5, exact)
         print(value_estimates[-1] * 0.5 - exact, error_estimate * 0.5)
         print
@@ -191,7 +187,6 @@ def _tanh_sinh(
 
 
 def _error_estimate1(
-        f, f_derivatives,
         h, j, f_left, f_right,
         f_left_derivatives, f_right_derivatives
         ):
@@ -245,7 +240,7 @@ def _error_estimate1(
         y1 = dy_dt(t)
         y2 = d2y_dt2(t)
         y3 = d3y_dt3(t)
-        return y1**3 * fd[2](yt) + 3 * y1 * y2 * fd[1](yt) + y3 * f(yt)
+        return y1**3 * fd[2](yt) + 3*y1*y2 * fd[1](yt) + y3 * f(yt)
 
     t = [h * jj for jj in range(j+1)]
 
