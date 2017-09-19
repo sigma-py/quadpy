@@ -35,6 +35,7 @@ mp.dps = 50
             1: lambda t: mp.exp(t) * (mp.cos(t) - mp.sin(t)),
             2: lambda t: -2*mp.exp(t) * mp.sin(t),
         }, 0, mp.pi/2, (sympy.exp(sympy.pi/2) - 1)/2)]
+    # Bailey example 1:
     + [({
             0: lambda t: t * mp.log(1+t),
             1: lambda t: t / (t+1) + mp.log(t+1),
@@ -45,6 +46,43 @@ mp.dps = 50
             1: lambda t: (mp.log(t) + 2) / 2 / mp.sqrt(t),
             2: lambda t: -mp.log(t) / 4 / mp.sqrt(t)**3,
         }, 0, 1, -sympy.Rational(4, 9))]
+    # Bailey example 6:
+    + [(
+        # If there are singularities, make sure they are at 0.
+        # sqrt(1 - t**2)
+        {
+            0: lambda t: mp.sqrt(2*t - t**2),
+            1: lambda t: (1 - t) / mp.sqrt(2*t - t**2),
+            2: lambda t: -1 / mp.sqrt(2*t - t**2)**3,
+        }, 0, 1, sympy.pi / 4
+        )]
+    # Bailey example 8:
+    + [(
+        {
+            0: lambda t: mp.log(t)**2,
+            1: lambda t: 2 * mp.log(t) / t,
+            2: lambda t: (2-2*mp.log(t)) / t**2,
+        }, 0, 1, 2
+        )]
+    # Bailey example 9:
+    + [(
+        {
+            0: lambda t: mp.log(mp.sin(t)),
+            1: lambda t: mp.cot(t),
+            2: lambda t: -mp.csc(t)**2,
+        }, 0, mp.pi/2, -mp.pi * mp.log(2) / 2
+        )]
+    # Bailey example 10:
+    + [(
+        {
+            0: lambda t: 1 / mp.sqrt(mp.tan(t)),
+            1: lambda t: -mp.sec(t)**2 / 2 / mp.sqrt(mp.tan(t))**3,
+            2: lambda t: (
+                + 3*mp.sec(t)**4 / 4 / mp.sqrt(mp.tan(t))**5
+                - mp.sec(t)**2 / mp.sqrt(mp.tan(t))
+                ),
+        }, 0, mp.pi/2, mp.pi / mp.sqrt(2)
+        )]
     )
 def test_tanh_sinh_good_estimate(f, a, b, exact):
     # test fine error estimate
@@ -53,7 +91,8 @@ def test_tanh_sinh_good_estimate(f, a, b, exact):
                 f[0], a, b, tol,
                 f_derivatives={1: f[1], 2: f[2]}
                 )
-    assert abs(value - exact) < tol
+    tol2 = 10**(-mp.dps+1)
+    assert abs(value - exact) < tol2
     return
 
 
