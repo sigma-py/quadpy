@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-import mpmath
 from mpmath import mp
+import numpy
 
 
 # pylint: disable=too-many-arguments
@@ -60,12 +60,13 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
     # 2006,
     # <http://www.davidhbailey.com/dhbpapers/dhb-tanh-sinh.pdf>.
     num_digits = int(-mp.log10(eps) + 1)
-    mpmath.mp.dps = num_digits
+    mp.dps = num_digits
 
     value_estimates = []
     h = mp.mpf(1)
     success = False
     for level in range(max_steps):
+        print(level)
         # For h=1, the error estimate is too optimistic. Hence, start with
         # h=1/2 right away.
         h /= 2
@@ -178,13 +179,10 @@ def _error_estimate1(h, j, f_left, f_right, alpha):
             ) / cosh_sinh**3
 
     # TODO reuse yt, g*
-    def F2(f, t):
+    def F2(f, y):
         '''Second derivative of F(t) = f(g(t)) * g'(t).
         '''
-        yt = y(t)
-        y1 = dy_dt(t)
-        y2 = d2y_dt2(t)
-        y3 = d3y_dt3(t)
+        yt, y1, y2, y3 = y
         return (
             + y1**3 * f[2](yt)
             + 3*y1*y2 * f[1](yt)
@@ -192,7 +190,17 @@ def _error_estimate1(h, j, f_left, f_right, alpha):
             )
 
     t = [h * jj for jj in range(j+1)]
-    summands = [F2(f_left, tt) for tt in t[1:]] + [F2(f_right, tt) for tt in t]
+    y = numpy.array([
+        [y(tt) for tt in t],
+        [dy_dt(tt) for tt in t],
+        [d2y_dt2(tt) for tt in t],
+        [d3y_dt3(tt) for tt in t],
+        ]).T
+
+    summands = (
+        [F2(f_left, yy) for yy in y[1:]]
+        + [F2(f_right, yy) for yy in y]
+        )
     return h * (h/2/mp.pi)**2 * mp.fsum(summands)
 
 

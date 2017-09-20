@@ -65,7 +65,6 @@ def test_tanh_sinh(f, a, b, exact):
     # test with crude estimate
     value, _ = quadpy.line_segment.tanh_sinh_quadrature(f, a, b, tol)
     assert abs(value - exact) < tol2
-
     return
 
 
@@ -113,22 +112,23 @@ def test_singularities_at_both_ends(f_left, f_right, b, exact):
     tol2 = 10**(-mp.dps+1)
     assert abs(value - exact) < tol2
 
-    # test with crude estimate
-    fl = {0: f_left}
-    fr = {0: f_right}
-    value, _ = quadpy.line_segment.tanh_sinh_lr(fl, fr, b, tol)
-    tol2 = 10**(-mp.dps+2)
-    assert abs(value - exact) < tol2
+    # # test with crude estimate
+    # fl = {0: f_left}
+    # fr = {0: f_right}
+    # value, _ = quadpy.line_segment.tanh_sinh_lr(fl, fr, b, tol)
+    # tol2 = 10**(-mp.dps+2)
+    # assert abs(value - exact) < tol2
     return
 
 
 if __name__ == '__main__':
-    test_tanh_sinh(
-        # If there are singularities, make sure they are at 0.
-        # sqrt(1 - t**2)
-        {
-            0: lambda t: sympy.sqrt(2*t - t**2),
-            1: lambda t: (1 - t) / mp.sqrt(2*t - t**2),
-            2: lambda t: -1 / mp.sqrt(2*t - t**2)**3,
-        }, 0, 1, sympy.pi / 4
+    # test_tanh_sinh(
+    #     # If there are singularities, make sure they are at 0.
+    #     # sqrt(1 - t**2)
+    #     lambda t: sympy.sqrt(2*t - t**2), 0, 1, sympy.pi / 4
+    #     )
+    test_singularities_at_both_ends(
+        lambda s: sympy.exp(1-1/s) / sympy.sqrt(s**3 - s**4),
+        lambda s: sympy.exp(s/(s-1)) / sympy.sqrt(s*(s*((3-s)*s-3)+1)),
+        1, mp.sqrt(mp.pi)
         )
