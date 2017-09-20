@@ -153,12 +153,20 @@ def _error_estimate1(h, j, f_left, f_right, alpha):
     # def g(t):
     #     return mp.tanh(mp.pi/2 * mp.sinh(t))
     # y = 1 - g(t)
-    def y(t):
-        u2 = mp.pi/2 * mp.sinh(t)
-        return alpha2 / (mp.exp(u2) * mp.cosh(u2))
+    t = [h * jj for jj in range(j+1)]
 
-    def dy_dt(t):
-        return -alpha2*mp.pi/2 * mp.cosh(t) / mp.cosh(mp.pi/2 * mp.sinh(t))**2
+    sinh_t = [mp.pi/2 * mp.sinh(tt) for tt in t]
+    cosh_t = [mp.pi/2 * mp.cosh(tt) for tt in t]
+    cosh_sinh_t = [mp.cosh(s) for s in sinh_t]
+
+    y0 = [
+        alpha2 / (mp.exp(s) * cs)
+        for s, cs in zip(sinh_t, cosh_sinh_t)
+        ]
+    y1 = [
+        -alpha2 * c / cs**2
+        for c, cs in zip(cosh_t, cosh_sinh_t)
+        ]
 
     def d2y_dt2(t):
         return -alpha2 * mp.pi/2 * (
@@ -184,15 +192,13 @@ def _error_estimate1(h, j, f_left, f_right, alpha):
         '''
         yt, y1, y2, y3 = y
         return (
-            + y1**3 * f[2](yt)
-            + 3*y1*y2 * f[1](yt)
             + y3 * f[0](yt)
+            + 3*y1*y2 * f[1](yt)
+            + y1**3 * f[2](yt)
             )
 
-    t = [h * jj for jj in range(j+1)]
     y = numpy.array([
-        [y(tt) for tt in t],
-        [dy_dt(tt) for tt in t],
+        y0, y1,
         [d2y_dt2(tt) for tt in t],
         [d3y_dt3(tt) for tt in t],
         ]).T
