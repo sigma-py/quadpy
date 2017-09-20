@@ -30,32 +30,58 @@ mp.dps = 50
         1: lambda t: 2*t,
         2: lambda t: 2,
         }, -1, +1, sympy.Rational(2, 3))]
-    + [({
-            0: lambda t: mp.exp(t) * mp.cos(t),
-            1: lambda t: mp.exp(t) * (mp.cos(t) - mp.sin(t)),
-            2: lambda t: -2*mp.exp(t) * mp.sin(t),
-        }, 0, mp.pi/2, (sympy.exp(sympy.pi/2) - 1)/2)]
     # Bailey example 1:
     + [({
             0: lambda t: t * mp.log(1+t),
             1: lambda t: t / (t+1) + mp.log(t+1),
             2: lambda t: (t+2) / (t+1)**2,
         }, 0, 1, sympy.Rational(1, 4))]
+    # Bailey example 2:
+    + [({
+            0: lambda t: t**2 * mp.atan(t),
+            1: lambda t: t * (t / (t**2+1) + 2*mp.atan(t)),
+            2: lambda t: 2 * (t * (t**2+2) / (t**2+1)**2 + mp.atan(t)),
+        }, 0, 1, (sympy.pi - 2 + 2*sympy.log(2))/12)]
+    # Bailey example 3:
+    + [({
+            0: lambda t: mp.exp(t) * mp.cos(t),
+            1: lambda t: mp.exp(t) * (mp.cos(t) - mp.sin(t)),
+            2: lambda t: -2*mp.exp(t) * mp.sin(t),
+        }, 0, mp.pi/2, (sympy.exp(sympy.pi/2) - 1)/2)]
+    # TODO
+    # Bailey example 4:
+    # Bailey example 5:
     + [({
             0: lambda t: mp.sqrt(t) * mp.log(t),
             1: lambda t: (mp.log(t) + 2) / 2 / mp.sqrt(t),
             2: lambda t: -mp.log(t) / 4 / mp.sqrt(t)**3,
         }, 0, 1, -sympy.Rational(4, 9))]
-    # Bailey example 6:
+    # Bailey example 6 with singularity moved to 0.
     + [(
-        # If there are singularities, make sure they are at 0.
-        # sqrt(1 - t**2)
         {
             0: lambda t: mp.sqrt(2*t - t**2),
             1: lambda t: (1 - t) / mp.sqrt(2*t - t**2),
             2: lambda t: -1 / mp.sqrt(2*t - t**2)**3,
         }, 0, 1, sympy.pi / 4
         )]
+    # # Bailey example 7 with singularity moved to 0.
+    # + [(
+    #     {
+    #         0: lambda t: mp.sqrt((1-t) / (2*t-t**2)),
+    #         1: lambda t: (
+    #             ((2*t - t**2) - 2)
+    #             / (2 * (t-2)**2 * t**2 * mp.sqrt((1-t) / (2*t-t**2)))
+    #             ),
+    #         2: lambda t: (
+    #             ((t-2) * t * (3*(t-2)*t + 16) + 12)
+    #             / (4 * (t-2)**2 * mp.sqrt((1-t) / (2*t-t**2))**3 * t**4)
+    #             ),
+    #     }, 0, 1, (
+    #         2 * sympy.sqrt(sympy.pi)
+    #         * sympy.gamma(sympy.Rational(3, 4))
+    #         / sympy.gamma(sympy.Rational(1, 4))
+    #         )
+    #     )]
     # Bailey example 8:
     + [(
         {
@@ -82,6 +108,14 @@ mp.dps = 50
                 - mp.sec(t)**2 / mp.sqrt(mp.tan(t))
                 ),
         }, 0, mp.pi/2, mp.pi / mp.sqrt(2)
+        )]
+    # Bailey example 11:
+    + [(
+        {
+            0: lambda s: 1 / (1 - 2*s + 2*s**2),
+            1: lambda s: (2 - 4*s) / (1 - 2*s + 2*s**2)**2,
+            2: lambda s: 4 * (6*s**2 - 6*s + 1) / (1 - 2*s + 2*s**2)**3,
+        }, 0, 1, mp.pi/2
         )]
     # Bailey example 12: (singularity at both ends)
     # + [(
