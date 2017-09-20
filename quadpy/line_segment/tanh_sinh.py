@@ -21,7 +21,7 @@ def tanh_sinh_quadrature(f, a, b, eps, max_steps=10, f_derivatives=None):
         2: lambda s: +f_derivatives[2](b - s),
         }
 
-    value_estimate, error_estimate = _tanh_sinh(
+    value_estimate, error_estimate = tanh_sinh_lr(
         f_left, f_right, b-a, eps,
         max_steps=max_steps
         )
@@ -29,11 +29,15 @@ def tanh_sinh_quadrature(f, a, b, eps, max_steps=10, f_derivatives=None):
 
 
 # pylint: disable=too-many-arguments, too-many-locals
-def _tanh_sinh(f_left, f_right, alpha, eps, max_steps=10):
+def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
     '''Integrate a function `f` between `a` and `b` with accuracy `eps`. The
-    function `f` is given in terms of two functions `f_left` and `f_right`
-    where `f_left(s) = f(a - s*(a-b)/2)`, i.e., `f` linearly scaled such that
-    `f_left(0) = a`, `f_left(2) = b` (`f_right` likewise).
+    function `f` is given in terms of two functions
+
+        * `f_left(s) = f(a + s)`, i.e., `f` linearly scaled such that
+          `f_left(0) = a`, `f_left(b-a) = b`,
+
+        * `f_right(s) = f(b - s)`, i.e., `f` linearly scaled such that
+          `f_right(0) = b`, `f_left(b-a) = a`.
 
     Mori, Masatake
     Discovery of the double exponential transformation and its developments,

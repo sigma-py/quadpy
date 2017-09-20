@@ -29,13 +29,9 @@ mp.dps = 50
         0, 1, sympy.pi**2 * sympy.Rational(5, 96)
         )]
     # Bailey example 5:
-    + [(lambda t: sympy.sqrt(t) * sympy.log(t),
-        0, 1, -sympy.Rational(4, 9)
-        )]
+    + [(lambda t: sympy.sqrt(t) * sympy.log(t), 0, 1, -sympy.Rational(4, 9))]
     # Bailey example 6 with singularity moved to 0.
-    + [(lambda t: sympy.sqrt(2*t - t**2),
-        0, 1, sympy.pi / 4
-        )]
+    + [(lambda t: sympy.sqrt(2*t - t**2), 0, 1, sympy.pi / 4)]
     # TODO
     # # Bailey example 7 with singularity moved to 0.
     # # First and second derivatives have singularities at both ends, however.
@@ -57,29 +53,11 @@ mp.dps = 50
     #         )
     #     )]
     # Bailey example 8:
-    + [(lambda t: sympy.log(t)**2,
-        0, 1, 2
-        )]
+    + [(lambda t: sympy.log(t)**2, 0, 1, 2)]
     # Bailey example 9:
-    + [(lambda t: sympy.log(sympy.sin(t)),
-        0, mp.pi/2, -mp.pi * mp.log(2) / 2
-        )]
-    # Bailey example 10:
-    # TODO
-    # + [(
-    #     {
-    #         0: lambda t: 1 / sympy.sqrt(sympy.tan(t)),
-    #         1: lambda t: -mp.sec(t)**2 / 2 / mp.sqrt(mp.tan(t))**3,
-    #         2: lambda t: (
-    #             + 3*mp.sec(t)**4 / 4 / mp.sqrt(mp.tan(t))**5
-    #             - mp.sec(t)**2 / mp.sqrt(mp.tan(t))
-    #             ),
-    #     }, 0, mp.pi/2, mp.pi / mp.sqrt(2)
-    #     )]
+    + [(lambda t: sympy.log(sympy.sin(t)), 0, mp.pi/2, -mp.pi * mp.log(2) / 2)]
     # Bailey example 11:
-    + [(lambda s: 1 / (1 - 2*s + 2*s**2),
-        0, 1, mp.pi/2
-        )]
+    + [(lambda s: 1 / (1 - 2*s + 2*s**2), 0, 1, mp.pi/2)]
     # Bailey example 12: (singularity at both ends)
     # + [(
     #     {
@@ -95,9 +73,7 @@ mp.dps = 50
     #     }, 0, 1, mp.sqrt(mp.pi)
     #     )]
     # Bailey example 13:
-    + [(lambda s: sympy.exp(-(1/s-1)**2/2) / s**2,
-        0, 1, mp.sqrt(mp.pi / 2)
-        )]
+    + [(lambda s: sympy.exp(-(1/s-1)**2/2) / s**2, 0, 1, mp.sqrt(mp.pi / 2))]
     # Bailey example 14:
     + [(lambda s: sympy.exp(1 - 1/s) * sympy.cos(1/s - 1) / s**2,
         0, 1, sympy.Rational(1, 2)
@@ -117,6 +93,38 @@ def test_tanh_sinh_good_estimate(f, a, b, exact):
                 f, a, b, tol,
                 f_derivatives=f_derivatives
                 )
+
+    tol2 = 10**(-mp.dps+1)
+    assert abs(value - exact) < tol2
+    return
+
+
+# Test functions with singularities at both ends.
+@pytest.mark.parametrize(
+    'f_left, f_right, b, exact',
+    # Bailey example 10:
+    [(lambda t: sympy.sqrt(sympy.tan(t)),
+      lambda t: 1 / sympy.sqrt(sympy.tan(t)),
+      mp.pi/2, mp.pi / mp.sqrt(2)
+      )]
+    )
+def test_singularities_at_both_ends(f_left, f_right, b, exact):
+    # test fine error estimate
+    tol = 10**(-mp.dps)
+
+    t = sympy.Symbol('t')
+    fl = {
+        0: f_left,
+        1: sympy.lambdify(t, sympy.diff(f_left(t), t, 1), modules=['mpmath']),
+        2: sympy.lambdify(t, sympy.diff(f_left(t), t, 2), modules=['mpmath']),
+        }
+    fr = {
+        0: f_right,
+        1: sympy.lambdify(t, sympy.diff(f_right(t), t, 1), modules=['mpmath']),
+        2: sympy.lambdify(t, sympy.diff(f_right(t), t, 2), modules=['mpmath']),
+        }
+
+    value, _ = quadpy.line_segment.tanh_sinh_lr(fl, fr, b, tol)
 
     tol2 = 10**(-mp.dps+1)
     assert abs(value - exact) < tol2
