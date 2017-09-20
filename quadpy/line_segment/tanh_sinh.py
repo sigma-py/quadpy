@@ -11,15 +11,19 @@ def tanh_sinh_quadrature(f, a, b, eps, max_steps=10, f_derivatives=None):
 
     f_left = {
         0: lambda s: f(a + s),
-        1: lambda s: f_derivatives[1](a + s),
-        2: lambda s: f_derivatives[2](a + s),
         }
+    if 1 in f_derivatives:
+        f_left[1] = lambda s: f_derivatives[1](a + s)
+    if 2 in f_derivatives:
+        f_left[2] = lambda s: f_derivatives[2](a + s)
 
     f_right = {
-        0: lambda s: +f(b - s),
-        1: lambda s: -f_derivatives[1](b - s),
-        2: lambda s: +f_derivatives[2](b - s),
+        0: lambda s: f(b - s),
         }
+    if 1 in f_derivatives:
+        f_right[1] = lambda s: -f_derivatives[1](b - s)
+    if 2 in f_derivatives:
+        f_right[2] = lambda s: +f_derivatives[2](b - s)
 
     value_estimate, error_estimate = tanh_sinh_lr(
         f_left, f_right, b-a, eps,
