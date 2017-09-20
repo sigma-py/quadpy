@@ -101,11 +101,11 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         assert mp.exp(1)*eps**2 < 2*h
         j = int(mp.ln(-2/mp.pi * mp.lambertw(-eps**2/h/2, -1)) / h) + 1
 
-        t = [h * jj for jj in range(j+1)]
+        t = numpy.array([h * jj for jj in range(j+1)])
 
         sinh_t = [mp.pi/2 * mp.sinh(tt) for tt in t]
         cosh_t = [mp.pi/2 * mp.cosh(tt) for tt in t]
-        cosh_sinh_t = [mp.cosh(v) for v in sinh_t]
+        cosh_sinh_t = map(mp.cosh, sinh_t)
 
         # y = alpha/2 * (1 - x)
         # x = [mp.tanh(v) for v in u2]
@@ -122,9 +122,11 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         # The summands are listed such that the points are in ascending order.
         # (The slice expression [-1:0:-1] cuts the first entry and reverses the
         # array.)
+        fly = [f_left[0](yy) for yy in y0]
+        fry = [f_right[0](yy) for yy in y0]
         summands = (
-            [f_left[0](yy) * w for yy, w in zip(y0[-1:0:-1], weights[-1:0:-1])]
-            + [f_right[0](yy) * w for yy, w in zip(y0, weights)]
+            [fy*w for fy, w in zip(fly[-1:0:-1], weights[-1:0:-1])]
+            + [fy*w for fy, w in zip(fry, weights)]
             )
         value_estimates.append(mp.fsum(summands))
 
@@ -133,7 +135,7 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
             assert 1 in f_right and 2 in f_right
             error_estimate = _error_estimate1(
                 h, t, sinh_t, cosh_t, cosh_sinh_t, y0, y1,
-                f_left, f_right, alpha
+                fly, fry, f_left, f_right, alpha
                 )
         else:
             error_estimate = _error_estimate2(
@@ -149,7 +151,8 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
 
 
 def _error_estimate1(
-        h, t, sinh_t, cosh_t, cosh_sinh_t, y0, y1, f_left, f_right, alpha
+        h, t, sinh_t, cosh_t, cosh_sinh_t, y0, y1,
+        fly, fry, f_left, f_right, alpha
         ):
     '''
     A pretty accurate error estimation is
@@ -163,10 +166,10 @@ def _error_estimate1(
     '''
     alpha2 = alpha / mp.mpf(2)
 
-    sinh_sinh_t = [mp.sinh(s) for s in sinh_t]
+    sinh_sinh_t = map(mp.sinh, sinh_t)
     tanh_sinh_t = [ss/cs for ss, cs in zip(sinh_sinh_t, cosh_sinh_t)]
 
-    # The derivatives of y = 1-g(t).
+    # More derivatives of y = 1-g(t).
     y2 = [
         -alpha2 * (s - 2 * c**2 * ts) / cs**2
         for s, c, cs, ts in zip(sinh_t, cosh_t, cosh_sinh_t, tanh_sinh_t)
@@ -179,11 +182,11 @@ def _error_estimate1(
         zip(sinh_t, cosh_t, sinh_sinh_t, cosh_sinh_t, tanh_sinh_t)
         ]
 
-    def F2(f, y):
+    def F2(f0_y, f, y):
         '''Second derivative of F(t) = f(g(t)) * g'(t).
         '''
         return (
-            + y[3] * f[0](y[0])
+            + y[3] * f0_y
             + 3*y[1]*y[2] * f[1](y[0])
             + y[1]**3 * f[2](y[0])
             )
@@ -191,8 +194,8 @@ def _error_estimate1(
     y = numpy.array([y0, y1, y2, y3]).T
 
     summands = (
-        [F2(f_left, yy) for yy in y[1:]]
-        + [F2(f_right, yy) for yy in y]
+        [F2(fy, f_left, yy) for fy, yy in zip(fly[1:], y[1:])]
+        + [F2(fy, f_right, yy) for fy, yy in zip(fry, y)]
         )
     return h * (h/2/mp.pi)**2 * mp.fsum(summands)
 
