@@ -177,26 +177,17 @@ def _error_estimate1(
         - 6 * sinh_t * sinh_sinh_t
         ) / cosh_sinh_t**3
 
-    def F2(f, f0_y, y):
-        '''Second derivative of F(t) = f(g(t)) * g'(t).
-        '''
-        return (
-            + y[3] * f0_y
-            + 3*y[1]*y[2] * f[1](y[0])
-            + y[1]**3 * f[2](y[0])
-            )
+    fl1_y = numpy.array([f_left[1](yy) for yy in y0])
+    fl2_y = numpy.array([f_left[2](yy) for yy in y0])
 
-    y = numpy.array([y0, y1, y2, y3]).T
+    fr1_y = numpy.array([f_right[1](yy) for yy in y0])
+    fr2_y = numpy.array([f_right[2](yy) for yy in y0])
 
-    # fl1_y = numpy.array([f_left[1](yy) for yy in y])
-    # fl2_y = numpy.array([f_left[2](yy) for yy in y])
-    # #
-    # fr1_y = numpy.array([f_right[1](yy) for yy in y])
-    # fr2_y = numpy.array([f_right[2](yy) for yy in y])
-    summands = (
-        [F2(f_left, f0, yy) for f0, yy in zip(fly[1:], y[1:])]
-        + [F2(f_right, f0, yy) for f0, yy in zip(fry, y)]
-        )
+    # Second derivative of F(t) = f(g(t)) * g'(t).
+    summands = numpy.concatenate([
+        (y3 * fly + 3*y1*y2 * fl1_y + y1**3 * fl2_y)[1:],
+        y3 * fry + 3*y1*y2 * fr1_y + y1**3 * fr2_y,
+        ])
     return h * (h/2/mp.pi)**2 * mp.fsum(summands)
 
 
