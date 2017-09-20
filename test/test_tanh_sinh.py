@@ -83,6 +83,48 @@ mp.dps = 50
                 ),
         }, 0, mp.pi/2, mp.pi / mp.sqrt(2)
         )]
+    # Bailey example 12: (singularity at both ends)
+    # + [(
+    #     {
+    #         0: lambda s: mp.exp(1-1/s) / mp.sqrt(s**3 - s**4),
+    #         1: lambda s: (
+    #             mp.exp(1-1/s) * s * (4*s**2 - 5*s + 2)
+    #             / 2 / mp.sqrt(s**3 - s**4)**3
+    #             ),
+    #         2: lambda s: (
+    #             mp.exp(1-1/s) * (6*s**6 - 15*s**5 + 63*s**4/4 - 7*s**3 + s**2)
+    #             / mp.sqrt(s**3 - s**4)**5
+    #             ),
+    #     }, 0, 1, mp.sqrt(mp.pi)
+    #     )]
+    # Bailey example 13:
+    + [(
+        {
+            0: lambda s: mp.exp(-(1/s-1)**2/2) / s**2,
+            1: lambda s: (
+                - mp.exp(-(1/s-1)**2/2) * (2*s**2 + s - 1) / s**5
+                ),
+            2: lambda s: (
+                mp.exp(-(1/s-1)**2/2) * (6*s**4 + 6*s**3 - 6*s**2 - 2*s + 1)
+                / s**8
+                ),
+        }, 0, 1, mp.sqrt(mp.pi / 2)
+        )]
+    # Bailey example 14:
+    + [(
+        {
+            0: lambda s: mp.exp(1 - 1/s) * mp.cos(1/s - 1) / s**2,
+            1: lambda s: (
+                -mp.exp(1 - 1/s) * (mp.sin(1-1/s) + (2*s-1)*mp.cos(1-1/s))
+                / s**4
+                ),
+            2: lambda s: (
+                2 * mp.exp(1 - 1/s)
+                * ((3*s-1)*mp.sin(1-1/s) + 3*s*(s-1)*mp.cos(1-1/s))
+                / s**6
+                ),
+        }, 0, 1, sympy.Rational(1, 2)
+        )]
     )
 def test_tanh_sinh_good_estimate(f, a, b, exact):
     # test fine error estimate
