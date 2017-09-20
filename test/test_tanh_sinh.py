@@ -24,13 +24,10 @@ mp.dps = 50
     + [(lambda t: sympy.exp(t) * sympy.cos(t),
         0, mp.pi/2, (sympy.exp(sympy.pi/2) - 1)/2
         )]
-    # TODO
     # Bailey example 4:
-    # + [({
-    #         0: lambda t: mp.atan(mp.sqrt(2+t**2)) / (1+t**2) / mp.sqrt(2+t**2),
-    #         1: lambda t: 1,
-    #         2: lambda t: 1,
-    #     }, 0, 1, sympy.pi**2 * sympy.Rational(5, 96))]
+    + [(lambda t: sympy.atan(sympy.sqrt(2+t**2)) / (1+t**2)/sympy.sqrt(2+t**2),
+        0, 1, sympy.pi**2 * sympy.Rational(5, 96)
+        )]
     # Bailey example 5:
     + [(lambda t: sympy.sqrt(t) * sympy.log(t),
         0, 1, -sympy.Rational(4, 9)
