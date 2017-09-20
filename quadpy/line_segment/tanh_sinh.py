@@ -103,31 +103,29 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
 
         t = numpy.array([h * jj for jj in range(j+1)])
 
-        sinh_t = [mp.pi/2 * mp.sinh(tt) for tt in t]
-        cosh_t = [mp.pi/2 * mp.cosh(tt) for tt in t]
-        cosh_sinh_t = map(mp.cosh, sinh_t)
+        sinh_t = mp.pi/2 * numpy.array(map(mp.sinh, t))
+        cosh_t = mp.pi/2 * numpy.array(map(mp.cosh, t))
+        cosh_sinh_t = numpy.array(map(mp.cosh, sinh_t))
 
         # y = alpha/2 * (1 - x)
         # x = [mp.tanh(v) for v in u2]
-        y0 = [alpha2 / (mp.exp(s) * cs) for s, cs in zip(sinh_t, cosh_sinh_t)]
+        exp_sinh_t = numpy.array(map(mp.exp, sinh_t))
 
-        y1 = [
-            -alpha2 * c / cs**2
-            for c, cs in zip(cosh_t, cosh_sinh_t)
-            ]
+        y0 = alpha2 / exp_sinh_t / cosh_sinh_t
+        y1 = -alpha2 * cosh_t / cosh_sinh_t**2
 
-        weights = [-h*x for x in y1]
+        weights = -h * y1
 
         # Perform the integration.
         # The summands are listed such that the points are in ascending order.
         # (The slice expression [-1:0:-1] cuts the first entry and reverses the
         # array.)
-        fly = [f_left[0](yy) for yy in y0]
-        fry = [f_right[0](yy) for yy in y0]
-        summands = (
-            [fy*w for fy, w in zip(fly[-1:0:-1], weights[-1:0:-1])]
-            + [fy*w for fy, w in zip(fry, weights)]
-            )
+        fly = numpy.array([f_left[0](yy) for yy in y0])
+        fry = numpy.array([f_right[0](yy) for yy in y0])
+        summands = numpy.concatenate([
+            fly[-1:0:-1] * weights[-1:0:-1],
+            fry*weights
+            ])
         value_estimates.append(mp.fsum(summands))
 
         # error estimation
@@ -166,23 +164,20 @@ def _error_estimate1(
     '''
     alpha2 = alpha / mp.mpf(2)
 
-    sinh_sinh_t = map(mp.sinh, sinh_t)
-    tanh_sinh_t = [ss/cs for ss, cs in zip(sinh_sinh_t, cosh_sinh_t)]
+    sinh_sinh_t = numpy.array(map(mp.sinh, sinh_t))
+    tanh_sinh_t = sinh_sinh_t / cosh_sinh_t
 
     # More derivatives of y = 1-g(t).
-    y2 = [
-        -alpha2 * (s - 2 * c**2 * ts) / cs**2
-        for s, c, cs, ts in zip(sinh_t, cosh_t, cosh_sinh_t, tanh_sinh_t)
-        ]
-    y3 = [
-        -alpha2 * c * (
-            cs - 4*c**2/cs + 2 * c**2 * cs + 2*c**2*ts*ss - 6*s*ss
-            ) / cs**3
-        for s, c, ss, cs, ts in
-        zip(sinh_t, cosh_t, sinh_sinh_t, cosh_sinh_t, tanh_sinh_t)
-        ]
+    y2 = -alpha2 * (sinh_t - 2 * cosh_t**2 * tanh_sinh_t) / cosh_sinh_t**2
+    y3 = -alpha2 * cosh_t * (
+        + cosh_sinh_t
+        - 4 * cosh_t**2 / cosh_sinh_t
+        + 2 * cosh_t**2 * cosh_sinh_t
+        + 2 * cosh_t**2 * tanh_sinh_t * sinh_sinh_t
+        - 6 * sinh_t * sinh_sinh_t
+        ) / cosh_sinh_t**3
 
-    def F2(f0_y, f, y):
+    def F2(f, f0_y, y):
         '''Second derivative of F(t) = f(g(t)) * g'(t).
         '''
         return (
@@ -193,9 +188,14 @@ def _error_estimate1(
 
     y = numpy.array([y0, y1, y2, y3]).T
 
+    # fl1_y = numpy.array([f_left[1](yy) for yy in y])
+    # fl2_y = numpy.array([f_left[2](yy) for yy in y])
+    # #
+    # fr1_y = numpy.array([f_right[1](yy) for yy in y])
+    # fr2_y = numpy.array([f_right[2](yy) for yy in y])
     summands = (
-        [F2(fy, f_left, yy) for fy, yy in zip(fly[1:], y[1:])]
-        + [F2(fy, f_right, yy) for fy, yy in zip(fry, y)]
+        [F2(f_left, f0, yy) for f0, yy in zip(fly[1:], y[1:])]
+        + [F2(f_right, f0, yy) for f0, yy in zip(fry, y)]
         )
     return h * (h/2/mp.pi)**2 * mp.fsum(summands)
 
