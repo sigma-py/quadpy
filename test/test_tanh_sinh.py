@@ -10,67 +10,44 @@ mp.dps = 50
 
 @pytest.mark.parametrize(
     'f, a, b, exact',
-    [({
-        0: lambda t: 1,
-        1: lambda t: 0,
-        2: lambda t: 0
-        }, -1, +1, 2)]
-    + [({
-        0: lambda t: 1,
-        1: lambda t: 0,
-        2: lambda t: 0
-        }, 0, +5, 5)]
-    + [({
-        0: lambda t: t,
-        1: lambda t: 1,
-        2: lambda t: 0,
-        }, -0, +1, sympy.Rational(1, 2))]
-    + [({
-        0: lambda t: t**2,
-        1: lambda t: 2*t,
-        2: lambda t: 2,
-        }, -1, +1, sympy.Rational(2, 3))]
+    [(lambda t: 1, -1, +1, 2)]
+    + [(lambda t: 1, 0, +5, 5)]
+    + [(lambda t: t, -0, +1, sympy.Rational(1, 2))]
+    + [(lambda t: t**2, -1, +1, sympy.Rational(2, 3))]
     # Bailey example 1:
-    + [({
-            0: lambda t: t * mp.log(1+t),
-            1: lambda t: t / (t+1) + mp.log(t+1),
-            2: lambda t: (t+2) / (t+1)**2,
-        }, 0, 1, sympy.Rational(1, 4))]
+    + [(lambda t: t * sympy.log(1+t), 0, 1, sympy.Rational(1, 4))]
     # Bailey example 2:
-    + [({
-            0: lambda t: t**2 * mp.atan(t),
-            1: lambda t: t * (t / (t**2+1) + 2*mp.atan(t)),
-            2: lambda t: 2 * (t * (t**2+2) / (t**2+1)**2 + mp.atan(t)),
-        }, 0, 1, (sympy.pi - 2 + 2*sympy.log(2))/12)]
+    + [(lambda t: t**2 * sympy.atan(t),
+        0, 1, (sympy.pi - 2 + 2*sympy.log(2))/12
+        )]
     # Bailey example 3:
-    + [({
-            0: lambda t: mp.exp(t) * mp.cos(t),
-            1: lambda t: mp.exp(t) * (mp.cos(t) - mp.sin(t)),
-            2: lambda t: -2*mp.exp(t) * mp.sin(t),
-        }, 0, mp.pi/2, (sympy.exp(sympy.pi/2) - 1)/2)]
+    + [(lambda t: sympy.exp(t) * sympy.cos(t),
+        0, mp.pi/2, (sympy.exp(sympy.pi/2) - 1)/2
+        )]
     # TODO
     # Bailey example 4:
+    # + [({
+    #         0: lambda t: mp.atan(mp.sqrt(2+t**2)) / (1+t**2) / mp.sqrt(2+t**2),
+    #         1: lambda t: 1,
+    #         2: lambda t: 1,
+    #     }, 0, 1, sympy.pi**2 * sympy.Rational(5, 96))]
     # Bailey example 5:
-    + [({
-            0: lambda t: mp.sqrt(t) * mp.log(t),
-            1: lambda t: (mp.log(t) + 2) / 2 / mp.sqrt(t),
-            2: lambda t: -mp.log(t) / 4 / mp.sqrt(t)**3,
-        }, 0, 1, -sympy.Rational(4, 9))]
-    # Bailey example 6 with singularity moved to 0.
-    + [(
-        {
-            0: lambda t: mp.sqrt(2*t - t**2),
-            1: lambda t: (1 - t) / mp.sqrt(2*t - t**2),
-            2: lambda t: -1 / mp.sqrt(2*t - t**2)**3,
-        }, 0, 1, sympy.pi / 4
+    + [(lambda t: sympy.sqrt(t) * sympy.log(t),
+        0, 1, -sympy.Rational(4, 9)
         )]
+    # Bailey example 6 with singularity moved to 0.
+    + [(lambda t: sympy.sqrt(2*t - t**2),
+        0, 1, sympy.pi / 4
+        )]
+    # TODO
     # # Bailey example 7 with singularity moved to 0.
+    # # First and second derivatives have singularities at both ends, however.
     # + [(
     #     {
     #         0: lambda t: mp.sqrt((1-t) / (2*t-t**2)),
     #         1: lambda t: (
     #             ((2*t - t**2) - 2)
-    #             / (2 * (t-2)**2 * t**2 * mp.sqrt((1-t) / (2*t-t**2)))
+    #             / (2 * (2*t-t**2)**2 * mp.sqrt((1-t) / (2*t-t**2)))
     #             ),
     #         2: lambda t: (
     #             ((t-2) * t * (3*(t-2)*t + 16) + 12)
@@ -83,39 +60,28 @@ mp.dps = 50
     #         )
     #     )]
     # Bailey example 8:
-    + [(
-        {
-            0: lambda t: mp.log(t)**2,
-            1: lambda t: 2 * mp.log(t) / t,
-            2: lambda t: (2-2*mp.log(t)) / t**2,
-        }, 0, 1, 2
+    + [(lambda t: sympy.log(t)**2,
+        0, 1, 2
         )]
     # Bailey example 9:
-    + [(
-        {
-            0: lambda t: mp.log(mp.sin(t)),
-            1: mp.cot,
-            2: lambda t: -mp.csc(t)**2,
-        }, 0, mp.pi/2, -mp.pi * mp.log(2) / 2
+    + [(lambda t: sympy.log(sympy.sin(t)),
+        0, mp.pi/2, -mp.pi * mp.log(2) / 2
         )]
     # Bailey example 10:
-    + [(
-        {
-            0: lambda t: 1 / mp.sqrt(mp.tan(t)),
-            1: lambda t: -mp.sec(t)**2 / 2 / mp.sqrt(mp.tan(t))**3,
-            2: lambda t: (
-                + 3*mp.sec(t)**4 / 4 / mp.sqrt(mp.tan(t))**5
-                - mp.sec(t)**2 / mp.sqrt(mp.tan(t))
-                ),
-        }, 0, mp.pi/2, mp.pi / mp.sqrt(2)
-        )]
+    # TODO
+    # + [(
+    #     {
+    #         0: lambda t: 1 / sympy.sqrt(sympy.tan(t)),
+    #         1: lambda t: -mp.sec(t)**2 / 2 / mp.sqrt(mp.tan(t))**3,
+    #         2: lambda t: (
+    #             + 3*mp.sec(t)**4 / 4 / mp.sqrt(mp.tan(t))**5
+    #             - mp.sec(t)**2 / mp.sqrt(mp.tan(t))
+    #             ),
+    #     }, 0, mp.pi/2, mp.pi / mp.sqrt(2)
+    #     )]
     # Bailey example 11:
-    + [(
-        {
-            0: lambda s: 1 / (1 - 2*s + 2*s**2),
-            1: lambda s: (2 - 4*s) / (1 - 2*s + 2*s**2)**2,
-            2: lambda s: 4 * (6*s**2 - 6*s + 1) / (1 - 2*s + 2*s**2)**3,
-        }, 0, 1, mp.pi/2
+    + [(lambda s: 1 / (1 - 2*s + 2*s**2),
+        0, 1, mp.pi/2
         )]
     # Bailey example 12: (singularity at both ends)
     # + [(
@@ -132,41 +98,29 @@ mp.dps = 50
     #     }, 0, 1, mp.sqrt(mp.pi)
     #     )]
     # Bailey example 13:
-    + [(
-        {
-            0: lambda s: mp.exp(-(1/s-1)**2/2) / s**2,
-            1: lambda s: (
-                - mp.exp(-(1/s-1)**2/2) * (2*s**2 + s - 1) / s**5
-                ),
-            2: lambda s: (
-                mp.exp(-(1/s-1)**2/2) * (6*s**4 + 6*s**3 - 6*s**2 - 2*s + 1)
-                / s**8
-                ),
-        }, 0, 1, mp.sqrt(mp.pi / 2)
+    + [(lambda s: sympy.exp(-(1/s-1)**2/2) / s**2,
+        0, 1, mp.sqrt(mp.pi / 2)
         )]
     # Bailey example 14:
-    + [(
-        {
-            0: lambda s: mp.exp(1 - 1/s) * mp.cos(1/s - 1) / s**2,
-            1: lambda s: (
-                -mp.exp(1 - 1/s) * (mp.sin(1-1/s) + (2*s-1)*mp.cos(1-1/s))
-                / s**4
-                ),
-            2: lambda s: (
-                2 * mp.exp(1 - 1/s)
-                * ((3*s-1)*mp.sin(1-1/s) + 3*s*(s-1)*mp.cos(1-1/s))
-                / s**6
-                ),
-        }, 0, 1, sympy.Rational(1, 2)
+    + [(lambda s: sympy.exp(1 - 1/s) * sympy.cos(1/s - 1) / s**2,
+        0, 1, sympy.Rational(1, 2)
         )]
     )
 def test_tanh_sinh_good_estimate(f, a, b, exact):
     # test fine error estimate
     tol = 10**(-mp.dps)
+
+    t = sympy.Symbol('t')
+    f_derivatives = {
+        1: sympy.lambdify(t, sympy.diff(f(t), t, 1), modules=['mpmath']),
+        2: sympy.lambdify(t, sympy.diff(f(t), t, 2), modules=['mpmath']),
+        }
+
     value, _ = quadpy.line_segment.tanh_sinh_quadrature(
-                f[0], a, b, tol,
-                f_derivatives={1: f[1], 2: f[2]}
+                f, a, b, tol,
+                f_derivatives=f_derivatives
                 )
+
     tol2 = 10**(-mp.dps+1)
     assert abs(value - exact) < tol2
     return
@@ -244,7 +198,7 @@ if __name__ == '__main__':
         # If there are singularities, make sure they are at 0.
         # sqrt(1 - t**2)
         {
-            0: lambda t: mp.sqrt(2*t - t**2),
+            0: lambda t: sympy.sqrt(2*t - t**2),
             1: lambda t: (1 - t) / mp.sqrt(2*t - t**2),
             2: lambda t: -1 / mp.sqrt(2*t - t**2)**3,
         }, 0, 1, sympy.pi / 4
