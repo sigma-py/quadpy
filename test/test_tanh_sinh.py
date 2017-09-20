@@ -32,46 +32,12 @@ mp.dps = 50
     + [(lambda t: sympy.sqrt(t) * sympy.log(t), 0, 1, -sympy.Rational(4, 9))]
     # Bailey example 6 with singularity moved to 0.
     + [(lambda t: sympy.sqrt(2*t - t**2), 0, 1, sympy.pi / 4)]
-    # TODO
-    # # Bailey example 7 with singularity moved to 0.
-    # # First and second derivatives have singularities at both ends, however.
-    # + [(
-    #     {
-    #         0: lambda t: mp.sqrt((1-t) / (2*t-t**2)),
-    #         1: lambda t: (
-    #             ((2*t - t**2) - 2)
-    #             / (2 * (2*t-t**2)**2 * mp.sqrt((1-t) / (2*t-t**2)))
-    #             ),
-    #         2: lambda t: (
-    #             ((t-2) * t * (3*(t-2)*t + 16) + 12)
-    #             / (4 * (t-2)**2 * mp.sqrt((1-t) / (2*t-t**2))**3 * t**4)
-    #             ),
-    #     }, 0, 1, (
-    #         2 * sympy.sqrt(sympy.pi)
-    #         * sympy.gamma(sympy.Rational(3, 4))
-    #         / sympy.gamma(sympy.Rational(1, 4))
-    #         )
-    #     )]
     # Bailey example 8:
     + [(lambda t: sympy.log(t)**2, 0, 1, 2)]
     # Bailey example 9:
     + [(lambda t: sympy.log(sympy.sin(t)), 0, mp.pi/2, -mp.pi * mp.log(2) / 2)]
     # Bailey example 11:
     + [(lambda s: 1 / (1 - 2*s + 2*s**2), 0, 1, mp.pi/2)]
-    # Bailey example 12: (singularity at both ends)
-    # + [(
-    #     {
-    #         0: lambda s: mp.exp(1-1/s) / mp.sqrt(s**3 - s**4),
-    #         1: lambda s: (
-    #             mp.exp(1-1/s) * s * (4*s**2 - 5*s + 2)
-    #             / 2 / mp.sqrt(s**3 - s**4)**3
-    #             ),
-    #         2: lambda s: (
-    #             mp.exp(1-1/s) * (6*s**6 - 15*s**5 + 63*s**4/4 - 7*s**3 + s**2)
-    #             / mp.sqrt(s**3 - s**4)**5
-    #             ),
-    #     }, 0, 1, mp.sqrt(mp.pi)
-    #     )]
     # Bailey example 13:
     + [(lambda s: sympy.exp(-(1/s-1)**2/2) / s**2, 0, 1, mp.sqrt(mp.pi / 2))]
     # Bailey example 14:
@@ -102,11 +68,26 @@ def test_tanh_sinh_good_estimate(f, a, b, exact):
 # Test functions with singularities at both ends.
 @pytest.mark.parametrize(
     'f_left, f_right, b, exact',
-    # Bailey example 10:
-    [(lambda t: sympy.sqrt(sympy.tan(t)),
-      lambda t: 1 / sympy.sqrt(sympy.tan(t)),
-      mp.pi/2, mp.pi / mp.sqrt(2)
+    # Bailey example 7 (f only has one singularity, but derivatives have two):
+    [(lambda t: sympy.sqrt((1-t) / (2*t-t**2)),
+      lambda t: sympy.sqrt(t / (1-t**2)),
+      1, (
+          2 * sympy.sqrt(sympy.pi)
+          * sympy.gamma(sympy.Rational(3, 4))
+          / sympy.gamma(sympy.Rational(1, 4))
+          )
       )]
+    # Bailey example 10:
+    + [(lambda t: sympy.sqrt(sympy.tan(t)),
+        lambda t: 1 / sympy.sqrt(sympy.tan(t)),
+        mp.pi/2, mp.pi / mp.sqrt(2)
+        )]
+    # Bailey example 12:
+    + [(
+        lambda s: sympy.exp(1-1/s) / sympy.sqrt(s**3 - s**4),
+        lambda s: sympy.exp(s/(s-1)) / sympy.sqrt(s*(s*((3-s)*s-3)+1)),
+        1, mp.sqrt(mp.pi)
+        )]
     )
 def test_singularities_at_both_ends(f_left, f_right, b, exact):
     # test fine error estimate
