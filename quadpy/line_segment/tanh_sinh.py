@@ -62,6 +62,8 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
     num_digits = int(-mp.log10(eps) + 1)
     mp.dps = num_digits
 
+    alpha2 = alpha / mp.mpf(2)
+
     value_estimates = []
     h = mp.mpf(1)
     success = False
@@ -99,31 +101,40 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         assert mp.exp(1)*eps**2 < 2*h
         j = int(mp.ln(-2/mp.pi * mp.lambertw(-eps**2/h/2, -1)) / h) + 1
 
-        u2 = [mp.pi/2 * mp.sinh(h*jj) for jj in range(j+1)]
-        cosh_u2 = [mp.cosh(v) for v in u2]
-        weights = [
-            alpha/mp.mpf(2) * h * mp.pi/2 * mp.cosh(h*jj) / v**2
-            for jj, v in zip(range(j+1), cosh_u2)
-            ]
+        t = [h * jj for jj in range(j+1)]
+
+        sinh_t = [mp.pi/2 * mp.sinh(tt) for tt in t]
+        cosh_t = [mp.pi/2 * mp.cosh(tt) for tt in t]
+        cosh_sinh_t = [mp.cosh(v) for v in sinh_t]
 
         # y = alpha/2 * (1 - x)
         # x = [mp.tanh(v) for v in u2]
-        y = [alpha/mp.mpf(2) / (mp.exp(v) * c) for v, c in zip(u2, cosh_u2)]
+        y0 = [alpha2 / (mp.exp(s) * cs) for s, cs in zip(sinh_t, cosh_sinh_t)]
+
+        y1 = [
+            -alpha2 * c / cs**2
+            for c, cs in zip(cosh_t, cosh_sinh_t)
+            ]
+
+        weights = [-h*x for x in y1]
 
         # Perform the integration.
         # The summands are listed such that the points are in ascending order.
         # (The slice expression [-1:0:-1] cuts the first entry and reverses the
         # array.)
         summands = (
-            [f_left[0](yy) * w for yy, w in zip(y[-1:0:-1], weights[-1:0:-1])]
-            + [f_right[0](yy) * w for yy, w in zip(y, weights)]
+            [f_left[0](yy) * w for yy, w in zip(y0[-1:0:-1], weights[-1:0:-1])]
+            + [f_right[0](yy) * w for yy, w in zip(y0, weights)]
             )
         value_estimates.append(mp.fsum(summands))
 
         # error estimation
         if 1 in f_left and 2 in f_left:
             assert 1 in f_right and 2 in f_right
-            error_estimate = _error_estimate1(h, j, f_left, f_right, alpha)
+            error_estimate = _error_estimate1(
+                h, t, sinh_t, cosh_t, cosh_sinh_t, y0, y1,
+                f_left, f_right, alpha
+                )
         else:
             error_estimate = _error_estimate2(
                 level, value_estimates, summands, eps
@@ -137,71 +148,47 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
     return value_estimates[-1], error_estimate
 
 
-def _error_estimate1(h, j, f_left, f_right, alpha):
-    # Pretty accurate error estimation:
-    #
-    #   E(h) = h * (h/2/pi)**2 * sum_{-N}^{+N} F''(h*j)
-    #
-    # with
-    #
-    #   F(t) = f(g(t)) * g'(t),
-    #   g(t) = tanh(pi/2 sinh(t)).
-    #
+def _error_estimate1(
+        h, t, sinh_t, cosh_t, cosh_sinh_t, y0, y1, f_left, f_right, alpha
+        ):
+    '''
+    A pretty accurate error estimation is
 
+      E(h) = h * (h/2/pi)**2 * sum_{-N}^{+N} F''(h*j)
+
+    with
+
+      F(t) = f(g(t)) * g'(t),
+      g(t) = tanh(pi/2 sinh(t)).
+    '''
     alpha2 = alpha / mp.mpf(2)
 
-    # def g(t):
-    #     return mp.tanh(mp.pi/2 * mp.sinh(t))
-    # y = 1 - g(t)
-    t = [h * jj for jj in range(j+1)]
+    sinh_sinh_t = [mp.sinh(s) for s in sinh_t]
+    tanh_sinh_t = [ss/cs for ss, cs in zip(sinh_sinh_t, cosh_sinh_t)]
 
-    sinh_t = [mp.pi/2 * mp.sinh(tt) for tt in t]
-    cosh_t = [mp.pi/2 * mp.cosh(tt) for tt in t]
-    cosh_sinh_t = [mp.cosh(s) for s in sinh_t]
-
-    y0 = [
-        alpha2 / (mp.exp(s) * cs)
-        for s, cs in zip(sinh_t, cosh_sinh_t)
+    # The derivatives of y = 1-g(t).
+    y2 = [
+        -alpha2 * (s - 2 * c**2 * ts) / cs**2
+        for s, c, cs, ts in zip(sinh_t, cosh_t, cosh_sinh_t, tanh_sinh_t)
         ]
-    y1 = [
-        -alpha2 * c / cs**2
-        for c, cs in zip(cosh_t, cosh_sinh_t)
+    y3 = [
+        -alpha2 * c * (
+            cs - 4*c**2/cs + 2 * c**2 * cs + 2*c**2*ts*ss - 6*s*ss
+            ) / cs**3
+        for s, c, ss, cs, ts in
+        zip(sinh_t, cosh_t, sinh_sinh_t, cosh_sinh_t, tanh_sinh_t)
         ]
 
-    def d2y_dt2(t):
-        return -alpha2 * mp.pi/2 * (
-            + mp.sinh(t)
-            - mp.pi * mp.cosh(t)**2 * mp.tanh(mp.pi/2 * mp.sinh(t))
-            ) / mp.cosh(mp.pi/2 * mp.sinh(t))**2
-
-    def d3y_dt3(t):
-        sinh_sinh = mp.sinh(mp.pi/2 * mp.sinh(t))
-        cosh_sinh = mp.cosh(mp.pi/2 * mp.sinh(t))
-        tanh_sinh = mp.tanh(mp.pi/2 * mp.sinh(t))
-        return -alpha2 * mp.pi/4 * mp.cosh(t) * (
-            + 2 * cosh_sinh
-            - 2 * mp.pi**2 * mp.cosh(t)**2 / cosh_sinh
-            + mp.pi**2 * mp.cosh(t)**2 * cosh_sinh
-            + mp.pi**2 * mp.cosh(t)**2 * tanh_sinh * sinh_sinh
-            - 6 * mp.pi * mp.sinh(t) * sinh_sinh
-            ) / cosh_sinh**3
-
-    # TODO reuse yt, g*
     def F2(f, y):
         '''Second derivative of F(t) = f(g(t)) * g'(t).
         '''
-        yt, y1, y2, y3 = y
         return (
-            + y3 * f[0](yt)
-            + 3*y1*y2 * f[1](yt)
-            + y1**3 * f[2](yt)
+            + y[3] * f[0](y[0])
+            + 3*y[1]*y[2] * f[1](y[0])
+            + y[1]**3 * f[2](y[0])
             )
 
-    y = numpy.array([
-        y0, y1,
-        [d2y_dt2(tt) for tt in t],
-        [d3y_dt3(tt) for tt in t],
-        ]).T
+    y = numpy.array([y0, y1, y2, y3]).T
 
     summands = (
         [F2(f_left, yy) for yy in y[1:]]
