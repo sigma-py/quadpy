@@ -121,10 +121,7 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         # array.)
         fly = numpy.array([f_left[0](yy) for yy in y0])
         fry = numpy.array([f_right[0](yy) for yy in y0])
-        summands = numpy.concatenate([
-            fly[-1:0:-1] * weights[-1:0:-1],
-            fry*weights
-            ])
+        summands = numpy.concatenate([fly[1:] * weights[1:], fry*weights])
         value_estimates.append(mp.fsum(summands))
 
         # error estimation
@@ -135,8 +132,11 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
                 fly, fry, f_left, f_right, alpha
                 )
         else:
+            index_leftmost = len(weights) - 2
+            index_rightmost = -1
             error_estimate = _error_estimate2(
-                level, value_estimates, summands, eps
+                level, eps, value_estimates,
+                summands, index_leftmost, index_rightmost
                 )
 
         if abs(error_estimate) < eps:
@@ -190,7 +190,10 @@ def _error_estimate1(
     return h * (h/2/mp.pi)**2 * mp.fsum(summands)
 
 
-def _error_estimate2(level, value_estimates, summands, eps):
+def _error_estimate2(
+        level, eps, value_estimates,
+        summands, index_leftmost, index_rightmost
+        ):
     # "less formal" error estimation after Bailey,
     # <http://www.davidhbailey.com/dhbpapers/dhb-tanh-sinh.pdf>
     if level <= 1:
@@ -207,7 +210,7 @@ def _error_estimate2(level, value_estimates, summands, eps):
         e1 = abs(value_estimates[-1] - value_estimates[-2])
         e2 = abs(value_estimates[-1] - value_estimates[-3])
         e3 = eps * max([abs(x) for x in summands])
-        e4 = max(abs(summands[0]), abs(summands[-1]))
+        e4 = max(abs(summands[index_leftmost]), abs(summands[index_rightmost]))
         error_estimate = max(e1**(mp.log(e1)/mp.log(e2)), e1**2, e3, e4)
 
     return error_estimate
