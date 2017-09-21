@@ -64,14 +64,41 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
 
     alpha2 = alpha / mp.mpf(2)
 
-    value_estimates = []
-    h = mp.mpf(1)
+    # What's a good initial h? One best starts out with only one more iteration
+    # than the midpoint -- perhaps that's already enough. How does h have to be
+    # chosen such that j=1 in the first step though? With
+    #
+    #    j = mp.ln(-2/mp.pi * mp.lambertw(-tau/h/2, -1)) / h
+    #
+    # one gets
+    #
+    #    0 = pi/2 * exp(h) - h - ln(h) - ln(pi/tau).
+    #
+    # There is no analytic solution of this equation, but one can approximate
+    # it. Since pi/2 * exp(h) >> h >> ln(h) (for `h` large enough), one can
+    # either forget about both h and ln(h) to get
+    #
+    #     h0 = ln(2/pi * ln(pi/tau))
+    #
+    # or just scratch ln(h) to get
+    #
+    #     h1 = ln(tau/pi) - W_{-1}(-tau/2).
+    #
+    # Both of these suggestions underestimate and `j` will be too large. An
+    # approximation that overestimates is obtained by replacing `ln(h)` by `h`
+    #
+    #     h2 = 1/2 - log(sqrt(pi/tau)) - W_{-1}(-sqrt(exp(1)*pi*tau) / 4).
+    #
+    # Application of Newton's method will improve all of these approximations
+    # and will also always overestimate such that `j` won't exceed 1 in the
+    # first step. Nice!
+    h = _solve_expx_x_logx(eps**2, 1.0e-10)
+    y0 = alpha2
+    y1 = alpha2
+    value_estimates = [h * y1 * f_left[0](y0)]
+
     success = False
     for level in range(max_steps):
-        # For h=1, the error estimate is too optimistic. Hence, start with
-        # h=1/2 right away.
-        h /= 2
-
         # We would like to calculate the weights until they are smaller than
         # tau = eps**2, i.e.,
         #
@@ -97,7 +124,16 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         #
         #     j > ln(-2/pi * W(-tau/h/2)) / h.
         #
-        assert mp.exp(1)*eps**2 < 2*h
+        # We do require j to be positive, so -2/pi * W(-tau/h/2) > 1. This
+        # translates to the slightly stricter requirement
+        #
+        #     tau * exp(pi/2) < pi * h,
+        #
+        # i.e., h needs to be about 1.531 times larger than tau (not only 1.359
+        # times as the previous bound suggested).
+        #
+        # Note further that h*j is ever decreasing as h decreases.
+        assert eps**2 * mp.exp(mp.pi/2) < mp.pi*h
         j = int(mp.ln(-2/mp.pi * mp.lambertw(-eps**2/h/2, -1)) / h) + 1
 
         t = numpy.array([h * jj for jj in range(j+1)])
@@ -121,8 +157,14 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         # array.)
         fly = numpy.array([f_left[0](yy) for yy in y0])
         fry = numpy.array([f_right[0](yy) for yy in y0])
-        summands = numpy.concatenate([fly[1:] * weights[1:], fry*weights])
+        summands = numpy.concatenate([
+            fly[1:] * weights[1:], fry * weights
+            ])
         value_estimates.append(mp.fsum(summands))
+        # print(fry[0] * weights[0] * 2)
+        # value_estimates.append(
+        #     value_estimates[-1]/2 + mp.fsum(summands)
+        #     )
 
         # error estimation
         if 1 in f_left and 2 in f_left:
@@ -142,6 +184,8 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         if abs(error_estimate) < eps:
             success = True
             break
+
+        h /= 2
 
     assert success
     return value_estimates[-1], error_estimate
@@ -214,3 +258,38 @@ def _error_estimate2(
         error_estimate = max(e1**(mp.log(e1)/mp.log(e2)), e1**2, e3, e4)
 
     return error_estimate
+
+
+def _solve_expx_x_logx(tau, tol, max_steps=10):
+    '''Solves the equation
+
+    log(pi/tau) = pi/2 * exp(x) - x - log(x)
+
+    approximately using Newton's method. The approximate solution is guaranteed
+    to overestimate.
+    '''
+    x = mp.log(2/mp.pi * mp.log(mp.pi/tau))
+    # x = mp.log(tau/mp.pi) -  mp.lambertw(-tau/2, -1))
+    # x = mp.mpf(1)/2 \
+    #    - mp.log(mp.sqrt(mp.pi/tau)) \
+    #    - mp.lambertw(-mp.sqrt(mp.exp(1)*mp.pi*tau)/4, -1)
+
+    def f0(x):
+        return mp.pi/2 * mp.exp(x) - x - mp.log(x*mp.pi/tau)
+
+    def f1(x):
+        return mp.pi/2 * mp.exp(x) - 1 - mp.mpf(1)/x
+
+    f0x = f0(x)
+    success = False
+    # At least one step is performed. This is required for the guarantee of
+    # overestimation.
+    for k in range(max_steps):
+        x -= f0x / f1(x)
+        f0x = f0(x)
+        if abs(f0x) < tol:
+            success = True
+            break
+
+    assert success
+    return x

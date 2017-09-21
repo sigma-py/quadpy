@@ -123,9 +123,7 @@ def test_singularities_at_both_ends(f_left, f_right, b, exact):
 
 if __name__ == '__main__':
     # test_tanh_sinh(
-    #     # If there are singularities, make sure they are at 0.
-    #     # sqrt(1 - t**2)
-    #     lambda t: sympy.sqrt(2*t - t**2), 0, 1, sympy.pi / 4
+    #     lambda t: 1, 0, 1, 1
     #     )
     test_singularities_at_both_ends(
         lambda s: sympy.exp(1-1/s) / sympy.sqrt(s**3 - s**4),
