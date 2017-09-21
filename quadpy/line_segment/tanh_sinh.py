@@ -68,7 +68,6 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
     h = mp.mpf(1)
     success = False
     for level in range(max_steps):
-        print(level)
         # For h=1, the error estimate is too optimistic. Hence, start with
         # h=1/2 right away.
         h /= 2
@@ -132,7 +131,7 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         if 1 in f_left and 2 in f_left:
             assert 1 in f_right and 2 in f_right
             error_estimate = _error_estimate1(
-                h, t, sinh_t, cosh_t, cosh_sinh_t, y0, y1,
+                h, sinh_t, cosh_t, cosh_sinh_t, y0, y1,
                 fly, fry, f_left, f_right, alpha
                 )
         else:
@@ -149,7 +148,7 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
 
 
 def _error_estimate1(
-        h, t, sinh_t, cosh_t, cosh_sinh_t, y0, y1,
+        h, sinh_t, cosh_t, cosh_sinh_t, y0, y1,
         fly, fry, f_left, f_right, alpha
         ):
     '''
