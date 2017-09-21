@@ -64,9 +64,9 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
 
     alpha2 = alpha / mp.mpf(2)
 
-    # What's a good initial h? One best starts out with only one more iteration
-    # than the midpoint -- perhaps that's already enough. How does h have to be
-    # chosen such that j=1 in the first step though? With
+    # What's a good initial h? One best starts out with only one more function
+    # evaluation other than the midpoint -- perhaps that's already enough. How
+    # does h have to be chosen such that j=1 in the first step though? From
     #
     #    j = mp.ln(-2/mp.pi * mp.lambertw(-tau/h/2, -1)) / h
     #
@@ -92,13 +92,15 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
     # Application of Newton's method will improve all of these approximations
     # and will also always overestimate such that `j` won't exceed 1 in the
     # first step. Nice!
-    h = _solve_expx_x_logx(eps**2, 1.0e-10)
+    h = 2 * _solve_expx_x_logx(eps**2, tol=1.0e-10)
     y0 = alpha2
-    y1 = alpha2
-    value_estimates = [h * y1 * f_left[0](y0)]
+    y1 = -mp.pi/2 * alpha2
+    weight = -h * y1
+    value_estimates = [weight * f_left[0](y0)]
 
     success = False
     for level in range(max_steps):
+        h /= 2
         # We would like to calculate the weights until they are smaller than
         # tau = eps**2, i.e.,
         #
@@ -158,13 +160,15 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         fly = numpy.array([f_left[0](yy) for yy in y0])
         fry = numpy.array([f_right[0](yy) for yy in y0])
         summands = numpy.concatenate([
-            fly[1:] * weights[1:], fry * weights
+            fly[1::2] * weights[1::2], fry[1::2] * weights[1::2]
             ])
-        value_estimates.append(mp.fsum(summands))
-        # print(fry[0] * weights[0] * 2)
-        # value_estimates.append(
-        #     value_estimates[-1]/2 + mp.fsum(summands)
-        #     )
+        value_estimates.append(
+            value_estimates[-1]/2 + mp.fsum(summands)
+            )
+
+        print(value_estimates[-1])
+        # if level == 1:
+        #     exit(1)
 
         # error estimation
         if 1 in f_left and 2 in f_left:
@@ -184,8 +188,6 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         if abs(error_estimate) < eps:
             success = True
             break
-
-        h /= 2
 
     assert success
     return value_estimates[-1], error_estimate
