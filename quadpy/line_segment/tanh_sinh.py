@@ -64,19 +64,22 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
 
     alpha2 = alpha / mp.mpf(2)
 
-    # What's a good initial h? One best starts out with only one more function
-    # evaluation other than the midpoint -- perhaps that's already enough. How
-    # does h have to be chosen such that j=1 in the first step though? From
+    # What's a good initial h?
+    # The larger `h` is chosen, the fewer points will be part of the
+    # evaluation. However, we don't want to choose the step size too large
+    # since that means less accuracy for the quadrature overall. The idea would
+    # then be too choose `h` such that it is just large enough for the first
+    # tanh-sinh-step to contain only one point, the midpoint. The expression
     #
     #    j = mp.ln(-2/mp.pi * mp.lambertw(-tau/h/2, -1)) / h
     #
-    # one gets
+    # hence needs to just smaller than 1. One gets
     #
-    #    0 = pi/2 * exp(h) - h - ln(h) - ln(pi/tau).
+    #    0 = pi/2 * exp(h) - h - ln(h) - ln(pi/tau)
     #
-    # There is no analytic solution of this equation, but one can approximate
-    # it. Since pi/2 * exp(h) >> h >> ln(h) (for `h` large enough), one can
-    # either forget about both h and ln(h) to get
+    # for which there is no analytic solution of this equation, but one can
+    # approximate it. Since pi/2 * exp(h) >> h >> ln(h) (for `h` large enough),
+    # one can either forget about both h and ln(h) to get
     #
     #     h0 = ln(2/pi * ln(pi/tau))
     #
@@ -85,22 +88,17 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
     #     h1 = ln(tau/pi) - W_{-1}(-tau/2).
     #
     # Both of these suggestions underestimate and `j` will be too large. An
-    # approximation that overestimates is obtained by replacing `ln(h)` by `h`
+    # approximation that overestimates is obtained by replacing `ln(h)` by `h`,
     #
     #     h2 = 1/2 - log(sqrt(pi/tau)) - W_{-1}(-sqrt(exp(1)*pi*tau) / 4).
     #
     # Application of Newton's method will improve all of these approximations
     # and will also always overestimate such that `j` won't exceed 1 in the
     # first step. Nice!
-    h = 2 * _solve_expx_x_logx(eps**2, tol=1.0e-10)
-    y0 = alpha2
-    y1 = -mp.pi/2 * alpha2
-    weight = -h * y1
-    value_estimates = [weight * f_left[0](y0)]
+    h = _solve_expx_x_logx(eps**2, tol=1.0e-10)
 
     success = False
-    for level in range(max_steps):
-        h /= 2
+    for level in range(max_steps+1):
         # We would like to calculate the weights until they are smaller than
         # tau = eps**2, i.e.,
         #
@@ -136,7 +134,7 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         #
         # Note further that h*j is ever decreasing as h decreases.
         assert eps**2 * mp.exp(mp.pi/2) < mp.pi*h
-        j = int(mp.ln(-2/mp.pi * mp.lambertw(-eps**2/h/2, -1)) / h) + 1
+        j = int(mp.ln(-2/mp.pi * mp.lambertw(-eps**2/h/2, -1)) / h)
 
         t = numpy.array([h * jj for jj in range(j+1)])
 
@@ -153,41 +151,48 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
 
         weights = -h * y1
 
-        # Perform the integration.
-        # The summands are listed such that the points are in ascending order.
-        # (The slice expression [-1:0:-1] cuts the first entry and reverses the
-        # array.)
-        fly = numpy.array([f_left[0](yy) for yy in y0])
-        fry = numpy.array([f_right[0](yy) for yy in y0])
-        summands = numpy.concatenate([
-            fly[1::2] * weights[1::2], fry[1::2] * weights[1::2]
-            ])
-        value_estimates.append(
-            value_estimates[-1]/2 + mp.fsum(summands)
-            )
-
-        print(value_estimates[-1])
-        # if level == 1:
-        #     exit(1)
-
-        # error estimation
-        if 1 in f_left and 2 in f_left:
-            assert 1 in f_right and 2 in f_right
-            error_estimate = _error_estimate1(
-                h, sinh_t, cosh_t, cosh_sinh_t, y0, y1,
-                fly, fry, f_left, f_right, alpha
-                )
+        if level == 0:
+            # The root level only contains one node, the midpoint; function
+            # values of f_left and f_right are equal here.
+            assert len(weights) == 1
+            assert len(y0) == 1
+            value_estimates = [weights[0] * f_left[0](y0[0])]
+            error_estimate = 1
         else:
-            index_leftmost = len(weights) - 2
-            index_rightmost = -1
-            error_estimate = _error_estimate2(
-                level, eps, value_estimates,
-                summands, index_leftmost, index_rightmost
+            # Perform the integration.
+            # The summands are listed such that the points are in ascending
+            # order. (The slice expression [-1:0:-1] cuts the first entry and
+            # reverses the array.)
+            fly = numpy.array([f_left[0](yy) for yy in y0])
+            fry = numpy.array([f_right[0](yy) for yy in y0])
+            summands = numpy.concatenate([
+                fly[1::2] * weights[1::2], fry[1::2] * weights[1::2]
+                ])
+            value_estimates.append(
+                value_estimates[-1]/2 + mp.fsum(summands)
                 )
+
+            # error estimation
+            if 1 in f_left and 2 in f_left:
+                assert 1 in f_right and 2 in f_right
+                last_error_estimate = error_estimate
+                error_estimate = _error_estimate1(
+                    h, sinh_t, cosh_t, cosh_sinh_t, y0, y1,
+                    fly, fry, f_left, f_right, alpha, last_error_estimate
+                    )
+            else:
+                index_leftmost = len(weights) - 2
+                index_rightmost = -1
+                error_estimate = _error_estimate2(
+                    eps, value_estimates,
+                    summands, index_leftmost, index_rightmost
+                    )
 
         if abs(error_estimate) < eps:
             success = True
             break
+
+        h /= 2
 
     assert success
     return value_estimates[-1], error_estimate
@@ -195,7 +200,7 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
 
 def _error_estimate1(
         h, sinh_t, cosh_t, cosh_sinh_t, y0, y1,
-        fly, fry, f_left, f_right, alpha
+        fly, fry, f_left, f_right, alpha, last_estimate
         ):
     '''
     A pretty accurate error estimation is
@@ -237,12 +242,12 @@ def _error_estimate1(
 
 
 def _error_estimate2(
-        level, eps, value_estimates,
+        eps, value_estimates,
         summands, index_leftmost, index_rightmost
         ):
     # "less formal" error estimation after Bailey,
     # <http://www.davidhbailey.com/dhbpapers/dhb-tanh-sinh.pdf>
-    if level <= 1:
+    if len(value_estimates) < 3:
         error_estimate = 1
     elif value_estimates[0] == value_estimates[-1]:
         error_estimate = 0
