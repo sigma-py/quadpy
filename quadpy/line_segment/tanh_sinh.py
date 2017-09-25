@@ -156,46 +156,16 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         fly = numpy.array([f_left[0](yy) for yy in y0])
         fry = numpy.array([f_right[0](yy) for yy in y0])
 
+        lsummands = fly * weights
+        rsummands = fry * weights
+
+        # Perform the integration.
         if level == 0:
             # The root level only contains one node, the midpoint; function
-            # values of f_left and f_right are equal here.
-            assert len(weights) == 1
-            assert len(y0) == 1
-            value_estimates = [weights[0] * f_left[0](y0[0])]
-
-            # error estimation
-            if 1 in f_left and 2 in f_left:
-                assert 1 in f_right and 2 in f_right
-                sinh_sinh_t = numpy.array(map(mp.sinh, sinh_t))
-                tanh_sinh_t = sinh_sinh_t / cosh_sinh_t
-
-                # More derivatives of y = 1-g(t).
-                y2 = (
-                    -alpha2 * (sinh_t - 2 * cosh_t**2 * tanh_sinh_t)
-                    / cosh_sinh_t**2
-                    )
-                y3 = -alpha2 * cosh_t * (
-                    + cosh_sinh_t
-                    - 4 * cosh_t**2 / cosh_sinh_t
-                    + 2 * cosh_t**2 * cosh_sinh_t
-                    + 2 * cosh_t**2 * tanh_sinh_t * sinh_sinh_t
-                    - 6 * sinh_t * sinh_sinh_t
-                    ) / cosh_sinh_t**3
-
-                # deliberately take fl (fr would have worked the same way)
-                fl1_y = numpy.array([f_left[1](yy) for yy in y0])
-                fl2_y = numpy.array([f_left[2](yy) for yy in y0])
-
-                # Second derivative of F(t) = f(g(t)) * g'(t).
-                summands = y3 * fly - 3*y1*y2 * fl1_y + y1**3 * fl2_y
-                error_estimate = h * (h/2/mp.pi)**2 * mp.fsum(summands)
-            else:
-                error_estimate = 1
+            # values of f_left and f_right are equal here. Deliberately take
+            # lsummands here.
+            value_estimates = [mp.fsum(lsummands)]
         else:
-            # Perform the integration.
-            lsummands = fly * weights
-            rsummands = fry * weights
-
             value_estimates.append(
                 # Take the estimation from the previous step and half the step
                 # size. Fill the gaps with the sum of the values of the current
@@ -203,24 +173,23 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
                 value_estimates[-1]/2 + mp.fsum(lsummands) + mp.fsum(rsummands)
                 )
 
-            # error estimation
-            if 1 in f_left and 2 in f_left:
-                assert 1 in f_right and 2 in f_right
-                last_error_estimate = error_estimate
-                error_estimate = _error_estimate1(
-                    h, sinh_t, cosh_t, cosh_sinh_t, y0, y1,
-                    fly, fry, f_left, f_right, alpha, last_error_estimate
-                    )
+        # error estimation
+        if 1 in f_left and 2 in f_left:
+            assert 1 in f_right and 2 in f_right
+            if level == 0:
+                last_error_estimate = 0
             else:
-                error_estimate = _error_estimate2(
-                    eps, value_estimates, lsummands, rsummands
-                    )
-
-        # exact = mp.sqrt(mp.pi)
-        # print(h)
-        # print(exact, value_estimates[-1])
-        # print(value_estimates[-1] - exact, error_estimate)
-        # print
+                last_error_estimate = error_estimate
+            error_estimate = _error_estimate1(
+                h, sinh_t, cosh_t, cosh_sinh_t, y0, y1,
+                fly, fry, f_left, f_right, alpha, last_error_estimate
+                )
+            if level == 0:
+                error_estimate /= 2
+        else:
+            error_estimate = _error_estimate2(
+                eps, value_estimates, lsummands, rsummands
+                )
 
         if abs(error_estimate) < eps:
             success = True
