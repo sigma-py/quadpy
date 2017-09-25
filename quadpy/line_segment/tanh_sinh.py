@@ -97,6 +97,8 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
     # first step. Nice!
     h = _solve_expx_x_logx(eps**2, tol=1.0e-10)
 
+    last_error_estimate = None
+
     success = False
     for level in range(max_steps+1):
         # We would like to calculate the weights until they are smaller than
@@ -136,9 +138,13 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         assert eps**2 * mp.exp(mp.pi/2) < mp.pi*h
         j = int(mp.ln(-2/mp.pi * mp.lambertw(-eps**2/h/2, -1)) / h)
 
-        t = numpy.array([h * jj for jj in range(j+1)])
-        if level > 0:
-            t = t[1::2]
+        # At level 0, one only takes the midpoint, for all greater levels every
+        # other point. The value estimation is later completed with the
+        # estimation from the previous level which.
+        if level == 0:
+            t = [0]
+        else:
+            t = h * numpy.arange(1, j+1, 2)
 
         sinh_t = mp.pi/2 * numpy.array(map(mp.sinh, t))
         cosh_t = mp.pi/2 * numpy.array(map(mp.cosh, t))
@@ -164,7 +170,7 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
             # The root level only contains one node, the midpoint; function
             # values of f_left and f_right are equal here. Deliberately take
             # lsummands here.
-            value_estimates = [mp.fsum(lsummands)]
+            value_estimates = list(lsummands)
         else:
             value_estimates.append(
                 # Take the estimation from the previous step and half the step
@@ -176,16 +182,11 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         # error estimation
         if 1 in f_left and 2 in f_left:
             assert 1 in f_right and 2 in f_right
-            if level == 0:
-                last_error_estimate = 0
-            else:
-                last_error_estimate = error_estimate
             error_estimate = _error_estimate1(
                 h, sinh_t, cosh_t, cosh_sinh_t, y0, y1,
                 fly, fry, f_left, f_right, alpha, last_error_estimate
                 )
-            if level == 0:
-                error_estimate /= 2
+            last_error_estimate = error_estimate
         else:
             error_estimate = _error_estimate2(
                 eps, value_estimates, lsummands, rsummands
@@ -241,7 +242,14 @@ def _error_estimate1(
         y3 * fly + 3*y1*y2 * fl1_y + y1**3 * fl2_y,
         y3 * fry + 3*y1*y2 * fr1_y + y1**3 * fr2_y,
         ])
-    out = last_estimate/8 + h * (h/2/mp.pi)**2 * mp.fsum(summands)
+
+    val = h * (h/2/mp.pi)**2 * mp.fsum(summands)
+    if last_estimate is None:
+        # Root level: The midpoint is counted twice in the above sum.
+        out = val / 2
+    else:
+        out = last_estimate/8 + val
+
     return out
 
 
