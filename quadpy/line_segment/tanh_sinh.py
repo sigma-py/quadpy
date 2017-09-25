@@ -315,7 +315,7 @@ def _solve_expx_x_logx(tau, tol, max_steps=10):
     success = False
     # At least one step is performed. This is required for the guarantee of
     # overestimation.
-    for k in range(max_steps):
+    for _ in range(max_steps):
         x -= f0x / f1(x)
         f0x = f0(x)
         if abs(f0x) < tol:
