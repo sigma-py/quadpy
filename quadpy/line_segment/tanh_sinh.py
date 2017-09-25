@@ -137,6 +137,8 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         j = int(mp.ln(-2/mp.pi * mp.lambertw(-eps**2/h/2, -1)) / h)
 
         t = numpy.array([h * jj for jj in range(j+1)])
+        if level > 0:
+            t = t[1::2]
 
         sinh_t = mp.pi/2 * numpy.array(map(mp.sinh, t))
         cosh_t = mp.pi/2 * numpy.array(map(mp.cosh, t))
@@ -160,6 +162,7 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
             assert len(weights) == 1
             assert len(y0) == 1
             value_estimates = [weights[0] * f_left[0](y0[0])]
+
             # error estimation
             if 1 in f_left and 2 in f_left:
                 assert 1 in f_right and 2 in f_right
@@ -190,17 +193,14 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
                 error_estimate = 1
         else:
             # Perform the integration.
-            # The summands are listed such that the points are in ascending
-            # order. (The slice expression [-1:0:-1] cuts the first entry and
-            # reverses the array.)
-            summands = numpy.concatenate([
-                fly[1::2] * weights[1::2], fry[1::2] * weights[1::2]
-                ])
+            lsummands = fly * weights
+            rsummands = fry * weights
+
             value_estimates.append(
                 # Take the estimation from the previous step and half the step
                 # size. Fill the gaps with the sum of the values of the current
                 # step.
-                value_estimates[-1]/2 + mp.fsum(summands)
+                value_estimates[-1]/2 + mp.fsum(lsummands) + mp.fsum(rsummands)
                 )
 
             # error estimation
@@ -212,11 +212,8 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
                     fly, fry, f_left, f_right, alpha, last_error_estimate
                     )
             else:
-                index_leftmost = len(weights) - 2
-                index_rightmost = -1
                 error_estimate = _error_estimate2(
-                    eps, value_estimates,
-                    summands, index_leftmost, index_rightmost
+                    eps, value_estimates, lsummands, rsummands
                     )
 
         # exact = mp.sqrt(mp.pi)
@@ -270,25 +267,16 @@ def _error_estimate1(
     fr1_y = numpy.array([f_right[1](yy) for yy in y0])
     fr2_y = numpy.array([f_right[2](yy) for yy in y0])
 
-    # summands = numpy.concatenate([
-    #     (y3 * fly + 3*y1*y2 * fl1_y + y1**3 * fl2_y)[1:],
-    #     y3 * fry + 3*y1*y2 * fr1_y + y1**3 * fr2_y,
-    #     ])
-    # out = h * (h/2/mp.pi)**2 * mp.fsum(summands)
-
     # Second derivative of F(t) = f(g(t)) * g'(t).
     summands = numpy.concatenate([
-        (y3 * fly + 3*y1*y2 * fl1_y + y1**3 * fl2_y)[1::2],
-        (y3 * fry + 3*y1*y2 * fr1_y + y1**3 * fr2_y)[1::2],
+        y3 * fly + 3*y1*y2 * fl1_y + y1**3 * fl2_y,
+        y3 * fry + 3*y1*y2 * fr1_y + y1**3 * fr2_y,
         ])
     out = last_estimate/8 + h * (h/2/mp.pi)**2 * mp.fsum(summands)
     return out
 
 
-def _error_estimate2(
-        eps, value_estimates,
-        summands, index_leftmost, index_rightmost
-        ):
+def _error_estimate2(eps, value_estimates, left_summands, right_summands):
     # "less formal" error estimation after Bailey,
     # <http://www.davidhbailey.com/dhbpapers/dhb-tanh-sinh.pdf>
     if len(value_estimates) < 3:
@@ -304,8 +292,8 @@ def _error_estimate2(
         # error_estimate = 10**d
         e1 = abs(value_estimates[-1] - value_estimates[-2])
         e2 = abs(value_estimates[-1] - value_estimates[-3])
-        e3 = eps * max([abs(x) for x in summands])
-        e4 = max(abs(summands[index_leftmost]), abs(summands[index_rightmost]))
+        e3 = eps * max(max(abs(left_summands)), max(abs(right_summands)))
+        e4 = max(abs(left_summands[-1]), abs(right_summands[-1]))
         error_estimate = max(e1**(mp.log(e1)/mp.log(e2)), e1**2, e3, e4)
 
     return error_estimate
