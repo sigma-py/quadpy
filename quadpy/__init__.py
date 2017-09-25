@@ -18,9 +18,11 @@ from . import helpers
 from . import ball
 from . import circle
 from . import disk
+from . import e1r
 from . import e2r
 from . import e3r
 from . import enr
+from . import e1r2
 from . import e2r2
 from . import e3r2
 from . import enr2
