@@ -110,6 +110,8 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
     # Application of Newton's method will improve all of these approximations
     # and will also always overestimate such that `j` won't exceed 1 in the
     # first step. Nice!
+    # TODO since we're doing Newton iterations anyways, use a more accurate
+    #      representation for j, and consequently for h
     h = _solve_expx_x_logx(eps**2, tol=1.0e-10)
 
     last_error_estimate = None
@@ -117,9 +119,11 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
     success = False
     for level in range(max_steps+1):
         # We would like to calculate the weights until they are smaller than
-        # tau = eps**2, i.e.,
+        # tau, i.e.,
         #
         #     h * pi/2 * cosh(h*j) / cosh(pi/2 * sinh(h*j))**2 < tau.
+        #
+        # (TODO Newton on this expression to find tau?)
         #
         # To streamline the computation, j is estimated in advance. The only
         # assumption we're making is that h*j>>1 such that exp(-h*j) can be
