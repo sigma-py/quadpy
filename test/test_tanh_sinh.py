@@ -56,14 +56,14 @@ def test_tanh_sinh(f, a, b, exact):
         2: sympy.lambdify(t, sympy.diff(f(t), t, 2), modules=['mpmath']),
         }
 
-    value, _ = quadpy.line_segment.tanh_sinh_quadrature(
+    value, _ = quadpy.line_segment.tanh_sinh(
                 f, a, b, tol,
                 f_derivatives=f_derivatives
                 )
     assert abs(value - exact) < tol2
 
     # test with crude estimate
-    value, _ = quadpy.line_segment.tanh_sinh_quadrature(f, a, b, tol)
+    value, _ = quadpy.line_segment.tanh_sinh(f, a, b, tol)
     assert abs(value - exact) < tol2
     return
 

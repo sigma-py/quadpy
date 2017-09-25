@@ -74,6 +74,35 @@ val, error_estimate = quadpy.line_segment.adaptive_integrate(
         )
 ```
 
+#### tanh-sinh quadrature
+
+The more modern tanh-sinh quadrature is different from all other methods in
+quadpy in that it doesn't exactly integrate any function exactly, not even
+polynomials of low degree. Its tremendous usefulness rather comes from the fact
+that a wide variety of function, even seemingly difficult ones with
+(integrable) singularities at the end points, can be integrated with
+_arbitrary_ precision.
+```python
+from mpmath import mp
+
+mp.dps = 50
+
+val, error_estimate = quadpy.line_segment.tanh_sinh(
+        lambda x: mp.exp(t) * sympy.cos(t),
+        [0, mp.pi/2],
+        1.0e-50  # !
+        )
+```
+Note the usage of `mpmath` here for arbirtrary precision arithmetics.
+
+If the function has a singularity at a boundary, it needs to be shifted such
+that the singularity is at 0. If there are singularities at both ends, the
+function can be shifted both ways and be handed off to `tanh_sinh_lr`:
+```
+tanh_sinh_lr(f_left, f_right, interval_length, tol)
+```
+
+
 #### Triangles
 ```python
 val, error_estimate = quadpy.triangle.adaptive_integrate(
@@ -105,6 +134,8 @@ approximation of the integral over the domain.
  * Gauss-Radau (arbitrary degree)
  * closed Newton-Cotes (arbitrary degree)
  * open Newton-Cotes (arbitrary degree)
+ * [tanh-sinh quadrature](https://en.wikipedia.org/wiki/Tanh-sinh_quadrature)
+   (see above)
 
 You can use [orthopy](https://github.com/nschloe/orthopy) to generate Gauss
 formulas for your own weight functions.
