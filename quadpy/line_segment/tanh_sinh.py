@@ -5,7 +5,24 @@ import numpy
 
 
 # pylint: disable=too-many-arguments
-def tanh_sinh_quadrature(f, a, b, eps, max_steps=10, f_derivatives=None):
+def tanh_sinh(f, a, b, eps, max_steps=10, f_derivatives=None):
+    '''Integrate a function `f` between `a` and `b` with accuracy `eps`.
+
+    For more details, see
+
+    Hidetosi Takahasi, Masatake Mori,
+    Double Exponential Formulas for Numerical Integration,
+    PM. RIMS, Kyoto Univ., 9 (1974), 721-741
+
+    and
+
+    Mori, Masatake
+    Discovery of the double exponential transformation and its developments,
+    Publications of the Research Institute for Mathematical Sciences,
+    41 (4): 897–935, ISSN 0034-5318,
+    doi:10.2977/prims/1145474600,
+    <http://www.kurims.kyoto-u.ac.jp/~okamoto/paper/Publ_RIMS_DE/41-4-38.pdf>.
+    '''
     if f_derivatives is None:
         f_derivatives = {}
 
@@ -43,28 +60,24 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         * `f_right(s) = f(b - s)`, i.e., `f` linearly scaled such that
           `f_right(0) = b`, `f_left(b-a) = a`.
 
-    Mori, Masatake
-    Discovery of the double exponential transformation and its developments,
-    Publications of the Research Institute for Mathematical Sciences,
-    41 (4): 897–935, ISSN 0034-5318,
-    doi:10.2977/prims/1145474600,
-    <http://www.kurims.kyoto-u.ac.jp/~okamoto/paper/Publ_RIMS_DE/41-4-38.pdf>.
+    Implemented are Bailey's enhancements plus a few more tricks.
+
+    David H. Bailey, Karthik Jeyabalan, and Xiaoye S. Li,
+    Error function quadrature,
+    Experiment. Math., Volume 14, Issue 3 (2005), 317-329,
+    <https://projecteuclid.org/euclid.em/1128371757>.
+
+    David H. Bailey,
+    Tanh-Sinh High-Precision Quadrature,
+    2006,
+    <http://www.davidhbailey.com/dhbpapers/dhb-tanh-sinh.pdf>.
     '''
-    # David H. Bailey, Karthik Jeyabalan, and Xiaoye S. Li,
-    # Error function quadrature,
-    # Experiment. Math., Volume 14, Issue 3 (2005), 317-329,
-    # <https://projecteuclid.org/euclid.em/1128371757>.
-    #
-    # David H. Bailey,
-    # Tanh-Sinh High-Precision Quadrature,
-    # 2006,
-    # <http://www.davidhbailey.com/dhbpapers/dhb-tanh-sinh.pdf>.
     num_digits = int(-mp.log10(eps) + 1)
     mp.dps = num_digits
 
     alpha2 = alpha / mp.mpf(2)
 
-    # What's a good initial h?
+    # What's a good initial step size `h`?
     # The larger `h` is chosen, the fewer points will be part of the
     # evaluation. However, we don't want to choose the step size too large
     # since that means less accuracy for the quadrature overall. The idea would
@@ -73,13 +86,15 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
     #
     #    j = mp.ln(-2/mp.pi * mp.lambertw(-tau/h/2, -1)) / h
     #
-    # hence needs to just smaller than 1. One gets
+    # hence needs to just smaller than 1. (Ideally, one would actually like to
+    # get `j` from the full tanh-sinh formula, but the above approximation is
+    # good enough.) One gets
     #
     #    0 = pi/2 * exp(h) - h - ln(h) - ln(pi/tau)
     #
-    # for which there is no analytic solution of this equation, but one can
-    # approximate it. Since pi/2 * exp(h) >> h >> ln(h) (for `h` large enough),
-    # one can either forget about both h and ln(h) to get
+    # for which there is no analytic solution. One can, however, approximate
+    # it. Since pi/2 * exp(h) >> h >> ln(h) (for `h` large enough), one can
+    # either forget about both h and ln(h) to get
     #
     #     h0 = ln(2/pi * ln(pi/tau))
     #
