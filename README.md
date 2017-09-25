@@ -23,7 +23,7 @@ Hundreds of numerical integration schemes for
 [n-balls](#n-ball),
 [n-cubes](#n-cube),
 [n-simplices](#n-simplex), and the
-2D/3D/nD spaces with weight functions exp(-r) and exp(-r<sup>2</sup>).
+1D/2D/3D/nD spaces with weight functions exp(-r) and exp(-r<sup>2</sup>).
 
 To numerically integrate any function over any given triangle, do
 ```python
@@ -74,6 +74,35 @@ val, error_estimate = quadpy.line_segment.adaptive_integrate(
         )
 ```
 
+#### tanh-sinh quadrature
+
+The more modern tanh-sinh quadrature is different from all other methods in
+quadpy in that it doesn't exactly integrate any function exactly, not even
+polynomials of low degree. Its tremendous usefulness rather comes from the fact
+that a wide variety of function, even seemingly difficult ones with
+(integrable) singularities at the end points, can be integrated with
+_arbitrary_ precision.
+```python
+from mpmath import mp
+
+mp.dps = 50
+
+val, error_estimate = quadpy.line_segment.tanh_sinh(
+        lambda x: mp.exp(t) * sympy.cos(t),
+        [0, mp.pi/2],
+        1.0e-50  # !
+        )
+```
+Note the usage of `mpmath` here for arbirtrary precision arithmetics.
+
+If the function has a singularity at a boundary, it needs to be shifted such
+that the singularity is at 0. If there are singularities at both ends, the
+function can be shifted both ways and be handed off to `tanh_sinh_lr`:
+```
+tanh_sinh_lr(f_left, f_right, interval_length, tol)
+```
+
+
 #### Triangles
 ```python
 val, error_estimate = quadpy.triangle.adaptive_integrate(
@@ -88,7 +117,7 @@ approximation of the integral over the domain.
 ## Schemes
 
 ### Line segment
-<img src="https://nschloe.github.io/quadpy/line.png" width="50%">
+<img src="https://nschloe.github.io/quadpy/line_segment.png" width="50%">
 
  * Chebyshev-Gauss (both variants, arbitrary degree)
  * Clenshaw-Curtis (after
@@ -97,10 +126,6 @@ approximation of the integral over the domain.
    [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
  * Fejér-type-2 (after
    [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
- * Gauss-Hermite (via
-   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.hermite.hermgauss.html), arbitrary degree)
- * Gauss-Laguerre (via
-   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.laguerre.laggauss.html), arbitrary degree)
  * Gauss-Legendre (via
    [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.legendre.leggauss.html), arbitrary degree)
  * Gauss-Lobatto (arbitrary degree)
@@ -109,6 +134,8 @@ approximation of the integral over the domain.
  * Gauss-Radau (arbitrary degree)
  * closed Newton-Cotes (arbitrary degree)
  * open Newton-Cotes (arbitrary degree)
+ * [tanh-sinh quadrature](https://en.wikipedia.org/wiki/Tanh-sinh_quadrature)
+   (see above)
 
 You can use [orthopy](https://github.com/nschloe/orthopy) to generate Gauss
 formulas for your own weight functions.
@@ -119,6 +146,35 @@ val = quadpy.line_segment.integrate(
     lambda x: numpy.exp(x),
     [0.0, 1.0],
     quadpy.line_segment.GaussPatterson(5)
+    )
+```
+
+### 1D half-space with weight function exp(-r)
+<img src="https://nschloe.github.io/quadpy/e1r.png" width="50%">
+
+ * Gauss-Laguerre (via
+   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.laguerre.laggauss.html), arbitrary degree)
+
+Example:
+```python
+val = quadpy.e1r.integrate(
+    lambda x: x**2,
+    quadpy.e1r.GaussLaguerre(5)
+    )
+```
+
+
+### 1D space with weight function exp(-r<sup>2</sup>)
+<img src="https://nschloe.github.io/quadpy/e1r2.png" width="50%">
+
+ * Gauss-Hermite (via
+   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.hermite.hermgauss.html), arbitrary degree)
+
+Example:
+```python
+val = quadpy.e1r2.integrate(
+    lambda x: x**2,
+    quadpy.e1r2.GaussHermite(5)
     )
 ```
 
@@ -276,7 +332,7 @@ to generate the array.
 Example:
 ```python
 val = quadpy.e2r.integrate(
-    lambda x: numpy.exp(x[0]),
+    lambda x: x[0]**2,
     quadpy.e2r.RabinowitzRichter(5)
     )
 ```
@@ -293,7 +349,7 @@ val = quadpy.e2r.integrate(
 Example:
 ```python
 val = quadpy.e2r2.integrate(
-    lambda x: numpy.exp(x[0]),
+    lambda x: x[0]**2,
     quadpy.e2r2.RabinowitzRichter(3)
     )
 ```
@@ -461,7 +517,7 @@ val = quadpy.wedge.integrate(
 Example:
 ```python
 val = quadpy.e2r.integrate(
-    lambda x: numpy.exp(x[0]),
+    lambda x: x[0]**2,
     quadpy.e2r.StroudSecrest('IX')
     )
 ```
@@ -477,7 +533,7 @@ val = quadpy.e2r.integrate(
 Example:
 ```python
 val = quadpy.e2r2.integrate(
-    lambda x: numpy.exp(x[0]),
+    lambda x: x[0]**2,
     quadpy.e2r2.RabinowitzRichter(3)
     )
 ```
@@ -582,7 +638,7 @@ Example:
 ```python
 dim = 4
 val = quadpy.enr.integrate(
-    lambda x: numpy.exp(x[0]),
+    lambda x: x[0]**2,
     quadpy.enr.Stroud(dim, '5-4')
     )
 ```
@@ -600,7 +656,7 @@ Example:
 ```python
 dim = 4
 val = quadpy.enr2.integrate(
-    lambda x: numpy.exp(x[0]),
+    lambda x: x[0]**2,
     quadpy.enr2.Stroud(dim, '5-2')
     )
 ```

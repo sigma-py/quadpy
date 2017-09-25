@@ -110,46 +110,6 @@ def test_cheb2_scheme(scheme):
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadpy.line_segment.GaussLaguerre(k) for k in range(1, 10)]
-    )
-def test_laguerre_scheme(scheme):
-    def integrate_exact(k):
-        # \int_0^\infty x^k * exp(-x)
-        return math.gamma(k + 1)
-
-    degree = check_degree_1d(
-            lambda poly: quadpy.line_segment.integrate(
-                    poly, numpy.array([[-1.0], [1.0]]), scheme
-                    ),
-            integrate_exact,
-            scheme.degree + 1
-            )
-    assert degree == scheme.degree
-    return
-
-
-@pytest.mark.parametrize(
-    'scheme',
-    [quadpy.line_segment.GaussHermite(k) for k in range(1, 8)]
-    )
-def test_hermite_scheme(scheme):
-    def integrate_exact(k):
-        # \int_-\infty^\infty x^k * exp(-x^2)
-        return 0.5 * ((-1)**k + 1) * math.gamma(0.5*(k + 1))
-
-    degree = check_degree_1d(
-            lambda poly: quadpy.line_segment.integrate(
-                    poly, numpy.array([[-1.0], [1.0]]), scheme
-                    ),
-            integrate_exact,
-            scheme.degree + 1
-            )
-    assert degree == scheme.degree
-    return
-
-
-@pytest.mark.parametrize(
-    'scheme',
     [quadpy.line_segment.NewtonCotesClosed(5)]
     )
 def test_show(scheme):

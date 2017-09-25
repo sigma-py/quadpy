@@ -35,14 +35,12 @@ def check_degree(
     exact_vals = numpy.array([exact(k) for k in exponents])
 
     def fun(x):
-        # Naive evaluation of the monomials.
+        # Evaluate monomials.
         # There's a more complex, faster implementation using matmul, exp, log.
         # However, this only works for strictly positive `x`, and requires some
         # tinkering. See below and
         # <https://stackoverflow.com/a/45421128/353337>.
-        return numpy.prod([
-            numpy.power.outer(x[i], exponents[:, i]) for i in range(len(x))
-            ], axis=0).T
+        return numpy.prod(x[..., None] ** exponents.T[:, None], axis=0).T
 
     # def fun(x):
     #     # Evaluate many monomials `x^k y^l z^m` at many points. Note that
