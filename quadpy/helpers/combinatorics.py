@@ -112,7 +112,7 @@ def pm_array0(n, v, idx):
     length n at indices idx with the rest filled up with zeros.
     '''
     pm_v = pm_array(v)
-    out = numpy.zeros((n, len(pm_v)))
+    out = numpy.zeros((n, len(pm_v)), dtype=pm_v.dtype)
     out[idx] = pm_v.T
     return out.T
 
@@ -132,7 +132,7 @@ def pm_roll(n, v):
 
     pm_v = pm_array(v)
 
-    r0 = numpy.zeros((len(pm_v), n))
+    r0 = numpy.zeros((len(pm_v), n), dtype=pm_v.dtype)
     r0[:, :k] = pm_v
 
     return numpy.concatenate([
