@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import Rational as fr
+from sympy import Rational as fr, sqrt
 import warnings
 
 import numpy
@@ -46,15 +46,19 @@ class Hillion(object):
                 ]
         elif index == 4:
             self.degree = 2
+            a0 = (3 + sqrt(3)) / 8
+            a1 = (3 - sqrt(3)) / 8
             data = [
                 (fr(1, 18), numpy.array([[0, 0]])),
-                (fr(2, 9), _symm(0.591506351, 0.158493649)),
+                (fr(2, 9), _symm(a0, a1)),
                 ]
         elif index == 5:
             self.degree = 2
+            a0 = (3 + sqrt(3)) / 8
+            a1 = (3 - sqrt(3)) / 8
             data = [
                 (fr(1, 18), fr(2, 3) - numpy.array([[0, 0]])),
-                (fr(2, 9), fr(2, 3) - _symm(0.591506351, 0.158493649)),
+                (fr(2, 9), fr(2, 3) - _symm(a0, a1))
                 ]
         elif index == 6:
             self.degree = 2
