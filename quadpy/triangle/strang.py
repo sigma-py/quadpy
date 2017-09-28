@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _s3, _s21, _s111 as fs
+from sympy import Rational as fr
 
+from .helpers import _s3, _s21, _s111 as fs
 from ..helpers import untangle
 
 
@@ -31,20 +32,20 @@ class Strang(object):
         self.name = 'Strang(%d)' % index
         if index == 1:
             self.degree = 2
-            data = [(1.0/3.0, _s21(1.0/6.0))]
+            data = [(fr(1, 3), _s21(fr(1, 6)))]
         elif index == 2:
             self.degree = 2
-            data = [(1.0/3.0, _s21(0.5))]
+            data = [(fr(1, 3), _s21(fr(1, 2)))]
         elif index == 3:
             self.degree = 3
             data = [
-                (-0.5625, _s3()),
-                (25.0/48.0, _s21(0.2)),
+                (-fr(9, 16), _s3()),
+                (fr(25, 48), _s21(fr(1, 5))),
                 ]
         elif index == 4:
             self.degree = 3
             data = [
-                (1.0/6.0, fs(0.659027622374092, 0.231933368553031))
+                (fr(1, 6), fs(0.659027622374092, 0.231933368553031))
                 ]
         elif index == 5:
             self.degree = 4
@@ -55,13 +56,13 @@ class Strang(object):
         elif index == 6:
             self.degree = 4
             data = [
-                (0.375, _s3()),
-                (5.0/48.0, fs(0.736712498968435, 0.237932366472434)),
+                (fr(3, 8), _s3()),
+                (fr(5, 48), fs(0.736712498968435, 0.237932366472434)),
                 ]
         elif index == 7:
             self.degree = 5
             data = [
-                (0.225, _s3()),
+                (fr(9, 40), _s3()),
                 (0.12593918054482717, _s21(0.10128650732345633)),
                 (0.13239415278850616, _s21(0.47014206410511505)),
                 ]
