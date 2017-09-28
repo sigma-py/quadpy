@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 import numpy
 
 
@@ -16,17 +18,16 @@ class Lether(object):
 
         a, A = numpy.polynomial.legendre.leggauss(n)
 
-        w = numpy.outer((1.0 + a) * A, A)
-        x = 0.50 * numpy.outer(1.0-a, numpy.ones(n))
-        y = 0.25 * numpy.outer(1+a, 1-a)
+        w = numpy.outer((1 + a) * A, A)
+        x = numpy.outer(1-a, numpy.ones(n)) / 2
+        y = numpy.outer(1+a, 1-a) / 4
 
-        self.weights = 0.25 * w.reshape(-1)
+        self.weights = w.reshape(-1) / 4
         self.points = numpy.stack([x.reshape(-1), y.reshape(-1)]).T
 
         self.bary = numpy.array([
             self.points[:, 0],
             self.points[:, 1],
-            1.0 - numpy.sum(self.points, axis=1)
+            1 - numpy.sum(self.points, axis=1)
             ]).T
-
         return
