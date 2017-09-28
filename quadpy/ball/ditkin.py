@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
+from sympy import Rational as fr, sqrt, pi
 
 from ..helpers import untangle, z, pm_array0, pm
 
@@ -11,17 +11,17 @@ class Ditkin(object):
     On certain approximate formulas for the calculation of triple integrals,
     Doklady Akad. Nauk SSSR (N.S.) 62 (1948), 445–447 (Russian).
     '''
-    def __init__(self, index, alpha=0.0):
+    def __init__(self, index, alpha=0):
         if index == 1:
             self.degree = 5
 
-            B0 = 4.0 / (alpha + 5.0)**2
-            B1 = (alpha + 3.0) * (alpha + 7.0) / 12.0 / (alpha + 5.0)**2
+            B0 = fr(4, (alpha + 5)**2)
+            B1 = fr((alpha + 3) * (alpha + 7), 12 * (alpha + 5)**2)
 
-            t = numpy.array([+1, -1])
-            r, s = numpy.sqrt(
-                    (alpha+5.0) * (5.0+t*numpy.sqrt(5.0)) / 10.0 / (alpha+7.0)
-                    )
+            r, s = [
+                sqrt((alpha+5) * (5+t*sqrt(5)) / 10 / (alpha+7))
+                for t in [+1, -1]
+                ]
 
             data = [
                 (B0, z(3)),
@@ -32,12 +32,11 @@ class Ditkin(object):
         elif index == 2:
             self.degree = 5
 
-            B0 = 4.0 / 25.0
-            B1 = 21.0 / 500.0
+            B0 = fr(4, 25)
+            B1 = fr(21, 500)
 
-            plus_minus = numpy.array([+1, -1])
-            r, s = numpy.sqrt((15.0 + 5.0*plus_minus*numpy.sqrt(5.0)) / 42.0)
-            t = numpy.sqrt(5.0 / 21.0)
+            r, s = [sqrt((15 + 5*t*sqrt(5)) / 42) for t in [+1, -1]]
+            t = sqrt(fr(5, 21))
 
             data = [
                 (B0, z(3)),
@@ -50,15 +49,14 @@ class Ditkin(object):
             assert index == 3, 'Illegal Ditkin index {}.'.format(index)
             self.degree = 7
 
-            B0 = 16.0 / 175.0
-            B1 = 81.0 / 1400.0
-            B2 = 3.0 / 280.0
+            B0 = fr(16, 175)
+            B1 = fr(81, 1400)
+            B2 = fr(3, 280)
 
-            plus_minus = numpy.array([+1, -1])
-            sqrt5 = numpy.sqrt(5.0)
-            r, s = numpy.sqrt((5.0 + plus_minus*sqrt5) / 18.0)
-            t = numpy.sqrt(1.0/3.0)
-            u, v = numpy.sqrt((3.0 - plus_minus*sqrt5) / 6.0)
+            sqrt5 = sqrt(5)
+            r, s = [sqrt((5 + pm_*sqrt5) / 18) for pm_ in [+1, -1]]
+            t = sqrt(fr(1, 3))
+            u, v = [sqrt((3 - pm_*sqrt5) / 6) for pm_ in [+1, -1]]
 
             data = [
                 (B0, z(3)),
@@ -72,5 +70,5 @@ class Ditkin(object):
                 ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= 4.0/3.0 * numpy.pi
+        self.weights *= fr(4, 3) * pi
         return
