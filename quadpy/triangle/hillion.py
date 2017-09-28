@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+from sympy import Rational as fr
 import warnings
 
 import numpy
@@ -29,39 +30,39 @@ class Hillion(object):
         if index == 1:
             self.degree = 1
             data = [
-                (0.5, [[1.0/3.0, 1.0/3.0]])
+                (fr(1, 2), [[fr(1, 3), fr(1, 3)]])
                 ]
         elif index == 2:
             self.degree = 2
             data = [
-                (1.0/6.0, _symm(0.0, 0.5)),
-                (1.0/6.0, numpy.array([[0.5, 0.5]])),
+                (fr(1, 6), _symm(0, fr(1, 2))),
+                (fr(1, 6), numpy.full((1, 2), fr(1, 2))),
                 ]
         elif index == 3:
             self.degree = 2
             data = [
-                (1.0/6.0, 2.0/3.0 - _symm(0.0, 0.5)),
-                (1.0/6.0, 2.0/3.0 - numpy.array([[0.5, 0.5]])),
+                (fr(1, 6), fr(2, 3) - _symm(0, fr(1, 2))),
+                (fr(1, 6), fr(2, 3) - numpy.full((1, 2), fr(1, 2))),
                 ]
         elif index == 4:
             self.degree = 2
             data = [
-                (1.0/18.0, numpy.array([[0.0, 0.0]])),
-                (2.0/9.0, _symm(0.591506351, 0.158493649)),
+                (fr(1, 18), numpy.array([[0, 0]])),
+                (fr(2, 9), _symm(0.591506351, 0.158493649)),
                 ]
         elif index == 5:
             self.degree = 2
             data = [
-                (1.0/18.0, 2.0/3.0 - numpy.array([[0.0, 0.0]])),
-                (2.0/9.0, 2.0/3.0 - _symm(0.591506351, 0.158493649)),
+                (fr(1, 18), fr(2, 3) - numpy.array([[0, 0]])),
+                (fr(2, 9), fr(2, 3) - _symm(0.591506351, 0.158493649)),
                 ]
         elif index == 6:
             self.degree = 2
             lmbda = 0.655308609
             mu = 0.247060398
             data = [
-                (0.125, _symm(lmbda, mu)),
-                (0.125, 2.0/3.0 - _symm(lmbda, mu)),
+                (fr(1, 8), _symm(lmbda, mu)),
+                (fr(1, 8), fr(2, 3) - _symm(lmbda, mu)),
                 ]
         # Not working
         # elif index == 7:
@@ -75,7 +76,7 @@ class Hillion(object):
             lambda2 = 0.433949142
             lambda3 = 0.175574667
             data = [
-                (0.065104166, _symm(0.0, 0.8)),
+                (0.065104166, _symm(0, fr(4, 5))),
                 (0.192191138, numpy.array([[lambda2, lambda2]])),
                 (0.177600528, numpy.array([[lambda3, lambda3]])),
                 ]
@@ -91,13 +92,13 @@ class Hillion(object):
             assert index == 10
             self.degree = 3
             data = [
-                (0.036232077, _symm(0.939332590, 0.0)),
-                (0.083559589, _symm(0.0, 0.340667409)),
-                (25.0/96.0, numpy.array([[0.4, 0.4]])),
+                (0.036232077, _symm(0.939332590, 0)),
+                (0.083559589, _symm(0, 0.340667409)),
+                (fr(25, 96), numpy.array([[fr(2, 5), fr(2, 5)]])),
                 ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= 2.0
+        self.weights *= 2
         return
 
 
