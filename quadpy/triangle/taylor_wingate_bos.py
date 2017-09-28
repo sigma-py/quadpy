@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _s21, _s111
+from sympy import Rational as fr
 
+from .helpers import _s21, _s111
 from ..helpers import untangle
 
 
@@ -25,7 +26,7 @@ class TaylorWingateBos(object):
         self.name = 'TWB(%d)' % index
         if index == 1:
             self.degree = 2
-            data = [(2.0/3.0, _s21(1.0/6.0))]
+            data = [(fr(2, 3), _s21(fr(1, 6)))]
         elif index == 2:
             self.degree = 4
             data = [
@@ -114,6 +115,6 @@ class TaylorWingateBos(object):
             # self.degree = 25
 
         self.bary, self.weights = untangle(data)
-        self.weights *= 0.5
+        self.weights /= 2
         self.points = self.bary[:, 1:]
         return
