@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
-from .helpers import _s3, _s21, _s111
+from sympy import Rational as fr, sqrt
 
+from .helpers import _s3, _s21, _s111
 from ..helpers import untangle
 
 
@@ -28,26 +28,26 @@ class LynessJespersen(object):
         if index == 1:
             self.degree = 2
             data = [
-                (1.0/3.0, _s21(0.5)),
+                (fr(1, 3), _s21(fr(1, 2))),
                 ]
         elif index == 2:
             self.degree = 2
             data = [
-                (0.75, _s3()),
-                (1.0/12.0, _s21(0.0)),
+                (fr(3, 4), _s3()),
+                (fr(1, 12), _s21(0)),
                 ]
         elif index == 3:
             self.degree = 3
             data = [
-                (-9.0/16.0, _s3()),
-                (25.0/48.0, _s21(0.2)),
+                (-fr(9, 16), _s3()),
+                (fr(25, 48), _s21(fr(1, 5))),
                 ]
         elif index == 4:
             self.degree = 3
             data = [
-                (9.0/20.0, _s3()),
-                (1.0/20.0, _s21(0.0)),
-                (2.0/15.0, _s21(0.5)),
+                (fr(9, 20), _s3()),
+                (fr(1, 20), _s21(0)),
+                (fr(2, 15), _s21(fr(1, 2))),
                 ]
         elif index == 5:
             self.degree = 4
@@ -57,36 +57,36 @@ class LynessJespersen(object):
                 ]
         elif index == 6:
             self.degree = 4
-            a0 = (3.0 + numpy.sqrt(3.0)) / 6.0
-            a1 = (3.0 - numpy.sqrt(3.0)) / 6.0
+            a0 = (3 + sqrt(3)) / 6
+            a1 = (3 - sqrt(3)) / 6
             data = [
-                (+9.0/20.0, _s3()),
-                (-1.0/60.0, _s21(0.0)),
-                (+1.0/10.0, _s111(a0, a1)),
+                (+fr(9, 20), _s3()),
+                (-fr(1, 60), _s21(0)),
+                (+fr(1, 10), _s111(a0, a1)),
                 ]
         elif index == 7:
             self.degree = 4
-            sqrt13 = numpy.sqrt(13.0)
+            sqrt13 = sqrt(13)
             data = [
-                ((11.0 - sqrt13) / 360.0, _s21(0.0)),
-                ((10.0 - 2*sqrt13) / 45.0, _s21(0.5)),
-                ((29.0 + 17*sqrt13) / 360.0, _s21((7.0 - sqrt13) / 18.0)),
+                ((11 - sqrt13) / 360, _s21(0)),
+                ((10 - 2*sqrt13) / 45, _s21(fr(1, 2))),
+                ((29 + 17*sqrt13) / 360, _s21((7 - sqrt13) / 18)),
                 ]
         elif index == 8:
             self.degree = 5
-            sqrt15 = numpy.sqrt(15.0)
+            sqrt15 = sqrt(15)
             data = [
-                (9.0/40.0, _s3()),
-                ((155.0 - sqrt15) / 1200.0, _s21((6.0 - sqrt15)/21.0)),
-                ((155.0 + sqrt15) / 1200.0, _s21((6.0 + sqrt15)/21.0)),
+                (fr(9, 40), _s3()),
+                ((155 - sqrt15) / 1200, _s21((6 - sqrt15)/21)),
+                ((155 + sqrt15) / 1200, _s21((6 + sqrt15)/21)),
                 ]
         elif index == 9:
             self.degree = 5
             data = [
-                (81.0/320.0, _s3()),
-                (1.0/90.0, _s21(0.0)),
-                (16.0/225.0, _s21(0.5)),
-                (2401.0/14400.0, _s21(1.0/7.0)),
+                (fr(81, 320), _s3()),
+                (fr(1, 90), _s21(0)),
+                (fr(16, 225), _s21(fr(1, 2))),
+                (fr(2401, 14400), _s21(fr(1, 7))),
                 ]
         elif index == 10:
             self.degree = 6
@@ -97,13 +97,13 @@ class LynessJespersen(object):
                 ]
         elif index == 11:
             self.degree = 6
-            sqrt6 = numpy.sqrt(6.0)
+            sqrt6 = sqrt(6)
             data = [
-                (-81.0/140.0, _s3()),
-                (-5.0/252.0, _s21(0.0)),
-                (17.0/315.0, _s21(0.5)),
-                (128.0/315.0, _s21(0.25)),
-                (9.0/210.0, _s111((3.0 + sqrt6) / 6.0, (3.0 - sqrt6) / 6.0)),
+                (-fr(81, 140), _s3()),
+                (-fr(5, 252), _s21(0)),
+                (fr(17, 315), _s21(fr(1, 2))),
+                (fr(128, 315), _s21(fr(1, 4))),
+                (fr(9, 210), _s111((3 + sqrt6) / 6, (3 - sqrt6) / 6)),
                 ]
         elif index == 12:
             self.degree = 6
