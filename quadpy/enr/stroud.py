@@ -7,9 +7,8 @@ Prentice Hall, 1971.
 '''
 from __future__ import division
 
-from math import sqrt, pi, exp, lgamma, fsum
-
 import numpy
+from sympy import sqrt, pi, gamma, Rational as fr
 
 from . import stroud_secrest
 
@@ -41,15 +40,14 @@ def _gen5_3(n):
     s = sqrt(n+3)
     for k in range(1, n+1):
         rk = sqrt((k+2) * (n+3))
-        Bk = 2**(k-n) * (n+1) / (k+1) / (k+2) / (n+3)
+        Bk = fr(2**(k-n) * (n+1), (k+1) * (k+2) * (n+3))
         arr = [rk] + (n-k) * [s]
-        idx = numpy.arange(k-1, n)
         data += [
-            (Bk, pm_array0(n, arr, idx))
+            (Bk, pm_array0(n, arr, range(k-1, n)))
             ]
-    B0 = 1.0 - fsum([item[0]*len(item[1]) for item in data])
+    B0 = 1 - sum([item[0]*len(item[1]) for item in data])
     data += [
-        (B0, numpy.full((1, n), 0.0))
+        (B0, numpy.full((1, n), 0))
         ]
     return 5, data
 
@@ -57,10 +55,10 @@ def _gen5_3(n):
 def _gen5_4(n):
     r = sqrt(((n+2)*(n+3) + (n-1)*(n+3)*sqrt(2*(n+2))) / n)
     s = sqrt(((n+2)*(n+3) - (n+3)*sqrt(2*(n+2))) / n)
-    A = (4*n + 6) / (n+2) / (n+3)
-    B = (n+1) / (n+2) / (n+3) / 2**n
+    A = fr(4*n + 6, (n+2) * (n+3))
+    B = fr(n+1, (n+2) * (n+3) * 2**n)
     data = [
-        (A, numpy.full((1, n), 0.0)),
+        (A, numpy.full((1, n), 0)),
         (B, fsd(n, (r, 1), (s, n-1))),
         ]
     return 5, data
@@ -128,5 +126,5 @@ class Stroud(object):
         self.dim = n
         self.degree, data = _gen[key](n)
         self.points, self.weights = untangle(data)
-        self.weights *= 2 * sqrt(pi)**n * exp(lgamma(n) - lgamma(n/2))
+        self.weights *= 2 * sqrt(pi)**n * gamma(n) / gamma(n/2)
         return
