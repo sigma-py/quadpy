@@ -2,8 +2,9 @@
 #
 import math
 import numpy
+from sympy import sqrt, Rational as fr
 
-from .helpers import cartesian_to_spherical
+from .helpers import cartesian_to_spherical_sympy
 from ..helpers import untangle, pm_array0, fsd, pm_array, pm
 
 
@@ -19,26 +20,24 @@ class McLaren(object):
     def __init__(self, index):
         if index == 1:
             self.degree = 3
-
             data = [
-                (1.0/12.0, fsd(3, (math.sqrt(0.5), 2)))
+                (fr(1, 12), fsd(3, (sqrt(fr(1, 2)), 2)))
                 ]
         elif index == 2:
             self.degree = 5
 
             # Stroud doesn't mention u=1, but it's implied. (After all, this is
             # integration on a sphere.)
-            u = 1.0
+            u = 1
 
-            r = 0.5
-            plus_minus = numpy.array([+1, -1])
-            s, t = (math.sqrt(5.0) + plus_minus * 1) / 4.0
+            r = fr(1, 2)
+            s, t = [(sqrt(5) + pm_) / 4 for pm_ in [+1, -1]]
 
             data = [
-                (1.0/30.0, fsd(3, (u, 1))),
-                (1.0/30.0, pm_array([r, s, t])),
-                (1.0/30.0, pm_array([t, r, s])),
-                (1.0/30.0, pm_array([s, t, r])),
+                (fr(1, 30), fsd(3, (u, 1))),
+                (fr(1, 30), pm_array([r, s, t])),
+                (fr(1, 30), pm_array([t, r, s])),
+                (fr(1, 30), pm_array([s, t, r])),
                 ]
         elif index == 3:
             self.degree = 7
@@ -56,10 +55,10 @@ class McLaren(object):
             w = numpy.array([+t, +s, +r, +t, +s, +r])
 
             data = [
-                (1.0/24.0, numpy.column_stack([+u, +v, +w])),
-                (1.0/24.0, numpy.column_stack([+u, -v, -w])),
-                (1.0/24.0, numpy.column_stack([+u, +w, -v])),
-                (1.0/24.0, numpy.column_stack([+u, -w, +v])),
+                (fr(1, 24), numpy.column_stack([+u, +v, +w])),
+                (fr(1, 24), numpy.column_stack([+u, -v, -w])),
+                (fr(1, 24), numpy.column_stack([+u, +w, -v])),
+                (fr(1, 24), numpy.column_stack([+u, -w, +v])),
                 ]
         elif index == 4:
             self.degree = 8
@@ -77,22 +76,21 @@ class McLaren(object):
             w = numpy.array([+t, +s, +r, +t, +s, +r])
 
             data = [
-                (16.0/600.0, fsd(3, (1.0, 1))),
-                (21.0/600.0, numpy.column_stack([+u, +v, +w])),
-                (21.0/600.0, numpy.column_stack([+u, -v, -w])),
-                (21.0/600.0, numpy.column_stack([+u, +w, -v])),
-                (21.0/600.0, numpy.column_stack([+u, -w, +v])),
+                (fr(16, 600), fsd(3, (1, 1))),
+                (fr(21, 600), numpy.column_stack([+u, +v, +w])),
+                (fr(21, 600), numpy.column_stack([+u, -v, -w])),
+                (fr(21, 600), numpy.column_stack([+u, +w, -v])),
+                (fr(21, 600), numpy.column_stack([+u, -w, +v])),
                 ]
         elif index == 5:
             self.degree = 9
 
-            plus_minus = numpy.array([+1, -1])
-            r, s = numpy.sqrt((5.0 + plus_minus * math.sqrt(5.0)) / 10.0)
-            u, v = numpy.sqrt((3.0 - plus_minus * math.sqrt(5.0)) / 6.0)
-            t = math.sqrt(1.0/3.0)
+            r, s = [sqrt((5 + pm_ * sqrt(5)) / 10) for pm_ in [+1, -1]]
+            u, v = [sqrt((3 - pm_ * sqrt(5)) / 6) for pm_ in [+1, -1]]
+            t = sqrt(fr(1, 3))
 
-            B1 = 25.0 / 840.0
-            B2 = 27.0 / 840.0
+            B1 = fr(25, 840)
+            B2 = fr(27, 840)
 
             data = [
                 (B1, pm_array0(3, [r, s], [0, 1])),
@@ -108,14 +106,13 @@ class McLaren(object):
         elif index == 6:
             self.degree = 9
 
-            plus_minus = numpy.array([+1, -1])
-            r, s = numpy.sqrt((5.0 + plus_minus * math.sqrt(5.0)) / 10.0)
-            t = 1.0
-            u = 0.5
-            v, w = (math.sqrt(5.0) + plus_minus * 1) / 4.0
+            r, s = [sqrt((5 + pm_ * sqrt(5)) / 10) for pm_ in [+1, -1]]
+            t = 1
+            u = fr(1, 2)
+            v, w = [(sqrt(5) + pm_) / 4 for pm_ in [+1, -1]]
 
-            B = 25.0 / 1260.0
-            C = 32.0 / 1260.0
+            B = fr(25, 1260)
+            C = fr(32, 1260)
 
             data = [
                 # ERR Stroud is missing +- at the first r.
@@ -132,15 +129,14 @@ class McLaren(object):
         elif index == 7:
             self.degree = 9
 
-            plus_minus = numpy.array([+1, -1])
-            r, s = numpy.sqrt((3.0 - plus_minus * math.sqrt(5.0)) / 6.0)
-            t = math.sqrt(1.0/3.0)
+            r, s = [sqrt((3 - pm_ * sqrt(5)) / 6) for pm_ in [+1, -1]]
+            t = sqrt(fr(1, 3))
             # ERR Stroud falsely gives sqrt(0.5)
-            u = 0.5
-            v, w = (math.sqrt(5.0) + plus_minus * 1) / 4.0
+            u = fr(1, 2)
+            v, w = [(sqrt(5) + pm_) / 4 for pm_ in [+1, -1]]
 
-            B = -9.0 / 140.0
-            C = 16.0 / 210.0
+            B = -fr(9, 140)
+            C = fr(16, 210)
 
             data = [
                 (B, pm_array0(3, [r, s], [0, 1])),
@@ -149,7 +145,7 @@ class McLaren(object):
                 #
                 (B, pm(3, t)),
                 #
-                (C, fsd(3, (1.0, 1))),
+                (C, fsd(3, (1, 1))),
                 #
                 (C, pm_array([u, v, w])),
                 (C, pm_array([w, u, v])),
@@ -158,17 +154,17 @@ class McLaren(object):
         elif index == 8:
             self.degree = 11
 
-            r = 1.0
-            s = math.sqrt(0.5)
-            t = math.sqrt(1.0/3.0)
+            r = 1
+            s = sqrt(fr(1, 2))
+            t = sqrt(fr(1, 3))
 
-            u = math.sqrt(1.0/11.0)
-            v = math.sqrt(9.0/11.0)
+            u = sqrt(fr(1, 11))
+            v = sqrt(fr(9, 11))
 
-            B1 = 9216.0 / 725760.0
-            B2 = 16384.0 / 725760.0
-            B3 = 15309.0 / 725760.0
-            B4 = 14641.0 / 725760.0
+            B1 = fr(9216, 725760)
+            B2 = fr(16384, 725760)
+            B3 = fr(15309, 725760)
+            B4 = fr(14641, 725760)
 
             data = [
                 (B1, fsd(3, (r, 1))),
@@ -179,19 +175,18 @@ class McLaren(object):
         elif index == 9:
             self.degree = 11
 
-            plus_minus = numpy.array([+1, -1])
-            sqrt5 = math.sqrt(5.0)
+            sqrt5 = sqrt(5)
 
-            p, q = numpy.sqrt((5.0 + plus_minus*sqrt5) / 10.0)
-            r, s = numpy.sqrt((3.0 - plus_minus*sqrt5) / 6.0)
-            t = math.sqrt(1.0/3.0)
+            p, q = [sqrt((5 + pm_*sqrt5) / 10) for pm_ in [+1, -1]]
+            r, s = [sqrt((3 - pm_*sqrt5) / 6) for pm_ in [+1, -1]]
+            t = sqrt(fr(1, 3))
 
-            u = 0.5
-            v, w = (math.sqrt(5) + plus_minus * 1) / 4.0
+            u = fr(1, 2)
+            v, w = [(sqrt(5) + pm_) / 4 for pm_ in [+1, -1]]
 
-            B = 625.0 / 27720.0
-            C = 243.0 / 27720.0
-            D = 512.0 / 27720.0
+            B = fr(625, 27720)
+            C = fr(243, 27720)
+            D = fr(512, 27720)
 
             data = [
                 (B, pm_array0(3, [p, q], [0, 1])),
@@ -204,7 +199,7 @@ class McLaren(object):
                 #
                 (C, pm(3, t)),
                 #
-                (D, fsd(3, (1.0, 1))),
+                (D, fsd(3, (1, 1))),
                 #
                 (D, pm_array([u, v, w])),
                 (D, pm_array([w, u, v])),
@@ -214,11 +209,9 @@ class McLaren(object):
             assert index == 10
             self.degree = 14
 
-            plus_minus = numpy.array([+1, -1])
-
-            r, s = numpy.sqrt((5.0 - plus_minus * numpy.sqrt(5.0)) / 10.0)
-            B = 125.0 / 10080.0
-            C = 143.0 / 10080.0
+            r, s = [sqrt((5 - pm_ * sqrt(5)) / 10) for pm_ in [+1, -1]]
+            B = fr(125, 10080)
+            C = fr(143, 10080)
 
             # The roots of
             #
@@ -242,21 +235,21 @@ class McLaren(object):
                 z[5] - z[1],
                 z[2] - z[5],
                 z[4] - z[3],
-                ]) / 2.0 / s
+                ]) / 2 / s
             v = numpy.array([
                 z[4] + z[5],
                 z[5] + z[3],
                 z[2] + z[4],
                 z[3] + z[1],
                 z[1] + z[2],
-                ]) / 2.0 / s
+                ]) / 2 / s
             w = numpy.array([
                 z[0] + z[1],
                 z[0] + z[2],
                 z[0] + z[3],
                 z[0] + z[4],
                 z[0] + z[5],
-                ]) / 2.0 / s
+                ]) / 2 / s
 
             data = [
                 (B, pm_array0(3, [r, s], [0, 1])),
@@ -280,5 +273,5 @@ class McLaren(object):
                 ]
 
         self.points, self.weights = untangle(data)
-        self.phi_theta = cartesian_to_spherical(self.points)
+        self.phi_theta = cartesian_to_spherical_sympy(self.points)
         return

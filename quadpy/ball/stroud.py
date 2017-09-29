@@ -4,7 +4,7 @@ from __future__ import division
 
 import numpy
 import orthopy
-from sympy import sqrt, pi
+from sympy import sqrt, pi, Rational as fr
 
 from .ditkin import Ditkin
 from .hammer_stroud import HammerStroud
@@ -40,7 +40,7 @@ class Stroud(object):
             # Spherical product Gauss formula.
             self.degree = 7
 
-            # Stroud only gives decimals, sophistacated guesswork gives the
+            # Stroud only gives decimals, sophisticated guesswork gives the
             # analytical expressions.
 
             # 0.9061798459, 0.5384691101
@@ -96,19 +96,31 @@ class Stroud(object):
             # Get the moments corresponding to the Legendre polynomials and the
             # weight function omega(x) = x^2:
             #
-            #                                        / 2/3   if k == 0,
-            #    int_{-1}^{+1} |x^alpha| P_k(x) dx ={  8/45  if k == 2,
-            #                                        \ 0     otherwise.
+            #                                    / 2/3   if k == 0,
+            #    int_{-1}^{+1} |x^2| P_k(x) dx ={  8/45  if k == 2,
+            #                                    \ 0     otherwise.
             #
             # In this case, the recurrence coefficients can be determined
             # analytically.
             n = 8
-            alpha = numpy.zeros(n)
+            alpha = numpy.full(n, fr(0))
             k = numpy.arange(n)
-            beta = numpy.empty(n)
-            beta[0] = 2/3
-            beta[1::2] = (k[1::2]+2)**2 / ((2*k[1::2]+2)**2 - 1)
-            beta[2::2] = k[2::2]**2 / ((2*k[2::2]+2)**2 - 1)
+            beta = numpy.full(n, fr(0))
+            beta[0] = fr(2, 3)
+            # beta[1::2] = fr((k[1::2]+2)**2, ((2*k[1::2]+2)**2 - 1))
+            for k in range(1, n, 2):
+                beta[k] = fr((k+2)**2, (2*k+2)**2 - 1)
+            # beta[2::2] = fr(k[2::2]**2, ((2*k[2::2]+2)**2 - 1))
+            for k in range(2, n, 2):
+                beta[k] = fr(k**2, (2*k+2)**2 - 1)
+
+            # symbolic computation of the points and weights takes 4orever.
+            # Keep an eye on
+            # <https://math.stackexchange.com/questions/2450401/solve-small-symmetric-triadiagonal-eigenvalue-problem-symbolically>
+            # for a better algorithm to be implemented in orthopy.
+            flt = numpy.vectorize(float)
+            alpha = flt(alpha)
+            beta = flt(beta)
             points, weights = orthopy.schemes.custom(alpha, beta, mode='numpy')
 
             r = points[-4:]
