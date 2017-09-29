@@ -5,6 +5,7 @@ from __future__ import division
 import warnings
 
 import numpy
+from sympy import sqrt, pi, sin, cos, Rational as fr
 
 from .rabinowitz_richter import RabinowitzRichter
 from .stroud_secrest import StroudSecrest
@@ -23,33 +24,32 @@ class Stroud(object):
         if index == '4-1':
             self.degree = 4
 
-            i = numpy.arange(5)
-            pts = numpy.sqrt(2.0) * numpy.array([
-                numpy.cos(2*i*numpy.pi / 5),
-                numpy.sin(2*i*numpy.pi / 5)
+            pts = sqrt(2) * numpy.array([
+                [cos(2*i*numpy.pi / 5) for i in range(5)],
+                [sin(2*i*numpy.pi / 5) for i in range(5)],
                 ]).T
             data = [
-                (0.5, numpy.array([[0.0, 0.0]])),
-                (0.1, pts),
+                (fr(1, 2), numpy.array([[0, 0]])),
+                (fr(1, 10), pts),
                 ]
 
             self.points, self.weights = untangle(data)
-            self.weights *= numpy.pi
+            self.weights *= pi
         elif index == '5-1':
             self.set_data(StroudSecrest('V'))
         elif index == '5-2':
             # Cartesian product Gauss formula
             self.degree = 5
 
-            r = numpy.sqrt(3/2)
+            r = sqrt(fr(3, 2))
             data = [
-                (4/9, numpy.array([[0.0, 0.0]])),
-                (1/9, fsd(2, (r, 1))),
-                (1/36, pm(2, r)),
+                (fr(4, 9), numpy.array([[0, 0]])),
+                (fr(1, 9), fsd(2, (r, 1))),
+                (fr(1, 36), pm(2, r)),
                 ]
 
             self.points, self.weights = untangle(data)
-            self.weights *= numpy.pi
+            self.weights *= pi
         elif index == '7-1':
             self.set_data(StroudSecrest('VI'))
         elif index == '7-2':
@@ -59,11 +59,10 @@ class Stroud(object):
                 )
             self.degree = 1
 
-            p_m = numpy.array([+1, -1])
-            sqrt6 = numpy.sqrt(6)
-            r, s = numpy.sqrt((3 + p_m * sqrt6) / 2)
-            A, B = (5 - p_m * 2 * sqrt6) / 48
-            C = 1/48
+            sqrt6 = sqrt(6)
+            r, s = [sqrt((3 + p_m * sqrt6) / 2) for p_m in [+1, -1]]
+            A, B = [(5 - p_m * 2 * sqrt6) / 48 for p_m in [+1, -1]]
+            C = fr(1, 48)
 
             data = [
                 (A, fsd(2, (r, 1))),
@@ -72,7 +71,7 @@ class Stroud(object):
                 ]
 
             self.points, self.weights = untangle(data)
-            self.weights *= numpy.pi
+            self.weights *= pi
         elif index == '9-1':
             self.set_data(RabinowitzRichter(1))
         elif index == '11-1':
