@@ -50,6 +50,10 @@ def show_mpl(points, weights, volume, edges, balls=None):
     # pylint: disable=relative-import, unused-variable
     from mpl_toolkits.mplot3d import Axes3D
 
+    flt = numpy.vectorize(float)
+    points = flt(points)
+    weights = flt(weights)
+
     # pylint: disable=too-many-locals
     def plot_spheres(plt, ax, pts, radii, colors):
         h = 1.0e-2
