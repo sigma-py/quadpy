@@ -43,7 +43,7 @@ def fsd(n, *tuples):
     total_count = sum([item[1] for item in tuples])
     assert total_count <= n
     pm_tuples += [
-        ((0.0,), n - total_count)
+        ((0,), n - total_count)
         ]
     return combine(*pm_tuples)
 
@@ -59,12 +59,12 @@ def fs_array(v):
 def combine(*elems):
     '''Given an input array with lists of options, e.g.,
 
-    ((+r, -r), 2), ((+s, -s), 2), ((0.0,), 1)
+    ((+r, -r), 2), ((+s, -s), 2), ((0,), 1)
 
     this methods returns all combinations, i.e.,
 
-    (+r, 0.0, -s, +r, +s),
-    (0.0, -s, -r, +r, +s),
+    (+r, 0, -s, +r, +s),
+    (0, -s, -r, +r, +s),
     ...
     '''
     # https://stackoverflow.com/a/45321972/353337
