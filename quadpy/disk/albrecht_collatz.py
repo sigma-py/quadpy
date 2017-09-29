@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from math import pi
+from sympy import pi, Rational as fr
 
 from ..helpers import untangle, pm
 
@@ -17,7 +17,7 @@ class AlbrechtCollatz(object):
         self.degree = 3
         data = [
             # ERR Wrongly stated in Stroud as sqrt(0.5) instead of 0.5
-            (0.25, pm(2, 0.5)),
+            (fr(1, 4), pm(2, fr(1, 2))),
             ]
         self.points, self.weights = untangle(data)
         self.weights *= pi
