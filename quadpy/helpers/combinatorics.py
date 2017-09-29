@@ -5,7 +5,7 @@ import numpy
 
 
 def z(n):
-    return numpy.zeros((1, n))
+    return numpy.zeros((1, n), dtype=int)
 
 
 def rd(n, items):

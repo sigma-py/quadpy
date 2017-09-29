@@ -21,6 +21,9 @@ def plot_disks_1d(plt, pts, weights, total_area):
 def plot_disks(plt, pts, weights, total_area):
     '''Plot a circles at quadrature points according to weights.
     '''
+    flt = numpy.vectorize(float)
+    pts = flt(pts)
+    weights = flt(weights)
     radii = numpy.sqrt(abs(weights)/math.fsum(weights) * total_area/math.pi)
     colors = [
         # use matplotlib 2.0's color scheme
