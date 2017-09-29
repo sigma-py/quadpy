@@ -78,14 +78,14 @@ class Peirce1956(object):
             r2 = sqrt(fr(1, 2))
             r3 = sqrt((5 + sqrt15) / 10)
             u1, v1 = [
-                sqrt((5 + pm_ * sqrt(45.0 - 10*sqrt15)) / 20.0)
+                sqrt((5 + pm_ * sqrt(45 - 10*sqrt15)) / 20)
                 for pm_ in [+1, -1]
                 ]
             u2, v2 = [
-                sqrt((5 + sqrt15 + pm_ * 2*sqrt(40*sqrt15 - 150.0)) / 20.0)
+                sqrt((5 + sqrt15 + pm_ * 2*sqrt(40*sqrt15 - 150)) / 20)
                 for pm_ in [+1, -1]
                 ]
-            t = sqrt((5 - sqrt15) / 20.0)
+            t = sqrt((5 - sqrt15) / 20)
 
             data = [
                 (B1, fsd(2, (r1, 1))),

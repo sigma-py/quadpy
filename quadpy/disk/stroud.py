@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
+from sympy import pi, Rational as fr, sqrt, cos, sin
+
 from . import albrecht
 from . import albrecht_collatz
 from . import hammer_stroud
@@ -31,35 +33,33 @@ class Stroud(object):
             self.set_data(radon.Radon(0.0))
         elif index == 'S2 5-2':
             self.degree = 5
-            r = numpy.sqrt(0.5)
+            r = sqrt(fr(1, 2))
             data = [
-                (1.0/6.0, z(2)),
-                (1.0/6.0, fsd(2, (r, 1))),
-                (1.0/24.0, pm(2, r))
+                (fr(1, 6), z(2)),
+                (fr(1, 6), fsd(2, (r, 1))),
+                (fr(1, 24), pm(2, r))
                 ]
             self.points, self.weights = untangle(data)
-            self.weights *= numpy.pi
+            self.weights *= pi
         elif index == 'S2 7-1':
             self.set_data(peirce1956.Peirce1956(1))
         elif index == 'S2 7-2':
             # spherical product Gauss
             self.degree = 7
 
-            r1 = numpy.sqrt((3.0 - numpy.sqrt(3.0)) / 6.0)
-            r2 = numpy.sqrt((3.0 + numpy.sqrt(3.0)) / 6.0)
+            r1, r2 = [sqrt((3 - t*sqrt(3)) / 6) for t in [+1, -1]]
 
-            k = numpy.arange(1, 9)
             x = numpy.column_stack([
-                numpy.cos((2*k-1)*numpy.pi/8),
-                numpy.sin((2*k-1)*numpy.pi/8),
+                [cos((2*k-1)*pi/8) for k in range(1, 9)],
+                [sin((2*k-1)*pi/8) for k in range(1, 9)],
                 ])
 
             data = [
-                (1.0/16.0, r1*x),
-                (1.0/16.0, r2*x),
+                (fr(1, 16), r1*x),
+                (fr(1, 16), r2*x),
                 ]
             self.points, self.weights = untangle(data)
-            self.weights *= numpy.pi
+            self.weights *= pi
         elif index == 'S2 9-1':
             self.set_data(albrecht.Albrecht(4))
         elif index == 'S2 9-2':
@@ -68,18 +68,15 @@ class Stroud(object):
             # spherical product Gauss
             self.degree = 9
 
-            r1 = numpy.sqrt((6.0 - numpy.sqrt(6.0)) / 10.0)
-            r2 = numpy.sqrt((6.0 + numpy.sqrt(6.0)) / 10.0)
+            r1, r2 = [sqrt((6 - t*sqrt(6)) / 10) for t in [+1, -1]]
 
-            k = numpy.arange(1, 11)
             x = numpy.column_stack([
-                numpy.cos(k*numpy.pi/5.0),
-                numpy.sin(k*numpy.pi/5.0),
+                [cos(k * pi / 5) for k in range(1, 11)],
+                [sin(k * pi / 5) for k in range(1, 11)],
                 ])
 
-            B0 = 1.0/9.0
-            B1 = (16.0 + numpy.sqrt(6.0)) / 360.0
-            B2 = (16.0 - numpy.sqrt(6.0)) / 360.0
+            B0 = fr(1, 9)
+            B1, B2 = [(16 + t*sqrt(6)) / 360 for t in [+1, -1]]
 
             data = [
                 (B0, z(2)),
@@ -87,7 +84,7 @@ class Stroud(object):
                 (B2, r2*x),
                 ]
             self.points, self.weights = untangle(data)
-            self.weights *= numpy.pi
+            self.weights *= pi
         elif index == 'S2 9-4':
             self.set_data(rabinowitz_richter.RabinowitzRichter(2))
         elif index == 'S2 9-5':
