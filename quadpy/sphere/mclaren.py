@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-import math
+from mpmath import mp
 import numpy
 from sympy import sqrt, Rational as fr
 
@@ -44,11 +44,12 @@ class McLaren(object):
 
             # the positive roots of
             #  z^6 - z^4 + 0.2*z^2 - 1/105 = 0,
-            # i.e., the squares of the roots of
+            # i.e., the square roots of the roots of
             #  z^3 - z^2 + 0.2*z^1 - 1/105 = 0,
-            r = math.sqrt(0.7503835498819236124134653)
-            s = math.sqrt(0.1785220127761020457111678)
-            t = math.sqrt(0.07109443734197434187536689)
+            r2, s2, t2 = mp.polyroots([1, -1, fr(1, 5), -fr(1, 105)])
+            r = mp.sqrt(r2)
+            s = mp.sqrt(s2)
+            t = mp.sqrt(t2)
 
             u = numpy.array([+r, -r, +s, -s, +t, -t])
             v = numpy.array([+s, +t, +t, +r, +r, +s])
@@ -65,11 +66,12 @@ class McLaren(object):
 
             # the positive roots of
             #  z^6 - z^4 + 5/21 * z^2 - 5/441 = 0,
-            # i.e., the squares of the roots of
+            # i.e., the square roots of the roots of
             #  z^3 - z^2 + 5/21 * z^1 - 5/441 = 0,
-            r = math.sqrt(0.6697999083949878692486451)
-            s = math.sqrt(0.2667404813476434816325695)
-            t = math.sqrt(0.06345961025736864911878537)
+            r2, s2, t2 = mp.polyroots([1, -1, fr(5, 21), -fr(5, 441)])
+            r = mp.sqrt(r2)
+            s = mp.sqrt(s2)
+            t = mp.sqrt(t2)
 
             u = numpy.array([+r, -r, +s, -s, +t, -t])
             v = numpy.array([+s, +t, +t, +r, +r, +s])
