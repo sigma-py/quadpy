@@ -7,6 +7,7 @@ import numpy
 from ..helpers import untangle, rd
 
 
+# TODO sympyfy
 class Stroud1967a(object):
     '''
     A.H. Stroud,
