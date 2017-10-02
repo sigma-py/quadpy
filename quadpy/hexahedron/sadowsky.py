@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
+from sympy import Rational as fr, sqrt
 
 from .helpers import fs_r00, fs_rr0, fs_rrs
-
 from ..helpers import untangle
 
 
@@ -18,11 +17,11 @@ class Sadowsky(object):
     def __init__(self):
         self.degree = 5
         data = [
-            (91.0/450.0, fs_r00(1.0)),
-            (-20.0/225.0, fs_rr0(1.0)),
-            (8.0/225.0, fs_rrs(numpy.sqrt(5.0/8.0), 1.0)),
+            (fr(91, 450), fs_r00(1)),
+            (fr(-20, 225), fs_rr0(1)),
+            (fr(8, 225), fs_rrs(sqrt(fr(5, 8)), 1)),
             ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= 8.0
+        self.weights *= 8
         return

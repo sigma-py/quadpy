@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-import math
+from sympy import sqrt, Rational as fr
 
 from ..helpers import untangle, fsd, pm, z
 
@@ -16,39 +16,39 @@ class HammerStroud(object):
         if index == '1-3':
             self.degree = 3
             data = [
-                (4.0/3.0, fsd(3, (1.0, 1))),
+                (fr(4, 3), fsd(3, (1, 1))),
                 ]
         elif index == '2-3':
             self.degree = 5
-            alpha = math.sqrt(3.0/5.0)
+            alpha = sqrt(fr(3, 5))
             data = [
-                (+56.0/27.0, z(3)),
-                (-20.0/81.0, fsd(3, (alpha, 1))),
-                (+50.0/81.0, fsd(3, (alpha, 2))),
+                (+fr(56, 27), z(3)),
+                (-fr(20, 81), fsd(3, (alpha, 1))),
+                (+fr(50, 81), fsd(3, (alpha, 2))),
                 ]
         elif index == '4-3':
             self.degree = 5
             data = [
-                (320.0/361.0, fsd(3, (math.sqrt(19.0/30.0), 1))),
-                (121.0/361.0, pm(3, math.sqrt(19.0/33.0)))
+                (fr(320, 361), fsd(3, (sqrt(fr(19, 30)), 1))),
+                (fr(121, 361), pm(3, sqrt(fr(19, 33))))
                 ]
         elif index in ['5-3a', '5-3b']:
             self.degree = 7
 
-            i = 1.0 if index == '5-3a' else -1.0
+            i = 1 if index == '5-3a' else -1
 
-            r2 = (33.0 - i * math.sqrt(165.0)) / 28.0
-            s2 = (30.0 + i * math.sqrt(165.0)) / 35.0
-            t2 = (195.0 - i * 4.0*math.sqrt(165.0)) / 337.0
+            r2 = (33 - i * sqrt(165)) / 28
+            s2 = (30 + i * sqrt(165)) / 35
+            t2 = (195 - i * 4*sqrt(165)) / 337
 
-            r = math.sqrt(r2)
-            s = math.sqrt(s2)
-            t = math.sqrt(t2)
+            r = sqrt(r2)
+            s = sqrt(s2)
+            t = sqrt(t2)
 
-            B1 = 176.0/945.0 / r2**3
-            B2 = 8.0/135.0 / s2**3
-            B3 = 8.0/216.0 / t2**3
-            B0 = 8.0 - 6.0*B1 - 12.0*B2 - 8.0*B3
+            B1 = 176 / r2**3 / 945
+            B2 = 8 / s2**3 / 135
+            B3 = 8 / t2**3 / 216
+            B0 = 8 - 6*B1 - 12*B2 - 8*B3
 
             data = [
                 (B0, z(3)),
@@ -59,10 +59,10 @@ class HammerStroud(object):
         else:
             assert index == '6-3'
             self.degree = 7
-            alpha = math.sqrt(6.0/7.0)
+            alpha = sqrt(fr(6, 7))
             data = [
-                (1078.0/3645.0, fsd(3, (alpha, 1))),
-                (343.0/3645.0, fsd(3, (alpha, 2))),
+                (fr(1078, 3645), fsd(3, (alpha, 1))),
+                (fr(343, 3645), fsd(3, (alpha, 2))),
                 (0.2247031747656014, pm(3, 0.7341125287521153)),
                 (0.4123338622714356, pm(3, 0.4067031864267161)),
                 ]
