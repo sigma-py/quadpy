@@ -46,7 +46,7 @@ class StroudSecrest(object):
             C = fr(1, (n+2)**2)
 
             data = [
-                (A, numpy.array([numpy.full(n, 0)])),
+                (A, numpy.full((1, n), 0)),
                 (B, fsd(n, (nu, 1))),
                 (C, fsd(n, (xi, 2))),
                 ]
