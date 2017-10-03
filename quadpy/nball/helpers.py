@@ -15,7 +15,7 @@ def integrate_monomial_over_unit_nball(exp):
     Vol. 108, No. 5 (May, 2001), pp. 446-448,
     <https://dx.doi.org/10.2307/2695802>.
     '''
-    radius = 1.0
+    radius = 1
     n = len(exp)
     alpha = n + sum(exp)
-    return radius**alpha / alpha * integrate_monomial_over_unit_nsphere(exp)
+    return radius**alpha * integrate_monomial_over_unit_nsphere(exp) / alpha

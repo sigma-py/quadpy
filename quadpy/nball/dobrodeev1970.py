@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
+from sympy import sqrt, Rational as fr, gamma, pi
 
 from ..helpers import untangle, fsd, z
 
@@ -19,26 +19,26 @@ class Dobrodeev1970(object):
         self.degree = 7
         self.dim = n
 
-        A = 0.125
-        B = (5.0 - n) / 4.0
-        C = ((6.0 - n) * (1.0 - n**2) + 36.0) / 4.0 / (n + 3.0)
-        D = 81.0 / (n + 3.0) / (n + 6.0)**2
-        E = (45.0*n**2 + 324.0*n + 216.0) / (n**2 + 12.0*n + 36.0) \
-            - n * (n**2 - 12.0*n + 65.0) / 6.0
+        A = fr(1, 8)
+        B = fr(5-n, 4)
+        C = fr((6 - n) * (1 - n**2) + 36, 4*(n + 3))
+        D = fr(81, (n + 3) * (n + 6)**2)
+        E = fr(45*n**2 + 324*n + 216, n**2 + 12*n + 36) \
+            - fr(n * (n**2 - 12*n + 65), 6)
 
-        r = numpy.sqrt(3.0 / (n + 6.0))
+        r = sqrt(fr(3, n+6))
         data = [
             (A, fsd(n, (r, 3))),
             (B, fsd(n, (r, 2))),
             (C, fsd(n, (r, 1))),
-            (D, fsd(n, (1.0, 1))),
+            (D, fsd(n, (1, 1))),
             (E, z(n)),
             ]
 
         self.points, self.weights = untangle(data)
 
         self.weights /= (
-            (0.5*n) * numpy.math.gamma(0.5*n) / numpy.pi**(0.5*n)
-            * 27.0 * (n+2.0) * (n+4.0) / (n+6.0)**2
+            fr(n, 2) * gamma(fr(n, 2)) / sqrt(pi)**n
+            * fr(27 * (n+2) * (n+4), (n+6)**2)
             )
         return
