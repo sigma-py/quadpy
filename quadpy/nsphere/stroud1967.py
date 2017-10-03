@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
-import numpy
+from sympy import sqrt, Rational as fr
 
 from ..helpers import untangle, fsd, pm
 from .helpers import integrate_monomial_over_unit_nsphere
@@ -18,12 +17,12 @@ class Stroud1967(object):
         self.dim = n
         self.degree = 7
 
-        r = 1.0
-        s = numpy.sqrt(1.0 / n)
-        t = numpy.sqrt(0.5)
-        B = (8 - n) / n / (n+2) / (n+4)
-        C = n**3 / 2**n / n / (n+2) / (n+4)
-        D = 4 / n / (n+2) / (n+4)
+        r = 1
+        s = sqrt(fr(1, n))
+        t = sqrt(fr(1, 2))
+        B = fr(8-n, n * (n+2) * (n+4))
+        C = fr(n**3, 2**n * n * (n+2) * (n+4))
+        D = fr(4, n * (n+2) * (n+4))
 
         data = [
             (B, fsd(n, (r, 1))),

@@ -41,7 +41,7 @@ def test_scheme(scheme):
     tol = 1.0e-14
     n = scheme.dim
     center = numpy.zeros(n)
-    radius = 1.0
+    radius = 1
     degree = check_degree(
             lambda poly: quadpy.nball.integrate(poly, center, radius, scheme),
             integrate_monomial_over_unit_nball,
@@ -55,6 +55,6 @@ def test_scheme(scheme):
 
 
 if __name__ == '__main__':
-    n_ = 5
-    scheme_ = quadpy.nball.Stroud(n_, 'Sn 11-1a')
+    n_ = 3
+    scheme_ = quadpy.nball.Dobrodeev1970(n_)
     test_scheme(scheme_)
