@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import (
-    check_degree, integrate_monomial_over_standard_simplex
-    )
+from helpers import check_degree
 
 import numpy
 import pytest
@@ -81,7 +79,7 @@ def test_scheme(scheme):
             lambda poly: quadpy.tetrahedron.integrate(
                 poly, tetrahedron, scheme
                 ),
-            integrate_monomial_over_standard_simplex,
+            quadpy.nsimplex.integrate_monomial_over_unit_simplex,
             lambda n: quadpy.helpers.partition(n, 3),
             scheme.degree + 1,
             )

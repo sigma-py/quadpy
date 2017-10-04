@@ -34,13 +34,10 @@ class Stroud1964(object):
             # Stroud's book only gives numerical values for certain n, the
             # article explains it in more detail.
             # r is a root of a polynomial of degree 3.
-            p = [n+1, -3, fr(3, n+2), -fr(1, (n+2)*(n+3))]
+            roots = mp.polyroots([
+                n+1, -3, 3/mp.mpf(n+2), -mp.mpf(1)/(n+2)/(n+3)
+                ])
 
-            # mpmath polyroots takes really long, unfortunately.
-            # from mpmath import mp
-            # roots = mp.polyroots(p)
-
-            roots = numpy.sort(numpy.roots(p))
             # all roots are real-valued
             if n > 8:
                 assert variant == 'b', 'Choose variant b for n >= 9.'
@@ -48,13 +45,10 @@ class Stroud1964(object):
             r = roots[0] if variant == 'a' else roots[1]
 
             # s and t are zeros of a polynomial of degree 2
-            # b = 1 - (n-1) * r
-            p = [
+            s, t = numpy.sort(mp.polyroots([
                 1, -(1-(n-1)*r), fr(n, 2*(n+2)) - (n-1)*r + fr(n*(n-1), 2)*r**2
-                ]
-            s, t = numpy.sort(numpy.roots(p))
+                ]))
 
-            # TODO check what's given wrong in Stroud's book
             data = [
                 (fr(1, n*(n+1)), rd(n+1, [(r, n-1), (s, 1), (t, 1)])),
                 ]
