@@ -9,26 +9,26 @@ def z(n):
 
 
 def rd(n, items):
-    '''Items is an array of 2-tuples of type (value, number). This method
+    '''Items is an array of 2-tuples of type (value, count). This method
     returns all all permutations of
 
     [value1, value1, value2, 0, ..., 0]
 
-    of length n, where value_i occurs number_i times.
+    of length n, where value_i occurs count_i times.
     '''
-    sum_numbers = 0
+    sum_counts = 0
     for item in items:
-        _, number = item
-        assert number > 0
-        sum_numbers += number
-    assert 0 <= sum_numbers <= n
+        _, count = item
+        assert count > 0
+        sum_counts += count
+    assert 0 <= sum_counts <= n
 
     elems = [
         ((item[0],), item[1])
         for item in items
         ]
     elems += [
-        ((0.0,), n-sum_numbers)
+        ((0,), n-sum_counts)
         ]
 
     return combine(*elems)

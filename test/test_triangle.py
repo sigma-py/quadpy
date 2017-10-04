@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import (
-    check_degree, integrate_monomial_over_standard_simplex
-    )
+from helpers import check_degree
 
 import numpy
 import pytest
@@ -89,7 +87,7 @@ def test_scheme(scheme, tol):
         ])
     degree = check_degree(
             lambda poly: quadpy.triangle.integrate(poly, triangle, scheme),
-            integrate_monomial_over_standard_simplex,
+            quadpy.nsimplex.integrate_monomial_over_unit_simplex,
             lambda n: quadpy.helpers.partition(n, 2),
             scheme.degree + 1,
             tol=tol
