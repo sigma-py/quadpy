@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-import math
+from sympy import pi
 
 from .helpers import cartesian_to_spherical
 
@@ -47,7 +47,8 @@ class Stroud(object):
             scheme = Stroud1969(3)
             self.degree = scheme.degree
             self.weights = scheme.weights
-            self.weights /= 4 * math.pi
+            print(self.weights)
+            self.weights /= 4 * pi
             self.points = scheme.points
             self.phi_theta = cartesian_to_spherical(self.points)
         elif index == 'U3 11-3':
