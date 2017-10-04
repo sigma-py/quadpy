@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
+from sympy import Rational as fr
 
 from .hammer_stroud import HammerStroud
 from .lauffer import Lauffer
@@ -26,7 +27,7 @@ class Stroud(object):
             # midpoint formula
             self.degree = 1
             data = [
-                (1.0, numpy.array([numpy.full(n+1, 1.0/(n+1))]))
+                (1, numpy.full((1, n+1), fr(1, n+1)))
                 ]
             self.bary, self.weights = untangle(data)
             self.points = self.bary[:, 1:]
