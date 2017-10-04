@@ -89,7 +89,7 @@ def _xi1(d, a):
 
 def _xi11(d, a):
     assert d > 1
-    b = fr(1 - (d-1) * a,  2)
+    b = fr(1 - (d-1) * a, 2)
     if d == 2:
         out = numpy.array([
             [b, b, a],

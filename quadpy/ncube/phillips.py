@@ -15,6 +15,7 @@ class Phillips(object):
     Abstract:
     Gaussian-type formulae are derived for all values of N >= 2.
     '''
+    # pylint: disable=too-many-locals
     def __init__(self, n):
         self.name = 'Phillips'
         self.degree = 7

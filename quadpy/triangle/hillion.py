@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import Rational as fr, sqrt
 import warnings
 
 import numpy
+from sympy import Rational as fr, sqrt
 
 from ..helpers import untangle
 
