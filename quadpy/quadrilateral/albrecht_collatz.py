@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
+from sympy import sqrt, Rational as fr
 
 from .helpers import _symm_r_0, _symm_s, _z, _pm, _pm2
-
 from ..helpers import untangle
 
 
@@ -19,41 +18,40 @@ class AlbrechtCollatz(object):
         if index == 1:
             self.degree = 3
             data = [
-                (5.0/12.0, _z()),
-                (0.125, _symm_r_0(1.0)),
-                (1.0/48.0, _symm_s(1.0))
+                (fr(5, 12), _z()),
+                (fr(1, 8), _symm_r_0(1)),
+                (fr(1, 48), _symm_s(1))
                 ]
         elif index == 2:
             self.degree = 5
-            r = numpy.sqrt(3.0 / 5.0)
-            s = numpy.sqrt(1.0 / 3.0)
-            t = numpy.sqrt(14.0 / 15.0)
+            r = sqrt(fr(3, 5))
+            s = sqrt(fr(1, 3))
+            t = sqrt(fr(14, 15))
             data = [
-                (5.0/36.0, _pm2(r, s)),
-                (5.0/63.0, _pm(0.0, t)),
-                (2.0/7.0, _z())
+                (fr(5, 36), _pm2(r, s)),
+                (fr(5, 63), _pm(0, t)),
+                (fr(2, 7), _z())
                 ]
         elif index == 3:
             self.degree = 5
-            r = numpy.sqrt(7.0 / 15.0)
-            s = numpy.sqrt((7.0 + numpy.sqrt(24)) / 15.0)
-            t = numpy.sqrt((7.0 - numpy.sqrt(24)) / 15.0)
+            r = sqrt(fr(7, 15))
+            s, t = [sqrt((7 + i*sqrt(24)) / 15) for i in [+1, -1]]
             data = [
-                (2.0/7.0, _z()),
-                (25.0/168.0, _pm(r, r)),
-                (5.0/48.0, _pm(+s, -t)),
-                (5.0/48.0, _pm(+t, -s)),
+                (fr(2, 7), _z()),
+                (fr(25, 168), _pm(r, r)),
+                (fr(5, 48), _pm(+s, -t)),
+                (fr(5, 48), _pm(+t, -s)),
                 ]
         else:
             assert index == 4
             self.degree = 5
             data = [
-                (2.0/45.0, _z()),
-                (2.0/45.0, _symm_r_0(1.0)),
-                (1.0/60.0, _symm_s(1.0)),
-                (8.0/45.0, _symm_s(0.5)),
+                (fr(2, 45), _z()),
+                (fr(2, 45), _symm_r_0(1)),
+                (fr(1, 60), _symm_s(1)),
+                (fr(8, 45), _symm_s(fr(1, 2))),
                 ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= 4.0
+        self.weights *= 4
         return

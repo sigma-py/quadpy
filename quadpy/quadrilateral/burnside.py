@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
+from sympy import sqrt, Rational as fr
 
 from .helpers import _symm_r_0, _symm_s
-
 from ..helpers import untangle
 
 
@@ -16,13 +15,13 @@ class Burnside(object):
     def __init__(self):
         self.name = 'Burnside'
         self.degree = 5
-        r = numpy.sqrt(7.0 / 15.0)
-        s = numpy.sqrt(7.0 / 9.0)
+        r = sqrt(fr(7, 15))
+        s = sqrt(fr(7, 9))
         data = [
-            (10.0/49.0, _symm_r_0(r)),
-            (9.0/196.0, _symm_s(s)),
+            (fr(10, 49), _symm_r_0(r)),
+            (fr(9, 196), _symm_s(s)),
             ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= 4.0
+        self.weights *= 4
         return
