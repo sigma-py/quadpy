@@ -23,7 +23,7 @@ class Dobrodeev1970(object):
         B = fr(19-5*n, 20)
         alpha = 35*n * (5*n - 33)
         C = fr((alpha + 2114)**3, 700 * (alpha+1790.0) * (alpha+2600.0))
-        D = fr(729, 1750) * fr(alpha + 2114,  alpha + 2600)
+        D = fr(729, 1750) * fr(alpha + 2114, alpha + 2600)
         E = fr(n * (n-1) * (n - 4.7), 3) - 2*n * (C + D) + fr(729, 125)
 
         a = sqrt(fr(3, 5))

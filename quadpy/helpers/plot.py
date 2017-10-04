@@ -48,6 +48,7 @@ def _plot_disks_helpers(plt, pts, radii, colors):
     return
 
 
+# pylint: disable=too-many-locals
 def show_mpl(points, weights, volume, edges, balls=None):
     import matplotlib.pyplot as plt
     # pylint: disable=relative-import, unused-variable
