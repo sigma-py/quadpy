@@ -42,5 +42,5 @@ def test_scheme(scheme, tol=1.0e-14):
 
 if __name__ == '__main__':
     n_ = 5
-    scheme_ = quadpy.nsphere.Dobrodeev1978(n_)
+    scheme_ = quadpy.nsphere.Stroud(n_, 'Un 11-1')
     test_scheme(scheme_)
