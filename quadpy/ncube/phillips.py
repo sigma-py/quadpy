@@ -17,10 +17,7 @@ class Phillips(object):
     '''
     def __init__(self, n):
         warnings.warn('The Phillips schemes are only single-precision.')
-
         self.name = 'Phillips'
-        reference_volume = 2.0**n
-
         self.degree = 7
 
         if n == 2:
@@ -84,5 +81,6 @@ class Phillips(object):
             data.append((B4, fsd(n, (t, 3))))
 
         self.points, self.weights = untangle(data)
+        reference_volume = 2**n
         self.weights *= reference_volume
         return

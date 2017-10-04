@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
+from sympy import sqrt, Rational as fr
 
 from ..helpers import untangle, fsd, z, pm
 
@@ -28,15 +28,15 @@ class MustardLynessBlatt(object):
     generalized to n dimensions for hyper-cubic domains.
     '''
     def __init__(self, n):
-        reference_volume = 2.0**n
         self.degree = 5
-        r = numpy.sqrt(2.0 / 5.0)
+        r = sqrt(fr(2, 5))
         data = [
-            ((8 - 5*n)/9.0, z(n)),
-            (5.0/18.0, fsd(n, (r, 1))),
-            (1.0/9.0 / 2**n, pm(n, 1.0)),
+            (fr(8 - 5*n, 9), z(n)),
+            (fr(5, 18), fsd(n, (r, 1))),
+            (fr(1, 9 * 2**n), pm(n, 1)),
             ]
 
         self.points, self.weights = untangle(data)
+        reference_volume = 2**n
         self.weights *= reference_volume
         return

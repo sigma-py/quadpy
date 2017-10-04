@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-import math
+from sympy import sqrt, Rational as fr
 
 from ..helpers import untangle, fsd, z
 
@@ -18,19 +18,19 @@ class HammerStroud(object):
         if index == '1-n':
             self.degree = 3
             data = [
-                (0.5/n, fsd(n, (math.sqrt(n/3.0), 1))),
+                (fr(1, 2*n), fsd(n, (sqrt(fr(n, 3)), 1))),
                 ]
         else:
             assert index == '2-n'
             self.degree = 5
-            r = math.sqrt(3.0 / 5.0)
+            r = sqrt(fr(3, 5))
             data = [
-                ((25*n**2 - 115*n + 162)/162.0, z(n)),
-                ((70 - 25*n)/162.0, fsd(n, (r, 1))),
-                (25.0/324.0, fsd(n, (r, 2))),
+                (fr(25*n**2 - 115*n + 162, 162), z(n)),
+                (fr(70 - 25*n, 162), fsd(n, (r, 1))),
+                (fr(25, 324), fsd(n, (r, 2))),
                 ]
 
         self.points, self.weights = untangle(data)
-        reference_volume = 2.0**n
+        reference_volume = 2**n
         self.weights *= reference_volume
         return
