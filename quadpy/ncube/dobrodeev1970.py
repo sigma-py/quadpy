@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
+from sympy import sqrt, Rational as fr
 
 from ..helpers import untangle, fsd, z
 
@@ -19,16 +19,16 @@ class Dobrodeev1970(object):
         self.degree = 7
         self.dim = n
 
-        A = 0.125
-        B = (19.0 - 5.0*n) / 20.0
-        alpha = 35.0*n * (5.0*n - 33.0)
-        C = (alpha + 2114.0)**3 / (700.0 * (alpha+1790.0) * (alpha+2600.0))
-        D = 729.0/1750.0 * (alpha + 2114.0)/(alpha + 2600.0)
-        E = n * (n-1) * (n - 4.7) / 3.0 - 2*n * (C + D) + 729.0/125.0
+        A = fr(1, 8)
+        B = fr(19-5*n, 20)
+        alpha = 35*n * (5*n - 33)
+        C = fr((alpha + 2114)**3, 700 * (alpha+1790.0) * (alpha+2600.0))
+        D = fr(729, 1750) * fr(alpha + 2114,  alpha + 2600)
+        E = fr(n * (n-1) * (n - 4.7), 3) - 2*n * (C + D) + fr(729, 125)
 
-        a = numpy.sqrt(3.0 / 5.0)
+        a = sqrt(fr(3, 5))
         b = a
-        c = numpy.sqrt(3.0 / 5.0 * (alpha+1790.0) / (alpha+2114.0))
+        c = sqrt(fr(3, 5) * fr(alpha+1790, alpha+2114))
         data = [
             (A, fsd(n, (a, 3))),
             (B, fsd(n, (b, 2))),
@@ -38,6 +38,5 @@ class Dobrodeev1970(object):
             ]
 
         self.points, self.weights = untangle(data)
-
-        self.weights /= 729.0/125.0 / 2**n
+        self.weights /= fr(729, 125 * 2**n)
         return
