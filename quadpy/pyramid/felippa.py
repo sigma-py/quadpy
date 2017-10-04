@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from .helpers import _s4, _s4_0
+from sympy import Rational as fr, sqrt
 
+from .helpers import _s4, _s4_0
 from ..helpers import untangle
 
 
@@ -39,118 +40,128 @@ class Felippa(object):
     of FEM work, whether symbolic or numeric, has been published before.
     '''
     def __init__(self, index):
-        wg9 = numpy.array([64.0, 40.0, 25.0]) / 81.0
+        wg9 = numpy.array([
+            fr(64, 81),
+            fr(40, 81),
+            fr(25, 81),
+            ])
 
         if index == 1:
             self.degree = 1
             data = [
-                (128.0/27.0, numpy.array([[0.0, 0.0, -0.5]])),
+                (fr(128, 27), numpy.array([[0, 0, -fr(1, 2)]])),
                 ]
         elif index == 2:
             self.degree = 2
             data = [
-                (0.81, _s4(8 * numpy.sqrt(2.0/15.0) / 5, -2.0/3.0)),
-                (125.0/27.0, numpy.array([[0.0, 0.0, 0.4]])),
+                (fr(81, 100), _s4(8 * sqrt(fr(2, 15)) / 5, -fr(2, 3))),
+                (fr(125, 27), numpy.array([[0, 0, fr(2, 5)]])),
                 ]
         elif index == 3:
             self.degree = 2
             data = [
-                (504.0/625.0, _s4(numpy.sqrt(12.0/35.0), -2.0/3.0)),
-                (576.0/625.0, numpy.array([[0.0, 0.0, 1.0/6.0]])),
-                (64.0/15.0, numpy.array([[0.0, 0.0, 0.5]])),
+                (fr(504, 625), _s4(sqrt(fr(12, 35)), -fr(2, 3))),
+                (fr(576, 625), numpy.array([[0, 0, fr(1, 6)]])),
+                (fr(64, 15), numpy.array([[0, 0, fr(1, 2)]])),
                 ]
         elif index == 4:
             self.degree = 3
-            w1 = 5 * (68.0 + 5*numpy.sqrt(10.0)) / 432.0
-            w2 = 85.0/54.0 - w1
-            g1 = numpy.sqrt(1.0/3.0)
-            g2 = (2*numpy.sqrt(10)-5) / 15.0
+            w1 = 5 * (68 + 5*sqrt(10)) / 432
+            w2 = fr(85, 54) - w1
+            g1 = sqrt(fr(1, 3))
+            g2 = (2*sqrt(10)-5) / 15
             data = [
                 (w1, _s4(g1, g2)),
-                (w2, _s4(g1, -2.0/3.0 - g2)),
+                (w2, _s4(g1, -fr(2, 3) - g2)),
                 ]
         elif index == 5:
             self.degree = 2
-            w1 = (11764.0 - 461.0*numpy.sqrt(51.0)) / 15300.0
-            w2 = 346.0 / 225.0 - w1
-            g1 = numpy.sqrt(2.0/15.0 * (573 - 2*numpy.sqrt(51))) / 15.0
-            g2 = numpy.sqrt(2.0/15.0 * (573 + 2*numpy.sqrt(51))) / 15.0
-            g3 = -(2*numpy.sqrt(51.0) + 13) / 35.0
-            g4 = +(2*numpy.sqrt(51.0) - 13) / 35.0
+            w1 = (11764 - 461*sqrt(51)) / 15300
+            w2 = fr(346, 225) - w1
+            g1, g2 = [
+                sqrt(fr(2, 15) * (573 - i * 2*sqrt(51))) / 15
+                for i in [+1, -1]
+                ]
+            g3, g4 = [
+                -i * (2*sqrt(51) + i*13) / 35
+                for i in [+1, -1]
+                ]
             data = [
                 (w1, _s4(g1, g3)),
                 (w2, _s4(g2, g4)),
                 ]
         elif index == 6:
             self.degree = 2
-            w1 = 7.0*(11472415.0 - 70057.0*numpy.sqrt(2865.0)) / 130739500.0
-            w2 = 84091.0/68450.0 - w1
+            w1 = 7*(11472415 - 70057*sqrt(2865)) / 130739500
+            w2 = fr(84091, 68450) - w1
 
-            g1 = 8 * numpy.sqrt(
-                (573 + 5*numpy.sqrt(2865.0))
-                / (109825 + 969*numpy.sqrt(2865.0))
+            g1 = 8 * sqrt(
+                (573 + 5*sqrt(2865))
+                / (109825 + 969*sqrt(2865))
                 )
-            g2 = numpy.sqrt(2*(8025 + numpy.sqrt(2865.0)) / 35.0) / 37.0
-            g3 = -(+87 + numpy.sqrt(2865.0)) / 168.0
-            g4 = +(-87 + numpy.sqrt(2865.0)) / 168.0
+            g2 = sqrt(2*(8025 + sqrt(2865)) / 35) / 37
+            g3, g4 = [
+                -i * (+i*87 + sqrt(2865)) / 168
+                for i in [+1, -1]
+                ]
 
             data = [
                 (w1, _s4(g1, g3)),
                 (w2, _s4(g2, g4)),
-                (3.6, numpy.array([[0.0, 0.0, 2.0/3.0]])),
+                (fr(18, 5), numpy.array([[0, 0, fr(2, 3)]])),
                 ]
         elif index == 7:
             self.degree = 2
-            w1 = 170569.0 / 331200.0
-            w2 = 276710106577408.0 / 1075923777052725.0
-            w3 = 12827693806929.0 / 30577384040000.0
-            w4 = 10663383340655070643544192.0 / 4310170528879365193704375.0
-            g1 = 7 * numpy.sqrt(35.0/59.0) / 8.0
-            g2 = 224 * numpy.sqrt(336633710.0/33088740423.0) / 37.0
-            g3 = numpy.sqrt(37043.0/35.0) / 56.0
-            g4 = -127.0/153.0
-            g5 = 1490761.0 / 2842826.0
+            w1 = fr(170569, 331200)
+            w2 = fr(276710106577408, 1075923777052725)
+            w3 = fr(12827693806929, 30577384040000)
+            w4 = fr(10663383340655070643544192, 4310170528879365193704375)
+            g1 = 7 * sqrt(fr(35, 59)) / 8
+            g2 = 224 * sqrt(fr(336633710, 33088740423)) / 37
+            g3 = sqrt(fr(37043, 35)) / 56
+            g4 = -fr(127, 153)
+            g5 = fr(1490761, 2842826)
             data = [
-                (w1, _s4(g1, -1.0/7.0)),
-                (w2, _s4_0(g2, -9.0/28.0)),
+                (w1, _s4(g1, -fr(1, 7))),
+                (w2, _s4_0(g2, -fr(9, 28))),
                 (w3, _s4(g3, g4)),
-                (w4, numpy.array([[0.0, 0.0, g5]])),
+                (w4, numpy.array([[0, 0, g5]])),
                 ]
         elif index == 8:
             self.degree = 3
-            w1 = 5 * (68.0 + 5.0*numpy.sqrt(10)) / 432.0
-            w2 = 85.0/54.0 - w1
-            g1 = numpy.sqrt(0.6)
-            g2 = 1.0 - 2*(10.0 - numpy.sqrt(10)) / 15.0
-            g3 = -2.0/3.0 - g2
+            w1 = 5 * (68 + 5*sqrt(10)) / 432
+            w2 = fr(85, 54) - w1
+            g1 = sqrt(fr(3, 5))
+            g2 = 1 - 2*(10 - sqrt(10)) / 15
+            g3 = -fr(2, 3) - g2
             data = [
                 (w1*wg9[2], _s4(g1, g2)),
                 (w1*wg9[1], _s4_0(g1, g2)),
-                (w1*wg9[0], numpy.array([[0.0, 0.0, g2]])),
+                (w1*wg9[0], numpy.array([[0, 0, g2]])),
                 (w2*wg9[2], _s4(g1, g3)),
                 (w2*wg9[1], _s4_0(g1, g3)),
-                (w2*wg9[0], numpy.array([[0.0, 0.0, g3]])),
+                (w2*wg9[0], numpy.array([[0, 0, g3]])),
                 ]
         else:
             assert index == 9
             self.degree = 5
-            g1 = numpy.sqrt(0.6)
+            g1 = sqrt(fr(3, 5))
             g3 = -0.854011951853700535688324041975993416
             g4 = -0.305992467923296230556472913192103090
             g5 = +0.410004419776996766244796955168096505
-            w1 = (4.0/15.0)*(4+5*(g4+g5)+10*g4*g5)/((g3-g4)*(g3-g5)*(1-g3)**2)
-            w2 = (4.0/15.0)*(4+5*(g3+g5)+10*g3*g5)/((g3-g4)*(g5-g4)*(1-g4)**2)
-            w3 = (4.0/15.0)*(4+5*(g3+g4)+10*g3*g4)/((g3-g5)*(g4-g5)*(1-g5)**2)
+            w1 = fr(4, 15)*(4+5*(g4+g5)+10*g4*g5)/((g3-g4)*(g3-g5)*(1-g3)**2)
+            w2 = fr(4, 15)*(4+5*(g3+g5)+10*g3*g5)/((g3-g4)*(g5-g4)*(1-g4)**2)
+            w3 = fr(4, 15)*(4+5*(g3+g4)+10*g3*g4)/((g3-g5)*(g4-g5)*(1-g5)**2)
             data = [
                 (w1*wg9[2], _s4(g1, g3)),
                 (w1*wg9[1], _s4_0(g1, g3)),
-                (w1*wg9[0], numpy.array([[0.0, 0.0, g3]])),
+                (w1*wg9[0], numpy.array([[0, 0, g3]])),
                 (w2*wg9[2], _s4(g1, g4)),
                 (w2*wg9[1], _s4_0(g1, g4)),
-                (w2*wg9[0], numpy.array([[0.0, 0.0, g4]])),
+                (w2*wg9[0], numpy.array([[0, 0, g4]])),
                 (w3*wg9[2], _s4(g1, g5)),
                 (w3*wg9[1], _s4_0(g1, g5)),
-                (w3*wg9[0], numpy.array([[0.0, 0.0, g5]])),
+                (w3*wg9[0], numpy.array([[0, 0, g5]])),
                 ]
 
         self.points, self.weights = untangle(data)

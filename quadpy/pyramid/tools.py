@@ -7,10 +7,13 @@ from .. import helpers
 
 
 def integrate(f, pyra, scheme, sumfun=helpers.kahan_sum):
-    xi = scheme.points.T
+    flt = numpy.vectorize(float)
+
+    xi = flt(scheme.points).T
     x = _transform(xi, pyra)
     det = _get_det_J(pyra, xi)
-    return sumfun(scheme.weights * f(x) * abs(det.T), axis=-1)
+
+    return sumfun(flt(scheme.weights) * f(x) * abs(det.T), axis=-1)
 
 
 def _transform(xi, pyra):
