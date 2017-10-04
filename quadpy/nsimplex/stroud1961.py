@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
-
-import numpy
+from sympy import Rational as fr
 
 from ..helpers import untangle, rd
 
@@ -18,16 +16,17 @@ class Stroud1961(object):
         self.dim = n
         self.degree = 3
 
-        r = 1 / (n+1)
-        s = 1 / n
+        r = fr(1, n+1)
+        s = fr(1, n)
 
-        A = (3-n) * (n+1)**2 / (n+2) / (n+3)
-        B = 3 / (n+1) / (n+2) / (n+3)
-        C = n**3 / (n+1) / (n+2) / (n+3)
+        prod = (n+1) * (n+2) * (n+3)
+        A = fr((3-n) * (n+1)**3, prod)
+        B = fr(3, prod)
+        C = fr(n**3, prod)
 
         data = [
-            (A, numpy.array([numpy.full(n+1, r)])),
-            (B, rd(n+1, [(1.0, 1)])),
+            (A, [(n+1) * [r]]),
+            (B, rd(n+1, [(1, 1)])),
             (C, rd(n+1, [(s, n)])),
             ]
 
