@@ -22,119 +22,48 @@ class Phillips(object):
         if n == 2:
             p1 = 1
             p2 = fr(14, 3)
-
             q = fr(5, 3)
-            # r = fr(5, 3)
-
-            En = fr(25*n**2 - 165*n + 302, 972)
-            gamma = fr((n-1) * (19 - 5*n), 270)
-            delta = fr((n-1) * (n - 2), 108)
-
-            # a1 = fr(3, 5) * En
-            a1 = fr(23 - 5*n, 180) - gamma*q / 2
-            a2 = fr(9, 25) * En + fr(2, 175)
-            beta1 = (a1 - a2 * p2) / (p1 - p2)
-            beta2 = (a1 - a2 * p1) / (p2 - p1)
-
-            lambda1 = 1 / sqrt(p1)
-            lambda2 = 1 / sqrt(p2)
-            mu = 1 / sqrt(q)
-            # nu = 1 / sqrt(r)
-
-            b1 = beta1 / lambda1**6
-            b2 = beta2 / lambda2**6
-
-            c = gamma / (2 * (n-1) * mu**6)
-
-            a = 1 - 2*n*(b1+b2) - 4*binomial(n, 2) * c
-
         elif n == 3:
             p1 = 1
             p2 = fr(14, 5)
-
             q = fr(5, 2)
             r = 1
-
-            En = fr(25*n**2 - 165*n + 302, 972)
-            gamma = fr((n-1) * (19 - 5*n), 270)
-            delta = fr((n-1) * (n - 2), 108)
-
-            a1 = fr(23 - 5*n, 180) - gamma*q / 2
-            a2 = fr(9, 25) * En + fr(2, 175)
-            beta1 = (a1 - a2 * p2) / (p1 - p2)
-            beta2 = (a1 - a2 * p1) / (p2 - p1)
-
-            lambda1 = 1 / sqrt(p1)
-            lambda2 = 1 / sqrt(p2)
-            mu = 1 / sqrt(q)
-            nu = 1 / sqrt(r)
-
-            b1 = beta1 / lambda1**6
-            b2 = beta2 / lambda2**6
-
-            c = gamma / (2 * (n-1) * mu**6)
-            d = delta / (4 * binomial(n-1, 2) * nu**6)
-
-            a = 1 - 2*n*(b1+b2) - 4*binomial(n, 2) * c - 8*binomial(n, 3) * d
         elif n == 4:
             p1 = 1
             p2 = fr(112, 11)
-
             q = 5
             r = 2
-
-            En = fr(25*n**2 - 165*n + 302, 972)
-            gamma = fr((n-1) * (19 - 5*n), 270)
-            delta = fr((n-1) * (n - 2), 108)
-
-            a1 = fr(23 - 5*n, 180) - gamma*q / 2
-            a2 = fr(9, 25) * En + fr(2, 175)
-            beta1 = (a1 - a2 * p2) / (p1 - p2)
-            beta2 = (a1 - a2 * p1) / (p2 - p1)
-
-            lambda1 = 1 / sqrt(p1)
-            lambda2 = 1 / sqrt(p2)
-            mu = 1 / sqrt(q)
-            nu = 1 / sqrt(r)
-
-            b1 = beta1 / lambda1**6
-            b2 = beta2 / lambda2**6
-
-            c = gamma / (2 * (n-1) * mu**6)
-            d = delta / (4 * binomial(n-1, 2) * nu**6)
-
-            a = 1 - 2*n*(b1+b2) - 4*binomial(n, 2) * c - 8*binomial(n, 3) * d
         else:
             assert n >= 5
-            En = fr(25*n**2 - 165*n + 302, 972)
-
             p1 = 1
+            En = fr(25*n**2 - 165*n + 302, 972)
             p2 = 1 / (fr(3, 5) - fr(1, 35*En))
-
             q = fr(5, 3)
             r = fr(5, 3)
 
-            gamma = fr((n-1) * (19 - 5*n), 270)
-            delta = fr((n-1) * (n - 2), 108)
+        gamma = fr((n-1) * (19 - 5*n), 270)
+        delta = fr((n-1) * (n - 2), 108)
 
-            # a1 = fr(3, 5) * En
-            a1 = fr(23 - 5*n, 180) - gamma*q / 2
-            a2 = fr(9, 25) * En + fr(2, 175)
-            beta1 = (a1 - a2 * p2) / (p1 - p2)
-            beta2 = (a1 - a2 * p1) / (p2 - p1)
+        a1 = fr(23 - 5*n, 180) - gamma*q / 2
+        a2 = fr(35*n**2 - 231*n + 466, 3780)
+        beta1 = (a1 - a2 * p2) / (p1 - p2)
+        beta2 = (a1 - a2 * p1) / (p2 - p1)
 
-            lambda1 = 1 / sqrt(p1)
-            lambda2 = 1 / sqrt(p2)
-            mu = 1 / sqrt(q)
+        lambda1 = 1 / sqrt(p1)
+        lambda2 = 1 / sqrt(p2)
+        mu = 1 / sqrt(q)
+
+        b1 = beta1 / lambda1**6
+        b2 = beta2 / lambda2**6
+
+        c = gamma / (2 * (n-1) * mu**6)
+
+        a = 1 - 2*n*(b1+b2) - 4*binomial(n, 2) * c
+
+        if n > 2:
             nu = 1 / sqrt(r)
-
-            b1 = beta1 / lambda1**6
-            b2 = beta2 / lambda2**6
-
-            c = gamma / (2 * (n-1) * mu**6)
             d = delta / (4 * binomial(n-1, 2) * nu**6)
-
-            a = 1 - 2*n*(b1+b2) - 4*binomial(n, 2) * c - 8*binomial(n, 3) * d
+            a -= 8*binomial(n, 3) * d
 
         data = [
             (a, z(n)),

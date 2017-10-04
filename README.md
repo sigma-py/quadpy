@@ -612,7 +612,7 @@ quadpy.nball.integrate(
     - [Mustard-Lyness-Blatt](https://doi.org/10.1093/comjnl/6.1.75) (1963, degree 5)
     - [Thacher](https://dx.doi.org/10.1145/363872.363897) (1964, degree 2)
     - [Stroud](https://doi.org/10.1090/S0025-5718-1966-0191094-8) (1966, 4 schemes of degree 5)
-    - [Phillips](https://doi.org/10.1093/comjnl/10.3.297) (1967, degree 7, single precision)
+    - [Phillips](https://doi.org/10.1093/comjnl/10.3.297) (1967, degree 7)
     - [Stroud](https://dx.doi.org/10.2307/2004655) (1968, degree 5)
  * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1978, n >= 2, degree 5)
 
