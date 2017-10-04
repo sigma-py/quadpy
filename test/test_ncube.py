@@ -22,10 +22,9 @@ from helpers import check_degree
         'Cn 3-2', 'Cn 3-3', 'Cn 3-4', 'Cn 3-5', 'Cn 3-6',
         'Cn 5-2', 'Cn 5-3', 'Cn 5-4', 'Cn 5-5', 'Cn 5-6', 'Cn 5-7', 'Cn 5-8',
         'Cn 5-9',
+        'Cn 7-1',
         ]
        ]
-    #
-    + [(quadpy.ncube.Stroud(d, 'Cn 7-1'), 1.0e-7) for d in range(2, 7)]
     )
 def test_scheme(scheme, tol):
     n = scheme.dim
@@ -44,6 +43,6 @@ def test_scheme(scheme, tol):
 
 
 if __name__ == '__main__':
-    n_ = 5
-    scheme_ = quadpy.ncube.HammerStroud(n_, '2-n')
+    n_ = 4
+    scheme_ = quadpy.ncube.Stroud(n_, 'Cn 7-1')
     test_scheme(scheme_, 1.0e-14)
