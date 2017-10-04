@@ -3,7 +3,7 @@
 import numpy
 from sympy import sqrt, Rational as fr
 
-from .tools import integrate_monomial_over_unit_simplex
+from .helpers import integrate_monomial_over_unit_simplex
 from ..helpers import untangle, rd
 
 
