@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
-
 import numpy
 from sympy import sqrt, Rational as fr
 
