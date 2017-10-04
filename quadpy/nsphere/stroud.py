@@ -2,7 +2,7 @@
 #
 from __future__ import division
 
-import math
+from sympy import sqrt, Rational as fr
 
 from ..helpers import untangle, fsd, pm_array0, pm
 
@@ -22,26 +22,26 @@ class Stroud(object):
         if index == 'Un 3-1':
             self.degree = 3
             data = [
-                (0.5/n, fsd(n, (1.0, 1))),
+                (fr(1, 2*n), fsd(n, (1, 1))),
                 ]
             self.points, self.weights = untangle(data)
             self.weights *= integrate_monomial_over_unit_nsphere(n * [0])
         elif index == 'Un 3-2':
             self.degree = 3
             data = [
-                (0.5**n, pm(n, math.sqrt(1.0/n))),
+                (fr(1, 2**n), pm(n, sqrt(fr(1, n)))),
                 ]
             self.points, self.weights = untangle(data)
             self.weights *= integrate_monomial_over_unit_nsphere(n * [0])
         elif index == 'Un 5-1':
             self.degree = 5
 
-            B1 = (4.0 - n) / (2.0*n*(n+2))
-            B2 = 1.0 / n / (n+2)
+            B1 = fr(4-n, 2*n*(n+2))
+            B2 = fr(1, n * (n+2))
 
             data = [
-                (B1, fsd(n, (1.0, 1))),
-                (B2, fsd(n, (math.sqrt(0.5), 2))),
+                (B1, fsd(n, (1, 1))),
+                (B2, fsd(n, (sqrt(fr(1, 2)), 2))),
                 ]
 
             self.points, self.weights = untangle(data)
@@ -49,12 +49,12 @@ class Stroud(object):
         elif index == 'Un 5-2':
             self.degree = 5
 
-            B1 = 1.0 / n / (n+2)
-            B2 = n / 2**n / (n+2)
+            B1 = fr(1, n * (n+2))
+            B2 = fr(n, 2**n * (n+2))
 
             data = [
-                (B1, fsd(n, (1.0, 1))),
-                (B2, pm(n, math.sqrt(1.0/n))),
+                (B1, fsd(n, (1, 1))),
+                (B2, pm(n, sqrt(fr(1, n)))),
                 ]
 
             self.points, self.weights = untangle(data)
@@ -62,13 +62,13 @@ class Stroud(object):
         elif index == 'Un 5-3':
             self.degree = 5
 
-            s = math.sqrt(1.0 / (n+2))
+            s = sqrt(fr(1, n+2))
             B = [
-                2.0**(k-n) * (n+2) / n / (k+1) / (k+2)
+                fr(2**(k-n) * (n+2), n * (k+1) * (k+2))
                 for k in range(1, n+1)
                 ]
             r = [
-                math.sqrt((k+2) / (n+2))
+                sqrt(fr(k+2, n+2))
                 for k in range(1, n+1)
                 ]
             data = [
@@ -81,12 +81,12 @@ class Stroud(object):
         elif index == 'Un 5-4':
             self.degree = 5
 
-            s = math.sqrt(2*(n+2))
-            u = math.sqrt((n + 2 + (n-1)*s) / n / (n+2))
-            v = math.sqrt((n + 2 - s) / n / (n+2))
+            s = sqrt(2*(n+2))
+            u = sqrt((n + 2 + (n-1)*s) / n / (n+2))
+            v = sqrt((n + 2 - s) / n / (n+2))
 
             data = [
-                (1.0/2**n/n, fsd(n, (u, 1), (v, n-1))),
+                (fr(1, 2**n * n), fsd(n, (u, 1), (v, n-1))),
                 ]
 
             self.points, self.weights = untangle(data)
@@ -96,12 +96,12 @@ class Stroud(object):
         elif index == 'Un 7-2':
             self.degree = 7
 
-            A = -n**2 / 2.0**(n+3) / (n+2)
-            B = (n+4)**2 / 2.0**(n+3) / n / (n+2)
+            A = fr(-n**2, 2**(n+3) * (n+2))
+            B = fr((n+4)**2, 2**(n+3) * n * (n+2))
 
-            r = math.sqrt(1.0 / n)
-            s = math.sqrt(5.0 / (n+4))
-            t = math.sqrt(1.0 / (n+4))
+            r = sqrt(fr(1, n))
+            s = sqrt(fr(5, n+4))
+            t = sqrt(fr(1, n+4))
 
             data = [
                 (A, pm(n, r)),

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 #
 from __future__ import division
-import math
-import numpy
 
-from ..helpers import untangle, pm, fsd
+from sympy import sqrt, Rational as fr
+
 from .helpers import integrate_monomial_over_unit_nsphere
+from ..helpers import untangle, pm, fsd
 
 
 class Stroud1969(object):
@@ -22,22 +22,21 @@ class Stroud1969(object):
         self.dim = n
         self.degree = 11
 
-        plus_minus = numpy.array([+1, -1])
-        sqrt3 = math.sqrt(3.0)
+        sqrt3 = sqrt(3)
 
-        t = math.sqrt(1.0 / n)
-        r1, r2 = numpy.sqrt(
-                (n + 6 - plus_minus*4*sqrt3) / (n**2 + 12*n - 12)
-                )
-        s1, s2 = numpy.sqrt(
-                (7*n - 6 + plus_minus*4*(n-1)*sqrt3) / (n**2 + 12*n - 12)
-                )
-        u1, u2 = numpy.sqrt(
-                (n + 12 + plus_minus*8*sqrt3) / (n**2 + 24*n - 48)
-                )
-        v1, v2 = numpy.sqrt(
-                (7*n - 12 - plus_minus*4*(n-2)*sqrt3) / (n**2 + 24*n - 48)
-                )
+        t = sqrt(fr(1, n))
+        r1, r2 = [sqrt(
+            (n + 6 - p_m*4*sqrt3) / (n**2 + 12*n - 12)
+            ) for p_m in [+1, -1]]
+        s1, s2 = [sqrt(
+            (7*n - 6 + p_m*4*(n-1)*sqrt3) / (n**2 + 12*n - 12)
+            ) for p_m in [+1, -1]]
+        u1, u2 = [sqrt(
+            (n + 12 + p_m*8*sqrt3) / (n**2 + 24*n - 48)
+            ) for p_m in [+1, -1]]
+        v1, v2 = [sqrt(
+            (7*n - 12 - p_m*4*(n-2)*sqrt3) / (n**2 + 24*n - 48)
+            ) for p_m in [+1, -1]]
 
         A = {
             3: 9.0 / 70.0,
@@ -56,7 +55,7 @@ class Stroud1969(object):
             16: 0.758518518518e+2,
             }
         B1 = {
-            3: (122.0 + 9 * math.sqrt(3.0)) / 6720 * 8,
+            3: (122.0 + 9 * sqrt(3.0)) / 6720 * 8,
             4: 0.967270533860e-1,
             5: 0.638253880175e-1,
             6: 0.452340041459e-1,
@@ -72,7 +71,7 @@ class Stroud1969(object):
             16: 0.660813369775e-2,
             }
         B2 = {
-            3: (122.0 - 9 * math.sqrt(3.0)) / 6720 * 8,
+            3: (122.0 - 9 * sqrt(3.0)) / 6720 * 8,
             4: 0.514210947621e-1,
             5: +0.213579471658e-1,
             6: -0.108726067638,
@@ -117,22 +116,37 @@ class Stroud1969(object):
             16: 0.215128820597e-2,
             }
 
+        pts = [
+            pm(n, t),
+            fsd(n, (s1, 1), (r1, n-1)),
+            fsd(n, (s2, 1), (r2, n-1)),
+            ]
+
+        if n >= 4:
+            pts.append(
+                fsd(n, (v1, 2), (u1, n-2))
+                )
+        if n >= 5:
+            pts.append(
+               fsd(n, (v2, 2), (u2, n-2))
+               )
+
         data = [
-            (A[n], pm(n, t)),
-            (B1[n], fsd(n, (s1, 1), (r1, n-1))),
-            (B2[n], fsd(n, (s2, 1), (r2, n-1))),
+            (A[n], pts[0]),
+            (B1[n], pts[1]),
+            (B2[n], pts[2]),
             ]
         if n >= 4:
             data += [
-                (C1[n], fsd(n, (v1, 2), (u1, n-2)))
+                (C1[n], pts[3])
                 ]
         if n >= 5:
             data += [
-                (C2[n], fsd(n, (v2, 2), (u2, n-2)))
+                (C2[n], pts[4])
                 ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= integrate_monomial_over_unit_nsphere(n * [0])
-        self.weights /= 2.0**n
-
+        # TODO remove float
+        self.weights *= float(integrate_monomial_over_unit_nsphere(n * [0]))
+        self.weights /= 2**n
         return
