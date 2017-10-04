@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 #
 from __future__ import division
-from math import sqrt, factorial as fact
 
-from ..helpers import untangle, fsd
+from sympy import sqrt, factorial as fact, Rational as fr
+
 from .helpers import integrate_monomial_over_unit_nsphere
+from ..helpers import untangle, fsd
 
 
 class Dobrodeev1978(object):
@@ -83,18 +84,18 @@ class Dobrodeev1978(object):
 
 def _generate_i(n, i):
     L = fact(n) // fact(i) // fact(n-i) * 2**i
-    G = 1.0 / L
-    a = sqrt(3 / (n+2))
+    G = fr(1, L)
+    a = sqrt(fr(3, n+2))
     return G, a
 
 
 def _generate_jk(n, pm_type, j, k):
     M = fact(n) // fact(j) // fact(k) // fact(n-j-k) * 2**(j+k)
-    G = 1.0 / M
+    G = fr(1, M)
 
     t = 1 if pm_type == 'I' else -1
-    b = sqrt(1 / (j+k) * (1 + t * (k/j * sqrt(3*(j+k)/(n+2) - 1))))
-    c = sqrt(1 / (j+k) * (1 - t * (j/k * sqrt(3*(j+k)/(n+2) - 1))))
+    b = sqrt(fr(1, j+k) * (1 + t * (k/j * sqrt(3*(j+k)/(n+2) - 1))))
+    c = sqrt(fr(1, j+k) * (1 - t * (j/k * sqrt(3*(j+k)/(n+2) - 1))))
     return G, b, c
 
 
@@ -109,14 +110,19 @@ def _compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k):
     L = fact(n) // (fact(i) * fact(n-i)) * 2**i
     M = fact(n) // (fact(j) * fact(k) * fact(n-j-k)) * 2**(j+k)
     N = L + M
-    R = -(j+k-i) / i * I2**2/I0**2 + (j+k-1)/n * I4/I0 - (n-1)/n * I22/I0
-    H = 1/i * (
-        (j+k-i) * I2**2/I0**2 + (j+k)/n * ((i-1) * I4/I0 - (n-1)*I22/I0)
+    R = (
+      - fr(j+k-i, i) * I2**2/I0**2
+      + fr(j+k-1, n) * I4/I0
+      - fr(n-1, n) * I22/I0
+      )
+    H = fr(1, i) * (
+        + (j+k-i) * I2**2/I0**2
+        + fr(j+k, n) * ((i-1) * I4/I0 - (n-1)*I22/I0)
         )
     Q = L/M*R + H
 
-    G = 1/N
-    a = sqrt(n/i * I2/I0)
-    b = sqrt(n/(j+k) * (I2/I0 + t * sqrt(k/j*Q)))
-    c = sqrt(n/(j+k) * (I2/I0 - t * sqrt(j/k*Q)))
+    G = fr(1, N)
+    a = sqrt(fr(n, i) * I2/I0)
+    b = sqrt(fr(n, j+k) * (I2/I0 + t * sqrt(k/j*Q)))
+    c = sqrt(fr(n, j+k) * (I2/I0 - t * sqrt(j/k*Q)))
     return G, a, b, c
