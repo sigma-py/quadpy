@@ -5,6 +5,7 @@ from helpers import check_degree
 import numpy
 import pytest
 import quadpy
+from quadpy.nsimplex.helpers import integrate_monomial_over_unit_simplex
 import sympy
 
 
@@ -87,7 +88,7 @@ def test_scheme(scheme, tol):
         ])
     degree = check_degree(
             lambda poly: quadpy.triangle.integrate(poly, triangle, scheme),
-            quadpy.nsimplex.integrate_monomial_over_unit_simplex,
+            integrate_monomial_over_unit_simplex,
             lambda n: quadpy.helpers.partition(n, 2),
             scheme.degree + 1,
             tol=tol
@@ -132,6 +133,6 @@ def test_volume():
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.triangle.Stroud('T2 7-1')
+    scheme_ = quadpy.triangle.Papanicolopulos('fs', 1)
     test_scheme(scheme_, 1.0e-14)
     test_show(scheme_)

@@ -47,7 +47,6 @@ class Stroud(object):
             scheme = Stroud1969(3)
             self.degree = scheme.degree
             self.weights = scheme.weights
-            print(self.weights)
             self.weights /= 4 * pi
             self.points = scheme.points
             self.phi_theta = cartesian_to_spherical(self.points)

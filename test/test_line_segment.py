@@ -117,8 +117,21 @@ def test_show(scheme):
     return
 
 
+def test_integrate_split():
+    val = quadpy.line_segment.integrate_split(
+        lambda r: 0.5108/r**2 / numpy.sqrt(2*1.158 + 2/r - 0.5108**2/(2*r**2)),
+        0.15, 0.702, 100,
+        quadpy.line_segment.Trapezoidal()
+        )
+    reference = 0.961715
+    assert abs(val - reference) < 1.0e-3 * reference
+    return
+
+
 if __name__ == '__main__':
     scheme_ = quadpy.line_segment.Fejer2(20)
     # scheme_ = quadpy.line_segment.Midpoint()
     test_scheme(scheme_)
     test_show(scheme_)
+    # import matplotlib.pyplot as plt
+    # plt.savefig('demo.png', transparent=True)
