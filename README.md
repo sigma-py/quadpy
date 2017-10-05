@@ -68,7 +68,7 @@ and vector-valued functions.
 
 #### Line segments
 ```python
-val, error_estimate = quadpy.line_segment.adaptive_integrate(
+val, error_estimate = quadpy.line_segment.integrate_adaptive(
         lambda x: x * sin(5 * x),
         [0.0, pi],
         1.0e-10
@@ -106,7 +106,7 @@ tanh_sinh_lr(f_left, f_right, interval_length, tol)
 
 #### Triangles
 ```python
-val, error_estimate = quadpy.triangle.adaptive_integrate(
+val, error_estimate = quadpy.triangle.integrate_adaptive(
         lambda x: x[0] * sin(5 * x[1]),
         [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
         1.0e-10
