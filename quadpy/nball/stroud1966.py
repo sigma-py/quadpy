@@ -77,6 +77,10 @@ class Stroud1966(object):
 
             B = fr(1, 2**n * (n+1))
 
+            # The data is given symbolically, and for large n, those are
+            # thousands of points and weights. Converting them to float takes a
+            # long time. A better approach would be to be convert r, s, t
+            # first, and assemble the data afterwards.
             data = [
                 (B, combine(((+r, -r), 1), ((+s, -s), (n-1)))),
                 (B, pm(n, t)),
