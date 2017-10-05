@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import fs_r00, fs_rr0, z
+from sympy import Rational as fr
 
+from .helpers import fs_r00, fs_rr0, z
 from ..helpers import untangle
 
 
@@ -15,11 +16,11 @@ class AlbrechtCollatz(object):
     def __init__(self):
         self.degree = 3
         data = [
-            (1.0/4.0, z()),
-            (1.0/12.0, fs_r00(1.0)),
-            (1.0/48.0, fs_rr0(1.0)),
+            (fr(1, 4), z()),
+            (fr(1, 12), fs_r00(1)),
+            (fr(1, 48), fs_rr0(1)),
             ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= 8.0
+        self.weights *= 8
         return

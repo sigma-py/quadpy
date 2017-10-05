@@ -2,7 +2,7 @@
 #
 from __future__ import division
 
-from math import sqrt, pi
+from sympy import sqrt, pi, Rational as fr
 
 import numpy
 
@@ -21,32 +21,32 @@ class StroudSecrest(object):
         if index == 'I':
             self.degree = 2
             data = [
-                (1/(n+1), sqrt(0.5) * _nsimplex(n))
+                (fr(1, n+1), sqrt(fr(1, 2)) * _nsimplex(n))
                 ]
         elif index == 'II':
             self.degree = 3
-            nu = sqrt(n/2)
+            nu = sqrt(fr(n, 2))
             data = [
-                (1/(2*n), fsd(n, (nu, 1)))
+                (fr(1, 2*n), fsd(n, (nu, 1)))
                 ]
         elif index == 'III':
             self.degree = 3
-            nu = sqrt(0.5)
+            nu = sqrt(fr(1, 2))
             data = [
-                (1/(2**n), pm(n, nu))
+                (fr(1, 2**n), pm(n, nu))
                 ]
         else:
             assert index == 'IV'
             self.degree = 5
 
-            nu = sqrt((n+2) / 2)
-            xi = sqrt((n+2) / 4)
-            A = 2 / (n+2)
-            B = (4-n) / 2 / (n+2)**2
-            C = 1 / (n+2)**2
+            nu = sqrt(fr(n+2, 2))
+            xi = sqrt(fr(n+2, 4))
+            A = fr(2, n+2)
+            B = fr(4-n, 2 * (n+2)**2)
+            C = fr(1, (n+2)**2)
 
             data = [
-                (A, numpy.array([numpy.full(n, 0.0)])),
+                (A, numpy.full((1, n), 0)),
                 (B, fsd(n, (nu, 1))),
                 (C, fsd(n, (xi, 2))),
                 ]
@@ -59,16 +59,12 @@ class StroudSecrest(object):
 def _nsimplex(n):
     # construct the regular n-simplex points with 0 center
     return numpy.array([
-        numpy.concatenate([
-            -numpy.sqrt(
-                (n + 1) / (n+1-numpy.arange(i)) / (n-numpy.arange(i))
-                ),
-            [numpy.sqrt((n+1) * (n-i) / (n+1-i))],
-            numpy.zeros(n-i-1)
-            ])
+        [-sqrt(fr(n+1, (n+1-k) * (n-k))) for k in range(i)]
+        + [sqrt(fr((n+1) * (n-i), n+1-i))]
+        + (n-i-1) * [0]
         for i in range(n)
-        ] + [
-        -numpy.sqrt(
-            (n + 1) / (n+1-numpy.arange(n)) / (n-numpy.arange(n))
-            )
-        ])
+        ]
+        + [
+            [-sqrt(fr(n+1, (n+1-i) * (n-i))) for i in range(n)]
+        ]
+        )

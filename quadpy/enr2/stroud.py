@@ -2,9 +2,7 @@
 #
 from __future__ import division
 
-from math import sqrt, pi
-
-import numpy
+from sympy import sqrt, pi, Rational as fr
 
 from .stenger import Stenger
 from .stroud1967a import Stroud1967a
@@ -37,10 +35,10 @@ class Stroud(object):
         elif index == '5-3':
             self.degree = 5
 
-            r = sqrt((n+2) / 4)
-            s = sqrt((n+2) / 2 / (n-2))
-            A = 4 / (n+2)**2
-            B = (n-2)**2 / 2**n / (n+2)**2
+            r = sqrt(fr(n+2, 4))
+            s = sqrt(fr(n+2, 2*(n-2)))
+            A = fr(4, (n+2)**2)
+            B = fr((n-2)**2, 2**n * (n+2)**2)
 
             data = [
                 (A, fsd(n, (r, 1))),
@@ -52,17 +50,18 @@ class Stroud(object):
             # spherical product Lobatto
             self.degree = 5
 
-            B0 = 2 / (n+2)
+            B0 = fr(2, (n+2))
             data = [
-                (B0, numpy.full((1, n), 0.0)),
+                (B0, [n*[0]]),
                 ]
             for k in range(1, n+1):
-                rk = sqrt((k+2) / 2)
-                s = sqrt(1/2)
+                rk = sqrt(fr(k+2, 2))
+                s = sqrt(fr(1, 2))
                 arr = [rk] + (n-k) * [s]
-                idx = numpy.arange(k-1, n)
+                idx = list(range(k-1, n))
+                alpha = fr(2**(k-n), (k+1) * (k+2))
                 data += [
-                    (2**(k-n) / (k+1) / (k+2), pm_array0(n, arr, idx))
+                    (alpha, pm_array0(n, arr, idx))
                     ]
 
             self.points, self.weights = untangle(data)
@@ -75,11 +74,11 @@ class Stroud(object):
             # r is complex-valued for n >= 3
             r = sqrt((n + 2 + p_m * (n-1) * sqrt(2*(n+2))) / (2*n))
             s = sqrt((n + 2 - p_m * sqrt(2*(n+2))) / (2*n))
-            A = 2 / (n+2)
-            B = 1 / 2**n / (n+2)
+            A = fr(2, n+2)
+            B = fr(1, 2**n * (n+2))
 
             data = [
-                (A, numpy.full((1, n), 0.0)),
+                (A, [n*[0]]),
                 (B, fsd(n, (r, 1), (s, n-1))),
                 ]
 
@@ -94,7 +93,7 @@ class Stroud(object):
             r = sqrt((n - sqrt2 + (n-1) * sqrt2n1) / (2*n))
             s = sqrt((n - sqrt2 - sqrt2n1) / (2*n))
             t = sqrt((1 + sqrt2) / 2)
-            A = 1 / 2**n / (n+1)
+            A = fr(1, 2**n * (n+1))
 
             data = [
                 (A, fsd(n, (r, 1), (s, n-1))),
@@ -120,7 +119,7 @@ class Stroud(object):
         elif index == '11-1a':
             self.set_data(Stenger(n, 11, 'a'))
         else:
-            assert index == '11-1b'
+            assert index == '11-1b', 'Illegal index \'{}\''.format(index)
             self.set_data(Stenger(n, 11, 'b'))
         return
 

@@ -4,13 +4,13 @@ import quadpy
 
 
 def test_simple():
-    val, _ = quadpy.line_segment.adaptive_integrate(
+    val, _ = quadpy.line_segment.integrate_adaptive(
             sin, [0.0, pi], 1.0e-10
             )
     exact = 2.0
     assert abs(exact - val) < 1.0e-10
 
-    val, _ = quadpy.line_segment.adaptive_integrate(
+    val, _ = quadpy.line_segment.integrate_adaptive(
             lambda x: x * sin(x),
             [0.0, pi],
             1.0e-10
@@ -21,7 +21,7 @@ def test_simple():
 
 @pytest.mark.parametrize('k', range(1, 6))
 def test_vector_valued(k):
-    val, _ = quadpy.line_segment.adaptive_integrate(
+    val, _ = quadpy.line_segment.integrate_adaptive(
             lambda x: array([x * sin(k * x), x * cos(k * x)]),
             [0.0, pi],
             1.0e-10
@@ -35,7 +35,7 @@ def test_vector_valued(k):
 
 def test_predefined_intervals():
     k = 5
-    val, _ = quadpy.line_segment.adaptive_integrate(
+    val, _ = quadpy.line_segment.integrate_adaptive(
             lambda x: x * sin(k * x),
             [
                 [0.0, 0.3*pi, 0.5*pi],
@@ -49,7 +49,7 @@ def test_predefined_intervals():
 
 @pytest.mark.parametrize('k', range(4, 12))
 def test_sink(k):
-    val, _ = quadpy.line_segment.adaptive_integrate(
+    val, _ = quadpy.line_segment.integrate_adaptive(
             lambda x: sin(k*x),
             [0.0, pi],
             1.0e-10

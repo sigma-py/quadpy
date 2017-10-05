@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
+from sympy import sqrt, Rational as fr
 
 from .albrecht_collatz import AlbrechtCollatz
 from .hammer_stroud import HammerStroud
@@ -24,14 +24,14 @@ class Stroud(object):
     Prentice Hall, 1971.
     '''
     def __init__(self, index):
-        reference_volume = 8.0
+        reference_volume = 8
         if index == 'C3 3-1':
             self.set_data(Tyler(1))
         elif index == 'C3 3-2':
             # product Gauss
             self.degree = 3
             data = [
-                (1.0/8.0, pm_rrr(numpy.sqrt(1.0/3.0)))
+                (fr(1, 8), pm_rrr(sqrt(fr(1, 3))))
                 ]
             self.points, self.weights = untangle(data)
             self.weights *= reference_volume

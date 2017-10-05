@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
+from sympy import sqrt, Rational as fr
 
 from . import hammer_stroud
 from . import stenger
@@ -29,9 +29,9 @@ class Stroud(object):
             self.set_data(hammer_stroud.HammerStroud(n, '11-n', alpha=0.0))
         elif index == 'Sn 3-2':
             self.degree = 3
-            r = numpy.sqrt(1.0 / (n+2))
+            r = sqrt(fr(1, n+2))
             data = [
-                (0.5**n, pm(n, r))
+                (fr(1, 2**n), pm(n, r))
                 ]
             self.points, self.weights = untangle(data)
             self.weights *= volume_unit_ball(n)

@@ -5,6 +5,7 @@ Your one-stop shop for numerical integration in Python.
 [![CircleCI](https://img.shields.io/circleci/project/github/nschloe/quadpy/master.svg)](https://circleci.com/gh/nschloe/quadpy/tree/master)
 [![codecov](https://codecov.io/gh/nschloe/quadpy/branch/master/graph/badge.svg)](https://codecov.io/gh/nschloe/quadpy)
 [![PyPi Version](https://img.shields.io/pypi/v/quadpy.svg)](https://pypi.python.org/pypi/quadpy)
+[![awesome](https://img.shields.io/badge/awesome-yes-brightgreen.svg)](https://img.shields.io/badge/awesome-yes-brightgreen.svg)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?style=social&label=Stars&maxAge=2592000)](https://github.com/nschloe/quadpy)
 
 Hundreds of numerical integration schemes for
@@ -67,7 +68,7 @@ and vector-valued functions.
 
 #### Line segments
 ```python
-val, error_estimate = quadpy.line_segment.adaptive_integrate(
+val, error_estimate = quadpy.line_segment.integrate_adaptive(
         lambda x: x * sin(5 * x),
         [0.0, pi],
         1.0e-10
@@ -105,7 +106,7 @@ tanh_sinh_lr(f_left, f_right, interval_length, tol)
 
 #### Triangles
 ```python
-val, error_estimate = quadpy.triangle.adaptive_integrate(
+val, error_estimate = quadpy.triangle.integrate_adaptive(
         lambda x: x[0] * sin(5 * x[1]),
         [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
         1.0e-10
@@ -542,6 +543,7 @@ val = quadpy.e2r2.integrate(
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y):
    - [Lauffer](https://doi.org/10.1007/BF01900222) (1955, 5 schemes up to degree 5)
    - [Hammer-Stroud](https://doi.org/10.2307/2002484) (1956, 3 schemes up to degree 3)
+   - [Stroud](https://doi.org/10.2307/2002945) (1964, degree 3)
    - [Stroud](https://doi.org/10.1007/BF02165227) (1966, 7 schemes of degree 3)
    - [Stroud](https://doi.org/10.1137/0706009) (1969, degree 5)
  * [Grundmann-Möller](http://dx.doi.org/10.1137/0715019) (1978, arbitrary degree)
@@ -612,7 +614,7 @@ quadpy.nball.integrate(
     - [Mustard-Lyness-Blatt](https://doi.org/10.1093/comjnl/6.1.75) (1963, degree 5)
     - [Thacher](https://dx.doi.org/10.1145/363872.363897) (1964, degree 2)
     - [Stroud](https://doi.org/10.1090/S0025-5718-1966-0191094-8) (1966, 4 schemes of degree 5)
-    - [Phillips](https://doi.org/10.1093/comjnl/10.3.297) (1967, degree 7, single precision)
+    - [Phillips](https://doi.org/10.1093/comjnl/10.3.297) (1967, degree 7)
     - [Stroud](https://dx.doi.org/10.2307/2004655) (1968, degree 5)
  * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1978, n >= 2, degree 5)
 

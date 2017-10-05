@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 #
+from sympy import Rational as fr
+
 from ..helpers import untangle, z, pm
 
 
@@ -12,13 +14,13 @@ class Ewing(object):
     <https://dx.doi.org/dx.doi.org/10.2307/2303604>.
     '''
     def __init__(self, n):
-        reference_volume = 2.0**n
         self.degree = 3
         data = [
-            (2.0/3.0, z(n)),
-            (1.0/3.0 / 2**n, pm(n, 1.0)),
+            (fr(2, 3), z(n)),
+            (fr(1, 3 * 2**n), pm(n, 1)),
             ]
 
         self.points, self.weights = untangle(data)
+        reference_volume = 2**n
         self.weights *= reference_volume
         return

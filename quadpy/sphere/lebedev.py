@@ -19,7 +19,7 @@ class Lebedev(object):
     <https://en.wikipedia.org/wiki/Lebedev_quadrature>
     <https://people.sc.fsu.edu/~jburkardt/datasets/sphere_lebedev_rule/sphere_lebedev_rule.html>
     '''
-    # It's a little unclear how to beset store the original data. By Burkhardt,
+    # It's a little unclear how to best store the original data. By Burkhardt,
     # it is given in terms of phi and theta, however those angles are not well
     # suited to express the symmetry. For that, this code converts the
     # spherical coordinates into Cartesians, applies the symmetry

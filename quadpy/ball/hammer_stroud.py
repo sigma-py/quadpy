@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from math import pi, sqrt
+from sympy import pi, sqrt, Rational as fr
 
 from ..helpers import untangle, fsd, pm, z
 
@@ -17,29 +17,29 @@ class HammerStroud(object):
         if index == '11-3':
             self.degree = 3
             data = [
-                (1.0/6.0, fsd(3, (sqrt(0.6), 1))),
+                (fr(1, 6), fsd(3, (sqrt(fr(3, 5)), 1))),
                 ]
         elif index == '12-3':
             self.degree = 5
-            alpha = sqrt(3.0/7.0)
+            alpha = sqrt(fr(3, 7))
             data = [
-                (1.0/15.0, z(3)),
-                (7.0/90.0, fsd(3, (alpha, 1))),
-                (7.0/180.0, fsd(3, (alpha, 2))),
+                (fr(1, 15), z(3)),
+                (fr(7, 90), fsd(3, (alpha, 1))),
+                (fr(7, 180), fsd(3, (alpha, 2))),
                 ]
         elif index in ['14-3a', '14-3b']:
             self.degree = 5
 
             t = 1 if index == '14-3a' else -1
 
-            sqrt14 = sqrt(14.0)
+            sqrt14 = sqrt(14)
 
             # ERR The article falsely gives 0.50824... instead of 0.050824...
-            a1 = 1.0/125.0 * (9 + t * 2*sqrt14)
-            c1 = (71.0 - t * 12 * sqrt14) / 1000.0
+            a1 = fr(1, 125) * (9 + t * 2*sqrt14)
+            c1 = (71 - t * 12 * sqrt14) / 1000
 
-            nu = sqrt((7.0 - t * sqrt14) / 7.0)
-            eta1 = sqrt(5.0 / (21.0 - t * 2*sqrt14))
+            nu = sqrt((7 - t * sqrt14) / 7)
+            eta1 = sqrt(5 / (21 - t * 2*sqrt14))
 
             data = [
                 (a1, fsd(3, (nu, 1))),
@@ -53,16 +53,16 @@ class HammerStroud(object):
 
             t = 1 if index == '15-3a' else - 1
 
-            sqrt30 = sqrt(30.0)
-            nu2 = (45.0 - t * sqrt30)/57.0
-            xi2 = (18.0 + t * sqrt30)/42.0
-            eta2 = 7.0 / (27.0 + t * 2*sqrt30)
+            sqrt30 = sqrt(30)
+            nu2 = (45 - t * sqrt30) / 57
+            xi2 = (18 + t * sqrt30) / 42
+            eta2 = 7 / (27 + t * 2*sqrt30)
 
             # The extract expressions are from Stroud's book.
-            a1 = 1.0 / 63.0 / nu2**3
-            b1 = 1.0 / 630.0 / xi2**3
-            c1 = 1.0 / 2520.0 / eta2**3
-            a0 = 1.0 - 6*a1 - 12*b1 - 8*c1
+            a1 = 1 / nu2**3 / 63
+            b1 = 1 / xi2**3 / 630
+            c1 = 1 / eta2**3 / 2520
+            a0 = 1 - 6*a1 - 12*b1 - 8*c1
 
             data = [
                 (a0, z(3)),
@@ -71,5 +71,5 @@ class HammerStroud(object):
                 (c1, pm(3, sqrt(eta2))),
                 ]
         self.points, self.weights = untangle(data)
-        self.weights *= 4.0/3.0 * pi
+        self.weights *= fr(4, 3) * pi
         return

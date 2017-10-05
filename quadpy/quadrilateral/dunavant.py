@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
+from sympy import sqrt, Rational as fr
 
 from ..helpers import untangle
 
@@ -11,7 +12,8 @@ class Dunavant(object):
     Economical symmetrical quadrature rules for complete polynomials over a
     square domain,
     Numerical Methods in Engineering, Volume 21, Issue 10, October 1985,
-    Pages 1777–1784.
+    Pages 1777–1784,
+    <https://dx.doi.org/10.1002/nme.1620211004>.
 
     Abstract:
     It is of interest in numerical analysis to develop symmetrical quadrature
@@ -24,20 +26,20 @@ class Dunavant(object):
     def __init__(self, index):
         if index == 0:
             self.degree = 1
-            data = [(4.0, numpy.array([[0.0, 0.0]]))]
+            data = [(4, numpy.array([[0, 0]]))]
         elif index == 1:
             self.degree = 3
-            data = [(1.0, _symm_s(numpy.sqrt(1.0/3.0)))]
+            data = [(1, _symm_s(sqrt(fr(1, 3))))]
         elif index == 2:
             self.degree = 5
             data = [
-                (40.0/49.0, _symm_r_0(numpy.sqrt(7.0/15.0))),
-                (9.0/49.0, _symm_s(numpy.sqrt(7.0/9.0))),
+                (fr(40, 49), _symm_r_0(sqrt(fr(7, 15)))),
+                (fr(9, 49), _symm_s(sqrt(fr(7, 9)))),
                 ]
         elif index == 3:
             self.degree = 7
             data = [
-                (98.0 / 405.0, _symm_r_0(numpy.sqrt(6.0/7.0))),
+                (fr(98, 405), _symm_r_0(sqrt(fr(6, 7)))),
                 (0.237431774690630, _symm_s(0.805979782918599)),
                 (0.520592916667394, _symm_s(0.380554433208316)),
                 ]
@@ -139,15 +141,15 @@ class Dunavant(object):
 
 
 def _c():
-    return numpy.array([[0.0, 0.0]])
+    return numpy.array([[0, 0]])
 
 
 def _symm_r_0(r):
     return numpy.array([
-        [+r, 0.0],
-        [-r, 0.0],
-        [0.0, +r],
-        [0.0, -r],
+        [+r, 0],
+        [-r, 0],
+        [0, +r],
+        [0, -r],
         ])
 
 

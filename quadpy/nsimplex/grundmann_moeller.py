@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from math import factorial
 import numpy
+from sympy import Rational as fr, factorial as fact
 
 from ..helpers import partition, untangle
 
@@ -26,14 +26,16 @@ class GrundmannMoeller(object):
 
         data = [
             (
-                (-1)**i * 2.0**(-2.0*s) * (d + n - 2*i)**d
-                / factorial(i) / factorial(d + n - i),
-                (2.0*numpy.array(partition(s-i, n+1)) + 1.0) / (d+n-2*i)
+                fr((-1)**i * 2**(-2*s) * (d+n-2*i)**d, fact(i) * fact(d+n-i)),
+                numpy.array([
+                    [fr(2*p + 1, d+n-2*i) for p in part]
+                    for part in partition(s-i, n+1)
+                    ])
             )
             for i in range(s+1)
             ]
 
         self.bary, self.weights = untangle(data)
-        self.weights /= numpy.sum(self.weights)
+        self.weights /= sum(self.weights)
         self.points = self.bary[:, 1:]
         return

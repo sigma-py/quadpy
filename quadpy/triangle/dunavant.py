@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 #
+from sympy import Rational
+
 from .helpers import _s3, _s21, _s111 as fs
 
 from ..helpers import untangle
@@ -21,15 +23,15 @@ class Dunavant(object):
         self.name = 'Dunavant(%d)' % index
         if index == 1:
             self.degree = 1
-            data = [(1.0, _s3())]
+            data = [(1, _s3())]
         elif index == 2:
             self.degree = 2
-            data = [(1.0/3.0, _s21(1.0/6.0))]
+            data = [(Rational(1, 3), _s21(Rational(1, 6)))]
         elif index == 3:
             self.degree = 3
             data = [
-                (-0.5625, _s3()),
-                (25.0/48.0, _s21(0.2)),
+                (-Rational(9, 16), _s3()),
+                (Rational(25, 48), _s21(Rational(1, 5))),
                 ]
         elif index == 4:
             self.degree = 4

@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
+from sympy import sqrt, Rational as fr
 
 from .helpers import _s2, _s11
-
 from ..helpers import untangle, fsd, z
 
 
@@ -17,22 +16,22 @@ class Stroud1968(object):
     <https://dx.doi.org/10.2307/2004655>.
     '''
     def __init__(self, n):
-        reference_volume = 2.0**n
         self.degree = 5
-        r = numpy.sqrt(7.0 / 15.0)
-        s = numpy.sqrt((7.0 + numpy.sqrt(24.0)) / 15.0)
-        t = numpy.sqrt((7.0 - numpy.sqrt(24.0)) / 15.0)
+
+        r = sqrt(fr(7, 15))
+        s, t = [sqrt((7 + i*sqrt(24)) / 15) for i in [+1, -1]]
         data = [
-            ((5*n**2 - 15*n+14)/14.0, z(n)),
-            (25.0/168.0, _s2(n, +r)),
-            (25.0/168.0, _s2(n, -r)),
-            (-25*(n-2)/168.0, fsd(n, (r, 1))),
-            (5.0/48.0, _s11(n, +s, -t)),
-            (5.0/48.0, _s11(n, -s, +t)),
-            (-5*(n-2)/48.0, fsd(n, (s, 1))),
-            (-5*(n-2)/48.0, fsd(n, (t, 1))),
+            (fr(5*n**2 - 15*n+14, 14), z(n)),
+            (fr(25, 168), _s2(n, +r)),
+            (fr(25, 168), _s2(n, -r)),
+            (fr(-25*(n-2), 168), fsd(n, (r, 1))),
+            (fr(5, 48), _s11(n, +s, -t)),
+            (fr(5, 48), _s11(n, -s, +t)),
+            (fr(-5*(n-2), 48), fsd(n, (s, 1))),
+            (fr(-5*(n-2), 48), fsd(n, (t, 1))),
             ]
 
         self.points, self.weights = untangle(data)
+        reference_volume = 2**n
         self.weights *= reference_volume
         return

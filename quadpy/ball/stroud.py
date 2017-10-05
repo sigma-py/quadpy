@@ -4,6 +4,7 @@ from __future__ import division
 
 import numpy
 import orthopy
+from sympy import sqrt, pi, Rational as fr
 
 from .ditkin import Ditkin
 from .hammer_stroud import HammerStroud
@@ -39,38 +40,30 @@ class Stroud(object):
             # Spherical product Gauss formula.
             self.degree = 7
 
-            # Stroud only gives decimals, sophistacated guesswork gives the
+            # Stroud only gives decimals, sophisticated guesswork gives the
             # analytical expressions.
-            plus_minus = numpy.array([+1, -1])
 
-            rho = numpy.empty(4)
             # 0.9061798459, 0.5384691101
-            rho[3], rho[2] = \
-                numpy.sqrt((35.0 + plus_minus * 2*numpy.sqrt(70.0)) / 63.0)
-            rho[0], rho[1] = -rho[3], -rho[2]
+            alpha, beta = [sqrt((35 + t * 2*sqrt(70)) / 63) for t in [+1, -1]]
+            rho = numpy.array([-alpha, -beta, beta, alpha])
 
-            u = numpy.empty(4)
             # 0.8611363116, 0.3399810436
-            u[3], u[2] = \
-                numpy.sqrt((15.0 + plus_minus * 2*numpy.sqrt(30.0)) / 35.0)
-            u[0], u[1] = -u[3], -u[2]
+            alpha, beta = [sqrt((15 + t * 2*sqrt(30)) / 35) for t in [+1, -1]]
+            u = numpy.array([-alpha, -beta, beta, alpha])
 
-            v = numpy.empty(4)
             # 0.9238795325, 0.3826834324
-            v[3], v[2] = numpy.sqrt((2 + plus_minus * numpy.sqrt(2.0)) / 4.0)
-            v[0], v[1] = -v[3], -v[2]
+            alpha, beta = [sqrt((2 + t * sqrt(2)) / 4) for t in [+1, -1]]
+            v = numpy.array([-alpha, -beta, beta, alpha])
 
             # 0.1945553342, 0.1387779991
-            A = numpy.empty(4)
-            A[0], A[1] = (50.0 + plus_minus * numpy.sqrt(70.0)) / 300.0
-            A[2], A[3] = A[1], A[0]
+            alpha, beta = [(50 + t * sqrt(70)) / 300 for t in [+1, -1]]
+            A = numpy.array([alpha, beta, beta, alpha])
 
             # 0.3478548451, 0.6521451549
-            B = numpy.empty(4)
-            B[0], B[1] = (18.0 - plus_minus * numpy.sqrt(30.0)) / 36.0
-            B[2], B[3] = B[1], B[0]
+            alpha, beta = [(18 - t * sqrt(30)) / 36 for t in [+1, -1]]
+            B = numpy.array([alpha, beta, beta, alpha])
 
-            C = numpy.full(4, numpy.pi / 4.0)
+            C = numpy.full(4, pi/4)
 
             def outer3(a, b, c):
                 '''Given 3 1-dimensional vectors a, b, c, the output is of
@@ -80,9 +73,10 @@ class Stroud(object):
                 '''
                 return numpy.multiply.outer(numpy.multiply.outer(a, b), c)
 
-            r = outer3(rho, numpy.sqrt(1.0 - u**2), numpy.sqrt(1.0 - v**2))
-            s = outer3(rho, numpy.sqrt(1.0 - u**2), v)
-            t = outer3(rho, u, numpy.ones(4))
+            vsqrt = numpy.vectorize(sqrt)
+            r = outer3(rho, vsqrt(1 - u**2), vsqrt(1 - v**2))
+            s = outer3(rho, vsqrt(1 - u**2), v)
+            t = outer3(rho, u, 4 * [1])
 
             data = []
             for i in range(4):
@@ -102,19 +96,31 @@ class Stroud(object):
             # Get the moments corresponding to the Legendre polynomials and the
             # weight function omega(x) = x^2:
             #
-            #                                        / 2/3   if k == 0,
-            #    int_{-1}^{+1} |x^alpha| P_k(x) dx ={  8/45  if k == 2,
-            #                                        \ 0     otherwise.
+            #                                    / 2/3   if k == 0,
+            #    int_{-1}^{+1} |x^2| P_k(x) dx ={  8/45  if k == 2,
+            #                                    \ 0     otherwise.
             #
             # In this case, the recurrence coefficients can be determined
             # analytically.
             n = 8
-            alpha = numpy.zeros(n)
+            alpha = numpy.full(n, fr(0))
             k = numpy.arange(n)
-            beta = numpy.empty(n)
-            beta[0] = 2/3
-            beta[1::2] = (k[1::2]+2)**2 / ((2*k[1::2]+2)**2 - 1)
-            beta[2::2] = k[2::2]**2 / ((2*k[2::2]+2)**2 - 1)
+            beta = numpy.full(n, fr(0))
+            beta[0] = fr(2, 3)
+            # beta[1::2] = fr((k[1::2]+2)**2, ((2*k[1::2]+2)**2 - 1))
+            for k in range(1, n, 2):
+                beta[k] = fr((k+2)**2, (2*k+2)**2 - 1)
+            # beta[2::2] = fr(k[2::2]**2, ((2*k[2::2]+2)**2 - 1))
+            for k in range(2, n, 2):
+                beta[k] = fr(k**2, (2*k+2)**2 - 1)
+
+            # symbolic computation of the points and weights takes 4orever.
+            # Keep an eye on
+            # <https://math.stackexchange.com/questions/2450401/solve-small-symmetric-triadiagonal-eigenvalue-problem-symbolically>
+            # for a better algorithm to be implemented in orthopy.
+            flt = numpy.vectorize(float)
+            alpha = flt(alpha)
+            beta = flt(beta)
             points, weights = orthopy.schemes.custom(alpha, beta, mode='numpy')
 
             r = points[-4:]

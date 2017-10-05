@@ -55,7 +55,7 @@ class CoolsHaegemans1988(object):
 
 
 def _s1():
-    return numpy.array([[0.0, 0.0]])
+    return numpy.array([[0, 0]])
 
 
 def _s4(a, b):

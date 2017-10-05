@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import fs_r00, pm_rrr, z
+from sympy import Rational as fr
 
+from .helpers import fs_r00, pm_rrr, z
 from ..helpers import untangle
 
 
@@ -16,18 +17,18 @@ class Tyler(object):
         if index == 1:
             self.degree = 3
             data = [
-                (1.0/6.0, fs_r00(1.0)),
+                (fr(1, 6), fs_r00(1)),
                 ]
         else:
             assert index == 2
             self.degree = 5
             data = [
-                (-62.0/45.0, z()),
-                (16.0/45.0, fs_r00(0.5)),
-                (1.0/45.0, fs_r00(1.0)),
-                (1.0/72.0, pm_rrr(1.0)),
+                (-fr(62, 45), z()),
+                (fr(16, 45), fs_r00(fr(1, 2))),
+                (fr(1, 45), fs_r00(1)),
+                (fr(1, 72), pm_rrr(1)),
                 ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= 8.0
+        self.weights *= 8
         return

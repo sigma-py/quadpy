@@ -5,30 +5,30 @@ import numpy
 
 
 def z(n):
-    return numpy.zeros((1, n))
+    return numpy.zeros((1, n), dtype=int)
 
 
 def rd(n, items):
-    '''Items is an array of 2-tuples of type (value, number). This method
+    '''Items is an array of 2-tuples of type (value, count). This method
     returns all all permutations of
 
     [value1, value1, value2, 0, ..., 0]
 
-    of length n, where value_i occurs number_i times.
+    of length n, where value_i occurs count_i times.
     '''
-    sum_numbers = 0
+    sum_counts = 0
     for item in items:
-        _, number = item
-        assert number > 0
-        sum_numbers += number
-    assert 0 <= sum_numbers <= n
+        _, count = item
+        assert count > 0
+        sum_counts += count
+    assert 0 <= sum_counts <= n
 
     elems = [
         ((item[0],), item[1])
         for item in items
         ]
     elems += [
-        ((0.0,), n-sum_numbers)
+        ((0,), n-sum_counts)
         ]
 
     return combine(*elems)
@@ -43,7 +43,7 @@ def fsd(n, *tuples):
     total_count = sum([item[1] for item in tuples])
     assert total_count <= n
     pm_tuples += [
-        ((0.0,), n - total_count)
+        ((0,), n - total_count)
         ]
     return combine(*pm_tuples)
 
@@ -59,12 +59,12 @@ def fs_array(v):
 def combine(*elems):
     '''Given an input array with lists of options, e.g.,
 
-    ((+r, -r), 2), ((+s, -s), 2), ((0.0,), 1)
+    ((+r, -r), 2), ((+s, -s), 2), ((0,), 1)
 
     this methods returns all combinations, i.e.,
 
-    (+r, 0.0, -s, +r, +s),
-    (0.0, -s, -r, +r, +s),
+    (+r, 0, -s, +r, +s),
+    (0, -s, -r, +r, +s),
     ...
     '''
     # https://stackoverflow.com/a/45321972/353337
@@ -112,7 +112,7 @@ def pm_array0(n, v, idx):
     length n at indices idx with the rest filled up with zeros.
     '''
     pm_v = pm_array(v)
-    out = numpy.zeros((n, len(pm_v)))
+    out = numpy.zeros((n, len(pm_v)), dtype=pm_v.dtype)
     out[idx] = pm_v.T
     return out.T
 
@@ -132,7 +132,7 @@ def pm_roll(n, v):
 
     pm_v = pm_array(v)
 
-    r0 = numpy.zeros((len(pm_v), n))
+    r0 = numpy.zeros((len(pm_v), n), dtype=pm_v.dtype)
     r0[:, :k] = pm_v
 
     return numpy.concatenate([

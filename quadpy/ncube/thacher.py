@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
+from sympy import sqrt
 
 from .helpers import _s
-
 from ..helpers import untangle
 
 
@@ -25,15 +24,15 @@ class Thacher(object):
     achieve second-degree accuracy.
     '''
     def __init__(self, n):
-        reference_volume = 2.0**n
         self.degree = 2
-        r = numpy.sqrt(3.0) / 6.0
+        r = sqrt(3) / 6
         data = [
-            (1.0, numpy.array([numpy.full(n, 2*r)])),
-            (+r, _s(n, -1.0, r)),
-            (-r, _s(n, +1.0, r)),
+            (1.0, [n * [2*r]]),
+            (+r, _s(n, -1, r)),
+            (-r, _s(n, +1, r)),
             ]
 
         self.points, self.weights = untangle(data)
+        reference_volume = 2**n
         self.weights *= reference_volume
         return

@@ -10,9 +10,9 @@ from helpers import check_degree
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadpy.nball.Dobrodeev1970(n) for n in range(3, 10)]
+    [quadpy.nball.Dobrodeev1970(n) for n in range(3, 9)]
     + [quadpy.nball.Dobrodeev1978(n) for n in range(2, 7)]
-    + [quadpy.nball.Stroud(dim, index) for dim in range(2, 10) for index in [
+    + [quadpy.nball.Stroud(dim, index) for dim in range(2, 9) for index in [
         'Sn 2-1',
         'Sn 3-1', 'Sn 3-2',
         'Sn 5-2', 'Sn 5-3', 'Sn 5-4', 'Sn 5-5', 'Sn 5-6',
@@ -41,7 +41,7 @@ def test_scheme(scheme):
     tol = 1.0e-14
     n = scheme.dim
     center = numpy.zeros(n)
-    radius = 1.0
+    radius = 1
     degree = check_degree(
             lambda poly: quadpy.nball.integrate(poly, center, radius, scheme),
             integrate_monomial_over_unit_nball,
@@ -55,6 +55,6 @@ def test_scheme(scheme):
 
 
 if __name__ == '__main__':
-    n_ = 5
-    scheme_ = quadpy.nball.Stroud(n_, 'Sn 11-1a')
+    n_ = 3
+    scheme_ = quadpy.nball.Dobrodeev1970(n_)
     test_scheme(scheme_)

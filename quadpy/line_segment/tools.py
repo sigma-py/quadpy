@@ -21,6 +21,19 @@ def integrate(f, interval, scheme, sumfun=helpers.kahan_sum):
         )
 
 
+# pylint: disable=too-many-arguments
+def integrate_split(f, a, b, n, scheme, sumfun=helpers.kahan_sum):
+    '''Integrates f between a and b with n subintervals.
+    '''
+    # prepare the intervals
+    x = numpy.linspace(a, b, n+1)
+    intervals = numpy.expand_dims(numpy.stack([x[:-1], x[1:]]), axis=-1)
+    # integrate
+    out = integrate(f, intervals, scheme, sumfun=sumfun)[0]
+    # sum over the intervals
+    return sumfun(out)
+
+
 def _numpy_all_except(a, axis=-1):
     axes = numpy.arange(a.ndim)
     axes = numpy.delete(axes, axis)
@@ -29,7 +42,7 @@ def _numpy_all_except(a, axis=-1):
 
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-locals
-def adaptive_integrate(
+def integrate_adaptive(
         f, intervals, eps,
         kronrod_degree=7,
         minimum_interval_length=None,

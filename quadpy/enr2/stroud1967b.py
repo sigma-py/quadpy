@@ -2,9 +2,8 @@
 #
 from __future__ import division
 
-import math
-
 import numpy
+from sympy import sqrt, Rational as fr, pi, gamma
 
 from ..helpers import untangle, fsd, pm
 from .. import nsphere
@@ -34,38 +33,40 @@ class Stroud1967b(object):
 
             p_m = +1 if index == '2a' else -1
 
-            sqrt38n = math.sqrt(3*(8-n))
+            sqrt38n = sqrt(3*(8-n))
 
             r2 = (3 * (8-n) - p_m * (n-2) * sqrt38n) / 2 / (5-n)
             s2 = (3*n - p_m * 2 * sqrt38n) / 2 / (3*n - 8)
             t2 = (6 + p_m * sqrt38n) / 2
-            B = (8 - n) / 8 / r2**3
-            C = 1 / 2**(n+3) / s2**3
-            D = 1 / 16 / t2**3
+            B = (8 - n) / r2**3 / 8
+            C = 1 / s2**3 / 2**(n+3)
+            D = 1 / t2**3 / 16
             A = 1 - 2*n*B - 2**n*C - 2*n*(n-1)*D
 
-            r = math.sqrt(r2)
-            s = math.sqrt(s2)
-            t = math.sqrt(t2)
+            r = sqrt(r2)
+            s = sqrt(s2)
+            t = sqrt(t2)
 
             data = [
-                (A, numpy.full((1, n), 0.0)),
+                (A, numpy.full((1, n), 0)),
                 (B, fsd(n, (r, 1))),
                 (C, pm(n, s)),
                 (D, fsd(n, (t, 2))),
                 ]
 
             self.points, self.weights = untangle(data)
-            self.weights *= math.sqrt(math.pi)**n
+            self.weights *= sqrt(pi)**n
         else:
             assert index == '4'
             assert n >= 3
-            p_m = numpy.array([+1, -1])
 
-            sqrt2n2 = math.sqrt(2*(n+2))
-            r1, r2 = numpy.sqrt((n + 2 - p_m * sqrt2n2) / 2)
-            g = math.gamma(n / 2)
-            A1, A2 = (n + 2 + p_m * sqrt2n2) / 4 / (n+2) * g
+            sqrt2n2 = sqrt(2*(n+2))
+            r1, r2 = [sqrt((n + 2 - p_m * sqrt2n2) / 2) for p_m in [+1, -1]]
+            g = gamma(fr(n, 2))
+            A1, A2 = [
+                (n + 2 + p_m * sqrt2n2) / 4 / (n+2) * g
+                for p_m in [+1, -1]
+                ]
 
             s = nsphere.Stroud1967(n)
 

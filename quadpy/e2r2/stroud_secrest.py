@@ -2,8 +2,8 @@
 #
 from __future__ import division
 
-from math import sqrt
 import numpy
+from sympy import sqrt, Rational as fr, pi
 
 from ..helpers import untangle, pm_array, pm_array0, fsd, pm
 
@@ -22,11 +22,11 @@ class StroudSecrest(object):
             nu = sqrt(2)
             xi = nu / 2
             eta = sqrt(6) / 2
-            A = 0.5
-            B = 1/12
+            A = fr(1, 2)
+            B = fr(1, 12)
 
             data = [
-                (A, numpy.array([[0.0, 0.0]])),
+                (A, numpy.array([[0, 0]])),
                 (B, pm_array0(2, [nu], [0])),
                 (B, pm_array([xi, eta])),
                 ]
@@ -35,11 +35,10 @@ class StroudSecrest(object):
             self.degree = 7
 
             sqrt5 = sqrt(5)
-            p_m = numpy.array([+1, -1])
             nu = sqrt(3)
-            xi, eta = numpy.sqrt((9 - p_m * 3*sqrt5) / 8)
-            A = 1/36
-            B, C = (5 + p_m * 2*sqrt5) / 45
+            xi, eta = [sqrt((9 - p_m * 3*sqrt5) / 8) for p_m in [+1, -1]]
+            A = fr(1, 36)
+            B, C = [(5 + p_m * 2*sqrt5) / 45 for p_m in [+1, -1]]
 
             data = [
                 (A, fsd(2, (nu, 1))),
@@ -48,5 +47,5 @@ class StroudSecrest(object):
                 ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= numpy.pi
+        self.weights *= pi
         return

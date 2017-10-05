@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 from __future__ import division
-import math
-
 import numpy
+from sympy import sqrt, Rational as fr, pi
 
 from ..helpers import z, untangle
 
@@ -19,18 +18,18 @@ class Radon(object):
     def __init__(self, alpha):
         self.degree = 5
 
-        r = math.sqrt((alpha+4) / (alpha+6))
-        s = math.sqrt((alpha+4) / 4 / (alpha+6))
-        t = math.sqrt(3 * (alpha+4) / 4 / (alpha+6))
+        r = sqrt(fr(alpha+4, alpha+6))
+        s = sqrt(fr(alpha+4, 4*(alpha+6)))
+        t = sqrt(fr(3 * (alpha+4), 4*(alpha+6)))
 
-        A = 4 / (alpha+4)**2
-        B = (alpha+2) * (alpha+6) / 6 / (alpha+4)**2
+        A = fr(4, (alpha+4)**2)
+        B = fr((alpha+2) * (alpha+6), 6 * (alpha+4)**2)
 
         data = [
             (A, z(2)),
             (B, numpy.array([
-                [+r, 0.0],
-                [-r, 0.0],
+                [+r, 0],
+                [-r, 0],
                 ])),
             # Stroud is missing +- in front of t.
             (B, numpy.array([
@@ -42,5 +41,5 @@ class Radon(object):
             ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= math.pi
+        self.weights *= pi
         return
