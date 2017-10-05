@@ -21,6 +21,7 @@ def integrate(f, interval, scheme, sumfun=helpers.kahan_sum):
         )
 
 
+# pylint: disable=too-many-arguments
 def integrate_split(f, a, b, n, scheme, sumfun=helpers.kahan_sum):
     '''Integrates f between a and b with n subintervals.
     '''

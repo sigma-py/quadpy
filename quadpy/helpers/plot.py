@@ -102,16 +102,18 @@ def show_mpl(points, weights, volume, edges, balls=None):
     for edge in edges:
         plt.plot(*edge, color='k', linestyle='-')
 
-    # Choose radius such that the sum of volumes of the balls equals
-    # total_volume.
-    radii = numpy.cbrt(
-        abs(weights)/math.fsum(weights) * volume/(4.0/3.0 * numpy.pi)
+    plot_spheres(
+        plt, ax, points,
+        # Choose radius such that the sum of volumes of the balls equals
+        # total_volume.
+        radii=numpy.cbrt(
+            abs(weights)/math.fsum(weights) * volume/(4.0/3.0 * numpy.pi)
+            ),
+        colors=[
+            '#1f77b4' if weight >= 0 else '#d62728'
+            for weight in weights
+            ]
         )
-    colors = [
-        '#1f77b4' if weight >= 0 else '#d62728'
-        for weight in weights
-        ]
-    plot_spheres(plt, ax, points, radii, colors)
 
     for ball in balls:
         plot_spheres(plt, ax, [ball[0]], [ball[1]], ['#dddddd'])
