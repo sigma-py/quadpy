@@ -3,10 +3,9 @@
 import numpy
 import pytest
 import quadpy
+from quadpy.nsimplex.helpers import integrate_monomial_over_unit_simplex
 
-from helpers import (
-    check_degree, integrate_monomial_over_standard_simplex
-    )
+from helpers import check_degree
 
 
 @pytest.mark.parametrize(
@@ -49,7 +48,7 @@ def test_scheme(scheme):
         simplex[k+1, k] = 1.0
     degree = check_degree(
             lambda poly: quadpy.nsimplex.integrate(poly, simplex, scheme),
-            integrate_monomial_over_standard_simplex,
+            integrate_monomial_over_unit_simplex,
             lambda k: quadpy.helpers.partition(k, n),
             scheme.degree + 1
             )

@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
+from sympy import sqrt, Rational as fr
 
 from .helpers import fs_r00, fs_rr0, pm_rrr
-
 from ..helpers import untangle
 
 
@@ -17,18 +16,18 @@ class HammerWymore(object):
     def __init__(self):
         self.degree = 7
 
-        r2 = 6.0/7.0
-        s2 = (960.0 - 3*numpy.sqrt(28798.0)) / 2726.0
-        t2 = (960.0 + 3*numpy.sqrt(28798.0)) / 2726.0
+        r2 = fr(6, 7)
+        s2 = (960 - 3*sqrt(28798)) / 2726
+        t2 = (960 + 3*sqrt(28798)) / 2726
 
-        r = numpy.sqrt(r2)
-        s = numpy.sqrt(s2)
-        t = numpy.sqrt(t2)
+        r = sqrt(r2)
+        s = sqrt(s2)
+        t = sqrt(t2)
 
-        B1 = 1078.0 / 29160.0
-        B2 = 343.0 / 29160.0
-        B3 = (774.0*t2 - 230.0) / (9720.0 * (t2-s2))
-        B4 = (230.0 - 774.*s2) / (9720.0 * (t2-s2))
+        B1 = fr(1078, 29160)
+        B2 = fr(343, 29160)
+        B3 = (774*t2 - 230) / (9720 * (t2-s2))
+        B4 = (230 - 774*s2) / (9720 * (t2-s2))
 
         data = [
             (B1, fs_r00(r)),
@@ -38,5 +37,5 @@ class HammerWymore(object):
             ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= 8.0
+        self.weights *= 8
         return

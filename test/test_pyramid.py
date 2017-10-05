@@ -91,7 +91,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.pyramid.Felippa(5)
-    # test_scheme(scheme_)
+    scheme_ = quadpy.pyramid.Felippa(3)
+    test_scheme(scheme_)
     # test_show(scheme_)
-    quadpy.pyramid.show(scheme_, backend='vtk')
+    # quadpy.pyramid.show(scheme_, backend='vtk')

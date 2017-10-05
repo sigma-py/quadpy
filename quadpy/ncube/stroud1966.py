@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
+from sympy import sqrt, Rational as fr, S
 
 from .helpers import _fs11
-
 from ..helpers import untangle, fsd, z, pm
 
 
@@ -18,51 +18,47 @@ class Stroud1966(object):
     '''
     def __init__(self, n, variant):
         self.name = 'Stroud66{}'.format(variant)
-        reference_volume = 2.0**n
         self.degree = 5
+
         if variant == 'a':
-            r = numpy.sqrt((5*n + 4) / 30.0)
-            s = numpy.sqrt((5*n + 4.0) / (15*n - 12.0))
+            r = sqrt(fr(5*n + 4, 30))
+            s = sqrt(fr(5*n + 4, 15*n - 12))
             data = [
-                (40.0 / (5*n+4)**2, fsd(n, (r, 1))),
-                (((5*n - 4.0) / (5*n + 4))**2 / 2**n, pm(n, s)),
+                (fr(40, (5*n+4)**2), fsd(n, (r, 1))),
+                (fr(5*n - 4, (5*n + 4))**2 / 2**n, pm(n, s)),
                 ]
         elif variant == 'b':
-            s = numpy.sqrt(1.0 / 3.0)
-            data = [(4.0 / (5*n + 4), z(n))]
+            s = 1 / sqrt(3)
+            data = [(fr(4, 5*n + 4), z(n))]
             for k in range(1, n+1):
-                r = numpy.sqrt((5*k + 4) / 15.0)
-                arr = numpy.zeros((2**(n-k+1), n))
-                arr[:, k-1:] = pm(n-k+1, 1.0)
+                r = sqrt(fr(5*k + 4, 15))
+                arr = numpy.full((2**(n-k+1), n), S.Zero)
+                arr[:, k-1:] = pm(n-k+1, 1)
                 arr[:, k-1] *= r
                 arr[:, k:] *= s
-                b = 5.0 * 2.0**(k-n+1) / (5.0*k-1.0) / (5.0*k+4.0)
+                b = fr(5 * 2**(k-n+1), (5*k-1) * (5*k+4))
                 data.append((b, arr))
         elif variant == 'c':
-            r = numpy.sqrt((5*n + 4 + 2*(n-1)*numpy.sqrt(5*n+4)) / (15.0*n))
-            s = numpy.sqrt((5*n + 4 - 2*numpy.sqrt(5*n+4)) / (15.0*n))
+            r = sqrt((5*n + 4 + 2*(n-1)*sqrt(5*n+4)) / (15*n))
+            s = sqrt((5*n + 4 - 2*sqrt(5*n+4)) / (15*n))
             data = [
-                (4.0/(5*n+4), z(n)),
-                (5.0/(5*n+4) / 2**n, _fs11(n, r, s)),
+                (fr(4, 5*n+4), z(n)),
+                (fr(5, (5*n+4) * 2**n), _fs11(n, r, s)),
                 ]
         else:
             assert variant == 'd'
             assert n >= 3
-            r = numpy.sqrt(
-                (5*n - 2*numpy.sqrt(5.0) + 2*(n-1)*numpy.sqrt(5*n+5))
-                / (15.0*n)
-                )
+            r = sqrt((5*n - 2*sqrt(5) + 2*(n-1)*sqrt(5*n+5)) / (15*n))
             # This sqrt() is imaginary for negative for n=2.
-            s = numpy.sqrt(
-                (5*n - 2*numpy.sqrt(5.0) - 2*numpy.sqrt(5*n+5)) / (15.0*n)
-                )
-            t = numpy.sqrt((5.0 + 2*numpy.sqrt(5)) / 15.0)
-            w = 1.0 / 2**n / (n+1)
+            s = sqrt((5*n - 2*sqrt(5) - 2*sqrt(5*n+5)) / (15*n))
+            t = sqrt((5 + 2*sqrt(5)) / 15)
+            w = fr(1, 2**n * (n+1))
             data = [
                 (w, _fs11(n, r, s)),
                 (w, pm(n, t)),
                 ]
 
         self.points, self.weights = untangle(data)
+        reference_volume = 2**n
         self.weights *= reference_volume
         return

@@ -20,43 +20,44 @@ and required degrees of accuracy are given. They are arranged so as to assist
 with selection of suitable quadrature formulas for finite element computer
 programming.
 '''
-from .helpers import _s3, _s21, _s111
+from sympy import Rational as fr
 
+from .helpers import _s3, _s21, _s111
 from ..helpers import untangle as _untangle
 
 
 def _gen1():
     data = [
-        (1.0, _s3()),
+        (1, _s3()),
         ]
     return 1, data
 
 
 def _gen2a():
     data = [
-        (1.0/3.0, _s21(1.0/6.0)),
+        (fr(1, 3), _s21(fr(1, 6))),
         ]
     return 2, data
 
 
 def _gen2b():
     data = [
-        (1.0/3.0, _s21(0.5)),
+        (fr(1, 3), _s21(fr(1, 2))),
         ]
     return 2, data
 
 
 def _gen3():
     data = [
-        (-0.5625, _s3()),
-        (25.0/48.0, _s21(0.2)),
+        (-fr(9, 16), _s3()),
+        (fr(25, 48), _s21(fr(1, 5))),
         ]
     return 3, data
 
 
 def _gen4():
     data = [
-        (1.0/6.0, _s111(0.659027622374092, 0.231933368553031)),
+        (fr(1, 6), _s111(0.659027622374092, 0.231933368553031)),
         ]
     return 3, data
 
@@ -71,15 +72,15 @@ def _gen5():
 
 def _gen6():
     data = [
-        (0.375, _s3()),
-        (5.0/48.0, _s111(0.736712498968435, 0.237932366472434)),
+        (fr(3, 8), _s3()),
+        (fr(5, 48), _s111(0.736712498968435, 0.237932366472434)),
         ]
     return 4, data
 
 
 def _gen7():
     data = [
-        (0.225, _s3()),
+        (fr(9, 40), _s3()),
         (0.125939180544827, _s21(0.101286507323456)),
         (0.132394152788506, _s21(0.470142064105115)),
         ]

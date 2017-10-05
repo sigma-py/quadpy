@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
+from sympy import Rational as fr, sqrt
 
 from .helpers import rss_pm, z
-
 from ..helpers import untangle
 
 
@@ -24,19 +23,26 @@ class Stroud1967(object):
     def __init__(self):
         self.degree = 5
 
-        sqrt19 = numpy.sqrt(19.0)
-        t = numpy.sqrt(71440.0 + 6802.0 * sqrt19)
+        sqrt19 = sqrt(19)
+        t = sqrt(71440 + 6802 * sqrt19)
 
-        lmbd = numpy.sqrt((1919.0 - 148.0*sqrt19 + 4*t) / 3285.0)
-        gmma = numpy.sqrt((1919.0 - 148.0*sqrt19 - 4*t) / 3285.0)
-        xi = -numpy.sqrt((1121.0 + 74.0*sqrt19 - 2*t) / 3285.0)
-        mu = +numpy.sqrt((1121.0 + 74.0*sqrt19 + 2*t) / 3285.0)
+        lmbd, gmma = [
+            sqrt((1919 - 148*sqrt19 + i * 4*t) / 3285)
+            for i in [+1, -1]
+            ]
+        xi, mu = [
+            -sqrt((1121 + 74*sqrt19 - i * 2*t) / 3285)
+            for i in [+1, -1]
+            ]
+        mu *= -1
 
-        B = 133225.0 / (260072.0 - 1520*sqrt19 + (133.0-37.0*sqrt19)*t)
-        C = 133225.0 / (260072.0 - 1520*sqrt19 - (133.0-37.0*sqrt19)*t)
+        B, C = [
+            133225 / (260072 - 1520*sqrt19 + i*(133 - 37*sqrt19)*t)
+            for i in [+1, -1]
+            ]
 
         data = [
-            (32.0/19.0, z()),
+            (fr(32, 19), z()),
             (B, rss_pm(lmbd, xi)),
             (C, rss_pm(gmma, mu)),
             ]

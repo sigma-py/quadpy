@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _s3, _s21, _s111 as fs
+from sympy import Rational as fr
 
+from .helpers import _s3, _s21, _s111 as fs
 from ..helpers import untangle
 
 
@@ -31,10 +32,10 @@ class WilliamsShunnJameson(object):
         self.name = 'WSJ(%d)' % index
         if index == 1:
             self.degree = 1
-            data = [(1.0, _s3())]
+            data = [(1, _s3())]
         elif index == 2:
             self.degree = 2
-            data = [(1.0/3.0, _s21(1.0 / 6.0))]
+            data = [(fr(1, 3), _s21(fr(1, 6)))]
         elif index == 3:
             data = [
                 (0.109951743655333, _s21(0.091576213509780)),

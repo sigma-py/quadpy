@@ -6,11 +6,8 @@ Approximate integration formulas for certain spherically symmetric regions,
 Math. Comp. 17 (1963), 105-135,
 <https://doi.org/10.1090/S0025-5718-1963-0161473-0>.
 '''
-from __future__ import division
-
-from math import sqrt, pi
-
 import numpy
+from sympy import sqrt, pi, Rational as fr
 
 from ..helpers import untangle, pm_array, pm, fsd
 
@@ -21,21 +18,23 @@ def v():
     eta = sqrt(15)
 
     data = [
-        (0.7, numpy.array([[0.0, 0.0]])),
-        (0.05, numpy.array([[+nu, 0], [-nu, 0]])),
-        (0.05, pm_array([xi, eta])),
+        (fr(7, 10), numpy.array([[0, 0]])),
+        (fr(1, 20), numpy.array([[+nu, 0], [-nu, 0]])),
+        (fr(1, 20), pm_array([xi, eta])),
         ]
     return 5, data
 
 
 def vi():
-    p_m = numpy.array([+1, -1])
     sqrt74255 = sqrt(74255)
 
     nu = sqrt(42)
-    xi, eta = numpy.sqrt((6615 - p_m * 21 * sqrt74255) / 454)
-    A = 5 / 588
-    B, C = (5272105 + p_m * 18733 * sqrt74255) / 43661940
+    xi, eta = [sqrt((6615 - p_m * 21 * sqrt74255) / 454) for p_m in [+1, -1]]
+    A = fr(5, 588)
+    B, C = [
+        (5272105 + p_m * 18733 * sqrt74255) / 43661940
+        for p_m in [+1, -1]
+        ]
 
     data = [
         (A, fsd(2, (nu, 1))),

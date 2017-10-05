@@ -5,7 +5,7 @@ import quadpy
 
 @pytest.mark.parametrize('k', range(1, 6))
 def test_simple(k):
-    val, _ = quadpy.triangle.adaptive_integrate(
+    val, _ = quadpy.triangle.integrate_adaptive(
             lambda x: sin(k * pi * x[0]) * sin(k * pi * x[1]),
             [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
             1.0e-10
@@ -22,7 +22,7 @@ def test_vector(k=1):
         [[1.0, 0.0], [1.0, 1.0]],
         [[0.0, 1.0], [0.0, 1.0]],
         ]
-    val, _ = quadpy.triangle.adaptive_integrate(
+    val, _ = quadpy.triangle.integrate_adaptive(
             lambda x: [
                 sin(k * pi * x[0]) * sin(k * pi * x[1]),
                 cos(k * pi * x[0]) * cos(k * pi * x[1]),

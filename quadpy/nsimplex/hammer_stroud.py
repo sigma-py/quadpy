@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
-
-import math
-
-import numpy
+from sympy import sqrt, Rational as fr
 
 from ..helpers import untangle, rd
 
@@ -21,31 +17,31 @@ class HammerStroud(object):
         self.dim = n
         if index == '1a':
             self.degree = 2
-            r = (n + 2 - math.sqrt(n+2.0)) / (n+1) / (n+2)
-            s = (n + 2 + n*math.sqrt(n+2.0)) / (n+1) / (n+2)
+            r = (n + 2 - sqrt(n+2)) / (n+1) / (n+2)
+            s = (n + 2 + n*sqrt(n+2)) / (n+1) / (n+2)
             data = [
-                (1.0/(n+1), rd(n+1, [(r, n), (s, 1)]))
+                (fr(1, n+1), rd(n+1, [(r, n), (s, 1)]))
                 ]
         elif index == '1b':
             self.degree = 2
-            r = (n + 2 + math.sqrt(n+2.0)) / (n+1) / (n+2)
-            s = (n + 2 - n*math.sqrt(n+2.0)) / (n+1) / (n+2)
+            r = (n + 2 + sqrt(n+2)) / (n+1) / (n+2)
+            s = (n + 2 - n*sqrt(n+2)) / (n+1) / (n+2)
             data = [
-                (1.0/(n+1), rd(n+1, [(r, n), (s, 1)]))
+                (fr(1, n+1), rd(n+1, [(r, n), (s, 1)]))
                 ]
         else:
             assert index == '2'
             self.degree = 3
 
-            B = -(n+1)**2 / 4 / (n+2)
-            C = (n+3)**2 / 4 / (n+1) / (n+2)
+            B = -fr((n+1)**2, 4 * (n+2))
+            C = fr((n+3)**2, 4 * (n+1) * (n+2))
 
-            r = 1 / (n+1)
-            s = 1 / (n+3)
-            t = 3 / (n+3)
+            r = fr(1, n+1)
+            s = fr(1, n+3)
+            t = fr(3, n+3)
 
             data = [
-                (B, numpy.array([numpy.full(n+1, r)])),
+                (B, [(n+1) * [r]]),
                 (C, rd(n+1, [(t, 1), (s, n)])),
                 ]
 

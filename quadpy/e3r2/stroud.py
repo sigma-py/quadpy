@@ -7,8 +7,6 @@ Prentice Hall, 1971.
 '''
 from __future__ import division
 
-from math import fsum
-
 import numpy
 import orthopy
 
@@ -47,6 +45,9 @@ def _gen14_1():
     v = spherical_scheme.points
     B = spherical_scheme.weights
 
+    # Normalize the weights to 1
+    B /= numpy.sqrt(numpy.pi) / 4
+
     data = [
         (A[i]*B[j], r[i] * numpy.array([v[j]]))
         for i in range(4)
@@ -56,6 +57,7 @@ def _gen14_1():
     return degree, data
 
 
+# The boolean tells if the factor pi^{3/2} is already in the weights
 _gen = {
     '5-1': stroud_secrest.vii,
     '5-2a': stroud_secrest.viiia,
@@ -65,7 +67,7 @@ _gen = {
     '7-1b': lambda: stroud_secrest.x(-1),
     '7-2a': lambda: stroud_secrest.xi_(+1),
     '7-2b': lambda: stroud_secrest.xi_(-1),
-    '14-1': _gen14_1,
+    '14-1': _gen14_1
     }
 
 
@@ -75,6 +77,5 @@ class Stroud(object):
     def __init__(self, key):
         self.degree, data = _gen[key]()
         self.points, self.weights = untangle(data)
-        self.weights /= fsum(self.weights)
         self.weights *= numpy.sqrt(numpy.pi)**3
         return

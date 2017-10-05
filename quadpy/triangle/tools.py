@@ -56,7 +56,7 @@ def _numpy_all_except(a, axis=-1):
 
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-locals
-def adaptive_integrate(
+def integrate_adaptive(
         f, triangles, eps,
         minimum_triangle_area=None,
         scheme1=Dunavant(5),

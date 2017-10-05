@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
+from sympy import sqrt, pi, Rational as fr
 
 from ..helpers import untangle, fsd, pm
 
@@ -15,17 +15,20 @@ class Mysovskih(object):
     def __init__(self):
         self.degree = 7
 
-        plus_minus = numpy.array([+1, -1])
+        sqrt17770 = sqrt(17770)
+        r, s = [
+            sqrt((1715 - plus_minus * 7 * sqrt17770) / 2817)
+            for plus_minus in [+1, -1]
+            ]
+        t = sqrt(fr(7, 18))
+        u = sqrt(fr(7, 27))
 
-        sqrt17770 = numpy.sqrt(17770.0)
-        r, s = numpy.sqrt((1715.0 - plus_minus * 7 * sqrt17770) / 2817.0)
-        t = numpy.sqrt(7.0/18.0)
-        u = numpy.sqrt(7.0/27.0)
-
-        B1, B2 = \
-            (2965 * sqrt17770 + plus_minus * 227816) / 72030.0 / sqrt17770
-        B3 = 324.0 / 12005.0
-        B4 = 2187.0 / 96040.0
+        B1, B2 = [
+            (2965 * sqrt17770 + plus_minus * 227816) / 72030 / sqrt17770
+            for plus_minus in [+1, -1]
+            ]
+        B3 = fr(324, 12005)
+        B4 = fr(2187, 96040)
 
         data = [
             (B1, fsd(3, (r, 1))),
@@ -35,5 +38,5 @@ class Mysovskih(object):
             ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= 4.0/3.0 * numpy.pi
+        self.weights *= fr(4, 3) * pi
         return

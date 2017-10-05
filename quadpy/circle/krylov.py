@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
+import sympy
 
 
 class Krylov(object):
@@ -14,10 +15,10 @@ class Krylov(object):
     <https://books.google.de/books/about/Approximate_Calculation_of_Integrals.html?id=ELeRwR27IRIC&redir_esc=y>
     '''
     def __init__(self, n):
-        self.weights = numpy.full(n, 2 * numpy.pi / n)
+        self.weights = numpy.full(n, 2*sympy.pi/n)
         self.points = numpy.column_stack([
-            numpy.cos(2*numpy.pi * numpy.arange(n) / n),
-            numpy.sin(2*numpy.pi * numpy.arange(n) / n),
+            [sympy.cos(sympy.pi * sympy.Rational(2*k, n)) for k in range(n)],
+            [sympy.sin(sympy.pi * sympy.Rational(2*k, n)) for k in range(n)],
             ])
         self.degree = n - 1
         return

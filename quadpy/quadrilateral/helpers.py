@@ -4,15 +4,15 @@ import numpy
 
 
 def _z():
-    return numpy.array([[0.0, 0.0]])
+    return numpy.array([[0, 0]])
 
 
 def _symm_r_0(r):
     return numpy.array([
-        [+r, 0.0],
-        [-r, 0.0],
-        [0.0, +r],
-        [0.0, -r],
+        [+r, 0],
+        [-r, 0],
+        [0, +r],
+        [0, -r],
         ])
 
 

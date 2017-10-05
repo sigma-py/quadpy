@@ -2,7 +2,7 @@
 #
 from __future__ import division
 
-from math import sqrt, factorial as fact
+from sympy import sqrt, factorial as fact, binomial
 import numpy
 
 
@@ -77,7 +77,7 @@ def compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k):
     '''
     t = 1 if pm_type == 'I' else -1
 
-    L = fact(n) // (fact(i) * fact(n-i)) * 2**i
+    L = binomial(n, i) * 2**i
     M = fact(n) // (fact(j) * fact(k) * fact(n-j-k)) * 2**(j+k)
     N = L + M
     F = I22/I0 - I2**2/I0**2 + (I4/I0 - I22/I0) / n

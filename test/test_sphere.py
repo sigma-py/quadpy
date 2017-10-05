@@ -3,6 +3,7 @@
 import numpy
 import pytest
 import quadpy
+from quadpy.sphere.helpers import cartesian_to_spherical
 import specialpy
 
 # Note
@@ -11,13 +12,6 @@ import specialpy
 # most l, one can instead test exact integration of all _spherical harmonics_
 # of degree at most l. While there are 2**l monomials, there are only l**2
 # spherical harmonics.
-
-
-def _cartesian_to_spherical(X):
-    return numpy.stack([
-        numpy.arctan2(X[:, 1], X[:, 0]),
-        numpy.arccos(X[:, 2])
-        ], axis=1)
 
 
 @pytest.mark.parametrize(
@@ -47,7 +41,8 @@ def test_scheme_cartesian(scheme, tol):
     exact_val[0] = numpy.sqrt(4*numpy.pi)
 
     def sph_tree_cartesian(x):
-        phi_theta = _cartesian_to_spherical(x.T).T
+        flt = numpy.vectorize(float)
+        phi_theta = cartesian_to_spherical(flt(x).T).T
         return specialpy.sph_tree(
             scheme.degree+1, phi_theta[1], phi_theta[0]
             )
@@ -104,10 +99,16 @@ def test_scheme_spherical(scheme, tol):
     exact_val = numpy.zeros(scheme.degree + 1)
     exact_val[0] = numpy.sqrt(4*numpy.pi)
 
-    vals = quadpy.sphere.integrate_spherical(
-        lambda phi_theta: specialpy.sph_tree(
+    flt = numpy.vectorize(float)
+
+    def sph_tree(phi_theta):
+        phi_theta = flt(phi_theta)
+        return specialpy.sph_tree(
             scheme.degree+1, phi_theta[1], phi_theta[0]
-            ),
+            )
+
+    vals = quadpy.sphere.integrate_spherical(
+        sph_tree,
         radius=1.0, rule=scheme, sumfun=numpy.sum
         )
 
@@ -116,7 +117,7 @@ def test_scheme_spherical(scheme, tol):
 
     # The exact value is sqrt(4*pi) for the Y_0^0, and 0 otherwise.
     err = vals
-    err[0, 0] -= numpy.sqrt(4.0 * numpy.pi)
+    err[0, 0] -= numpy.sqrt(4 * numpy.pi)
 
     # check in which level the first significant errors occur
     first_error_level = numpy.min(
@@ -140,8 +141,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    # scheme_ = quadpy.sphere.Stroud('U3 11-3')
-    scheme_ = quadpy.sphere.HeoXu('35')
+    scheme_ = quadpy.sphere.Stroud('U3 5-2')
     # test_scheme(scheme_)
-    test_scheme_cartesian(scheme_, tol=1.0e-7)
+    test_scheme_spherical(scheme_, tol=1.0e-7)
     # test_show(scheme_)

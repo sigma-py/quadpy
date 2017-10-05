@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 from __future__ import division
-from math import sqrt, cos, sin, pi
+from sympy import sqrt, cos, sin, pi, Rational as fr
 
 from ..helpers import fsd, pm, untangle, fs_array
 
@@ -20,15 +20,13 @@ class Peirce1956(object):
             # Also: Formula 13-2 in Hammer-Stroud.
             self.degree = 7
 
-            sqrt29 = sqrt(29.0)
-            r = sqrt(0.75)
-            s = sqrt((27 - 3 * sqrt29)/104.0)
-            t = sqrt((27 + 3 * sqrt29)/104.0)
+            sqrt29 = sqrt(29)
+            r = sqrt(fr(3, 4))
+            s, t = [sqrt((27 - pm_ * 3 * sqrt29)/104) for pm_ in [+1, -1]]
 
-            B1 = 2.0/27.0
+            B1 = fr(2, 27)
             # ERR Stroud falsely lists 4 instead of 41 here.
-            B2 = (551.0 + 41*sqrt29) / 6264.0
-            B3 = (551.0 - 41*sqrt29) / 6264.0
+            B2, B3 = [(551 + pm_ * 41*sqrt29) / 6264 for pm_ in [+1, -1]]
 
             data = [
                 (B1, fsd(2, (r, 1))),
@@ -38,22 +36,24 @@ class Peirce1956(object):
         elif index == 2:
             self.degree = 9
 
-            sqrt15 = sqrt(15.0)
+            sqrt15 = sqrt(15)
             cos_pi8 = cos(pi/8)
             sin_pi8 = sin(pi/8)
 
-            r = sqrt((5 + sqrt15) / 10.0)
-            u1 = sqrt((5.0 - sqrt15)/10.0) * cos_pi8
-            v1 = sqrt((5.0 - sqrt15)/10.0) * sin_pi8
-            u2 = sqrt(0.5) * cos_pi8
-            v2 = sqrt(0.5) * sin_pi8
-            u3 = sqrt((5 + sqrt15 + sqrt(185.0*sqrt15 - 700.0)) / 20.0)
-            v3 = sqrt((5 + sqrt15 - sqrt(185.0*sqrt15 - 700.0)) / 20.0)
+            r = sqrt((5 + sqrt15) / 10)
+            u1 = sqrt((5 - sqrt15)/10) * cos_pi8
+            v1 = sqrt((5 - sqrt15)/10) * sin_pi8
+            u2 = sqrt(fr(1, 2)) * cos_pi8
+            v2 = sqrt(fr(1, 2)) * sin_pi8
+            u3, v3 = [
+                sqrt((5 + sqrt15 + pm_*sqrt(185*sqrt15 - 700)) / 20)
+                for pm_ in [+1, -1]
+                ]
 
-            B1 = (12060.0 - 1440.0*sqrt15) / 254088.0
-            B2 = 5.0 / 144.0
-            B3 = 1.0/18.0
-            B4 = (5585.0 + 1440.0*sqrt15) / 508176.0
+            B1 = (12060 - 1440*sqrt15) / 254088
+            B2 = fr(5, 144)
+            B3 = fr(1, 18)
+            B4 = (5585 + 1440*sqrt15) / 508176
 
             data = [
                 (B1, fsd(2, (r, 1))),
@@ -65,23 +65,27 @@ class Peirce1956(object):
             assert index == 3
             self.degree = 11
 
-            sqrt15 = sqrt(15.0)
+            sqrt15 = sqrt(15)
 
-            B1 = 5.0/144.0
-            B2 = (34.0 - 5*sqrt15) / 396.0
-            B3 = (4805.0 - 620*sqrt15) / 103824.0
-            C1 = (10.0 + 5*sqrt15) / 792.0
-            C2 = (2405.0 + 620*sqrt15) / 207648.0
+            B1 = fr(5, 144)
+            B2 = (34 - 5*sqrt15) / 396
+            B3 = (4805 - 620*sqrt15) / 103824
+            C1 = (10 + 5*sqrt15) / 792
+            C2 = (2405 + 620*sqrt15) / 207648
             D = B1
 
-            r1 = sqrt((5.0 - sqrt15) / 10)
-            r2 = sqrt(0.5)
-            r3 = sqrt((5.0 + sqrt15) / 10)
-            u1 = sqrt((5.0 + sqrt(45.0 - 10*sqrt15)) / 20.0)
-            v1 = sqrt((5.0 - sqrt(45.0 - 10*sqrt15)) / 20.0)
-            u2 = sqrt((5.0 + sqrt15 + 2*sqrt(40*sqrt15 - 150.0)) / 20.0)
-            v2 = sqrt((5.0 + sqrt15 - 2*sqrt(40*sqrt15 - 150.0)) / 20.0)
-            t = sqrt((5.0 - sqrt15) / 20.0)
+            r1 = sqrt((5 - sqrt15) / 10)
+            r2 = sqrt(fr(1, 2))
+            r3 = sqrt((5 + sqrt15) / 10)
+            u1, v1 = [
+                sqrt((5 + pm_ * sqrt(45 - 10*sqrt15)) / 20)
+                for pm_ in [+1, -1]
+                ]
+            u2, v2 = [
+                sqrt((5 + sqrt15 + pm_ * 2*sqrt(40*sqrt15 - 150)) / 20)
+                for pm_ in [+1, -1]
+                ]
+            t = sqrt((5 - sqrt15) / 20)
 
             data = [
                 (B1, fsd(2, (r1, 1))),

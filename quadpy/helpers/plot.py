@@ -21,6 +21,9 @@ def plot_disks_1d(plt, pts, weights, total_area):
 def plot_disks(plt, pts, weights, total_area):
     '''Plot a circles at quadrature points according to weights.
     '''
+    flt = numpy.vectorize(float)
+    pts = flt(pts)
+    weights = flt(weights)
     radii = numpy.sqrt(abs(weights)/math.fsum(weights) * total_area/math.pi)
     colors = [
         # use matplotlib 2.0's color scheme
@@ -45,10 +48,15 @@ def _plot_disks_helpers(plt, pts, radii, colors):
     return
 
 
+# pylint: disable=too-many-locals
 def show_mpl(points, weights, volume, edges, balls=None):
     import matplotlib.pyplot as plt
     # pylint: disable=relative-import, unused-variable
     from mpl_toolkits.mplot3d import Axes3D
+
+    flt = numpy.vectorize(float)
+    points = flt(points)
+    weights = flt(weights)
 
     # pylint: disable=too-many-locals
     def plot_spheres(plt, ax, pts, radii, colors):
@@ -94,16 +102,18 @@ def show_mpl(points, weights, volume, edges, balls=None):
     for edge in edges:
         plt.plot(*edge, color='k', linestyle='-')
 
-    # Choose radius such that the sum of volumes of the balls equals
-    # total_volume.
-    radii = numpy.cbrt(
-        abs(weights)/math.fsum(weights) * volume/(4.0/3.0 * numpy.pi)
+    plot_spheres(
+        plt, ax, points,
+        # Choose radius such that the sum of volumes of the balls equals
+        # total_volume.
+        radii=numpy.cbrt(
+            abs(weights)/math.fsum(weights) * volume/(4.0/3.0 * numpy.pi)
+            ),
+        colors=[
+            '#1f77b4' if weight >= 0 else '#d62728'
+            for weight in weights
+            ]
         )
-    colors = [
-        '#1f77b4' if weight >= 0 else '#d62728'
-        for weight in weights
-        ]
-    plot_spheres(plt, ax, points, radii, colors)
 
     for ball in balls:
         plot_spheres(plt, ax, [ball[0]], [ball[1]], ['#dddddd'])

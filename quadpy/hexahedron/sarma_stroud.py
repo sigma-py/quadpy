@@ -27,5 +27,5 @@ class SarmaStroud(object):
             ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= 8.0
+        self.weights *= 8
         return

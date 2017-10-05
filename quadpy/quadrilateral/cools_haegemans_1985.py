@@ -47,7 +47,7 @@ class CoolsHaegemans1985(object):
         # TODO There are three more schemes in the technical report
 
         self.points, self.weights = untangle(data)
-        self.weights *= 4.0
+        self.weights *= 4
         return
 
 
@@ -75,8 +75,8 @@ def _s4(a):
 
 def _s40(a):
     return numpy.array([
-        [+a, 0.0],
-        [-a, 0.0],
-        [0.0, +a],
-        [0.0, -a],
+        [+a, 0],
+        [-a, 0],
+        [0, +a],
+        [0, -a],
         ])

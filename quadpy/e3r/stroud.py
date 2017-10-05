@@ -7,7 +7,7 @@ Prentice Hall, 1971.
 '''
 from __future__ import division
 
-from math import pi
+from sympy import pi
 
 from . import stroud_secrest
 

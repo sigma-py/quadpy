@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 from __future__ import division
-import math
 import numpy
+from sympy import sqrt
 
 from ..helpers import untangle, fsd, pm, z
 from .helpers import volume_unit_ball
@@ -33,7 +33,7 @@ class Stroud1967b(object):
                 assert 3 <= n <= 6
                 t = -1
 
-            alpha = math.sqrt(6*(n+6)*(8-n))
+            alpha = sqrt(6*(n+6)*(8-n))
 
             r2 = (3*(n+6)*(8-n) - t*(n-2) * alpha) / ((n+6) * (34-5*n))
             s2 = (3*n*(n+6) - t*2*alpha) / ((n+6) * (3*n**2+6*n-16))
@@ -44,9 +44,9 @@ class Stroud1967b(object):
             D = 1 / (n+2) / (n+4) / (n+6) / t2**3 / 2
             A = 1 - 2*n*B - 2**n*C - 2*n*(n-1)*D
 
-            r = math.sqrt(r2)
-            s = math.sqrt(s2)
-            t = math.sqrt(t2)
+            r = sqrt(r2)
+            s = sqrt(s2)
+            t = sqrt(t2)
 
             data = [
                 (A, z(n)),
@@ -61,11 +61,16 @@ class Stroud1967b(object):
             assert variant == 'c'
             assert n >= 3
 
-            alpha = math.sqrt(2*(n+2)*(n+4))
+            alpha = sqrt(2*(n+2)*(n+4))
 
-            p_m = numpy.array([+1, -1])
-            r1, r2 = numpy.sqrt(((n+2)*(n+4) + p_m*2*alpha) / (n+4) / (n+6))
-            A1, A2 = (2*(n+2)**2 + p_m*(n-2)*alpha) / (4*n*(n+2)**2)
+            r1, r2 = [
+                sqrt(((n+2)*(n+4) + p_m*2*alpha) / (n+4) / (n+6))
+                for p_m in [+1, -1]
+                ]
+            A1, A2 = [
+                (2*(n+2)**2 + p_m*(n-2)*alpha) / (4*n*(n+2)**2)
+                for p_m in [+1, -1]
+                ]
 
             s = nsphere.Stroud1967(n)
 
