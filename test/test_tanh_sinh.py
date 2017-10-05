@@ -47,6 +47,8 @@ mp.dps = 50
     )
 def test_tanh_sinh(f, a, b, exact):
     # test fine error estimate
+    mp.dps = 50
+
     tol = 10**(-mp.dps)
     tol2 = 10**(-mp.dps+1)
 
