@@ -41,7 +41,7 @@ def _numpy_all_except(a, axis=-1):
 
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-locals
-def adaptive_integrate(
+def integrate_adaptive(
         f, intervals, eps,
         kronrod_degree=7,
         minimum_interval_length=None,
