@@ -10,9 +10,9 @@ from helpers import check_degree
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadpy.nball.Dobrodeev1970(n) for n in range(3, 10)]
+    [quadpy.nball.Dobrodeev1970(n) for n in range(3, 9)]
     + [quadpy.nball.Dobrodeev1978(n) for n in range(2, 7)]
-    + [quadpy.nball.Stroud(dim, index) for dim in range(2, 10) for index in [
+    + [quadpy.nball.Stroud(dim, index) for dim in range(2, 9) for index in [
         'Sn 2-1',
         'Sn 3-1', 'Sn 3-2',
         'Sn 5-2', 'Sn 5-3', 'Sn 5-4', 'Sn 5-5', 'Sn 5-6',
