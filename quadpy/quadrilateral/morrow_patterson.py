@@ -105,8 +105,8 @@ class MorrowPatterson(object):
 
 def _s20(a):
     return numpy.array([
-        [+a, 0.0],
-        [-a, 0.0],
+        [+a, 0],
+        [-a, 0],
         ])
 
 

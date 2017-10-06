@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
+from sympy import Rational as fr
 
 from ..helpers import untangle
 
@@ -17,7 +18,7 @@ class WissmannBecker(object):
         if index == '4-1':
             self.degree = 4
             data = [
-                (1.142857142857143, _z(0.0)),
+                (fr(8, 7), _z(0)),
                 (0.439560439560440, _z(0.966091783079296)),
                 (0.566072207007532, _m(0.851914653304601, 0.455603727836193)),
                 (0.642719001783677, _m(0.630912788976754, -0.731629951573135))
@@ -53,7 +54,7 @@ class WissmannBecker(object):
         elif index == '8-1':
             self.degree = 8
             data = [
-                (0.055364705621440, _z(0.0)),
+                (0.055364705621440, _z(0)),
                 (0.404389368726076, _z(0.757629177660505)),
                 (0.533546604952635, _z(-0.236871842255702)),
                 (0.117054188786739, _z(-0.989717929044527)),
@@ -85,7 +86,7 @@ class WissmannBecker(object):
 
 def _z(a):
     return numpy.array([
-        [0.0, a]
+        [0, a]
         ])
 
 

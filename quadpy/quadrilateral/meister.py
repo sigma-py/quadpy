@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _symm_r_0, _symm_s, _z, _symm_s_t
+from sympy import Rational as fr
 
+from .helpers import _symm_r_0, _symm_s, _z, _symm_s_t
 from ..helpers import untangle
 
 
@@ -16,18 +17,18 @@ class Meister(object):
         self.name = 'Meister'
         self.degree = 7
 
-        r = 2.0/3.0
-        s = 1.0/3.0
+        r = fr(2, 3)
+        s = fr(1, 3)
 
         data = [
-            (1024.0/6720.0, _z()),
-            (576.0/6720.0, _symm_s(r)),
-            (576.0/6720.0, _symm_r_0(r)),
-            (-9.0/6720.0, _symm_s(s)),
-            (117.0/6720.0, _symm_s_t(1.0, s)),
-            (47.0/6720.0, _symm_s(1.0)),
+            (fr(1024, 6720), _z()),
+            (fr(576, 6720), _symm_s(r)),
+            (fr(576, 6720), _symm_r_0(r)),
+            (-fr(9, 6720), _symm_s(s)),
+            (fr(117, 6720), _symm_s_t(1, s)),
+            (fr(47, 6720), _symm_s(1)),
             ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= 4.0
+        self.weights *= 4
         return

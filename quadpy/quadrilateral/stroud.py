@@ -3,6 +3,7 @@
 import warnings
 
 import numpy
+from sympy import Rational as fr, sqrt
 
 from .albrecht_collatz import AlbrechtCollatz
 from .burnside import Burnside
@@ -26,20 +27,20 @@ class Stroud(object):
     Prentice Hall, 1971.
     '''
     def __init__(self, index):
-        reference_volume = 4.0
+        reference_volume = 4
         if index == 'C2 1-1':
             # Product trapezoidal
             self.degree = 1
-            self.weights = reference_volume * numpy.full(4, 0.25)
-            self.points = _symm_s(1.0)
+            self.weights = reference_volume * numpy.full(4, fr(1, 4))
+            self.points = _symm_s(1)
         elif index == 'C2 1-2':
             self.set_data(Miller())
         elif index == 'C2 3-1':
             # Product Gauss
             self.degree = 3
-            self.weights = reference_volume * numpy.full(4, 0.25)
+            self.weights = reference_volume * numpy.full(4, fr(1, 4))
             # ERR misprint in Stroud: sqrt(1/3) vs 1/3
-            self.points = _symm_s(numpy.sqrt(1.0/3.0))
+            self.points = _symm_s(sqrt(fr(1, 3)))
         elif index == 'C2 3-2':
             self.set_data(ncube.Ewing(2))
         elif index == 'C2 3-3':
@@ -58,11 +59,11 @@ class Stroud(object):
         elif index == 'C2 5-4':
             # product Gauss
             self.degree = 5
-            r = numpy.sqrt(3.0 / 5.0)
+            r = sqrt(fr(3, 5))
             data = [
-                (16.0/81.0, _z()),
-                (10.0/81.0, _symm_r_0(r)),
-                (25.0/324.0, _symm_s(r)),
+                (fr(16, 81), _z()),
+                (fr(10, 81), _symm_r_0(r)),
+                (fr(25, 324), _symm_s(r)),
                 ]
             self.points, self.weights = untangle(data)
             self.weights *= reference_volume
@@ -84,14 +85,12 @@ class Stroud(object):
             warnings.warn('Formula {} only has degree 1!'.format(index))
             self.degree = 1
 
-            r = numpy.sqrt((15.0 - 2.0*numpy.sqrt(30)) / 35.0)
-            s = numpy.sqrt((15.0 + 2.0*numpy.sqrt(30)) / 35.0)
+            r, s = [sqrt((15 - i*2*sqrt(30)) / 35) for i in [+1, -1]]
 
-            B1 = (59.0 + 6.0*numpy.sqrt(30.0)) / 864.0
-            B2 = (59.0 - 6.0*numpy.sqrt(30.0)) / 864.0
-            B3 = 49.0 / 864.0
+            B1, B2 = [(59 + i*6*sqrt(30)) / 864 for i in [+1, -1]]
+            B3 = fr(49, 864)
 
-            r = numpy.sqrt(3.0 / 5.0)
+            r = sqrt(fr(3, 5))
             data = [
                 (B1, _symm_s(r)),
                 (B2, _symm_s(s)),
@@ -119,7 +118,7 @@ class Stroud(object):
 
         # elif index == 2:
         #     self.weights = 4 * [1.0]
-        #     self.points = _symm_r_0(numpy.sqrt(2.0/3.0))
+        #     self.points = _symm_r_0(sqrt(2.0/3.0))
         #     self.degree = 3
         # elif index == 3:
         #     self.weights = (
@@ -150,7 +149,7 @@ class Stroud(object):
         #     self.points = (
         #         _symm_s(1.0) +
         #         [[0.0, 0.0]] +
-        #         _symm_r_0(numpy.sqrt(2.0 / 5.0))
+        #         _symm_r_0(sqrt(2.0 / 5.0))
         #         )
         #     self.degree = 5
         # elif index == 7:
