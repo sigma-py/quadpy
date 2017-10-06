@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
+from sympy import sqrt, Rational as fr
 
 from .helpers import _s4
-
 from ..helpers import untangle
 
 
@@ -36,19 +36,19 @@ class HammerMarloweStroud(object):
         if index == 1:
             self.degree = 2
             data = [
-                (0.25, _r(1.0 / numpy.sqrt(5.0))),
+                (fr(1, 4), _r(1/sqrt(5))),
                 ]
         elif index == 2:
             self.degree = 2
             data = [
-                (0.25, _r(-1.0 / numpy.sqrt(5.0))),
+                (fr(1, 4), _r(-1/sqrt(5))),
                 ]
         else:
             assert index == 3
             self.degree = 3
             data = [
-                (-0.8, _s4()),
-                (9.0/20.0, _r(1.0 / 3.0)),
+                (-fr(4, 5), _s4()),
+                (fr(9, 20), _r(fr(1, 3))),
                 ]
 
         self.bary, self.weights = untangle(data)
@@ -60,8 +60,8 @@ def _r(r):
     '''Given $r$ (as appearing in the article), it returns the barycentric
     coordinates of the three points.
     '''
-    a = r + (1.0-r) / 4.0
-    b = (1.0 - a) / 3.0
+    a = r + (1-r) / 4
+    b = (1 - a) / 3
     return numpy.array([
         [a, b, b, b],
         [b, a, b, b],
