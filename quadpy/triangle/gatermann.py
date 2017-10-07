@@ -31,6 +31,6 @@ class Gatermann(object):
             ]
 
         self.bary, self.weights = untangle(data)
-        self.weights *= 2.0
+        self.weights *= 2
         self.points = self.bary[:, 1:]
         return
