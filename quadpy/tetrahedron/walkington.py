@@ -34,7 +34,7 @@ class Walkington(object):
 
 
 def _xi1(a):
-    b = 1.0 - 3*a
+    b = 1 - 3*a
     return numpy.array([
         [b, a, a, a],
         [a, b, a, a],
@@ -44,7 +44,7 @@ def _xi1(a):
 
 
 def _xi11(a):
-    b = (1.0 - 2*a) / 2.0
+    b = (1 - 2*a) / 2
     return numpy.array([
         [b, b, a, a],
         [b, a, b, a],

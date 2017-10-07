@@ -7,9 +7,10 @@ from .. import helpers
 
 
 def integrate(f, wedge, scheme, sumfun=helpers.kahan_sum):
-    x = _transform(scheme.points.T, wedge)
-    det = _get_detJ(scheme.points.T, wedge)
-    return sumfun(scheme.weights * f(x) * abs(det), axis=-1)
+    flt = numpy.vectorize(float)
+    x = _transform(flt(scheme.points).T, wedge)
+    det = _get_detJ(flt(scheme.points).T, wedge)
+    return sumfun(flt(scheme.weights) * f(x) * abs(det), axis=-1)
 
 
 def _transform(xi, wedge):

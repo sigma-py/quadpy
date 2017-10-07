@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
+from sympy import sqrt, Rational as fr
 
 from .helpers import _symm_r_0, _z, _symm_s_t
-
 from ..helpers import untangle
 
 
@@ -21,17 +20,16 @@ class Maxwell(object):
         self.name = 'Maxwell'
         self.degree = 7
 
-        r = numpy.sqrt(12.0 / 35.0)
-        s = numpy.sqrt((93.0 + 3.0*numpy.sqrt(186.0)) / 155.0)
-        t = numpy.sqrt((93.0 - 3.0*numpy.sqrt(186.0)) / 155.0)
+        r = sqrt(fr(12, 35))
+        s, t = [sqrt((93 + i*3*sqrt(186)) / 155) for i in [+1, -1]]
 
         data = [
-            (1.0/81.0, _z()),
-            (49.0/324.0, _symm_r_0(r)),
-            # typo in Stroud: 648 vs 649
-            (31.0/648.0, _symm_s_t(s, t))
+            (fr(1, 81), _z()),
+            (fr(49, 324), _symm_r_0(r)),
+            # ERR typo in Stroud: 648 vs 649
+            (fr(31, 648), _symm_s_t(s, t))
             ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= 4.0
+        self.weights *= 4
         return

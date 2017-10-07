@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
+from sympy import sqrt, Rational as fr, cos, acos
 
 from .helpers import _s4
 
 
+# TODO update weight/points specification
 class LiuVinokur(object):
     '''
     Y. Liu and M. Vinokur,
@@ -17,7 +19,7 @@ class LiuVinokur(object):
     def __init__(self, index):
         if index == 1:
             self.weights = numpy.concatenate([
-                numpy.full(1, 1.0),
+                numpy.full(1, 1),
                 ])
             bary = numpy.concatenate([
                 _s4(),
@@ -25,7 +27,7 @@ class LiuVinokur(object):
             self.degree = 1
         elif index == 2:
             self.weights = numpy.concatenate([
-                numpy.full(4, 0.25),
+                numpy.full(4, fr(1, 4)),
                 ])
             bary = numpy.concatenate([
                 _r_alpha(1.0),
@@ -33,178 +35,178 @@ class LiuVinokur(object):
             self.degree = 1
         elif index == 3:
             self.weights = numpy.concatenate([
-                numpy.full(4, 0.25),
+                numpy.full(4, fr(1, 4)),
                 ])
             bary = numpy.concatenate([
-                _r_alpha(1.0 / numpy.sqrt(5.0)),
+                _r_alpha(1/sqrt(5)),
                 ])
             self.degree = 2
         elif index == 4:
             self.weights = numpy.concatenate([
-                numpy.full(1, 0.8),
-                numpy.full(4, 0.05),
+                numpy.full(1, fr(4, 5)),
+                numpy.full(4, fr(1, 20)),
                 ])
             bary = numpy.concatenate([
                 _s4(),
-                _r_alpha(1.0),
+                _r_alpha(1),
                 ])
             self.degree = 2
         elif index == 5:
             self.weights = numpy.concatenate([
-                numpy.full(1, -0.8),
-                numpy.full(4, 0.45),
+                numpy.full(1, -fr(4, 5)),
+                numpy.full(4, fr(9, 20)),
                 ])
             bary = numpy.concatenate([
                 _s4(),
-                _r_alpha(1.0/3.0),
+                _r_alpha(fr(1, 3)),
                 ])
             self.degree = 3
         elif index == 6:
             self.weights = numpy.concatenate([
-                numpy.full(4, 1.0/40.0),
-                numpy.full(4, 9.0/40.0),
+                numpy.full(4, fr(1, 40)),
+                numpy.full(4, fr(9, 40)),
                 ])
             bary = numpy.concatenate([
-                _r_alpha(1.0),
-                _r_alpha(-1.0/3.0),
+                _r_alpha(1),
+                _r_alpha(-fr(1, 3)),
                 ])
             self.degree = 3
         elif index == 7:
             self.weights = numpy.concatenate([
-                numpy.full(1, -148.0/1875.0),
-                numpy.full(4, 343.0/7500.0),
-                numpy.full(6, 56.0/375.0),
+                numpy.full(1, -fr(148, 1875)),
+                numpy.full(4, fr(343, 7500)),
+                numpy.full(6, fr(56, 375)),
                 ])
             bary = numpy.concatenate([
                 _s4(),
-                _r_alpha(5.0/7.0),
-                _r_beta(numpy.sqrt(70.0)/28.0),
+                _r_alpha(fr(5, 7)),
+                _r_beta(sqrt(70)/28),
                 ])
             self.degree = 4
         elif index == 8:
             alpha1 = (
-                + numpy.sqrt(65944.0 - 19446*numpy.sqrt(11))
-                + 51*numpy.sqrt(11) - 154.0
-                ) / 89.0
+                + sqrt(65944 - 19446*sqrt(11))
+                + 51*sqrt(11) - 154
+                ) / 89
             alpha2 = (
-                - numpy.sqrt(65944.0 - 19446*numpy.sqrt(11))
-                + 51*numpy.sqrt(11) - 154.0
-                ) / 89.0
+                - sqrt(65944 - 19446*sqrt(11))
+                + 51*sqrt(11) - 154
+                ) / 89
             self.weights = numpy.concatenate([
                 numpy.full(
-                    4, (17*alpha2 - 7.0)/(420.0*alpha1**2 * (alpha2 - alpha1))
+                    4, (17*alpha2 - 7)/(420*alpha1**2 * (alpha2 - alpha1))
                     ),
                 numpy.full(
-                    4, (17*alpha1 - 7.0)/(420.0*alpha2**2 * (alpha1 - alpha2))
+                    4, (17*alpha1 - 7)/(420*alpha2**2 * (alpha1 - alpha2))
                     ),
-                numpy.full(6, 2.0/105.0),
+                numpy.full(6, fr(2, 105)),
                 ])
             bary = numpy.concatenate([
                 _r_alpha(alpha1),
                 _r_alpha(alpha2),
-                _r_beta(0.5),
+                _r_beta(fr(1, 2)),
                 ])
             self.degree = 4
         elif index == 9:
             self.weights = numpy.concatenate([
-                numpy.full(1, -32.0/15.0),
-                numpy.full(4, 3.0/280.0),
-                numpy.full(4, 125.0/168.0),
-                numpy.full(6, 2.0/105.0),
+                numpy.full(1, -fr(32, 15)),
+                numpy.full(4, fr(3, 280)),
+                numpy.full(4, fr(125, 168)),
+                numpy.full(6, fr(2, 105)),
                 ])
             bary = numpy.concatenate([
                 _s4(),
                 _r_alpha(1),
-                _r_alpha(0.2),
-                _r_beta(0.5),
+                _r_alpha(fr(1, 5)),
+                _r_beta(fr(1, 2)),
                 ])
             self.degree = 4
         elif index == 10:
             self.weights = numpy.concatenate([
-                numpy.full(1, 32.0/105.0),
-                numpy.full(4, -31.0/840.0),
-                numpy.full(4, 27.0/280.0),
-                numpy.full(12, 4.0/105.0),
+                numpy.full(1, fr(32, 105)),
+                numpy.full(4, -fr(31, 840)),
+                numpy.full(4, fr(27, 280)),
+                numpy.full(12, fr(4, 105)),
                 ])
             bary = numpy.concatenate([
                 _s4(),
                 _r_alpha(1),
-                _r_alpha(-1.0/3.0),
+                _r_alpha(-fr(1, 3)),
                 _r_gamma_delta(
-                    (2 + numpy.sqrt(2.0)) / 4.0,
-                    (2 - numpy.sqrt(2.0)) / 4.0,
+                    (2 + sqrt(2)) / 4,
+                    (2 - sqrt(2)) / 4,
                     ),
                 ])
             self.degree = 4
         elif index == 11:
             self.weights = numpy.concatenate([
-                (11.0 - 4*numpy.sqrt(2.0)) / numpy.full(4, 840.0),
-                (243.0 - 108*numpy.sqrt(2.0)) / numpy.full(4, 1960.0),
-                (62.0 + 44*numpy.sqrt(2.0)) / numpy.full(4, 735.0),
-                numpy.full(6, 2.0/105.0),
+                (11 - 4*sqrt(2)) / numpy.full(4, 840),
+                (243 - 108*sqrt(2)) / numpy.full(4, 1960),
+                (62 + 44*sqrt(2)) / numpy.full(4, 735),
+                numpy.full(6, fr(2, 105)),
                 ])
             bary = numpy.concatenate([
                 _r_alpha(1),
-                _r_alpha(-1.0/3.0),
-                _r_alpha(numpy.sqrt(2.0) - 1.0),
-                _r_beta(0.5),
+                _r_alpha(-fr(1, 3)),
+                _r_alpha(sqrt(2) - 1),
+                _r_beta(fr(1, 2)),
                 ])
             self.degree = 4
         elif index == 12:
-            lmbda = 4.0/27.0 * (4.0 * numpy.sqrt(79.0)*numpy.cos(
-                (numpy.arccos(67*numpy.sqrt(79.0)/24964.0) + 2*numpy.pi) / 3.0
-                ) + 71.0
+            lmbda = fr(4, 27) * (4 * sqrt(79)*cos(
+                (acos(67*sqrt(79)/24964) + 2*numpy.pi) / 3
+                ) + 71
                 )
             alpha1 = (
-                + numpy.sqrt(9*lmbda**2 - 248*lmbda + 1680) + 28.0 - 3*lmbda
-                ) / (112.0 - 10*lmbda)
+                + sqrt(9*lmbda**2 - 248*lmbda + 1680) + 28 - 3*lmbda
+                ) / (112 - 10*lmbda)
             alpha2 = (
-                - numpy.sqrt(9*lmbda**2 - 248*lmbda + 1680) + 28.0 - 3*lmbda
-                ) / (112.0 - 10*lmbda)
-            w1 = ((21.0 - lmbda)*alpha2 - 7.0) \
-                / (420.0*alpha1**2 * (alpha2 - alpha1))
-            w2 = ((21.0 - lmbda)*alpha1 - 7.0) \
-                / (420.0*alpha2**2 * (alpha1 - alpha2))
+                - sqrt(9*lmbda**2 - 248*lmbda + 1680) + 28 - 3*lmbda
+                ) / (112 - 10*lmbda)
+            w1 = ((21 - lmbda)*alpha2 - 7) \
+                / (420*alpha1**2 * (alpha2 - alpha1))
+            w2 = ((21 - lmbda)*alpha1 - 7) \
+                / (420*alpha2**2 * (alpha1 - alpha2))
             self.weights = numpy.concatenate([
                 numpy.full(4, w1),
                 numpy.full(4, w2),
-                numpy.full(6, lmbda**2 / 840.0),
+                numpy.full(6, lmbda**2 / 840),
                 ])
             bary = numpy.concatenate([
                 _r_alpha(alpha1),
                 _r_alpha(alpha2),
-                _r_beta(1.0 / numpy.sqrt(lmbda)),
+                _r_beta(1/sqrt(lmbda)),
                 ])
             self.degree = 5
         elif index == 13:
             self.weights = numpy.concatenate([
-                numpy.full(1, -16.0/21.0),
-                (2249.0 - 391.0*numpy.sqrt(13.0)) / numpy.full(4, 10920.0),
-                (2249.0 + 391.0*numpy.sqrt(13.0)) / numpy.full(4, 10920.0),
-                2.0 / numpy.full(6, 105.0),
+                numpy.full(1, -fr(16, 21)),
+                numpy.full(4, (2249 - 391*sqrt(13)) / 10920),
+                numpy.full(4, (2249 + 391*sqrt(13)) / 10920),
+                numpy.full(6, fr(2, 105)),
                 ])
             bary = numpy.concatenate([
                 _s4(),
-                _r_alpha((2.0 + numpy.sqrt(13.0)) / 9.0),
-                _r_alpha((2.0 - numpy.sqrt(13.0)) / 9.0),
-                _r_beta(0.5),
+                _r_alpha((2 + sqrt(13)) / 9),
+                _r_alpha((2 - sqrt(13)) / 9),
+                _r_beta(fr(1, 2)),
                 ])
             self.degree = 5
         else:
             assert index == 14
             self.weights = numpy.concatenate([
-                numpy.full(1, 16.0/105.0),
-                numpy.full(4, 1.0/280.0),
-                numpy.full(4, 81.0/1400.0),
-                numpy.full(4, 64.0/525.0),
-                numpy.full(6, 2.0/105.0),
+                numpy.full(1, fr(16, 105)),
+                numpy.full(4, fr(1, 280)),
+                numpy.full(4, fr(81, 1400)),
+                numpy.full(4, fr(64, 525)),
+                numpy.full(6, fr(2, 105)),
                 ])
             bary = numpy.concatenate([
                 _s4(),
-                _r_alpha(1.0),
-                _r_alpha(-1.0/3.0),
-                _r_alpha(0.5),
-                _r_beta(0.5),
+                _r_alpha(1),
+                _r_alpha(-fr(1, 3)),
+                _r_alpha(fr(1, 2)),
+                _r_beta(fr(1, 2)),
                 ])
             self.degree = 5
 
@@ -220,8 +222,8 @@ def _r_alpha(alpha):
 
     where n is the number of vertices
     '''
-    a = (1.0 + 3*alpha) / 4.0
-    b = (1.0 - alpha) / 4.0
+    a = (1 + 3*alpha) / 4
+    b = (1 - alpha) / 4
     return numpy.array([
         [a, b, b, b],
         [b, a, b, b],
@@ -239,8 +241,8 @@ def _r_beta(beta):
 
     where n is the number of vertices.
     '''
-    a = (1.0 + 2*beta) / 4.0
-    b = (1.0 - 2*beta) / 4.0
+    a = (1 + 2*beta) / 4
+    b = (1 - 2*beta) / 4
     return numpy.array([
         [a, a, b, b],
         [a, b, a, b],
@@ -260,9 +262,9 @@ def _r_gamma_delta(gamma, delta):
 
     where n is the number of vertices
     '''
-    b = (1.0 + 3*gamma - delta) / 4.0
-    c = (1.0 + 3*delta - gamma) / 4.0
-    a = (1.0 - gamma - delta) / 4.0
+    b = (1 + 3*gamma - delta) / 4
+    c = (1 + 3*delta - gamma) / 4
+    a = (1 - gamma - delta) / 4
     return numpy.array([
         [a, a, b, c],
         [a, b, a, c],

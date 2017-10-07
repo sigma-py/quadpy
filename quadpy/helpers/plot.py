@@ -224,6 +224,10 @@ def show_vtk(points, weights, volume, edges, balls=None):
         sphere_actor.GetProperty().SetOpacity(opacity)
         return sphere_actor
 
+    flt = numpy.vectorize(float)
+    points = flt(points)
+    weights = flt(weights)
+
     balls = [] if balls is None else balls
 
     line_actors = [get_line_actor(edge[:, 0], edge[:, 1]) for edge in edges]
@@ -268,6 +272,16 @@ def show_vtk(points, weights, volume, edges, balls=None):
     interactor.Initialize()
     render_window.Render()
     interactor.Start()
+
+    # # Screenshot
+    # TODO transparent background
+    # w2if = vtk.vtkWindowToImageFilter()
+    # w2if.SetInput(render_window)
+    # w2if.Update()
+    # writer = vtk.vtkPNGWriter()
+    # writer.SetFileName('screenshot.png')
+    # writer.SetInputConnection(w2if.GetOutputPort())
+    # writer.Write()
     return
 
 
