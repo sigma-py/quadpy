@@ -5203,5 +5203,5 @@ class XiaoGimbutas(object):
                 0.00907033305470961,
                 ])
 
-        self.points = bary[:, [1, 2, 3]]
+        self.points = bary[:, 1:]
         return
