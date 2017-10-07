@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from sympy import sqrt, Rational as fr
+from sympy import sqrt, Rational as fr, cos, acos
 
 from .helpers import _s4
+
 
 # TODO update weight/points specification
 class LiuVinokur(object):
@@ -152,8 +153,8 @@ class LiuVinokur(object):
                 ])
             self.degree = 4
         elif index == 12:
-            lmbda = fr(4, 27) * (4 * sqrt(79)*numpy.cos(
-                (numpy.arccos(67*sqrt(79)/24964) + 2*numpy.pi) / 3
+            lmbda = fr(4, 27) * (4 * sqrt(79)*cos(
+                (acos(67*sqrt(79)/24964) + 2*numpy.pi) / 3
                 ) + 71
                 )
             alpha1 = (
