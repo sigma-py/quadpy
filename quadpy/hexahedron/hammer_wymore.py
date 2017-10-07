@@ -17,8 +17,7 @@ class HammerWymore(object):
         self.degree = 7
 
         r2 = fr(6, 7)
-        s2 = (960 - 3*sqrt(28798)) / 2726
-        t2 = (960 + 3*sqrt(28798)) / 2726
+        s2, t2 = [(960 - i*3*sqrt(28798)) / 2726 for i in [+1, -1]]
 
         r = sqrt(r2)
         s = sqrt(s2)

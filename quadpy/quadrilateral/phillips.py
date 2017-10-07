@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
+from sympy import sqrt, Rational as fr
 
 from .helpers import _symm_r_0, _pm2
-
 from ..helpers import untangle
 
 
@@ -21,14 +20,12 @@ class Phillips(object):
     def __init__(self):
         self.name = 'Phillips'
 
-        c = 3.0*numpy.sqrt(385.0)
-        r = numpy.sqrt((105.0 + c) / 140.0)
-        s = numpy.sqrt((105.0 - c) / 140.0)
-        t = numpy.sqrt(3.0 / 5.0)
+        c = 3*sqrt(385)
+        r, s = [sqrt((105 + i*c) / 140) for i in [+1, -1]]
+        t = sqrt(fr(3, 5))
 
-        B1 = (77.0 - c) / 891.0
-        B2 = (77.0 + c) / 891.0
-        B3 = 25.0 / 324.0
+        B1, B2 = [(77 - i*c) / 891 for i in [+1, -1]]
+        B3 = fr(25, 324)
 
         self.degree = 7
         data = [
@@ -38,5 +35,5 @@ class Phillips(object):
             ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= 4.0
+        self.weights *= 4
         return

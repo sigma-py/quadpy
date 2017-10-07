@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
+from sympy import sqrt, Rational as fr
 
 from .helpers import _symm_r_0, _symm_s, _z
-
 from ..helpers import untangle
 
 
@@ -19,19 +18,20 @@ class Tyler(object):
         if index == 1:
             self.degree = 5
             data = [
-                (-28.0/45.0, _z()),
-                (1.0/36.0, _symm_s(1.0)),
-                (1.0/45.0, _symm_r_0(1.0)),
-                (16.0/45.0, _symm_r_0(0.5)),
+                (-fr(28, 45), _z()),
+                (fr(1, 36), _symm_s(1)),
+                (fr(1, 45), _symm_r_0(1)),
+                (fr(16, 45), _symm_r_0(fr(1, 2))),
                 ]
         elif index == 2:
             self.degree = 7
-            r = numpy.sqrt(6.0 / 7.0)
-            s = numpy.sqrt((114.0 - 3*numpy.sqrt(583.0)) / 287.0)
-            t = numpy.sqrt((114.0 + 3*numpy.sqrt(583.0)) / 287.0)
-            B1 = 49.0 / 810.0
-            B2 = (178981.0 + 2769 * numpy.sqrt(583.0)) / 1888920.0
-            B3 = (178981.0 - 2769 * numpy.sqrt(583.0)) / 1888920.0
+            r = sqrt(fr(6, 7))
+            s, t = [sqrt((114 - i*3*sqrt(583)) / 287) for i in [+1, -1]]
+            B1 = fr(49, 810)
+            B2, B3 = [
+                (178981 + i * 2769 * sqrt(583)) / 1888920
+                for i in [+1, -1]
+                ]
             data = [
                 (B1, _symm_r_0(r)),
                 (B2, _symm_s(s)),
@@ -40,18 +40,18 @@ class Tyler(object):
         else:
             assert index == 3
             self.degree = 7
-            r = 2.0/3.0
-            s = 1.0/3.0
-            t = 0.5
+            r = fr(2, 3)
+            s = fr(1, 3)
+            t = fr(1, 2)
             data = [
-                (449.0/315.0, _z()),
-                (37.0/1260.0, _symm_r_0(1.0)),
-                (3.0/28.0, _symm_r_0(r)),
-                (-69.0/140.0, _symm_r_0(s)),
-                (7.0/540.0, _symm_s(1.0)),
-                (32.0/135.0, _symm_s(t)),
+                (fr(449, 315), _z()),
+                (fr(37, 1260), _symm_r_0(1)),
+                (fr(3, 28), _symm_r_0(r)),
+                (-fr(69, 140), _symm_r_0(s)),
+                (fr(7, 540), _symm_s(1)),
+                (fr(32, 135), _symm_s(t)),
                 ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= 4.0
+        self.weights *= 4
         return

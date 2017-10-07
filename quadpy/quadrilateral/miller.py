@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _symm_r_0, _symm_s, _z
+from sympy import Rational as fr
 
+from .helpers import _symm_r_0, _symm_s, _z
 from ..helpers import untangle
 
 
@@ -19,11 +20,11 @@ class Miller(object):
         self.name = 'Miller'
         self.degree = 1
         data = [
-            (250.0/225.0, _z()),
-            (-8.0/225.0, _symm_r_0(1.0)),
-            (7.0/900.0, _symm_s(1.0)),
+            (fr(250, 225), _z()),
+            (-fr(8, 225), _symm_r_0(1)),
+            (fr(7, 900), _symm_s(1)),
             ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= 4.0
+        self.weights *= 4
         return

@@ -32,7 +32,11 @@ def _plot_mpl(scheme):
     ax = fig.gca(projection='3d')
     ax.set_aspect('equal')
 
-    for p, w in zip(scheme.points, scheme.weights):
+    flt = numpy.vectorize(float)
+    pts = flt(scheme.points)
+    wgs = flt(scheme.weights)
+
+    for p, w in zip(pts, wgs):
         # <https://en.wikipedia.org/wiki/Spherical_cap>
         w *= 4 * numpy.pi
         theta = numpy.arccos(1.0 - abs(w) / (2*numpy.pi))

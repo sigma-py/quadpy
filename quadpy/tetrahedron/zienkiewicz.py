@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _s4, _s31
+from sympy import Rational as fr
 
+from .helpers import _s4, _s31
 from ..helpers import untangle
 
 
@@ -19,14 +20,14 @@ class Zienkiewicz(object):
         if index == 4:
             self.degree = 2
             data = [
-                (0.25, _s31(0.1381966011250105))
+                (fr(1, 4), _s31(0.1381966011250105))
                 ]
         else:
             assert index == 5
             self.degree = 3
             data = [
-                (-0.8, _s4()),
-                (0.45, _s31(1.0/6.0)),
+                (-fr(4, 5), _s4()),
+                (fr(9, 20), _s31(fr(1, 6))),
                 ]
 
         self.bary, self.weights = untangle(data)

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _s4, _s31, _s211
+from sympy import Rational as fr
 
+from .helpers import _s4, _s31, _s211
 from ..helpers import untangle
 
 
@@ -22,13 +23,13 @@ class Yu(object):
         if index == 1:
             self.degree = 2
             data = [
-                (0.25, _s31(0.138196601125015))
+                (fr(1, 4), _s31(0.138196601125015))
                 ]
         elif index == 2:
             self.degree = 3
             data = [
-                (-0.8, _s4()),
-                (0.45, _s31(1.0/6.0))
+                (-fr(4, 5), _s4()),
+                (fr(9, 20), _s31(fr(1, 6)))
                 ]
         elif index == 3:
             self.degree = 4

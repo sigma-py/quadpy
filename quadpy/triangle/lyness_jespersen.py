@@ -52,13 +52,12 @@ class LynessJespersen(object):
         elif index == 5:
             self.degree = 4
             data = [
-                (3.298552309659655E-01/3.0, _s21(9.157621350977073E-02)),
-                (6.701447690340345E-01/3.0, _s21(4.459484909159649E-01)),
+                (3.298552309659655E-01 / 3, _s21(9.157621350977073E-02)),
+                (6.701447690340345E-01 / 3, _s21(4.459484909159649E-01)),
                 ]
         elif index == 6:
             self.degree = 4
-            a0 = (3 + sqrt(3)) / 6
-            a1 = (3 - sqrt(3)) / 6
+            a0, a1 = [(3 + i*sqrt(3)) / 6 for i in [+1, -1]]
             data = [
                 (+fr(9, 20), _s3()),
                 (-fr(1, 60), _s21(0)),
@@ -75,10 +74,12 @@ class LynessJespersen(object):
         elif index == 8:
             self.degree = 5
             sqrt15 = sqrt(15)
+            a1, a2 = [(155 - i*sqrt15) / 1200 for i in [+1, -1]]
+            r1, r2 = [(6 - i*sqrt15)/21 for i in [+1, -1]]
             data = [
                 (fr(9, 40), _s3()),
-                ((155 - sqrt15) / 1200, _s21((6 - sqrt15)/21)),
-                ((155 + sqrt15) / 1200, _s21((6 + sqrt15)/21)),
+                (a1, _s21(r1)),
+                (a2, _s21(r2)),
                 ]
         elif index == 9:
             self.degree = 5
