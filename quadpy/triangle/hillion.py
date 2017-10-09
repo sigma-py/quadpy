@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-import warnings
-
 import numpy
 from sympy import Rational as fr, sqrt
 
@@ -21,9 +19,6 @@ class Hillion(object):
     '''
     def __init__(self, index):
         self.name = 'Hillion(%d)' % index
-
-        warnings.warn('Some Hillion schemes are single precision only.')
-        # TODO generate more digits
 
         if index == 1:
             self.degree = 1
@@ -58,8 +53,8 @@ class Hillion(object):
                 ]
         elif index == 6:
             self.degree = 2
-            lmbda = 0.655308609
-            mu = 0.247060398
+            lmbda = (2 + sqrt(2 + sqrt(3))) / 6
+            mu = (2 - sqrt(2 - sqrt(3))) / 6
             data = [
                 (fr(1, 8), _symm(lmbda, mu)),
                 (fr(1, 8), fr(2, 3) - _symm(lmbda, mu)),
