@@ -17,15 +17,13 @@ class Hillion(object):
     DOI:10.1002/nme.1620110504,
     <https://dx.doi.org/10.1002/nme.1620110504>.
 
-    Note that the schemes here are not fully symmetric. Also note that in the
-    article, the quadrature constants are specified with low precision such
-    that the tests are failing. What is needed here is a reimplementation of
-    Hillion's method to retrieve more digits.
+    Note that the schemes here are not fully symmetric.
     '''
     def __init__(self, index):
         self.name = 'Hillion(%d)' % index
 
         warnings.warn('Some Hillion schemes are single precision only.')
+        # TODO generate more digits
 
         if index == 1:
             self.degree = 1
@@ -46,16 +44,14 @@ class Hillion(object):
                 ]
         elif index == 4:
             self.degree = 2
-            a0 = (3 + sqrt(3)) / 8
-            a1 = (3 - sqrt(3)) / 8
+            a0, a1 = [(3 + i*sqrt(3)) / 8 for i in [+1, -1]]
             data = [
                 (fr(1, 18), numpy.array([[0, 0]])),
                 (fr(2, 9), _symm(a0, a1)),
                 ]
         elif index == 5:
             self.degree = 2
-            a0 = (3 + sqrt(3)) / 8
-            a1 = (3 - sqrt(3)) / 8
+            a0, a1 = [(3 + i*sqrt(3)) / 8 for i in [+1, -1]]
             data = [
                 (fr(1, 18), fr(2, 3) - numpy.array([[0, 0]])),
                 (fr(2, 9), fr(2, 3) - _symm(a0, a1))
@@ -77,12 +73,12 @@ class Hillion(object):
         #         ]
         elif index == 8:
             self.degree = 3
-            lambda2 = 0.433949142
-            lambda3 = 0.175574667
+            lambda2, lambda3 = [(32 + i*2*sqrt(46))/105 for i in [+1, -1]]
+            w1, w2 = [(3266 + i * 19*sqrt(46)) / 17664 for i in [+1, -1]]
             data = [
-                (0.065104166, _symm(0, fr(4, 5))),
-                (0.192191138, numpy.array([[lambda2, lambda2]])),
-                (0.177600528, numpy.array([[lambda3, lambda3]])),
+                (fr(25, 384), _symm(0, fr(4, 5))),
+                (w1, numpy.array([[lambda2, lambda2]])),
+                (w2, numpy.array([[lambda3, lambda3]])),
                 ]
         # Not working. The weights don't even add up.
         # elif index == 9:
@@ -95,9 +91,11 @@ class Hillion(object):
         else:
             assert index == 10
             self.degree = 3
+            lambda1, lambda2 = [(16 + i*2*sqrt(14))/25 for i in [+1, -1]]
+            w1, w2 = [(161 + i * 17*sqrt(14))/2688 for i in [+1, -1]]
             data = [
-                (0.036232077, _symm(0.939332590, 0)),
-                (0.083559589, _symm(0, 0.340667409)),
+                (w2, _symm(lambda1, 0)),
+                (w1, _symm(0, lambda2)),
                 (fr(25, 96), numpy.array([[fr(2, 5), fr(2, 5)]])),
                 ]
 
