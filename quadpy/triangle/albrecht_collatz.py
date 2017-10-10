@@ -5,7 +5,6 @@ from __future__ import division
 from sympy import Rational
 
 from .helpers import _s21
-
 from ..helpers import untangle
 
 
