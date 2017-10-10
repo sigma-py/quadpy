@@ -54,19 +54,23 @@ class Hillion(object):
                 ]
         elif index == 6:
             self.degree = 2
-            lmbda = (2 + sqrt(2 + sqrt(3))) / 6
-            mu = (2 - sqrt(2 - sqrt(3))) / 6
+            lm, mu = [(2 + i*sqrt(2 + i*sqrt(3))) / 6 for i in [+1, -1]]
             data = [
-                (fr(1, 8), _symm(lmbda, mu)),
-                (fr(1, 8), _symm(fr(2, 3) - lmbda, fr(2, 3) - mu)),
+                (fr(1, 8), _symm(lm, mu)),
+                (fr(1, 8), _symm(fr(2, 3) - lm, fr(2, 3) - mu)),
                 ]
-        # Not working
-        # elif index == 7:
-        #     self.degree = 3
-        #     data = [
-        #         (0.159020691, _symm(0.666390246, 0.280019915)),
-        #         (0.090979309, _symm(0.178558728, 0.075031109)),
-        #         ]
+        elif index == 7:
+            self.degree = 3
+            a = (6 + sqrt(2) + sqrt(6 * (3 + 2*sqrt(2)))) / 20
+            b = (6 + sqrt(2) - sqrt(6 * (3 + 2*sqrt(2)))) / 20
+            c = (6 - sqrt(2) + sqrt(6 * (3 - 2*sqrt(2)))) / 20
+            d = (6 - sqrt(2) - sqrt(6 * (3 - 2*sqrt(2)))) / 20
+            w1 = (2 - 3 * (b+c)) / 12 / (a+d-b-c)
+            w2 = (2 - 3 * (a+d)) / 12 / (b+c-a-d)
+            data = [
+                (w1, _symm(a, d)),
+                (w2, _symm(c, b)),
+                ]
         elif index == 8:
             self.degree = 3
             lambda2, lambda3 = [(32 + i*2*sqrt(46))/105 for i in [+1, -1]]

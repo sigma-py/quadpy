@@ -210,7 +210,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * [Lyness-Jespersen](https://dx.doi.org/10.1093/imamat/15.1.19) (1975, 21
    schemes up to degree 11),
  * [Lether](https://doi.org/10.1016/0771-050X(76)90008-5) (1976, degree 2n-2, arbitrary n, not symmetric)
- * [Hillion](https://dx.doi.org/10.1002/nme.1620110504) (1977, 8 schemes up to
+ * [Hillion](https://dx.doi.org/10.1002/nme.1620110504) (1977, 10 schemes up to
    degree 3),
  * [Grundmann-Möller](http://dx.doi.org/10.1137/0715019) (1978, arbitrary degree),
  * [Laursen-Gellert](https://dx.doi.org/10.1002/nme.1620120107) (1978, 17
