@@ -3,7 +3,7 @@
 import numpy
 from sympy import Rational as fr, sqrt
 
-from .helpers import _s21
+from .helpers import _s21, _s3
 from ..helpers import untangle
 
 
@@ -26,7 +26,7 @@ class Hillion(object):
         if index == 1:
             self.degree = 1
             data = [
-                (fr(1, 2), numpy.full((1, 3), fr(1, 3))),
+                (fr(1, 2), _s3()),
                 ]
         elif index == 2:
             self.degree = 2
@@ -76,14 +76,13 @@ class Hillion(object):
                 (w1, numpy.array([[lambda2, lambda2, 1 - 2*lambda2]])),
                 (w2, numpy.array([[lambda3, lambda3, 1 - 2*lambda3]])),
                 ]
-        # Not working. The weights don't even add up.
-        # elif index == 9:
-        #     self.degree = 3
-        #     data = [
-        #         (fr(9, 32), numpy.full((1, 3), fr(1, 3))),
-        #         (fr(25, 96), _symm(fr(1, 5), fr(3, 5))),
-        #         (fr(25, 96), numpy.array([[fr(1, 5), fr(1, 5), fr(3, 5)]])),
-        #         ]
+        elif index == 9:
+            self.degree = 3
+            # ERR the article is missing the minus sign
+            data = [
+                (-fr(9, 32), _s3()),
+                (fr(25, 96), _s21(fr(1, 5))),
+                ]
         else:
             assert index == 10
             self.degree = 3
