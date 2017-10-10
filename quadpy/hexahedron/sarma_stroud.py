@@ -16,7 +16,8 @@ class SarmaStroud(object):
         # parameters lambda is chosen to minimize the standard deviation of
         # Sarma's error functional. The particular value of lambda is not
         # explicitly given in the article, but computed from the specified
-        # values. Note that it is only given in single precision.
+        # values. Note that it is only given in single precision, so the
+        # minimum is only approximated.
         lmbda = 1.0329785305
         hw = HammerWymore(lmbda=lmbda)
         self.degree = hw.degree
