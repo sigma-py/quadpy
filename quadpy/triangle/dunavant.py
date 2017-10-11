@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+import numpy
 from sympy import Rational
 
-from .helpers import _s3, _s21, _s111 as fs
-
+from .helpers import _s3, _s21, _s111 as fs, _s111ab
 from ..helpers import untangle
 
 
@@ -11,12 +11,11 @@ class Dunavant(object):
     '''
     Triangle integration schemes from
 
-    D. A. Dunavant,
+    D.A. Dunavant,
     High Degree Efficient Symmetrical Gaussian Quadrature Rules for the
     Triangle,
     Article in International Journal for Numerical Methods in Engineering,
     21(6):1129-1148, June 1985,
-    10.1002/nme.1620210612,
     <https://dx.doi.org/10.1002/nme.1620210612>.
     '''
     def __init__(self, index):
@@ -24,21 +23,25 @@ class Dunavant(object):
         if index == 1:
             self.degree = 1
             data = [(1, _s3())]
+            self.bary, self.weights = untangle(data)
         elif index == 2:
             self.degree = 2
             data = [(Rational(1, 3), _s21(Rational(1, 6)))]
+            self.bary, self.weights = untangle(data)
         elif index == 3:
             self.degree = 3
             data = [
                 (-Rational(9, 16), _s3()),
                 (Rational(25, 48), _s21(Rational(1, 5))),
                 ]
+            self.bary, self.weights = untangle(data)
         elif index == 4:
             self.degree = 4
             data = [
                 (0.223381589678011, _s21(0.445948490915965)),
                 (0.109951743655322, _s21(0.091576213509771)),
                 ]
+            self.bary, self.weights = untangle(data)
         elif index == 5:
             self.degree = 5
             data = [
@@ -46,6 +49,7 @@ class Dunavant(object):
                 (0.132394152788506, _s21(0.4701420641051)),
                 (0.125939180544827, _s21(0.101286507323456)),
                 ]
+            self.bary, self.weights = untangle(data)
         elif index == 6:
             self.degree = 6
             data = [
@@ -53,6 +57,7 @@ class Dunavant(object):
                 (0.050844906370207, _s21(0.063089014491502)),
                 (0.082851075618374, fs(0.053145049844817, 0.310352451033784)),
                 ]
+            self.bary, self.weights = untangle(data)
         elif index == 7:
             self.degree = 7
             data = [
@@ -61,6 +66,7 @@ class Dunavant(object):
                 (+0.053347235608838, _s21(0.065130102902216)),
                 (+0.077113760890257, fs(0.048690315425316, 0.312865496004874)),
                 ]
+            self.bary, self.weights = untangle(data)
         elif index == 8:
             self.degree = 8
             data = [
@@ -70,6 +76,7 @@ class Dunavant(object):
                 (0.032458497623198, _s21(0.050547228317031)),
                 (0.027230314174435, fs(0.008394777409958, 0.263112829634638)),
                 ]
+            self.bary, self.weights = untangle(data)
         elif index == 9:
             self.degree = 9
             data = [
@@ -80,6 +87,7 @@ class Dunavant(object):
                 (0.025577675658698, _s21(0.044729513394453)),
                 (0.043283539377289, fs(0.036838412054736, 0.221962989160766)),
                 ]
+            self.bary, self.weights = untangle(data)
         elif index == 10:
             self.degree = 10
             data = [
@@ -90,6 +98,7 @@ class Dunavant(object):
                 (0.028327242531057, fs(0.025003534762686, 0.246672560639903)),
                 (0.009421666963733, fs(0.009540815400299, 0.066803251012200)),
                 ]
+            self.bary, self.weights = untangle(data)
         elif index == 11:
             self.degree = 11
             data = [
@@ -101,6 +110,7 @@ class Dunavant(object):
                 (0.052337111962204, fs(0.050178138310495, 0.356620648261293)),
                 (0.020707659639141, fs(0.021022016536166, 0.171488980304042)),
                 ]
+            self.bary, self.weights = untangle(data)
         elif index == 12:
             self.degree = 12
             data = [
@@ -113,6 +123,7 @@ class Dunavant(object):
                 (0.022356773202303, fs(0.022838332222257, 0.281325580989940)),
                 (0.017316231108659, fs(0.025734050548330, 0.116251915907597)),
                 ]
+            self.bary, self.weights = untangle(data)
         elif index == 13:
             self.degree = 13
             data = [
@@ -127,6 +138,7 @@ class Dunavant(object):
                 (0.017401463303822, fs(0.018100773278807, 0.291730066734288)),
                 (0.015521786839045, fs(0.022233076674090, 0.126357385491669)),
                 ]
+            self.bary, self.weights = untangle(data)
         elif index == 14:
             self.degree = 14
             data = [
@@ -141,6 +153,7 @@ class Dunavant(object):
                 (0.014436308113534, fs(0.014646950055654, 0.298372882136258)),
                 (0.005010228838501, fs(0.001268330932872, 0.118974497696957)),
                 ]
+            self.bary, self.weights = untangle(data)
         elif index == 15:
             self.degree = 15
             data = [
@@ -156,6 +169,7 @@ class Dunavant(object):
                 (0.021505319847731, fs(+0.036843869875878, 0.215599664072284)),
                 (0.007673942631049, fs(+0.012459809331199, 0.103575616576386)),
                 ]
+            self.bary, self.weights = untangle(data)
         elif index == 16:
             self.degree = 16
             data = [
@@ -173,6 +187,7 @@ class Dunavant(object):
                 (0.019084792755899, fs(+0.041941786468010, 0.189358492130623)),
                 (0.006850054546542, fs(+0.014317320230681, 0.085283615682657)),
                 ]
+            self.bary, self.weights = untangle(data)
         elif index == 17:
             self.degree = 17
             data = [
@@ -192,6 +207,7 @@ class Dunavant(object):
                 (0.018292796770025, fs(0.180483211648746, 0.752351005937729)),
                 (0.006665632004165, fs(0.080711313679564, 0.904625504095608)),
                 ]
+            self.bary, self.weights = untangle(data)
         elif index == 18:
             self.degree = 18
             data = [
@@ -213,6 +229,7 @@ class Dunavant(object):
                 (+0.007634129070725, fs(0.101179597136408, 0.883962302273467)),
                 (+0.000046187660794, fs(0.020874755282586, 1.014347260005363)),
                 ]
+            self.bary, self.weights = untangle(data)
         elif index == 19:
             self.degree = 19
             data = [
@@ -234,32 +251,69 @@ class Dunavant(object):
                 (0.010258563736199, fs(0.142421601113383, 0.822931324069857)),
                 (0.003799928855302, fs(0.065494628082938, 0.924344252620784)),
                 ]
+            self.bary, self.weights = untangle(data)
         else:
             assert index == 20
             self.degree = 20
-            data = [
-                (+0.033057055541624, _s3()),
-                (+0.000867019185663, _s21(0.500950464352200)),
-                (+0.011660052716448, _s21(0.488212957934729)),
-                (+0.022876936356421, _s21(0.455136681950283)),
-                (+0.030448982673938, _s21(0.401996259318289)),
-                (+0.030624891725355, _s21(0.255892909759421)),
-                (+0.024368057676800, _s21(0.176488255995106)),
-                (+0.015997432032024, _s21(0.104170855336758)),
-                (+0.007698301815602, _s21(0.053068963840930)),
-                (-0.000632060497488, _s21(0.041618715196029)),
-                (+0.001751134301193, _s21(0.011581921406822)),
-                (+0.016465839189576, fs(0.344855770229001, 0.606402646106160)),
-                (+0.004839033540485, fs(0.377843269594854, 0.615842614456541)),
-                (+0.025804906534650, fs(0.306635479062357, 0.559048000390295)),
-                (+0.008471091054441, fs(0.249419362774742, 0.736606743262866)),
-                (+0.018354914106280, fs(0.212775724802802, 0.711675142287434)),
-                (+0.000704404677908, fs(0.146965436053239, 0.861402717154987)),
-                (+0.010112684927462, fs(0.137726978828923, 0.835586957912363)),
-                (+0.003573909385950, fs(0.059696109149007, 0.929756171556853)),
-                ]
+            data = {
+                's3': [
+                    [+0.033057055541624],
+                    ],
+                's21': [
+                    [+0.000867019185663, 0.500950464352200],
+                    [+0.011660052716448, 0.488212957934729],
+                    [+0.022876936356421, 0.455136681950283],
+                    [+0.030448982673938, 0.401996259318289],
+                    [+0.030624891725355, 0.255892909759421],
+                    [+0.024368057676800, 0.176488255995106],
+                    [+0.015997432032024, 0.104170855336758],
+                    [+0.007698301815602, 0.053068963840930],
+                    [-0.000632060497488, 0.041618715196029],
+                    [+0.001751134301193, 0.011581921406822],
+                    ],
+                's111': [
+                    [+0.016465839189576, 0.344855770229001, 0.606402646106160],
+                    [+0.004839033540485, 0.377843269594854, 0.615842614456541],
+                    [+0.025804906534650, 0.306635479062357, 0.559048000390295],
+                    [+0.008471091054441, 0.249419362774742, 0.736606743262866],
+                    [+0.018354914106280, 0.212775724802802, 0.711675142287434],
+                    [+0.000704404677908, 0.146965436053239, 0.861402717154987],
+                    [+0.010112684927462, 0.137726978828923, 0.835586957912363],
+                    [+0.003573909385950, 0.059696109149007, 0.929756171556853],
+                    ]
+                }
 
-        # convert self.barycentric coordinates to reference triangle
-        self.bary, self.weights = untangle(data)
+            self.data = data
+            self.bary, self.weights = _untangle(data)
+
+        # convert barycentric coordinates to reference triangle
         self.points = self.bary[:, 1:]
         return
+
+
+def _collapse0(a):
+    '''Collapse all dimensions of `a` except the first.
+    '''
+    return numpy.reshape(a, (a.shape[0], numpy.prod(a.shape[1:])))
+
+
+def _untangle(data):
+    data['s3'] = numpy.array(data['s3']).T
+    data['s21'] = numpy.array(data['s21']).T
+    data['s111'] = numpy.array(data['s111']).T
+
+    s21_data = _s21(data['s21'][1])
+    s111_data = _s111ab(*data['s111'][1:])
+
+    bary = numpy.column_stack([
+        _s3().T,
+        _collapse0(s21_data),
+        _collapse0(s111_data),
+        ]).T
+
+    weights = numpy.concatenate([
+        data['s3'][0],
+        numpy.tile(data['s21'][0], 3),
+        numpy.tile(data['s111'][0], 6),
+        ])
+    return bary, weights

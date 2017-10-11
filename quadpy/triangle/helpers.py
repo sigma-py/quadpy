@@ -9,12 +9,14 @@ def _s3():
 
 
 def _s21(a):
+    a = numpy.array(a)
     b = 1 - 2*a
-    return numpy.array([
+    out = numpy.array([
         [a, a, b],
         [a, b, a],
         [b, a, a],
         ])
+    return out
 
 
 def _s111(a, b):
@@ -27,6 +29,20 @@ def _s111(a, b):
         [c, b, a],
         [a, c, b],
         ])
+
+
+def _s111ab(a, b):
+    c = 1 - a - b
+    out = numpy.array([
+        [a, b, c],
+        [c, a, b],
+        [b, c, a],
+        [b, a, c],
+        [c, b, a],
+        [a, c, b],
+        ])
+    out = numpy.swapaxes(out, 0, 1)
+    return out
 
 
 def _rot(a, b):
