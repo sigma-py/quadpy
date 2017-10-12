@@ -11,15 +11,19 @@ class Walkington(object):
         self.name = 'Walkington(triangle, {})'.format(index)
         if index == 'p5':
             self.degree = 5
+
+            a1, a2 = [(155 + i * sqrt(15))/1200 for i in [+1, -1]]
             self.weights = numpy.concatenate([
                 numpy.full(1, fr(9, 40)),
-                numpy.full(3, fr(31, 240) + sqrt(15) / 1200),
-                numpy.full(3, fr(31, 240) - sqrt(15) / 1200),
+                numpy.full(3, a1),
+                numpy.full(3, a2),
                 ])
+
+            x1, x2 = [(6 + i * sqrt(15))/21 for i in [+1, -1]]
             self.bary = numpy.concatenate([
                 _c(),
-                _xi1(fr(2, 7) + sqrt(15)/21),
-                _xi1(fr(2, 7) - sqrt(15)/21),
+                _xi1(x1),
+                _xi1(x2),
                 ])
             self.points = self.bary[:, 1:]
             return
