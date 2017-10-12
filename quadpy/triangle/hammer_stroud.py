@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 #
+from sympy import Rational as fr
+
 from .helpers import _s3, _s21
 from ..helpers import untangle
 
@@ -15,13 +17,13 @@ class HammerStroud(object):
         self.degree = degree
         if degree == 2:
             data = [
-                (1.0/3.0, _s21(1.0/6.0)),
+                (fr(1, 3), _s21(fr(1, 6))),
                 ]
         else:
             assert degree == 3
             data = [
-                (-27.0/48.0, _s3()),
-                (+25.0/48.0, _s21(0.2)),
+                (-fr(27, 48), _s3()),
+                (+fr(25, 48), _s21(fr(1, 5))),
                 ]
 
         self.bary, self.weights = untangle(data)
