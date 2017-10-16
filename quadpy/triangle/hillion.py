@@ -14,7 +14,7 @@ class Hillion(object):
     International Journal for Numerical Methods in Engineering,
     Vol. 11, 797-815 (1977).
     DOI:10.1002/nme.1620110504,
-    <https://dx.doi.org/10.1002/nme.1620110504>.
+    <https://doi.org/10.1002/nme.1620110504>.
 
     Note that the schemes here are not fully symmetric.
     '''

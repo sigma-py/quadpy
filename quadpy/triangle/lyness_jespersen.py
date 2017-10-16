@@ -12,7 +12,7 @@ class LynessJespersen(object):
     Moderate Degree Symmetric Quadrature Rules for the Triangle,
     J. Inst. Maths Applies (1975) 15, 19-32,
     doi: 10.1093/imamat/15.1.19,
-    <https://dx.doi.org/10.1093/imamat/15.1.19>.
+    <https://doi.org/10.1093/imamat/15.1.19>.
 
     Abstract:
     A variant formulation of the moment fitting equations for the construction

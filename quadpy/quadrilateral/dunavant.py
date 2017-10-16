@@ -13,7 +13,7 @@ class Dunavant(object):
     square domain,
     Numerical Methods in Engineering, Volume 21, Issue 10, October 1985,
     Pages 1777–1784,
-    <https://dx.doi.org/10.1002/nme.1620211004>.
+    <https://doi.org/10.1002/nme.1620211004>.
 
     Abstract:
     It is of interest in numerical analysis to develop symmetrical quadrature

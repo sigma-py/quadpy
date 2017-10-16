@@ -11,7 +11,7 @@ class Tyler(object):
     G.W. Tyler,
     Numerical integration of functions of several variables,
     Canad. J. Math. 5(1953), 393-412,
-    <https://dx.doi.org/10.4153/CJM-1953-044-1>.
+    <https://doi.org/10.4153/CJM-1953-044-1>.
     '''
     def __init__(self, index):
         if index == 1:

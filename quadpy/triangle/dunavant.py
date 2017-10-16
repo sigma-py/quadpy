@@ -16,7 +16,7 @@ class Dunavant(object):
     Triangle,
     Article in International Journal for Numerical Methods in Engineering,
     21(6):1129-1148, June 1985,
-    <https://dx.doi.org/10.1002/nme.1620210612>.
+    <https://doi.org/10.1002/nme.1620210612>.
     '''
     def __init__(self, index):
         self.name = 'Dunavant(%d)' % index

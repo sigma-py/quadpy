@@ -5,7 +5,7 @@ Philip Rabinowitz and Nira Richter,
 Perfectly Symmetric Two-Dimensional Integration Formulas with Minimal
 Numbers of Points,
 Mathematics of Computation, Vol. 23, No. 108 (Oct., 1969), pp. 765-779,
-<https://dx.doi.org/10.2307/2004962>.
+<https://doi.org/10.2307/2004962>.
 '''
 from .helpers import _s40, _s8, _s4
 from ..helpers import untangle

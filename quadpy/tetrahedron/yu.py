@@ -11,7 +11,7 @@ class Yu(object):
     Yu Jinyun,
     Symmetyric Gaussian quadrature formulae for tetrahedronal regions,
     Computer Methods in Applied Mechanics and Engineering, 43 (1984) 349-353,
-    <https://dx.doi.org/10.1016/0045-7825(84)90072-0>.
+    <https://doi.org/10.1016/0045-7825(84)90072-0>.
 
     Abstract:
     Quadrature formulae of degrees 2 to 6 are presented for the numerical
