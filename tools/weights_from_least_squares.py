@@ -6,8 +6,8 @@ from quadpy.triangle.helpers import _s3, _s21, _s111ab
 import scipy.special
 
 
-s = quadpy.triangle.Dunavant(20)
-# s = quadpy.triangle.LiuVinokur(5)
+# s = quadpy.triangle.Dunavant(20)
+s = quadpy.triangle.Cubtri()
 
 
 # WITH MONOMIALS

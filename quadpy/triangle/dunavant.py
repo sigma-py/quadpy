@@ -8,8 +8,6 @@ from ..helpers import untangle
 
 class Dunavant(object):
     '''
-    Triangle integration schemes from
-
     D.A. Dunavant,
     High Degree Efficient Symmetrical Gaussian Quadrature Rules for the
     Triangle,
