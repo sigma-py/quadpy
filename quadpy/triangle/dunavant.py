@@ -37,11 +37,14 @@ class Dunavant(object):
             self.bary, self.weights = untangle(data)
         elif index == 4:
             self.degree = 4
-            data = [
-                (0.223381589678011, _s21(0.445948490915965)),
-                (0.109951743655322, _s21(0.091576213509771)),
-                ]
-            self.bary, self.weights = untangle(data)
+            self.data = {
+                's2': [
+                    [0.223381589678011, 0.445948490915965],
+                    [0.109951743655322, 0.091576213509771],
+                    ],
+                }
+            self.bary, self.weights = _untangle(self.data)
+            # self.bary, self.weights = untangle(data)
         elif index == 5:
             self.degree = 5
             data = [
@@ -259,7 +262,7 @@ class Dunavant(object):
                 's3': [
                     [+0.033057055541624],
                     ],
-                's21': [
+                's2': [
                     [+0.000867019185663, 0.500950464352200],
                     [+0.011660052716448, 0.488212957934729],
                     [+0.022876936356421, 0.455136681950283],
@@ -271,7 +274,7 @@ class Dunavant(object):
                     [-0.000632060497488, 0.041618715196029],
                     [+0.001751134301193, 0.011581921406822],
                     ],
-                's111': [
+                's1': [
                     [+0.016465839189576, 0.344855770229001, 0.606402646106160],
                     [+0.004839033540485, 0.377843269594854, 0.615842614456541],
                     [+0.025804906534650, 0.306635479062357, 0.559048000390295],
@@ -298,22 +301,26 @@ def _collapse0(a):
 
 
 def _untangle(data):
-    data['s3'] = numpy.array(data['s3']).T
-    data['s21'] = numpy.array(data['s21']).T
-    data['s111'] = numpy.array(data['s111']).T
+    bary = []
+    weights = []
 
-    s21_data = _s21(data['s21'][1])
-    s111_data = _s111ab(*data['s111'][1:])
+    if 's3' in data:
+        data['s3'] = numpy.array(data['s3']).T
+        bary.append(_s3().T)
+        weights.append(numpy.tile(data['s3'][0], 1))
 
-    bary = numpy.column_stack([
-        _s3().T,
-        _collapse0(s21_data),
-        _collapse0(s111_data),
-        ]).T
+    if 's2' in data:
+        data['s2'] = numpy.array(data['s2']).T
+        s2_data = _s21(data['s2'][1])
+        bary.append(_collapse0(s2_data))
+        weights.append(numpy.tile(data['s2'][0], 3))
 
-    weights = numpy.concatenate([
-        data['s3'][0],
-        numpy.tile(data['s21'][0], 3),
-        numpy.tile(data['s111'][0], 6),
-        ])
+    if 's1' in data:
+        data['s1'] = numpy.array(data['s1']).T
+        s1_data = _s111ab(*data['s1'][1:])
+        bary.append(_collapse0(s1_data))
+        weights.append(numpy.tile(data['s1'][0], 6))
+
+    bary = numpy.column_stack(bary).T
+    weights = numpy.concatenate(weights)
     return bary, weights
