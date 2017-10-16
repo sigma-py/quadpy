@@ -6,7 +6,9 @@ from quadpy.triangle.helpers import _s3, _s21, _s111ab
 import scipy.special
 
 
-s = quadpy.triangle.Dunavant(20)
+s = quadpy.triangle.Dunavant(4)
+# s = quadpy.triangle.LiuVinokur(5)
+
 
 # WITH MONOMIALS
 # ==============
@@ -43,19 +45,19 @@ exact_vals[0] = numpy.sqrt(2) / 2
 
 def fun(x):
     def f(i, j, x, y):
-        # alpha1, beta1 = \
-        #     orthopy.recurrence_coefficients.jacobi(i, 0, 0, mode='numpy')
-        # a = orthopy.tools.evaluate_orthogonal_polynomial(
-        #         alpha1, beta1, (x-y)/(x+y)
-        #         )
-        a = numpy.polyval(scipy.special.jacobi(i, 0, 0), (x-y)/(x+y))
+        alpha1, beta1 = \
+            orthopy.recurrence_coefficients.jacobi(i, 0, 0, mode='numpy')
+        a = orthopy.tools.evaluate_orthogonal_polynomial(
+                alpha1, beta1, (x-y)/(x+y)
+                )
+        # a = numpy.polyval(scipy.special.jacobi(i, 0, 0), (x-y)/(x+y))
 
-        # alpha2, beta2 = \
-        #     orthopy.recurrence_coefficients.jacobi(j, 2*i+1, 0, mode='numpy')
-        # b = orthopy.tools.evaluate_orthogonal_polynomial(
-        #         alpha2, beta2, 1-2*(x+y)
-        #         )
-        b = numpy.polyval(scipy.special.jacobi(j, 2*i+1, 0), 1-2*(x+y))
+        alpha2, beta2 = \
+            orthopy.recurrence_coefficients.jacobi(j, 2*i+1, 0, mode='numpy')
+        b = orthopy.tools.evaluate_orthogonal_polynomial(
+                alpha2, beta2, 1-2*(x+y)
+                )
+        # b = numpy.polyval(scipy.special.jacobi(j, 2*i+1, 0), 1-2*(x+y))
 
         return (
             numpy.sqrt(2*i + 1) * a * (x+y)**i
@@ -68,17 +70,19 @@ def fun(x):
         ]).T
 
 
-s21_data = _s21(s.data['s21'][1])
-s111_data = _s111ab(*s.data['s111'][1:])
+a_data = []
+if 's3' in s.data:
+    a_data.append(fun(_s3().T[1:]))
 
-print(fun(s21_data[1:]).shape)
-print(fun(s111_data[1:]).shape)
+if 's2' in s.data:
+    s2_data = _s21(s.data['s2'][1])
+    a_data.append(numpy.sum(fun(s2_data[1:]), axis=1))
 
-A = numpy.concatenate([
-    fun(_s3().T[1:]),
-    numpy.sum(fun(s21_data[1:]), axis=1),
-    numpy.sum(fun(s111_data[1:]), axis=1),
-    ]).T
+if 's1' in s.data:
+    s1_data = _s111ab(*s.data['s1'][1:])
+    a_data.append(numpy.sum(fun(s1_data[1:]), axis=1))
+
+A = numpy.concatenate(a_data).T
 
 print(A.shape)
 
