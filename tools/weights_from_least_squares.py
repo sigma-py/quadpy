@@ -6,7 +6,7 @@ from quadpy.triangle.helpers import _s3, _s21, _s111ab
 import scipy.special
 
 
-s = quadpy.triangle.Dunavant(4)
+s = quadpy.triangle.Dunavant(20)
 # s = quadpy.triangle.LiuVinokur(5)
 
 
@@ -96,4 +96,5 @@ print(sv)
 print(numpy.dot(A, x) - exact_vals)
 
 print('{:.15e}'.format(x[0]*2))
+print('{:.15e}'.format(x[1]*2))
 print('{:.15e}'.format(x[-1]*2))
