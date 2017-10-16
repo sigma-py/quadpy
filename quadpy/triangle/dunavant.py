@@ -34,7 +34,6 @@ class Dunavant(object):
                 (-Rational(9, 16), _s3()),
                 (Rational(25, 48), _s21(Rational(1, 5))),
                 ]
-            self.bary, self.weights = untangle(data)
         elif index == 4:
             self.degree = 4
             self.data = {
@@ -335,7 +334,7 @@ class Dunavant(object):
         else:
             assert index == 20
             self.degree = 20
-            data = {
+            self.data = {
                 's3': [
                     [+0.033057055541624],
                     ],
@@ -363,8 +362,9 @@ class Dunavant(object):
                     ]
                 }
 
-            self.data = data
             self.bary, self.weights = _untangle(data)
+
+        self.bary, self.weights = untangle(data)
 
         # convert barycentric coordinates to reference triangle
         self.points = self.bary[:, 1:]
