@@ -12,7 +12,7 @@ class Keast(object):
     Moderate degree tetrahedral quadrature formulas,
     CMAME 55: 339-348
     1986,
-    <http://dx.doi.org/10.1016/0045-7825(86)90059-9>.
+    <http://doi.org/10.1016/0045-7825(86)90059-9>.
 
     Abstract:
     Quadrature formulas of degrees 4 to 8 for numerical integration over the
@@ -104,8 +104,8 @@ class Keast(object):
         else:
             assert index == 10
             self.degree = 8
-            # In Keast's article, the first weight is incorrectly given with a
-            # positive sign.
+            # ERR In Keast's article, the first weight is incorrectly given
+            # with a positive sign.
             data = [
                 (-0.393270066412926145e-01, _s4()),
                 (+0.408131605934270525e-02, _s31(0.127470936566639015e-00)),

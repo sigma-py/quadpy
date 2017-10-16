@@ -9,7 +9,7 @@ class SarmaStroud(object):
     Eberlein Measure and Mechanical Quadrature Formulae. II. Numerical Results,
     Mathematics of Computation,
     Vol. 23, No. 108 (Oct., 1969), pp. 781-784,
-    <https://dx.doi.org/10.2307/2004963>.
+    <https://doi.org/10.2307/2004963>.
     '''
     def __init__(self):
         # Hammer-Wymore is a one-parameter family of schemes, and the

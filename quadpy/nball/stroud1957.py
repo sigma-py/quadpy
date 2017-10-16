@@ -13,7 +13,7 @@ class Stroud1957(object):
     Remarks on the Disposition of Points in Numerical Integration Formulas,
     Mathematical Tables and Other Aids to Computation,
     Vol. 11, No. 60 (Oct., 1957), pp. 257-261,
-    <https://dx.doi.org/10.2307/2001945>.
+    <https://doi.org/10.2307/2001945>.
     '''
     def __init__(self, n):
         self.degree = 2

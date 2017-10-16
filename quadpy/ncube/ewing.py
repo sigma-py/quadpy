@@ -11,7 +11,7 @@ class Ewing(object):
     On Approximate Cubature,
     The American Mathematical Monthly,
     Vol. 48, No. 2 (Feb., 1941), pp. 134-136,
-    <https://dx.doi.org/dx.doi.org/10.2307/2303604>.
+    <https://doi.org/10.2307/2303604>.
     '''
     def __init__(self, n):
         self.degree = 3

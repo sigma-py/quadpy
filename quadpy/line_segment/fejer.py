@@ -13,7 +13,7 @@ class Fejer1(object):
     Fast Construction of the Fejér and Clenshaw–Curtis Quadrature Rules,
     BIT Numerical Mathematics, March 2006, Volume 46, Issue 1, pp 195–202,
     DOI: 10.1007/s10543-006-0045-4,
-    <https://dx.doi.org/10.1007/s10543-006-0045-4>.
+    <https://doi.org/10.1007/s10543-006-0045-4>.
     '''
     def __init__(self, n):
         self.degree = n
@@ -49,7 +49,7 @@ class Fejer2(object):
     Fast Construction of the Fejér and Clenshaw–Curtis Quadrature Rules,
     BIT Numerical Mathematics, March 2006, Volume 46, Issue 1, pp 195–202,
     DOI: 10.1007/s10543-006-0045-4,
-    <https://dx.doi.org/10.1007/s10543-006-0045-4>.
+    <https://doi.org/10.1007/s10543-006-0045-4>.
     '''
     def __init__(self, n):
         self.degree = n
