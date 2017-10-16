@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
 from sympy import Rational
 
-from .helpers import _s3, _s21, _s111ab
+from .helpers import _s3, _s21, untangle2
 from ..helpers import untangle
 
 
@@ -43,7 +42,7 @@ class Dunavant(object):
                     [0.109951743655322, 0.091576213509771],
                     ],
                 }
-            self.bary, self.weights = _untangle(self.data)
+            self.bary, self.weights = untangle2(self.data)
         elif index == 5:
             self.degree = 5
             self.data = {
@@ -55,7 +54,7 @@ class Dunavant(object):
                     [0.125939180544827, 0.101286507323456],
                     ],
                 }
-            self.bary, self.weights = _untangle(self.data)
+            self.bary, self.weights = untangle2(self.data)
         elif index == 6:
             self.degree = 6
             self.data = {
@@ -67,7 +66,7 @@ class Dunavant(object):
                     [0.082851075618374, 0.053145049844817, 0.310352451033784],
                     ],
                 }
-            self.bary, self.weights = _untangle(self.data)
+            self.bary, self.weights = untangle2(self.data)
         elif index == 7:
             self.degree = 7
             self.data = {
@@ -82,7 +81,7 @@ class Dunavant(object):
                     [+0.077113760890257, 0.048690315425316, 0.312865496004874],
                     ],
                 }
-            self.bary, self.weights = _untangle(self.data)
+            self.bary, self.weights = untangle2(self.data)
         elif index == 8:
             self.degree = 8
             self.data = {
@@ -98,7 +97,7 @@ class Dunavant(object):
                     [0.027230314174435, 0.008394777409958, 0.263112829634638],
                     ]
                 }
-            self.bary, self.weights = _untangle(self.data)
+            self.bary, self.weights = untangle2(self.data)
         elif index == 9:
             self.degree = 9
             self.data = {
@@ -115,7 +114,7 @@ class Dunavant(object):
                     [0.043283539377289, 0.036838412054736, 0.221962989160766],
                     ],
                 }
-            self.bary, self.weights = _untangle(self.data)
+            self.bary, self.weights = untangle2(self.data)
         elif index == 10:
             self.degree = 10
             self.data = {
@@ -132,7 +131,7 @@ class Dunavant(object):
                     [0.009421666963733, 0.009540815400299, 0.066803251012200],
                     ],
                 }
-            self.bary, self.weights = _untangle(self.data)
+            self.bary, self.weights = untangle2(self.data)
         elif index == 11:
             self.degree = 11
             self.data = {
@@ -148,7 +147,7 @@ class Dunavant(object):
                     [0.020707659639141, 0.021022016536166, 0.171488980304042],
                     ],
                 }
-            self.bary, self.weights = _untangle(self.data)
+            self.bary, self.weights = untangle2(self.data)
         elif index == 12:
             self.degree = 12
             self.data = {
@@ -165,7 +164,7 @@ class Dunavant(object):
                     [0.017316231108659, 0.025734050548330, 0.116251915907597],
                     ],
                 }
-            self.bary, self.weights = _untangle(self.data)
+            self.bary, self.weights = untangle2(self.data)
         elif index == 13:
             self.degree = 13
             self.data = {
@@ -186,7 +185,7 @@ class Dunavant(object):
                     [0.015521786839045, 0.022233076674090, 0.126357385491669],
                     ],
                 }
-            self.bary, self.weights = _untangle(self.data)
+            self.bary, self.weights = untangle2(self.data)
         elif index == 14:
             self.degree = 14
             self.data = {
@@ -205,7 +204,7 @@ class Dunavant(object):
                     [0.005010228838501, 0.001268330932872, 0.118974497696957],
                     ],
                 }
-            self.bary, self.weights = _untangle(self.data)
+            self.bary, self.weights = untangle2(self.data)
         elif index == 15:
             self.degree = 15
             self.data = {
@@ -225,7 +224,7 @@ class Dunavant(object):
                     [0.007673942631049, +0.012459809331199, 0.103575616576386],
                     ],
                 }
-            self.bary, self.weights = _untangle(self.data)
+            self.bary, self.weights = untangle2(self.data)
         elif index == 16:
             self.degree = 16
             self.data = {
@@ -249,7 +248,7 @@ class Dunavant(object):
                     [0.006850054546542, +0.014317320230681, 0.085283615682657],
                     ],
                 }
-            self.bary, self.weights = _untangle(self.data)
+            self.bary, self.weights = untangle2(self.data)
         elif index == 17:
             self.degree = 17
             self.data = {
@@ -275,7 +274,7 @@ class Dunavant(object):
                     [0.006665632004165, 0.080711313679564, 0.904625504095608],
                     ],
                 }
-            self.bary, self.weights = _untangle(self.data)
+            self.bary, self.weights = untangle2(self.data)
         elif index == 18:
             self.degree = 18
             self.data = {
@@ -303,7 +302,7 @@ class Dunavant(object):
                     [+0.000046187660794, 0.020874755282586, 1.014347260005363],
                     ],
                 }
-            self.bary, self.weights = _untangle(self.data)
+            self.bary, self.weights = untangle2(self.data)
         elif index == 19:
             self.degree = 19
             self.data = {
@@ -331,7 +330,7 @@ class Dunavant(object):
                     [0.003799928855302, 0.065494628082938, 0.924344252620784],
                     ],
                 }
-            self.bary, self.weights = _untangle(self.data)
+            self.bary, self.weights = untangle2(self.data)
         else:
             assert index == 20
             self.degree = 20
@@ -363,40 +362,8 @@ class Dunavant(object):
                     ]
                 }
 
-            self.bary, self.weights = _untangle(self.data)
+            self.bary, self.weights = untangle2(self.data)
 
         # convert barycentric coordinates to reference triangle
         self.points = self.bary[:, 1:]
         return
-
-
-def _collapse0(a):
-    '''Collapse all dimensions of `a` except the first.
-    '''
-    return numpy.reshape(a, (a.shape[0], numpy.prod(a.shape[1:])))
-
-
-def _untangle(data):
-    bary = []
-    weights = []
-
-    if 's3' in data:
-        data['s3'] = numpy.array(data['s3']).T
-        bary.append(_s3().T)
-        weights.append(numpy.tile(data['s3'][0], 1))
-
-    if 's2' in data:
-        data['s2'] = numpy.array(data['s2']).T
-        s2_data = _s21(data['s2'][1])
-        bary.append(_collapse0(s2_data))
-        weights.append(numpy.tile(data['s2'][0], 3))
-
-    if 's1' in data:
-        data['s1'] = numpy.array(data['s1']).T
-        s1_data = _s111ab(*data['s1'][1:])
-        bary.append(_collapse0(s1_data))
-        weights.append(numpy.tile(data['s1'][0], 6))
-
-    bary = numpy.column_stack(bary).T
-    weights = numpy.concatenate(weights)
-    return bary, weights
