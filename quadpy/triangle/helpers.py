@@ -11,12 +11,11 @@ def _s3():
 def _s21(a):
     a = numpy.array(a)
     b = 1 - 2*a
-    out = numpy.array([
+    return numpy.array([
         [a, a, b],
         [a, b, a],
         [b, a, a],
         ])
-    return out
 
 
 def _s111(a, b):
@@ -46,12 +45,23 @@ def _s111ab(a, b):
 
 
 def _rot(a, b):
-    c = 1.0 - a - b
+    c = 1 - a - b
     return numpy.array([
         [a, b, c],
         [c, a, b],
         [b, c, a],
         ])
+
+
+def _rot_ab(a, b):
+    c = 1 - a - b
+    out = numpy.array([
+        [a, b, c],
+        [c, a, b],
+        [b, c, a],
+        ])
+    out = numpy.swapaxes(out, 0, 1)
+    return out
 
 
 def _collapse0(a):
@@ -80,6 +90,12 @@ def untangle2(data):
         s1_data = _s111ab(*data['s1'][1:])
         bary.append(_collapse0(s1_data))
         weights.append(numpy.tile(data['s1'][0], 6))
+
+    if 'rot' in data:
+        data['rot'] = numpy.array(data['rot']).T
+        rot_data = _rot_ab(*data['rot'][1:])
+        bary.append(_collapse0(rot_data))
+        weights.append(numpy.tile(data['rot'][0], 3))
 
     bary = numpy.column_stack(bary).T
     weights = numpy.concatenate(weights)
