@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
 from mpmath import mp
 
-from ..helpers import untangle
+from .helpers import untangle2
 
 
 class CoolsHaegemans(object):
@@ -21,13 +20,15 @@ class CoolsHaegemans(object):
         assert index == 1
         self.degree = 8
         mp.dps = 20
-        data = [
-            (mp.mpf('0.16058343856681218798E-09'), _r3(mp.mpf('0.34579201116826902882E+00'), mp.mpf('0.36231682215692616667E+01'))),
-            (mp.mpf('0.26530624434780379347E-01'), _r3(mp.mpf('0.65101993458939166328E-01'), mp.mpf('0.87016510156356306078E+00'))),
-            (mp.mpf('0.29285717640155892159E-01'), _r3(mp.mpf('0.65177530364879570754E+00'), mp.mpf('0.31347788752373300717E+00'))),
-            (mp.mpf('0.43909556791220782402E-01'), _r3(mp.mpf('0.31325121067172530696E+00'), mp.mpf('0.63062143431895614010E+00'))),
-            (mp.mpf('0.66940767639916174192E-01'), _r3(mp.mpf('0.51334692063945414949E+00'), mp.mpf('0.28104124731511039057E+00'))),
-            ]
+        data = {
+            'rot': [
+                [mp.mpf('0.16058343856681218798E-09'), mp.mpf('0.34579201116826902882E+00'), mp.mpf('0.36231682215692616667E+01')],
+                [mp.mpf('0.26530624434780379347E-01'), mp.mpf('0.65101993458939166328E-01'), mp.mpf('0.87016510156356306078E+00')],
+                [mp.mpf('0.29285717640155892159E-01'), mp.mpf('0.65177530364879570754E+00'), mp.mpf('0.31347788752373300717E+00')],
+                [mp.mpf('0.43909556791220782402E-01'), mp.mpf('0.31325121067172530696E+00'), mp.mpf('0.63062143431895614010E+00')],
+                [mp.mpf('0.66940767639916174192E-01'), mp.mpf('0.51334692063945414949E+00'), mp.mpf('0.28104124731511039057E+00')],
+                ],
+            }
         # elif index == 2:
         #     self.degree = 10
         #     data = [
@@ -41,17 +42,7 @@ class CoolsHaegemans(object):
         #         (0.47910534861520060665E-01numpy.array([[1.0/3.0, 1.0/3.0, 1.0/3.0]])
         #         ]
 
-        self.bary, self.weights = untangle(data)
+        self.bary, self.weights = untangle2(data)
         self.points = self.bary[:, 1:]
-        self.weights *= 2.0
+        self.weights *= 2
         return
-
-
-def _r3(a, b):
-    # rotation group R_3
-    c = 1 - a - b
-    return numpy.array([
-        [a, b, c],
-        [c, a, b],
-        [b, c, a],
-        ])
