@@ -39,7 +39,7 @@ class LiuVinokur(object):
             self.degree = 3
             data = [
                 (-fr(9, 16), _s3()),
-                # Wrongly specified in the article as 25 (instead of 2/5).
+                # ERR Wrongly specified in the article as 25 (instead of 2/5).
                 (fr(25, 48), _r_alpha(fr(2, 5))),
                 ]
         elif index == 6:

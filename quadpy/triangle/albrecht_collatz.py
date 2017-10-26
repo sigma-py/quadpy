@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+from sympy import Rational as fr
 
-from sympy import Rational
-
-from .helpers import _s21
-from ..helpers import untangle
+from .helpers import untangle2
 
 
 class AlbrechtCollatz(object):
@@ -18,12 +15,14 @@ class AlbrechtCollatz(object):
     def __init__(self):
         self.degree = 3
 
-        data = [
-            (Rational(2, 30), _s21(Rational(1, 2))),
-            (Rational(9, 15), _s21(Rational(1, 6))),
-            ]
+        self.data = {
+            's2': [
+                [fr(2, 30), fr(1, 2)],
+                [fr(9, 15), fr(1, 6)],
+                ],
+            }
+        self.bary, self.weights = untangle2(self.data)
 
-        self.bary, self.weights = untangle(data)
         self.points = self.bary[:, 1:]
         self.weights /= 2
         return
