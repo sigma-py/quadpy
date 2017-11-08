@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
+import orthopy
 from sympy import Rational
+
+from .. import helpers
 
 
 def _s3():
@@ -100,3 +103,183 @@ def untangle2(data):
     bary = numpy.column_stack(bary).T
     weights = numpy.concatenate(weights)
     return bary, weights
+
+
+def untangle3(point_data, weight_data):
+    bary = []
+    weights = []
+
+    k = 0
+
+    if 's3' in point_data:
+        point_data['s3'] = numpy.array(point_data['s3']).T
+        bary.append(_s3().T)
+        n = point_data['s3'].shape[1]
+        weights.append(numpy.tile(weight_data[k:k+n], 1))
+        k += n
+
+    if 's2' in point_data:
+        point_data['s2'] = numpy.array(point_data['s2']).T
+        s2_data = _s21(point_data['s2'][0])
+        bary.append(_collapse0(s2_data))
+        n = point_data['s2'].shape[1]
+        weights.append(numpy.tile(weight_data[k:k+n], 3))
+        k += n
+
+    if 's1' in point_data:
+        point_data['s1'] = numpy.array(point_data['s1']).T
+        s1_data = _s111ab(*point_data['s1'])
+        bary.append(_collapse0(s1_data))
+        n = point_data['s1'].shape[1]
+        weights.append(numpy.tile(weight_data[k:k+n], 6))
+        k += n
+
+    if 'rot' in point_data:
+        point_data['rot'] = numpy.array(point_data['rot']).T
+        rot_data = _rot_ab(*point_data['rot'])
+        bary.append(_collapse0(rot_data))
+        n = point_data['rot'].shape[1]
+        weights.append(numpy.tile(weight_data[k:k+n], 3))
+        k += n
+
+    bary = numpy.column_stack(bary).T
+    weights = numpy.concatenate(weights)
+
+    return bary, weights
+
+
+def untangle_points(data):
+    bary = []
+
+    if 's3' in data:
+        data['s3'] = numpy.array(data['s3']).T
+        bary.append(_s3().T)
+
+    if 's2' in data:
+        data['s2'] = numpy.array(data['s2']).T
+        s2_data = _s21(data['s2'])
+        bary.append(_collapse0(s2_data))
+
+    if 's1' in data:
+        data['s1'] = numpy.array(data['s1']).T
+        s1_data = _s111ab(*data['s1'])
+        bary.append(_collapse0(s1_data))
+
+    if 'rot' in data:
+        data['rot'] = numpy.array(data['rot']).T
+        rot_data = _rot_ab(*data['rot'])
+        bary.append(_collapse0(rot_data))
+
+    bary = numpy.column_stack(bary).T
+    return bary
+
+
+def untangle_weights(data):
+    weights = []
+
+    if 's3' in data:
+        data['s3'] = numpy.array(data['s3']).T
+        weights.append(numpy.tile(data['s3'][0], 1))
+
+    if 's2' in data:
+        data['s2'] = numpy.array(data['s2']).T
+        weights.append(numpy.tile(data['s2'][0], 3))
+
+    if 's1' in data:
+        data['s1'] = numpy.array(data['s1']).T
+        weights.append(numpy.tile(data['s1'][0], 6))
+
+    if 'rot' in data:
+        data['rot'] = numpy.array(data['rot']).T
+        weights.append(numpy.tile(data['rot'][0], 3))
+
+    return numpy.concatenate(weights)
+
+
+def weights_from_points(point_data, degree):
+    '''In a quadrature scheme, the weights really only depend on the points and
+    the information up to which degree the scheme is supposed to be exact. This
+    method solves a least-squares problem with polynomials orthogonal on the
+    triangle, leading to a well-conditioned system.
+    '''
+    # from quadpy.nsimplex.helpers import integrate_monomial_over_unit_simplex
+    # import scipy.special
+
+    # s = quadpy.triangle.Dunavant(20)
+    # s = quadpy.triangle.Cubtri()
+
+    # WITH MONOMIALS
+    # ==============
+    # exponents = numpy.concatenate([
+    #     quadpy.helpers.partition(d, 2)
+    #     for d in range(s.degree+1)
+    #     ])
+    #
+    # exact_vals = numpy.array([
+    #     integrate_monomial_over_unit_simplex(k) for k in exponents
+    #     ])
+    #
+    #
+    # def fun(x):
+    #     k = exponents.T
+    #     # <https://stackoverflow.com/a/46689653/353337>
+    #     s = x.shape[1:] + k.shape[1:]
+    #     return (
+    #         x.reshape(x.shape[0], -1, 1)**k.reshape(k.shape[0], 1, -1)
+    #         ).prod(0).reshape(s)
+
+    # WITH ORTHOGONAL POLYNOMIALS
+    # ===========================
+    exponents = numpy.concatenate([
+        helpers.partition(d, 2)
+        for d in range(degree+1)
+        ])
+    # The exact integrals of the orthogonal polynomials over the triangle are
+    # 0, except for the one with degree 0 for which we have sqrt(2)/2.
+    exact_vals = numpy.zeros(len(exponents))
+    exact_vals[0] = numpy.sqrt(2) / 2
+
+    def fun(x):
+        def f(i, j, x, y):
+            alpha1, beta1 = \
+                orthopy.recurrence_coefficients.jacobi(i, 0, 0, mode='numpy')
+            a = orthopy.tools.evaluate_orthogonal_polynomial(
+                    alpha1, beta1, (x-y)/(x+y)
+                    )
+            # a = numpy.polyval(scipy.special.jacobi(i, 0, 0), (x-y)/(x+y))
+
+            alpha2, beta2 = orthopy.recurrence_coefficients.jacobi(
+                    j, 2*i+1, 0, mode='numpy'
+                    )
+            b = orthopy.tools.evaluate_orthogonal_polynomial(
+                    alpha2, beta2, 1-2*(x+y)
+                    )
+            # b = numpy.polyval(scipy.special.jacobi(j, 2*i+1, 0), 1-2*(x+y))
+
+            return (
+                numpy.sqrt(2*i + 1) * a * (x+y)**i
+                * numpy.sqrt(2*j + 2*i + 2) * b
+                )
+
+        return numpy.array([
+            f(ij[0], ij[1], x[0], x[1])
+            for ij in exponents
+            ]).T
+
+    a_data = []
+    if 's3' in point_data:
+        a_data.append(fun(_s3().T[1:]))
+
+    if 's2' in point_data:
+        s2_data = _s21(numpy.array(point_data['s2'])[:, 0])
+        a_data.append(numpy.sum(fun(s2_data[1:]), axis=1))
+
+    if 's1' in point_data:
+        point_data['s1'] = numpy.array(point_data['s1'])
+        s1_data = _s111ab(*point_data['s1'].T)
+        a_data.append(numpy.sum(fun(s1_data[1:]), axis=1))
+
+    A = numpy.concatenate(a_data).T
+
+    x, res, rank, sv = numpy.linalg.lstsq(A, exact_vals)
+    return 2*x
