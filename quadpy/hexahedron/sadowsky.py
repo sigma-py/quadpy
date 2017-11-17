@@ -12,7 +12,7 @@ class Sadowsky(object):
     A Formula for Approximate Computation of a Triple Integral,
     The American Mathematical Monthly,
     Vol. 47, No. 8 (Oct., 1940), pp. 539-543,
-    <https://dx.doi.org/10.2307/2303834>.
+    <https://doi.org/10.2307/2303834>.
     '''
     def __init__(self):
         self.degree = 5

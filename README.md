@@ -122,11 +122,11 @@ approximation of the integral over the domain.
 
  * Chebyshev-Gauss (both variants, arbitrary degree)
  * Clenshaw-Curtis (after
-   [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
+   [Waldvogel](https://doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
  * Fejér-type-1 (after
-   [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
+   [Waldvogel](https://doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
  * Fejér-type-2 (after
-   [Waldvogel](https://dx.doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
+   [Waldvogel](https://doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
  * Gauss-Legendre (via
    [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.legendre.leggauss.html), arbitrary degree)
  * Gauss-Lobatto (arbitrary degree)
@@ -203,38 +203,38 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 2 schemes up to degree 3)
  * open and closed Newton-Cotes schemes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6), arbitrary degree),
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
-   - [Albrecht-Collatz](https://dx.doi.org/10.1002/zamm.19580380102) (1958, degree 3)
+   - [Albrecht-Collatz](https://doi.org/10.1002/zamm.19580380102) (1958, degree 3)
    - conical product scheme (degree 7)
- * [Strang](http://bookstore.siam.org/wc08/)/[Cowper](https://dx.doi.org/10.1002/nme.1620070316) (1973, 10 schemes up to
+ * [Strang](http://bookstore.siam.org/wc08/)/[Cowper](https://doi.org/10.1002/nme.1620070316) (1973, 10 schemes up to
    degree 7),
- * [Lyness-Jespersen](https://dx.doi.org/10.1093/imamat/15.1.19) (1975, 21
+ * [Lyness-Jespersen](https://doi.org/10.1093/imamat/15.1.19) (1975, 21
    schemes up to degree 11),
  * [Lether](https://doi.org/10.1016/0771-050X(76)90008-5) (1976, degree 2n-2, arbitrary n, not symmetric)
- * [Hillion](https://dx.doi.org/10.1002/nme.1620110504) (1977, 8 schemes up to
+ * [Hillion](https://doi.org/10.1002/nme.1620110504) (1977, 8 schemes up to
    degree 3),
- * [Grundmann-Möller](http://dx.doi.org/10.1137/0715019) (1978, arbitrary degree),
- * [Laursen-Gellert](https://dx.doi.org/10.1002/nme.1620120107) (1978, 17
+ * [Grundmann-Möller](https://doi.org/10.1137/0715019) (1978, arbitrary degree),
+ * [Laursen-Gellert](https://doi.org/10.1002/nme.1620120107) (1978, 17
    schemes up to degree 10),
  * [CUBTRI](http://dl.acm.org/citation.cfm?id=356001) (Laurie, 1982, degree 8),
  * [TRIEX](http://dl.acm.org/citation.cfm?id=356070) (de Doncker-Robinson, 1984, degrees 9 and 11),
- * [Dunavant](https://dx.doi.org/10.1002/nme.1620210612) (1985, 20 schemes up
+ * [Dunavant](https://doi.org/10.1002/nme.1620210612) (1985, 20 schemes up
    to degree 20),
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131869) (1987,
    degrees 8 and 11),
- * [Gatermann](https://dx.doi.org/10.1007/BF02251251) (1988, degree 7)
+ * [Gatermann](https://doi.org/10.1007/BF02251251) (1988, degree 7)
  * Berntsen-Espelid (1990, 4 schemes of degree 13, the first one being
    [DCUTRI](http://dl.acm.org/citation.cfm?id=131772)),
- * [Liu-Vinokur](https://dx.doi.org/10.1006/jcph.1998.5884) (1998, 13 schemes
+ * [Liu-Vinokur](https://doi.org/10.1006/jcph.1998.5884) (1998, 13 schemes
    up to degree 5),
  * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
    (2000, 5 schemes up to degree 5),
- * [Wandzura-Xiao](https://dx.doi.org/10.1016/S0898-1221(03)90004-6) (2003, 6
+ * [Wandzura-Xiao](https://doi.org/10.1016/S0898-1221(03)90004-6) (2003, 6
    schemes up to degree 30),
  * [Taylor-Wingate-Bos](https://arxiv.org/abs/math/0501496) (2005, 5 schemes up
    to degree 14),
  * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2009, 3 schemes up to
    degree 20),
- * [Xiao-Gimbutas](http://dx.doi.org/10.1016/j.camwa.2009.10.027) (2010, 50
+ * [Xiao-Gimbutas](https://doi.org/10.1016/j.camwa.2009.10.027) (2010, 50
    schemes up to degree 50),
  * [Vioreanu-Rokhlin](https://doi.org/10.1137/110860082) (2014, 20
    schemes up to degree 62),
@@ -262,14 +262,14 @@ val = quadpy.triangle.integrate(
    - [Radon](https://eudml.org/doc/176796) (1948, degree 5)
    - [Peirce](https://books.google.de/books/about/Numerical_integration_over_planar_region.html?id=WR9SAAAAMAAJ&redir_esc=y)
      (1956, 3 schemes up to degree 11)
-   - [Albrecht-Collatz](https://dx.doi.org/10.1002/zamm.19580380102) (1958, degree 3)
+   - [Albrecht-Collatz](https://doi.org/10.1002/zamm.19580380102) (1958, degree 3)
    - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 8 schemes up to degree 15)
-   - [Albrecht](https://dx.doi.org/10.1002/zamm.19600401014) (1960, 8 schemes up to degree 17)
+   - [Albrecht](https://doi.org/10.1002/zamm.19600401014) (1960, 8 schemes up to degree 17)
    - Mysovskih (1964, 3 schemes up to degree 15)
-   - [Rabinowitz-Richter](https://dx.doi.org/10.2307/2004962) (1969, 6 schemes up to degree 15)
+   - [Rabinowitz-Richter](https://doi.org/10.2307/2004962) (1969, 6 schemes up to degree 15)
  * [Lether](http://www.jstor.org/stable/2949473) (1971, arbitrary degree)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 9)
- * [Wissmann-Becker](https://dx.doi.org/10.1137/0723043) (1986, 3 schemes up to degree 8)
+ * [Wissmann-Becker](https://doi.org/10.1137/0723043) (1986, 3 schemes up to degree 8)
  * [Cools-Kim](https://link.springer.com/article/10.1007/BF03012263) (2000, 3 schemes up to degree 21)
 
 Example:
@@ -290,17 +290,17 @@ val = quadpy.disk.integrate(
    - [Maxwell](https://doi.org/10.1017/CBO9780511710377.061) (1890, degree 7)
    - Burnside (1908, degree 5)
    - [Irwin](https://books.google.de/books/about/On_quadrature_and_cubature.html?id=SuruAAAAMAAJ&redir_esc=y) (1923, 3 schemes up to degree 5)
-   - [Tyler](https://dx.doi.org/10.4153/CJM-1953-044-1) (1953, 3 schemes up to degree 7)
-   - [Albrecht-Collatz](https://dx.doi.org/10.1002/zamm.19580380102) (1958, 4 schemes up to degree 5)
-   - [Miller](https://dx.doi.org/10.2307/2003163) (1960, degree 1)
+   - [Tyler](https://doi.org/10.4153/CJM-1953-044-1) (1953, 3 schemes up to degree 7)
+   - [Albrecht-Collatz](https://doi.org/10.1002/zamm.19580380102) (1958, 4 schemes up to degree 5)
+   - [Miller](https://doi.org/10.2307/2003163) (1960, degree 1)
    - [Meister](https://doi.org/10.1093/comjnl/8.4.368) (1966, degree 7)
    - [Phillips](https://doi.org/10.1093/comjnl/10.2.202) (1967, degree 7)
-   - [Rabinowitz-Richter](https://dx.doi.org/10.2307/2004962) (1969, 6 schemes up to degree 15)
+   - [Rabinowitz-Richter](https://doi.org/10.2307/2004962) (1969, 6 schemes up to degree 15)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 13)
- * [Dunavant](https://dx.doi.org/10.1002/nme.1620211004) (1985, 11 schemes up to degree 19)
- * [Morrow-Patterson](https://dx.doi.org/10.1137/0722071) (1985, 2 schemes up to degree 20, single precision)
- * [Wissmann-Becker](https://dx.doi.org/10.1137/0723043) (1986, 6 schemes up to degree 8)
- * [Cools-Haegemans](https://dx.doi.org/10.1007/BF02247942) (1988, 2 schemes up to degree 13)
+ * [Dunavant](https://doi.org/10.1002/nme.1620211004) (1985, 11 schemes up to degree 19)
+ * [Morrow-Patterson](https://doi.org/10.1137/0722071) (1985, 2 schemes up to degree 20, single precision)
+ * [Wissmann-Becker](https://doi.org/10.1137/0723043) (1986, 6 schemes up to degree 8)
+ * [Cools-Haegemans](https://doi.org/10.1007/BF02247942) (1988, 2 schemes up to degree 13)
  * products of line segment schemes
  * all formulas from the n-cube
 
@@ -327,7 +327,7 @@ to generate the array.
 
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
    - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 2 schemes up to degree 7)
-   - [Rabinowitz-Richter](https://dx.doi.org/10.2307/2004962) (1969, 4 schemes up to degree 15)
+   - [Rabinowitz-Richter](https://doi.org/10.2307/2004962) (1969, 4 schemes up to degree 15)
    - a scheme of degree 4
 
 Example:
@@ -344,7 +344,7 @@ val = quadpy.e2r.integrate(
 
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
    - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 2 schemes up to degree 7)
-   - [Rabinowitz-Richter](https://dx.doi.org/10.2307/2004962) (1969, 5 schemes up to degree 15)
+   - [Rabinowitz-Richter](https://doi.org/10.2307/2004962) (1969, 5 schemes up to degree 15)
    - 3 schemes up to degree 7
 
 Example:
@@ -360,7 +360,7 @@ val = quadpy.e2r2.integrate(
 <img src="https://nschloe.github.io/quadpy/sphere.png" width="25%">
 
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
-   - [Albrecht-Collatz](https://dx.doi.org/10.1002/zamm.19580380102) (1958, 5
+   - [Albrecht-Collatz](https://doi.org/10.1002/zamm.19580380102) (1958, 5
      schemes up to degree 7)
    - [McLaren](https://doi.org/10.1090/S0025-5718-1963-0159418-2) (1963, 10 schemes up to degree 14)
  * [Lebedev](https://en.wikipedia.org/wiki/Lebedev_quadrature) (1976, 32
@@ -414,13 +414,13 @@ val = quadpy.ball.integrate(
  * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 2 schemes up to degree 3)
  * open and closed Newton-Cotes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6)) (arbitrary degree)
  * [Stroud](https://cds.cern.ch/record/104291?ln=en) (1971, degree 7)
- * [Grundmann-Möller](http://dx.doi.org/10.1137/0715019) (1978, arbitrary degree),
- * [Yu](http://dx.doi.org/10.1016/0045-7825(84)90072-0) (1984, 5 schemes up to degree 6)
- * [Keast](http://dx.doi.org/10.1016/0045-7825(86)90059-9) (1986, 11 schemes up to
+ * [Grundmann-Möller](https://doi.org/10.1137/0715019) (1978, arbitrary degree),
+ * [Yu](https://doi.org/10.1016/0045-7825(84)90072-0) (1984, 5 schemes up to degree 6)
+ * [Keast](https://doi.org/10.1016/0045-7825(86)90059-9) (1986, 11 schemes up to
    degree 8)
  * [Beckers-Haegemans](https://lirias.kuleuven.be/handle/123456789/132648) (1990, degrees 8 and 9)
- * [Gatermann](https://dx.doi.org/10.1007/978-94-011-2646-5_2) (1992, degree 5)
- * [Liu-Vinokur](http://dx.doi.org/10.1006/jcph.1998.5884) (1998, 14 schemes up to
+ * [Gatermann](https://doi.org/10.1007/978-94-011-2646-5_2) (1992, degree 5)
+ * [Liu-Vinokur](https://doi.org/10.1006/jcph.1998.5884) (1998, 14 schemes up to
    degree 5)
  * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
    (2000, 6 schemes up to degree 7)
@@ -428,9 +428,9 @@ val = quadpy.ball.integrate(
    (2005, 2 schemes up to degree 3)
  * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2009, 2 schemes up to
    degree 14)
- * [Xiao-Gimbutas](http://dx.doi.org/10.1016/j.camwa.2009.10.027) (2010, 15
+ * [Xiao-Gimbutas](https://doi.org/10.1016/j.camwa.2009.10.027) (2010, 15
    schemes up to degree 15)
- * [Shunn-Ham](http://dx.doi.org/10.1016/j.cam.2012.03.032) (2012, 6 schemes up to
+ * [Shunn-Ham](https://doi.org/10.1016/j.cam.2012.03.032) (2012, 6 schemes up to
    degree 7)
  * [Vioreanu-Rokhlin](https://doi.org/10.1137/110860082) (2014, 10
    schemes up to degree 13)
@@ -453,14 +453,14 @@ val = quadpy.tetrahedron.integrate(
 
  * Product schemes derived from line segment schemes
  * via: [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
-   - [Sadowsky](https://dx.doi.org/10.2307/2303834) (1940, degree 5)
-   - [Tyler](https://dx.doi.org/10.4153/CJM-1953-044-1) (1953, 2 schemes up to degree 5)
+   - [Sadowsky](https://doi.org/10.2307/2303834) (1940, degree 5)
+   - [Tyler](https://doi.org/10.4153/CJM-1953-044-1) (1953, 2 schemes up to degree 5)
    - [Hammer-Wymore](https://doi.org/10.1090/S0025-5718-1957-0087220-6) (1957, degree 7)
-   - [Albrecht-Collatz](https://dx.doi.org/10.1002/zamm.19580380102) (1958, degree 3)
+   - [Albrecht-Collatz](https://doi.org/10.1002/zamm.19580380102) (1958, degree 3)
    - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 6 schemes up to degree 7)
    - [Mustard-Lyness-Blatt](https://doi.org/10.1093/comjnl/6.1.75) (1963, 6 schemes up to degree 5)
-   - [Stroud](https://dx.doi.org/10.1007/BF02162160) (1967, degree 5)
-   - [Sarma-Stroud](https://dx.doi.org/10.2307/2004963) (1969, degree 7)
+   - [Stroud](https://doi.org/10.1007/BF02162160) (1967, degree 5)
+   - [Sarma-Stroud](https://doi.org/10.2307/2004963) (1969, degree 7)
  * all formulas from the n-cube
 
 Example:
@@ -475,7 +475,7 @@ val = quadpy.hexahedron.integrate(
 ### Pyramid
 <img src="https://nschloe.github.io/quadpy/pyra.png" width="25%">
 
- * [Felippa](http://dx.doi.org/10.1108/02644400410554362) (9 schemes
+ * [Felippa](https://doi.org/10.1108/02644400410554362) (9 schemes
    up to degree 5)
 
 Example:
@@ -493,7 +493,7 @@ val = quadpy.pyramid.integrate(
 ### Wedge
 <img src="https://nschloe.github.io/quadpy/wedge.png" width="15%">
 
- * [Felippa](http://dx.doi.org/10.1108/02644400410554362) (6 schemes
+ * [Felippa](https://doi.org/10.1108/02644400410554362) (6 schemes
    up to degree 6)
 
 Example:
@@ -546,7 +546,7 @@ val = quadpy.e2r2.integrate(
    - [Stroud](https://doi.org/10.2307/2002945) (1964, degree 3)
    - [Stroud](https://doi.org/10.1007/BF02165227) (1966, 7 schemes of degree 3)
    - [Stroud](https://doi.org/10.1137/0706009) (1969, degree 5)
- * [Grundmann-Möller](http://dx.doi.org/10.1137/0715019) (1978, arbitrary degree)
+ * [Grundmann-Möller](https://doi.org/10.1137/0715019) (1978, arbitrary degree)
  * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/) (2000, 5 schemes up to degree 7)
 
 Example:
@@ -586,10 +586,10 @@ quadpy.nsphere.integrate(
 ### n-Ball
  * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1970, n >= 3, degree 7)
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
-   - [Stroud](https://dx.doi.org/10.2307/2001945) (1957, degree 2)
+   - [Stroud](https://doi.org/10.2307/2001945) (1957, degree 2)
    - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 2 schemes up to degree 5)
    - [Stroud](https://doi.org/10.1090/S0025-5718-1966-0191094-8) (1966, 4 schemes of degree 5)
-   - [Stroud](https://dx.doi.org/10.1007/BF02162160) (1967, 4 <= n <= 7, 2 schemes of degree 5)
+   - [Stroud](https://doi.org/10.1007/BF02162160) (1967, 4 <= n <= 7, 2 schemes of degree 5)
    - [Stroud](https://doi.org/10.1137/0704004) (1967, n >= 3, 3 schemes of degree 7)
    - [Stenger](https://www.jstor.org/stable/2004361) (1967, 6 schemes up to degree 11)
  * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1978, 2 <= n <= 20, degree 5)
@@ -607,15 +607,15 @@ quadpy.nball.integrate(
 ### n-Cube
  * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1970, n >= 5, degree 7)
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
-    - [Ewing](https://dx.doi.org/dx.doi.org/10.2307/2303604) (1941, degree 3)
-    - [Tyler](https://dx.doi.org/10.4153/CJM-1953-044-1) (1953, degree 3)
-    - [Stroud](https://dx.doi.org/10.2307/2001945) (1957, 2 schemes up to degree 3)
+    - [Ewing](https://doi.org/doi.org/10.2307/2303604) (1941, degree 3)
+    - [Tyler](https://doi.org/10.4153/CJM-1953-044-1) (1953, degree 3)
+    - [Stroud](https://doi.org/10.2307/2001945) (1957, 2 schemes up to degree 3)
     - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, degree 5)
     - [Mustard-Lyness-Blatt](https://doi.org/10.1093/comjnl/6.1.75) (1963, degree 5)
-    - [Thacher](https://dx.doi.org/10.1145/363872.363897) (1964, degree 2)
+    - [Thacher](https://doi.org/10.1145/363872.363897) (1964, degree 2)
     - [Stroud](https://doi.org/10.1090/S0025-5718-1966-0191094-8) (1966, 4 schemes of degree 5)
     - [Phillips](https://doi.org/10.1093/comjnl/10.3.297) (1967, degree 7)
-    - [Stroud](https://dx.doi.org/10.2307/2004655) (1968, degree 5)
+    - [Stroud](https://doi.org/10.2307/2004655) (1968, degree 5)
  * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1978, n >= 2, degree 5)
 
 Example:
@@ -649,7 +649,7 @@ val = quadpy.enr.integrate(
 
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
    - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 4 schemes up to degree 5)
-   - [Stroud](https://dx.doi.org/10.1007/BF02162160) (1967, 2 schemes of degree 5)
+   - [Stroud](https://doi.org/10.1007/BF02162160) (1967, 2 schemes of degree 5)
    - [Stroud](https://doi.org/10.1137/0704004) (1967, 3 schemes of degree 7)
    - [Stenger](https://www.jstor.org/stable/2004361) (1971, 6 schemes up to degree 11, varying dimensionality restrictions)
    - 5 schemes up to degree 5

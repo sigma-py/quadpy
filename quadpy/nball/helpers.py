@@ -13,7 +13,7 @@ def integrate_monomial_over_unit_nball(exp):
     How to Integrate a Polynomial over a Sphere,
     The American Mathematical Monthly,
     Vol. 108, No. 5 (May, 2001), pp. 446-448,
-    <https://dx.doi.org/10.2307/2695802>.
+    <https://doi.org/10.2307/2695802>.
     '''
     radius = 1
     n = len(exp)

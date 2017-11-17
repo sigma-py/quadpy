@@ -14,7 +14,7 @@ class Lebedev(object):
     Lebedev, V. I. (1976),
     Quadratures on a sphere,
     Zh. Vȳchisl. Mat. Mat. Fiz. 16 (2): 293–306,
-    <https:/dx.doi.org/10.1016/0041-5553(76)90100-2>.
+    <https://doi.org/10.1016/0041-5553(76)90100-2>.
 
     <https://en.wikipedia.org/wiki/Lebedev_quadrature>
     <https://people.sc.fsu.edu/~jburkardt/datasets/sphere_lebedev_rule/sphere_lebedev_rule.html>

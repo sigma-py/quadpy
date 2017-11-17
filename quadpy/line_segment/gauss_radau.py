@@ -11,8 +11,11 @@ class GaussRadau(object):
     def __init__(self, n, a=0.0, b=0.0):
         assert n >= 2
         self.degree = 2*n - 1
-        alpha, beta = \
-            orthopy.recurrence_coefficients.jacobi(n, a, b, mode='numpy')
+        _, _, alpha, beta = \
+            orthopy.recurrence_coefficients.jacobi(n, a, b, 'monic')
+        flt = numpy.vectorize(float)
+        alpha = flt(alpha)
+        beta = flt(beta)
         self.points, self.weights = _radau(alpha, beta, -1.0)
         return
 

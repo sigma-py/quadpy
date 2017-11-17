@@ -11,7 +11,7 @@ class CoolsHaegemans1988(object):
     Another Step Forward in Searching for Cubature Formulae with a Minimal
     Number of Knots for the Square,
     Computing 40, 139- 146 (1988),
-    <https://dx.doi.org/10.1007/BF02247942>.
+    <https://doi.org/10.1007/BF02247942>.
 
     Abstract:
     The knots and weights of a cubature formula are determined by a system of

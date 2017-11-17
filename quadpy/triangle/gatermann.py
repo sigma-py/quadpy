@@ -11,7 +11,7 @@ class Gatermann(object):
     triangle,
     Computing, September 1988, Volume 40, Issue 3, pp 229–240,
     DOI: 10.1007/BF02251251,
-    <https://dx.doi.org/10.1007/BF02251251>.
+    <https://doi.org/10.1007/BF02251251>.
 
     Abstract:
     The weights and nodes of a symmetric cubature formula are determined by

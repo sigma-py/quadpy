@@ -12,7 +12,7 @@ class ShunnHam(object):
     close-packed lattice arrangement,
     Journal of Computational and Applied Mathematics,
     2012,
-    <http://dx.doi.org/10.1016/j.cam.2012.03.032>.
+    <https://doi.org/10.1016/j.cam.2012.03.032>.
 
     Abstract:
     A family of quadrature rules for integration over tetrahedral volumes is

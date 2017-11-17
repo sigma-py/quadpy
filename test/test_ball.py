@@ -20,6 +20,9 @@ from helpers import check_degree
         ]]
     )
 def test_scheme(scheme, tol):
+    out = quadpy.helpers.partition(0, 3)
+    print(out[0])
+    print(type(out[0][0]))
     degree = check_degree(
             lambda poly: quadpy.ball.integrate(
                 poly, [0.0, 0.0, 0.0], 1.0, scheme

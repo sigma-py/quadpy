@@ -7,7 +7,7 @@ triangles,
 International Journal for Numerical Methods in Engineering,
 Volume 12, Issue 1, 1978, Pages 67–76.
 DOI: 10.1002/nme.1620120107,
-<https://dx.doi.org/10.1002/nme.1620120107>.
+<https://doi.org/10.1002/nme.1620120107>.
 
 Abstract:
 For a wide class of finite element matrices integrated numerically rather than
