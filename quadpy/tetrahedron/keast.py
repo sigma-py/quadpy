@@ -12,7 +12,7 @@ class Keast(object):
     Moderate degree tetrahedral quadrature formulas,
     CMAME 55: 339-348
     1986,
-    <http://dx.doi.org/10.1016/0045-7825(86)90059-9>.
+    <https://doi.org/10.1016/0045-7825(86)90059-9>.
 
     Abstract:
     Quadrature formulas of degrees 4 to 8 for numerical integration over the

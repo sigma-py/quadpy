@@ -14,7 +14,7 @@ class LiuVinokur(object):
     Arbitrary Polyhedral Grids,
     Journal of Computational Physics, 140, 122–147 (1998).
     DOI: 10.1006/jcph.1998.5884,
-    <https://dx.doi.org/10.1006/jcph.1998.5884>.
+    <https://doi.org/10.1006/jcph.1998.5884>.
     '''
     def __init__(self, index):
         self.name = 'LV(%d)' % index

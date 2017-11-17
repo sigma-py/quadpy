@@ -12,7 +12,7 @@ class WandzuraXiao(object):
     Computers & Mathematics with Applications
     Volume 45, Issue 12, June 2003, Pages 1829-1840,
     doi:10.1016/S0898-1221(03)90004-6,
-    <https://dx.doi.org/10.1016/S0898-1221(03)90004-6>.
+    <https://doi.org/10.1016/S0898-1221(03)90004-6>.
 
     Abstract:
     We present a class of quadrature rules on triangles in R2 which, somewhat
