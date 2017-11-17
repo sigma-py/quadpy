@@ -13,7 +13,7 @@ class Stroud1968(object):
     Mathematics of Computation,
     Vol. 22, No. 102 (Apr., 1968), pp. 271-274,
     Published by: American Mathematical Society,
-    <https://dx.doi.org/10.2307/2004655>.
+    <https://doi.org/10.2307/2004655>.
     '''
     def __init__(self, n):
         self.degree = 5

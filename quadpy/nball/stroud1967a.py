@@ -11,7 +11,7 @@ class Stroud1967a(object):
     A.H. Stroud,
     Some fifth degree integration formulas for symmetric regions II,
     Numerische Mathematik, Volume 9 Issue 5, April 1967, Pages 460-468
-    <https://dx.doi.org/10.1007/BF02162160>.
+    <https://doi.org/10.1007/BF02162160>.
     '''
     def __init__(self, n, variant):
         self.degree = 5

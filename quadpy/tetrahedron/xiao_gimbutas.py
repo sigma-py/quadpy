@@ -10,7 +10,7 @@ class XiaoGimbutas(object):
     two and higher dimensions,
     Computers & Mathematics with Applications,
     Volume 59, Issue 2, January 2010, Pages 663–676,
-    <http://dx.doi.org/10.1016/j.camwa.2009.10.027>.
+    <https://doi.org/10.1016/j.camwa.2009.10.027>.
 
     Abstract:
     We present a numerical algorithm for the construction of efficient,
