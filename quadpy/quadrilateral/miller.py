@@ -13,7 +13,7 @@ class Miller(object):
     Part 3: Quadrature of a Harmonic Integrand,
     Mathematics of Computation,
     Vol. 14, No. 71 (Jul., 1960), pp. 240-248,
-    <https://dx.doi.org/10.2307/2003163>.
+    <https://doi.org/10.2307/2003163>.
     '''
     def __init__(self):
         # This scheme is exact for harmonic integrands of degree <= 11.

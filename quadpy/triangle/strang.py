@@ -26,7 +26,7 @@ class Strang(object):
     Numerical Methods in Engineering,
     Volume 7, Issue 3, 1973, Pages 405–408.
     DOI: 10.1002/nme.1620070316,
-    <https://dx.doi.org/10.1002/nme.1620070316>.
+    <https://doi.org/10.1002/nme.1620070316>.
     '''
     def __init__(self, index):
         self.name = 'Strang(%d)' % index

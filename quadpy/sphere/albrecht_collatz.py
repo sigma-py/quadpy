@@ -11,7 +11,7 @@ class AlbrechtCollatz(object):
     J. Albrecht, L. Collatz,
     Zur numerischen Auswertung mehrdimensionaler Integrale,
     ZAMM, Volume 38, Issue 1-2, 1958, Pages 1–15,
-    <https://dx.doi.org/10.1002/zamm.19580380102>
+    <https://doi.org/10.1002/zamm.19580380102>
     '''
     def __init__(self, index):
         if index == 1:
