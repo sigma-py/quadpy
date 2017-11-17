@@ -165,13 +165,13 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         else:
             t = h * numpy.arange(1, j+1, 2)
 
-        sinh_t = mp.pi/2 * numpy.array(map(mp.sinh, t))
-        cosh_t = mp.pi/2 * numpy.array(map(mp.cosh, t))
-        cosh_sinh_t = numpy.array(map(mp.cosh, sinh_t))
+        sinh_t = mp.pi/2 * numpy.array(list(map(mp.sinh, t)))
+        cosh_t = mp.pi/2 * numpy.array(list(map(mp.cosh, t)))
+        cosh_sinh_t = numpy.array(list(map(mp.cosh, sinh_t)))
 
         # y = alpha/2 * (1 - x)
         # x = [mp.tanh(v) for v in u2]
-        exp_sinh_t = numpy.array(map(mp.exp, sinh_t))
+        exp_sinh_t = numpy.array(list(map(mp.exp, sinh_t)))
 
         y0 = alpha2 / exp_sinh_t / cosh_sinh_t
         y1 = -alpha2 * cosh_t / cosh_sinh_t**2
@@ -237,7 +237,7 @@ def _error_estimate1(
     '''
     alpha2 = alpha / mp.mpf(2)
 
-    sinh_sinh_t = numpy.array(map(mp.sinh, sinh_t))
+    sinh_sinh_t = numpy.array(list(map(mp.sinh, sinh_t)))
     tanh_sinh_t = sinh_sinh_t / cosh_sinh_t
 
     # More derivatives of y = 1-g(t).
