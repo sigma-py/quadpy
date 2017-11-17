@@ -191,26 +191,35 @@ def weights_from_points(point_data, degree):
     exact_vals = numpy.zeros(len(exponents))
     exact_vals[0] = numpy.sqrt(2) / 2
 
-    def fun(x):
-        def f(i, j, x, y):
-            alpha1, beta1 = \
-                orthopy.recurrence_coefficients.jacobi(i, 0, 0, mode='numpy')
-            a = orthopy.tools.evaluate_orthogonal_polynomial(
-                    alpha1, beta1, (x-y)/(x+y)
-                    )
-            # a = numpy.polyval(scipy.special.jacobi(i, 0, 0), (x-y)/(x+y))
+    def eval_orthpolys(x):
+        '''Evaluate all orthogonal polynomials at x.
+        See, e.g.,
 
-            alpha2, beta2 = orthopy.recurrence_coefficients.jacobi(
-                    j, 2*i+1, 0, mode='numpy'
+        S.-A. Papanicolopulos,
+        New fully symmetric and rotationally symmetric cubature rules on the
+        triangle using minimal orthonormal bases,
+        <https://arxiv.org/pdf/1411.5631.pdf>.
+        '''
+        def f(i, j, x, y):
+            p0, a1, b1, c1 = \
+                orthopy.recurrence_coefficients.jacobi(i, 0, 0, 'monic')
+            val1 = orthopy.tools.evaluate_orthogonal_polynomial(
+                    (x-y)/(x+y), p0, a1, b1, c1
                     )
-            b = orthopy.tools.evaluate_orthogonal_polynomial(
-                    alpha2, beta2, 1-2*(x+y)
+            # val1 = numpy.polyval(scipy.special.jacobi(i, 0, 0), (x-y)/(x+y))
+
+            p0, a2, b2, c2 = orthopy.recurrence_coefficients.jacobi(
+                    j, 2*i+1, 0, 'monic'
                     )
-            # b = numpy.polyval(scipy.special.jacobi(j, 2*i+1, 0), 1-2*(x+y))
+            val2 = orthopy.tools.evaluate_orthogonal_polynomial(
+                    1-2*(x+y), p0, a1, b2, c2
+                    )
+            # val2 = \
+            #     numpy.polyval(scipy.special.jacobi(j, 2*i+1, 0), 1-2*(x+y))
 
             return (
-                numpy.sqrt(2*i + 1) * a * (x+y)**i
-                * numpy.sqrt(2*j + 2*i + 2) * b
+                numpy.sqrt(2*i + 1) * val1 * (x+y)**i
+                * numpy.sqrt(2*j + 2*i + 2) * val2
                 )
 
         return numpy.array([
@@ -220,18 +229,20 @@ def weights_from_points(point_data, degree):
 
     a_data = []
     if 's3' in point_data:
-        a_data.append(fun(_s3().T[1:]))
+        a_data.append(eval_orthpolys(_s3().T[1:]))
 
     if 's2' in point_data:
-        s2_data = _s21(numpy.array(point_data['s2'])[:, 0])
-        a_data.append(numpy.sum(fun(s2_data[1:]), axis=1))
+        point_data['s2'] = numpy.array(point_data['s2'])
+        s2_data = _s21(*point_data['s2'].T)
+        a_data.append(numpy.sum(eval_orthpolys(s2_data[1:]), axis=1))
 
     if 's1' in point_data:
         point_data['s1'] = numpy.array(point_data['s1'])
         s1_data = _s111ab(*point_data['s1'].T)
-        a_data.append(numpy.sum(fun(s1_data[1:]), axis=1))
+        a_data.append(numpy.sum(eval_orthpolys(s1_data[1:]), axis=1))
 
     A = numpy.concatenate(a_data).T
 
     x, res, rank, sv = numpy.linalg.lstsq(A, exact_vals)
+    assert numpy.all(abs(res) < 1.0e-15)
     return 2*x
