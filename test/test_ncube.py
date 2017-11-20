@@ -34,6 +34,7 @@ def test_scheme(scheme, tol):
             lambda poly: quadpy.ncube.integrate(poly, ncube, scheme),
             lambda exp: integrate_monomial_over_ncube(ncube_limits, exp),
             lambda k: quadpy.helpers.partition(k, n),
+            n,
             scheme.degree + 1,
             tol=tol
             )

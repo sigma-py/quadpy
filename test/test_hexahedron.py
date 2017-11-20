@@ -102,6 +102,7 @@ def test_scheme(scheme, tol, print_degree=False):
             lambda poly: quadpy.hexahedron.integrate(poly, hexa, scheme),
             lambda k: _integrate_exact2(k, x[0], x[1], y[0], y[1], z[0], z[1]),
             lambda n: quadpy.helpers.partition(n, 3),
+            3,
             scheme.degree + 1,
             tol=tol
             )

@@ -26,6 +26,7 @@ def test_scheme(scheme, tol):
                 ),
             integrate_monomial_over_unit_nball,
             lambda n: quadpy.helpers.partition(n, 3),
+            3,
             scheme.degree + 1,
             tol=tol
             )

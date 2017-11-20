@@ -18,6 +18,7 @@ def test_scheme(scheme):
                 ),
             integrate_monomial_over_unit_nsphere,
             lambda n: quadpy.helpers.partition(n, 2),
+            2,
             scheme.degree + 1
             )
     assert degree == scheme.degree

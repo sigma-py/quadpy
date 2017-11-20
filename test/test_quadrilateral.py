@@ -95,6 +95,7 @@ def test_scheme(scheme, tol, print_degree=False):
             lambda poly: quadpy.quadrilateral.integrate(poly, quad, scheme),
             lambda k: _integrate_exact2(k, x0, x1, y0, y1),
             lambda n: quadpy.helpers.partition(n, 2),
+            2,
             scheme.degree + 1,
             tol=tol
             )

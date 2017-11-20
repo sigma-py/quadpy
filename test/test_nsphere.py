@@ -32,6 +32,7 @@ def test_scheme(scheme, tol=1.0e-14):
             lambda poly: quadpy.nsphere.integrate(poly, center, rad, scheme),
             integrate_monomial_over_unit_nsphere,
             lambda k: quadpy.helpers.partition(k, n),
+            n,
             scheme.degree + 1,
             tol=tol
             )
