@@ -23,47 +23,68 @@ def check_degree_1d(
 
 
 def check_degree(
-        quadrature, exact, exponents_creator, max_degree, tol=1.0e-14
+        quadrature, exact, exponents_creator, dim, max_degree, tol=1.0e-14
         ):
+
+    def evaluate_all_polynomials(x):
+        '''Evaluate all polynomials in `x` of up to degree `max_degree`. Also
+        returns the exponents
+        '''
+        def rec(exponents):
+            print('>> rec(', exponents, ')')
+            if len(exponents) == 0 or len(exponents[0]) == 0:
+                out = []
+                print('   rec >>', out)
+                return out
+            print(exponents)
+            # Add 1 to the first element.
+            out = [[e[0]+1] + e[1:] for e in exponents]
+            exponents_with_initial_zero = \
+                [e[1:] for e in exponents if e[0] == 0]
+            out1 = rec(exponents_with_initial_zero)
+            out += [[0] + e for e in out1]
+            print('   rec >>', out)
+            return out
+
+        dim = 3
+        print(dim)
+        exponents = [dim * [0]]
+        for k in range(4):
+            exponents = rec(exponents)
+        print(exponents)
+        print(len(exponents))
+        exit(1)
+        # # values = [numpy.ones_like(x)]
+        # for m in range(max_degree):
+        #     new_exponents = []
+        #     print(exponents)
+        #     for d in range(dim+1):
+        #         new_exponent = exponents[-1][:]
+        #         print(new_exponent)
+        #         new_exponent[0] += 1
+        #         new_exponents.append(new_exponent)
+        #     exponents.append(new_exponents)
+
+        for ex in exponents:
+            print(ex)
+        exit(1)
+        return
+
     exponents = numpy.concatenate([
         exponents_creator(degree)
         for degree in range(max_degree+1)
         ])
-
     exact_vals = numpy.array([exact(k) for k in exponents])
 
-    def fun(x):
-        # Evaluate monomials.
-        # There's a more complex, faster implementation using matmul, exp, log.
-        # However, this only works for strictly positive `x`, and requires some
-        # tinkering. See below and
-        # <https://stackoverflow.com/a/45421128/353337>.
-        return numpy.prod(x[..., None] ** exponents.T[:, None], axis=0).T
-
     # def fun(x):
-    #     # Evaluate many monomials `x^k y^l z^m` at many points. Note that
-    #     # `x^k y^l z^m = exp(log(x)*k  + log(y)*l + log(z)*m` , i.e., a
-    #     # dot-product, for positive x, y, z. With a correction for points
-    #     # with nonpositive components, this is used here.
-    #     k = exponents
-    #     eps = 1.0e-12
-    #     out = \
-    #        numpy.exp(numpy.matmul(k, numpy.log(abs(x), where=abs(x) > eps)))
-    #     odd_k = numpy.zeros(k.shape, dtype=int)
-    #     odd_k[k % 2 == 1] = 1
-    #     neg_x = numpy.zeros(x.shape, dtype=int)
-    #     neg_x[x < 0.0] = 1
-    #     negative_count = numpy.dot(odd_k, neg_x)
-    #     out *= (-1)**negative_count
-    #     pos_k = numpy.zeros(k.shape, dtype=int)
-    #     pos_k[k > 0] = 1
-    #     zero_x = numpy.zeros(x.shape, dtype=int)
-    #     zero_x[x == 0.0] = 1
-    #     zero_count = numpy.dot(pos_k, zero_x)
-    #     out[zero_count > 0] = 0.0
-    #     return out
+    #   # Evaluate monomials.
+    #   # There's a more complex, faster implementation using matmul, exp, log.
+    #   # However, this only works for strictly positive `x`, and requires some
+    #   # tinkering. See below and
+    #   # <https://stackoverflow.com/a/45421128/353337>.
+    #   return numpy.prod(x[..., None] ** exponents.T[:, None], axis=0).T
 
-    vals = quadrature(fun)
+    vals = quadrature(evaluate_all_polynomials)
 
     # check relative error
     # The allowance is quite large here, 1e5 over machine precision.

@@ -21,6 +21,7 @@ def test_scheme(scheme, tol):
             lambda poly: quadpy.enr.integrate(poly, scheme),
             integrate_monomial_over_enr,
             lambda k: quadpy.helpers.partition(k, n),
+            n,
             scheme.degree + 1,
             tol=tol
             )

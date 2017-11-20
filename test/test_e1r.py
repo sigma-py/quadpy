@@ -17,6 +17,7 @@ def test_scheme(scheme, tol):
             lambda poly: quadpy.e1r.integrate(poly, scheme),
             lambda k: math.factorial(k[0]),
             lambda k: quadpy.helpers.partition(k, 1),
+            1,
             scheme.degree + 1,
             tol=tol
             )

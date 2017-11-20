@@ -50,6 +50,7 @@ def test_scheme(scheme):
             lambda poly: quadpy.nsimplex.integrate(poly, simplex, scheme),
             integrate_monomial_over_unit_simplex,
             lambda k: quadpy.helpers.partition(k, n),
+            n,
             scheme.degree + 1
             )
     assert degree >= scheme.degree, \
