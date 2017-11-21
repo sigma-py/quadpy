@@ -25,7 +25,25 @@ def check_degree_1d(
 def evaluate_all_monomials(x, max_degree):
     '''Evaluate all polynomials of up to degree `max_degree` at point(s) `x`.
     '''
-    def rec(exponents, vals, x):
+    def augment(exponents, vals, x):
+        '''This function takes the values and exponents of a given monomial
+        level, e.g., [(1,0,0), (0,1,0), (0,0,1)], and augments them by one
+        level, i.e., [(2,0,0), (1,1,0), (1,0,1), (0,2,0), (0,1,1), (0,0,2)].
+        The methods works for all dimension and is based on the observation
+        that the augmentation can happen by
+
+          1. adding 1 to all exponents from the previous level (i.e.,
+             multiplication with x[0]),
+          2. adding 1 to the second exponent of all exponent tuples where
+             ex[0]==0 (i.e., multiplication with x[1]),
+          3. adding 1 to the third exponent of all exponent tuples where
+             ex[0]==0, ex[1]=0 (i.e., multiplication with x[2]),
+
+        etc. The function call is recursive.
+
+        Right now, the method explicitly checks for exponents with leading
+        zeros. This could be skipped if the data is rearranged in a better way.
+        '''
         if len(exponents) == 0 or len(exponents[0]) == 0:
             return [], []
 
@@ -36,7 +54,7 @@ def evaluate_all_monomials(x, max_degree):
             [exponents[k][1:] for k in idx_leading_zero]
         val1 = vals[idx_leading_zero]
         x1 = x[1:]
-        out1, vals1 = rec(exponents_with_leading_zero, val1, x1)
+        out1, vals1 = augment(exponents_with_leading_zero, val1, x1)
 
         # increment leading exponent by 1
         out = [[e[0]+1] + e[1:] for e in exponents]
@@ -58,7 +76,7 @@ def evaluate_all_monomials(x, max_degree):
     all_exponents.append(exponents)
     all_vals.append(vals)
     for k in range(max_degree):
-        exponents, vals = rec(exponents, vals, x)
+        exponents, vals = augment(exponents, vals, x)
         all_exponents.append(exponents)
         all_vals.append(vals)
 
