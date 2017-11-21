@@ -22,54 +22,52 @@ def check_degree_1d(
     return numpy.where(is_larger)[0] - 1 if any(is_larger) else max_degree
 
 
+def evaluate_all_monomials(x, max_degree):
+    '''Evaluate all polynomials of up to degree `max_degree` at point(s) `x`.
+    '''
+    def rec(exponents, vals, x):
+        if len(exponents) == 0 or len(exponents[0]) == 0:
+            return [], []
+
+        idx_leading_zero = [
+            k for k in range(len(exponents)) if exponents[k][0] == 0
+            ]
+        exponents_with_leading_zero = \
+            [exponents[k][1:] for k in idx_leading_zero]
+        val1 = vals[idx_leading_zero]
+        x1 = x[1:]
+        out1, vals1 = rec(exponents_with_leading_zero, val1, x1)
+
+        # increment leading exponent by 1
+        out = [[e[0]+1] + e[1:] for e in exponents]
+        vals0 = vals * x[0]
+
+        out += [[0] + e for e in out1]
+        out_vals = numpy.concatenate([vals0, vals1])
+        return out, out_vals
+
+    dim = x.shape[0]
+
+    # Initialization, level 0
+    exponents = [dim * [0]]
+    vals = numpy.array(numpy.ones(x.shape[1:]))
+
+    all_vals = []
+    all_exponents = []
+
+    all_exponents.append(exponents)
+    all_vals.append(vals)
+    for k in range(max_degree):
+        exponents, vals = rec(exponents, vals, x)
+        all_exponents.append(exponents)
+        all_vals.append(vals)
+
+    return all_vals
+
+
 def check_degree(
         quadrature, exact, exponents_creator, dim, max_degree, tol=1.0e-14
         ):
-
-    def evaluate_all_polynomials(x):
-        '''Evaluate all polynomials in `x` of up to degree `max_degree`. Also
-        returns the exponents
-        '''
-        def rec(exponents):
-            print('>> rec(', exponents, ')')
-            if len(exponents) == 0 or len(exponents[0]) == 0:
-                out = []
-                print('   rec >>', out)
-                return out
-            print(exponents)
-            # Add 1 to the first element.
-            out = [[e[0]+1] + e[1:] for e in exponents]
-            exponents_with_initial_zero = \
-                [e[1:] for e in exponents if e[0] == 0]
-            out1 = rec(exponents_with_initial_zero)
-            out += [[0] + e for e in out1]
-            print('   rec >>', out)
-            return out
-
-        dim = 3
-        print(dim)
-        exponents = [dim * [0]]
-        for k in range(4):
-            exponents = rec(exponents)
-        print(exponents)
-        print(len(exponents))
-        exit(1)
-        # # values = [numpy.ones_like(x)]
-        # for m in range(max_degree):
-        #     new_exponents = []
-        #     print(exponents)
-        #     for d in range(dim+1):
-        #         new_exponent = exponents[-1][:]
-        #         print(new_exponent)
-        #         new_exponent[0] += 1
-        #         new_exponents.append(new_exponent)
-        #     exponents.append(new_exponents)
-
-        for ex in exponents:
-            print(ex)
-        exit(1)
-        return
-
     exponents = numpy.concatenate([
         exponents_creator(degree)
         for degree in range(max_degree+1)
@@ -84,7 +82,7 @@ def check_degree(
     #   # <https://stackoverflow.com/a/45421128/353337>.
     #   return numpy.prod(x[..., None] ** exponents.T[:, None], axis=0).T
 
-    vals = quadrature(evaluate_all_polynomials)
+    vals = quadrature(evaluate_all_monomials)
 
     # check relative error
     # The allowance is quite large here, 1e5 over machine precision.
