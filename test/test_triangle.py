@@ -89,7 +89,7 @@ def test_scheme(scheme, tol):
     degree = check_degree(
             lambda poly: quadpy.triangle.integrate(poly, triangle, scheme),
             integrate_monomial_over_unit_simplex,
-            lambda n: quadpy.helpers.partition(n, 2),
+            2,
             scheme.degree + 1,
             tol=tol
             )

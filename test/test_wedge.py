@@ -84,7 +84,7 @@ def test_scheme(scheme):
                 ),
             # lambda k: _integrate_exact(k, wedge),
             _integrate_monomial_over_unit_wedge,
-            lambda n: quadpy.helpers.partition(n, 3),
+            3,
             scheme.degree + 1
             )
     assert degree == scheme.degree
