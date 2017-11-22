@@ -74,7 +74,6 @@ def test_scheme(scheme):
     degree = check_degree(
             lambda poly: quadpy.pyramid.integrate(poly, pyra, scheme),
             lambda k: _integrate_exact(k, pyra),
-            lambda n: quadpy.helpers.partition(n, 3),
             3,
             scheme.degree + 1
             )
