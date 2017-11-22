@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
-
 import helpers
 
 
 def test():
-    x = numpy.array([[2, 3, 5]]).T
-    vals = helpers.evaluate_all_monomials(x, max_degree=3)
-    tol = 1.0e-14
-    assert numpy.all(abs(vals[0] - [1]) < tol)
-    assert numpy.all(abs(vals[1] - [2, 3, 5]) < tol)
-    assert numpy.all(abs(vals[2] - [4, 6, 10, 9, 15, 25]) < tol)
-    assert numpy.all(
-        abs(vals[3] - [8, 12, 20, 18, 30, 50, 27, 45, 75, 125]) < tol
-        )
+    exp = helpers.get_all_exponents(dim=3, max_degree=3)
+    assert exp[0] == [[0, 0, 0]]
+    assert exp[1] == [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+    assert exp[2] == [
+        [2, 0, 0], [1, 1, 0], [1, 0, 1], [0, 2, 0], [0, 1, 1], [0, 0, 2]
+        ]
+    assert exp[3] == [
+        [3, 0, 0], [2, 1, 0], [2, 0, 1], [1, 2, 0], [1, 1, 1], [1, 0, 2],
+        [0, 3, 0], [0, 2, 1], [0, 1, 2], [0, 0, 3]
+        ]
     return
