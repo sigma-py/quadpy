@@ -29,6 +29,7 @@ def check_degree(quadrature, exact, dim, max_degree, tol=1.0e-14):
     # flatten list
     exponents = [item for sublist in exponents for item in sublist]
     exponents = numpy.array(exponents)
+
     exact_vals = numpy.array([exact(k) for k in exponents])
 
     def evaluate_all_monomials(x):
@@ -46,8 +47,9 @@ def check_degree(quadrature, exact, dim, max_degree, tol=1.0e-14):
     # Some tests fail if lowered, though.
     # TODO increase precision
     eps = numpy.finfo(float).eps
-    alpha = abs(exact_vals) * tol + (1.0e5+tol+exact_vals)*eps
-    is_smaller = abs(exact_vals - vals) < alpha
+    is_smaller = (
+        abs(exact_vals-vals) < abs(exact_vals)*tol + (1.0e5+tol+exact_vals)*eps
+        )
 
     if numpy.all(is_smaller):
         return max_degree
