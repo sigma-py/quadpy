@@ -141,21 +141,21 @@ def pm_roll(n, v):
         ])
 
 
-def partition(balls, boxes):
-    '''Create all nonnegative tuples of length d which sum up to n.
-    '''
-    # <https://stackoverflow.com/a/36748940/353337>
-    # See <https://stackoverflow.com/a/45348441/353337> for an alterative
-    # solution.
-    def rec(boxes, balls, parent=tuple()):
-        if boxes > 1:
-            for i in range(balls + 1):
-                for x in rec(boxes - 1, i, parent + (balls - i,)):
-                    yield x
-        else:
-            yield parent + (balls,)
-
-    return list(rec(boxes, balls))
+# def partition(boxes, balls):
+#     '''Create all nonnegative tuples of length d which sum up to n.
+#     '''
+#     # <https://stackoverflow.com/a/36748940/353337>
+#     # See <https://stackoverflow.com/a/45348441/353337> for an alterative
+#     # solution.
+#     def rec(boxes, balls, parent=tuple()):
+#         if boxes > 1:
+#             for i in range(balls + 1):
+#                 for x in rec(boxes - 1, i, parent + (balls - i,)):
+#                     yield x
+#         else:
+#             yield parent + (balls,)
+#
+#     return list(rec(boxes, balls))
 
 
 def get_all_exponents(dim, max_degree):
