@@ -34,7 +34,7 @@ def test_scheme(scheme, tol):
     degree = check_degree(
             lambda poly: quadpy.enr2.integrate(poly, scheme),
             integrate_monomial_over_enr2,
-            lambda k: quadpy.helpers.partition(k, n),
+            n,
             scheme.degree + 1,
             tol=tol
             )

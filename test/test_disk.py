@@ -38,7 +38,7 @@ def test_scheme(scheme, tol):
                 poly, [0.0, 0.0], 1.0, scheme
                 ),
             integrate_monomial_over_unit_nball,
-            lambda n: quadpy.helpers.partition(n, 2),
+            2,
             scheme.degree + 1,
             tol=tol
             )
