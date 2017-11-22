@@ -82,9 +82,7 @@ def get_all_exponents(dim, max_degree):
     return all_exponents
 
 
-def check_degree(
-        quadrature, exact, exponents_creator, dim, max_degree, tol=1.0e-14
-        ):
+def check_degree(quadrature, exact, dim, max_degree, tol=1.0e-14):
     exponents = get_all_exponents(dim, max_degree)
     # flatten list
     exponents = [item for sublist in exponents for item in sublist]
