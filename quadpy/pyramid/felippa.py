@@ -13,7 +13,7 @@ class Felippa(object):
     A compendium of FEM integration formulas for symbolic work,
     Engineering Computation,
     Volume 21, Number 8, 2004, pages 867-890,
-    <http://doi.org/10.1108/02644400410554362>.
+    <https://doi.org/10.1108/02644400410554362>.
 
     Abstract:
     This paper presents a set of Mathematica modules that organizes numerical

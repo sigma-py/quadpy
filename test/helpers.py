@@ -5,6 +5,8 @@ from __future__ import division
 import math
 import numpy
 
+from quadpy.helpers import get_all_exponents
+
 
 def check_degree_1d(
         quadrature, exact, max_degree, tol=1.0e-14
@@ -22,17 +24,15 @@ def check_degree_1d(
     return numpy.where(is_larger)[0] - 1 if any(is_larger) else max_degree
 
 
-def check_degree(
-        quadrature, exact, exponents_creator, max_degree, tol=1.0e-14
-        ):
-    exponents = numpy.concatenate([
-        exponents_creator(degree)
-        for degree in range(max_degree+1)
-        ])
+def check_degree(quadrature, exact, dim, max_degree, tol=1.0e-14):
+    exponents = get_all_exponents(dim, max_degree)
+    # flatten list
+    exponents = [item for sublist in exponents for item in sublist]
+    exponents = numpy.array(exponents)
 
     exact_vals = numpy.array([exact(k) for k in exponents])
 
-    def fun(x):
+    def evaluate_all_monomials(x):
         # Evaluate monomials.
         # There's a more complex, faster implementation using matmul, exp, log.
         # However, this only works for strictly positive `x`, and requires some
@@ -40,38 +40,16 @@ def check_degree(
         # <https://stackoverflow.com/a/45421128/353337>.
         return numpy.prod(x[..., None] ** exponents.T[:, None], axis=0).T
 
-    # def fun(x):
-    #     # Evaluate many monomials `x^k y^l z^m` at many points. Note that
-    #     # `x^k y^l z^m = exp(log(x)*k  + log(y)*l + log(z)*m` , i.e., a
-    #     # dot-product, for positive x, y, z. With a correction for points
-    #     # with nonpositive components, this is used here.
-    #     k = exponents
-    #     eps = 1.0e-12
-    #     out = \
-    #        numpy.exp(numpy.matmul(k, numpy.log(abs(x), where=abs(x) > eps)))
-    #     odd_k = numpy.zeros(k.shape, dtype=int)
-    #     odd_k[k % 2 == 1] = 1
-    #     neg_x = numpy.zeros(x.shape, dtype=int)
-    #     neg_x[x < 0.0] = 1
-    #     negative_count = numpy.dot(odd_k, neg_x)
-    #     out *= (-1)**negative_count
-    #     pos_k = numpy.zeros(k.shape, dtype=int)
-    #     pos_k[k > 0] = 1
-    #     zero_x = numpy.zeros(x.shape, dtype=int)
-    #     zero_x[x == 0.0] = 1
-    #     zero_count = numpy.dot(pos_k, zero_x)
-    #     out[zero_count > 0] = 0.0
-    #     return out
-
-    vals = quadrature(fun)
+    vals = quadrature(evaluate_all_monomials)
 
     # check relative error
     # The allowance is quite large here, 1e5 over machine precision.
     # Some tests fail if lowered, though.
     # TODO increase precision
     eps = numpy.finfo(float).eps
-    alpha = abs(exact_vals) * tol + (1.0e5+tol+exact_vals)*eps
-    is_smaller = abs(exact_vals - vals) < alpha
+    is_smaller = (
+        abs(exact_vals-vals) < abs(exact_vals)*tol + (1.0e5+tol+exact_vals)*eps
+        )
 
     if numpy.all(is_smaller):
         return max_degree

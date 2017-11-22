@@ -212,7 +212,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * [Lether](https://doi.org/10.1016/0771-050X(76)90008-5) (1976, degree 2n-2, arbitrary n, not symmetric)
  * [Hillion](https://doi.org/10.1002/nme.1620110504) (1977, 10 schemes up to
    degree 3),
- * [Grundmann-Möller](http://doi.org/10.1137/0715019) (1978, arbitrary degree),
+ * [Grundmann-Möller](https://doi.org/10.1137/0715019) (1978, arbitrary degree),
  * [Laursen-Gellert](https://doi.org/10.1002/nme.1620120107) (1978, 17
    schemes up to degree 10),
  * [CUBTRI](http://dl.acm.org/citation.cfm?id=356001) (Laurie, 1982, degree 8),
@@ -234,7 +234,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    to degree 14),
  * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2009, 3 schemes up to
    degree 20),
- * [Xiao-Gimbutas](http://doi.org/10.1016/j.camwa.2009.10.027) (2010, 50
+ * [Xiao-Gimbutas](https://doi.org/10.1016/j.camwa.2009.10.027) (2010, 50
    schemes up to degree 50),
  * [Vioreanu-Rokhlin](https://doi.org/10.1137/110860082) (2014, 20
    schemes up to degree 62),
@@ -414,13 +414,13 @@ val = quadpy.ball.integrate(
  * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 2 schemes up to degree 3)
  * open and closed Newton-Cotes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6)) (arbitrary degree)
  * [Stroud](https://cds.cern.ch/record/104291?ln=en) (1971, degree 7)
- * [Grundmann-Möller](http://doi.org/10.1137/0715019) (1978, arbitrary degree),
- * [Yu](http://doi.org/10.1016/0045-7825(84)90072-0) (1984, 5 schemes up to degree 6)
- * [Keast](http://doi.org/10.1016/0045-7825(86)90059-9) (1986, 11 schemes up to
+ * [Grundmann-Möller](https://doi.org/10.1137/0715019) (1978, arbitrary degree),
+ * [Yu](https://doi.org/10.1016/0045-7825(84)90072-0) (1984, 5 schemes up to degree 6)
+ * [Keast](https://doi.org/10.1016/0045-7825(86)90059-9) (1986, 11 schemes up to
    degree 8)
  * [Beckers-Haegemans](https://lirias.kuleuven.be/handle/123456789/132648) (1990, degrees 8 and 9)
  * [Gatermann](https://doi.org/10.1007/978-94-011-2646-5_2) (1992, degree 5)
- * [Liu-Vinokur](http://doi.org/10.1006/jcph.1998.5884) (1998, 14 schemes up to
+ * [Liu-Vinokur](https://doi.org/10.1006/jcph.1998.5884) (1998, 14 schemes up to
    degree 5)
  * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
    (2000, 6 schemes up to degree 7)
@@ -428,9 +428,9 @@ val = quadpy.ball.integrate(
    (2005, 2 schemes up to degree 3)
  * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2009, 2 schemes up to
    degree 14)
- * [Xiao-Gimbutas](http://doi.org/10.1016/j.camwa.2009.10.027) (2010, 15
+ * [Xiao-Gimbutas](https://doi.org/10.1016/j.camwa.2009.10.027) (2010, 15
    schemes up to degree 15)
- * [Shunn-Ham](http://doi.org/10.1016/j.cam.2012.03.032) (2012, 6 schemes up to
+ * [Shunn-Ham](https://doi.org/10.1016/j.cam.2012.03.032) (2012, 6 schemes up to
    degree 7)
  * [Vioreanu-Rokhlin](https://doi.org/10.1137/110860082) (2014, 10
    schemes up to degree 13)
@@ -475,7 +475,7 @@ val = quadpy.hexahedron.integrate(
 ### Pyramid
 <img src="https://nschloe.github.io/quadpy/pyra.png" width="25%">
 
- * [Felippa](http://doi.org/10.1108/02644400410554362) (9 schemes
+ * [Felippa](https://doi.org/10.1108/02644400410554362) (9 schemes
    up to degree 5)
 
 Example:
@@ -493,7 +493,7 @@ val = quadpy.pyramid.integrate(
 ### Wedge
 <img src="https://nschloe.github.io/quadpy/wedge.png" width="15%">
 
- * [Felippa](http://doi.org/10.1108/02644400410554362) (6 schemes
+ * [Felippa](https://doi.org/10.1108/02644400410554362) (6 schemes
    up to degree 6)
 
 Example:
@@ -546,7 +546,7 @@ val = quadpy.e2r2.integrate(
    - [Stroud](https://doi.org/10.2307/2002945) (1964, degree 3)
    - [Stroud](https://doi.org/10.1007/BF02165227) (1966, 7 schemes of degree 3)
    - [Stroud](https://doi.org/10.1137/0706009) (1969, degree 5)
- * [Grundmann-Möller](http://doi.org/10.1137/0715019) (1978, arbitrary degree)
+ * [Grundmann-Möller](https://doi.org/10.1137/0715019) (1978, arbitrary degree)
  * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/) (2000, 5 schemes up to degree 7)
 
 Example:

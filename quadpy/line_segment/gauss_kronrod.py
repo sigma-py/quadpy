@@ -43,8 +43,11 @@ class GaussKronrod(object):
         # to retrieve the points and weights.
         length = int(math.ceil(3*n/2.0)) + 1
         self.degree = 2*length + 1
-        alpha, beta = \
-            orthopy.recurrence_coefficients.jacobi(length, a, b, mode='numpy')
+        _, _, alpha, beta = \
+            orthopy.recurrence_coefficients.jacobi(length, a, b, 'monic')
+        flt = numpy.vectorize(float)
+        alpha = flt(alpha)
+        beta = flt(beta)
         a, b = self.r_kronrod(n, alpha, beta)
         x, w = orthopy.schemes.custom(a, b, mode='numpy')
         # sort by x

@@ -81,7 +81,7 @@ def test_scheme(scheme):
                 poly, tetrahedron, scheme
                 ),
             integrate_monomial_over_unit_simplex,
-            lambda n: quadpy.helpers.partition(n, 3),
+            3,
             scheme.degree + 1,
             )
     assert degree == scheme.degree, \
