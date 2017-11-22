@@ -22,10 +22,12 @@ def check_degree_1d(
     return numpy.where(is_larger)[0] - 1 if any(is_larger) else max_degree
 
 
-def evaluate_all_monomials(x, max_degree):
-    '''Evaluate all polynomials of up to degree `max_degree` at point(s) `x`.
+def get_all_exponents(dim, max_degree):
+    '''Get all exponent combinations of dimension `dim` and maximum degree
+    `max_degree`. This method is actually meant for evaluating all polynomials
+    with these exponents.
     '''
-    def augment(exponents, vals, x):
+    def augment(exponents):
         '''This function takes the values and exponents of a given monomial
         level, e.g., [(1,0,0), (0,1,0), (0,0,1)], and augments them by one
         level, i.e., [(2,0,0), (1,1,0), (1,0,1), (0,2,0), (0,1,1), (0,0,2)].
@@ -40,65 +42,62 @@ def evaluate_all_monomials(x, max_degree):
              ex[0]==0, ex[1]=0 (i.e., multiplication with x[2]),
 
         etc. The function call is recursive.
-
-        Right now, the method explicitly checks for exponents with leading
-        zeros. This could be skipped if the data is rearranged in a better way.
         '''
         if len(exponents) == 0 or len(exponents[0]) == 0:
-            return [], []
+            return []
 
         idx_leading_zero = [
             k for k in range(len(exponents)) if exponents[k][0] == 0
             ]
         exponents_with_leading_zero = \
             [exponents[k][1:] for k in idx_leading_zero]
-        val1 = vals[idx_leading_zero]
-        x1 = x[1:]
-        out1, vals1 = augment(exponents_with_leading_zero, val1, x1)
+        # val1 = vals[idx_leading_zero]
+        # x1 = x[1:]
+        out1 = augment(exponents_with_leading_zero)
 
         # increment leading exponent by 1
         out = [[e[0]+1] + e[1:] for e in exponents]
-        vals0 = vals * x[0]
+        # vals0 = vals * x[0]
 
         out += [[0] + e for e in out1]
-        out_vals = numpy.concatenate([vals0, vals1])
-        return out, out_vals
+        # out_vals = numpy.concatenate([vals0, vals1])
+        return out
 
-    dim = x.shape[0]
+    # dim = x.shape[0]
 
     # Initialization, level 0
     exponents = [dim * [0]]
-    vals = numpy.array(numpy.ones(x.shape[1:]))
+    # vals = numpy.array(numpy.ones(x.shape[1:]))
 
-    all_vals = []
+    # all_vals = []
     all_exponents = []
 
+    # all_vals.append(vals)
     all_exponents.append(exponents)
-    all_vals.append(vals)
     for k in range(max_degree):
-        exponents, vals = augment(exponents, vals, x)
+        exponents = augment(exponents)
+        # all_vals.append(vals)
         all_exponents.append(exponents)
-        all_vals.append(vals)
 
-    return all_vals
+    return all_exponents
 
 
 def check_degree(
         quadrature, exact, exponents_creator, dim, max_degree, tol=1.0e-14
         ):
-    exponents = numpy.concatenate([
-        exponents_creator(degree)
-        for degree in range(max_degree+1)
-        ])
+    exponents = get_all_exponents(dim, max_degree)
+    # flatten list
+    exponents = [item for sublist in exponents for item in sublist]
+    exponents = numpy.array(exponents)
     exact_vals = numpy.array([exact(k) for k in exponents])
 
-    # def fun(x):
-    #   # Evaluate monomials.
-    #   # There's a more complex, faster implementation using matmul, exp, log.
-    #   # However, this only works for strictly positive `x`, and requires some
-    #   # tinkering. See below and
-    #   # <https://stackoverflow.com/a/45421128/353337>.
-    #   return numpy.prod(x[..., None] ** exponents.T[:, None], axis=0).T
+    def evaluate_all_monomials(x):
+        # Evaluate monomials.
+        # There's a more complex, faster implementation using matmul, exp, log.
+        # However, this only works for strictly positive `x`, and requires some
+        # tinkering. See below and
+        # <https://stackoverflow.com/a/45421128/353337>.
+        return numpy.prod(x[..., None] ** exponents.T[:, None], axis=0).T
 
     vals = quadrature(evaluate_all_monomials)
 
