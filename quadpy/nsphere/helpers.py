@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import gamma, prod, Rational as fr
+from sympy import gamma, prod, Rational
 
 
 def integrate_monomial_over_unit_nsphere(alpha):
@@ -19,7 +19,10 @@ def integrate_monomial_over_unit_nsphere(alpha):
     #     math.fsum([math.lgamma(0.5*(a+1)) for a in alpha])
     #     - math.lgamma(math.fsum([0.5*(a+1) for a in alpha]))
     #     )
+
+    # Explicitly cast a to int (from numpy.int64) to work around bug
+    # <https://github.com/sympy/sympy/issues/13618>.
     return 2 * (
-        prod([gamma(fr(a+1, 2)) for a in alpha])
-        / gamma(sum([fr(a+1, 2) for a in alpha]))
+        prod([gamma(Rational(int(a)+1, 2)) for a in alpha])
+        / gamma(sum([Rational(int(a)+1, 2) for a in alpha]))
         )
