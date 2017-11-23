@@ -43,9 +43,8 @@ def test_scheme_cartesian(scheme, tol):
     def sph_tree_cartesian(x):
         flt = numpy.vectorize(float)
         phi_theta = cartesian_to_spherical(flt(x).T).T
-        return numpy.concatenate(specialpy.sph_tree(
-            scheme.degree+1, phi_theta[1], phi_theta[0]
-            ))
+        tree = specialpy.sph_tree(scheme.degree+1, phi_theta[1], phi_theta[0])
+        return [item for level in tree for item in level]
 
     vals = quadpy.sphere.integrate(
         sph_tree_cartesian,
