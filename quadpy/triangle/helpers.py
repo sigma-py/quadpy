@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-import orthopy
+# import orthopy
+import scipy.special
 from sympy import Rational
 
 from .. import helpers
@@ -183,7 +184,7 @@ def weights_from_points(point_data, degree):
     # WITH ORTHOGONAL POLYNOMIALS
     # ===========================
     exponents = numpy.concatenate([
-        helpers.partition(d, 2)
+        helpers.partition(2, d)
         for d in range(degree+1)
         ])
     # The exact integrals of the orthogonal polynomials over the triangle are
@@ -201,21 +202,21 @@ def weights_from_points(point_data, degree):
         <https://arxiv.org/pdf/1411.5631.pdf>.
         '''
         def f(i, j, x, y):
-            p0, a1, b1, c1 = \
-                orthopy.recurrence_coefficients.jacobi(i, 0, 0, 'monic')
-            val1 = orthopy.tools.evaluate_orthogonal_polynomial(
-                    (x-y)/(x+y), p0, a1, b1, c1
-                    )
-            # val1 = numpy.polyval(scipy.special.jacobi(i, 0, 0), (x-y)/(x+y))
+            # p0, a1, b1, c1 = \
+            #     orthopy.recurrence_coefficients.jacobi(i, 0, 0, 'monic')
+            # val1 = orthopy.tools.evaluate_orthogonal_polynomial(
+            #         (x-y)/(x+y), p0, a1, b1, c1
+            #         )
+            val1 = numpy.polyval(scipy.special.jacobi(i, 0, 0), (x-y)/(x+y))
 
-            p0, a2, b2, c2 = orthopy.recurrence_coefficients.jacobi(
-                    j, 2*i+1, 0, 'monic'
-                    )
-            val2 = orthopy.tools.evaluate_orthogonal_polynomial(
-                    1-2*(x+y), p0, a1, b2, c2
-                    )
-            # val2 = \
-            #     numpy.polyval(scipy.special.jacobi(j, 2*i+1, 0), 1-2*(x+y))
+            # p0, a2, b2, c2 = orthopy.recurrence_coefficients.jacobi(
+            #         j, 2*i+1, 0, 'monic'
+            #         )
+            # val2 = orthopy.tools.evaluate_orthogonal_polynomial(
+            #         1-2*(x+y), p0, a1, b2, c2
+            #         )
+            val2 = \
+                numpy.polyval(scipy.special.jacobi(j, 2*i+1, 0), 1-2*(x+y))
 
             return (
                 numpy.sqrt(2*i + 1) * val1 * (x+y)**i
