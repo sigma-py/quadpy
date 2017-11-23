@@ -244,6 +244,6 @@ def weights_from_points(point_data, degree):
 
     A = numpy.concatenate(a_data).T
 
-    x, res, rank, sv = numpy.linalg.lstsq(A, exact_vals)
+    x, res, _, _ = numpy.linalg.lstsq(A, exact_vals)
     assert numpy.all(abs(res) < 1.0e-15)
     return 2*x
