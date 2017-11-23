@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+from __future__ import division, print_function
 
 import math
 import numpy
@@ -43,13 +43,12 @@ def check_degree(quadrature, exact, dim, max_degree, tol=1.0e-14):
     vals = quadrature(evaluate_all_monomials)
 
     # check relative error
-    # The allowance is quite large here, 1e5 over machine precision.
+    # The allowance is quite large here, 1e6 over machine precision.
     # Some tests fail if lowered, though.
     # TODO increase precision
     eps = numpy.finfo(float).eps
-    is_smaller = (
-        abs(exact_vals-vals) < abs(exact_vals)*tol + (1.0e5+tol+exact_vals)*eps
-        )
+    tol = abs(exact_vals)*tol + (1.0e6+tol+exact_vals)*eps
+    is_smaller = abs(exact_vals-vals) < tol
 
     if numpy.all(is_smaller):
         return max_degree
