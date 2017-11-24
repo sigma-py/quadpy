@@ -24,7 +24,7 @@ import specialpy
         ]]
     + [(quadpy.sphere.Lebedev(degree), 1.0e-11) for degree in [
         3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 35, 41, 47, 53,
-        59, 65, 71, 77, 83, 89, 95, 101, 107, 113, 119, 125,
+        59, 65, 71, 77, 83, 89, 95, 101, 107, 113, 119,
         # The highest degree formulas are too memory-intensive for circleci,
         # and the tests are oom-killed. A workaround would be to not test the
         # entire tree at once, but split it up.
