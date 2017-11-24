@@ -44,9 +44,7 @@ def _integrate_exact(f, triangle):
     + [(quadpy.triangle.Centroid(), 1.0e-14)]
     + [(quadpy.triangle.CoolsHaegemans(k), 1.0e-14) for k in [1]]
     + [(quadpy.triangle.Cubtri(), 1.0e-14)]
-    + [(quadpy.triangle.Dunavant(k), 1.0e-14) for k in range(1, 19)]
-    # TODO improve precision
-    + [(quadpy.triangle.Dunavant(k), 1.0e-8) for k in [19, 20]]
+    + [(quadpy.triangle.Dunavant(k), 1.0e-14) for k in range(1, 21)]
     + [(quadpy.triangle.Gatermann(), 1.0e-14)]
     + [(quadpy.triangle.GrundmannMoeller(k), 1.0e-14) for k in range(10)]
     + [(quadpy.triangle.HammerMarloweStroud(k), 1.0e-14) for k in range(1, 6)]
