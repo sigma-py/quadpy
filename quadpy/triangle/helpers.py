@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-import orthopy
-# import scipy.special
+import specialpy
 from sympy import Rational
-
-from .. import helpers
 
 
 def _s3():
@@ -155,96 +152,31 @@ def weights_from_points(point_data, degree):
     method solves a least-squares problem with polynomials orthogonal on the
     triangle, leading to a well-conditioned system.
     '''
-    # from quadpy.nsimplex.helpers import integrate_monomial_over_unit_simplex
-    # import scipy.special
-
-    # s = quadpy.triangle.Dunavant(20)
-    # s = quadpy.triangle.Cubtri()
-
-    # WITH MONOMIALS
-    # ==============
-    # exponents = numpy.concatenate([
-    #     quadpy.helpers.partition(d, 2)
-    #     for d in range(s.degree+1)
-    #     ])
-    #
-    # exact_vals = numpy.array([
-    #     integrate_monomial_over_unit_simplex(k) for k in exponents
-    #     ])
-    #
-    #
-    # def fun(x):
-    #     k = exponents.T
-    #     # <https://stackoverflow.com/a/46689653/353337>
-    #     s = x.shape[1:] + k.shape[1:]
-    #     return (
-    #         x.reshape(x.shape[0], -1, 1)**k.reshape(k.shape[0], 1, -1)
-    #         ).prod(0).reshape(s)
-
-    # WITH ORTHOGONAL POLYNOMIALS
-    # ===========================
-    exponents = numpy.concatenate([
-        helpers.partition(2, d)
-        for d in range(degree+1)
-        ])
-    # The exact integrals of the orthogonal polynomials over the triangle are
-    # 0, except for the one with degree 0 for which we have sqrt(2)/2.
-    exact_vals = numpy.zeros(len(exponents))
-    exact_vals[0] = numpy.sqrt(2) / 2
-
-    def eval_orthpolys(x):
-        '''Evaluate all orthogonal polynomials at x.
-        See, e.g.,
-
-        S.-A. Papanicolopulos,
-        New fully symmetric and rotationally symmetric cubature rules on the
-        triangle using minimal orthonormal bases,
-        <https://arxiv.org/pdf/1411.5631.pdf>.
-        '''
-        def f(i, j, x, y):
-            p0, a1, b1, c1 = orthopy.recurrence_coefficients.jacobi(
-                    i, 0, 0, 'p(1)=(n+alpha over n)'
-                    )
-            val1 = orthopy.tools.evaluate_orthogonal_polynomial(
-                    (x-y)/(x+y), p0, a1, b1, c1
-                    )
-            # val1 = numpy.polyval(scipy.special.jacobi(i, 0, 0), (x-y)/(x+y))
-
-            p0, a2, b2, c2 = orthopy.recurrence_coefficients.jacobi(
-                    j, 2*i+1, 0, 'p(1)=(n+alpha over n)'
-                    )
-            val2 = orthopy.tools.evaluate_orthogonal_polynomial(
-                    1-2*(x+y), p0, a2, b2, c2
-                    )
-            # val2 = \
-            #     numpy.polyval(scipy.special.jacobi(j, 2*i+1, 0), 1-2*(x+y))
-            return (
-                numpy.sqrt(2*i + 1) * val1 * (x+y)**i
-                * numpy.sqrt(2*j + 2*i + 2) * val2
-                )
-
-        return numpy.array([
-            f(ij[0], ij[1], x[0], x[1])
-            for ij in exponents
-            ]).T
+    def eval_orthpolys(bary):
+        return numpy.concatenate(
+            specialpy.triangle_orth_tree(degree, bary, 'normal')
+            )
 
     a_data = []
     if 's3' in point_data:
-        a_data.append(eval_orthpolys(_s3().T[1:]))
+        a_data.append(eval_orthpolys(_s3().T))
 
     if 's2' in point_data:
         point_data['s2'] = numpy.array(point_data['s2'])
         s2_data = _s21(*point_data['s2'].T)
-        a_data.append(numpy.sum(eval_orthpolys(s2_data[1:]), axis=1))
+        a_data.append(numpy.sum(eval_orthpolys(s2_data), axis=1))
 
     if 's1' in point_data:
         point_data['s1'] = numpy.array(point_data['s1'])
         s1_data = _s111ab(*point_data['s1'].T)
-        a_data.append(numpy.sum(eval_orthpolys(s1_data[1:]), axis=1))
+        a_data.append(numpy.sum(eval_orthpolys(s1_data), axis=1))
 
-    print(a_data)
+    A = numpy.column_stack(a_data)
 
-    A = numpy.concatenate(a_data).T
+    # The exact integrals of the orthogonal polynomials over the triangle are
+    # 0, except for the one with degree 0 for which we have sqrt(2)/2.
+    exact_vals = numpy.zeros(A.shape[0])
+    exact_vals[0] = numpy.sqrt(2) / 2
 
     x, res, _, _ = numpy.linalg.lstsq(A, exact_vals)
     assert numpy.all(abs(res) < 1.0e-15)
