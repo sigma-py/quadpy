@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-# import orthopy
-import scipy.special
+import orthopy
+# import scipy.special
 from sympy import Rational
 
 from .. import helpers
@@ -202,22 +202,22 @@ def weights_from_points(point_data, degree):
         <https://arxiv.org/pdf/1411.5631.pdf>.
         '''
         def f(i, j, x, y):
-            # p0, a1, b1, c1 = \
-            #     orthopy.recurrence_coefficients.jacobi(i, 0, 0, 'monic')
-            # val1 = orthopy.tools.evaluate_orthogonal_polynomial(
-            #         (x-y)/(x+y), p0, a1, b1, c1
-            #         )
-            val1 = numpy.polyval(scipy.special.jacobi(i, 0, 0), (x-y)/(x+y))
+            p0, a1, b1, c1 = orthopy.recurrence_coefficients.jacobi(
+                    i, 0, 0, 'p(1)=(n+alpha over n)'
+                    )
+            val1 = orthopy.tools.evaluate_orthogonal_polynomial(
+                    (x-y)/(x+y), p0, a1, b1, c1
+                    )
+            # val1 = numpy.polyval(scipy.special.jacobi(i, 0, 0), (x-y)/(x+y))
 
-            # p0, a2, b2, c2 = orthopy.recurrence_coefficients.jacobi(
-            #         j, 2*i+1, 0, 'monic'
-            #         )
-            # val2 = orthopy.tools.evaluate_orthogonal_polynomial(
-            #         1-2*(x+y), p0, a1, b2, c2
-            #         )
-            val2 = \
-                numpy.polyval(scipy.special.jacobi(j, 2*i+1, 0), 1-2*(x+y))
-
+            p0, a2, b2, c2 = orthopy.recurrence_coefficients.jacobi(
+                    j, 2*i+1, 0, 'p(1)=(n+alpha over n)'
+                    )
+            val2 = orthopy.tools.evaluate_orthogonal_polynomial(
+                    1-2*(x+y), p0, a2, b2, c2
+                    )
+            # val2 = \
+            #     numpy.polyval(scipy.special.jacobi(j, 2*i+1, 0), 1-2*(x+y))
             return (
                 numpy.sqrt(2*i + 1) * val1 * (x+y)**i
                 * numpy.sqrt(2*j + 2*i + 2) * val2
@@ -241,6 +241,8 @@ def weights_from_points(point_data, degree):
         point_data['s1'] = numpy.array(point_data['s1'])
         s1_data = _s111ab(*point_data['s1'].T)
         a_data.append(numpy.sum(eval_orthpolys(s1_data[1:]), axis=1))
+
+    print(a_data)
 
     A = numpy.concatenate(a_data).T
 
