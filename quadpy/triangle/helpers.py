@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-import specialpy
+import orthopy
 from sympy import Rational
 
 
@@ -154,7 +154,7 @@ def weights_from_points(point_data, degree):
     '''
     def eval_orthpolys(bary):
         return numpy.concatenate(
-            specialpy.triangle_orth_tree(degree, bary, 'normal')
+            orthopy.triangle.orth_tree(degree, bary, 'normal')
             )
 
     a_data = []

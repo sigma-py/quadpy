@@ -2,9 +2,9 @@
 #
 import numpy
 import pytest
+import orthopy
 import quadpy
 from quadpy.sphere.helpers import cartesian_to_spherical
-import specialpy
 
 # Note
 # ====
@@ -49,9 +49,9 @@ def test_scheme_cartesian(scheme, tol):
     def sph_tree_cartesian(x):
         flt = numpy.vectorize(float)
         phi_theta = cartesian_to_spherical(flt(x).T).T
-        return numpy.concatenate(
-            specialpy.sph_tree(scheme.degree+1, phi_theta[1], phi_theta[0])
-            )
+        return numpy.concatenate(orthopy.sphere.sph_tree(
+            scheme.degree+1, phi_theta[1], phi_theta[0]
+            ))
 
     vals = quadpy.sphere.integrate(
         sph_tree_cartesian,
@@ -112,7 +112,7 @@ def test_scheme_spherical(scheme, tol):
 
     def sph_tree(phi_theta):
         phi_theta = flt(phi_theta)
-        return numpy.concatenate(specialpy.sph_tree(
+        return numpy.concatenate(orthopy.sphere.sph_tree(
             scheme.degree+1, phi_theta[1], phi_theta[0]
             ))
 
