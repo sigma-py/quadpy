@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import check_degree
+from helpers import check_degree_ortho
 
 import numpy
+import orthopy
 import pytest
 import quadpy
-from quadpy.nsimplex.helpers import integrate_monomial_over_unit_simplex
+# from quadpy.nsimplex.helpers import integrate_monomial_over_unit_simplex
 import sympy
 
 
@@ -69,14 +70,14 @@ def _integrate_exact(f, triangle):
     + [(quadpy.triangle.TaylorWingateBos(k), 1.0e-14) for k in [1, 2, 4, 5, 8]]
     + [(quadpy.triangle.Triex(k), 1.0e-14) for k in [19, 28]]
     + [(quadpy.triangle.Vertex(), 1.0e-14)]
-    + [(quadpy.triangle.VioreanuRokhlin(k), 1.0e-14) for k in range(20)]
+    # + [(quadpy.triangle.VioreanuRokhlin(k), 1.0e-14) for k in range(20)]
     + [(quadpy.triangle.Walkington(k), 1.0e-14) for k in [1, 2, 3, 5, 'p5']]
-    + [(quadpy.triangle.WandzuraXiao(k), 1.0e-14) for k in range(1, 7)]
+    # + [(quadpy.triangle.WandzuraXiao(k), 1.0e-14) for k in range(1, 7)]
     + [(quadpy.triangle.WilliamsShunnJameson(k), 1.0e-14) for k in range(1, 9)]
     + [(quadpy.triangle.WitherdenVincent(k), 1.0e-14) for k in [
         1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
         ]]
-    + [(quadpy.triangle.XiaoGimbutas(k), 1.0e-14) for k in range(1, 51)]
+    # + [(quadpy.triangle.XiaoGimbutas(k), 1.0e-14) for k in range(1, 51)]
     + [(quadpy.triangle.ZhangCuiLiu(k), 1.0e-14) for k in [1, 2, 3]]
     )
 def test_scheme(scheme, tol):
@@ -85,13 +86,27 @@ def test_scheme(scheme, tol):
         [1.0, 0.0],
         [0.0, 1.0]
         ])
-    degree = check_degree(
-            lambda poly: quadpy.triangle.integrate(poly, triangle, scheme),
-            integrate_monomial_over_unit_simplex,
-            2,
-            scheme.degree + 1,
-            tol=tol
+
+    def eval_orthopolys(x):
+        bary = numpy.array([x[0], x[1], 1.0-x[0]-x[1]])
+        return numpy.concatenate(
+            orthopy.triangle.orth_tree(scheme.degree+1, bary, 'normal')
             )
+
+    vals = quadpy.triangle.integrate(eval_orthopolys, triangle, scheme)
+    print(len(vals))
+    # Put vals back into the tree structure:
+    # len(approximate[k]) == k+1
+    approximate = [
+        vals[k*(k+1)//2:(k+1)*(k+2)//2]
+        for k in range(scheme.degree+2)
+        ]
+
+    exact = [numpy.zeros(k+1) for k in range(scheme.degree+2)]
+    exact[0][0] = 1.0 / numpy.sqrt(2.0)
+
+    degree = check_degree_ortho(approximate, exact, 2, tol=tol)
+
     assert degree >= scheme.degree, \
         'Observed: {}, expected: {}'.format(degree, scheme.degree)
     return

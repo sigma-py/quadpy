@@ -47,8 +47,8 @@ def check_degree(quadrature, exact, dim, max_degree, tol=1.0e-14):
     # Some tests fail if lowered, though.
     # TODO increase precision
     eps = numpy.finfo(float).eps
-    tol = abs(exact_vals)*tol + (1.0e5+tol+exact_vals)*eps
-    is_smaller = abs(exact_vals-vals) < tol
+    mytol = abs(exact_vals)*tol + (1.0e5+tol+exact_vals)*eps
+    is_smaller = abs(exact_vals-vals) < mytol
 
     if numpy.all(is_smaller):
         return max_degree
@@ -56,6 +56,25 @@ def check_degree(quadrature, exact, dim, max_degree, tol=1.0e-14):
     k = numpy.where(numpy.logical_not(is_smaller))[0]
     degree = numpy.sum(exponents[k[0]]) - 1
     return degree
+
+
+def check_degree_ortho(approximate, exact, dim, tol=1.0e-14):
+
+    # check relative error
+    # The allowance is quite large here, 1e5 over machine precision.
+    # Some tests fail if lowered, though.
+    # TODO increase precision
+    eps = numpy.finfo(float).eps
+
+    for degree, (approx, ex) in enumerate(zip(approximate, exact)):
+        mytol = abs(ex)*tol + (1.0e5+tol+ex)*eps
+        is_smaller = abs(ex - approx) < mytol
+
+        if not numpy.all(is_smaller):
+            return degree - 1
+
+    # All values are equal; the degree is at least this.
+    return len(approximate)
 
 
 def integrate_monomial_over_enr2(k):
