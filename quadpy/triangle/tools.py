@@ -2,9 +2,11 @@
 #
 import matplotlib.pyplot as plt
 import numpy
+import orthopy
 
 from .dunavant import Dunavant
 
+from .helpers import _s3, _s21, _s111ab, _rot_ab
 from .. import helpers
 from ..nsimplex import transform, get_vol, integrate
 
@@ -134,3 +136,41 @@ def integrate_adaptive(
         is_bad = numpy.logical_not(is_good)
 
     return quad_sum, global_error_estimate
+
+
+def compute_weights(scheme):
+    '''Computes weights from points for a given scheme. Useful for
+    cross-checking scheme integrity.
+    '''
+    def eval_orthopolys(bary):
+        return numpy.concatenate(
+            orthopy.triangle.orth_tree(scheme.degree, bary, 'normal')
+            )
+
+    fun = eval_orthopolys
+
+    a_data = []
+    if 's3' in scheme.data:
+        a_data.append(fun(_s3().T))
+
+    if 's2' in scheme.data:
+        d = numpy.array(scheme.data['s2']).T
+        s2_data = _s21(d[1])
+        a_data.append(numpy.sum(fun(s2_data), axis=1))
+
+    if 's1' in scheme.data:
+        d = numpy.array(scheme.data['s1']).T
+        s1_data = _s111ab(*d[1:])
+        a_data.append(numpy.sum(fun(s1_data), axis=1))
+
+    if 'rot' in scheme.data:
+        d = numpy.array(scheme.data['rot']).T
+        rot_data = _rot_ab(*d[1:])
+        a_data.append(numpy.sum(fun(rot_data), axis=1))
+
+    A = numpy.column_stack(a_data)
+
+    exact_vals = numpy.zeros(len(A))
+    exact_vals[0] = numpy.sqrt(2) / 2
+
+    return numpy.linalg.lstsq(A, exact_vals)

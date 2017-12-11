@@ -55,12 +55,12 @@ class HammerMarloweStroud(object):
                 ]
         else:
             assert index == 5
-            w1 = (155 - sqrt(15)) / 1200
-            w2 = (155 + sqrt(15)) / 1200
+            w1, w2 = [(155 - i*sqrt(15)) / 1200 for i in [+1, -1]]
+            x1, x2 = [(1 + i*sqrt(15)) / 7 for i in [+1, -1]]
             data = [
                 (Rational(9, 40), _s3()),
-                (w1, _r((1 + sqrt(15)) / 7)),
-                (w2, _r((1 - sqrt(15)) / 7)),
+                (w1, _r(x1)),
+                (w2, _r(x2)),
                 ]
             self.degree = 5
 

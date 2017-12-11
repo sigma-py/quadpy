@@ -104,8 +104,8 @@ class Keast(object):
         else:
             assert index == 10
             self.degree = 8
-            # In Keast's article, the first weight is incorrectly given with a
-            # positive sign.
+            # ERR In Keast's article, the first weight is incorrectly given
+            # with a positive sign.
             data = [
                 (-0.393270066412926145e-01, _s4()),
                 (+0.408131605934270525e-02, _s31(0.127470936566639015e-00)),

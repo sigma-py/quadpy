@@ -36,8 +36,8 @@ class Stroud(object):
             # Generate Gauss formula for int_0^1 (1-s) * f(s) ds.
             k = numpy.arange(8)
             moments = 1 / (k**2 + 3*k + 2)
-            alpha, beta = orthopy.chebyshev(moments)
-            s, B = orthopy.schemes.custom(alpha, beta, mode='numpy')
+            alpha, beta = orthopy.line.chebyshev(moments)
+            s, B = orthopy.line.schemes.custom(alpha, beta, mode='numpy')
 
             data = [
                 (2*A[i]*B[j], numpy.array([[

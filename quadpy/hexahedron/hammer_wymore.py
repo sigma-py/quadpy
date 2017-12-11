@@ -6,6 +6,7 @@ from .helpers import fs_r00, fs_rr0, pm_rrr
 from ..helpers import untangle
 
 
+# pylint: disable=too-many-locals
 class HammerWymore(object):
     '''
     Preston C. Hammer and A. Wayne Wymore,
@@ -13,28 +14,47 @@ class HammerWymore(object):
     Math. Comp. 11 (1957), 59-67,
     <https://doi.org/10.1090/S0025-5718-1957-0087220-6>.
     '''
-    def __init__(self):
+    def __init__(self, lmbda=1):
         self.degree = 7
 
-        r2 = fr(6, 7)
-        s2, t2 = [(960 - i*3*sqrt(28798)) / 2726 for i in [+1, -1]]
+        I0 = 8
+        I2 = fr(8, 3)
+        I4 = fr(8, 5)
+        I22 = fr(8, 9)
+        I6 = fr(8, 7)
+        I42 = fr(8, 15)
+        I222 = fr(8, 27)
 
-        r = sqrt(r2)
-        s = sqrt(s2)
-        t = sqrt(t2)
+        u1 = (I6 - 2*I42 + I222 + lmbda*(I42 - I222)) / (I4 - I22)
+        u2 = u1 / lmbda
+        a1 = (I6 - 2*I42 + I222) / 2 / u1**3
+        a2 = (I42 - I222) / 4 / u2**3
 
-        B1 = fr(1078, 29160)
-        B2 = fr(343, 29160)
-        B3 = (774*t2 - 230) / (9720 * (t2-s2))
-        B4 = (230 - 774*s2) / (9720 * (t2-s2))
+        p0 = I0 - 6*a1 - 12*a2
+        p1 = I2 - 2*a1*u1 - 8*a2*u2
+        p2 = I22 - 4*a2*u2**2
+        p3 = I222
+
+        c0 = (p3*p1 - p2**2) / (p0*p2 - p1**2)
+        c1 = (p3*p0 - p1*p2) / (p1**2 - p2*p0)
+
+        u3 = (-c1 - sqrt(c1**2 - 4*c0)) / 2
+        u4 = (-c1 + sqrt(c1**2 - 4*c0)) / 2
+
+        a3 = (p0*u4 - p1) / 8 / (u4 - u3)
+        a4 = (p0*u3 - p1) / 8 / (u3 - u4)
+
+        x1 = sqrt(u1)
+        x2 = sqrt(u2)
+        x3 = sqrt(u3)
+        x4 = sqrt(u4)
 
         data = [
-            (B1, fs_r00(r)),
-            (B2, fs_rr0(r)),
-            (B3, pm_rrr(s)),
-            (B4, pm_rrr(t)),
+            (a1, fs_r00(x1)),
+            (a2, fs_rr0(x2)),
+            (a3, pm_rrr(x3)),
+            (a4, pm_rrr(x4)),
             ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= 8
         return

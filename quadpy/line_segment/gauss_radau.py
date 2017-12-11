@@ -12,7 +12,7 @@ class GaussRadau(object):
         assert n >= 2
         self.degree = 2*n - 1
         _, _, alpha, beta = \
-            orthopy.recurrence_coefficients.jacobi(n, a, b, 'monic')
+            orthopy.line.recurrence_coefficients.jacobi(n, a, b, 'monic')
         flt = numpy.vectorize(float)
         alpha = flt(alpha)
         beta = flt(beta)
@@ -40,5 +40,5 @@ def _radau(alpha, beta, xr):
     delta = solve_banded((1, 1), J, f)
     alphar = alpha.copy()
     alphar[-1] = xr + delta[-1]
-    x, w = orthopy.schemes.custom(alphar, beta, mode='numpy')
+    x, w = orthopy.line.schemes.custom(alphar, beta, mode='numpy')
     return x, w

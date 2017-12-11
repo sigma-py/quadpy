@@ -38,18 +38,18 @@ class GaussKronrod(object):
     def __init__(self, n, a=0.0, b=0.0):
         # The general scheme is:
         # Get the Jacobi recursion coefficients, get the Kronrod vectors alpha
-        # and beta, and hand those off to orthopy.schemes.custom. There, the
-        # eigenproblem for a tridiagonal matrix with alpha and beta is solved
-        # to retrieve the points and weights.
+        # and beta, and hand those off to orthopy.line.schemes.custom. There,
+        # the eigenproblem for a tridiagonal matrix with alpha and beta is
+        # solved to retrieve the points and weights.
         length = int(math.ceil(3*n/2.0)) + 1
         self.degree = 2*length + 1
         _, _, alpha, beta = \
-            orthopy.recurrence_coefficients.jacobi(length, a, b, 'monic')
+            orthopy.line.recurrence_coefficients.jacobi(length, a, b, 'monic')
         flt = numpy.vectorize(float)
         alpha = flt(alpha)
         beta = flt(beta)
         a, b = self.r_kronrod(n, alpha, beta)
-        x, w = orthopy.schemes.custom(a, b, mode='numpy')
+        x, w = orthopy.line.schemes.custom(a, b, mode='numpy')
         # sort by x
         i = numpy.argsort(x)
         self.points = x[i]
