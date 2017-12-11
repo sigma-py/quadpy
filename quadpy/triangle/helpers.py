@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-import orthopy
 from sympy import Rational
 
 
@@ -144,40 +143,3 @@ def untangle3(point_data, weight_data):
     weights = numpy.concatenate(weights)
 
     return bary, weights
-
-
-def weights_from_points(point_data, degree):
-    '''In a quadrature scheme, the weights really only depend on the points and
-    the information up to which degree the scheme is supposed to be exact. This
-    method solves a least-squares problem with polynomials orthogonal on the
-    triangle, leading to a well-conditioned system.
-    '''
-    def eval_orthpolys(bary):
-        return numpy.concatenate(
-            orthopy.triangle.orth_tree(degree, bary, 'normal')
-            )
-
-    a_data = []
-    if 's3' in point_data:
-        a_data.append(eval_orthpolys(_s3().T))
-
-    if 's2' in point_data:
-        point_data['s2'] = numpy.array(point_data['s2'])
-        s2_data = _s21(*point_data['s2'].T)
-        a_data.append(numpy.sum(eval_orthpolys(s2_data), axis=1))
-
-    if 's1' in point_data:
-        point_data['s1'] = numpy.array(point_data['s1'])
-        s1_data = _s111ab(*point_data['s1'].T)
-        a_data.append(numpy.sum(eval_orthpolys(s1_data), axis=1))
-
-    A = numpy.column_stack(a_data)
-
-    # The exact integrals of the orthogonal polynomials over the triangle are
-    # 0, except for the one with degree 0 for which we have sqrt(2)/2.
-    exact_vals = numpy.zeros(A.shape[0])
-    exact_vals[0] = numpy.sqrt(2) / 2
-
-    x, res, _, _ = numpy.linalg.lstsq(A, exact_vals)
-    assert numpy.all(abs(res) < 1.0e-15)
-    return 2*x
