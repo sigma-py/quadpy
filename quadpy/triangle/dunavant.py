@@ -326,6 +326,7 @@ class Dunavant(object):
                     ]
                 }
 
+        self.data = data
         self.bary, self.weights = untangle2(data)
 
         # convert barycentric coordinates to reference triangle

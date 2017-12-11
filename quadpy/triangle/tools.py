@@ -154,11 +154,13 @@ def compute_weights(scheme):
         a_data.append(fun(_s3().T))
 
     if 's2' in scheme.data:
-        s2_data = _s21(scheme.data['s2'][1])
+        d = numpy.array(scheme.data['s2']).T
+        s2_data = _s21(d[1])
         a_data.append(numpy.sum(fun(s2_data), axis=1))
 
     if 's1' in scheme.data:
-        s1_data = _s111ab(*scheme.data['s1'][1:])
+        d = numpy.array(scheme.data['s1']).T
+        s1_data = _s111ab(*d[1:])
         a_data.append(numpy.sum(fun(s1_data), axis=1))
 
     A = numpy.column_stack(a_data)
@@ -167,4 +169,3 @@ def compute_weights(scheme):
     exact_vals[0] = numpy.sqrt(2) / 2
 
     return numpy.linalg.lstsq(A, exact_vals)
-
