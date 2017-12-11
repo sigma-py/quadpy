@@ -147,6 +147,19 @@ def test_volume():
     return
 
 
+@pytest.mark.parametrize(
+    'scheme', [
+        quadpy.triangle.Dunavant(7)
+        ])
+def test_compute_weights(scheme):
+    x, _, _, _ = quadpy.triangle.compute_weights(scheme)
+    raw_weights = numpy.concatenate([
+        numpy.array(d)[:, 0] for d in scheme.data.values()
+        ])
+    assert numpy.all(abs(2*x - raw_weights) < 1.0e-14)
+    return
+
+
 if __name__ == '__main__':
     scheme_ = quadpy.triangle.WandzuraXiao(3)
     test_scheme(scheme_, 1.0e-14)
