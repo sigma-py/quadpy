@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-import warnings
-
-from .helpers import fs_r00, fs_rr0, pm_rrr
-
-from ..helpers import untangle
+from .hammer_wymore import HammerWymore
 
 
 class SarmaStroud(object):
@@ -16,16 +12,15 @@ class SarmaStroud(object):
     <https://doi.org/10.2307/2004963>.
     '''
     def __init__(self):
-        warnings.warn('SarmaStroud is only in single precision.')
-        self.degree = 7
-
-        data = [
-            (0.3558180896e-1, fs_r00(0.9317380000)),
-            (0.1247892770e-1, fs_rr0(0.9167441779)),
-            (0.5286772991e-1, pm_rrr(0.4086003800)),
-            (0.2672752182e-1, pm_rrr(0.7398529500)),
-            ]
-
-        self.points, self.weights = untangle(data)
-        self.weights *= 8
+        # Hammer-Wymore is a one-parameter family of schemes, and the
+        # parameters lambda is chosen to minimize the standard deviation of
+        # Sarma's error functional. The particular value of lambda is not
+        # explicitly given in the article, but computed from the specified
+        # values. Note that it is only given in single precision, so the
+        # minimum is only approximated.
+        lmbda = 1.0329785305
+        hw = HammerWymore(lmbda=lmbda)
+        self.degree = hw.degree
+        self.points = hw.points
+        self.weights = hw.weights
         return

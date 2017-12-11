@@ -121,7 +121,8 @@ class Stroud(object):
             flt = numpy.vectorize(float)
             alpha = flt(alpha)
             beta = flt(beta)
-            points, weights = orthopy.schemes.custom(alpha, beta, mode='numpy')
+            points, weights = \
+                orthopy.line.schemes.custom(alpha, beta, mode='numpy')
 
             r = points[-4:]
             A = weights[-4:]

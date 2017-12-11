@@ -51,10 +51,13 @@ def data_to_code(data, f):
     for k, item in enumerate(data):
         print('elif index == {}:'.format(k))
         print('    self.degree = {}'.format(item['degree']))
-        print('    data = [')
+        print('    data = {')
 
-        for d0 in item['data'][0]:
-            print(8*' ' + '({:.16e}, {}()),'.format(d0[0], f[0]))
+        if len(item['data'][0]) > 0:
+            print(8*' ' + '\'s3\': [')
+            for d0 in item['data'][0]:
+                print(12*' ' + '[{:.16e}],'.format(d0[0]))
+            print(12*' ' + '],')
 
         # for d1 in item['data'][1]:
         #     # find the value that appears twice
@@ -64,16 +67,18 @@ def data_to_code(data, f):
         #         alpha = d1[2]
         #     print(8*' ' + '({:.16e}, {}({:.16e})),'.format(d1[0], f[1], alpha))
 
-        for d2 in item['data'][1]:
-            print(8*' ' + '({:.16e}, {}({:.16e}, {:.16e})),'.format(
-                d2[0], f[1], d2[1], d2[2]
-                ))
-        print('        ]')
+        if len(item['data'][1]) > 0:
+            print(8*' ' + '\'rot\': [')
+            for d2 in item['data'][1]:
+                print(12*' ' + '[{:.16e}, {:.16e}, {:.16e}],'.format(*d2))
+            print(12*' ' + '],')
+
+        print(8*' ' + '}')
     return
 
 
 if __name__ == '__main__':
-    # data = read_data('papa.txt', num_orbit_types=3)
+    # data = read_data('papanicolopoulos.txt', num_orbit_types=3)
     # data_to_code(data, ('_s3', '_s21', '_s111'))
     data = read_data('rotationalsymmetry.txt', num_orbit_types=2)
-    data_to_code(data, ('_s3', '_rot'))
+    data_to_code(data, ('s3', 'rot'))

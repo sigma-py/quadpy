@@ -36,7 +36,8 @@ def _gen14_1():
     beta[1::2] = numpy.arange(n//2) + 1.5
     beta[2::2] = numpy.arange(n//2-1) + 1.0
 
-    points, weights = orthopy.schemes.custom(alpha, beta, mode='numpy')
+    points, weights = \
+        orthopy.line.schemes.custom(alpha, beta, mode='numpy')
 
     r = points[-4:]
     A = weights[-4:]

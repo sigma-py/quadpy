@@ -12,7 +12,7 @@ class GaussLobatto(object):
         assert n >= 2
         self.degree = 2*n - 3
         _, _, alpha, beta = \
-            orthopy.recurrence_coefficients.jacobi(n, a, b, 'monic')
+            orthopy.line.recurrence_coefficients.jacobi(n, a, b, 'monic')
         flt = numpy.vectorize(float)
         alpha = flt(alpha)
         beta = flt(beta)
@@ -51,5 +51,5 @@ def _lobatto(alpha, beta, xl1, xl2):
     alphal[-1] = ab[0]
     betal = beta
     betal[-1] = ab[1]
-    x, w = orthopy.schemes.custom(alphal, betal, mode='numpy')
+    x, w = orthopy.line.schemes.custom(alphal, betal, mode='numpy')
     return x, w

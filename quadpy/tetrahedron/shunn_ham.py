@@ -8,8 +8,8 @@ from .helpers import _s4, _s31, _s22, _s211
 class ShunnHam(object):
     '''
     Lee Shunn, Frank Ham,
-    Symmetric quadrature rules for tetrahedra based on a cubic
-    close-packed lattice arrangement,
+    Symmetric quadrature rules for tetrahedra based on a cubic close-packed
+    lattice arrangement,
     Journal of Computational and Applied Mathematics,
     2012,
     <https://doi.org/10.1016/j.cam.2012.03.032>.

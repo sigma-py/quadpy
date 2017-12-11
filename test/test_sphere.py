@@ -2,9 +2,9 @@
 #
 import numpy
 import pytest
+import orthopy
 import quadpy
 from quadpy.sphere.helpers import cartesian_to_spherical
-import specialpy
 
 # Note
 # ====
@@ -24,9 +24,15 @@ import specialpy
         ]]
     + [(quadpy.sphere.Lebedev(degree), 1.0e-11) for degree in [
         3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 35, 41, 47, 53,
-        59, 65, 71, 77, 83, 89, 95, 101, 107, 113, 119, 125, 131
+        59, 65, 71, 77, 83, 89, 95, 101, 107, 113, 119,
+        # The highest degree formulas are too memory-intensive for circleci,
+        # and the tests are oom-killed. A workaround would be to not test the
+        # entire tree at once, but split it up.
+        # Check <https://stackoverflow.com/q/47474140/353337>.
+        # TODO reenable
+        # 125, 131
         ]]
-    + [(quadpy.sphere.Stroud(k), 1.0e-14) for k in [
+    + [(quadpy.sphere.Stroud(k), 1.0e-13) for k in [
         'U3 3-1',
         'U3 5-1', 'U3 5-2', 'U3 5-3', 'U3 5-4', 'U3 5-5',
         'U3 7-1', 'U3 7-2',
@@ -43,9 +49,9 @@ def test_scheme_cartesian(scheme, tol):
     def sph_tree_cartesian(x):
         flt = numpy.vectorize(float)
         phi_theta = cartesian_to_spherical(flt(x).T).T
-        return specialpy.sph_tree(
+        return numpy.concatenate(orthopy.sphere.sph_tree(
             scheme.degree+1, phi_theta[1], phi_theta[0]
-            )
+            ))
 
     vals = quadpy.sphere.integrate(
         sph_tree_cartesian,
@@ -53,17 +59,20 @@ def test_scheme_cartesian(scheme, tol):
         radius=1.0, rule=scheme, sumfun=numpy.sum
         )
 
-    exact = numpy.zeros((scheme.degree+2, scheme.degree+2))
-    exact[0, 0] = numpy.sqrt(4 * numpy.pi)
-
     # The exact value is sqrt(4*pi) for the Y_0^0, and 0 otherwise.
     err = vals
-    err[0, 0] -= numpy.sqrt(4.0 * numpy.pi)
+    err[0] -= numpy.sqrt(4.0 * numpy.pi)
 
     # check in which level the first significant errors occur
-    first_error_level = numpy.min(
-        numpy.max(numpy.vstack(numpy.where(abs(err) > tol)), axis=0)
-        )
+    k = 0
+    first_error_level = None
+    for L in range(scheme.degree+2):
+        m = 2*L + 1
+        if numpy.any(abs(err[k:k+m]) > tol):
+            first_error_level = L
+            break
+        k += m
+    assert first_error_level is not None
 
     degree = first_error_level - 1
 
@@ -85,7 +94,7 @@ def test_scheme_cartesian(scheme, tol):
     + [(quadpy.sphere.Lebedev(degree), 1.0e-11) for degree in [
         3, 5, 7, 9, 11, 13, 15, 17, 19,
         ]]
-    + [(quadpy.sphere.Stroud(k), 1.0e-14) for k in [
+    + [(quadpy.sphere.Stroud(k), 1.0e-13) for k in [
         'U3 3-1',
         'U3 5-1', 'U3 5-2', 'U3 5-3', 'U3 5-4', 'U3 5-5',
         'U3 7-1', 'U3 7-2',
@@ -103,26 +112,29 @@ def test_scheme_spherical(scheme, tol):
 
     def sph_tree(phi_theta):
         phi_theta = flt(phi_theta)
-        return specialpy.sph_tree(
+        return numpy.concatenate(orthopy.sphere.sph_tree(
             scheme.degree+1, phi_theta[1], phi_theta[0]
-            )
+            ))
 
     vals = quadpy.sphere.integrate_spherical(
         sph_tree,
         radius=1.0, rule=scheme, sumfun=numpy.sum
         )
 
-    exact = numpy.zeros((scheme.degree+2, scheme.degree+2))
-    exact[0, 0] = numpy.sqrt(4 * numpy.pi)
-
     # The exact value is sqrt(4*pi) for the Y_0^0, and 0 otherwise.
     err = vals
-    err[0, 0] -= numpy.sqrt(4 * numpy.pi)
+    err[0] -= numpy.sqrt(4 * numpy.pi)
 
     # check in which level the first significant errors occur
-    first_error_level = numpy.min(
-        numpy.max(numpy.vstack(numpy.where(abs(err) > tol)), axis=0)
-        )
+    k = 0
+    first_error_level = None
+    for L in range(scheme.degree+2):
+        m = 2*L + 1
+        if numpy.any(abs(err[k:k+m]) > tol):
+            first_error_level = L
+            break
+        k += m
+    assert first_error_level is not None
 
     degree = first_error_level - 1
 
