@@ -32,7 +32,7 @@ from quadpy.sphere.helpers import cartesian_to_spherical
         # TODO reenable
         # 125, 131
         ]]
-    + [(quadpy.sphere.Stroud(k), 1.0e-14) for k in [
+    + [(quadpy.sphere.Stroud(k), 1.0e-13) for k in [
         'U3 3-1',
         'U3 5-1', 'U3 5-2', 'U3 5-3', 'U3 5-4', 'U3 5-5',
         'U3 7-1', 'U3 7-2',
@@ -94,7 +94,7 @@ def test_scheme_cartesian(scheme, tol):
     + [(quadpy.sphere.Lebedev(degree), 1.0e-11) for degree in [
         3, 5, 7, 9, 11, 13, 15, 17, 19,
         ]]
-    + [(quadpy.sphere.Stroud(k), 1.0e-14) for k in [
+    + [(quadpy.sphere.Stroud(k), 1.0e-13) for k in [
         'U3 3-1',
         'U3 5-1', 'U3 5-2', 'U3 5-3', 'U3 5-4', 'U3 5-5',
         'U3 7-1', 'U3 7-2',
