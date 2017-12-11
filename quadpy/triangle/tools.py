@@ -2,9 +2,11 @@
 #
 import matplotlib.pyplot as plt
 import numpy
+import orthopy
 
 from .dunavant import Dunavant
 
+from .helpers import _s3, _s21, _s111ab
 from .. import helpers
 from ..nsimplex import transform, get_vol, integrate
 
@@ -134,3 +136,35 @@ def integrate_adaptive(
         is_bad = numpy.logical_not(is_good)
 
     return quad_sum, global_error_estimate
+
+
+def compute_weights(scheme):
+    '''Computes weights from points for a given scheme. Useful for
+    cross-checking scheme integrity.
+    '''
+    def eval_orthopolys(bary):
+        return numpy.concatenate(
+            orthopy.triangle.orth_tree(scheme.degree, bary, 'normal')
+            )
+
+    fun = eval_orthopolys
+
+    a_data = []
+    if 's3' in scheme.data:
+        a_data.append(fun(_s3().T))
+
+    if 's2' in scheme.data:
+        s2_data = _s21(scheme.data['s2'][1])
+        a_data.append(numpy.sum(fun(s2_data), axis=1))
+
+    if 's1' in scheme.data:
+        s1_data = _s111ab(*scheme.data['s1'][1:])
+        a_data.append(numpy.sum(fun(s1_data), axis=1))
+
+    A = numpy.column_stack(a_data)
+
+    exact_vals = numpy.zeros(len(A))
+    exact_vals[0] = numpy.sqrt(2) / 2
+
+    return numpy.linalg.lstsq(A, exact_vals)
+

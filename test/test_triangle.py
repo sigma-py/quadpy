@@ -71,14 +71,14 @@ def _integrate_exact(f, triangle):
     + [(quadpy.triangle.TaylorWingateBos(k), 1.0e-14) for k in [1, 2, 4, 5, 8]]
     + [(quadpy.triangle.Triex(k), 1.0e-14) for k in [19, 28]]
     + [(quadpy.triangle.Vertex(), 1.0e-14)]
-    # + [(quadpy.triangle.VioreanuRokhlin(k), 1.0e-14) for k in range(20)]
+    + [(quadpy.triangle.VioreanuRokhlin(k), 1.0e-14) for k in range(20)]
     + [(quadpy.triangle.Walkington(k), 1.0e-14) for k in [1, 2, 3, 5, 'p5']]
-    # + [(quadpy.triangle.WandzuraXiao(k), 1.0e-14) for k in range(1, 7)]
+    + [(quadpy.triangle.WandzuraXiao(k), 1.0e-14) for k in range(1, 7)]
     + [(quadpy.triangle.WilliamsShunnJameson(k), 1.0e-14) for k in range(1, 9)]
     + [(quadpy.triangle.WitherdenVincent(k), 1.0e-14) for k in [
         1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
         ]]
-    # + [(quadpy.triangle.XiaoGimbutas(k), 1.0e-14) for k in range(1, 51)]
+    + [(quadpy.triangle.XiaoGimbutas(k), 1.0e-14) for k in range(1, 51)]
     + [(quadpy.triangle.ZhangCuiLiu(k), 1.0e-14) for k in [1, 2, 3]]
     )
 def test_scheme(scheme, tol):
@@ -90,12 +90,12 @@ def test_scheme(scheme, tol):
 
     def eval_orthopolys(x):
         bary = numpy.array([x[0], x[1], 1.0-x[0]-x[1]])
-        return numpy.concatenate(
+        out = numpy.concatenate(
             orthopy.triangle.orth_tree(scheme.degree+1, bary, 'normal')
             )
+        return out
 
     vals = quadpy.triangle.integrate(eval_orthopolys, triangle, scheme)
-    print(len(vals))
     # Put vals back into the tree structure:
     # len(approximate[k]) == k+1
     approximate = [
@@ -104,7 +104,7 @@ def test_scheme(scheme, tol):
         ]
 
     exact = [numpy.zeros(k+1) for k in range(scheme.degree+2)]
-    exact[0][0] = 1.0 / numpy.sqrt(2.0)
+    exact[0][0] = numpy.sqrt(2.0) / 2
 
     degree = check_degree_ortho(approximate, exact, 2, tol=tol)
 
@@ -148,6 +148,6 @@ def test_volume():
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.triangle.Papanicolopulos('fs', 1)
+    scheme_ = quadpy.triangle.WandzuraXiao(3)
     test_scheme(scheme_, 1.0e-14)
-    test_show(scheme_)
+    # test_show(scheme_)
