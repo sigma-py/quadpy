@@ -29,7 +29,8 @@ def with_monomials(degree):
 
 
 if __name__ == '__main__':
-    scheme = quadpy.triangle.VioreanuRokhlin(19)
+    scheme = quadpy.triangle.Papanicolopulos('rot', 8)
+    factor = 2  # depends on the convention of the scheme
 
     x, res, rank, sv = quadpy.triangle.compute_weights(scheme)
 
@@ -41,7 +42,6 @@ if __name__ == '__main__':
     for val in sv:
         print('  {:.15e}'.format(val))
 
-    factor = 4  # depends on the convention of the scheme
     print()
     print('solution:')
     for val in x:

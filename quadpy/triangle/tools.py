@@ -6,7 +6,7 @@ import orthopy
 
 from .dunavant import Dunavant
 
-from .helpers import _s3, _s21, _s111ab
+from .helpers import _s3, _s21, _s111ab, _rot_ab
 from .. import helpers
 from ..nsimplex import transform, get_vol, integrate
 
@@ -162,6 +162,11 @@ def compute_weights(scheme):
         d = numpy.array(scheme.data['s1']).T
         s1_data = _s111ab(*d[1:])
         a_data.append(numpy.sum(fun(s1_data), axis=1))
+
+    if 'rot' in scheme.data:
+        d = numpy.array(scheme.data['rot']).T
+        rot_data = _rot_ab(*d[1:])
+        a_data.append(numpy.sum(fun(rot_data), axis=1))
 
     A = numpy.column_stack(a_data)
 
