@@ -60,8 +60,10 @@ def _integrate_exact(f, triangle):
     + [(quadpy.triangle.NewtonCotesClosed(k), 1.0e-14) for k in range(1, 6)]
     + [(quadpy.triangle.NewtonCotesOpen(k), 1.0e-14) for k in range(6)]
     + [(quadpy.triangle.Papanicolopulos('fs', k), 1.0e-14) for k in range(9)]
-    # TODO reenable tests
-    # + [(quadpy.triangle.Papanicolopulos('rot', k), 1.0e-14) for k in range(18)]
+    + [(quadpy.triangle.Papanicolopulos('rot', k), 1.0e-14)
+       # The first 8 schemes are flawed by round-off error
+       for k in range(8, 18)
+       ]
     + [(quadpy.triangle.SevenPoint(), 1.0e-14)]
     + [(quadpy.triangle.Strang(k), 1.0e-14) for k in range(1, 11)]
     + [(quadpy.triangle.Stroud(k), 1.0e-14) for k in [
@@ -149,7 +151,8 @@ def test_volume():
 
 @pytest.mark.parametrize(
     'scheme', [
-        quadpy.triangle.Dunavant(7)
+        quadpy.triangle.Dunavant(7),
+        quadpy.triangle.Papanicolopulos('rot', 8),
         ])
 def test_compute_weights(scheme):
     x, _, _, _ = quadpy.triangle.compute_weights(scheme)
