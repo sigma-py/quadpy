@@ -54,12 +54,10 @@ def check_degree(quadrature, exact, dim, max_degree, tol=1.0e-14):
         return max_degree
 
     k = numpy.where(numpy.logical_not(is_smaller))[0]
-    degree = numpy.sum(exponents[k[0]]) - 1
-    return degree
+    return numpy.sum(exponents[k[0]]) - 1  # = degree
 
 
-def check_degree_ortho(approximate, exact, dim, tol=1.0e-14):
-
+def check_degree_ortho(approximate, exact, tol=1.0e-14):
     # check relative error
     # The allowance is quite large here, 1e5 over machine precision.
     # Some tests fail if lowered, though.
