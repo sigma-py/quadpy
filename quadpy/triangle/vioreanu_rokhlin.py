@@ -142,7 +142,8 @@ class VioreanuRokhlin(object):
                     ],
                 }
         elif index == 10:
-            self.degree = 19
+            # ERR upstream specifies degree 19
+            self.degree = 17
             data = {
                 's2': [
                     [4.533150138338916e-03, 1.338044267375471e-02],
@@ -164,7 +165,8 @@ class VioreanuRokhlin(object):
                     ],
                 }
         elif index == 11:
-            self.degree = 22
+            # ERR upstream specifies degree 22
+            self.degree = 19
             data = {
                 's2': [
                     [3.570986637127163e-03, 1.190577007231675e-02],
@@ -188,7 +190,8 @@ class VioreanuRokhlin(object):
                     ],
                 }
         elif index == 12:
-            self.degree = 25
+            # ERR upstream specifies degree 25
+            self.degree = 20
             data = {
                 's3': [[5.588291294116084e-02]],
                 's2': [
@@ -215,7 +218,8 @@ class VioreanuRokhlin(object):
                     ],
                 }
         elif index == 13:
-            self.degree = 30
+            # ERR upstream specifies degree 30
+            self.degree = 22
             data = {
                 's2': [
                     [9.372740681166061e-04, 5.819134670830062e-03],
@@ -244,7 +248,8 @@ class VioreanuRokhlin(object):
                     ],
                 }
         elif index == 14:
-            self.degree = 35
+            # ERR upstream specifies degree 35
+            self.degree = 24
             data = {
                 's2': [
                     [6.758286353449607e-04, 4.680447738470872e-03],
@@ -276,7 +281,8 @@ class VioreanuRokhlin(object):
                     ],
                 }
         elif index == 15:
-            self.degree = 40
+            # ERR upstream specifies degree 40
+            self.degree = 25
             data = {
                 's3': [[3.826701851913514e-02]],
                 's2': [
@@ -311,7 +317,8 @@ class VioreanuRokhlin(object):
                     ],
                 }
         elif index == 16:
-            self.degree = 44
+            # ERR upstream specifies degree 44
+            self.degree = 27
             data = {
                 's2': [
                     [8.864712285876080e-04, 6.028725106885902e-03],
@@ -349,7 +356,8 @@ class VioreanuRokhlin(object):
                     ]
                 }
         elif index == 17:
-            self.degree = 50
+            # ERR upstream specifies degree 50
+            self.degree = 28
             data = {
                 's2': [
                     [3.376569435794172e-04, 3.527814686147823e-03],
@@ -390,7 +398,8 @@ class VioreanuRokhlin(object):
                     ],
                 }
         elif index == 18:
-            self.degree = 56
+            # ERR upstream specifies degree 56
+            self.degree = 30
             data = {
                 's3': [[2.755469669500557e-02]],
                 's2': [
@@ -436,7 +445,8 @@ class VioreanuRokhlin(object):
                 }
         else:
             assert index == 19
-            self.degree = 62
+            # ERR upstream specifies degree 62
+            self.degree = 32
             data = {
                 's2': [
                     [2.861718478111237e-04, 3.191453506137143e-03],
