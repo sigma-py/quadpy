@@ -381,7 +381,6 @@ coordinates:
 ```python
 val = quadpy.sphere.integrate_spherical(
     lambda azimuthal_polar: numpy.sin(azimuthal_polar[0])**2 * numpy.sin(azimuthal_polar[1]),
-    radius=1.0,
     rule=quadpy.sphere.Lebedev(19)
     )
 ```
