@@ -48,9 +48,9 @@ def test_scheme_cartesian(scheme, tol):
 
     def sph_tree_cartesian(x):
         flt = numpy.vectorize(float)
-        phi_theta = cartesian_to_spherical(flt(x).T).T
+        azimuthal, polar = cartesian_to_spherical(flt(x).T).T
         return numpy.concatenate(orthopy.sphere.sph_tree(
-            scheme.degree+1, phi_theta[1], phi_theta[0]
+            scheme.degree+1, polar, azimuthal
             ))
 
     vals = quadpy.sphere.integrate(
@@ -110,10 +110,11 @@ def test_scheme_spherical(scheme, tol):
 
     flt = numpy.vectorize(float)
 
-    def sph_tree(phi_theta):
-        phi_theta = flt(phi_theta)
+    def sph_tree(azimuthal_polar):
+        azimuthal_polar = flt(azimuthal_polar)
+        azimuthal, polar = azimuthal_polar
         return numpy.concatenate(orthopy.sphere.sph_tree(
-            scheme.degree+1, phi_theta[1], phi_theta[0]
+            scheme.degree+1, polar, azimuthal
             ))
 
     vals = quadpy.sphere.integrate_spherical(
