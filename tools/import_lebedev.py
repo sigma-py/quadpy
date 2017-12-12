@@ -23,9 +23,9 @@ else:
 
 def read(filename):
     data = numpy.loadtxt(filename)
-    phi_theta = data[:, :2] / 180.0
+    azimuthal_polar = data[:, :2] / 180.0
     weights = data[:, 2]
-    return phi_theta, weights
+    return azimuthal_polar, weights
 
 
 def chunk_data(weights):
@@ -43,7 +43,7 @@ def chunk_data(weights):
     return chunks
 
 
-def sort_into_symmetry_classes(weights, phi_theta):
+def sort_into_symmetry_classes(weights, azimuthal_polar):
     data = []
     for c in chunks:
         if len(c) == 6:
@@ -53,43 +53,47 @@ def sort_into_symmetry_classes(weights, phi_theta):
         elif len(c) == 8:
             data.append({'type': 'a3', 'weight': weights[c[0]]})
         elif len(c) == 24:
-            if any(abs(phi_theta[c, 1] - 0.5) < 1.0e-12):
-                # theta == pi/2   =>   X == [p, q, 0].
-                # Find the smallest positive phi that's paired with `theta ==
+            if any(abs(azimuthal_polar[c, 1] - 0.5) < 1.0e-12):
+                # polar == pi/2   =>   X == [p, q, 0].
+                # Find the smallest positive phi that's paired with `polar ==
                 # pi/2`; the symmetry is fully characterized by that phi.
-                k = numpy.where(abs(phi_theta[c, 1] - 0.5) < 1.0e-12)[0]
+                k = numpy.where(abs(azimuthal_polar[c, 1] - 0.5) < 1.0e-12)[0]
                 assert len(k) == 8
-                k2 = numpy.where(phi_theta[c, 0][k] > 0.0)[0]
-                phi_min = numpy.min(phi_theta[c, 0][k][k2])
+                k2 = numpy.where(azimuthal_polar[c, 0][k] > 0.0)[0]
+                azimuthal_min = numpy.min(azimuthal_polar[c, 0][k][k2])
                 data.append({
-                    'type': 'pq0', 'weight': weights[c[0]], 'val': phi_min
+                    'type': 'pq0',
+                    'weight': weights[c[0]],
+                    'val': azimuthal_min
                     })
             else:
                 # X = [l, l, m].
                 # In this case, there must by exactly two phi with the value
-                # pi/4. Take the value of the smaller corresponding `theta`;
+                # pi/4. Take the value of the smaller corresponding `polar`;
                 # all points are characterized by it.
-                k = numpy.where(abs(phi_theta[c, 0] - 0.25) < 1.0e-12)[0]
+                k = numpy.where(abs(azimuthal_polar[c, 0] - 0.25) < 1.0e-12)[0]
                 assert len(k) == 2
-                k2 = numpy.where(phi_theta[c, 1][k] > 0.0)[0]
-                theta_min = numpy.min(phi_theta[c, 1][k][k2])
+                k2 = numpy.where(azimuthal_polar[c, 1][k] > 0.0)[0]
+                polar_min = numpy.min(azimuthal_polar[c, 1][k][k2])
                 data.append({
-                    'type': 'llm', 'weight': weights[c[0]], 'val': theta_min
+                    'type': 'llm', 'weight': weights[c[0]], 'val': polar_min
                     })
         else:
             assert len(c) == 48
             # This most general symmetry is characterized by two angles; one
             # could take any two here.
-            # To make things easier later on, out of the 6 smallest theta, take
-            # the one with the smallest positive phi.
-            min_theta = numpy.min(phi_theta[c, 1])
-            k = numpy.where(abs(phi_theta[c, 1] - min_theta) < 1.0e-12)[0]
-            k2 = numpy.where(phi_theta[c, 0][k] > 0.0)[0]
-            min_phi = numpy.min(phi_theta[c, 0][k][k2])
+            # To make things easier later on, out of the 6 smallest polar
+            # angle, take the one with the smallest positive phi.
+            min_polar = numpy.min(azimuthal_polar[c, 1])
+            k = numpy.where(
+                abs(azimuthal_polar[c, 1] - min_polar) < 1.0e-12
+                )[0]
+            k2 = numpy.where(azimuthal_polar[c, 0][k] > 0.0)[0]
+            min_azimuthal = numpy.min(azimuthal_polar[c, 0][k][k2])
             data.append({
                 'type': 'rSW',
                 'weight': weights[c[0]],
-                'val': (min_phi, min_theta)
+                'val': (min_azimuthal, min_polar)
                 })
 
     return data
@@ -143,11 +147,11 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     for filename in args.filenames:
-        phi_theta, weights = read(filename)
+        azimuthal_polar, weights = read(filename)
         m = re.match('lebedev_([0-9]+).txt', filename)
         degree = int(m.group(1))
         print('elif degree == {}:'.format(degree))
         chunks = chunk_data(weights)
-        data = sort_into_symmetry_classes(weights, phi_theta)
+        data = sort_into_symmetry_classes(weights, azimuthal_polar)
         out = generate_python_code(data)
         print(indent(out, 4))

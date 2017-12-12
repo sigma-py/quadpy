@@ -367,7 +367,7 @@ class HeoXu(object):
                 ]
 
         self.points, self.weights = untangle(data)
-        self.phi_theta = cartesian_to_spherical(self.points)
+        self.azimuthal_polar = cartesian_to_spherical(self.points)
         return
 
 

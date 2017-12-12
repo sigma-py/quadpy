@@ -50,7 +50,7 @@ class Stroud(object):
             self.weights /= 4 * numpy.pi
             flt = numpy.vectorize(float)
             self.points = flt(scheme.points)
-            self.phi_theta = cartesian_to_spherical(self.points)
+            self.azimuthal_polar = cartesian_to_spherical(self.points)
         elif index == 'U3 11-3':
             self.set_data(McLaren(9))
         else:
@@ -62,5 +62,5 @@ class Stroud(object):
         self.degree = scheme.degree
         self.weights = scheme.weights
         self.points = scheme.points
-        self.phi_theta = scheme.phi_theta
+        self.azimuthal_polar = scheme.azimuthal_polar
         return
