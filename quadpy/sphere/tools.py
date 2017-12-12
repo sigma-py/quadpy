@@ -91,10 +91,11 @@ def integrate(f, center, radius, rule, sumfun=helpers.kahan_sum):
     return area(radius) * sumfun(rule.weights * ff, axis=-1)
 
 
-def integrate_spherical(f, radius, rule, sumfun=helpers.kahan_sum):
+def integrate_spherical(f, rule, sumfun=helpers.kahan_sum):
     '''Quadrature where `f` is a function of the spherical coordinates
     `azimuthal` and `polar` (in this order).
     '''
-    rr = numpy.swapaxes(rule.azimuthal_polar, 0, -2)
-    ff = numpy.array(f(rr.T))
-    return area(radius) * sumfun(rule.weights * ff, axis=-1)
+    flt = numpy.vectorize(float)
+    rr = numpy.swapaxes(flt(rule.azimuthal_polar), 0, -2)
+    ff = numpy.array(f(rr.T[0], rr.T[1]))
+    return area(1.0) * sumfun(flt(rule.weights) * ff, axis=-1)
