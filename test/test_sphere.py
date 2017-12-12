@@ -30,11 +30,10 @@ def test_spherical_harmonic(scheme):
         Y_1^1(phi, theta) * conj(Y_1^1(phi, theta)) * sin(theta)
         dphi dtheta = 1.
     '''
-    def spherical_harmonic_11(azimuthal_polar):
-        phi, theta = azimuthal_polar
+    def spherical_harmonic_11(azimuthal, polar):
         # y00 = 1.0 / numpy.sqrt(4*numpy.pi)
         y11 = -0.5 * numpy.sqrt(3.0/2.0/numpy.pi) \
-            * numpy.exp(1j*phi) * numpy.sin(theta)
+            * numpy.exp(1j*azimuthal) * numpy.sin(polar)
         return y11 * numpy.conjugate(y11)
 
     val = quadpy.sphere.integrate_spherical(
@@ -140,11 +139,7 @@ def test_scheme_spherical(scheme, tol):
     exact_val = numpy.zeros(scheme.degree + 1)
     exact_val[0] = numpy.sqrt(4*numpy.pi)
 
-    flt = numpy.vectorize(float)
-
-    def sph_tree(azimuthal_polar):
-        azimuthal_polar = flt(azimuthal_polar)
-        azimuthal, polar = azimuthal_polar
+    def sph_tree(azimuthal, polar):
         return numpy.concatenate(orthopy.sphere.sph_tree(
             scheme.degree+1, polar, azimuthal
             ))

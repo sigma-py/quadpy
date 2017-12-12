@@ -380,7 +380,7 @@ Integration on the sphere can also be done for function defined in spherical
 coordinates:
 ```python
 val = quadpy.sphere.integrate_spherical(
-    lambda azimuthal_polar: numpy.sin(azimuthal_polar[0])**2 * numpy.sin(azimuthal_polar[1]),
+    lambda azimuthal, polar: numpy.sin(azimuthal)**2 * numpy.sin(polar),
     rule=quadpy.sphere.Lebedev(19)
     )
 ```
