@@ -63,5 +63,5 @@ class AlbrechtCollatz(object):
                 ]
 
         self.points, self.weights = untangle(data)
-        self.phi_theta = cartesian_to_spherical_sympy(self.points)
+        self.azimuthal_polar = cartesian_to_spherical_sympy(self.points)
         return

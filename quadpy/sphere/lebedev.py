@@ -20,10 +20,10 @@ class Lebedev(object):
     <https://people.sc.fsu.edu/~jburkardt/datasets/sphere_lebedev_rule/sphere_lebedev_rule.html>
     '''
     # It's a little unclear how to best store the original data. By Burkhardt,
-    # it is given in terms of phi and theta, however those angles are not well
-    # suited to express the symmetry. For that, this code converts the
-    # spherical coordinates into Cartesians, applies the symmetry
-    # transformations, and converts back.
+    # it is given in terms of the spherical coordinates phi and theta, however
+    # those angles are not well suited to express the symmetry. For that, this
+    # code converts the spherical coordinates into Cartesians, applies the
+    # symmetry transformations, and converts back.
     def __init__(self, degree):
         self.degree = degree
         if degree == 3:
@@ -1411,18 +1411,18 @@ class Lebedev(object):
                 (1.9055344987300001e-04, _rsw(1.3716092309148088e-02, 2.3708499670410427e-01))
                 ]
 
-        self.phi_theta, self.weights = untangle(data)
-        self.points = _spherical_to_cartesian(self.phi_theta)
+        self.azimuthal_polar, self.weights = untangle(data)
+        self.points = _spherical_to_cartesian(self.azimuthal_polar)
         return
 
 
-def _spherical_to_cartesian(phi_theta):
-    sin_phi_theta = numpy.sin(phi_theta)
-    cos_phi_theta = numpy.cos(phi_theta)
+def _spherical_to_cartesian(azimuthal_polar):
+    sin_azimuthal_polar = numpy.sin(azimuthal_polar)
+    cos_azimuthal_polar = numpy.cos(azimuthal_polar)
     return numpy.stack([
-        sin_phi_theta[:, 1] * cos_phi_theta[:, 0],
-        sin_phi_theta[:, 1] * sin_phi_theta[:, 0],
-        cos_phi_theta[:, 1],
+        sin_azimuthal_polar[:, 1] * cos_azimuthal_polar[:, 0],
+        sin_azimuthal_polar[:, 1] * sin_azimuthal_polar[:, 0],
+        cos_azimuthal_polar[:, 1],
         ], axis=1)
 
 
@@ -1541,19 +1541,19 @@ def _llm(beta):
     return cartesian_to_spherical(X)
 
 
-def _rsw(phi, theta):
+def _rsw(azimuthal, polar):
     # translate the point into cartesian coords; note that phi=pi/4.
-    phi *= numpy.pi
-    theta *= numpy.pi
+    azimuthal *= numpy.pi
+    polar *= numpy.pi
 
-    sin_theta = numpy.sin(theta)
-    cos_theta = numpy.cos(theta)
-    sin_phi = numpy.sin(phi)
-    cos_phi = numpy.cos(phi)
+    sin_polar = numpy.sin(polar)
+    cos_polar = numpy.cos(polar)
+    sin_azimuthal = numpy.sin(azimuthal)
+    cos_azimuthal = numpy.cos(azimuthal)
 
-    r = sin_theta * cos_phi
-    s = sin_theta * sin_phi
-    w = cos_theta
+    r = sin_polar * cos_azimuthal
+    s = sin_polar * sin_azimuthal
+    w = cos_polar
 
     X = numpy.array([
         [+r, +s, +w],
