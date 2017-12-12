@@ -14,6 +14,36 @@ from quadpy.sphere.helpers import cartesian_to_spherical
 # spherical harmonics.
 
 
+# TODO test all schemes
+def test_spherical_harmonic():
+    '''Assert the norm of the spherical harmonic
+
+    Y_1^1(phi, theta) = -1/2 sqrt(3/2/pi) * exp(i*phi) * sin(theta)
+
+    is indeed 1, i.e.,
+
+    int_0^2pi int_0^pi
+        Y_1^1(phi, theta) * conj(Y_1^1(phi, theta)) * sin(theta)
+        dphi dtheta = 1.
+    '''
+    def spherical_harmonic_11(azimuthal_polar):
+        phi, theta = azimuthal_polar
+        y11 = -0.5 * numpy.sqrt(3.0/2.0/numpy.pi) \
+            * numpy.exp(1j*phi) * numpy.sin(theta)
+        return y11 * numpy.conjugate(y11) * numpy.sin(theta)
+
+    val = quadpy.sphere.integrate_spherical(
+        spherical_harmonic_11,
+        radius=1.0,
+        rule=quadpy.sphere.Lebedev(19)
+        )
+
+    print(val)
+    assert abs(val - 1.0) < 1.0e-15
+    assert False
+    return
+
+
 @pytest.mark.parametrize(
     'scheme,tol',
     [(quadpy.sphere.HeoXu(index), 1.0e-6) for index in [
