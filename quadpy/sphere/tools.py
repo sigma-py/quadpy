@@ -97,5 +97,5 @@ def integrate_spherical(f, rule, sumfun=helpers.kahan_sum):
     '''
     flt = numpy.vectorize(float)
     rr = numpy.swapaxes(flt(rule.azimuthal_polar), 0, -2)
-    ff = numpy.array(f(rr.T))
+    ff = numpy.array(f(rr.T[0], rr.T[1]))
     return area(1.0) * sumfun(flt(rule.weights) * ff, axis=-1)
