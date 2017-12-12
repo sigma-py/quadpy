@@ -15,6 +15,37 @@ from quadpy.sphere.helpers import cartesian_to_spherical
 
 
 @pytest.mark.parametrize(
+    'scheme', [
+        quadpy.sphere.Lebedev(3),
+        quadpy.sphere.Stroud('U3 14-1'),
+        ])
+def test_spherical_harmonic(scheme):
+    '''Assert the norm of the spherical harmonic
+
+    Y_1^1(phi, theta) = -1/2 sqrt(3/2/pi) * exp(i*phi) * sin(theta)
+
+    is indeed 1, i.e.,
+
+    int_0^2pi int_0^pi
+        Y_1^1(phi, theta) * conj(Y_1^1(phi, theta)) * sin(theta)
+        dphi dtheta = 1.
+    '''
+    def spherical_harmonic_11(azimuthal, polar):
+        # y00 = 1.0 / numpy.sqrt(4*numpy.pi)
+        y11 = -0.5 * numpy.sqrt(3.0/2.0/numpy.pi) \
+            * numpy.exp(1j*azimuthal) * numpy.sin(polar)
+        return y11 * numpy.conjugate(y11)
+
+    val = quadpy.sphere.integrate_spherical(
+        spherical_harmonic_11,
+        rule=scheme
+        )
+
+    assert abs(val - 1.0) < 1.0e-15
+    return
+
+
+@pytest.mark.parametrize(
     'scheme,tol',
     [(quadpy.sphere.HeoXu(index), 1.0e-6) for index in [
         '13', '15', '17', '19-1', '19-2',
@@ -108,18 +139,13 @@ def test_scheme_spherical(scheme, tol):
     exact_val = numpy.zeros(scheme.degree + 1)
     exact_val[0] = numpy.sqrt(4*numpy.pi)
 
-    flt = numpy.vectorize(float)
-
-    def sph_tree(azimuthal_polar):
-        azimuthal_polar = flt(azimuthal_polar)
-        azimuthal, polar = azimuthal_polar
+    def sph_tree(azimuthal, polar):
         return numpy.concatenate(orthopy.sphere.sph_tree(
             scheme.degree+1, polar, azimuthal
             ))
 
     vals = quadpy.sphere.integrate_spherical(
-        sph_tree,
-        radius=1.0, rule=scheme, sumfun=numpy.sum
+        sph_tree, rule=scheme, sumfun=numpy.sum
         )
 
     # The exact value is sqrt(4*pi) for the Y_0^0, and 0 otherwise.
