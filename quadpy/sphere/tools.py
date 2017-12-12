@@ -49,12 +49,12 @@ def _plot_mpl(scheme):
 
 def _plot_spherical_cap_mpl(ax, b, opening_angle, color, elevation=1.01):
     r = elevation
-    phi = numpy.linspace(0, 2 * numpy.pi, 30)
-    theta = numpy.linspace(0, opening_angle, 20)
+    azimuthal = numpy.linspace(0, 2 * numpy.pi, 30)
+    polar = numpy.linspace(0, opening_angle, 20)
     X = r * numpy.stack([
-        numpy.outer(numpy.cos(phi), numpy.sin(theta)),
-        numpy.outer(numpy.sin(phi), numpy.sin(theta)),
-        numpy.outer(numpy.ones(numpy.size(phi)), numpy.cos(theta)),
+        numpy.outer(numpy.cos(azimuthal), numpy.sin(polar)),
+        numpy.outer(numpy.sin(azimuthal), numpy.sin(polar)),
+        numpy.outer(numpy.ones(numpy.size(azimuthal)), numpy.cos(polar)),
         ], axis=-1)
 
     # rotate X such that [0, 0, 1] gets rotated to `c`;
@@ -92,12 +92,9 @@ def integrate(f, center, radius, rule, sumfun=helpers.kahan_sum):
 
 
 def integrate_spherical(f, radius, rule, sumfun=helpers.kahan_sum):
-    '''Quadrature where `f` is defined in spherical coordinates `phi`, `theta`.
-
-    This is using the ISO 31-11 convection of `theta` being the polar, `phi`
-    the azimuthal angle. Note that this meaning is often reversed in physics,
-    cf. <http://mathworld.wolfram.com/SphericalCoordinates.html>.
+    '''Quadrature where `f` is a function of the spherical coordinates
+    `azimuthal` and `polar` (in this order).
     '''
-    rr = numpy.swapaxes(rule.phi_theta, 0, -2)
+    rr = numpy.swapaxes(rule.azimuthal_polar, 0, -2)
     ff = numpy.array(f(rr.T))
     return area(radius) * sumfun(rule.weights * ff, axis=-1)
