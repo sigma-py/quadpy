@@ -5,8 +5,7 @@ import orthopy
 
 
 class GaussRadau(object):
-    '''
-    Gauss-Radau quadrature.
+    '''Gauss-Radau quadrature.
     '''
     def __init__(self, n, a=0.0, b=0.0):
         assert n >= 2
