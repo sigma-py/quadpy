@@ -34,10 +34,24 @@ class Stroud(object):
             A = gl4.weights / 2
 
             # Generate Gauss formula for int_0^1 (1-s) * f(s) ds.
-            k = numpy.arange(8)
-            moments = 1 / (k**2 + 3*k + 2)
-            alpha, beta = orthopy.line.chebyshev(moments)
-            s, B = orthopy.line.schemes.custom(alpha, beta, mode='numpy')
+            # ```
+            # k = numpy.arange(8)
+            # moments = 1 / (k**2 + 3*k + 2)
+            # alpha, beta = orthopy.line.chebyshev(moments)
+            # s, B = orthopy.line.schemes.custom(alpha, beta, mode='numpy')
+            # ```
+            s = numpy.array([
+                5.710419611452533e-02,
+                2.768430136381415e-01,
+                5.835904323689318e-01,
+                8.602401356562251e-01,
+                ])
+            B = numpy.array([
+                1.355069134315012e-01,
+                2.034645680102685e-01,
+                1.298475476082247e-01,
+                3.118097095000554e-02,
+                ])
 
             data = [
                 (2*A[i]*B[j], numpy.array([[
