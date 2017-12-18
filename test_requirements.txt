@@ -1,1 +1,1 @@
-0.4 <= orthopy < 0.5
+orthopy < 0.5
