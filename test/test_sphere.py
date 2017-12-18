@@ -81,7 +81,7 @@ def test_scheme_cartesian(scheme, tol):
         flt = numpy.vectorize(float)
         azimuthal, polar = cartesian_to_spherical(flt(x).T).T
         return numpy.concatenate(orthopy.sphere.sph_tree(
-            scheme.degree+1, polar, azimuthal
+            scheme.degree+1, polar, azimuthal, normalization='quantum mechanic'
             ))
 
     vals = quadpy.sphere.integrate(
@@ -141,7 +141,7 @@ def test_scheme_spherical(scheme, tol):
 
     def sph_tree(azimuthal, polar):
         return numpy.concatenate(orthopy.sphere.sph_tree(
-            scheme.degree+1, polar, azimuthal
+            scheme.degree+1, polar, azimuthal, normalization='quantum mechanic'
             ))
 
     vals = quadpy.sphere.integrate_spherical(
