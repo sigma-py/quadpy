@@ -41,6 +41,7 @@ class GaussKronrod(object):
         # and beta, and hand those off to orthopy.line.schemes.custom. There,
         # the eigenproblem for a tridiagonal matrix with alpha and beta is
         # solved to retrieve the points and weights.
+        # TODO replace math.ceil by -(-k//n)
         length = int(math.ceil(3*n/2.0)) + 1
         self.degree = 2*length + 1
         _, _, alpha, beta = \
