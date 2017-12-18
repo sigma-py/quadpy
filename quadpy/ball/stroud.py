@@ -3,8 +3,7 @@
 from __future__ import division
 
 import numpy
-import orthopy
-from sympy import sqrt, pi, Rational as fr
+from sympy import sqrt, pi
 
 from .ditkin import Ditkin
 from .hammer_stroud import HammerStroud
@@ -102,30 +101,43 @@ class Stroud(object):
             #
             # In this case, the recurrence coefficients can be determined
             # analytically.
-            n = 8
-            alpha = numpy.full(n, fr(0))
-            k = numpy.arange(n)
-            beta = numpy.full(n, fr(0))
-            beta[0] = fr(2, 3)
-            # beta[1::2] = fr((k[1::2]+2)**2, ((2*k[1::2]+2)**2 - 1))
-            for k in range(1, n, 2):
-                beta[k] = fr((k+2)**2, (2*k+2)**2 - 1)
-            # beta[2::2] = fr(k[2::2]**2, ((2*k[2::2]+2)**2 - 1))
-            for k in range(2, n, 2):
-                beta[k] = fr(k**2, (2*k+2)**2 - 1)
-
-            # symbolic computation of the points and weights takes 4orever.
-            # Keep an eye on
-            # <https://math.stackexchange.com/questions/2450401/solve-small-symmetric-triadiagonal-eigenvalue-problem-symbolically>
-            # for a better algorithm to be implemented in orthopy.
-            flt = numpy.vectorize(float)
-            alpha = flt(alpha)
-            beta = flt(beta)
-            points, weights = \
-                orthopy.line.schemes.custom(alpha, beta, mode='numpy')
-
-            r = points[-4:]
-            A = weights[-4:]
+            # ```
+            # n = 8
+            # alpha = numpy.full(n, fr(0))
+            # k = numpy.arange(n)
+            # beta = numpy.full(n, fr(0))
+            # beta[0] = fr(2, 3)
+            # # beta[1::2] = fr((k[1::2]+2)**2, ((2*k[1::2]+2)**2 - 1))
+            # for k in range(1, n, 2):
+            #     beta[k] = fr((k+2)**2, (2*k+2)**2 - 1)
+            # # beta[2::2] = fr(k[2::2]**2, ((2*k[2::2]+2)**2 - 1))
+            # for k in range(2, n, 2):
+            #     beta[k] = fr(k**2, (2*k+2)**2 - 1)
+            #
+            # # symbolic computation of the points and weights takes 4orever.
+            # # Keep an eye on <https://math.stackexchange.com/q/2450401/36678>
+            # # for a better algorithm to be implemented in orthopy.
+            # flt = numpy.vectorize(float)
+            # alpha = flt(alpha)
+            # beta = flt(beta)
+            # points, weights = \
+            #     orthopy.line.schemes.custom(alpha, beta, mode='numpy')
+            #
+            # r = points[-4:]
+            # A = weights[-4:]
+            # ```
+            r = numpy.array([
+                3.242534234038097e-01,
+                6.133714327005908e-01,
+                8.360311073266362e-01,
+                9.681602395076261e-01,
+                ])
+            A = numpy.array([
+                3.284025994586210e-02,
+                9.804813271549834e-02,
+                1.262636728646019e-01,
+                7.618126780737085e-02,
+                ])
 
             spherical_scheme = sphere_stroud.Stroud('U3 14-1')
             v = spherical_scheme.points

@@ -11,6 +11,7 @@ class GaussLobatto(object):
     def __init__(self, n, a=0.0, b=0.0):
         assert n >= 2
         self.degree = 2*n - 3
+        # TODO use symbolic=False instead of float()
         _, _, alpha, beta = \
             orthopy.line.recurrence_coefficients.jacobi(n, a, b, 'monic')
         flt = numpy.vectorize(float)

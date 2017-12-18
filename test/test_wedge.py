@@ -2,8 +2,9 @@
 #
 import numpy
 import pytest
-import quadpy
 import scipy.special
+
+import quadpy
 
 from helpers import check_degree
 

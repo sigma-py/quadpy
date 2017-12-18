@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import check_degree_ortho
-
 import numpy
-import orthopy
 import pytest
-import quadpy
 # from quadpy.nsimplex.helpers import integrate_monomial_over_unit_simplex
 import sympy
+
+import orthopy
+import quadpy
+
+from helpers import check_degree_ortho
 
 
 def _integrate_exact(f, triangle):
@@ -41,24 +42,24 @@ def _integrate_exact(f, triangle):
 
 @pytest.mark.parametrize(
     'scheme,tol',
-    [(quadpy.triangle.BerntsenEspelid(k), 1.0e-14) for k in range(1, 5)]
+    [(quadpy.triangle.BerntsenEspelid(k), 1.0e-11) for k in range(1, 5)]
     + [(quadpy.triangle.Centroid(), 1.0e-14)]
-    + [(quadpy.triangle.CoolsHaegemans(k), 1.0e-14) for k in [1]]
+    + [(quadpy.triangle.CoolsHaegemans(k), 1.0e-13) for k in [1]]
     + [(quadpy.triangle.Cubtri(), 1.0e-14)]
-    + [(quadpy.triangle.Dunavant(k), 1.0e-14) for k in range(1, 21)]
-    + [(quadpy.triangle.Gatermann(), 1.0e-14)]
-    + [(quadpy.triangle.GrundmannMoeller(k), 1.0e-14) for k in range(10)]
+    + [(quadpy.triangle.Dunavant(k), 1.0e-12) for k in range(1, 21)]
+    + [(quadpy.triangle.Gatermann(), 1.0e-12)]
+    + [(quadpy.triangle.GrundmannMoeller(k), 1.0e-12) for k in range(10)]
     + [(quadpy.triangle.HammerMarloweStroud(k), 1.0e-14) for k in range(1, 6)]
     + [(quadpy.triangle.HammerStroud(k), 1.0e-14) for k in [2, 3]]
     + [(quadpy.triangle.Hillion(k), 1.0e-14) for k in range(1, 11)]
-    + [(quadpy.triangle.LaursenGellert(key), 1.0e-14)
+    + [(quadpy.triangle.LaursenGellert(key), 1.0e-13)
        for key in quadpy.triangle.LaursenGellert.keys
        ]
     + [(quadpy.triangle.Lether(k), 1.0e-14) for k in range(1, 14)]
     + [(quadpy.triangle.LiuVinokur(k), 1.0e-14) for k in range(1, 14)]
-    + [(quadpy.triangle.LynessJespersen(k), 1.0e-14) for k in range(1, 22)]
+    + [(quadpy.triangle.LynessJespersen(k), 1.0e-11) for k in range(1, 22)]
     + [(quadpy.triangle.NewtonCotesClosed(k), 1.0e-14) for k in range(1, 6)]
-    + [(quadpy.triangle.NewtonCotesOpen(k), 1.0e-14) for k in range(6)]
+    + [(quadpy.triangle.NewtonCotesOpen(k), 1.0e-13) for k in range(6)]
     + [(quadpy.triangle.Papanicolopulos('fs', k), 1.0e-14) for k in range(9)]
     + [(quadpy.triangle.Papanicolopulos('rot', k), 1.0e-14)
        # The first 8 schemes are flawed by round-off error
@@ -66,17 +67,17 @@ def _integrate_exact(f, triangle):
        ]
     + [(quadpy.triangle.SevenPoint(), 1.0e-14)]
     + [(quadpy.triangle.Strang(k), 1.0e-14) for k in range(1, 11)]
-    + [(quadpy.triangle.Stroud(k), 1.0e-14) for k in [
+    + [(quadpy.triangle.Stroud(k), 1.0e-12) for k in [
         'T2 3-1', 'T2 5-1', 'T2 7-1'
         ]
        ]
-    + [(quadpy.triangle.TaylorWingateBos(k), 1.0e-14) for k in [1, 2, 4, 5, 8]]
-    + [(quadpy.triangle.Triex(k), 1.0e-14) for k in [19, 28]]
+    + [(quadpy.triangle.TaylorWingateBos(k), 1.0e-12) for k in [1, 2, 4, 5, 8]]
+    + [(quadpy.triangle.Triex(k), 1.0e-13) for k in [19, 28]]
     + [(quadpy.triangle.Vertex(), 1.0e-14)]
-    + [(quadpy.triangle.VioreanuRokhlin(k), 1.0e-14) for k in range(20)]
+    + [(quadpy.triangle.VioreanuRokhlin(k), 1.0e-11) for k in range(20)]
     + [(quadpy.triangle.Walkington(k), 1.0e-14) for k in [1, 2, 3, 5, 'p5']]
     + [(quadpy.triangle.WandzuraXiao(k), 1.0e-14) for k in range(1, 7)]
-    + [(quadpy.triangle.WilliamsShunnJameson(k), 1.0e-14) for k in range(1, 9)]
+    + [(quadpy.triangle.WilliamsShunnJameson(k), 1.0e-11) for k in range(1, 9)]
     + [(quadpy.triangle.WitherdenVincent(k), 1.0e-14) for k in [
         1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
         ]]
@@ -92,9 +93,9 @@ def test_scheme(scheme, tol):
 
     def eval_orthopolys(x):
         bary = numpy.array([x[0], x[1], 1.0-x[0]-x[1]])
-        out = numpy.concatenate(
-            orthopy.triangle.orth_tree(scheme.degree+1, bary, 'normal')
-            )
+        out = numpy.concatenate(orthopy.triangle.tree(
+            scheme.degree+1, bary, 'normal', symbolic=False
+            ))
         return out
 
     vals = quadpy.triangle.integrate(eval_orthopolys, triangle, scheme)
@@ -108,7 +109,7 @@ def test_scheme(scheme, tol):
     exact = [numpy.zeros(k+1) for k in range(scheme.degree+2)]
     exact[0][0] = numpy.sqrt(2.0) / 2
 
-    degree = check_degree_ortho(approximate, exact, tol=tol)
+    degree = check_degree_ortho(approximate, exact, abs_tol=tol)
 
     assert degree >= scheme.degree, \
         'Observed: {}, expected: {}'.format(degree, scheme.degree)
@@ -146,20 +147,6 @@ def test_volume():
         ])
     ref = numpy.sqrt(0.0209)
     assert abs(quadpy.triangle.get_vol(triangle) - ref) < 1.0e-14 * ref
-    return
-
-
-@pytest.mark.parametrize(
-    'scheme', [
-        quadpy.triangle.Dunavant(7),
-        quadpy.triangle.Papanicolopulos('rot', 8),
-        ])
-def test_compute_weights(scheme):
-    x, _, _, _ = quadpy.triangle.compute_weights(scheme)
-    raw_weights = numpy.concatenate([
-        numpy.array(d)[:, 0] for d in scheme.data.values()
-        ])
-    assert numpy.all(abs(2*x - raw_weights) < 1.0e-14)
     return
 
 

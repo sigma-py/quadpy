@@ -8,7 +8,6 @@ Prentice Hall, 1971.
 from __future__ import division
 
 import numpy
-import orthopy
 
 from . import stroud_secrest
 
@@ -29,18 +28,30 @@ def _gen14_1():
     #
     # In this particular case, we don't need to compute the recurrence
     # coefficients numerically, but they are given analytically.
-    n = 8
-    alpha = numpy.zeros(n)
-    beta = numpy.empty(n)
-    beta[0] = numpy.sqrt(numpy.pi)/2
-    beta[1::2] = numpy.arange(n//2) + 1.5
-    beta[2::2] = numpy.arange(n//2-1) + 1.0
-
-    points, weights = \
-        orthopy.line.schemes.custom(alpha, beta, mode='numpy')
-
-    r = points[-4:]
-    A = weights[-4:]
+    # ```
+    # n = 8
+    # alpha = numpy.zeros(n)
+    # beta = numpy.empty(n)
+    # beta[0] = numpy.sqrt(numpy.pi)/2
+    # beta[1::2] = numpy.arange(n//2) + 1.5
+    # beta[2::2] = numpy.arange(n//2-1) + 1.0
+    # points, weights = \
+    #     orthopy.line.schemes.custom(alpha, beta, mode='numpy')
+    # r = points[-4:]
+    # A = weights[-4:]
+    # ```
+    r = numpy.array([
+        7.235510187528402e-01,
+        1.468553289216669e+00,
+        2.266580584531844e+00,
+        3.190993201781527e+00,
+        ])
+    A = numpy.array([
+        2.265043732793035e-01,
+        1.908084800858996e-01,
+        2.539731378612040e-02,
+        4.032955750550135e-04,
+        ])
 
     spherical_scheme = sphere_stroud.Stroud('U3 14-1')
     v = spherical_scheme.points
