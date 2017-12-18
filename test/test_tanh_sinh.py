@@ -2,8 +2,9 @@
 #
 from mpmath import mp
 import pytest
-import quadpy
 import sympy
+
+import quadpy
 
 mp.dps = 50
 

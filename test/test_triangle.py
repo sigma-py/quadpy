@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import check_degree_ortho
-
 import numpy
-import orthopy
 import pytest
-import quadpy
 # from quadpy.nsimplex.helpers import integrate_monomial_over_unit_simplex
 import sympy
+
+import orthopy
+import quadpy
+
+from helpers import check_degree_ortho
 
 
 def _integrate_exact(f, triangle):
