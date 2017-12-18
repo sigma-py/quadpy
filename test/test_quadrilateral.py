@@ -85,7 +85,7 @@ def _integrate_exact2(k, x0, x1, y0, y1):
        for k in range(6)
        ]
     )
-def test_scheme(scheme, tol, print_degree=False):
+def test_scheme(scheme, tol):
     # Test integration until we get to a polynomial degree `d` that can no
     # longer be integrated exactly. The scheme's degree is `d-1`.
 
@@ -126,4 +126,4 @@ if __name__ == '__main__':
     # scheme_ = Product(quadpy.line_segment.GaussLegendre(6))
     scheme_ = quadpy.quadrilateral.HammerStroud('3-2')
     test_show(scheme_)
-    test_scheme(scheme_, 1.0e-14, print_degree=True)
+    test_scheme(scheme_, 1.0e-14)
