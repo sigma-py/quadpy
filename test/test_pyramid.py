@@ -2,8 +2,9 @@
 #
 import numpy
 import pytest
-import quadpy
 import sympy
+
+import quadpy
 
 from helpers import check_degree
 

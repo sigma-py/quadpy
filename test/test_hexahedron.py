@@ -2,12 +2,13 @@
 #
 from __future__ import print_function
 
-from helpers import check_degree
+import pytest
+import sympy
 
 import quadpy
 from quadpy.hexahedron import Product
-import pytest
-import sympy
+
+from helpers import check_degree
 
 
 def _integrate_exact(f, hexa):

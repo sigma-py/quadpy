@@ -2,11 +2,13 @@
 #
 import math
 
-from helpers import check_degree_1d
-
 import numpy
 import pytest
+
 import quadpy
+
+from helpers import check_degree_1d
+
 
 
 @pytest.mark.parametrize(
