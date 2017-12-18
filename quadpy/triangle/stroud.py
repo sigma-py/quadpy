@@ -2,7 +2,6 @@
 #
 from __future__ import division
 
-import orthopy
 import numpy
 
 from .albrecht_collatz import AlbrechtCollatz
