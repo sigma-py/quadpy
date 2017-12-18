@@ -134,5 +134,3 @@ def integrate_adaptive(
         is_bad = numpy.logical_not(is_good)
 
     return quad_sum, global_error_estimate
-
-
