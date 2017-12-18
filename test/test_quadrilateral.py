@@ -3,11 +3,12 @@
 from __future__ import print_function
 
 import numpy
-import orthopy
 import pytest
+import sympy
+
+import orthopy
 import quadpy
 from quadpy.quadrilateral import Product
-import sympy
 
 from helpers import check_degree_ortho
 

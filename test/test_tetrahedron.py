@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 #
-from helpers import check_degree
-
 import numpy
 import pytest
+import sympy
+
 import quadpy
 from quadpy.nsimplex.helpers import integrate_monomial_over_unit_simplex
-import sympy
+
+from helpers import check_degree
 
 
 def _integrate_exact(f, tetrahedron):
