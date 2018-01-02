@@ -3,8 +3,6 @@
 import matplotlib.pyplot as plt
 import numpy
 
-from .. import helpers
-
 
 def area(radius):
     return 4*numpy.pi * numpy.array(radius)**2
@@ -81,21 +79,21 @@ def _plot_spherical_cap_mpl(ax, b, opening_angle, color, elevation=1.01):
     return
 
 
-def integrate(f, center, radius, rule, sumfun=helpers.kahan_sum):
+def integrate(f, center, radius, rule, dot=numpy.dot):
     '''Quadrature where `f` is defined in Cartesian coordinates.
     '''
     center = numpy.array(center)
     rr = numpy.multiply.outer(radius, rule.points)
     rr = numpy.swapaxes(rr, 0, -2)
     ff = numpy.array(f((rr + center).T))
-    return area(radius) * sumfun(rule.weights * ff, axis=-1)
+    return area(radius) * dot(ff, rule.weights)
 
 
-def integrate_spherical(f, rule, sumfun=helpers.kahan_sum):
+def integrate_spherical(f, rule, dot=numpy.dot):
     '''Quadrature where `f` is a function of the spherical coordinates
     `azimuthal` and `polar` (in this order).
     '''
     flt = numpy.vectorize(float)
     rr = numpy.swapaxes(flt(rule.azimuthal_polar), 0, -2)
     ff = numpy.array(f(rr.T[0], rr.T[1]))
-    return area(1.0) * sumfun(flt(rule.weights) * ff, axis=-1)
+    return area(1.0) * dot(ff, flt(rule.weights))

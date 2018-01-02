@@ -64,6 +64,12 @@ def kahan_sum(a, axis=0):
     return s
 
 
+def kahan_dot(a, b):
+    '''The dot product performed as a Kahan sum.
+    '''
+    return kahan_sum(numpy.moveaxis(b * a, -1, 0))
+
+
 # pylint: disable=too-many-arguments, too-many-locals
 def compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k):
     '''Compute some helper quantities used in

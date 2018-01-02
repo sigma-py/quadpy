@@ -6,11 +6,11 @@ from . import felippa
 from .. import helpers
 
 
-def integrate(f, wedge, scheme, sumfun=helpers.kahan_sum):
+def integrate(f, wedge, scheme, dot=numpy.dot):
     flt = numpy.vectorize(float)
     x = _transform(flt(scheme.points).T, wedge)
     det = _get_detJ(flt(scheme.points).T, wedge)
-    return sumfun(flt(scheme.weights) * f(x) * abs(det), axis=-1)
+    return dot(f(x) * abs(det), flt(scheme.weights))
 
 
 def _transform(xi, wedge):
