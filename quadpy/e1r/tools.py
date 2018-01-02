@@ -6,9 +6,8 @@ import numpy
 from .. import helpers
 
 
-def integrate(f, rule, sumfun=helpers.kahan_sum):
-    ff = numpy.array(f(rule.points.T))
-    return sumfun(rule.weights * ff, axis=-1)
+def integrate(f, rule, dot=numpy.dot):
+    return dot(f(rule.points.T), rule.weights)
 
 
 def show(*args, **kwargs):

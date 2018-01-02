@@ -61,8 +61,10 @@ def integrate_adaptive(
         minimum_triangle_area=None,
         scheme1=Dunavant(5),
         scheme2=Dunavant(10),
-        sumfun=helpers.kahan_sum
+        dot=numpy.dot
         ):
+    sumfun = helpers.kahan_sum
+
     triangles = numpy.array(triangles)
     if len(triangles.shape) == 2:
         # add dimension in the second-to-last place
@@ -74,8 +76,8 @@ def integrate_adaptive(
     if minimum_triangle_area is None:
         minimum_triangle_area = total_area * 0.25**10
 
-    val1 = integrate(f, triangles, scheme1, sumfun=sumfun)
-    val2 = integrate(f, triangles, scheme2, sumfun=sumfun)
+    val1 = integrate(f, triangles, scheme1, dot=dot)
+    val2 = integrate(f, triangles, scheme2, dot=dot)
     error_estimate = abs(val1 - val2)
 
     # Mark intervals with acceptable approximations. For this, take all()
@@ -119,8 +121,8 @@ def integrate_adaptive(
         assert all(areas > minimum_triangle_area)
 
         # compute values and error estimates for the new intervals
-        val1 = integrate(f, triangles, scheme1, sumfun=sumfun)
-        val2 = integrate(f, triangles, scheme2, sumfun=sumfun)
+        val1 = integrate(f, triangles, scheme1, dot=dot)
+        val2 = integrate(f, triangles, scheme2, dot=dot)
         error_estimate = abs(val1 - val2)
 
         # mark good intervals, gather values and error estimates

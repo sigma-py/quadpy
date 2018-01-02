@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 import numpy
-from sympy import sqrt, pi, sin, cos, Rational as fr
+import sympy
 
 from ..helpers import untangle, z, fsd, fs_array
 
@@ -13,18 +15,23 @@ class Mysovskih(object):
     Z. Vychisl. Mat. i. Mat. Fiz. 4, 3-14, 1964.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, index, alpha=0):
+    def __init__(self, index, alpha=0, symbolic=True):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        pi = sympy.pi if symbolic else numpy.pi
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+        cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
+        sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
+        pm_ = numpy.array([+1, -1])
+
         if index == 1:
             self.degree = 4
-            b = sqrt(fr(alpha + 4, alpha + 6))
+            b = sqrt(frac(alpha + 4, alpha + 6))
 
-            x = numpy.column_stack([
-                [b * cos(2*i*pi/5) for i in range(5)],
-                [b * sin(2*i*pi/5) for i in range(5)],
-                ])
+            a = 2*numpy.arange(5)*pi / 5
+            x = b * numpy.array([cos(a), sin(a)]).T
 
-            B0 = fr(4, (alpha + 4)**2)
-            B1 = fr((alpha + 2)*(alpha + 6), 5 * (alpha + 4)**2)
+            B0 = frac(4, (alpha + 4)**2)
+            B1 = frac((alpha + 2)*(alpha + 6), 5 * (alpha + 4)**2)
 
             data = [
                 (B0, z(2)),
@@ -36,18 +43,15 @@ class Mysovskih(object):
             sqrt10 = sqrt(10)
             sqrt601 = sqrt(601)
 
-            B1, B3 = [
-                (857*sqrt601 + t*12707) / 20736 / sqrt601
-                for t in [+1, -1]
-                ]
-            B2 = fr(125, 3456)
-            B4, B5 = [(340 + t * 25*sqrt10) / 10368 for t in [+1, -1]]
+            B1, B3 = (857*sqrt601 + pm_ * 12707) / 20736 / sqrt601
+            B2 = frac(125, 3456)
+            B4, B5 = (340 + pm_ * 25*sqrt10) / 10368
 
-            r1, r3 = [sqrt((31 - t*sqrt601) / 60) for t in [+1, -1]]
-            r2 = sqrt(fr(3, 5))
-            r4, r5 = [sqrt((10 - t*sqrt10) / 20) for t in [+1, -1]]
+            r1, r3 = sqrt((31 - pm_ * sqrt601) / 60)
+            r2 = sqrt(frac(3, 5))
+            r4, r5 = sqrt((10 - pm_ * sqrt10) / 20)
 
-            s4, s5 = [sqrt((10 - t*sqrt10) / 60) for t in [+1, -1]]
+            s4, s5 = sqrt((10 - pm_ * sqrt10) / 60)
 
             data = [
                 (B1, fsd(2, (r1, 1))),
@@ -65,19 +69,17 @@ class Mysovskih(object):
             sqrt1401 = sqrt(1401)
 
             # ERR Stroud lists 5096 instead of 4998 here
-            A1, A2 = [(4998 + t * 343 * sqrt21) / 253125 for t in [+1, -1]]
+            A1, A2 = (4998 + pm_ * 343 * sqrt21) / 253125
 
             # ERR Stroud is missing the +- here
-            B1, B3 = [
-                (1055603 * sqrt1401 + t * 26076047) / 43200000 / sqrt1401
-                for t in [+1, -1]
-                ]
+            B1, B3 = \
+                (1055603 * sqrt1401 + pm_ * 26076047) / 43200000 / sqrt1401
 
-            B2 = fr(16807, 800000)
+            B2 = frac(16807, 800000)
 
-            rho1, rho2 = [sqrt((21 - t * sqrt21) / 28) for t in [+1, -1]]
-            sigma1, sigma3 = [sqrt((69 - t*sqrt1401) / 112) for t in [+1, -1]]
-            sigma2 = sqrt(fr(5, 7))
+            rho1, rho2 = sqrt((21 - pm_ * sqrt21) / 28)
+            sigma1, sigma3 = sqrt((69 - pm_ * sqrt1401) / 112)
+            sigma2 = sqrt(frac(5, 7))
 
             tau1 = 0.252863797091230
             tau2 = 0.577728928444823
@@ -89,20 +91,14 @@ class Mysovskih(object):
             C3 = 0.210840370156484e-1
             C4 = 0.531979391979623e-2
 
-            xa = numpy.column_stack([
-                [cos((2*k-1) * pi / 8) for k in range(1, 9)],
-                [sin((2*k-1) * pi / 8) for k in range(1, 9)],
-                ])
+            a = (2*numpy.arange(8)+1)*pi / 8
+            xa = numpy.array([cos(a), sin(a)]).T
 
-            xb = numpy.column_stack([
-                [cos((2*k-1) * pi / 4) for k in range(1, 5)],
-                [sin((2*k-1) * pi / 4) for k in range(1, 5)],
-                ])
+            a = (2*numpy.arange(4)+1)*pi / 4
+            xb = numpy.array([cos(a), sin(a)]).T
 
-            xc = numpy.column_stack([
-                [cos(k*pi / 2) for k in range(1, 5)],
-                [sin(k*pi / 2) for k in range(1, 5)],
-                ])
+            a = numpy.arange(1, 5)*pi / 2
+            xc = numpy.array([cos(a), sin(a)]).T
 
             data = [
                 (A1, rho1 * xa),

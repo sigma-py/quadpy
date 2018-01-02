@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import sqrt, Rational as fr
+from __future__ import division
+
+import numpy
+import sympy
 
 from ..helpers import untangle, fsd, z
 
@@ -14,21 +17,25 @@ class Dobrodeev1970(object):
     Volume 10, Issue 1, 1970, Pages 252–253,
     <https://doi.org/10.1016/0041-5553(70)90084-4>.
     '''
-    def __init__(self, n):
+    # pylint: disable=too-many-locals
+    def __init__(self, n, symbolic=True):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = sympy.sqrt if symbolic else numpy.sqrt
+
         self.name = 'Dobrodeev'
         self.degree = 7
         self.dim = n
 
-        A = fr(1, 8)
-        B = fr(19-5*n, 20)
+        A = frac(1, 8)
+        B = frac(19-5*n, 20)
         alpha = 35*n * (5*n - 33)
-        C = fr((alpha + 2114)**3, 700 * (alpha+1790.0) * (alpha+2600.0))
-        D = fr(729, 1750) * fr(alpha + 2114, alpha + 2600)
-        E = fr(n * (n-1) * (n - 4.7), 3) - 2*n * (C + D) + fr(729, 125)
+        C = frac((alpha + 2114)**3, 700 * (alpha+1790.0) * (alpha+2600.0))
+        D = frac(729, 1750) * frac(alpha + 2114, alpha + 2600)
+        E = frac(n * (n-1) * (n - 4.7), 3) - 2*n * (C + D) + frac(729, 125)
 
-        a = sqrt(fr(3, 5))
+        a = sqrt(frac(3, 5))
         b = a
-        c = sqrt(fr(3, 5) * fr(alpha+1790, alpha+2114))
+        c = sqrt(frac(3, 5) * frac(alpha+1790, alpha+2114))
         data = [
             (A, fsd(n, (a, 3))),
             (B, fsd(n, (b, 2))),
@@ -38,5 +45,5 @@ class Dobrodeev1970(object):
             ]
 
         self.points, self.weights = untangle(data)
-        self.weights /= fr(729, 125 * 2**n)
+        self.weights /= frac(729, 125 * 2**n)
         return

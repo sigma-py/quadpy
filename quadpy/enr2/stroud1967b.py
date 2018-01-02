@@ -3,7 +3,8 @@
 from __future__ import division
 
 import numpy
-from sympy import sqrt, Rational as fr, pi, gamma
+import scipy
+import sympy
 
 from ..helpers import untangle, fsd, pm
 from .. import nsphere
@@ -17,7 +18,12 @@ class Stroud1967b(object):
     <https://doi.org/10.1137/0704004>.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, index, n):
+    def __init__(self, index, n, symbolic=True):
+        sqrt = sympy.sqrt if symbolic else numpy.sqrt
+        pi = sympy.pi if symbolic else numpy.pi
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        gamma = sympy.gamma if symbolic else scipy.special.gamma
+
         self.dim = n
         self.degree = 7
 
@@ -62,13 +68,13 @@ class Stroud1967b(object):
 
             sqrt2n2 = sqrt(2*(n+2))
             r1, r2 = [sqrt((n + 2 - p_m * sqrt2n2) / 2) for p_m in [+1, -1]]
-            g = gamma(fr(n, 2))
+            g = gamma(frac(n, 2))
             A1, A2 = [
                 (n + 2 + p_m * sqrt2n2) / 4 / (n+2) * g
                 for p_m in [+1, -1]
                 ]
 
-            s = nsphere.Stroud1967(n)
+            s = nsphere.Stroud1967(n, symbolic=symbolic)
 
             self.points = numpy.concatenate([
                 r1 * s.points,

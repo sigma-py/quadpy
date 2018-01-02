@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 #
 from __future__ import division
+
 import numpy
-from sympy import sqrt, Rational as fr, pi
+import sympy
 
 from ..helpers import z, untangle
 
@@ -15,15 +16,19 @@ class Radon(object):
     Volume: 52, page 286-300, ISSN: 0026-9255; 1436-5081/e.
     <https://eudml.org/doc/176796>.
     '''
-    def __init__(self, alpha):
+    def __init__(self, alpha, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        pi = sympy.pi if symbolic else numpy.pi
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
         self.degree = 5
 
-        r = sqrt(fr(alpha+4, alpha+6))
-        s = sqrt(fr(alpha+4, 4*(alpha+6)))
-        t = sqrt(fr(3 * (alpha+4), 4*(alpha+6)))
+        r = sqrt(frac(alpha+4, alpha+6))
+        s = sqrt(frac(alpha+4, 4*(alpha+6)))
+        t = sqrt(frac(3 * (alpha+4), 4*(alpha+6)))
 
-        A = fr(4, (alpha+4)**2)
-        B = fr((alpha+2) * (alpha+6), 6 * (alpha+4)**2)
+        A = frac(4, (alpha+4)**2)
+        B = frac((alpha+2) * (alpha+6), 6 * (alpha+4)**2)
 
         data = [
             (A, z(2)),

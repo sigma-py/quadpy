@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import sqrt, Rational as fr
+from __future__ import division
+
+import numpy
+import sympy
 
 from ..helpers import untangle, fsd, z, pm
 
@@ -27,13 +30,16 @@ class MustardLynessBlatt(object):
     interest for three-dimensional integrations is presented. The discussion is
     generalized to n dimensions for hyper-cubic domains.
     '''
-    def __init__(self, n):
+    def __init__(self, n, symbolic=True):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = sympy.sqrt if symbolic else numpy.sqrt
+
         self.degree = 5
-        r = sqrt(fr(2, 5))
+        r = sqrt(frac(2, 5))
         data = [
-            (fr(8 - 5*n, 9), z(n)),
-            (fr(5, 18), fsd(n, (r, 1))),
-            (fr(1, 9 * 2**n), pm(n, 1)),
+            (frac(8 - 5*n, 9), z(n)),
+            (frac(5, 18), fsd(n, (r, 1))),
+            (frac(1, 9 * 2**n), pm(n, 1)),
             ]
 
         self.points, self.weights = untangle(data)

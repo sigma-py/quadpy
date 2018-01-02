@@ -6,14 +6,14 @@ from .felippa import Felippa
 from .. import helpers
 
 
-def integrate(f, pyra, scheme, sumfun=helpers.kahan_sum):
+def integrate(f, pyra, scheme, dot=numpy.dot):
     flt = numpy.vectorize(float)
 
     xi = flt(scheme.points).T
     x = _transform(xi, pyra)
     det = _get_det_J(pyra, xi)
 
-    return sumfun(flt(scheme.weights) * f(x) * abs(det.T), axis=-1)
+    return dot(f(x) * abs(det.T), flt(scheme.weights))
 
 
 def _transform(xi, pyra):

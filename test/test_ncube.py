@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import numpy
 import pytest
 import quadpy
 from quadpy.ncube.helpers import integrate_monomial_over_ncube
@@ -9,12 +10,15 @@ from helpers import check_degree
 
 @pytest.mark.parametrize(
     'scheme, tol',
-    [(quadpy.ncube.Dobrodeev1970(dim), 1.0e-14) for dim in range(5, 8)]
-    + [(quadpy.ncube.Dobrodeev1978(dim), 1.0e-14) for dim in range(2, 8)]
-    + [(quadpy.ncube.HammerStroud(n, k), 1.0e-14) for n in range(3, 7)
+    [(quadpy.ncube.Dobrodeev1970(dim, False), 1.0e-14) for dim in range(5, 8)]
+    + [
+        (quadpy.ncube.Dobrodeev1978(dim, False), 1.0e-14)
+        for dim in range(2, 8)
+      ]
+    + [(quadpy.ncube.HammerStroud(n, k, False), 1.0e-14) for n in range(3, 7)
        for k in ['1-n', '2-n']
        ]
-    + [(quadpy.ncube.Stroud(n, k), 1.0e-14) for n in range(3, 7)
+    + [(quadpy.ncube.Stroud(n, k, False), 1.0e-14) for n in range(3, 7)
        for k in [
         'Cn 1-1', 'Cn 1-2',
         'Cn 2-1', 'Cn 2-2',
@@ -27,6 +31,9 @@ from helpers import check_degree
        ]
     )
 def test_scheme(scheme, tol):
+    assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
+    assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
+
     n = scheme.dim
     ncube_limits = [[0.0, 1.0]] * n
     ncube = quadpy.ncube.ncube_points(*ncube_limits)
