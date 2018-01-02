@@ -9,7 +9,7 @@ from helpers import check_degree
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadpy.circle.Krylov(k) for k in range(1, 6)]
+    [quadpy.circle.Krylov(k, symbolic=False) for k in range(1, 6)]
     )
 def test_scheme(scheme):
     degree = check_degree(
