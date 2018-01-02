@@ -22,6 +22,7 @@ class McLaren(object):
     def __init__(self, index, symbolic=True):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         sqrt = sympy.sqrt if symbolic else numpy.sqrt
+        roots = mp.polyroots if symbolic else numpy.roots
 
         if index == 1:
             self.degree = 3
@@ -51,10 +52,10 @@ class McLaren(object):
             #  z^6 - z^4 + 0.2*z^2 - 1/105 = 0,
             # i.e., the square roots of the roots of
             #  z^3 - z^2 + 0.2*z^1 - 1/105 = 0,
-            r2, s2, t2 = mp.polyroots([1, -1, frac(1, 5), -frac(1, 105)])
-            r = mp.sqrt(r2)
-            s = mp.sqrt(s2)
-            t = mp.sqrt(t2)
+            r2, s2, t2 = roots([1, -1, frac(1, 5), -frac(1, 105)])
+            r = sqrt(r2)
+            s = sqrt(s2)
+            t = sqrt(t2)
 
             u = numpy.array([+r, -r, +s, -s, +t, -t])
             v = numpy.array([+s, +t, +t, +r, +r, +s])
@@ -73,10 +74,10 @@ class McLaren(object):
             #  z^6 - z^4 + 5/21 * z^2 - 5/441 = 0,
             # i.e., the square roots of the roots of
             #  z^3 - z^2 + 5/21 * z^1 - 5/441 = 0,
-            r2, s2, t2 = mp.polyroots([1, -1, frac(5, 21), -frac(5, 441)])
-            r = mp.sqrt(r2)
-            s = mp.sqrt(s2)
-            t = mp.sqrt(t2)
+            r2, s2, t2 = roots([1, -1, frac(5, 21), -frac(5, 441)])
+            r = sqrt(r2)
+            s = sqrt(s2)
+            t = sqrt(t2)
 
             u = numpy.array([+r, -r, +s, -s, +t, -t])
             v = numpy.array([+s, +t, +t, +r, +r, +s])

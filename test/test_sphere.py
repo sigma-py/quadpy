@@ -84,6 +84,9 @@ def test_scheme_cartesian(scheme, tol):
             scheme.degree+1, polar, azimuthal, normalization='quantum mechanic'
             ))
 
+    assert scheme.points.dtype == numpy.float64, scheme.name
+    assert scheme.weights.dtype == numpy.float64, scheme.name
+
     vals = quadpy.sphere.integrate(
         sph_tree_cartesian,
         center=numpy.array([0.0, 0.0, 0.0]),
