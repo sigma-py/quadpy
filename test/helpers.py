@@ -30,7 +30,8 @@ def check_degree(quadrature, exact, dim, max_degree, tol=1.0e-14):
     exponents = [item for sublist in exponents for item in sublist]
     exponents = numpy.array(exponents)
 
-    exact_vals = numpy.array([exact(k) for k in exponents])
+    flt = numpy.vectorize(float)
+    exact_vals = flt([exact(k) for k in exponents])
 
     def evaluate_all_monomials(x):
         # Evaluate monomials.
