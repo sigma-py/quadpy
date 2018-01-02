@@ -2,8 +2,10 @@
 #
 from __future__ import division
 
-from sympy import sqrt, factorial as fact, binomial
+import math
 import numpy
+import scipy.special
+import sympy
 
 
 def untangle(data):
@@ -71,7 +73,7 @@ def kahan_dot(a, b):
 
 
 # pylint: disable=too-many-arguments, too-many-locals
-def compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k):
+def compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k, symbolic=True):
     '''Compute some helper quantities used in
 
     L.N. Dobrodeev,
@@ -82,6 +84,10 @@ def compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k):
     <https://doi.org/10.1016/0041-5553(78)90064-2>.
     '''
     t = 1 if pm_type == 'I' else -1
+
+    binomial = sympy.binomial if symbolic else scipy.special.binom
+    fact = sympy.factorial if symbolic else math.factorial
+    sqrt = sympy.sqrt if symbolic else numpy.sqrt
 
     L = binomial(n, i) * 2**i
     M = fact(n) // (fact(j) * fact(k) * fact(n-j-k)) * 2**(j+k)

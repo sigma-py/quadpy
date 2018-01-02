@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 import numpy
-from sympy import sqrt, Rational as fr
+import sympy
 
 from .helpers import volume_unit_ball
 from ..helpers import untangle, fsd, pm, combine, z, pm_array
@@ -17,7 +19,10 @@ class Stroud1966(object):
     <https://doi.org/10.1090/S0025-5718-1966-0191094-8>.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, n, variant):
+    def __init__(self, n, variant, symbolic=True):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = sympy.sqrt if symbolic else numpy.sqrt
+
         self.name = 'Stroud66'
         self.degree = 5
 
@@ -39,16 +44,16 @@ class Stroud1966(object):
                 ]
         elif variant == 'b':
             alpha = 0
-            s = sqrt(fr(n+alpha+2, (n+2) * (n+alpha+4)))
+            s = sqrt(frac(n+alpha+2, (n+2) * (n+alpha+4)))
             data = []
             B0 = 1
             for k in range(1, n+1):
-                B = fr(
+                B = frac(
                     2**(k-n) * (n+2) * (n+alpha) * (n+alpha+4),
                     n * (k+1) * (k+2) * (n+alpha+2)**2
                     )
                 B0 -= 2**(n-k+1) * B
-                r = sqrt(fr((k+2) * (n+alpha+2), (n+2) * (n+alpha+4)))
+                r = sqrt(frac((k+2) * (n+alpha+2), (n+2) * (n+alpha+4)))
                 v = numpy.concatenate([
                     numpy.zeros((2**(n-k+1), k-1), dtype=int),
                     pm_array(numpy.array([r] + (n-k) * [s]))
@@ -60,8 +65,8 @@ class Stroud1966(object):
             r = sqrt((n + 2 + (n-1)*a) / (n * (n+4)))
             s = sqrt((n + 2 - a) / (n * (n+4)))
 
-            B0 = fr(4, (n+2)**2)
-            B1 = fr(n+4, 2**n * (n+2)**2)
+            B0 = frac(4, (n+2)**2)
+            B1 = frac(n+4, 2**n * (n+2)**2)
 
             data = [
                 (B0, z(n)),
@@ -75,7 +80,7 @@ class Stroud1966(object):
             s = sqrt((n*(n+4) + a - b) / (n * (n+2) * (n+4)))
             t = sqrt((n + 4 - a) / ((n+2) * (n+4)))
 
-            B = fr(1, 2**n * (n+1))
+            B = frac(1, 2**n * (n+1))
 
             # The data is given symbolically, and for large n, those are
             # thousands of points and weights. Converting them to float takes a
@@ -87,5 +92,5 @@ class Stroud1966(object):
                 ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= volume_unit_ball(n)
+        self.weights *= volume_unit_ball(n, symbolic=symbolic)
         return
