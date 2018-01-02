@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import sqrt, Rational as fr
+from __future__ import division
+
+import numpy
+import sympy
 
 from .helpers import _symm_r_0, _z, _symm_s_t
 from ..helpers import untangle
@@ -16,18 +19,21 @@ class Maxwell(object):
     First published in 1890.
     <https://doi.org/10.1017/CBO9780511710377.061>.
     '''
-    def __init__(self):
+    def __init__(self, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = sympy.sqrt if symbolic else numpy.sqrt
+
         self.name = 'Maxwell'
         self.degree = 7
 
-        r = sqrt(fr(12, 35))
+        r = sqrt(frac(12, 35))
         s, t = [sqrt((93 + i*3*sqrt(186)) / 155) for i in [+1, -1]]
 
         data = [
-            (fr(1, 81), _z()),
-            (fr(49, 324), _symm_r_0(r)),
+            (frac(1, 81), _z()),
+            (frac(49, 324), _symm_r_0(r)),
             # ERR typo in Stroud: 648 vs 649
-            (fr(31, 648), _symm_s_t(s, t))
+            (frac(31, 648), _symm_s_t(s, t))
             ]
 
         self.points, self.weights = untangle(data)
