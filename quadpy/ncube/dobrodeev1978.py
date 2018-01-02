@@ -23,7 +23,7 @@ class Dobrodeev1978(object):
     dimensionalities 2 <= n <= 20.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, n):
+    def __init__(self, n, symbolic):
         assert 2 <= n <= 20
 
         self.name = 'Dobrodeev1978'
@@ -60,7 +60,9 @@ class Dobrodeev1978(object):
 
         pm_type, i, j, k = dim_config[n]
 
-        G, a, b, c = compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k)
+        G, a, b, c = compute_dobrodeev(
+                n, I0, I2, I22, I4, pm_type, i, j, k, symbolic=symbolic
+                )
 
         data = [
             (G, fsd(n, (a, i))),

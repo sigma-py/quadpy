@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 import numpy
-from sympy import sqrt, sin, cos, pi, Rational as fr
+import sympy
 
 from .helpers import _s
 
@@ -16,7 +18,13 @@ class Stroud1957(object):
     Vol. 11, No. 60 (Oct., 1957), pp. 257-261,
     <https://doi.org/10.2307/2001945>.
     '''
-    def __init__(self, n, index):
+    def __init__(self, n, index, symbolic=True):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = sympy.sqrt if symbolic else numpy.sqrt
+        pi = sympy.pi if symbolic else numpy.pi
+        sin = sympy.sin if symbolic else numpy.sin
+        cos = sympy.cos if symbolic else numpy.cos
+
         self.dim = n
         if index == 2:
             self.degree = 2
@@ -32,8 +40,8 @@ class Stroud1957(object):
             n2 = n // 2 if n % 2 == 0 else (n-1)//2
             i_range = range(1, 2*n+1)
             pts = [[
-                [sqrt(fr(2, 3)) * cos((2*k-1)*i*pi / n) for i in i_range],
-                [sqrt(fr(2, 3)) * sin((2*k-1)*i*pi / n) for i in i_range],
+                [sqrt(frac(2, 3)) * cos((2*k-1)*i*pi / n) for i in i_range],
+                [sqrt(frac(2, 3)) * sin((2*k-1)*i*pi / n) for i in i_range],
                 ] for k in range(1, n2+1)]
             if n % 2 == 1:
                 sqrt3pm = numpy.full(2*n, 1/sqrt(3))
@@ -41,7 +49,7 @@ class Stroud1957(object):
                 pts.append(sqrt3pm)
             pts = numpy.vstack(pts).T
 
-            data = [(fr(1, 2*n), pts)]
+            data = [(frac(1, 2*n), pts)]
 
         self.points, self.weights = untangle(data)
         reference_volume = 2**n

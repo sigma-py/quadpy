@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import Rational as fr
+from __future__ import division
+
+import sympy
 
 from ..helpers import untangle, z, pm
 
@@ -13,11 +15,13 @@ class Ewing(object):
     Vol. 48, No. 2 (Feb., 1941), pp. 134-136,
     <https://doi.org/10.2307/2303604>.
     '''
-    def __init__(self, n):
+    def __init__(self, n, symbolic=True):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+
         self.degree = 3
         data = [
-            (fr(2, 3), z(n)),
-            (fr(1, 3 * 2**n), pm(n, 1)),
+            (frac(2, 3), z(n)),
+            (frac(1, 3 * 2**n), pm(n, 1)),
             ]
 
         self.points, self.weights = untangle(data)
