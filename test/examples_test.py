@@ -135,7 +135,7 @@ def test_e2r():
 
 def test_sphere():
     quadpy.sphere.integrate(
-            lambda x: numpy.exp(x[0]),
+            lambda x: numpy.exp(1j*x[0]) + 1j*x[0]**2,
             numpy.array([0.0, 0.3, 0.0]), 0.7,
             quadpy.sphere.Lebedev(3)
             )
@@ -321,3 +321,7 @@ def test_e1r2():
         quadpy.e1r2.GaussHermite(5)
         )
     return
+
+
+if __name__ == '__main__':
+    test_sphere()
