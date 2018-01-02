@@ -84,10 +84,9 @@ def get_detJ(xi, cube):
 
 
 def integrate(f, ncube, scheme, dot=numpy.dot):
-    flt = numpy.vectorize(float, otypes=[float])
-    x = transform(flt(scheme.points).T, ncube).T
-    detJ = get_detJ(flt(scheme.points).T, ncube)
-    return dot(f(x)*abs(detJ), flt(scheme.weights))
+    x = transform(scheme.points.T, ncube).T
+    detJ = get_detJ(scheme.points.T, ncube)
+    return dot(f(x)*abs(detJ), scheme.weights)
 
 
 def ncube_points(*xyz):
