@@ -30,7 +30,8 @@ def check_degree(quadrature, exact, dim, max_degree, tol=1.0e-14):
     exponents = [item for sublist in exponents for item in sublist]
     exponents = numpy.array(exponents)
 
-    exact_vals = numpy.array([exact(k) for k in exponents])
+    flt = numpy.vectorize(float)
+    exact_vals = flt([exact(k) for k in exponents])
 
     def evaluate_all_monomials(x):
         # Evaluate monomials.
@@ -41,6 +42,9 @@ def check_degree(quadrature, exact, dim, max_degree, tol=1.0e-14):
         return numpy.prod(x[..., None] ** exponents.T[:, None], axis=0).T
 
     vals = quadrature(evaluate_all_monomials)
+
+    # print(exact_vals)
+    # print(vals)
 
     # check relative error
     # The allowance is quite large here, 1e5 over machine precision.

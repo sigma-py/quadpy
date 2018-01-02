@@ -10,34 +10,44 @@ from helpers import check_degree
 
 @pytest.mark.parametrize(
     'scheme',
-    [quadpy.nball.Dobrodeev1970(n) for n in range(3, 9)]
-    + [quadpy.nball.Dobrodeev1978(n) for n in range(2, 7)]
-    + [quadpy.nball.Stroud(dim, index) for dim in range(2, 9) for index in [
+    [quadpy.nball.Dobrodeev1970(n, symbolic=False) for n in range(3, 9)]
+    + [quadpy.nball.Dobrodeev1978(n, symbolic=False) for n in range(2, 7)]
+    + [quadpy.nball.Stroud(dim, index, symbolic=False) for dim in range(2, 9)
+        for index in [
         'Sn 2-1',
         'Sn 3-1', 'Sn 3-2',
         'Sn 5-2', 'Sn 5-3', 'Sn 5-4', 'Sn 5-5', 'Sn 5-6',
         ]]
-    + [quadpy.nball.Stroud(dim, index) for dim in range(4, 8) for index in [
+    + [quadpy.nball.Stroud(dim, index, symbolic=False) for dim in range(4, 8)
+        for index in [
         'Sn 5-1a', 'Sn 5-1b',
         ]]
-    + [quadpy.nball.Stroud(dim, index) for dim in range(3, 8) for index in [
+    + [quadpy.nball.Stroud(dim, index, symbolic=False) for dim in range(3, 8)
+        for index in [
         'Sn 7-1a'
         ]]
-    + [quadpy.nball.Stroud(dim, index) for dim in range(3, 7) for index in [
+    + [quadpy.nball.Stroud(dim, index, symbolic=False) for dim in range(3, 7)
+        for index in [
         'Sn 7-1b', 'Sn 7-2', 'Sn 7-3a', 'Sn 7-3b',
         'Sn 9-1a',
         ]]
-    + [quadpy.nball.Stroud(dim, index) for dim in range(4, 7) for index in [
+    + [quadpy.nball.Stroud(dim, index, symbolic=False) for dim in range(4, 7)
+        for index in [
         'Sn 9-1b',
         ]]
-    + [quadpy.nball.Stroud(dim, index) for dim in [3, 4] for index in [
+    + [quadpy.nball.Stroud(dim, index, symbolic=False) for dim in [3, 4]
+        for index in [
         'Sn 11-1a',
         ]]
-    + [quadpy.nball.Stroud(dim, index) for dim in [4, 5] for index in [
+    + [quadpy.nball.Stroud(dim, index, symbolic=False) for dim in [4, 5]
+        for index in [
         'Sn 11-1b',
         ]]
     )
 def test_scheme(scheme):
+    assert scheme.points.dtype == numpy.float64, scheme.name
+    assert scheme.weights.dtype == numpy.float64, scheme.name
+
     tol = 1.0e-14
     n = scheme.dim
     center = numpy.zeros(n)
@@ -56,5 +66,5 @@ def test_scheme(scheme):
 
 if __name__ == '__main__':
     n_ = 3
-    scheme_ = quadpy.nball.Dobrodeev1970(n_)
+    scheme_ = quadpy.nball.Stroud(n_, 'Sn 2-1', symbolic=True)
     test_scheme(scheme_)

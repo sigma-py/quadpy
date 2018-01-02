@@ -30,8 +30,6 @@ def plot(scheme, show_axes=True):
     return
 
 
-def integrate(f, rule, sumfun=helpers.kahan_sum):
+def integrate(f, rule, dot=numpy.dot):
     flt = numpy.vectorize(float)
-
-    ff = numpy.array(f(flt(rule.points).T))
-    return sumfun(flt(rule.weights) * ff, axis=-1)
+    return dot(f(flt(rule.points).T), flt(rule.weights))

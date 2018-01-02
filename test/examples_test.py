@@ -6,13 +6,13 @@ def test_circle():
     quadpy.circle.integrate(
         lambda x: numpy.exp(x[0]),
         numpy.array([0.0, 0.3]), 0.7,
-        quadpy.circle.Krylov(3)
+        quadpy.circle.Krylov(3, symbolic=False)
         )
     quadpy.circle.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[0])],
         numpy.array([[1.0, 1.0], [0.0, 0.3], [2.0, 2.0]]),
         [1.0, 0.7, 0.333],
-        quadpy.circle.Krylov(5)
+        quadpy.circle.Krylov(5, symbolic=False)
         )
     return
 
@@ -135,7 +135,7 @@ def test_e2r():
 
 def test_sphere():
     quadpy.sphere.integrate(
-            lambda x: numpy.exp(x[0]),
+            lambda x: numpy.exp(1j*x[0]) + 1j*x[0]**2,
             numpy.array([0.0, 0.3, 0.0]), 0.7,
             quadpy.sphere.Lebedev(3)
             )
@@ -153,14 +153,14 @@ def test_ball():
     quadpy.ball.integrate(
         lambda x: numpy.exp(x[0]),
         [0.0, 0.0, 0.0], 1.0,
-        quadpy.ball.HammerStroud('14-3a')
+        quadpy.ball.HammerStroud('14-3a', symbolic=False)
         )
 
     quadpy.ball.integrate(
             lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
             numpy.array([[1.0, 1.0, 0.0], [0.0, 0.3, 0.0], [2.0, 2.0, 0.0]]),
             [1.0, 0.7, 0.333],
-            quadpy.ball.HammerStroud('15-3b')
+            quadpy.ball.HammerStroud('15-3b', symbolic=False)
             )
     return
 
@@ -263,7 +263,7 @@ def test_nball():
         lambda x: numpy.exp(x[0]),
         numpy.zeros(4),
         1.0,
-        quadpy.nball.Dobrodeev1970(dim)
+        quadpy.nball.Dobrodeev1970(dim, symbolic=False)
         )
     return
 
@@ -294,7 +294,7 @@ def test_enr2():
     dim = 4
     quadpy.enr2.integrate(
         lambda x: numpy.exp(x[0]),
-        quadpy.enr2.Stroud(dim, '5-2')
+        quadpy.enr2.Stroud(dim, '5-2', symbolic=False)
         )
     return
 
@@ -321,3 +321,7 @@ def test_e1r2():
         quadpy.e1r2.GaussHermite(5)
         )
     return
+
+
+if __name__ == '__main__':
+    test_sphere()

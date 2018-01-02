@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import numpy
 import pytest
 import quadpy
 from quadpy.nball.helpers import integrate_monomial_over_unit_nball
@@ -9,17 +10,17 @@ from helpers import check_degree
 
 @pytest.mark.parametrize(
     'scheme,tol',
-    [(quadpy.disk.Albrecht(k), 1.0e-14) for k in range(1, 9)]
+    [(quadpy.disk.Albrecht(k, symbolic=False), 1.0e-14) for k in range(1, 9)]
     + [(quadpy.disk.CoolsHaegemans(k), 1.0e-14) for k in range(1, 4)]
     + [(quadpy.disk.CoolsKim(k), 1.0e-14) for k in range(1, 4)]
-    + [(quadpy.disk.HammerStroud(k), 1.0e-14) for k in [
+    + [(quadpy.disk.HammerStroud(k, symbolic=False), 1.0e-14) for k in [
         '11-2', '12-2', '13-2',
         '17', '18', '19', '20', '21'
         ]]
     + [(quadpy.disk.Lether(k), 1.0e-14) for k in range(1, 6)]
     + [(quadpy.disk.Peirce1957(k), 1.0e-14) for k in range(1, 6)]
     + [(quadpy.disk.RabinowitzRichter(k), 1.0e-14) for k in range(1, 7)]
-    + [(quadpy.disk.Stroud(k), 1.0e-14) for k in [
+    + [(quadpy.disk.Stroud(k, symbolic=False), 1.0e-14) for k in [
         'S2 3-1', 'S2 3-2',
         'S2 4-1',
         'S2 5-1', 'S2 5-2',
@@ -33,6 +34,9 @@ from helpers import check_degree
     + [(quadpy.disk.WissmannBecker(k), 1.0e-14) for k in ['6-1', '6-2', '8-1']]
     )
 def test_scheme(scheme, tol):
+    assert scheme.points.dtype == numpy.float64, scheme.name
+    assert scheme.weights.dtype == numpy.float64, scheme.name
+
     degree = check_degree(
             lambda poly: quadpy.disk.integrate(
                 poly, [0.0, 0.0], 1.0, scheme

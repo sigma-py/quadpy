@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import pi, sqrt, Rational as fr
+from __future__ import division
+
+import numpy
+import sympy
 
 from ..helpers import untangle, fsd, pm, z
 
@@ -13,19 +16,23 @@ class HammerStroud(object):
     <https://doi.org/10.1090/S0025-5718-1958-0102176-6>.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, index):
+    def __init__(self, index, symbolic=True):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = sympy.sqrt if symbolic else numpy.sqrt
+        pi = sympy.pi if symbolic else numpy.pi
+
         if index == '11-3':
             self.degree = 3
             data = [
-                (fr(1, 6), fsd(3, (sqrt(fr(3, 5)), 1))),
+                (frac(1, 6), fsd(3, (sqrt(frac(3, 5)), 1))),
                 ]
         elif index == '12-3':
             self.degree = 5
-            alpha = sqrt(fr(3, 7))
+            alpha = sqrt(frac(3, 7))
             data = [
-                (fr(1, 15), z(3)),
-                (fr(7, 90), fsd(3, (alpha, 1))),
-                (fr(7, 180), fsd(3, (alpha, 2))),
+                (frac(1, 15), z(3)),
+                (frac(7, 90), fsd(3, (alpha, 1))),
+                (frac(7, 180), fsd(3, (alpha, 2))),
                 ]
         elif index in ['14-3a', '14-3b']:
             self.degree = 5
@@ -35,7 +42,7 @@ class HammerStroud(object):
             sqrt14 = sqrt(14)
 
             # ERR The article falsely gives 0.50824... instead of 0.050824...
-            a1 = fr(1, 125) * (9 + t * 2*sqrt14)
+            a1 = frac(1, 125) * (9 + t * 2*sqrt14)
             c1 = (71 - t * 12 * sqrt14) / 1000
 
             nu = sqrt((7 - t * sqrt14) / 7)
@@ -71,5 +78,5 @@ class HammerStroud(object):
                 (c1, pm(3, sqrt(eta2))),
                 ]
         self.points, self.weights = untangle(data)
-        self.weights *= fr(4, 3) * pi
+        self.weights *= frac(4, 3) * pi
         return

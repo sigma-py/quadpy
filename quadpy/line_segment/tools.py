@@ -7,7 +7,7 @@ from .. import helpers
 from .gauss_kronrod import _gauss_kronrod_integrate
 
 
-def integrate(f, interval, scheme, sumfun=helpers.kahan_sum):
+def integrate(f, interval, scheme, dot=numpy.dot):
     xi = scheme.points
     x = \
         + numpy.multiply.outer(0.5 * (1.0 - xi), interval[0]) \
@@ -16,22 +16,20 @@ def integrate(f, interval, scheme, sumfun=helpers.kahan_sum):
     diff = interval[1] - interval[0]
     len_intervals = numpy.sqrt(numpy.einsum('...j,...j->...', diff, diff))
     # The factor 0.5 is from the length of the reference line [-1, 1].
-    return sumfun(
-        numpy.moveaxis(scheme.weights * f(x), -1, 0) * 0.5 * len_intervals
-        )
+    return 0.5 * len_intervals * dot(f(x), scheme.weights)
 
 
 # pylint: disable=too-many-arguments
-def integrate_split(f, a, b, n, scheme, sumfun=helpers.kahan_sum):
+def integrate_split(f, a, b, n, scheme, dot=helpers.kahan_dot):
     '''Integrates f between a and b with n subintervals.
     '''
     # prepare the intervals
     x = numpy.linspace(a, b, n+1)
     intervals = numpy.expand_dims(numpy.stack([x[:-1], x[1:]]), axis=-1)
     # integrate
-    out = integrate(f, intervals, scheme, sumfun=sumfun)[0]
+    out = integrate(f, intervals, scheme, dot=dot)[0]
     # sum over the intervals
-    return sumfun(out)
+    return helpers.kahan_sum(out)
 
 
 def _numpy_all_except(a, axis=-1):
@@ -46,8 +44,10 @@ def integrate_adaptive(
         f, intervals, eps,
         kronrod_degree=7,
         minimum_interval_length=None,
-        sumfun=helpers.kahan_sum
+        dot=numpy.dot
         ):
+    sumfun = helpers.kahan_sum
+
     intervals = numpy.array(intervals)
     if len(intervals.shape) == 1:
         intervals = intervals[..., None]
@@ -60,7 +60,7 @@ def integrate_adaptive(
 
     # Use Gauss-Kronrod 7/15 scheme for error estimation and adaptivity.
     _, val_g, error_estimate = \
-        _gauss_kronrod_integrate(kronrod_degree, f, intervals, sumfun=sumfun)
+        _gauss_kronrod_integrate(kronrod_degree, f, intervals, dot=dot)
 
     # Mark intervals with acceptable approximations. For this, take all()
     # across every dimension except the last one, which is the interval index.
@@ -83,7 +83,7 @@ def integrate_adaptive(
             ])
         # compute values and error estimates for the new intervals
         _, val_g, error_estimate = _gauss_kronrod_integrate(
-                kronrod_degree, f, intervals, sumfun=sumfun
+                kronrod_degree, f, intervals, dot=dot
                 )
         # mark good intervals, gather values and error estimates
         lengths = abs(intervals[1] - intervals[0])

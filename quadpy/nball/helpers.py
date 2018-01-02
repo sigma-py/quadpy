@@ -3,11 +3,11 @@
 from ..nsphere.helpers import integrate_monomial_over_unit_nsphere
 
 
-def volume_unit_ball(n):
-    return integrate_monomial_over_unit_nball(n * [0])
+def volume_unit_ball(n, symbolic=True):
+    return integrate_monomial_over_unit_nball(n * [0], symbolic=symbolic)
 
 
-def integrate_monomial_over_unit_nball(exp):
+def integrate_monomial_over_unit_nball(exponents, symbolic=True):
     '''
     Gerald B. Folland,
     How to Integrate a Polynomial over a Sphere,
@@ -16,6 +16,10 @@ def integrate_monomial_over_unit_nball(exp):
     <https://doi.org/10.2307/2695802>.
     '''
     radius = 1
-    n = len(exp)
-    alpha = n + sum(exp)
-    return radius**alpha * integrate_monomial_over_unit_nsphere(exp) / alpha
+    n = len(exponents)
+    alpha = n + sum(exponents)
+    return (
+        radius**alpha
+        * integrate_monomial_over_unit_nsphere(exponents, symbolic=symbolic)
+        / alpha
+        )

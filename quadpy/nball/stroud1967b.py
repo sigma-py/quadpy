@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 #
 from __future__ import division
+
 import numpy
-from sympy import sqrt
+import sympy
 
 from ..helpers import untangle, fsd, pm, z
 from .helpers import volume_unit_ball
@@ -18,7 +19,9 @@ class Stroud1967b(object):
     <https://doi.org/10.1137/0704004>.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, n, variant):
+    def __init__(self, n, variant, symbolic=True):
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
         self.degree = 7
         self.dim = n
 
@@ -56,23 +59,18 @@ class Stroud1967b(object):
                 ]
             self.points, self.weights = untangle(data)
 
-            self.weights *= volume_unit_ball(n)
+            self.weights *= volume_unit_ball(n, symbolic=symbolic)
         else:
             assert variant == 'c'
             assert n >= 3
 
             alpha = sqrt(2*(n+2)*(n+4))
 
-            r1, r2 = [
-                sqrt(((n+2)*(n+4) + p_m*2*alpha) / (n+4) / (n+6))
-                for p_m in [+1, -1]
-                ]
-            A1, A2 = [
-                (2*(n+2)**2 + p_m*(n-2)*alpha) / (4*n*(n+2)**2)
-                for p_m in [+1, -1]
-                ]
+            pm_ = numpy.array([+1, -1])
+            r1, r2 = sqrt(((n+2)*(n+4) + pm_*2*alpha) / (n+4) / (n+6))
+            A1, A2 = (2*(n+2)**2 + pm_*(n-2)*alpha) / (4*n*(n+2)**2)
 
-            s = nsphere.Stroud1967(n)
+            s = nsphere.Stroud1967(n, symbolic=symbolic)
 
             self.points = numpy.concatenate([
                 r1 * s.points,

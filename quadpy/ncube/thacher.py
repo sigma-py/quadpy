@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import sqrt
+import numpy
+import sympy
 
 from .helpers import _s
 from ..helpers import untangle
@@ -23,7 +24,9 @@ class Thacher(object):
     subdivisions, only one point is required in each interior subdivision to
     achieve second-degree accuracy.
     '''
-    def __init__(self, n):
+    def __init__(self, n, symbolic=True):
+        sqrt = sympy.sqrt if symbolic else numpy.sqrt
+
         self.degree = 2
         r = sqrt(3) / 6
         data = [
