@@ -2,6 +2,7 @@
 #
 from __future__ import print_function
 
+import numpy
 import pytest
 import sympy
 
@@ -94,6 +95,9 @@ def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
     + [(quadpy.hexahedron.StroudN(k), 1.0e-7) for k in ['Cn 7-1']]
     )
 def test_scheme(scheme, tol, print_degree=False):
+    assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
+    assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
+
     x = [-1.0, +1.0]
     y = [-1.0, +1.0]
     z = [-1.0, +1.0]
