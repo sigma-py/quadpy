@@ -15,7 +15,7 @@ class Ditkin(object):
     Doklady Akad. Nauk SSSR (N.S.) 62 (1948), 445–447 (Russian).
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, index, alpha=0, symbolic=True):
+    def __init__(self, index, alpha=0, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
         pi = sympy.pi if symbolic else numpy.pi

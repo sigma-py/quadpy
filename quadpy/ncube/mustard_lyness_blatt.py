@@ -30,7 +30,7 @@ class MustardLynessBlatt(object):
     interest for three-dimensional integrations is presented. The discussion is
     generalized to n dimensions for hyper-cubic domains.
     '''
-    def __init__(self, n, symbolic=True):
+    def __init__(self, n, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         sqrt = sympy.sqrt if symbolic else numpy.sqrt
 

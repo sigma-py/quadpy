@@ -28,7 +28,7 @@ class Dobrodeev1978(object):
     dimensionalities 2 <= n <= 20.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, n, symbolic=True):
+    def __init__(self, n, symbolic=False):
         # from sympy import sqrt, factorial as fact, Rational as fr
 
         assert 2 <= n <= 20

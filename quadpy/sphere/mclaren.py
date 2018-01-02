@@ -19,7 +19,7 @@ class McLaren(object):
     '''
     # <https://github.com/PyCQA/pylint/issues/1472>
     # pylint: disable=too-many-locals, invalid-unary-operand-type
-    def __init__(self, index, symbolic=True):
+    def __init__(self, index, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         sqrt = sympy.sqrt if symbolic else numpy.sqrt
         roots = mp.polyroots if symbolic else numpy.roots

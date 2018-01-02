@@ -16,7 +16,7 @@ class AlbrechtCollatz(object):
     ZAMM, Volume 38, Issue 1-2, 1958, Pages 1–15,
     <https://doi.org/10.1002/zamm.19580380102>
     '''
-    def __init__(self, index, symbolic=True):
+    def __init__(self, index, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         sqrt = sympy.sqrt if symbolic else numpy.sqrt
 
