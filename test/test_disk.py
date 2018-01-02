@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import numpy
 import pytest
 import quadpy
 from quadpy.nball.helpers import integrate_monomial_over_unit_nball
@@ -33,6 +34,9 @@ from helpers import check_degree
     + [(quadpy.disk.WissmannBecker(k), 1.0e-14) for k in ['6-1', '6-2', '8-1']]
     )
 def test_scheme(scheme, tol):
+    assert scheme.points.dtype == numpy.float64, scheme.name
+    assert scheme.weights.dtype == numpy.float64, scheme.name
+
     degree = check_degree(
             lambda poly: quadpy.disk.integrate(
                 poly, [0.0, 0.0], 1.0, scheme

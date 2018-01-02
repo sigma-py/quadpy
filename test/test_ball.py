@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import numpy
 import pytest
 import quadpy
 from quadpy.nball.helpers import integrate_monomial_over_unit_nball
@@ -20,6 +21,9 @@ from helpers import check_degree
         ]]
     )
 def test_scheme(scheme, tol):
+    assert scheme.points.dtype == numpy.float64, scheme.name
+    assert scheme.weights.dtype == numpy.float64, scheme.name
+
     degree = check_degree(
             lambda poly: quadpy.ball.integrate(
                 poly, [0.0, 0.0, 0.0], 1.0, scheme

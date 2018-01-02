@@ -45,6 +45,9 @@ from helpers import check_degree
         ]]
     )
 def test_scheme(scheme):
+    assert scheme.points.dtype == numpy.float64, scheme.name
+    assert scheme.weights.dtype == numpy.float64, scheme.name
+
     tol = 1.0e-14
     n = scheme.dim
     center = numpy.zeros(n)
