@@ -22,6 +22,8 @@ class Albrecht(object):
         sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
         sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
         pm_ = numpy.array([+1, -1])
+        roots = mp.polyroots if symbolic else numpy.roots
+        linear_solve = mp.lu_solve if symbolic else numpy.linalg.solve
 
         self.name = 'Albrecht({})'.format(index)
 
@@ -89,15 +91,14 @@ class Albrecht(object):
 
             # The values are solutions of
             # 6317094x^3 - 10022245*x^2 + 4149900*x - 336375 = 0
-            sigma2 = mp.polyroots([6317094, -10022245, 4149900, -336375])
-
+            sigma2 = roots([6317094, -10022245, 4149900, -336375])
             A = numpy.vander(sigma2, increasing=True).T
             b = numpy.array([
-                sympy.Rational(168899, 1350000),
-                sympy.Rational(7661, 180000),
-                sympy.Rational(71, 3000),
+                frac(168899, 1350000),
+                frac(7661, 180000),
+                frac(71, 3000),
                 ])
-            B = mp.lu_solve(A, b)
+            B = linear_solve(A, b)
 
             sqrt19 = sqrt(19)
 
@@ -124,15 +125,14 @@ class Albrecht(object):
 
             # The values are solutions of
             # 11025*x^3 - 19020*x^2 + 9370*x - 1212 = 0
-            sigma2 = mp.polyroots([11025, -19020, 9370, -1212])
-
+            sigma2 = roots([11025, -19020, 9370, -1212])
             A = numpy.vander(sigma2, increasing=True).T
             b = numpy.array([
                 frac(1432433, 18849024),
                 frac(1075, 31104),
                 frac(521, 25920),
                 ])
-            B = mp.lu_solve(A, b)
+            B = linear_solve(A, b)
 
             B0 = frac(2615, 43632)
             C = frac(16807, 933120)
@@ -165,18 +165,15 @@ class Albrecht(object):
 
             # The values are solutions of
             # 4960228*x^4 - 10267740*x^3 + 6746490*x^2 - 1476540*x + 70425 = 0
-            sigma2 = mp.polyroots([
-                4960228, -10267740, 6746490, -1476540, 70425
-                ])
-
+            sigma2 = roots([4960228, -10267740, 6746490, -1476540, 70425])
             A = numpy.vander(sigma2, increasing=True).T
             b = numpy.array([
-                sympy.Rational(57719, 675000),
-                sympy.Rational(9427, 270000),
-                sympy.Rational(193, 9000),
-                sympy.Rational(113, 7200),
+                frac(57719, 675000),
+                frac(9427, 270000),
+                frac(193, 9000),
+                frac(113, 7200),
                 ])
-            ws = mp.lu_solve(A, b)
+            ws = linear_solve(A, b)
 
             data = [
                 (ws[0], sqrt(sigma2[0]) * s),
@@ -205,18 +202,17 @@ class Albrecht(object):
             # The values are solutions of
             # 160901628*x^4 - 364759920*x^3 + 274856190*x^2 - 76570340*x
             # + 6054195 = 0
-            sigma2 = mp.polyroots([
+            sigma2 = roots([
                 160901628, -364759920, 274856190, -76570340, 6054195
                 ])
-
             A = numpy.vander(sigma2, increasing=True).T
             b = numpy.array([
-                sympy.Rational(121827491812, 1802182496625),
-                sympy.Rational(48541, 1666980),
-                sympy.Rational(977, 55566),
-                sympy.Rational(671, 52920),
+                frac(121827491812, 1802182496625),
+                frac(48541, 1666980),
+                frac(977, 55566),
+                frac(671, 52920),
                 ])
-            ws = mp.lu_solve(A, b)
+            ws = linear_solve(A, b)
 
             data = [
                 (m0, z(2)),
