@@ -36,9 +36,8 @@ def plot(scheme, show_axes=False):
 
 
 def integrate(f, center, radius, rule, dot=numpy.dot):
-    flt = numpy.vectorize(float)
     center = numpy.array(center)
-    rr = numpy.multiply.outer(radius, flt(rule.points))
+    rr = numpy.multiply.outer(radius, rule.points)
     rr = numpy.swapaxes(rr, 0, -2)
     ff = numpy.array(f((rr + center).T))
-    return radius * dot(ff, flt(rule.weights))
+    return radius * dot(ff, rule.weights)
