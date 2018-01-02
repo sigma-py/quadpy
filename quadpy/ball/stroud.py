@@ -77,15 +77,14 @@ class Stroud(object):
             s = outer3(rho, vsqrt(1 - u**2), v)
             t = outer3(rho, u, 4 * [1])
 
-            data = []
-            for i in range(4):
-                for j in range(4):
-                    for k in range(4):
-                        data.append((
-                            (A[i]*B[j]*C[k]), numpy.array([[
-                                r[i][j][k], s[i][j][k], t[i][j][k],
-                                ]])
-                            ))
+            data = [(
+                (A[i]*B[j]*C[k]),
+                numpy.array([[r[i][j][k], s[i][j][k], t[i][j][k]]])
+                )
+                for i in range(4)
+                for j in range(4)
+                for k in range(4)
+                ]
 
             self.points, self.weights = untangle(data)
         else:
