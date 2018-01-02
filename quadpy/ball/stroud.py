@@ -3,7 +3,7 @@
 from __future__ import division
 
 import numpy
-from sympy import sqrt, pi
+import sympy
 
 from .ditkin import Ditkin
 from .hammer_stroud import HammerStroud
@@ -20,7 +20,10 @@ class Stroud(object):
     Prentice Hall, 1971.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, index):
+    def __init__(self, index, symbolic=True):
+        pi = sympy.pi if symbolic else numpy.pi
+        sqrt = sympy.sqrt if symbolic else numpy.sqrt
+
         if index == 'S3 3-1':
             self.set_data(HammerStroud('11-3'))
         elif index == 'S3 5-1':
@@ -138,7 +141,8 @@ class Stroud(object):
                 7.618126780737085e-02,
                 ])
 
-            spherical_scheme = sphere_stroud.Stroud('U3 14-1')
+            spherical_scheme = \
+                sphere_stroud.Stroud('U3 14-1', symbolic=False)
             v = spherical_scheme.points
             B = spherical_scheme.weights
 
@@ -149,7 +153,7 @@ class Stroud(object):
                 ]
 
             self.points, self.weights = untangle(data)
-            self.weights *= 4.0 * numpy.pi
+            self.weights *= 4 * numpy.pi
 
         return
 
