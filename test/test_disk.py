@@ -9,7 +9,7 @@ from helpers import check_degree
 
 @pytest.mark.parametrize(
     'scheme,tol',
-    [(quadpy.disk.Albrecht(k), 1.0e-14) for k in range(1, 9)]
+    [(quadpy.disk.Albrecht(k, symbolic=False), 1.0e-14) for k in range(1, 9)]
     + [(quadpy.disk.CoolsHaegemans(k), 1.0e-14) for k in range(1, 4)]
     + [(quadpy.disk.CoolsKim(k), 1.0e-14) for k in range(1, 4)]
     + [(quadpy.disk.HammerStroud(k), 1.0e-14) for k in [

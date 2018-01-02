@@ -2,7 +2,7 @@
 #
 import numpy
 from mpmath import mp
-from sympy import sin, cos, pi, Rational as fr, sqrt
+import sympy
 
 from ..helpers import untangle, z, fsd, pm
 
@@ -15,51 +15,50 @@ class Albrecht(object):
     <https://doi.org/10.1002/zamm.19600401014>.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, index):
+    def __init__(self, index, symbolic=True):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        pi = sympy.pi if symbolic else numpy.pi
+        cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
+        sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+        pm_ = numpy.array([+1, -1])
+
+        self.name = 'Albrecht({})'.format(index)
+
         if index == 1:
             self.degree = 3
 
-            t = numpy.column_stack([
-                [cos((2*k+1)*pi / 4) for k in range(4)],
-                [sin((2*k+1)*pi / 4) for k in range(4)],
-                ])
+            alpha = (2*numpy.arange(4)+1)*pi / 4
+            t = numpy.array([cos(alpha), sin(alpha)]).T
 
             data = [
-                (fr(1, 4), sqrt(fr(1, 2)) * t),
+                (frac(1, 4), sqrt(frac(1, 2)) * t),
                 ]
         elif index == 2:
             self.degree = 5
 
-            t = numpy.array([
-                [cos((2*k+1)*pi / 6) for k in range(6)],
-                [sin((2*k+1)*pi / 6) for k in range(6)],
-                ]).T
+            alpha = (2*numpy.arange(6)+1)*pi / 6
+            t = numpy.array([cos(alpha), sin(alpha)]).T
 
             data = [
-                (fr(1, 4), z(2)),
-                (fr(1, 8), sqrt(fr(2, 3)) * t),
+                (frac(1, 4), z(2)),
+                (frac(1, 8), sqrt(frac(2, 3)) * t),
                 ]
         elif index == 3:
             self.degree = 7
 
-            s = numpy.column_stack([
-                [cos(2*k*pi / 4) for k in range(4)],
-                [sin(2*k*pi / 4) for k in range(4)],
-                ])
-            t = numpy.column_stack([
-                [cos((2*k+1)*pi / 4) for k in range(4)],
-                [sin((2*k+1)*pi / 4) for k in range(4)],
-                ])
+            alpha = 2*numpy.arange(4)*pi / 4
+            s = numpy.array([cos(alpha), sin(alpha)]).T
+
+            alpha = (2*numpy.arange(4)+1)*pi / 4
+            t = numpy.array([cos(alpha), sin(alpha)]).T
 
             sqrt29 = sqrt(29)
-            a1, a2 = [(551 + pm_ * 41 * sqrt29) / 6264 for pm_ in [+1, -1]]
-            rho1, rho2 = [
-                sqrt((27 - pm_ * 3 * sqrt29) / 52)
-                for pm_ in [+1, -1]
-                ]
+            a1, a2 = (551 + pm_ * 41 * sqrt29) / 6264
+            rho1, rho2 = sqrt((27 - pm_ * 3 * sqrt29) / 52)
 
             data = [
-                (fr(2, 27), sqrt(fr(3, 4)) * t),
+                (frac(2, 27), sqrt(frac(3, 4)) * t),
                 (a1, rho1 * s),
                 (a2, rho2 * s),
                 ]
@@ -67,33 +66,23 @@ class Albrecht(object):
             self.degree = 9
 
             sqrt111 = sqrt(111)
-            rho1, rho2 = [
-                sqrt((96 - pm_ * 4*sqrt111) / 155)
-                for pm_ in [+1, -1]
-                ]
+            rho1, rho2 = sqrt((96 - pm_ * 4*sqrt(111)) / 155)
 
-            s = numpy.column_stack([
-                [cos(2*k*pi / 6) for k in range(6)],
-                [sin(2*k*pi / 6) for k in range(6)],
-                ])
+            alpha = 2*numpy.arange(6)*pi / 6
+            s = numpy.array([cos(alpha), sin(alpha)]).T
 
-            t = numpy.column_stack([
-                [cos((2*k+1)*pi / 6) for k in range(6)],
-                [sin((2*k+1)*pi / 6) for k in range(6)],
-                ])
+            alpha = (2*numpy.arange(6)+1)*pi / 6
+            t = numpy.array([cos(alpha), sin(alpha)]).T
 
-            B0 = fr(251, 2304)
-            B1, B2 = [
-                (110297 + pm_ * 5713*sqrt111) / 2045952
-                for pm_ in [+1, -1]
-                ]
-            C = fr(125, 3072)
+            B0 = frac(251, 2304)
+            B1, B2 = (110297 + pm_ * 5713*sqrt111) / 2045952
+            C = frac(125, 3072)
 
             data = [
                 (B0, z(2)),
                 (B1, rho1 * s),
                 (B2, rho2 * s),
-                (C, sqrt(fr(4, 5)) * t),
+                (C, sqrt(frac(4, 5)) * t),
                 ]
         elif index == 5:
             self.degree = 11
@@ -104,26 +93,23 @@ class Albrecht(object):
 
             A = numpy.vander(sigma2, increasing=True).T
             b = numpy.array([
-                fr(168899, 1350000),
-                fr(7661, 180000),
-                fr(71, 3000),
+                sympy.Rational(168899, 1350000),
+                sympy.Rational(7661, 180000),
+                sympy.Rational(71, 3000),
                 ])
             B = mp.lu_solve(A, b)
 
             sqrt19 = sqrt(19)
 
             # ERR Stroud falsely lists sqrt(10) for s1.
-            s1, s2 = [sqrt((125 - pm_ * 10*sqrt19) / 366) for pm_ in [+1, -1]]
+            s1, s2 = sqrt((125 - pm_ * 10*sqrt19) / 366)
 
             # ERR Stroud falsely lists 749489_3_.0 instead of 749489_2_.0
-            C1, C2 = [
-                (7494892 + pm_ * 1053263*sqrt19) / 205200000
-                for pm_ in [+1, -1]
-                ]
-            D = fr(81, 3125)
+            C1, C2 = (7494892 + pm_ * 1053263*sqrt19) / 205200000
+            D = frac(81, 3125)
 
-            u = sqrt(fr(5, 6)) * cos(pi/8)
-            v = sqrt(fr(5, 6)) * sin(pi/8)
+            u = sqrt(frac(5, 6)) * cos(pi/8)
+            v = sqrt(frac(5, 6)) * sin(pi/8)
 
             data = [
                 (B[0], fsd(2, (sqrt(sigma2[0]), 1))),
@@ -142,51 +128,40 @@ class Albrecht(object):
 
             A = numpy.vander(sigma2, increasing=True).T
             b = numpy.array([
-                fr(1432433, 18849024),
-                fr(1075, 31104),
-                fr(521, 25920),
+                frac(1432433, 18849024),
+                frac(1075, 31104),
+                frac(521, 25920),
                 ])
             B = mp.lu_solve(A, b)
 
-            B0 = fr(2615, 43632)
-            C = fr(16807, 933120)
+            B0 = frac(2615, 43632)
+            C = frac(16807, 933120)
 
-            rs = numpy.column_stack([
-                [cos(2*k*pi / 10) for k in range(10)],
-                [sin(2*k*pi / 10) for k in range(10)],
-                ])
+            alpha = 2*numpy.arange(10)*pi / 10
+            rs = numpy.array([cos(alpha), sin(alpha)]).T
 
-            uv = numpy.column_stack([
-                [cos((2*k+1)*pi / 10) for k in range(10)],
-                [sin((2*k+1)*pi / 10) for k in range(10)],
-                ])
+            alpha = (2*numpy.arange(10)+1)*pi / 10
+            uv = numpy.array([cos(alpha), sin(alpha)]).T
 
             data = [
                 (B0, z(2)),
                 (B[0], sqrt(sigma2[0])*rs),
                 (B[1], sqrt(sigma2[1])*rs),
                 (B[2], sqrt(sigma2[2])*rs),
-                (C, sqrt(fr(6, 7)) * uv)
+                (C, sqrt(frac(6, 7)) * uv)
                 ]
         elif index == 7:
             self.degree = 15
 
-            s = numpy.column_stack([
-                [cos(2*k*pi / 8) for k in range(8)],
-                [sin(2*k*pi / 8) for k in range(8)],
-                ])
+            alpha = 2*numpy.arange(8)*pi / 8
+            s = numpy.array([cos(alpha), sin(alpha)]).T
 
-            t = numpy.column_stack([
-                [cos((2*k+1)*pi / 8) for k in range(8)],
-                [sin((2*k+1)*pi / 8) for k in range(8)],
-                ])
+            alpha = (2*numpy.arange(8)+1)*pi / 8
+            t = numpy.array([cos(alpha), sin(alpha)]).T
 
             sqrt21 = sqrt(21)
-            wt1, wt2 = [
-                (4998 + pm_ * 343 * sqrt21) / 253125
-                for pm_ in [+1, -1]
-                ]
-            tau1, tau2 = [sqrt((21 - pm_*sqrt21) / 28) for pm_ in [+1, -1]]
+            wt1, wt2 = (4998 + pm_ * 343 * sqrt21) / 253125
+            tau1, tau2 = sqrt((21 - pm_*sqrt21) / 28)
 
             # The values are solutions of
             # 4960228*x^4 - 10267740*x^3 + 6746490*x^2 - 1476540*x + 70425 = 0
@@ -196,10 +171,10 @@ class Albrecht(object):
 
             A = numpy.vander(sigma2, increasing=True).T
             b = numpy.array([
-                fr(57719, 675000),
-                fr(9427, 270000),
-                fr(193, 9000),
-                fr(113, 7200),
+                sympy.Rational(57719, 675000),
+                sympy.Rational(9427, 270000),
+                sympy.Rational(193, 9000),
+                sympy.Rational(113, 7200),
                 ])
             ws = mp.lu_solve(A, b)
 
@@ -215,21 +190,17 @@ class Albrecht(object):
             assert index == 8
             self.degree = 17
 
-            s = numpy.column_stack([
-                [cos(2*k*pi / 10) for k in range(10)],
-                [sin(2*k*pi / 10) for k in range(10)],
-                ])
+            alpha = 2*numpy.arange(10)*pi / 10
+            s = numpy.array([cos(alpha), sin(alpha)]).T
 
-            t = numpy.column_stack([
-                [cos((2*k+1)*pi / 10) for k in range(10)],
-                [sin((2*k+1)*pi / 10) for k in range(10)],
-                ])
+            alpha = (2*numpy.arange(10)+1)*pi / 10
+            t = numpy.array([cos(alpha), sin(alpha)]).T
 
-            m0 = fr(496439663, 13349499975)
+            m0 = frac(496439663, 13349499975)
 
             sqrt7 = sqrt(7)
-            wt1, wt2 = [(125504 + pm_*16054*sqrt7)/8751645 for pm_ in [+1, -1]]
-            tau1, tau2 = [sqrt((14 - pm_*sqrt7) / 18) for pm_ in [+1, -1]]
+            wt1, wt2 = (125504 + pm_*16054*sqrt7) / 8751645
+            tau1, tau2 = sqrt((14 - pm_*sqrt7) / 18)
 
             # The values are solutions of
             # 160901628*x^4 - 364759920*x^3 + 274856190*x^2 - 76570340*x
@@ -240,10 +211,10 @@ class Albrecht(object):
 
             A = numpy.vander(sigma2, increasing=True).T
             b = numpy.array([
-                fr(121827491812, 1802182496625),
-                fr(48541, 1666980),
-                fr(977, 55566),
-                fr(671, 52920),
+                sympy.Rational(121827491812, 1802182496625),
+                sympy.Rational(48541, 1666980),
+                sympy.Rational(977, 55566),
+                sympy.Rational(671, 52920),
                 ])
             ws = mp.lu_solve(A, b)
 
