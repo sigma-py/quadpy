@@ -110,5 +110,5 @@ class Stroud1967a(object):
                 ]
 
         self.points, self.weights = untangle(data)
-        self.weights *= float(volume_unit_ball(n))
+        self.weights *= volume_unit_ball(n, symbolic=False)
         return

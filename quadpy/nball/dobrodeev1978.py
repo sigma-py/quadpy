@@ -23,7 +23,7 @@ class Dobrodeev1978(object):
     dimensionalities 2 <= n <= 20.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, n):
+    def __init__(self, n, symbolic=True):
         assert 2 <= n <= 20
 
         self.name = 'Dobrodeev1978'
@@ -52,12 +52,23 @@ class Dobrodeev1978(object):
             20: ('I', 20, 1, 3),
             }
 
-        I0 = integrate_monomial_over_unit_nball(n * [0])
-        I2 = integrate_monomial_over_unit_nball([2] + (n-1) * [0])
-        I22 = integrate_monomial_over_unit_nball([2, 2] + (n-2) * [0])
-        I4 = integrate_monomial_over_unit_nball([4] + (n-1) * [0])
+        I0 = integrate_monomial_over_unit_nball(n * [0], symbolic=symbolic)
+        I2 = integrate_monomial_over_unit_nball(
+                [2] + (n-1) * [0],
+                symbolic=symbolic
+                )
+        I22 = integrate_monomial_over_unit_nball(
+                [2, 2] + (n-2) * [0],
+                symbolic=symbolic
+                )
+        I4 = integrate_monomial_over_unit_nball(
+                [4] + (n-1) * [0],
+                symbolic=symbolic
+                )
         pm_type, i, j, k = dim_config[n]
-        G, a, b, c = compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k)
+        G, a, b, c = compute_dobrodeev(
+            n, I0, I2, I22, I4, pm_type, i, j, k, symbolic=symbolic
+            )
 
         data = [
             (G, fsd(n, (a, i))),
