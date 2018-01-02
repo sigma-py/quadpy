@@ -52,7 +52,7 @@ class Stroud1969(object):
 
         # TODO build the equation system from orthogonal polynomials
         b = [
-            integrate_monomial_over_unit_nsphere([k] + (n-1)*[0])
+            integrate_monomial_over_unit_nsphere([k] + (n-1)*[0], symbolic)
             for k in k_range
             ]
         A = [[
