@@ -16,7 +16,7 @@ class Stroud(object):
     Prentice Hall, 1971.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, index):
+    def __init__(self, index, symbolic=True):
         if index == 'U3 3-1':
             self.set_data(McLaren(1))
         elif index == 'U3 5-1':
@@ -55,7 +55,7 @@ class Stroud(object):
             self.set_data(McLaren(9))
         else:
             assert index == 'U3 14-1', 'Illegal index {}.'.format(index)
-            self.set_data(McLaren(10))
+            self.set_data(McLaren(10, symbolic=symbolic))
         return
 
     def set_data(self, scheme):
