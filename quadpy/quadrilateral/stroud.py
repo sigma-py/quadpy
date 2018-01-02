@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 import warnings
 
 import numpy
-from sympy import Rational as fr, sqrt
+import sympy
 
 from .albrecht_collatz import AlbrechtCollatz
 from .burnside import Burnside
@@ -26,71 +28,76 @@ class Stroud(object):
     Approximate Calculation of Multiple Integrals,
     Prentice Hall, 1971.
     '''
-    def __init__(self, index):
+    def __init__(self, index, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
         reference_volume = 4
         if index == 'C2 1-1':
             # Product trapezoidal
             self.degree = 1
-            self.weights = reference_volume * numpy.full(4, fr(1, 4))
+            self.weights = reference_volume * numpy.full(4, frac(1, 4))
             self.points = _symm_s(1)
         elif index == 'C2 1-2':
-            self.set_data(Miller())
+            self.set_data(Miller(symbolic))
         elif index == 'C2 3-1':
             # Product Gauss
             self.degree = 3
-            self.weights = reference_volume * numpy.full(4, fr(1, 4))
+            self.weights = reference_volume * numpy.full(4, frac(1, 4))
             # ERR misprint in Stroud: sqrt(1/3) vs 1/3
-            self.points = _symm_s(sqrt(fr(1, 3)))
+            self.points = _symm_s(sqrt(frac(1, 3)))
         elif index == 'C2 3-2':
-            self.set_data(ncube.Ewing(2))
+            self.set_data(ncube.Ewing(2, symbolic))
         elif index == 'C2 3-3':
             # product Simpson
-            self.set_data(ncube.Stroud(2, 'Cn 3-6'))
+            self.set_data(ncube.Stroud(2, 'Cn 3-6', symbolic))
         elif index == 'C2 3-4':
-            self.set_data(AlbrechtCollatz(1))
+            self.set_data(AlbrechtCollatz(1, symbolic))
         elif index == 'C2 3-5':
-            self.set_data(Irwin(1))
+            self.set_data(Irwin(1, symbolic))
         elif index == 'C2 5-1':
-            self.set_data(AlbrechtCollatz(2))
+            self.set_data(AlbrechtCollatz(2, symbolic))
         elif index == 'C2 5-2':
-            self.set_data(AlbrechtCollatz(3))
+            self.set_data(AlbrechtCollatz(3, symbolic))
         elif index == 'C2 5-3':
-            self.set_data(Burnside())
+            self.set_data(Burnside(symbolic))
         elif index == 'C2 5-4':
             # product Gauss
             self.degree = 5
-            r = sqrt(fr(3, 5))
+            r = sqrt(frac(3, 5))
             data = [
-                (fr(16, 81), _z()),
-                (fr(10, 81), _symm_r_0(r)),
-                (fr(25, 324), _symm_s(r)),
+                (frac(16, 81), _z()),
+                (frac(10, 81), _symm_r_0(r)),
+                (frac(25, 324), _symm_s(r)),
                 ]
             self.points, self.weights = untangle(data)
             self.weights *= reference_volume
         elif index == 'C2 5-5':
             self.set_data(Tyler(1))
         elif index == 'C2 5-6':
-            self.set_data(AlbrechtCollatz(4))
+            self.set_data(AlbrechtCollatz(4, symbolic))
         elif index == 'C2 5-7':
-            self.set_data(Irwin(2))
+            self.set_data(Irwin(2, symbolic))
         elif index == 'C2 7-1':
-            self.set_data(Tyler(2))
+            self.set_data(Tyler(2, symbolic))
         elif index == 'C2 7-2':
-            self.set_data(Phillips())
+            self.set_data(Phillips(symbolic))
         elif index == 'C2 7-3':
-            self.set_data(Maxwell())
+            self.set_data(Maxwell(symbolic))
         elif index == 'C2 7-4':
             # product Gauss
             # TODO fix
             warnings.warn('Formula {} only has degree 1!'.format(index))
             self.degree = 1
 
-            r, s = [sqrt((15 - i*2*sqrt(30)) / 35) for i in [+1, -1]]
+            pm = numpy.array([+1, -1])
 
-            B1, B2 = [(59 + i*6*sqrt(30)) / 864 for i in [+1, -1]]
-            B3 = fr(49, 864)
+            r, s = sqrt((15 - pm*2*sqrt(30)) / 35)
 
-            r = sqrt(fr(3, 5))
+            B1, B2 = (59 + pm*6*sqrt(30)) / 864
+            B3 = frac(49, 864)
+
+            r = sqrt(frac(3, 5))
             data = [
                 (B1, _symm_s(r)),
                 (B2, _symm_s(s)),
@@ -99,9 +106,9 @@ class Stroud(object):
             self.points, self.weights = untangle(data)
             self.weights *= reference_volume
         elif index == 'C2 7-5':
-            self.set_data(Tyler(3))
+            self.set_data(Tyler(3, symbolic))
         elif index == 'C2 7-6':
-            self.set_data(Meister())
+            self.set_data(Meister(symbolic))
         elif index == 'C2 9-1':
             self.set_data(RabinowitzRichter(1))
         elif index == 'C2 11-1':

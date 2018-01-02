@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import sqrt, Rational as fr
+from __future__ import division
+
+import numpy
+import sympy
 
 from .helpers import _symm_r_0, _pm2
 from ..helpers import untangle
@@ -17,15 +20,19 @@ class Phillips(object):
     Gaussian-type quadrature formulae are derived for a rectangular region of
     two or three dimensions.
     '''
-    def __init__(self):
+    def __init__(self, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+        pm = numpy.array([+1, -1])
+
         self.name = 'Phillips'
 
         c = 3*sqrt(385)
-        r, s = [sqrt((105 + i*c) / 140) for i in [+1, -1]]
-        t = sqrt(fr(3, 5))
+        r, s = sqrt((105 + pm*c) / 140)
+        t = sqrt(frac(3, 5))
 
-        B1, B2 = [(77 - i*c) / 891 for i in [+1, -1]]
-        B3 = fr(25, 324)
+        B1, B2 = (77 - pm*c) / 891
+        B3 = frac(25, 324)
 
         self.degree = 7
         data = [
