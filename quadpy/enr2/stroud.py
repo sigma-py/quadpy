@@ -28,15 +28,15 @@ class Stroud(object):
         self.name = 'Stroud_Enr2({})'.format(index)
         self.dim = n
         if index == '3-1':
-            self.set_data(StroudSecrest(n, 'I'))
+            self.set_data(StroudSecrest(n, 'I', symbolic=symbolic))
         elif index == '3-2':
-            self.set_data(StroudSecrest(n, 'III'))
+            self.set_data(StroudSecrest(n, 'III', symbolic=symbolic))
         elif index == '5-1a':
             self.set_data(Stroud1967a(n, 'a'))
         elif index == '5-1b':
             self.set_data(Stroud1967a(n, 'b'))
         elif index == '5-2':
-            self.set_data(StroudSecrest(n, 'IV'))
+            self.set_data(StroudSecrest(n, 'IV', symbolic=symbolic))
         elif index == '5-3':
             self.degree = 5
 
@@ -108,11 +108,11 @@ class Stroud(object):
             self.points, self.weights = untangle(data)
             self.weights *= sqrt(pi)**n
         elif index == '7-1a':
-            self.set_data(Stroud1967b('2a', n))
+            self.set_data(Stroud1967b('2a', n, symbolic=symbolic))
         elif index == '7-1b':
-            self.set_data(Stroud1967b('2b', n))
+            self.set_data(Stroud1967b('2b', n, symbolic=symbolic))
         elif index == '7-2':
-            self.set_data(Stroud1967b('4', n))
+            self.set_data(Stroud1967b('4', n, symbolic=symbolic))
         elif index == '7-3a':
             self.set_data(Stenger(n, 7, 'a'))
         elif index == '7-3b':

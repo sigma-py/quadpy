@@ -74,7 +74,7 @@ class Stroud1967b(object):
                 for p_m in [+1, -1]
                 ]
 
-            s = nsphere.Stroud1967(n)
+            s = nsphere.Stroud1967(n, symbolic=symbolic)
 
             self.points = numpy.concatenate([
                 r1 * s.points,
