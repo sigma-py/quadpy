@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-import math
 import numpy
 
 from .gauss_legendre import GaussLegendre
@@ -225,14 +224,14 @@ def _get_weights(pts):
     # L has degree n-1, so k needs to be n/2 if n is even, and (n+1)/2 if n is
     # odd.
     k = (n // 2) - 1 if n % 2 == 0 else (n+1) // 2
-    return numpy.array([
+    out = numpy.array([
         integrate(
             lambda x, i=i: L(i, x[0]),
             numpy.array([[-1.0], [1.0]]),
-            GaussLegendre(k),
-            sumfun=lambda a: numpy.array([math.fsum(a)])
-            )[0]
+            GaussLegendre(k)
+            )
         /
         numpy.prod([(pts[i] - pts[j]) for j in range(n) if j != i])
         for i in range(n)
         ])
+    return out

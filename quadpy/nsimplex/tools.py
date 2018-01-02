@@ -3,14 +3,12 @@
 import math
 import numpy
 
-from .. import helpers
 
-
-def integrate(f, simplex, scheme, sumfun=helpers.kahan_sum):
+def integrate(f, simplex, scheme, dot=numpy.dot):
     flt = numpy.vectorize(float)
     x = transform(flt(scheme.points).T, simplex.T)
     vol = get_vol(simplex)
-    return sumfun(numpy.moveaxis(flt(scheme.weights) * f(x), -1, 0) * vol)
+    return vol * dot(f(x), flt(scheme.weights))
 
 
 def transform(xi, simplex):

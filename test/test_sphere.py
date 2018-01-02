@@ -87,7 +87,7 @@ def test_scheme_cartesian(scheme, tol):
     vals = quadpy.sphere.integrate(
         sph_tree_cartesian,
         center=numpy.array([0.0, 0.0, 0.0]),
-        radius=1.0, rule=scheme, sumfun=numpy.sum
+        radius=1.0, rule=scheme
         )
 
     # The exact value is sqrt(4*pi) for the Y_0^0, and 0 otherwise.
@@ -144,9 +144,7 @@ def test_scheme_spherical(scheme, tol):
             scheme.degree+1, polar, azimuthal, normalization='quantum mechanic'
             ))
 
-    vals = quadpy.sphere.integrate_spherical(
-        sph_tree, rule=scheme, sumfun=numpy.sum
-        )
+    vals = quadpy.sphere.integrate_spherical(sph_tree, rule=scheme)
 
     # The exact value is sqrt(4*pi) for the Y_0^0, and 0 otherwise.
     err = vals

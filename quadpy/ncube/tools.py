@@ -83,11 +83,11 @@ def get_detJ(xi, cube):
     return out
 
 
-def integrate(f, ncube, scheme, sumfun=helpers.kahan_sum):
+def integrate(f, ncube, scheme, dot=numpy.dot):
     flt = numpy.vectorize(float, otypes=[float])
     x = transform(flt(scheme.points).T, ncube).T
     detJ = get_detJ(flt(scheme.points).T, ncube)
-    return sumfun(flt(scheme.weights) * f(x) * abs(detJ), axis=-1)
+    return dot(f(x)*abs(detJ), flt(scheme.weights))
 
 
 def ncube_points(*xyz):

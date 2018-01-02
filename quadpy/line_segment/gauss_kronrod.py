@@ -5,7 +5,6 @@ import math
 import numpy
 import orthopy
 
-from .. import helpers
 from .gauss_legendre import GaussLegendre
 
 
@@ -105,17 +104,16 @@ class GaussKronrod(object):
 
 
 # pylint: disable=too-many-locals
-def _gauss_kronrod_integrate(k, f, interval, sumfun=helpers.kahan_sum):
+def _gauss_kronrod_integrate(k, f, interval, dot=numpy.dot):
     def _scale_points(points, interval):
         alpha = 0.5 * (interval[1] - interval[0])
         beta = 0.5 * (interval[0] + interval[1])
         return (numpy.multiply.outer(points, alpha) + beta).T
 
-    def _integrate(values, weights, interval_length, sumfun=helpers.kahan_sum):
+    def _integrate(values, weights, interval_length, dot):
         '''Integration with point values explicitly specified.
         '''
-        out = sumfun(weights * values, axis=-1)
-        return 0.5 * interval_length * out
+        return 0.5 * interval_length * dot(values, weights)
 
     # Compute the integral estimations according to Gauss and Gauss-Kronrod,
     # sharing the function evaluations
@@ -125,8 +123,8 @@ def _gauss_kronrod_integrate(k, f, interval, sumfun=helpers.kahan_sum):
     point_vals_g = point_vals_gk[..., 1::2]
     alpha = abs(interval[1] - interval[0])
     val_gauss_kronrod = \
-        _integrate(point_vals_gk, scheme.weights, alpha, sumfun=sumfun)
-    val_gauss = _integrate(point_vals_g, gauss_weights, alpha, sumfun=sumfun)
+        _integrate(point_vals_gk, scheme.weights, alpha, dot=dot)
+    val_gauss = _integrate(point_vals_g, gauss_weights, alpha, dot=dot)
 
     # Get an error estimate. According to
     #
@@ -140,7 +138,7 @@ def _gauss_kronrod_integrate(k, f, interval, sumfun=helpers.kahan_sum):
     # the classicial QUADPACK still compares favorably with other approaches.
     average = val_gauss_kronrod / alpha
     point_vals_abs = abs(point_vals_gk - average[..., None])
-    I_tilde = _integrate(point_vals_abs, scheme.weights, alpha, sumfun=sumfun)
+    I_tilde = _integrate(point_vals_abs, scheme.weights, alpha, dot=dot)
     # The exponent 1.5 is chosen such that (200*x)**1.5 is approximately x at
     # 1.0e-6, the machine precision on IEEE 754 32-bit floating point
     # arithmentic. This could be adapted to
