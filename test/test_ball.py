@@ -9,10 +9,10 @@ from helpers import check_degree
 
 @pytest.mark.parametrize(
     'scheme,tol',
-    [(quadpy.ball.HammerStroud(k), 1.0e-14) for k in [
+    [(quadpy.ball.HammerStroud(k, symbolic=False), 1.0e-14) for k in [
         '11-3', '12-3', '14-3a', '14-3b', '15-3a', '15-3b',
         ]]
-    + [(quadpy.ball.Stroud(k), 1.0e-14) for k in [
+    + [(quadpy.ball.Stroud(k, symbolic=False), 1.0e-14) for k in [
         'S3 3-1',
         'S3 5-1', 'S3 5-2',
         'S3 7-1a', 'S3 7-1b', 'S3 7-2', 'S3 7-3', 'S3 7-4',

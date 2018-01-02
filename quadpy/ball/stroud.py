@@ -22,22 +22,22 @@ class Stroud(object):
     # pylint: disable=too-many-locals
     def __init__(self, index, symbolic=True):
         pi = sympy.pi if symbolic else numpy.pi
-        sqrt = sympy.sqrt if symbolic else numpy.sqrt
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
         if index == 'S3 3-1':
-            self.set_data(HammerStroud('11-3'))
+            self.set_data(HammerStroud('11-3', symbolic=symbolic))
         elif index == 'S3 5-1':
-            self.set_data(Ditkin(1))
+            self.set_data(Ditkin(1, symbolic=symbolic))
         elif index == 'S3 5-2':
-            self.set_data(Ditkin(2))
+            self.set_data(Ditkin(2, symbolic=symbolic))
         elif index == 'S3 7-1a':
-            self.set_data(HammerStroud('15-3a'))
+            self.set_data(HammerStroud('15-3a', symbolic=symbolic))
         elif index == 'S3 7-1b':
-            self.set_data(HammerStroud('15-3b'))
+            self.set_data(HammerStroud('15-3b', symbolic=symbolic))
         elif index == 'S3 7-2':
-            self.set_data(Mysovskih())
+            self.set_data(Mysovskih(symbolic=symbolic))
         elif index == 'S3 7-3':
-            self.set_data(Ditkin(3))
+            self.set_data(Ditkin(3, symbolic=symbolic))
         elif index == 'S3 7-4':
             # Spherical product Gauss formula.
             self.degree = 7
@@ -45,24 +45,26 @@ class Stroud(object):
             # Stroud only gives decimals, sophisticated guesswork gives the
             # analytical expressions.
 
+            pm = numpy.array([+1, -1])
+
             # 0.9061798459, 0.5384691101
-            alpha, beta = [sqrt((35 + t * 2*sqrt(70)) / 63) for t in [+1, -1]]
+            alpha, beta = sqrt((35 + pm * 2*sqrt(70)) / 63)
             rho = numpy.array([-alpha, -beta, beta, alpha])
 
             # 0.8611363116, 0.3399810436
-            alpha, beta = [sqrt((15 + t * 2*sqrt(30)) / 35) for t in [+1, -1]]
+            alpha, beta = sqrt((15 + pm * 2*sqrt(30)) / 35)
             u = numpy.array([-alpha, -beta, beta, alpha])
 
             # 0.9238795325, 0.3826834324
-            alpha, beta = [sqrt((2 + t * sqrt(2)) / 4) for t in [+1, -1]]
+            alpha, beta = sqrt((2 + pm * sqrt(2)) / 4)
             v = numpy.array([-alpha, -beta, beta, alpha])
 
             # 0.1945553342, 0.1387779991
-            alpha, beta = [(50 + t * sqrt(70)) / 300 for t in [+1, -1]]
+            alpha, beta = (50 + pm * sqrt(70)) / 300
             A = numpy.array([alpha, beta, beta, alpha])
 
             # 0.3478548451, 0.6521451549
-            alpha, beta = [(18 - t * sqrt(30)) / 36 for t in [+1, -1]]
+            alpha, beta = (18 - pm * sqrt(30)) / 36
             B = numpy.array([alpha, beta, beta, alpha])
 
             C = numpy.full(4, pi/4)
@@ -75,9 +77,8 @@ class Stroud(object):
                 '''
                 return numpy.multiply.outer(numpy.multiply.outer(a, b), c)
 
-            vsqrt = numpy.vectorize(sqrt)
-            r = outer3(rho, vsqrt(1 - u**2), vsqrt(1 - v**2))
-            s = outer3(rho, vsqrt(1 - u**2), v)
+            r = outer3(rho, sqrt(1 - u**2), sqrt(1 - v**2))
+            s = outer3(rho, sqrt(1 - u**2), v)
             t = outer3(rho, u, 4 * [1])
 
             data = [(
@@ -128,6 +129,7 @@ class Stroud(object):
             # r = points[-4:]
             # A = weights[-4:]
             # ```
+            # TODO get symbolic expressions here
             r = numpy.array([
                 3.242534234038097e-01,
                 6.133714327005908e-01,
