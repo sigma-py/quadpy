@@ -17,7 +17,7 @@ from quadpy.sphere.helpers import cartesian_to_spherical
 @pytest.mark.parametrize(
     'scheme', [
         quadpy.sphere.Lebedev(3),
-        quadpy.sphere.Stroud('U3 14-1'),
+        quadpy.sphere.Stroud('U3 14-1', symbolic=False),
         ])
 def test_spherical_harmonic(scheme):
     '''Assert the norm of the spherical harmonic
@@ -63,7 +63,7 @@ def test_spherical_harmonic(scheme):
         # TODO reenable
         # 125, 131
         ]]
-    + [(quadpy.sphere.Stroud(k), 1.0e-13) for k in [
+    + [(quadpy.sphere.Stroud(k, symbolic=False), 1.0e-13) for k in [
         'U3 3-1',
         'U3 5-1', 'U3 5-2', 'U3 5-3', 'U3 5-4', 'U3 5-5',
         'U3 7-1', 'U3 7-2',
@@ -125,7 +125,7 @@ def test_scheme_cartesian(scheme, tol):
     + [(quadpy.sphere.Lebedev(degree), 1.0e-11) for degree in [
         3, 5, 7, 9, 11, 13, 15, 17, 19,
         ]]
-    + [(quadpy.sphere.Stroud(k), 1.0e-13) for k in [
+    + [(quadpy.sphere.Stroud(k, symbolic=False), 1.0e-13) for k in [
         'U3 3-1',
         'U3 5-1', 'U3 5-2', 'U3 5-3', 'U3 5-4', 'U3 5-5',
         'U3 7-1', 'U3 7-2',
@@ -178,7 +178,7 @@ def test_show(scheme):
 
 
 if __name__ == '__main__':
-    scheme_ = quadpy.sphere.Stroud('U3 5-2')
+    scheme_ = quadpy.sphere.Stroud('U3 5-2', symbolic=False)
     # test_scheme(scheme_)
     test_scheme_spherical(scheme_, tol=1.0e-7)
     # test_show(scheme_)
