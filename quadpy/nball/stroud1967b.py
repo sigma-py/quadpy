@@ -19,7 +19,7 @@ class Stroud1967b(object):
     <https://doi.org/10.1137/0704004>.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, n, variant, symbolic=True):
+    def __init__(self, n, variant, symbolic=False):
         sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
         self.degree = 7

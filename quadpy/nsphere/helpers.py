@@ -4,7 +4,7 @@ import math
 from sympy import gamma, prod, Rational
 
 
-def integrate_monomial_over_unit_nsphere(alpha, symbolic=True):
+def integrate_monomial_over_unit_nsphere(alpha, symbolic=False):
     '''
     Gerald B. Folland,
     How to Integrate a Polynomial over a Sphere,

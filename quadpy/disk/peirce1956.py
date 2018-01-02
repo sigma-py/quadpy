@@ -16,7 +16,7 @@ class Peirce1956(object):
     <https://books.google.de/books/about/Numerical_integration_over_planar_region.html?id=WR9SAAAAMAAJ&redir_esc=y>.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, index, symbolic=True):
+    def __init__(self, index, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         pi = sympy.pi if symbolic else numpy.pi
         sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt

@@ -16,7 +16,7 @@ class Stroud1967(object):
     SIAM J. Numer. Anal., 4(1), 37–44. (8 pages),
     <https://doi.org/10.1137/0704004>.
     '''
-    def __init__(self, n, symbolic=True):
+    def __init__(self, n, symbolic=False):
         sqrt = sympy.sqrt if symbolic else numpy.sqrt
         frac = sympy.Rational if symbolic else lambda x, y: x/y
 

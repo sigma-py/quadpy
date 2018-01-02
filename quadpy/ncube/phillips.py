@@ -20,7 +20,7 @@ class Phillips(object):
     Gaussian-type formulae are derived for all values of N >= 2.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, n, symbolic=True):
+    def __init__(self, n, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         sqrt = sympy.sqrt if symbolic else numpy.sqrt
 

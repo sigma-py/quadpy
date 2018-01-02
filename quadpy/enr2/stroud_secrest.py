@@ -15,7 +15,7 @@ class StroudSecrest(object):
     Math. Comp. 17 (1963), 105-135,
     <https://doi.org/10.1090/S0025-5718-1963-0161473-0>.
     '''
-    def __init__(self, n, index, symbolic=True):
+    def __init__(self, n, index, symbolic=False):
         sqrt = sympy.sqrt if symbolic else numpy.sqrt
         pi = sympy.pi if symbolic else numpy.pi
         frac = sympy.Rational if symbolic else lambda x, y: x/y

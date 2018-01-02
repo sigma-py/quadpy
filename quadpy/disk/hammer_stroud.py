@@ -18,7 +18,7 @@ class HammerStroud(object):
     <https://doi.org/10.1090/S0025-5718-1958-0102176-6>.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, index, symbolic=True):
+    def __init__(self, index, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         pi = sympy.pi if symbolic else numpy.pi
         sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt

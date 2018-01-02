@@ -17,7 +17,7 @@ class Stroud1957(object):
     Vol. 11, No. 60 (Oct., 1957), pp. 257-261,
     <https://doi.org/10.2307/2001945>.
     '''
-    def __init__(self, n, symbolic=True):
+    def __init__(self, n, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         pi = sympy.pi if symbolic else numpy.pi
         sqrt = sympy.sqrt if symbolic else numpy.sqrt

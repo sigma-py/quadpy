@@ -18,7 +18,7 @@ from ..enr2.stroud_secrest import _nsimplex
 
 def i(n):
     data = [
-        (fr(1, n+1), sqrt(n+1) * _nsimplex(n, symbolic=True))
+        (fr(1, n+1), sqrt(n+1) * _nsimplex(n, symbolic=False))
         ]
     return 2, data
 
