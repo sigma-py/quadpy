@@ -294,7 +294,7 @@ def test_enr2():
     dim = 4
     quadpy.enr2.integrate(
         lambda x: numpy.exp(x[0]),
-        quadpy.enr2.Stroud(dim, '5-2')
+        quadpy.enr2.Stroud(dim, '5-2', symbolic=False)
         )
     return
 
