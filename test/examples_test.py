@@ -6,13 +6,13 @@ def test_circle():
     quadpy.circle.integrate(
         lambda x: numpy.exp(x[0]),
         numpy.array([0.0, 0.3]), 0.7,
-        quadpy.circle.Krylov(3)
+        quadpy.circle.Krylov(3, symbolic=False)
         )
     quadpy.circle.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[0])],
         numpy.array([[1.0, 1.0], [0.0, 0.3], [2.0, 2.0]]),
         [1.0, 0.7, 0.333],
-        quadpy.circle.Krylov(5)
+        quadpy.circle.Krylov(5, symbolic=False)
         )
     return
 
@@ -153,14 +153,14 @@ def test_ball():
     quadpy.ball.integrate(
         lambda x: numpy.exp(x[0]),
         [0.0, 0.0, 0.0], 1.0,
-        quadpy.ball.HammerStroud('14-3a')
+        quadpy.ball.HammerStroud('14-3a', symbolic=False)
         )
 
     quadpy.ball.integrate(
             lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
             numpy.array([[1.0, 1.0, 0.0], [0.0, 0.3, 0.0], [2.0, 2.0, 0.0]]),
             [1.0, 0.7, 0.333],
-            quadpy.ball.HammerStroud('15-3b')
+            quadpy.ball.HammerStroud('15-3b', symbolic=False)
             )
     return
 
