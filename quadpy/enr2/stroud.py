@@ -2,7 +2,8 @@
 #
 from __future__ import division
 
-from sympy import sqrt, pi, Rational as fr
+import numpy
+import sympy
 
 from .stenger import Stenger
 from .stroud1967a import Stroud1967a
@@ -19,7 +20,11 @@ class Stroud(object):
     Prentice Hall, 1971.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, n, index):
+    def __init__(self, n, index, symbolic=True):
+        sqrt = sympy.sqrt if symbolic else numpy.sqrt
+        pi = sympy.pi if symbolic else numpy.pi
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+
         self.name = 'Stroud_Enr2({})'.format(index)
         self.dim = n
         if index == '3-1':
@@ -35,10 +40,10 @@ class Stroud(object):
         elif index == '5-3':
             self.degree = 5
 
-            r = sqrt(fr(n+2, 4))
-            s = sqrt(fr(n+2, 2*(n-2)))
-            A = fr(4, (n+2)**2)
-            B = fr((n-2)**2, 2**n * (n+2)**2)
+            r = sqrt(frac(n+2, 4))
+            s = sqrt(frac(n+2, 2*(n-2)))
+            A = frac(4, (n+2)**2)
+            B = frac((n-2)**2, 2**n * (n+2)**2)
 
             data = [
                 (A, fsd(n, (r, 1))),
@@ -50,16 +55,16 @@ class Stroud(object):
             # spherical product Lobatto
             self.degree = 5
 
-            B0 = fr(2, (n+2))
+            B0 = frac(2, (n+2))
             data = [
                 (B0, [n*[0]]),
                 ]
             for k in range(1, n+1):
-                rk = sqrt(fr(k+2, 2))
-                s = sqrt(fr(1, 2))
+                rk = sqrt(frac(k+2, 2))
+                s = sqrt(frac(1, 2))
                 arr = [rk] + (n-k) * [s]
                 idx = list(range(k-1, n))
-                alpha = fr(2**(k-n), (k+1) * (k+2))
+                alpha = frac(2**(k-n), (k+1) * (k+2))
                 data += [
                     (alpha, pm_array0(n, arr, idx))
                     ]
@@ -74,8 +79,8 @@ class Stroud(object):
             # r is complex-valued for n >= 3
             r = sqrt((n + 2 + p_m * (n-1) * sqrt(2*(n+2))) / (2*n))
             s = sqrt((n + 2 - p_m * sqrt(2*(n+2))) / (2*n))
-            A = fr(2, n+2)
-            B = fr(1, 2**n * (n+2))
+            A = frac(2, n+2)
+            B = frac(1, 2**n * (n+2))
 
             data = [
                 (A, [n*[0]]),
@@ -93,7 +98,7 @@ class Stroud(object):
             r = sqrt((n - sqrt2 + (n-1) * sqrt2n1) / (2*n))
             s = sqrt((n - sqrt2 - sqrt2n1) / (2*n))
             t = sqrt((1 + sqrt2) / 2)
-            A = fr(1, 2**n * (n+1))
+            A = frac(1, 2**n * (n+1))
 
             data = [
                 (A, fsd(n, (r, 1), (s, n-1))),
