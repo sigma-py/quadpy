@@ -5,22 +5,30 @@ Arthur Stroud,
 Approximate Calculation of Multiple Integrals,
 Prentice Hall, 1971.
 '''
+from __future__ import division
+
 import numpy
-from sympy import sqrt, pi, Rational as fr, sin, cos
+import sympy
 
 from . import rabinowitz_richter
 from . import stroud_secrest
 from ..helpers import untangle
 
 
-def _gen4_1():
+def _gen4_1(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
+    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
+    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
+    pi = sympy.pi if symbolic else numpy.pi
+
     pts = 2 * sqrt(5) * numpy.array([
         [cos(2*i*pi/5) for i in range(5)],
         [sin(2*i*pi/5) for i in range(5)],
         ]).T
     data = [
-        (fr(7, 10), numpy.array([[0, 0]])),
-        (fr(3, 50), pts),
+        (frac(7, 10), numpy.array([[0, 0]])),
+        (frac(3, 50), pts),
         ]
     return 4, data
 
@@ -42,10 +50,13 @@ _gen = {
 class Stroud(object):
     keys = _gen.keys()
 
-    def __init__(self, key):
-        self.degree, data = _gen[key][0]()
+    def __init__(self, key, symbolic=False):
+        self.name = 'Stroud_E2r({})'.format(key)
+        self.degree, data = _gen[key][0](symbolic)
         weights_contain_2pi = _gen[key][1]
         self.points, self.weights = untangle(data)
+
+        pi = sympy.pi if symbolic else numpy.pi
         if not weights_contain_2pi:
             self.weights *= 2 * pi
         return
