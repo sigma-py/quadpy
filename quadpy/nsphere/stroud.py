@@ -2,7 +2,8 @@
 #
 from __future__ import division
 
-from sympy import sqrt, Rational as fr
+import numpy
+import sympy
 
 from ..helpers import untangle, fsd, pm_array0, pm
 
@@ -17,58 +18,67 @@ class Stroud(object):
     Approximate Calculation of Multiple Integrals,
     Prentice Hall, 1971.
     '''
-    def __init__(self, n, index):
+    # pylint: disable=too-many-locals
+    def __init__(self, n, index, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = sympy.sqrt if symbolic else numpy.sqrt
+
+        self.name = 'Stround Un({})'.format(index)
         self.dim = n
         if index == 'Un 3-1':
             self.degree = 3
             data = [
-                (fr(1, 2*n), fsd(n, (1, 1))),
+                (frac(1, 2*n), fsd(n, (1, 1))),
                 ]
             self.points, self.weights = untangle(data)
-            self.weights *= integrate_monomial_over_unit_nsphere(n * [0])
+            self.weights *= \
+                integrate_monomial_over_unit_nsphere(n * [0], symbolic)
         elif index == 'Un 3-2':
             self.degree = 3
             data = [
-                (fr(1, 2**n), pm(n, sqrt(fr(1, n)))),
+                (frac(1, 2**n), pm(n, sqrt(frac(1, n)))),
                 ]
             self.points, self.weights = untangle(data)
-            self.weights *= integrate_monomial_over_unit_nsphere(n * [0])
+            self.weights *= \
+                integrate_monomial_over_unit_nsphere(n * [0], symbolic)
         elif index == 'Un 5-1':
             self.degree = 5
 
-            B1 = fr(4-n, 2*n*(n+2))
-            B2 = fr(1, n * (n+2))
+            B1 = frac(4-n, 2*n*(n+2))
+            B2 = frac(1, n * (n+2))
 
             data = [
                 (B1, fsd(n, (1, 1))),
-                (B2, fsd(n, (sqrt(fr(1, 2)), 2))),
+                (B2, fsd(n, (sqrt(frac(1, 2)), 2))),
                 ]
 
             self.points, self.weights = untangle(data)
-            self.weights *= integrate_monomial_over_unit_nsphere(n * [0])
+            self.weights *= \
+                integrate_monomial_over_unit_nsphere(n * [0], symbolic)
         elif index == 'Un 5-2':
             self.degree = 5
 
-            B1 = fr(1, n * (n+2))
-            B2 = fr(n, 2**n * (n+2))
+            B1 = frac(1, n * (n+2))
+            B2 = frac(n, 2**n * (n+2))
 
             data = [
                 (B1, fsd(n, (1, 1))),
-                (B2, pm(n, sqrt(fr(1, n)))),
+                (B2, pm(n, sqrt(frac(1, n)))),
                 ]
 
             self.points, self.weights = untangle(data)
-            self.weights *= integrate_monomial_over_unit_nsphere(n * [0])
+            self.weights *= \
+                integrate_monomial_over_unit_nsphere(n * [0], symbolic)
         elif index == 'Un 5-3':
             self.degree = 5
 
-            s = sqrt(fr(1, n+2))
+            s = sqrt(frac(1, n+2))
             B = [
-                fr(2**(k-n) * (n+2), n * (k+1) * (k+2))
+                frac(2**(k-n) * (n+2), n * (k+1) * (k+2))
                 for k in range(1, n+1)
                 ]
             r = [
-                sqrt(fr(k+2, n+2))
+                sqrt(frac(k+2, n+2))
                 for k in range(1, n+1)
                 ]
             data = [
@@ -77,7 +87,8 @@ class Stroud(object):
                 ]
 
             self.points, self.weights = untangle(data)
-            self.weights *= integrate_monomial_over_unit_nsphere(n * [0])
+            self.weights *= \
+                integrate_monomial_over_unit_nsphere(n * [0], symbolic)
         elif index == 'Un 5-4':
             self.degree = 5
 
@@ -86,22 +97,23 @@ class Stroud(object):
             v = sqrt((n + 2 - s) / n / (n+2))
 
             data = [
-                (fr(1, 2**n * n), fsd(n, (u, 1), (v, n-1))),
+                (frac(1, 2**n * n), fsd(n, (u, 1), (v, n-1))),
                 ]
 
             self.points, self.weights = untangle(data)
-            self.weights *= integrate_monomial_over_unit_nsphere(n * [0])
+            self.weights *= \
+                integrate_monomial_over_unit_nsphere(n * [0], symbolic)
         elif index == 'Un 7-1':
-            self.set_data(Stroud1967(n))
+            self.set_data(Stroud1967(n, symbolic=symbolic))
         elif index == 'Un 7-2':
             self.degree = 7
 
-            A = fr(-n**2, 2**(n+3) * (n+2))
-            B = fr((n+4)**2, 2**(n+3) * n * (n+2))
+            A = frac(-n**2, 2**(n+3) * (n+2))
+            B = frac((n+4)**2, 2**(n+3) * n * (n+2))
 
-            r = sqrt(fr(1, n))
-            s = sqrt(fr(5, n+4))
-            t = sqrt(fr(1, n+4))
+            r = sqrt(frac(1, n))
+            s = sqrt(frac(5, n+4))
+            t = sqrt(frac(1, n+4))
 
             data = [
                 (A, pm(n, r)),
@@ -109,10 +121,11 @@ class Stroud(object):
                 ]
 
             self.points, self.weights = untangle(data)
-            self.weights *= integrate_monomial_over_unit_nsphere(n * [0])
+            self.weights *= \
+                integrate_monomial_over_unit_nsphere(n * [0], symbolic)
         else:
             assert index == 'Un 11-1'
-            self.set_data(Stroud1969(n))
+            self.set_data(Stroud1969(n, symbolic=symbolic))
 
         return
 

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 import numpy
-from sympy import Rational as fr, sqrt
+import sympy
 
 from .helpers import _s21, _s3
 from ..helpers import untangle
@@ -19,46 +21,52 @@ class Hillion(object):
 
     Note that the schemes here are not fully symmetric.
     '''
-    def __init__(self, index):
+    def __init__(self, index, symbolic=False):
         # ENH in the article, most schemes are given only in single precision.
         # quadpy adds symbolic expressions
+        frac = sympy.frac if symbolic else lambda x, y: x/y
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
         self.name = 'Hillion(%d)' % index
 
         if index == 1:
             self.degree = 1
             data = [
-                (fr(1, 2), _s3()),
+                (frac(1, 2), _s3(symbolic)),
                 ]
         elif index == 2:
             self.degree = 2
             data = [
-                (fr(1, 6), _s21(fr(1, 2))),
+                (frac(1, 6), _s21(frac(1, 2))),
                 ]
         elif index == 3:
             self.degree = 2
             data = [
-                (fr(1, 6), _s21(fr(1, 6))),
+                (frac(1, 6), _s21(frac(1, 6))),
                 ]
         elif index == 4:
             self.degree = 2
             a0, a1 = [(3 + i*sqrt(3)) / 8 for i in [+1, -1]]
             data = [
-                (fr(1, 18), numpy.array([[0, 0, 1]])),
-                (fr(2, 9), _symm(a0, a1)),
+                (frac(1, 18), numpy.array([[0, 0, 1]])),
+                (frac(2, 9), _symm(a0, a1)),
                 ]
         elif index == 5:
             self.degree = 2
             a0, a1 = [(3 + i*sqrt(3)) / 8 for i in [+1, -1]]
             data = [
-                (fr(1, 18), numpy.array([[fr(2, 3), fr(2, 3), -fr(1, 3)]])),
-                (fr(2, 9), _symm(fr(2, 3) - a0, fr(2, 3) - a1))
+                (
+                    frac(1, 18),
+                    numpy.array([[frac(2, 3), frac(2, 3), -frac(1, 3)]])
+                ),
+                (frac(2, 9), _symm(frac(2, 3) - a0, frac(2, 3) - a1))
                 ]
         elif index == 6:
             self.degree = 2
             lm, mu = [(2 + i*sqrt(2 + i*sqrt(3))) / 6 for i in [+1, -1]]
             data = [
-                (fr(1, 8), _symm(lm, mu)),
-                (fr(1, 8), _symm(fr(2, 3) - lm, fr(2, 3) - mu)),
+                (frac(1, 8), _symm(lm, mu)),
+                (frac(1, 8), _symm(frac(2, 3) - lm, frac(2, 3) - mu)),
                 ]
         elif index == 7:
             self.degree = 3
@@ -77,7 +85,7 @@ class Hillion(object):
             lambda2, lambda3 = [(32 + i*2*sqrt(46))/105 for i in [+1, -1]]
             w1, w2 = [(3266 + i * 19*sqrt(46)) / 17664 for i in [+1, -1]]
             data = [
-                (fr(25, 384), _symm(0, fr(4, 5))),
+                (frac(25, 384), _symm(0, frac(4, 5))),
                 (w1, numpy.array([[lambda2, lambda2, 1 - 2*lambda2]])),
                 (w2, numpy.array([[lambda3, lambda3, 1 - 2*lambda3]])),
                 ]
@@ -85,8 +93,8 @@ class Hillion(object):
             self.degree = 3
             # ERR the article is missing the minus sign
             data = [
-                (-fr(9, 32), _s3()),
-                (fr(25, 96), _s21(fr(1, 5))),
+                (-frac(9, 32), _s3(symbolic)),
+                (frac(25, 96), _s21(frac(1, 5))),
                 ]
         else:
             assert index == 10
@@ -96,7 +104,10 @@ class Hillion(object):
             data = [
                 (w2, _symm(lambda1, 0)),
                 (w1, _symm(0, lambda2)),
-                (fr(25, 96), numpy.array([[fr(2, 5), fr(2, 5), fr(1, 5)]])),
+                (
+                    frac(25, 96),
+                    numpy.array([[frac(2, 5), frac(2, 5), frac(1, 5)]])
+                ),
                 ]
 
         self.bary, self.weights = untangle(data)

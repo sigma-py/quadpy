@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import Rational as fr, sqrt
+from __future__ import division
+
+import numpy
+import sympy
 
 from ..helpers import untangle
 
@@ -14,21 +17,24 @@ class Felippa(object):
 
     <https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_wedge/quadrature_rules_wedge.html>
     '''
-    def __init__(self, index):
+    def __init__(self, index, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
         if index == 1:
             self.degree = 1
             data = [
-              (1, _s3()),
+              (1, _s3(symbolic)),
               ]
         elif index == 2:
             self.degree = 2
             data = [
-                (fr(1, 6), _s21_z(fr(1, 6), sqrt(fr(1, 3))))
+                (frac(1, 6), _s21_z(frac(1, 6), sqrt(frac(1, 3))))
                 ]
         elif index == 3:
             self.degree = 2
             data = [
-                (fr(1, 6), _s21_z(fr(1, 2), sqrt(fr(1, 3)))),
+                (frac(1, 6), _s21_z(frac(1, 2), sqrt(frac(1, 3)))),
                 ]
         elif index == 4:
             self.degree = 4
@@ -38,8 +44,8 @@ class Felippa(object):
                 for i in [+1, -1]
                 ]
             data = [
-                (0.6205044157722541E-01, _s21_z(a2, sqrt(fr(3, 5)))),
-                (0.3054215101536719E-01, _s21_z(a1, sqrt(fr(3, 5)))),
+                (0.6205044157722541E-01, _s21_z(a2, sqrt(frac(3, 5)))),
+                (0.3054215101536719E-01, _s21_z(a1, sqrt(frac(3, 5)))),
                 (0.9928070652356065E-01, _s21(a2)),
                 (0.4886744162458750E-01, _s21(a1)),
                 ]
@@ -47,12 +53,12 @@ class Felippa(object):
             self.degree = 5
             a1, a2 = [(6 - i*sqrt(15))/21 for i in [+1, -1]]
             data = [
-                (0.3498310570689643E-01, _s21_z(a1, sqrt(fr(3, 5)))),
-                (0.3677615355236283E-01, _s21_z(a2, sqrt(fr(3, 5)))),
-                (fr(1, 16), _s3_z(sqrt(fr(3, 5)))),
+                (0.3498310570689643E-01, _s21_z(a1, sqrt(frac(3, 5)))),
+                (0.3677615355236283E-01, _s21_z(a2, sqrt(frac(3, 5)))),
+                (frac(1, 16), _s3_z(sqrt(frac(3, 5)), symbolic)),
                 (0.5597296913103428E-01, _s21(a1)),
                 (0.5884184568378053E-01, _s21(a2)),
-                (fr(1, 10), _s3()),
+                (frac(1, 10), _s3(symbolic)),
                 ]
         else:
             assert index == 6
@@ -71,16 +77,18 @@ class Felippa(object):
         return
 
 
-def _s3():
+def _s3(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
     return [
-        [fr(1, 3), fr(1, 3), 0],
+        [frac(1, 3), frac(1, 3), 0],
         ]
 
 
-def _s3_z(z):
+def _s3_z(z, symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
     return [
-        [fr(1, 3), fr(1, 3), +z],
-        [fr(1, 3), fr(1, 3), -z],
+        [frac(1, 3), frac(1, 3), +z],
+        [frac(1, 3), frac(1, 3), -z],
         ]
 
 

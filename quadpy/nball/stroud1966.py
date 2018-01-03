@@ -19,7 +19,7 @@ class Stroud1966(object):
     <https://doi.org/10.1090/S0025-5718-1966-0191094-8>.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, n, variant, symbolic=True):
+    def __init__(self, n, variant, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         sqrt = sympy.sqrt if symbolic else numpy.sqrt
 

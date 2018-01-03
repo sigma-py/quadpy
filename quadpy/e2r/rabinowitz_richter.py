@@ -11,7 +11,8 @@ from .helpers import _s40, _s8, _s4
 from ..helpers import untangle
 
 
-def gen1():
+# pylint: disable=unused-argument
+def gen1(symbolic):
     data = [
         (.3380228176732269e-1, _s40(6.822859174233539)),
         (.1467201651910359e+1, _s40(1.901350903458987)),
@@ -21,7 +22,7 @@ def gen1():
     return 9, data
 
 
-def gen2():
+def gen2(symbolic):
     data = [
         (.1528937836199174e-3, _s40(12.74800100302598)),
         (.2460475747386993e-1, _s40(6.548756194884845)),
@@ -32,7 +33,7 @@ def gen2():
     return 11, data
 
 
-def gen3():
+def gen3(symbolic):
     data = [
         (.1020154285801705e-3, _s40(13.23694157142503)),
         (.5959360016181913e-1, _s40(5.858647139727296)),
@@ -62,7 +63,7 @@ def gen3():
 #     return 13, data
 
 
-def gen5():
+def gen5(symbolic):
     data = [
         (.1783029629694328e-6, _s40(19.97643084360520)),
         (.3075756711058412e-3, _s40(11.52881449694446)),
@@ -90,6 +91,6 @@ class RabinowitzRichter(object):
     keys = _gen.keys()
 
     def __init__(self, key):
-        self.degree, data = _gen[key]()
+        self.degree, data = _gen[key](False)
         self.points, self.weights = untangle(data)
         return

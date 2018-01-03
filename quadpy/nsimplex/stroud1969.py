@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 import numpy
-from sympy import sqrt, Rational as fr
+import sympy
 
 from .helpers import integrate_monomial_over_unit_simplex
 from ..helpers import untangle, rd
@@ -15,14 +17,18 @@ class Stroud1969(object):
     <https://doi.org/10.1137/0706009>.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, n):
+    def __init__(self, n, symbolic=False):
         assert n >= 3
+
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
         self.dim = n
         self.degree = 5
 
         sqrt15 = sqrt(15)
 
-        t = fr(1, n+1)
+        t = frac(1, n+1)
         r1, r2 = [(n + 4 - pm * sqrt15) / (n**2 + 8*n + 1) for pm in [+1, -1]]
         s1, s2 = [
             (4*n + 1 + pm * n * sqrt15) / (n**2 + 8*n + 1) for pm in [+1, -1]
@@ -51,10 +57,11 @@ class Stroud1969(object):
                 )
             k_range.append(5)
 
-        b0 = integrate_monomial_over_unit_simplex(n*[0])
+        b0 = integrate_monomial_over_unit_simplex(n*[0], symbolic=symbolic)
         b = [
-            integrate_monomial_over_unit_simplex(numpy.array([k] + (n-1)*[0]))
-            / b0
+            integrate_monomial_over_unit_simplex(
+                numpy.array([k] + (n-1)*[0]), symbolic=symbolic
+                ) / b0
             for k in k_range
             ]
 

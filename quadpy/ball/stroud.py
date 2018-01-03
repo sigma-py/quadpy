@@ -20,7 +20,7 @@ class Stroud(object):
     Prentice Hall, 1971.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, index, symbolic=True):
+    def __init__(self, index, symbolic=False):
         pi = sympy.pi if symbolic else numpy.pi
         sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 

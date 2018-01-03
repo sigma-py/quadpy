@@ -24,7 +24,7 @@ class Thacher(object):
     subdivisions, only one point is required in each interior subdivision to
     achieve second-degree accuracy.
     '''
-    def __init__(self, n, symbolic=True):
+    def __init__(self, n, symbolic=False):
         sqrt = sympy.sqrt if symbolic else numpy.sqrt
 
         self.degree = 2

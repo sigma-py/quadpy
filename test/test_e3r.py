@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 #
+import numpy
 import pytest
+
 import quadpy
 from quadpy.helpers import kahan_dot
 
@@ -12,6 +14,9 @@ from helpers import check_degree, integrate_monomial_over_enr
     [(quadpy.e3r.Stroud(key), 1.0e-14) for key in quadpy.e3r.Stroud.keys]
     )
 def test_scheme(scheme, tol):
+    assert scheme.points.dtype == numpy.float64, scheme.name
+    assert scheme.weights.dtype == numpy.float64, scheme.name
+
     degree = check_degree(
             lambda poly: quadpy.e3r.integrate(poly, scheme, dot=kahan_dot),
             integrate_monomial_over_enr,

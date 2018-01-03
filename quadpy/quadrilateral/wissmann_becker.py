@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 import numpy
-from sympy import Rational as fr
+import sympy
 
 from ..helpers import untangle
 
@@ -13,12 +15,14 @@ class WissmannBecker(object):
     SIAM J. Numer. Anal., 23(3), 676–685, 10 pages,
     <https://doi.org/10.1137/0723043>.
     '''
-    def __init__(self, index):
+    def __init__(self, index, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+
         self.name = 'WB({})'.format(index)
         if index == '4-1':
             self.degree = 4
             data = [
-                (fr(8, 7), _z(0)),
+                (frac(8, 7), _z(0)),
                 (0.439560439560440, _z(0.966091783079296)),
                 (0.566072207007532, _m(0.851914653304601, 0.455603727836193)),
                 (0.642719001783677, _m(0.630912788976754, -0.731629951573135))

@@ -74,6 +74,9 @@ def _integrate_monomial_over_unit_wedge(k):
     [quadpy.wedge.Felippa(k) for k in range(1, 7)]
     )
 def test_scheme(scheme):
+    assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
+    assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
+
     wedge = numpy.array([
         [[0.0, 0.0, -1.0], [1.0, 0.0, -1.0], [0.0, 1.0, -1.0]],
         [[0.0, 0.0, +1.0], [1.0, 0.0, +1.0], [0.0, 1.0, +1.0]],

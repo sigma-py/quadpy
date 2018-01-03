@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 import numpy
-from sympy import Rational as fr, sqrt
+import sympy
 
 from .helpers import _s3
 from ..helpers import untangle
@@ -16,31 +18,34 @@ class LiuVinokur(object):
     DOI: 10.1006/jcph.1998.5884,
     <https://doi.org/10.1006/jcph.1998.5884>.
     '''
-    def __init__(self, index):
+    def __init__(self, index, symbolic=False):
+        frac = sympy.frac if symbolic else lambda x, y: x/y
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
         self.name = 'LV(%d)' % index
         if index == 1:
             self.degree = 1
-            data = [(1, _s3())]
+            data = [(1, _s3(symbolic))]
         elif index == 2:
             self.degree = 1
-            data = [(fr(1, 3), _r_alpha(1))]
+            data = [(frac(1, 3), _r_alpha(1))]
         elif index == 3:
             self.degree = 2
             data = [
-                (fr(1, 3), _r_alpha(-fr(1, 2))),
+                (frac(1, 3), _r_alpha(-frac(1, 2))),
                 ]
         elif index == 4:
             self.degree = 2
             data = [
-                (fr(3, 4), _s3()),
-                (fr(1, 12), _r_alpha(1)),
+                (frac(3, 4), _s3(symbolic)),
+                (frac(1, 12), _r_alpha(1)),
                 ]
         elif index == 5:
             self.degree = 3
             data = [
-                (-fr(9, 16), _s3()),
+                (-frac(9, 16), _s3(symbolic)),
                 # ERR Wrongly specified in the article as 25 (instead of 2/5).
-                (fr(25, 48), _r_alpha(fr(2, 5))),
+                (frac(25, 48), _r_alpha(frac(2, 5))),
                 ]
         elif index == 6:
             self.degree = 3
@@ -52,9 +57,9 @@ class LiuVinokur(object):
         elif index == 7:
             self.degree = 3
             data = [
-                (fr(9, 20), _s3()),
-                (fr(1, 20), _r_alpha(1)),
-                (fr(2, 15), _r_alpha(-fr(1, 2))),
+                (frac(9, 20), _s3(symbolic)),
+                (frac(1, 20), _r_alpha(1)),
+                (frac(2, 15), _r_alpha(-frac(1, 2))),
                 ]
         elif index == 8:
             self.degree = 4
@@ -69,31 +74,31 @@ class LiuVinokur(object):
         elif index == 9:
             self.degree = 4
             data = [
-                (fr(27, 80), _s3()),
-                (fr(8, 105), _r_alpha(-fr(1, 2))),
-                (fr(81, 560), _r_alpha(fr(2, 3))),
+                (frac(27, 80), _s3(symbolic)),
+                (frac(8, 105), _r_alpha(-frac(1, 2))),
+                (frac(81, 560), _r_alpha(frac(2, 3))),
                 ]
         elif index == 10:
             self.degree = 4
             sqrt13 = sqrt(13)
             data = [
                 ((11 - 1*sqrt13)/360, _r_alpha(1)),
-                ((80 - 16*sqrt13)/360, _r_alpha(-fr(1, 2))),
+                ((80 - 16*sqrt13)/360, _r_alpha(-frac(1, 2))),
                 ((29 + 17*sqrt13)/360, _r_alpha((-1 + sqrt13) / 6)),
                 ]
         elif index == 11:
             self.degree = 4
             sqrt3 = sqrt(3)
             data = [
-                (+fr(9, 20), _s3()),
-                (-fr(1, 60), _r_alpha(1)),
-                (+fr(1, 10), _r_gamma_delta((3 + sqrt3)/6, (3 - sqrt3)/6)),
+                (+frac(9, 20), _s3(symbolic)),
+                (-frac(1, 60), _r_alpha(1)),
+                (+frac(1, 10), _r_gamma_delta((3 + sqrt3)/6, (3 - sqrt3)/6)),
                 ]
         elif index == 12:
             self.degree = 5
             sqrt15 = sqrt(15)
             data = [
-                (fr(9, 40), _s3()),
+                (frac(9, 40), _s3(symbolic)),
                 ((155 - sqrt15)/1200, _r_alpha((1 + sqrt15) / 7)),
                 ((155 + sqrt15)/1200, _r_alpha((1 - sqrt15) / 7)),
                 ]
@@ -101,10 +106,10 @@ class LiuVinokur(object):
             assert index == 13
             self.degree = 5
             data = [
-                (fr(81, 320), _s3()),
-                (fr(1, 90), _r_alpha(1)),
-                (fr(16, 225), _r_alpha(-fr(1, 2))),
-                (fr(2401, 14400), _r_alpha(fr(4, 7))),
+                (frac(81, 320), _s3(symbolic)),
+                (frac(1, 90), _r_alpha(1)),
+                (frac(16, 225), _r_alpha(-frac(1, 2))),
+                (frac(2401, 14400), _r_alpha(frac(4, 7))),
                 ]
 
         self.bary, self.weights = untangle(data)

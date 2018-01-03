@@ -17,7 +17,7 @@ class Dobrodeev1970(object):
     Volume 10, Issue 1, 1970, Pages 252–253,
     <https://doi.org/10.1016/0041-5553(70)90084-4>.
     '''
-    def __init__(self, n, symbolic=True):
+    def __init__(self, n, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         pi = sympy.pi if symbolic else numpy.pi
         sqrt = sympy.sqrt if symbolic else numpy.sqrt

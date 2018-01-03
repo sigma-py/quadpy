@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import numpy
 import pytest
 import quadpy
 
@@ -20,6 +21,9 @@ from helpers import check_degree, integrate_monomial_over_enr2
     + [(quadpy.e2r2.StroudSecrest(k), 1.0e-14) for k in ['V', 'VI']]
     )
 def test_scheme(scheme, tol):
+    assert scheme.points.dtype == numpy.float64, scheme.name
+    assert scheme.weights.dtype == numpy.float64, scheme.name
+
     degree = check_degree(
             lambda poly: quadpy.e2r2.integrate(poly, scheme),
             integrate_monomial_over_enr2,

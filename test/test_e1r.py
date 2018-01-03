@@ -2,6 +2,7 @@
 #
 import math
 
+import numpy
 import pytest
 import quadpy
 
@@ -13,6 +14,9 @@ from helpers import check_degree
     [(quadpy.e1r.GaussLaguerre(n), 1.0e-14) for n in range(1, 10)]
     )
 def test_scheme(scheme, tol):
+    assert scheme.points.dtype == numpy.float64, scheme.name
+    assert scheme.weights.dtype == numpy.float64, scheme.name
+
     degree = check_degree(
             lambda poly: quadpy.e1r.integrate(poly, scheme),
             lambda k: math.factorial(k[0]),

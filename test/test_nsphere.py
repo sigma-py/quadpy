@@ -11,7 +11,8 @@ from helpers import check_degree
 @pytest.mark.parametrize(
     'scheme',
     [quadpy.nsphere.Dobrodeev1978(n) for n in range(2, 7)]
-    + [quadpy.nsphere.Stroud(n, index) for n in range(2, 7) for index in [
+    + [quadpy.nsphere.Stroud(n, index) for n in range(2, 7)
+        for index in [
         'Un 3-1', 'Un 3-2',
         'Un 5-1', 'Un 5-2', 'Un 5-3', 'Un 5-4',
         'Un 7-1', 'Un 7-2',
@@ -19,12 +20,16 @@ from helpers import check_degree
     # The scheme has degree 11, so don't push it too far with n. First of all,
     # the number of points increases exponentially, and so does the number of
     # polynomials of degree at most 11.
-    + [quadpy.nsphere.Stroud(n, index) for n in range(3, 6) for index in [
+    + [quadpy.nsphere.Stroud(n, index) for n in range(3, 6)
+        for index in [
         'Un 11-1',
         ]]
     + [quadpy.nsphere.Stroud1967(n) for n in range(2, 7)]
     )
 def test_scheme(scheme, tol=1.0e-14):
+    assert scheme.points.dtype in [numpy.int64, numpy.float64], scheme.name
+    assert scheme.weights.dtype in [numpy.int64, numpy.float64], scheme.name
+
     n = scheme.dim
     center = numpy.zeros(n)
     rad = 1.0

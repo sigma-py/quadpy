@@ -15,7 +15,7 @@ class Ewing(object):
     Vol. 48, No. 2 (Feb., 1941), pp. 134-136,
     <https://doi.org/10.2307/2303604>.
     '''
-    def __init__(self, n, symbolic=True):
+    def __init__(self, n, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
 
         self.degree = 3

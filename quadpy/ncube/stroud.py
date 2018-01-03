@@ -25,7 +25,7 @@ class Stroud(object):
     Prentice Hall, 1971.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, n, index, symbolic=True):
+    def __init__(self, n, index, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         sqrt = sympy.sqrt if symbolic else numpy.sqrt
 

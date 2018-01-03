@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import Rational as fr
+from __future__ import division
+
+import sympy
 
 from ..helpers import untangle, rd
 
@@ -12,17 +14,19 @@ class Stroud1961(object):
     Mathematics of Computation, Vol. 15, No. 74 (Apr., 1961), pp. 143-150,
     <https://doi.org/10.2307/2004220>.
     '''
-    def __init__(self, n):
+    def __init__(self, n, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+
         self.dim = n
         self.degree = 3
 
-        r = fr(1, n+1)
-        s = fr(1, n)
+        r = frac(1, n+1)
+        s = frac(1, n)
 
         prod = (n+1) * (n+2) * (n+3)
-        A = fr((3-n) * (n+1)**3, prod)
-        B = fr(3, prod)
-        C = fr(n**3, prod)
+        A = frac((3-n) * (n+1)**3, prod)
+        B = frac(3, prod)
+        C = frac(n**3, prod)
 
         data = [
             (A, [(n+1) * [r]]),

@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import sqrt, Rational as fr
+from __future__ import division
+
+import numpy
+import sympy
 
 from ..helpers import untangle, fsd, pm, z
 
@@ -13,25 +16,28 @@ class HammerStroud(object):
     Math. Comp. 12 (1958), 272-280,
     <https://doi.org/10.1090/S0025-5718-1958-0102176-6>.
     '''
-    def __init__(self, index):
+    def __init__(self, index, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
         if index == '1-3':
             self.degree = 3
             data = [
-                (fr(4, 3), fsd(3, (1, 1))),
+                (frac(4, 3), fsd(3, (1, 1))),
                 ]
         elif index == '2-3':
             self.degree = 5
-            alpha = sqrt(fr(3, 5))
+            alpha = sqrt(frac(3, 5))
             data = [
-                (+fr(56, 27), z(3)),
-                (-fr(20, 81), fsd(3, (alpha, 1))),
-                (+fr(50, 81), fsd(3, (alpha, 2))),
+                (+frac(56, 27), z(3)),
+                (-frac(20, 81), fsd(3, (alpha, 1))),
+                (+frac(50, 81), fsd(3, (alpha, 2))),
                 ]
         elif index == '4-3':
             self.degree = 5
             data = [
-                (fr(320, 361), fsd(3, (sqrt(fr(19, 30)), 1))),
-                (fr(121, 361), pm(3, sqrt(fr(19, 33))))
+                (frac(320, 361), fsd(3, (sqrt(frac(19, 30)), 1))),
+                (frac(121, 361), pm(3, sqrt(frac(19, 33))))
                 ]
         elif index in ['5-3a', '5-3b']:
             self.degree = 7
@@ -60,10 +66,10 @@ class HammerStroud(object):
         else:
             assert index == '6-3'
             self.degree = 7
-            alpha = sqrt(fr(6, 7))
+            alpha = sqrt(frac(6, 7))
             data = [
-                (fr(1078, 3645), fsd(3, (alpha, 1))),
-                (fr(343, 3645), fsd(3, (alpha, 2))),
+                (frac(1078, 3645), fsd(3, (alpha, 1))),
+                (frac(343, 3645), fsd(3, (alpha, 2))),
                 (0.2247031747656014, pm(3, 0.7341125287521153)),
                 (0.4123338622714356, pm(3, 0.4067031864267161)),
                 ]

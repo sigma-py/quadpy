@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import Rational as fr, sqrt
+from __future__ import division
+
+import numpy
+import sympy
 
 from .helpers import rss_pm, z
 from ..helpers import untangle
@@ -20,7 +23,10 @@ class Stroud1967(object):
     Sep. 2009,
     <https://arxiv.org/pdf/0909.5106.pdf>.
     '''
-    def __init__(self):
+    def __init__(self, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
         self.degree = 5
 
         sqrt19 = sqrt(19)
@@ -42,7 +48,7 @@ class Stroud1967(object):
             ]
 
         data = [
-            (fr(32, 19), z()),
+            (frac(32, 19), z()),
             (B, rss_pm(lmbd, xi)),
             (C, rss_pm(gmma, mu)),
             ]

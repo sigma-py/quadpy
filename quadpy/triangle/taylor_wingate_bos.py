@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import Rational as fr
+from __future__ import division
+
+import sympy
 
 from .helpers import untangle2
 
@@ -21,12 +23,14 @@ class TaylorWingateBos(object):
     positive weights and contain no points outside the triangle. Seven of these
     quadrature formulas improve on previously known results.
     '''
-    def __init__(self, index):
-        self.name = 'TWB(%d)' % index
+    def __init__(self, index, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+
+        self.name = 'TWB({})'.format(index)
         if index == 1:
             self.degree = 2
             data = {
-                's2': [[fr(2, 3), fr(1, 6)]]
+                's2': [[frac(2, 3), frac(1, 6)]]
                 }
         elif index == 2:
             self.degree = 4
