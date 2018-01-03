@@ -85,6 +85,9 @@ def _integrate_exact(f, triangle):
     + [(quadpy.triangle.ZhangCuiLiu(k), 1.0e-14) for k in [1, 2, 3]]
     )
 def test_scheme(scheme, tol):
+    assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
+    assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
+
     triangle = numpy.array([
         [0.0, 0.0],
         [1.0, 0.0],

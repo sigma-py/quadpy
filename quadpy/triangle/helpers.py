@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 import numpy
-from sympy import Rational
+import sympy
 
 
-def _s3():
-    return numpy.full((1, 3), Rational(1, 3))
+def _s3(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
+    return numpy.full((1, 3), frac(1, 3))
 
 
 def _s21(a):
@@ -70,13 +73,13 @@ def _collapse0(a):
     return numpy.reshape(a, (a.shape[0], numpy.prod(a.shape[1:])))
 
 
-def untangle2(data):
+def untangle2(data, symbolic=False):
     bary = []
     weights = []
 
     if 's3' in data:
         d = numpy.array(data['s3']).T
-        bary.append(_s3().T)
+        bary.append(_s3(symbolic).T)
         weights.append(numpy.tile(d[0], 1))
 
     if 's2' in data:
