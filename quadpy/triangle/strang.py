@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import Rational as fr
+from __future__ import division
+
+import sympy
 
 from .helpers import untangle2
 
@@ -27,28 +29,30 @@ class Strang(object):
     DOI: 10.1002/nme.1620070316,
     <https://doi.org/10.1002/nme.1620070316>.
     '''
-    def __init__(self, index):
+    def __init__(self, index, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+
         self.name = 'Strang(%d)' % index
         if index == 1:
             self.degree = 2
             data = {
-                's2': [[fr(1, 3), fr(1, 6)]],
+                's2': [[frac(1, 3), frac(1, 6)]],
                 }
         elif index == 2:
             self.degree = 2
             data = {
-                's2': [[fr(1, 3), fr(1, 2)]],
+                's2': [[frac(1, 3), frac(1, 2)]],
                 }
         elif index == 3:
             self.degree = 3
             data = {
-                's3': [[-fr(9, 16)]],
-                's2': [[fr(25, 48), fr(1, 5)]],
+                's3': [[-frac(9, 16)]],
+                's2': [[frac(25, 48), frac(1, 5)]],
                 }
         elif index == 4:
             self.degree = 3
             data = {
-                's1': [[fr(1, 6), 0.659027622374092, 0.231933368553031]],
+                's1': [[frac(1, 6), 0.659027622374092, 0.231933368553031]],
                 }
         elif index == 5:
             self.degree = 4
@@ -61,13 +65,13 @@ class Strang(object):
         elif index == 6:
             self.degree = 4
             data = {
-                's3': [[fr(3, 8)]],
-                's1': [[fr(5, 48), 0.736712498968435, 0.237932366472434]],
+                's3': [[frac(3, 8)]],
+                's1': [[frac(5, 48), 0.736712498968435, 0.237932366472434]],
                 }
         elif index == 7:
             self.degree = 5
             data = {
-                's3': [[fr(9, 40)]],
+                's3': [[frac(9, 40)]],
                 's2': [
                     [0.12593918054482717, 0.10128650732345633],
                     [0.13239415278850616, 0.47014206410511505],

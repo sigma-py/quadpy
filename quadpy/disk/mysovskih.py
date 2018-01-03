@@ -15,7 +15,7 @@ class Mysovskih(object):
     Z. Vychisl. Mat. i. Mat. Fiz. 4, 3-14, 1964.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, index, alpha=0, symbolic=True):
+    def __init__(self, index, alpha=0, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         pi = sympy.pi if symbolic else numpy.pi
         sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt

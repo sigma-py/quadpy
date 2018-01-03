@@ -8,43 +8,54 @@ Math. Comp. 17 (1963), 105-135,
 '''
 from __future__ import division
 
-from sympy import sqrt, pi, gamma, Rational as fr
-
 import numpy
+import scipy.special
+import sympy
 
 from ..helpers import untangle, fsd, pm
 from ..enr2.stroud_secrest import _nsimplex
 
 
-def i(n):
+def i(n, symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
+    sqrt = sympy.sqrt if symbolic else numpy.sqrt
     data = [
-        (fr(1, n+1), sqrt(n+1) * _nsimplex(n, symbolic=True))
+        (frac(1, n+1), sqrt(n+1) * _nsimplex(n, symbolic=symbolic))
         ]
     return 2, data
 
 
-def ii(n):
+def ii(n, symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
+    sqrt = sympy.sqrt if symbolic else numpy.sqrt
+
     nu = sqrt(n * (n+1))
     data = [
-        (fr(1, 2*n), fsd(n, (nu, 1))),
+        (frac(1, 2*n), fsd(n, (nu, 1))),
         ]
     return 3, data
 
 
-def iii(n):
+def iii(n, symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
+    sqrt = sympy.sqrt if symbolic else numpy.sqrt
+
     nu = sqrt(n+1)
     data = [
-        (fr(1, 2**n), pm(n, nu)),
+        (frac(1, 2**n), pm(n, nu)),
         ]
     return 3, data
 
 
-def iv(n):
+def iv(n, symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
+    sqrt = sympy.sqrt if symbolic else numpy.sqrt
+
     nu = sqrt((n+2) * (n+3))
-    xi = sqrt(fr((n+2) * (n+3), 2))
-    A = fr(2*(2*n+3), (n+2) * (n+3))
-    B = fr((4-n)*(n+1), 2 * (n+2)**2 * (n+3))
-    C = fr(n+1, (n+2)**2 * (n+3))
+    xi = sqrt(frac((n+2) * (n+3), 2))
+    A = frac(2*(2*n+3), (n+2) * (n+3))
+    B = frac((4-n)*(n+1), 2 * (n+2)**2 * (n+3))
+    C = frac(n+1, (n+2)**2 * (n+3))
 
     data = [
         (A, numpy.full((1, n), 0)),
@@ -65,9 +76,15 @@ _gen = {
 class StroudSecrest(object):
     keys = _gen.keys()
 
-    def __init__(self, n, key):
+    def __init__(self, n, key, symbolic=False):
         self.dim = n
-        self.degree, data = _gen[key](n)
+        self.degree, data = _gen[key](n, symbolic)
         self.points, self.weights = untangle(data)
-        self.weights *= 2 * sqrt(pi)**n * gamma(n) / gamma(fr(n, 2))
+
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = sympy.sqrt if symbolic else numpy.sqrt
+        pi = sympy.pi if symbolic else numpy.pi
+        gamma = sympy.gamma if symbolic else scipy.special.gamma
+
+        self.weights *= 2 * sqrt(pi)**n * gamma(n) / gamma(frac(n, 2))
         return

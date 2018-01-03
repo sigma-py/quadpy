@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import sqrt, Rational as fr
+from __future__ import division
+
+import numpy
+import sympy
 
 from .helpers import fs_r00, fs_rr0, pm_rrr
 from ..helpers import untangle
@@ -14,16 +17,19 @@ class HammerWymore(object):
     Math. Comp. 11 (1957), 59-67,
     <https://doi.org/10.1090/S0025-5718-1957-0087220-6>.
     '''
-    def __init__(self, lmbda=1):
+    def __init__(self, lmbda=1, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
         self.degree = 7
 
         I0 = 8
-        I2 = fr(8, 3)
-        I4 = fr(8, 5)
-        I22 = fr(8, 9)
-        I6 = fr(8, 7)
-        I42 = fr(8, 15)
-        I222 = fr(8, 27)
+        I2 = frac(8, 3)
+        I4 = frac(8, 5)
+        I22 = frac(8, 9)
+        I6 = frac(8, 7)
+        I42 = frac(8, 15)
+        I222 = frac(8, 27)
 
         u1 = (I6 - 2*I42 + I222 + lmbda*(I42 - I222)) / (I4 - I22)
         u2 = u1 / lmbda

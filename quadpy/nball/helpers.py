@@ -3,11 +3,11 @@
 from ..nsphere.helpers import integrate_monomial_over_unit_nsphere
 
 
-def volume_unit_ball(n, symbolic=True):
+def volume_unit_ball(n, symbolic=False):
     return integrate_monomial_over_unit_nball(n * [0], symbolic=symbolic)
 
 
-def integrate_monomial_over_unit_nball(exponents, symbolic=True):
+def integrate_monomial_over_unit_nball(exponents, symbolic=False):
     '''
     Gerald B. Folland,
     How to Integrate a Polynomial over a Sphere,

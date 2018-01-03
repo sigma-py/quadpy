@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 import numpy
-from sympy import Rational
+import sympy
 
 
-def _s3():
-    return numpy.full((1, 3), Rational(1, 3))
+def _s3(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
+    return numpy.full((1, 3), frac(1, 3))
 
 
 def _s21(a):
@@ -70,13 +73,13 @@ def _collapse0(a):
     return numpy.reshape(a, (a.shape[0], numpy.prod(a.shape[1:])))
 
 
-def untangle2(data):
+def untangle2(data, symbolic=False):
     bary = []
     weights = []
 
     if 's3' in data:
         d = numpy.array(data['s3']).T
-        bary.append(_s3().T)
+        bary.append(_s3(symbolic).T)
         weights.append(numpy.tile(d[0], 1))
 
     if 's2' in data:
@@ -99,47 +102,4 @@ def untangle2(data):
 
     bary = numpy.column_stack(bary).T
     weights = numpy.concatenate(weights)
-    return bary, weights
-
-
-def untangle3(point_data, weight_data):
-    bary = []
-    weights = []
-
-    k = 0
-
-    if 's3' in point_data:
-        point_data['s3'] = numpy.array(point_data['s3']).T
-        bary.append(_s3().T)
-        n = point_data['s3'].shape[1]
-        weights.append(numpy.tile(weight_data[k:k+n], 1))
-        k += n
-
-    if 's2' in point_data:
-        point_data['s2'] = numpy.array(point_data['s2']).T
-        s2_data = _s21(point_data['s2'][0])
-        bary.append(_collapse0(s2_data))
-        n = point_data['s2'].shape[1]
-        weights.append(numpy.tile(weight_data[k:k+n], 3))
-        k += n
-
-    if 's1' in point_data:
-        point_data['s1'] = numpy.array(point_data['s1']).T
-        s1_data = _s111ab(*point_data['s1'])
-        bary.append(_collapse0(s1_data))
-        n = point_data['s1'].shape[1]
-        weights.append(numpy.tile(weight_data[k:k+n], 6))
-        k += n
-
-    if 'rot' in point_data:
-        point_data['rot'] = numpy.array(point_data['rot']).T
-        rot_data = _rot_ab(*point_data['rot'])
-        bary.append(_collapse0(rot_data))
-        n = point_data['rot'].shape[1]
-        weights.append(numpy.tile(weight_data[k:k+n], 3))
-        k += n
-
-    bary = numpy.column_stack(bary).T
-    weights = numpy.concatenate(weights)
-
     return bary, weights

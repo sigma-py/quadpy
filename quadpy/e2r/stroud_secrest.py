@@ -6,31 +6,39 @@ Approximate integration formulas for certain spherically symmetric regions,
 Math. Comp. 17 (1963), 105-135,
 <https://doi.org/10.1090/S0025-5718-1963-0161473-0>.
 '''
+from __future__ import division
+
 import numpy
-from sympy import sqrt, pi, Rational as fr
+import sympy
 
 from ..helpers import untangle, pm_array, pm, fsd
 
 
-def v():
+def v(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
+    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
     nu = 2 * sqrt(5)
     xi = sqrt(5)
     eta = sqrt(15)
 
     data = [
-        (fr(7, 10), numpy.array([[0, 0]])),
-        (fr(1, 20), numpy.array([[+nu, 0], [-nu, 0]])),
-        (fr(1, 20), pm_array([xi, eta])),
+        (frac(7, 10), numpy.array([[0, 0]])),
+        (frac(1, 20), numpy.array([[+nu, 0], [-nu, 0]])),
+        (frac(1, 20), pm_array([xi, eta])),
         ]
     return 5, data
 
 
-def vi():
+def vi(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
+    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
     sqrt74255 = sqrt(74255)
 
     nu = sqrt(42)
     xi, eta = [sqrt((6615 - p_m * 21 * sqrt74255) / 454) for p_m in [+1, -1]]
-    A = fr(5, 588)
+    A = frac(5, 588)
     B, C = [
         (5272105 + p_m * 18733 * sqrt74255) / 43661940
         for p_m in [+1, -1]
@@ -53,8 +61,9 @@ _gen = {
 class StroudSecrest(object):
     keys = _gen.keys()
 
-    def __init__(self, key):
-        self.degree, data = _gen[key]()
+    def __init__(self, key, symbolic=False):
+        self.degree, data = _gen[key](symbolic)
         self.points, self.weights = untangle(data)
+        pi = sympy.pi if symbolic else numpy.pi
         self.weights *= 2 * pi
         return

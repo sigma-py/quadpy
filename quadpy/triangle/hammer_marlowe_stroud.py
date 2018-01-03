@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 import numpy
-from sympy import Rational, sqrt
+import sympy
 
 from .helpers import _s3
 from ..helpers import untangle
@@ -32,33 +34,36 @@ class HammerMarloweStroud(object):
     Vol. 12, No. 64 (Oct., 1958), pp. 272-280,
     <http://www.jstor.org/stable/2002370>
     '''
-    def __init__(self, index):
+    def __init__(self, index, symbolic=False):
+        frac = sympy.frac if symbolic else lambda x, y: x/y
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
         self.name = 'HMS(%d)' % index
         if index == 1:
             self.degree = 1
-            data = [(1, _s3())]
+            data = [(1, _s3(symbolic))]
         elif index == 2:
             self.degree = 2
             data = [
-                (Rational(1, 3), _r(Rational(1, 2)))
+                (frac(1, 3), _r(frac(1, 2)))
                 ]
         elif index == 3:
             self.degree = 2
             data = [
-                (Rational(1, 3), _r(-Rational(1, 2))),
+                (frac(1, 3), _r(-frac(1, 2))),
                 ]
         elif index == 4:
             self.degree = 3
             data = [
-                (-Rational(9, 16), _s3()),
-                (Rational(25, 48), _r(Rational(2, 5))),
+                (-frac(9, 16), _s3(symbolic)),
+                (frac(25, 48), _r(frac(2, 5))),
                 ]
         else:
             assert index == 5
             w1, w2 = [(155 - i*sqrt(15)) / 1200 for i in [+1, -1]]
             x1, x2 = [(1 + i*sqrt(15)) / 7 for i in [+1, -1]]
             data = [
-                (Rational(9, 40), _s3()),
+                (frac(9, 40), _s3(symbolic)),
                 (w1, _r(x1)),
                 (w2, _r(x2)),
                 ]

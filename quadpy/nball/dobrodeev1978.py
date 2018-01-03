@@ -23,7 +23,7 @@ class Dobrodeev1978(object):
     dimensionalities 2 <= n <= 20.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, n, symbolic=True):
+    def __init__(self, n, symbolic=False):
         assert 2 <= n <= 20
 
         self.name = 'Dobrodeev1978'

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import Rational
+from __future__ import division
+
+import sympy
 
 from .helpers import untangle2
 
@@ -14,7 +16,9 @@ class Dunavant(object):
     21(6):1129-1148, June 1985,
     <https://doi.org/10.1002/nme.1620210612>.
     '''
-    def __init__(self, index):
+    def __init__(self, index, symbolic=False):
+        frac = sympy.frac if symbolic else lambda x, y: x/y
+
         self.name = 'Dunavant(%d)' % index
         if index == 1:
             self.degree = 1
@@ -24,16 +28,16 @@ class Dunavant(object):
         elif index == 2:
             self.degree = 2
             data = {
-                's2': [[Rational(1, 3), Rational(1, 6)]]
+                's2': [[frac(1, 3), frac(1, 6)]]
                 }
         elif index == 3:
             self.degree = 3
             data = {
                 's3': [
-                    [-Rational(9, 16)]
+                    [-frac(9, 16)]
                     ],
                 's2': [
-                    [Rational(25, 48), Rational(1, 5)],
+                    [frac(25, 48), frac(1, 5)],
                     ]
                 }
         elif index == 4:

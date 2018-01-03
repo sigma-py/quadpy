@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import sqrt, Rational as fr
+from __future__ import division
+
+import numpy
+import sympy
 
 from ..helpers import untangle, rd
 
@@ -13,32 +16,35 @@ class HammerStroud(object):
     Vol. 10, No. 55 (Jul., 1956), pp. 137-139,
     <https://doi.org/10.2307/2002484>.
     '''
-    def __init__(self, n, index):
+    def __init__(self, n, index, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
         self.dim = n
         if index == '1a':
             self.degree = 2
             r = (n + 2 - sqrt(n+2)) / (n+1) / (n+2)
             s = (n + 2 + n*sqrt(n+2)) / (n+1) / (n+2)
             data = [
-                (fr(1, n+1), rd(n+1, [(r, n), (s, 1)]))
+                (frac(1, n+1), rd(n+1, [(r, n), (s, 1)]))
                 ]
         elif index == '1b':
             self.degree = 2
             r = (n + 2 + sqrt(n+2)) / (n+1) / (n+2)
             s = (n + 2 - n*sqrt(n+2)) / (n+1) / (n+2)
             data = [
-                (fr(1, n+1), rd(n+1, [(r, n), (s, 1)]))
+                (frac(1, n+1), rd(n+1, [(r, n), (s, 1)]))
                 ]
         else:
             assert index == '2'
             self.degree = 3
 
-            B = -fr((n+1)**2, 4 * (n+2))
-            C = fr((n+3)**2, 4 * (n+1) * (n+2))
+            B = -frac((n+1)**2, 4 * (n+2))
+            C = frac((n+3)**2, 4 * (n+1) * (n+2))
 
-            r = fr(1, n+1)
-            s = fr(1, n+3)
-            t = fr(3, n+3)
+            r = frac(1, n+1)
+            s = frac(1, n+3)
+            t = frac(3, n+3)
 
             data = [
                 (B, [(n+1) * [r]]),

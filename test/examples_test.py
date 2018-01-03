@@ -6,13 +6,13 @@ def test_circle():
     quadpy.circle.integrate(
         lambda x: numpy.exp(x[0]),
         numpy.array([0.0, 0.3]), 0.7,
-        quadpy.circle.Krylov(3, symbolic=False)
+        quadpy.circle.Krylov(3)
         )
     quadpy.circle.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[0])],
         numpy.array([[1.0, 1.0], [0.0, 0.3], [2.0, 2.0]]),
         [1.0, 0.7, 0.333],
-        quadpy.circle.Krylov(5, symbolic=False)
+        quadpy.circle.Krylov(5)
         )
     return
 
@@ -153,14 +153,14 @@ def test_ball():
     quadpy.ball.integrate(
         lambda x: numpy.exp(x[0]),
         [0.0, 0.0, 0.0], 1.0,
-        quadpy.ball.HammerStroud('14-3a', symbolic=False)
+        quadpy.ball.HammerStroud('14-3a')
         )
 
     quadpy.ball.integrate(
             lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
             numpy.array([[1.0, 1.0, 0.0], [0.0, 0.3, 0.0], [2.0, 2.0, 0.0]]),
             [1.0, 0.7, 0.333],
-            quadpy.ball.HammerStroud('15-3b', symbolic=False)
+            quadpy.ball.HammerStroud('15-3b')
             )
     return
 
@@ -263,7 +263,7 @@ def test_nball():
         lambda x: numpy.exp(x[0]),
         numpy.zeros(4),
         1.0,
-        quadpy.nball.Dobrodeev1970(dim, symbolic=False)
+        quadpy.nball.Dobrodeev1970(dim)
         )
     return
 
@@ -294,7 +294,7 @@ def test_enr2():
     dim = 4
     quadpy.enr2.integrate(
         lambda x: numpy.exp(x[0]),
-        quadpy.enr2.Stroud(dim, '5-2', symbolic=False)
+        quadpy.enr2.Stroud(dim, '5-2')
         )
     return
 

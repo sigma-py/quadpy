@@ -16,7 +16,7 @@ class HammerStroud(object):
     Math. Comp. 12 (1958), 272-280,
     <https://doi.org/10.1090/S0025-5718-1958-0102176-6>.
     '''
-    def __init__(self, n, index, alpha, symbolic=True):
+    def __init__(self, n, index, alpha, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         sqrt = sympy.sqrt if symbolic else numpy.sqrt
 

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import Rational as fr
+from __future__ import division
+
+import sympy
 
 from .helpers import _s4, _s31, _s211
 from ..helpers import untangle
@@ -19,17 +21,20 @@ class Yu(object):
     presented are of Gaussian type and fully symmetric with respect to the four
     vertices of the tetrahedron.
     '''
-    def __init__(self, index):
+    def __init__(self, index, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+
+        self.name = 'Yu({})'.format(index)
         if index == 1:
             self.degree = 2
             data = [
-                (fr(1, 4), _s31(0.138196601125015))
+                (frac(1, 4), _s31(0.138196601125015))
                 ]
         elif index == 2:
             self.degree = 3
             data = [
-                (-fr(4, 5), _s4()),
-                (fr(9, 20), _s31(fr(1, 6)))
+                (-frac(4, 5), _s4()),
+                (frac(9, 20), _s31(frac(1, 6)))
                 ]
         elif index == 3:
             self.degree = 4

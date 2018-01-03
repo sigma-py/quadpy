@@ -17,10 +17,10 @@ class Stroud(object):
     ISBN 0-13-043893-6.
     '''
     # pylint: disable=too-many-locals
-    def __init__(self, index):
+    def __init__(self, index, symbolic=False):
         self.name = 'Stroud({})'.format(index)
         if index == 'T3 5-1':
-            self.set_data(nsimplex_Stroud(3, 'Tn 5-1'))
+            self.set_data(nsimplex_Stroud(3, 'Tn 5-1', symbolic=symbolic))
         else:
             assert index == 'T3 7-1'
             self.degree = 7

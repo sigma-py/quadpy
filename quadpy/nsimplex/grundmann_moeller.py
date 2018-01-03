@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
+from math import factorial as fact
+
 import numpy
-from sympy import Rational as fr, factorial as fact
+import sympy
 
 from ..helpers import untangle, get_all_exponents
 
@@ -18,7 +22,9 @@ class GrundmannMoeller(object):
     derived and the monomial representations of the orthogonal polynomials
     corresponding to T_n are given.
     '''
-    def __init__(self, n, s):
+    def __init__(self, n, s, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+
         self.name = 'GrundmannMöller(dim={}, {})'.format(n, s)
         d = 2*s + 1
         self.degree = d
@@ -28,9 +34,12 @@ class GrundmannMoeller(object):
 
         data = [
             (
-                fr((-1)**i * 2**(-2*s) * (d+n-2*i)**d, fact(i) * fact(d+n-i)),
+                frac(
+                    (-1)**i * 2**(-2*s) * (d+n-2*i)**d,
+                    fact(i) * fact(d+n-i)
+                    ),
                 numpy.array([
-                    [fr(2*p + 1, d+n-2*i) for p in part]
+                    [frac(2*p + 1, d+n-2*i) for p in part]
                     for part in exponents[s-i]
                     ])
             )

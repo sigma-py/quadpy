@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import prod, gamma
+import math
+
+import scipy.special
+import sympy
 
 
-def integrate_monomial_over_unit_simplex(k):
+def integrate_monomial_over_unit_simplex(k, symbolic=False):
     '''The integrals of monomials over the standard triangle and tetrahedron are
     given by
 
@@ -20,10 +23,14 @@ def integrate_monomial_over_unit_simplex(k):
     See, e.g., <https://math.stackexchange.com/q/207073/36678> for a formula in
     all dimensions.
     '''
+    if symbolic:
+        return (
+            sympy.prod([sympy.gamma(kk+1) for kk in k])
+            / sympy.gamma(sum(k) + len(k) + 1)
+            )
     # exp-log to account for large values in numerator and denominator
     # import scipy.special
-    # return math.exp(
-    #     math.fsum(scipy.special.gammaln(k+1))
-    #     - scipy.special.gammaln(sum(k+1) + 1)
-    #     )
-    return prod([gamma(kk+1) for kk in k]) / gamma(sum(k) + len(k) + 1)
+    return math.exp(
+        math.fsum([scipy.special.gammaln(kk+1) for kk in k])
+        - scipy.special.gammaln(sum([kk+1 for kk in k]) + 1)
+        )

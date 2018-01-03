@@ -14,7 +14,7 @@ class Tyler(object):
     Canad. J. Math. 5(1953), 393-412,
     <https://doi.org/10.4153/CJM-1953-044-1>.
     '''
-    def __init__(self, n, symbolic=True):
+    def __init__(self, n, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
 
         self.degree = 3

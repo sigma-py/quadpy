@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import numpy
 import pytest
 import quadpy
 
@@ -11,6 +12,9 @@ from helpers import check_degree, integrate_monomial_over_enr2
     [(quadpy.e1r2.GaussHermite(n), 1.0e-14) for n in range(1, 10)]
     )
 def test_scheme(scheme, tol):
+    assert scheme.points.dtype == numpy.float64, scheme.name
+    assert scheme.weights.dtype == numpy.float64, scheme.name
+
     degree = check_degree(
             lambda poly: quadpy.e1r2.integrate(poly, scheme),
             integrate_monomial_over_enr2,

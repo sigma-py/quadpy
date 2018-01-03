@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 import numpy
-from sympy import sqrt, Rational as fr
+import sympy
 
 from ..helpers import untangle
 
@@ -23,23 +25,26 @@ class Dunavant(object):
     are developed and presented for integration of complete polynomial
     functions up to 21st order with minimum computational effort.
     '''
-    def __init__(self, index):
+    def __init__(self, index, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = sympy.sqrt if symbolic else numpy.sqrt
+
         if index == 0:
             self.degree = 1
             data = [(4, numpy.array([[0, 0]]))]
         elif index == 1:
             self.degree = 3
-            data = [(1, _symm_s(sqrt(fr(1, 3))))]
+            data = [(1, _symm_s(sqrt(frac(1, 3))))]
         elif index == 2:
             self.degree = 5
             data = [
-                (fr(40, 49), _symm_r_0(sqrt(fr(7, 15)))),
-                (fr(9, 49), _symm_s(sqrt(fr(7, 9)))),
+                (frac(40, 49), _symm_r_0(sqrt(frac(7, 15)))),
+                (frac(9, 49), _symm_s(sqrt(frac(7, 9)))),
                 ]
         elif index == 3:
             self.degree = 7
             data = [
-                (fr(98, 405), _symm_r_0(sqrt(fr(6, 7)))),
+                (frac(98, 405), _symm_r_0(sqrt(frac(6, 7)))),
                 (0.237431774690630, _symm_s(0.805979782918599)),
                 (0.520592916667394, _symm_s(0.380554433208316)),
                 ]
