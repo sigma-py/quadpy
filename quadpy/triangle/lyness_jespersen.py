@@ -25,6 +25,7 @@ class LynessJespersen(object):
     of the same polynomial degree. Cytolic rules of degrees up to 9 are also
     derived.
     '''
+    # pylint: disable=too-many-locals
     def __init__(self, index, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
