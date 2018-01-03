@@ -11,15 +11,18 @@ from __future__ import division
 import warnings
 
 import numpy
-from sympy import sqrt, pi, Rational as fr
+import sympy
 
 from ..helpers import untangle, pm, fsd, pm_roll
 
 
-def vii():
+def vii(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
+    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
     nu, xi = [sqrt(15 - p_m * 3 * sqrt(5)) for p_m in [+1, -1]]
-    A = fr(3, 5)
-    B = fr(1, 30)
+    A = frac(3, 5)
+    B = frac(1, 30)
 
     data = [
         (A, numpy.array([[0, 0, 0]])),
@@ -28,12 +31,15 @@ def vii():
     return 5, data
 
 
-def viii():
+def viii(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
+    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
     nu = sqrt(30)
     eta = sqrt(10)
-    A = fr(3, 5)
-    B = fr(2, 75)
-    C = fr(3, 100)
+    A = frac(3, 5)
+    B = frac(2, 75)
+    C = frac(3, 100)
 
     data = [
         (A, numpy.array([[0, 0, 0]])),
@@ -43,11 +49,14 @@ def viii():
     return 5, data
 
 
-def ix():
+def ix(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
+    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
     eta = sqrt(10)
     xi, nu = [sqrt(15 - p_m * 5 * sqrt(5)) for p_m in [+1, -1]]
-    A = fr(3, 5)
-    B = fr(1, 50)
+    A = frac(3, 5)
+    B = frac(1, 50)
 
     data = [
         (A, numpy.array([[0, 0, 0]])),
@@ -57,7 +66,9 @@ def ix():
     return 5, data
 
 
-def x():
+def x(symbolic):
+    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
     sqrt130 = sqrt(130)
 
     nu = sqrt((720 - 24*sqrt130) / 11)
@@ -82,7 +93,9 @@ def x():
     return 3, data
 
 
-def xi_():
+def xi_(symbolic):
+    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
     sqrt5 = sqrt(5)
     sqrt39 = sqrt(39)
     sqrt195 = sqrt(195)
@@ -121,8 +134,9 @@ _gen = {
 class StroudSecrest(object):
     keys = _gen.keys()
 
-    def __init__(self, key):
-        self.degree, data = _gen[key]()
+    def __init__(self, key, symbolic=False):
+        self.degree, data = _gen[key](symbolic)
         self.points, self.weights = untangle(data)
+        pi = sympy.pi if symbolic else numpy.pi
         self.weights *= 8 * pi
         return

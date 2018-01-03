@@ -5,7 +5,7 @@ from __future__ import division
 import warnings
 
 import numpy
-from sympy import sqrt, pi, sin, cos, Rational as fr
+import sympy
 
 from .rabinowitz_richter import RabinowitzRichter
 from .stroud_secrest import StroudSecrest
@@ -19,7 +19,13 @@ class Stroud(object):
     Approximate Calculation of Multiple Integrals,
     Prentice Hall, 1971.
     '''
-    def __init__(self, index):
+    def __init__(self, index, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+        cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
+        sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
+        pi = sympy.pi if symbolic else numpy.pi
+
         self.name = 'Stroud_E2r2({})'.format(index)
         if index == '4-1':
             self.degree = 4
@@ -29,29 +35,29 @@ class Stroud(object):
                 [sin(2*i*numpy.pi / 5) for i in range(5)],
                 ]).T
             data = [
-                (fr(1, 2), numpy.array([[0, 0]])),
-                (fr(1, 10), pts),
+                (frac(1, 2), numpy.array([[0, 0]])),
+                (frac(1, 10), pts),
                 ]
 
             self.points, self.weights = untangle(data)
             self.weights *= pi
         elif index == '5-1':
-            self.set_data(StroudSecrest('V'))
+            self.set_data(StroudSecrest('V', symbolic=symbolic))
         elif index == '5-2':
             # Cartesian product Gauss formula
             self.degree = 5
 
-            r = sqrt(fr(3, 2))
+            r = sqrt(frac(3, 2))
             data = [
-                (fr(4, 9), numpy.array([[0, 0]])),
-                (fr(1, 9), fsd(2, (r, 1))),
-                (fr(1, 36), pm(2, r)),
+                (frac(4, 9), numpy.array([[0, 0]])),
+                (frac(1, 9), fsd(2, (r, 1))),
+                (frac(1, 36), pm(2, r)),
                 ]
 
             self.points, self.weights = untangle(data)
             self.weights *= pi
         elif index == '7-1':
-            self.set_data(StroudSecrest('VI'))
+            self.set_data(StroudSecrest('VI', symbolic=symbolic))
         elif index == '7-2':
             # Cartesian product Gauss formula
             warnings.warn(
@@ -62,7 +68,7 @@ class Stroud(object):
             sqrt6 = sqrt(6)
             r, s = [sqrt((3 + p_m * sqrt6) / 2) for p_m in [+1, -1]]
             A, B = [(5 - p_m * 2 * sqrt6) / 48 for p_m in [+1, -1]]
-            C = fr(1, 48)
+            C = frac(1, 48)
 
             data = [
                 (A, fsd(2, (r, 1))),
