@@ -1,19 +1,23 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import Rational as fr
+from __future__ import division
+
+import sympy
 
 from .helpers import untangle2
 
 
 class SevenPoint(object):
-    def __init__(self):
+    def __init__(self, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+
         self.name = 'seven-point'
         self.degree = 3
         data = {
-            's3': [fr(9, 20)],
+            's3': [frac(9, 20)],
             's2': [
-                [fr(1, 20), 0],
-                [fr(2, 15), fr(1, 2)],
+                [frac(1, 20), 0],
+                [frac(2, 15), frac(1, 2)],
                 ],
             }
         self.bary, self.weights = untangle2(data)

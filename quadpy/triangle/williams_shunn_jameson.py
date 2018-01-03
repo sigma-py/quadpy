@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import Rational as fr
+from __future__ import division
+
+import sympy
 
 from .helpers import _s3, _s21, _s111 as fs
 from ..helpers import untangle
@@ -28,14 +30,16 @@ class WilliamsShunnJameson(object):
     capable of exactly integrating polynomials of up to degree 17 in 2D and up
     to degree 9 in 3D.
     '''
-    def __init__(self, index):
+    def __init__(self, index, symbolic=False):
+        frac = sympy.frac if symbolic else lambda x, y: x/y
+
         self.name = 'WSJ(%d)' % index
         if index == 1:
             self.degree = 1
-            data = [(1, _s3())]
+            data = [(1, _s3(symbolic))]
         elif index == 2:
             self.degree = 2
-            data = [(fr(1, 3), _s21(fr(1, 6)))]
+            data = [(frac(1, 3), _s21(frac(1, 6)))]
         elif index == 3:
             data = [
                 (0.109951743655333, _s21(0.091576213509780)),
@@ -47,7 +51,7 @@ class WilliamsShunnJameson(object):
             data = [
                 (0.041955512996649, _s21(0.055564052669793)),
                 (0.112098412070887, fs(0.295533711735893, 0.634210747745723)),
-                (0.201542988584730, _s3()),
+                (0.201542988584730, _s3(symbolic)),
                 ]
         elif index == 5:
             self.degree = 7
@@ -71,7 +75,7 @@ class WilliamsShunnJameson(object):
             data = [
                 (0.005272170280495, _s21(0.019977187122193)),
                 (0.044552936679504, _s21(0.131721767529998)),
-                (0.083608212215637, _s3()),
+                (0.083608212215637, _s3(symbolic)),
                 (0.033815712804198, _s21(0.485135346793461)),
                 (0.015710461340183, fs(0.107951981846011, 0.867911210117951)),
                 (0.028205136280616, fs(0.270840772921567, 0.700872570380723)),

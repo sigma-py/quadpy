@@ -20,48 +20,54 @@ and required degrees of accuracy are given. They are arranged so as to assist
 with selection of suitable quadrature formulas for finite element computer
 programming.
 '''
-from sympy import Rational as fr
+from __future__ import division
+
+import sympy
 
 from .helpers import untangle2
 
 
-def _gen1():
+def _gen1(symbolic):
     data = {
         's3': [1],
         }
     return 1, data
 
 
-def _gen2a():
+def _gen2a(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
     data = {
-        's2': [fr(1, 3), fr(1, 6)],
+        's2': [frac(1, 3), frac(1, 6)],
         }
     return 2, data
 
 
-def _gen2b():
+def _gen2b(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
     data = {
-        's2': [fr(1, 3), fr(1, 2)],
+        's2': [frac(1, 3), frac(1, 2)],
         }
     return 2, data
 
 
-def _gen3():
+def _gen3(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
     data = {
-        's3': [-fr(9, 16)],
-        's2': [fr(25, 48), fr(1, 5)],
+        's3': [-frac(9, 16)],
+        's2': [frac(25, 48), frac(1, 5)],
         }
     return 3, data
 
 
-def _gen4():
+def _gen4(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
     data = {
-        's1': [fr(1, 6), 0.659027622374092, 0.231933368553031],
+        's1': [frac(1, 6), 0.659027622374092, 0.231933368553031],
         }
     return 3, data
 
 
-def _gen5():
+def _gen5(symbolic):
     data = {
         's2': [
             [0.109951743655322, 0.091576213509771],
@@ -71,17 +77,19 @@ def _gen5():
     return 4, data
 
 
-def _gen6():
+def _gen6(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
     data = {
-        's3': [fr(3, 8)],
-        's1': [fr(5, 48), 0.736712498968435, 0.237932366472434],
+        's3': [frac(3, 8)],
+        's1': [frac(5, 48), 0.736712498968435, 0.237932366472434],
         }
     return 4, data
 
 
-def _gen7():
+def _gen7(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
     data = {
-        's3': [fr(9, 40)],
+        's3': [frac(9, 40)],
         's2': [
             [0.125939180544827, 0.101286507323456],
             [0.132394152788506, 0.470142064105115],
@@ -90,7 +98,7 @@ def _gen7():
     return 5, data
 
 
-def _gen8():
+def _gen8(symbolic):
     data = {
         's2': [
             [0.205950504760887, 0.437525248383384],
@@ -102,7 +110,7 @@ def _gen8():
     return 5, data
 
 
-def _gen9():
+def _gen9(symbolic):
     data = {
         's2': [
             [0.050844906370207, 0.063089014491502],
@@ -115,7 +123,7 @@ def _gen9():
     return 6, data
 
 
-def _gen10():
+def _gen10(symbolic):
     data = {
         's3': [
             [-0.149570044467670],
@@ -131,7 +139,7 @@ def _gen10():
     return 7, data
 
 
-def _gen11():
+def _gen11(symbolic):
     data = {
         's2': [
             [0.053077801790233, 0.064930513159165],
@@ -144,7 +152,7 @@ def _gen11():
     return 7, data
 
 
-def _gen12():
+def _gen12(symbolic):
     data = {
         's3': [
             [0.144315607677787],
@@ -161,7 +169,7 @@ def _gen12():
     return 8, data
 
 
-def _gen13():
+def _gen13(symbolic):
     data = {
         's3': [
             [0.097135796282799],
@@ -179,7 +187,7 @@ def _gen13():
     return 9, data
 
 
-def _gen14():
+def _gen14(symbolic):
     data = {
         's2': [
             [0.051617202569021, 0.481519834783311],
@@ -194,7 +202,7 @@ def _gen14():
     return 9, data
 
 
-def _gen15a():
+def _gen15a(symbolic):
     data = {
         's3': [
             [0.079894504741240],
@@ -212,7 +220,7 @@ def _gen15a():
     return 10, data
 
 
-def _gen15b():
+def _gen15b(symbolic):
     data = {
         's3': [
             [0.081743329146286],
@@ -254,8 +262,8 @@ _gen = {
 class LaursenGellert(object):
     keys = _gen.keys()
 
-    def __init__(self, key):
-        self.degree, data = _gen[key]()
+    def __init__(self, key, symbolic=False):
+        self.degree, data = _gen[key](symbolic)
         self.bary, self.weights = untangle2(data)
         self.points = self.bary[:, 1:]
         return

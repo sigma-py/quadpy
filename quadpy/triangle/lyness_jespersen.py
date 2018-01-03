@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import Rational as fr, sqrt
+from __future__ import division
+
+import numpy
+import sympy
 
 from .helpers import untangle2
 
@@ -22,44 +25,47 @@ class LynessJespersen(object):
     of the same polynomial degree. Cytolic rules of degrees up to 9 are also
     derived.
     '''
-    def __init__(self, index):
+    def __init__(self, index, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
         self.name = 'LJ(%d)' % index
         if index == 1:
             self.degree = 2
             data = {
                 's2': [
-                    [fr(1, 3), fr(1, 2)],
+                    [frac(1, 3), frac(1, 2)],
                     ],
                 }
         elif index == 2:
             self.degree = 2
             data = {
                 's3': [
-                    [fr(3, 4)]
+                    [frac(3, 4)]
                     ],
                 's2': [
-                    [fr(1, 12), 0],
+                    [frac(1, 12), 0],
                     ],
                 }
         elif index == 3:
             self.degree = 3
             data = {
                 's3': [
-                    [-fr(9, 16)],
+                    [-frac(9, 16)],
                     ],
                 's2': [
-                    [fr(25, 48), fr(1, 5)],
+                    [frac(25, 48), frac(1, 5)],
                     ],
                 }
         elif index == 4:
             self.degree = 3
             data = {
                 's3': [
-                    [fr(9, 20)],
+                    [frac(9, 20)],
                     ],
                 's2': [
-                    [fr(1, 20), 0],
-                    [fr(2, 15), fr(1, 2)],
+                    [frac(1, 20), 0],
+                    [frac(2, 15), frac(1, 2)],
                     ],
                 }
         elif index == 5:
@@ -74,9 +80,9 @@ class LynessJespersen(object):
             self.degree = 4
             a0, a1 = [(3 + i*sqrt(3)) / 6 for i in [+1, -1]]
             data = {
-                's3': [[+fr(9, 20)]],
-                's2': [[-fr(1, 60), 0]],
-                's1': [[+fr(1, 10), a0, a1]],
+                's3': [[+frac(9, 20)]],
+                's2': [[-frac(1, 60), 0]],
+                's1': [[+frac(1, 10), a0, a1]],
                 }
         elif index == 7:
             self.degree = 4
@@ -84,7 +90,7 @@ class LynessJespersen(object):
             data = {
                 's2': [
                     [(11 - sqrt13) / 360, 0],
-                    [(10 - 2*sqrt13) / 45, fr(1, 2)],
+                    [(10 - 2*sqrt13) / 45, frac(1, 2)],
                     [(29 + 17*sqrt13) / 360, (7 - sqrt13) / 18],
                     ],
                 }
@@ -95,7 +101,7 @@ class LynessJespersen(object):
             r1, r2 = [(6 - i*sqrt15)/21 for i in [+1, -1]]
             data = {
                 's3': [
-                    [fr(9, 40)],
+                    [frac(9, 40)],
                     ],
                 's2': [
                     [a1, r1],
@@ -106,12 +112,12 @@ class LynessJespersen(object):
             self.degree = 5
             data = {
                 's3': [
-                    [fr(81, 320)],
+                    [frac(81, 320)],
                     ],
                 's2': [
-                    [fr(1, 90), 0],
-                    [fr(16, 225), fr(1, 2)],
-                    [fr(2401, 14400), fr(1, 7)],
+                    [frac(1, 90), 0],
+                    [frac(16, 225), frac(1, 2)],
+                    [frac(2401, 14400), frac(1, 7)],
                     ],
                 }
         elif index == 10:
@@ -130,15 +136,15 @@ class LynessJespersen(object):
             a, b = [(3 + i * sqrt(6)) / 6 for i in [+1, -1]]
             data = {
                 's3': [
-                    [-fr(81, 140)],
+                    [-frac(81, 140)],
                     ],
                 's2': [
-                    [-fr(5, 252), 0],
-                    [fr(17, 315), fr(1, 2)],
-                    [fr(128, 315), fr(1, 4)],
+                    [-frac(5, 252), 0],
+                    [frac(17, 315), frac(1, 2)],
+                    [frac(128, 315), frac(1, 4)],
                     ],
                 's1': [
-                    [fr(9, 210), a, b],
+                    [frac(9, 210), a, b],
                     ],
                 }
         elif index == 12:
@@ -204,7 +210,7 @@ class LynessJespersen(object):
             data = {
                 's2': [
                     [+1.207273935292775E-02/3, 0],
-                    [-8.491579879151455E-01/3, fr(1, 2)],
+                    [-8.491579879151455E-01/3, frac(1, 2)],
                     [+1.042367468891334E+00/3, 4.956813941755582E-01],
                     [+1.947229791412260E-01/3, 9.032775751426533E-02],
                     [+4.511852767201322E-01/3, 2.341547497073052E-01],
@@ -252,7 +258,7 @@ class LynessJespersen(object):
                     ],
                 's2': [
                     [1.062573789846330E-03/3, 0],
-                    [4.803411513859279E-02/3, fr(1, 2)],
+                    [4.803411513859279E-02/3, frac(1, 2)],
                     [2.524243006337300E-01/3, 4.497793381870162E-01],
                     [7.819254371487040E-02/3, 4.694744319909033E-02],
                     [2.472227459993048E-01/3, 1.918719127374489E-01],
