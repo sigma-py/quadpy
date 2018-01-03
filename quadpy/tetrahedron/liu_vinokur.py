@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+from __future__ import division
+
 import numpy
-from sympy import sqrt, Rational as fr, cos, acos
+import sympy
 
 from .helpers import _s4
 
@@ -16,7 +18,13 @@ class LiuVinokur(object):
     DOI: 10.1006/jcph.1998.5884,
     <https://doi.org/10.1006/jcph.1998.5884>.
     '''
-    def __init__(self, index):
+    def __init__(self, index, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = sympy.sqrt if symbolic else numpy.sqrt
+        cos = sympy.cos if symbolic else numpy.cos
+        acos = sympy.acos if symbolic else numpy.arccos
+
+        self.name = 'LiuVinokur({})'.format(index)
         if index == 1:
             self.weights = numpy.concatenate([
                 numpy.full(1, 1),
@@ -27,7 +35,7 @@ class LiuVinokur(object):
             self.degree = 1
         elif index == 2:
             self.weights = numpy.concatenate([
-                numpy.full(4, fr(1, 4)),
+                numpy.full(4, frac(1, 4)),
                 ])
             bary = numpy.concatenate([
                 _r_alpha(1.0),
@@ -35,7 +43,7 @@ class LiuVinokur(object):
             self.degree = 1
         elif index == 3:
             self.weights = numpy.concatenate([
-                numpy.full(4, fr(1, 4)),
+                numpy.full(4, frac(1, 4)),
                 ])
             bary = numpy.concatenate([
                 _r_alpha(1/sqrt(5)),
@@ -43,8 +51,8 @@ class LiuVinokur(object):
             self.degree = 2
         elif index == 4:
             self.weights = numpy.concatenate([
-                numpy.full(1, fr(4, 5)),
-                numpy.full(4, fr(1, 20)),
+                numpy.full(1, frac(4, 5)),
+                numpy.full(4, frac(1, 20)),
                 ])
             bary = numpy.concatenate([
                 _s4(),
@@ -53,33 +61,33 @@ class LiuVinokur(object):
             self.degree = 2
         elif index == 5:
             self.weights = numpy.concatenate([
-                numpy.full(1, -fr(4, 5)),
-                numpy.full(4, fr(9, 20)),
+                numpy.full(1, -frac(4, 5)),
+                numpy.full(4, frac(9, 20)),
                 ])
             bary = numpy.concatenate([
                 _s4(),
-                _r_alpha(fr(1, 3)),
+                _r_alpha(frac(1, 3)),
                 ])
             self.degree = 3
         elif index == 6:
             self.weights = numpy.concatenate([
-                numpy.full(4, fr(1, 40)),
-                numpy.full(4, fr(9, 40)),
+                numpy.full(4, frac(1, 40)),
+                numpy.full(4, frac(9, 40)),
                 ])
             bary = numpy.concatenate([
                 _r_alpha(1),
-                _r_alpha(-fr(1, 3)),
+                _r_alpha(-frac(1, 3)),
                 ])
             self.degree = 3
         elif index == 7:
             self.weights = numpy.concatenate([
-                numpy.full(1, -fr(148, 1875)),
-                numpy.full(4, fr(343, 7500)),
-                numpy.full(6, fr(56, 375)),
+                numpy.full(1, -frac(148, 1875)),
+                numpy.full(4, frac(343, 7500)),
+                numpy.full(6, frac(56, 375)),
                 ])
             bary = numpy.concatenate([
                 _s4(),
-                _r_alpha(fr(5, 7)),
+                _r_alpha(frac(5, 7)),
                 _r_beta(sqrt(70)/28),
                 ])
             self.degree = 4
@@ -99,39 +107,39 @@ class LiuVinokur(object):
                 numpy.full(
                     4, (17*alpha1 - 7)/(420*alpha2**2 * (alpha1 - alpha2))
                     ),
-                numpy.full(6, fr(2, 105)),
+                numpy.full(6, frac(2, 105)),
                 ])
             bary = numpy.concatenate([
                 _r_alpha(alpha1),
                 _r_alpha(alpha2),
-                _r_beta(fr(1, 2)),
+                _r_beta(frac(1, 2)),
                 ])
             self.degree = 4
         elif index == 9:
             self.weights = numpy.concatenate([
-                numpy.full(1, -fr(32, 15)),
-                numpy.full(4, fr(3, 280)),
-                numpy.full(4, fr(125, 168)),
-                numpy.full(6, fr(2, 105)),
+                numpy.full(1, -frac(32, 15)),
+                numpy.full(4, frac(3, 280)),
+                numpy.full(4, frac(125, 168)),
+                numpy.full(6, frac(2, 105)),
                 ])
             bary = numpy.concatenate([
                 _s4(),
                 _r_alpha(1),
-                _r_alpha(fr(1, 5)),
-                _r_beta(fr(1, 2)),
+                _r_alpha(frac(1, 5)),
+                _r_beta(frac(1, 2)),
                 ])
             self.degree = 4
         elif index == 10:
             self.weights = numpy.concatenate([
-                numpy.full(1, fr(32, 105)),
-                numpy.full(4, -fr(31, 840)),
-                numpy.full(4, fr(27, 280)),
-                numpy.full(12, fr(4, 105)),
+                numpy.full(1, frac(32, 105)),
+                numpy.full(4, -frac(31, 840)),
+                numpy.full(4, frac(27, 280)),
+                numpy.full(12, frac(4, 105)),
                 ])
             bary = numpy.concatenate([
                 _s4(),
                 _r_alpha(1),
-                _r_alpha(-fr(1, 3)),
+                _r_alpha(-frac(1, 3)),
                 _r_gamma_delta(
                     (2 + sqrt(2)) / 4,
                     (2 - sqrt(2)) / 4,
@@ -143,17 +151,17 @@ class LiuVinokur(object):
                 (11 - 4*sqrt(2)) / numpy.full(4, 840),
                 (243 - 108*sqrt(2)) / numpy.full(4, 1960),
                 (62 + 44*sqrt(2)) / numpy.full(4, 735),
-                numpy.full(6, fr(2, 105)),
+                numpy.full(6, frac(2, 105)),
                 ])
             bary = numpy.concatenate([
                 _r_alpha(1),
-                _r_alpha(-fr(1, 3)),
+                _r_alpha(-frac(1, 3)),
                 _r_alpha(sqrt(2) - 1),
-                _r_beta(fr(1, 2)),
+                _r_beta(frac(1, 2)),
                 ])
             self.degree = 4
         elif index == 12:
-            lmbda = fr(4, 27) * (4 * sqrt(79)*cos(
+            lmbda = frac(4, 27) * (4 * sqrt(79)*cos(
                 (acos(67*sqrt(79)/24964) + 2*numpy.pi) / 3
                 ) + 71
                 )
@@ -180,33 +188,33 @@ class LiuVinokur(object):
             self.degree = 5
         elif index == 13:
             self.weights = numpy.concatenate([
-                numpy.full(1, -fr(16, 21)),
+                numpy.full(1, -frac(16, 21)),
                 numpy.full(4, (2249 - 391*sqrt(13)) / 10920),
                 numpy.full(4, (2249 + 391*sqrt(13)) / 10920),
-                numpy.full(6, fr(2, 105)),
+                numpy.full(6, frac(2, 105)),
                 ])
             bary = numpy.concatenate([
                 _s4(),
                 _r_alpha((2 + sqrt(13)) / 9),
                 _r_alpha((2 - sqrt(13)) / 9),
-                _r_beta(fr(1, 2)),
+                _r_beta(frac(1, 2)),
                 ])
             self.degree = 5
         else:
             assert index == 14
             self.weights = numpy.concatenate([
-                numpy.full(1, fr(16, 105)),
-                numpy.full(4, fr(1, 280)),
-                numpy.full(4, fr(81, 1400)),
-                numpy.full(4, fr(64, 525)),
-                numpy.full(6, fr(2, 105)),
+                numpy.full(1, frac(16, 105)),
+                numpy.full(4, frac(1, 280)),
+                numpy.full(4, frac(81, 1400)),
+                numpy.full(4, frac(64, 525)),
+                numpy.full(6, frac(2, 105)),
                 ])
             bary = numpy.concatenate([
                 _s4(),
                 _r_alpha(1),
-                _r_alpha(-fr(1, 3)),
-                _r_alpha(fr(1, 2)),
-                _r_beta(fr(1, 2)),
+                _r_alpha(-frac(1, 3)),
+                _r_alpha(frac(1, 2)),
+                _r_beta(frac(1, 2)),
                 ])
             self.degree = 5
 
