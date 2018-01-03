@@ -9,12 +9,15 @@ Math. Comp. 17 (1963), 105-135,
 from __future__ import division
 
 import numpy
-from sympy import sqrt, Rational as fr, pi
+import sympy
 
 from ..helpers import untangle, pm_roll, fsd, pm
 
 
-def vii():
+def vii(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
+    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
     # article:
     # nu, xi = numpy.sqrt((15 + plus_minus * 3*numpy.sqrt(5)))
     # A = 3/5
@@ -22,8 +25,8 @@ def vii():
 
     # book:
     nu, xi = [sqrt((5 - p_m * sqrt(5)) / 4) for p_m in [+1, -1]]
-    A = fr(2, 5)
-    B = fr(1, 20)
+    A = frac(2, 5)
+    B = frac(1, 20)
 
     data = [
         (A, numpy.array([[0, 0, 0]])),
@@ -32,40 +35,51 @@ def vii():
     return 5, data
 
 
-def viiia():
-    r = sqrt(fr(5, 4))
-    s = sqrt(fr(5, 2))
+def viiia(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
+    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
+    r = sqrt(frac(5, 4))
+    s = sqrt(frac(5, 2))
     data = [
-        (fr(4, 25), fsd(3, (r, 1))),
-        (fr(1, 200), pm(3, s)),
+        (frac(4, 25), fsd(3, (r, 1))),
+        (frac(1, 200), pm(3, s)),
         ]
     return 5, data
 
 
-def viiib():
-    r = sqrt(fr(5, 2))
-    s = sqrt(fr(5, 6))
+def viiib(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
+    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
+    r = sqrt(frac(5, 2))
+    s = sqrt(frac(5, 6))
     data = [
-        (fr(2, 5), numpy.array([[0, 0, 0]])),
-        (fr(1, 25), fsd(3, (r, 1))),
-        (fr(9, 200), pm(3, s)),
+        (frac(2, 5), numpy.array([[0, 0, 0]])),
+        (frac(1, 25), fsd(3, (r, 1))),
+        (frac(9, 200), pm(3, s)),
         ]
     return 5, data
 
 
-def ix():
+def ix(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x/y
+    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
     r, s = [sqrt((15 - p_m * 5*sqrt(5))/12) for p_m in [+1, -1]]
-    t = sqrt(fr(5, 6))
+    t = sqrt(frac(5, 6))
 
     data = [
-        (fr(2, 5), numpy.array([[0, 0, 0]])),
-        (fr(3, 100), pm_roll(3, [r, s])),
-        (fr(3, 100), pm(3, t)),
+        (frac(2, 5), numpy.array([[0, 0, 0]])),
+        (frac(3, 100), pm_roll(3, [r, s])),
+        (frac(3, 100), pm(3, t)),
         ]
     return 5, data
 
 
-def x(plus_minus):
+def x(plus_minus, symbolic):
+    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
     degree = 7
 
     sqrt15 = sqrt(15)
@@ -87,7 +101,9 @@ def x(plus_minus):
     return degree, data
 
 
-def xi_(p_m):
+def xi_(p_m, symbolic):
+    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
     degree = 7
 
     sqrt2 = sqrt(2)
@@ -118,18 +134,24 @@ _gen = {
     'VIIIa': viiia,
     'VIIIb': viiib,
     'IX': ix,
-    'Xa': lambda: x(+1),
-    'Xb': lambda: x(-1),
-    'XIa': lambda: xi_(+1),
-    'XIb': lambda: xi_(-1),
+    'Xa': lambda symbolic: x(+1, symbolic),
+    'Xb': lambda symbolic: x(-1, symbolic),
+    'XIa': lambda symbolic: xi_(+1, symbolic),
+    'XIb': lambda symbolic: xi_(-1, symbolic),
     }
 
 
 class StroudSecrest(object):
     keys = _gen.keys()
 
-    def __init__(self, key):
-        self.degree, data = _gen[key]()
+    def __init__(self, key, symbolic=False):
+        self.name = 'StroudSecrest_E3r2({})'.format(key)
+
+        self.degree, data = _gen[key](symbolic)
         self.points, self.weights = untangle(data)
+
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+        pi = sympy.pi if symbolic else numpy.pi
+
         self.weights *= sqrt(pi)**3
         return

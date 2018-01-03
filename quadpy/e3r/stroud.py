@@ -7,7 +7,8 @@ Prentice Hall, 1971.
 '''
 from __future__ import division
 
-from sympy import pi
+import numpy
+import sympy
 
 from . import stroud_secrest
 
@@ -26,8 +27,10 @@ _gen = {
 class Stroud(object):
     keys = _gen.keys()
 
-    def __init__(self, key):
-        self.degree, data = _gen[key]()
+    def __init__(self, key, symbolic=False):
+        self.name = 'Stround_E3r({})'.format(key)
+        self.degree, data = _gen[key](symbolic)
         self.points, self.weights = untangle(data)
+        pi = sympy.pi if symbolic else numpy.pi
         self.weights *= 8 * pi
         return

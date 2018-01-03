@@ -15,7 +15,7 @@ from ..sphere import stroud as sphere_stroud
 from ..helpers import untangle
 
 
-def _gen14_1():
+def _gen14_1(symbolic):
     degree = 14
     # Get the moments corresponding to monomials and the weight
     # function omega(x) = x^2 * exp(-x^2):
@@ -75,10 +75,10 @@ _gen = {
     '5-2a': stroud_secrest.viiia,
     '5-2b': stroud_secrest.viiib,
     '5-3': stroud_secrest.ix,
-    '7-1a': lambda: stroud_secrest.x(+1),
-    '7-1b': lambda: stroud_secrest.x(-1),
-    '7-2a': lambda: stroud_secrest.xi_(+1),
-    '7-2b': lambda: stroud_secrest.xi_(-1),
+    '7-1a': lambda symbolic: stroud_secrest.x(+1, symbolic),
+    '7-1b': lambda symbolic: stroud_secrest.x(-1, symbolic),
+    '7-2a': lambda symbolic: stroud_secrest.xi_(+1, symbolic),
+    '7-2b': lambda symbolic: stroud_secrest.xi_(-1, symbolic),
     '14-1': _gen14_1
     }
 
@@ -86,8 +86,9 @@ _gen = {
 class Stroud(object):
     keys = _gen.keys()
 
-    def __init__(self, key):
-        self.degree, data = _gen[key]()
+    def __init__(self, key, symbolic=False):
+        self.name = 'Stround_E3r2({})'.format(key)
+        self.degree, data = _gen[key](symbolic)
         self.points, self.weights = untangle(data)
         self.weights *= numpy.sqrt(numpy.pi)**3
         return
