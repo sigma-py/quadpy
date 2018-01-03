@@ -2,7 +2,6 @@
 #
 from __future__ import division
 
-import numpy
 import sympy
 
 from .helpers import _symm_r_0, _symm_s, _z, _symm_s_t
