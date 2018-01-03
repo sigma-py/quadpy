@@ -4,7 +4,8 @@ from __future__ import division
 
 from mpmath import mp
 import numpy
-from sympy import sqrt, Rational as fr
+import sympy
+
 
 from ..helpers import untangle, rd
 
@@ -17,7 +18,11 @@ class Stroud1966(object):
     Numerische Mathematik, November 1966, Volume 9, Issue 1, pp 38–45,
     <https://doi.org/10.1007/BF02165227>.
     '''
-    def __init__(self, n, index):
+    def __init__(self, n, index, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+        roots = mp.polyroots if symbolic else numpy.roots
+
         self.dim = n
         self.degree = 3
         if index == 'I':
@@ -35,15 +40,16 @@ class Stroud1966(object):
                 ]
         elif index == 'II':
             # r is a smallest real-valued root of a polynomial of degree 3
-            r = mp.polyroots([
+            rts = roots([
                 2*(n-2)*(n+1)*(n+3), -(5*n**2+5*n-18), 4*n, - 1
-                ])[0]
+                ])
+            r = numpy.min([r.real for r in rts if abs(r.imag) < 1.0e-15])
 
             s = 1 - n*r
-            t = fr(1, 2)
+            t = frac(1, 2)
 
             B = (n-2) / (1 - 2*n*r**2 - 2*(1-n*r)**2) / (n+1) / (n+2)
-            C = 2 * (fr(1, n+1) - B) / n
+            C = 2 * (frac(1, n+1) - B) / n
 
             data = [
                 (B, rd(n+1, [(r, n), (s, 1)])),
@@ -52,13 +58,13 @@ class Stroud1966(object):
         elif index == 'III':
             assert n > 2
 
-            r = fr(1, 2)
-            s = fr(1, n)
+            r = frac(1, 2)
+            s = frac(1, n)
 
             prod = (n+1) * (n+2) * (n+3)
-            B = fr(6-n, prod)
-            C = fr(8*(n-3), (n-2) * prod)
-            D = fr(n**3, (n-2) * prod)
+            B = frac(6-n, prod)
+            C = frac(8*(n-3), (n-2) * prod)
+            D = frac(n**3, (n-2) * prod)
 
             data = [
                 (B, rd(n+1, [(1, 1)])),
@@ -68,12 +74,12 @@ class Stroud1966(object):
         elif index == 'IV':
             assert n >= 3
 
-            r = fr(1, n+1)
-            s = fr(1, 3)
+            r = frac(1, n+1)
+            s = frac(1, 3)
 
-            A = fr((n+1)**2 * (n-3), (n-2) * (n+2) * (n+3))
-            B = fr((9-n), 2 * (n+1) * (n+2) * (n+3))
-            C = fr(27, (n-2) * (n+1) * (n+2) * (n+3))
+            A = frac((n+1)**2 * (n-3), (n-2) * (n+2) * (n+3))
+            B = frac((9-n), 2 * (n+1) * (n+2) * (n+3))
+            C = frac(27, (n-2) * (n+1) * (n+2) * (n+3))
 
             data = [
                 (A, numpy.full((1, n+1), r)),
@@ -81,13 +87,13 @@ class Stroud1966(object):
                 (C, rd(n+1, [(s, 3)])),
                 ]
         elif index == 'V':
-            r = fr(1, n)
-            s = fr(1, 3)
+            r = frac(1, n)
+            s = frac(1, 3)
 
             prod = (n+1) * (n+2) * (n+3)
-            A = fr(-n**2 + 11*n - 12, 2 * (n-1) * prod)
-            B = fr(n**3, (n-1) * prod)
-            C = fr(27, (n-1) * prod)
+            A = frac(-n**2 + 11*n - 12, 2 * (n-1) * prod)
+            B = frac(n**3, (n-1) * prod)
+            C = frac(27, (n-1) * prod)
 
             data = [
                 (A, rd(n+1, [(1, 1)])),
@@ -98,14 +104,14 @@ class Stroud1966(object):
             assert n >= 3
             assert n != 5
 
-            r = fr(1, n+1)
-            s = fr(1, 3)
-            t = fr(1, n-2)
+            r = frac(1, n+1)
+            s = frac(1, 3)
+            t = frac(1, n-2)
 
             prod = (n+1) * (n+2) * (n+3)
-            A = fr((3-n) * (n-12) * (n+1)**2, 3 * (n-2) * (n+2) * (n+3))
-            B = fr(54 * (3*n-11), (n-5) * (n-2) * (n-1) * prod)
-            C = fr(2 * (n-2)**2 * (n-9), (n-5) * (n-1) * prod)
+            A = frac((3-n) * (n-12) * (n+1)**2, 3 * (n-2) * (n+2) * (n+3))
+            B = frac(54 * (3*n-11), (n-5) * (n-2) * (n-1) * prod)
+            C = frac(2 * (n-2)**2 * (n-9), (n-5) * (n-1) * prod)
 
             data = [
                 (A, numpy.full((1, n+1), r)),
@@ -117,13 +123,13 @@ class Stroud1966(object):
             assert n >= 3
             assert n != 5
 
-            s = fr(1, 3)
-            t = fr(1, n-2)
+            s = frac(1, 3)
+            t = frac(1, n-2)
 
             prod = (n+1) * (n+2) * (n+3)
-            A = fr((12-n), 2 * prod)
-            B = fr(27 * (n-7), (n-5) * (n-1) * prod)
-            C = fr(6 * (n-2)**2, (n-5) * (n-1) * prod)
+            A = frac((12-n), 2 * prod)
+            B = frac(27 * (n-7), (n-5) * (n-1) * prod)
+            C = frac(6 * (n-2)**2, (n-5) * (n-1) * prod)
 
             data = [
                 (A, rd(n+1, [(1, 1)])),

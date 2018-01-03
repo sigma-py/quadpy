@@ -42,6 +42,9 @@ from helpers import check_degree
        ]
     )
 def test_scheme(scheme):
+    assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
+    assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
+
     n = scheme.dim
     simplex = numpy.zeros((n+1, n))
     for k in range(n):
