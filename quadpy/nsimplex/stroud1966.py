@@ -18,6 +18,7 @@ class Stroud1966(object):
     Numerische Mathematik, November 1966, Volume 9, Issue 1, pp 38–45,
     <https://doi.org/10.1007/BF02165227>.
     '''
+    # pylint: disable=too-many-locals
     def __init__(self, n, index, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt

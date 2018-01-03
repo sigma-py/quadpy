@@ -15,6 +15,7 @@ from ..sphere import stroud as sphere_stroud
 from ..helpers import untangle
 
 
+# pylint: disable=unused-argument
 def _gen14_1(symbolic):
     degree = 14
     # Get the moments corresponding to monomials and the weight
