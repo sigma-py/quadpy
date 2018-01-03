@@ -10,7 +10,6 @@ import quadpy
 from helpers import check_degree_1d
 
 
-
 @pytest.mark.parametrize(
     'scheme',
     [quadpy.line_segment.Midpoint()]
@@ -27,6 +26,9 @@ from helpers import check_degree_1d
     + [quadpy.line_segment.NewtonCotesOpen(k) for k in range(1, 5)]
     )
 def test_scheme(scheme):
+    assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
+    assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
+
     degree = 0
     while True:
         # Set bounds such that the values are between 0.5 and 1.5.

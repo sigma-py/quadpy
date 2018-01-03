@@ -69,8 +69,11 @@ def test_spherical_harmonic(scheme):
         'U3 7-1', 'U3 7-2',
         'U3 8-1',
         'U3 9-1', 'U3 9-2', 'U3 9-3',
-        'U3 11-1', 'U3 11-2', 'U3 11-3',
+        'U3 11-1', 'U3 11-3',
         'U3 14-1',
+        ]]
+    + [(quadpy.sphere.Stroud(k), 1.0e-12) for k in [
+        'U3 11-2',
         ]]
     )
 def test_scheme_cartesian(scheme, tol):
@@ -134,8 +137,11 @@ def test_scheme_cartesian(scheme, tol):
         'U3 7-1', 'U3 7-2',
         'U3 8-1',
         'U3 9-1', 'U3 9-2', 'U3 9-3',
-        'U3 11-1', 'U3 11-2', 'U3 11-3',
+        'U3 11-1', 'U3 11-3',
         'U3 14-1',
+        ]]
+    + [(quadpy.sphere.Stroud(k), 1.0e-12) for k in [
+        'U3 11-2'
         ]]
     )
 def test_scheme_spherical(scheme, tol):
