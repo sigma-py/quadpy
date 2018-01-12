@@ -8,9 +8,9 @@ import math
 
 from mpmath import mp
 import numpy
+import orthopy
 import pytest
 import scipy
-from scipy.special import legendre
 import sympy
 
 import quadpy
@@ -106,7 +106,7 @@ def test_chebyshev_modified(tol=1.0e-14):
     moments[0] = 2.0/3.0
     moments[2] = 8.0/45.0
     _, _, b, c = \
-        quadpy.tools.recurrence_coefficients.legendre(2*n, 'monic')
+        orthopy.line_segment.recurrence_coefficients.legendre(2*n, 'monic')
 
     alpha, beta = quadpy.tools.chebyshev_modified(moments, b, c)
 
@@ -127,11 +127,11 @@ def test_gauss(mode):
         a = sympy.S(0)/1
         b = sympy.S(0)/1
         _, _, alpha, beta = \
-            quadpy.tools.recurrence_coefficients.jacobi(
+            orthopy.line_segment.recurrence_coefficients.jacobi(
                 n, a, b, 'monic', symbolic=True
                 )
         points, weights = \
-            quadpy.tools.schemes.custom(alpha, beta, mode=mode)
+            quadpy.tools.scheme_from_rc(alpha, beta, mode=mode)
 
         assert points == [
             -sympy.sqrt(sympy.S(3)/5),
@@ -150,10 +150,10 @@ def test_gauss(mode):
         a = sympy.S(0)/1
         b = sympy.S(0)/1
         _, _, alpha, beta = \
-            quadpy.tools.recurrence_coefficients.jacobi(
+            orthopy.line_segment.recurrence_coefficients.jacobi(
                 n, a, b, 'monic'
                 )
-        points, weights = quadpy.tools.schemes.custom(
+        points, weights = quadpy.tools.scheme_from_rc(
                 alpha, beta,
                 mode=mode,
                 decimal_places=50
@@ -175,10 +175,10 @@ def test_gauss(mode):
         n = 5
         tol = 1.0e-14
         _, _, alpha, beta = \
-            quadpy.tools.recurrence_coefficients.legendre(n, 'monic')
+            orthopy.line_segment.recurrence_coefficients.legendre(n, 'monic')
         alpha = numpy.array([float(a) for a in alpha])
         beta = numpy.array([float(b) for b in beta])
-        points, weights = quadpy.tools.schemes.custom(
+        points, weights = quadpy.tools.scheme_from_rc(
                 alpha, beta,
                 mode=mode
                 )
@@ -200,8 +200,8 @@ def test_gauss(mode):
     )
 def test_jacobi_reconstruction(tol=1.0e-14):
     _, _, alpha1, beta1 = \
-        quadpy.tools.recurrence_coefficients.jacobi(4, 2, 1, 'monic')
-    points, weights = quadpy.tools.schemes.custom(alpha1, beta1)
+        orthopy.line_segment.recurrence_coefficients.jacobi(4, 2, 1, 'monic')
+    points, weights = quadpy.tools.scheme_from_rc(alpha1, beta1)
 
     alpha2, beta2 = \
         quadpy.tools.coefficients_from_gauss(points, weights)
@@ -279,9 +279,7 @@ def test_gautschi_how_to_and_how_not_to():
 
 def test_compute_moments():
     moments = quadpy.tools.compute_moments(lambda x: 1, -1, +1, 5)
-    assert (
-        moments == [2, 0, sympy.S(2)/3, 0, sympy.S(2)/5]
-        ).all()
+    assert (moments == [2, 0, sympy.S(2)/3, 0, sympy.S(2)/5]).all()
 
     moments = quadpy.tools.compute_moments(
             lambda x: 1, -1, +1, 5,
@@ -311,7 +309,7 @@ def test_compute_moments():
 def test_stieltjes():
     alpha0, beta0 = quadpy.tools.stieltjes(lambda t: 1, -1, +1, 5)
     _, _, alpha1, beta1 = \
-        quadpy.tools.recurrence_coefficients.legendre(5, 'monic')
+        orthopy.line_segment.recurrence_coefficients.legendre(5, 'monic')
     assert (alpha0 == alpha1).all()
     assert (beta0 == beta1).all()
     return
@@ -351,14 +349,14 @@ def test_xk(k):
     assert beta[0] == moments[0]
     assert beta[1] == sympy.S(k+1) / (k+3)
     assert beta[2] == sympy.S(4) / ((k+5) * (k+3))
-    quadpy.tools.schemes.custom(
+    quadpy.tools.scheme_from_rc(
         numpy.array([sympy.N(a) for a in alpha], dtype=float),
         numpy.array([sympy.N(b) for b in beta], dtype=float),
         mode='numpy'
         )
 
     # a, b = \
-    #     quadpy.tools.recurrence_coefficients.legendre(
+    #     orthopy.line_segment.recurrence_coefficients.legendre(
     #             2*n, mode='sympy'
     #             )
 
@@ -367,7 +365,7 @@ def test_xk(k):
     #         polynomial_class=quadpy.tools.legendre
     #         )
     # alpha, beta = quadpy.tools.chebyshev_modified(moments, a, b)
-    # points, weights = quadpy.tools.schemes.custom(
+    # points, weights = quadpy.tools.scheme_from_rc(
     #         numpy.array([sympy.N(a) for a in alpha], dtype=float),
     #         numpy.array([sympy.N(b) for b in beta], dtype=float)
     #         )
@@ -376,4 +374,5 @@ def test_xk(k):
 
 if __name__ == '__main__':
     # test_gauss('mpmath')
-    test_logo()
+    # test_logo()
+    pass
