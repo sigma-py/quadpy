@@ -38,6 +38,8 @@ from . import triangle
 from . import tetrahedron
 from . import wedge
 
+from . import tools
+
 try:
     import pipdate
 except ImportError:
