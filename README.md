@@ -802,6 +802,15 @@ Some explanations:
    err = orthopy.line.check_coefficients(moments, alpha, beta)
    ```
 
+### Relevant publications
+
+ * [A.H. Stroud and D. Secrest, Gaussian Quadrature Formulas, 1966, Prentice Hall, Series in Automatic Computation](https://books.google.de/books/about/Gaussian_quadrature_formulas.html?id=X7M-AAAAIAAJ)
+ * [Gene H. Golub and John H. Welsch, Calculation of Gauss Quadrature Rules, Mathematics of Computation, Vol. 23, No. 106 (Apr., 1969), pp. 221-230+s1-s10](https://dx.doi.org/10.2307/2004418)
+ * [W. Gautschi, On Generating Orthogonal Polynomials, SIAM J. Sci. and Stat. Comput., 3(3), 289–317](https://doi.org/10.1137/0903018)
+ * [W. Gautschi, How and how not to check Gaussian quadrature formulae, BIT Numerical Mathematics, June 1983, Volume 23, Issue 2, pp 209–216](https://doi.org/10.1007/BF02218441)
+ * [D. Boley and G.H. Golub, A survey of matrix inverse eigenvalue problems, Inverse Problems, 1987, Volume 3, Number 4](https://doi.org/10.1088/0266-5611/3/4/010)
+ * [W. Gautschi, Algorithm 726: ORTHPOL–a package of routines for generating orthogonal polynomials and Gauss-type quadrature rules, ACM Transactions on Mathematical Software (TOMS), Volume 20, Issue 1, March 1994, Pages 21-62](http://doi.org/10.1145/174603.174605)
+
 ### Installation
 
 quadpy is [available from the Python Package Index](https://pypi.python.org/pypi/quadpy/), so with
