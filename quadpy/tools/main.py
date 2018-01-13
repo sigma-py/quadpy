@@ -174,22 +174,20 @@ def chebyshev_modified(nu, a, b):
     return alpha, beta
 
 
-def compute_moments(w, a, b, n, polynomial_class=lambda k, x: x**k):
-    '''Symbolically calculate the first n moments
+def integrate(f, a, b):
+    '''Symbolically calculate the integrals
 
-      int_a^b w(x) P_k(x) dx
+      int_a^b f_k(x) dx.
 
-    where `P_k` is the `k`th polynomials of a specified class. The default
-    settings are monomials, i.e., `P_k(x)=x^k`, but you can provide any
-    function with the signature `p(k, x)`, e.g.,
-    `sympy.polys.orthopolys.legendre_poly` scaled by the inverse of its leading
-    coefficient `(2n)! / 2^n / (n!)^2`.
+    Useful for computing the moments `w(x) * P_k(x)`, e.g.,
+
+    moments = quadpy.tools.compute_moments(
+            lambda x: [x**k for k in range(5)],
+            -1, +1
+            )
     '''
     x = sympy.Symbol('x')
-    return numpy.array([
-        sympy.integrate(w(x) * polynomial_class(k, x), (x, a, b))
-        for k in range(n)
-        ])
+    return numpy.array([sympy.integrate(fun, (x, a, b)) for fun in f(x)])
 
 
 def coefficients_from_gauss(points, weights):

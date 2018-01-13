@@ -277,21 +277,25 @@ def test_gautschi_how_to_and_how_not_to():
     return
 
 
-def test_compute_moments():
-    moments = quadpy.tools.compute_moments(lambda x: 1, -1, +1, 5)
+def test_integrate():
+    moments = quadpy.tools.integrate(
+            lambda x: [x**k for k in range(5)],
+            -1, +1
+            )
     assert (moments == [2, 0, sympy.S(2)/3, 0, sympy.S(2)/5]).all()
 
-    moments = quadpy.tools.compute_moments(
-            lambda x: 1, -1, +1, 5,
-            polynomial_class=quadpy.tools.legendre
+    moments = quadpy.tools.integrate(
+            lambda x: orthopy.line_segment.tree_legendre(
+                x, 4, 'monic', symbolic=True
+                ),
+            -1, +1,
             )
     assert (moments == [2, 0, 0, 0, 0]).all()
 
     # Example from Gautschi's "How to and how not to" article
-    moments = quadpy.tools.compute_moments(
-            lambda x: sympy.exp(-x**3/3),
-            0, sympy.oo,
-            5
+    moments = quadpy.tools.integrate(
+            lambda x: [x**k * sympy.exp(-x**3/3) for k in range(5)],
+            0, sympy.oo
             )
 
     S = numpy.vectorize(sympy.S)
@@ -303,6 +307,7 @@ def test_compute_moments():
         sympy.simplify(m - r) == 0
         for m, r in zip(moments, reference)
         ])
+
     return
 
 
@@ -318,7 +323,7 @@ def test_stieltjes():
 # def test_expt3():
 #     '''Full example from Gautschi's "How to and how not to" article.
 #     '''
-#     # moments = quadpy.tools.compute_moments(
+#     # moments = quadpy.tools.integrate(
 #     #         lambda x: sympy.exp(-x**3/3),
 #     #         0, sympy.oo,
 #     #         31
@@ -342,7 +347,11 @@ def test_stieltjes():
 def test_xk(k):
     n = 10
 
-    moments = quadpy.tools.compute_moments(lambda x: x**k, -1, +1, 2*n)
+    moments = quadpy.tools.integrate(
+            lambda x: [x**(i+k) for i in range(2*n)],
+            -1, +1
+            )
+
     alpha, beta = quadpy.tools.chebyshev(moments)
 
     assert (alpha == 0).all()
@@ -360,7 +369,7 @@ def test_xk(k):
     #             2*n, mode='sympy'
     #             )
 
-    # moments = quadpy.tools.compute_moments(
+    # moments = quadpy.tools.integrate(
     #         lambda x: x**2, -1, +1, 2*n,
     #         polynomial_class=quadpy.tools.legendre
     #         )
