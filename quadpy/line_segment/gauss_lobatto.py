@@ -3,6 +3,8 @@
 import numpy
 import orthopy
 
+from ..tools import scheme_from_rc
+
 
 class GaussLobatto(object):
     '''
@@ -13,7 +15,9 @@ class GaussLobatto(object):
         self.degree = 2*n - 3
         # TODO use symbolic=False instead of float()
         _, _, alpha, beta = \
-            orthopy.line.recurrence_coefficients.jacobi(n, a, b, 'monic')
+            orthopy.line_segment.recurrence_coefficients.jacobi(
+                n, a, b, 'monic'
+                )
         flt = numpy.vectorize(float)
         alpha = flt(alpha)
         beta = flt(beta)
@@ -52,5 +56,5 @@ def _lobatto(alpha, beta, xl1, xl2):
     alphal[-1] = ab[0]
     betal = beta
     betal[-1] = ab[1]
-    x, w = orthopy.line.schemes.custom(alphal, betal, mode='numpy')
+    x, w = scheme_from_rc(alphal, betal, mode='numpy')
     return x, w
