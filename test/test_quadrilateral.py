@@ -94,7 +94,7 @@ def test_scheme(scheme, tol):
 
     def eval_orthopolys(x):
         return numpy.concatenate(
-            orthopy.quadrilateral.tree(scheme.degree+1, x, symbolic=False)
+            orthopy.quadrilateral.tree(x, scheme.degree+1, symbolic=False)
             )
 
     quad = quadpy.quadrilateral.rectangle_points([-1.0, +1.0], [-1.0, +1.0])
