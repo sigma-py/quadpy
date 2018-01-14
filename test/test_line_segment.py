@@ -154,7 +154,6 @@ def test_chebyshev1_mpmath():
     scheme = quadpy.line_segment.ChebyshevGauss1(
             4, mode='mpmath', decimal_places=50
             )
-
     tol = 1.0e-50
 
     x1 = mp.cos(3 * mp.pi/8)
@@ -162,7 +161,7 @@ def test_chebyshev1_mpmath():
     assert (abs(scheme.points - [-x2, -x1, +x1, +x2]) < tol).all()
 
     w = mp.pi / 4
-    tol = 1.0e-50
+    tol = 1.0e-49
     assert (abs(scheme.weights - [w, w, w, w]) < tol).all()
     return
 
@@ -185,7 +184,7 @@ def test_chebyshev2_mpmath():
 
 
 def test_jacobi_mpmath():
-    scheme = quadpy.line_segment.Jacobi(
+    scheme = quadpy.line_segment.GaussJacobi(
             4, 1, 1, mode='mpmath', decimal_places=51
             )
 

@@ -334,9 +334,11 @@ def _gauss_from_coefficients_mpmath(alpha, beta, decimal_places):
     d = mp.matrix(alpha)
     tridiag_eigen(mp, d, b, z)
 
-    # nx1 matrix -> list of sympy floats
-    x = numpy.array([sympy.Float(xx) for xx in d])
-    w = numpy.array([beta[0] * mp.power(ww, 2) for ww in z])
+    # nx1 matrix -> list of mpf
+    x = numpy.array([mp.mpf(sympy.N(xx, decimal_places)) for xx in d])
+    w = numpy.array([
+        mp.mpf(sympy.N(beta[0], decimal_places)) * mp.power(ww, 2) for ww in z
+        ])
     return x, w
 
 
