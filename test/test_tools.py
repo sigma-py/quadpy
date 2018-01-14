@@ -8,10 +8,11 @@ import math
 
 from mpmath import mp
 import numpy
-import orthopy
 import pytest
 import scipy
 import sympy
+
+import orthopy
 
 import quadpy
 

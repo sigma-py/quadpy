@@ -42,15 +42,9 @@ def test_hermite_mpmath():
 
     tol = 1.0e-50
 
-    print(scheme.points)
-
     x1 = mp.sqrt((3 - mp.sqrt(6)) / 2)
     x2 = mp.sqrt((3 + mp.sqrt(6)) / 2)
-    print(x1)
-    print(x2)
     assert (abs(scheme.points - [-x2, -x1, +x1, +x2]) < tol).all()
-
-    print(scheme.weights)
 
     w1 = mp.sqrt(mp.pi) / 4 / (3 - mp.sqrt(6))
     w2 = mp.sqrt(mp.pi) / 4 / (3 + mp.sqrt(6))

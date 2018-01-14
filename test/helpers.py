@@ -24,11 +24,12 @@ def check_degree_1d(
     return numpy.where(is_larger)[0] - 1 if any(is_larger) else max_degree
 
 
+# pylint: disable=too-many-locals
 def check_degree(quadrature, exact, dim, max_degree, tol=1.0e-14):
     exponents = get_all_exponents(dim, max_degree)
     # flatten list
-    exponents = [item for sublist in exponents for item in sublist]
-    exponents = numpy.array(exponents)
+    exponents = \
+        numpy.array([item for sublist in exponents for item in sublist])
 
     flt = numpy.vectorize(float)
     exact_vals = flt([exact(k) for k in exponents])
@@ -43,8 +44,8 @@ def check_degree(quadrature, exact, dim, max_degree, tol=1.0e-14):
 
     vals = quadrature(evaluate_all_monomials)
 
-    print(exact_vals)
-    print(vals)
+    # print(exact_vals)
+    # print(vals)
 
     # check relative error
     # The allowance is quite large here, 1e5 over machine precision.
