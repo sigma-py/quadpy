@@ -97,7 +97,7 @@ def test_scheme(scheme, tol):
     def eval_orthopolys(x):
         bary = numpy.array([x[0], x[1], 1.0-x[0]-x[1]])
         out = numpy.concatenate(orthopy.triangle.tree(
-            scheme.degree+1, bary, 'normal', symbolic=False
+            bary, scheme.degree+1, 'normal', symbolic=False
             ))
         return out
 
