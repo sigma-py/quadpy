@@ -292,7 +292,6 @@ def _sympy_tridiag(a, b):
 
 
 def _gauss_from_coefficients_sympy(alpha, beta):
-    assert isinstance(alpha[0], sympy.Rational)
     # Construct the triadiagonal matrix [sqrt(beta), alpha, sqrt(beta)]
     A = _sympy_tridiag(alpha, [sympy.sqrt(bta) for bta in beta])
 
