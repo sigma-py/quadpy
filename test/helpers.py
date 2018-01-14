@@ -43,8 +43,8 @@ def check_degree(quadrature, exact, dim, max_degree, tol=1.0e-14):
 
     vals = quadrature(evaluate_all_monomials)
 
-    # print(exact_vals)
-    # print(vals)
+    print(exact_vals)
+    print(vals)
 
     # check relative error
     # The allowance is quite large here, 1e5 over machine precision.

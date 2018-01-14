@@ -154,14 +154,13 @@ val = quadpy.line_segment.integrate(
 ### 1D half-space with weight function exp(-r)
 <img src="https://nschloe.github.io/quadpy/e1r.png" width="50%">
 
- * Gauss-Laguerre (via
-   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.laguerre.laggauss.html), arbitrary degree)
+ * Generalized Gauss-Laguerre
 
 Example:
 ```python
 val = quadpy.e1r.integrate(
     lambda x: x**2,
-    quadpy.e1r.GaussLaguerre(5)
+    quadpy.e1r.GaussLaguerre(5, alpha=0)
     )
 ```
 

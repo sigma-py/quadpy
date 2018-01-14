@@ -5,29 +5,6 @@ from mpmath import mp
 import quadpy
 
 
-def test_laguerre():
-    scheme = quadpy.e1r.Laguerre(2, mode='mpmath', decimal_places=51)
-
-    tol = 1.0e-50
-
-    x1 = 2 - mp.sqrt(2)
-    x2 = 2 + mp.sqrt(2)
-    assert (abs(scheme.points - [x1, x2]) < tol).all()
-
-    w1 = (2 + mp.sqrt(2)) / 4
-    w2 = (2 - mp.sqrt(2)) / 4
-    assert (abs(scheme.weights - [w1, w2]) < tol).all()
-    return
-
-
-def test_laguerre_generalized():
-    quadpy.e1r.schemes.laguerre_generalized(
-            2, a=1, decimal_places=51
-            )
-    # TODO get reference values
-    return
-
-
 def test_hermite():
     scheme = quadpy.e1r2.Hermite(4, mode='mpmath', decimal_places=51)
 

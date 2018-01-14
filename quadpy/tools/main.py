@@ -343,18 +343,24 @@ def _gauss_from_coefficients_mpmath(alpha, beta, decimal_places):
 
 
 def _gauss_from_coefficients_numpy(alpha, beta):
-    assert isinstance(alpha, numpy.ndarray)
-    assert isinstance(beta, numpy.ndarray)
+    # assert isinstance(alpha, numpy.ndarray)
+    # assert isinstance(beta, numpy.ndarray)
+    alpha = alpha.astype(numpy.float64)
+    beta = beta.astype(numpy.float64)
 
-    # eigh_tridiagonal is only available from scipy 1.0.0
-    try:
-        from scipy.linalg import eigh_tridiagonal
-    except ImportError:
-        # Use eig_banded
-        x, V = eig_banded(numpy.vstack((numpy.sqrt(beta), alpha)), lower=False)
-        w = beta[0]*scipy.real(scipy.power(V[0, :], 2))
-    else:
-        x, V = eigh_tridiagonal(alpha, numpy.sqrt(beta[1:]))
-        w = beta[0] * V[0, :]**2
+    x, V = eig_banded(numpy.vstack((numpy.sqrt(beta), alpha)), lower=False)
+    w = beta[0]*scipy.real(scipy.power(V[0, :], 2))
+    # eigh_tridiagonal is only available from scipy 1.0.0, and has problems
+    # with precision. TODO find out how/why/what
+    # try:
+    #     from scipy.linalg import eigh_tridiagonal
+    # except ImportError:
+    #     # Use eig_banded
+    #     x, V = \
+    #         eig_banded(numpy.vstack((numpy.sqrt(beta), alpha)), lower=False)
+    #     w = beta[0]*scipy.real(scipy.power(V[0, :], 2))
+    # else:
+    #     x, V = eigh_tridiagonal(alpha, numpy.sqrt(beta[1:]))
+    #     w = beta[0] * V[0, :]**2
 
     return x, w

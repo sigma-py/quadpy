@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
+import orthopy
+
+from ..tools import scheme_from_rc
 
 
 class GaussLaguerre(object):
@@ -9,7 +11,18 @@ class GaussLaguerre(object):
 
         int_0^{+inf} exp(-x) f(x) dx.
     '''
-    def __init__(self, n):
+    def __init__(self, n, alpha=0, mode='numpy', decimal_places=None):
         self.degree = 2*n - 1
-        self.points, self.weights = numpy.polynomial.laguerre.laggauss(n)
+
+        _, _, a, b = orthopy.e1r.recurrence_coefficients(
+                n, alpha, 'monic', symbolic=True
+                )
+        print(a, a.dtype)
+        print(b, b.dtype)
+        self.points, self.weights = scheme_from_rc(
+                a, b, mode=mode, decimal_places=decimal_places
+                )
+
+        print(self.points)
+        print(self.weights)
         return
