@@ -17,12 +17,7 @@ class GaussLaguerre(object):
         _, _, a, b = orthopy.e1r.recurrence_coefficients(
                 n, alpha, 'monic', symbolic=True
                 )
-        print(a, a.dtype)
-        print(b, b.dtype)
         self.points, self.weights = scheme_from_rc(
                 a, b, mode=mode, decimal_places=decimal_places
                 )
-
-        print(self.points)
-        print(self.weights)
         return

@@ -55,8 +55,18 @@ def test_laguerre_mpmath():
 
 
 def test_laguerre_generalized_mpmath():
-    quadpy.e1r.GaussLaguerre(2, alpha=1, mode='mpmath', decimal_places=51)
-    # TODO get reference values
+    scheme = \
+        quadpy.e1r.GaussLaguerre(2, alpha=1, mode='mpmath', decimal_places=51)
+
+    tol = 1.0e-50
+
+    x1 = 3 - mp.sqrt(3)
+    x2 = 3 + mp.sqrt(3)
+    assert (abs(scheme.points - [x1, x2]) < tol).all()
+
+    w1 = 2/((-1 + mp.sqrt(3))**2 * (1 + 2/(-1 + mp.sqrt(3))**2))
+    w2 = 2/((-1 - mp.sqrt(3))**2 * (1 + 2/(-1 - mp.sqrt(3))**2))
+    assert (abs(scheme.weights - [w1, w2]) < tol).all()
     return
 
 
