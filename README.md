@@ -127,6 +127,7 @@ approximation of the integral over the domain.
    [Waldvogel](https://doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
  * Fejér-type-2 (after
    [Waldvogel](https://doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
+ * Gauss-Jacobi
  * Gauss-Legendre (via
    [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.legendre.leggauss.html), arbitrary degree)
  * Gauss-Lobatto (arbitrary degree)
