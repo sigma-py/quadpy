@@ -9,6 +9,7 @@ class GaussJacobi(object):
     '''
     Gauss-Jacobi quadrature.
     '''
+    # pylint: disable=too-many-arguments
     def __init__(self, n, alpha, beta, mode='numpy', decimal_places=None):
 
         self.degree = 2*n - 1

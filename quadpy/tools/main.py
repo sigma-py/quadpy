@@ -35,6 +35,7 @@ from mpmath.matrices.eigen_symmetric import tridiag_eigen
 import numpy
 import scipy
 from scipy.linalg import eig_banded
+# pylint: disable=no-name-in-module
 from scipy.linalg.lapack import get_lapack_funcs
 import sympy
 
