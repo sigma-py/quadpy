@@ -60,7 +60,7 @@ def _integrate_exact(f, triangle):
     + [(quadpy.triangle.LynessJespersen(k), 1.0e-11) for k in range(1, 22)]
     + [(quadpy.triangle.NewtonCotesClosed(k), 1.0e-14) for k in range(1, 6)]
     + [(quadpy.triangle.NewtonCotesOpen(k), 1.0e-13) for k in range(6)]
-    + [(quadpy.triangle.Papanicolopulos('fs', k), 1.0e-14) for k in range(9)]
+    + [(quadpy.triangle.Papanicolopulos('fs', k), 1.0e-13) for k in range(9)]
     + [(quadpy.triangle.Papanicolopulos('rot', k), 1.0e-14)
        # The first 8 schemes are flawed by round-off error
        for k in range(8, 18)
