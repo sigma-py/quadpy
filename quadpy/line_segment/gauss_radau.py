@@ -3,6 +3,8 @@
 import numpy
 import orthopy
 
+from ..tools import scheme_from_rc
+
 
 class GaussRadau(object):
     '''Gauss-Radau quadrature.
@@ -11,7 +13,9 @@ class GaussRadau(object):
         assert n >= 2
         self.degree = 2*n - 1
         _, _, alpha, beta = \
-            orthopy.line.recurrence_coefficients.jacobi(n, a, b, 'monic')
+            orthopy.line_segment.recurrence_coefficients.jacobi(
+                    n, a, b, 'monic'
+                    )
         flt = numpy.vectorize(float)
         alpha = flt(alpha)
         beta = flt(beta)
@@ -39,5 +43,5 @@ def _radau(alpha, beta, xr):
     delta = solve_banded((1, 1), J, f)
     alphar = alpha.copy()
     alphar[-1] = xr + delta[-1]
-    x, w = orthopy.line.schemes.custom(alphar, beta, mode='numpy')
+    x, w = scheme_from_rc(alphar, beta, mode='numpy')
     return x, w
