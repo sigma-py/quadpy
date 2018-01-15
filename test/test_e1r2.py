@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+from mpmath import mp
 import numpy
 import pytest
 import quadpy
@@ -33,6 +34,22 @@ def test_scheme(scheme, tol):
     )
 def test_show(scheme):
     quadpy.e1r2.show(scheme)
+    return
+
+
+def test_hermite_mpmath():
+    scheme = quadpy.e1r2.GaussHermite(4, mode='mpmath', decimal_places=51)
+
+    tol = 1.0e-50
+
+    x1 = mp.sqrt((3 - mp.sqrt(6)) / 2)
+    x2 = mp.sqrt((3 + mp.sqrt(6)) / 2)
+    assert (abs(scheme.points - [-x2, -x1, +x1, +x2]) < tol).all()
+
+    w1 = mp.sqrt(mp.pi) / 4 / (3 - mp.sqrt(6))
+    w2 = mp.sqrt(mp.pi) / 4 / (3 + mp.sqrt(6))
+
+    assert (abs(scheme.weights - [w2, w1, w1, w2]) < tol).all()
     return
 
 

@@ -2,6 +2,7 @@
 #
 import math
 
+from mpmath import mp
 import numpy
 import pytest
 
@@ -129,6 +130,73 @@ def test_integrate_split():
         )
     reference = 0.961715
     assert abs(val - reference) < 1.0e-3 * reference
+    return
+
+
+def test_legendre_mpmath():
+    scheme = quadpy.line_segment.GaussLegendre(
+            4, mode='mpmath', decimal_places=50
+            )
+
+    tol = 1.0e-50
+
+    x1 = mp.sqrt(mp.mpf(3)/7 - mp.mpf(2)/7 * mp.sqrt(mp.mpf(6)/5))
+    x2 = mp.sqrt(mp.mpf(3)/7 + mp.mpf(2)/7 * mp.sqrt(mp.mpf(6)/5))
+    assert (abs(scheme.points - [-x2, -x1, +x1, +x2]) < tol).all()
+
+    w1 = (18 + mp.sqrt(30)) / 36
+    w2 = (18 - mp.sqrt(30)) / 36
+    assert (abs(scheme.weights - [w2, w1, w1, w2]) < tol).all()
+    return
+
+
+def test_chebyshev1_mpmath():
+    scheme = quadpy.line_segment.ChebyshevGauss1(
+            4, mode='mpmath', decimal_places=50
+            )
+    tol = 1.0e-50
+
+    x1 = mp.cos(3 * mp.pi/8)
+    x2 = mp.cos(1 * mp.pi/8)
+    assert (abs(scheme.points - [-x2, -x1, +x1, +x2]) < tol).all()
+
+    w = mp.pi / 4
+    tol = 1.0e-49
+    assert (abs(scheme.weights - [w, w, w, w]) < tol).all()
+    return
+
+
+def test_chebyshev2_mpmath():
+    scheme = quadpy.line_segment.ChebyshevGauss2(
+            4, mode='mpmath', decimal_places=51
+            )
+
+    tol = 1.0e-50
+
+    x1 = mp.cos(2 * mp.pi/5)
+    x2 = mp.cos(1 * mp.pi/5)
+    assert (abs(scheme.points - [-x2, -x1, +x1, +x2]) < tol).all()
+
+    w1 = mp.pi / 5 * mp.sin(2 * mp.pi/5)**2
+    w2 = mp.pi / 5 * mp.sin(1 * mp.pi/5)**2
+    assert (abs(scheme.weights - [w2, w1, w1, w2]) < tol).all()
+    return
+
+
+def test_jacobi_mpmath():
+    scheme = quadpy.line_segment.GaussJacobi(
+            4, 1, 1, mode='mpmath', decimal_places=51
+            )
+
+    tol = 1.0e-50
+
+    x1 = mp.sqrt((7 - 2*mp.sqrt(7)) / 21)
+    x2 = mp.sqrt((7 + 2*mp.sqrt(7)) / 21)
+    assert (abs(scheme.points - [-x2, -x1, +x1, +x2]) < tol).all()
+
+    w1 = (5 + mp.sqrt(7)) / 15
+    w2 = (5 - mp.sqrt(7)) / 15
+    assert (abs(scheme.weights - [w2, w1, w1, w2]) < tol).all()
     return
 
 

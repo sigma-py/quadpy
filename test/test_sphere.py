@@ -83,8 +83,9 @@ def test_scheme_cartesian(scheme, tol):
     def sph_tree_cartesian(x):
         flt = numpy.vectorize(float)
         azimuthal, polar = cartesian_to_spherical(flt(x).T).T
-        return numpy.concatenate(orthopy.sphere.sph_tree(
-            scheme.degree+1, polar, azimuthal, normalization='quantum mechanic'
+        return numpy.concatenate(orthopy.sphere.tree_sph(
+            polar, azimuthal, scheme.degree+1,
+            standardization='quantum mechanic'
             ))
 
     assert scheme.points.dtype == numpy.float64, scheme.name
@@ -149,8 +150,9 @@ def test_scheme_spherical(scheme, tol):
     exact_val[0] = numpy.sqrt(4*numpy.pi)
 
     def sph_tree(azimuthal, polar):
-        return numpy.concatenate(orthopy.sphere.sph_tree(
-            scheme.degree+1, polar, azimuthal, normalization='quantum mechanic'
+        return numpy.concatenate(orthopy.sphere.tree_sph(
+            polar, azimuthal, scheme.degree+1,
+            standardization='quantum mechanic'
             ))
 
     vals = quadpy.sphere.integrate_spherical(sph_tree, rule=scheme)
