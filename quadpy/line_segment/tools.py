@@ -14,7 +14,8 @@ def integrate(f, interval, scheme, dot=numpy.dot):
         + numpy.multiply.outer(0.5 * (1.0 + xi), interval[1])
     x = x.T
     diff = interval[1] - interval[0]
-    len_intervals = numpy.sqrt(numpy.einsum('...j,...j->...', diff, diff))
+    # numpy.sum is slower than dot() and friends, but allows for scalar input.
+    len_intervals = numpy.sqrt(numpy.sum(diff**2, axis=-1))
     # The factor 0.5 is from the length of the reference line [-1, 1].
     return 0.5 * len_intervals * dot(f(x), scheme.weights)
 
