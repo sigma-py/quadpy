@@ -16,8 +16,7 @@ jobs:
       - run: pip3 install -r test_requirements.txt
       - run: pip3 install .
       # lint
-      - run: pylint quadpy/
-      - run: pylint test/*.py
+      - run: pylint quadpy/ test/*.py
       # make sure that rst converts correctly
       - run: pip3 install docutils pygments
       - run: make README.rst
