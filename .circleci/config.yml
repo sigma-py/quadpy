@@ -14,8 +14,8 @@ jobs:
       - checkout
       - run: pip3 install -r test_requirements.txt
       - run: pip3 install .[all]
-      # lint
-      - run: pylint setup.py quadpy/ test/*.py
+      # lint; <https://github.com/PyCQA/pylint/issues/2059> test/*.py
+      - run: pylint setup.py quadpy/
       # The tests
       - run: cd test/ && MPLBACKEND=Agg pytest --cov quadpy
       # submit to codecov
