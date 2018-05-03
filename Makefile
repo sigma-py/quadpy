@@ -25,4 +25,4 @@ clean:
 	@rm -rf *.egg-info/ build/ dist/ MANIFEST
 
 lint:
-	pylint setup.py matplotlib2tikz/ test/*.py
+	pylint setup.py quadpy/ test/*.py
