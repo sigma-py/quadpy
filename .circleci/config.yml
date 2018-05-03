@@ -1,36 +1,23 @@
 version: 2
 
 jobs:
-
   build:
-    working_directory: ~/quadpy
+    working_directory: ~/work
     docker:
-      - image: ubuntu:17.10
+      - image: ubuntu:18.04
     steps:
       - run: apt-get update
-      # don't install sympy with apt: it pulls in texlive which takes for ever
+      # don't install sympy with apt: it pulls in texlive which takes forever
       # to download and install
-      - run: apt-get install -y git python3-pip pandoc
+      - run: apt-get install -y git python3-pip
       - run: pip3 install -U pytest pytest-cov pylint
       - checkout
       - run: pip3 install -r test_requirements.txt
-      - run: pip3 install .
+      - run: pip3 install .[all]
       # lint
-      - run: pylint quadpy/ test/*.py
-      # make sure that rst converts correctly
-      - run: pip3 install docutils pygments
-      - run: make README.rst
+      - run: pylint setup.py quadpy/ test/*.py
       # The tests
       - run: cd test/ && MPLBACKEND=Agg pytest --cov quadpy
       # submit to codecov
       - run: apt-get install -y curl
       - run: bash <(curl -s https://codecov.io/bash)
-
-# workflow builds don't support forked PRs yet, cf.
-# <https://circleci.com/docs/2.0/faq/#can-i-build-fork-prs-using-workflows>.
-# workflows:
-#   version: 2
-#   build-and-test:
-#     jobs:
-#       - python2
-#       - python3
