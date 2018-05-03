@@ -42,6 +42,7 @@ def _integrate_exact(f, hexa):
         ])
     det_J = sympy.det(J)
     # we cannot use abs(), see <https://github.com/sympy/sympy/issues/4212>.
+    # pylint: disable=invalid-unary-operand-type
     abs_det_J = sympy.Piecewise((det_J, det_J >= 0), (-det_J, det_J < 0))
     g_xi = f(pxi)
     exact = \
