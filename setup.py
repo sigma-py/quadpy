@@ -14,14 +14,7 @@ with open(os.path.join(base_dir, 'quadpy', '__about__.py'), 'rb') as f:
 
 
 def read(fname):
-    try:
-        content = codecs.open(
-            os.path.join(os.path.dirname(__file__), fname),
-            encoding='utf-8'
-            ).read()
-    except FileNotFoundError:
-        content = ''
-    return content
+    return codecs.open(os.path.join(base_dir, fname), encoding='utf-8').read()
 
 
 setup(
@@ -29,19 +22,19 @@ setup(
     version=about['__version__'],
     packages=find_packages(),
     url='https://github.com/nschloe/quadpy',
-    download_url='https://pypi.python.org/pypi/quadpy',
     author=about['__author__'],
     author_email=about['__email__'],
     install_requires=[
         'matplotlib',
         'numpy',
         'orthopy >=0.5, <0.6',
-        'pipdate',
+        'pipdate >=0.2.0, <0.3.0',
         'scipy',
         'sympy'
         ],
-    description='numerical integration, quadrature for various shapes',
-    long_description=read('README.rst'),
+    description='Numerical integration, quadrature for various shapes',
+    long_description=read('README.md'),
+    long_description_content_type='text/markdown',
     license=about['__license__'],
     classifiers=[
         about['__license__'],
