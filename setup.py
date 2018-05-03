@@ -19,7 +19,7 @@ def read(fname):
             os.path.join(os.path.dirname(__file__), fname),
             encoding='utf-8'
             ).read()
-    except FileNotFoundError:
+    except IOError:
         content = ''
     return content
 
@@ -36,7 +36,7 @@ setup(
         'matplotlib',
         'numpy',
         'orthopy >=0.5, <0.6',
-        'pipdate',
+        'pipdate >=0.2.0, <0.3.0',
         'scipy',
         'sympy'
         ],
