@@ -9,12 +9,11 @@ README.rst: README.md
 	python3 setup.py check -r -s || exit 1
 
 # https://packaging.python.org/distributing/#id72
-upload: setup.py README.rst
+upload: setup.py
 	# Make sure we're on the master branch
 	@if [ "$(shell git rev-parse --abbrev-ref HEAD)" != "master" ]; then exit 1; fi
 	rm -f dist/*
 	python3 setup.py bdist_wheel --universal
-	gpg --detach-sign -a dist/*
 	twine upload dist/*
 
 tag:
@@ -26,4 +25,7 @@ tag:
 publish: tag upload
 
 clean:
-	rm -f README.rst
+	@find . | grep -E "(__pycache__|\.pyc|\.pyo$\)" | xargs rm -rf
+
+lint:
+	pylint setup.py matplotlib2tikz/ test/*.py
