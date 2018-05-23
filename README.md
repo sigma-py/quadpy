@@ -87,12 +87,13 @@ that a wide variety of function, even seemingly difficult ones with
 _arbitrary_ precision.
 ```python
 from mpmath import mp
+import sympy
 
 mp.dps = 50
 
 val, error_estimate = quadpy.line_segment.tanh_sinh(
-        lambda x: mp.exp(t) * sympy.cos(t),
-        [0, mp.pi/2],
+        lambda x: mp.exp(x) * sympy.cos(x),
+        0, mp.pi/2,
         1.0e-50  # !
         )
 ```
