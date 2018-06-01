@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 
-from .felippa import *
+from .felippa import Felippa
 
-from .tools import *
+from .tools import integrate, show
+
+__all__ = ["Felippa", "integrate", "show"]

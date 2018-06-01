@@ -4,5 +4,6 @@ from .rabinowitz_richter import RabinowitzRichter
 from .stroud import Stroud
 from .stroud_secrest import StroudSecrest
 
+from .tools import show, plot, integrate
 
-from .tools import *
+__all__ = ["RabinowitzRichter", "Stroud", "StroudSecrest", "show", "plot", "integrate"]
