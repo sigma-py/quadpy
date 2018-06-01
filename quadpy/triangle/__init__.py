@@ -31,5 +31,41 @@ from .witherden_vincent import WitherdenVincent
 from .xiao_gimbutas import XiaoGimbutas
 from .zhang_cui_liu import ZhangCuiLiu
 
+from .tools import show, plot, integrate_adaptive
 
-from .tools import *
+__all__ = [
+    "AlbrechtCollatz",
+    "Centroid",
+    "CoolsHaegemans",
+    "Cubtri",
+    "BerntsenEspelid",
+    "Dunavant",
+    "Gatermann",
+    "GrundmannMoeller",
+    "HammerMarloweStroud",
+    "HammerStroud",
+    "Hillion",
+    "LaursenGellert",
+    "Lether",
+    "LiuVinokur",
+    "LynessJespersen",
+    "NewtonCotesClosed",
+    "NewtonCotesOpen",
+    "Papanicolopulos",
+    "SevenPoint",
+    "Strang",
+    "Stroud",
+    "TaylorWingateBos",
+    "Triex",
+    "Vertex",
+    "VioreanuRokhlin",
+    "Walkington",
+    "WandzuraXiao",
+    "WilliamsShunnJameson",
+    "WitherdenVincent",
+    "XiaoGimbutas",
+    "ZhangCuiLiu",
+    "show",
+    "plot",
+    "integrate_adaptive",
+]
