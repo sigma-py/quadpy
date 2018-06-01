@@ -6,17 +6,17 @@ from .helpers import untangle2
 
 
 class CoolsHaegemans(object):
-    '''
+    """
     R. Cools, A. Haegemans,
     Construction of minimal cubature formulae for the square and the triangle
     using invariant theory,
     Department of Computer Science, K.U.Leuven,
     TW Reports vol:TW96, Sept. 1987,
     <https://lirias.kuleuven.be/handle/123456789/131869>.
-    '''
+    """
 
     def __init__(self, index, mpmath=False):
-        self.name = 'CH(%d)' % index
+        self.name = "CH(%d)" % index
         assert index == 1
         self.degree = 8
 
@@ -24,14 +24,34 @@ class CoolsHaegemans(object):
 
         mp.dps = 20
         data = {
-            'rot': [
-                [flt('0.16058343856681218798E-09'), flt('0.34579201116826902882E+00'), flt('0.36231682215692616667E+01')],
-                [flt('0.26530624434780379347E-01'), flt('0.65101993458939166328E-01'), flt('0.87016510156356306078E+00')],
-                [flt('0.29285717640155892159E-01'), flt('0.65177530364879570754E+00'), flt('0.31347788752373300717E+00')],
-                [flt('0.43909556791220782402E-01'), flt('0.31325121067172530696E+00'), flt('0.63062143431895614010E+00')],
-                [flt('0.66940767639916174192E-01'), flt('0.51334692063945414949E+00'), flt('0.28104124731511039057E+00')],
+            "rot": [
+                [
+                    flt("0.16058343856681218798E-09"),
+                    flt("0.34579201116826902882E+00"),
+                    flt("0.36231682215692616667E+01"),
                 ],
-            }
+                [
+                    flt("0.26530624434780379347E-01"),
+                    flt("0.65101993458939166328E-01"),
+                    flt("0.87016510156356306078E+00"),
+                ],
+                [
+                    flt("0.29285717640155892159E-01"),
+                    flt("0.65177530364879570754E+00"),
+                    flt("0.31347788752373300717E+00"),
+                ],
+                [
+                    flt("0.43909556791220782402E-01"),
+                    flt("0.31325121067172530696E+00"),
+                    flt("0.63062143431895614010E+00"),
+                ],
+                [
+                    flt("0.66940767639916174192E-01"),
+                    flt("0.51334692063945414949E+00"),
+                    flt("0.28104124731511039057E+00"),
+                ],
+            ]
+        }
         # elif index == 2:
         #     self.degree = 10
         #     data = [

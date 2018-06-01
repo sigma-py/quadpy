@@ -6,19 +6,20 @@ from ..helpers import untangle, fsd, z
 
 
 class Stenger(object):
-    '''
+    """
     Review: Tabulation of Certain Fully Symmetric Numerical Integration
     Formulas of Degree 7, 9 and 11 by Frank Stenger,
     Mathematics of Computation,
     Vol. 25, No. 116 (Oct., 1971), pp. 935+s58-s125,
     <https://www.jstor.org/stable/2004361>.
-    '''
+    """
+
     def __init__(self, n, degree, variant):
         self.degree = degree
         self.dim = n
 
         if degree == 7:
-            if variant == 'a':
+            if variant == "a":
                 if n == 3:
                     u = 0.524647623275290
                     v = 0.165068012388578e1
@@ -29,7 +30,7 @@ class Stenger(object):
                         -0.604719151221535e1,
                         +0.234381399489666e-1,
                         +0.417194501880647e1,
-                        ]
+                    ]
                 elif n == 4:
                     u = 0.524647623275290
                     v = 0.165068012388578e1
@@ -40,7 +41,7 @@ class Stenger(object):
                         -0.255075279116885e2,
                         +0.415430214106084e-1,
                         +0.739458001434961e1,
-                        ]
+                    ]
                 # TODO find the mistake here
                 # elif n == 5:
                 #     u = 0.524647623275290
@@ -64,9 +65,9 @@ class Stenger(object):
                         -0.173057295296448e3,
                         +0.130511250871491,
                         +0.232307582494626e2,
-                        ]
+                    ]
             else:
-                assert variant == 'b'
+                assert variant == "b"
                 if n == 3:
                     u = 0.165068012388578e1
                     v = 0.524647623275290
@@ -77,7 +78,7 @@ class Stenger(object):
                         +0.148361823143070e-1,
                         +0.229669852539758e1,
                         +0.430097881732984e-2,
-                        ]
+                    ]
                 elif n == 4:
                     u = 0.165068012388578e1
                     v = 0.524647623275290
@@ -88,7 +89,7 @@ class Stenger(object):
                         +0.110498755408511e-1,
                         +0.407079214570997e1,
                         +0.762328646743931e-2,
-                        ]
+                    ]
                 elif n == 5:
                     u = 0.165068012388578e1
                     v = 0.524647623275290
@@ -99,7 +100,7 @@ class Stenger(object):
                         -0.743845245712926e-2,
                         +0.721529121489956e1,
                         +0.135119234557687e-1,
-                        ]
+                    ]
                 else:
                     assert n == 6
                     u = 0.165068012388578e1
@@ -111,7 +112,7 @@ class Stenger(object):
                         -0.610828352270520e-1,
                         +0.127887706992535e2,
                         +0.239492607623178e-1,
-                        ]
+                    ]
 
             data = [
                 (B[0], z(n)),
@@ -120,9 +121,9 @@ class Stenger(object):
                 (B[3], fsd(n, (u, 2))),
                 (B[4], fsd(n, (v, 2))),
                 (B[5], fsd(n, (u, 3))),
-                ]
+            ]
         elif degree == 9:
-            if variant == 'a':
+            if variant == "a":
                 if n == 3:
                     u = 0.202018287045609e1
                     v = 0.958572464613819
@@ -135,7 +136,7 @@ class Stenger(object):
                         0.139208199920793e-1,
                         0.235223454595606e-3,
                         0.915390713080008e-1,
-                        ]
+                    ]
                 elif n == 4:
                     u = 0.202018287045609e1
                     v = 0.958572464613819
@@ -149,7 +150,7 @@ class Stenger(object):
                         +0.138974239307094e-3,
                         +0.162248779448181,
                         +0.138974239307094e-3,
-                        ]
+                    ]
                 elif n == 5:
                     u = 0.202018287045609e1
                     v = 0.958572464613819
@@ -163,7 +164,7 @@ class Stenger(object):
                         -0.246325425636523e-3,
                         +0.287578473937648,
                         +0.246325425636523e-3,
-                        ]
+                    ]
                 else:
                     assert n == 6
                     u = 0.202018287045609e1
@@ -178,9 +179,9 @@ class Stenger(object):
                         -0.130980134773619e-2,
                         +0.509719573568315,
                         +0.436600449245395e-3,
-                        ]
+                    ]
             else:
-                assert variant == 'b'
+                assert variant == "b"
                 if n == 4:
                     u = 0.958572464613819
                     v = 0.202018287045609e1
@@ -193,8 +194,8 @@ class Stenger(object):
                         +0.246740110027234e-1,
                         +0.540829264827270e-1,
                         +0.416922717921281e-3,
-                        +0.540829264827269e-1
-                        ]
+                        +0.540829264827269e-1,
+                    ]
                 elif n == 5:
                     u = 0.958572464613819
                     v = 0.202018287045609e1
@@ -208,7 +209,7 @@ class Stenger(object):
                         -0.958594913125490e-1,
                         +0.738976276909568e-3,
                         +0.958594913125492e-1,
-                        ]
+                    ]
                 else:
                     assert n == 6
                     u = 0.958572464613819
@@ -223,7 +224,7 @@ class Stenger(object):
                         -0.509719573568314,
                         +0.130980134773618e-2,
                         +0.169906524522772,
-                        ]
+                    ]
 
             data = [
                 (B[0], z(n)),
@@ -234,15 +235,13 @@ class Stenger(object):
                 (B[5], fsd(n, (u, 1), (v, 1))),
                 (B[6], fsd(n, (u, 3))),
                 (B[7], fsd(n, (v, 3))),
-                ]
+            ]
             if n > 3:
-                data += [
-                    (B[8], fsd(n, (u, 4)))
-                    ]
+                data += [(B[8], fsd(n, (u, 4)))]
 
         else:
             assert degree == 11
-            if variant == 'a':
+            if variant == "a":
                 if n == 3:
                     u = 0.235060497367449e1
                     v = 0.436077411927617
@@ -261,7 +260,7 @@ class Stenger(object):
                         +0.326777873717691e1,
                         +0.968469949206802e-2,
                         +0.789754514877422e-3,
-                        ]
+                    ]
                 else:
                     assert n == 4
                     u = 0.235060497367449e1
@@ -283,7 +282,7 @@ class Stenger(object):
                         +0.139980343116450e-2,
                         +0.101552487093372e-4,
                         +0.222435922356439e2,
-                        ]
+                    ]
                 # TODO find the mistake here
                 # else:
                 #     assert n == 5
@@ -309,7 +308,7 @@ class Stenger(object):
                 #         +0.331725011358320e-5,
                 #         ]
             else:
-                assert variant == 'b'
+                assert variant == "b"
                 if n == 3:
                     u = 0.235060497367449e1
                     v = 0.133584907401370e1
@@ -328,7 +327,7 @@ class Stenger(object):
                         +0.804353953375146e-2,
                         +0.393451849690453e1,
                         +0.171183493169724e-3,
-                        ]
+                    ]
                 elif n == 4:
                     u = 0.235060497367449e1
                     v = 0.133584907401370e1
@@ -349,7 +348,7 @@ class Stenger(object):
                         +0.303414841680135e-3,
                         -0.314574391771792e-5,
                         +0.409103498175100e-2,
-                        ]
+                    ]
                 else:
                     assert n == 5
                     u = 0.235060497367449e1
@@ -372,7 +371,7 @@ class Stenger(object):
                         -0.122101861480881e-4,
                         +0.725117070759373e-2,
                         +0.331725011358320e-5,
-                        ]
+                    ]
 
             data = [
                 (B[0], z(n)),
@@ -388,16 +387,11 @@ class Stenger(object):
                 (B[10], fsd(n, (v, 3))),
                 (B[11], fsd(n, (w, 3))),
                 (B[12], fsd(n, (u, 2), (v, 1))),
-                ]
+            ]
             if n > 3:
-                data += [
-                    (B[13], fsd(n, (u, 4))),
-                    (B[14], fsd(n, (v, 4))),
-                    ]
+                data += [(B[13], fsd(n, (u, 4))), (B[14], fsd(n, (v, 4)))]
             if n > 4:
-                data += [
-                    (B[15], fsd(n, (u, 5))),
-                    ]
+                data += [(B[15], fsd(n, (u, 5)))]
 
         # TODO According to Stroud,
         #      Stenger's original article has data up to n == 20.

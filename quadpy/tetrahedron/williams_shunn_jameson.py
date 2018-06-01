@@ -6,7 +6,7 @@ from ..helpers import untangle
 
 
 class WilliamsShunnJameson(object):
-    '''
+    """
     D.M. Williams, L. Shunn, A. Jameson,
     Symmetric quadrature rules for simplexes based on sphere close packed
     lattice arrangements,
@@ -26,7 +26,8 @@ class WilliamsShunnJameson(object):
     2-simplex and Np = 84 points on the 3-simplex. These rules are found to be
     capable of exactly integrating polynomials of up to degree 17 in 2D and up
     to degree 9 in 3D.
-    '''
+    """
+
     def __init__(self):
         self.degree = 9
         data = [
@@ -38,8 +39,11 @@ class WilliamsShunnJameson(object):
             (0.008593530677833, _s211(0.096989733123466, 0.158462939666092)),
             (0.023000681669286, _s31(0.322111431830857)),
             (0.004863063904912, _s211(0.097608162890442, 0.011844417749498)),
-            (0.015595140078259, _s1111(0.541184412800237, 0.133558160703568, 0.296501020543124)),
-            ]
+            (
+                0.015595140078259,
+                _s1111(0.541184412800237, 0.133558160703568, 0.296501020543124),
+            ),
+        ]
         self.bary, self.weights = untangle(data)
         self.points = self.bary[:, 1:]
         return

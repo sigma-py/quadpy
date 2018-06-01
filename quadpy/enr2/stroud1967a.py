@@ -9,17 +9,18 @@ from ..helpers import untangle, rd
 
 # TODO sympyfy
 class Stroud1967a(object):
-    '''
+    """
     A.H. Stroud,
     Some fifth degree integration formulas for symmetric regions II,
     Numerische Mathematik, Volume 9 Issue 5, April 1967, Pages 460-468
     <https://doi.org/10.1007/BF02162160>.
-    '''
+    """
+
     def __init__(self, n, variant):
         self.degree = 5
         self.dim = n
 
-        if variant == 'a':
+        if variant == "a":
             if n == 2:
                 eta = 0.446103183094540
                 lmbda = 0.136602540378444e1
@@ -71,11 +72,11 @@ class Stroud1967a(object):
                 xi = -0.772326488820521
                 mu = -0.141214270131942e1
                 gamma = 0.319908106249452
-                A = 1/9
-                B = 1/72
+                A = 1 / 9
+                B = 1 / 72
                 C = B
         else:
-            assert variant == 'b'
+            assert variant == "b"
             if n == 3:
                 eta = 0.476731294622796
                 lmbda = 0.128679320334269e+1
@@ -101,35 +102,29 @@ class Stroud1967a(object):
                 lmbda = 0.942809041582063
                 xi = -0.471404520791032
                 mu = -0.166666666666667e1
-                gamma = 1/3
+                gamma = 1 / 3
                 A = 0.78125e-2
                 B = 0.62500e-1
                 C = A
 
         data = [
-            (B, rd(n, [(+lmbda, 1), (+xi, n-1)])),
-            (B, rd(n, [(-lmbda, 1), (-xi, n-1)])),
-            ]
+            (B, rd(n, [(+lmbda, 1), (+xi, n - 1)])),
+            (B, rd(n, [(-lmbda, 1), (-xi, n - 1)])),
+        ]
 
         if n == 2:
-            data += [
-                (C, numpy.array([[+mu, +mu]])),
-                (C, numpy.array([[-mu, -mu]])),
-                ]
+            data += [(C, numpy.array([[+mu, +mu]])), (C, numpy.array([[-mu, -mu]]))]
         else:
             data += [
-                (C, rd(n, [(+mu, 2), (+gamma, n-2)])),
-                (C, rd(n, [(-mu, 2), (-gamma, n-2)])),
-                ]
+                (C, rd(n, [(+mu, 2), (+gamma, n - 2)])),
+                (C, rd(n, [(-mu, 2), (-gamma, n - 2)])),
+            ]
 
         if n == 7:
-            data += [(2*A, numpy.full((1, n), 0.0))]
+            data += [(2 * A, numpy.full((1, n), 0.0))]
         else:
-            data += [
-                (A, numpy.full((1, n), +eta)),
-                (A, numpy.full((1, n), -eta)),
-                ]
+            data += [(A, numpy.full((1, n), +eta)), (A, numpy.full((1, n), -eta))]
 
         self.points, self.weights = untangle(data)
-        self.weights *= numpy.sqrt(numpy.pi)**n
+        self.weights *= numpy.sqrt(numpy.pi) ** n
         return

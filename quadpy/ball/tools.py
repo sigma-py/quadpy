@@ -6,19 +6,16 @@ import numpy
 from .. import helpers
 
 
-def show(
-        scheme,
-        backend='mpl'
-        ):
-    '''Displays scheme for 3D ball quadrature.
-    '''
+def show(scheme, backend="mpl"):
+    """Displays scheme for 3D ball quadrature.
+    """
     helpers.backend_to_function[backend](
-            scheme.points,
-            scheme.weights,
-            volume=4.0/3.0*pi,
-            edges=[],
-            balls=[((0.0, 0.0, 0.0), 1.0)],
-            )
+        scheme.points,
+        scheme.weights,
+        volume=4.0 / 3.0 * pi,
+        edges=[],
+        balls=[((0.0, 0.0, 0.0), 1.0)],
+    )
     return
 
 
@@ -27,4 +24,4 @@ def integrate(f, center, radius, rule, dot=numpy.dot):
     rr = numpy.multiply.outer(radius, rule.points)
     rr = numpy.swapaxes(rr, 0, -2)
     ff = numpy.array(f((rr + center).T))
-    return numpy.array(radius)**3 * dot(ff, rule.weights)
+    return numpy.array(radius) ** 3 * dot(ff, rule.weights)

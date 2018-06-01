@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-'''
+"""
 Arthur Stroud,
 Approximate Calculation of Multiple Integrals,
 Prentice Hall, 1971.
-'''
+"""
 from __future__ import division
 
 import numpy
@@ -35,39 +35,32 @@ from ..helpers import untangle, pm_array0, fsd
 
 
 def _gen5_3(n, symbolic):
-    '''Spherical product Lobatto formula.
-    '''
-    frac = sympy.Rational if symbolic else lambda x, y: x/y
+    """Spherical product Lobatto formula.
+    """
+    frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
     data = []
-    s = sqrt(n+3)
-    for k in range(1, n+1):
-        rk = sqrt((k+2) * (n+3))
-        Bk = frac(2**(k-n) * (n+1), (k+1) * (k+2) * (n+3))
-        arr = [rk] + (n-k) * [s]
-        data += [
-            (Bk, pm_array0(n, arr, range(k-1, n)))
-            ]
-    B0 = 1 - sum([item[0]*len(item[1]) for item in data])
-    data += [
-        (B0, numpy.full((1, n), 0))
-        ]
+    s = sqrt(n + 3)
+    for k in range(1, n + 1):
+        rk = sqrt((k + 2) * (n + 3))
+        Bk = frac(2 ** (k - n) * (n + 1), (k + 1) * (k + 2) * (n + 3))
+        arr = [rk] + (n - k) * [s]
+        data += [(Bk, pm_array0(n, arr, range(k - 1, n)))]
+    B0 = 1 - sum([item[0] * len(item[1]) for item in data])
+    data += [(B0, numpy.full((1, n), 0))]
     return 5, data
 
 
 def _gen5_4(n, symbolic):
-    frac = sympy.Rational if symbolic else lambda x, y: x/y
+    frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
-    r = sqrt(((n+2)*(n+3) + (n-1)*(n+3)*sqrt(2*(n+2))) / n)
-    s = sqrt(((n+2)*(n+3) - (n+3)*sqrt(2*(n+2))) / n)
-    A = frac(4*n + 6, (n+2) * (n+3))
-    B = frac(n+1, (n+2) * (n+3) * 2**n)
-    data = [
-        (A, numpy.full((1, n), 0)),
-        (B, fsd(n, (r, 1), (s, n-1))),
-        ]
+    r = sqrt(((n + 2) * (n + 3) + (n - 1) * (n + 3) * sqrt(2 * (n + 2))) / n)
+    s = sqrt(((n + 2) * (n + 3) - (n + 3) * sqrt(2 * (n + 2))) / n)
+    A = frac(4 * n + 6, (n + 2) * (n + 3))
+    B = frac(n + 1, (n + 2) * (n + 3) * 2 ** n)
+    data = [(A, numpy.full((1, n), 0)), (B, fsd(n, (r, 1), (s, n - 1)))]
     return 5, data
 
 
@@ -115,30 +108,30 @@ def _gen5_4(n, symbolic):
 
 
 _gen = {
-    '3-1': stroud_secrest.ii,
-    '3-2': stroud_secrest.iii,
-    '5-1': stroud_secrest.iv,
+    "3-1": stroud_secrest.ii,
+    "3-2": stroud_secrest.iii,
+    "5-1": stroud_secrest.iv,
     # '5-2': _gen5_2,
-    '5-3': _gen5_3,
-    '5-4': _gen5_4,
+    "5-3": _gen5_3,
+    "5-4": _gen5_4,
     # '5-5': _gen5_5,
     # '7-1': _gen7_1,
-    }
+}
 
 
 class Stroud(object):
     keys = _gen.keys()
 
     def __init__(self, n, key, symbolic=False):
-        self.name = 'Stround_Enr({})'.format(key)
+        self.name = "Stround_Enr({})".format(key)
         self.dim = n
         self.degree, data = _gen[key](n, symbolic=symbolic)
         self.points, self.weights = untangle(data)
 
-        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        frac = sympy.Rational if symbolic else lambda x, y: x / y
         sqrt = sympy.sqrt if symbolic else numpy.sqrt
         pi = sympy.pi if symbolic else numpy.pi
         gamma = sympy.gamma if symbolic else scipy.special.gamma
 
-        self.weights *= 2 * sqrt(pi)**n * gamma(n) / gamma(frac(n, 2))
+        self.weights *= 2 * sqrt(pi) ** n * gamma(n) / gamma(frac(n, 2))
         return

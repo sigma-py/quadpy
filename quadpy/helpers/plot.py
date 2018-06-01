@@ -5,31 +5,31 @@ import numpy
 
 
 def plot_disks_1d(plt, pts, weights, total_area):
-    '''Plot a circles at quadrature points according to weights. The diameters
+    """Plot a circles at quadrature points according to weights. The diameters
     sum up to the total area.
-    '''
-    radii = 0.5 * abs(weights)/math.fsum(weights) * total_area
+    """
+    radii = 0.5 * abs(weights) / math.fsum(weights) * total_area
     colors = [
         # use matplotlib 2.0's color scheme
-        '#1f77b4' if weight >= 0 else '#d62728'
+        "#1f77b4" if weight >= 0 else "#d62728"
         for weight in weights
-        ]
+    ]
     _plot_disks_helpers(plt, pts, radii, colors)
     return
 
 
 def plot_disks(plt, pts, weights, total_area):
-    '''Plot a circles at quadrature points according to weights.
-    '''
+    """Plot a circles at quadrature points according to weights.
+    """
     flt = numpy.vectorize(float)
     pts = flt(pts)
     weights = flt(weights)
-    radii = numpy.sqrt(abs(weights)/math.fsum(weights) * total_area/math.pi)
+    radii = numpy.sqrt(abs(weights) / math.fsum(weights) * total_area / math.pi)
     colors = [
         # use matplotlib 2.0's color scheme
-        '#1f77b4' if weight >= 0 else '#d62728'
+        "#1f77b4" if weight >= 0 else "#d62728"
         for weight in weights
-        ]
+    ]
     _plot_disks_helpers(plt, pts, radii, colors)
     return
 
@@ -37,10 +37,7 @@ def plot_disks(plt, pts, weights, total_area):
 def _plot_disks_helpers(plt, pts, radii, colors):
     for tp, radius, color in zip(pts, radii, colors):
         # highlight circle center
-        plt.plot(
-            [tp[0]], [tp[1]],
-            linestyle='None', marker='.', color=color
-            )
+        plt.plot([tp[0]], [tp[1]], linestyle="None", marker=".", color=color)
         # Choose radius such that the sum of areas of the circles equals
         # total_area.
         circ = plt.Circle((tp[0], tp[1]), radius, color=color, alpha=0.5)
@@ -67,24 +64,25 @@ def show_mpl(points, weights, volume, edges, balls=None):
             # would be to precompute x, y, z before the loop, but this can be
             # heavy on the graphics output. See
             # <https://stackoverflow.com/q/45324258/353337>.
-            u = numpy.linspace(0, 2 * numpy.pi, int(2*numpy.pi/h*r) + 1)
-            v = numpy.linspace(0, numpy.pi, int(numpy.pi/h*r) + 1)
+            u = numpy.linspace(0, 2 * numpy.pi, int(2 * numpy.pi / h * r) + 1)
+            v = numpy.linspace(0, numpy.pi, int(numpy.pi / h * r) + 1)
             _x = numpy.outer(numpy.cos(u), numpy.sin(v))
             _y = numpy.outer(numpy.sin(u), numpy.sin(v))
             _z = numpy.outer(numpy.ones(numpy.size(u)), numpy.cos(v))
 
             # highlight ball center
             plt.plot(
-                [tp[0]], [tp[1]], [tp[2]],
-                linestyle='None', marker='.', color=color
-                )
+                [tp[0]], [tp[1]], [tp[2]], linestyle="None", marker=".", color=color
+            )
 
             ax.plot_surface(
-                r*_x + tp[0], r*_y + tp[1], r*_z + tp[2],
+                r * _x + tp[0],
+                r * _y + tp[1],
+                r * _z + tp[2],
                 color=color,
                 alpha=0.3,
-                linewidth=1
-                )
+                linewidth=1,
+            )
 
         ax.set_axis_off()
         return
@@ -92,28 +90,27 @@ def show_mpl(points, weights, volume, edges, balls=None):
     balls = [] if balls is None else balls
 
     fig = plt.figure()
-    ax = fig.gca(projection='3d')
-    ax.set_aspect('equal')
+    ax = fig.gca(projection="3d")
+    ax.set_aspect("equal")
     ax.set_axis_off()
 
     for edge in edges:
-        plt.plot(*edge, color='k', linestyle='-')
+        plt.plot(*edge, color="k", linestyle="-")
 
     plot_spheres(
-        plt, ax, points,
+        plt,
+        ax,
+        points,
         # Choose radius such that the sum of volumes of the balls equals
         # total_volume.
         radii=numpy.cbrt(
-            abs(weights)/math.fsum(weights) * volume/(4.0/3.0 * numpy.pi)
-            ),
-        colors=[
-            '#1f77b4' if weight >= 0 else '#d62728'
-            for weight in weights
-            ]
-        )
+            abs(weights) / math.fsum(weights) * volume / (4.0 / 3.0 * numpy.pi)
+        ),
+        colors=["#1f77b4" if weight >= 0 else "#d62728" for weight in weights],
+    )
 
     for ball in balls:
-        plot_spheres(plt, ax, [ball[0]], [ball[1]], ['#dddddd'])
+        plot_spheres(plt, ax, [ball[0]], [ball[1]], ["#dddddd"])
 
     plt.show()
     return
@@ -127,21 +124,19 @@ def show_mayavi(points, weights, volume, edges, balls=None):
     for edge in edges:
         mlab.plot3d(*edge, tube_radius=0.5e-2, color=(0.0, 0.0, 0.0))
 
-    blue = (31./255., 119.0/255., 180./255.)
-    red = (84./255., 15.0/255., 16./255.)
+    blue = (31. / 255., 119.0 / 255., 180. / 255.)
+    red = (84. / 255., 15.0 / 255., 16. / 255.)
 
     h = 1.0e-2
     sum_weights = math.fsum(weights)
     for tp, weight in zip(points, weights):
         # Choose radius such that the sum of volumes of the balls equals
         # total_volume.
-        r = (
-            abs(weight)/sum_weights * volume/(4.0/3.0 * numpy.pi)
-            )**(1.0/3.0)
+        r = (abs(weight) / sum_weights * volume / (4.0 / 3.0 * numpy.pi)) ** (1.0 / 3.0)
 
         # Create a sphere
-        u = numpy.linspace(0, 2 * numpy.pi, int(2*numpy.pi/h*r) + 1)
-        v = numpy.linspace(0, numpy.pi, int(numpy.pi/h*r) + 1)
+        u = numpy.linspace(0, 2 * numpy.pi, int(2 * numpy.pi / h * r) + 1)
+        v = numpy.linspace(0, numpy.pi, int(numpy.pi / h * r) + 1)
         sin_u, cos_u = numpy.sin(u), numpy.cos(u)
         sin_v, cos_v = numpy.sin(v), numpy.cos(v)
         _x = numpy.outer(cos_u, sin_v)
@@ -149,10 +144,12 @@ def show_mayavi(points, weights, volume, edges, balls=None):
         _z = numpy.outer(numpy.ones(numpy.size(u)), cos_v)
 
         mlab.mesh(
-            r*_x + tp[0], r*_y + tp[1], r*_z + tp[2],
+            r * _x + tp[0],
+            r * _y + tp[1],
+            r * _z + tp[2],
             color=blue if weight >= 0 else red,
-            opacity=1.0
-            )
+            opacity=1.0,
+        )
 
     balls = [] if balls is None else balls
     for ball in balls:
@@ -160,8 +157,8 @@ def show_mayavi(points, weights, volume, edges, balls=None):
         r = ball[1]
 
         # Create a sphere
-        u = numpy.linspace(0, 2 * numpy.pi, int(2*numpy.pi/h*r) + 1)
-        v = numpy.linspace(0, numpy.pi, int(numpy.pi/h*r) + 1)
+        u = numpy.linspace(0, 2 * numpy.pi, int(2 * numpy.pi / h * r) + 1)
+        v = numpy.linspace(0, numpy.pi, int(numpy.pi / h * r) + 1)
         sin_u, cos_u = numpy.sin(u), numpy.cos(u)
         sin_v, cos_v = numpy.sin(v), numpy.cos(v)
         _x = numpy.outer(cos_u, sin_v)
@@ -169,10 +166,8 @@ def show_mayavi(points, weights, volume, edges, balls=None):
         _z = numpy.outer(numpy.ones(numpy.size(u)), cos_v)
 
         mlab.mesh(
-            r*_x + tp[0], r*_y + tp[1], r*_z + tp[2],
-            color=[0, 0, 0],
-            opacity=1.0
-            )
+            r * _x + tp[0], r * _y + tp[1], r * _z + tp[2], color=[0, 0, 0], opacity=1.0
+        )
 
     mlab.show()
     return
@@ -229,22 +224,24 @@ def show_vtk(points, weights, volume, edges, balls=None):
     red = numpy.array([84.0, 15.0, 16.0]) / 255.0
 
     radii = numpy.cbrt(
-        abs(weights)/math.fsum(weights) * volume/(4.0/3.0 * numpy.pi)
-        )
+        abs(weights) / math.fsum(weights) * volume / (4.0 / 3.0 * numpy.pi)
+    )
     sphere_actors = [
         get_sphere_actor(pt, radius, color=blue if weight > 0.0 else red)
         for pt, weight, radius in zip(points, weights, radii)
-        ]
+    ]
 
-    sphere_actors.extend([
-        get_sphere_actor(
-            numpy.array(ball[0]),
-            ball[1],
-            color=numpy.array([0.0, 0.0, 0.0]) / 255.0,
-            opacity=0.5
+    sphere_actors.extend(
+        [
+            get_sphere_actor(
+                numpy.array(ball[0]),
+                ball[1],
+                color=numpy.array([0.0, 0.0, 0.0]) / 255.0,
+                opacity=0.5,
             )
-        for ball in balls
-        ])
+            for ball in balls
+        ]
+    )
 
     # Create a renderer and add the sphere actor to it
     renderer = vtk.vtkRenderer()
@@ -278,8 +275,4 @@ def show_vtk(points, weights, volume, edges, balls=None):
     return
 
 
-backend_to_function = {
-    'mayavi': show_mayavi,
-    'mpl': show_mpl,
-    'vtk': show_vtk,
-    }
+backend_to_function = {"mayavi": show_mayavi, "mpl": show_mpl, "vtk": show_vtk}

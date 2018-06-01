@@ -16,17 +16,15 @@ def show(*args, **kwargs):
 
 def plot(scheme, show_axes=True):
     ax = plt.gca()
-    plt.axis('equal')
+    plt.axis("equal")
 
     if not show_axes:
         ax.set_axis_off()
 
     n = 2
-    I0 = 2*math.factorial(n-1)*math.pi**(0.5*n) / math.gamma(0.5*n)
+    I0 = 2 * math.factorial(n - 1) * math.pi ** (0.5 * n) / math.gamma(0.5 * n)
 
-    helpers.plot_disks(
-        plt, scheme.points, scheme.weights, I0
-        )
+    helpers.plot_disks(plt, scheme.points, scheme.weights, I0)
     return
 
 
