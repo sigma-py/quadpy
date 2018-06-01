@@ -6,5 +6,17 @@ from .lebedev import Lebedev
 from .mclaren import McLaren
 from .stroud import Stroud
 
+from .tools import area, show, plot, integrate, integrate_spherical
 
-from .tools import *
+__all__ = [
+    "AlbrechtCollatz",
+    "HeoXu ",
+    "Lebedev",
+    "McLaren",
+    "Stroud",
+    "area",
+    "show",
+    "plot",
+    "integrate",
+    "integrate_spherical",
+]
