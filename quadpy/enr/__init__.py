@@ -3,4 +3,6 @@
 from .stroud import Stroud
 from .stroud_secrest import StroudSecrest
 
-from .tools import *
+from .tools import integrate
+
+__all__ = ["Stroud", "StroudSecrest", "integrate"]
