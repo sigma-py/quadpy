@@ -20,7 +20,6 @@ def integrate(f, interval, scheme, dot=numpy.dot):
     return 0.5 * len_intervals * dot(f(x), scheme.weights)
 
 
-# pylint: disable=too-many-arguments
 def integrate_split(f, a, b, n, scheme, dot=helpers.kahan_dot):
     '''Integrates f between a and b with n subintervals.
     '''
@@ -39,8 +38,6 @@ def _numpy_all_except(a, axis=-1):
     return numpy.all(a, axis=tuple(axes))
 
 
-# pylint: disable=too-many-arguments
-# pylint: disable=too-many-locals
 def integrate_adaptive(
         f, intervals, eps,
         kronrod_degree=7,

@@ -8,7 +8,7 @@ import sympy
 from ..helpers import untangle, fsd, pm, z
 
 
-# pylint: disable=too-many-locals
+
 class HammerStroud(object):
     '''
     Preston C. Hammer and Arthur H. Stroud,

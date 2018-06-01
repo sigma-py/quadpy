@@ -22,7 +22,6 @@ class Stroud(object):
     Approximate Calculation of Multiple Integrals,
     Prentice Hall, 1971.
     '''
-    # pylint: disable=too-many-locals
     def __init__(self, index, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         pi = sympy.pi if symbolic else numpy.pi

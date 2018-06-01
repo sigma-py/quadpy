@@ -22,7 +22,7 @@ class ZhangCuiLiu(object):
     computations. All rules presented here have positive weights with points
     lying within the integration domain.
     '''
-    # pylint: disable=line-too-long
+
     def __init__(self, index, mpmath=False):
         self.name = 'ZCL({})'.format(index)
 

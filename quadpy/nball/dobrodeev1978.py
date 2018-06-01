@@ -22,7 +22,6 @@ class Dobrodeev1978(object):
     optimality criterion for a number of symmetric domains of integration, of
     dimensionalities 2 <= n <= 20.
     '''
-    # pylint: disable=too-many-locals
     def __init__(self, n, symbolic=False):
         assert 2 <= n <= 20
 

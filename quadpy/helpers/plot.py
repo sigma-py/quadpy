@@ -48,17 +48,14 @@ def _plot_disks_helpers(plt, pts, radii, colors):
     return
 
 
-# pylint: disable=too-many-locals
 def show_mpl(points, weights, volume, edges, balls=None):
     import matplotlib.pyplot as plt
-    # pylint: disable=relative-import, unused-variable
     from mpl_toolkits.mplot3d import Axes3D
 
     flt = numpy.vectorize(float)
     points = flt(points)
     weights = flt(weights)
 
-    # pylint: disable=too-many-locals
     def plot_spheres(plt, ax, pts, radii, colors):
         h = 1.0e-2
 
@@ -122,9 +119,7 @@ def show_mpl(points, weights, volume, edges, balls=None):
     return
 
 
-# pylint: disable=too-many-locals
 def show_mayavi(points, weights, volume, edges, balls=None):
-    # pylint: disable=import-error
     import mayavi.mlab as mlab
 
     mlab.figure(bgcolor=(1.0, 1.0, 1.0))
@@ -183,9 +178,7 @@ def show_mayavi(points, weights, volume, edges, balls=None):
     return
 
 
-# pylint: disable=too-many-locals
 def show_vtk(points, weights, volume, edges, balls=None):
-    # pylint: disable=import-error
     import vtk
 
     def get_line_actor(x0, x1):

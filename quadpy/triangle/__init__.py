@@ -31,5 +31,5 @@ from .witherden_vincent import WitherdenVincent
 from .xiao_gimbutas import XiaoGimbutas
 from .zhang_cui_liu import ZhangCuiLiu
 
-# pylint: disable=wildcard-import
+
 from .tools import *

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# pylint: disable=wildcard-import
+
 from .albrecht import *
 from .albrecht_collatz import *
 from .cools_haegemans import *

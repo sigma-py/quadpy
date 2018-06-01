@@ -185,7 +185,7 @@ def get_all_exponents(dim, max_degree):
 
         etc. The function call is recursive.
         '''
-        # pylint: disable=len-as-condition
+
         if len(exponents) == 0 or len(exponents[0]) == 0:
             return []
 

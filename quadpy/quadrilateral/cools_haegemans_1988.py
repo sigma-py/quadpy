@@ -22,7 +22,7 @@ class CoolsHaegemans1988(object):
     independent equations.  This is used to construct cubature formulae for the
     square. One of the results is a 24-point formula of degree 11.
     '''
-    # pylint: disable=line-too-long
+
     def __init__(self, index):
         self.name = 'CH88(%d)' % index
         if index == 1:

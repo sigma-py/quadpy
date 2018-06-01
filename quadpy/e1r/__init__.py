@@ -2,5 +2,4 @@
 #
 from .gauss_laguerre import GaussLaguerre
 
-# pylint: disable=wildcard-import
 from .tools import *

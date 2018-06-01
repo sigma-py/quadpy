@@ -9,5 +9,5 @@ from .stroud1966 import Stroud1966
 from .stroud1969 import Stroud1969
 from .walkington import Walkington
 
-# pylint: disable=wildcard-import
+
 from .tools import *

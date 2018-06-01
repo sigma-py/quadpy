@@ -24,7 +24,6 @@ class Keast(object):
 
     https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tet/quadrature_rules_tet.html
     '''
-    # pylint: disable=line-too-long
     def __init__(self, index, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
 

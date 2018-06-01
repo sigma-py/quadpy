@@ -11,7 +11,7 @@ from .helpers import _s40, _s8, _s4
 from ..helpers import untangle
 
 
-# pylint: disable=unused-argument
+
 def gen1(symbolic):
     data = [
         (.3380228176732269e-1, _s40(6.822859174233539)),

@@ -27,7 +27,7 @@ class Dobrodeev1978(object):
     optimality criterion for a number of symmetric domains of integration, of
     dimensionalities 2 <= n <= 20.
     '''
-    # pylint: disable=too-many-locals
+
     def __init__(self, n, symbolic=False):
         # from sympy import sqrt, factorial as fact, Rational as fr
 
@@ -120,7 +120,7 @@ def _generate_jk(n, pm_type, j, k, symbolic):
     return G, b, c
 
 
-# pylint: disable=too-many-arguments, too-many-locals
+
 def _compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k, symbolic):
     '''Same as the helper function in ..helpers, making use of the fact that
     `F == 0` for the sphere
