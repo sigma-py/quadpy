@@ -5,7 +5,7 @@ import numpy
 import sympy
 
 
-# pylint: disable=too-many-locals
+
 def _newton_cotes(n, point_fun):
     '''
     Construction after

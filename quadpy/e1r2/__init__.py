@@ -2,5 +2,4 @@
 #
 from .gauss_hermite import GaussHermite
 
-# pylint: disable=wildcard-import
 from .tools import *

@@ -41,7 +41,7 @@ class Felippa(object):
     selected arbitrarily. No similar modular collection applicable to a range
     of FEM work, whether symbolic or numeric, has been published before.
     '''
-    # pylint: disable=too-many-locals
+
     def __init__(self, index, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt

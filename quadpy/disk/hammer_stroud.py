@@ -17,7 +17,6 @@ class HammerStroud(object):
     Math. Comp. 12 (1958), 272-280,
     <https://doi.org/10.1090/S0025-5718-1958-0102176-6>.
     '''
-    # pylint: disable=too-many-locals
     def __init__(self, index, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         pi = sympy.pi if symbolic else numpy.pi

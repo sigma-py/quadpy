@@ -25,7 +25,7 @@ class GaussLobatto(object):
         return
 
 
-# pylint: disable=too-many-locals
+
 def _lobatto(alpha, beta, xl1, xl2):
     '''Compute the Lobatto nodes and weights with the preassigned node xl1, xl2.
     Based on the section 7 of the paper

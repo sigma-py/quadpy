@@ -20,7 +20,6 @@ from .walkington import Walkington
 from .williams_shunn_jameson import WilliamsShunnJameson
 from .witherden_vincent import WitherdenVincent
 
-# pylint: disable=wildcard-import
 from .tools import *
 
 from ..nsimplex import integrate

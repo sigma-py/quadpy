@@ -23,7 +23,7 @@ def plot(scheme, backend='mpl'):
 
 
 def _plot_mpl(scheme):
-    # pylint: disable=relative-import, unused-variable
+
     from mpl_toolkits.mplot3d import Axes3D
 
     fig = plt.figure()

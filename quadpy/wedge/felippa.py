@@ -63,7 +63,7 @@ class Felippa(object):
         else:
             assert index == 6
             self.degree = 6
-            # pylint: disable=line-too-long
+
             data = [
                 (0.8843323515718317E-02, _s21_z(0.6308901449150223E-01, -0.8611363115940526)),
                 (0.2031233592848984E-01, _s21_z(0.2492867451709104, -0.8611363115940526)),

@@ -17,7 +17,7 @@ class Stroud1967b(object):
     SIAM J. Numer. Anal., 4(1), 37–44. (8 pages),
     <https://doi.org/10.1137/0704004>.
     '''
-    # pylint: disable=too-many-locals
+
     def __init__(self, index, n, symbolic=False):
         sqrt = sympy.sqrt if symbolic else numpy.sqrt
         pi = sympy.pi if symbolic else numpy.pi

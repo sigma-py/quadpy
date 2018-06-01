@@ -24,7 +24,6 @@ def check_degree_1d(
     return numpy.where(is_larger)[0] - 1 if any(is_larger) else max_degree
 
 
-# pylint: disable=too-many-locals
 def check_degree(quadrature, exact, dim, max_degree, tol=1.0e-14):
     exponents = get_all_exponents(dim, max_degree)
     # flatten list

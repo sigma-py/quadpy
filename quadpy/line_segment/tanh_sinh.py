@@ -4,7 +4,6 @@ from mpmath import mp
 import numpy
 
 
-# pylint: disable=too-many-arguments
 def tanh_sinh(f, a, b, eps, max_steps=10, f_derivatives=None):
     '''Integrate a function `f` between `a` and `b` with accuracy `eps`.
 
@@ -49,7 +48,6 @@ def tanh_sinh(f, a, b, eps, max_steps=10, f_derivatives=None):
     return value_estimate, error_estimate
 
 
-# pylint: disable=too-many-arguments, too-many-locals
 def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
     '''Integrate a function `f` between `a` and `b` with accuracy `eps`. The
     function `f` is given in terms of two functions

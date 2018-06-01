@@ -14,7 +14,7 @@ class Albrecht(object):
     Volume 40, Issue 10-11, 1960, Pages 514–517,
     <https://doi.org/10.1002/zamm.19600401014>.
     '''
-    # pylint: disable=too-many-locals
+
     def __init__(self, index, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         pi = sympy.pi if symbolic else numpy.pi

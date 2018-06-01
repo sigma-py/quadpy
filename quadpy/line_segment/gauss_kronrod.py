@@ -60,7 +60,6 @@ class GaussKronrod(object):
         self.weights = w[i]
         return
 
-    # pylint: disable=no-self-use
     def r_kronrod(self, n, a0, b0):
         assert len(a0) == int(math.ceil(3*n/2.0)) + 1
         assert len(b0) == int(math.ceil(3*n/2.0)) + 1
@@ -107,7 +106,6 @@ class GaussKronrod(object):
         return a, b
 
 
-# pylint: disable=too-many-locals
 def _gauss_kronrod_integrate(k, f, interval, dot=numpy.dot):
     def _scale_points(points, interval):
         alpha = 0.5 * (interval[1] - interval[0])

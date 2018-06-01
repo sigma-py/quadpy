@@ -19,7 +19,7 @@ class BerntsenEspelid(object):
     rules that have all evaluation points inside the triangle, and all weights
     positive.
     '''
-    # pylint: disable=line-too-long
+
     def __init__(self, index, mpmath=False):
         self.name = 'BerntsenEspelid({})'.format(index)
         self.degree = 13

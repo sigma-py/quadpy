@@ -14,7 +14,7 @@ class Lauffer(object):
     Arch. Math. v. 6. 1955, pp. 159-164, MR 16, 862,
     <https://doi.org/10.1007/BF01900222>.
     '''
-    # pylint: disable=too-many-locals
+
     def __init__(self, n, degree, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
 

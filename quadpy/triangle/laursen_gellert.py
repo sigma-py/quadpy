@@ -27,7 +27,7 @@ import sympy
 from .helpers import untangle2
 
 
-# pylint: disable=unused-argument
+
 def _gen1(symbolic):
     data = {
         's3': [1],

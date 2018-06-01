@@ -9,7 +9,7 @@ from .helpers import _s21, _s3
 from ..helpers import untangle
 
 
-# pylint: disable=too-many-locals
+
 class Hillion(object):
     '''
     P. Hillion,

@@ -12,7 +12,7 @@ class Mysovskih(object):
     On the construction of cubature formulas for the simplest regions,
     Z. Vychisl. Mat. i. Mat. Fiz. 4, 3-14, 1964.
     '''
-    # pylint: disable=too-many-locals
+
     def __init__(self, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x/y
         sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt

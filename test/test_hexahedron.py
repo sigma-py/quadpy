@@ -42,7 +42,7 @@ def _integrate_exact(f, hexa):
         ])
     det_J = sympy.det(J)
     # we cannot use abs(), see <https://github.com/sympy/sympy/issues/4212>.
-    # pylint: disable=invalid-unary-operand-type
+
     abs_det_J = sympy.Piecewise((det_J, det_J >= 0), (-det_J, det_J < 0))
     g_xi = f(pxi)
     exact = \
@@ -56,7 +56,7 @@ def _integrate_exact(f, hexa):
     return float(exact)
 
 
-# pylint: disable=too-many-arguments
+
 def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
     return 1.0/(k[0] + 1) * (x1**(k[0]+1) - x0**(k[0]+1)) \
         * 1.0/(k[1] + 1) * (y1**(k[1]+1) - y0**(k[1]+1)) \

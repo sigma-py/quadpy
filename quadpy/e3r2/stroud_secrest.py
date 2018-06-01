@@ -101,7 +101,7 @@ def x(plus_minus, symbolic):
     return degree, data
 
 
-# pylint: disable=too-many-locals
+
 def xi_(p_m, symbolic):
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 

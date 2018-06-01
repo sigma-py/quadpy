@@ -54,8 +54,8 @@ def _numpy_all_except(a, axis=-1):
     return numpy.all(a, axis=tuple(axes))
 
 
-# pylint: disable=too-many-arguments
-# pylint: disable=too-many-locals
+
+
 def integrate_adaptive(
         f, triangles, eps,
         minimum_triangle_area=None,

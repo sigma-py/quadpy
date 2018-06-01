@@ -9,7 +9,7 @@ from .helpers import fs_r00, fs_rr0, pm_rrr
 from ..helpers import untangle
 
 
-# pylint: disable=too-many-locals
+
 class HammerWymore(object):
     '''
     Preston C. Hammer and A. Wayne Wymore,
