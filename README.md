@@ -5,6 +5,7 @@ Your one-stop shop for numerical integration in Python.
 [![CircleCI](https://img.shields.io/circleci/project/github/nschloe/quadpy/master.svg)](https://circleci.com/gh/nschloe/quadpy/tree/master)
 [![codecov](https://img.shields.io/codecov/c/github/nschloe/quadpy.svg)](https://codecov.io/gh/nschloe/quadpy)
 [![Codacy grade](https://img.shields.io/codacy/grade/079f3979c96b440ab4734785b946e848.svg)](https://app.codacy.com/app/nschloe/quadpy/dashboard)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![awesome](https://img.shields.io/badge/awesome-yes-brightgreen.svg)](https://github.com/nschloe/quadpy)
 [![PyPi Version](https://img.shields.io/pypi/v/quadpy.svg)](https://pypi.org/project/quadpy)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1173132.svg)](https://doi.org/10.5281/zenodo.1173132)

@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 #
-'''
+"""
 Philip Rabinowitz and Nira Richter,
 Perfectly Symmetric Two-Dimensional Integration Formulas with Minimal
 Numbers of Points,
 Mathematics of Computation, Vol. 23, No. 108 (Oct., 1969), pp. 765-779,
 <https://doi.org/10.2307/2004962>.
-'''
+"""
 from .helpers import _s40, _s8, _s4
 from ..helpers import untangle
-
 
 
 def gen1(symbolic):
@@ -18,7 +17,7 @@ def gen1(symbolic):
         (.1467201651910359e+1, _s40(1.901350903458987)),
         (.6973178170307865e-1, _s4(4.260195453867070)),
         (.3030570706813315e-4, _s8(6.693991707281686, 14.77112509749386)),
-        ]
+    ]
     return 9, data
 
 
@@ -29,7 +28,7 @@ def gen2(symbolic):
         (.1409433533958677e+1, _s40(1.760536818970077)),
         (.4416296048062511e-3, _s8(10.05412033203744, 5.804749080166705)),
         (.6786094118455858e-1, _s8(4.616780734333329, 2.665499599756826)),
-        ]
+    ]
     return 11, data
 
 
@@ -41,7 +40,7 @@ def gen3(symbolic):
         (.1691597241187992e-5, _s4(12.76644300362842)),
         (.1189929098056537e+0, _s4(3.556098987915152)),
         (.1103920675225255e-2, _s8(9.300537618869137, 4.847679857416328)),
-        ]
+    ]
     return 11, data
 
 
@@ -74,7 +73,7 @@ def gen5(symbolic):
         (.1439495304734647e+0, _s4(3.275323454134366)),
         (.5384883122895214e-5, _s8(14.96412806506222, 6.198344793636629)),
         (.3365458295852239e-2, _s8(8.095727497543633, 3.353360126759371)),
-        ]
+    ]
     return 15, data
 
 
@@ -84,7 +83,7 @@ _gen = {
     3: gen3,
     # 4: gen4,
     5: gen5,
-    }
+}
 
 
 class RabinowitzRichter(object):

@@ -14,31 +14,31 @@ from ..helpers import untangle
 
 
 class Stroud(object):
-    '''
+    """
     Arthur Stroud,
     Approximate Calculation of Multiple Integrals,
     Prentice Hall, 1971.
-    '''
+    """
 
     def __init__(self, index, symbolic=False):
         pi = sympy.pi if symbolic else numpy.pi
         sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
-        if index == 'S3 3-1':
-            self.set_data(HammerStroud('11-3', symbolic=symbolic))
-        elif index == 'S3 5-1':
+        if index == "S3 3-1":
+            self.set_data(HammerStroud("11-3", symbolic=symbolic))
+        elif index == "S3 5-1":
             self.set_data(Ditkin(1, symbolic=symbolic))
-        elif index == 'S3 5-2':
+        elif index == "S3 5-2":
             self.set_data(Ditkin(2, symbolic=symbolic))
-        elif index == 'S3 7-1a':
-            self.set_data(HammerStroud('15-3a', symbolic=symbolic))
-        elif index == 'S3 7-1b':
-            self.set_data(HammerStroud('15-3b', symbolic=symbolic))
-        elif index == 'S3 7-2':
+        elif index == "S3 7-1a":
+            self.set_data(HammerStroud("15-3a", symbolic=symbolic))
+        elif index == "S3 7-1b":
+            self.set_data(HammerStroud("15-3b", symbolic=symbolic))
+        elif index == "S3 7-2":
             self.set_data(Mysovskih(symbolic=symbolic))
-        elif index == 'S3 7-3':
+        elif index == "S3 7-3":
             self.set_data(Ditkin(3, symbolic=symbolic))
-        elif index == 'S3 7-4':
+        elif index == "S3 7-4":
             # Spherical product Gauss formula.
             self.degree = 7
 
@@ -48,11 +48,11 @@ class Stroud(object):
             pm = numpy.array([+1, -1])
 
             # 0.9061798459, 0.5384691101
-            alpha, beta = sqrt((35 + pm * 2*sqrt(70)) / 63)
+            alpha, beta = sqrt((35 + pm * 2 * sqrt(70)) / 63)
             rho = numpy.array([-alpha, -beta, beta, alpha])
 
             # 0.8611363116, 0.3399810436
-            alpha, beta = sqrt((15 + pm * 2*sqrt(30)) / 35)
+            alpha, beta = sqrt((15 + pm * 2 * sqrt(30)) / 35)
             u = numpy.array([-alpha, -beta, beta, alpha])
 
             # 0.9238795325, 0.3826834324
@@ -67,32 +67,33 @@ class Stroud(object):
             alpha, beta = (18 - pm * sqrt(30)) / 36
             B = numpy.array([alpha, beta, beta, alpha])
 
-            C = numpy.full(4, pi/4)
+            C = numpy.full(4, pi / 4)
 
             def outer3(a, b, c):
-                '''Given 3 1-dimensional vectors a, b, c, the output is of
+                """Given 3 1-dimensional vectors a, b, c, the output is of
                 shape (len(a), len(b), len(c)) and contains the values
 
                    out[i, j, k] = a[i] * b[j] * c[k]
-                '''
+                """
                 return numpy.multiply.outer(numpy.multiply.outer(a, b), c)
 
-            r = outer3(rho, sqrt(1 - u**2), sqrt(1 - v**2))
-            s = outer3(rho, sqrt(1 - u**2), v)
+            r = outer3(rho, sqrt(1 - u ** 2), sqrt(1 - v ** 2))
+            s = outer3(rho, sqrt(1 - u ** 2), v)
             t = outer3(rho, u, 4 * [1])
 
-            data = [(
-                (A[i]*B[j]*C[k]),
-                numpy.array([[r[i][j][k], s[i][j][k], t[i][j][k]]])
+            data = [
+                (
+                    (A[i] * B[j] * C[k]),
+                    numpy.array([[r[i][j][k], s[i][j][k], t[i][j][k]]]),
                 )
                 for i in range(4)
                 for j in range(4)
                 for k in range(4)
-                ]
+            ]
 
             self.points, self.weights = untangle(data)
         else:
-            assert index == 'S3 14-1'
+            assert index == "S3 14-1"
             self.degree = 14
 
             # Get the moments corresponding to the Legendre polynomials and the
@@ -130,29 +131,32 @@ class Stroud(object):
             # A = weights[-4:]
             # ```
             # TODO get symbolic expressions here
-            r = numpy.array([
-                3.242534234038097e-01,
-                6.133714327005908e-01,
-                8.360311073266362e-01,
-                9.681602395076261e-01,
-                ])
-            A = numpy.array([
-                3.284025994586210e-02,
-                9.804813271549834e-02,
-                1.262636728646019e-01,
-                7.618126780737085e-02,
-                ])
+            r = numpy.array(
+                [
+                    3.242534234038097e-01,
+                    6.133714327005908e-01,
+                    8.360311073266362e-01,
+                    9.681602395076261e-01,
+                ]
+            )
+            A = numpy.array(
+                [
+                    3.284025994586210e-02,
+                    9.804813271549834e-02,
+                    1.262636728646019e-01,
+                    7.618126780737085e-02,
+                ]
+            )
 
-            spherical_scheme = \
-                sphere_stroud.Stroud('U3 14-1', symbolic=False)
+            spherical_scheme = sphere_stroud.Stroud("U3 14-1", symbolic=False)
             v = spherical_scheme.points
             B = spherical_scheme.weights
 
             data = [
-                (A[i]*B[j], r[i] * numpy.array([v[j]]))
+                (A[i] * B[j], r[i] * numpy.array([v[j]]))
                 for i in range(4)
                 for j in range(72)
-                ]
+            ]
 
             self.points, self.weights = untangle(data)
             self.weights *= 4 * numpy.pi

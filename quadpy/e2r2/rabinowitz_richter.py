@@ -5,15 +5,16 @@ from ..helpers import untangle
 
 
 class RabinowitzRichter(object):
-    '''
+    """
     Philip Rabinowitz and Nira Richter,
     Perfectly Symmetric Two-Dimensional Integration Formulas with Minimal
     Numbers of Points,
     Mathematics of Computation, Vol. 23, No. 108 (Oct., 1969), pp. 765-779,
     <https://doi.org/10.2307/2004962>.
-    '''
+    """
+
     def __init__(self, index):
-        self.name = 'RabinowitzRichter({})'.format(index)
+        self.name = "RabinowitzRichter({})".format(index)
         if index == 1:
             self.degree = 9
             data = [
@@ -21,7 +22,7 @@ class RabinowitzRichter(object):
                 (.6544984694978697e-01, _s4(1.224744871391589)),
                 (.5935280476180875e+00, _s4(0.4817165220011443)),
                 (.1349017971918148e-02, _s8(2.607349811958554, 0.9663217712794149)),
-                ]
+            ]
         elif index == 2:
             self.degree = 11
             data = [
@@ -30,7 +31,7 @@ class RabinowitzRichter(object):
                 (.5373255214498174e+0, _s40(0.6280515301597559)),
                 (.3636102608321520e-2, _s8(1.224744871391589, 2.121320343559643)),
                 (.9817477042468103e-1, _s8(0.7071067811865475, 1.224744871391589)),
-                ]
+            ]
         elif index == 3:
             self.degree = 11
             data = [
@@ -40,7 +41,7 @@ class RabinowitzRichter(object):
                 (.9681125175723808e-3, _s4(1.904162039910276)),
                 (.1515812331366514e+0, _s4(0.9724173472297303)),
                 (.7542839504417270e-2, _s8(2.061552812808830, 0.8660254037844387)),
-                ]
+            ]
         elif index == 4:
             self.degree = 13
             data = [
@@ -52,7 +53,7 @@ class RabinowitzRichter(object):
                 (+.6447719928481539e+0, _s4(0.3188824732576547)),
                 (+.1799266413507747e-4, _s8(3.325657829663178, 1.145527285699371)),
                 (+.1279412775888998e-1, _s8(1.882228401823884, 0.8826073082889659)),
-                ]
+            ]
         else:
             assert index == 5
             self.degree = 15
@@ -66,7 +67,7 @@ class RabinowitzRichter(object):
                 (.1777774268424240e+0, _s4(0.8418504335819279)),
                 (.2735449647853290e-3, _s8(2.685533581755341, 1.112384431771456)),
                 (.2087984556938594e-1, _s8(1.740847514397403, 0.7210826504868960)),
-                ]
+            ]
 
         self.points, self.weights = untangle(data)
         return

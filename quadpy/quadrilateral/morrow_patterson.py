@@ -8,7 +8,7 @@ from ..helpers import untangle
 
 
 class MorrowPatterson(object):
-    '''
+    """
     C.R. Morrow and T.N.L. Patterson,
     The Construction of Algebraic Cubature Formulae by the Distribution of
     Nodes Along Selected Lines,
@@ -21,12 +21,11 @@ class MorrowPatterson(object):
     reduced to dealing with a series of one-dimensional moment problems.
     Several analytical and numerical illustrative examples are provided. The
     extension to higher dimensions is also considered.
-    '''
+    """
+
     def __init__(self, index):
-        warnings.warn(
-            'The Morrow-Patterson schemes are only single-precision.'
-            )
-        self.name = 'MP({})'.format(index)
+        warnings.warn("The Morrow-Patterson schemes are only single-precision.")
+        self.name = "MP({})".format(index)
         if index == 1:
             self.degree = 11
             data = [
@@ -38,7 +37,7 @@ class MorrowPatterson(object):
                 (-0.1118414644e-03, _s4(0.9324695142, 1.532186887)),
                 (0.0541846008, _s4(0.9324695142, 0.8829273433)),
                 (0.1172517331, _s4(0.9324695142, 0.3592258245)),
-                ]
+            ]
         else:
             assert index == 2
             # The article claims degree 31.
@@ -97,23 +96,15 @@ class MorrowPatterson(object):
                 (+0.846360999901e-02, _s4(0.989400934992, 0.158216672941)),
                 (+0.203393765743e-15, _s4(0.989400934992, 0.339722181604e+1)),
                 (+0.508117261709e-08, _s4(0.989400934992, 0.135173206143e+1)),
-                ]
+            ]
 
         self.points, self.weights = untangle(data)
         return
 
 
 def _s20(a):
-    return numpy.array([
-        [+a, 0],
-        [-a, 0],
-        ])
+    return numpy.array([[+a, 0], [-a, 0]])
 
 
 def _s4(a, b):
-    return numpy.array([
-        [+a, +b],
-        [+a, -b],
-        [-a, +b],
-        [-a, -b],
-        ])
+    return numpy.array([[+a, +b], [+a, -b], [-a, +b], [-a, -b]])

@@ -7,14 +7,14 @@ from ..helpers import untangle, fsd, pm
 
 
 class Mysovskih(object):
-    '''
+    """
     I.P. Mysovskih,
     On the construction of cubature formulas for the simplest regions,
     Z. Vychisl. Mat. i. Mat. Fiz. 4, 3-14, 1964.
-    '''
+    """
 
     def __init__(self, symbolic=False):
-        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        frac = sympy.Rational if symbolic else lambda x, y: x / y
         sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
         pi = sympy.pi if symbolic else numpy.pi
         pm_ = numpy.array([+1, -1])
@@ -35,7 +35,7 @@ class Mysovskih(object):
             (B2, fsd(3, (s, 1))),
             (B3, fsd(3, (t, 2))),
             (B4, pm(3, u)),
-            ]
+        ]
 
         self.points, self.weights = untangle(data)
         self.weights *= frac(4, 3) * pi

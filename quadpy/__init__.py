@@ -11,7 +11,7 @@ from .__about__ import (
     __version__,
     __maintainer__,
     __status__,
-    )
+)
 
 from . import helpers
 
@@ -46,4 +46,4 @@ except ImportError:
     pass
 else:
     if pipdate.needs_checking(__name__):
-        print(pipdate.check(__name__, __version__), end='')
+        print(pipdate.check(__name__, __version__), end="")

@@ -16,23 +16,15 @@ def show(*args, **kwargs):
 
 
 def plot(
-        scheme,
-        triangle=numpy.array([
-            [-0.5, 0.0],
-            [+0.5, 0.0],
-            [0, 0.5 * (numpy.sqrt(3))],
-            ]),
-        show_axes=False
-        ):
-    '''Shows the quadrature points on a given triangle. The size of the circles
+    scheme,
+    triangle=numpy.array([[-0.5, 0.0], [+0.5, 0.0], [0, 0.5 * (numpy.sqrt(3))]]),
+    show_axes=False,
+):
+    """Shows the quadrature points on a given triangle. The size of the circles
     around the points coincides with their weights.
-    '''
-    plt.plot(triangle[:, 0], triangle[:, 1], '-k')
-    plt.plot(
-        [triangle[-1, 0], triangle[0, 0]],
-        [triangle[-1, 1], triangle[0, 1]],
-        '-k'
-        )
+    """
+    plt.plot(triangle[:, 0], triangle[:, 1], "-k")
+    plt.plot([triangle[-1, 0], triangle[0, 0]], [triangle[-1, 1], triangle[0, 1]], "-k")
 
     if not show_axes:
         plt.gca().set_axis_off()
@@ -40,11 +32,9 @@ def plot(
     transformed_pts = transform(scheme.points.T, triangle.T).T
 
     vol = get_vol(triangle)
-    helpers.plot_disks(
-        plt, transformed_pts, scheme.weights, vol
-        )
+    helpers.plot_disks(plt, transformed_pts, scheme.weights, vol)
 
-    plt.axis('equal')
+    plt.axis("equal")
     return
 
 
@@ -54,15 +44,15 @@ def _numpy_all_except(a, axis=-1):
     return numpy.all(a, axis=tuple(axes))
 
 
-
-
 def integrate_adaptive(
-        f, triangles, eps,
-        minimum_triangle_area=None,
-        scheme1=Dunavant(5),
-        scheme2=Dunavant(10),
-        dot=numpy.dot
-        ):
+    f,
+    triangles,
+    eps,
+    minimum_triangle_area=None,
+    scheme1=Dunavant(5),
+    scheme2=Dunavant(10),
+    dot=numpy.dot,
+):
     sumfun = helpers.kahan_sum
 
     triangles = numpy.array(triangles)
@@ -74,7 +64,7 @@ def integrate_adaptive(
     total_area = sumfun(areas)
 
     if minimum_triangle_area is None:
-        minimum_triangle_area = total_area * 0.25**10
+        minimum_triangle_area = total_area * 0.25 ** 10
 
     val1 = integrate(f, triangles, scheme1, dot=dot)
     val2 = integrate(f, triangles, scheme2, dot=dot)
@@ -82,10 +72,7 @@ def integrate_adaptive(
 
     # Mark intervals with acceptable approximations. For this, take all()
     # across every dimension except the last one, which is the interval index.
-    is_good = _numpy_all_except(
-            error_estimate < eps * areas / total_area,
-            axis=-1
-            )
+    is_good = _numpy_all_except(error_estimate < eps * areas / total_area, axis=-1)
 
     # add values from good intervals to sum
     quad_sum = sumfun(val1[..., is_good], axis=-1)
@@ -105,18 +92,20 @@ def integrate_adaptive(
             0.5 * (triangles[1] + triangles[2]),
             0.5 * (triangles[2] + triangles[0]),
             0.5 * (triangles[0] + triangles[1]),
+        ]
+        triangles = numpy.array(
+            [
+                numpy.concatenate(
+                    [triangles[0], triangles[1], triangles[2], midpoints[0]]
+                ),
+                numpy.concatenate(
+                    [midpoints[1], midpoints[2], midpoints[0], midpoints[1]]
+                ),
+                numpy.concatenate(
+                    [midpoints[2], midpoints[0], midpoints[1], midpoints[2]]
+                ),
             ]
-        triangles = numpy.array([
-            numpy.concatenate([
-                triangles[0], triangles[1], triangles[2], midpoints[0]
-                ]),
-            numpy.concatenate([
-                midpoints[1], midpoints[2], midpoints[0], midpoints[1]
-                ]),
-            numpy.concatenate([
-                midpoints[2], midpoints[0], midpoints[1], midpoints[2]
-                ]),
-            ])
+        )
         areas = get_vol(triangles)
         assert all(areas > minimum_triangle_area)
 
@@ -126,10 +115,7 @@ def integrate_adaptive(
         error_estimate = abs(val1 - val2)
 
         # mark good intervals, gather values and error estimates
-        is_good = _numpy_all_except(
-                error_estimate < eps * areas / total_area,
-                axis=-1
-                )
+        is_good = _numpy_all_except(error_estimate < eps * areas / total_area, axis=-1)
         # add values from good intervals to sum
         quad_sum += sumfun(val1[..., is_good], axis=-1)
         global_error_estimate += sumfun(error_estimate[..., is_good], axis=-1)

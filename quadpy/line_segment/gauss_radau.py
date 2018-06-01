@@ -7,15 +7,15 @@ from ..tools import scheme_from_rc
 
 
 class GaussRadau(object):
-    '''Gauss-Radau quadrature.
-    '''
+    """Gauss-Radau quadrature.
+    """
+
     def __init__(self, n, a=0.0, b=0.0):
         assert n >= 2
-        self.degree = 2*n - 1
-        _, _, alpha, beta = \
-            orthopy.line_segment.recurrence_coefficients.jacobi(
-                    n, a, b, 'monic'
-                    )
+        self.degree = 2 * n - 1
+        _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.jacobi(
+            n, a, b, "monic"
+        )
         flt = numpy.vectorize(float)
         alpha = flt(alpha)
         beta = flt(beta)
@@ -24,7 +24,7 @@ class GaussRadau(object):
 
 
 def _radau(alpha, beta, xr):
-    '''From <http://www.scientificpython.net/pyblog/radau-quadrature>:
+    """From <http://www.scientificpython.net/pyblog/radau-quadrature>:
     Compute the Radau nodes and weights with the preassigned node xr.
 
     Based on the section 7 of the paper
@@ -32,16 +32,16 @@ def _radau(alpha, beta, xr):
         Some modified matrix eigenvalue problems,
         Gene Golub,
         SIAM Review Vol 15, No. 2, April 1973, pp.318--334.
-    '''
+    """
     from scipy.linalg import solve_banded
 
-    n = len(alpha)-1
+    n = len(alpha) - 1
     f = numpy.zeros(n)
     f[-1] = beta[-1]
-    A = numpy.vstack((numpy.sqrt(beta), alpha-xr))
+    A = numpy.vstack((numpy.sqrt(beta), alpha - xr))
     J = numpy.vstack((A[:, 0:-1], A[0, 1:]))
     delta = solve_banded((1, 1), J, f)
     alphar = alpha.copy()
     alphar[-1] = xr + delta[-1]
-    x, w = scheme_from_rc(alphar, beta, mode='numpy')
+    x, w = scheme_from_rc(alphar, beta, mode="numpy")
     return x, w

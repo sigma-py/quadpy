@@ -56,56 +56,50 @@ from helpers import check_degree
 
 
 def _integrate_monomial_over_unit_wedge(k):
-    '''Unit wedge given by the points
+    """Unit wedge given by the points
         [0.0, 0.0, -1.0],
         [1.0, 0.0, -1.0],
         [0.0, 1.0, -1.0],
         [0.0, 0.0, +1.0],
         [1.0, 0.0, +1.0],
         [0.0, 1.0, +1.0].
-    '''
+    """
     if k[2] % 2 == 1:
         return 0.0
-    return 2.0 * scipy.special.beta(k[0]+1, k[1]+2) / (k[1]+1) / (k[2]+1)
+    return 2.0 * scipy.special.beta(k[0] + 1, k[1] + 2) / (k[1] + 1) / (k[2] + 1)
 
 
-@pytest.mark.parametrize(
-    'scheme',
-    [quadpy.wedge.Felippa(k) for k in range(1, 7)]
-    )
+@pytest.mark.parametrize("scheme", [quadpy.wedge.Felippa(k) for k in range(1, 7)])
 def test_scheme(scheme):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
-    wedge = numpy.array([
-        [[0.0, 0.0, -1.0], [1.0, 0.0, -1.0], [0.0, 1.0, -1.0]],
-        [[0.0, 0.0, +1.0], [1.0, 0.0, +1.0], [0.0, 1.0, +1.0]],
-        ])
+    wedge = numpy.array(
+        [
+            [[0.0, 0.0, -1.0], [1.0, 0.0, -1.0], [0.0, 1.0, -1.0]],
+            [[0.0, 0.0, +1.0], [1.0, 0.0, +1.0], [0.0, 1.0, +1.0]],
+        ]
+    )
 
     degree = check_degree(
-            lambda poly: quadpy.wedge.integrate(
-                poly, wedge, scheme
-                ),
-            # lambda k: _integrate_exact(k, wedge),
-            _integrate_monomial_over_unit_wedge,
-            3,
-            scheme.degree + 1
-            )
+        lambda poly: quadpy.wedge.integrate(poly, wedge, scheme),
+        # lambda k: _integrate_exact(k, wedge),
+        _integrate_monomial_over_unit_wedge,
+        3,
+        scheme.degree + 1,
+    )
     assert degree == scheme.degree
     return
 
 
-@pytest.mark.parametrize(
-    'scheme',
-    [quadpy.wedge.Felippa(4)]
-    )
+@pytest.mark.parametrize("scheme", [quadpy.wedge.Felippa(4)])
 def test_show(scheme):
     quadpy.wedge.show(scheme)
     return
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     scheme_ = quadpy.wedge.Felippa(2)
     test_scheme(scheme_)
     # test_show(scheme_)
-    quadpy.wedge.show(scheme_, backend='vtk')
+    quadpy.wedge.show(scheme_, backend="vtk")
