@@ -10,7 +10,7 @@ jobs:
       # don't install sympy with apt: it pulls in texlive which takes forever
       # to download and install
       - run: apt-get install -y git python3-pip
-      - run: pip3 install -U pytest pytest-cov pylint
+      - run: pip3 install -U pytest pytest-cov black flake8
       - checkout
       - run: pip3 install -r test_requirements.txt
       - run: pip3 install .[all]
