@@ -2,16 +2,7 @@
 #
 from __future__ import print_function
 
-from .__about__ import (
-    __author__,
-    __email__,
-    __copyright__,
-    __credits__,
-    __license__,
-    __version__,
-    __maintainer__,
-    __status__,
-)
+from .__about__ import __author__, __email__, __license__, __version__, __status__
 
 from . import helpers
 
@@ -39,6 +30,38 @@ from . import tetrahedron
 from . import wedge
 
 from . import tools
+
+__all__ = [
+    "__author__",
+    "__email__",
+    "__license__",
+    "__version__",
+    "__status__",
+    "helpers",
+    "ball",
+    "circle",
+    "disk",
+    "e1r",
+    "e2r",
+    "e3r",
+    "enr",
+    "e1r2",
+    "e2r2",
+    "e3r2",
+    "enr2",
+    "hexahedron",
+    "line_segment",
+    "nball",
+    "ncube",
+    "nsimplex",
+    "pyramid",
+    "quadrilateral",
+    "sphere",
+    "triangle",
+    "tetrahedron",
+    "wedge",
+    "tools",
+]
 
 try:
     import pipdate
