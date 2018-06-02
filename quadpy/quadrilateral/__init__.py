@@ -18,8 +18,8 @@ from .stroud import Stroud
 from .tyler import Tyler
 from .wissmann_becker import WissmannBecker
 
-from .product import *
-from .stroudn import *
+from .product import Product
+from .stroudn import StroudN
 
 from .tools import show, plot
 
@@ -40,6 +40,8 @@ __all__ = [
     "Stroud",
     "Tyler",
     "WissmannBecker",
+    "Product",
+    "StroudN",
     "show",
     "plot",
 ]

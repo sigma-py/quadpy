@@ -9,7 +9,7 @@ from .stroud1967 import Stroud1967
 from .stroudn import StroudN
 from .tyler import Tyler
 
-from .product import *
+from .product import Product
 
 from .tools import show
 
@@ -22,5 +22,6 @@ __all__ = [
     "Stroud1967",
     "StroudN",
     "Tyler",
+    "Product",
     "show",
 ]
