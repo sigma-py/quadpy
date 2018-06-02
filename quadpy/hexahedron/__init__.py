@@ -2,7 +2,7 @@
 #
 from .hammer_stroud import HammerStroud
 from .hammer_wymore import HammerWymore
-from .mustard_lyness_blatt import MusterLynessBlatt
+from .mustard_lyness_blatt import MustardLynessBlatt
 from .sadowsky import Sadowsky
 from .stroud import Stroud
 from .stroud1967 import Stroud1967
@@ -16,7 +16,7 @@ from .tools import show
 __all__ = [
     "HammerStroud",
     "HammerWymore",
-    "MusterLynessBlatt",
+    "MustardLynessBlatt",
     "Sadowsky",
     "Stroud",
     "Stroud1967",
