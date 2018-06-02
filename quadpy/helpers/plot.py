@@ -3,6 +3,8 @@
 import math
 import numpy
 
+__all__ = ["plot_disks_1d", "plot_disks"]
+
 
 def plot_disks_1d(plt, pts, weights, total_area):
     """Plot a circles at quadrature points according to weights. The diameters
