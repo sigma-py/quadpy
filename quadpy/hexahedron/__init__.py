@@ -19,6 +19,7 @@ __all__ = [
     "MusterLynessBlatt",
     "Sadowsky",
     "Stroud",
+    "Stroud1967",
     "StroudN",
     "Tyler",
     "show",
