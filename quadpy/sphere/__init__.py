@@ -10,7 +10,7 @@ from .tools import area, show, plot, integrate, integrate_spherical
 
 __all__ = [
     "AlbrechtCollatz",
-    "HeoXu ",
+    "HeoXu",
     "Lebedev",
     "McLaren",
     "Stroud",
