@@ -52,7 +52,7 @@ class Stroud(object):
         }
 
         fun, args = d[index]
-        scheme = fun(args)
+        scheme = fun(*args)
 
         self.degree = scheme.degree
         self.weights = scheme.weights
