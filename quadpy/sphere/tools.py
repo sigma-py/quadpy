@@ -22,7 +22,7 @@ def plot(scheme, backend="mpl"):
 
 def _plot_mpl(scheme):
 
-    from mpl_toolkits.mplot3d import Axes3D
+    from mpl_toolkits.mplot3d import Axes3D  # noqa
 
     fig = plt.figure()
     ax = fig.gca(projection="3d")

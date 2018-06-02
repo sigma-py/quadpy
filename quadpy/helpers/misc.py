@@ -49,6 +49,7 @@ def n_outer(a):
     return out
 
 
+# TODO remove (-> accupy)
 def kahan_sum(a, axis=0):
     """Kahan summation of the numpy array `a` along axis `axis`.
     """
@@ -66,6 +67,7 @@ def kahan_sum(a, axis=0):
     return s
 
 
+# TODO remove (-> accupy)
 def kahan_dot(a, b):
     """The dot product performed as a Kahan sum.
     """
