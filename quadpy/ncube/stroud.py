@@ -53,7 +53,6 @@ class Stroud(object):
             "Cn 5-9": (ProductGauss, [n, 5, symbolic]),
             "Cn 7-1": (Phillips, [n, symbolic]),
         }
-
         fun, args = d[index]
         scheme = fun(*args)
 

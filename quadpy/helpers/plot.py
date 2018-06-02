@@ -49,7 +49,7 @@ def _plot_disks_helpers(plt, pts, radii, colors):
 
 def show_mpl(points, weights, volume, edges, balls=None):
     import matplotlib.pyplot as plt
-    from mpl_toolkits.mplot3d import Axes3D
+    from mpl_toolkits.mplot3d import Axes3D  # noqa
 
     flt = numpy.vectorize(float)
     points = flt(points)
