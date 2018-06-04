@@ -174,7 +174,7 @@ def integrate(f, a, b):
 
     Useful for computing the moments `w(x) * P_k(x)`, e.g.,
 
-    moments = quadpy.tools.compute_moments(
+    moments = quadpy.tools.integrate(
             lambda x: [x**k for k in range(5)],
             -1, +1
             )
@@ -259,15 +259,11 @@ def scheme_from_rc(alpha, beta, mode="mpmath", decimal_places=32):
     associated with a set of orthogonal polynomials. See [2] and
     <http://www.scientificpython.net/pyblog/radau-quadrature>.
     """
-
-    if mode == "sympy":
-        x, w = _gauss_from_coefficients_sympy(alpha, beta)
-    elif mode == "mpmath":
-        x, w = _gauss_from_coefficients_mpmath(alpha, beta, decimal_places)
-    else:
-        assert mode == "numpy"
-        x, w = _gauss_from_coefficients_numpy(alpha, beta)
-    return x, w
+    return {
+        "sympy": lambda: _gauss_from_coefficients_sympy(alpha, beta),
+        "mpmath": lambda: _gauss_from_coefficients_mpmath(alpha, beta, decimal_places),
+        "numpy": lambda: _gauss_from_coefficients_numpy(alpha, beta),
+    }[mode]()
 
 
 def _sympy_tridiag(a, b):

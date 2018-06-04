@@ -272,12 +272,10 @@ def test_integrate():
     moments = quadpy.tools.integrate(
         lambda x: [x ** k * sympy.exp(-x ** 3 / 3) for k in range(5)], 0, sympy.oo
     )
-
     S = numpy.vectorize(sympy.S)
     gamma = numpy.vectorize(sympy.gamma)
     n = numpy.arange(5)
     reference = 3 ** (S(n - 2) / 3) * gamma(S(n + 1) / 3)
-
     assert numpy.all([sympy.simplify(m - r) == 0 for m, r in zip(moments, reference)])
 
     return
@@ -334,24 +332,33 @@ def test_xk(k):
         mode="numpy",
     )
 
-    # a, b = \
-    #     orthopy.line_segment.recurrence_coefficients.legendre(
-    #             2*n, mode='sympy'
-    #             )
+    def leg_polys(x):
+        return orthopy.line_segment.tree_legendre(x, 19, "monic", symbolic=True)
 
-    # moments = quadpy.tools.integrate(
-    #         lambda x: x**2, -1, +1, 2*n,
-    #         polynomial_class=quadpy.tools.legendre
-    #         )
-    # alpha, beta = quadpy.tools.chebyshev_modified(moments, a, b)
-    # points, weights = quadpy.tools.scheme_from_rc(
-    #         numpy.array([sympy.N(a) for a in alpha], dtype=float),
-    #         numpy.array([sympy.N(b) for b in beta], dtype=float)
-    #         )
+    moments = quadpy.tools.integrate(
+        lambda x: [x ** 2 * leg_poly for leg_poly in leg_polys(x)], -1, +1
+    )
+
+    _, _, a, b = orthopy.line_segment.recurrence_coefficients.legendre(
+        2 * n, "monic", symbolic=True
+    )
+
+    alpha, beta = quadpy.tools.chebyshev_modified(moments, a, b)
+
+    assert (alpha == 0).all()
+    # TODO assert beta
+    # assert beta[0] == moments[0]
+    # assert beta[1] == sympy.S(k + 1) / (k + 3)
+    # assert beta[2] == sympy.S(4) / ((k + 5) * (k + 3))
+    points, weights = quadpy.tools.scheme_from_rc(
+        numpy.array([sympy.N(a) for a in alpha], dtype=float),
+        numpy.array([sympy.N(b) for b in beta], dtype=float),
+        mode="numpy",
+    )
     return
 
 
 if __name__ == "__main__":
     # test_gauss('mpmath')
     # test_logo()
-    pass
+    test_xk(2)
