@@ -29,32 +29,30 @@ class Stroud(object):
         self.name = "Stroud({})".format(index)
         self.dim = n
 
-        d = {
-            "Cn 1-1": (Centroid, [n]),
-            "Cn 1-2": (ProductTrapezoidal, [n]),
-            "Cn 2-1": (Stroud1957, [n, 2, symbolic]),
-            "Cn 2-2": (Thacher, [n, symbolic]),
-            "Cn 3-1": (Stroud1957, [n, 3, symbolic]),
-            "Cn 3-2": (Cn32, [n, symbolic]),
-            "Cn 3-3": (Tyler, [n, symbolic]),
-            "Cn 3-4": (ProductGauss, [n, 3, symbolic]),
-            "Cn 3-5": (Ewing, [n, symbolic]),
-            "Cn 3-6": (ProductSimpson, [n, symbolic]),
+        scheme = {
+            "Cn 1-1": lambda: Centroid(n),
+            "Cn 1-2": lambda: ProductTrapezoidal(n),
+            "Cn 2-1": lambda: Stroud1957(n, 2, symbolic),
+            "Cn 2-2": lambda: Thacher(n, symbolic),
+            "Cn 3-1": lambda: Stroud1957(n, 3, symbolic),
+            "Cn 3-2": lambda: Cn32(n, symbolic),
+            "Cn 3-3": lambda: Tyler(n, symbolic),
+            "Cn 3-4": lambda: ProductGauss3(n, symbolic),
+            "Cn 3-5": lambda: Ewing(n, symbolic),
+            "Cn 3-6": lambda: ProductSimpson(n, symbolic),
             # TODO implement Cn 5-1
             # Cn 5-1 is not implemented because it's based on explicit values
             # only given for n=4,5,6.
-            "Cn 5-2": (HammerStroud, [n, "2-n", symbolic]),
-            "Cn 5-3": (Stroud1968, [n, symbolic]),
-            "Cn 5-4": (Stroud1966, [n, "a", symbolic]),
-            "Cn 5-5": (MustardLynessBlatt, [n, symbolic]),
-            "Cn 5-6": (Stroud1966, [n, "b", symbolic]),
-            "Cn 5-7": (Stroud1966, [n, "c", symbolic]),
-            "Cn 5-8": (Stroud1966, [n, "d", symbolic]),
-            "Cn 5-9": (ProductGauss, [n, 5, symbolic]),
-            "Cn 7-1": (Phillips, [n, symbolic]),
-        }
-        fun, args = d[index]
-        scheme = fun(*args)
+            "Cn 5-2": lambda: HammerStroud(n, "2-n", symbolic),
+            "Cn 5-3": lambda: Stroud1968(n, symbolic),
+            "Cn 5-4": lambda: Stroud1966(n, "a", symbolic),
+            "Cn 5-5": lambda: MustardLynessBlatt(n, symbolic),
+            "Cn 5-6": lambda: Stroud1966(n, "b", symbolic),
+            "Cn 5-7": lambda: Stroud1966(n, "c", symbolic),
+            "Cn 5-8": lambda: Stroud1966(n, "d", symbolic),
+            "Cn 5-9": lambda: ProductGauss5(n, symbolic),
+            "Cn 7-1": lambda: Phillips(n, symbolic),
+        }[index]()
 
         self.degree = scheme.degree
         self.weights = scheme.weights
@@ -93,30 +91,36 @@ class Cn32(object):
         return
 
 
-def ProductGauss(object):
-    def __init__(self, n, degree, symbolic):
+class ProductGauss3(object):
+    def __init__(self, n, symbolic):
         frac = sympy.Rational if symbolic else lambda x, y: x / y
         sqrt = sympy.sqrt if symbolic else numpy.sqrt
 
         self.degree = 3
-
-        if degree == 3:
-            reference_volume = 2 ** n
-            self.weights = numpy.full(2 ** n, frac(reference_volume, 2 ** n))
-            r = sqrt(3) / 3
-            self.points = pm(n, r)
-        else:
-            lst = n * [[frac(5, 9), frac(8, 9), frac(5, 9)]]
-            self.weights = numpy.product(
-                numpy.array(numpy.meshgrid(*lst)).T.reshape(-1, n), axis=-1
-            )
-            sqrt35 = sqrt(frac(3, 5))
-            lst = n * [[-sqrt35, 0, sqrt35]]
-            self.points = numpy.array(numpy.meshgrid(*lst)).T.reshape(-1, n)
+        reference_volume = 2 ** n
+        self.weights = numpy.full(2 ** n, frac(reference_volume, 2 ** n))
+        r = sqrt(3) / 3
+        self.points = pm(n, r)
         return
 
 
-def ProductSimpson(object):
+class ProductGauss5(object):
+    def __init__(self, n, symbolic):
+        frac = sympy.Rational if symbolic else lambda x, y: x / y
+        sqrt = sympy.sqrt if symbolic else numpy.sqrt
+
+        self.degree = 5
+        lst = n * [[frac(5, 9), frac(8, 9), frac(5, 9)]]
+        self.weights = numpy.product(
+            numpy.array(numpy.meshgrid(*lst)).T.reshape(-1, n), axis=-1
+        )
+        sqrt35 = sqrt(frac(3, 5))
+        lst = n * [[-sqrt35, 0, sqrt35]]
+        self.points = numpy.array(numpy.meshgrid(*lst)).T.reshape(-1, n)
+        return
+
+
+class ProductSimpson(object):
     def __init__(self, n, symbolic):
         frac = sympy.Rational if symbolic else lambda x, y: x / y
 

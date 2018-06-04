@@ -24,30 +24,27 @@ class Stroud(object):
         self.name = "Stroud_Enr2({})".format(index)
         self.dim = n
 
-        d = {
-            "3-1": (StroudSecrest, [n, "I", symbolic]),
-            "3-2": (StroudSecrest, [n, "III", symbolic]),
-            "5-1a": (Stroud1967a, [n, "a"]),
-            "5-1b": (Stroud1967a, [n, "b"]),
-            "5-2": (StroudSecrest, [n, "IV", symbolic]),
-            "5-3": (Enr2_5_3, [n, symbolic]),
-            "5-4": (SphericalProductLobatto, [n, symbolic]),
-            "5-5a": (Enr2_5_5, [n, True, symbolic]),
-            "5-5b": (Enr2_5_5, [n, False, symbolic]),
-            "5-6": (Enr2_5_6, [n, symbolic]),
-            "7-1a": (Stroud1967b, ["2a", n, symbolic]),
-            "7-1b": (Stroud1967b, ["2b", n, symbolic]),
-            "7-2": (Stroud1967b, ["4", n, symbolic]),
-            "7-3a": (Stenger, [n, 7, "a"]),
-            "7-3b": (Stenger, [n, 7, "b"]),
-            "9-1a": (Stenger, [n, 9, "a"]),
-            "9-1b": (Stenger, [n, 9, "b"]),
-            "11-1a": (Stenger, [n, 11, "a"]),
-            "11-1b": (Stenger, [n, 11, "b"]),
-        }
-
-        fun, args = d[index]
-        scheme = fun(*args)
+        scheme = {
+            "3-1": lambda: StroudSecrest(n, "I", symbolic),
+            "3-2": lambda: StroudSecrest(n, "III", symbolic),
+            "5-1a": lambda: Stroud1967a(n, "a"),
+            "5-1b": lambda: Stroud1967a(n, "b"),
+            "5-2": lambda: StroudSecrest(n, "IV", symbolic),
+            "5-3": lambda: Enr2_5_3(n, symbolic),
+            "5-4": lambda: SphericalProductLobatto(n, symbolic),
+            "5-5a": lambda: Enr2_5_5(n, True, symbolic),
+            "5-5b": lambda: Enr2_5_5(n, False, symbolic),
+            "5-6": lambda: Enr2_5_6(n, symbolic),
+            "7-1a": lambda: Stroud1967b("2a", n, symbolic),
+            "7-1b": lambda: Stroud1967b("2b", n, symbolic),
+            "7-2": lambda: Stroud1967b("4", n, symbolic),
+            "7-3a": lambda: Stenger(n, 7, "a"),
+            "7-3b": lambda: Stenger(n, 7, "b"),
+            "9-1a": lambda: Stenger(n, 9, "a"),
+            "9-1b": lambda: Stenger(n, 9, "b"),
+            "11-1a": lambda: Stenger(n, 11, "a"),
+            "11-1b": lambda: Stenger(n, 11, "b"),
+        }[index]()
 
         self.degree = scheme.degree
         self.weights = scheme.weights

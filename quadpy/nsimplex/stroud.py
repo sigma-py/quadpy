@@ -26,31 +26,28 @@ class Stroud(object):
         self.name = "Stroud({})".format(index)
         self.dim = n
 
-        d = {
-            "Tn 1-1": (MidPoint, [n, symbolic]),
-            "Tn 1-2": (Lauffer, [n, 1, symbolic]),
-            "Tn 2-1a": (HammerStroud, [n, "1a", symbolic]),
-            "Tn 2-1b": (HammerStroud, [n, "1b", symbolic]),
-            "Tn 2-2": (Lauffer, [n, 2, symbolic]),
-            "Tn 3-1": (HammerStroud, [n, "2", symbolic]),
-            "Tn 3-2": (Stroud1966, [n, "I", symbolic]),
-            "Tn 3-3": (Stroud1961, [n, symbolic]),
-            "Tn 3-4": (Stroud1966, [n, "II", symbolic]),
-            "Tn 3-5": (Stroud1966, [n, "III", symbolic]),
-            "Tn 3-6a": (Stroud1964, [n, "a", symbolic]),
-            "Tn 3-6b": (Stroud1964, [n, "b", symbolic]),
-            "Tn 3-7": (Stroud1966, [n, "IV", symbolic]),
-            "Tn 3-8": (Stroud1966, [n, "V", symbolic]),
-            "Tn 3-9": (Lauffer, [n, 3, symbolic]),
-            "Tn 3-10": (Stroud1966, [n, "VI", symbolic]),
-            "Tn 3-11": (Stroud1966, [n, "VII", symbolic]),
-            "Tn 4-1": (Lauffer, [n, 4, symbolic]),
-            "Tn 5-1": (Stroud1969, [n, symbolic]),
-            "Tn 5-2": (Lauffer, [n, 5, symbolic]),
-        }
-
-        fun, args = d[index]
-        scheme = fun(args)
+        scheme = {
+            "Tn 1-1": lambda: MidPoint(n, symbolic),
+            "Tn 1-2": lambda: Lauffer(n, 1, symbolic),
+            "Tn 2-1a": lambda: HammerStroud(n, "1a", symbolic),
+            "Tn 2-1b": lambda: HammerStroud(n, "1b", symbolic),
+            "Tn 2-2": lambda: Lauffer(n, 2, symbolic),
+            "Tn 3-1": lambda: HammerStroud(n, "2", symbolic),
+            "Tn 3-2": lambda: Stroud1966(n, "I", symbolic),
+            "Tn 3-3": lambda: Stroud1961(n, symbolic),
+            "Tn 3-4": lambda: Stroud1966(n, "II", symbolic),
+            "Tn 3-5": lambda: Stroud1966(n, "III", symbolic),
+            "Tn 3-6a": lambda: Stroud1964(n, "a", symbolic),
+            "Tn 3-6b": lambda: Stroud1964(n, "b", symbolic),
+            "Tn 3-7": lambda: Stroud1966(n, "IV", symbolic),
+            "Tn 3-8": lambda: Stroud1966(n, "V", symbolic),
+            "Tn 3-9": lambda: Lauffer(n, 3, symbolic),
+            "Tn 3-10": lambda: Stroud1966(n, "VI", symbolic),
+            "Tn 3-11": lambda: Stroud1966(n, "VII", symbolic),
+            "Tn 4-1": lambda: Lauffer(n, 4, symbolic),
+            "Tn 5-1": lambda: Stroud1969(n, symbolic),
+            "Tn 5-2": lambda: Lauffer(n, 5, symbolic),
+        }[index]()
 
         self.degree = scheme.degree
         self.weights = scheme.weights

@@ -19,12 +19,11 @@ class Stroud(object):
 
     def __init__(self, index, symbolic=False):
         self.name = "Stroud({index})"
-        d = {
-            "T3 5-1": (nsimplex_Stroud, [3, "Tn 5-1", symbolic]),
-            "T3 7-1": (T371, [symbolic]),
-        }
-        fun, args = d[index]
-        scheme = fun(args)
+        scheme = {
+            "T3 5-1": lambda: nsimplex_Stroud(3, "Tn 5-1", symbolic),
+            "T3 7-1": lambda: T371(),
+        }[index]()
+
         self.degree = scheme.degree
         self.weights = scheme.weights
         self.points = scheme.points

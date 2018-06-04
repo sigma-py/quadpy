@@ -27,30 +27,28 @@ class Stroud(object):
         self.name = "Stroud({})".format(index)
         self.dim = n
 
-        d = {
-            "Sn 2-1": (Stroud1957, [n, symbolic]),
-            "Sn 3-1": (HammerStroud, [n, "11-n", 0, symbolic]),
-            "Sn 3-2": (Sn32, [n, symbolic]),
-            "Sn 5-1a": (Stroud1967a, [n, "a"]),
-            "Sn 5-1b": (Stroud1967a, [n, "b"]),
-            "Sn 5-2": (HammerStroud, [n, "12-n", 0, symbolic]),
-            "Sn 5-3": (Stroud1966, [n, "a", symbolic]),
-            "Sn 5-4": (Stroud1966, [n, "b", symbolic]),
-            "Sn 5-5": (Stroud1966, [n, "c", symbolic]),
-            "Sn 5-6": (Stroud1966, [n, "d", symbolic]),
-            "Sn 7-1a": (Stroud1967b, [n, "a", symbolic]),
-            "Sn 7-1b": (Stroud1967b, [n, "b", symbolic]),
-            "Sn 7-2": (Stroud1967b, [n, "c", symbolic]),
-            "Sn 7-3a": (Stenger, [n, 7, "a"]),
-            "Sn 7-3b": (Stenger, [n, 7, "b"]),
-            "Sn 9-1a": (Stenger, [n, 9, "a"]),
-            "Sn 9-1b": (Stenger, [n, 9, "b"]),
-            "Sn 11-1a": (Stenger, [n, 11, "a"]),
-            "Sn 11-1b": (Stenger, [n, 11, "b"]),
-        }
-
-        fun, args = d[index]
-        scheme = fun(args)
+        scheme = {
+            "Sn 2-1": lambda: Stroud1957(n, symbolic),
+            "Sn 3-1": lambda: HammerStroud(n, "11-n", 0, symbolic),
+            "Sn 3-2": lambda: Sn32(n, symbolic),
+            "Sn 5-1a": lambda: Stroud1967a(n, "a"),
+            "Sn 5-1b": lambda: Stroud1967a(n, "b"),
+            "Sn 5-2": lambda: HammerStroud(n, "12-n", 0, symbolic),
+            "Sn 5-3": lambda: Stroud1966(n, "a", symbolic),
+            "Sn 5-4": lambda: Stroud1966(n, "b", symbolic),
+            "Sn 5-5": lambda: Stroud1966(n, "c", symbolic),
+            "Sn 5-6": lambda: Stroud1966(n, "d", symbolic),
+            "Sn 7-1a": lambda: Stroud1967b(n, "a", symbolic),
+            "Sn 7-1b": lambda: Stroud1967b(n, "b", symbolic),
+            "Sn 7-2": lambda: Stroud1967b(n, "c", symbolic),
+            # TODO fix
+            # "Sn 7-3a": lambda: Stenger(n, 7, "a"),
+            "Sn 7-3b": lambda: Stenger(n, 7, "b"),
+            "Sn 9-1a": lambda: Stenger(n, 9, "a"),
+            "Sn 9-1b": lambda: Stenger(n, 9, "b"),
+            "Sn 11-1a": lambda: Stenger(n, 11, "a"),
+            "Sn 11-1b": lambda: Stenger(n, 11, "b"),
+        }[index]()
 
         self.degree = scheme.degree
         self.weights = scheme.weights

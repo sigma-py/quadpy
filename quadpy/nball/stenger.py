@@ -19,7 +19,7 @@ class Stenger(object):
         self.dim = n
 
         if degree == 7:
-            d = {
+            u, v, B = {
                 ("a", 3): (
                     0.285231516480645,
                     0.765055323929465,
@@ -117,9 +117,7 @@ class Stenger(object):
                         +0.770580714268811e-02,
                     ],
                 ),
-            }
-
-            u, v, B = d[(variant, n)]
+            }[(variant, n)]
 
             data = [
                 (B[0], z(n)),
@@ -130,7 +128,7 @@ class Stenger(object):
                 (B[5], fsd(n, (u, 3))),
             ]
         elif degree == 9:
-            d = {
+            u, v, B = {
                 ("a", 3): (
                     0.468848793470714,
                     0.830223896278566,
@@ -235,9 +233,7 @@ class Stenger(object):
                         +0.257417929250816e-03,
                     ],
                 ),
-            }
-
-            u, v, B = d[(variant, n)]
+            }[(variant, n)]
 
             data = [
                 (B[0], z(n)),
@@ -254,7 +250,7 @@ class Stenger(object):
 
         else:
             assert degree == 11
-            d = {
+            u, v, w, B = {
                 ("a", 3): (
                     0.871740148509601,
                     0.209299217902484,
@@ -387,9 +383,7 @@ class Stenger(object):
                         +0.887274197302674e-05,
                     ],
                 ),
-            }
-
-            u, v, w, B = d[(variant, n)]
+            }[(variant, n)]
 
             data = [
                 (B[0], z(n)),

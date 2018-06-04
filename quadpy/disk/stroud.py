@@ -26,32 +26,29 @@ class Stroud(object):
     def __init__(self, index, symbolic=False):
         self.name = "Stroud({})".format(index)
 
-        d = {
-            "S2 3-1": (HammerStroud, ["11-2", symbolic]),
-            "S2 3-2": (AlbrechtCollatz, [symbolic]),
-            "S2 4-1": (Mysovskih, [1, symbolic]),
-            "S2 5-1": (Radon, [0, symbolic]),
-            "S2 5-2": (StroudS252, [symbolic]),
-            "S2 7-1": (Peirce1956, [1, symbolic]),
-            "S2 7-2": (SphericalProductGauss, [7, symbolic]),
-            "S2 9-1": (Albrecht, [4, symbolic]),
-            "S2 9-2": (RabinowitzRichter, [1]),
-            "S2 9-3": (SphericalProductGauss, [9, symbolic]),
-            "S2 9-4": (RabinowitzRichter, [2]),
-            "S2 9-5": (Peirce1956, [2, symbolic]),
-            "S2 11-1": (Mysovskih, [2, symbolic]),
-            "S2 11-2": (Albrecht, [5, symbolic]),
-            "S2 11-3": (RabinowitzRichter, [4]),
-            "S2 11-4": (Peirce1956, [3, symbolic]),
-            "S2 13-1": (RabinowitzRichter, [5]),
-            "S2 13-2": (Albrecht, [6, symbolic]),
-            "S2 15-1": (Mysovskih, [3, symbolic]),
-            "S2 15-2": (Albrecht, [7, symbolic]),
-            "S2 17-1": (Albrecht, [8, symbolic]),
-        }
-
-        fun, args = d[index]
-        scheme = fun(*args)
+        scheme = {
+            "S2 3-1": lambda: HammerStroud("11-2", symbolic),
+            "S2 3-2": lambda: AlbrechtCollatz(symbolic),
+            "S2 4-1": lambda: Mysovskih(1, symbolic),
+            "S2 5-1": lambda: Radon(0, symbolic),
+            "S2 5-2": lambda: StroudS252(symbolic),
+            "S2 7-1": lambda: Peirce1956(1, symbolic),
+            "S2 7-2": lambda: SphericalProductGauss(7, symbolic),
+            "S2 9-1": lambda: Albrecht(4, symbolic),
+            "S2 9-2": lambda: RabinowitzRichter(1),
+            "S2 9-3": lambda: SphericalProductGauss(9, symbolic),
+            "S2 9-4": lambda: RabinowitzRichter(2),
+            "S2 9-5": lambda: Peirce1956(2, symbolic),
+            "S2 11-1": lambda: Mysovskih(2, symbolic),
+            "S2 11-2": lambda: Albrecht(5, symbolic),
+            "S2 11-3": lambda: RabinowitzRichter(4),
+            "S2 11-4": lambda: Peirce1956(3, symbolic),
+            "S2 13-1": lambda: RabinowitzRichter(5),
+            "S2 13-2": lambda: Albrecht(6, symbolic),
+            "S2 15-1": lambda: Mysovskih(3, symbolic),
+            "S2 15-2": lambda: Albrecht(7, symbolic),
+            "S2 17-1": lambda: Albrecht(8, symbolic),
+        }[index]()
 
         self.degree = scheme.degree
         self.weights = scheme.weights

@@ -29,30 +29,29 @@ class Stroud(object):
 
     def __init__(self, index, symbolic=False):
 
-        d = {
-            "C3 3-1": (Tyler, [1]),
-            "C3 3-2": (ProductGauss, [symbolic]),
-            "C3 3-3": (Ewing, [3, symbolic]),
-            "C3 3-4": (MustardLynessBlatt, [1, symbolic]),
-            "C3 3-5": (MustardLynessBlatt, [2, symbolic]),
-            "C3 3-6": (AlbrechtCollatz, [symbolic]),
-            "C3 3-7": (MustardLynessBlatt, [3, symbolic]),
-            "C3 5-1": (Stroud1967, [symbolic]),
-            "C3 5-2": (HammerStroud, ["2-3", symbolic]),
-            "C3 5-3": (Tyler, [2, symbolic]),
-            "C3 5-4": (MustardLynessBlatt, [4, symbolic]),
-            "C3 5-5": (MustardLynessBlatt, [5, symbolic]),
-            "C3 5-6": (MustardLynessBlatt, [6, symbolic]),
-            "C3 5-7": (MustardLynessBlatt, [7, symbolic]),
-            "C3 5-8": (Sadowsky, [symbolic]),
-            "C3 7-1a": (HammerStroud, ["5-3a", symbolic]),
-            "C3 7-1b": (HammerStroud, ["5-3b", symbolic]),
-            "C3 7-2": (HammerWymore, [symbolic]),
-            "C3 7-3": (SarmaStroud, [symbolic]),
-        }
-
-        fun, args = d[index]
-        scheme = fun(*args)
+        # Adding lambdas here makes sure that only the selected scheme is actually
+        # created.
+        scheme = {
+            "C3 3-1": lambda: Tyler(1),
+            "C3 3-2": lambda: ProductGauss(symbolic=symbolic),
+            "C3 3-3": lambda: Ewing(3, symbolic=symbolic),
+            "C3 3-4": lambda: MustardLynessBlatt(1, symbolic=symbolic),
+            "C3 3-5": lambda: MustardLynessBlatt(2, symbolic=symbolic),
+            "C3 3-6": lambda: AlbrechtCollatz(symbolic=symbolic),
+            "C3 3-7": lambda: MustardLynessBlatt(3, symbolic=symbolic),
+            "C3 5-1": lambda: Stroud1967(symbolic=symbolic),
+            "C3 5-2": lambda: HammerStroud("2-3", symbolic=symbolic),
+            "C3 5-3": lambda: Tyler(2, symbolic=symbolic),
+            "C3 5-4": lambda: MustardLynessBlatt(4, symbolic=symbolic),
+            "C3 5-5": lambda: MustardLynessBlatt(5, symbolic=symbolic),
+            "C3 5-6": lambda: MustardLynessBlatt(6, symbolic=symbolic),
+            "C3 5-7": lambda: MustardLynessBlatt(7, symbolic=symbolic),
+            "C3 5-8": lambda: Sadowsky(symbolic=symbolic),
+            "C3 7-1a": lambda: HammerStroud("5-3a", symbolic=symbolic),
+            "C3 7-1b": lambda: HammerStroud("5-3b", symbolic=symbolic),
+            "C3 7-2": lambda: HammerWymore(symbolic=symbolic),
+            "C3 7-3": lambda: SarmaStroud(symbolic=symbolic),
+        }[index]()
 
         self.degree = scheme.degree
         self.weights = scheme.weights
