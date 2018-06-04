@@ -18,6 +18,7 @@ class HammerStroud(object):
     def __init__(self, degree, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x / y
 
+        self.name = "Hammer-Stroud"
         self.degree = degree
         if degree == 2:
             data = {"s2": [[frac(1, 3), frac(1, 6)]]}

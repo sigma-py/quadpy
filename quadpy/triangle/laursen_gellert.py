@@ -228,6 +228,7 @@ class LaursenGellert(object):
     keys = _gen.keys()
 
     def __init__(self, key, symbolic=False):
+        self.name = "Laursen-Gellert({})".format(key)
         self.degree, data = _gen[key](symbolic)
         self.bary, self.weights = untangle2(data)
         self.points = self.bary[:, 1:]

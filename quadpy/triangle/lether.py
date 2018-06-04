@@ -16,6 +16,7 @@ class Lether(object):
 
     def __init__(self, n):
         self.degree = 2 * n - 2
+        self.name = "Lether"
 
         a, A = numpy.polynomial.legendre.leggauss(n)
 

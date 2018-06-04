@@ -96,6 +96,7 @@ def test_scheme(scheme, tol):
         )
         return out
 
+    print(scheme.name)
     vals = quadpy.triangle.integrate(eval_orthopolys, triangle, scheme)
     # Put vals back into the tree structure:
     # len(approximate[k]) == k+1
