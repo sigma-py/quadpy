@@ -23,6 +23,9 @@ from .stroudn import StroudN
 
 from .tools import show, plot
 
+from ..ncube import transform, integrate
+from ..ncube import ncube_points as rectangle_points
+
 __all__ = [
     "AlbrechtCollatz",
     "Burnside",
@@ -44,4 +47,7 @@ __all__ = [
     "StroudN",
     "show",
     "plot",
+    "transform",
+    "integrate",
+    "rectangle_points",
 ]

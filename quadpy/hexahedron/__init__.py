@@ -13,6 +13,9 @@ from .product import Product
 
 from .tools import show
 
+from ..ncube import transform, integrate
+from ..ncube import ncube_points as cube_points
+
 __all__ = [
     "HammerStroud",
     "HammerWymore",
@@ -24,4 +27,7 @@ __all__ = [
     "Tyler",
     "Product",
     "show",
+    "transform",
+    "integrate",
+    "cube_points",
 ]
