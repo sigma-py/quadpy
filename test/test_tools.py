@@ -336,7 +336,7 @@ def test_xk(k):
         return orthopy.line_segment.tree_legendre(x, 19, "monic", symbolic=True)
 
     moments = quadpy.tools.integrate(
-        lambda x: [x ** 2 * leg_poly for leg_poly in leg_polys(x)], -1, +1
+        lambda x: [x ** k * leg_poly for leg_poly in leg_polys(x)], -1, +1
     )
 
     _, _, a, b = orthopy.line_segment.recurrence_coefficients.legendre(
@@ -346,10 +346,9 @@ def test_xk(k):
     alpha, beta = quadpy.tools.chebyshev_modified(moments, a, b)
 
     assert (alpha == 0).all()
-    # TODO assert beta
-    # assert beta[0] == moments[0]
-    # assert beta[1] == sympy.S(k + 1) / (k + 3)
-    # assert beta[2] == sympy.S(4) / ((k + 5) * (k + 3))
+    assert beta[0] == moments[0]
+    assert beta[1] == sympy.S(k + 1) / (k + 3)
+    assert beta[2] == sympy.S(4) / ((k + 5) * (k + 3))
     points, weights = quadpy.tools.scheme_from_rc(
         numpy.array([sympy.N(a) for a in alpha], dtype=float),
         numpy.array([sympy.N(b) for b in beta], dtype=float),
