@@ -725,6 +725,8 @@ Some explanations:
      [orthopy](https://github.com/nschloe/orthopy)
      for `p_k`:
      ```python
+     import orthopy
+
      def leg_polys(x):
          return orthopy.line_segment.tree_legendre(x, 20, "monic", symbolic=True)
 
