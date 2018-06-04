@@ -33,6 +33,8 @@ from .zhang_cui_liu import ZhangCuiLiu
 
 from .tools import show, plot, integrate_adaptive
 
+from ..nsimplex import transform, get_vol, integrate
+
 __all__ = [
     "AlbrechtCollatz",
     "Centroid",
@@ -68,4 +70,7 @@ __all__ = [
     "show",
     "plot",
     "integrate_adaptive",
+    "transform",
+    "get_vol",
+    "integrate",
 ]

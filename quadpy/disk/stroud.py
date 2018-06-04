@@ -33,10 +33,10 @@ class Stroud(object):
             "S2 5-1": lambda: Radon(0, symbolic),
             "S2 5-2": lambda: StroudS252(symbolic),
             "S2 7-1": lambda: Peirce1956(1, symbolic),
-            "S2 7-2": lambda: SphericalProductGauss(7, symbolic),
+            "S2 7-2": lambda: SphericalProductGauss7(symbolic),
             "S2 9-1": lambda: Albrecht(4, symbolic),
             "S2 9-2": lambda: RabinowitzRichter(1),
-            "S2 9-3": lambda: SphericalProductGauss(9, symbolic),
+            "S2 9-3": lambda: SphericalProductGauss9(symbolic),
             "S2 9-4": lambda: RabinowitzRichter(2),
             "S2 9-5": lambda: Peirce1956(2, symbolic),
             "S2 11-1": lambda: Mysovskih(2, symbolic),
@@ -74,8 +74,8 @@ class StroudS252(object):
         return
 
 
-class SphericalProductGauss(object):
-    def __init__(self, degree, symbolic):
+class SphericalProductGauss7(object):
+    def __init__(self, symbolic):
         sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
         pm_ = numpy.array([+1, -1])
         cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
@@ -83,29 +83,41 @@ class SphericalProductGauss(object):
         frac = sympy.Rational if symbolic else lambda x, y: x / y
         pi = sympy.pi if symbolic else numpy.pi
 
-        self.degree = degree
+        self.degree = 7
 
-        if degree == 7:
-            r1, r2 = sqrt((3 - pm_ * sqrt(3)) / 6)
+        r1, r2 = sqrt((3 - pm_ * sqrt(3)) / 6)
 
-            a = (2 * numpy.arange(8) + 1) * pi / 8
-            x = numpy.array([cos(a), sin(a)]).T
+        a = (2 * numpy.arange(8) + 1) * pi / 8
+        x = numpy.array([cos(a), sin(a)]).T
 
-            data = [(frac(1, 16), r1 * x), (frac(1, 16), r2 * x)]
-            self.points, self.weights = untangle(data)
-        else:
-            assert degree == 9
-            r1, r2 = sqrt((6 - pm_ * sqrt(6)) / 10)
+        data = [(frac(1, 16), r1 * x), (frac(1, 16), r2 * x)]
+        self.points, self.weights = untangle(data)
 
-            a = (numpy.arange(10) + 1) * pi / 5
-            x = numpy.array([cos(a), sin(a)]).T
+        self.weights *= pi
+        return
 
-            B0 = frac(1, 9)
-            B1, B2 = (16 + pm_ * sqrt(6)) / 360
 
-            data = [(B0, z(2)), (B1, r1 * x), (B2, r2 * x)]
-            self.points, self.weights = untangle(data)
-            self.weights *= pi
+class SphericalProductGauss9(object):
+    def __init__(self, symbolic):
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+        pm_ = numpy.array([+1, -1])
+        cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
+        sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
+        frac = sympy.Rational if symbolic else lambda x, y: x / y
+        pi = sympy.pi if symbolic else numpy.pi
+
+        self.degree = 9
+
+        r1, r2 = sqrt((6 - pm_ * sqrt(6)) / 10)
+
+        a = (numpy.arange(10) + 1) * pi / 5
+        x = numpy.array([cos(a), sin(a)]).T
+
+        B0 = frac(1, 9)
+        B1, B2 = (16 + pm_ * sqrt(6)) / 360
+
+        data = [(B0, z(2)), (B1, r1 * x), (B2, r2 * x)]
+        self.points, self.weights = untangle(data)
 
         self.weights *= pi
         return

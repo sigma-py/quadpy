@@ -15,7 +15,14 @@ from .combinatorics import (
     get_all_exponents,
 )
 from .misc import untangle, n_outer, kahan_sum, kahan_dot, compute_dobrodeev
-from .plot import plot_disks_1d, plot_disks, show_mpl, show_mayavi, show_vtk
+from .plot import (
+    plot_disks_1d,
+    plot_disks,
+    show_mpl,
+    show_mayavi,
+    show_vtk,
+    backend_to_function,
+)
 
 __all__ = [
     "z",
@@ -39,4 +46,5 @@ __all__ = [
     "show_mpl",
     "show_mayavi",
     "show_vtk",
+    "backend_to_function",
 ]
