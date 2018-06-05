@@ -775,12 +775,13 @@ Some explanations:
      points, weights = quadpy.tools.scheme_from_rc(
          numpy.array([sympy.N(a) for a in alpha], dtype=float),
          numpy.array([sympy.N(b) for b in beta], dtype=float),
-         mode='numpy',
+         mode='numpy'
      )
      ```
      ```
      [-0.97822866 -0.8870626  -0.73015201 -0.51909613 -0.26954316  0.26954316
       0.51909613  0.73015201  0.8870626   0.97822866]
+     ```
      ```
      [0.05327099 0.09881669 0.0993154  0.06283658 0.01909367 0.01909367
       0.06283658 0.0993154  0.09881669 0.05327099]
