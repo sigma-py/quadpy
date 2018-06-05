@@ -8,7 +8,7 @@ import import_helpers
 
 
 def read_data_tri(filename):
-    data = numpy.loadtxt(filename)
+    data = numpy.loadtxt(filename, dtype=float)
     if len(data.shape) == 1:
         data = numpy.array([data])
     points = data[:, :2]
@@ -66,6 +66,42 @@ def data_to_code(points, weights):
     return
 
 
+def data_to_json(degree, points, weights):
+    print(degree)
+    print(points)
+    print(weights)
+    exit(1)
+    # identify groups of equal weights
+    tol = 1.0e-12
+    count = 0
+    kk = 0
+    last_value = weights[0]
+    for w in weights:
+        if abs(last_value - w) < tol:
+            count += 1
+        else:
+            pts = points[kk : kk + count]
+            print(pts)
+            exit(1)
+            kk += count
+            print(
+                8 * " "
+                + "(%.15e, %s),"
+                % (last_value, import_helpers.get_symmetry_code_tet(pts))
+            )
+            last_value = w
+            count = 1
+
+    pts = points[kk : kk + count]
+    print(
+        8 * " "
+        + "(%.15e, %s)," % (last_value, import_helpers.get_symmetry_code_tet(pts))
+    )
+
+    exit(1)
+    return
+
+
 def import_triangle():
     filenames = [
         "1-1.txt",
@@ -90,12 +126,10 @@ def import_triangle():
     ]
     for k, filename in enumerate(filenames):
         out = re.match("([0-9]+)-([0-9]+)\.txt", filename)
-        strength = out.group(1)
-        print("elif degree == {}:".format(strength))
-        print("    data = [")
+        degree = out.group(1)
         x, weights = read_data_tri(filename)
-        data_to_code(x, weights)
-        print(8 * " " + "]")
+        data_to_json(degree, x, weights)
+    return
 
 
 def import_tet():
@@ -118,6 +152,7 @@ def import_tet():
         x, weights = read_data_tet(filename)
         data_to_code(x, weights)
         print(8 * " " + "]")
+    return
 
 
 if __name__ == "__main__":
