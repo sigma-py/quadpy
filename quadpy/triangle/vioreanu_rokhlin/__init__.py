@@ -28,11 +28,8 @@ class VioreanuRokhlin(object):
         #  * it's _much_ faster to parse <https://stackoverflow.com/a/50685946/353337>
         this_dir = os.path.dirname(os.path.realpath(__file__))
         filename = "vr{:02d}.json".format(index)
-        print(filename)
         with open(os.path.join(this_dir, filename), "r") as f:
             data = json.load(f)
-
-        print(data)
 
         self.degree = data["degree"]
 
