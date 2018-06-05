@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _s4, _s31, _s22, _s211, untangle2
-
-from ..helpers import untangle
+from .helpers import untangle2
 
 
 class BeckersHaegemans(object):

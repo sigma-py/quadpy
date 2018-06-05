@@ -79,10 +79,6 @@ def _s1111(a, b, c):
 
 
 def untangle2(data):
-    print('untangle 2')
-    print(data)
-    print()
-
     bary = []
     weights = []
 
@@ -117,9 +113,6 @@ def untangle2(data):
         s1111_data = _s1111(*d[1:])
         bary.append(_collapse0(s1111_data).T)
         weights.append(numpy.tile(d[0], 24))
-
-    for b in bary:
-        print(b.shape)
 
     bary = numpy.concatenate(bary)
     weights = numpy.concatenate(weights)
