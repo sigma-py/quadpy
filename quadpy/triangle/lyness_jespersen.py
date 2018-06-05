@@ -31,66 +31,62 @@ class LynessJespersen(object):
         sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
         self.name = "LJ({})".format(index)
-        if index == 1:
-            self.degree = 2
-            data = {"s2": [[frac(1, 3), frac(1, 2)]]}
-        elif index == 2:
-            self.degree = 2
-            data = {"s3": [[frac(3, 4)]], "s2": [[frac(1, 12), 0]]}
-        elif index == 3:
-            self.degree = 3
-            data = {"s3": [[-frac(9, 16)]], "s2": [[frac(25, 48), frac(1, 5)]]}
-        elif index == 4:
-            self.degree = 3
-            data = {
+
+        a0, a1 = [(3 + i * sqrt(3)) / 6 for i in [+1, -1]]
+        sqrt13 = sqrt(13)
+
+        sqrt15 = sqrt(15)
+        b1, b2 = [(155 - i * sqrt15) / 1200 for i in [+1, -1]]
+        r1, r2 = [(6 - i * sqrt15) / 21 for i in [+1, -1]]
+
+        c, d = [(3 + i * sqrt(6)) / 6 for i in [+1, -1]]
+
+        data = {
+            1: {"degree": 2, "s2": [[frac(1, 3), frac(1, 2)]]},
+            2: {"degree": 2, "s3": [[frac(3, 4)]], "s2": [[frac(1, 12), 0]]},
+            3: {
+                "degree": 3,
+                "s3": [[-frac(9, 16)]],
+                "s2": [[frac(25, 48), frac(1, 5)]],
+            },
+            4: {
+                "degree": 3,
                 "s3": [[frac(9, 20)]],
                 "s2": [[frac(1, 20), 0], [frac(2, 15), frac(1, 2)]],
-            }
-        elif index == 5:
-            self.degree = 4
-            data = {
+            },
+            5: {
+                "degree": 4,
                 "s2": [
                     [3.298552309659655E-01 / 3, 9.157621350977073E-02],
                     [6.701447690340345E-01 / 3, 4.459484909159649E-01],
-                ]
-            }
-        elif index == 6:
-            self.degree = 4
-            a0, a1 = [(3 + i * sqrt(3)) / 6 for i in [+1, -1]]
-            data = {
+                ],
+            },
+            6: {
+                "degree": 4,
                 "s3": [[+frac(9, 20)]],
                 "s2": [[-frac(1, 60), 0]],
                 "s1": [[+frac(1, 10), a0, a1]],
-            }
-        elif index == 7:
-            self.degree = 4
-            sqrt13 = sqrt(13)
-            data = {
+            },
+            7: {
+                "degree": 4,
                 "s2": [
                     [(11 - sqrt13) / 360, 0],
                     [(10 - 2 * sqrt13) / 45, frac(1, 2)],
                     [(29 + 17 * sqrt13) / 360, (7 - sqrt13) / 18],
-                ]
-            }
-        elif index == 8:
-            self.degree = 5
-            sqrt15 = sqrt(15)
-            a1, a2 = [(155 - i * sqrt15) / 1200 for i in [+1, -1]]
-            r1, r2 = [(6 - i * sqrt15) / 21 for i in [+1, -1]]
-            data = {"s3": [[frac(9, 40)]], "s2": [[a1, r1], [a2, r2]]}
-        elif index == 9:
-            self.degree = 5
-            data = {
+                ],
+            },
+            8: {"degree": 5, "s3": [[frac(9, 40)]], "s2": [[b1, r1], [b2, r2]]},
+            9: {
+                "degree": 5,
                 "s3": [[frac(81, 320)]],
                 "s2": [
                     [frac(1, 90), 0],
                     [frac(16, 225), frac(1, 2)],
                     [frac(2401, 14400), frac(1, 7)],
                 ],
-            }
-        elif index == 10:
-            self.degree = 6
-            data = {
+            },
+            10: {
+                "degree": 6,
                 "s2": [
                     [3.503588271790222E-01 / 3, 2.492867451709329E-01],
                     [1.525347191106164E-01 / 3, 6.308901449150177E-02],
@@ -102,32 +98,28 @@ class LynessJespersen(object):
                         5.314504984483216E-02,
                     ]
                 ],
-            }
-        elif index == 11:
-            self.degree = 6
-            a, b = [(3 + i * sqrt(6)) / 6 for i in [+1, -1]]
-            data = {
+            },
+            11: {
+                "degree": 6,
                 "s3": [[-frac(81, 140)]],
                 "s2": [
                     [-frac(5, 252), 0],
                     [frac(17, 315), frac(1, 2)],
                     [frac(128, 315), frac(1, 4)],
                 ],
-                "s1": [[frac(9, 210), a, b]],
-            }
-        elif index == 12:
-            self.degree = 6
-            data = {
+                "s1": [[frac(9, 210), c, d]],
+            },
+            12: {
+                "degree": 6,
                 "s3": [[1.527089667883523E-01]],
                 "s2": [
                     [2.944076042366762E-01 / 3, 4.738308139536513E-01],
                     [3.887052878418766E-01 / 3, 1.721176696308175E-01],
                 ],
                 "s1": [[1.641781411330949E-01 / 6, 0, 8.653073540834571E-01]],
-            }
-        elif index == 13:
-            self.degree = 7
-            data = {
+            },
+            13: {
+                "degree": 7,
                 "s3": [[-1.495700444677495E-01]],
                 "s2": [
                     [+5.268457722996328E-01 / 3, 2.603459660790466E-01],
@@ -140,10 +132,9 @@ class LynessJespersen(object):
                         4.869031542531756E-02,
                     ]
                 ],
-            }
-        elif index == 14:
-            self.degree = 7
-            data = {
+            },
+            14: {
+                "degree": 7,
                 "s3": [[1.763126156005252E-01]],
                 "s2": [
                     [1.210901532763310E-02 / 3, 0],
@@ -151,10 +142,9 @@ class LynessJespersen(object):
                     [3.195119754425220E-01 / 3, 4.691507461438120E-01],
                 ],
                 "s1": [[1.421102178595603E-01 / 6, 0, 8.392991722729236E-01]],
-            }
-        elif index == 15:
-            self.degree = 8
-            data = {
+            },
+            15: {
+                "degree": 8,
                 "s3": [[1.443156076777862E-01]],
                 "s2": [
                     [2.852749028018549E-01 / 3, 4.592925882927229E-01],
@@ -168,10 +158,9 @@ class LynessJespersen(object):
                         7.284923929554041E-01,
                     ]
                 ],
-            }
-        elif index == 16:
-            self.degree = 8
-            data = {
+            },
+            16: {
+                "degree": 8,
                 "s2": [
                     [+1.207273935292775E-02 / 3, 0],
                     [-8.491579879151455E-01 / 3, frac(1, 2)],
@@ -180,10 +169,9 @@ class LynessJespersen(object):
                     [+4.511852767201322E-01 / 3, 2.341547497073052E-01],
                 ],
                 "s1": [[+1.488095238055238E-01 / 6, 0, 7.236067977499750E-01]],
-            }
-        elif index == 17:
-            self.degree = 8
-            data = {
+            },
+            17: {
+                "degree": 8,
                 "s3": [[-2.834183851113958E-01]],
                 "s2": [
                     [2.097208857979572E-01 / 3, 4.766654393821525E-01],
@@ -197,10 +185,9 @@ class LynessJespersen(object):
                         7.458294907672514E-01,
                     ]
                 ],
-            }
-        elif index == 18:
-            self.degree = 9
-            data = {
+            },
+            18: {
+                "degree": 9,
                 "s3": [[9.713579628279610E-02]],
                 "s2": [
                     [9.400410068141950E-02 / 3, 4.896825191987370E-01],
@@ -215,10 +202,9 @@ class LynessJespersen(object):
                         7.411985987844980E-01,
                     ]
                 ],
-            }
-        elif index == 19:
-            self.degree = 9
-            data = {
+            },
+            19: {
+                "degree": 9,
                 "s3": [[1.133624844599192E-01]],
                 "s2": [
                     [1.062573789846330E-03 / 3, 0],
@@ -234,10 +220,9 @@ class LynessJespersen(object):
                         7.411985987844980E-01,
                     ]
                 ],
-            }
-        elif index == 20:
-            self.degree = 11
-            data = {
+            },
+            20: {
+                "degree": 11,
                 "s2": [
                     [4.097919300803106E-02 / 3, 3.236494811127173E-02],
                     [1.085536215102866E-01 / 3, 1.193509122825931E-01],
@@ -257,11 +242,9 @@ class LynessJespersen(object):
                         8.074890031597923E-01,
                     ],
                 ],
-            }
-        else:
-            assert index == 21
-            self.degree = 11
-            data = {
+            },
+            21: {
+                "degree": 11,
                 "s3": [[8.797730116222190E-02]],
                 "s2": [
                     [2.623293466120857E-02 / 3, 2.598914092828833E-02],
@@ -278,7 +261,10 @@ class LynessJespersen(object):
                         6.779376548825902E-01,
                     ],
                 ],
-            }
+            },
+        }[index]
+
+        self.degree = data.pop("degree")
 
         self.bary, self.weights = untangle2(data)
         self.points = self.bary[:, 1:]
