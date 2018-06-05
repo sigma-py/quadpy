@@ -88,6 +88,8 @@ def _extract_bary_data(data):
 
     all_dicts = []
 
+    ref_weight = 0.21934566882541541013653648363283
+
     for k, item in enumerate(data):
         points, weights = item
 
@@ -98,16 +100,21 @@ def _extract_bary_data(data):
         d = {"s1": [], "s2": [], "s3": [], "degree": k + 1}
         for w, b in zip(weights, bary):
             if numpy.all(numpy.abs(b - 1.0 / 3.0) < tol):
-                d["s3"].append([w])
+                weight = w / ref_weight
+                d["s3"].append([weight])
             elif abs(b[0] - b[1]) < tol:
-                d["s2"].append([w, b[0]])
+                weight = w / ref_weight / 3
+                d["s2"].append([weight, b[0]])
             elif abs(b[1] - b[2]) < tol:
-                d["s2"].append([w, b[1]])
+                weight = w / ref_weight / 3
+                d["s2"].append([weight, b[1]])
             elif abs(b[2] - b[0]) < tol:
-                d["s2"].append([w, b[0]])
+                weight = w / ref_weight / 3
+                d["s2"].append([weight, b[0]])
             else:
                 srt = numpy.sort(b)
-                d["s1"].append([w, srt[0], srt[1]])
+                weight = w / ref_weight / 6
+                d["s1"].append([weight, srt[0], srt[1]])
 
         for key in ["s1", "s2", "s3"]:
             if len(d[key]) == 0:
