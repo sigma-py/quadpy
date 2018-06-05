@@ -107,10 +107,8 @@ def untangle2(data):
         weights.append(numpy.tile(d[0], 12))
 
     if "s1111" in data:
-        # TODO
-        assert False
         d = numpy.array(data["s1111"]).T
-        s1111_data = _s1111(*d[1:])
+        s1111_data = numpy.moveaxis(_s1111(*d[1:]), 0, 1)
         bary.append(_collapse0(s1111_data).T)
         weights.append(numpy.tile(d[0], 24))
 

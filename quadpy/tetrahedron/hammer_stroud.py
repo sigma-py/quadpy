@@ -5,8 +5,7 @@ from __future__ import division
 import numpy
 import sympy
 
-from .helpers import _s4, _s31
-from ..helpers import untangle
+from .helpers import untangle2
 
 
 class HammerStroud(object):
@@ -23,12 +22,12 @@ class HammerStroud(object):
 
         self.name = "HammerStroud({})".format(degree)
         self.degree = degree
-        if degree == 2:
-            data = [(frac(1, 4), _s31((5 - sqrt(5)) / 20))]
-        else:
-            assert degree == 3
-            data = [(-frac(4, 5), _s4()), (+frac(9, 20), _s31(frac(1, 6)))]
 
-        self.bary, self.weights = untangle(data)
+        data = {
+            2: {"s31": [[frac(1, 4), (5 - sqrt(5)) / 20]]},
+            3: {"s4": [[-frac(4, 5)]], "s31": [[+frac(9, 20), frac(1, 6)]]},
+        }[degree]
+
+        self.bary, self.weights = untangle2(data)
         self.points = self.bary[:, 1:]
         return
