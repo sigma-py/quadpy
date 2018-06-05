@@ -29,10 +29,9 @@ class Papanicolopulos(object):
             assert index >= 8
             filename = "rot{:02d}.json".format(index)
 
-        print(filename)
         with open(os.path.join(this_dir, filename), "r") as f:
             data = json.load(f)
-        self.degree = data["degree"]
+        self.degree = data.pop("degree")
 
         self.data = data
         self.bary, self.weights = untangle2(data)
