@@ -30,7 +30,7 @@ class LynessJespersen(object):
         frac = sympy.Rational if symbolic else lambda x, y: x / y
         sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
-        self.name = "LJ(%d)" % index
+        self.name = "LJ({})".format(index)
         if index == 1:
             self.degree = 2
             data = {"s2": [[frac(1, 3), frac(1, 2)]]}
