@@ -31,7 +31,7 @@ class VioreanuRokhlin(object):
         with open(os.path.join(this_dir, filename), "r") as f:
             data = json.load(f)
 
-        self.degree = data["degree"]
+        self.degree = data.pop("degree")
 
         self.bary, self.weights = untangle2(data)
 
