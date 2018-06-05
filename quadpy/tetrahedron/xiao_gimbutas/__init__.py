@@ -6,7 +6,6 @@ import os
 from ..helpers import untangle2
 
 
-# TODO mpmath
 class XiaoGimbutas(object):
     """
     Hong Xiao, Zydrunas Gimbutas,
@@ -27,7 +26,7 @@ class XiaoGimbutas(object):
     squares, and cubes, up to degree 50. These formulae are near optimal in the
     number of nodes used, and many of them appear to be new.
 
-    Data extracted from
+    Data adapted from
     <https://people.sc.fsu.edu/~jburkardt/f_src/triangle_symq_rule/triangle_symq_rule.f90>.
     """
 
