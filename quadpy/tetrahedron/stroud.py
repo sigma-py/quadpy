@@ -108,5 +108,4 @@ class T371(object):
 
         self.bary, self.weights = untangle(data)
         self.points = self.bary[:, 1:]
-
         return
