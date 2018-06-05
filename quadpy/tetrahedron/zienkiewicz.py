@@ -4,8 +4,7 @@ from __future__ import division
 
 import sympy
 
-from .helpers import _s4, _s31
-from ..helpers import untangle
+from .helpers import untangle2
 
 
 class Zienkiewicz(object):
@@ -23,14 +22,14 @@ class Zienkiewicz(object):
         frac = sympy.Rational if symbolic else lambda x, y: x / y
 
         self.name = "Zienkiewicz({})".format(index)
-        if index == 4:
-            self.degree = 2
-            data = [(frac(1, 4), _s31(0.1381966011250105))]
-        else:
-            assert index == 5
-            self.degree = 3
-            data = [(-frac(4, 5), _s4()), (frac(9, 20), _s31(frac(1, 6)))]
 
-        self.bary, self.weights = untangle(data)
+        data = {
+            4: {"degree": 2, "s31": [[frac(1, 4), 0.1381966011250105]]},
+            5: {"degree": 3, "s4": [[-frac(4, 5)]], "s31": [[frac(9, 20), frac(1, 6)]]},
+        }[index]
+
+        self.degree = data.pop("degree")
+
+        self.bary, self.weights = untangle2(data)
         self.points = self.bary[:, 1:]
         return
