@@ -23,7 +23,6 @@ def transform(xi, cube):
     one_mp_xi = numpy.stack([0.5 * (1.0 - xi), 0.5 * (1.0 + xi)], axis=1)
     a = helpers.n_outer(one_mp_xi)
 
-    # TODO kahan tensordot
     # <https://stackoverflow.com/q/45372098/353337>
     d = xi.shape[0]
     return numpy.tensordot(a, cube, axes=(range(d), range(d)))

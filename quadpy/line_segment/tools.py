@@ -20,7 +20,7 @@ def integrate(f, interval, scheme, dot=numpy.dot):
     return 0.5 * len_intervals * dot(f(x), scheme.weights)
 
 
-def integrate_split(f, a, b, n, scheme, dot=helpers.kahan_dot):
+def integrate_split(f, a, b, n, scheme, dot=numpy.dot):
     """Integrates f between a and b with n subintervals.
     """
     # prepare the intervals
@@ -29,7 +29,7 @@ def integrate_split(f, a, b, n, scheme, dot=helpers.kahan_dot):
     # integrate
     out = integrate(f, intervals, scheme, dot=dot)[0]
     # sum over the intervals
-    return helpers.kahan_sum(out)
+    return numpy.sum(out)
 
 
 def _numpy_all_except(a, axis=-1):
@@ -41,7 +41,7 @@ def _numpy_all_except(a, axis=-1):
 def integrate_adaptive(
     f, intervals, eps, kronrod_degree=7, minimum_interval_length=None, dot=numpy.dot
 ):
-    sumfun = helpers.kahan_sum
+    sumfun = numpy.sum
 
     intervals = numpy.array(intervals)
     if len(intervals.shape) == 1:
