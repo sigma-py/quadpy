@@ -53,7 +53,7 @@ def integrate_adaptive(
     scheme2=Dunavant(10),
     dot=numpy.dot,
 ):
-    sumfun = helpers.kahan_sum
+    sumfun = numpy.sum
 
     triangles = numpy.array(triangles)
     if len(triangles.shape) == 2:
