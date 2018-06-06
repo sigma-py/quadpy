@@ -122,4 +122,13 @@ if __name__ == '__main__':
         azimuthal_polar, weights = read(os.path.join('data', filename))
         chunks = chunk_data(weights)
         data = sort_into_symmetry_classes(weights, azimuthal_polar)
+
+        delete_list = []
+        for key in data:
+            if len(data[key]) == 0:
+                delete_list.append(key)
+        for key in delete_list:
+            data.pop(key)
+        data["degree"] = degree
+
         write_json('lebedev_{:03d}.json'.format(degree), data)

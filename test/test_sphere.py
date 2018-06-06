@@ -41,7 +41,7 @@ def test_spherical_harmonic(scheme):
 
     val = quadpy.sphere.integrate_spherical(spherical_harmonic_11, rule=scheme)
 
-    assert abs(val - 1.0) < 1.0e-15
+    assert abs(val - 1.0) < 1.0e-14
     return
 
 
