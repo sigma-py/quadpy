@@ -9,8 +9,6 @@ import re
 
 import numpy
 
-# import ..import_helpers
-
 
 def read_data_tri(filename):
     data = numpy.loadtxt(filename, dtype=float)
