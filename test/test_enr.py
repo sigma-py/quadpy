@@ -2,9 +2,9 @@
 #
 import numpy
 import pytest
+import accupy
 
 import quadpy
-from quadpy.helpers import kahan_dot
 
 from helpers import check_degree, integrate_monomial_over_enr
 
@@ -28,7 +28,7 @@ def test_scheme(scheme, tol):
 
     n = scheme.dim
     degree = check_degree(
-        lambda poly: quadpy.enr.integrate(poly, scheme, dot=kahan_dot),
+        lambda poly: quadpy.enr.integrate(poly, scheme, dot=accupy.fdot),
         integrate_monomial_over_enr,
         n,
         scheme.degree + 1,

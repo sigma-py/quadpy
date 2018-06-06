@@ -14,7 +14,7 @@ from .combinatorics import (
     partition,
     get_all_exponents,
 )
-from .misc import untangle, n_outer, kahan_sum, kahan_dot, compute_dobrodeev
+from .misc import untangle, n_outer, compute_dobrodeev
 from .plot import (
     plot_disks_1d,
     plot_disks,
@@ -38,8 +38,6 @@ __all__ = [
     "get_all_exponents",
     "untangle",
     "n_outer",
-    "kahan_sum",
-    "kahan_dot",
     "compute_dobrodeev",
     "plot_disks_1d",
     "plot_disks",

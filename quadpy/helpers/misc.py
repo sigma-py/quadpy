@@ -49,31 +49,6 @@ def n_outer(a):
     return out
 
 
-# TODO remove (-> accupy)
-def kahan_sum(a, axis=0):
-    """Kahan summation of the numpy array `a` along axis `axis`.
-    """
-    # See <https://en.wikipedia.org/wiki/Kahan_summation_algorithm> for
-    # details.
-    k = axis % len(a.shape)
-    s = numpy.zeros(a.shape[:axis] + a.shape[k + 1 :])
-    c = numpy.zeros(s.shape)
-    for i in range(a.shape[axis]):
-        # http://stackoverflow.com/a/42817610/353337
-        y = a[(slice(None),) * k + (i,)] - c
-        t = s + y
-        c = (t - s) - y
-        s = t.copy()
-    return s
-
-
-# TODO remove (-> accupy)
-def kahan_dot(a, b):
-    """The dot product performed as a Kahan sum.
-    """
-    return kahan_sum(numpy.moveaxis(b * a, -1, 0))
-
-
 def compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k, symbolic=False):
     """Compute some helper quantities used in
 
