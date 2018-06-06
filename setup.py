@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import glob
 import os
 import codecs
 
@@ -16,6 +17,22 @@ def read(fname):
     return codecs.open(os.path.join(base_dir, fname), encoding="utf-8").read()
 
 
+directories = [
+    os.path.join("quadpy", "triangle", "papanicolopoulos"),
+    os.path.join("quadpy", "triangle", "vioreanu_rokhlin"),
+    os.path.join("quadpy", "triangle", "witherden_vincent"),
+    os.path.join("quadpy", "triangle", "xiao_gimbutas"),
+    #
+    os.path.join("quadpy", "sphere", "lebedev"),
+    #
+    os.path.join("quadpy", "tetrahedron", "xiao_gimbutas"),
+]
+
+data_files = [
+    (directory, glob.glob(os.path.join(directory, "*.json")))
+    for directory in directories
+]
+
 setup(
     name="quadpy",
     version=about["__version__"],
@@ -31,7 +48,7 @@ setup(
         "scipy",
         "sympy",
     ],
-    description="Numerical integration, quadrature for various shapes",
+    description="Numerical integration, quadrature for various domains",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
     license=about["__license__"],
@@ -45,4 +62,5 @@ setup(
         "Topic :: Scientific/Engineering",
         "Topic :: Scientific/Engineering :: Mathematics",
     ],
+    data_files=data_files,
 )
