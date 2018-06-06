@@ -20,7 +20,7 @@ class Dunavant(object):
     def __init__(self, degree, symbolic=False):
         frac = sympy.frac if symbolic else lambda x, y: x / y
 
-        self.name = "Dunavant({degree})"
+        self.name = "Dunavant({})".format(degree)
 
         self.degree = degree
 
