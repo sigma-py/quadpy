@@ -10,12 +10,13 @@ jobs:
       # don't install sympy with apt: it pulls in texlive which takes forever
       # to download and install
       - run: apt-get install -y git python3-pip
-      - run: pip3 install -U pytest pytest-cov pylint
+      - run: pip3 install -U pytest pytest-cov black flake8
       - checkout
       - run: pip3 install -r test_requirements.txt
       - run: pip3 install .[all]
-      # lint; <https://github.com/PyCQA/pylint/issues/2059> test/*.py
-      - run: pylint setup.py quadpy/
+      # format and lint
+      - run: LC_ALL=C.UTF-8 black --check setup.py quadpy/ test/*.py
+      - run: flake8 setup.py quadpy/ test/*.py
       # The tests
       - run: cd test/ && MPLBACKEND=Agg pytest --cov quadpy
       # submit to codecov

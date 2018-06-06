@@ -6,15 +6,16 @@ from ..helpers import untangle
 
 
 class WissmannBecker(object):
-    '''
+    """
     Johannes W. Wissmann and Thomas Becker,
     Partially Symmetric Cubature Formulas for Even Degrees of Exactness,
     SIAM J. Numer. Anal., 23(3), 676–685, 10 pages,
     <https://doi.org/10.1137/0723043>.
-    '''
+    """
+
     def __init__(self, index):
-        self.name = 'WissmannBecker({})'.format(index)
-        if index == '6-1':
+        self.name = "WissmannBecker({})".format(index)
+        if index == "6-1":
             self.degree = 6
             data = [
                 (0.192106330409167, _z(0.914874261544932)),
@@ -23,8 +24,8 @@ class WissmannBecker(object):
                 (0.502358408812314, _m(0.458236515708684, +0.464889889783278)),
                 (0.340540094500688, _m(0.802017004072343, -0.174207378839556)),
                 (0.280075256745352, _m(0.373683864304499, -0.770749853148807)),
-                ]
-        elif index == '6-2':
+            ]
+        elif index == "6-2":
             self.degree = 6
             data = [
                 (0.552687596464871, _z(0.0)),
@@ -34,9 +35,9 @@ class WissmannBecker(object):
                 (0.076090439302545, _m(0.606915348667678, -0.835347313162651)),
                 (0.441690572122440, _m(0.426943605361474, +0.587637459480312)),
                 (0.441690572122440, _m(0.690809264754287, -0.224457536458840)),
-                ]
+            ]
         else:
-            assert index == '8-1'
+            assert index == "8-1"
             self.degree = 8
             data = [
                 (0.334521439965580, _z(0.000000000000000)),
@@ -49,20 +50,15 @@ class WissmannBecker(object):
                 (0.167628039106469, _m(0.839267525316398, -0.272694549383947)),
                 (0.305874815913735, _m(0.553832724273449, +0.179951160534772)),
                 (0.305874815913735, _m(0.342287447682940, -0.471118254595022)),
-                ]
+            ]
 
         self.points, self.weights = untangle(data)
         return
 
 
 def _z(a):
-    return numpy.array([
-        [0.0, a]
-        ])
+    return numpy.array([[0.0, a]])
 
 
 def _m(a, b):
-    return numpy.array([
-        [+a, +b],
-        [-a, +b],
-        ])
+    return numpy.array([[+a, +b], [-a, +b]])

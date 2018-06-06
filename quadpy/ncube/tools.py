@@ -6,8 +6,8 @@ from .. import helpers
 
 
 def transform(xi, cube):
-    '''Transform the points `xi` from the reference cube to `cube`.
-    '''
+    """Transform the points `xi` from the reference cube to `cube`.
+    """
     # For d==2, the result used to be computed with
     #
     # out = (
@@ -20,10 +20,7 @@ def transform(xi, cube):
     # This array of multiplications and additions is reminiscent of dot(), and
     # indeed tensordot() can handle the situation. We just need to compute the
     # `1+-xi` products and align them with `cube`.
-    one_mp_xi = numpy.stack([
-        0.5 * (1.0 - xi),
-        0.5 * (1.0 + xi),
-        ], axis=1)
+    one_mp_xi = numpy.stack([0.5 * (1.0 - xi), 0.5 * (1.0 + xi)], axis=1)
     a = helpers.n_outer(one_mp_xi)
 
     # TODO kahan tensordot
@@ -33,8 +30,8 @@ def transform(xi, cube):
 
 
 def get_detJ(xi, cube):
-    '''Get the determinant of the transformation matrix.
-    '''
+    """Get the determinant of the transformation matrix.
+    """
     # For d==2, the result can be computed with
     # ```
     # J0 = (
@@ -54,10 +51,7 @@ def get_detJ(xi, cube):
     # Like transform(), simplify here and form the determinant explicitly.
     d = xi.shape[0]
 
-    one_mp_xi = numpy.stack([
-        0.5 * (1.0 - xi),
-        0.5 * (1.0 + xi),
-        ], axis=1)
+    one_mp_xi = numpy.stack([0.5 * (1.0 - xi), 0.5 * (1.0 + xi)], axis=1)
 
     # Build the Jacobi matrix row by row.
     J = []
@@ -86,14 +80,11 @@ def get_detJ(xi, cube):
 def integrate(f, ncube, scheme, dot=numpy.dot):
     x = transform(scheme.points.T, ncube).T
     detJ = get_detJ(scheme.points.T, ncube)
-    return dot(f(x)*abs(detJ), scheme.weights)
+    return dot(f(x) * abs(detJ), scheme.weights)
 
 
 def ncube_points(*xyz):
-    '''Given the end points of an n-cube aligned with the coordinate axes, this
+    """Given the end points of an n-cube aligned with the coordinate axes, this
     returns the corner points of the cube in the correct data structure.
-    '''
-    return numpy.moveaxis(
-            numpy.array(numpy.meshgrid(*xyz, indexing='ij')),
-            0, -1
-            )
+    """
+    return numpy.moveaxis(numpy.array(numpy.meshgrid(*xyz, indexing="ij")), 0, -1)

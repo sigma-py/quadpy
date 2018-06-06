@@ -6,15 +6,16 @@ from ..helpers import untangle
 
 
 class CoolsHaegemans1985(object):
-    '''
+    """
     R. Cools, A. Haegemans,
     Construction of fully symmetric cubature formulae of degree 4k-3 for fully
     symmetric planar regions
     1985, Report TW 71, Dept. of Computer Science, KU Leuven,
     <https://lirias.kuleuven.be/bitstream/123456789/131870/1/TW71.pdf>.
-    '''
+    """
+
     def __init__(self, index):
-        self.name = 'CH85(%d)' % index
+        self.name = "CH85(%d)" % index
         if index == 1:
             self.degree = 9
             data = [
@@ -22,7 +23,7 @@ class CoolsHaegemans1985(object):
                 (0.535500902317e-01, _s4(0.690880550486)),
                 (0.106828079664e-01, _s4(0.939655258097)),
                 (0.113540990172e+00, _s40(0.488926856974)),
-                ]
+            ]
         elif index == 2:
             self.degree = 13
             data = [
@@ -32,7 +33,7 @@ class CoolsHaegemans1985(object):
                 (0.203490805188e-01, _s8(0.702141598362, 0.913909457030)),
                 (0.475325029082e-01, _s4(0.551473280570)),
                 (0.325703974952e-02, _s4(0.968340720218)),
-                ]
+            ]
         else:
             assert index == 3
             self.degree = 13
@@ -43,7 +44,7 @@ class CoolsHaegemans1985(object):
                 (0.287255968895e-01, _s8(0.586713014973, 0.826081709475)),
                 (0.361061434781e-01, _s4(0.178898689064)),
                 (0.116671271121e-01, _s4(0.914197956909)),
-                ]
+            ]
         # TODO There are three more schemes in the technical report
 
         self.points, self.weights = untangle(data)
@@ -52,31 +53,14 @@ class CoolsHaegemans1985(object):
 
 
 def _s8(a, b):
-    return numpy.array([
-        [+a, +b],
-        [-a, +b],
-        [+a, -b],
-        [-a, -b],
-        [+b, +a],
-        [-b, +a],
-        [+b, -a],
-        [-b, -a],
-        ])
+    return numpy.array(
+        [[+a, +b], [-a, +b], [+a, -b], [-a, -b], [+b, +a], [-b, +a], [+b, -a], [-b, -a]]
+    )
 
 
 def _s4(a):
-    return numpy.array([
-        [+a, +a],
-        [-a, +a],
-        [+a, -a],
-        [-a, -a],
-        ])
+    return numpy.array([[+a, +a], [-a, +a], [+a, -a], [-a, -a]])
 
 
 def _s40(a):
-    return numpy.array([
-        [+a, 0],
-        [-a, 0],
-        [0, +a],
-        [0, -a],
-        ])
+    return numpy.array([[+a, 0], [-a, 0], [0, +a], [0, -a]])

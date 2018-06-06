@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-# pylint: disable=wildcard-import
-from .felippa import *
 
-from .tools import *
+from .felippa import Felippa
+
+from .tools import integrate, show
+
+__all__ = ["Felippa", "integrate", "show"]

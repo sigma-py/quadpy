@@ -8,3 +8,4 @@ build/
 .coverage
 .cache/
 *.egg-info/
+.pytest_cache/

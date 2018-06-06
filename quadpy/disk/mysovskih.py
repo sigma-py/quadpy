@@ -9,14 +9,14 @@ from ..helpers import untangle, z, fsd, fs_array
 
 
 class Mysovskih(object):
-    '''
+    """
     I.P. Mysovskih,
     On the construction of cubature formulas for the simplest regions,
     Z. Vychisl. Mat. i. Mat. Fiz. 4, 3-14, 1964.
-    '''
-    # pylint: disable=too-many-locals
+    """
+
     def __init__(self, index, alpha=0, symbolic=False):
-        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        frac = sympy.Rational if symbolic else lambda x, y: x / y
         pi = sympy.pi if symbolic else numpy.pi
         sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
         cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
@@ -27,25 +27,22 @@ class Mysovskih(object):
             self.degree = 4
             b = sqrt(frac(alpha + 4, alpha + 6))
 
-            a = 2*numpy.arange(5)*pi / 5
+            a = 2 * numpy.arange(5) * pi / 5
             x = b * numpy.array([cos(a), sin(a)]).T
 
-            B0 = frac(4, (alpha + 4)**2)
-            B1 = frac((alpha + 2)*(alpha + 6), 5 * (alpha + 4)**2)
+            B0 = frac(4, (alpha + 4) ** 2)
+            B1 = frac((alpha + 2) * (alpha + 6), 5 * (alpha + 4) ** 2)
 
-            data = [
-                (B0, z(2)),
-                (B1, x),
-                ]
+            data = [(B0, z(2)), (B1, x)]
         elif index == 2:
             self.degree = 11
 
             sqrt10 = sqrt(10)
             sqrt601 = sqrt(601)
 
-            B1, B3 = (857*sqrt601 + pm_ * 12707) / 20736 / sqrt601
+            B1, B3 = (857 * sqrt601 + pm_ * 12707) / 20736 / sqrt601
             B2 = frac(125, 3456)
-            B4, B5 = (340 + pm_ * 25*sqrt10) / 10368
+            B4, B5 = (340 + pm_ * 25 * sqrt10) / 10368
 
             r1, r3 = sqrt((31 - pm_ * sqrt601) / 60)
             r2 = sqrt(frac(3, 5))
@@ -59,7 +56,7 @@ class Mysovskih(object):
                 (B3, fsd(2, (r3, 1))),
                 (B4, fs_array([r4, s4])),
                 (B5, fs_array([r5, s5])),
-                ]
+            ]
         else:
             assert index == 3
             # This is is the same as Rabinowitz-Richter
@@ -72,8 +69,7 @@ class Mysovskih(object):
             A1, A2 = (4998 + pm_ * 343 * sqrt21) / 253125
 
             # ERR Stroud is missing the +- here
-            B1, B3 = \
-                (1055603 * sqrt1401 + pm_ * 26076047) / 43200000 / sqrt1401
+            B1, B3 = (1055603 * sqrt1401 + pm_ * 26076047) / 43200000 / sqrt1401
 
             B2 = frac(16807, 800000)
 
@@ -91,13 +87,13 @@ class Mysovskih(object):
             C3 = 0.210840370156484e-1
             C4 = 0.531979391979623e-2
 
-            a = (2*numpy.arange(8)+1)*pi / 8
+            a = (2 * numpy.arange(8) + 1) * pi / 8
             xa = numpy.array([cos(a), sin(a)]).T
 
-            a = (2*numpy.arange(4)+1)*pi / 4
+            a = (2 * numpy.arange(4) + 1) * pi / 4
             xb = numpy.array([cos(a), sin(a)]).T
 
-            a = numpy.arange(1, 5)*pi / 2
+            a = numpy.arange(1, 5) * pi / 2
             xc = numpy.array([cos(a), sin(a)]).T
 
             data = [
@@ -110,7 +106,7 @@ class Mysovskih(object):
                 (C2, tau2 * xc),
                 (C3, tau3 * xc),
                 (C4, tau4 * xc),
-                ]
+            ]
 
         self.points, self.weights = untangle(data)
         self.weights *= pi

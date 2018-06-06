@@ -5,6 +5,7 @@ Your one-stop shop for numerical integration in Python.
 [![CircleCI](https://img.shields.io/circleci/project/github/nschloe/quadpy/master.svg)](https://circleci.com/gh/nschloe/quadpy/tree/master)
 [![codecov](https://img.shields.io/codecov/c/github/nschloe/quadpy.svg)](https://codecov.io/gh/nschloe/quadpy)
 [![Codacy grade](https://img.shields.io/codacy/grade/079f3979c96b440ab4734785b946e848.svg)](https://app.codacy.com/app/nschloe/quadpy/dashboard)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![awesome](https://img.shields.io/badge/awesome-yes-brightgreen.svg)](https://github.com/nschloe/quadpy)
 [![PyPi Version](https://img.shields.io/pypi/v/quadpy.svg)](https://pypi.org/project/quadpy)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1173132.svg)](https://doi.org/10.5281/zenodo.1173132)
@@ -689,10 +690,12 @@ the weight function `x^2` on the interval `[-1, +1]`.
 
 TLDR:
 ```python
-import orthopy
-moments = orthopy.line.compute_moments(lambda x: x**2, -1, +1, 20)
-alpha, beta = orthopy.line.chebyshev(moments)
-points, weights = orthopy.line.schemes.custom(alpha, beta, decimal_places=30)
+moments = quadpy.tools.integrate(
+    lambda x: [x**(2+k) for k in range(20)],
+    -1, +1
+    )
+alpha, beta = quadpy.tools.chebyshev(moments)
+points, weights = quadpy.tools.scheme_from_rc(alpha, beta, decimal_places=20)
 ```
 
 Some explanations:
@@ -704,7 +707,7 @@ Some explanations:
      with a particular set of polynomials `p_k`. A common choice are the
      monomials `x^k`. You can do that by hand or use
      ```python
-     moments = orthopy.line.compute_moments(lambda x: x**2, -1, +1, 20)
+     moments = quadpy.tools.integrate(lambda x: [x**(2+k) for k in range(20)], -1, +1)
      ```
      ```
      [2/3, 0, 2/5, 0, 2/7, 0, 2/9, 0, 2/11, 0, 2/13, 0, 2/15, 0, 2/17, 0, 2/19, 0, 2/21, 0]
@@ -716,15 +719,21 @@ Some explanations:
      implications here. That's because the map to the recurrence coefficients
      (step 2) can be _very_ ill-conditioned, meaning that small round-off
      errors can lead to an unusable scheme.
-     For further computation, it's numerically beneficial if the moments are
-     either 0 or in the same order of magnitude. The above numbers are alright,
-     but if you want to max it out, you could try Legendre polynomials for
-     `p_k`:
+     For further computation, it's numerically beneficial if the moments are either 0 or
+     in the same order of magnitude. The above numbers are alright, but if you want to
+     max it out, you could try Legendre polynomials from
+     [orthopy](https://github.com/nschloe/orthopy)
+     for `p_k`:
      ```python
-     moments = orthopy.line.compute_moments(
-         lambda x: x**2, -1, +1, 20,
-         polynomial_class=orthopy.line.legendre
-         )
+     import orthopy
+
+     def leg_polys(x):
+         return orthopy.line_segment.tree_legendre(x, 20, "monic", symbolic=True)
+
+     moments = quadpy.tools.integrate(
+         lambda x: [x**2 * leg_poly for leg_poly in leg_polys(x)],
+         -1, +1
+     )
      ```
      ```
      [2/3, 0, 8/45, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -746,8 +755,9 @@ Some explanations:
        Since we have computed modified moments in step one, let's use the
        latter method:
        ```python
-       _, _, a, b = orthopy.line.recurrence_coefficients.legendre(20, 'monic')
-       alpha, beta = orthopy.line.chebyshev_modified(moments, a, b)
+       _, _, a, b = \
+          orthopy.line_segment.recurrence_coefficients.legendre(20, "monic", symbolic=True)
+       alpha, beta = quadpy.tools.chebyshev_modified(moments, a, b)
        ```
        ```
        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -759,34 +769,22 @@ Some explanations:
 
   3. Lastly, we generate the Gauss points and weights from `alpha` and `beta`.
      Since symbolic computation can take _very_ long even for small sizes, we
-     choose the `mpmath` mode (default) with 30 decimal digits
+     convert `alpha` and `beta` to numpy arrays first. (If you need more digits, look at
+     [mpmath](http://mpmath.org/) arrays.)
      ```python
-     points, weights = \
-         orthopy.line.schemes.custom(alpha, beta, mode='mpmath', decimal_places=30)
+     points, weights = quadpy.tools.scheme_from_rc(
+         numpy.array([sympy.N(a) for a in alpha], dtype=float),
+         numpy.array([sympy.N(b) for b in beta], dtype=float),
+         mode='numpy'
+     )
      ```
      ```
-     [-0.978228658146056992803938001123,
-      -0.887062599768095299075157769304,
-      -0.730152005574049324093416252031,
-      -0.519096129206811815925725669458,
-      -0.269543155952344972331531985401,
-      0.2695431559523449723315319854,
-      0.519096129206811815925725669458,
-      0.730152005574049324093416252031,
-      0.887062599768095299075157769304,
-      0.978228658146056992803938001123]
+     [-0.97822866 -0.8870626  -0.73015201 -0.51909613 -0.26954316  0.26954316
+      0.51909613  0.73015201  0.8870626   0.97822866]
      ```
      ```
-       [0.0532709947237135572432759986252,
-        0.0988166881454075626728761840589,
-        0.0993154007474139787312043384226,
-        0.0628365763465911675266984722740,
-        0.0190936733702070671592783399524,
-        0.0190936733702070671592783399524,
-        0.0628365763465911675266984722744,
-        0.0993154007474139787312043384225,
-        0.0988166881454075626728761840592,
-        0.0532709947237135572432759986251]
+     [0.05327099 0.09881669 0.0993154  0.06283658 0.01909367 0.01909367
+      0.06283658 0.0993154  0.09881669 0.05327099]
      ```
      Congratulations! Your Gaussian quadrature rule.
 

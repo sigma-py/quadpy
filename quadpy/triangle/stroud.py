@@ -12,20 +12,21 @@ from ..line_segment.gauss_legendre import GaussLegendre
 
 
 class Stroud(object):
-    '''
+    """
     Arthur Stroud,
     Approximate Calculation of Multiple Integrals,
     Prentice Hall, 1971.
-    '''
+    """
+
     def __init__(self, index):
-        self.name = 'Stroud({})'.format(index)
-        if index == 'T2 3-1':
+        self.name = "Stroud({})".format(index)
+        if index == "T2 3-1":
             self.set_data(AlbrechtCollatz())
-        elif index == 'T2 5-1':
+        elif index == "T2 5-1":
             self.set_data(HammerMarloweStroud(5))
         else:
             # conical product Gauss
-            assert index == 'T2 7-1'
+            assert index == "T2 7-1"
             self.degree = 7
 
             gl4 = GaussLegendre(4)
@@ -39,26 +40,31 @@ class Stroud(object):
             # alpha, beta = orthopy.line.chebyshev(moments)
             # s, B = orthopy.line.schemes.custom(alpha, beta, mode='numpy')
             # ```
-            s = numpy.array([
-                5.710419611452533e-02,
-                2.768430136381415e-01,
-                5.835904323689318e-01,
-                8.602401356562251e-01,
-                ])
-            B = numpy.array([
-                1.355069134315012e-01,
-                2.034645680102685e-01,
-                1.298475476082247e-01,
-                3.118097095000554e-02,
-                ])
+            s = numpy.array(
+                [
+                    5.710419611452533e-02,
+                    2.768430136381415e-01,
+                    5.835904323689318e-01,
+                    8.602401356562251e-01,
+                ]
+            )
+            B = numpy.array(
+                [
+                    1.355069134315012e-01,
+                    2.034645680102685e-01,
+                    1.298475476082247e-01,
+                    3.118097095000554e-02,
+                ]
+            )
 
             data = [
-                (2*A[i]*B[j], numpy.array([[
-                    s[j], r[i]*(1-s[j]), (1-r[i])*(1-s[j])
-                    ]]))
+                (
+                    2 * A[i] * B[j],
+                    numpy.array([[s[j], r[i] * (1 - s[j]), (1 - r[i]) * (1 - s[j])]]),
+                )
                 for i in range(4)
                 for j in range(4)
-                ]
+            ]
 
             self.bary, self.weights = untangle(data)
             self.points = self.bary[:, 1:]

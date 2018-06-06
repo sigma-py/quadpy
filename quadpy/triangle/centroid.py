@@ -10,5 +10,5 @@ class Centroid(object):
         self.bary = _s3(symbolic)
         self.points = self.bary[:, 1:]
         self.degree = 1
-        self.name = 'centroid'
+        self.name = "centroid"
         return

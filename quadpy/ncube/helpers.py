@@ -5,47 +5,53 @@ import numpy
 
 
 def integrate_monomial_over_ncube(ncube_limits, exp):
-    return numpy.prod([
-            (a[1]**(k+1) - a[0]**(k+1)) / (k+1) for a, k in
-            zip(ncube_limits, exp)
-            ])
+    return numpy.prod(
+        [
+            (a[1] ** (k + 1) - a[0] ** (k + 1)) / (k + 1)
+            for a, k in zip(ncube_limits, exp)
+        ]
+    )
 
 
 def _fs11(n, r, s):
-    '''Get all permutations of [+-r, +-s, ..., +-s] of length n.
+    """Get all permutations of [+-r, +-s, ..., +-s] of length n.
     len(out) == n * 2**n.
-    '''
+    """
     # <https://stackoverflow.com/a/45321972/353337>
     k1 = 1
-    k2 = n-1
+    k2 = n - 1
     idx = itertools.combinations(range(k1 + k2), k1)
     vs = ((s if j not in i else r for j in range(k1 + k2)) for i in idx)
-    return numpy.array(list(itertools.chain.from_iterable(
-        itertools.product(*((+vij, -vij) for vij in vi)) for vi in vs
-        )))
+    return numpy.array(
+        list(
+            itertools.chain.from_iterable(
+                itertools.product(*((+vij, -vij) for vij in vi)) for vi in vs
+            )
+        )
+    )
 
 
 def _s(n, a, b):
-    '''Get all permutations of [a, b, ..., b] of length n.
+    """Get all permutations of [a, b, ..., b] of length n.
     len(out) == n.
-    '''
+    """
     out = numpy.full((n, n), b)
     numpy.fill_diagonal(out, a)
     return out
 
 
 def _s2(n, a):
-    '''Get all permutations of [a, a, 0, 0, ..., 0] of length n.
+    """Get all permutations of [a, a, 0, 0, ..., 0] of length n.
     len(out) == (n-1)*n / 2.
-    '''
+    """
     return _s11(n, a, a)
 
 
 def _s11(n, a, b):
-    '''Get all permutations of [a, b, 0, 0, ..., 0] of length n.
+    """Get all permutations of [a, b, 0, 0, ..., 0] of length n.
     len(out) == (n-1)*n.
-    '''
-    s = [a, b] + (n-2) * [0]
+    """
+    s = [a, b] + (n - 2) * [0]
     # First permutations, then set can be really inefficient if items are
     # repeated. Check out <https://stackoverflow.com/q/6284396/353337> for
     # improvements.

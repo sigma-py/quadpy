@@ -9,33 +9,34 @@ from ..helpers import untangle
 
 
 class WissmannBecker(object):
-    '''
+    """
     Johannes W. Wissmann and Thomas Becker,
     Partially Symmetric Cubature Formulas for Even Degrees of Exactness,
     SIAM J. Numer. Anal., 23(3), 676–685, 10 pages,
     <https://doi.org/10.1137/0723043>.
-    '''
-    def __init__(self, index, symbolic=False):
-        frac = sympy.Rational if symbolic else lambda x, y: x/y
+    """
 
-        self.name = 'WB({})'.format(index)
-        if index == '4-1':
+    def __init__(self, index, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x / y
+
+        self.name = "WB({})".format(index)
+        if index == "4-1":
             self.degree = 4
             data = [
                 (frac(8, 7), _z(0)),
                 (0.439560439560440, _z(0.966091783079296)),
                 (0.566072207007532, _m(0.851914653304601, 0.455603727836193)),
-                (0.642719001783677, _m(0.630912788976754, -0.731629951573135))
-                ]
-        elif index == '4-2':
+                (0.642719001783677, _m(0.630912788976754, -0.731629951573135)),
+            ]
+        elif index == "4-2":
             self.degree = 4
             data = [
                 (1.286412084888852, _z(-0.356822089773090)),
                 (0.491365692888926, _z(0.934172358962716)),
                 (0.761883709085613, _m(0.774596669241483, 0.390885162530071)),
                 (0.349227402025498, _m(0.774596669241483, -0.852765377881771)),
-                ]
-        elif index == '6-1':
+            ]
+        elif index == "6-1":
             self.degree = 6
             data = [
                 (0.455343245714174, _z(0.836405633697626)),
@@ -44,8 +45,8 @@ class WissmannBecker(object):
                 (0.668259104262665, _m(0.604857639464685, 0.305985162155427)),
                 (0.225474004890679, _m(0.955447506641064, -0.410270899466658)),
                 (0.320896396788441, _m(0.565459993438754, -0.872869311156879)),
-                ]
-        elif index == '6-2':
+            ]
+        elif index == "6-2":
             self.degree = 6
             data = [
                 (0.392750590964348, _z(0.869833375250059)),
@@ -54,8 +55,8 @@ class WissmannBecker(object):
                 (0.689992138489864, _m(0.518690521392582, 0.262143665508058)),
                 (0.260517488732317, _m(0.933972544972849, -0.363096583148066)),
                 (0.269567586086061, _m(0.608977536016356, -0.896608632762453)),
-                ]
-        elif index == '8-1':
+            ]
+        elif index == "8-1":
             self.degree = 8
             data = [
                 (0.055364705621440, _z(0)),
@@ -68,9 +69,9 @@ class WissmannBecker(object):
                 (0.252528506429544, _m(0.887188506449625, -0.236496718536120)),
                 (0.361262323882172, _m(0.494698820670197, -0.698953476086564)),
                 (0.085464254086247, _m(0.897495818279768, -0.900390774211580)),
-                ]
+            ]
         else:
-            assert index == '8-2'
+            assert index == "8-2"
             self.degree = 8
             data = [
                 (0.450276776305590, _z(0.659560131960342)),
@@ -82,20 +83,15 @@ class WissmannBecker(object):
                 (0.189589054577798, _m(0.927683319306117, -0.272240080612534)),
                 (0.375101001147587, _m(0.453120687403749, -0.613735353398028)),
                 (0.125618791640072, _m(0.837503640422812, -0.888477650535971)),
-                ]
+            ]
 
         self.points, self.weights = untangle(data)
         return
 
 
 def _z(a):
-    return numpy.array([
-        [0, a]
-        ])
+    return numpy.array([[0, a]])
 
 
 def _m(a, b):
-    return numpy.array([
-        [+a, +b],
-        [-a, +b],
-        ])
+    return numpy.array([[+a, +b], [-a, +b]])

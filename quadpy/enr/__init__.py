@@ -3,5 +3,6 @@
 from .stroud import Stroud
 from .stroud_secrest import StroudSecrest
 
-# pylint: disable=wildcard-import
-from .tools import *
+from .tools import integrate
+
+__all__ = ["Stroud", "StroudSecrest", "integrate"]

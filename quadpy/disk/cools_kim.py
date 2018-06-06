@@ -6,14 +6,15 @@ from ..helpers import untangle
 
 
 class CoolsKim(object):
-    '''
+    """
     R. Cools, K.J. Kim
     A survey of known and cubature formulas for the unit disk,
     Korean J. Comput. & Appl. Math. Vol. 7(2000), No. 3, pp. 477 - 485,
     DOI: 10.1007/BF03012263.
-    '''
+    """
+
     def __init__(self, index):
-        self.name = 'CK(%d)' % index
+        self.name = "CK(%d)" % index
         if index == 1:
             self.degree = 17
             data = [
@@ -28,7 +29,7 @@ class CoolsKim(object):
                 (0.020201237989565462, _s8(0.96121228504617867, 0.17385745088683603)),
                 (0.056834571713156972, _s8(0.30538732225214729, 0.79035487531148609)),
                 (0.024268628331345539, _s8(0.84937290409632805, 0.46270056598293749)),
-                ]
+            ]
         elif index == 2:
             self.degree = 19
             data = [
@@ -45,7 +46,7 @@ class CoolsKim(object):
                 (0.028368949384516057, _s8(0.83822144355055265, 0.46025996563724600)),
                 (0.0018669074320751099, _s8(0.96670876580048578, 0.33737925901740466)),
                 (0.058009352935795362, _s8(0.73773390012389973, 0.32685240870845720)),
-                ]
+            ]
         else:
             assert index == 3
             self.degree = 21
@@ -64,38 +65,21 @@ class CoolsKim(object):
                 (0.042923763669888949, _s8(0.76010583069266321, 0.12830595415488073)),
                 (0.047444099811669938, _s8(0.62209339812108792, 0.34691040719842391)),
                 (0.063500222219468438, _s8(0.36200059276768541, 0.16676191877222966)),
-                ]
+            ]
 
         self.points, self.weights = untangle(data)
         return
 
 
 def _s4(a):
-    return numpy.array([
-        [+a, +a],
-        [-a, +a],
-        [+a, -a],
-        [-a, -a],
-        ])
+    return numpy.array([[+a, +a], [-a, +a], [+a, -a], [-a, -a]])
 
 
 def _s40(a):
-    return numpy.array([
-        [+a, 0.0],
-        [-a, 0.0],
-        [0.0, +a],
-        [0.0, -a],
-        ])
+    return numpy.array([[+a, 0.0], [-a, 0.0], [0.0, +a], [0.0, -a]])
 
 
 def _s8(a, b):
-    return numpy.array([
-        [+a, +b],
-        [-a, +b],
-        [+a, -b],
-        [-a, -b],
-        [+b, +a],
-        [-b, +a],
-        [+b, -a],
-        [-b, -a],
-        ])
+    return numpy.array(
+        [[+a, +b], [-a, +b], [+a, -b], [-a, -b], [+b, +a], [-b, +a], [+b, -a], [-b, -a]]
+    )

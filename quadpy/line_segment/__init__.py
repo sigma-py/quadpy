@@ -15,5 +15,29 @@ from .trapezoidal import Trapezoidal
 
 from .tanh_sinh import tanh_sinh, tanh_sinh_lr
 
-# import pylint: disable=wildcard-import
-from .tools import *
+from .tools import integrate, integrate_split, integrate_adaptive, show, plot
+
+__all__ = [
+    "ChebyshevGauss1",
+    "ChebyshevGauss2",
+    "ClenshawCurtis",
+    "Fejer1",
+    "Fejer2",
+    "GaussJacobi",
+    "GaussKronrod",
+    "GaussLegendre",
+    "GaussLobatto",
+    "GaussPatterson",
+    "GaussRadau",
+    "Midpoint",
+    "NewtonCotesOpen",
+    "NewtonCotesClosed",
+    "Trapezoidal",
+    "tanh_sinh",
+    "tanh_sinh_lr",
+    "integrate",
+    "integrate_split",
+    "integrate_adaptive",
+    "show",
+    "plot",
+]

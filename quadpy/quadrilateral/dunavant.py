@@ -9,7 +9,7 @@ from ..helpers import untangle
 
 
 class Dunavant(object):
-    '''
+    """
     D.A. Dunavant,
     Economical symmetrical quadrature rules for complete polynomials over a
     square domain,
@@ -24,9 +24,10 @@ class Dunavant(object):
     integrate such functions with maximum effort. Symmetrical quadrature rules
     are developed and presented for integration of complete polynomial
     functions up to 21st order with minimum computational effort.
-    '''
+    """
+
     def __init__(self, index, symbolic=False):
-        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        frac = sympy.Rational if symbolic else lambda x, y: x / y
         sqrt = sympy.sqrt if symbolic else numpy.sqrt
 
         if index == 0:
@@ -40,14 +41,14 @@ class Dunavant(object):
             data = [
                 (frac(40, 49), _symm_r_0(sqrt(frac(7, 15)))),
                 (frac(9, 49), _symm_s(sqrt(frac(7, 9)))),
-                ]
+            ]
         elif index == 3:
             self.degree = 7
             data = [
                 (frac(98, 405), _symm_r_0(sqrt(frac(6, 7)))),
                 (0.237431774690630, _symm_s(0.805979782918599)),
                 (0.520592916667394, _symm_s(0.380554433208316)),
-                ]
+            ]
         elif index == 4:
             self.degree = 9
             data = [
@@ -55,7 +56,7 @@ class Dunavant(object):
                 (0.390052939160735, _symm_r_0(0.451773049920657)),
                 (0.083095178026482, _symm_s(0.891849420851512)),
                 (0.254188020152646, _st(0.824396370749276, 0.411623426336542)),
-                ]
+            ]
         elif index == 5:
             self.degree = 11
             data = [
@@ -65,7 +66,7 @@ class Dunavant(object):
                 (0.034265103851229, _symm_s(0.935787012440540)),
                 (0.308993036133713, _symm_s(0.413491953449114)),
                 (0.146684377651312, _st(0.883025508525690, 0.575653595840465)),
-                ]
+            ]
         elif index == 6:
             self.degree = 13
             data = [
@@ -76,7 +77,7 @@ class Dunavant(object):
                 (0.228125175912536, _symm_s(0.246795612720261)),
                 (0.117496926974491, _st(0.900258815287201, 0.304720678579870)),
                 (0.066655770186205, _st(0.929866705560780, 0.745052720131169)),
-                ]
+            ]
         elif index == 7:
             self.degree = 15
             data = [
@@ -89,7 +90,7 @@ class Dunavant(object):
                 (0.168053047203816, _st(0.621974427996805, 0.321696694921009)),
                 (0.076169694452294, _st(0.928618480068352, 0.455124178121179)),
                 (0.028794154400064, _st(0.960457474887516, 0.809863684081217)),
-                ]
+            ]
         elif index == 8:
             self.degree = 17
             data = [
@@ -103,7 +104,7 @@ class Dunavant(object):
                 (0.060394163649685, _st(0.803743962958745, 0.058344481776551)),
                 (0.057387752969213, _st(0.936506276127495, 0.347386316166203)),
                 (0.021922559481864, _st(0.981321179805452, 0.706000287798646)),
-                ]
+            ]
         elif index == 9:
             # TODO ERR the article claims 19
             self.degree = 16
@@ -120,7 +121,7 @@ class Dunavant(object):
                 (0.055594877793785, _st(0.901672714410389, 0.541983037327871)),
                 (0.006049054506376, _st(1.007018449383116, 0.669414798783936)),
                 (0.024839207949609, _st(0.945161453573471, 0.829501421477824)),
-                ]
+            ]
         else:
             assert index == 10
             self.degree = 21
@@ -139,7 +140,7 @@ class Dunavant(object):
                 (0.042512352239126, _st(0.882246882640128, 0.568113580166780)),
                 (0.067270936863160, _st(0.741324453314596, 0.371360260002223)),
                 (0.103507336515645, _st(0.469570217710647, 0.237333359193547)),
-                ]
+            ]
 
         self.points, self.weights = untangle(data)
         return
@@ -150,31 +151,14 @@ def _c():
 
 
 def _symm_r_0(r):
-    return numpy.array([
-        [+r, 0],
-        [-r, 0],
-        [0, +r],
-        [0, -r],
-        ])
+    return numpy.array([[+r, 0], [-r, 0], [0, +r], [0, -r]])
 
 
 def _symm_s(s):
-    return numpy.array([
-        [+s, +s],
-        [-s, +s],
-        [+s, -s],
-        [-s, -s],
-        ])
+    return numpy.array([[+s, +s], [-s, +s], [+s, -s], [-s, -s]])
 
 
 def _st(s, t):
-    return numpy.array([
-        [+s, +t],
-        [-s, +t],
-        [+s, -t],
-        [-s, -t],
-        [+t, +s],
-        [-t, +s],
-        [+t, -s],
-        [-t, -s],
-        ])
+    return numpy.array(
+        [[+s, +t], [-s, +t], [+s, -t], [-s, -t], [+t, +s], [-t, +s], [+t, -s], [-t, -s]]
+    )
