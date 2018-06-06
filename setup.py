@@ -18,7 +18,7 @@ def read(fname):
 
 
 directories = [
-    os.path.join("quadpy", "triangle", "papanicolopoulos"),
+    os.path.join("quadpy", "triangle", "papanicolopulos"),
     os.path.join("quadpy", "triangle", "vioreanu_rokhlin"),
     os.path.join("quadpy", "triangle", "witherden_vincent"),
     os.path.join("quadpy", "triangle", "xiao_gimbutas"),

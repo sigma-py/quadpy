@@ -112,7 +112,7 @@ def data_to_json(data, f):
 
 
 if __name__ == "__main__":
-    data = read_data("papanicolopoulos.txt", num_orbit_types=3)
+    data = read_data("papanicolopulos.txt", num_orbit_types=3)
     # data_to_code(data, ('_s3', '_s21', '_s111'))
     data_to_json(data, ("_s3", "_s21", "_s111"))
     # data = read_data('rotationalsymmetry.txt', num_orbit_types=2)
