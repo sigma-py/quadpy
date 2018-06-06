@@ -29,25 +29,31 @@ class Lebedev(object):
     def __init__(self, degree):
         self.degree = degree
         if degree == 3:
-            data = [(1.0 / 6.0, _a1())]
-            self.azimuthal_polar, self.weights = untangle(data)
+            data = {
+                "a1": [
+                  [1.0/6.0],
+                  ]
+                }
+            self.azimuthal_polar, self.weights = untangle2(data)
         elif degree == 5:
-            data = [(6.6666666666666999e-02, _a1()), (7.4999999999999997e-02, _a3())]
-            self.azimuthal_polar, self.weights = untangle(data)
+            data = {
+                "a1": [[2.0/30.0]], "a3": [[0.075]]
+                }
+            self.azimuthal_polar, self.weights = untangle2(data)
         elif degree == 7:
-            data = [
-                (4.7619047619047998e-02, _a1()),
-                (3.8095238095238002e-02, _a2()),
-                (3.2142857142857001e-02, _a3()),
-            ]
-            self.azimuthal_polar, self.weights = untangle(data)
+            data = {
+                "a1": [[4.7619047619047998e-02]],
+                "a2": [[3.8095238095238002e-02]],
+                "a3": [[3.2142857142857001e-02]],
+                }
+            self.azimuthal_polar, self.weights = untangle2(data)
         elif degree == 9:
-            data = [
-                (9.5238095238100000e-03, _a1()),
-                (3.2142857142857001e-02, _a3()),
-                (2.8571428571429001e-02, _pq0(1.5204336199234819e-01)),
-            ]
-            self.azimuthal_polar, self.weights = untangle(data)
+            data = {
+                "a1": [[9.5238095238100000e-03]],
+                "a3": [[3.2142857142857001e-02]],
+                "pq0": [[2.8571428571429001e-02, 1.5204336199234819e-01]],
+                }
+            self.azimuthal_polar, self.weights = untangle2(data)
         elif degree == 11:
             data = {
                 "a1": [
