@@ -17,22 +17,6 @@ def read(fname):
     return codecs.open(os.path.join(base_dir, fname), encoding="utf-8").read()
 
 
-directories = [
-    os.path.join("quadpy", "triangle", "papanicolopulos"),
-    os.path.join("quadpy", "triangle", "vioreanu_rokhlin"),
-    os.path.join("quadpy", "triangle", "witherden_vincent"),
-    os.path.join("quadpy", "triangle", "xiao_gimbutas"),
-    #
-    os.path.join("quadpy", "sphere", "lebedev"),
-    #
-    os.path.join("quadpy", "tetrahedron", "xiao_gimbutas"),
-]
-
-data_files = [
-    (directory, glob.glob(os.path.join(directory, "*.json")))
-    for directory in directories
-]
-
 setup(
     name="quadpy",
     version=about["__version__"],
@@ -62,5 +46,5 @@ setup(
         "Topic :: Scientific/Engineering",
         "Topic :: Scientific/Engineering :: Mathematics",
     ],
-    data_files=data_files,
+    package_data={"": ["*.json"]},
 )
