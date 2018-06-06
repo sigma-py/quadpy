@@ -270,6 +270,13 @@ def untangle2(data):
         w = numpy.array(data["pq0"])[:, 0]
         weights.append(numpy.tile(w, 24))
 
+    if "rsw" in data:
+        beta = numpy.array(data["rsw"])[:, 1:].T
+        out = _collapse0(numpy.moveaxis(_rsw(*beta), 0, 1)).T
+        points.append(out)
+        w = numpy.array(data["rsw"])[:, 0]
+        weights.append(numpy.tile(w, 48))
+
     points = numpy.concatenate(points)
     weights = numpy.concatenate(weights)
     return points, weights
