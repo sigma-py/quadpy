@@ -18,8 +18,6 @@ class McLaren(object):
     <https://doi.org/10.1090/S0025-5718-1963-0159418-2>.
     """
 
-    # <https://github.com/PyCQA/pylint/issues/1472>
-
     def __init__(self, index, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x / y
         sqrt = sympy.sqrt if symbolic else numpy.sqrt

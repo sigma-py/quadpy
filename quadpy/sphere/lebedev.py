@@ -2,7 +2,8 @@
 #
 import numpy
 
-from .helpers import cartesian_to_spherical
+from .helpers import cartesian_to_spherical, _a1, _a2, _a3, _pq0, _llm, _rsw
+from .helpers import untangle2
 
 from ..helpers import untangle
 
@@ -29,27 +30,40 @@ class Lebedev(object):
         self.degree = degree
         if degree == 3:
             data = [(1.0 / 6.0, _a1())]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 5:
             data = [(6.6666666666666999e-02, _a1()), (7.4999999999999997e-02, _a3())]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 7:
             data = [
                 (4.7619047619047998e-02, _a1()),
                 (3.8095238095238002e-02, _a2()),
                 (3.2142857142857001e-02, _a3()),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 9:
             data = [
                 (9.5238095238100000e-03, _a1()),
                 (3.2142857142857001e-02, _a3()),
                 (2.8571428571429001e-02, _pq0(1.5204336199234819e-01)),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 11:
-            data = [
-                (1.2698412698413000e-02, _a1()),
-                (2.2574955908289000e-02, _a2()),
-                (2.1093750000000001e-02, _a3()),
-                (2.0173335537919002e-02, _llm(1.4021889900377171e-01)),
-            ]
+            data = {
+                "a1": [
+                  [1.2698412698413000e-02],
+                  ],
+                "a2": [
+                  [2.2574955908289000e-02],
+                  ],
+                "a3": [
+                  [2.1093750000000001e-02],
+                  ],
+                "llm": [
+                   [2.0173335537919002e-02, 1.4021889900377171e-01],
+                   ],
+                }
+            self.azimuthal_polar, self.weights = untangle2(data)
         elif degree == 13:
             data = [
                 (5.1306717973400001e-04, _a1()),
@@ -58,6 +72,7 @@ class Lebedev(object):
                 (2.6576207082158999e-02, _llm(2.3774520615063846e-01)),
                 (1.6522170993716001e-02, _pq0(1.0394254360193009e-01)),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 15:
             data = [
                 (1.1544011544012000e-02, _a1()),
@@ -66,6 +81,7 @@ class Lebedev(object):
                 (1.1876501294537000e-02, _llm(4.3945478184831077e-01)),
                 (1.1812303746904000e-02, _pq0(1.2209742089682904e-01)),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 17:
             data = [
                 (3.8282704949370002e-03, _a1()),
@@ -75,6 +91,7 @@ class Lebedev(object):
                 (9.5954713360710004e-03, _llm(1.8904115614172226e-01)),
                 (9.6949963616630008e-03, _pq0(1.5877185995996732e-01)),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 19:
             data = [
                 (5.9963136886199996e-04, _a1()),
@@ -88,6 +105,7 @@ class Lebedev(object):
                     _rsw(9.6371795051365561e-02, 1.5601434599147013e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 21:
             data = [
                 (5.5448429020370001e-03, _a1()),
@@ -102,6 +120,7 @@ class Lebedev(object):
                     _rsw(8.9809985745262069e-02, 1.7391524882944950e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 23:
             data = [
                 (1.7823404472450000e-03, _a1()),
@@ -117,6 +136,7 @@ class Lebedev(object):
                     _rsw(9.3610506016528261e-02, 1.8486738992916613e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 25:
             data = [
                 (-5.5226399197272999e-02, _a1()),
@@ -133,6 +153,7 @@ class Lebedev(object):
                     _rsw(1.3909053288148493e-01, 1.8041031475364136e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 27:
             data = [
                 (-1.3137691273270001e-03, _a1()),
@@ -153,6 +174,7 @@ class Lebedev(object):
                     _rsw(1.3229823610597896e-01, 1.9433823127269889e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 29:
             data = [
                 (8.5459117251300001e-04, _a1()),
@@ -174,6 +196,7 @@ class Lebedev(object):
                     _rsw(9.2436097378089485e-02, 1.4177217959441341e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 31:
             data = [
                 (3.0067967494540001e-03, _a1()),
@@ -199,6 +222,7 @@ class Lebedev(object):
                     _rsw(1.4374716958744232e-01, 1.3801409152271216e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 35:
             data = [
                 (5.2658979682200003e-04, _a1()),
@@ -230,6 +254,7 @@ class Lebedev(object):
                     _rsw(9.1800654189073447e-02, 1.1342553218130361e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 41:
             data = [
                 (3.0951212953099998e-04, _a1()),
@@ -271,6 +296,7 @@ class Lebedev(object):
                     _rsw(5.6313735629904271e-02, 1.7084986503447563e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 47:
             data = [
                 (2.1929420881800001e-04, _a1()),
@@ -326,6 +352,7 @@ class Lebedev(object):
                     _rsw(1.8936614291248285e-01, 2.3891358165513843e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 53:
             data = [
                 (1.4382941905300000e-04, _a1()),
@@ -395,6 +422,7 @@ class Lebedev(object):
                     _rsw(1.9748919518870767e-01, 2.4570106099668815e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 59:
             data = [
                 (1.1051892332700000e-04, _a1()),
@@ -482,6 +510,7 @@ class Lebedev(object):
                     _rsw(2.0369796009147373e-01, 2.5122346068669016e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 65:
             data = [
                 (7.7771607433000002e-05, _a1()),
@@ -587,6 +616,7 @@ class Lebedev(object):
                     _rsw(3.1619172770663867e-02, 1.9874998248857403e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 71:
             data = [
                 (6.3090494373999997e-05, _a1()),
@@ -714,6 +744,7 @@ class Lebedev(object):
                     _rsw(2.6116110081186139e-02, 2.2665311278358263e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 77:
             data = [
                 (4.6560318991999998e-05, _a1()),
@@ -863,6 +894,7 @@ class Lebedev(object):
                     _rsw(4.7716296800917581e-02, 2.2958259580795992e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 83:
             data = [
                 (3.9226162707000000e-05, _a1()),
@@ -1038,6 +1070,7 @@ class Lebedev(object):
                     _rsw(2.2118446350596878e-02, 2.2989800988803780e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 89:
             data = [
                 (2.9986751498999999e-05, _a1()),
@@ -1239,6 +1272,7 @@ class Lebedev(object):
                     _rsw(4.0972180515830611e-02, 2.3209355666287107e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 95:
             data = [
                 (2.5990959538000000e-05, _a1()),
@@ -1470,6 +1504,7 @@ class Lebedev(object):
                     _rsw(1.9181495137045916e-02, 2.3235214507614843e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 101:
             data = [
                 (2.0403827308000001e-05, _a1()),
@@ -1731,6 +1766,7 @@ class Lebedev(object):
                     _rsw(3.5893948689152660e-02, 2.3405840187253335e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 107:
             data = [
                 (1.8073952522000000e-05, _a1()),
@@ -2026,6 +2062,7 @@ class Lebedev(object):
                     _rsw(1.6932714566415905e-02, 2.3427285444479826e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 113:
             data = [
                 (1.4490630225000000e-05, _a1()),
@@ -2355,6 +2392,7 @@ class Lebedev(object):
                     _rsw(3.1933331945866811e-02, 2.3563676240369411e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 119:
             data = [
                 (9.6875218794000004e-05, _a1()),
@@ -2722,6 +2760,7 @@ class Lebedev(object):
                     _rsw(1.5154107595876577e-02, 2.3581330991926575e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         elif degree == 125:
             data = [
                 (9.0805107643000005e-05, _a1()),
@@ -3127,6 +3166,7 @@ class Lebedev(object):
                     _rsw(2.8756638475066133e-02, 2.3692998731338194e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
         else:
             assert degree == 131, "Illegal degree {}.".format(degree)
             data = [
@@ -3575,8 +3615,8 @@ class Lebedev(object):
                     _rsw(1.3716092309148088e-02, 2.3708499670410427e-01),
                 ),
             ]
+            self.azimuthal_polar, self.weights = untangle(data)
 
-        self.azimuthal_polar, self.weights = untangle(data)
         self.points = _spherical_to_cartesian(self.azimuthal_polar)
         return
 
@@ -3592,214 +3632,3 @@ def _spherical_to_cartesian(azimuthal_polar):
         ],
         axis=1,
     )
-
-
-def _a1():
-    return (
-        numpy.array(
-            [
-                [+0.0, 0.0],
-                [+0.0, 1.0],
-                [-0.5, 0.5],
-                [+0.0, 0.5],
-                [+0.5, 0.5],
-                [+1.0, 0.5],
-            ]
-        )
-        * numpy.pi
-    )
-
-
-def _a2():
-    return (
-        numpy.array(
-            [
-                [+0.75, 0.5],
-                [+0.25, 0.5],
-                [-0.25, 0.5],
-                [-0.75, 0.5],
-                #
-                [-0.5, 0.25],
-                [+0.0, 0.25],
-                [+0.5, 0.25],
-                [+1.0, 0.25],
-                #
-                [-0.5, 0.75],
-                [+0.0, 0.75],
-                [+0.5, 0.75],
-                [+1.0, 0.75],
-            ]
-        )
-        * numpy.pi
-    )
-
-
-def _a3():
-    X = numpy.array(
-        [
-            [+1.0, +1.0, +1.0],
-            [+1.0, +1.0, -1.0],
-            [+1.0, -1.0, +1.0],
-            [+1.0, -1.0, -1.0],
-            [-1.0, +1.0, +1.0],
-            [-1.0, +1.0, -1.0],
-            [-1.0, -1.0, +1.0],
-            [-1.0, -1.0, -1.0],
-        ]
-    ) / numpy.sqrt(3.0)
-    return cartesian_to_spherical(X)
-
-
-def _pq0(alpha):
-    return (
-        numpy.array(
-            [
-                [+0.0 + alpha, 0.5],
-                [+0.5 - alpha, 0.5],
-                [+0.5 + alpha, 0.5],
-                [+1.0 - alpha, 0.5],
-                #
-                [+0.0 - alpha, 0.5],
-                [-0.5 + alpha, 0.5],
-                [-0.5 - alpha, 0.5],
-                [-1.0 + alpha, 0.5],
-                #
-                [+0.0, alpha],
-                [+0.5, alpha],
-                [+1.0, alpha],
-                [-0.5, alpha],
-                #
-                [+0.0, 0.5 - alpha],
-                [+0.5, 0.5 - alpha],
-                [+1.0, 0.5 - alpha],
-                [-0.5, 0.5 - alpha],
-                #
-                [+0.0, 0.5 + alpha],
-                [+0.5, 0.5 + alpha],
-                [+1.0, 0.5 + alpha],
-                [-0.5, 0.5 + alpha],
-                #
-                [+0.0, 1.0 - alpha],
-                [+0.5, 1.0 - alpha],
-                [+1.0, 1.0 - alpha],
-                [-0.5, 1.0 - alpha],
-            ]
-        )
-        * numpy.pi
-    )
-
-
-def _llm(beta):
-    # translate the point into cartesian coords; note that phi=pi/4.
-    beta *= numpy.pi
-    L = numpy.sin(beta) / numpy.sqrt(2)
-    m = numpy.cos(beta)
-    X = numpy.array(
-        [
-            [+L, +L, +m],
-            [-L, +L, +m],
-            [+L, -L, +m],
-            [-L, -L, +m],
-            [+L, +L, -m],
-            [-L, +L, -m],
-            [+L, -L, -m],
-            [-L, -L, -m],
-            #
-            [+L, +m, +L],
-            [-L, +m, +L],
-            [+L, +m, -L],
-            [-L, +m, -L],
-            [+L, -m, +L],
-            [-L, -m, +L],
-            [+L, -m, -L],
-            [-L, -m, -L],
-            #
-            [+m, +L, +L],
-            [+m, -L, +L],
-            [+m, +L, -L],
-            [+m, -L, -L],
-            [-m, +L, +L],
-            [-m, -L, +L],
-            [-m, +L, -L],
-            [-m, -L, -L],
-        ]
-    )
-    # translate back to spherical coords
-    return cartesian_to_spherical(X)
-
-
-def _rsw(azimuthal, polar):
-    # translate the point into cartesian coords; note that phi=pi/4.
-    azimuthal *= numpy.pi
-    polar *= numpy.pi
-
-    sin_polar = numpy.sin(polar)
-    cos_polar = numpy.cos(polar)
-    sin_azimuthal = numpy.sin(azimuthal)
-    cos_azimuthal = numpy.cos(azimuthal)
-
-    r = sin_polar * cos_azimuthal
-    s = sin_polar * sin_azimuthal
-    w = cos_polar
-
-    X = numpy.array(
-        [
-            [+r, +s, +w],
-            [+w, +r, +s],
-            [+s, +w, +r],
-            [+s, +r, +w],
-            [+w, +s, +r],
-            [+r, +w, +s],
-            #
-            [-r, +s, +w],
-            [+w, -r, +s],
-            [+s, +w, -r],
-            [+s, -r, +w],
-            [+w, +s, -r],
-            [-r, +w, +s],
-            #
-            [+r, -s, +w],
-            [+w, +r, -s],
-            [-s, +w, +r],
-            [-s, +r, +w],
-            [+w, -s, +r],
-            [+r, +w, -s],
-            #
-            [+r, +s, -w],
-            [-w, +r, +s],
-            [+s, -w, +r],
-            [+s, +r, -w],
-            [-w, +s, +r],
-            [+r, -w, +s],
-            #
-            [-r, -s, +w],
-            [+w, -r, -s],
-            [-s, +w, -r],
-            [-s, -r, +w],
-            [+w, -s, -r],
-            [-r, +w, -s],
-            #
-            [-r, +s, -w],
-            [-w, -r, +s],
-            [+s, -w, -r],
-            [+s, -r, -w],
-            [-w, +s, -r],
-            [-r, -w, +s],
-            #
-            [+r, -s, -w],
-            [-w, +r, -s],
-            [-s, -w, +r],
-            [-s, +r, -w],
-            [-w, -s, +r],
-            [+r, -w, -s],
-            #
-            [-r, -s, -w],
-            [-w, -r, -s],
-            [-s, -w, -r],
-            [-s, -r, -w],
-            [-w, -s, -r],
-            [-r, -w, -s],
-        ]
-    )
-
-    return cartesian_to_spherical(X)

@@ -6,6 +6,7 @@ from .helpers import _s3, _s21, _s111
 from ..helpers import untangle
 
 
+# TODO modernize
 class ZhangCuiLiu(object):
     """
     Linbo Zhang, Tao Cui and Hui Liu,
