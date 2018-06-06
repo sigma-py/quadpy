@@ -7,7 +7,7 @@ jobs:
       - image: ubuntu:18.04
     steps:
       - run: apt-get update
-      - run: apt-get install -y git python3-pip pybind11-dev
+      - run: apt-get install -y git python3-pip python3-pybind11
       - run: pip3 install -U pytest pytest-cov black flake8
       - checkout
       - run: pip3 install -r test_requirements.txt
