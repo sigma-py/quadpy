@@ -6,5 +6,17 @@ from .lebedev import Lebedev
 from .mclaren import McLaren
 from .stroud import Stroud
 
-# pylint: disable=wildcard-import
-from .tools import *
+from .tools import area, show, plot, integrate, integrate_spherical
+
+__all__ = [
+    "AlbrechtCollatz",
+    "HeoXu",
+    "Lebedev",
+    "McLaren",
+    "Stroud",
+    "area",
+    "show",
+    "plot",
+    "integrate",
+    "integrate_spherical",
+]

@@ -21,65 +21,53 @@ from ..helpers import untangle
 
 
 class Stroud(object):
-    '''
+    """
     Arthur Stroud,
     Approximate Calculation of Multiple Integrals,
     Prentice Hall, 1971.
-    '''
+    """
+
     def __init__(self, index, symbolic=False):
-        frac = sympy.Rational if symbolic else lambda x, y: x/y
-        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
-        reference_volume = 8
-        if index == 'C3 3-1':
-            self.set_data(Tyler(1))
-        elif index == 'C3 3-2':
-            # product Gauss
-            self.degree = 3
-            data = [
-                (frac(1, 8), pm_rrr(sqrt(frac(1, 3))))
-                ]
-            self.points, self.weights = untangle(data)
-            self.weights *= reference_volume
-        elif index == 'C3 3-3':
-            self.set_data(Ewing(3, symbolic))
-        elif index == 'C3 3-4':
-            self.set_data(MustardLynessBlatt(1, symbolic))
-        elif index == 'C3 3-5':
-            self.set_data(MustardLynessBlatt(2, symbolic))
-        elif index == 'C3 3-6':
-            self.set_data(AlbrechtCollatz(symbolic))
-        elif index == 'C3 3-7':
-            self.set_data(MustardLynessBlatt(3, symbolic))
-        elif index == 'C3 5-1':
-            self.set_data(Stroud1967(symbolic))
-        elif index == 'C3 5-2':
-            self.set_data(HammerStroud('2-3', symbolic))
-        elif index == 'C3 5-3':
-            self.set_data(Tyler(2, symbolic))
-        elif index == 'C3 5-4':
-            self.set_data(MustardLynessBlatt(4, symbolic))
-        elif index == 'C3 5-5':
-            self.set_data(MustardLynessBlatt(5, symbolic))
-        elif index == 'C3 5-6':
-            self.set_data(MustardLynessBlatt(6, symbolic))
-        elif index == 'C3 5-7':
-            self.set_data(MustardLynessBlatt(7, symbolic))
-        elif index == 'C3 5-8':
-            self.set_data(Sadowsky(symbolic))
-        elif index == 'C3 7-1a':
-            self.set_data(HammerStroud('5-3a', symbolic))
-        elif index == 'C3 7-1b':
-            self.set_data(HammerStroud('5-3b', symbolic))
-        elif index == 'C3 7-2':
-            self.set_data(HammerWymore(symbolic=symbolic))
-        else:
-            assert index == 'C3 7-3'
-            self.set_data(SarmaStroud(symbolic))
-        return
+        # Adding lambdas here makes sure that only the selected scheme is actually
+        # created.
+        scheme = {
+            "C3 3-1": lambda: Tyler(1),
+            "C3 3-2": lambda: ProductGauss(symbolic=symbolic),
+            "C3 3-3": lambda: Ewing(3, symbolic=symbolic),
+            "C3 3-4": lambda: MustardLynessBlatt(1, symbolic=symbolic),
+            "C3 3-5": lambda: MustardLynessBlatt(2, symbolic=symbolic),
+            "C3 3-6": lambda: AlbrechtCollatz(symbolic=symbolic),
+            "C3 3-7": lambda: MustardLynessBlatt(3, symbolic=symbolic),
+            "C3 5-1": lambda: Stroud1967(symbolic=symbolic),
+            "C3 5-2": lambda: HammerStroud("2-3", symbolic=symbolic),
+            "C3 5-3": lambda: Tyler(2, symbolic=symbolic),
+            "C3 5-4": lambda: MustardLynessBlatt(4, symbolic=symbolic),
+            "C3 5-5": lambda: MustardLynessBlatt(5, symbolic=symbolic),
+            "C3 5-6": lambda: MustardLynessBlatt(6, symbolic=symbolic),
+            "C3 5-7": lambda: MustardLynessBlatt(7, symbolic=symbolic),
+            "C3 5-8": lambda: Sadowsky(symbolic=symbolic),
+            "C3 7-1a": lambda: HammerStroud("5-3a", symbolic=symbolic),
+            "C3 7-1b": lambda: HammerStroud("5-3b", symbolic=symbolic),
+            "C3 7-2": lambda: HammerWymore(symbolic=symbolic),
+            "C3 7-3": lambda: SarmaStroud(symbolic=symbolic),
+        }[index]()
 
-    def set_data(self, scheme):
         self.degree = scheme.degree
         self.weights = scheme.weights
         self.points = scheme.points
+        return
+
+
+class ProductGauss(object):
+    def __init__(self, symbolic):
+        reference_volume = 8
+
+        frac = sympy.Rational if symbolic else lambda x, y: x / y
+        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
+        self.degree = 3
+        data = [(frac(1, 8), pm_rrr(sqrt(frac(1, 3))))]
+        self.points, self.weights = untangle(data)
+        self.weights *= reference_volume
         return

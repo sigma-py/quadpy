@@ -11,7 +11,7 @@ from ..tools import scheme_from_rc
 
 
 class GaussKronrod(object):
-    '''
+    """
     Gauss-Kronrod quadrature; see
     <https://en.wikipedia.org/wiki/Gauss%E2%80%93Kronrod_quadrature_formula>.
 
@@ -35,7 +35,8 @@ class GaussKronrod(object):
     for obtaining the Jacobi-Kronrod matrix analytically. The nodes and weights
     can then be computed directly by standard software for Gaussian quadrature
     formulas.
-    '''
+    """
+
     def __init__(self, n, a=0.0, b=0.0):
         # The general scheme is:
         # Get the Jacobi recurrence coefficients, get the Kronrod vectors alpha
@@ -43,71 +44,70 @@ class GaussKronrod(object):
         # eigenproblem for a tridiagonal matrix with alpha and beta is solved
         # to retrieve the points and weights.
         # TODO replace math.ceil by -(-k//n)
-        length = int(math.ceil(3*n/2.0)) + 1
-        self.degree = 2*length + 1
-        _, _, alpha, beta = \
-            orthopy.line_segment.recurrence_coefficients.jacobi(
-                    length, a, b, 'monic'
-                    )
+        length = int(math.ceil(3 * n / 2.0)) + 1
+        self.degree = 2 * length + 1
+        _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.jacobi(
+            length, a, b, "monic"
+        )
         flt = numpy.vectorize(float)
         alpha = flt(alpha)
         beta = flt(beta)
         a, b = self.r_kronrod(n, alpha, beta)
-        x, w = scheme_from_rc(a, b, mode='numpy')
+        x, w = scheme_from_rc(a, b, mode="numpy")
         # sort by x
         i = numpy.argsort(x)
         self.points = x[i]
         self.weights = w[i]
         return
 
-    # pylint: disable=no-self-use
     def r_kronrod(self, n, a0, b0):
-        assert len(a0) == int(math.ceil(3*n/2.0)) + 1
-        assert len(b0) == int(math.ceil(3*n/2.0)) + 1
+        assert len(a0) == int(math.ceil(3 * n / 2.0)) + 1
+        assert len(b0) == int(math.ceil(3 * n / 2.0)) + 1
 
-        a = numpy.zeros(2*n+1)
-        b = numpy.zeros(2*n+1)
+        a = numpy.zeros(2 * n + 1)
+        b = numpy.zeros(2 * n + 1)
 
-        k = int(math.floor(3*n/2.0)) + 1
+        k = int(math.floor(3 * n / 2.0)) + 1
         a[:k] = a0[:k]
-        k = int(math.ceil(3*n/2.0)) + 1
+        k = int(math.ceil(3 * n / 2.0)) + 1
         b[:k] = b0[:k]
-        s = numpy.zeros(int(math.floor(n/2.0)) + 2)
-        t = numpy.zeros(int(math.floor(n/2.0)) + 2)
-        t[1] = b[n+1]
-        for m in range(n-1):
-            k0 = int(math.floor((m+1)/2.0))
+        s = numpy.zeros(int(math.floor(n / 2.0)) + 2)
+        t = numpy.zeros(int(math.floor(n / 2.0)) + 2)
+        t[1] = b[n + 1]
+        for m in range(n - 1):
+            k0 = int(math.floor((m + 1) / 2.0))
             k = numpy.arange(k0, -1, -1)
             L = m - k
-            s[k+1] = numpy.cumsum(
-                (a[k+n+1] - a[L])*t[k+1] + b[k+n+1]*s[k] - b[L]*s[k+1]
-                )
+            s[k + 1] = numpy.cumsum(
+                (a[k + n + 1] - a[L]) * t[k + 1] + b[k + n + 1] * s[k] - b[L] * s[k + 1]
+            )
             s, t = t, s
 
-        j = int(math.floor(n/2.0)) + 1
-        s[1:j+1] = s[:j]
-        for m in range(n-1, 2*n-2):
-            k0 = m+1-n
-            k1 = int(math.floor((m-1)/2.0))
+        j = int(math.floor(n / 2.0)) + 1
+        s[1 : j + 1] = s[:j]
+        for m in range(n - 1, 2 * n - 2):
+            k0 = m + 1 - n
+            k1 = int(math.floor((m - 1) / 2.0))
             k = numpy.arange(k0, k1 + 1)
             L = m - k
-            j = n-1-L
-            s[j+1] = numpy.cumsum(
-                -(a[k+n+1] - a[L])*t[j+1] - b[k+n+1]*s[j+1] + b[L]*s[j+2]
-                )
+            j = n - 1 - L
+            s[j + 1] = numpy.cumsum(
+                -(a[k + n + 1] - a[L]) * t[j + 1]
+                - b[k + n + 1] * s[j + 1]
+                + b[L] * s[j + 2]
+            )
             j = j[-1]
-            k = int(math.floor((m+1)/2.0))
+            k = int(math.floor((m + 1) / 2.0))
             if m % 2 == 0:
-                a[k+n+1] = a[k] + (s[j+1] - b[k+n+1]*s[j+2]) / t[j+2]
+                a[k + n + 1] = a[k] + (s[j + 1] - b[k + n + 1] * s[j + 2]) / t[j + 2]
             else:
-                b[k+n+1] = s[j+1] / s[j+2]
+                b[k + n + 1] = s[j + 1] / s[j + 2]
             s, t = t, s
 
-        a[2*n] = a[n-1] - b[2*n] * s[1]/t[1]
+        a[2 * n] = a[n - 1] - b[2 * n] * s[1] / t[1]
         return a, b
 
 
-# pylint: disable=too-many-locals
 def _gauss_kronrod_integrate(k, f, interval, dot=numpy.dot):
     def _scale_points(points, interval):
         alpha = 0.5 * (interval[1] - interval[0])
@@ -115,8 +115,8 @@ def _gauss_kronrod_integrate(k, f, interval, dot=numpy.dot):
         return (numpy.multiply.outer(points, alpha) + beta).T
 
     def _integrate(values, weights, interval_length, dot):
-        '''Integration with point values explicitly specified.
-        '''
+        """Integration with point values explicitly specified.
+        """
         return 0.5 * interval_length * dot(values, weights)
 
     # Compute the integral estimations according to Gauss and Gauss-Kronrod,
@@ -126,8 +126,7 @@ def _gauss_kronrod_integrate(k, f, interval, dot=numpy.dot):
     point_vals_gk = f(_scale_points(scheme.points, interval))
     point_vals_g = point_vals_gk[..., 1::2]
     alpha = abs(interval[1] - interval[0])
-    val_gauss_kronrod = \
-        _integrate(point_vals_gk, scheme.weights, alpha, dot=dot)
+    val_gauss_kronrod = _integrate(point_vals_gk, scheme.weights, alpha, dot=dot)
     val_gauss = _integrate(point_vals_g, gauss_weights, alpha, dot=dot)
 
     # Get an error estimate. According to
@@ -150,9 +149,8 @@ def _gauss_kronrod_integrate(k, f, interval, dot=numpy.dot):
     #   eps = numpy.finfo(float).eps
     #   exponent = numpy.log(eps) / numpy.log(200*eps)
     #
-    error_estimate = \
-        I_tilde * numpy.minimum(
-            numpy.ones(I_tilde.shape),
-            (200 * abs(val_gauss_kronrod - val_gauss) / I_tilde)**1.5
-            )
+    error_estimate = I_tilde * numpy.minimum(
+        numpy.ones(I_tilde.shape),
+        (200 * abs(val_gauss_kronrod - val_gauss) / I_tilde) ** 1.5,
+    )
     return val_gauss_kronrod, val_gauss, error_estimate

@@ -2,5 +2,6 @@
 #
 from .gauss_hermite import GaussHermite
 
-# pylint: disable=wildcard-import
-from .tools import *
+from .tools import integrate, show, plot
+
+__all__ = ["GaussHermite", "integrate", "show", "plot"]

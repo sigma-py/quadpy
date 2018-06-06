@@ -10,7 +10,7 @@ from ..helpers import untangle
 
 
 class Maxwell(object):
-    '''
+    """
     J.C. Maxwell,
     On Approximate Multiple Integration between Limits by Summation.
     In W. Niven (Ed.), The Scientific Papers of James Clerk Maxwell,
@@ -18,23 +18,24 @@ class Maxwell(object):
     Cambridge: Cambridge University Press.
     First published in 1890.
     <https://doi.org/10.1017/CBO9780511710377.061>.
-    '''
+    """
+
     def __init__(self, symbolic=False):
-        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        frac = sympy.Rational if symbolic else lambda x, y: x / y
         sqrt = sympy.sqrt if symbolic else numpy.sqrt
 
-        self.name = 'Maxwell'
+        self.name = "Maxwell"
         self.degree = 7
 
         r = sqrt(frac(12, 35))
-        s, t = [sqrt((93 + i*3*sqrt(186)) / 155) for i in [+1, -1]]
+        s, t = [sqrt((93 + i * 3 * sqrt(186)) / 155) for i in [+1, -1]]
 
         data = [
             (frac(1, 81), _z()),
             (frac(49, 324), _symm_r_0(r)),
             # ERR typo in Stroud: 648 vs 649
-            (frac(31, 648), _symm_s_t(s, t))
-            ]
+            (frac(31, 648), _symm_s_t(s, t)),
+        ]
 
         self.points, self.weights = untangle(data)
         self.weights *= 4

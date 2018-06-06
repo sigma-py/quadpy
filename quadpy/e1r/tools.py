@@ -17,9 +17,9 @@ def show(*args, **kwargs):
 
 
 def plot(scheme):
-    plt.axis('equal')
+    plt.axis("equal")
     m = 1.1 * numpy.max(scheme.points)
-    plt.plot([0, m], [0, 0], color='k')
+    plt.plot([0, m], [0, 0], color="k")
     pts = numpy.column_stack([scheme.points, numpy.zeros(len(scheme.points))])
     helpers.plot_disks_1d(plt, pts, scheme.weights, total_area=1.0)
     return

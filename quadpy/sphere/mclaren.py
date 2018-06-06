@@ -11,24 +11,21 @@ from ..helpers import untangle, pm_array0, fsd, pm_array, pm
 
 
 class McLaren(object):
-    '''
+    """
     A.D. McLaren,
     Optimal Numerical Integration on a Sphere,
     Mathematics of Computation, Vol. 17, No. 84. (Oct., 1963), pp. 361-383,
     <https://doi.org/10.1090/S0025-5718-1963-0159418-2>.
-    '''
-    # <https://github.com/PyCQA/pylint/issues/1472>
-    # pylint: disable=too-many-locals, invalid-unary-operand-type
+    """
+
     def __init__(self, index, symbolic=False):
-        frac = sympy.Rational if symbolic else lambda x, y: x/y
+        frac = sympy.Rational if symbolic else lambda x, y: x / y
         sqrt = sympy.sqrt if symbolic else numpy.sqrt
         roots = mp.polyroots if symbolic else numpy.roots
 
         if index == 1:
             self.degree = 3
-            data = [
-                (frac(1, 12), fsd(3, (sqrt(frac(1, 2)), 2)))
-                ]
+            data = [(frac(1, 12), fsd(3, (sqrt(frac(1, 2)), 2)))]
         elif index == 2:
             self.degree = 5
 
@@ -44,7 +41,7 @@ class McLaren(object):
                 (frac(1, 30), pm_array([r, s, t])),
                 (frac(1, 30), pm_array([t, r, s])),
                 (frac(1, 30), pm_array([s, t, r])),
-                ]
+            ]
         elif index == 3:
             self.degree = 7
 
@@ -66,7 +63,7 @@ class McLaren(object):
                 (frac(1, 24), numpy.column_stack([+u, -v, -w])),
                 (frac(1, 24), numpy.column_stack([+u, +w, -v])),
                 (frac(1, 24), numpy.column_stack([+u, -w, +v])),
-                ]
+            ]
         elif index == 4:
             self.degree = 8
 
@@ -89,7 +86,7 @@ class McLaren(object):
                 (frac(21, 600), numpy.column_stack([+u, -v, -w])),
                 (frac(21, 600), numpy.column_stack([+u, +w, -v])),
                 (frac(21, 600), numpy.column_stack([+u, -w, +v])),
-                ]
+            ]
         elif index == 5:
             self.degree = 9
 
@@ -110,7 +107,7 @@ class McLaren(object):
                 (B2, pm_array0(3, [u, v], [2, 0])),
                 #
                 (B2, pm(3, t)),
-                ]
+            ]
         elif index == 6:
             self.degree = 9
 
@@ -133,7 +130,7 @@ class McLaren(object):
                 (C, pm_array([u, v, w])),
                 (C, pm_array([w, u, v])),
                 (C, pm_array([v, w, u])),
-                ]
+            ]
         elif index == 7:
             self.degree = 9
 
@@ -158,7 +155,7 @@ class McLaren(object):
                 (C, pm_array([u, v, w])),
                 (C, pm_array([w, u, v])),
                 (C, pm_array([v, w, u])),
-                ]
+            ]
         elif index == 8:
             self.degree = 11
 
@@ -179,14 +176,14 @@ class McLaren(object):
                 (B2, fsd(3, (s, 2))),
                 (B3, pm(3, t)),
                 (B4, fsd(3, (u, 2), (v, 1))),
-                ]
+            ]
         elif index == 9:
             self.degree = 11
 
             sqrt5 = sqrt(5)
 
-            p, q = [sqrt((5 + pm_*sqrt5) / 10) for pm_ in [+1, -1]]
-            r, s = [sqrt((3 - pm_*sqrt5) / 6) for pm_ in [+1, -1]]
+            p, q = [sqrt((5 + pm_ * sqrt5) / 10) for pm_ in [+1, -1]]
+            r, s = [sqrt((3 - pm_ * sqrt5) / 6) for pm_ in [+1, -1]]
             t = sqrt(frac(1, 3))
 
             u = frac(1, 2)
@@ -212,7 +209,7 @@ class McLaren(object):
                 (D, pm_array([u, v, w])),
                 (D, pm_array([w, u, v])),
                 (D, pm_array([v, w, u])),
-                ]
+            ]
         else:
             assert index == 10
             self.degree = 14
@@ -234,30 +231,30 @@ class McLaren(object):
                 0.1479981814629634692260834719469411619893,
                 0.04473134613410273910111648293922113227845,
                 0.002768150983039381173906148718103889666260,
-                ]
+            ]
             z = numpy.sqrt(y)
 
-            u = numpy.array([
-                z[3] - z[2],
-                z[1] - z[4],
-                z[5] - z[1],
-                z[2] - z[5],
-                z[4] - z[3],
-                ]) / 2 / s
-            v = numpy.array([
-                z[4] + z[5],
-                z[5] + z[3],
-                z[2] + z[4],
-                z[3] + z[1],
-                z[1] + z[2],
-                ]) / 2 / s
-            w = numpy.array([
-                z[0] + z[1],
-                z[0] + z[2],
-                z[0] + z[3],
-                z[0] + z[4],
-                z[0] + z[5],
-                ]) / 2 / s
+            u = (
+                numpy.array(
+                    [z[3] - z[2], z[1] - z[4], z[5] - z[1], z[2] - z[5], z[4] - z[3]]
+                )
+                / 2
+                / s
+            )
+            v = (
+                numpy.array(
+                    [z[4] + z[5], z[5] + z[3], z[2] + z[4], z[3] + z[1], z[1] + z[2]]
+                )
+                / 2
+                / s
+            )
+            w = (
+                numpy.array(
+                    [z[0] + z[1], z[0] + z[2], z[0] + z[3], z[0] + z[4], z[0] + z[5]]
+                )
+                / 2
+                / s
+            )
 
             data = [
                 (B, pm_array0(3, [r, s], [0, 1])),
@@ -278,7 +275,7 @@ class McLaren(object):
                 (C, numpy.column_stack([+w, -u, -v])),
                 (C, numpy.column_stack([-w, -u, +v])),
                 (C, numpy.column_stack([-w, +u, -v])),
-                ]
+            ]
 
         self.points, self.weights = untangle(data)
         self.azimuthal_polar = cartesian_to_spherical_sympy(self.points)

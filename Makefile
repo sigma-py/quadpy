@@ -25,4 +25,5 @@ clean:
 	@rm -rf *.egg-info/ build/ dist/ MANIFEST
 
 lint:
-	pylint setup.py quadpy/ test/*.py
+	black --check setup.py quadpy/ test/*.py
+	flake8 setup.py quadpy/ test/*.py

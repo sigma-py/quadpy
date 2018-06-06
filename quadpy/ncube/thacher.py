@@ -8,7 +8,7 @@ from ..helpers import untangle
 
 
 class Thacher(object):
-    '''
+    """
     Henry C. Thacher,
     An efficient composite formula for multidimensional quadrature,
     Communications of the ACM CACM,
@@ -23,19 +23,16 @@ class Thacher(object):
     faces. When a large volume is subdivided into congruent rectangular
     subdivisions, only one point is required in each interior subdivision to
     achieve second-degree accuracy.
-    '''
+    """
+
     def __init__(self, n, symbolic=False):
         sqrt = sympy.sqrt if symbolic else numpy.sqrt
 
         self.degree = 2
         r = sqrt(3) / 6
-        data = [
-            (1.0, [n * [2*r]]),
-            (+r, _s(n, -1, r)),
-            (-r, _s(n, +1, r)),
-            ]
+        data = [(1.0, [n * [2 * r]]), (+r, _s(n, -1, r)), (-r, _s(n, +1, r))]
 
         self.points, self.weights = untangle(data)
-        reference_volume = 2**n
+        reference_volume = 2 ** n
         self.weights *= reference_volume
         return

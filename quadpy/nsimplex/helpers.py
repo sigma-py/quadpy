@@ -7,7 +7,7 @@ import sympy
 
 
 def integrate_monomial_over_unit_simplex(k, symbolic=False):
-    '''The integrals of monomials over the standard triangle and tetrahedron are
+    """The integrals of monomials over the standard triangle and tetrahedron are
     given by
 
     \\int_T x_0^k0 * x1^k1 = (k0!*k1!) / (2+k0+k1)!,
@@ -22,15 +22,14 @@ def integrate_monomial_over_unit_simplex(k, symbolic=False):
 
     See, e.g., <https://math.stackexchange.com/q/207073/36678> for a formula in
     all dimensions.
-    '''
+    """
     if symbolic:
-        return (
-            sympy.prod([sympy.gamma(kk+1) for kk in k])
-            / sympy.gamma(sum(k) + len(k) + 1)
-            )
+        return sympy.prod([sympy.gamma(kk + 1) for kk in k]) / sympy.gamma(
+            sum(k) + len(k) + 1
+        )
     # exp-log to account for large values in numerator and denominator
     # import scipy.special
     return math.exp(
-        math.fsum([scipy.special.gammaln(kk+1) for kk in k])
-        - scipy.special.gammaln(sum([kk+1 for kk in k]) + 1)
-        )
+        math.fsum([scipy.special.gammaln(kk + 1) for kk in k])
+        - scipy.special.gammaln(sum([kk + 1 for kk in k]) + 1)
+    )

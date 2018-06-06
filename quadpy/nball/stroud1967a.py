@@ -7,17 +7,18 @@ from .helpers import volume_unit_ball
 
 
 class Stroud1967a(object):
-    '''
+    """
     A.H. Stroud,
     Some fifth degree integration formulas for symmetric regions II,
     Numerische Mathematik, Volume 9 Issue 5, April 1967, Pages 460-468
     <https://doi.org/10.1007/BF02162160>.
-    '''
+    """
+
     def __init__(self, n, variant):
         self.degree = 5
         self.dim = n
 
-        if variant == 'a':
+        if variant == "a":
             if n == 4:
                 eta = 0.118301270189222e+01
                 lmbda = 0.889256950212571
@@ -28,7 +29,7 @@ class Stroud1967a(object):
                 B = 0.210826276726545e-01
                 C = 0.691951501051233e-01
             elif n == 5:
-                eta = 1.0/3.0
+                eta = 1.0 / 3.0
                 lmbda = 0.586530598075514
                 xi = -0.229965982852212
                 mu = -0.689897948556636
@@ -56,7 +57,7 @@ class Stroud1967a(object):
                 B = 0.169753086419753e-01
                 C = B
         else:
-            assert variant == 'b'
+            assert variant == "b"
             if n == 4:
                 eta = 0.316987298107781
                 lmbda = 0.660677533878188
@@ -67,7 +68,7 @@ class Stroud1967a(object):
                 B = 0.691951501051233e-01
                 C = 0.210826276726545e-01
             elif n == 5:
-                eta = 1.0/3.0
+                eta = 1.0 / 3.0
                 lmbda = 0.719863931408848
                 xi = -0.966326495188785e-01
                 mu = -0.289897948556636
@@ -96,18 +97,15 @@ class Stroud1967a(object):
                 C = B
 
         data = [
-            (B, combine(((+lmbda,), 1), ((+xi,), n-1))),
-            (B, combine(((-lmbda,), 1), ((-xi,), n-1))),
-            (C, combine(((+mu,), 2), ((+gamma,), n-2))),
-            (C, combine(((-mu,), 2), ((-gamma,), n-2))),
-            ]
+            (B, combine(((+lmbda,), 1), ((+xi,), n - 1))),
+            (B, combine(((-lmbda,), 1), ((-xi,), n - 1))),
+            (C, combine(((+mu,), 2), ((+gamma,), n - 2))),
+            (C, combine(((-mu,), 2), ((-gamma,), n - 2))),
+        ]
         if n == 7:
             data += [(A, numpy.full((1, n), 0.0))]
         else:
-            data += [
-                (A, numpy.full((1, n), +eta)),
-                (A, numpy.full((1, n), -eta)),
-                ]
+            data += [(A, numpy.full((1, n), +eta)), (A, numpy.full((1, n), -eta))]
 
         self.points, self.weights = untangle(data)
         self.weights *= volume_unit_ball(n, symbolic=False)
