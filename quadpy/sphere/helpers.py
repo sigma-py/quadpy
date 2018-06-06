@@ -84,35 +84,35 @@ def _pq0(alpha):
     return (
         numpy.array(
             [
-                [+0.0 + alpha, 0.5],
-                [+0.5 - alpha, 0.5],
-                [+0.5 + alpha, 0.5],
-                [+1.0 - alpha, 0.5],
+                [+0.0 + alpha, 0.5 * numpy.ones_like(alpha)],
+                [+0.5 - alpha, 0.5 * numpy.ones_like(alpha)],
+                [+0.5 + alpha, 0.5 * numpy.ones_like(alpha)],
+                [+1.0 - alpha, 0.5 * numpy.ones_like(alpha)],
                 #
-                [+0.0 - alpha, 0.5],
-                [-0.5 + alpha, 0.5],
-                [-0.5 - alpha, 0.5],
-                [-1.0 + alpha, 0.5],
+                [+0.0 - alpha, 0.5 * numpy.ones_like(alpha)],
+                [-0.5 + alpha, 0.5 * numpy.ones_like(alpha)],
+                [-0.5 - alpha, 0.5 * numpy.ones_like(alpha)],
+                [-1.0 + alpha, 0.5 * numpy.ones_like(alpha)],
                 #
-                [+0.0, alpha],
-                [+0.5, alpha],
-                [+1.0, alpha],
-                [-0.5, alpha],
+                [+0.0 * numpy.ones_like(alpha), alpha],
+                [+0.5 * numpy.ones_like(alpha), alpha],
+                [+1.0 * numpy.ones_like(alpha), alpha],
+                [-0.5 * numpy.ones_like(alpha), alpha],
                 #
-                [+0.0, 0.5 - alpha],
-                [+0.5, 0.5 - alpha],
-                [+1.0, 0.5 - alpha],
-                [-0.5, 0.5 - alpha],
+                [+0.0 * numpy.ones_like(alpha), 0.5 - alpha],
+                [+0.5 * numpy.ones_like(alpha), 0.5 - alpha],
+                [+1.0 * numpy.ones_like(alpha), 0.5 - alpha],
+                [-0.5 * numpy.ones_like(alpha), 0.5 - alpha],
                 #
-                [+0.0, 0.5 + alpha],
-                [+0.5, 0.5 + alpha],
-                [+1.0, 0.5 + alpha],
-                [-0.5, 0.5 + alpha],
+                [+0.0 * numpy.ones_like(alpha), 0.5 + alpha],
+                [+0.5 * numpy.ones_like(alpha), 0.5 + alpha],
+                [+1.0 * numpy.ones_like(alpha), 0.5 + alpha],
+                [-0.5 * numpy.ones_like(alpha), 0.5 + alpha],
                 #
-                [+0.0, 1.0 - alpha],
-                [+0.5, 1.0 - alpha],
-                [+1.0, 1.0 - alpha],
-                [-0.5, 1.0 - alpha],
+                [+0.0 * numpy.ones_like(alpha), 1.0 - alpha],
+                [+0.5 * numpy.ones_like(alpha), 1.0 - alpha],
+                [+1.0 * numpy.ones_like(alpha), 1.0 - alpha],
+                [-0.5 * numpy.ones_like(alpha), 1.0 - alpha],
             ]
         )
         * numpy.pi
@@ -261,6 +261,13 @@ def untangle2(data):
         out = _collapse0(numpy.moveaxis(_llm(beta), 0, 1)).T
         points.append(out)
         w = numpy.array(data["llm"])[:, 0]
+        weights.append(numpy.tile(w, 24))
+
+    if "pq0" in data:
+        beta = numpy.array(data["pq0"])[:, 1]
+        out = _collapse0(numpy.moveaxis(_pq0(beta), 0, 1)).T
+        points.append(out)
+        w = numpy.array(data["pq0"])[:, 0]
         weights.append(numpy.tile(w, 24))
 
     points = numpy.concatenate(points)
