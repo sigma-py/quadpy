@@ -143,8 +143,8 @@ approximation of the integral over the domain.
  * [tanh-sinh quadrature](https://en.wikipedia.org/wiki/Tanh-sinh_quadrature)
    (see above)
 
-You can use [orthopy](https://github.com/nschloe/orthopy) to generate Gauss
-formulas for your own weight functions.
+[See below](#generating-your-own-gauss-quadrature-in-three-simple-steps) for how to
+generate Gauss formulas for your own weight functions.
 
 Example:
 ```python
@@ -669,14 +669,14 @@ val = quadpy.enr2.integrate(
 
 #### Classical schemes
 
-With orthopy, it's easy to regenerate classical Gauss quadrature schemes are
+With quadpy, it's easy to regenerate classical Gauss quadrature schemes are
 listed in, e.g., [Stroud & Secrest](https://books.google.de/books/about/Gaussian_quadrature_formulas.html?id=X7M-AAAAIAAJ).
 
 Some examples:
 ```python
-points, weights = orthopy.line.schemes.legendre(96, decimal_places=30)
-points, weights = orthopy.line.schemes.hermite(14, decimal_places=20)
-points, weights = orthopy.line.schemes.laguerre(13, decimal_places=50)
+scheme = quadpy.line_segment.GaussLegendre(96, mode='mpmath', decimal_places=30)
+scheme = quadpy.e1r2.GaussHermite(14, mode='mpmath', decimal_places=20)
+scheme = quadpy.e1r.GaussLaguerre(13, mode='mpmath', decimal_places=50)
 ```
 
 #### Generating your own Gauss quadrature in three simple steps
@@ -793,14 +793,14 @@ Some explanations:
 
  * Transforming Gaussian points and weights back to recurrence coefficients:
    ```python
-   alpha, beta = orthopy.line.coefficients_from_gauss(points, weights)
+   alpha, beta = quadpy.tools.coefficients_from_gauss(points, weights)
    ```
 
  * The Gautschi test: [As recommended by
    Gautschi](https://doi.org/10.1007/BF02218441), you can test your
    moment-based scheme with
    ```python
-   err = orthopy.line.check_coefficients(moments, alpha, beta)
+   err = quadpy.tools.check_coefficients(moments, alpha, beta)
    ```
 
 ### Relevant publications
