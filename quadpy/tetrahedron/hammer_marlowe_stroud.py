@@ -5,8 +5,7 @@ from __future__ import division
 import numpy
 import sympy
 
-from .helpers import _s4
-from ..helpers import untangle
+from .helpers import untangle2
 
 
 class HammerMarloweStroud(object):
@@ -43,24 +42,15 @@ class HammerMarloweStroud(object):
 
         if index == 1:
             self.degree = 2
-            data = [(frac(1, 4), _r(1 / sqrt(5)))]
+            data = {"r": [[frac(1, 4), 1 / sqrt(5)]]}
         elif index == 2:
             self.degree = 2
-            data = [(frac(1, 4), _r(-1 / sqrt(5)))]
+            data = {"r": [[frac(1, 4), -1 / sqrt(5)]]}
         else:
             assert index == 3
             self.degree = 3
-            data = [(-frac(4, 5), _s4()), (frac(9, 20), _r(frac(1, 3)))]
+            data = {"s4": [[-frac(4, 5)]], "r": [[frac(9, 20), frac(1, 3)]]}
 
-        self.bary, self.weights = untangle(data)
+        self.bary, self.weights = untangle2(data)
         self.points = self.bary[:, 1:]
         return
-
-
-def _r(r):
-    """Given $r$ (as appearing in the article), it returns the barycentric
-    coordinates of the three points.
-    """
-    a = r + (1 - r) / 4
-    b = (1 - a) / 3
-    return numpy.array([[a, b, b, b], [b, a, b, b], [b, b, a, b], [b, b, b, a]])
