@@ -12,6 +12,13 @@ def _s31(a):
     return numpy.array([[a, a, a, b], [a, a, b, a], [a, b, a, a], [b, a, a, a]])
 
 
+def _r(r):
+    # a = r + (1 - r) / 4
+    # b = (1 - a) / 3
+    b = (1 - r) / 4
+    return _s31(b)
+
+
 def _s22(a):
     b = 0.5 - a
     return numpy.array(
@@ -111,6 +118,12 @@ def untangle2(data):
         s1111_data = numpy.moveaxis(_s1111(*d[1:]), 0, 1)
         bary.append(_collapse0(s1111_data).T)
         weights.append(numpy.tile(d[0], 24))
+
+    if "r" in data:
+        d = numpy.array(data["r"]).T
+        r_data = numpy.moveaxis(_r(d[1]), 0, 1)
+        bary.append(_collapse0(r_data).T)
+        weights.append(numpy.tile(d[0], 4))
 
     bary = numpy.concatenate(bary)
     weights = numpy.concatenate(weights)
