@@ -4,7 +4,6 @@ from __future__ import division
 
 import numpy
 
-from ..helpers import untangle
 from ..line_segment.gauss_legendre import GaussLegendre
 from ..nsimplex.stroud import Stroud as nsimplex_Stroud
 
@@ -87,25 +86,28 @@ class T371(object):
             ]
         )
 
-        data = [
-            (
-                6 * A[i] * B[j] * C[k],
-                numpy.array(
-                    [
-                        [
-                            t[k],
-                            s[j] * (1 - t[k]),
-                            r[i] * (1 - s[j]) * (1 - t[k]),
-                            (1 - r[i]) * (1 - s[j]) * (1 - t[k]),
-                        ]
-                    ]
-                ),
-            )
-            for i in range(4)
-            for j in range(4)
-            for k in range(4)
-        ]
+        self.weights = numpy.array(
+            [
+                6 * A[i] * B[j] * C[k]
+                for i in range(4)
+                for j in range(4)
+                for k in range(4)
+            ]
+        )
 
-        self.bary, self.weights = untangle(data)
+        self.bary = numpy.array(
+            [
+                [
+                    t[k],
+                    s[j] * (1 - t[k]),
+                    r[i] * (1 - s[j]) * (1 - t[k]),
+                    (1 - r[i]) * (1 - s[j]) * (1 - t[k]),
+                ]
+                for i in range(4)
+                for j in range(4)
+                for k in range(4)
+            ]
+        )
+
         self.points = self.bary[:, 1:]
         return
