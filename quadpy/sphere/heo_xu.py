@@ -28,6 +28,8 @@ class HeoXu(object):
     def __init__(self, index):
         warnings.warn("The Heo-Xu schemes are only single-precision.")
 
+        self.name = "HeoXu({})".format(index)
+
         self.degree = int(index.split("-")[0])
 
         d = {

@@ -15,7 +15,7 @@ from quadpy.sphere.helpers import cartesian_to_spherical
 
 
 @pytest.mark.parametrize(
-    "scheme", [quadpy.sphere.Lebedev(3), quadpy.sphere.Stroud("U3 14-1")]
+    "scheme", [quadpy.sphere.Lebedev("3a"), quadpy.sphere.Stroud("U3 14-1")]
 )
 def test_spherical_harmonic(scheme):
     """Assert the norm of the spherical harmonic
@@ -79,44 +79,46 @@ def test_spherical_harmonic(scheme):
         ]
     ]
     + [
-        (quadpy.sphere.Lebedev(degree), 1.0e-11)
-        for degree in [
-            3,
-            5,
-            7,
-            9,
-            11,
-            13,
-            15,
-            17,
-            19,
-            21,
-            23,
-            25,
-            27,
-            29,
-            31,
-            35,
-            41,
-            47,
-            53,
-            59,
-            65,
-            71,
-            77,
-            83,
-            89,
-            95,
-            101,
-            107,
-            113,
-            119,
+        (quadpy.sphere.Lebedev(index), 1.0e-11)
+        for index in [
+            "3a",
+            "3b",
+            "3c",
+            "5",
+            "7",
+            "9",
+            "11",
+            "13",
+            "15",
+            "17",
+            "19",
+            "21",
+            "23",
+            "25",
+            "27",
+            "29",
+            "31",
+            "35",
+            "41",
+            "47",
+            "53",
+            "59",
+            "65",
+            "71",
+            "77",
+            "83",
+            "89",
+            "95",
+            "101",
+            "107",
+            "113",
+            "119",
             # The highest degree formulas are too memory-intensive for circleci,
             # and the tests are oom-killed. A workaround would be to not test the
             # entire tree at once, but split it up.
             # Check <https://stackoverflow.com/q/47474140/353337>.
             # TODO reenable
-            # 125, 131
+            # "125", "131"
         ]
     ]
     + [
@@ -178,8 +180,8 @@ def test_scheme_cartesian(scheme, tol):
 
     degree = first_error_level - 1
 
-    assert degree == scheme.degree, "Observed: {}, expected: {}".format(
-        degree, scheme.degree
+    assert degree == scheme.degree, "{}  --  Observed: {}, expected: {}".format(
+        scheme.name, degree, scheme.degree
     )
     return
 
@@ -220,8 +222,8 @@ def test_scheme_cartesian(scheme, tol):
         ]
     ]
     + [
-        (quadpy.sphere.Lebedev(degree), 1.0e-11)
-        for degree in [3, 5, 7, 9, 11, 13, 15, 17, 19]
+        (quadpy.sphere.Lebedev(index), 1.0e-11)
+        for index in ["3a", "3b", "3c", "5", "7", "9", "11", "13", "15", "17", "19"]
     ]
     + [
         (quadpy.sphere.Stroud(k), 1.0e-13)
@@ -281,7 +283,7 @@ def test_scheme_spherical(scheme, tol):
     return
 
 
-@pytest.mark.parametrize("scheme", [quadpy.sphere.Lebedev(7)])
+@pytest.mark.parametrize("scheme", [quadpy.sphere.Lebedev("7")])
 def test_show(scheme):
     quadpy.sphere.show(scheme)
     return
