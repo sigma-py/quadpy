@@ -25,47 +25,41 @@ def cartesian_to_spherical_sympy(X):
 
 
 def _a1():
-    return (
-        numpy.array(
-            [
-                [+0.0, 0.0],
-                [+0.0, 1.0],
-                [-0.5, 0.5],
-                [+0.0, 0.5],
-                [+0.5, 0.5],
-                [+1.0, 0.5],
-            ]
-        )
-        * numpy.pi
+    return numpy.array(
+        [
+            [+1.0, 0.0, 0.0],
+            [-1.0, 0.0, 0.0],
+            [0.0, +1.0, 0.0],
+            [0.0, -1.0, 0.0],
+            [0.0, 0.0, +1.0],
+            [0.0, 0.0, -1.0],
+        ]
     )
 
 
 def _a2():
-    return (
-        numpy.array(
-            [
-                [+0.75, 0.5],
-                [+0.25, 0.5],
-                [-0.25, 0.5],
-                [-0.75, 0.5],
-                #
-                [-0.5, 0.25],
-                [+0.0, 0.25],
-                [+0.5, 0.25],
-                [+1.0, 0.25],
-                #
-                [-0.5, 0.75],
-                [+0.0, 0.75],
-                [+0.5, 0.75],
-                [+1.0, 0.75],
-            ]
-        )
-        * numpy.pi
-    )
+    return numpy.array(
+        [
+            [+1.0, +1.0, 0.0],
+            [+1.0, -1.0, 0.0],
+            [-1.0, +1.0, 0.0],
+            [-1.0, -1.0, 0.0],
+            #
+            [+1.0, 0.0, +1.0],
+            [+1.0, 0.0, -1.0],
+            [-1.0, 0.0, +1.0],
+            [-1.0, 0.0, -1.0],
+            #
+            [0.0, +1.0, +1.0],
+            [0.0, +1.0, -1.0],
+            [0.0, -1.0, +1.0],
+            [0.0, -1.0, -1.0],
+        ]
+    ) / numpy.sqrt(2.0)
 
 
 def _a3():
-    X = numpy.array(
+    return numpy.array(
         [
             [+1.0, +1.0, +1.0],
             [+1.0, +1.0, -1.0],
@@ -77,45 +71,44 @@ def _a3():
             [-1.0, -1.0, -1.0],
         ]
     ) / numpy.sqrt(3.0)
-    return cartesian_to_spherical(X)
 
 
 def _pq0(alpha):
-    return (
-        numpy.array(
-            [
-                [+0.0 + alpha, 0.5 * numpy.ones_like(alpha)],
-                [+0.5 - alpha, 0.5 * numpy.ones_like(alpha)],
-                [+0.5 + alpha, 0.5 * numpy.ones_like(alpha)],
-                [+1.0 - alpha, 0.5 * numpy.ones_like(alpha)],
-                #
-                [+0.0 - alpha, 0.5 * numpy.ones_like(alpha)],
-                [-0.5 + alpha, 0.5 * numpy.ones_like(alpha)],
-                [-0.5 - alpha, 0.5 * numpy.ones_like(alpha)],
-                [-1.0 + alpha, 0.5 * numpy.ones_like(alpha)],
-                #
-                [+0.0 * numpy.ones_like(alpha), alpha],
-                [+0.5 * numpy.ones_like(alpha), alpha],
-                [+1.0 * numpy.ones_like(alpha), alpha],
-                [-0.5 * numpy.ones_like(alpha), alpha],
-                #
-                [+0.0 * numpy.ones_like(alpha), 0.5 - alpha],
-                [+0.5 * numpy.ones_like(alpha), 0.5 - alpha],
-                [+1.0 * numpy.ones_like(alpha), 0.5 - alpha],
-                [-0.5 * numpy.ones_like(alpha), 0.5 - alpha],
-                #
-                [+0.0 * numpy.ones_like(alpha), 0.5 + alpha],
-                [+0.5 * numpy.ones_like(alpha), 0.5 + alpha],
-                [+1.0 * numpy.ones_like(alpha), 0.5 + alpha],
-                [-0.5 * numpy.ones_like(alpha), 0.5 + alpha],
-                #
-                [+0.0 * numpy.ones_like(alpha), 1.0 - alpha],
-                [+0.5 * numpy.ones_like(alpha), 1.0 - alpha],
-                [+1.0 * numpy.ones_like(alpha), 1.0 - alpha],
-                [-0.5 * numpy.ones_like(alpha), 1.0 - alpha],
-            ]
-        )
-        * numpy.pi
+    a = numpy.sin(alpha * numpy.pi)
+    b = numpy.cos(alpha * numpy.pi)
+    zero = numpy.zeros_like(alpha)
+    return numpy.array(
+        [
+            [+a, +b, zero],
+            [-a, +b, zero],
+            [-a, -b, zero],
+            [+a, -b, zero],
+            #
+            [+b, +a, zero],
+            [-b, +a, zero],
+            [-b, -a, zero],
+            [+b, -a, zero],
+            #
+            [+a, zero, +b],
+            [-a, zero, +b],
+            [-a, zero, -b],
+            [+a, zero, -b],
+            #
+            [+b, zero, +a],
+            [-b, zero, +a],
+            [-b, zero, -a],
+            [+b, zero, -a],
+            #
+            [zero, +a, +b],
+            [zero, -a, +b],
+            [zero, -a, -b],
+            [zero, +a, -b],
+            #
+            [zero, +b, +a],
+            [zero, -b, +a],
+            [zero, -b, -a],
+            [zero, +b, -a],
+        ]
     )
 
 
@@ -124,7 +117,7 @@ def _llm(beta):
     beta *= numpy.pi
     L = numpy.sin(beta) / numpy.sqrt(2)
     m = numpy.cos(beta)
-    X = numpy.array(
+    return numpy.array(
         [
             [+L, +L, +m],
             [-L, +L, +m],
@@ -154,8 +147,6 @@ def _llm(beta):
             [-m, -L, -L],
         ]
     )
-    # translate back to spherical coords
-    return cartesian_to_spherical(X)
 
 
 def _rsw(azimuthal, polar):
@@ -172,7 +163,7 @@ def _rsw(azimuthal, polar):
     s = sin_polar * sin_azimuthal
     w = cos_polar
 
-    X = numpy.array(
+    return numpy.array(
         [
             [+r, +s, +w],
             [+w, +r, +s],
@@ -231,8 +222,6 @@ def _rsw(azimuthal, polar):
             [-r, -w, -s],
         ]
     )
-
-    return cartesian_to_spherical(X)
 
 
 def untangle2(data):

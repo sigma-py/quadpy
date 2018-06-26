@@ -3,10 +3,6 @@
 import numpy
 
 
-def _z():
-    return numpy.array([[0.0, 0.0]])
-
-
 def _s8(a, b):
     return numpy.array(
         [[+a, +b], [-a, +b], [+a, -b], [-a, -b], [+b, +a], [-b, +a], [+b, -a], [-b, -a]]

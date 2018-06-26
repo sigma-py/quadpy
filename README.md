@@ -367,7 +367,7 @@ val = quadpy.e2r2.integrate(
    - [Albrecht-Collatz](https://doi.org/10.1002/zamm.19580380102) (1958, 5
      schemes up to degree 7)
    - [McLaren](https://doi.org/10.1090/S0025-5718-1963-0159418-2) (1963, 10 schemes up to degree 14)
- * [Lebedev](https://en.wikipedia.org/wiki/Lebedev_quadrature) (1976, 32
+ * [Lebedev](https://en.wikipedia.org/wiki/Lebedev_quadrature) (1976, 34
    schemes up to degree 131)
  * [Heo-Xu](https://doi.org/10.1090/S0025-5718-00-01198-4) (2001, 27 schemes up
    to degree 39, single-precision)
@@ -377,7 +377,7 @@ Example:
 val = quadpy.sphere.integrate(
     lambda x: numpy.exp(x[0]),
     [0.0, 0.0, 0.0], 1.0,
-    quadpy.sphere.Lebedev(19)
+    quadpy.sphere.Lebedev("19")
     )
 ```
 Integration on the sphere can also be done for function defined in spherical
@@ -385,7 +385,7 @@ coordinates:
 ```python
 val = quadpy.sphere.integrate_spherical(
     lambda azimuthal, polar: numpy.sin(azimuthal)**2 * numpy.sin(polar),
-    rule=quadpy.sphere.Lebedev(19)
+    rule=quadpy.sphere.Lebedev("19")
     )
 ```
 

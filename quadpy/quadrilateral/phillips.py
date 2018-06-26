@@ -16,7 +16,7 @@ class Phillips(object):
     Comput J (1967) 10 (2): 202-204,
     <https://doi.org/10.1093/comjnl/10.2.202>.
 
-    Abtract:
+    Abstract:
     Gaussian-type quadrature formulae are derived for a rectangular region of
     two or three dimensions.
     """
