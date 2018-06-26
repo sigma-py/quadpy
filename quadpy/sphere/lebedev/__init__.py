@@ -3,9 +3,7 @@
 import json
 import os
 
-import numpy
-
-from ..helpers import untangle2
+from ..helpers import untangle2, cartesian_to_spherical
 
 
 class Lebedev(object):
@@ -27,6 +25,8 @@ class Lebedev(object):
     # code converts the spherical coordinates into Cartesians, applies the
     # symmetry transformations, and converts back.
     def __init__(self, degree):
+        self.name = "Lebedev({})".format(degree)
+
         this_dir = os.path.dirname(os.path.realpath(__file__))
         filename = "lebedev_{:03d}.json".format(degree)
         with open(os.path.join(this_dir, filename), "r") as f:
@@ -34,19 +34,6 @@ class Lebedev(object):
 
         self.degree = data.pop("degree")
 
-        self.azimuthal_polar, self.weights = untangle2(data)
-        self.points = _spherical_to_cartesian(self.azimuthal_polar)
+        self.points, self.weights = untangle2(data)
+        self.azimuthal_polar = cartesian_to_spherical(self.points)
         return
-
-
-def _spherical_to_cartesian(azimuthal_polar):
-    sin_azimuthal_polar = numpy.sin(azimuthal_polar)
-    cos_azimuthal_polar = numpy.cos(azimuthal_polar)
-    return numpy.stack(
-        [
-            sin_azimuthal_polar[:, 1] * cos_azimuthal_polar[:, 0],
-            sin_azimuthal_polar[:, 1] * sin_azimuthal_polar[:, 0],
-            cos_azimuthal_polar[:, 1],
-        ],
-        axis=1,
-    )
