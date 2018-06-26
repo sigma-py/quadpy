@@ -178,8 +178,8 @@ def test_scheme_cartesian(scheme, tol):
 
     degree = first_error_level - 1
 
-    assert degree == scheme.degree, "Observed: {}, expected: {}".format(
-        degree, scheme.degree
+    assert degree == scheme.degree, "{}  --  Observed: {}, expected: {}".format(
+        scheme.name, degree, scheme.degree
     )
     return
 
