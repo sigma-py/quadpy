@@ -33,11 +33,6 @@ def _s111ab(a, b):
     return out
 
 
-def _rot(a, b):
-    c = 1 - a - b
-    return numpy.array([[a, b, c], [c, a, b], [b, c, a]])
-
-
 def _rot_ab(a, b):
     c = 1 - a - b
     out = numpy.array([[a, b, c], [c, a, b], [b, c, a]])
