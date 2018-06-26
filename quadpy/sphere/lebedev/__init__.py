@@ -2,6 +2,7 @@
 #
 import json
 import os
+import re
 
 from ..helpers import untangle2, cartesian_to_spherical
 
@@ -39,11 +40,14 @@ class Lebedev(object):
     <https://en.wikipedia.org/wiki/Lebedev_quadrature>
     <https://people.sc.fsu.edu/~jburkardt/datasets/sphere_lebedev_rule/sphere_lebedev_rule.html>
     """
-    def __init__(self, degree):
-        self.name = "Lebedev({})".format(degree)
+
+    def __init__(self, index):
+        self.name = "Lebedev({})".format(index)
 
         this_dir = os.path.dirname(os.path.realpath(__file__))
-        filename = "lebedev_{:03d}.json".format(degree)
+
+        m = re.match("([0-9]+)([a-z]*)", index)
+        filename = "lebedev_{:03d}{}.json".format(int(m.group(1)), m.group(2))
         with open(os.path.join(this_dir, filename), "r") as f:
             data = json.load(f)
 

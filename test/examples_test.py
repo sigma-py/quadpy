@@ -134,14 +134,14 @@ def test_sphere():
         lambda x: numpy.exp(1j * x[0]) + 1j * x[0] ** 2,
         numpy.array([0.0, 0.3, 0.0]),
         0.7,
-        quadpy.sphere.Lebedev(3),
+        quadpy.sphere.Lebedev("3a"),
     )
 
     quadpy.sphere.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         numpy.array([[1.0, 1.0, 0.0], [0.0, 0.3, 0.0], [2.0, 2.0, 0.0]]),
         [1.0, 0.7, 0.333],
-        quadpy.sphere.Lebedev(3),
+        quadpy.sphere.Lebedev("3a"),
     )
     return
 
