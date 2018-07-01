@@ -95,6 +95,7 @@ def integrate_adaptive(
 
 def show(*args, **kwargs):
     import matplotlib.pyplot as plt
+
     plot(*args, **kwargs)
     plt.show()
     return

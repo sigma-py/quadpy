@@ -30,10 +30,7 @@ setup(
         "scipy",
         "sympy",
     ],
-    extras_require={
-        "all": ["matplotlib"],
-        "plot": ["matplotlib"]
-    },
+    extras_require={"all": ["matplotlib"], "plot": ["matplotlib"]},
     description="Numerical integration, quadrature for various domains",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
