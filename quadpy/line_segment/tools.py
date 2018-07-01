@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-import matplotlib.pyplot as plt
 import numpy
 
 from .. import helpers
@@ -95,12 +94,15 @@ def integrate_adaptive(
 
 
 def show(*args, **kwargs):
+    import matplotlib.pyplot as plt
     plot(*args, **kwargs)
     plt.show()
     return
 
 
 def plot(scheme, interval=numpy.array([[-1.0], [1.0]]), show_axes=False):
+    import matplotlib.pyplot as plt
+
     # change default range so that new disks will work
     plt.axis("equal")
     # ax.set_xlim((-1.5, 1.5))
