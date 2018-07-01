@@ -49,7 +49,7 @@ def _plot_disks_helpers(plt, pts, radii, colors):
 
 def show_mpl(points, weights, volume, edges, balls=None):
     import matplotlib.pyplot as plt
-    from mpl_toolkits.mplot3d import Axes3D  # noqa
+    from mpl_toolkits.mplot3d import Axes3D
 
     flt = numpy.vectorize(float)
     points = flt(points)
@@ -92,7 +92,7 @@ def show_mpl(points, weights, volume, edges, balls=None):
     balls = [] if balls is None else balls
 
     fig = plt.figure()
-    ax = fig.gca(projection="3d")
+    ax = fig.gca(projection=Axes3D.name)
     ax.set_aspect("equal")
     ax.set_axis_off()
 

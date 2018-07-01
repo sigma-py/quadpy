@@ -1,18 +1,21 @@
 # -*- coding: utf-8 -*-
 #
-import matplotlib.pyplot as plt
 import numpy
 
 from .. import helpers
 
 
 def show(*args, **kwargs):
+    import matplotlib.pyplot as plt
+
     plot(*args, **kwargs)
     plt.show()
     return
 
 
 def plot(scheme, show_axes=False):
+    import matplotlib.pyplot as plt
+
     ax = plt.gca()
     # change default range so that new disks will work
     plt.axis("equal")
