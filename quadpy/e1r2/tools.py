@@ -11,6 +11,7 @@ def integrate(f, rule, dot=numpy.dot):
 
 def show(*args, **kwargs):
     import matplotlib.pyplot as plt
+
     plot(*args, **kwargs)
     plt.show()
     return
@@ -18,6 +19,7 @@ def show(*args, **kwargs):
 
 def plot(scheme):
     import matplotlib.pyplot as plt
+
     plt.axis("equal")
     m = 1.1 * numpy.max(scheme.points)
     plt.plot([-m, +m], [0, 0], color="k")

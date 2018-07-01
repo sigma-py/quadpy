@@ -9,6 +9,7 @@ from .. import helpers
 
 def show(*args, **kwargs):
     import matplotlib.pyplot as plt
+
     plot(*args, **kwargs)
     plt.show()
     return
@@ -16,6 +17,7 @@ def show(*args, **kwargs):
 
 def plot(scheme, show_axes=True):
     import matplotlib.pyplot as plt
+
     ax = plt.gca()
     plt.axis("equal")
 

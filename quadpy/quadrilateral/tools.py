@@ -9,6 +9,7 @@ from ..ncube import ncube_points as rectangle_points
 
 def show(*args, **kwargs):
     import matplotlib.pyplot as plt
+
     plot(*args, **kwargs)
     plt.show()
     return

@@ -7,6 +7,7 @@ from .. import helpers
 
 def show(*args, **kwargs):
     import matplotlib.pyplot as plt
+
     plot(*args, **kwargs)
     plt.show()
     return

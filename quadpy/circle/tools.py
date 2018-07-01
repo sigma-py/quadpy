@@ -7,6 +7,7 @@ from .. import helpers
 
 def show(*args, **kwargs):
     import matplotlib.pyplot as plt
+
     plot(*args, **kwargs)
     plt.show()
     return
@@ -14,6 +15,7 @@ def show(*args, **kwargs):
 
 def plot(scheme, show_axes=False):
     import matplotlib.pyplot as plt
+
     ax = plt.gca()
     # change default range so that new disks will work
     plt.axis("equal")
