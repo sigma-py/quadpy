@@ -1,18 +1,20 @@
 # -*- coding: utf-8 -*-
 #
-import matplotlib.pyplot as plt
 import numpy
 
 from .. import helpers
 
 
 def show(*args, **kwargs):
+    import matplotlib.pyplot as plt
     plot(*args, **kwargs)
     plt.show()
     return
 
 
 def plot(scheme, show_axes=True):
+    import matplotlib.pyplot as plt
+
     ax = plt.gca()
     plt.axis("equal")
 
