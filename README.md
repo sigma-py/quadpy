@@ -47,6 +47,7 @@ quadpy is fully vectorized, so if you like to compute the integral of a
 function on many domains at once, you can provide them all in one `integrate()`
 call, e.g.,
 ```python
+# shape (3, 5, 2), i.e., (corners, num_triangles, xy_coords)
 triangles = numpy.stack([
     [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
     [[1.2, 0.6], [1.3, 0.7], [1.4, 0.8]],
