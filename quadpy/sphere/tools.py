@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-import matplotlib.pyplot as plt
 import numpy
 
 
@@ -9,6 +8,8 @@ def area(radius):
 
 
 def show(*args, **kwargs):
+    import matplotlib.pyplot as plt
+
     plot(*args, **kwargs)
     plt.show()
     return
@@ -21,11 +22,11 @@ def plot(scheme, backend="mpl"):
 
 
 def _plot_mpl(scheme):
-
-    from mpl_toolkits.mplot3d import Axes3D  # noqa
+    import matplotlib.pyplot as plt
+    from mpl_toolkits.mplot3d import Axes3D
 
     fig = plt.figure()
-    ax = fig.gca(projection="3d")
+    ax = fig.gca(projection=Axes3D.name)
     ax.set_aspect("equal")
 
     flt = numpy.vectorize(float)

@@ -43,7 +43,7 @@ def _rot_ab(a, b):
 def _collapse0(a):
     """Collapse all dimensions of `a` except the first.
     """
-    return numpy.reshape(a, (a.shape[0], numpy.prod(a.shape[1:])))
+    return a.reshape(a.shape[0], -1)
 
 
 def untangle2(data, symbolic=False):

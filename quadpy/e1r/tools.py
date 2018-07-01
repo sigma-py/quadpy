@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-import matplotlib.pyplot as plt
 import numpy
 
 from .. import helpers
@@ -11,12 +10,16 @@ def integrate(f, rule, dot=numpy.dot):
 
 
 def show(*args, **kwargs):
+    import matplotlib.pyplot as plt
+
     plot(*args, **kwargs)
     plt.show()
     return
 
 
 def plot(scheme):
+    import matplotlib.pyplot as plt
+
     plt.axis("equal")
     m = 1.1 * numpy.max(scheme.points)
     plt.plot([0, m], [0, 0], color="k")
