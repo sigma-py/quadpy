@@ -8,7 +8,17 @@ def integrate(f, simplex, scheme, dot=numpy.dot):
     flt = numpy.vectorize(float)
     x = transform(flt(scheme.points).T, simplex.T)
     vol = get_vol(simplex)
-    return vol * dot(f(x), flt(scheme.weights))
+
+    fx = numpy.array(f(x))
+
+    s = x.shape[1:]
+    assert (
+        s == fx.shape[-len(s) :]
+    ), "Illegal shape of f(x) (expected (..., {}), got {})".format(
+        ", ".join([str(k) for k in x.shape[1:]]), fx.shape
+    )
+
+    return vol * dot(fx, flt(scheme.weights))
 
 
 def transform(xi, simplex):
