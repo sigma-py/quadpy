@@ -555,7 +555,7 @@ val = quadpy.e2r2.integrate(
 Example:
 ```python
 dim = 4
-val = quadpy.simplex.integrate(
+val = quadpy.nsimplex.integrate(
     lambda x: numpy.exp(x[0]),
     numpy.array([
         [0.0, 0.0, 0.0, 0.0],
@@ -564,7 +564,7 @@ val = quadpy.simplex.integrate(
         [0.0, 3.0, 1.0, 0.0],
         [0.0, 0.0, 4.0, 1.0],
         ]),
-    quadpy.simplex.GrundmannMoeller(dim, 3)
+    quadpy.nsimplex.GrundmannMoeller(dim, 3)
     )
 ```
 
