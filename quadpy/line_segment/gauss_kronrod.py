@@ -125,10 +125,10 @@ def _gauss_kronrod_integrate(k, f, interval, dot=numpy.dot):
     gauss_weights = GaussLegendre(k).weights
     sp = _scale_points(scheme.points, interval)
     point_vals_gk = f(sp)
-    assert point_vals_gk.shape == sp.shape, (
+    assert point_vals_gk.shape[-len(sp.shape) :] == sp.shape, (
         "Function evaluation returned numpy array of wrong shape. "
-        "(Input shape: {}, expected output shape: {}, got: {})".format(
-            sp.shape, sp.shape, point_vals_gk.shape
+        "(Input shape: {}, expected output shape: (..., {}), got: {})".format(
+            sp.shape, ", ".join(str(k) for k in sp.shape), point_vals_gk.shape
         )
     )
     point_vals_g = point_vals_gk[..., 1::2]
