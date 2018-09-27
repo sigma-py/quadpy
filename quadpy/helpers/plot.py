@@ -126,8 +126,8 @@ def show_mayavi(points, weights, volume, edges, balls=None):
     for edge in edges:
         mlab.plot3d(*edge, tube_radius=0.5e-2, color=(0.0, 0.0, 0.0))
 
-    blue = (31. / 255., 119.0 / 255., 180. / 255.)
-    red = (84. / 255., 15.0 / 255., 16. / 255.)
+    blue = (31.0 / 255.0, 119.0 / 255.0, 180.0 / 255.0)
+    red = (84.0 / 255.0, 15.0 / 255.0, 16.0 / 255.0)
 
     h = 1.0e-2
     sum_weights = math.fsum(weights)

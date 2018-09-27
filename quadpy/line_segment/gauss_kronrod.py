@@ -123,7 +123,14 @@ def _gauss_kronrod_integrate(k, f, interval, dot=numpy.dot):
     # sharing the function evaluations
     scheme = GaussKronrod(k)
     gauss_weights = GaussLegendre(k).weights
-    point_vals_gk = f(_scale_points(scheme.points, interval))
+    sp = _scale_points(scheme.points, interval)
+    point_vals_gk = f(sp)
+    assert point_vals_gk.shape[-len(sp.shape) :] == sp.shape, (
+        "Function evaluation returned numpy array of wrong shape. "
+        "(Input shape: {}, expected output shape: (..., {}), got: {})".format(
+            sp.shape, ", ".join(str(k) for k in sp.shape), point_vals_gk.shape
+        )
+    )
     point_vals_g = point_vals_gk[..., 1::2]
     alpha = abs(interval[1] - interval[0])
     val_gauss_kronrod = _integrate(point_vals_gk, scheme.weights, alpha, dot=dot)

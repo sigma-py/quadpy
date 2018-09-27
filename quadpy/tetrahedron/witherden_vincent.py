@@ -30,7 +30,7 @@ class WitherdenVincent(object):
         self.degree = degree
 
         if degree == 1:
-            data = {"s4": [[1.000000000000000e+00]]}
+            data = {"s4": [[1.000000000000000e00]]}
         elif degree == 2:
             data = {"s31": [[2.500000000000000e-01, 1.381966011250105e-01]]}
         elif degree == 3:
