@@ -5,6 +5,7 @@ Parse Fortran code to extract points and weight of the Xiao-Gimbutas schemes.
 """
 import numpy
 
+
 # TODO the first two functions could go into a helper and be shared with tri
 def _parsed_strings_to_array(strings):
     return numpy.array(
@@ -73,11 +74,13 @@ def _parse():
                 line = f.readline().strip()
                 wstr.append(line)
 
-            points = numpy.column_stack([
-                _parsed_strings_to_array(xstr),
-                _parsed_strings_to_array(ystr),
-                _parsed_strings_to_array(zstr),
-            ])
+            points = numpy.column_stack(
+                [
+                    _parsed_strings_to_array(xstr),
+                    _parsed_strings_to_array(ystr),
+                    _parsed_strings_to_array(zstr),
+                ]
+            )
             weights = _parsed_strings_to_array(wstr)
             data.append((points, weights))
 
@@ -87,111 +90,30 @@ def _parse():
 def _extract_bary_data(data):
     # The points are given in terms of coordinates of a reference tetrahedron. Convert
     # to barycentric coordinates, and check their symmetry there.
-    t0 = [-1, -1/numpy.sqrt(3), -1/numpy.sqrt(6)]
-    t1 = [+0, +2/numpy.sqrt(3), -1/numpy.sqrt(6)]
-    t2 = [+1, -1/numpy.sqrt(3), -1/numpy.sqrt(6)]
-    t3 = [+0, +0, 3/numpy.sqrt(6)]
+    t0 = [-1, -1 / numpy.sqrt(3), -1 / numpy.sqrt(6)]
+    t1 = [+0, +2 / numpy.sqrt(3), -1 / numpy.sqrt(6)]
+    t2 = [+1, -1 / numpy.sqrt(3), -1 / numpy.sqrt(6)]
+    t3 = [+0, +0, 3 / numpy.sqrt(6)]
 
-    T = numpy.array([
-        [t1[k] - t0[k], t2[k] - t0[k], t3[k] - t0[k]]
-        for k in range(3)
-        ])
-
-    tol = 1.0e-10
+    T = numpy.array([[t1[k] - t0[k], t2[k] - t0[k], t3[k] - t0[k]] for k in range(3)])
 
     all_dicts = []
 
     ref_weight = 0.9709835434146467
 
     for k, item in enumerate(data):
+        d = {"degree": k + 1}
         points, weights = item
-        print()
-        print(weights)
-        print(points)
-        print()
 
         b = (points - t0).T
         sol = numpy.linalg.solve(T, b)
-        bary = numpy.column_stack([
-            sol[0],
-            sol[1],
-            sol[2],
-            1.0 - sol[0] - sol[1] - sol[2]
-            ])
+        bary = numpy.column_stack(
+            [sol[0], sol[1], sol[2], 1.0 - sol[0] - sol[1] - sol[2]]
+        )
 
-        d = {"s4": [], "s31": [], "s22": [], "s211": [], "s1111": [], "degree": k + 1}
-        for w, b in zip(weights, bary):
-
-            if numpy.all(numpy.abs(b - 0.25) < tol):
-                print('s4', b)
-                weight = w / ref_weight
-                d["s4"].append([weight])
-
-            elif abs(b[0] - b[1]) < tol and abs(b[0] - b[2]) < tol:
-                print('s31', b)
-                weight = w / ref_weight / 4
-                d["s31"].append([weight, b[0]])
-            elif abs(b[0] - b[1]) < tol and abs(b[0] - b[3]) < tol:
-                print('s31', b)
-                weight = w / ref_weight / 4
-                d["s31"].append([weight, b[0]])
-            elif abs(b[0] - b[2]) < tol and abs(b[0] - b[3]) < tol:
-                print('s31', b)
-                weight = w / ref_weight / 4
-                d["s31"].append([weight, b[0]])
-            elif abs(b[1] - b[2]) < tol and abs(b[1] - b[3]) < tol:
-                print('s31', b)
-                weight = w / ref_weight / 4
-                d["s31"].append([weight, b[1]])
-
-            elif abs(b[0] - b[1]) < tol and abs(b[2] - b[3]) < tol:
-                print('s22', b)
-                weight = w / ref_weight / 6
-                d["s22"].append([weight, b[0]])
-            elif abs(b[0] - b[2]) < tol and abs(b[1] - b[3]) < tol:
-                print('s22', b)
-                weight = w / ref_weight / 6
-                d["s22"].append([weight, b[0]])
-            elif abs(b[0] - b[3]) < tol and abs(b[1] - b[2]) < tol:
-                print('s22', b)
-                weight = w / ref_weight / 6
-                d["s22"].append([weight, b[0]])
-
-            elif abs(b[0] - b[1]) < tol:
-                print('s211', b)
-                weight = w / ref_weight / 12
-                d["s211"].append([weight, b[0], b[2]])
-            elif abs(b[0] - b[2]) < tol:
-                print('s211', b)
-                weight = w / ref_weight / 12
-                d["s211"].append([weight, b[0], b[1]])
-            elif abs(b[0] - b[3]) < tol:
-                print('s211', b)
-                weight = w / ref_weight / 12
-                d["s211"].append([weight, b[0], b[1]])
-            elif abs(b[1] - b[2]) < tol:
-                print('s211', b)
-                weight = w / ref_weight / 12
-                d["s211"].append([weight, b[1], b[0]])
-            elif abs(b[1] - b[3]) < tol:
-                print('s211', b)
-                weight = w / ref_weight / 12
-                d["s211"].append([weight, b[1], b[0]])
-            elif abs(b[2] - b[3]) < tol:
-                print('s211', b)
-                weight = w / ref_weight / 12
-                d["s211"].append([weight, b[2], b[0]])
-
-            else:
-                print('s1111', b)
-                srt = numpy.sort(b)
-                weight = w / ref_weight / 24
-                d["s1111"].append([weight, srt[0], srt[1], srt[2]])
-
-        for key in ["s4", "s31", "s22", "s211", "s1111"]:
-            if len(d[key]) == 0:
-                d.pop(key)
-
+        idx = numpy.argsort(weights)
+        d["weights"] = (weights[idx] / ref_weight).tolist()
+        d["bary"] = bary[idx].tolist()
         all_dicts.append(d)
 
     return all_dicts
@@ -214,12 +136,13 @@ def _main():
             return PrettyFloat(obj)
         elif isinstance(obj, dict):
             return dict((k, pretty_floats(v)) for k, v in obj.items())
-        elif isinstance(obj, (list, tuple)):
+        elif isinstance(obj, (list, tuple, numpy.ndarray)):
             return list(map(pretty_floats, obj))
         return obj
 
     for d in all_dicts:
         degree = d["degree"]
+        print(d)
         with open("xg{:02d}.json".format(degree), "w") as f:
             string = (
                 pretty_floats(d)

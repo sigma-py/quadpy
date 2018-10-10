@@ -37,8 +37,12 @@ def _numpy_all_except(a, axis=-1):
     return numpy.all(a, axis=tuple(axes))
 
 
+class IntegrationError(Exception):
+    pass
+
+
 def integrate_adaptive(
-    f, intervals, eps, kronrod_degree=7, minimum_interval_length=None, dot=numpy.dot
+    f, intervals, eps, kronrod_degree=7, minimum_interval_length=0.0, dot=numpy.dot
 ):
     sumfun = numpy.sum
 
@@ -49,16 +53,13 @@ def integrate_adaptive(
     lengths = abs(intervals[1] - intervals[0])
     total_length = sumfun(lengths)
 
-    if minimum_interval_length is None:
-        minimum_interval_length = total_length / 2 ** 10
-
     # Use Gauss-Kronrod 7/15 scheme for error estimation and adaptivity.
     _, val_g, error_estimate = _gauss_kronrod_integrate(
         kronrod_degree, f, intervals, dot=dot
     )
 
-    # Mark intervals with acceptable approximations. For this, take all()
-    # across every dimension except the last one, which is the interval index.
+    # Mark intervals with acceptable approximations. For this, take all() across every
+    # dimension except the last one, which is the interval index.
     is_good = _numpy_all_except(error_estimate < eps * lengths / total_length, axis=-1)
     # add values from good intervals to sum
     quad_sum = sumfun(val_g[..., is_good], axis=-1)
@@ -81,7 +82,12 @@ def integrate_adaptive(
         )
         # mark good intervals, gather values and error estimates
         lengths = abs(intervals[1] - intervals[0])
-        assert all(lengths > minimum_interval_length)
+        if any(lengths < minimum_interval_length):
+            raise IntegrationError(
+                "Tolerance ({}) could not be reached with the minimum_interval_length (= {}).".format(
+                    eps, minimum_interval_length
+                )
+            )
         is_good = _numpy_all_except(
             error_estimate < eps * lengths / total_length, axis=-1
         )

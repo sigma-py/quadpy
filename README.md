@@ -519,9 +519,9 @@ val = quadpy.wedge.integrate(
 
 Example:
 ```python
-val = quadpy.e2r.integrate(
+val = quadpy.e3r.integrate(
     lambda x: x[0]**2,
-    quadpy.e2r.StroudSecrest('IX')
+    quadpy.e3r.StroudSecrest('IX')
     )
 ```
 
@@ -535,9 +535,9 @@ val = quadpy.e2r.integrate(
 
 Example:
 ```python
-val = quadpy.e2r2.integrate(
+val = quadpy.e3r2.integrate(
     lambda x: x[0]**2,
-    quadpy.e2r2.RabinowitzRichter(3)
+    quadpy.e3r2.StroudSecrest("Xa")
     )
 ```
 
