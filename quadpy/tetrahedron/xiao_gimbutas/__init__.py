@@ -3,7 +3,7 @@
 import json
 import os
 
-from ..helpers import untangle2
+import numpy
 
 
 class XiaoGimbutas(object):
@@ -40,6 +40,7 @@ class XiaoGimbutas(object):
 
         self.degree = data.pop("degree")
 
-        self.bary, self.weights = untangle2(data)
+        self.bary = numpy.array(data["bary"])
+        self.weights = numpy.array(data["weights"])
         self.points = self.bary[:, 1:]
         return
