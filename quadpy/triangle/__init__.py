@@ -17,6 +17,7 @@ from .liu_vinokur import LiuVinokur
 from .lyness_jespersen import LynessJespersen
 from .newton_cotes import NewtonCotesClosed, NewtonCotesOpen
 from .papanicolopulos import Papanicolopulos
+from .rathod_nagaraja_venkatesudu import RathodNagarajaVenkatesudu
 from .seven_point import SevenPoint
 from .strang import Strang
 from .stroud import Stroud
@@ -54,6 +55,7 @@ __all__ = [
     "NewtonCotesClosed",
     "NewtonCotesOpen",
     "Papanicolopulos",
+    "RathodNagarajaVenkatesudu",
     "SevenPoint",
     "Strang",
     "Stroud",
