@@ -369,6 +369,7 @@ val = quadpy.e2r2.integrate(
    - [McLaren](https://doi.org/10.1090/S0025-5718-1963-0159418-2) (1963, 10 schemes up to degree 14)
  * [Lebedev](https://en.wikipedia.org/wiki/Lebedev_quadrature) (1976, 34
    schemes up to degree 131)
+ * [Bažant-Oh](https://doi.org/10.1002/zamm.19860660108) (1986, 3 schemes up to degree 11)
  * [Heo-Xu](https://doi.org/10.1090/S0025-5718-00-01198-4) (2001, 27 schemes up
    to degree 39, single-precision)
  * [Fliege-Maier](http://www.personal.soton.ac.uk/jf1w07/nodes/nodes.html) (2007, 4 schemes up
