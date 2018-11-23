@@ -47,7 +47,8 @@ def test_spherical_harmonic(scheme):
 
 @pytest.mark.parametrize(
     "scheme,tol",
-    [
+    [(quadpy.sphere.BazantOh(index), 1.0e-10) for index in ["9", "11", "13"]]
+    + [
         (quadpy.sphere.HeoXu(index), 1.0e-6)
         for index in [
             "13",
