@@ -112,11 +112,83 @@ def _pq0(alpha):
     )
 
 
+def _pq02(a):
+    b = numpy.sqrt(1 - a ** 2)
+    zero = numpy.zeros_like(a)
+    return numpy.array(
+        [
+            [+a, +b, zero],
+            [-a, +b, zero],
+            [-a, -b, zero],
+            [+a, -b, zero],
+            #
+            [+b, +a, zero],
+            [-b, +a, zero],
+            [-b, -a, zero],
+            [+b, -a, zero],
+            #
+            [+a, zero, +b],
+            [-a, zero, +b],
+            [-a, zero, -b],
+            [+a, zero, -b],
+            #
+            [+b, zero, +a],
+            [-b, zero, +a],
+            [-b, zero, -a],
+            [+b, zero, -a],
+            #
+            [zero, +a, +b],
+            [zero, -a, +b],
+            [zero, -a, -b],
+            [zero, +a, -b],
+            #
+            [zero, +b, +a],
+            [zero, -b, +a],
+            [zero, -b, -a],
+            [zero, +b, -a],
+        ]
+    )
+
+
 def _llm(beta):
     # translate the point into cartesian coords; note that phi=pi/4.
     beta *= numpy.pi
     L = numpy.sin(beta) / numpy.sqrt(2)
     m = numpy.cos(beta)
+    return numpy.array(
+        [
+            [+L, +L, +m],
+            [-L, +L, +m],
+            [+L, -L, +m],
+            [-L, -L, +m],
+            [+L, +L, -m],
+            [-L, +L, -m],
+            [+L, -L, -m],
+            [-L, -L, -m],
+            #
+            [+L, +m, +L],
+            [-L, +m, +L],
+            [+L, +m, -L],
+            [-L, +m, -L],
+            [+L, -m, +L],
+            [-L, -m, +L],
+            [+L, -m, -L],
+            [-L, -m, -L],
+            #
+            [+m, +L, +L],
+            [+m, -L, +L],
+            [+m, +L, -L],
+            [+m, -L, -L],
+            [-m, +L, +L],
+            [-m, -L, +L],
+            [-m, +L, -L],
+            [-m, -L, -L],
+        ]
+    )
+
+
+def _llm2(L):
+    m = numpy.sqrt(1 - 2 * L ** 2)
     return numpy.array(
         [
             [+L, +L, +m],
@@ -252,11 +324,25 @@ def untangle2(data):
         w = numpy.array(data["llm"])[:, 0]
         weights.append(numpy.tile(w, 24))
 
+    if "llm2" in data:
+        beta = numpy.array(data["llm2"])[:, 1]
+        out = _collapse0(numpy.moveaxis(_llm2(beta), 0, 1)).T
+        points.append(out)
+        w = numpy.array(data["llm2"])[:, 0]
+        weights.append(numpy.tile(w, 24))
+
     if "pq0" in data:
         beta = numpy.array(data["pq0"])[:, 1]
         out = _collapse0(numpy.moveaxis(_pq0(beta), 0, 1)).T
         points.append(out)
         w = numpy.array(data["pq0"])[:, 0]
+        weights.append(numpy.tile(w, 24))
+
+    if "pq02" in data:
+        beta = numpy.array(data["pq02"])[:, 1]
+        out = _collapse0(numpy.moveaxis(_pq02(beta), 0, 1)).T
+        points.append(out)
+        w = numpy.array(data["pq02"])[:, 0]
         weights.append(numpy.tile(w, 24))
 
     if "rsw" in data:
