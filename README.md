@@ -236,6 +236,8 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    schemes up to degree 30),
  * [Taylor-Wingate-Bos](https://arxiv.org/abs/math/0501496) (2005, 5 schemes up
    to degree 14),
+ * [Rathod-Nagaraja-Venkatesudu](https://doi.org/10.1016/j.amc.2006.10.041) (2007,
+   arbitrary degree)
  * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2009, 3 schemes up to
    degree 20),
  * [Xiao-Gimbutas](https://doi.org/10.1016/j.camwa.2009.10.027) (2010, 50
