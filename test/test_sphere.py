@@ -79,6 +79,12 @@ def test_spherical_harmonic(scheme):
         ]
     ]
     + [
+        (quadpy.sphere.FliegeMaier(index), 1.0e-6)
+        for index in [
+            "4", "9", "16", "25",
+        ]
+    ]
+    + [
         (quadpy.sphere.Lebedev(index), 1.0e-11)
         for index in [
             "3a",
