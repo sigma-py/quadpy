@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 from .albrecht_collatz import AlbrechtCollatz
+from .fliege_maier import FliegeMaier
 from .heo_xu import HeoXu
 from .lebedev import Lebedev
 from .mclaren import McLaren
@@ -10,6 +11,7 @@ from .tools import area, show, plot, integrate, integrate_spherical
 
 __all__ = [
     "AlbrechtCollatz",
+    "FliegeMaier",
     "HeoXu",
     "Lebedev",
     "McLaren",
