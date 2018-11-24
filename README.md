@@ -213,7 +213,9 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    degree 7),
  * [Lyness-Jespersen](https://doi.org/10.1093/imamat/15.1.19) (1975, 21
    schemes up to degree 11),
- * [Lether](https://doi.org/10.1016/0771-050X(76)90008-5) (1976, degree 2n-2, arbitrary n, not symmetric)
+ * [Lether](https://doi.org/10.1016/0771-050X(76)90008-5) (1976, degree 2n-2, arbitrary
+   n, not symmetric; reproduced in
+   [Rathod-Nagaraja-Venkatesudu](https://doi.org/10.1016/j.amc.2006.10.041), 2007)
  * [Hillion](https://doi.org/10.1002/nme.1620110504) (1977, 10 schemes up to
    degree 3),
  * [Grundmann-Möller](https://doi.org/10.1137/0715019) (1978, arbitrary degree),
@@ -236,8 +238,6 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    schemes up to degree 30),
  * [Taylor-Wingate-Bos](https://arxiv.org/abs/math/0501496) (2005, 5 schemes up
    to degree 14),
- * [Rathod-Nagaraja-Venkatesudu](https://doi.org/10.1016/j.amc.2006.10.041) (2007,
-   arbitrary degree)
  * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2009, 3 schemes up to
    degree 20),
  * [Xiao-Gimbutas](https://doi.org/10.1016/j.camwa.2009.10.027) (2010, 50
