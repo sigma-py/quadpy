@@ -66,7 +66,6 @@ def _integrate_exact(f, triangle):
         # The first 8 schemes are flawed by round-off error
         for k in range(8, 18)
     ]
-    + [(quadpy.triangle.RathodNagarajaVenkatesudu(k), 1.0e-14) for k in range(1, 10)]
     + [(quadpy.triangle.SevenPoint(), 1.0e-14)]
     + [(quadpy.triangle.Strang(k), 1.0e-14) for k in range(1, 11)]
     + [(quadpy.triangle.Stroud(k), 1.0e-12) for k in ["T2 3-1", "T2 5-1", "T2 7-1"]]
