@@ -2,13 +2,13 @@
 #
 import json
 import os
-import re
 
 import numpy
 
 
 class Sommariva(object):
     """
+    Quad quadrature by Alvise Sommariva, <http://www.math.unipd.it/~alvise/sets.html>.
     """
 
     def __init__(self, index):
@@ -16,8 +16,7 @@ class Sommariva(object):
 
         this_dir = os.path.dirname(os.path.realpath(__file__))
 
-        m = re.match("([0-9]+)([a-z]*)", index)
-        filename = "sommariva_{:02d}{}.json".format(int(m.group(1)), m.group(2))
+        filename = "sommariva_{:02d}.json".format(index)
         with open(os.path.join(this_dir, filename), "r") as f:
             data = json.load(f)
 
