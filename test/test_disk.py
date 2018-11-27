@@ -13,6 +13,7 @@ from helpers import check_degree
     [(quadpy.disk.Albrecht(k), 1.0e-14) for k in range(1, 9)]
     + [(quadpy.disk.CoolsHaegemans(k), 1.0e-14) for k in range(1, 4)]
     + [(quadpy.disk.CoolsKim(k), 1.0e-14) for k in range(1, 4)]
+    + [(quadpy.disk.HaegemansPiessens(), 1.0e-14)]
     + [
         (quadpy.disk.HammerStroud(k), 1.0e-14)
         for k in ["11-2", "12-2", "13-2", "17", "18", "19", "20", "21"]
