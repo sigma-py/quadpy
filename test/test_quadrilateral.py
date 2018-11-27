@@ -108,6 +108,7 @@ def _integrate_exact2(k, x0, x1, y0, y1):
             "Cn 5-9",
         ]
     ]
+    + [(quadpy.quadrilateral.HaegemansPiessens(), 1.0e-14)]
     + [(quadpy.quadrilateral.Sommariva(k), 1.0e-13) for k in range(1, 56)]
     + [(quadpy.quadrilateral.StroudN(k), 1.0e-8) for k in ["Cn 7-1"]]
     + [

@@ -274,6 +274,7 @@ val = quadpy.triangle.integrate(
    - Mysovskih (1964, 3 schemes up to degree 15)
    - [Rabinowitz-Richter](https://doi.org/10.2307/2004962) (1969, 6 schemes up to degree 15)
  * [Lether](http://www.jstor.org/stable/2949473) (1971, arbitrary degree)
+ * [Haegemans-Piessens](http://www.jstor.org/stable/2156699) (1977, degree 9)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 9)
  * [Wissmann-Becker](https://doi.org/10.1137/0723043) (1986, 3 schemes up to degree 8)
  * [Cools-Kim](https://link.springer.com/article/10.1007/BF03012263) (2000, 3 schemes up to degree 21)
@@ -302,6 +303,7 @@ val = quadpy.disk.integrate(
    - [Meister](https://doi.org/10.1093/comjnl/8.4.368) (1966, degree 7)
    - [Phillips](https://doi.org/10.1093/comjnl/10.2.202) (1967, degree 7)
    - [Rabinowitz-Richter](https://doi.org/10.2307/2004962) (1969, 6 schemes up to degree 15)
+ * [Haegemans-Piessens](http://www.jstor.org/stable/2156699) (1977, degree 7)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 13)
  * [Dunavant](https://doi.org/10.1002/nme.1620211004) (1985, 11 schemes up to degree 19)
  * [Morrow-Patterson](https://doi.org/10.1137/0722071) (1985, 2 schemes up to degree 20, single precision)
@@ -336,6 +338,7 @@ to generate the array.
    - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 2 schemes up to degree 7)
    - [Rabinowitz-Richter](https://doi.org/10.2307/2004962) (1969, 4 schemes up to degree 15)
    - a scheme of degree 4
+ * [Haegemans-Piessens](http://www.jstor.org/stable/2156699) (1977, 2 schemes up to degree 9)
 
 Example:
 ```python
@@ -353,6 +356,7 @@ val = quadpy.e2r.integrate(
    - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 2 schemes up to degree 7)
    - [Rabinowitz-Richter](https://doi.org/10.2307/2004962) (1969, 5 schemes up to degree 15)
    - 3 schemes up to degree 7
+ * [Haegemans-Piessens](http://www.jstor.org/stable/2156699) (1977, 2 schemes of degree 9)
 
 Example:
 ```python

@@ -5,6 +5,7 @@ from .albrecht import Albrecht
 from .albrecht_collatz import AlbrechtCollatz
 from .cools_haegemans import CoolsHaegemans
 from .cools_kim import CoolsKim
+from .haegemans_piessens import HaegemansPiessens
 from .hammer_stroud import HammerStroud
 from .lether import Lether
 from .mysovskih import Mysovskih
@@ -21,6 +22,7 @@ __all__ = [
     "AlbrechtCollatz",
     "CoolsHaegemans",
     "CoolsKim",
+    "HaegemansPiessens",
     "HammerStroud",
     "Lether",
     "Mysovskih",
