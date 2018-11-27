@@ -11,7 +11,8 @@ from helpers import check_degree, integrate_monomial_over_enr
 
 @pytest.mark.parametrize(
     "scheme,tol",
-    [
+    [(quadpy.e2r.HaegemansPiessens(variant), 1.0e-14) for variant in ["a", "b"]]
+    + [
         (quadpy.e2r.RabinowitzRichter(k), 1.0e-14)
         for k in quadpy.e2r.RabinowitzRichter.keys
     ]
