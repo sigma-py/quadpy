@@ -19,6 +19,7 @@ from .sommariva import Sommariva
 from .stroud import Stroud
 from .tyler import Tyler
 from .wissmann_becker import WissmannBecker
+from .witherden_vincent import WitherdenVincent
 
 from .product import Product
 from .stroudn import StroudN
@@ -46,6 +47,7 @@ __all__ = [
     "Stroud",
     "Tyler",
     "WissmannBecker",
+    "WitherdenVincent",
     "Product",
     "Sommariva",
     "StroudN",
