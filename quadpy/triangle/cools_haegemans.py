@@ -16,7 +16,7 @@ class CoolsHaegemans(object):
     """
 
     def __init__(self, index, mpmath=False):
-        self.name = "CH(%d)" % index
+        self.name = "CoolsHaegemans({})".format(index)
         assert index == 1
         self.degree = 8
 

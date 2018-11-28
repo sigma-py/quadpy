@@ -33,7 +33,7 @@ class Strang(object):
     def __init__(self, index, symbolic=False):
         frac = sympy.Rational if symbolic else lambda x, y: x / y
 
-        self.name = "Strang(%d)" % index
+        self.name = "Strang({})".format(index)
         if index == 1:
             self.degree = 2
             data = {"s2": [[frac(1, 3), frac(1, 6)]]}

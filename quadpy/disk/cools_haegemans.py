@@ -16,7 +16,7 @@ class CoolsHaegemans(object):
     """
 
     def __init__(self, index):
-        self.name = "CH(%d)" % index
+        self.name = "CoolsHaegemans({})".format(index)
         if index == 1:
             self.degree = 5
             data = [

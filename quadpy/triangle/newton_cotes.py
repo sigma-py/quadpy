@@ -65,7 +65,7 @@ class NewtonCotesClosed(object):
             n, lambda k, n: k / float(n)
         )
         self.points = self.bary[:, 1:]
-        self.name = "NCC(%d)" % n
+        self.name = "NewtonCotesClosed({})".format(n)
         return
 
 
@@ -75,5 +75,5 @@ class NewtonCotesOpen(object):
             n, lambda k, n: (k + 1) / float(n + 3)
         )
         self.points = self.bary[:, 1:]
-        self.name = "NCO(%d)" % n
+        self.name = "NewtonCotesOpen({})".format(n)
         return
