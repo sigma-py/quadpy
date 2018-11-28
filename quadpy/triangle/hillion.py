@@ -27,7 +27,7 @@ class Hillion(object):
         frac = sympy.frac if symbolic else lambda x, y: x / y
         sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
-        self.name = "Hillion(%d)" % index
+        self.name = "Hillion({})".format(index)
 
         if index == 1:
             self.degree = 1

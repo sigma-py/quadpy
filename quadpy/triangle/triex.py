@@ -18,7 +18,7 @@ class Triex(object):
     """
 
     def __init__(self, index):
-        self.name = "TRIEX(%d)" % index
+        self.name = "TRIEX({})".format(index)
         if index == 19:
             self.degree = 9
             data = {
