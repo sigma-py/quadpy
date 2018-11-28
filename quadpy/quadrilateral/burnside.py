@@ -5,8 +5,7 @@ from __future__ import division
 import numpy
 import sympy
 
-from .helpers import _symm_r_0, _symm_s
-from ..helpers import untangle
+from .helpers import unroll
 
 
 class Burnside(object):
@@ -24,8 +23,9 @@ class Burnside(object):
         self.degree = 5
         r = sqrt(frac(7, 15))
         s = sqrt(frac(7, 9))
-        data = [(frac(10, 49), _symm_r_0(r)), (frac(9, 196), _symm_s(s))]
 
-        self.points, self.weights = untangle(data)
+        data = {"symm_r0": [[frac(10, 49), r]], "symm_s": [[frac(9, 196), s]]}
+
+        self.points, self.weights = unroll(data)
         self.weights *= 4
         return

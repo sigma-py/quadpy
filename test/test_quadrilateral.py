@@ -115,6 +115,10 @@ def _integrate_exact2(k, x0, x1, y0, y1):
         (quadpy.quadrilateral.WissmannBecker(k), 1.0e-14)
         for k in ["4-1", "4-2", "6-1", "6-2", "8-1", "8-2"]
     ]
+    + [
+        (quadpy.quadrilateral.WitherdenVincent(k), 1.0e-14)
+        for k in [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21]
+    ]
     + [(Product(quadpy.line_segment.Midpoint()), 1.0e-14)]
     + [(Product(quadpy.line_segment.Trapezoidal()), 1.0e-14)]
     + [(Product(quadpy.line_segment.GaussLegendre(k)), 1.0e-14) for k in range(1, 5)]
