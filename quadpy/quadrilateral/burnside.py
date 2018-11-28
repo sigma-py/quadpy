@@ -24,10 +24,7 @@ class Burnside(object):
         r = sqrt(frac(7, 15))
         s = sqrt(frac(7, 9))
 
-        data = {
-            "symm_r0": [[frac(10, 49), r]],
-            "symm_s": [[frac(9, 196), s]]
-        }
+        data = {"symm_r0": [[frac(10, 49), r]], "symm_s": [[frac(9, 196), s]]}
 
         self.points, self.weights = unroll(data)
         self.weights *= 4
