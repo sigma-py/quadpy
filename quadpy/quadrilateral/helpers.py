@@ -52,7 +52,8 @@ def unroll(data, symbolic=False):
     if "symm_r0" in data:
         d = numpy.array(data["symm_r0"]).T
         r0_data = _symm_r0(d[1])
-        bary.append(_collapse0(r0_data))
+        r0_data = numpy.swapaxes(r0_data, 0, 1)
+        bary.append(_collapse0(r0_data).T)
         weights.append(numpy.tile(d[0], 4))
 
     if "symm_s" in data:
@@ -61,6 +62,13 @@ def unroll(data, symbolic=False):
         s_data = numpy.swapaxes(s_data, 0, 1)
         bary.append(_collapse0(s_data).T)
         weights.append(numpy.tile(d[0], 4))
+
+    if "symm_s_t" in data:
+        d = numpy.array(data["symm_s_t"]).T
+        s_data = _symm_s_t(*d[1:])
+        s_data = numpy.swapaxes(s_data, 0, 1)
+        bary.append(_collapse0(s_data).T)
+        weights.append(numpy.tile(d[0], 8))
 
     if "pm" in data:
         d = numpy.array(data["pm"]).T
