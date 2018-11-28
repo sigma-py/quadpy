@@ -14,7 +14,7 @@ class CoolsKim(object):
     """
 
     def __init__(self, index):
-        self.name = "CK(%d)" % index
+        self.name = "CoolsKim({})".format(index)
         if index == 1:
             self.degree = 17
             data = [

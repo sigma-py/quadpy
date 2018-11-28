@@ -23,7 +23,7 @@ class LiuVinokur(object):
         frac = sympy.frac if symbolic else lambda x, y: x / y
         sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
-        self.name = "LV(%d)" % index
+        self.name = "LiuVinokur({})".format(index)
         if index == 1:
             self.degree = 1
             data = [(1, _s3(symbolic))]
