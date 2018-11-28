@@ -11,6 +11,11 @@ def _symm_r_0(r):
     return numpy.array([[+r, 0], [-r, 0], [0, +r], [0, -r]])
 
 
+def _symm_r0(r):
+    z = numpy.zeros_like(r)
+    return numpy.array([[+r, z], [-r, z], [z, +r], [z, -r]])
+
+
 def _symm_s(s):
     return numpy.array([[+s, +s], [-s, +s], [+s, -s], [-s, -s]])
 
@@ -27,3 +32,50 @@ def _pm(s, t):
 
 def _pm2(s, t):
     return numpy.array([[+s, +t], [-s, +t], [+s, -t], [-s, -t]])
+
+
+def _collapse0(a):
+    """Collapse all dimensions of `a` except the first.
+    """
+    return a.reshape(a.shape[0], -1)
+
+
+def unroll(data, symbolic=False):
+    bary = []
+    weights = []
+
+    if "zero" in data:
+        d = numpy.array(data["zero"]).T
+        bary.append(numpy.zeros((1, 2)))
+        weights.append(numpy.tile(d[0], 1))
+
+    if "symm_r0" in data:
+        d = numpy.array(data["symm_r0"]).T
+        r0_data = _symm_r0(d[1])
+        bary.append(_collapse0(r0_data))
+        weights.append(numpy.tile(d[0], 4))
+
+    if "symm_s" in data:
+        d = numpy.array(data["symm_s"]).T
+        s_data = _symm_s(d[1])
+        s_data = numpy.swapaxes(s_data, 0, 1)
+        bary.append(_collapse0(s_data).T)
+        weights.append(numpy.tile(d[0], 4))
+
+    if "pm" in data:
+        d = numpy.array(data["pm"]).T
+        s_data = _pm(*d[1:])
+        s_data = numpy.swapaxes(s_data, 0, 1)
+        bary.append(_collapse0(s_data).T)
+        weights.append(numpy.tile(d[0], 2))
+
+    if "pm2" in data:
+        d = numpy.array(data["pm2"]).T
+        s_data = _pm2(*d[1:])
+        s_data = numpy.swapaxes(s_data, 0, 1)
+        bary.append(_collapse0(s_data).T)
+        weights.append(numpy.tile(d[0], 4))
+
+    bary = numpy.concatenate(bary)
+    weights = numpy.concatenate(weights)
+    return bary, weights

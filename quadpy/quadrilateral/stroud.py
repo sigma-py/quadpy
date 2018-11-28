@@ -30,6 +30,8 @@ class Stroud(object):
     """
 
     def __init__(self, index, symbolic=False):
+        self.name = "Stroud({})".format(index)
+
         scheme = {
             "C2 1-1": lambda: ProductTrapezoidal(symbolic),
             "C2 1-2": lambda: Miller(symbolic),
