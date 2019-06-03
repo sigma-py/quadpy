@@ -149,6 +149,24 @@ def test_singularities_at_both_ends(f_left, f_right, b, exact):
     return
 
 
+@pytest.mark.parametrize(
+    "f, a, b, exact", [(lambda t: t ** 2, -1, +1, sympy.Rational(2, 3))]
+)
+def test_low_precision(f, a, b, exact):
+    mp.dps = 10
+
+    t = sympy.Symbol("t")
+    f_derivatives = {
+        1: sympy.lambdify(t, sympy.diff(f(t), t, 1), modules=["mpmath"]),
+        2: sympy.lambdify(t, sympy.diff(f(t), t, 2), modules=["mpmath"]),
+    }
+
+    tol = 1.0e-2
+    value, _ = quadpy.line_segment.tanh_sinh(f, a, b, tol, f_derivatives=f_derivatives)
+    assert abs(value - exact) < tol
+    return
+
+
 if __name__ == "__main__":
     # test_tanh_sinh(
     #     lambda t: 1, 0, 1, 1

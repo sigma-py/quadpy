@@ -9,6 +9,7 @@ Your one-stop shop for numerical integration in Python.
 [![PyPi Version](https://img.shields.io/pypi/v/quadpy.svg)](https://pypi.org/project/quadpy)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1173132.svg)](https://doi.org/10.5281/zenodo.1173132)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?logo=github&label=Stars&logoColor=white)](https://github.com/nschloe/quadpy)
+[![PyPi downloads](https://img.shields.io/pypi/dd/quadpy.svg)](https://pypistats.org/packages/quadpy)
 
 Hundreds of numerical integration schemes for
 [line segments](#line-segment),
@@ -62,6 +63,9 @@ def f(x):
 ```
 
 More examples under [test/examples_test.py](https://github.com/nschloe/quadpy/blob/master/test/examples_test.py).
+
+Read more about the dimensionality of the input/output arrays [in the
+wiki](https://github.com/nschloe/quadpy/wiki#dimensionality-of-input-and-output-arrays).
 
 ### Adaptive quadrature
 
@@ -837,17 +841,6 @@ To run the tests, just check out this repository and type
 ```
 MPLBACKEND=Agg pytest
 ```
-
-### Distribution
-
-To create a new release
-
-1. bump the `__version__` number,
-
-2. publish to PyPi and GitHub:
-    ```
-    $ make publish
-    ```
 
 ### License
 quadpy is published under the [MIT license](https://en.wikipedia.org/wiki/MIT_License).

@@ -44,14 +44,14 @@ def tanh_sinh(f, a, b, eps, max_steps=10, f_derivatives=None):
 
 
 def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
-    """Integrate a function `f` between `a` and `b` with accuracy `eps`. The
-    function `f` is given in terms of two functions
+    """Integrate a function `f` between `a` and `b` with accuracy `eps`. The function
+    `f` is given in terms of two functions
 
-        * `f_left(s) = f(a + s)`, i.e., `f` linearly scaled such that
-          `f_left(0) = a`, `f_left(b-a) = b`,
+        * `f_left(s) = f(a + s)`, i.e., `f` linearly scaled such that `f_left(0) = a`,
+        `f_left(b-a) = b`,
 
-        * `f_right(s) = f(b - s)`, i.e., `f` linearly scaled such that
-          `f_right(0) = b`, `f_left(b-a) = a`.
+        * `f_right(s) = f(b - s)`, i.e., `f` linearly scaled such that `f_right(0) = b`,
+        `f_left(b-a) = a`.
 
     Implemented are Bailey's enhancements plus a few more tricks.
 
@@ -71,23 +71,23 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
     alpha2 = alpha / mp.mpf(2)
 
     # What's a good initial step size `h`?
-    # The larger `h` is chosen, the fewer points will be part of the
-    # evaluation. However, we don't want to choose the step size too large
-    # since that means less accuracy for the quadrature overall. The idea would
-    # then be too choose `h` such that it is just large enough for the first
-    # tanh-sinh-step to contain only one point, the midpoint. The expression
+    # The larger `h` is chosen, the fewer points will be part of the evaluation.
+    # However, we don't want to choose the step size too large since that means less
+    # accuracy for the quadrature overall. The idea would then be too choose `h` such
+    # that it is just large enough for the first tanh-sinh-step to contain only one
+    # point, the midpoint. The expression
     #
     #    j = mp.ln(-2/mp.pi * mp.lambertw(-tau/h/2, -1)) / h
     #
-    # hence needs to just smaller than 1. (Ideally, one would actually like to
-    # get `j` from the full tanh-sinh formula, but the above approximation is
-    # good enough.) One gets
+    # hence needs to just smaller than 1. (Ideally, one would actually like to get `j`
+    # from the full tanh-sinh formula, but the above approximation is good enough.) One
+    # gets
     #
     #    0 = pi/2 * exp(h) - h - ln(h) - ln(pi/tau)
     #
-    # for which there is no analytic solution. One can, however, approximate
-    # it. Since pi/2 * exp(h) >> h >> ln(h) (for `h` large enough), one can
-    # either forget about both h and ln(h) to get
+    # for which there is no analytic solution. One can, however, approximate it. Since
+    # pi/2 * exp(h) >> h >> ln(h) (for `h` large enough), one can either forget about
+    # both h and ln(h) to get
     #
     #     h0 = ln(2/pi * ln(pi/tau))
     #
@@ -100,9 +100,8 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
     #
     #     h2 = 1/2 - log(sqrt(pi/tau)) - W_{-1}(-sqrt(exp(1)*pi*tau) / 4).
     #
-    # Application of Newton's method will improve all of these approximations
-    # and will also always overestimate such that `j` won't exceed 1 in the
-    # first step. Nice!
+    # Application of Newton's method will improve all of these approximations and will
+    # also always overestimate such that `j` won't exceed 1 in the first step. Nice!
     # TODO since we're doing Newton iterations anyways, use a more accurate
     #      representation for j, and consequently for h
     h = _solve_expx_x_logx(eps ** 2, tol=1.0e-10)
@@ -111,16 +110,15 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
 
     success = False
     for level in range(max_steps + 1):
-        # We would like to calculate the weights until they are smaller than
-        # tau, i.e.,
+        # We would like to calculate the weights until they are smaller than tau, i.e.,
         #
         #     h * pi/2 * cosh(h*j) / cosh(pi/2 * sinh(h*j))**2 < tau.
         #
         # (TODO Newton on this expression to find tau?)
         #
-        # To streamline the computation, j is estimated in advance. The only
-        # assumption we're making is that h*j>>1 such that exp(-h*j) can be
-        # neglected. With this, the above becomes
+        # To streamline the computation, j is estimated in advance. The only assumption
+        # we're making is that h*j >> 1 such that exp(-h*j) can be neglected. With this,
+        # the above becomes
         #
         #     tau > h * pi/2 * exp(h*j)/2 / cosh(pi/2 * exp(h*j)/2)**2
         #
@@ -132,27 +130,27 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         #
         #     tau > -2*h*z * exp(z)
         #
-        # This inequality is fulfilled exactly if z = W(-tau/h/2) with W being
-        # the (-1)-branch of the Lambert-W function IF exp(1)*tau < 2*h (which
-        # we can assume since `tau` will generally be small). We finally get
+        # This inequality is fulfilled exactly if z = W(-tau/h/2) with W being the
+        # (-1)-branch of the Lambert-W function IF exp(1)*tau < 2*h (which we can assume
+        # since `tau` will generally be small). We finally get
         #
         #     j > ln(-2/pi * W(-tau/h/2)) / h.
         #
-        # We do require j to be positive, so -2/pi * W(-tau/h/2) > 1. This
-        # translates to the slightly stricter requirement
+        # We do require j to be positive, so -2/pi * W(-tau/h/2) > 1. This translates to
+        # the slightly stricter requirement
         #
         #     tau * exp(pi/2) < pi * h,
         #
-        # i.e., h needs to be about 1.531 times larger than tau (not only 1.359
-        # times as the previous bound suggested).
+        # i.e., h needs to be about 1.531 times larger than tau (not only 1.359 times as
+        # the previous bound suggested).
         #
         # Note further that h*j is ever decreasing as h decreases.
         assert eps ** 2 * mp.exp(mp.pi / 2) < mp.pi * h
         j = int(mp.ln(-2 / mp.pi * mp.lambertw(-eps ** 2 / h / 2, -1)) / h)
 
-        # At level 0, one only takes the midpoint, for all greater levels every
-        # other point. The value estimation is later completed with the
-        # estimation from the previous level which.
+        # At level 0, one only takes the midpoint, for all greater levels every other
+        # point. The value estimation is later completed with the estimation from the
+        # previous level which.
         if level == 0:
             t = [0]
         else:
@@ -179,15 +177,13 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
 
         # Perform the integration.
         if level == 0:
-            # The root level only contains one node, the midpoint; function
-            # values of f_left and f_right are equal here. Deliberately take
-            # lsummands here.
+            # The root level only contains one node, the midpoint; function values of
+            # f_left and f_right are equal here. Deliberately take lsummands here.
             value_estimates = list(lsummands)
         else:
             value_estimates.append(
-                # Take the estimation from the previous step and half the step
-                # size. Fill the gaps with the sum of the values of the current
-                # step.
+                # Take the estimation from the previous step and half the step size.
+                # Fill the gaps with the sum of the values of the current step.
                 value_estimates[-1] / 2
                 + mp.fsum(lsummands)
                 + mp.fsum(rsummands)
@@ -325,17 +321,25 @@ def _solve_expx_x_logx(tau, tol, max_steps=10):
     approximately using Newton's method. The approximate solution is guaranteed
     to overestimate.
     """
+    num_digits_orig = mp.dps
+    num_digits = int(-mp.log10(tol) + 1)
+    if num_digits_orig < num_digits:
+        mp.dps = num_digits
+
+    # Initial guess
     x = mp.log(2 / mp.pi * mp.log(mp.pi / tau))
-    # x = mp.log(tau/mp.pi) -  mp.lambertw(-tau/2, -1))
-    # x = mp.mpf(1)/2 \
-    #    - mp.log(mp.sqrt(mp.pi/tau)) \
-    #    - mp.lambertw(-mp.sqrt(mp.exp(1)*mp.pi*tau)/4, -1)
+    # x = mp.log(tau / mp.pi) - mp.lambertw(-tau / 2, -1)
+    # x = (
+    #     mp.mpf(1) / 2
+    #     - mp.log(mp.sqrt(mp.pi / tau))
+    #     - mp.lambertw(-mp.sqrt(mp.exp(1) * mp.pi * tau) / 4, -1)
+    # )
 
     def f0(x):
         return mp.pi / 2 * mp.exp(x) - x - mp.log(x * mp.pi / tau)
 
     def f1(x):
-        return mp.pi / 2 * mp.exp(x) - 1 - mp.mpf(1) / x
+        return mp.pi / 2 * mp.exp(x) - 1 - 1 / x
 
     f0x = f0(x)
     success = False
@@ -349,4 +353,6 @@ def _solve_expx_x_logx(tau, tol, max_steps=10):
             break
 
     assert success
+
+    mp.dps = num_digits_orig
     return x
