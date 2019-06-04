@@ -91,6 +91,23 @@ function, even seemingly difficult ones with (integrable) singularities at the e
 points, can be integrated with _arbitrary_ precision.
 ```python
 import quadpy
+impoy numpy
+
+val, error_estimate = quadpy.line_segment.tanh_sinh(
+    lambda x: numpy.exp(x) * numpy.cos(x),
+    0,
+    numpy.pi / 2,
+    1.0e-14,
+    # Optional: Specify first and second derivative for better error estimation
+    # f_derivatives={
+    #     1: lambda x: numpy.exp(x) * (numpy.cos(x) - numpy.sin(x)),
+    #     2: lambda x: -2 * numpy.exp(x) * numpy.sin(x),
+    # },
+)
+```
+If you want more digits, use [mpmath](http://mpmath.org/) for arbitrary precision arithmetics:
+```python
+import quadpy
 from mpmath import mp
 import sympy
 
@@ -103,7 +120,6 @@ val, error_estimate = quadpy.line_segment.tanh_sinh(
         mode="mpmath"
         )
 ```
-Note the usage of `mpmath` here for arbirtrary precision arithmetics.
 
 If the function has a singularity at a boundary, it needs to be shifted such that the
 singularity is at 0. If there are singularities at both ends, the function can be
