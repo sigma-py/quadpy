@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 #
+import math
+
 from mpmath import mp
 import numpy
 import scipy.special
@@ -83,7 +85,7 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10, mode="mpmath"):
             return scipy.special.lambertw(x, k).real
 
         ln = numpy.log
-        fsum = numpy.sum
+        fsum = math.fsum
 
     alpha2 = alpha / 2
 
@@ -240,6 +242,7 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10, mode="mpmath"):
                 f_right,
                 alpha,
                 last_error_estimate,
+                mode
             )
             last_error_estimate = error_estimate
         else:
@@ -270,6 +273,7 @@ def _error_estimate1(
     f_right,
     alpha,
     last_estimate,
+    mode
 ):
     """
     A pretty accurate error estimation is
@@ -283,7 +287,12 @@ def _error_estimate1(
     """
     alpha2 = alpha / 2
 
-    sinh_sinh_t = numpy.array(list(map(mp.sinh, sinh_t)))
+    if mode == "mpmath":
+        sinh_sinh_t = numpy.array(list(map(mp.sinh, sinh_t)))
+    else:
+        assert mode == "numpy"
+        sinh_sinh_t = numpy.sinh(sinh_t)
+
     tanh_sinh_t = sinh_sinh_t / cosh_sinh_t
 
     # More derivatives of y = 1-g(t).
@@ -301,11 +310,17 @@ def _error_estimate1(
         / cosh_sinh_t ** 3
     )
 
-    fl1_y = numpy.array([f_left[1](yy) for yy in y0])
-    fl2_y = numpy.array([f_left[2](yy) for yy in y0])
-
-    fr1_y = numpy.array([f_right[1](yy) for yy in y0])
-    fr2_y = numpy.array([f_right[2](yy) for yy in y0])
+    if mode == "mpmath":
+        fl1_y = numpy.array([f_left[1](yy) for yy in y0])
+        fl2_y = numpy.array([f_left[2](yy) for yy in y0])
+        fr1_y = numpy.array([f_right[1](yy) for yy in y0])
+        fr2_y = numpy.array([f_right[2](yy) for yy in y0])
+    else:
+        assert mode == "numpy"
+        fl1_y = f_left[1](y0)
+        fl2_y = f_left[2](y0)
+        fr1_y = f_right[1](y0)
+        fr2_y = f_right[2](y0)
 
     # Second derivative of F(t) = f(g(t)) * g'(t).
     summands = numpy.concatenate(
@@ -315,7 +330,15 @@ def _error_estimate1(
         ]
     )
 
-    val = h * (h / 2 / mp.pi) ** 2 * mp.fsum(summands)
+    if mode == "mpmath":
+        fsum = mp.fsum
+        pi = mp.pi
+    else:
+        assert mode == "numpy"
+        fsum = math.fsum
+        pi = math.pi
+
+    val = h * (h / 2 / pi) ** 2 * fsum(summands)
     if last_estimate is None:
         # Root level: The midpoint is counted twice in the above sum.
         out = val / 2

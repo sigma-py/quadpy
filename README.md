@@ -90,6 +90,7 @@ degree. Its tremendous usefulness rather comes from the fact that a wide variety
 function, even seemingly difficult ones with (integrable) singularities at the end
 points, can be integrated with _arbitrary_ precision.
 ```python
+import quadpy
 from mpmath import mp
 import sympy
 
