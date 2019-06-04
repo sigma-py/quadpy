@@ -48,11 +48,11 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10, mode="mpmath"):
     """Integrate a function `f` between `a` and `b` with accuracy `eps`. The function
     `f` is given in terms of two functions
 
-        * `f_left(s) = f(a + s)`, i.e., `f` linearly scaled such that `f_left(0) = a`,
-        `f_left(b-a) = b`,
+        * `f_left(s) = f(a + s)`, i.e., `f` linearly scaled such that `f_left(0) =
+          f(a)`, `f_left(b-a) = f(b)`,
 
-        * `f_right(s) = f(b - s)`, i.e., `f` linearly scaled such that `f_right(0) = b`,
-        `f_left(b-a) = a`.
+        * `f_right(s) = f(b - s)`, i.e., `f` linearly scaled such that `f_right(0) =
+          f(b)`, `f_left(b-a) = f(a)`.
 
     Implemented are Bailey's enhancements plus a few more tricks.
 
@@ -76,11 +76,16 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10, mode="mpmath"):
     else:
         assert mode == "numpy"
         kernel = numpy
-        lambertw = scipy.special.lambertw
+
+        def lambertw(x, k):
+            out = scipy.special.lambertw(x, k)
+            assert abs(out.imag) < 1.0e-15
+            return scipy.special.lambertw(x, k).real
+
         ln = numpy.log
         fsum = numpy.sum
 
-    alpha2 = alpha / mp.mpf(2)
+    alpha2 = alpha / 2
 
     # What's a good initial step size `h`?
     # The larger `h` is chosen, the fewer points will be part of the evaluation.
@@ -168,7 +173,7 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10, mode="mpmath"):
         #
         # Note further that h*j is ever decreasing as h decreases.
         assert eps ** 2 * kernel.exp(kernel.pi / 2) < kernel.pi * h
-        j = int(ln(-2 / kernel.pi * kernel.lambertw(-eps ** 2 / h / 2, -1)) / h)
+        j = int(ln(-2 / kernel.pi * lambertw(-eps ** 2 / h / 2, -1)) / h)
 
         # At level 0, one only takes the midpoint, for all greater levels every other
         # point. The value estimation is later completed with the estimation from the
@@ -276,7 +281,7 @@ def _error_estimate1(
       F(t) = f(g(t)) * g'(t),
       g(t) = tanh(pi/2 sinh(t)).
     """
-    alpha2 = alpha / mp.mpf(2)
+    alpha2 = alpha / 2
 
     sinh_sinh_t = numpy.array(list(map(mp.sinh, sinh_t)))
     tanh_sinh_t = sinh_sinh_t / cosh_sinh_t

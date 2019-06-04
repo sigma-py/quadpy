@@ -78,6 +78,32 @@ def test_tanh_sinh(f, a, b, exact):
     return
 
 
+@pytest.mark.parametrize("f, a, b, exact", test_cases)
+def test_tanh_sinh_numpy(f, a, b, exact):
+    # test fine error estimate
+    tol = 1.0e-14
+    tol2 = 1.0e-13
+
+    t = sympy.Symbol("t")
+    f_derivatives = {
+        1: sympy.lambdify(t, sympy.diff(f(t), t, 1), modules=["numpy"]),
+        2: sympy.lambdify(t, sympy.diff(f(t), t, 2), modules=["numpy"]),
+    }
+
+    a = float(a)
+    b = float(b)
+
+    value, _ = quadpy.line_segment.tanh_sinh(
+        f, a, b, tol, f_derivatives=f_derivatives, mode="numpy"
+    )
+    assert abs(value - exact) < tol2
+
+    # test with crude estimate
+    value, _ = quadpy.line_segment.tanh_sinh(f, a, b, tol, mode="numpy")
+    assert abs(value - exact) < tol2
+    return
+
+
 # Test functions with singularities at both ends.
 @pytest.mark.parametrize(
     "f_left, f_right, b, exact",
@@ -139,7 +165,7 @@ def test_singularities_at_both_ends(f_left, f_right, b, exact):
     # fl = {0: f_left}
     # fr = {0: f_right}
     # value, _ = quadpy.line_segment.tanh_sinh_lr(fl, fr, b, tol)
-    # tol2 = 10**(-mp.dps+2)
+    # tol2 = 10**(-mp.dps + 2)
     # assert abs(value - exact) < tol2
     return
 

@@ -84,12 +84,11 @@ val, error_estimate = quadpy.line_segment.integrate_adaptive(
 
 #### tanh-sinh quadrature
 
-The more modern tanh-sinh quadrature is different from all other methods in
-quadpy in that it doesn't exactly integrate any function exactly, not even
-polynomials of low degree. Its tremendous usefulness rather comes from the fact
-that a wide variety of function, even seemingly difficult ones with
-(integrable) singularities at the end points, can be integrated with
-_arbitrary_ precision.
+The more modern tanh-sinh quadrature is different from all other methods in quadpy in
+that it doesn't exactly integrate any function exactly, not even polynomials of low
+degree. Its tremendous usefulness rather comes from the fact that a wide variety of
+function, even seemingly difficult ones with (integrable) singularities at the end
+points, can be integrated with _arbitrary_ precision.
 ```python
 from mpmath import mp
 import sympy
@@ -104,9 +103,9 @@ val, error_estimate = quadpy.line_segment.tanh_sinh(
 ```
 Note the usage of `mpmath` here for arbirtrary precision arithmetics.
 
-If the function has a singularity at a boundary, it needs to be shifted such
-that the singularity is at 0. If there are singularities at both ends, the
-function can be shifted both ways and be handed off to `tanh_sinh_lr`:
+If the function has a singularity at a boundary, it needs to be shifted such that the
+singularity is at 0. If there are singularities at both ends, the function can be
+shifted both ways and be handed off to `tanh_sinh_lr`:
 ```
 tanh_sinh_lr(f_left, f_right, interval_length, tol)
 ```
