@@ -2,9 +2,10 @@
 #
 from mpmath import mp
 import numpy
+import scipy.special
 
 
-def tanh_sinh(f, a, b, eps, max_steps=10, f_derivatives=None):
+def tanh_sinh(f, a, b, eps, max_steps=10, f_derivatives=None, mode="mpmath"):
     """Integrate a function `f` between `a` and `b` with accuracy `eps`.
 
     For more details, see
@@ -38,12 +39,12 @@ def tanh_sinh(f, a, b, eps, max_steps=10, f_derivatives=None):
         f_right[2] = lambda s: +f_derivatives[2](b - s)
 
     value_estimate, error_estimate = tanh_sinh_lr(
-        f_left, f_right, b - a, eps, max_steps=max_steps
+        f_left, f_right, b - a, eps, max_steps=max_steps, mode=mode
     )
     return value_estimate, error_estimate
 
 
-def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
+def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10, mode="mpmath"):
     """Integrate a function `f` between `a` and `b` with accuracy `eps`. The function
     `f` is given in terms of two functions
 
@@ -65,8 +66,19 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
     2006,
     <http://www.davidhbailey.com/dhbpapers/dhb-tanh-sinh.pdf>.
     """
-    num_digits = int(-mp.log10(eps) + 1)
-    mp.dps = num_digits
+    if mode == "mpmath":
+        num_digits = int(-mp.log10(eps) + 1)
+        mp.dps = num_digits
+        kernel = mp
+        lambertw = mp.lambertw
+        ln = mp.ln
+        fsum = mp.fsum
+    else:
+        assert mode == "numpy"
+        kernel = numpy
+        lambertw = scipy.special.lambertw
+        ln = numpy.log
+        fsum = numpy.sum
 
     alpha2 = alpha / mp.mpf(2)
 
@@ -104,7 +116,17 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
     # also always overestimate such that `j` won't exceed 1 in the first step. Nice!
     # TODO since we're doing Newton iterations anyways, use a more accurate
     #      representation for j, and consequently for h
-    h = _solve_expx_x_logx(eps ** 2, tol=1.0e-10)
+    tol = 1.0e-10
+    if mode == "mpmath":
+        num_digits_orig = mp.dps
+        num_digits = int(-mp.log10(tol) + 1)
+        if num_digits_orig < num_digits:
+            mp.dps = num_digits
+
+    h = _solve_expx_x_logx(eps ** 2, tol, kernel, ln)
+
+    if mode == "mpmath":
+        mp.dps = num_digits_orig
 
     last_error_estimate = None
 
@@ -145,8 +167,8 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         # the previous bound suggested).
         #
         # Note further that h*j is ever decreasing as h decreases.
-        assert eps ** 2 * mp.exp(mp.pi / 2) < mp.pi * h
-        j = int(mp.ln(-2 / mp.pi * mp.lambertw(-eps ** 2 / h / 2, -1)) / h)
+        assert eps ** 2 * kernel.exp(kernel.pi / 2) < kernel.pi * h
+        j = int(ln(-2 / kernel.pi * kernel.lambertw(-eps ** 2 / h / 2, -1)) / h)
 
         # At level 0, one only takes the midpoint, for all greater levels every other
         # point. The value estimation is later completed with the estimation from the
@@ -156,13 +178,21 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
         else:
             t = h * numpy.arange(1, j + 1, 2)
 
-        sinh_t = mp.pi / 2 * numpy.array(list(map(mp.sinh, t)))
-        cosh_t = mp.pi / 2 * numpy.array(list(map(mp.cosh, t)))
-        cosh_sinh_t = numpy.array(list(map(mp.cosh, sinh_t)))
-
-        # y = alpha/2 * (1 - x)
-        # x = [mp.tanh(v) for v in u2]
-        exp_sinh_t = numpy.array(list(map(mp.exp, sinh_t)))
+        if mode == "mpmath":
+            sinh_t = mp.pi / 2 * numpy.array(list(map(mp.sinh, t)))
+            cosh_t = mp.pi / 2 * numpy.array(list(map(mp.cosh, t)))
+            cosh_sinh_t = numpy.array(list(map(mp.cosh, sinh_t)))
+            # y = alpha/2 * (1 - x)
+            # x = [mp.tanh(v) for v in u2]
+            exp_sinh_t = numpy.array(list(map(mp.exp, sinh_t)))
+        else:
+            assert mode == "numpy"
+            sinh_t = numpy.pi / 2 * numpy.sinh(t)
+            cosh_t = numpy.pi / 2 * numpy.cosh(t)
+            cosh_sinh_t = numpy.cosh(sinh_t)
+            # y = alpha/2 * (1 - x)
+            # x = [mp.tanh(v) for v in u2]
+            exp_sinh_t = numpy.exp(sinh_t)
 
         y0 = alpha2 / exp_sinh_t / cosh_sinh_t
         y1 = -alpha2 * cosh_t / cosh_sinh_t ** 2
@@ -185,8 +215,8 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10):
                 # Take the estimation from the previous step and half the step size.
                 # Fill the gaps with the sum of the values of the current step.
                 value_estimates[-1] / 2
-                + mp.fsum(lsummands)
-                + mp.fsum(rsummands)
+                + fsum(lsummands)
+                + fsum(rsummands)
             )
 
         # error estimation
@@ -313,7 +343,7 @@ def _error_estimate2(eps, value_estimates, left_summands, right_summands):
     return error_estimate
 
 
-def _solve_expx_x_logx(tau, tol, max_steps=10):
+def _solve_expx_x_logx(tau, tol, kernel, ln, max_steps=10):
     """Solves the equation
 
     log(pi/tau) = pi/2 * exp(x) - x - log(x)
@@ -321,14 +351,9 @@ def _solve_expx_x_logx(tau, tol, max_steps=10):
     approximately using Newton's method. The approximate solution is guaranteed
     to overestimate.
     """
-    num_digits_orig = mp.dps
-    num_digits = int(-mp.log10(tol) + 1)
-    if num_digits_orig < num_digits:
-        mp.dps = num_digits
-
     # Initial guess
-    x = mp.log(2 / mp.pi * mp.log(mp.pi / tau))
-    # x = mp.log(tau / mp.pi) - mp.lambertw(-tau / 2, -1)
+    x = kernel.log(2 / kernel.pi * ln(kernel.pi / tau))
+    # x = ln(tau / kernel.pi) - kernel.lambertw(-tau / 2, -1)
     # x = (
     #     mp.mpf(1) / 2
     #     - mp.log(mp.sqrt(mp.pi / tau))
@@ -336,10 +361,10 @@ def _solve_expx_x_logx(tau, tol, max_steps=10):
     # )
 
     def f0(x):
-        return mp.pi / 2 * mp.exp(x) - x - mp.log(x * mp.pi / tau)
+        return kernel.pi / 2 * kernel.exp(x) - x - kernel.log(x * kernel.pi / tau)
 
     def f1(x):
-        return mp.pi / 2 * mp.exp(x) - 1 - 1 / x
+        return kernel.pi / 2 * kernel.exp(x) - 1 - 1 / x
 
     f0x = f0(x)
     success = False
@@ -353,6 +378,4 @@ def _solve_expx_x_logx(tau, tol, max_steps=10):
             break
 
     assert success
-
-    mp.dps = num_digits_orig
     return x
