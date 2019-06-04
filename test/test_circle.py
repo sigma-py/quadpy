@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import matplotlib.pyplot as plt
 import numpy
 import pytest
 import quadpy
@@ -28,6 +29,7 @@ def test_scheme(scheme):
 @pytest.mark.parametrize("scheme", [quadpy.circle.Krylov(3)])
 def test_show(scheme):
     quadpy.circle.show(scheme)
+    plt.close()
     return
 
 

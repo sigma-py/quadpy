@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import matplotlib.pyplot as plt
 import numpy
 import pytest
 import orthopy
@@ -288,6 +289,7 @@ def test_scheme_spherical(scheme, tol):
 @pytest.mark.parametrize("scheme", [quadpy.sphere.Lebedev("7")])
 def test_show(scheme):
     quadpy.sphere.show(scheme)
+    plt.close()
     return
 
 

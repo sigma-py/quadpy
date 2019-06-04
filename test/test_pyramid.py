@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import matplotlib.pyplot as plt
 import numpy
 import pytest
 import sympy
@@ -84,6 +85,7 @@ def test_scheme(scheme):
 @pytest.mark.parametrize("scheme", [quadpy.pyramid.Felippa(5)])
 def test_show(scheme):
     quadpy.pyramid.show(scheme)
+    plt.close()
     return
 
 

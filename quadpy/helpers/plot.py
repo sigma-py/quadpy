@@ -93,7 +93,7 @@ def show_mpl(points, weights, volume, edges, balls=None):
 
     fig = plt.figure()
     ax = fig.gca(projection=Axes3D.name)
-    ax.set_aspect("equal")
+    # ax.set_aspect("equal")
     ax.set_axis_off()
 
     for edge in edges:
