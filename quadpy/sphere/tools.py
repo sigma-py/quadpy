@@ -27,7 +27,7 @@ def _plot_mpl(scheme):
 
     fig = plt.figure()
     ax = fig.gca(projection=Axes3D.name)
-    ax.set_aspect("equal")
+    # ax.set_aspect("equal")
 
     flt = numpy.vectorize(float)
     pts = flt(scheme.points)

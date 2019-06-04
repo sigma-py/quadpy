@@ -2,6 +2,7 @@
 #
 from __future__ import print_function
 
+import matplotlib.pyplot as plt
 import numpy
 import pytest
 import sympy
@@ -160,6 +161,7 @@ def test_scheme(scheme, tol, print_degree=False):
 @pytest.mark.parametrize("scheme", [Product(quadpy.line_segment.NewtonCotesClosed(2))])
 def test_show(scheme):
     quadpy.hexahedron.show(scheme)
+    plt.close()
     return
 
 

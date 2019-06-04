@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import matplotlib.pyplot as plt
 import numpy
 import pytest
 import quadpy
@@ -31,6 +32,7 @@ def test_scheme(scheme, tol):
 @pytest.mark.parametrize("scheme", [quadpy.e3r2.Stroud("5-1")])
 def test_show(scheme, backend="mpl"):
     quadpy.e3r2.show(scheme, backend=backend)
+    plt.close()
     return
 
 

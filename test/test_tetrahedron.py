@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import matplotlib.pyplot as plt
 import numpy
 import pytest
 import sympy
@@ -99,6 +100,7 @@ def test_show(scheme):
         ]
     )
     quadpy.tetrahedron.show(scheme, tet)
+    plt.close()
     return
 
 
