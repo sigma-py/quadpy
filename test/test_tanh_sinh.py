@@ -70,8 +70,9 @@ def test_tanh_sinh(f, a, b, exact):
         2: sympy.lambdify(t, sympy.diff(f(t), t, 2), modules=["mpmath"]),
     }
 
-    value, _ = quadpy.line_segment.tanh_sinh(f, a, b, tol, f_derivatives=f_derivatives,
-            mode="mpmath")
+    value, _ = quadpy.line_segment.tanh_sinh(
+        f, a, b, tol, f_derivatives=f_derivatives, mode="mpmath"
+    )
     assert abs(value - exact) < tol2
 
     # test with crude estimate
@@ -95,9 +96,7 @@ def test_tanh_sinh_numpy(f, a, b, exact):
     a = float(a)
     b = float(b)
 
-    value, _ = quadpy.line_segment.tanh_sinh(
-        f, a, b, tol, f_derivatives=f_derivatives
-    )
+    value, _ = quadpy.line_segment.tanh_sinh(f, a, b, tol, f_derivatives=f_derivatives)
     assert abs(value - exact) < tol2
 
     # test with crude estimate
@@ -203,7 +202,9 @@ def test_low_precision(f, a, b, exact):
     }
 
     tol = 1.0e-2
-    value, _ = quadpy.line_segment.tanh_sinh(f, a, b, tol, f_derivatives=f_derivatives, mode="mpmath")
+    value, _ = quadpy.line_segment.tanh_sinh(
+        f, a, b, tol, f_derivatives=f_derivatives, mode="mpmath"
+    )
     assert abs(value - exact) < tol
     return
 

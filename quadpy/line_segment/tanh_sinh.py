@@ -242,7 +242,7 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10, mode="numpy"):
                 f_right,
                 alpha,
                 last_error_estimate,
-                mode
+                mode,
             )
             last_error_estimate = error_estimate
         else:
@@ -273,7 +273,7 @@ def _error_estimate1(
     f_right,
     alpha,
     last_estimate,
-    mode
+    mode,
 ):
     """
     A pretty accurate error estimation is
