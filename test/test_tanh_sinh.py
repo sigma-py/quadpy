@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 from mpmath import mp
+import numpy
 import pytest
 import sympy
 
@@ -104,6 +105,25 @@ def test_tanh_sinh_numpy(f, a, b, exact):
     return
 
 
+def test_tanh_sinh_numpy_example():
+    tol = 1.0e-14
+    val, error_estimate = quadpy.line_segment.tanh_sinh(
+        lambda x: numpy.exp(x) * numpy.cos(x),
+        0,
+        numpy.pi / 2,
+        tol,
+        # f_derivatives={
+        #     1: lambda x: numpy.exp(x) * (numpy.cos(x) - numpy.sin(x)),
+        #     2: lambda x: -2 * numpy.exp(x) * numpy.sin(x),
+        # },
+        mode="numpy",
+    )
+    exact = (numpy.exp(numpy.pi / 2) - 1) / 2
+
+    assert abs(val - exact) < tol
+    return
+
+
 # Test functions with singularities at both ends.
 @pytest.mark.parametrize(
     "f_left, f_right, b, exact",
@@ -192,9 +212,10 @@ if __name__ == "__main__":
     # test_tanh_sinh(
     #     lambda t: 1, 0, 1, 1
     #     )
-    test_singularities_at_both_ends(
-        lambda s: sympy.exp(1 - 1 / s) / sympy.sqrt(s ** 3 - s ** 4),
-        lambda s: sympy.exp(s / (s - 1)) / sympy.sqrt(s * (s * ((3 - s) * s - 3) + 1)),
-        1,
-        mp.sqrt(mp.pi),
-    )
+    # test_singularities_at_both_ends(
+    #     lambda s: sympy.exp(1 - 1 / s) / sympy.sqrt(s ** 3 - s ** 4),
+    #     lambda s: sympy.exp(s / (s - 1)) / sympy.sqrt(s * (s * ((3 - s) * s - 3) + 1)),
+    #     1,
+    #     mp.sqrt(mp.pi),
+    # )
+    test_tanh_sinh_numpy_example()
