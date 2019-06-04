@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import matplotlib.pyplot as plt
 import numpy
 import pytest
 import quadpy
@@ -49,6 +50,7 @@ def test_scheme(scheme, tol):
 @pytest.mark.parametrize("scheme", [quadpy.ball.HammerStroud("11-3")])
 def test_show(scheme, backend="mpl"):
     quadpy.ball.show(scheme, backend=backend)
+    plt.close()
     return
 
 

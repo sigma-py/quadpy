@@ -9,6 +9,7 @@ Your one-stop shop for numerical integration in Python.
 [![PyPi Version](https://img.shields.io/pypi/v/quadpy.svg)](https://pypi.org/project/quadpy)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1173132.svg)](https://doi.org/10.5281/zenodo.1173132)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?logo=github&label=Stars&logoColor=white)](https://github.com/nschloe/quadpy)
+[![PyPi downloads](https://img.shields.io/pypi/dd/quadpy.svg)](https://pypistats.org/packages/quadpy)
 
 Hundreds of numerical integration schemes for
 [line segments](#line-segment),
@@ -63,6 +64,9 @@ def f(x):
 
 More examples under [test/examples_test.py](https://github.com/nschloe/quadpy/blob/master/test/examples_test.py).
 
+Read more about the dimensionality of the input/output arrays [in the
+wiki](https://github.com/nschloe/quadpy/wiki#dimensionality-of-input-and-output-arrays).
+
 ### Adaptive quadrature
 
 quadpy can do adaptive quadrature for certain domains.
@@ -80,13 +84,30 @@ val, error_estimate = quadpy.line_segment.integrate_adaptive(
 
 #### tanh-sinh quadrature
 
-The more modern tanh-sinh quadrature is different from all other methods in
-quadpy in that it doesn't exactly integrate any function exactly, not even
-polynomials of low degree. Its tremendous usefulness rather comes from the fact
-that a wide variety of function, even seemingly difficult ones with
-(integrable) singularities at the end points, can be integrated with
-_arbitrary_ precision.
+The more modern tanh-sinh quadrature is different from all other methods in quadpy in
+that it doesn't exactly integrate any function exactly, not even polynomials of low
+degree. Its tremendous usefulness rather comes from the fact that a wide variety of
+function, even seemingly difficult ones with (integrable) singularities at the end
+points, can be integrated with _arbitrary_ precision.
 ```python
+import quadpy
+impoy numpy
+
+val, error_estimate = quadpy.line_segment.tanh_sinh(
+    lambda x: numpy.exp(x) * numpy.cos(x),
+    0,
+    numpy.pi / 2,
+    1.0e-14,
+    # Optional: Specify first and second derivative for better error estimation
+    # f_derivatives={
+    #     1: lambda x: numpy.exp(x) * (numpy.cos(x) - numpy.sin(x)),
+    #     2: lambda x: -2 * numpy.exp(x) * numpy.sin(x),
+    # },
+)
+```
+If you want more digits, use [mpmath](http://mpmath.org/) for arbitrary precision arithmetics:
+```python
+import quadpy
 from mpmath import mp
 import sympy
 
@@ -95,14 +116,14 @@ mp.dps = 50
 val, error_estimate = quadpy.line_segment.tanh_sinh(
         lambda x: mp.exp(x) * sympy.cos(x),
         0, mp.pi/2,
-        1.0e-50  # !
+        1.0e-50,  # !
+        mode="mpmath"
         )
 ```
-Note the usage of `mpmath` here for arbirtrary precision arithmetics.
 
-If the function has a singularity at a boundary, it needs to be shifted such
-that the singularity is at 0. If there are singularities at both ends, the
-function can be shifted both ways and be handed off to `tanh_sinh_lr`:
+If the function has a singularity at a boundary, it needs to be shifted such that the
+singularity is at 0. If there are singularities at both ends, the function can be
+shifted both ways and be handed off to `tanh_sinh_lr`:
 ```
 tanh_sinh_lr(f_left, f_right, interval_length, tol)
 ```
@@ -837,17 +858,6 @@ To run the tests, just check out this repository and type
 ```
 MPLBACKEND=Agg pytest
 ```
-
-### Distribution
-
-To create a new release
-
-1. bump the `__version__` number,
-
-2. publish to PyPi and GitHub:
-    ```
-    $ make publish
-    ```
 
 ### License
 quadpy is published under the [MIT license](https://en.wikipedia.org/wiki/MIT_License).
