@@ -7,7 +7,7 @@ import numpy
 import scipy.special
 
 
-def tanh_sinh(f, a, b, eps, max_steps=10, f_derivatives=None, mode="mpmath"):
+def tanh_sinh(f, a, b, eps, max_steps=10, f_derivatives=None, mode="numpy"):
     """Integrate a function `f` between `a` and `b` with accuracy `eps`.
 
     For more details, see
@@ -46,7 +46,7 @@ def tanh_sinh(f, a, b, eps, max_steps=10, f_derivatives=None, mode="mpmath"):
     return value_estimate, error_estimate
 
 
-def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10, mode="mpmath"):
+def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10, mode="numpy"):
     """Integrate a function `f` between `a` and `b` with accuracy `eps`. The function
     `f` is given in terms of two functions
 

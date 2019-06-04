@@ -99,7 +99,8 @@ mp.dps = 50
 val, error_estimate = quadpy.line_segment.tanh_sinh(
         lambda x: mp.exp(x) * sympy.cos(x),
         0, mp.pi/2,
-        1.0e-50  # !
+        1.0e-50,  # !
+        mode="mpmath"
         )
 ```
 Note the usage of `mpmath` here for arbirtrary precision arithmetics.
