@@ -8,59 +8,54 @@ import quadpy
 
 mp.dps = 50
 
-
-@pytest.mark.parametrize(
-    "f, a, b, exact",
-    [(lambda t: 1, -1, +1, 2)]
-    + [(lambda t: 1, 0, +5, 5)]
-    + [(lambda t: t, -0, +1, sympy.Rational(1, 2))]
-    + [(lambda t: t ** 2, -1, +1, sympy.Rational(2, 3))]
+test_cases = [
+    (lambda t: 1, -1, +1, 2),
+    (lambda t: 1, 0, +5, 5),
+    (lambda t: t, -0, +1, sympy.Rational(1, 2)),
+    (lambda t: t ** 2, -1, +1, sympy.Rational(2, 3)),
     # Bailey example 1:
-    + [(lambda t: t * sympy.log(1 + t), 0, 1, sympy.Rational(1, 4))]
+    (lambda t: t * sympy.log(1 + t), 0, 1, sympy.Rational(1, 4)),
     # Bailey example 2:
-    + [(lambda t: t ** 2 * sympy.atan(t), 0, 1, (sympy.pi - 2 + 2 * sympy.log(2)) / 12)]
+    (lambda t: t ** 2 * sympy.atan(t), 0, 1, (sympy.pi - 2 + 2 * sympy.log(2)) / 12),
     # Bailey example 3:
-    + [
-        (
-            lambda t: sympy.exp(t) * sympy.cos(t),
-            0,
-            mp.pi / 2,
-            (sympy.exp(sympy.pi / 2) - 1) / 2,
-        )
-    ]
+    (
+        lambda t: sympy.exp(t) * sympy.cos(t),
+        0,
+        mp.pi / 2,
+        (sympy.exp(sympy.pi / 2) - 1) / 2,
+    ),
     # Bailey example 4:
-    + [
-        (
-            lambda t: sympy.atan(sympy.sqrt(2 + t ** 2))
-            / (1 + t ** 2)
-            / sympy.sqrt(2 + t ** 2),
-            0,
-            1,
-            sympy.pi ** 2 * sympy.Rational(5, 96),
-        )
-    ]
+    (
+        lambda t: sympy.atan(sympy.sqrt(2 + t ** 2))
+        / (1 + t ** 2)
+        / sympy.sqrt(2 + t ** 2),
+        0,
+        1,
+        sympy.pi ** 2 * sympy.Rational(5, 96),
+    ),
     # Bailey example 5:
-    + [(lambda t: sympy.sqrt(t) * sympy.log(t), 0, 1, -sympy.Rational(4, 9))]
+    (lambda t: sympy.sqrt(t) * sympy.log(t), 0, 1, -sympy.Rational(4, 9)),
     # Bailey example 6 with singularity moved to 0.
-    + [(lambda t: sympy.sqrt(2 * t - t ** 2), 0, 1, sympy.pi / 4)]
+    (lambda t: sympy.sqrt(2 * t - t ** 2), 0, 1, sympy.pi / 4),
     # Bailey example 8:
-    + [(lambda t: sympy.log(t) ** 2, 0, 1, 2)]
+    (lambda t: sympy.log(t) ** 2, 0, 1, 2),
     # Bailey example 9:
-    + [(lambda t: sympy.log(sympy.sin(t)), 0, mp.pi / 2, -mp.pi * mp.log(2) / 2)]
+    (lambda t: sympy.log(sympy.sin(t)), 0, mp.pi / 2, -mp.pi * mp.log(2) / 2),
     # Bailey example 11:
-    + [(lambda s: 1 / (1 - 2 * s + 2 * s ** 2), 0, 1, mp.pi / 2)]
+    (lambda s: 1 / (1 - 2 * s + 2 * s ** 2), 0, 1, mp.pi / 2),
     # Bailey example 13:
-    + [(lambda s: sympy.exp(-(1 / s - 1) ** 2 / 2) / s ** 2, 0, 1, mp.sqrt(mp.pi / 2))]
+    (lambda s: sympy.exp(-(1 / s - 1) ** 2 / 2) / s ** 2, 0, 1, mp.sqrt(mp.pi / 2)),
     # Bailey example 14:
-    + [
-        (
-            lambda s: sympy.exp(1 - 1 / s) * sympy.cos(1 / s - 1) / s ** 2,
-            0,
-            1,
-            sympy.Rational(1, 2),
-        )
-    ],
-)
+    (
+        lambda s: sympy.exp(1 - 1 / s) * sympy.cos(1 / s - 1) / s ** 2,
+        0,
+        1,
+        sympy.Rational(1, 2),
+    ),
+]
+
+
+@pytest.mark.parametrize("f, a, b, exact", test_cases)
 def test_tanh_sinh(f, a, b, exact):
     # test fine error estimate
     mp.dps = 50
