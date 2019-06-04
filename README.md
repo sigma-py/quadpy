@@ -29,7 +29,12 @@ Hundreds of numerical integration schemes for
 [n-simplices](#n-simplex), and the
 1D/2D/3D/nD spaces with weight functions exp(-r) and exp(-r<sup>2</sup>).
 
-To numerically integrate any function over any given triangle, do
+To numerically integrate any function over any given triangle, install quadpy [from the
+Python Package Index](https://pypi.org/project/quadpy/) with
+```
+pip3 install quadpy --user
+```
+and do
 ```python
 import numpy
 import quadpy
@@ -91,7 +96,7 @@ function, even seemingly difficult ones with (integrable) singularities at the e
 points, can be integrated with _arbitrary_ precision.
 ```python
 import quadpy
-impoy numpy
+import numpy
 
 val, error_estimate = quadpy.line_segment.tanh_sinh(
     lambda x: numpy.exp(x) * numpy.cos(x),
@@ -105,7 +110,7 @@ val, error_estimate = quadpy.line_segment.tanh_sinh(
     # },
 )
 ```
-If you want more digits, use [mpmath](http://mpmath.org/) for arbitrary precision arithmetics:
+If you want more digits, use [mpmath](http://mpmath.org/) for arbitrary precision arithmetic:
 ```python
 import quadpy
 from mpmath import mp
@@ -848,9 +853,9 @@ Some explanations:
 
 quadpy is [available from the Python Package Index](https://pypi.org/project/quadpy/), so with
 ```
-pip install -U quadpy
+pip3 install quadpy --user
 ```
-you can install/upgrade.
+you can install.
 
 ### Testing
 
