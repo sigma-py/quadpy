@@ -70,11 +70,12 @@ def test_tanh_sinh(f, a, b, exact):
         2: sympy.lambdify(t, sympy.diff(f(t), t, 2), modules=["mpmath"]),
     }
 
-    value, _ = quadpy.line_segment.tanh_sinh(f, a, b, tol, f_derivatives=f_derivatives)
+    value, _ = quadpy.line_segment.tanh_sinh(f, a, b, tol, f_derivatives=f_derivatives,
+            mode="mpmath")
     assert abs(value - exact) < tol2
 
     # test with crude estimate
-    value, _ = quadpy.line_segment.tanh_sinh(f, a, b, tol)
+    value, _ = quadpy.line_segment.tanh_sinh(f, a, b, tol, mode="mpmath")
     assert abs(value - exact) < tol2
     return
 
@@ -95,12 +96,12 @@ def test_tanh_sinh_numpy(f, a, b, exact):
     b = float(b)
 
     value, _ = quadpy.line_segment.tanh_sinh(
-        f, a, b, tol, f_derivatives=f_derivatives, mode="numpy"
+        f, a, b, tol, f_derivatives=f_derivatives
     )
     assert abs(value - exact) < tol2
 
     # test with crude estimate
-    value, _ = quadpy.line_segment.tanh_sinh(f, a, b, tol, mode="numpy")
+    value, _ = quadpy.line_segment.tanh_sinh(f, a, b, tol)
     assert abs(value - exact) < tol2
     return
 
@@ -116,7 +117,6 @@ def test_tanh_sinh_numpy_example():
         #     1: lambda x: numpy.exp(x) * (numpy.cos(x) - numpy.sin(x)),
         #     2: lambda x: -2 * numpy.exp(x) * numpy.sin(x),
         # },
-        mode="numpy",
     )
     exact = (numpy.exp(numpy.pi / 2) - 1) / 2
 
@@ -177,7 +177,7 @@ def test_singularities_at_both_ends(f_left, f_right, b, exact):
         2: sympy.lambdify(t, sympy.diff(f_right(t), t, 2), modules=["mpmath"]),
     }
 
-    value, _ = quadpy.line_segment.tanh_sinh_lr(fl, fr, b, tol)
+    value, _ = quadpy.line_segment.tanh_sinh_lr(fl, fr, b, tol, mode="mpmath")
     tol2 = 10 ** (-mp.dps + 1)
     assert abs(value - exact) < tol2
 
@@ -203,7 +203,7 @@ def test_low_precision(f, a, b, exact):
     }
 
     tol = 1.0e-2
-    value, _ = quadpy.line_segment.tanh_sinh(f, a, b, tol, f_derivatives=f_derivatives)
+    value, _ = quadpy.line_segment.tanh_sinh(f, a, b, tol, f_derivatives=f_derivatives, mode="mpmath")
     assert abs(value - exact) < tol
     return
 
