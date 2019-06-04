@@ -1,6 +1,16 @@
 version: 2
 
 jobs:
+  lint:
+    docker:
+      - image: ubuntu:18.04
+    steps:
+      - checkout
+      - run: apt update
+      - run: apt install -y python3-pip
+      - run: pip3 install -U black flake8
+      - run: LC_ALL=C.UTF-8 black --check setup.py quadpy/ test/*.py
+      - run: flake8 setup.py quadpy/ test/*.py
   build:
     working_directory: ~/work
     docker:
@@ -8,15 +18,19 @@ jobs:
     steps:
       - run: apt-get update
       - run: apt-get install -y git python3-pip python3-pybind11 libeigen3-dev
-      - run: pip3 install -U pytest pytest-cov black flake8
+      - run: pip3 install -U pytest pytest-cov
       - checkout
       - run: pip3 install -r test_requirements.txt
       - run: pip3 install .[all]
-      # format and lint
-      - run: LC_ALL=C.UTF-8 black --check setup.py quadpy/ test/*.py
-      - run: flake8 setup.py quadpy/ test/*.py
       # The tests
       - run: cd test/ && MPLBACKEND=Agg pytest --cov quadpy
       # submit to codecov
       - run: apt-get install -y curl
       - run: bash <(curl -s https://codecov.io/bash)
+
+workflows:
+  version: 2
+  lint_and_build:
+    jobs:
+      - lint
+      - build
