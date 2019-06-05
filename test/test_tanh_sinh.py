@@ -141,6 +141,7 @@ def test_tanh_sinh_numpy_example():
         )
     ]
     # Bailey example 10:
+    # singularity on the right, derivative singularities at both ends
     + [
         (
             lambda t: sympy.sqrt(sympy.tan(t)),
