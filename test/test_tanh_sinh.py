@@ -92,6 +92,7 @@ def test_tanh_sinh_numpy(f, a, b, exact):
         1: sympy.lambdify(t, sympy.diff(f(t), t, 1), modules=["numpy"]),
         2: sympy.lambdify(t, sympy.diff(f(t), t, 2), modules=["numpy"]),
     }
+    f = sympy.lambdify(t, f(t), modules=["numpy"])
 
     a = float(a)
     b = float(b)
