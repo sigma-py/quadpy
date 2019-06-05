@@ -206,8 +206,13 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10, mode="numpy"):
 
         weights = -h * y1
 
-        fly = numpy.array([f_left[0](yy) for yy in y0])
-        fry = numpy.array([f_right[0](yy) for yy in y0])
+        if mode == "mpmath":
+            fly = numpy.array([f_left[0](yy) for yy in y0])
+            fry = numpy.array([f_right[0](yy) for yy in y0])
+        else:
+            assert mode == "numpy"
+            fly = f_left[0](y0)
+            fry = f_right[0](y0)
 
         lsummands = fly * weights
         rsummands = fry * weights
