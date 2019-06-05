@@ -127,10 +127,24 @@ val, error_estimate = quadpy.line_segment.tanh_sinh(
 ```
 
 If the function has a singularity at a boundary, it needs to be shifted such that the
-singularity is at 0. If there are singularities at both ends, the function can be
-shifted both ways and be handed off to `tanh_sinh_lr`:
+singularity is at 0. (This is to avoid round-off errors for points that are very close
+to the singularity.)
+If there are singularities at both ends, the function can be shifted both ways and be
+handed off to `tanh_sinh_lr`; For example, for the function `1 / sqrt(1 - x**2)`, this
+gives
 ```
-tanh_sinh_lr(f_left, f_right, interval_length, tol)
+import numpy
+import quadpy
+
+# def f(x):
+#    return 1 / numpy.sqrt(1 - x ** 2)
+
+val, error_estimate = quadpy.line_segment.tanh_sinh_lr(
+      [lambda x: 1 / numpy.sqrt(-x**2 + 2*x)],  # = 1 / sqrt(1 - (x-1)**2)
+      [lambda x: 1 / numpy.sqrt(-x**2 + 2*x)],  # = 1 / sqrt(1 - (-(x-1))**2)
+      2,  # length of the interval
+      1.0e-10
+      )
 ```
 
 
