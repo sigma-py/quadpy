@@ -50,6 +50,7 @@ __all__ = [
     "WissmannBecker",
     "WitherdenVincent",
     "Product",
+    "Schmid",
     "Sommariva",
     "StroudN",
     "show",

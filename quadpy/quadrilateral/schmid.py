@@ -30,8 +30,6 @@ class Schmid(object):
 
         self.name = "Schmid({})".format(index)
 
-        print(index == 2)
-
         if index == 2:
             self.degree = 2
             self.points = numpy.array(
