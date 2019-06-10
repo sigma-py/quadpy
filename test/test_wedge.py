@@ -74,7 +74,7 @@ def _integrate_monomial_over_unit_wedge(k):
     [quadpy.wedge.Felippa(k) for k in range(1, 7)]
     + [
         quadpy.wedge.KubatkoYeagerMaggi(k)
-        for k in ["1", "2a", "2b", "3a", "3b", "3c", "3d", "4a", "4b"]
+        for k in ["1", "2a", "2b", "3a", "3b", "3c", "3d", "4a", "4b", "5a", "5b", "5c"]
     ],
 )
 def test_scheme(scheme):
