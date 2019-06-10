@@ -15,6 +15,7 @@ from .miller import Miller
 from .morrow_patterson import MorrowPatterson
 from .phillips import Phillips
 from .rabinowitz_richter import RabinowitzRichter
+from .schmid import Schmid
 from .sommariva import Sommariva
 from .stroud import Stroud
 from .tyler import Tyler
@@ -49,6 +50,7 @@ __all__ = [
     "WissmannBecker",
     "WitherdenVincent",
     "Product",
+    "Schmid",
     "Sommariva",
     "StroudN",
     "show",
