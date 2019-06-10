@@ -95,6 +95,7 @@ def _integrate_monomial_over_unit_wedge(k):
             "7c",
             "8a",
             "8b",
+            "9",
         ]
     ],
 )
