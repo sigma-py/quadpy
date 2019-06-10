@@ -37,11 +37,8 @@ class KubatkoYeagerMaggi(object):
         elif index == "2b":
             self.degree = 2
             data = [
-                (frac(1, 3), [[-1, -1, 0]]),
-                (frac(1, 3), [[-1, +1, 0]]),
-                (frac(1, 3), [[+1, -1, 0]]),
-                (frac(3, 2), [[-frac(1, 3), -frac(1, 3), +frac(2, 3)]]),
-                (frac(3, 2), [[-frac(1, 3), -frac(1, 3), -frac(2, 3)]]),
+                (frac(1, 3), _s21(-1)),
+                (frac(3, 2), _s3_z(frac(2, 3), symbolic)),
             ]
         elif index == "3a":
             self.degree = 3
@@ -74,24 +71,16 @@ class KubatkoYeagerMaggi(object):
         elif index == "3b":
             self.degree = 3
             data = [
-                (-frac(43, 12), [[-frac(1, 3), -frac(1, 3), 0]]),
-                (frac(25, 12), [[-frac(3, 5), -frac(3, 5), 0]]),
-                (frac(25, 12), [[-frac(3, 5), frac(1, 5), 0]]),
-                (frac(25, 12), [[frac(1, 5), -frac(3, 5), 0]]),
-                (frac(2, 3), [[-frac(1, 3), -frac(1, 3), +1]]),
-                (frac(2, 3), [[-frac(1, 3), -frac(1, 3), -1]]),
+                (-frac(43, 12), _s3(symbolic)),
+                (frac(25, 12), _s21(-frac(3, 5))),
+                (frac(2, 3), _s3_z(1, symbolic)),
             ]
         elif index == "3c":
             self.degree = 3
             alpha = 4 * sqrt(3) / 15
             data = [
-                (-frac(9, 4), [[-frac(1, 3), -frac(1, 3), 0]]),
-                (frac(25, 24), [[-frac(3, 5), -frac(3, 5), alpha]]),
-                (frac(25, 24), [[-frac(3, 5), -frac(3, 5), -alpha]]),
-                (frac(25, 24), [[-frac(3, 5), frac(1, 5), alpha]]),
-                (frac(25, 24), [[-frac(3, 5), frac(1, 5), -alpha]]),
-                (frac(25, 24), [[frac(1, 5), -frac(3, 5), alpha]]),
-                (frac(25, 24), [[frac(1, 5), -frac(3, 5), -alpha]]),
+                (-frac(9, 4), _s3(symbolic)),
+                (frac(25, 24), _s21_z(-frac(3, 5), alpha)),
             ]
         elif index == "3d":
             self.degree = 3
@@ -105,8 +94,28 @@ class KubatkoYeagerMaggi(object):
                 (frac(4, 9), [[-alpha, gamma, 0]]),
                 (frac(4, 9), [[-beta, gamma, 0]]),
                 (frac(4, 9), [[-beta, -alpha, 0]]),
-                (frac(2, 3), [[-frac(1, 3), -frac(1, 3), +1]]),
-                (frac(2, 3), [[-frac(1, 3), -frac(1, 3), -1]]),
+                (frac(2, 3), _s3_z(1, symbolic)),
+            ]
+        elif index == "4a":
+            self.degree = 4
+            data = [
+                (0.111155943811228, [[0.812075900047562, -0.986242751499303, 0.850716248413834]]),
+                (0.309060899887509, [[-0.792166223585545, 0.687201105597868, -0.115214772515700]]),
+                (0.516646862442958, [[-0.756726179789306, -0.731311840596107, -0.451491675441927]]),
+                (0.567975205132714, [[-0.552495167978340, 0.015073398439985, -0.824457000064439]]),
+                (0.382742555939017, [[-0.357230019521233, 0.126888850505978, 0.855349689995606]]),
+                (0.355960928492268, [[-0.987225392999058, 0.082647545710800, 0.452976444667786]]),
+                (0.108183228294342, [[-0.816603728785918, -0.915066171481315, 0.997939285245240]]),
+                (0.126355242780924, [[0.423489172633859, -1.112801167237130, -0.963298774205756]]),
+                (0.587370828592853, [[0.363041084609230, -0.499011410082669, -0.299892769705443]]),
+                (0.934548304626188, [[-0.175780343149613, -0.654971142379686, 0.367947041936472]]),
+            ]
+        elif index == "4b":
+            self.degree = 4
+            data = [
+                (0.545658450421913, _s21(-0.062688380276010)),
+                (0.431647899262139, _s3_z(0.866861974009030, symbolic)),
+                (0.249954808368331, _s21_z(-0.798519188402179, 0.675639823682265)),
             ]
         else:
             assert False
@@ -125,21 +134,21 @@ def _zeta_pm(xi, eta, zeta):
 
 def _s3(symbolic):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
-    return [[frac(1, 3), frac(1, 3), 0]]
+    return [[-frac(1, 3), -frac(1, 3), 0]]
 
 
 def _s3_z(z, symbolic):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
-    return [[frac(1, 3), frac(1, 3), +z], [frac(1, 3), frac(1, 3), -z]]
+    return [[-frac(1, 3), -frac(1, 3), +z], [-frac(1, 3), -frac(1, 3), -z]]
 
 
 def _s21(a):
-    b = 1 - 2 * a
+    b = -(1 + 2 * a)
     return [[a, b, 0], [b, a, 0], [a, a, 0]]
 
 
 def _s21_z(a, z):
-    b = 1 - 2 * a
+    b = -(1 + 2 * a)
     return [[a, b, +z], [b, a, +z], [a, a, +z], [a, b, -z], [b, a, -z], [a, a, -z]]
 
 
