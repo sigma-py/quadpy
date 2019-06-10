@@ -14,6 +14,7 @@ from .meister import Meister
 from .miller import Miller
 from .morrow_patterson import MorrowPatterson
 from .phillips import Phillips
+from .piessens_haegemans import PiessensHaegemans
 from .rabinowitz_richter import RabinowitzRichter
 from .schmid import Schmid
 from .sommariva import Sommariva
@@ -43,6 +44,7 @@ __all__ = [
     "Meister",
     "Miller",
     "MorrowPatterson",
+    "PiessensHaegemans",
     "Phillips",
     "RabinowitzRichter",
     "Stroud",
