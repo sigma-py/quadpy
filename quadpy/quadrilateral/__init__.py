@@ -20,6 +20,7 @@ from .schmid import Schmid
 from .sommariva import Sommariva
 from .stroud import Stroud
 from .tyler import Tyler
+from .waldron import Waldron
 from .wissmann_becker import WissmannBecker
 from .witherden_vincent import WitherdenVincent
 
@@ -49,6 +50,7 @@ __all__ = [
     "RabinowitzRichter",
     "Stroud",
     "Tyler",
+    "Waldron",
     "WissmannBecker",
     "WitherdenVincent",
     "Product",
