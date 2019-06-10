@@ -69,7 +69,36 @@ def _integrate_monomial_over_unit_wedge(k):
     return 2.0 * scipy.special.beta(k[0] + 1, k[1] + 2) / (k[1] + 1) / (k[2] + 1)
 
 
-@pytest.mark.parametrize("scheme", [quadpy.wedge.Felippa(k) for k in range(1, 7)])
+@pytest.mark.parametrize(
+    "scheme",
+    [quadpy.wedge.Felippa(k) for k in range(1, 7)]
+    + [
+        quadpy.wedge.KubatkoYeagerMaggi(k)
+        for k in [
+            "1",
+            "2a",
+            "2b",
+            "3a",
+            "3b",
+            "3c",
+            "3d",
+            "4a",
+            "4b",
+            "5a",
+            "5b",
+            "5c",
+            "6a",
+            "6b",
+            "6c",
+            "7a",
+            "7b",
+            "7c",
+            "8a",
+            "8b",
+            "9",
+        ]
+    ],
+)
 def test_scheme(scheme):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
