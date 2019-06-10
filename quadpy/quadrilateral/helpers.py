@@ -34,6 +34,16 @@ def _pm2(s, t):
     return numpy.array([[+s, +t], [-s, +t], [+s, -t], [-s, -t]])
 
 
+def _pmx(x):
+    z = numpy.zeros_like(x)
+    return numpy.array([[+x, z], [-x, z]])
+
+
+def _pmy(y):
+    z = numpy.zeros_like(y)
+    return numpy.array([[z, +y], [z, -y]])
+
+
 def _collapse0(a):
     """Collapse all dimensions of `a` except the first.
     """
@@ -83,6 +93,20 @@ def unroll(data, symbolic=False):
         s_data = numpy.swapaxes(s_data, 0, 1)
         bary.append(_collapse0(s_data).T)
         weights.append(numpy.tile(d[0], 4))
+
+    if "pmx" in data:
+        d = numpy.array(data["pmx"]).T
+        s_data = _pmx(d[1])
+        s_data = numpy.swapaxes(s_data, 0, 1)
+        bary.append(_collapse0(s_data).T)
+        weights.append(numpy.tile(d[0], 2))
+
+    if "pmy" in data:
+        d = numpy.array(data["pmy"]).T
+        s_data = _pmy(d[1])
+        s_data = numpy.swapaxes(s_data, 0, 1)
+        bary.append(_collapse0(s_data).T)
+        weights.append(numpy.tile(d[0], 2))
 
     bary = numpy.concatenate(bary)
     weights = numpy.concatenate(weights)
