@@ -344,6 +344,7 @@ val = quadpy.disk.integrate(
    - [Phillips](https://doi.org/10.1093/comjnl/10.2.202) (1967, degree 7)
    - [Rabinowitz-Richter](https://doi.org/10.2307/2004962) (1969, 6 schemes up to degree 15)
  * [Haegemans-Piessens](http://www.jstor.org/stable/2156699) (1977, degree 7)
+ * [Schmid](https://eudml.org/doc/132580) (1978, 3 schemes up to degree 6)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 13)
  * [Dunavant](https://doi.org/10.1002/nme.1620211004) (1985, 11 schemes up to degree 19)
  * [Morrow-Patterson](https://doi.org/10.1137/0722071) (1985, 2 schemes up to degree 20, single precision)
