@@ -20,6 +20,7 @@ from helpers import check_degree
     ]
     + [(quadpy.disk.Lether(k), 1.0e-14) for k in range(1, 6)]
     + [(quadpy.disk.Peirce1957(k), 1.0e-14) for k in range(1, 6)]
+    + [(quadpy.disk.PiessensHaegemans(), 1.0e-14)]
     + [(quadpy.disk.RabinowitzRichter(k), 1.0e-14) for k in range(1, 7)]
     + [
         (quadpy.disk.Stroud(k), 1.0e-14)

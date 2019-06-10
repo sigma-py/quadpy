@@ -11,6 +11,7 @@ from .lether import Lether
 from .mysovskih import Mysovskih
 from .peirce1956 import Peirce1956
 from .peirce1957 import Peirce1957
+from .piessens_haegemans import PiessensHaegemans
 from .rabinowitz_richter import RabinowitzRichter
 from .stroud import Stroud
 from .wissmann_becker import WissmannBecker
@@ -28,6 +29,7 @@ __all__ = [
     "Mysovskih",
     "Peirce1956",
     "Peirce1957",
+    "PiessensHaegemans",
     "RabinowitzRichter",
     "Stroud",
     "WissmannBecker",
