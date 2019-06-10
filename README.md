@@ -546,8 +546,9 @@ val = quadpy.pyramid.integrate(
 ### Wedge
 <img src="https://nschloe.github.io/quadpy/wedge.png" width="15%">
 
- * [Felippa](https://doi.org/10.1108/02644400410554362) (6 schemes
-   up to degree 6)
+ * [Felippa](https://doi.org/10.1108/02644400410554362) (6 schemes up to degree 6)
+ * [Kubatko-Yeager-Maggi](https://doi.org/10.1016/j.compfluid.2013.01.002) (21 schemes
+   up to degree 9)
 
 Example:
 ```python
