@@ -314,6 +314,7 @@ val = quadpy.triangle.integrate(
    - Mysovskih (1964, 3 schemes up to degree 15)
    - [Rabinowitz-Richter](https://doi.org/10.2307/2004962) (1969, 6 schemes up to degree 15)
  * [Lether](http://www.jstor.org/stable/2949473) (1971, arbitrary degree)
+ * [Piessens-Haegemans](https://doi.org/10.2307/2005291) (1975, 1 scheme of degree 9)
  * [Haegemans-Piessens](http://www.jstor.org/stable/2156699) (1977, degree 9)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 9)
  * [Wissmann-Becker](https://doi.org/10.1137/0723043) (1986, 3 schemes up to degree 8)
