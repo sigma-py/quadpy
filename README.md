@@ -350,6 +350,7 @@ val = quadpy.disk.integrate(
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 13)
  * [Dunavant](https://doi.org/10.1002/nme.1620211004) (1985, 11 schemes up to degree 19)
  * [Morrow-Patterson](https://doi.org/10.1137/0722071) (1985, 2 schemes up to degree 20, single precision)
+ * [Cohen-Gismalla](https://doi.org/10.1080/00207168608803504), (1986, 2 schemes up to degree 3, single precision)
  * [Wissmann-Becker](https://doi.org/10.1137/0723043) (1986, 6 schemes up to degree 8)
  * [Cools-Haegemans](https://doi.org/10.1007/BF02247942) (1988, 2 schemes up to degree 13)
  * [Waldron](http://ftp.cs.wisc.edu/Approx/symmetries.pdf) (1994, infinitely many schemes of degree 3)
