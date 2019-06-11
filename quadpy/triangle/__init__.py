@@ -7,6 +7,7 @@ from .cubtri import Cubtri
 from .berntsen_espelid import BerntsenEspelid
 from .dunavant import Dunavant
 from .gatermann import Gatermann
+from .griener_schmid import GrienerSchmid
 from .grundmann_moeller import GrundmannMoeller
 from .hammer_marlowe_stroud import HammerMarloweStroud
 from .hammer_stroud import HammerStroud
@@ -43,6 +44,7 @@ __all__ = [
     "BerntsenEspelid",
     "Dunavant",
     "Gatermann",
+    "GrienerSchmid",
     "GrundmannMoeller",
     "HammerMarloweStroud",
     "HammerStroud",
