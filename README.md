@@ -272,6 +272,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    [DCUTRI](http://dl.acm.org/citation.cfm?id=131772)),
  * [Liu-Vinokur](https://doi.org/10.1006/jcph.1998.5884) (1998, 13 schemes
    up to degree 5),
+ * [Griener-Schmid](https://doi.org/10.1016/S0377-0427(99)00215-0), (1999, 2 schemes of degree 6),
  * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
    (2000, 5 schemes up to degree 5),
  * [Wandzura-Xiao](https://doi.org/10.1016/S0898-1221(03)90004-6) (2003, 6
