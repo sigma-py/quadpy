@@ -162,6 +162,15 @@ def symm_s(*data):
     return points, weights
 
 
+def symm_s_t(*data):
+    w, s, t = numpy.array(data).T
+    points = _stack_first_last(
+        [[+s, +t], [-s, +t], [+s, -t], [-s, -t], [+t, +s], [-t, +s], [+t, -s], [-t, -s]]
+    )
+    weights = numpy.tile(w, 8)
+    return points, weights
+
+
 def _stack_first_last(arr):
     """Stacks an input array of shape (i, j, k) such that the output array is of shape
     (i*k, j).

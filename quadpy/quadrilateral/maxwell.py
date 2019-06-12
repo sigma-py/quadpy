@@ -5,8 +5,7 @@ from __future__ import division
 import numpy
 import sympy
 
-from .helpers import _symm_r_0, _z, _symm_s_t
-from ..helpers import untangle
+from .helpers import concat, zero, symm_r0, symm_s_t
 
 
 class Maxwell(object):
@@ -30,13 +29,11 @@ class Maxwell(object):
         r = sqrt(frac(12, 35))
         s, t = [sqrt((93 + i * 3 * sqrt(186)) / 155) for i in [+1, -1]]
 
-        data = [
-            (frac(1, 81), _z()),
-            (frac(49, 324), _symm_r_0(r)),
+        self.points, self.weights = concat(
+            zero(frac(1, 81)),
+            symm_r0([frac(49, 324), r]),
             # ERR typo in Stroud: 648 vs 649
-            (frac(31, 648), _symm_s_t(s, t)),
-        ]
-
-        self.points, self.weights = untangle(data)
+            symm_s_t([frac(31, 648), s, t]),
+        )
         self.weights *= 4
         return
