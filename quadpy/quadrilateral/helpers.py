@@ -116,10 +116,7 @@ def unroll(data, symbolic=False):
 def pmx(data):
     w, x = numpy.array(data).T
     zero = numpy.zeros(w.shape[0])
-    points = numpy.array([
-        [+x, zero],
-        [-x, zero],
-    ])[..., 0]
+    points = _stack_first_last([[+x, zero], [-x, zero]])
     weights = numpy.tile(w, 2)
     return points, weights
 
@@ -127,27 +124,27 @@ def pmx(data):
 def pmy(data):
     w, y = numpy.array(data).T
     zero = numpy.zeros(w.shape[0])
-    points = numpy.array([
-        [zero, +y],
-        [zero, -y],
-    ])[..., 0]
+    points = _stack_first_last([[zero, +y], [zero, -y]])
     weights = numpy.tile(w, 2)
     return points, weights
 
 
 def pm2(data):
     w, x, y = numpy.array(data).T
-    points = numpy.array([
-        [+x, +y],
-        [+x, -y],
-        [-x, +y],
-        [-x, -y],
-    ])[..., 0]
+    points = _stack_first_last([[+x, +y], [+x, -y], [-x, +y], [-x, -y]])
     weights = numpy.tile(w, 4)
     return points, weights
 
 
+def _stack_first_last(arr):
+    """Stacks an input array of shape (i, j, k) such that the output array is of shape
+    (i*k, j).
+    """
+    arr = numpy.swapaxes(arr, 0, 1)
+    return arr.reshape(arr.shape[0], -1).T
+
+
 def concat(data):
-    points = numpy.vstack(t[0] for t in data)
+    points = numpy.vstack([t[0] for t in data])
     weights = numpy.concatenate([t[1] for t in data])
     return points, weights
