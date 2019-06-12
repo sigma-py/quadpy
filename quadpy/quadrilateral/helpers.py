@@ -111,3 +111,43 @@ def unroll(data, symbolic=False):
     bary = numpy.concatenate(bary)
     weights = numpy.concatenate(weights)
     return bary, weights
+
+
+def pmx(data):
+    w, x = numpy.array(data).T
+    zero = numpy.zeros(w.shape[0])
+    points = numpy.array([
+        [+x, zero],
+        [-x, zero],
+    ])[..., 0]
+    weights = numpy.tile(w, 2)
+    return points, weights
+
+
+def pmy(data):
+    w, y = numpy.array(data).T
+    zero = numpy.zeros(w.shape[0])
+    points = numpy.array([
+        [zero, +y],
+        [zero, -y],
+    ])[..., 0]
+    weights = numpy.tile(w, 2)
+    return points, weights
+
+
+def pm2(data):
+    w, x, y = numpy.array(data).T
+    points = numpy.array([
+        [+x, +y],
+        [+x, -y],
+        [-x, +y],
+        [-x, -y],
+    ])[..., 0]
+    weights = numpy.tile(w, 4)
+    return points, weights
+
+
+def concat(data):
+    points = numpy.vstack(t[0] for t in data)
+    weights = numpy.concatenate([t[1] for t in data])
+    return points, weights
