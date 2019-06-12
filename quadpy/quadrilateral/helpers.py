@@ -129,9 +129,31 @@ def pmy(data):
     return points, weights
 
 
+def pm(data):
+    w, s, t = numpy.array(data).T
+    points = _stack_first_last([[+s, +t], [-s, -t]])
+    weights = numpy.tile(w, 2)
+    return points, weights
+
+
 def pm2(data):
     w, x, y = numpy.array(data).T
     points = _stack_first_last([[+x, +y], [+x, -y], [-x, +y], [-x, -y]])
+    weights = numpy.tile(w, 4)
+    return points, weights
+
+
+def symm_r0(data):
+    w, r = numpy.array(data).T
+    zero = numpy.zeros(w.shape[0])
+    points = _stack_first_last([[+r, zero], [-r, zero], [zero, +r], [zero, -r]])
+    weights = numpy.tile(w, 4)
+    return points, weights
+
+
+def symm_s(data):
+    w, s = numpy.array(data).T
+    points = _stack_first_last([[+s, +s], [+s, -s], [-s, +s], [-s, -s]])
     weights = numpy.tile(w, 4)
     return points, weights
 
