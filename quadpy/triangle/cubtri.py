@@ -13,7 +13,7 @@ class Cubtri(object):
     Algorithm 584: CUBTRI: Automatic Cubature over a Triangle,
     ACM Trans. Math. Softw.,
     June 1982,
-    <http://dl.acm.org/citation.cfm?id=356001>.
+    <https://dl.acm.org/citation.cfm?id=356001>.
     """
 
     def __init__(self):

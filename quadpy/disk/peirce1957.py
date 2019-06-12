@@ -9,7 +9,7 @@ class Peirce1957(object):
     Numerical integration over the planar annulus,
     J. Soc. Indust. Appl. Math.,
     Vol. 5, No. 2, June, 1957,
-    <http://www.jstor.org/stable/2098722>.
+    <https://www.jstor.org/stable/2098722>.
     """
 
     def __init__(self, m):

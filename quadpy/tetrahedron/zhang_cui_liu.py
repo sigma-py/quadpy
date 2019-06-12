@@ -9,7 +9,7 @@ class ZhangCuiLiu(object):
     A set of symmetric quadrature rules on triangles and tetrahedra,
     Journal of Computational Mathematics
     Vol. 27, No. 1 (January 2009), pp. 89-96,
-    <http://www.jstor.org/stable/43693493>.
+    <https://www.jstor.org/stable/43693493>.
 
     Abstract:
     We present a program for computing symmetric quadrature rules on triangles
