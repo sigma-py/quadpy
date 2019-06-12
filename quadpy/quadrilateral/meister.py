@@ -4,8 +4,7 @@ from __future__ import division
 
 import sympy
 
-from .helpers import _symm_r_0, _symm_s, _z, _symm_s_t
-from ..helpers import untangle
+from .helpers import concat, zero, symm_s, symm_r0, symm_s_t
 
 
 class Meister(object):
@@ -25,15 +24,12 @@ class Meister(object):
         r = frac(2, 3)
         s = frac(1, 3)
 
-        data = [
-            (frac(1024, 6720), _z()),
-            (frac(576, 6720), _symm_s(r)),
-            (frac(576, 6720), _symm_r_0(r)),
-            (-frac(9, 6720), _symm_s(s)),
-            (frac(117, 6720), _symm_s_t(1, s)),
-            (frac(47, 6720), _symm_s(1)),
-        ]
+        self.points, self.weights = concat(
+            zero(frac(1024, 6720)),
+            symm_s([frac(576, 6720), r], [-frac(9, 6720), s], [frac(47, 6720), 1]),
+            symm_r0([frac(576, 6720), r]),
+            symm_s_t([frac(117, 6720), 1, s]),
+        )
 
-        self.points, self.weights = untangle(data)
         self.weights *= 4
         return
