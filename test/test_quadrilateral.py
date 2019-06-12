@@ -54,6 +54,7 @@ def _integrate_exact2(k, x0, x1, y0, y1):
     + [(quadpy.quadrilateral.CoolsHaegemans1985(k), 1.0e-10) for k in range(1, 4)]
     + [(quadpy.quadrilateral.CoolsHaegemans1988(k), 1.0e-14) for k in [1, 2]]
     + [(quadpy.quadrilateral.Dunavant(k), 1.0e-13) for k in range(11)]
+    + [(quadpy.quadrilateral.Franke(lmbda), 1.0e-13) for lmbda in [0.0, 1.0, -0.8]]
     + [(quadpy.quadrilateral.HammerStroud(k), 1.0e-14) for k in ["1-2", "2-2", "3-2"]]
     + [(quadpy.quadrilateral.MorrowPatterson(k), 1.0e-5) for k in [1, 2]]
     + [
