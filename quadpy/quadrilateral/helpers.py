@@ -113,6 +113,10 @@ def unroll(data, symbolic=False):
     return bary, weights
 
 
+def zero(weight):
+    return [[0, 0]], [weight]
+
+
 def pmx(*data):
     w, x = numpy.array(data).T
     zero = numpy.zeros(w.shape[0])

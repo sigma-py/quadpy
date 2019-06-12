@@ -12,7 +12,7 @@ from __future__ import division
 import numpy
 import sympy
 
-from .helpers import pmx, pmy, pm2, concat
+from .helpers import pmx, pmy, pm2, concat, zero
 
 
 class Franke1(object):
@@ -31,7 +31,7 @@ class Franke1(object):
         c = sqrt(frac(3, 5))
 
         self.points, self.weights = concat(
-            ([[0, 0]], [frac(16 * (4 + 5 * lmbda), 9 * (9 + 5 * lmbda))]),
+            zero(frac(16 * (4 + 5 * lmbda), 9 * (9 + 5 * lmbda))),
             pmx([frac(40, 9 * (9 + 5 * lmbda)), a]),
             pm2([frac(25, 9 * (9 - 4 * lmbda)), b, c]),
             pmy([frac(40 * (1 - lmbda), 9 * (9 - 4 * lmbda)), c]),
@@ -100,7 +100,7 @@ class Franke3a(object):
             ),
             pmx([0.316049382716049, 0.774596669241483]),
             pmy([0.188616439798053, a], [0.258606964371341e-1, b]),
-            ([[0, 0]], [0.505679012345679]),
+            zero(0.505679012345679),
         )
         return
 
