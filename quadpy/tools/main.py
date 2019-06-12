@@ -14,8 +14,8 @@
     ACM Transactions on Mathematical Software (TOMS),
     Volume 20, Issue 1, March 1994,
     Pages 21-62,
-    <http://doi.org/10.1145/174603.174605>,
-    <http://www.cs.purdue.edu/archives/2002/wxg/codes/gauss.m>,
+    <https://doi.org/10.1145/174603.174605>,
+    <https://www.cs.purdue.edu/archives/2002/wxg/codes/gauss.m>,
 
 [3] W. Gautschi,
     How and how not to check Gaussian quadrature formulae,

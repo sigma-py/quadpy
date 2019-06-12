@@ -35,7 +35,7 @@ class BerntsenEspelid(object):
         # ACM Trans. Math. Softw.,
         # Sept. 1992,
         # 10.1145/131766.131772,
-        # <http://dl.acm.org/citation.cfm?id=131772>.
+        # <https://dl.acm.org/citation.cfm?id=131772>.
         data = {
             1: {
                 "s3": [flt("0.051739766065744133555179145422")],

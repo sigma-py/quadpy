@@ -14,7 +14,7 @@ class Triex(object):
     EXtrapolation,
     ACM Trans. Math. Softw.,
     March 1984,
-    <http://dl.acm.org/citation.cfm?id=356070&CFID=836775288&CFTOKEN=89206835>.
+    <https://dl.acm.org/citation.cfm?id=356070>.
     """
 
     def __init__(self, index):
