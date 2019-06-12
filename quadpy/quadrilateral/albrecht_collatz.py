@@ -22,11 +22,9 @@ class AlbrechtCollatz1(object):
         self.degree = 3
 
         self.points, self.weights = concat(
-            [
-                ([[0, 0]], [frac(5, 12)]),
-                symm_r0([[frac(1, 8), 1]]),
-                symm_s([[frac(1, 48), 1]]),
-            ]
+            ([[0, 0]], [frac(5, 12)]),
+            symm_r0([frac(1, 8), 1]),
+            symm_s([frac(1, 48), 1]),
         )
         self.weights *= 4
         return
@@ -43,11 +41,7 @@ class AlbrechtCollatz2(object):
         s = sqrt(frac(1, 3))
         t = sqrt(frac(14, 15))
         self.points, self.weights = concat(
-            [
-                ([[0, 0]], [frac(2, 7)]),
-                pmy([[frac(5, 63), t]]),
-                pm2([[frac(5, 36), r, s]]),
-            ]
+            ([[0, 0]], [frac(2, 7)]), pmy([frac(5, 63), t]), pm2([frac(5, 36), r, s])
         )
         self.weights *= 4
         return
@@ -64,16 +58,8 @@ class AlbrechtCollatz3(object):
         r = sqrt(frac(7, 15))
         s, t = [sqrt((7 + i * sqrt(24)) / 15) for i in [+1, -1]]
         self.points, self.weights = concat(
-            [
-                ([[0, 0]], [frac(2, 7)]),
-                pm(
-                    [
-                        [frac(25, 168), r, r],
-                        [frac(5, 48), +s, -t],
-                        [frac(5, 48), +t, -s],
-                    ]
-                ),
-            ]
+            ([[0, 0]], [frac(2, 7)]),
+            pm([frac(25, 168), r, r], [frac(5, 48), +s, -t], [frac(5, 48), +t, -s]),
         )
         self.weights *= 4
         return
@@ -86,11 +72,9 @@ class AlbrechtCollatz4(object):
         self.degree = 5
 
         self.points, self.weights = concat(
-            [
-                ([[0, 0]], [frac(2, 45)]),
-                symm_r0([[frac(2, 45), 1]]),
-                symm_s([[frac(1, 60), 1], [frac(8, 45), frac(1, 2)]]),
-            ]
+            ([[0, 0]], [frac(2, 45)]),
+            symm_r0([frac(2, 45), 1]),
+            symm_s([frac(1, 60), 1], [frac(8, 45), frac(1, 2)]),
         )
 
         self.weights *= 4

@@ -113,7 +113,7 @@ def unroll(data, symbolic=False):
     return bary, weights
 
 
-def pmx(data):
+def pmx(*data):
     w, x = numpy.array(data).T
     zero = numpy.zeros(w.shape[0])
     points = _stack_first_last([[+x, zero], [-x, zero]])
@@ -121,7 +121,7 @@ def pmx(data):
     return points, weights
 
 
-def pmy(data):
+def pmy(*data):
     w, y = numpy.array(data).T
     zero = numpy.zeros(w.shape[0])
     points = _stack_first_last([[zero, +y], [zero, -y]])
@@ -129,21 +129,21 @@ def pmy(data):
     return points, weights
 
 
-def pm(data):
+def pm(*data):
     w, s, t = numpy.array(data).T
     points = _stack_first_last([[+s, +t], [-s, -t]])
     weights = numpy.tile(w, 2)
     return points, weights
 
 
-def pm2(data):
+def pm2(*data):
     w, x, y = numpy.array(data).T
     points = _stack_first_last([[+x, +y], [+x, -y], [-x, +y], [-x, -y]])
     weights = numpy.tile(w, 4)
     return points, weights
 
 
-def symm_r0(data):
+def symm_r0(*data):
     w, r = numpy.array(data).T
     zero = numpy.zeros(w.shape[0])
     points = _stack_first_last([[+r, zero], [-r, zero], [zero, +r], [zero, -r]])
@@ -151,7 +151,7 @@ def symm_r0(data):
     return points, weights
 
 
-def symm_s(data):
+def symm_s(*data):
     w, s = numpy.array(data).T
     points = _stack_first_last([[+s, +s], [+s, -s], [-s, +s], [-s, -s]])
     weights = numpy.tile(w, 4)
@@ -166,7 +166,7 @@ def _stack_first_last(arr):
     return arr.reshape(arr.shape[0], -1).T
 
 
-def concat(data):
+def concat(*data):
     points = numpy.vstack([t[0] for t in data])
     weights = numpy.concatenate([t[1] for t in data])
     return points, weights
