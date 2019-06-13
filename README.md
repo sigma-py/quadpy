@@ -249,6 +249,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
    - [Albrecht-Collatz](https://doi.org/10.1002/zamm.19580380102) (1958, degree 3)
    - conical product scheme (degree 7)
+ * [Franke](https://doi.org/10.1090/S0025-5718-1971-0300440-5) (1971, 2 schemes of degree 7)
  * [Strang](https://bookstore.siam.org/wc08/)/[Cowper](https://doi.org/10.1002/nme.1620070316) (1973, 10 schemes up to
    degree 7),
  * [Lyness-Jespersen](https://doi.org/10.1093/imamat/15.1.19) (1975, 21
