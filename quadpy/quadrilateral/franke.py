@@ -110,4 +110,65 @@ class Franke3a(object):
         return
 
 
-Franke = {"1": Franke1, "2a": Franke2a, "2b": Franke2b, "3a": Franke3a}
+class Franke3b(object):
+    def __init__(self, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x / y
+        sqrt = sympy.sqrt if symbolic else numpy.sqrt
+
+        self.degree = 9
+
+        a = sqrt(frac(5, 9) + frac(2, 63) * sqrt(70))
+        b = sqrt(frac(5, 9) - frac(2, 63) * sqrt(70))
+
+        self.weights, self.points = concat(
+            pm2(
+                [0.499290623065150e-1, 0.945813739519925, a],
+                [0.158445182284802, 0.465346624836203, a],
+                [0.183383788151247, 0.804253925742002, b],
+                [0.881476523665422e-1, 0.681385892163677, b],
+            ),
+            pm(
+                [0.114456375561331, 0.963018409085396, 0.0],
+                [0.454432513327558, 0.428610143223121, 0.0],
+                [0.571052809297435e-1, 0.0, a],
+                [0.414194459963155, 0.0, b],
+            ),
+        )
+        return
+
+
+class Franke3c(object):
+    def __init__(self, symbolic=False):
+        frac = sympy.Rational if symbolic else lambda x, y: x / y
+        sqrt = sympy.sqrt if symbolic else numpy.sqrt
+
+        self.degree = 9
+
+        a = sqrt(frac(5, 9) + frac(2, 63) * sqrt(70))
+        b = sqrt(frac(5, 9) - frac(2, 63) * sqrt(70))
+
+        self.weights, self.points = concat(
+            pm2(
+                [0.494522019130682e-1, 0.949307350001342, a],
+                [0.163914731881061, 0.458177548931134, a],
+                [0.265904816944092, 0.774596669241483, b],
+            ),
+            pm(
+                [0.113041839046410, 0.967776908976724, 0.0],
+                [0.479922229600720, 0.417754671502987, 0.0],
+                [0.471199025241204e-1, 0.0, a],
+                [0.425447707110548, 0.0, b],
+            ),
+            zero(-0.481503595164821e-1),
+        )
+        return
+
+
+Franke = {
+    "1": Franke1,
+    "2a": Franke2a,
+    "2b": Franke2b,
+    "3a": Franke3a,
+    "3b": Franke3b,
+    "3c": Franke3c,
+}
