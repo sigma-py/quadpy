@@ -52,7 +52,7 @@ def _integrate_exact2(k, x0, x1, y0, y1):
     "scheme,tol",
     [(quadpy.quadrilateral.AlbrechtCollatz[k](), 1.0e-14) for k in [1, 2, 3, 4]]
     + [(quadpy.quadrilateral.CohenGismalla[k](), 1.0e-6) for k in [1, 2]]
-    + [(quadpy.quadrilateral.CoolsHaegemans1985(k), 1.0e-10) for k in range(1, 4)]
+    + [(quadpy.quadrilateral.CoolsHaegemans1985[k](), 1.0e-10) for k in range(1, 4)]
     + [(quadpy.quadrilateral.CoolsHaegemans1988[k](), 1.0e-14) for k in [1, 2]]
     + [(scheme(), 1.0e-13) for scheme in quadpy.quadrilateral.Dunavant.values()]
     + [(quadpy.quadrilateral.Franke["1"](lmbda), 1.0e-13) for lmbda in [0.0, 1.0, -0.8]]

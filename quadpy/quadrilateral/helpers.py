@@ -74,6 +74,13 @@ def s4(*data):
     return weights, points
 
 
+def s4a(*data):
+    w, a = numpy.array(data).T
+    points = _stack_first_last([[+a, +a], [+a, -a], [-a, +a], [-a, -a]])
+    weights = numpy.tile(w, 4)
+    return weights, points
+
+
 def _stack_first_last(arr):
     """Stacks an input array of shape (i, j, k) such that the output array is of shape
     (i*k, j).
