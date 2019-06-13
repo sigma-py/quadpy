@@ -18,7 +18,7 @@ class Strang(object):
     Cambridge, 1973,
     ISBN: 096140888X,
     LC: TA335.S77,
-    <http://bookstore.siam.org/wc08/>.
+    <https://bookstore.siam.org/wc08/>.
 
     The same schemes are published as
 

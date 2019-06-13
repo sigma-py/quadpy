@@ -59,7 +59,7 @@ def show_mpl(points, weights, volume, edges, balls=None):
         h = 1.0e-2
 
         for tp, r, color in zip(pts, radii, colors):
-            # http://matplotlib.org/examples/mplot3d/surface3d_demo2.html
+            # https://matplotlib.org/examples/mplot3d/surface3d_demo2.html
             # Compute sphere for every point anew. This is more costly on the
             # numerical side, but gives the flexibility of drawing sphere of
             # different size with different number of points. Another options

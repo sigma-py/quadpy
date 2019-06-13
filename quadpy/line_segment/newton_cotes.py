@@ -40,7 +40,7 @@ class NewtonCotesClosed(object):
 class NewtonCotesOpen(object):
     """
     Open Newton-Cotes formulae.
-    <http://math.stackexchange.com/a/1959071/36678>
+    <https://math.stackexchange.com/a/1959071/36678>
     """
 
     def __init__(self, index):

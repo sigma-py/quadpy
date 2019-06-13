@@ -9,7 +9,7 @@ class Lether(object):
     A Generalized Product Rule for the Circle,
     SIAM Journal on Numerical Analysis,
     Vol. 8, No. 2 (Jun., 1971), pp. 249-253,
-    <http://www.jstor.org/stable/2949473>.
+    <https://www.jstor.org/stable/2949473>.
     """
 
     def __init__(self, n):

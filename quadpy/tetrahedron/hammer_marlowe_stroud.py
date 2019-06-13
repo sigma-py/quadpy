@@ -31,7 +31,7 @@ class HammerMarloweStroud(object):
     Numerical Evaluation of Multiple Integrals II,
     Mathematical Tables and Other Aids to Computation.
     Vol. 12, No. 64 (Oct., 1958), pp. 272-280,
-    <http://www.jstor.org/stable/2002370>
+    <https://www.jstor.org/stable/2002370>
     """
 
     def __init__(self, index, symbolic=False):

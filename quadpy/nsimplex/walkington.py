@@ -16,7 +16,7 @@ class Walkington(object):
     Quadrature on simplices of arbitrary dimension,
     Technical Report,
     CMU, 2000,
-    <http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/>.
+    <https://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/>.
     """
 
     def __init__(self, d, index, symbolic=False):

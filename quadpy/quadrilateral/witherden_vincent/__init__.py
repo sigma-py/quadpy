@@ -1,42 +1,54 @@
 # -*- coding: utf-8 -*-
 #
+"""
+F.D. Witherden, P.E. Vincent,
+On the identification of symmetric quadrature rules for finite
+element methods,
+Computers & Mathematics with Applications,
+Volume 69, Issue 10, May 2015, Pages 1232–1241,
+<https://doi.org/10.1016/j.camwa.2015.03.017>.
+
+Abstract:
+In this paper we describe a methodology for the identification of symmetric quadrature
+rules inside of quadrilaterals, triangles, tetrahedra, prisms, pyramids, and hexahedra.
+The methodology is free from manual intervention and is capable of identifying a set of
+rules with a given strength and a given number of points. We also present polyquad which
+is an implementation of our methodology. Using polyquad v1.0 we proceed to derive a
+complete set of symmetric rules on the aforementioned domains. All rules possess purely
+positive weights and have all points inside the domain. Many of the rules appear to be
+new, and an improvement over those tabulated in the literature.
+"""
 import json
 import os
 
-from ..helpers import unroll
+from ..helpers import concat, zero, symm_r0, symm_s, symm_s_t, QuadrilateralScheme
 
 
-class WitherdenVincent(object):
-    """
-    F.D. Witherden, P.E. Vincent,
-    On the identification of symmetric quadrature rules for finite
-    element methods,
-    Computers & Mathematics with Applications,
-    Volume 69, Issue 10, May 2015, Pages 1232–1241,
-    <https://doi.org/10.1016/j.camwa.2015.03.017>.
+def witherden_vincent(degree, symbolic=False):
+    this_dir = os.path.dirname(os.path.realpath(__file__))
+    filename = "wv{:02d}.json".format(degree)
+    with open(os.path.join(this_dir, filename), "r") as f:
+        data = json.load(f)
 
-    Abstract:
-    In this paper we describe a methodology for the identification of symmetric
-    quadrature rules inside of quadrilaterals, triangles, tetrahedra, prisms,
-    pyramids, and hexahedra. The methodology is free from manual intervention
-    and is capable of identifying a set of rules with a given strength and a
-    given number of points. We also present polyquad which is an implementation
-    of our methodology. Using polyquad v1.0 we proceed to derive a complete set
-    of symmetric rules on the aforementioned domains. All rules possess purely
-    positive weights and have all points inside the domain. Many of the rules
-    appear to be new, and an improvement over those tabulated in the
-    literature.
-    """
+    assert degree == data.pop("degree")
 
-    def __init__(self, degree, symbolic=False):
-        self.name = "WitherdenVincent({})".format(degree)
+    d = []
+    if "zero" in data:
+        d += [zero(data["zero"][0][0])]
+    if "symm_r0" in data:
+        d += [symm_r0(*data["symm_r0"])]
+    if "symm_s" in data:
+        d += [symm_s(*data["symm_s"])]
+    if "symm_s_t" in data:
+        d += [symm_s_t(*data["symm_s_t"])]
 
-        this_dir = os.path.dirname(os.path.realpath(__file__))
-        filename = "wv{:02d}.json".format(degree)
-        with open(os.path.join(this_dir, filename), "r") as f:
-            data = json.load(f)
+    weights, points = concat(*d)
+    return QuadrilateralScheme(
+        "Witherden-Vincent {}".format(degree), degree, weights, points
+    )
 
-        self.degree = data.pop("degree")
 
-        self.points, self.weights = unroll(data)
-        return
+WitherdenVincent = {
+    k: lambda symbolic=False: witherden_vincent(k, symbolic)
+    for k in [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21]
+}

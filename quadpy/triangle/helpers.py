@@ -2,8 +2,15 @@
 #
 from __future__ import division
 
+import collections
+
 import numpy
 import sympy
+
+
+TriangleScheme = collections.namedtuple(
+    "TriangleScheme", ["name", "degree", "weights", "points", "bary"]
+)
 
 
 def _s3(symbolic):
