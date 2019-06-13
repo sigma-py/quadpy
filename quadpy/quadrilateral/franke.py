@@ -9,21 +9,29 @@ Math. Comp. 25 (1971), 803-817,
 """
 from __future__ import division
 
+import warnings
+
 import numpy
 import sympy
 
-from .helpers import pm, pm2, concat, zero, QuadrilateralScheme
+from .helpers import (
+    pm,
+    pm2,
+    concat,
+    zero,
+    QuadrilateralScheme,
+    symm_r0,
+    symm_s,
+    symm_s_t,
+)
+from .rabinowitz_richter import rabinowitz_richter_1
 
 
 def franke_1(lmbda, symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
 
-    name = "Franke(1, {})".format(lmbda)
-
     assert -frac(9, 5) <= lmbda <= frac(9, 4)
-
-    degree = 5
 
     a = sqrt(frac(9 + 5 * lmbda, 15))
     b = sqrt(frac(9 - 4 * lmbda, 15))
@@ -37,15 +45,12 @@ def franke_1(lmbda, symbolic=False):
             [frac(40 * (1 - lmbda), 9 * (9 - 4 * lmbda)), 0, c],
         ),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Franke(1, {})".format(lmbda), 5, weights, points)
 
 
 def franke_2a(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
-    name = "Franke 2a"
-    degree = 7
 
     a = sqrt(frac(15 + 2 * sqrt(30), 35))
     b = sqrt(frac(15 - 2 * sqrt(30), 35))
@@ -58,15 +63,12 @@ def franke_2a(symbolic=False):
         ),
         pm([0.579684582100041, 0, b]),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Franke 2a", 7, weights, points)
 
 
 def franke_2b(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
-    name = "Franke 2b"
-    degree = 7
 
     a = sqrt(frac(15 + 2 * sqrt(30), 35))
     b = sqrt(frac(15 - 2 * sqrt(30), 35))
@@ -79,15 +81,12 @@ def franke_2b(symbolic=False):
         ),
         pm([0.309204306788848, 0, a]),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Franke 2b", 7, weights, points)
 
 
 def franke_3a(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
-    name = "Franke 3a"
-    degree = 9
 
     a = sqrt(frac(5, 9) + frac(2, 63) * sqrt(70))
     b = sqrt(frac(5, 9) - frac(2, 63) * sqrt(70))
@@ -106,15 +105,12 @@ def franke_3a(symbolic=False):
         ),
         zero(0.505679012345679),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Franke 3a", 9, weights, points)
 
 
 def franke_3b(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
-    name = "Franke 3b"
-    degree = 9
 
     a = sqrt(frac(5, 9) + frac(2, 63) * sqrt(70))
     b = sqrt(frac(5, 9) - frac(2, 63) * sqrt(70))
@@ -133,15 +129,12 @@ def franke_3b(symbolic=False):
             [0.414194459963155, 0.0, b],
         ),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Franke 3b", 9, weights, points)
 
 
 def franke_3c(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
-    name = "Franke 3c"
-    degree = 9
 
     a = sqrt(frac(5, 9) + frac(2, 63) * sqrt(70))
     b = sqrt(frac(5, 9) - frac(2, 63) * sqrt(70))
@@ -160,7 +153,59 @@ def franke_3c(symbolic=False):
         ),
         zero(-0.481503595164821e-1),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Franke 3c", 9, weights, points)
+
+
+def franke_5(symbolic=False):
+    frac = sympy.Rational if symbolic else lambda x, y: x / y
+    sqrt = sympy.sqrt if symbolic else numpy.sqrt
+
+    r = sqrt(frac(6, 7))
+    s = sqrt(frac(114 - 3 * sqrt(583), 287))
+    t = sqrt(frac(114 + 3 * sqrt(583), 287))
+
+    weights, points = concat(
+        symm_r0([frac(98, 405), r]),
+        symm_s(
+            [frac(178981 + 2769 * sqrt(583), 472230), s],
+            [frac(178981 - 2769 * sqrt(583), 472230), t],
+        ),
+    )
+    return QuadrilateralScheme("Franke 5", 7, weights, points)
+
+
+def franke_6(symbolic=False):
+    frac = sympy.Rational if symbolic else lambda x, y: x / y
+    sqrt = sympy.sqrt if symbolic else numpy.sqrt
+
+    a = sqrt(frac(3, 2))
+    b = sqrt(frac(3, 7) * (1 + sqrt(frac(10, 31))))
+    c = sqrt(frac(3, 7) * (1 - sqrt(frac(10, 31))))
+
+    weights, points = concat(
+        zero(frac(392, 405)),
+        symm_s([frac(16, 2025), a]),
+        symm_s_t([frac(1519, 4050), b, c]),
+    )
+    return QuadrilateralScheme("Franke 6", 7, weights, points)
+
+
+def franke_8():
+    # TODO find error in franke_8
+    warnings.warn("Franke(8) only has degree 1.")
+
+    a = 0.488926856974369
+    b = 0.690880550486344
+    c = 0.939565258096838
+    r = 0.918620441056722
+    s = 0.344872025364404
+
+    weights, points = concat(
+        symm_r0([0.454163960686749, a]),
+        symm_s([0.214200360926862, b], [0.427312318657758e-1, c]),
+        symm_s_t([0.144452223260307, r, s]),
+    )
+    return QuadrilateralScheme("Franke 8", 1, weights, points)
 
 
 Franke = {
@@ -170,4 +215,8 @@ Franke = {
     "3a": franke_3a,
     "3b": franke_3b,
     "3c": franke_3c,
+    "5": franke_5,
+    "6": franke_6,
+    "7": rabinowitz_richter_1,
+    "8": franke_8,
 }
