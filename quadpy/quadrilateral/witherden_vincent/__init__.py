@@ -3,7 +3,7 @@
 import json
 import os
 
-from ..helpers import unroll
+from ..helpers import concat, zero, symm_r0, symm_s, symm_s_t
 
 
 class WitherdenVincent(object):
@@ -38,5 +38,15 @@ class WitherdenVincent(object):
 
         self.degree = data.pop("degree")
 
-        self.points, self.weights = unroll(data)
+        d = []
+        if "zero" in data:
+            d += [zero(data["zero"][0][0])]
+        if "symm_r0" in data:
+            d += [symm_r0(*data["symm_r0"])]
+        if "symm_s" in data:
+            d += [symm_s(*data["symm_s"])]
+        if "symm_s_t" in data:
+            d += [symm_s_t(*data["symm_s_t"])]
+
+        self.weights, self.points = concat(*d)
         return

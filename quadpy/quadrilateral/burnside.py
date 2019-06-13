@@ -5,7 +5,7 @@ from __future__ import division
 import numpy
 import sympy
 
-from .helpers import unroll
+from .helpers import concat, symm_r0, symm_s
 
 
 class Burnside(object):
@@ -24,8 +24,8 @@ class Burnside(object):
         r = sqrt(frac(7, 15))
         s = sqrt(frac(7, 9))
 
-        data = {"symm_r0": [[frac(10, 49), r]], "symm_s": [[frac(9, 196), s]]}
-
-        self.points, self.weights = unroll(data)
+        self.weights, self.points = concat(
+            symm_r0([frac(10, 49), r]), symm_s([frac(9, 196), s])
+        )
         self.weights *= 4
         return
