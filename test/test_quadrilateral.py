@@ -92,14 +92,11 @@ def _integrate_exact2(k, x0, x1, y0, y1):
     + [(quadpy.quadrilateral.PiessensHaegemans[k](), 1.0e-14) for k in [1, 2]]
     # TODO better-quality points/weights for Schmidt
     + [(quadpy.quadrilateral.Schmid[k](), 1.0e-10) for k in [2, 4, 6]]
-    + [(quadpy.quadrilateral.Sommariva(k), 1.0e-13) for k in range(1, 56)]
+    + [(scheme(), 1.0e-13) for scheme in quadpy.quadrilateral.Sommariva.values()]
     + [(quadpy.quadrilateral.StroudN(k), 1.0e-8) for k in ["Cn 7-1"]]
     + [(quadpy.quadrilateral.Waldron(0.6, numpy.pi / 7), 1.0e-14)]
     + [(scheme(), 1.0e-14) for scheme in quadpy.quadrilateral.WissmannBecker.values()]
-    + [
-        (quadpy.quadrilateral.WitherdenVincent(k), 1.0e-14)
-        for k in [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21]
-    ]
+    + [(scheme(), 1.0e-14) for scheme in quadpy.quadrilateral.WitherdenVincent.values()]
     + [(Product(quadpy.line_segment.Midpoint()), 1.0e-14)]
     + [(Product(quadpy.line_segment.Trapezoidal()), 1.0e-14)]
     + [(Product(quadpy.line_segment.GaussLegendre(k)), 1.0e-14) for k in range(1, 5)]
