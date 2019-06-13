@@ -95,10 +95,7 @@ def _integrate_exact2(k, x0, x1, y0, y1):
     + [(quadpy.quadrilateral.Sommariva(k), 1.0e-13) for k in range(1, 56)]
     + [(quadpy.quadrilateral.StroudN(k), 1.0e-8) for k in ["Cn 7-1"]]
     + [(quadpy.quadrilateral.Waldron(0.6, numpy.pi / 7), 1.0e-14)]
-    + [
-        (quadpy.quadrilateral.WissmannBecker(k), 1.0e-14)
-        for k in ["4-1", "4-2", "6-1", "6-2", "8-1", "8-2"]
-    ]
+    + [(scheme(), 1.0e-14) for scheme in quadpy.quadrilateral.WissmannBecker.values()]
     + [
         (quadpy.quadrilateral.WitherdenVincent(k), 1.0e-14)
         for k in [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21]
