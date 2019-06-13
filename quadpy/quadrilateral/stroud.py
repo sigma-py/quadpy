@@ -114,12 +114,12 @@ Stroud = {
     "C2 7-4": lambda symbolic=False: ProductGauss7(symbolic),
     "C2 7-5": lambda symbolic=False: Tyler(3, symbolic),
     "C2 7-6": lambda symbolic=False: Meister(symbolic),
-    "C2 9-1": lambda: RabinowitzRichter(1),
-    "C2 11-1": lambda: RabinowitzRichter(2),
-    "C2 11-2": lambda: RabinowitzRichter(3),
-    "C2 13-1": lambda: RabinowitzRichter(4),
-    "C2 15-1": lambda: RabinowitzRichter(5),
-    "C2 15-2": lambda: RabinowitzRichter(6),
+    "C2 9-1": RabinowitzRichter[1],
+    "C2 11-1": RabinowitzRichter[2],
+    "C2 11-2": RabinowitzRichter[3],
+    "C2 13-1": RabinowitzRichter[4],
+    "C2 15-1": RabinowitzRichter[5],
+    "C2 15-2": RabinowitzRichter[6],
 }
 
 # elif index == 2:
