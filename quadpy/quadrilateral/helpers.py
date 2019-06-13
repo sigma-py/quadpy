@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
 #
+import collections
+
 import numpy
+
+
+QuadrilateralScheme = collections.namedtuple(
+    "QuadrilateralScheme", ["name", "degree", "weights", "points"]
+)
 
 
 def zero(weight):
