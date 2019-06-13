@@ -66,7 +66,7 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10, mode="numpy"):
     David H. Bailey,
     Tanh-Sinh High-Precision Quadrature,
     2006,
-    <http://www.davidhbailey.com/dhbpapers/dhb-tanh-sinh.pdf>.
+    <https://www.davidhbailey.com/dhbpapers/dhb-tanh-sinh.pdf>.
     """
     if mode == "mpmath":
         num_digits = int(-mp.log10(eps) + 1)
@@ -355,7 +355,7 @@ def _error_estimate1(
 
 def _error_estimate2(eps, value_estimates, left_summands, right_summands):
     # "less formal" error estimation after Bailey,
-    # <http://www.davidhbailey.com/dhbpapers/dhb-tanh-sinh.pdf>
+    # <https://www.davidhbailey.com/dhbpapers/dhb-tanh-sinh.pdf>
     if len(value_estimates) < 3:
         error_estimate = 1
     elif value_estimates[0] == value_estimates[-1]:

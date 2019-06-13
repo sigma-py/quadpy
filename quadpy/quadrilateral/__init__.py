@@ -7,6 +7,7 @@ from .cohen_gismalla import CohenGismalla
 from .cools_haegemans_1985 import CoolsHaegemans1985
 from .cools_haegemans_1988 import CoolsHaegemans1988
 from .dunavant import Dunavant
+from .franke import Franke
 from .hammer_stroud import HammerStroud
 from .haegemans_piessens import HaegemansPiessens
 from .irwin import Irwin
@@ -40,6 +41,7 @@ __all__ = [
     "CoolsHaegemans1985",
     "CoolsHaegemans1988",
     "Dunavant",
+    "Franke",
     "HammerStroud",
     "HaegemansPiessens",
     "Irwin",

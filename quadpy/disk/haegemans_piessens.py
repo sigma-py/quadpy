@@ -9,7 +9,7 @@ class HaegemansPiessens(object):
     Construction of Cubature Formulas of Degree Seven and Nine Symmetric Planar Regions
     Using Orthogonal Polynomials,
     SIAM Journal on Numerical Analysis, Vol. 14, No. 3 (Jun., 1977), pp. 492-508,
-    <http://www.jstor.org/stable/2156699>.
+    <https://www.jstor.org/stable/2156699>.
 
     Abstract:
     A method of constructing twelve-point cubature formulas with polynomial precision

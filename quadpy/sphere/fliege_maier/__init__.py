@@ -14,7 +14,7 @@ class FliegeMaier(object):
     """
     Jörg Fliege, Ulrike Maier,
     A Two-Stage Approach for Computing Cubature Formulae for the Sphere,
-    <http://www.personal.soton.ac.uk/jf1w07/nodes/nodes.html>.
+    <https://www.personal.soton.ac.uk/jf1w07/nodes/nodes.html>.
     """
 
     def __init__(self, index):

@@ -1,113 +1,95 @@
 # -*- coding: utf-8 -*-
 #
+import collections
+
 import numpy
 
 
-def _z():
-    return numpy.array([[0, 0]])
+QuadrilateralScheme = collections.namedtuple(
+    "QuadrilateralScheme", ["name", "degree", "weights", "points"]
+)
 
 
-def _symm_r_0(r):
-    return numpy.array([[+r, 0], [-r, 0], [0, +r], [0, -r]])
+def zero(weight):
+    return numpy.array([weight]), numpy.array([[0, 0]])
 
 
-def _symm_r0(r):
-    z = numpy.zeros_like(r)
-    return numpy.array([[+r, z], [-r, z], [z, +r], [z, -r]])
+def pmx(*data):
+    w, x, y = numpy.array(data).T
+    points = _stack_first_last([[+x, y], [-x, y]])
+    weights = numpy.tile(w, 2)
+    return weights, points
 
 
-def _symm_s(s):
-    return numpy.array([[+s, +s], [-s, +s], [+s, -s], [-s, -s]])
+def pmy(*data):
+    w, x, y = numpy.array(data).T
+    points = _stack_first_last([[x, +y], [x, -y]])
+    weights = numpy.tile(w, 2)
+    return weights, points
 
 
-def _symm_s_t(s, t):
-    return numpy.array(
+def pm(*data):
+    w, s, t = numpy.array(data).T
+    points = _stack_first_last([[+s, +t], [-s, -t]])
+    weights = numpy.tile(w, 2)
+    return weights, points
+
+
+def pm2(*data):
+    w, x, y = numpy.array(data).T
+    points = _stack_first_last([[+x, +y], [+x, -y], [-x, +y], [-x, -y]])
+    weights = numpy.tile(w, 4)
+    return weights, points
+
+
+def symm_r0(*data):
+    data = numpy.array(data)
+    w, r = data.T
+    zero = numpy.zeros(w.shape[0], dtype=r.dtype)
+    points = _stack_first_last([[+r, zero], [-r, zero], [zero, +r], [zero, -r]])
+    weights = numpy.tile(w, 4)
+    return weights, points
+
+
+def symm_s(*data):
+    w, s = numpy.array(data).T
+    points = _stack_first_last([[+s, +s], [+s, -s], [-s, +s], [-s, -s]])
+    weights = numpy.tile(w, 4)
+    return weights, points
+
+
+def symm_s_t(*data):
+    w, s, t = numpy.array(data).T
+    points = _stack_first_last(
         [[+s, +t], [-s, +t], [+s, -t], [-s, -t], [+t, +s], [-t, +s], [+t, -s], [-t, -s]]
     )
+    weights = numpy.tile(w, 8)
+    return weights, points
 
 
-def _pm(s, t):
-    return numpy.array([[+s, +t], [-s, -t]])
+def s4(*data):
+    w, a, b = numpy.array(data).T
+    points = _stack_first_last([[+a, +b], [-a, -b], [-b, +a], [+b, -a]])
+    weights = numpy.tile(w, 4)
+    return weights, points
 
 
-def _pm2(s, t):
-    return numpy.array([[+s, +t], [-s, +t], [+s, -t], [-s, -t]])
+def s4a(*data):
+    w, a = numpy.array(data).T
+    points = _stack_first_last([[+a, +a], [+a, -a], [-a, +a], [-a, -a]])
+    weights = numpy.tile(w, 4)
+    return weights, points
 
 
-def _pmx(x):
-    z = numpy.zeros_like(x)
-    return numpy.array([[+x, z], [-x, z]])
-
-
-def _pmy(y):
-    z = numpy.zeros_like(y)
-    return numpy.array([[z, +y], [z, -y]])
-
-
-def _collapse0(a):
-    """Collapse all dimensions of `a` except the first.
+def _stack_first_last(arr):
+    """Stacks an input array of shape (i, j, k) such that the output array is of shape
+    (i*k, j).
     """
-    return a.reshape(a.shape[0], -1)
+    arr = numpy.swapaxes(arr, 0, 1)
+    return arr.reshape(arr.shape[0], -1).T
 
 
-def unroll(data, symbolic=False):
-    bary = []
-    weights = []
-
-    if "zero" in data:
-        d = numpy.array(data["zero"]).T
-        bary.append(numpy.zeros((1, 2)))
-        weights.append(numpy.tile(d[0], 1))
-
-    if "symm_r0" in data:
-        d = numpy.array(data["symm_r0"]).T
-        r0_data = _symm_r0(d[1])
-        r0_data = numpy.swapaxes(r0_data, 0, 1)
-        bary.append(_collapse0(r0_data).T)
-        weights.append(numpy.tile(d[0], 4))
-
-    if "symm_s" in data:
-        d = numpy.array(data["symm_s"]).T
-        s_data = _symm_s(d[1])
-        s_data = numpy.swapaxes(s_data, 0, 1)
-        bary.append(_collapse0(s_data).T)
-        weights.append(numpy.tile(d[0], 4))
-
-    if "symm_s_t" in data:
-        d = numpy.array(data["symm_s_t"]).T
-        s_data = _symm_s_t(*d[1:])
-        s_data = numpy.swapaxes(s_data, 0, 1)
-        bary.append(_collapse0(s_data).T)
-        weights.append(numpy.tile(d[0], 8))
-
-    if "pm" in data:
-        d = numpy.array(data["pm"]).T
-        s_data = _pm(*d[1:])
-        s_data = numpy.swapaxes(s_data, 0, 1)
-        bary.append(_collapse0(s_data).T)
-        weights.append(numpy.tile(d[0], 2))
-
-    if "pm2" in data:
-        d = numpy.array(data["pm2"]).T
-        s_data = _pm2(*d[1:])
-        s_data = numpy.swapaxes(s_data, 0, 1)
-        bary.append(_collapse0(s_data).T)
-        weights.append(numpy.tile(d[0], 4))
-
-    if "pmx" in data:
-        d = numpy.array(data["pmx"]).T
-        s_data = _pmx(d[1])
-        s_data = numpy.swapaxes(s_data, 0, 1)
-        bary.append(_collapse0(s_data).T)
-        weights.append(numpy.tile(d[0], 2))
-
-    if "pmy" in data:
-        d = numpy.array(data["pmy"]).T
-        s_data = _pmy(d[1])
-        s_data = numpy.swapaxes(s_data, 0, 1)
-        bary.append(_collapse0(s_data).T)
-        weights.append(numpy.tile(d[0], 2))
-
-    bary = numpy.concatenate(bary)
-    weights = numpy.concatenate(weights)
-    return bary, weights
+def concat(*data):
+    weights = numpy.concatenate([t[0] for t in data])
+    points = numpy.vstack([t[1] for t in data])
+    return weights, points

@@ -50,42 +50,21 @@ def _integrate_exact2(k, x0, x1, y0, y1):
 
 @pytest.mark.parametrize(
     "scheme,tol",
-    [(quadpy.quadrilateral.CohenGismalla(k), 1.0e-6) for k in [1, 2]]
-    + [(quadpy.quadrilateral.CoolsHaegemans1985(k), 1.0e-10) for k in range(1, 4)]
-    + [(quadpy.quadrilateral.CoolsHaegemans1988(k), 1.0e-14) for k in [1, 2]]
-    + [(quadpy.quadrilateral.Dunavant(k), 1.0e-13) for k in range(11)]
-    + [(quadpy.quadrilateral.HammerStroud(k), 1.0e-14) for k in ["1-2", "2-2", "3-2"]]
-    + [(quadpy.quadrilateral.MorrowPatterson(k), 1.0e-5) for k in [1, 2]]
+    [(quadpy.quadrilateral.AlbrechtCollatz[k](), 1.0e-14) for k in [1, 2, 3, 4]]
+    + [(quadpy.quadrilateral.CohenGismalla[k](), 1.0e-6) for k in [1, 2]]
+    + [(quadpy.quadrilateral.CoolsHaegemans1985[k](), 1.0e-10) for k in range(1, 4)]
+    + [(quadpy.quadrilateral.CoolsHaegemans1988[k](), 1.0e-14) for k in [1, 2]]
+    + [(scheme(), 1.0e-13) for scheme in quadpy.quadrilateral.Dunavant.values()]
+    + [(quadpy.quadrilateral.Franke["1"](lmbda), 1.0e-13) for lmbda in [0.0, 1.0, -0.8]]
     + [
-        (quadpy.quadrilateral.Stroud(k), 1.0e-13)
-        for k in [
-            "C2 1-1",
-            "C2 1-2",
-            "C2 3-1",
-            "C2 3-2",
-            "C2 3-3",
-            "C2 3-4",
-            "C2 3-5",
-            "C2 5-1",
-            "C2 5-2",
-            "C2 5-3",
-            "C2 5-4",
-            "C2 5-5",
-            "C2 5-6",
-            "C2 5-7",
-            "C2 7-1",
-            "C2 7-2",
-            "C2 7-3",
-            "C2 7-4",
-            "C2 7-5",
-            "C2 7-6",
-            "C2 9-1",
-            "C2 11-1",
-            "C2 11-2",
-            "C2 13-1",
-            "C2 15-1",
-            "C2 15-2",
-        ]
+        (quadpy.quadrilateral.Franke[k](), 1.0e-13)
+        for k in ["2a", "2b", "3a", "3b", "3c", "5", "6", "7", "8"]
+    ]
+    + [(quadpy.quadrilateral.HammerStroud[k](), 1.0e-14) for k in ["1-2", "2-2", "3-2"]]
+    + [(quadpy.quadrilateral.MorrowPatterson[k](), 1.0e-5) for k in [1, 2]]
+    + [
+        (quadpy.quadrilateral.Stroud[k](), 1.0e-13)
+        for k in quadpy.quadrilateral.Stroud.keys()
     ]
     + [
         (quadpy.quadrilateral.StroudN(k), 1.0e-14)
@@ -110,20 +89,14 @@ def _integrate_exact2(k, x0, x1, y0, y1):
         ]
     ]
     + [(quadpy.quadrilateral.HaegemansPiessens(), 1.0e-14)]
-    + [(quadpy.quadrilateral.PiessensHaegemans(k), 1.0e-14) for k in [1, 2]]
+    + [(quadpy.quadrilateral.PiessensHaegemans[k](), 1.0e-14) for k in [1, 2]]
     # TODO better-quality points/weights for Schmidt
-    + [(quadpy.quadrilateral.Schmid(k), 1.0e-10) for k in [2, 4, 6]]
-    + [(quadpy.quadrilateral.Sommariva(k), 1.0e-13) for k in range(1, 56)]
+    + [(quadpy.quadrilateral.Schmid[k](), 1.0e-10) for k in [2, 4, 6]]
+    + [(scheme(), 1.0e-13) for scheme in quadpy.quadrilateral.Sommariva.values()]
     + [(quadpy.quadrilateral.StroudN(k), 1.0e-8) for k in ["Cn 7-1"]]
     + [(quadpy.quadrilateral.Waldron(0.6, numpy.pi / 7), 1.0e-14)]
-    + [
-        (quadpy.quadrilateral.WissmannBecker(k), 1.0e-14)
-        for k in ["4-1", "4-2", "6-1", "6-2", "8-1", "8-2"]
-    ]
-    + [
-        (quadpy.quadrilateral.WitherdenVincent(k), 1.0e-14)
-        for k in [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21]
-    ]
+    + [(scheme(), 1.0e-14) for scheme in quadpy.quadrilateral.WissmannBecker.values()]
+    + [(scheme(), 1.0e-14) for scheme in quadpy.quadrilateral.WitherdenVincent.values()]
     + [(Product(quadpy.line_segment.Midpoint()), 1.0e-14)]
     + [(Product(quadpy.line_segment.Trapezoidal()), 1.0e-14)]
     + [(Product(quadpy.line_segment.GaussLegendre(k)), 1.0e-14) for k in range(1, 5)]
@@ -172,6 +145,7 @@ def test_show(scheme):
 
 if __name__ == "__main__":
     # scheme_ = Product(quadpy.line_segment.GaussLegendre(6))
-    scheme_ = quadpy.quadrilateral.HammerStroud("3-2")
+    # scheme_ = quadpy.quadrilateral.HammerStroud("3-2")
+    scheme_ = quadpy.quadrilateral.Stroud["C2 3-2"]()
     test_show(scheme_)
     test_scheme(scheme_, 1.0e-14)

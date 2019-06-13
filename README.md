@@ -249,7 +249,8 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
    - [Albrecht-Collatz](https://doi.org/10.1002/zamm.19580380102) (1958, degree 3)
    - conical product scheme (degree 7)
- * [Strang](http://bookstore.siam.org/wc08/)/[Cowper](https://doi.org/10.1002/nme.1620070316) (1973, 10 schemes up to
+ * [Franke](https://doi.org/10.1090/S0025-5718-1971-0300440-5) (1971, 2 schemes of degree 7)
+ * [Strang](https://bookstore.siam.org/wc08/)/[Cowper](https://doi.org/10.1002/nme.1620070316) (1973, 10 schemes up to
    degree 7),
  * [Lyness-Jespersen](https://doi.org/10.1093/imamat/15.1.19) (1975, 21
    schemes up to degree 11),
@@ -261,25 +262,25 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * [Grundmann-Möller](https://doi.org/10.1137/0715019) (1978, arbitrary degree),
  * [Laursen-Gellert](https://doi.org/10.1002/nme.1620120107) (1978, 17
    schemes up to degree 10),
- * [CUBTRI](http://dl.acm.org/citation.cfm?id=356001) (Laurie, 1982, degree 8),
- * [TRIEX](http://dl.acm.org/citation.cfm?id=356070) (de Doncker-Robinson, 1984, degrees 9 and 11),
+ * [CUBTRI](https://dl.acm.org/citation.cfm?id=356001) (Laurie, 1982, degree 8),
+ * [TRIEX](https://dl.acm.org/citation.cfm?id=356070) (de Doncker-Robinson, 1984, degrees 9 and 11),
  * [Dunavant](https://doi.org/10.1002/nme.1620210612) (1985, 20 schemes up
    to degree 20),
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131869) (1987,
    degrees 8 and 11),
  * [Gatermann](https://doi.org/10.1007/BF02251251) (1988, degree 7)
  * Berntsen-Espelid (1990, 4 schemes of degree 13, the first one being
-   [DCUTRI](http://dl.acm.org/citation.cfm?id=131772)),
+   [DCUTRI](https://dl.acm.org/citation.cfm?id=131772)),
  * [Liu-Vinokur](https://doi.org/10.1006/jcph.1998.5884) (1998, 13 schemes
    up to degree 5),
  * [Griener-Schmid](https://doi.org/10.1016/S0377-0427(99)00215-0), (1999, 2 schemes of degree 6),
- * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
+ * [Walkington](https://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
    (2000, 5 schemes up to degree 5),
  * [Wandzura-Xiao](https://doi.org/10.1016/S0898-1221(03)90004-6) (2003, 6
    schemes up to degree 30),
  * [Taylor-Wingate-Bos](https://arxiv.org/abs/math/0501496) (2005, 5 schemes up
    to degree 14),
- * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2009, 3 schemes up to
+ * [Zhang-Cui-Liu](https://www.jstor.org/stable/43693493) (2009, 3 schemes up to
    degree 20),
  * [Xiao-Gimbutas](https://doi.org/10.1016/j.camwa.2009.10.027) (2010, 50
    schemes up to degree 50),
@@ -304,7 +305,7 @@ val = quadpy.triangle.integrate(
 ### Disk
 <img src="https://nschloe.github.io/quadpy/disk.png" width="25%">
 
- * [Peirce](http://www.jstor.org/stable/2098722) (1957, arbitrary degree)
+ * [Peirce](https://www.jstor.org/stable/2098722) (1957, arbitrary degree)
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y):
    - [Radon](https://eudml.org/doc/176796) (1948, degree 5)
    - [Peirce](https://books.google.de/books/about/Numerical_integration_over_planar_region.html?id=WR9SAAAAMAAJ&redir_esc=y)
@@ -314,9 +315,9 @@ val = quadpy.triangle.integrate(
    - [Albrecht](https://doi.org/10.1002/zamm.19600401014) (1960, 8 schemes up to degree 17)
    - Mysovskih (1964, 3 schemes up to degree 15)
    - [Rabinowitz-Richter](https://doi.org/10.2307/2004962) (1969, 6 schemes up to degree 15)
- * [Lether](http://www.jstor.org/stable/2949473) (1971, arbitrary degree)
+ * [Lether](https://www.jstor.org/stable/2949473) (1971, arbitrary degree)
  * [Piessens-Haegemans](https://doi.org/10.2307/2005291) (1975, 1 scheme of degree 9)
- * [Haegemans-Piessens](http://www.jstor.org/stable/2156699) (1977, degree 9)
+ * [Haegemans-Piessens](https://www.jstor.org/stable/2156699) (1977, degree 9)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 9)
  * [Wissmann-Becker](https://doi.org/10.1137/0723043) (1986, 3 schemes up to degree 8)
  * [Cools-Kim](https://link.springer.com/article/10.1007/BF03012263) (2000, 3 schemes up to degree 21)
@@ -345,8 +346,9 @@ val = quadpy.disk.integrate(
    - [Meister](https://doi.org/10.1093/comjnl/8.4.368) (1966, degree 7)
    - [Phillips](https://doi.org/10.1093/comjnl/10.2.202) (1967, degree 7)
    - [Rabinowitz-Richter](https://doi.org/10.2307/2004962) (1969, 6 schemes up to degree 15)
+ * [Franke](https://doi.org/10.1090/S0025-5718-1971-0300440-5) (1971, 10 schemes up to degree 9)
  * [Piessens-Haegemans](https://doi.org/10.2307/2005291) (1975, 2 schemes of degree 9)
- * [Haegemans-Piessens](http://www.jstor.org/stable/2156699) (1977, degree 7)
+ * [Haegemans-Piessens](https://www.jstor.org/stable/2156699) (1977, degree 7)
  * [Schmid](https://eudml.org/doc/132580) (1978, 3 schemes up to degree 6)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 13)
  * [Dunavant](https://doi.org/10.1002/nme.1620211004) (1985, 11 schemes up to degree 19)
@@ -356,7 +358,7 @@ val = quadpy.disk.integrate(
  * [Cools-Haegemans](https://doi.org/10.1007/BF02247942) (1988, 2 schemes up to degree 13)
  * [Waldron](http://ftp.cs.wisc.edu/Approx/symmetries.pdf) (1994, infinitely many schemes of degree 3)
  * [Witherden-Vincent](https://doi.org/10.1016/j.camwa.2015.03.017) (2015, 11 schemes up to degree 21)
- * [Sommariva](http://www.math.unipd.it/~alvise/POINTSETS/set_amr_square.m) (2012, 55 schemes up to degree 55)
+ * [Sommariva](https://www.math.unipd.it/~alvise/POINTSETS/set_amr_square.m) (2012, 55 schemes up to degree 55)
  * products of line segment schemes
  * all formulas from the n-cube
 
@@ -385,7 +387,7 @@ to generate the array.
    - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 2 schemes up to degree 7)
    - [Rabinowitz-Richter](https://doi.org/10.2307/2004962) (1969, 4 schemes up to degree 15)
    - a scheme of degree 4
- * [Haegemans-Piessens](http://www.jstor.org/stable/2156699) (1977, 2 schemes up to degree 9)
+ * [Haegemans-Piessens](https://www.jstor.org/stable/2156699) (1977, 2 schemes up to degree 9)
 
 Example:
 ```python
@@ -403,7 +405,7 @@ val = quadpy.e2r.integrate(
    - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 2 schemes up to degree 7)
    - [Rabinowitz-Richter](https://doi.org/10.2307/2004962) (1969, 5 schemes up to degree 15)
    - 3 schemes up to degree 7
- * [Haegemans-Piessens](http://www.jstor.org/stable/2156699) (1977, 2 schemes of degree 9)
+ * [Haegemans-Piessens](https://www.jstor.org/stable/2156699) (1977, 2 schemes of degree 9)
 
 Example:
 ```python
@@ -426,7 +428,7 @@ val = quadpy.e2r2.integrate(
  * [Bažant-Oh](https://doi.org/10.1002/zamm.19860660108) (1986, 3 schemes up to degree 11)
  * [Heo-Xu](https://doi.org/10.1090/S0025-5718-00-01198-4) (2001, 27 schemes up
    to degree 39, single-precision)
- * [Fliege-Maier](http://www.personal.soton.ac.uk/jf1w07/nodes/nodes.html) (2007, 4 schemes up
+ * [Fliege-Maier](https://www.personal.soton.ac.uk/jf1w07/nodes/nodes.html) (2007, 4 schemes up
    to degree 4, single-precision)
 
 Example:
@@ -481,11 +483,11 @@ val = quadpy.ball.integrate(
  * [Gatermann](https://doi.org/10.1007/978-94-011-2646-5_2) (1992, degree 5)
  * [Liu-Vinokur](https://doi.org/10.1006/jcph.1998.5884) (1998, 14 schemes up to
    degree 5)
- * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
+ * [Walkington](https://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
    (2000, 6 schemes up to degree 7)
- * [Zienkiewicz](http://www.sciencedirect.com/science/book/9780750664318)
+ * [Zienkiewicz](https://www.sciencedirect.com/science/book/9780750664318)
    (2005, 2 schemes up to degree 3)
- * [Zhang-Cui-Liu](http://www.jstor.org/stable/43693493) (2009, 2 schemes up to
+ * [Zhang-Cui-Liu](https://www.jstor.org/stable/43693493) (2009, 2 schemes up to
    degree 14)
  * [Xiao-Gimbutas](https://doi.org/10.1016/j.camwa.2009.10.027) (2010, 15
    schemes up to degree 15)
@@ -607,7 +609,7 @@ val = quadpy.e3r2.integrate(
    - [Stroud](https://doi.org/10.1007/BF02165227) (1966, 7 schemes of degree 3)
    - [Stroud](https://doi.org/10.1137/0706009) (1969, degree 5)
  * [Grundmann-Möller](https://doi.org/10.1137/0715019) (1978, arbitrary degree)
- * [Walkington](http://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/) (2000, 5 schemes up to degree 7)
+ * [Walkington](https://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/) (2000, 5 schemes up to degree 7)
 
 Example:
 ```python
@@ -868,7 +870,7 @@ Some explanations:
  * [W. Gautschi, On Generating Orthogonal Polynomials, SIAM J. Sci. and Stat. Comput., 3(3), 289–317](https://doi.org/10.1137/0903018)
  * [W. Gautschi, How and how not to check Gaussian quadrature formulae, BIT Numerical Mathematics, June 1983, Volume 23, Issue 2, pp 209–216](https://doi.org/10.1007/BF02218441)
  * [D. Boley and G.H. Golub, A survey of matrix inverse eigenvalue problems, Inverse Problems, 1987, Volume 3, Number 4](https://doi.org/10.1088/0266-5611/3/4/010)
- * [W. Gautschi, Algorithm 726: ORTHPOL–a package of routines for generating orthogonal polynomials and Gauss-type quadrature rules, ACM Transactions on Mathematical Software (TOMS), Volume 20, Issue 1, March 1994, Pages 21-62](http://doi.org/10.1145/174603.174605)
+ * [W. Gautschi, Algorithm 726: ORTHPOL–a package of routines for generating orthogonal polynomials and Gauss-type quadrature rules, ACM Transactions on Mathematical Software (TOMS), Volume 20, Issue 1, March 1994, Pages 21-62](https://doi.org/10.1145/174603.174605)
 
 ### Installation
 
