@@ -23,8 +23,6 @@ def Phillips(symbolic=False):
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
     pm = numpy.array([+1, -1])
 
-    name = "Phillips"
-
     c = 3 * sqrt(385)
     r, s = sqrt((105 + pm * c) / 140)
     t = sqrt(frac(3, 5))
@@ -32,7 +30,6 @@ def Phillips(symbolic=False):
     B1, B2 = (77 - pm * c) / 891
     B3 = frac(25, 324)
 
-    degree = 7
     weights, points = concat(symm_r0([B1, r], [B2, s]), pm2([B3, t, t]))
     weights *= 4
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Phillips", 7, weights, points)
