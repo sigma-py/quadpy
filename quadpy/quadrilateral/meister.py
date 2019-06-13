@@ -16,9 +16,6 @@ from .helpers import concat, zero, symm_s, symm_r0, symm_s_t, QuadrilateralSchem
 def Meister(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
-    name = "Meister"
-    degree = 7
-
     r = frac(2, 3)
     s = frac(1, 3)
 
@@ -30,4 +27,4 @@ def Meister(symbolic=False):
     )
 
     weights *= 4
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Meister", 7, weights, points)
