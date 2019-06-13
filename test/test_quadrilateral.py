@@ -60,8 +60,8 @@ def _integrate_exact2(k, x0, x1, y0, y1):
         (quadpy.quadrilateral.Franke[k](), 1.0e-13)
         for k in ["2a", "2b", "3a", "3b", "3c"]
     ]
-    + [(quadpy.quadrilateral.HammerStroud(k), 1.0e-14) for k in ["1-2", "2-2", "3-2"]]
-    + [(quadpy.quadrilateral.MorrowPatterson(k), 1.0e-5) for k in [1, 2]]
+    + [(quadpy.quadrilateral.HammerStroud[k](), 1.0e-14) for k in ["1-2", "2-2", "3-2"]]
+    + [(quadpy.quadrilateral.MorrowPatterson[k](), 1.0e-5) for k in [1, 2]]
     + [
         (quadpy.quadrilateral.Stroud[k](), 1.0e-13)
         for k in quadpy.quadrilateral.Stroud.keys()
