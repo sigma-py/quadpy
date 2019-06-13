@@ -6,6 +6,7 @@ from .cools_haegemans import CoolsHaegemans
 from .cubtri import Cubtri
 from .berntsen_espelid import BerntsenEspelid
 from .dunavant import Dunavant
+from .franke import Franke
 from .gatermann import Gatermann
 from .griener_schmid import GrienerSchmid
 from .grundmann_moeller import GrundmannMoeller
@@ -43,6 +44,7 @@ __all__ = [
     "Cubtri",
     "BerntsenEspelid",
     "Dunavant",
+    "Franke",
     "Gatermann",
     "GrienerSchmid",
     "GrundmannMoeller",
