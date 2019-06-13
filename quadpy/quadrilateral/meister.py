@@ -24,7 +24,7 @@ class Meister(object):
         r = frac(2, 3)
         s = frac(1, 3)
 
-        self.points, self.weights = concat(
+        self.weights, self.points = concat(
             zero(frac(1024, 6720)),
             symm_s([frac(576, 6720), r], [-frac(9, 6720), s], [frac(47, 6720), 1]),
             symm_r0([frac(576, 6720), r]),

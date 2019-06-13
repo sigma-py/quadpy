@@ -114,37 +114,35 @@ def unroll(data, symbolic=False):
 
 
 def zero(weight):
-    return [[0, 0]], [weight]
+    return [weight], [[0, 0]]
 
 
 def pmx(*data):
-    w, x = numpy.array(data).T
-    zero = numpy.zeros(w.shape[0])
-    points = _stack_first_last([[+x, zero], [-x, zero]])
+    w, x, y = numpy.array(data).T
+    points = _stack_first_last([[+x, y], [-x, y]])
     weights = numpy.tile(w, 2)
-    return points, weights
+    return weights, points
 
 
 def pmy(*data):
-    w, y = numpy.array(data).T
-    zero = numpy.zeros(w.shape[0])
-    points = _stack_first_last([[zero, +y], [zero, -y]])
+    w, x, y = numpy.array(data).T
+    points = _stack_first_last([[x, +y], [x, -y]])
     weights = numpy.tile(w, 2)
-    return points, weights
+    return weights, points
 
 
 def pm(*data):
     w, s, t = numpy.array(data).T
     points = _stack_first_last([[+s, +t], [-s, -t]])
     weights = numpy.tile(w, 2)
-    return points, weights
+    return weights, points
 
 
 def pm2(*data):
     w, x, y = numpy.array(data).T
     points = _stack_first_last([[+x, +y], [+x, -y], [-x, +y], [-x, -y]])
     weights = numpy.tile(w, 4)
-    return points, weights
+    return weights, points
 
 
 def symm_r0(*data):
@@ -152,14 +150,14 @@ def symm_r0(*data):
     zero = numpy.zeros(w.shape[0])
     points = _stack_first_last([[+r, zero], [-r, zero], [zero, +r], [zero, -r]])
     weights = numpy.tile(w, 4)
-    return points, weights
+    return weights, points
 
 
 def symm_s(*data):
     w, s = numpy.array(data).T
     points = _stack_first_last([[+s, +s], [+s, -s], [-s, +s], [-s, -s]])
     weights = numpy.tile(w, 4)
-    return points, weights
+    return weights, points
 
 
 def symm_s_t(*data):
@@ -168,7 +166,7 @@ def symm_s_t(*data):
         [[+s, +t], [-s, +t], [+s, -t], [-s, -t], [+t, +s], [-t, +s], [+t, -s], [-t, -s]]
     )
     weights = numpy.tile(w, 8)
-    return points, weights
+    return weights, points
 
 
 def _stack_first_last(arr):
@@ -180,6 +178,6 @@ def _stack_first_last(arr):
 
 
 def concat(*data):
-    points = numpy.vstack([t[0] for t in data])
-    weights = numpy.concatenate([t[1] for t in data])
-    return points, weights
+    weights = numpy.concatenate([t[0] for t in data])
+    points = numpy.vstack([t[1] for t in data])
+    return weights, points

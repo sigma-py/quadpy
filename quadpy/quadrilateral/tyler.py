@@ -24,7 +24,7 @@ class Tyler(object):
         self.name = "Tyler({})".format(index)
         if index == 1:
             self.degree = 5
-            self.points, self.weights = concat(
+            self.weights, self.points = concat(
                 zero(-frac(28, 45)),
                 symm_s([frac(1, 36), 1]),
                 symm_r0([frac(1, 45), 1], [frac(16, 45), frac(1, 2)]),
@@ -35,13 +35,13 @@ class Tyler(object):
             s, t = sqrt((114 - pm * 3 * sqrt(583)) / 287)
             B1 = frac(49, 810)
             B2, B3 = (178981 + pm * 2769 * sqrt(583)) / 1888920
-            self.points, self.weights = concat(
+            self.weights, self.points = concat(
                 symm_r0([B1, r]), symm_s([B2, s], [B3, t])
             )
         else:
             assert index == 3
             self.degree = 7
-            self.points, self.weights = concat(
+            self.weights, self.points = concat(
                 zero(frac(449, 315)),
                 symm_r0(
                     [frac(37, 1260), 1],

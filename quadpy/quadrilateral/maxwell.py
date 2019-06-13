@@ -29,7 +29,7 @@ class Maxwell(object):
         r = sqrt(frac(12, 35))
         s, t = [sqrt((93 + i * 3 * sqrt(186)) / 155) for i in [+1, -1]]
 
-        self.points, self.weights = concat(
+        self.weights, self.points = concat(
             zero(frac(1, 81)),
             symm_r0([frac(49, 324), r]),
             # ERR typo in Stroud: 648 vs 649
