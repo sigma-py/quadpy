@@ -4,8 +4,7 @@ from __future__ import division
 
 import sympy
 
-from .helpers import _symm_r_0, _symm_s, _z
-from ..helpers import untangle
+from .helpers import concat, zero, symm_r0, symm_s
 
 
 class Miller(object):
@@ -25,12 +24,9 @@ class Miller(object):
 
         self.name = "Miller"
         self.degree = 1
-        data = [
-            (frac(250, 225), _z()),
-            (-frac(8, 225), _symm_r_0(1)),
-            (frac(7, 900), _symm_s(1)),
-        ]
 
-        self.points, self.weights = untangle(data)
+        self.weights, self.points = concat(
+            zero(frac(250, 225)), symm_r0([-frac(8, 225), 1]), symm_s([frac(7, 900), 1])
+        )
         self.weights *= 4
         return

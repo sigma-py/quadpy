@@ -16,10 +16,9 @@ from .miller import Miller
 from .phillips import Phillips
 from .rabinowitz_richter import RabinowitzRichter
 from .tyler import Tyler
-from .helpers import _symm_r_0, _symm_s, _symm_s_t, _z
 
 from .. import ncube
-from ..helpers import untangle
+from .helpers import concat, zero, symm_r0, symm_s, symm_s_t
 
 
 class Stroud(object):
@@ -136,8 +135,8 @@ class ProductTrapezoidal(object):
         reference_volume = 4
 
         self.degree = 1
-        self.weights = reference_volume * numpy.full(4, frac(1, 4))
-        self.points = _symm_s(1)
+        self.weights, self.points = symm_s(frac(1, 4), 1)
+        self.weights *= reference_volume
         return
 
 
@@ -148,9 +147,9 @@ class ProductGauss3(object):
         reference_volume = 4
 
         self.degree = 3
-        self.weights = reference_volume * numpy.full(4, frac(1, 4))
         # ERR misprint in Stroud: sqrt(1/3) vs 1/3
-        self.points = _symm_s(sqrt(frac(1, 3)))
+        self.weights, self.points = symm_s([frac(1, 4), sqrt(frac(1, 3))])
+        self.weights *= reference_volume
         return
 
 
@@ -162,12 +161,9 @@ class ProductGauss5(object):
 
         self.degree = 5
         r = sqrt(frac(3, 5))
-        data = [
-            (frac(16, 81), _z()),
-            (frac(10, 81), _symm_r_0(r)),
-            (frac(25, 324), _symm_s(r)),
-        ]
-        self.points, self.weights = untangle(data)
+        self.weights, self.points = concat(
+            zero(frac(16, 81)), symm_r0([frac(10, 81), r]), symm_s([frac(25, 324), r])
+        )
         self.weights *= reference_volume
         return
 
@@ -190,7 +186,9 @@ class ProductGauss7(object):
         B3 = frac(49, 864)
 
         r = sqrt(frac(3, 5))
-        data = [(B1, _symm_s(r)), (B2, _symm_s(s)), (B3, _symm_s_t(r, s))]
-        self.points, self.weights = untangle(data)
+        self.weights, self.points = concat(
+            symm_s([B1, r], [B2, s]), symm_s_t([B3, r, s])
+        )
+
         self.weights *= reference_volume
         return

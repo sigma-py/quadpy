@@ -5,8 +5,7 @@ from __future__ import division
 import numpy
 import sympy
 
-from .helpers import _symm_r_0, _pm2
-from ..helpers import untangle
+from .helpers import concat, symm_r0, pm2
 
 
 class Phillips(object):
@@ -36,8 +35,6 @@ class Phillips(object):
         B3 = frac(25, 324)
 
         self.degree = 7
-        data = [(B1, _symm_r_0(r)), (B2, _symm_r_0(s)), (B3, _pm2(t, t))]
-
-        self.points, self.weights = untangle(data)
+        self.weights, self.points = concat(symm_r0([B1, r], [B2, s]), pm2([B3, t, t]))
         self.weights *= 4
         return

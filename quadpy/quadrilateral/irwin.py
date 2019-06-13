@@ -4,8 +4,7 @@ from __future__ import division
 
 import sympy
 
-from .helpers import _symm_s, _symm_s_t
-from ..helpers import untangle
+from .helpers import concat, symm_s, symm_s_t
 
 
 class Irwin(object):
@@ -22,17 +21,16 @@ class Irwin(object):
         self.name = "Irwin({})".format(index)
         if index == 1:
             self.degree = 3
-            data = [(frac(14, 48), _symm_s(1)), (-frac(1, 48), _symm_s_t(3, 1))]
+            self.weights, self.points = concat(
+                symm_s([frac(14, 48), 1]), symm_s_t([-frac(1, 48), 3, 1])
+            )
         else:
             assert index == 2
             self.degree = 5
-            data = [
-                (frac(889, 2880), _symm_s(1)),
-                (-frac(98, 2880), _symm_s_t(3, 1)),
-                (frac(5, 2880), _symm_s(3)),
-                (frac(11, 2880), _symm_s_t(5, 1)),
-            ]
+            self.weights, self.points = concat(
+                symm_s([frac(889, 2880), 1], [frac(5, 2880), 3]),
+                symm_s_t([-frac(98, 2880), 3, 1], [frac(11, 2880), 5, 1]),
+            )
 
-        self.points, self.weights = untangle(data)
         self.weights *= 4
         return
