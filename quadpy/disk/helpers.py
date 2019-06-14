@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 #
+import collections
+
 import numpy
+
+DiskScheme = collections.namedtuple(
+    "DiskScheme", ["name", "degree", "weights", "points"]
+)
 
 
 def _z():

@@ -10,7 +10,7 @@ from helpers import check_degree
 
 @pytest.mark.parametrize(
     "scheme,tol",
-    [(quadpy.disk.Albrecht(k), 1.0e-14) for k in range(1, 9)]
+    [(scheme(), 1.0e-14) for scheme in quadpy.disk.Albrecht.values()]
     + [(quadpy.disk.CoolsHaegemans(k), 1.0e-14) for k in range(1, 4)]
     + [(quadpy.disk.CoolsKim(k), 1.0e-14) for k in range(1, 4)]
     + [(quadpy.disk.HaegemansPiessens(), 1.0e-14)]
@@ -75,6 +75,6 @@ def test_show(scheme):
 
 if __name__ == "__main__":
     # scheme_ = quadpy.disk.Lether(5)
-    scheme_ = quadpy.disk.Albrecht(8)
+    scheme_ = quadpy.disk.Albrecht[8]()
     test_scheme(scheme_, 1.0e-14)
     test_show(scheme_)
