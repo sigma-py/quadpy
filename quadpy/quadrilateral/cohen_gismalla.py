@@ -41,9 +41,7 @@ def cohen_gismalla_2():
     A = 0.1856914
     B = 0.5951448
     C = 0.3584324
-    weights, points = concat(
-        zero(A), pm([B, u, -v], [B, v, u], [C, r, -s], [C, r, s])
-    )
+    weights, points = concat(zero(A), pm([B, u, -v], [B, v, u], [C, r, -s], [C, r, s]))
     # ERR this scheme only has order 1
     # According to the article, it has order 7 for symmetric integrands.
     # Something is fishy...
