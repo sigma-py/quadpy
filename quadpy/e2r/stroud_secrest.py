@@ -11,12 +11,14 @@ from __future__ import division
 import numpy
 import sympy
 
+from .helpers import E2rScheme
 from ..helpers import untangle, pm_array, pm, fsd
 
 
-def v(symbolic):
+def stroud_secrest_v(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+    pi = sympy.pi if symbolic else numpy.pi
 
     nu = 2 * sqrt(5)
     xi = sqrt(5)
@@ -27,12 +29,15 @@ def v(symbolic):
         (frac(1, 20), numpy.array([[+nu, 0], [-nu, 0]])),
         (frac(1, 20), pm_array([xi, eta])),
     ]
-    return 5, data
+    points, weights = untangle(data)
+    weights *= 2 * pi
+    return E2rScheme("Stroud-Secrest V", 5, weights, points)
 
 
-def vi(symbolic):
+def stroud_secrest_vi(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+    pi = sympy.pi if symbolic else numpy.pi
 
     sqrt74255 = sqrt(74255)
 
@@ -42,18 +47,10 @@ def vi(symbolic):
     B, C = [(5272105 + p_m * 18733 * sqrt74255) / 43661940 for p_m in [+1, -1]]
 
     data = [(A, fsd(2, (nu, 1))), (B, pm(2, xi)), (C, pm(2, eta))]
-    return 7, data
+
+    points, weights = untangle(data)
+    weights *= 2 * pi
+    return E2rScheme("Stroud-Secrest VI", 7, weights, points)
 
 
-_gen = {"V": v, "VI": vi}
-
-
-class StroudSecrest(object):
-    keys = _gen.keys()
-
-    def __init__(self, key, symbolic=False):
-        self.degree, data = _gen[key](symbolic)
-        self.points, self.weights = untangle(data)
-        pi = sympy.pi if symbolic else numpy.pi
-        self.weights *= 2 * pi
-        return
+StroudSecrest = {"V": stroud_secrest_v, "VI": stroud_secrest_vi}

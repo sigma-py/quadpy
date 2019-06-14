@@ -2,26 +2,26 @@
 #
 """
 Philip Rabinowitz and Nira Richter,
-Perfectly Symmetric Two-Dimensional Integration Formulas with Minimal
-Numbers of Points,
+Perfectly Symmetric Two-Dimensional Integration Formulas with Minimal Numbers of Points,
 Mathematics of Computation, Vol. 23, No. 108 (Oct., 1969), pp. 765-779,
 <https://doi.org/10.2307/2004962>.
 """
-from .helpers import _s40, _s8, _s4
+from .helpers import _s40, _s8, _s4, E2rScheme
 from ..helpers import untangle
 
 
-def gen1(symbolic):
+def rabinowitz_richter_1():
     data = [
         (0.3380228176732269e-1, _s40(6.822859174233539)),
         (0.1467201651910359e1, _s40(1.901350903458987)),
         (0.6973178170307865e-1, _s4(4.260195453867070)),
         (0.3030570706813315e-4, _s8(6.693991707281686, 14.77112509749386)),
     ]
-    return 9, data
+    points, weights = untangle(data)
+    return E2rScheme("Rabinowitz-Richter 1", 9, weights, points)
 
 
-def gen2(symbolic):
+def rabinowitz_richter_2():
     data = [
         (0.1528937836199174e-3, _s40(12.74800100302598)),
         (0.2460475747386993e-1, _s40(6.548756194884845)),
@@ -29,10 +29,11 @@ def gen2(symbolic):
         (0.4416296048062511e-3, _s8(10.05412033203744, 5.804749080166705)),
         (0.6786094118455858e-1, _s8(4.616780734333329, 2.665499599756826)),
     ]
-    return 11, data
+    points, weights = untangle(data)
+    return E2rScheme("Rabinowitz-Richter 2", 11, weights, points)
 
 
-def gen3(symbolic):
+def rabinowitz_richter_3():
     data = [
         (0.1020154285801705e-3, _s40(13.23694157142503)),
         (0.5959360016181913e-1, _s40(5.858647139727296)),
@@ -41,14 +42,15 @@ def gen3(symbolic):
         (0.1189929098056537e0, _s4(3.556098987915152)),
         (0.1103920675225255e-2, _s8(9.300537618869137, 4.847679857416328)),
     ]
-    return 11, data
+    points, weights = untangle(data)
+    return E2rScheme("Rabinowitz-Richter 3", 11, weights, points)
 
 
 # ERR There's a misprint here somewhere.
 # When replacing -.1010440929995067e+1 by -.1010440929995067e+3,
 # the scheme has order 3.
 # TODO find out what's going wrong
-# def gen4():
+# def rabinowitz_richter_4():
 #     data = [
 #         (+.3497776022412480e+1, numpy.array([[0.0, 0.0]])),
 #         (+.4425802565915590e-6, _s40(19.67638186041246)),
@@ -59,10 +61,11 @@ def gen3(symbolic):
 #         (+.1127213703086534e-3, _s8(11.94169301540818, 4.911904665577694)),
 #         (+.4921143017387419e+2, _s8(3.287383483530638, 3.162277660168379)),
 #         ]
-#     return 13, data
+#     points, weights = untangle(data)
+#     return E2rScheme("Rabinowitz-Richter 3", 13, weights, points)
 
 
-def gen5(symbolic):
+def rabinowitz_richter_5():
     data = [
         (0.1783029629694328e-6, _s40(19.97643084360520)),
         (0.3075756711058412e-3, _s40(11.52881449694446)),
@@ -74,22 +77,14 @@ def gen5(symbolic):
         (0.5384883122895214e-5, _s8(14.96412806506222, 6.198344793636629)),
         (0.3365458295852239e-2, _s8(8.095727497543633, 3.353360126759371)),
     ]
-    return 15, data
+    points, weights = untangle(data)
+    return E2rScheme("Rabinowitz-Richter 5", 15, weights, points)
 
 
-_gen = {
-    1: gen1,
-    2: gen2,
-    3: gen3,
-    # 4: gen4,
-    5: gen5,
+RabinowitzRichter = {
+    1: rabinowitz_richter_1,
+    2: rabinowitz_richter_2,
+    3: rabinowitz_richter_3,
+    # 4: rabinowitz_richter_4,
+    5: rabinowitz_richter_5,
 }
-
-
-class RabinowitzRichter(object):
-    keys = _gen.keys()
-
-    def __init__(self, key):
-        self.degree, data = _gen[key](False)
-        self.points, self.weights = untangle(data)
-        return

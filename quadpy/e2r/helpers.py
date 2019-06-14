@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+import collections
 import numpy
+
+E2rScheme = collections.namedtuple("E2rScheme", ["name", "degree", "weights", "points"])
 
 
 def _s8(a, b):
