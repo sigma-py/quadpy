@@ -11,44 +11,16 @@ from helpers import check_degree
 @pytest.mark.parametrize(
     "scheme,tol",
     [(scheme(), 1.0e-14) for scheme in quadpy.disk.Albrecht.values()]
-    + [(quadpy.disk.CoolsHaegemans(k), 1.0e-14) for k in range(1, 4)]
-    + [(quadpy.disk.CoolsKim(k), 1.0e-14) for k in range(1, 4)]
+    + [(quadpy.disk.CoolsHaegemans[k](), 1.0e-14) for k in range(1, 4)]
+    + [(quadpy.disk.CoolsKim[k](), 1.0e-14) for k in range(1, 4)]
     + [(quadpy.disk.HaegemansPiessens(), 1.0e-14)]
-    + [
-        (quadpy.disk.HammerStroud(k), 1.0e-14)
-        for k in ["11-2", "12-2", "13-2", "17", "18", "19", "20", "21"]
-    ]
+    + [(scheme(), 1.0e-14) for scheme in quadpy.disk.HammerStroud.values()]
     + [(quadpy.disk.Lether(k), 1.0e-14) for k in range(1, 6)]
     + [(quadpy.disk.Peirce1957(k), 1.0e-14) for k in range(1, 6)]
     + [(quadpy.disk.PiessensHaegemans(), 1.0e-14)]
-    + [(quadpy.disk.RabinowitzRichter(k), 1.0e-14) for k in range(1, 7)]
-    + [
-        (quadpy.disk.Stroud(k), 1.0e-14)
-        for k in [
-            "S2 3-1",
-            "S2 3-2",
-            "S2 4-1",
-            "S2 5-1",
-            "S2 5-2",
-            "S2 7-1",
-            "S2 7-2",
-            "S2 9-1",
-            "S2 9-2",
-            "S2 9-3",
-            "S2 9-4",
-            "S2 9-5",
-            "S2 11-1",
-            "S2 11-2",
-            "S2 11-3",
-            "S2 11-4",
-            "S2 13-1",
-            "S2 13-2",
-            "S2 15-1",
-            "S2 15-2",
-            "S2 17-1",
-        ]
-    ]
-    + [(quadpy.disk.WissmannBecker(k), 1.0e-14) for k in ["6-1", "6-2", "8-1"]],
+    + [(scheme(), 1.0e-14) for scheme in quadpy.disk.RabinowitzRichter.values()]
+    + [(scheme(), 1.0e-14) for scheme in quadpy.disk.Stroud.values()]
+    + [(quadpy.disk.WissmannBecker[k](), 1.0e-14) for k in ["6-1", "6-2", "8-1"]],
 )
 def test_scheme(scheme, tol):
     assert scheme.points.dtype == numpy.float64, scheme.name
