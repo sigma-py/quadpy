@@ -11,12 +11,13 @@ from helpers import check_degree
 
 @pytest.mark.parametrize(
     "scheme,tol",
-    [
-        (quadpy.ball.HammerStroud(k), 1.0e-14)
-        for k in ["11-3", "12-3", "14-3a", "14-3b", "15-3a", "15-3b"]
+    [(quadpy.ball.HammerStroud[k](), 1.0e-14) for k in ["11-3", "12-3", "14-3", "15-3"]]
+    + [
+        (quadpy.ball.HammerStroud[k](variant_a=False), 1.0e-14)
+        for k in ["14-3", "15-3"]
     ]
     + [
-        (quadpy.ball.Stroud(k), 1.0e-14)
+        (quadpy.ball.Stroud[k](), 1.0e-14)
         for k in [
             "S3 3-1",
             "S3 5-1",
@@ -47,7 +48,7 @@ def test_scheme(scheme, tol):
     return
 
 
-@pytest.mark.parametrize("scheme", [quadpy.ball.HammerStroud("11-3")])
+@pytest.mark.parametrize("scheme", [quadpy.ball.HammerStroud["11-3"]()])
 def test_show(scheme, backend="mpl"):
     quadpy.ball.show(scheme, backend=backend)
     plt.close()
