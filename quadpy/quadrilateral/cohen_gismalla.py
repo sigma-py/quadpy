@@ -12,48 +12,42 @@ import warnings
 
 import sympy
 
-from .helpers import concat, zero, pm
+from .helpers import concat, zero, pm, QuadrilateralScheme
 
 
-class CohenGismalla1(object):
-    def __init__(self, symbolic=False):
-        frac = sympy.Rational if symbolic else lambda x, y: x / y
+def cohen_gismalla_1(symbolic=False):
+    frac = sympy.Rational if symbolic else lambda x, y: x / y
 
-        # TODO improve precision
-        warnings.warn("The Cohen-Gismalla schemes are only given in single-precision.")
+    # TODO improve precision
+    warnings.warn("The Cohen-Gismalla schemes are only given in single-precision.")
 
-        self.name = "CohenGismalla(1)"
-        # This scheme is of order 5 for symmetric integrands
-        self.degree = 3
-        u = 0.84623312
-        v = 0.46607171
-        self.weights, self.points = concat(
-            zero(frac(8, 7)), pm([frac(5, 7), u, -v], [frac(5, 7), v, u])
-        )
-        return
+    u = 0.84623312
+    v = 0.46607171
+    weights, points = concat(
+        zero(frac(8, 7)), pm([frac(5, 7), u, -v], [frac(5, 7), v, u])
+    )
+    # This scheme is of order 5 for symmetric integrands
+    return QuadrilateralScheme("CohenGismalla 1", 3, weights, points)
 
 
-class CohenGismalla2(object):
-    def __init__(self):
-        # TODO improve precision
-        warnings.warn("The Cohen-Gismalla schemes are only given in single-precision.")
-        self.name = "CohenGismalla(2)"
+def cohen_gismalla_2():
+    # TODO improve precision
+    warnings.warn("The Cohen-Gismalla schemes are only given in single-precision.")
 
-        # ERR this scheme only has order 1
-        # According to the article, it has order 7 for symmetric integrands.
-        # Something is fishy...
-        self.degree = 1
-        r = 0.5878606
-        s = 0.9353943
-        u = 0.6105540
-        v = 0.1109710
-        A = 0.1856914
-        B = 0.5951448
-        C = 0.3584324
-        self.weights, self.points = concat(
-            zero(A), pm([B, u, -v], [B, v, u], [C, r, -s], [C, r, s])
-        )
-        return
+    r = 0.5878606
+    s = 0.9353943
+    u = 0.6105540
+    v = 0.1109710
+    A = 0.1856914
+    B = 0.5951448
+    C = 0.3584324
+    weights, points = concat(
+        zero(A), pm([B, u, -v], [B, v, u], [C, r, -s], [C, r, s])
+    )
+    # ERR this scheme only has order 1
+    # According to the article, it has order 7 for symmetric integrands.
+    # Something is fishy...
+    return QuadrilateralScheme("CohenGismalla 2", 1, weights, points)
 
 
-CohenGismalla = {1: CohenGismalla1, 2: CohenGismalla2}
+CohenGismalla = {1: cohen_gismalla_1, 2: cohen_gismalla_2}
