@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 #
+import collections
 import numpy
+
+
+E2r2Scheme = collections.namedtuple(
+    "E2r2Scheme", ["name", "degree", "weights", "points"]
+)
 
 
 def _z():
