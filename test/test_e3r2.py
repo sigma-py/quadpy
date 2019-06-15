@@ -9,8 +9,7 @@ from helpers import check_degree, integrate_monomial_over_enr2
 
 
 @pytest.mark.parametrize(
-    "scheme,tol",
-    [(quadpy.e3r2.Stroud(key), 1.0e-14) for key in quadpy.e3r2.Stroud.keys],
+    "scheme,tol", [(scheme(), 1.0e-14) for scheme in quadpy.e3r2.Stroud.values()]
 )
 def test_scheme(scheme, tol):
     assert scheme.points.dtype == numpy.float64, scheme.name
@@ -29,7 +28,7 @@ def test_scheme(scheme, tol):
     return
 
 
-@pytest.mark.parametrize("scheme", [quadpy.e3r2.Stroud("5-1")])
+@pytest.mark.parametrize("scheme", [quadpy.e3r2.Stroud["5-1"]()])
 def test_show(scheme, backend="mpl"):
     quadpy.e3r2.show(scheme, backend=backend)
     plt.close()

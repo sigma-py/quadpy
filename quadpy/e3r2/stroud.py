@@ -9,16 +9,16 @@ from __future__ import division
 
 import numpy
 
-from . import stroud_secrest
+from .stroud_secrest import StroudSecrest
 
 from ..sphere import stroud as sphere_stroud
 from ..helpers import untangle
+from .helpers import E3r2Scheme
 
 
-def _gen14_1(symbolic):
-    degree = 14
-    # Get the moments corresponding to monomials and the weight
-    # function omega(x) = x^2 * exp(-x^2):
+def stroud_14_1(symbolic=False):
+    # Get the moments corresponding to monomials and the weight function omega(x) = x^2
+    # * exp(-x^2):
     #
     #    int_{-infty}^{infty} x^2 exp(-x^2) x^k dx \
     #
@@ -26,8 +26,8 @@ def _gen14_1(symbolic):
     #        = {
     #           \ Gamma((k+3)/2) if k even
     #
-    # In this particular case, we don't need to compute the recurrence
-    # coefficients numerically, but they are given analytically.
+    # In this particular case, we don't need to compute the recurrence coefficients
+    # numerically, but they are given analytically.
     # ```
     # n = 8
     # alpha = numpy.zeros(n)
@@ -68,29 +68,19 @@ def _gen14_1(symbolic):
         (A[i] * B[j], r[i] * numpy.array([v[j]])) for i in range(4) for j in range(72)
     ]
 
-    return degree, data
+    points, weights = untangle(data)
+    weights *= numpy.sqrt(numpy.pi) ** 3
+    return E3r2Scheme("Stroud 14-1", 14, weights, points)
 
 
-# The boolean tells if the factor pi^{3/2} is already in the weights
-_gen = {
-    "5-1": stroud_secrest.vii,
-    "5-2a": stroud_secrest.viiia,
-    "5-2b": stroud_secrest.viiib,
-    "5-3": stroud_secrest.ix,
-    "7-1a": lambda symbolic: stroud_secrest.x(+1, symbolic),
-    "7-1b": lambda symbolic: stroud_secrest.x(-1, symbolic),
-    "7-2a": lambda symbolic: stroud_secrest.xi_(+1, symbolic),
-    "7-2b": lambda symbolic: stroud_secrest.xi_(-1, symbolic),
-    "14-1": _gen14_1,
+Stroud = {
+    "5-1": StroudSecrest["VII"],
+    "5-2a": StroudSecrest["VIIIa"],
+    "5-2b": StroudSecrest["VIIIb"],
+    "5-3": StroudSecrest["IX"],
+    "7-1a": StroudSecrest["Xa"],
+    "7-1b": StroudSecrest["Xb"],
+    "7-2a": StroudSecrest["XIa"],
+    "7-2b": StroudSecrest["XIb"],
+    "14-1": stroud_14_1,
 }
-
-
-class Stroud(object):
-    keys = _gen.keys()
-
-    def __init__(self, key, symbolic=False):
-        self.name = "Stround_E3r2({})".format(key)
-        self.degree, data = _gen[key](symbolic)
-        self.points, self.weights = untangle(data)
-        self.weights *= numpy.sqrt(numpy.pi) ** 3
-        return
