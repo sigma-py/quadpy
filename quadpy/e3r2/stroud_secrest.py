@@ -11,12 +11,14 @@ from __future__ import division
 import numpy
 import sympy
 
+from .helpers import E3r2Scheme
 from ..helpers import untangle, pm_roll, fsd, pm
 
 
-def vii(symbolic):
+def stroud_secrest_vii(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+    pi = sympy.pi if symbolic else numpy.pi
 
     # article:
     # nu, xi = numpy.sqrt((15 + plus_minus * 3*numpy.sqrt(5)))
@@ -29,22 +31,28 @@ def vii(symbolic):
     B = frac(1, 20)
 
     data = [(A, numpy.array([[0, 0, 0]])), (B, pm_roll(3, [nu, xi]))]
-    return 5, data
+    points, weights = untangle(data)
+    weights *= sqrt(pi) ** 3
+    return E3r2Scheme("Stroud-Secrest VII", 5, weights, points)
 
 
-def viiia(symbolic):
+def stroud_secrest_viii_a(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+    pi = sympy.pi if symbolic else numpy.pi
 
     r = sqrt(frac(5, 4))
     s = sqrt(frac(5, 2))
     data = [(frac(4, 25), fsd(3, (r, 1))), (frac(1, 200), pm(3, s))]
-    return 5, data
+    points, weights = untangle(data)
+    weights *= sqrt(pi) ** 3
+    return E3r2Scheme("Stroud-Secrest VIIIa", 5, weights, points)
 
 
-def viiib(symbolic):
+def stroud_secrest_viii_b(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+    pi = sympy.pi if symbolic else numpy.pi
 
     r = sqrt(frac(5, 2))
     s = sqrt(frac(5, 6))
@@ -53,12 +61,15 @@ def viiib(symbolic):
         (frac(1, 25), fsd(3, (r, 1))),
         (frac(9, 200), pm(3, s)),
     ]
-    return 5, data
+    points, weights = untangle(data)
+    weights *= sqrt(pi) ** 3
+    return E3r2Scheme("Stroud-Secrest VIIIb", 5, weights, points)
 
 
-def ix(symbolic):
+def stroud_secrest_ix(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+    pi = sympy.pi if symbolic else numpy.pi
 
     r, s = [sqrt((15 - p_m * 5 * sqrt(5)) / 12) for p_m in [+1, -1]]
     t = sqrt(frac(5, 6))
@@ -68,13 +79,16 @@ def ix(symbolic):
         (frac(3, 100), pm_roll(3, [r, s])),
         (frac(3, 100), pm(3, t)),
     ]
-    return 5, data
+    points, weights = untangle(data)
+    weights *= sqrt(pi) ** 3
+    return E3r2Scheme("Stroud-Secrest IX", 5, weights, points)
 
 
-def x(plus_minus, symbolic):
+def stroud_secrest_x(positive, symbolic=False):
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+    pi = sympy.pi if symbolic else numpy.pi
 
-    degree = 7
+    plus_minus = 1 if positive else -1
 
     sqrt15 = sqrt(15)
 
@@ -92,13 +106,16 @@ def x(plus_minus, symbolic):
         (C, fsd(3, (s, 2))),
         (D, pm(3, t)),
     ]
-    return degree, data
+    points, weights = untangle(data)
+    weights *= sqrt(pi) ** 3
+    return E3r2Scheme("Stroud-Secrest X", 7, weights, points)
 
 
-def xi_(p_m, symbolic):
+def stroud_secrest_xi(positive, symbolic=False):
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+    pi = sympy.pi if symbolic else numpy.pi
 
-    degree = 7
+    p_m = 1 if positive else -1
 
     sqrt2 = sqrt(2)
     sqrt5 = sqrt(5)
@@ -120,32 +137,18 @@ def xi_(p_m, symbolic):
         (C, pm_roll(3, [u, v])),
         (C, pm(3, t)),
     ]
-    return degree, data
+    points, weights = untangle(data)
+    weights *= sqrt(pi) ** 3
+    return E3r2Scheme("Stroud-Secrest X", 7, weights, points)
 
 
-_gen = {
-    "VII": vii,
-    "VIIIa": viiia,
-    "VIIIb": viiib,
-    "IX": ix,
-    "Xa": lambda symbolic: x(+1, symbolic),
-    "Xb": lambda symbolic: x(-1, symbolic),
-    "XIa": lambda symbolic: xi_(+1, symbolic),
-    "XIb": lambda symbolic: xi_(-1, symbolic),
+StroudSecrest = {
+    "VII": stroud_secrest_vii,
+    "VIIIa": stroud_secrest_viii_a,
+    "VIIIb": stroud_secrest_viii_b,
+    "IX": stroud_secrest_ix,
+    "Xa": lambda symbolic=False: stroud_secrest_x(True, symbolic),
+    "Xb": lambda symbolic=False: stroud_secrest_x(False, symbolic),
+    "XIa": lambda symbolic=False: stroud_secrest_xi(True, symbolic),
+    "XIb": lambda symbolic=False: stroud_secrest_xi(False, symbolic),
 }
-
-
-class StroudSecrest(object):
-    keys = _gen.keys()
-
-    def __init__(self, key, symbolic=False):
-        self.name = "StroudSecrest_E3r2({})".format(key)
-
-        self.degree, data = _gen[key](symbolic)
-        self.points, self.weights = untangle(data)
-
-        sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-        pi = sympy.pi if symbolic else numpy.pi
-
-        self.weights *= sqrt(pi) ** 3
-        return
