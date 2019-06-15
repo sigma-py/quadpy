@@ -11,7 +11,7 @@ from helpers import check_degree, integrate_monomial_over_enr
 
 
 @pytest.mark.parametrize(
-    "scheme,tol", [(quadpy.e3r.Stroud(key), 1.0e-14) for key in quadpy.e3r.Stroud.keys]
+    "scheme,tol", [(scheme(), 1.0e-14) for scheme in quadpy.e3r.Stroud.values()]
 )
 def test_scheme(scheme, tol):
     assert scheme.points.dtype == numpy.float64, scheme.name
@@ -30,7 +30,7 @@ def test_scheme(scheme, tol):
     return
 
 
-@pytest.mark.parametrize("scheme", [quadpy.e3r.StroudSecrest("X")])
+@pytest.mark.parametrize("scheme", [quadpy.e3r.StroudSecrest["X"]()])
 def test_show(scheme, backend="mpl"):
     quadpy.e3r.show(scheme, backend=backend)
     plt.close()

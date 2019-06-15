@@ -13,10 +13,11 @@ import warnings
 import numpy
 import sympy
 
+from .helpers import E3rScheme
 from ..helpers import untangle, pm, fsd, pm_roll
 
 
-def vii(symbolic):
+def stroud_secrest_vii(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
@@ -25,10 +26,14 @@ def vii(symbolic):
     B = frac(1, 30)
 
     data = [(A, numpy.array([[0, 0, 0]])), (B, pm_roll(3, [xi, nu]))]
-    return 5, data
+
+    points, weights = untangle(data)
+    pi = sympy.pi if symbolic else numpy.pi
+    weights *= 8 * pi
+    return E3rScheme("Stroud-Secrest VII", 5, weights, points)
 
 
-def viii(symbolic):
+def stroud_secrest_viii(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
@@ -39,10 +44,13 @@ def viii(symbolic):
     C = frac(3, 100)
 
     data = [(A, numpy.array([[0, 0, 0]])), (B, fsd(3, (nu, 1))), (C, pm(3, eta))]
-    return 5, data
+    points, weights = untangle(data)
+    pi = sympy.pi if symbolic else numpy.pi
+    weights *= 8 * pi
+    return E3rScheme("Stroud-Secrest VIII", 5, weights, points)
 
 
-def ix(symbolic):
+def stroud_secrest_ix(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
@@ -52,10 +60,13 @@ def ix(symbolic):
     B = frac(1, 50)
 
     data = [(A, numpy.array([[0, 0, 0]])), (B, pm(3, eta)), (B, pm_roll(3, [xi, nu]))]
-    return 5, data
+    points, weights = untangle(data)
+    pi = sympy.pi if symbolic else numpy.pi
+    weights *= 8 * pi
+    return E3rScheme("Stroud-Secrest IX", 5, weights, points)
 
 
-def x(symbolic):
+def stroud_secrest_x(symbolic=False):
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
     sqrt130 = sqrt(130)
@@ -76,13 +87,16 @@ def x(symbolic):
         (D, pm(3, eta)),
     ]
 
-    # ERR
-    # TODO find out what's wrong
-    warnings.warn("Stroud-Secrest's scheme X for E_3^r has degree 3, not 7.")
-    return 3, data
+    points, weights = untangle(data)
+    pi = sympy.pi if symbolic else numpy.pi
+    weights *= 8 * pi
+
+    # TODO ERR find out what's wrong
+    warnings.warn("Stroud-Secrest X for E_3^r has degree 3, not 7.")
+    return E3rScheme("Stroud-Secrest X", 3, weights, points)
 
 
-def xi_(symbolic):
+def stroud_secrest_xi(symbolic=False):
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
     sqrt5 = sqrt(5)
@@ -107,18 +121,17 @@ def xi_(symbolic):
         (C, pm(3, eta)),
         (C, pm_roll(3, [lmbda, mu])),
     ]
-    return 7, data
+
+    points, weights = untangle(data)
+    pi = sympy.pi if symbolic else numpy.pi
+    weights *= 8 * pi
+    return E3rScheme("Stroud-Secrest XI", 7, weights, points)
 
 
-_gen = {"VII": vii, "VIII": viii, "IX": ix, "X": x, "XI": xi_}
-
-
-class StroudSecrest(object):
-    keys = _gen.keys()
-
-    def __init__(self, key, symbolic=False):
-        self.degree, data = _gen[key](symbolic)
-        self.points, self.weights = untangle(data)
-        pi = sympy.pi if symbolic else numpy.pi
-        self.weights *= 8 * pi
-        return
+StroudSecrest = {
+    "VII": stroud_secrest_vii,
+    "VIII": stroud_secrest_viii,
+    "IX": stroud_secrest_ix,
+    "X": stroud_secrest_x,
+    "XI": stroud_secrest_xi,
+}
