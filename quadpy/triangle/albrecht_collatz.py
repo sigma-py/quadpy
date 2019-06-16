@@ -17,6 +17,5 @@ def AlbrechtCollatz(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
     weights, bary = s2([frac(2, 30), frac(1, 2)], [frac(9, 15), frac(1, 6)])
-    points = bary[:, 1:]
     weights /= 2
-    return TriangleScheme("Albrecht-Collatz", 3, weights, points, bary)
+    return TriangleScheme("Albrecht-Collatz", 3, weights, bary)

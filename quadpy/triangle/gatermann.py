@@ -23,5 +23,4 @@ def Gatermann():
         [0.6749318700980879e-01, 0.5158423343536001, 0.2777161669764050],
     )
     weights *= 2
-    points = bary[:, 1:]
-    return TriangleScheme("Gatermann", 7, weights, points, bary)
+    return TriangleScheme("Gatermann", 7, weights, bary)

@@ -31,7 +31,7 @@ def _newton_cotes(n, point_fun):
     # weights
     if n == 0:
         weights = numpy.ones(1)
-        return points, weights, degree
+        return points, bary, weights, degree
 
     def get_poly(t, m, n):
         return sympy.prod(
@@ -69,12 +69,12 @@ def _newton_cotes(n, point_fun):
                     ]
                 )
                 idx += 1
-    return points, weights, degree
+    return points, bary, weights, degree
 
 
 class NewtonCotesClosed(object):
     def __init__(self, n):
-        self.points, self.weights, self.degree = _newton_cotes(
+        self.points, self.bary, self.weights, self.degree = _newton_cotes(
             n, lambda k, n: k / float(n)
         )
         return
@@ -82,7 +82,7 @@ class NewtonCotesClosed(object):
 
 class NewtonCotesOpen(object):
     def __init__(self, n):
-        self.points, self.weights, self.degree = _newton_cotes(
+        self.points, self.bary, self.weights, self.degree = _newton_cotes(
             n, lambda k, n: (k + 1) / float(n + 4)
         )
         if n == 0:

@@ -9,7 +9,7 @@ import sympy
 
 
 TriangleScheme = collections.namedtuple(
-    "TriangleScheme", ["name", "degree", "weights", "points", "bary"]
+    "TriangleScheme", ["name", "degree", "weights", "bary"]
 )
 
 

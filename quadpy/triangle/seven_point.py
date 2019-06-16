@@ -13,5 +13,4 @@ def SevenPoint(symbolic=False):
     weights, bary = concat(
         s3(frac(9, 20)), s2([frac(1, 20), 0], [frac(2, 15), frac(1, 2)])
     )
-    points = bary[:, 1:]
-    return TriangleScheme("Seven-point scheme", 3, weights, points, bary)
+    return TriangleScheme("Seven-point scheme", 3, weights, bary)

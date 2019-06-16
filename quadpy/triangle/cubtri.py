@@ -25,5 +25,4 @@ def Cubtri():
         ),
         s1([0.0375097224552317, 0.7384168123405100, 0.2321023267750504]),
     )
-    points = bary[:, 1:]
-    return TriangleScheme("CUBTRI", 8, weights, points, bary)
+    return TriangleScheme("CUBTRI", 8, weights, bary)

@@ -60,7 +60,6 @@ class HammerMarloweStroud(object):
             self.degree = 5
 
         self.bary, self.weights = untangle(data)
-        self.points = self.bary[:, 1:]
         return
 
 

@@ -9,5 +9,6 @@ class GrundmannMoeller(object):
         gm = grundmann_moeller.GrundmannMoeller(3, s)
         self.weights = gm.weights
         self.points = gm.points
+        self.bary = gm.bary
         self.degree = gm.degree
         return

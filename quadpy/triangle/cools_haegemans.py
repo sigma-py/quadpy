@@ -44,9 +44,8 @@ def cools_haegemans_1(mpmath=False):
             flt("0.28104124731511039057E+00"),
         ],
     )
-    points = bary[:, 1:]
     weights *= 2
-    return TriangleScheme("Cools-Haegemans 1", 8, weights, points, bary)
+    return TriangleScheme("Cools-Haegemans 1", 8, weights, bary)
 
 
 # TODO find error
@@ -87,9 +86,8 @@ def cools_haegemans_1(mpmath=False):
 #     ]
 #
 #     bary, weights = untangle2(data)
-#     points = bary[:, 1:]
 #     weights *= 2
-#     return TriangleScheme("Cools-Haegemans 1", 10, weights, points, bary)
+#     return TriangleScheme("Cools-Haegemans 1", 10, weights, bary)
 
 
 CoolsHaegemans = {

@@ -67,13 +67,11 @@ class Stroud(object):
             ]
 
             self.bary, self.weights = untangle(data)
-            self.points = self.bary[:, 1:]
 
         return
 
     def set_data(self, scheme):
         self.degree = scheme.degree
         self.weights = scheme.weights
-        self.points = scheme.points
         self.bary = scheme.bary
         return

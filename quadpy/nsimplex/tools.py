@@ -6,7 +6,7 @@ import numpy
 
 def integrate(f, simplex, scheme, dot=numpy.dot):
     flt = numpy.vectorize(float)
-    x = transform(flt(scheme.points).T, simplex.T)
+    x = transform(flt(scheme.bary).T, simplex.T)
     vol = get_vol(simplex)
 
     fx = numpy.array(f(x))
@@ -21,7 +21,7 @@ def integrate(f, simplex, scheme, dot=numpy.dot):
     return vol * dot(fx, flt(scheme.weights))
 
 
-def transform(xi, simplex):
+def transform(bary, simplex):
     """Transform the points `xi` from the reference simplex onto `simplex`.
     """
     # For n == 2:
@@ -30,8 +30,7 @@ def transform(xi, simplex):
     #     + outer(triangle[1].T, xi[0])
     #     + outer(triangle[2].T, xi[1])
     #     )
-    shape_funs = numpy.vstack([1.0 - numpy.sum(xi, axis=0), xi])
-    return numpy.dot(simplex, shape_funs)
+    return numpy.dot(simplex, bary)
 
 
 def get_vol(simplex):
