@@ -4,23 +4,22 @@ import numpy
 import orthopy
 
 from ..tools import scheme_from_rc
+from .helpers import LineSegmentScheme
 
 
-class GaussRadau(object):
+def GaussRadau(n, a=0.0, b=0.0):
     """Gauss-Radau quadrature.
     """
-
-    def __init__(self, n, a=0.0, b=0.0):
-        assert n >= 2
-        self.degree = 2 * n - 1
-        _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.jacobi(
-            n, a, b, "monic"
-        )
-        flt = numpy.vectorize(float)
-        alpha = flt(alpha)
-        beta = flt(beta)
-        self.points, self.weights = _radau(alpha, beta, -1.0)
-        return
+    assert n >= 2
+    degree = 2 * n - 1
+    _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.jacobi(
+        n, a, b, "monic"
+    )
+    flt = numpy.vectorize(float)
+    alpha = flt(alpha)
+    beta = flt(beta)
+    points, weights = _radau(alpha, beta, -1.0)
+    return LineSegmentScheme("Gauss-Radau", degree, weights, points)
 
 
 def _radau(alpha, beta, xr):

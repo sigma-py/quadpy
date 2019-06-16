@@ -2,10 +2,10 @@
 #
 import numpy
 
+from .helpers import LineSegmentScheme
 
-class Midpoint(object):
-    def __init__(self):
-        self.weights = numpy.array([2.0])
-        self.points = numpy.array([0.0])
-        self.degree = 1
-        return
+
+def Midpoint():
+    weights = numpy.array([2.0])
+    points = numpy.array([0.0])
+    return LineSegmentScheme("Midpoint rule", 1, weights, points)
