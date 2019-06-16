@@ -41,9 +41,9 @@ def _integrate_exact(f, triangle):
 
 @pytest.mark.parametrize(
     "scheme,tol",
-    [(quadpy.triangle.BerntsenEspelid(k), 1.0e-11) for k in range(1, 5)]
+    [(quadpy.triangle.BerntsenEspelid[k](), 1.0e-11) for k in range(1, 5)]
     + [(quadpy.triangle.Centroid(), 1.0e-14)]
-    + [(quadpy.triangle.CoolsHaegemans(k), 1.0e-13) for k in [1]]
+    + [(quadpy.triangle.CoolsHaegemans[1], 1.0e-13) for k in [1]]
     + [(quadpy.triangle.Cubtri(), 1.0e-14)]
     + [(quadpy.triangle.Dunavant(k), 1.0e-12) for k in range(1, 21)]
     + [(quadpy.triangle.Franke[k](), 1.0e-14) for k in ["9", "10"]]

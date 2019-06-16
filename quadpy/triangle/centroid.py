@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from .helpers import _s3
+from .helpers import _s3, TriangleScheme
 
 
-class Centroid(object):
-    def __init__(self, symbolic=False):
-        self.weights = numpy.array([1])
-        self.bary = _s3(symbolic)
-        self.points = self.bary[:, 1:]
-        self.degree = 1
-        self.name = "centroid"
-        return
+def Centroid(symbolic=False):
+    weights = numpy.array([1])
+    bary = _s3(symbolic)
+    points = bary[:, 1:]
+    return TriangleScheme("Centroid rule", 1, weights, points, bary)
