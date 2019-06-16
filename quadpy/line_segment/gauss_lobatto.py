@@ -4,25 +4,24 @@ import numpy
 import orthopy
 
 from ..tools import scheme_from_rc
+from .helpers import LineSegmentScheme
 
 
-class GaussLobatto(object):
+def GaussLobatto(n, a=0.0, b=0.0):
     """
     Gauss-Lobatto quadrature.
     """
-
-    def __init__(self, n, a=0.0, b=0.0):
-        assert n >= 2
-        self.degree = 2 * n - 3
-        # TODO use symbolic=False instead of float()
-        _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.jacobi(
-            n, a, b, "monic"
-        )
-        flt = numpy.vectorize(float)
-        alpha = flt(alpha)
-        beta = flt(beta)
-        self.points, self.weights = _lobatto(alpha, beta, -1.0, 1.0)
-        return
+    assert n >= 2
+    degree = 2 * n - 3
+    # TODO use symbolic=False instead of float()
+    _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.jacobi(
+        n, a, b, "monic"
+    )
+    flt = numpy.vectorize(float)
+    alpha = flt(alpha)
+    beta = flt(beta)
+    points, weights = _lobatto(alpha, beta, -1.0, 1.0)
+    return LineSegmentScheme("Gauss-Lobatto", degree, weights, points)
 
 
 def _lobatto(alpha, beta, xl1, xl2):
