@@ -52,8 +52,8 @@ def integrate_adaptive(
     triangles,
     eps,
     minimum_triangle_area=None,
-    scheme1=Dunavant(5),
-    scheme2=Dunavant(10),
+    scheme1=Dunavant[5](),
+    scheme2=Dunavant[10](),
     dot=numpy.dot,
 ):
     sumfun = numpy.sum
