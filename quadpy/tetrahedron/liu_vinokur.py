@@ -28,33 +28,33 @@ class LiuVinokur(object):
         self.name = "LiuVinokur({})".format(index)
         if index == 1:
             self.weights = numpy.concatenate([numpy.full(1, 1)])
-            bary = numpy.concatenate([_s4()])
+            self.bary = numpy.concatenate([_s4()])
             self.degree = 1
         elif index == 2:
             self.weights = numpy.concatenate([numpy.full(4, frac(1, 4))])
-            bary = numpy.concatenate([_r_alpha(1.0)])
+            self.bary = numpy.concatenate([_r_alpha(1.0)])
             self.degree = 1
         elif index == 3:
             self.weights = numpy.concatenate([numpy.full(4, frac(1, 4))])
-            bary = numpy.concatenate([_r_alpha(1 / sqrt(5))])
+            self.bary = numpy.concatenate([_r_alpha(1 / sqrt(5))])
             self.degree = 2
         elif index == 4:
             self.weights = numpy.concatenate(
                 [numpy.full(1, frac(4, 5)), numpy.full(4, frac(1, 20))]
             )
-            bary = numpy.concatenate([_s4(), _r_alpha(1)])
+            self.bary = numpy.concatenate([_s4(), _r_alpha(1)])
             self.degree = 2
         elif index == 5:
             self.weights = numpy.concatenate(
                 [numpy.full(1, -frac(4, 5)), numpy.full(4, frac(9, 20))]
             )
-            bary = numpy.concatenate([_s4(), _r_alpha(frac(1, 3))])
+            self.bary = numpy.concatenate([_s4(), _r_alpha(frac(1, 3))])
             self.degree = 3
         elif index == 6:
             self.weights = numpy.concatenate(
                 [numpy.full(4, frac(1, 40)), numpy.full(4, frac(9, 40))]
             )
-            bary = numpy.concatenate([_r_alpha(1), _r_alpha(-frac(1, 3))])
+            self.bary = numpy.concatenate([_r_alpha(1), _r_alpha(-frac(1, 3))])
             self.degree = 3
         elif index == 7:
             self.weights = numpy.concatenate(
@@ -64,7 +64,7 @@ class LiuVinokur(object):
                     numpy.full(6, frac(56, 375)),
                 ]
             )
-            bary = numpy.concatenate(
+            self.bary = numpy.concatenate(
                 [_s4(), _r_alpha(frac(5, 7)), _r_beta(sqrt(70) / 28)]
             )
             self.degree = 4
@@ -82,7 +82,7 @@ class LiuVinokur(object):
                     numpy.full(6, frac(2, 105)),
                 ]
             )
-            bary = numpy.concatenate(
+            self.bary = numpy.concatenate(
                 [_r_alpha(alpha1), _r_alpha(alpha2), _r_beta(frac(1, 2))]
             )
             self.degree = 4
@@ -95,7 +95,7 @@ class LiuVinokur(object):
                     numpy.full(6, frac(2, 105)),
                 ]
             )
-            bary = numpy.concatenate(
+            self.bary = numpy.concatenate(
                 [_s4(), _r_alpha(1), _r_alpha(frac(1, 5)), _r_beta(frac(1, 2))]
             )
             self.degree = 4
@@ -108,7 +108,7 @@ class LiuVinokur(object):
                     numpy.full(12, frac(4, 105)),
                 ]
             )
-            bary = numpy.concatenate(
+            self.bary = numpy.concatenate(
                 [
                     _s4(),
                     _r_alpha(1),
@@ -126,7 +126,7 @@ class LiuVinokur(object):
                     numpy.full(6, frac(2, 105)),
                 ]
             )
-            bary = numpy.concatenate(
+            self.bary = numpy.concatenate(
                 [
                     _r_alpha(1),
                     _r_alpha(-frac(1, 3)),
@@ -151,7 +151,7 @@ class LiuVinokur(object):
             self.weights = numpy.concatenate(
                 [numpy.full(4, w1), numpy.full(4, w2), numpy.full(6, lmbda ** 2 / 840)]
             )
-            bary = numpy.concatenate(
+            self.bary = numpy.concatenate(
                 [_r_alpha(alpha1), _r_alpha(alpha2), _r_beta(1 / sqrt(lmbda))]
             )
             self.degree = 5
@@ -164,7 +164,7 @@ class LiuVinokur(object):
                     numpy.full(6, frac(2, 105)),
                 ]
             )
-            bary = numpy.concatenate(
+            self.bary = numpy.concatenate(
                 [
                     _s4(),
                     _r_alpha((2 + sqrt(13)) / 9),
@@ -184,7 +184,7 @@ class LiuVinokur(object):
                     numpy.full(6, frac(2, 105)),
                 ]
             )
-            bary = numpy.concatenate(
+            self.bary = numpy.concatenate(
                 [
                     _s4(),
                     _r_alpha(1),
@@ -195,7 +195,7 @@ class LiuVinokur(object):
             )
             self.degree = 5
 
-        self.points = bary[:, 1:]
+        self.points = self.bary[:, 1:]
         return
 
 

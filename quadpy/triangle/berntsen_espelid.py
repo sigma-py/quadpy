@@ -76,8 +76,7 @@ def berntsen_espelid_1(mpmath=False):
             ],
         ),
     )
-    points = bary[:, 1:]
-    return TriangleScheme("Berntsen-Espelid 1", 13, weights, points, bary)
+    return TriangleScheme("Berntsen-Espelid 1", 13, weights, bary)
 
 
 def berntsen_espelid_2(mpmath=False):
@@ -127,8 +126,7 @@ def berntsen_espelid_2(mpmath=False):
             ],
         ),
     )
-    points = bary[:, 1:]
-    return TriangleScheme("Berntsen-Espelid 2", 13, weights, points, bary)
+    return TriangleScheme("Berntsen-Espelid 2", 13, weights, bary)
 
 
 def berntsen_espelid_3(mpmath=False):
@@ -177,8 +175,7 @@ def berntsen_espelid_3(mpmath=False):
             ],
         ),
     )
-    points = bary[:, 1:]
-    return TriangleScheme("Berntsen-Espelid 3", 13, weights, points, bary)
+    return TriangleScheme("Berntsen-Espelid 3", 13, weights, bary)
 
 
 def berntsen_espelid_4(mpmath=False):
@@ -229,8 +226,7 @@ def berntsen_espelid_4(mpmath=False):
             ],
         ),
     )
-    points = bary[:, 1:]
-    return TriangleScheme("Berntsen-Espelid 4", 13, weights, points, bary)
+    return TriangleScheme("Berntsen-Espelid 4", 13, weights, bary)
 
 
 BerntsenEspelid = {
