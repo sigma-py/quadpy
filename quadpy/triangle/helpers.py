@@ -108,6 +108,14 @@ def s1(*data):
     return weights, points
 
 
+def rot_ab(*data):
+    w, a, b = numpy.array(data).T
+    c = 1 - a - b
+    points = _stack_first_last([[a, b, c], [c, a, b], [b, c, a]])
+    weights = numpy.tile(w, 3)
+    return weights, points
+
+
 def _stack_first_last(arr):
     """Stacks an input array of shape (i, j, k) such that the output array is of shape
     (i*k, j).

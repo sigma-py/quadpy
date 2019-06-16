@@ -10,15 +10,13 @@ from __future__ import division
 
 import sympy
 
-from .helpers import untangle2, TriangleScheme
+from .helpers import TriangleScheme, s2
 
 
 def AlbrechtCollatz(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
-    data = {"s2": [[frac(2, 30), frac(1, 2)], [frac(9, 15), frac(1, 6)]]}
-    bary, weights = untangle2(data)
-
+    weights, bary = s2([frac(2, 30), frac(1, 2)], [frac(9, 15), frac(1, 6)])
     points = bary[:, 1:]
     weights /= 2
     return TriangleScheme("Albrecht-Collatz", 3, weights, points, bary)
