@@ -19,4 +19,4 @@ def SarmaStroud(symbolic=False):
     # from the specified values. Note that it is only given in single precision.
     lmbda = 1.0329785305
     hw = HammerWymore(lmbda=lmbda, symbolic=symbolic)
-    return HexahedronScheme("Sarma-Stroud", hw.degree, hw.weight, hw.points)
+    return HexahedronScheme("Sarma-Stroud", hw.degree, hw.weights, hw.points)
