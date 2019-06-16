@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
 #
+import collections
+
 from ..nsphere.helpers import integrate_monomial_over_unit_nsphere
+
+
+NBallScheme = collections.namedtuple(
+    "NBallScheme", ["name", "dim", "degree", "weights", "points"]
+)
 
 
 def volume_unit_ball(n, symbolic=False):
