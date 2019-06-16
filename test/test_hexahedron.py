@@ -85,11 +85,11 @@ def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
     ]
     + [(Product(quadpy.line_segment.NewtonCotesOpen(k)), 1.0e-14) for k in range(5)]
     + [
-        (quadpy.hexahedron.HammerStroud(k), 1.0e-14)
+        (quadpy.hexahedron.HammerStroud[k](), 1.0e-14)
         for k in ["1-3", "2-3", "4-3", "5-3a", "5-3b", "6-3"]
     ]
     + [
-        (quadpy.hexahedron.Stroud(k), 1.0e-14)
+        (quadpy.hexahedron.Stroud[k](), 1.0e-14)
         for k in [
             "C3 3-1",
             "C3 3-2",

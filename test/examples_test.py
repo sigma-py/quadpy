@@ -120,12 +120,12 @@ def test_quadrilateral():
 
 
 def test_e2r2():
-    quadpy.e2r2.integrate(lambda x: numpy.exp(x[0]), quadpy.e2r2.RabinowitzRichter(3))
+    quadpy.e2r2.integrate(lambda x: numpy.exp(x[0]), quadpy.e2r2.RabinowitzRichter[3]())
     return
 
 
 def test_e2r():
-    quadpy.e2r.integrate(lambda x: numpy.exp(x[0]), quadpy.e2r.RabinowitzRichter(5))
+    quadpy.e2r.integrate(lambda x: numpy.exp(x[0]), quadpy.e2r.RabinowitzRichter[5]())
     return
 
 
@@ -151,14 +151,14 @@ def test_ball():
         lambda x: numpy.exp(x[0]),
         [0.0, 0.0, 0.0],
         1.0,
-        quadpy.ball.HammerStroud("14-3a"),
+        quadpy.ball.HammerStroud["14-3"](variant_a=True),
     )
 
     quadpy.ball.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         numpy.array([[1.0, 1.0, 0.0], [0.0, 0.3, 0.0], [2.0, 2.0, 0.0]]),
         [1.0, 0.7, 0.333],
-        quadpy.ball.HammerStroud("15-3b"),
+        quadpy.ball.HammerStroud["15-3"](variant_a=False),
     )
     return
 
@@ -217,7 +217,7 @@ def test_wedge():
         numpy.array(
             [[[0, 0, 0], [1, 0, 0], [0, 1, 0]], [[0, 0, 1], [1, 0, 1], [0, 1, 1]]]
         ),
-        quadpy.wedge.Felippa(4),
+        quadpy.wedge.Felippa[4](),
     )
 
     val = quadpy.wedge.integrate(
@@ -230,7 +230,7 @@ def test_wedge():
             ],
             axis=-2,
         ),
-        quadpy.wedge.Felippa(4),
+        quadpy.wedge.Felippa[4](),
     )
     assert val.shape == (2, 3)
     return
@@ -285,7 +285,7 @@ def test_nsphere():
 
 def test_enr2():
     dim = 4
-    quadpy.enr2.integrate(lambda x: numpy.exp(x[0]), quadpy.enr2.Stroud(dim, "5-2"))
+    quadpy.enr2.integrate(lambda x: numpy.exp(x[0]), quadpy.enr2.Stroud["5-2"](dim))
     return
 
 
@@ -295,7 +295,7 @@ def test_e1r():
 
 
 def test_e3r():
-    quadpy.e3r.integrate(lambda x: numpy.exp(x[0]), quadpy.e3r.StroudSecrest("IX"))
+    quadpy.e3r.integrate(lambda x: numpy.exp(x[0]), quadpy.e3r.StroudSecrest["IX"]())
     return
 
 
