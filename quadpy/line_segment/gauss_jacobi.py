@@ -15,7 +15,5 @@ def GaussJacobi(n, alpha, beta, mode="numpy", decimal_places=None):
     _, _, a, b = orthopy.line_segment.recurrence_coefficients.jacobi(
         n, alpha, beta, "monic", symbolic=True
     )
-    points, weights = scheme_from_rc(
-        a, b, mode=mode, decimal_places=decimal_places
-    )
+    points, weights = scheme_from_rc(a, b, mode=mode, decimal_places=decimal_places)
     return LineSegmentScheme("Gauss-Jacobi", degree, weights, points)
