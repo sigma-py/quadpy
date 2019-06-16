@@ -12,38 +12,54 @@ import numpy
 import scipy.special
 import sympy
 
+from .helpers import EnrScheme
 from ..helpers import untangle, fsd, pm
 from ..enr2.stroud_secrest import _nsimplex
 
 
-def i(n, symbolic):
+def stroud_secrest_i(n, symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
+    pi = sympy.pi if symbolic else numpy.pi
+    gamma = sympy.gamma if symbolic else scipy.special.gamma
+
     data = [(frac(1, n + 1), sqrt(n + 1) * _nsimplex(n, symbolic=symbolic))]
-    return 2, data
+    points, weights = untangle(data)
+    weights *= 2 * sqrt(pi) ** n * gamma(n) / gamma(frac(n, 2))
+    return EnrScheme("Stroud-Secrest I", n, 2, weights, points)
 
 
-def ii(n, symbolic):
+def stroud_secrest_ii(n, symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
+    pi = sympy.pi if symbolic else numpy.pi
+    gamma = sympy.gamma if symbolic else scipy.special.gamma
 
     nu = sqrt(n * (n + 1))
     data = [(frac(1, 2 * n), fsd(n, (nu, 1)))]
-    return 3, data
+    points, weights = untangle(data)
+    weights *= 2 * sqrt(pi) ** n * gamma(n) / gamma(frac(n, 2))
+    return EnrScheme("Stroud-Secrest II", n, 3, weights, points)
 
 
-def iii(n, symbolic):
+def stroud_secrest_iii(n, symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
+    pi = sympy.pi if symbolic else numpy.pi
+    gamma = sympy.gamma if symbolic else scipy.special.gamma
 
     nu = sqrt(n + 1)
     data = [(frac(1, 2 ** n), pm(n, nu))]
-    return 3, data
+    points, weights = untangle(data)
+    weights *= 2 * sqrt(pi) ** n * gamma(n) / gamma(frac(n, 2))
+    return EnrScheme("Stroud-Secrest III", n, 3, weights, points)
 
 
-def iv(n, symbolic):
+def stroud_secrest_iv(n, symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
+    pi = sympy.pi if symbolic else numpy.pi
+    gamma = sympy.gamma if symbolic else scipy.special.gamma
 
     nu = sqrt((n + 2) * (n + 3))
     xi = sqrt(frac((n + 2) * (n + 3), 2))
@@ -52,24 +68,14 @@ def iv(n, symbolic):
     C = frac(n + 1, (n + 2) ** 2 * (n + 3))
 
     data = [(A, numpy.full((1, n), 0)), (B, fsd(n, (nu, 1))), (C, fsd(n, (xi, 2)))]
-    return 5, data
+    points, weights = untangle(data)
+    weights *= 2 * sqrt(pi) ** n * gamma(n) / gamma(frac(n, 2))
+    return EnrScheme("Stroud-Secrest IV", n, 5, weights, points)
 
 
-_gen = {"I": i, "II": ii, "III": iii, "IV": iv}
-
-
-class StroudSecrest(object):
-    keys = _gen.keys()
-
-    def __init__(self, n, key, symbolic=False):
-        self.dim = n
-        self.degree, data = _gen[key](n, symbolic)
-        self.points, self.weights = untangle(data)
-
-        frac = sympy.Rational if symbolic else lambda x, y: x / y
-        sqrt = sympy.sqrt if symbolic else numpy.sqrt
-        pi = sympy.pi if symbolic else numpy.pi
-        gamma = sympy.gamma if symbolic else scipy.special.gamma
-
-        self.weights *= 2 * sqrt(pi) ** n * gamma(n) / gamma(frac(n, 2))
-        return
+StroudSecrest = {
+    "I": stroud_secrest_i,
+    "II": stroud_secrest_ii,
+    "III": stroud_secrest_iii,
+    "IV": stroud_secrest_iv,
+}

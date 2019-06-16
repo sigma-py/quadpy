@@ -11,8 +11,9 @@ import numpy
 import scipy.special
 import sympy
 
-from . import stroud_secrest
+from .stroud_secrest import StroudSecrest
 
+from .helpers import EnrScheme
 from ..helpers import untangle, pm_array0, fsd
 
 # ERR
@@ -34,11 +35,13 @@ from ..helpers import untangle, pm_array0, fsd
 #     return 5, data
 
 
-def _gen5_3(n, symbolic):
+def stroud_5_3(n, symbolic=False):
     """Spherical product Lobatto formula.
     """
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+    pi = sympy.pi if symbolic else numpy.pi
+    gamma = sympy.gamma if symbolic else scipy.special.gamma
 
     data = []
     s = sqrt(n + 3)
@@ -49,19 +52,27 @@ def _gen5_3(n, symbolic):
         data += [(Bk, pm_array0(n, arr, range(k - 1, n)))]
     B0 = 1 - sum([item[0] * len(item[1]) for item in data])
     data += [(B0, numpy.full((1, n), 0))]
-    return 5, data
+
+    points, weights = untangle(data)
+    weights *= 2 * sqrt(pi) ** n * gamma(n) / gamma(frac(n, 2))
+    return EnrScheme("Stroud 5-3", n, 5, weights, points)
 
 
-def _gen5_4(n, symbolic):
+def stroud_5_4(n, symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+    pi = sympy.pi if symbolic else numpy.pi
+    gamma = sympy.gamma if symbolic else scipy.special.gamma
 
     r = sqrt(((n + 2) * (n + 3) + (n - 1) * (n + 3) * sqrt(2 * (n + 2))) / n)
     s = sqrt(((n + 2) * (n + 3) - (n + 3) * sqrt(2 * (n + 2))) / n)
     A = frac(4 * n + 6, (n + 2) * (n + 3))
     B = frac(n + 1, (n + 2) * (n + 3) * 2 ** n)
     data = [(A, numpy.full((1, n), 0)), (B, fsd(n, (r, 1), (s, n - 1)))]
-    return 5, data
+
+    points, weights = untangle(data)
+    weights *= 2 * sqrt(pi) ** n * gamma(n) / gamma(frac(n, 2))
+    return EnrScheme("Stroud 5-4", n, 5, weights, points)
 
 
 # math domain error
@@ -107,31 +118,13 @@ def _gen5_4(n, symbolic):
 #     return 7, data
 
 
-_gen = {
-    "3-1": stroud_secrest.ii,
-    "3-2": stroud_secrest.iii,
-    "5-1": stroud_secrest.iv,
+Stroud = {
+    "3-1": StroudSecrest["II"],
+    "3-2": StroudSecrest["III"],
+    "5-1": StroudSecrest["IV"],
     # '5-2': _gen5_2,
-    "5-3": _gen5_3,
-    "5-4": _gen5_4,
+    "5-3": stroud_5_3,
+    "5-4": stroud_5_4,
     # '5-5': _gen5_5,
     # '7-1': _gen7_1,
 }
-
-
-class Stroud(object):
-    keys = _gen.keys()
-
-    def __init__(self, n, key, symbolic=False):
-        self.name = "Stround_Enr({})".format(key)
-        self.dim = n
-        self.degree, data = _gen[key](n, symbolic=symbolic)
-        self.points, self.weights = untangle(data)
-
-        frac = sympy.Rational if symbolic else lambda x, y: x / y
-        sqrt = sympy.sqrt if symbolic else numpy.sqrt
-        pi = sympy.pi if symbolic else numpy.pi
-        gamma = sympy.gamma if symbolic else scipy.special.gamma
-
-        self.weights *= 2 * sqrt(pi) ** n * gamma(n) / gamma(frac(n, 2))
-        return
