@@ -83,7 +83,7 @@ def _integrate_exact(f, triangle):
         for k in [1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
     ]
     + [(quadpy.triangle.XiaoGimbutas(k), 1.0e-14) for k in range(1, 51)]
-    + [(quadpy.triangle.ZhangCuiLiu(k), 1.0e-14) for k in [1, 2, 3]],
+    + [(quadpy.triangle.ZhangCuiLiu[k](), 1.0e-14) for k in [1, 2, 3]],
 )
 def test_scheme(scheme, tol):
     assert scheme.bary.dtype in [numpy.float64, numpy.int64], scheme.name
