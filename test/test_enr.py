@@ -11,15 +11,11 @@ from helpers import check_degree, integrate_monomial_over_enr
 
 @pytest.mark.parametrize(
     "scheme,tol",
-    [
-        (quadpy.enr.Stroud(n, key), 1.0e-14)
-        for n in range(4, 6)
-        for key in quadpy.enr.Stroud.keys
-    ]
+    [(scheme(n), 1.0e-14) for n in range(4, 6) for scheme in quadpy.enr.Stroud.values()]
     + [
-        (quadpy.enr.StroudSecrest(n, key), 1.0e-14)
+        (scheme(n), 1.0e-14)
         for n in range(2, 6)
-        for key in quadpy.enr.StroudSecrest.keys
+        for scheme in quadpy.enr.StroudSecrest.values()
     ],
 )
 def test_scheme(scheme, tol):
