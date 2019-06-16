@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 #
+import collections
+
 import numpy
+
+HexahedronScheme = collections.namedtuple(
+    "HexahedronScheme", ["name", "degree", "weights", "points"]
+)
 
 
 def z():

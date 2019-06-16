@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
 #
+import collections
 import itertools
+
 import numpy
+
+
+NCubecheme = collections.namedtuple(
+    "NCubeScheme", ["name", "dim", "degree", "weights", "points"]
+)
 
 
 def integrate_monomial_over_ncube(ncube_limits, exp):
