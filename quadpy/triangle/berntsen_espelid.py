@@ -14,7 +14,7 @@ points inside the triangle, and all weights positive.
 """
 from mpmath import mp
 
-from .helpers import untangle2, TriangleScheme
+from .helpers import TriangleScheme, s1, s2, s3, concat
 
 
 def berntsen_espelid_1(mpmath=False):
@@ -30,9 +30,9 @@ def berntsen_espelid_1(mpmath=False):
     # Sept. 1992,
     # 10.1145/131766.131772,
     # <https://dl.acm.org/citation.cfm?id=131772>.
-    data = {
-        "s3": [flt("0.051739766065744133555179145422")],
-        "s2": [
+    weights, bary = concat(
+        s3(flt("0.051739766065744133555179145422")),
+        s2(
             [
                 flt("0.008007799555564801597804123460"),
                 flt("0.024862168537947217274823955239"),
@@ -57,8 +57,8 @@ def berntsen_espelid_1(mpmath=False):
                 flt("0.032195534242431618819414482205"),
                 flt("0.468861354847056503251458179727"),
             ],
-        ],
-        "s1": [
+        ),
+        s1(
             [
                 flt("0.015445834210701583817692900053"),
                 flt("0.022076289653624405142446876931"),
@@ -74,10 +74,8 @@ def berntsen_espelid_1(mpmath=False):
                 flt("0.096506481292159228736516560903"),
                 flt("0.635867859433372768286976979827"),
             ],
-        ],
-    }
-
-    bary, weights = untangle2(data, symbolic=False)
+        ),
+    )
     points = bary[:, 1:]
     return TriangleScheme("Berntsen-Espelid 1", 13, weights, points, bary)
 
@@ -86,9 +84,9 @@ def berntsen_espelid_2(mpmath=False):
     flt = mp.mpf if mpmath else float
 
     mp.dps = 30
-    data = {
-        "s3": [[flt("0.058696079612719031799193912788")]],
-        "s2": [
+    weights, bary = concat(
+        s3(flt("0.058696079612719031799193912788")),
+        s2(
             [
                 flt("0.007850768296100080327451819370"),
                 flt("0.024607188643230218187849951620"),
@@ -110,8 +108,8 @@ def berntsen_espelid_2(mpmath=False):
                 flt("0.031492563075968795690055730726"),
                 flt("0.476602980049079152951254192421"),
             ],
-        ],
-        "s1": [
+        ),
+        s1(
             [
                 flt("0.015802532215260751359123743555"),
                 flt("0.022797894538248612547720754462"),
@@ -127,10 +125,8 @@ def berntsen_espelid_2(mpmath=False):
                 flt("0.089733060451605359079629076100"),
                 flt("0.637955883864209538412552781228"),
             ],
-        ],
-    }
-
-    bary, weights = untangle2(data, symbolic=False)
+        ),
+    )
     points = bary[:, 1:]
     return TriangleScheme("Berntsen-Espelid 2", 13, weights, points, bary)
 
@@ -139,8 +135,8 @@ def berntsen_espelid_3(mpmath=False):
     flt = mp.mpf if mpmath else float
 
     mp.dps = 30
-    data = {
-        "s2": [
+    weights, bary = concat(
+        s2(
             [flt("-4.438917939249711e-15"), flt("-1.097321247106281159287766916114")],
             [
                 flt("0.023875084055169335843543623613"),
@@ -162,8 +158,8 @@ def berntsen_espelid_3(mpmath=False):
                 flt("0.050685061067025767745642589150"),
                 flt("0.440323874478061332339068546065"),
             ],
-        ],
-        "s1": [
+        ),
+        s1(
             [
                 flt("0.014867088321983380610493967543"),
                 flt("0.020821520846631616958730687380"),
@@ -179,10 +175,8 @@ def berntsen_espelid_3(mpmath=False):
                 flt("0.115458022821994138042223116054"),
                 flt("0.631364930935447484201224031403"),
             ],
-        ],
-    }
-
-    bary, weights = untangle2(data, symbolic=False)
+        ),
+    )
     points = bary[:, 1:]
     return TriangleScheme("Berntsen-Espelid 3", 13, weights, points, bary)
 
@@ -191,9 +185,9 @@ def berntsen_espelid_4(mpmath=False):
     flt = mp.mpf if mpmath else float
 
     mp.dps = 30
-    data = {
-        "s3": [[flt("0.055141401445961668095892272765")]],
-        "s2": [
+    weights, bary = concat(
+        s3(flt("0.055141401445961668095892272765")),
+        s2(
             [flt("0.000011142520455322162070507537"), flt("0")],
             [
                 flt("0.008019330681470505488363363198"),
@@ -216,8 +210,8 @@ def berntsen_espelid_4(mpmath=False):
                 flt("0.417965185286509715766771174230"),
             ],
             [flt("0.005884459601338707440236321752"), flt("0.5")],
-        ],
-        "s1": [
+        ),
+        s1(
             [
                 flt("0.015445834210701583817692900053"),
                 flt("0.022076289653624405142446876931"),
@@ -233,10 +227,8 @@ def berntsen_espelid_4(mpmath=False):
                 flt("0.096506481292159228736516560903"),
                 flt("0.635867859433872768286976979827"),
             ],
-        ],
-    }
-
-    bary, weights = untangle2(data, symbolic=False)
+        ),
+    )
     points = bary[:, 1:]
     return TriangleScheme("Berntsen-Espelid 4", 13, weights, points, bary)
 
