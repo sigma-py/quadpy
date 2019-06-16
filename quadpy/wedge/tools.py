@@ -86,7 +86,7 @@ def show(
     helpers.backend_to_function[backend](
         _transform(scheme.points.T, wedge).T,
         scheme.weights,
-        integrate(lambda x: numpy.ones(1), wedge, felippa.Felippa(1)),
+        integrate(lambda x: numpy.ones(1), wedge, felippa.Felippa[1]()),
         edges,
     )
     return
