@@ -6,7 +6,7 @@ import itertools
 import numpy
 
 
-NCubecheme = collections.namedtuple(
+NCubeScheme = collections.namedtuple(
     "NCubeScheme", ["name", "dim", "degree", "weights", "points"]
 )
 

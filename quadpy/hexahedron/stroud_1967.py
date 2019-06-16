@@ -22,7 +22,7 @@ from .helpers import rss_pm, z, HexahedronScheme
 from ..helpers import untangle
 
 
-def Stroud1967(symbolic=False):
+def Stroud_1967(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
