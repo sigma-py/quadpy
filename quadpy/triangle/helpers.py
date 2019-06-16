@@ -83,3 +83,40 @@ def untangle2(data, symbolic=False):
     bary = numpy.column_stack(bary).T
     weights = numpy.concatenate(weights)
     return bary, weights
+
+
+def s3(weight, symbolic=False):
+    frac = sympy.Rational if symbolic else lambda x, y: x / y
+    return numpy.array([weight]), numpy.full((1, 3), frac(1, 3))
+
+
+def s2(*data):
+    w, a = numpy.array(data).T
+    b = 1 - 2 * a
+    points = _stack_first_last([[a, a, b], [a, b, a], [b, a, a]])
+    weights = numpy.tile(w, 3)
+    return weights, points
+
+
+def s1(*data):
+    w, a, b = numpy.array(data).T
+    c = 1 - a - b
+    points = _stack_first_last(
+        [[a, b, c], [c, a, b], [b, c, a], [b, a, c], [c, b, a], [a, c, b]]
+    )
+    weights = numpy.tile(w, 6)
+    return weights, points
+
+
+def _stack_first_last(arr):
+    """Stacks an input array of shape (i, j, k) such that the output array is of shape
+    (i*k, j).
+    """
+    arr = numpy.swapaxes(arr, 0, 1)
+    return arr.reshape(arr.shape[0], -1).T
+
+
+def concat(*data):
+    weights = numpy.concatenate([t[0] for t in data])
+    points = numpy.vstack([t[1] for t in data])
+    return weights, points
