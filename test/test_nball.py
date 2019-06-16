@@ -13,7 +13,7 @@ from helpers import check_degree
     [quadpy.nball.Dobrodeev1970(n) for n in range(3, 9)]
     + [quadpy.nball.Dobrodeev1978(n) for n in range(2, 7)]
     + [
-        quadpy.nball.Stroud(dim, index)
+        quadpy.nball.Stroud[index](dim)
         for dim in range(2, 9)
         for index in [
             "Sn 2-1",
@@ -27,13 +27,13 @@ from helpers import check_degree
         ]
     ]
     + [
-        quadpy.nball.Stroud(dim, index)
+        quadpy.nball.Stroud[index](dim)
         for dim in range(4, 8)
         for index in ["Sn 5-1a", "Sn 5-1b"]
     ]
-    + [quadpy.nball.Stroud(dim, index) for dim in range(3, 8) for index in ["Sn 7-1a"]]
+    + [quadpy.nball.Stroud[index](dim) for dim in range(3, 8) for index in ["Sn 7-1a"]]
     + [
-        quadpy.nball.Stroud(dim, index)
+        quadpy.nball.Stroud[index](dim)
         for dim in range(3, 7)
         for index in [
             "Sn 7-1b",
@@ -43,9 +43,9 @@ from helpers import check_degree
             "Sn 9-1a",
         ]
     ]
-    + [quadpy.nball.Stroud(dim, index) for dim in range(4, 7) for index in ["Sn 9-1b"]]
-    + [quadpy.nball.Stroud(dim, index) for dim in [3, 4] for index in ["Sn 11-1a"]]
-    + [quadpy.nball.Stroud(dim, index) for dim in [4, 5] for index in ["Sn 11-1b"]],
+    + [quadpy.nball.Stroud[index](dim) for dim in range(4, 7) for index in ["Sn 9-1b"]]
+    + [quadpy.nball.Stroud[index](dim) for dim in [3, 4] for index in ["Sn 11-1a"]]
+    + [quadpy.nball.Stroud[index](dim) for dim in [4, 5] for index in ["Sn 11-1b"]],
 )
 def test_scheme(scheme):
     assert scheme.points.dtype == numpy.float64, scheme.name
