@@ -71,7 +71,7 @@ def _integrate_monomial_over_unit_wedge(k):
 
 @pytest.mark.parametrize(
     "scheme",
-    [quadpy.wedge.Felippa(k) for k in range(1, 7)]
+    [scheme() for scheme in quadpy.wedge.Felippa.values()]
     + [
         quadpy.wedge.KubatkoYeagerMaggi(k)
         for k in [
@@ -121,7 +121,7 @@ def test_scheme(scheme):
     return
 
 
-@pytest.mark.parametrize("scheme", [quadpy.wedge.Felippa(4)])
+@pytest.mark.parametrize("scheme", [quadpy.wedge.Felippa[4]()])
 def test_show(scheme):
     quadpy.wedge.show(scheme)
     return
