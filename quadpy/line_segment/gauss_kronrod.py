@@ -15,8 +15,8 @@ class GaussKronrod(object):
     Gauss-Kronrod quadrature; see
     <https://en.wikipedia.org/wiki/Gauss%E2%80%93Kronrod_quadrature_formula>.
 
-    Besides points and weights, this class provides the weights of the
-    corresponding Gauss-Legendre scheme in self.gauss_weights.
+    Besides points and weights, this class provides the weights of the corresponding
+    Gauss-Legendre scheme in self.gauss_weights.
 
     Code adapted from
     <https://www.cs.purdue.edu/archives/2002/wxg/codes/r_kronrod.m>,
@@ -29,20 +29,19 @@ class GaussKronrod(object):
     <https://doi.org/10.1090/S0025-5718-97-00861-2>
 
     Abstract:
-    The Jacobi matrix of the $(2n+1)$-point Gauss-Kronrod quadrature rule for a
-    given measure is calculated efficiently by a five-term recurrence relation.
-    The algorithm uses only rational operations and is therefore also useful
-    for obtaining the Jacobi-Kronrod matrix analytically. The nodes and weights
-    can then be computed directly by standard software for Gaussian quadrature
-    formulas.
+    The Jacobi matrix of the $(2n+1)$-point Gauss-Kronrod quadrature rule for a given
+    measure is calculated efficiently by a five-term recurrence relation. The algorithm
+    uses only rational operations and is therefore also useful for obtaining the
+    Jacobi-Kronrod matrix analytically. The nodes and weights can then be computed
+    directly by standard software for Gaussian quadrature formulas.
     """
 
     def __init__(self, n, a=0.0, b=0.0):
         # The general scheme is:
-        # Get the Jacobi recurrence coefficients, get the Kronrod vectors alpha
-        # and beta, and hand those off to scheme_from_rc. There, the
-        # eigenproblem for a tridiagonal matrix with alpha and beta is solved
-        # to retrieve the points and weights.
+        # Get the Jacobi recurrence coefficients, get the Kronrod vectors alpha and
+        # beta, and hand those off to scheme_from_rc. There, the eigenproblem for a
+        # tridiagonal matrix with alpha and beta is solved to retrieve the points and
+        # weights.
         # TODO replace math.ceil by -(-k//n)
         length = int(math.ceil(3 * n / 2.0)) + 1
         self.degree = 2 * length + 1
@@ -149,9 +148,9 @@ def _gauss_kronrod_integrate(k, f, interval, dot=numpy.dot):
     average = val_gauss_kronrod / alpha
     point_vals_abs = abs(point_vals_gk - average[..., None])
     I_tilde = _integrate(point_vals_abs, scheme.weights, alpha, dot=dot)
-    # The exponent 1.5 is chosen such that (200*x)**1.5 is approximately x at
-    # 1.0e-6, the machine precision on IEEE 754 32-bit floating point
-    # arithmentic. This could be adapted to
+    # The exponent 1.5 is chosen such that (200*x)**1.5 is approximately x at 1.0e-6,
+    # the machine precision on IEEE 754 32-bit floating point arithmentic. This could be
+    # adapted to
     #
     #   eps = numpy.finfo(float).eps
     #   exponent = numpy.log(eps) / numpy.log(200*eps)
