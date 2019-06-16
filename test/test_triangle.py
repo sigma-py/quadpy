@@ -69,7 +69,7 @@ def _integrate_exact(f, triangle):
         for k in range(8, 18)
     ]
     + [(quadpy.triangle.SevenPoint(), 1.0e-14)]
-    + [(quadpy.triangle.Strang(k), 1.0e-14) for k in range(1, 11)]
+    + [(quadpy.triangle.Strang[k](), 1.0e-14) for k in range(1, 11)]
     + [(quadpy.triangle.Stroud(k), 1.0e-12) for k in ["T2 3-1", "T2 5-1", "T2 7-1"]]
     + [(quadpy.triangle.TaylorWingateBos(k), 1.0e-12) for k in [1, 2, 4, 5, 8]]
     + [(quadpy.triangle.Triex(k), 1.0e-13) for k in [19, 28]]
