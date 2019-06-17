@@ -68,13 +68,13 @@ def _integrate_exact(f, triangle):
     + [(quadpy.triangle.SevenPoint(), 1.0e-14)]
     + [(quadpy.triangle.Strang[k](), 1.0e-14) for k in range(1, 11)]
     + [(quadpy.triangle.Stroud[k](), 1.0e-12) for k in ["T2 3-1", "T2 5-1", "T2 7-1"]]
-    + [(quadpy.triangle.TaylorWingateBos(k), 1.0e-12) for k in [1, 2, 4, 5, 8]]
-    + [(quadpy.triangle.Triex(k), 1.0e-13) for k in [19, 28]]
+    + [(quadpy.triangle.TaylorWingateBos[k](), 1.0e-12) for k in [1, 2, 4, 5, 8]]
+    + [(quadpy.triangle.Triex[k](), 1.0e-13) for k in [19, 28]]
     + [(quadpy.triangle.Vertex(), 1.0e-14)]
     + [(quadpy.triangle.VioreanuRokhlin(k), 1.0e-11) for k in range(20)]
     + [(quadpy.triangle.Walkington(k), 1.0e-14) for k in [1, 2, 3, 5, "p5"]]
     + [(quadpy.triangle.WandzuraXiao(k), 1.0e-14) for k in range(1, 7)]
-    + [(quadpy.triangle.WilliamsShunnJameson(k), 1.0e-11) for k in range(1, 9)]
+    + [(quadpy.triangle.WilliamsShunnJameson[k](), 1.0e-11) for k in range(1, 9)]
     + [
         (quadpy.triangle.WitherdenVincent(k), 1.0e-14)
         for k in [1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
