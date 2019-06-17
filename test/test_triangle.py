@@ -56,7 +56,7 @@ def _integrate_exact(f, triangle):
     + [(scheme(), 1.0e-13) for scheme in quadpy.triangle.LaursenGellert.values()]
     + [(quadpy.triangle.Lether(k), 1.0e-14) for k in range(1, 14)]
     + [(quadpy.triangle.LiuVinokur[k](), 1.0e-14) for k in range(1, 14)]
-    + [(quadpy.triangle.LynessJespersen(k), 1.0e-11) for k in range(1, 22)]
+    + [(quadpy.triangle.LynessJespersen[k](), 1.0e-11) for k in range(1, 22)]
     + [(quadpy.triangle.NewtonCotesClosed(k), 1.0e-14) for k in range(1, 6)]
     + [(quadpy.triangle.NewtonCotesOpen(k), 1.0e-13) for k in range(6)]
     + [(quadpy.triangle.Papanicolopulos("fs", k), 1.0e-13) for k in range(9)]
