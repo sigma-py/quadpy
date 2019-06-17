@@ -23,7 +23,7 @@ class Stroud(object):
         if index == "T2 3-1":
             self.set_data(AlbrechtCollatz())
         elif index == "T2 5-1":
-            self.set_data(HammerMarloweStroud(5))
+            self.set_data(HammerMarloweStroud[5]())
         else:
             # conical product Gauss
             assert index == "T2 7-1"
