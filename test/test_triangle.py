@@ -59,15 +59,15 @@ def _integrate_exact(f, triangle):
     + [(quadpy.triangle.LynessJespersen[k](), 1.0e-11) for k in range(1, 22)]
     + [(quadpy.triangle.NewtonCotesClosed(k), 1.0e-14) for k in range(1, 6)]
     + [(quadpy.triangle.NewtonCotesOpen(k), 1.0e-13) for k in range(6)]
-    + [(quadpy.triangle.Papanicolopulos("fs", k), 1.0e-13) for k in range(9)]
+    + [(quadpy.triangle.PapanicolopulosSym[k](), 1.0e-13) for k in range(9)]
     + [
-        (quadpy.triangle.Papanicolopulos("rot", k), 1.0e-14)
+        (quadpy.triangle.PapanicolopulosRot[k](), 1.0e-14)
         # The first 8 schemes are flawed by round-off error
         for k in range(8, 18)
     ]
     + [(quadpy.triangle.SevenPoint(), 1.0e-14)]
     + [(quadpy.triangle.Strang[k](), 1.0e-14) for k in range(1, 11)]
-    + [(quadpy.triangle.Stroud(k), 1.0e-12) for k in ["T2 3-1", "T2 5-1", "T2 7-1"]]
+    + [(quadpy.triangle.Stroud[k](), 1.0e-12) for k in ["T2 3-1", "T2 5-1", "T2 7-1"]]
     + [(quadpy.triangle.TaylorWingateBos(k), 1.0e-12) for k in [1, 2, 4, 5, 8]]
     + [(quadpy.triangle.Triex(k), 1.0e-13) for k in [19, 28]]
     + [(quadpy.triangle.Vertex(), 1.0e-14)]

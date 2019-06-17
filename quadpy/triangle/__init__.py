@@ -18,7 +18,7 @@ from .lether import Lether
 from .liu_vinokur import LiuVinokur
 from .lyness_jespersen import LynessJespersen
 from .newton_cotes import NewtonCotesClosed, NewtonCotesOpen
-from .papanicolopulos import Papanicolopulos
+from .papanicolopulos import PapanicolopulosSym, PapanicolopulosRot
 from .seven_point import SevenPoint
 from .strang import Strang
 from .stroud import Stroud
@@ -57,7 +57,8 @@ __all__ = [
     "LynessJespersen",
     "NewtonCotesClosed",
     "NewtonCotesOpen",
-    "Papanicolopulos",
+    "PapanicolopulosSym",
+    "PapanicolopulosRot",
     "SevenPoint",
     "Strang",
     "Stroud",
