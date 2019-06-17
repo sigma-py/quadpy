@@ -4,6 +4,8 @@ import math
 import numpy
 import sympy
 
+from .helpers import TriangleScheme
+
 
 def _newton_cotes(n, point_fun):
     """
@@ -59,21 +61,11 @@ def _newton_cotes(n, point_fun):
     return bary, weights, degree
 
 
-class NewtonCotesClosed(object):
-    def __init__(self, n):
-        self.bary, self.weights, self.degree = _newton_cotes(
-            n, lambda k, n: k / float(n)
-        )
-        self.points = self.bary[:, 1:]
-        self.name = "NewtonCotesClosed({})".format(n)
-        return
+def NewtonCotesClosed(n):
+    bary, weights, degree = _newton_cotes(n, lambda k, n: k / float(n))
+    return TriangleScheme("Newton-Cotes (closed)", degree, weights, bary)
 
 
-class NewtonCotesOpen(object):
-    def __init__(self, n):
-        self.bary, self.weights, self.degree = _newton_cotes(
-            n, lambda k, n: (k + 1) / float(n + 3)
-        )
-        self.points = self.bary[:, 1:]
-        self.name = "NewtonCotesOpen({})".format(n)
-        return
+def NewtonCotesOpen(n):
+    bary, weights, degree = _newton_cotes(n, lambda k, n: (k + 1) / float(n + 3))
+    return TriangleScheme("Newton-Cotes (open)", degree, weights, bary)
