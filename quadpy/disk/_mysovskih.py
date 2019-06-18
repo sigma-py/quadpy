@@ -1,17 +1,21 @@
 # -*- coding: utf-8 -*-
 #
-"""
-I.P. Mysovskih,
-On the construction of cubature formulas for the simplest regions,
-Z. Vychisl. Mat. i. Mat. Fiz. 4, 3-14, 1964.
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
-from ..helpers import untangle, z, fsd, fs_array
+from ..helpers import untangle, z, fsd, fs_array, article
 from .helpers import DiskScheme
+
+_citation = article(
+    authors=["I.P. Mysovskih"],
+    title="On the construction of cubature formulas for the simplest regions",
+    journal="Z. Vychisl. Mat. i. Mat. Fiz.",
+    number="4",
+    pages="3-14",
+    year="1964",
+)
 
 
 def mysovskih_1(alpha=0, symbolic=False):
@@ -33,7 +37,7 @@ def mysovskih_1(alpha=0, symbolic=False):
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Mysovskih 1", 4, weights, points)
+    return DiskScheme("Mysovskih 1", weights, points, 4, _citation)
 
 
 def mysovskih_2(symbolic=False):
@@ -65,7 +69,7 @@ def mysovskih_2(symbolic=False):
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Mysovskih 2", 11, weights, points)
+    return DiskScheme("Mysovskih 2", weights, points, 11, _citation)
 
 
 def mysovskih_3(symbolic=False):
@@ -125,7 +129,4 @@ def mysovskih_3(symbolic=False):
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Mysovskih 3", 15, weights, points)
-
-
-Mysovskih = {1: mysovskih_1, 2: mysovskih_2, 3: mysovskih_3}
+    return DiskScheme("Mysovskih 3", weights, points, 15, _citation)

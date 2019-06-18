@@ -15,7 +15,7 @@ _citation = article(
     number="62",
     year=1948,
     pages="445–447",
-    comment="Russian",
+    note="Russian",
 )
 
 

@@ -10,13 +10,36 @@ import sympy
 
 article = namedtuple(
     "Article",
-    ["authors", "title", "journal", "year", "pages", "number", "url", "comment"],
+    [
+        "authors",
+        "title",
+        "journal",
+        "volume",
+        "number",
+        "year",
+        "month",
+        "pages",
+        "url",
+        "issn",
+        "issne",
+        "note",
+    ],
     # defaults=(None,) * 8
 )
 article.__new__.__defaults__ = (None,) * len(article._fields)
 
-book = namedtuple("Book", ["authors", "title", "publisher", "year", "comment", "url"])
+book = namedtuple("Book", ["authors", "title", "publisher", "year", "url", "note"])
 book.__new__.__defaults__ = (None,) * len(book._fields)
+
+techreport = namedtuple(
+    "Techreport", ["authors", "title", "year", "institution", "number", "url", "note"]
+)
+techreport.__new__.__defaults__ = (None,) * len(techreport._fields)
+
+phdthesis = namedtuple(
+    "Phdthesis", ["authors", "title", "year", "school", "url", "note"]
+)
+phdthesis.__new__.__defaults__ = (None,) * len(phdthesis._fields)
 
 
 def untangle(data):
