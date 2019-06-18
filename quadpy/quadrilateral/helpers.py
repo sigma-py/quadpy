@@ -1,13 +1,49 @@
 # -*- coding: utf-8 -*-
 #
-import collections
-
 import numpy
 
+from .. import helpers
+from ..ncube import transform, NCubeScheme
+from ..ncube import ncube_points as rectangle_points
 
-QuadrilateralScheme = collections.namedtuple(
-    "QuadrilateralScheme", ["name", "degree", "weights", "points"]
-)
+
+class QuadrilateralScheme(NCubeScheme):
+    def __init__(self, name, weights, points, degree):
+        self.name = name
+        self.weights = weights
+        self.points = points
+        self.degree = degree
+        return
+
+    def show(self, *args, **kwargs):
+        import matplotlib.pyplot as plt
+
+        self. plot(*args, **kwargs)
+        plt.show()
+        return
+
+    def plot(self, quad=rectangle_points([0.0, 1.0], [0.0, 1.0]), show_axes=False):
+        """Shows the quadrature points on a given quad. The area of the disks
+        around the points coincides with their weights.
+        """
+        import matplotlib.pyplot as plt
+
+        plt.plot(quad[0][0], quad[1][0], "-k")
+        plt.plot(quad[1][0], quad[1][1], "-k")
+        plt.plot(quad[1][1], quad[0][1], "-k")
+        plt.plot(quad[0][1], quad[0][0], "-k")
+
+        plt.axis("equal")
+
+        if not show_axes:
+            plt.gca().set_axis_off()
+
+        transformed_pts = transform(self.points.T, quad)
+
+        # from .stroud import Stroud
+        vol = self.integrate(lambda x: 1.0, quad, Stroud["C2 1-1"]())
+        helpers.plot_disks(plt, transformed_pts, self.weights, vol)
+        return
 
 
 def zero(weight):

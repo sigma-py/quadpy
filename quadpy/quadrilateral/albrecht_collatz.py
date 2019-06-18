@@ -71,11 +71,3 @@ def albrecht_collatz_4(symbolic=False):
     )
     weights *= 4
     return QuadrilateralScheme(name, degree, weights, points)
-
-
-AlbrechtCollatz = {
-    1: albrecht_collatz_1,
-    2: albrecht_collatz_2,
-    3: albrecht_collatz_3,
-    4: albrecht_collatz_4,
-}

@@ -1,12 +1,50 @@
 # -*- coding: utf-8 -*-
 #
-import collections
-
 import numpy
 
-HexahedronScheme = collections.namedtuple(
-    "HexahedronScheme", ["name", "degree", "weights", "points"]
-)
+from .. import helpers
+from ..ncube import transform, NCubeScheme, ncube_points as cube_points
+
+
+class HexahedronScheme(NCubeScheme):
+
+    def __init__(self, name, weights, points, degree):
+        self.name = name
+        self.weights = weights
+        self.points = points
+        self.degree = degree
+        return
+
+    def show(self, hexa=cube_points([0.0, 1.0], [0.0, 1.0], [0.0, 1.0]), backend="vtk"):
+        """Shows the quadrature points on a given hexahedron. The size of the balls
+        around the points coincides with their weights."""
+        edges = numpy.array(
+            [
+                [hexa[0, 0, 0], hexa[1, 0, 0]],
+                [hexa[1, 0, 0], hexa[1, 1, 0]],
+                [hexa[1, 1, 0], hexa[0, 1, 0]],
+                [hexa[0, 1, 0], hexa[0, 0, 0]],
+                #
+                [hexa[0, 0, 1], hexa[1, 0, 1]],
+                [hexa[1, 0, 1], hexa[1, 1, 1]],
+                [hexa[1, 1, 1], hexa[0, 1, 1]],
+                [hexa[0, 1, 1], hexa[0, 0, 1]],
+                #
+                [hexa[0, 0, 0], hexa[0, 0, 1]],
+                [hexa[1, 0, 0], hexa[1, 0, 1]],
+                [hexa[1, 1, 0], hexa[1, 1, 1]],
+                [hexa[0, 1, 0], hexa[0, 1, 1]],
+            ]
+        )
+        edges = numpy.moveaxis(edges, 1, 2)
+
+        helpers.backend_to_function[backend](
+            transform(self.points.T, hexa),
+            self.weights,
+            self.integrate(lambda x: 1.0, hexa),
+            edges,
+        )
+        return
 
 
 def z():

@@ -1,8 +1,26 @@
 # -*- coding: utf-8 -*-
 #
+import itertools
+
 import numpy
 
-from .. import helpers
+from ..helpers import n_outer
+
+
+class NCubeScheme(object):
+    def __init__(self, name, dim, weights, points, degree, citation):
+        self.name = name
+        self.dim = dim
+        self.weights = weights
+        self.points = points
+        self.degree = degree
+        self.citation = citation
+        return
+
+    def integrate(self, f, ncube, dot=numpy.dot):
+        x = transform(self.points.T, ncube).T
+        detJ = get_detJ(self.points.T, ncube)
+        return dot(f(x) * abs(detJ), self.weights)
 
 
 def transform(xi, cube):
@@ -21,7 +39,7 @@ def transform(xi, cube):
     # indeed tensordot() can handle the situation. We just need to compute the
     # `1+-xi` products and align them with `cube`.
     one_mp_xi = numpy.stack([0.5 * (1.0 - xi), 0.5 * (1.0 + xi)], axis=1)
-    a = helpers.n_outer(one_mp_xi)
+    a = n_outer(one_mp_xi)
 
     # <https://stackoverflow.com/q/45372098/353337>
     d = xi.shape[0]
@@ -58,7 +76,7 @@ def get_detJ(xi, cube):
         a = one_mp_xi.copy()
         a[k, 0, :] = -0.5
         a[k, 1, :] = +0.5
-        a0 = helpers.n_outer(a)
+        a0 = n_outer(a)
         J.append(numpy.tensordot(a0, cube, axes=(range(d), range(d))).T)
 
     # `det` needs the square at the end. Fortran...
@@ -76,14 +94,62 @@ def get_detJ(xi, cube):
     return out
 
 
-def integrate(f, ncube, scheme, dot=numpy.dot):
-    x = transform(scheme.points.T, ncube).T
-    detJ = get_detJ(scheme.points.T, ncube)
-    return dot(f(x) * abs(detJ), scheme.weights)
+def integrate_monomial_over_ncube(ncube_limits, exp):
+    return numpy.prod(
+        [
+            (a[1] ** (k + 1) - a[0] ** (k + 1)) / (k + 1)
+            for a, k in zip(ncube_limits, exp)
+        ]
+    )
 
 
 def ncube_points(*xyz):
-    """Given the end points of an n-cube aligned with the coordinate axes, this
-    returns the corner points of the cube in the correct data structure.
+    """Given the end points of an n-cube aligned with the coordinate axes, this returns
+    the corner points of the cube in the correct data structure.
     """
     return numpy.moveaxis(numpy.array(numpy.meshgrid(*xyz, indexing="ij")), 0, -1)
+
+
+def _fs11(n, r, s):
+    """Get all permutations of [+-r, +-s, ..., +-s] of length n.
+    len(out) == n * 2**n.
+    """
+    # <https://stackoverflow.com/a/45321972/353337>
+    k1 = 1
+    k2 = n - 1
+    idx = itertools.combinations(range(k1 + k2), k1)
+    vs = ((s if j not in i else r for j in range(k1 + k2)) for i in idx)
+    return numpy.array(
+        list(
+            itertools.chain.from_iterable(
+                itertools.product(*((+vij, -vij) for vij in vi)) for vi in vs
+            )
+        )
+    )
+
+
+def _s(n, a, b):
+    """Get all permutations of [a, b, ..., b] of length n.
+    len(out) == n.
+    """
+    out = numpy.full((n, n), b)
+    numpy.fill_diagonal(out, a)
+    return out
+
+
+def _s2(n, a):
+    """Get all permutations of [a, a, 0, 0, ..., 0] of length n.
+    len(out) == (n-1)*n / 2.
+    """
+    return _s11(n, a, a)
+
+
+def _s11(n, a, b):
+    """Get all permutations of [a, b, 0, 0, ..., 0] of length n.
+    len(out) == (n-1)*n.
+    """
+    s = [a, b] + (n - 2) * [0]
+    # First permutations, then set can be really inefficient if items are
+    # repeated. Check out <https://stackoverflow.com/q/6284396/353337> for
+    # improvements.
+    return numpy.array(list(set(itertools.permutations(s, n))))

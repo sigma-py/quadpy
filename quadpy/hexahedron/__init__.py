@@ -6,14 +6,11 @@ from .mustard_lyness_blatt import MustardLynessBlatt
 from .sadowsky import Sadowsky
 from .stroud import Stroud
 from .stroud_1967 import Stroud_1967
-from .stroudn import StroudN
 from .tyler import Tyler
 
 from .product import Product
 
-from .tools import show
-
-from ..ncube import transform, integrate
+from ..ncube import transform
 from ..ncube import ncube_points as cube_points
 
 __all__ = [
@@ -23,11 +20,8 @@ __all__ = [
     "Sadowsky",
     "Stroud",
     "Stroud_1967",
-    "StroudN",
     "Tyler",
     "Product",
-    "show",
     "transform",
-    "integrate",
     "cube_points",
 ]

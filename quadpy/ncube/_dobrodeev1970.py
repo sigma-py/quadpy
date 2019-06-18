@@ -1,0 +1,47 @@
+# -*- coding: utf-8 -*-
+#
+from __future__ import division
+
+import numpy
+import sympy
+
+from ._helpers import NCubeScheme
+from ..helpers import untangle, fsd, z, article
+
+_citation = article(
+    authors=["L.N. Dobrodeev"],
+    title="Cubature formulas of the seventh order of accuracy for a hypersphere and a hypercube",
+    journal="USSR Computational Mathematics and Mathematical Physics",
+    volume="10",
+    number="1",
+    year="1970",
+    pages="252–253",
+    url="https://doi.org/10.1016/0041-5553(70)90084-4",
+)
+
+
+def dobrodeev_1970(n, symbolic=False):
+    frac = sympy.Rational if symbolic else lambda x, y: x / y
+    sqrt = sympy.sqrt if symbolic else numpy.sqrt
+
+    A = frac(1, 8)
+    B = frac(19 - 5 * n, 20)
+    alpha = 35 * n * (5 * n - 33)
+    C = frac((alpha + 2114) ** 3, 700 * (alpha + 1790) * (alpha + 2600))
+    D = frac(729, 1750) * frac(alpha + 2114, alpha + 2600)
+    E = frac(n * (n - 1) * (n - frac(47, 10)), 3) - 2 * n * (C + D) + frac(729, 125)
+
+    a = sqrt(frac(3, 5))
+    b = a
+    c = sqrt(frac(3, 5) * frac(alpha + 1790, alpha + 2114))
+    data = [
+        (A, fsd(n, (a, 3))),
+        (B, fsd(n, (b, 2))),
+        (C, fsd(n, (c, 1))),
+        (D, fsd(n, (1.0, 1))),
+        (E, z(n)),
+    ]
+
+    points, weights = untangle(data)
+    weights /= frac(729, 125 * 2 ** n)
+    return NCubeScheme("Dobrodeev 1970", n, weights, points, 7, _citation)

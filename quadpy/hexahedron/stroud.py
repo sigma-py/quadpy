@@ -10,7 +10,7 @@ from __future__ import division
 import numpy
 import sympy
 
-from .albrecht_collatz import AlbrechtCollatz
+from .albrecht_collatz import albrecht_collatz
 from .hammer_stroud import hammer_stroud_2_3, hammer_stroud_5_3a, hammer_stroud_5_3b
 from .hammer_wymore import HammerWymore
 from .mustard_lyness_blatt import (
@@ -29,7 +29,7 @@ from .tyler import tyler_1, tyler_2
 
 from .helpers import pm_rrr
 
-from ..ncube import Ewing
+from ..ncube import ewing
 from ..helpers import untangle
 from .helpers import HexahedronScheme
 
@@ -48,10 +48,10 @@ def stroud_3_2(symbolic=False):
 Stroud = {
     "C3 3-1": tyler_1,
     "C3 3-2": stroud_3_2,
-    "C3 3-3": lambda symbolic=False: Ewing(3, symbolic),
+    "C3 3-3": lambda symbolic=False: ewing(3, symbolic),
     "C3 3-4": mustard_lyness_blatt_1,
     "C3 3-5": mustard_lyness_blatt_2,
-    "C3 3-6": AlbrechtCollatz,
+    "C3 3-6": albrecht_collatz,
     "C3 3-7": mustard_lyness_blatt_3,
     "C3 5-1": Stroud_1967,
     "C3 5-2": hammer_stroud_2_3,

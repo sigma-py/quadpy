@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 #
 
-from .albrecht_collatz import AlbrechtCollatz
+from .albrecht_collatz import (
+    albrecht_collatz_1,
+    albrecht_collatz_2,
+    albrecht_collatz_3,
+    albrecht_collatz_4,
+)
 from .burnside import Burnside
 from .cohen_gismalla import CohenGismalla
 from .cools_haegemans_1985 import CoolsHaegemans1985
@@ -27,15 +32,15 @@ from .wissmann_becker import WissmannBecker
 from .witherden_vincent import WitherdenVincent
 
 from .product import Product
-from .stroudn import StroudN
 
-from .tools import show, plot
-
-from ..ncube import transform, integrate
+from ..ncube import transform
 from ..ncube import ncube_points as rectangle_points
 
 __all__ = [
-    "AlbrechtCollatz",
+    "albrecht_collatz_1",
+    "albrecht_collatz_2",
+    "albrecht_collatz_3",
+    "albrecht_collatz_4",
     "Burnside",
     "CohenGismalla",
     "CoolsHaegemans1985",
@@ -61,9 +66,6 @@ __all__ = [
     "Schmid",
     "Sommariva",
     "StroudN",
-    "show",
-    "plot",
     "transform",
-    "integrate",
     "rectangle_points",
 ]

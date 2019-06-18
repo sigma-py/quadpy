@@ -4,9 +4,7 @@ import quadpy
 
 def test_circle():
     scheme = quadpy.circle.krylov(3)
-    scheme.integrate(
-        lambda x: numpy.exp(x[0]), numpy.array([0.0, 0.3]), 0.7
-    )
+    scheme.integrate(lambda x: numpy.exp(x[0]), numpy.array([0.0, 0.3]), 0.7)
     scheme = quadpy.circle.krylov(5)
     scheme.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[0])],
@@ -18,11 +16,7 @@ def test_circle():
 
 def test_disk():
     scheme = quadpy.disk.peirce_1957(5)
-    scheme.integrate(
-        lambda x: numpy.exp(x[0]),
-        numpy.array([0.0, 0.3]),
-        0.7,
-    )
+    scheme.integrate(lambda x: numpy.exp(x[0]), numpy.array([0.0, 0.3]), 0.7)
     scheme = quadpy.disk.peirce_1957(5)
     scheme.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
