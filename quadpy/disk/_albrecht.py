@@ -1,17 +1,22 @@
 # -*- coding: utf-8 -*-
 #
-"""
-J. Albrecht,
-Formeln zur numerischen Integration über Kreisbereiche,
-Volume 40, Issue 10-11, 1960, Pages 514–517,
-<https://doi.org/10.1002/zamm.19600401014>.
-"""
 import numpy
 from mpmath import mp
 import sympy
 
-from ..helpers import untangle, z, fsd, pm
+from ..helpers import untangle, z, fsd, pm, article
 from .helpers import DiskScheme
+
+_citation = article(
+    authors=["J. Albrecht"],
+    title="Formeln zur numerischen Integration über Kreisbereiche",
+    journal="ZAMM",
+    volume="40",
+    number="10-11",
+    year="1960",
+    pages="514–517",
+    url="https://doi.org/10.1002/zamm.19600401014",
+)
 
 
 def albrecht_1(symbolic=False):
@@ -28,7 +33,7 @@ def albrecht_1(symbolic=False):
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Albrecht 1", 3, weights, points)
+    return DiskScheme("Albrecht 1", weights, points, 3, _citation)
 
 
 def albrecht_2(symbolic=False):
@@ -45,7 +50,7 @@ def albrecht_2(symbolic=False):
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Albrecht 2", 5, weights, points)
+    return DiskScheme("Albrecht 2", weights, points, 5, _citation)
 
 
 def albrecht_3(symbolic=False):
@@ -70,7 +75,7 @@ def albrecht_3(symbolic=False):
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Albrecht 3", 7, weights, points)
+    return DiskScheme("Albrecht 3", weights, points, 7, _citation)
 
 
 def albrecht_4(symbolic=False):
@@ -98,7 +103,7 @@ def albrecht_4(symbolic=False):
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Albrecht 4", 9, weights, points)
+    return DiskScheme("Albrecht 4", weights, points, 9, _citation)
 
 
 def albrecht_5(symbolic=False):
@@ -141,7 +146,7 @@ def albrecht_5(symbolic=False):
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Albrecht 5", 11, weights, points)
+    return DiskScheme("Albrecht 5", weights, points, 11, _citation)
 
 
 def albrecht_6(symbolic=False):
@@ -179,7 +184,7 @@ def albrecht_6(symbolic=False):
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Albrecht 6", 13, weights, points)
+    return DiskScheme("Albrecht 6", weights, points, 13, _citation)
 
 
 def albrecht_7(symbolic=False):
@@ -222,7 +227,7 @@ def albrecht_7(symbolic=False):
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Albrecht 7", 15, weights, points)
+    return DiskScheme("Albrecht 7", weights, points, 15, _citation)
 
 
 def albrecht_8(symbolic=False):
@@ -274,16 +279,4 @@ def albrecht_8(symbolic=False):
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Albrecht 8", 17, weights, points)
-
-
-Albrecht = {
-    1: albrecht_1,
-    2: albrecht_2,
-    3: albrecht_3,
-    4: albrecht_4,
-    5: albrecht_5,
-    6: albrecht_6,
-    7: albrecht_7,
-    8: albrecht_8,
-}
+    return DiskScheme("Albrecht 8", weights, points, 17, _citation)

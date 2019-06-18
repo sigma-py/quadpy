@@ -1,18 +1,21 @@
 # -*- coding: utf-8 -*-
 #
-"""
-William Hollis Peirce,
-Numerical integration over planar regions,
-PhD thesis, University of Wisconsin--Madison, 1956,
-<https://books.google.de/books/about/Numerical_integration_over_planar_region.html?id=WR9SAAAAMAAJ&redir_esc=y>.
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
-from ..helpers import fsd, pm, untangle, fs_array
+from ..helpers import fsd, pm, untangle, fs_array, phdthesis
 from .helpers import DiskScheme
+
+
+_citation = phdthesis(
+    authors=["William Hollis Peirce"],
+    title="Numerical integration over planar regions",
+    school="University of Wisconsin--Madison",
+    year="1956",
+    url="https://books.google.de/books/about/Numerical_integration_over_planar_region.html?id=WR9SAAAAMAAJ",
+)
 
 
 def peirce_1956_1(symbolic=False):
@@ -34,7 +37,7 @@ def peirce_1956_1(symbolic=False):
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Peirce 1956-1", 7, weights, points)
+    return DiskScheme("Peirce 1956-1", weights, points, 7, _citation)
 
 
 def peirce_1956_2(symbolic=False):
@@ -70,7 +73,7 @@ def peirce_1956_2(symbolic=False):
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Peirce 1956-2", 9, weights, points)
+    return DiskScheme("Peirce 1956-2", weights, points, 9, _citation)
 
 
 def peirce_1956_3(symbolic=False):
@@ -106,7 +109,4 @@ def peirce_1956_3(symbolic=False):
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Peirce 1956-3", 11, weights, points)
-
-
-Peirce1956 = {1: peirce_1956_1, 2: peirce_1956_2, 3: peirce_1956_3}
+    return DiskScheme("Peirce 1956-3", weights, points, 11, _citation)

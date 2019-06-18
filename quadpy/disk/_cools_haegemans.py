@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
 #
-"""
-R. Cools, A. Haegemans,
-Construction of fully symmetric cubature formulae of degree 4k-3 for fully
-symmetric planar regions
-1985, Report TW 71, Dept. of Computer Science, KU Leuven,
-<https://lirias.kuleuven.be/bitstream/123456789/131870/1/TW71.pdf>.
-"""
-# TODO There are more schemes in the techincal report
+# TODO There are more schemes in the technical report
 import math
 
 from .helpers import _s4, _s40, _s8, DiskScheme
-from ..helpers import untangle
+from ..helpers import untangle, techreport
+
+_citation = techreport(
+    authors=["R. Cools", "A. Haegemans"],
+    title="Construction of fully symmetric cubature formulae of degree 4k-3 for fully symmetric planar regions",
+    year="1985",
+    institution="Dept. of Computer Science, KU Leuven",
+    number="Report TW 71",
+    url="https://lirias.kuleuven.be/bitstream/123456789/131870/1/TW71.pdf",
+)
 
 
 def cools_haegemans_1():
@@ -21,7 +23,7 @@ def cools_haegemans_1():
     ]
     points, weights = untangle(data)
     weights *= math.pi
-    return DiskScheme("Cools-Haegemans 1", 5, weights, points)
+    return DiskScheme("Cools-Haegemans 1", weights, points, 5, _citation)
 
 
 def cools_haegemans_2():
@@ -33,7 +35,7 @@ def cools_haegemans_2():
     ]
     points, weights = untangle(data)
     weights *= math.pi
-    return DiskScheme("Cools-Haegemans 2", 9, weights, points)
+    return DiskScheme("Cools-Haegemans 2", weights, points, 9, _citation)
 
 
 def cools_haegemans_3():
@@ -45,7 +47,4 @@ def cools_haegemans_3():
     ]
     points, weights = untangle(data)
     weights *= math.pi
-    return DiskScheme("Cools-Haegemans 3", 9, weights, points)
-
-
-CoolsHaegemans = {1: cools_haegemans_1, 2: cools_haegemans_2, 3: cools_haegemans_3}
+    return DiskScheme("Cools-Haegemans 3", weights, points, 9, _citation)

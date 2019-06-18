@@ -1,18 +1,24 @@
 # -*- coding: utf-8 -*-
 #
-"""
-W.H. Peirce,
-Numerical integration over the planar annulus,
-J. Soc. Indust. Appl. Math.,
-Vol. 5, No. 2, June, 1957,
-<https://www.jstor.org/stable/2098722>.
-"""
 import numpy
 
 from .helpers import DiskScheme
+from ..helpers import article
 
 
-def Peirce1957(m):
+_citation = article(
+    authors=["W.H. Peirce"],
+    title="Numerical integration over the planar annulus",
+    journal="J. Soc. Indust. Appl. Math.",
+    volume="5",
+    number="2",
+    month="jun",
+    year="1957",
+    url="https://www.jstor.org/stable/2098722",
+)
+
+
+def peirce_1957(m):
     k = 4 * m + 3
     theta = 2 * numpy.pi * numpy.arange(1, k + 2) / (k + 1)
     p, w = numpy.polynomial.legendre.leggauss(m + 1)
@@ -25,4 +31,4 @@ def Peirce1957(m):
     # When integrating between 0 and 1, the weights are exactly the Gauss-Legendre
     # weights, scaled according to the disk area.
     weights = numpy.tile(0.5 * numpy.pi / (k + 1) * w, k + 1)
-    return DiskScheme("Peirce 1957", k, weights, points)
+    return DiskScheme("Peirce 1957", weights, points, k, _citation)

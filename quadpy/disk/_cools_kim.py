@@ -1,15 +1,21 @@
 # -*- coding: utf-8 -*-
 #
-"""
-R. Cools, K.J. Kim
-A survey of known and cubature formulas for the unit disk,
-Korean J. Comput. & Appl. Math. Vol. 7(2000), No. 3, pp. 477 - 485,
-DOI: 10.1007/BF03012263.
-"""
 import numpy
 
 from .helpers import DiskScheme
-from ..helpers import untangle
+from ..helpers import untangle, article
+
+_citation = article(
+    authors=["R. Cools", "K.J. Kim"],
+    title="A survey of known and new cubature formulas for the unit disk",
+    journal="Korean J. Comput. & Appl. Math.",
+    volume="7",
+    month="sep",
+    year="2000",
+    number="3",
+    pages="477-485",
+    # url="https://doi.org/10.1007/BF03012263"
+)
 
 
 def cools_kim_1():
@@ -27,7 +33,7 @@ def cools_kim_1():
         (0.024268628331345539, _s8(0.84937290409632805, 0.46270056598293749)),
     ]
     points, weights = untangle(data)
-    return DiskScheme("Cools-Kim 1", 17, weights, points)
+    return DiskScheme("Cools-Kim 1", weights, points, 17, _citation)
 
 
 def cools_kim_2():
@@ -47,7 +53,7 @@ def cools_kim_2():
         (0.058009352935795362, _s8(0.73773390012389973, 0.32685240870845720)),
     ]
     points, weights = untangle(data)
-    return DiskScheme("Cools-Kim 2", 19, weights, points)
+    return DiskScheme("Cools-Kim 2", weights, points, 19, _citation)
 
 
 def cools_kim_3():
@@ -68,7 +74,7 @@ def cools_kim_3():
         (0.063500222219468438, _s8(0.36200059276768541, 0.16676191877222966)),
     ]
     points, weights = untangle(data)
-    return DiskScheme("Cools-Kim 3", 21, weights, points)
+    return DiskScheme("Cools-Kim 3", weights, points, 21, _citation)
 
 
 def _s4(a):
@@ -83,6 +89,3 @@ def _s8(a, b):
     return numpy.array(
         [[+a, +b], [-a, +b], [+a, -b], [-a, -b], [+b, +a], [-b, +a], [+b, -a], [-b, -a]]
     )
-
-
-CoolsKim = {1: cools_kim_1, 2: cools_kim_2, 3: cools_kim_3}

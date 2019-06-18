@@ -1,15 +1,20 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Johannes W. Wissmann and Thomas Becker,
-Partially Symmetric Cubature Formulas for Even Degrees of Exactness,
-SIAM J. Numer. Anal., 23(3), 676–685, 10 pages,
-<https://doi.org/10.1137/0723043>.
-"""
 import numpy
 
-from ..helpers import untangle
+from ..helpers import untangle, article
 from .helpers import DiskScheme
+
+
+_citation = article(
+    authors=["Johannes W. Wissmann", "Thomas Becker"],
+    title="Partially Symmetric Cubature Formulas for Even Degrees of Exactness",
+    journal="SIAM J. Numer. Anal.",
+    volume="23",
+    number="3",
+    pages="676–685",
+    url="https://doi.org/10.1137/0723043",
+)
 
 
 def wissmann_becker_6_1():
@@ -22,7 +27,7 @@ def wissmann_becker_6_1():
         (0.280075256745352, _m(0.373683864304499, -0.770749853148807)),
     ]
     points, weights = untangle(data)
-    return DiskScheme("Wissmann-Becker 6-1", 6, weights, points)
+    return DiskScheme("Wissmann-Becker 6-1", weights, points, 6, _citation)
 
 
 def wissmann_becker_6_2():
@@ -36,7 +41,7 @@ def wissmann_becker_6_2():
         (0.441690572122440, _m(0.690809264754287, -0.224457536458840)),
     ]
     points, weights = untangle(data)
-    return DiskScheme("Wissmann-Becker 6-2", 6, weights, points)
+    return DiskScheme("Wissmann-Becker 6-2", weights, points, 6, _citation)
 
 
 def wissmann_becker_8_1():
@@ -53,7 +58,7 @@ def wissmann_becker_8_1():
         (0.305874815913735, _m(0.342287447682940, -0.471118254595022)),
     ]
     points, weights = untangle(data)
-    return DiskScheme("Wissmann-Becker 8-1", 8, weights, points)
+    return DiskScheme("Wissmann-Becker 8-1", weights, points, 8, _citation)
 
 
 def _z(a):
@@ -62,10 +67,3 @@ def _z(a):
 
 def _m(a, b):
     return numpy.array([[+a, +b], [-a, +b]])
-
-
-WissmannBecker = {
-    "6-1": wissmann_becker_6_1,
-    "6-2": wissmann_becker_6_2,
-    "8-1": wissmann_becker_8_1,
-}

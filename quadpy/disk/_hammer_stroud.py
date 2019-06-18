@@ -1,18 +1,23 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Preston C. Hammer and Arthur H. Stroud,
-Numerical Evaluation of Multiple Integrals II,
-Math. Comp. 12 (1958), 272-280,
-<https://doi.org/10.1090/S0025-5718-1958-0102176-6>.
-"""
 from __future__ import division
 
 import sympy
 import numpy
 
-from ..helpers import untangle, fsd, pm, z, pm_array, pm_array0, fs_array as fs
+from ..helpers import untangle, fsd, pm, z, pm_array, pm_array0, fs_array as fs, article
 from .helpers import DiskScheme
+
+
+_citation = article(
+    authors=["Preston C. Hammer", "Arthur H. Stroud"],
+    title="Numerical Evaluation of Multiple Integrals II",
+    journal="Math. Comp.",
+    volume="12",
+    year="1958",
+    pages="272-280",
+    url="https://doi.org/10.1090/S0025-5718-1958-0102176-6",
+)
 
 
 def hammer_stroud_11_2(symbolic=False):
@@ -24,7 +29,7 @@ def hammer_stroud_11_2(symbolic=False):
     data = [(frac(1, 4), fsd(2, (sqrt(frac(1, 2)), 1)))]
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Hammer-Stroud 11-2", 3, weights, points)
+    return DiskScheme("Hammer-Stroud 11-2", weights, points, 3, _citation)
 
 
 def hammer_stroud_12_2(symbolic=False):
@@ -39,7 +44,7 @@ def hammer_stroud_12_2(symbolic=False):
     ]
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Hammer-Stroud 12-2", 5, weights, points)
+    return DiskScheme("Hammer-Stroud 12-2", weights, points, 5, _citation)
 
 
 def hammer_stroud_13_2(symbolic=False):
@@ -58,7 +63,7 @@ def hammer_stroud_13_2(symbolic=False):
     ]
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Hammer-Stroud 13-2", 7, weights, points)
+    return DiskScheme("Hammer-Stroud 13-2", weights, points, 7, _citation)
 
 
 def hammer_stroud_17(symbolic=False):
@@ -73,7 +78,7 @@ def hammer_stroud_17(symbolic=False):
     ]
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Hammer-Stroud 17", 5, weights, points)
+    return DiskScheme("Hammer-Stroud 17", weights, points, 5, _citation)
 
 
 def hammer_stroud_18(symbolic=False):
@@ -86,7 +91,7 @@ def hammer_stroud_18(symbolic=False):
     ]
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Hammer-Stroud 18", 7, weights, points)
+    return DiskScheme("Hammer-Stroud 18", weights, points, 7, _citation)
 
 
 def hammer_stroud_19(symbolic=False):
@@ -107,7 +112,7 @@ def hammer_stroud_19(symbolic=False):
     ]
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Hammer-Stroud 19", 9, weights, points)
+    return DiskScheme("Hammer-Stroud 19", weights, points, 9, _citation)
 
 
 def hammer_stroud_20(symbolic=False):
@@ -134,7 +139,7 @@ def hammer_stroud_20(symbolic=False):
     ]
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Hammer-Stroud 20", 11, weights, points)
+    return DiskScheme("Hammer-Stroud 20", weights, points, 11, _citation)
 
 
 def hammer_stroud_21(symbolic=False):
@@ -157,16 +162,4 @@ def hammer_stroud_21(symbolic=False):
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Hammer-Stroud 21", 15, weights, points)
-
-
-HammerStroud = {
-    "11-2": hammer_stroud_11_2,
-    "12-2": hammer_stroud_12_2,
-    "13-2": hammer_stroud_13_2,
-    "17": hammer_stroud_17,
-    "18": hammer_stroud_18,
-    "19": hammer_stroud_19,
-    "20": hammer_stroud_20,
-    "21": hammer_stroud_21,
-}
+    return DiskScheme("Hammer-Stroud 21", weights, points, 15, _citation)

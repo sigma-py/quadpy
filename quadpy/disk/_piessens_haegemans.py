@@ -1,17 +1,24 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Robert Piessens and Ann Haegemans,
-Cubature Formulas of Degree Nine for Symmetric Planar Regions,
-Mathematics of Computation, Volume 29, Number 11, July 1975, Pages 810-815,
-<https://doi.org/10.2307/2005291>.
-"""
 from .helpers import _pm, _pmx, _pmy, DiskScheme
 
-from ..helpers import untangle
+from ..helpers import untangle, article
 
 
-def PiessensHaegemans():
+_citation = article(
+    authors=["Robert Piessens", "Ann Haegemans"],
+    title="Cubature Formulas of Degree Nine for Symmetric Planar Regions",
+    journal="Mathematics of Computation",
+    volume="29",
+    number="11",
+    month="jul",
+    year="1975",
+    pages="810-815",
+    url="https://doi.org/10.2307/2005291",
+)
+
+
+def piessens_haegemans():
     data = [
         (0.12937261598422958670, _pm(0.86686876801492291622, 0.28376671812094800827)),
         (
@@ -25,4 +32,4 @@ def PiessensHaegemans():
     ]
 
     points, weights = untangle(data)
-    return DiskScheme("Piessens-Haegemans", 9, weights, points)
+    return DiskScheme("Piessens-Haegemans", weights, points, 9, _citation)

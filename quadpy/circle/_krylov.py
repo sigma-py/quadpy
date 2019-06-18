@@ -14,7 +14,7 @@ _citation = book(
     title="Approximate Calculation of Integrals",
     publisher="Macmillan, New York",
     year="1962",
-    comment="Translated from 1st Russian ed., 1959, by A.H. Stroud.",
+    note="Translated from 1st Russian ed., 1959, by A.H. Stroud",
     url="https://books.google.de/books/about/Approximate_Calculation_of_Integrals.html?id=ELeRwR27IRIC",
 )
 
