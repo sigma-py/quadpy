@@ -4,7 +4,7 @@ from __future__ import division
 
 import sympy
 
-from .helpers import fs_r00, fs_rr0, z, HexahedronScheme
+from ._helpers import fs_r00, fs_rr0, z, HexahedronScheme
 from ..helpers import untangle, article
 
 _citation = article(

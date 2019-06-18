@@ -8,7 +8,6 @@ import pytest
 import sympy
 
 import quadpy
-from quadpy.hexahedron import Product
 
 from helpers import check_degree
 
@@ -75,69 +74,87 @@ def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
 
 
 @pytest.mark.parametrize(
-    "scheme, tol",
-    [(Product(quadpy.line_segment.Midpoint()), 1.0e-14)]
-    + [(Product(quadpy.line_segment.Trapezoidal()), 1.0e-14)]
-    + [(Product(quadpy.line_segment.GaussLegendre(k)), 1.0e-14) for k in range(1, 6)]
+    "scheme",
+    [quadpy.hexahedron.product(quadpy.line_segment.Midpoint())]
+    + [quadpy.hexahedron.product(quadpy.line_segment.Trapezoidal())]
     + [
-        (Product(quadpy.line_segment.NewtonCotesClosed(k)), 1.0e-14)
+        quadpy.hexahedron.product(quadpy.line_segment.GaussLegendre(k))
+        for k in range(1, 6)
+    ]
+    + [
+        quadpy.hexahedron.product(quadpy.line_segment.NewtonCotesClosed(k))
         for k in range(1, 5)
     ]
-    + [(Product(quadpy.line_segment.NewtonCotesOpen(k)), 1.0e-14) for k in range(5)]
     + [
-        (quadpy.hexahedron.HammerStroud[k](), 1.0e-14)
-        for k in ["1-3", "2-3", "4-3", "5-3a", "5-3b", "6-3"]
+        quadpy.hexahedron.product(quadpy.line_segment.NewtonCotesOpen(k))
+        for k in range(5)
     ]
     + [
-        (quadpy.hexahedron.Stroud[k](), 1.0e-14)
-        for k in [
-            "C3 3-1",
-            "C3 3-2",
-            "C3 3-3",
-            "C3 3-4",
-            "C3 3-5",
-            "C3 3-6",
-            "C3 3-7",
-            "C3 5-1",
-            "C3 5-2",
-            "C3 5-3",
-            "C3 5-4",
-            "C3 5-5",
-            "C3 5-6",
-            "C3 5-7",
-            "C3 5-8",
-            "C3 7-1a",
-            "C3 7-1b",
-            "C3 7-2",
-            "C3 7-3",
-        ]
+        quadpy.hexahedron.hammer_stroud_1_3(),
+        quadpy.hexahedron.hammer_stroud_2_3(),
+        quadpy.hexahedron.hammer_stroud_4_3(),
+        quadpy.hexahedron.hammer_stroud_5_3a(),
+        quadpy.hexahedron.hammer_stroud_5_3b(),
+        quadpy.hexahedron.hammer_stroud_6_3(),
+        quadpy.hexahedron.hammer_wymore(),
+        quadpy.hexahedron.mustard_lyness_blatt_1(),
+        quadpy.hexahedron.mustard_lyness_blatt_2(),
+        quadpy.hexahedron.mustard_lyness_blatt_3(),
+        quadpy.hexahedron.mustard_lyness_blatt_4(),
+        quadpy.hexahedron.mustard_lyness_blatt_5(),
+        quadpy.hexahedron.mustard_lyness_blatt_6(),
+        quadpy.hexahedron.mustard_lyness_blatt_7(),
+        quadpy.hexahedron.sadowsky(),
+        quadpy.hexahedron.stroud_c3_3_1(),
+        quadpy.hexahedron.stroud_c3_3_2(),
+        quadpy.hexahedron.stroud_c3_3_3(),
+        quadpy.hexahedron.stroud_c3_3_4(),
+        quadpy.hexahedron.stroud_c3_3_5(),
+        quadpy.hexahedron.stroud_c3_3_6(),
+        quadpy.hexahedron.stroud_c3_3_7(),
+        quadpy.hexahedron.stroud_c3_5_1(),
+        quadpy.hexahedron.stroud_c3_5_2(),
+        quadpy.hexahedron.stroud_c3_5_3(),
+        quadpy.hexahedron.stroud_c3_5_4(),
+        quadpy.hexahedron.stroud_c3_5_5(),
+        quadpy.hexahedron.stroud_c3_5_6(),
+        quadpy.hexahedron.stroud_c3_5_7(),
+        quadpy.hexahedron.stroud_c3_5_8(),
+        quadpy.hexahedron.stroud_c3_7_1a(),
+        quadpy.hexahedron.stroud_c3_7_1b(),
+        quadpy.hexahedron.stroud_c3_7_2(),
+        quadpy.hexahedron.stroud_c3_7_3(),
+        quadpy.hexahedron.stroud_1967(),
+        quadpy.hexahedron.tyler_1(),
+        quadpy.hexahedron.tyler_2(),
     ]
     + [
-        (quadpy.hexahedron.StroudN(k), 1.0e-14)
-        for k in [
-            "Cn 1-1",
-            "Cn 1-2",
-            "Cn 2-1",
-            "Cn 2-2",
-            "Cn 3-1",
-            "Cn 3-2",
-            "Cn 3-3",
-            "Cn 3-4",
-            "Cn 3-5",
-            "Cn 3-6",
-            "Cn 5-2",
-            "Cn 5-3",
-            "Cn 5-4",
-            "Cn 5-5",
-            "Cn 5-6",
-            "Cn 5-7",
-            "Cn 5-8",
-            "Cn 5-9",
-        ]
+        # quadpy.ncube.dobrodeev_1970(3),
+        quadpy.ncube.dobrodeev_1978(3),
+        quadpy.ncube.hammer_stroud_1n(3),
+        quadpy.ncube.hammer_stroud_2n(3),
+        quadpy.ncube.stroud_cn_1_1(3),
+        quadpy.ncube.stroud_cn_1_2(3),
+        quadpy.ncube.stroud_cn_2_1(3),
+        quadpy.ncube.stroud_cn_2_2(3),
+        quadpy.ncube.stroud_cn_3_1(3),
+        quadpy.ncube.stroud_cn_3_2(3),
+        quadpy.ncube.stroud_cn_3_3(3),
+        quadpy.ncube.stroud_cn_3_4(3),
+        quadpy.ncube.stroud_cn_3_5(3),
+        quadpy.ncube.stroud_cn_3_6(3),
+        quadpy.ncube.stroud_cn_5_2(3),
+        quadpy.ncube.stroud_cn_5_3(3),
+        quadpy.ncube.stroud_cn_5_4(3),
+        quadpy.ncube.stroud_cn_5_5(3),
+        quadpy.ncube.stroud_cn_5_6(3),
+        quadpy.ncube.stroud_cn_5_7(3),
+        quadpy.ncube.stroud_cn_5_8(3),
+        quadpy.ncube.stroud_cn_5_9(3),
+        quadpy.ncube.stroud_cn_7_1(3),
     ]
-    + [(quadpy.hexahedron.StroudN(k), 1.0e-7) for k in ["Cn 7-1"]],
 )
-def test_scheme(scheme, tol, print_degree=False):
+def test_scheme(scheme, tol=1.0e-14, print_degree=False):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
@@ -146,7 +163,7 @@ def test_scheme(scheme, tol, print_degree=False):
     z = [-1.0, +1.0]
     hexa = quadpy.hexahedron.cube_points(x, y, z)
     degree = check_degree(
-        lambda poly: quadpy.hexahedron.integrate(poly, hexa, scheme),
+        lambda poly: scheme.integrate(poly, hexa),
         lambda k: _integrate_exact2(k, x[0], x[1], y[0], y[1], z[0], z[1]),
         3,
         scheme.degree + 1,
@@ -154,13 +171,15 @@ def test_scheme(scheme, tol, print_degree=False):
     )
     if print_degree:
         print("Detected degree {}, scheme degree {}.".format(degree, scheme.degree))
-    assert degree == scheme.degree
+    assert degree == scheme.degree, scheme.name
     return
 
 
-@pytest.mark.parametrize("scheme", [Product(quadpy.line_segment.NewtonCotesClosed(2))])
+@pytest.mark.parametrize(
+    "scheme", [quadpy.hexahedron.product(quadpy.line_segment.NewtonCotesClosed(2))]
+)
 def test_show(scheme):
-    quadpy.hexahedron.show(scheme)
+    scheme.show(backend="mpl")
     plt.close()
     return
 

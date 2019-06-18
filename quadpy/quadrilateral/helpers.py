@@ -18,7 +18,7 @@ class QuadrilateralScheme(NCubeScheme):
     def show(self, *args, **kwargs):
         import matplotlib.pyplot as plt
 
-        self. plot(*args, **kwargs)
+        self.plot(*args, **kwargs)
         plt.show()
         return
 

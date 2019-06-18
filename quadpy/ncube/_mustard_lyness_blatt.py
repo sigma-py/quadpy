@@ -32,6 +32,5 @@ def mustard_lyness_blatt(n, symbolic=False):
     ]
 
     points, weights = untangle(data)
-    reference_volume = 2 ** n
-    weights *= reference_volume
+    weights *= 2 ** n
     return NCubeScheme("Mustard-Lyness-Blatt", n, weights, points, 5, _citation)

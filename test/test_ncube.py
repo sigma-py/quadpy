@@ -32,7 +32,7 @@ from helpers import check_degree
     + [quadpy.ncube.stroud_cn_5_7(n) for n in range(3, 7)]
     + [quadpy.ncube.stroud_cn_5_8(n) for n in range(3, 7)]
     + [quadpy.ncube.stroud_cn_5_9(n) for n in range(3, 7)]
-    + [quadpy.ncube.stroud_cn_7_1(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_7_1(n) for n in range(3, 7)],
 )
 def test_scheme(scheme, tol=1.0e-14):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
