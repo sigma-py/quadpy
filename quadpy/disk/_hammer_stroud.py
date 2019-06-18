@@ -5,8 +5,11 @@ from __future__ import division
 import sympy
 import numpy
 
-from ..helpers import untangle, fsd, pm, z, pm_array, pm_array0, fs_array as fs, article
+from ..helpers import untangle, fsd, pm, z, fs_array as fs, article
 from .helpers import DiskScheme
+
+from ._radon import radon
+from ._peirce_1956 import peirce_1956_1, peirce_1956_3
 
 
 _citation = article(
@@ -48,47 +51,35 @@ def hammer_stroud_12_2(symbolic=False):
 
 
 def hammer_stroud_13_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pm_ = numpy.array([+1, -1])
-
-    sqrt29 = sqrt(29)
-    b1, b2 = (551 + pm_ * 41 * sqrt29) / 6264
-    xi1, xi2 = sqrt(3 / (9 + pm_ * sqrt29) / 2)
-    data = [
-        (frac(2, 27), fsd(2, (sqrt(frac(3, 4)), 1))),
-        (b1, pm(2, xi1)),
-        (b2, pm(2, xi2)),
-    ]
-    points, weights = untangle(data)
-    weights *= pi
-    return DiskScheme("Hammer-Stroud 13-2", weights, points, 7, _citation)
+    return peirce_1956_1(symbolic)
 
 
 def hammer_stroud_17(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
-    data = [
-        (frac(1, 4), z(2)),
-        (frac(1, 8), pm_array0(2, [sqrt(frac(2, 3))], [0])),
-        (frac(1, 8), pm_array([sqrt(frac(1, 6)), sqrt(frac(1, 2))])),
-    ]
-    points, weights = untangle(data)
-    weights *= pi
-    return DiskScheme("Hammer-Stroud 17", weights, points, 5, _citation)
+    # ENH This is Radon's formula.
+    return radon(0, symbolic)
 
 
 def hammer_stroud_18(symbolic=False):
+    # ENH The article only gives floats, but really this is the spherical-product gauss
+    # formula as described in Strouds book, S2 7-2.
+    #
+    # data = [
+    #     (frac(1, 16), fs([0.4247082002778669, 0.1759198966061612])),
+    #     (frac(1, 16), fs([0.8204732385702833, 0.3398511429799874])),
+    # ]
+    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+    pm_ = numpy.array([+1, -1])
+    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
+    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     pi = sympy.pi if symbolic else numpy.pi
 
-    data = [
-        (frac(1, 16), fs([0.4247082002778669, 0.1759198966061612])),
-        (frac(1, 16), fs([0.8204732385702833, 0.3398511429799874])),
-    ]
+    r1, r2 = sqrt((3 - pm_ * sqrt(3)) / 6)
+
+    a = (2 * numpy.arange(8) + 1) * pi / 8
+    x = numpy.array([cos(a), sin(a)]).T
+
+    data = [(frac(1, 16), r1 * x), (frac(1, 16), r2 * x)]
     points, weights = untangle(data)
     weights *= pi
     return DiskScheme("Hammer-Stroud 18", weights, points, 7, _citation)
@@ -116,30 +107,8 @@ def hammer_stroud_19(symbolic=False):
 
 
 def hammer_stroud_20(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
-    sqrt15 = sqrt(15)
-    alpha1 = (34 - 5 * sqrt15) / 396
-    alpha2 = frac(5, 792) * (2 + sqrt15)
-    alpha3 = 0.0727157433213629 / pi
-
-    x1 = sqrt((5 - sqrt15) / 10)
-    x2 = sqrt(frac(1, 2)) * x1
-    x3 = sqrt((5 + sqrt15) / 10)
-
-    data = [
-        (frac(5, 144), fsd(2, (x1, 1))),
-        (frac(5, 144), pm(2, x2)),
-        (alpha1, fsd(2, (sqrt(0.5), 1))),
-        (alpha2, fs([0.6125369400823741, 0.3532683074300921])),
-        (alpha3, fs([0.8157480497746617, 0.4710132205252606])),
-        (0.0727346698565653 / pi, fsd(2, (x3, 1))),
-    ]
-    points, weights = untangle(data)
-    weights *= pi
-    return DiskScheme("Hammer-Stroud 20", weights, points, 11, _citation)
+    # ENH Also Peirce's formula, even given symbolically.
+    return peirce_1956_3(symbolic)
 
 
 def hammer_stroud_21(symbolic=False):

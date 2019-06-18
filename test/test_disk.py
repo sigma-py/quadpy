@@ -7,80 +7,79 @@ from quadpy.nball.helpers import integrate_monomial_over_unit_nball
 
 from helpers import check_degree
 
+schemes = [
+    quadpy.disk.albrecht_1(),
+    quadpy.disk.albrecht_2(),
+    quadpy.disk.albrecht_3(),
+    quadpy.disk.albrecht_4(),
+    quadpy.disk.albrecht_5(),
+    quadpy.disk.albrecht_6(),
+    quadpy.disk.albrecht_7(),
+    quadpy.disk.albrecht_8(),
+    quadpy.disk.albrecht_collatz(),
+    quadpy.disk.cools_haegemans_1(),
+    quadpy.disk.cools_haegemans_2(),
+    quadpy.disk.cools_haegemans_3(),
+    quadpy.disk.cools_kim_1(),
+    quadpy.disk.cools_kim_2(),
+    quadpy.disk.cools_kim_3(),
+    quadpy.disk.haegemans_piessens(),
+    quadpy.disk.hammer_stroud_11_2(),
+    quadpy.disk.hammer_stroud_12_2(),
+    quadpy.disk.hammer_stroud_13_2(),
+    quadpy.disk.hammer_stroud_17(),
+    quadpy.disk.hammer_stroud_18(),
+    quadpy.disk.hammer_stroud_19(),
+    quadpy.disk.hammer_stroud_20(),
+    quadpy.disk.hammer_stroud_21(),
+    quadpy.disk.lether(2),
+    quadpy.disk.lether(3),
+    quadpy.disk.lether(5),
+    quadpy.disk.mysovskih_1(),
+    quadpy.disk.mysovskih_2(),
+    quadpy.disk.mysovskih_3(),
+    quadpy.disk.peirce_1956_1(),
+    quadpy.disk.peirce_1956_2(),
+    quadpy.disk.peirce_1956_3(),
+    quadpy.disk.peirce_1957(1),
+    quadpy.disk.peirce_1957(2),
+    quadpy.disk.peirce_1957(3),
+    quadpy.disk.peirce_1957(5),
+    quadpy.disk.piessens_haegemans(),
+    quadpy.disk.rabinowitz_richter_1(),
+    quadpy.disk.rabinowitz_richter_2(),
+    quadpy.disk.rabinowitz_richter_3(),
+    quadpy.disk.rabinowitz_richter_4(),
+    quadpy.disk.rabinowitz_richter_5(),
+    quadpy.disk.rabinowitz_richter_6(),
+    quadpy.disk.stroud_s2_3_1(),
+    quadpy.disk.stroud_s2_3_2(),
+    quadpy.disk.stroud_s2_4_1(),
+    quadpy.disk.stroud_s2_5_1(),
+    quadpy.disk.stroud_s2_5_2(),
+    quadpy.disk.stroud_s2_7_1(),
+    quadpy.disk.stroud_s2_7_2(),
+    quadpy.disk.stroud_s2_9_1(),
+    quadpy.disk.stroud_s2_9_2(),
+    quadpy.disk.stroud_s2_9_3(),
+    quadpy.disk.stroud_s2_9_4(),
+    quadpy.disk.stroud_s2_9_5(),
+    quadpy.disk.stroud_s2_11_1(),
+    quadpy.disk.stroud_s2_11_2(),
+    quadpy.disk.stroud_s2_11_3(),
+    quadpy.disk.stroud_s2_11_4(),
+    quadpy.disk.stroud_s2_13_1(),
+    quadpy.disk.stroud_s2_13_2(),
+    quadpy.disk.stroud_s2_15_1(),
+    quadpy.disk.stroud_s2_15_2(),
+    quadpy.disk.stroud_s2_17_1(),
+    quadpy.disk.wissmann_becker_6_1(),
+    quadpy.disk.wissmann_becker_6_2(),
+    quadpy.disk.wissmann_becker_8_1(),
+]
 
-@pytest.mark.parametrize(
-    "scheme",
-    [
-        quadpy.disk.albrecht_1(),
-        quadpy.disk.albrecht_2(),
-        quadpy.disk.albrecht_3(),
-        quadpy.disk.albrecht_4(),
-        quadpy.disk.albrecht_5(),
-        quadpy.disk.albrecht_6(),
-        quadpy.disk.albrecht_7(),
-        quadpy.disk.albrecht_8(),
-        quadpy.disk.albrecht_collatz(),
-        quadpy.disk.cools_haegemans_1(),
-        quadpy.disk.cools_haegemans_2(),
-        quadpy.disk.cools_haegemans_3(),
-        quadpy.disk.cools_kim_1(),
-        quadpy.disk.cools_kim_2(),
-        quadpy.disk.cools_kim_3(),
-        quadpy.disk.haegemans_piessens(),
-        quadpy.disk.hammer_stroud_11_2(),
-        quadpy.disk.hammer_stroud_12_2(),
-        quadpy.disk.hammer_stroud_13_2(),
-        quadpy.disk.hammer_stroud_17(),
-        quadpy.disk.hammer_stroud_18(),
-        quadpy.disk.hammer_stroud_19(),
-        quadpy.disk.hammer_stroud_20(),
-        quadpy.disk.hammer_stroud_21(),
-        quadpy.disk.lether(2),
-        quadpy.disk.lether(3),
-        quadpy.disk.lether(5),
-        quadpy.disk.mysovskih_1(),
-        quadpy.disk.mysovskih_2(),
-        quadpy.disk.mysovskih_3(),
-        quadpy.disk.peirce_1956_1(),
-        quadpy.disk.peirce_1956_2(),
-        quadpy.disk.peirce_1956_3(),
-        quadpy.disk.peirce_1957(1),
-        quadpy.disk.peirce_1957(2),
-        quadpy.disk.peirce_1957(3),
-        quadpy.disk.peirce_1957(5),
-        quadpy.disk.piessens_haegemans(),
-        quadpy.disk.rabinowitz_richter_1(),
-        quadpy.disk.rabinowitz_richter_2(),
-        quadpy.disk.rabinowitz_richter_3(),
-        quadpy.disk.rabinowitz_richter_4(),
-        quadpy.disk.rabinowitz_richter_5(),
-        quadpy.disk.rabinowitz_richter_6(),
-        quadpy.disk.stroud_s2_3_1(),
-        quadpy.disk.stroud_s2_3_2(),
-        quadpy.disk.stroud_s2_4_1(),
-        quadpy.disk.stroud_s2_5_1(),
-        quadpy.disk.stroud_s2_5_2(),
-        quadpy.disk.stroud_s2_7_1(),
-        quadpy.disk.stroud_s2_7_2(),
-        quadpy.disk.stroud_s2_9_1(),
-        quadpy.disk.stroud_s2_9_2(),
-        quadpy.disk.stroud_s2_9_3(),
-        quadpy.disk.stroud_s2_9_4(),
-        quadpy.disk.stroud_s2_9_5(),
-        quadpy.disk.stroud_s2_11_1(),
-        quadpy.disk.stroud_s2_11_2(),
-        quadpy.disk.stroud_s2_11_3(),
-        quadpy.disk.stroud_s2_11_4(),
-        quadpy.disk.stroud_s2_13_1(),
-        quadpy.disk.stroud_s2_13_2(),
-        quadpy.disk.stroud_s2_15_1(),
-        quadpy.disk.stroud_s2_15_2(),
-        quadpy.disk.stroud_s2_17_1(),
-        quadpy.disk.wissmann_becker_6_1(),
-        quadpy.disk.wissmann_becker_6_2(),
-        quadpy.disk.wissmann_becker_8_1(),
-    ],
-)
+
+@pytest.mark.parametrize("scheme", schemes)
 def test_scheme(scheme, tol=1.0e-14):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
@@ -104,8 +103,37 @@ def test_show(scheme):
     return
 
 
+def find_equal():
+    tol = 1.0e-13
+    n = len(schemes)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if schemes[i].name == schemes[j].name:
+                continue
+            if len(schemes[i].points) != len(schemes[j].points):
+                continue
+            # Check if the point sets are equal
+            x = numpy.column_stack([schemes[i].weights, schemes[i].points])
+            y = numpy.column_stack([schemes[j].weights, schemes[j].points])
+            is_equal = True
+            for x_i in x:
+                diff = y - x_i
+                diff = numpy.min(numpy.sum(diff ** 2, axis=-1))
+                if diff > tol:
+                    is_equal = False
+                    break
+            if is_equal:
+                print(
+                    "Schemes '{}' and '{}' are equal.".format(
+                        schemes[i].name, schemes[j].name
+                    )
+                )
+    return
+
+
 if __name__ == "__main__":
-    # scheme_ = quadpy.disk.Lether(5)
-    scheme_ = quadpy.disk.Albrecht[8]()
-    test_scheme(scheme_, 1.0e-14)
-    test_show(scheme_)
+    # scheme_ = quadpy.disk.lether(5)
+    # scheme_ = quadpy.disk.albrecht_8()
+    # test_scheme(scheme_, 1.0e-14)
+    # test_show(scheme_)
+    find_equal()
