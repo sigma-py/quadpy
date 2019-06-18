@@ -5,7 +5,7 @@ from __future__ import division
 import numpy
 import sympy
 
-from .rabinowitz_richter import (
+from ._rabinowitz_richter import (
     rabinowitz_richter_1 as stroud_9_1,
     rabinowitz_richter_2 as stroud_11_1,
     rabinowitz_richter_3 as stroud_11_2,
@@ -13,11 +13,11 @@ from .rabinowitz_richter import (
     # rabinowitz_richter_4 as stroud_13_1,
     rabinowitz_richter_5 as stroud_15_1,
 )
-from .stroud_secrest import (
+from ._stroud_secrest import (
     stroud_secrest_v as stroud_5_1,
     stroud_secrest_vi as stroud_7_1,
 )
-from .helpers import E2rScheme
+from ._helpers import E2rScheme
 from ..helpers import untangle, book
 
 _citation = book(
