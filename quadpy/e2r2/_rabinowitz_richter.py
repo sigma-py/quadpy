@@ -1,13 +1,19 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Philip Rabinowitz and Nira Richter,
-Perfectly Symmetric Two-Dimensional Integration Formulas with Minimal Numbers of Points,
-Mathematics of Computation, Vol. 23, No. 108 (Oct., 1969), pp. 765-779,
-<https://doi.org/10.2307/2004962>.
-"""
-from .helpers import _s40, _s8, _s4, _z, E2r2Scheme
-from ..helpers import untangle
+from ._helpers import _s40, _s8, _s4, _z, E2r2Scheme
+from ..helpers import untangle, article
+
+_citation = article(
+    authors=["Philip Rabinowitz", "Nira Richter"],
+    title="Perfectly Symmetric Two-Dimensional Integration Formulas with Minimal Numbers of Points",
+    journal="Mathematics of Computation",
+    volume="23",
+    number="108",
+    month="oct",
+    year="1969",
+    pages="765-779",
+    url="https://doi.org/10.2307/2004962",
+)
 
 
 def rabinowitz_richter_1():
@@ -18,7 +24,7 @@ def rabinowitz_richter_1():
         (0.1349017971918148e-02, _s8(2.607349811958554, 0.9663217712794149)),
     ]
     points, weights = untangle(data)
-    return E2r2Scheme("RabinowitzRichter 1", 9, weights, points)
+    return E2r2Scheme("RabinowitzRichter 1", weights, points, 9, _citation)
 
 
 def rabinowitz_richter_2():
@@ -30,7 +36,7 @@ def rabinowitz_richter_2():
         (0.9817477042468103e-1, _s8(0.7071067811865475, 1.224744871391589)),
     ]
     points, weights = untangle(data)
-    return E2r2Scheme("RabinowitzRichter 2", 11, weights, points)
+    return E2r2Scheme("RabinowitzRichter 2", weights, points, 11, _citation)
 
 
 def rabinowitz_richter_3():
@@ -43,7 +49,7 @@ def rabinowitz_richter_3():
         (0.7542839504417270e-2, _s8(2.061552812808830, 0.8660254037844387)),
     ]
     points, weights = untangle(data)
-    return E2r2Scheme("RabinowitzRichter 3", 11, weights, points)
+    return E2r2Scheme("RabinowitzRichter 3", weights, points, 11, _citation)
 
 
 def rabinowitz_richter_4():
@@ -58,7 +64,7 @@ def rabinowitz_richter_4():
         (+0.1279412775888998e-1, _s8(1.882228401823884, 0.8826073082889659)),
     ]
     points, weights = untangle(data)
-    return E2r2Scheme("RabinowitzRichter 4", 13, weights, points)
+    return E2r2Scheme("RabinowitzRichter 4", weights, points, 13, _citation)
 
 
 def rabinowitz_richter_5():
@@ -74,13 +80,4 @@ def rabinowitz_richter_5():
         (0.2087984556938594e-1, _s8(1.740847514397403, 0.7210826504868960)),
     ]
     points, weights = untangle(data)
-    return E2r2Scheme("RabinowitzRichter 5", 15, weights, points)
-
-
-RabinowitzRichter = {
-    1: rabinowitz_richter_1,
-    2: rabinowitz_richter_2,
-    3: rabinowitz_richter_3,
-    4: rabinowitz_richter_4,
-    5: rabinowitz_richter_5,
-}
+    return E2r2Scheme("RabinowitzRichter 5", weights, points, 15, _citation)
