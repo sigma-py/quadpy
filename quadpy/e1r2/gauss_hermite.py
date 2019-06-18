@@ -7,7 +7,7 @@ from .helpers import E1r2Scheme
 from ..tools import scheme_from_rc
 
 
-def GaussHermite(n, mode="numpy", decimal_places=None):
+def gauss_hermite(n, mode="numpy", decimal_places=None):
     """
     Gauss-Hermite quadrature for integrals of the form
 
@@ -27,4 +27,4 @@ def GaussHermite(n, mode="numpy", decimal_places=None):
         points, weights = scheme_from_rc(
             alpha, beta, mode=mode, decimal_places=decimal_places
         )
-    return E1r2Scheme("Gauss-Hermite", 2 * n - 1, weights, points)
+    return E1r2Scheme("Gauss-Hermite", weights, points, 2 * n - 1)
