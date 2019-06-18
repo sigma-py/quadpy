@@ -1,13 +1,19 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Philip Rabinowitz and Nira Richter,
-Perfectly Symmetric Two-Dimensional Integration Formulas with Minimal Numbers of Points,
-Mathematics of Computation, Vol. 23, No. 108 (Oct., 1969), pp. 765-779,
-<https://doi.org/10.2307/2004962>.
-"""
 from .helpers import _s40, _s8, _s4, E2rScheme
-from ..helpers import untangle
+from ..helpers import untangle, article
+
+_citation = article(
+    authors=["Philip Rabinowitz", "Nira Richter"],
+    title="Perfectly Symmetric Two-Dimensional Integration Formulas with Minimal Numbers of Points",
+    journal="Mathematics of Computation",
+    volume="23",
+    number="108",
+    month="oct",
+    year="1969",
+    pages="765-779",
+    url="https://doi.org/10.2307/2004962",
+)
 
 
 def rabinowitz_richter_1():
@@ -18,7 +24,7 @@ def rabinowitz_richter_1():
         (0.3030570706813315e-4, _s8(6.693991707281686, 14.77112509749386)),
     ]
     points, weights = untangle(data)
-    return E2rScheme("Rabinowitz-Richter 1", 9, weights, points)
+    return E2rScheme("Rabinowitz-Richter 1", weights, points, 9, _citation)
 
 
 def rabinowitz_richter_2():
@@ -30,7 +36,7 @@ def rabinowitz_richter_2():
         (0.6786094118455858e-1, _s8(4.616780734333329, 2.665499599756826)),
     ]
     points, weights = untangle(data)
-    return E2rScheme("Rabinowitz-Richter 2", 11, weights, points)
+    return E2rScheme("Rabinowitz-Richter 2", weights, points, 11, _citation)
 
 
 def rabinowitz_richter_3():
@@ -43,7 +49,7 @@ def rabinowitz_richter_3():
         (0.1103920675225255e-2, _s8(9.300537618869137, 4.847679857416328)),
     ]
     points, weights = untangle(data)
-    return E2rScheme("Rabinowitz-Richter 3", 11, weights, points)
+    return E2rScheme("Rabinowitz-Richter 3", weights, points, 11, _citation)
 
 
 # ERR There's a misprint here somewhere.
@@ -78,7 +84,7 @@ def rabinowitz_richter_5():
         (0.3365458295852239e-2, _s8(8.095727497543633, 3.353360126759371)),
     ]
     points, weights = untangle(data)
-    return E2rScheme("Rabinowitz-Richter 5", 15, weights, points)
+    return E2rScheme("Rabinowitz-Richter 5", weights, points, 15, _citation)
 
 
 RabinowitzRichter = {
