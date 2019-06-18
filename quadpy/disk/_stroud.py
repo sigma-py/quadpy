@@ -36,7 +36,7 @@ from ._rabinowitz_richter import (
 )
 from ._radon import radon
 
-from .helpers import DiskScheme
+from ._helpers import DiskScheme
 from ..helpers import z, untangle, book
 
 

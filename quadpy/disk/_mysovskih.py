@@ -6,7 +6,7 @@ import numpy
 import sympy
 
 from ..helpers import untangle, z, fsd, fs_array, article
-from .helpers import DiskScheme
+from ._helpers import DiskScheme
 
 _citation = article(
     authors=["I.P. Mysovskih"],

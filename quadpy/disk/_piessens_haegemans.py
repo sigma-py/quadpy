@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _pm, _pmx, _pmy, DiskScheme
+from ._helpers import _pm, _pmx, _pmy, DiskScheme
 
 from ..helpers import untangle, article
 

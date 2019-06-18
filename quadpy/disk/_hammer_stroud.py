@@ -6,7 +6,7 @@ import sympy
 import numpy
 
 from ..helpers import untangle, fsd, pm, z, fs_array as fs, article
-from .helpers import DiskScheme
+from ._helpers import DiskScheme
 
 from ._radon import radon
 from ._peirce_1956 import peirce_1956_1, peirce_1956_3

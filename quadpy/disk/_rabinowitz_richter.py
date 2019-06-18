@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import _s40, _s8, _s4, _z, DiskScheme
+from ._helpers import _s40, _s8, _s4, _z, DiskScheme
 from ..helpers import untangle, article
 
 from ._mysovskih import mysovskih_2, mysovskih_3
