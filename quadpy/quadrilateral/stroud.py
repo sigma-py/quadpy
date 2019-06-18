@@ -12,7 +12,12 @@ import warnings
 import numpy
 import sympy
 
-from .albrecht_collatz import AlbrechtCollatz
+from .albrecht_collatz import (
+    albrecht_collatz_1,
+    albrecht_collatz_2,
+    albrecht_collatz_3,
+    albrecht_collatz_4,
+)
 from .burnside import Burnside
 from .irwin import Irwin
 from .maxwell import Maxwell
@@ -99,14 +104,14 @@ Stroud = {
     "C2 3-2": lambda symbolic=False: ncube.Ewing(2, symbolic),
     # product Simpson:
     "C2 3-3": lambda symbolic=False: ncube.Stroud(2, "Cn 3-6", symbolic),
-    "C2 3-4": lambda symbolic=False: AlbrechtCollatz[1](symbolic),
+    "C2 3-4": albrecht_collatz_1,
     "C2 3-5": lambda symbolic=False: Irwin[1](symbolic),
-    "C2 5-1": lambda symbolic=False: AlbrechtCollatz[2](symbolic),
-    "C2 5-2": lambda symbolic=False: AlbrechtCollatz[3](symbolic),
-    "C2 5-3": lambda symbolic=False: Burnside(symbolic),
+    "C2 5-1": albrecht_collatz_2,
+    "C2 5-2": albrecht_collatz_3,
+    " C2 5-3": lambda symbolic=False: Burnside(symbolic),
     "C2 5-4": lambda symbolic=False: ProductGauss5(symbolic),
     "C2 5-5": lambda symbolic=False: Tyler[1](symbolic),
-    "C2 5-6": lambda symbolic=False: AlbrechtCollatz[4](symbolic),
+    "C2 5-6": albrecht_collatz_4,
     "C2 5-7": lambda symbolic=False: Irwin[2](symbolic),
     "C2 7-1": lambda symbolic=False: Tyler[2](symbolic),
     "C2 7-2": lambda symbolic=False: Phillips(symbolic),
