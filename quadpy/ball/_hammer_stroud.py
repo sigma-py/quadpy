@@ -1,18 +1,22 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Preston C. Hammer and Arthur H. Stroud,
-Numerical Evaluation of Multiple Integrals II,
-Math. Comp. 12 (1958), 272-280,
-<https://doi.org/10.1090/S0025-5718-1958-0102176-6>.
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
-from .helpers import BallScheme
-from ..helpers import untangle, fsd, pm, z
+from ._helpers import BallScheme
+from ..helpers import untangle, fsd, pm, z, article
+
+_citation = article(
+    authors=["Preston C. Hammer", "Arthur H. Stroud"],
+    title="Numerical Evaluation of Multiple Integrals II",
+    journal="Math. Comp.",
+    number="12",
+    year="1958",
+    pages="272-280",
+    url="https://doi.org/10.1090/S0025-5718-1958-0102176-6",
+)
 
 
 def hammer_stroud_11_3(symbolic=False):
@@ -23,7 +27,7 @@ def hammer_stroud_11_3(symbolic=False):
     data = [(frac(1, 6), fsd(3, (sqrt(frac(3, 5)), 1)))]
     points, weights = untangle(data)
     weights *= frac(4, 3) * pi
-    return BallScheme("Hammer-Stroud 11-3", 3, weights, points)
+    return BallScheme("Hammer-Stroud 11-3", _citation, 3, weights, points)
 
 
 def hammer_stroud_12_3(symbolic=False):
@@ -39,7 +43,7 @@ def hammer_stroud_12_3(symbolic=False):
     ]
     points, weights = untangle(data)
     weights *= frac(4, 3) * pi
-    return BallScheme("Hammer-Stroud 12-3", 5, weights, points)
+    return BallScheme("Hammer-Stroud 12-3", _citation, 5, weights, points)
 
 
 def hammer_stroud_14_3(variant_a=True, symbolic=False):
@@ -63,10 +67,10 @@ def hammer_stroud_14_3(variant_a=True, symbolic=False):
     points, weights = untangle(data)
     weights *= frac(4, 3) * pi
     name = "Hammer-Stroud 14-3" + ("a" if variant_a else "b")
-    return BallScheme(name, 5, weights, points)
+    return BallScheme(name, _citation, 5, weights, points)
 
 
-def hammer_stroud_15_3(variant_a=True, symbolic=False):
+def _hammer_stroud_15_3(variant_a, symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
     pi = sympy.pi if symbolic else numpy.pi
@@ -93,12 +97,12 @@ def hammer_stroud_15_3(variant_a=True, symbolic=False):
     points, weights = untangle(data)
     weights *= frac(4, 3) * pi
     name = "Hammer-Stroud 15-3" + ("a" if variant_a else "b")
-    return BallScheme(name, 7, weights, points)
+    return BallScheme(name, _citation, 7, weights, points)
 
 
-HammerStroud = {
-    "11-3": hammer_stroud_11_3,
-    "12-3": hammer_stroud_12_3,
-    "14-3": hammer_stroud_14_3,
-    "15-3": hammer_stroud_15_3,
-}
+def hammer_stroud_15_3a(symbolic=False):
+    return _hammer_stroud_15_3(True, symbolic)
+
+
+def hammer_stroud_15_3b(symbolic=False):
+    return _hammer_stroud_15_3(False, symbolic)
