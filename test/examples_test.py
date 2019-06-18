@@ -3,30 +3,31 @@ import quadpy
 
 
 def test_circle():
-    quadpy.circle.integrate(
-        lambda x: numpy.exp(x[0]), numpy.array([0.0, 0.3]), 0.7, quadpy.circle.Krylov(3)
+    scheme = quadpy.circle.krylov(3)
+    scheme.integrate(
+        lambda x: numpy.exp(x[0]), numpy.array([0.0, 0.3]), 0.7
     )
-    quadpy.circle.integrate(
+    scheme = quadpy.circle.krylov(5)
+    scheme.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[0])],
         numpy.array([[1.0, 1.0], [0.0, 0.3], [2.0, 2.0]]),
         [1.0, 0.7, 0.333],
-        quadpy.circle.Krylov(5),
     )
     return
 
 
 def test_disk():
-    quadpy.disk.integrate(
+    scheme = quadpy.disk.peirce_1957(5)
+    scheme.integrate(
         lambda x: numpy.exp(x[0]),
         numpy.array([0.0, 0.3]),
         0.7,
-        quadpy.disk.Peirce1957(5),
     )
-    quadpy.disk.integrate(
+    scheme = quadpy.disk.peirce_1957(5)
+    scheme.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         numpy.array([[1.0, 1.0], [0.0, 0.3], [2.0, 2.0]]),
         [1.0, 0.7, 0.333],
-        quadpy.disk.Peirce1957(5),
     )
     return
 
@@ -120,12 +121,14 @@ def test_quadrilateral():
 
 
 def test_e2r2():
-    quadpy.e2r2.integrate(lambda x: numpy.exp(x[0]), quadpy.e2r2.RabinowitzRichter[3]())
+    scheme = quadpy.e2r2.rabinowitz_richter_3()
+    scheme.integrate(lambda x: numpy.exp(x[0]))
     return
 
 
 def test_e2r():
-    quadpy.e2r.integrate(lambda x: numpy.exp(x[0]), quadpy.e2r.RabinowitzRichter[5]())
+    scheme = quadpy.e2r.rabinowitz_richter_5()
+    scheme.integrate(lambda x: numpy.exp(x[0]))
     return
 
 
@@ -286,7 +289,8 @@ def test_enr2():
 
 
 def test_e1r():
-    quadpy.e1r.integrate(lambda x: x[0] ** 2, quadpy.e1r.GaussLaguerre(5))
+    scheme = quadpy.e1r.gauss_laguerre(5)
+    scheme.integrate(lambda x: x[0] ** 2)
     return
 
 
@@ -296,7 +300,8 @@ def test_e3r():
 
 
 def test_e1r2():
-    quadpy.e1r2.integrate(lambda x: x[0] ** 2, quadpy.e1r2.GaussHermite(5))
+    scheme = quadpy.e1r2.gauss_hermite(5)
+    scheme.integrate(lambda x: x[0] ** 2)
     return
 
 
