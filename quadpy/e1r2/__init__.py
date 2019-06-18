@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-from .gauss_hermite import GaussHermite
+from .gauss_hermite import gauss_hermite
 
-from .tools import integrate, show, plot
-
-__all__ = ["GaussHermite", "integrate", "show", "plot"]
+__all__ = ["gauss_hermite"]

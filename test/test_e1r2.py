@@ -9,14 +9,14 @@ from helpers import check_degree, integrate_monomial_over_enr2
 
 
 @pytest.mark.parametrize(
-    "scheme,tol", [(quadpy.e1r2.GaussHermite(n), 1.0e-14) for n in range(1, 10)]
+    "scheme,tol", [(quadpy.e1r2.gauss_hermite(n), 1.0e-14) for n in range(1, 10)]
 )
 def test_scheme(scheme, tol):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
     degree = check_degree(
-        lambda poly: quadpy.e1r2.integrate(poly, scheme),
+        lambda poly: scheme.integrate(poly),
         integrate_monomial_over_enr2,
         1,
         scheme.degree + 1,
@@ -28,14 +28,14 @@ def test_scheme(scheme, tol):
     return
 
 
-@pytest.mark.parametrize("scheme", [quadpy.e1r2.GaussHermite(2)])
+@pytest.mark.parametrize("scheme", [quadpy.e1r2.gauss_hermite(2)])
 def test_show(scheme):
-    quadpy.e1r2.show(scheme)
+    scheme.show()
     return
 
 
 def test_hermite_mpmath():
-    scheme = quadpy.e1r2.GaussHermite(4, mode="mpmath", decimal_places=51)
+    scheme = quadpy.e1r2.gauss_hermite(4, mode="mpmath", decimal_places=51)
 
     tol = 1.0e-50
 
@@ -51,6 +51,6 @@ def test_hermite_mpmath():
 
 
 if __name__ == "__main__":
-    scheme_ = quadpy.e1r2.GaussHermite(10)
+    scheme_ = quadpy.e1r2.gauss_hermite(10)
     test_scheme(scheme_, 1.0e-14)
     test_show(scheme_)
