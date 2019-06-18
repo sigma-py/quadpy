@@ -14,7 +14,7 @@ from .combinatorics import (
     partition,
     get_all_exponents,
 )
-from .misc import untangle, n_outer, compute_dobrodeev
+from .misc import untangle, n_outer, compute_dobrodeev, article, book
 from .plot import (
     plot_disks_1d,
     plot_disks,
@@ -39,6 +39,8 @@ __all__ = [
     "untangle",
     "n_outer",
     "compute_dobrodeev",
+    "article",
+    "book",
     "plot_disks_1d",
     "plot_disks",
     "show_mpl",

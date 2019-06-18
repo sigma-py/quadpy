@@ -1,25 +1,36 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Arthur Stroud,
-Approximate Calculation of Multiple Integrals,
-Prentice Hall, 1971.
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
-from .ditkin import Ditkin
-from .hammer_stroud import HammerStroud
-from .mysovskih import Mysovskih
+from ._ditkin import (
+    ditkin_1 as stroud_5_1,
+    ditkin_2 as stroud_5_2,
+    ditkin_3 as stroud_7_3,
+)
+from ._hammer_stroud import (
+    hammer_stroud_11_3 as stroud_3_1,
+    hammer_stroud_15_3a as stroud_7_1a,
+    hammer_stroud_15_3b as stroud_7_1b,
+)
+from ._mysovskih import mysovskih as stroud_7_2
 
-from .helpers import BallScheme
+from ._helpers import BallScheme
 from ..sphere import stroud as sphere_stroud
-from ..helpers import untangle
+from ..helpers import untangle, book
+
+_citation = book(
+    authors=["Arthur Stroud"],
+    title="Approximate Calculation of Multiple Integrals",
+    publisher="Prentice Hall",
+    year="1971",
+)
 
 
-def spherical_product_gauss(symbolic=False):
+def stroud_7_4(symbolic=False):
+    # spherical product gauss
     pi = sympy.pi if symbolic else numpy.pi
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
@@ -69,7 +80,7 @@ def spherical_product_gauss(symbolic=False):
     ]
 
     points, weights = untangle(data)
-    return BallScheme("Spherical-Product Gauss", 7, weights, points)
+    return BallScheme("Stroud S3 7-4", _citation, 7, weights, points)
 
 
 def stroud_14_1():
@@ -134,17 +145,17 @@ def stroud_14_1():
 
     points, weights = untangle(data)
     weights *= 4 * numpy.pi
-    return BallScheme("Stroud 14-1", 14, weights, points)
+    return BallScheme("Stroud S3 14-1", _citation, 14, weights, points)
 
 
-Stroud = {
-    "S3 3-1": HammerStroud["11-3"],
-    "S3 5-1": Ditkin[1],
-    "S3 5-2": Ditkin[2],
-    "S3 7-1a": lambda symbolic=False: HammerStroud["15-3"](True, symbolic),
-    "S3 7-1b": lambda symbolic=False: HammerStroud["15-3"](False, symbolic),
-    "S3 7-2": Mysovskih,
-    "S3 7-3": Ditkin[3],
-    "S3 7-4": spherical_product_gauss,
-    "S3 14-1": stroud_14_1,
-}
+__all__ = [
+    "stroud_3_1",
+    "stroud_5_1",
+    "stroud_5_2",
+    "stroud_7_1a",
+    "stroud_7_1b",
+    "stroud_7_2",
+    "stroud_7_3",
+    "stroud_7_4",
+    "stroud_14_1",
+]

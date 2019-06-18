@@ -1,11 +1,22 @@
 # -*- coding: utf-8 -*-
 #
 from __future__ import division
+from collections import namedtuple
 
 import math
 import numpy
 import scipy.special
 import sympy
+
+article = namedtuple(
+    "Article",
+    ["authors", "title", "journal", "year", "pages", "number", "url", "comment"],
+    # defaults=(None,) * 8
+)
+article.__new__.__defaults__ = (None,) * len(article._fields)
+
+book = namedtuple("Book", ["authors", "title", "publisher", "year"])
+book.__new__.__defaults__ = (None,) * len(book._fields)
 
 
 def untangle(data):

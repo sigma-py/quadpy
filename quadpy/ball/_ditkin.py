@@ -1,17 +1,22 @@
 # -*- coding: utf-8 -*-
 #
-"""
-V.A. Ditkin,
-On certain approximate formulas for the calculation of triple integrals,
-Doklady Akad. Nauk SSSR (N.S.) 62 (1948), 445–447 (Russian).
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
-from ..helpers import untangle, z, pm_array0, pm
-from .helpers import BallScheme
+from ..helpers import untangle, z, pm_array0, pm, article
+from ._helpers import BallScheme
+
+_citation = article(
+    authors=["V.A. Ditkin"],
+    title="On certain approximate formulas for the calculation of triple integrals",
+    journal="Doklady Akad. Nauk SSSR (N.S.)",
+    number="62",
+    year=1948,
+    pages="445–447",
+    comment="Russian",
+)
 
 
 def ditkin_1(alpha=0, symbolic=False):
@@ -34,7 +39,7 @@ def ditkin_1(alpha=0, symbolic=False):
 
     points, weights = untangle(data)
     weights *= frac(4, 3) * pi
-    return BallScheme("Ditkin 1", 5, weights, points)
+    return BallScheme("Ditkin 1", _citation, 5, weights, points)
 
 
 def ditkin_2(symbolic=False):
@@ -59,7 +64,7 @@ def ditkin_2(symbolic=False):
 
     points, weights = untangle(data)
     weights *= frac(4, 3) * pi
-    return BallScheme("Ditkin 2", 5, weights, points)
+    return BallScheme("Ditkin 2", _citation, 5, weights, points)
 
 
 def ditkin_3(symbolic=False):
@@ -90,7 +95,4 @@ def ditkin_3(symbolic=False):
 
     points, weights = untangle(data)
     weights *= frac(4, 3) * pi
-    return BallScheme("Ditkin 3", 7, weights, points)
-
-
-Ditkin = {1: ditkin_1, 2: ditkin_2, 3: ditkin_3}
+    return BallScheme("Ditkin 3", _citation, 7, weights, points)

@@ -36,7 +36,7 @@ def test_scheme(scheme, tol):
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
     degree = check_degree(
-        lambda poly: quadpy.ball.integrate(poly, [0.0, 0.0, 0.0], 1.0, scheme),
+        lambda poly: scheme.integrate(poly, [0.0, 0.0, 0.0], 1.0),
         integrate_monomial_over_unit_nball,
         3,
         scheme.degree + 1,

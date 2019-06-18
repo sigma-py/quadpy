@@ -147,18 +147,14 @@ def test_sphere():
 
 
 def test_ball():
-    quadpy.ball.integrate(
-        lambda x: numpy.exp(x[0]),
-        [0.0, 0.0, 0.0],
-        1.0,
-        quadpy.ball.HammerStroud["14-3"](variant_a=True),
-    )
+    scheme = quadpy.ball.hammer_stroud_15_3a()
+    scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0, 0.0], 1.0)
 
-    quadpy.ball.integrate(
+    scheme = quadpy.ball.hammer_stroud_15_3b()
+    scheme.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
-        numpy.array([[1.0, 1.0, 0.0], [0.0, 0.3, 0.0], [2.0, 2.0, 0.0]]),
+        [[1.0, 1.0, 0.0], [0.0, 0.3, 0.0], [2.0, 2.0, 0.0]],
         [1.0, 0.7, 0.333],
-        quadpy.ball.HammerStroud["15-3"](variant_a=False),
     )
     return
 

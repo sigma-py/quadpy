@@ -1,18 +1,22 @@
 # -*- coding: utf-8 -*-
 #
-"""
-I.P. Mysovskih,
-On the construction of cubature formulas for the simplest regions,
-Z. Vychisl. Mat. i. Mat. Fiz. 4, 3-14, 1964.
-"""
 import numpy
 import sympy
 
-from .helpers import BallScheme
-from ..helpers import untangle, fsd, pm
+from ._helpers import BallScheme
+from ..helpers import untangle, fsd, pm, article
+
+_citation = article(
+    authors=["I.P. Mysovskih"],
+    title="On the construction of cubature formulas for the simplest regions",
+    journal="Z. Vychisl. Mat. i. Mat. Fiz.",
+    number="4",
+    pages="3-14",
+    year="1964",
+)
 
 
-def Mysovskih(symbolic=False):
+def mysovskih(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
     pi = sympy.pi if symbolic else numpy.pi
@@ -36,4 +40,4 @@ def Mysovskih(symbolic=False):
 
     points, weights = untangle(data)
     weights *= frac(4, 3) * pi
-    return BallScheme("Mysovskih", 7, weights, points)
+    return BallScheme("Mysovskih", _citation, 7, weights, points)
