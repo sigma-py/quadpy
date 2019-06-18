@@ -24,7 +24,6 @@ def peirce_1956_1(symbolic=False):
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
     pm_ = numpy.array([+1, -1])
 
-    # Also: Formula 13-2 in Hammer-Stroud.
     sqrt29 = sqrt(29)
     r = sqrt(frac(3, 4))
     s, t = sqrt((27 - pm_ * 3 * sqrt29) / 104)

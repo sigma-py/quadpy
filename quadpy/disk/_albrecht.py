@@ -20,6 +20,7 @@ _citation = article(
 
 
 def albrecht_1(symbolic=False):
+    # Equals Albrecht-Collatz, Lether(2)
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     pi = sympy.pi if symbolic else numpy.pi
     cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos

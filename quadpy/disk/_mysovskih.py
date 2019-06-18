@@ -80,7 +80,6 @@ def mysovskih_3(symbolic=False):
     sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
     pm_ = numpy.array([+1, -1])
 
-    # This is is the same as Rabinowitz-Richter
     sqrt21 = sqrt(21)
     sqrt1401 = sqrt(1401)
 

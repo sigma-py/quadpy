@@ -3,6 +3,8 @@
 from .helpers import _s40, _s8, _s4, _z, DiskScheme
 from ..helpers import untangle, article
 
+from ._mysovskih import mysovskih_2, mysovskih_3
+
 
 _citation = article(
     authors=["Philip Rabinowitz", "Nira Richter"],
@@ -40,16 +42,9 @@ def rabinowitz_richter_2():
     return DiskScheme("Rabinowitz-Richter 2", weights, points, 9, _citation)
 
 
-def rabinowitz_richter_3():
-    data = [
-        (0.0513100527123566, _s40(0.9619017737816972)),
-        (0.1136282065100473, _s40(0.7745966692414835)),
-        (0.2083682752319387, _s40(0.3287526591967855)),
-        (0.0790679779683282, _s8(0.4683708939890903, 0.8112421851755608)),
-        (0.1269778365032246, _s8(0.3375826402485671, 0.5847102846637651)),
-    ]
-    points, weights = untangle(data)
-    return DiskScheme("Rabinowitz-Richter 3", weights, points, 11, _citation)
+def rabinowitz_richter_3(symbolic=False):
+    # ENH Given analytically by Mysovskih.
+    return mysovskih_2(symbolic)
 
 
 def rabinowitz_richter_4():
@@ -80,18 +75,6 @@ def rabinowitz_richter_5():
     return DiskScheme("Rabinowitz-Richter 5", weights, points, 13, _citation)
 
 
-def rabinowitz_richter_6():
-    # Myskovskih has the same, but with analytical points and weights.
-    data = [
-        (0.1252902085642858, _s40(0.2528637970912295)),
-        (0.1095003911263660, _s40(0.5777289284448234)),
-        (0.0167126254970435, _s40(0.9897468025114907)),
-        (0.0662374557963763, _s40(0.8738369566448817)),
-        (0.1274283726817204, _s4(0.3754168246261542)),
-        (0.0261028601843605, _s4(0.6892993807911362)),
-        (0.0660009346611046, _s4(0.5976143046671968)),
-        (0.0425230658266824, _s8(0.3657908004006625, 0.8830971113185893)),
-        (0.0815395916164132, _s8(0.2930307227106603, 0.7074387449600663)),
-    ]
-    points, weights = untangle(data)
-    return DiskScheme("Rabinowitz-Richter 6", weights, points, 15, _citation)
+def rabinowitz_richter_6(symbolic=False):
+    # ENH Given analytically by Mysovskih.
+    return mysovskih_3(symbolic)
