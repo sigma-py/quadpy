@@ -54,6 +54,9 @@ def test_show(scheme):
 
 
 if __name__ == "__main__":
-    scheme_ = quadpy.e2r2.Stroud["7-2"]()
-    test_scheme(scheme_, 1.0e-14)
-    test_show(scheme_)
+    # scheme_ = quadpy.e2r2.Stroud["7-2"]()
+    # test_scheme(scheme_, 1.0e-14)
+    # test_show(scheme_)
+    from helpers import find_equal
+
+    find_equal(schemes)

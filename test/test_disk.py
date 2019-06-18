@@ -103,37 +103,11 @@ def test_show(scheme):
     return
 
 
-def find_equal():
-    tol = 1.0e-13
-    n = len(schemes)
-    for i in range(n):
-        for j in range(i + 1, n):
-            if schemes[i].name == schemes[j].name:
-                continue
-            if len(schemes[i].points) != len(schemes[j].points):
-                continue
-            # Check if the point sets are equal
-            x = numpy.column_stack([schemes[i].weights, schemes[i].points])
-            y = numpy.column_stack([schemes[j].weights, schemes[j].points])
-            is_equal = True
-            for x_i in x:
-                diff = y - x_i
-                diff = numpy.min(numpy.sum(diff ** 2, axis=-1))
-                if diff > tol:
-                    is_equal = False
-                    break
-            if is_equal:
-                print(
-                    "Schemes '{}' and '{}' are equal.".format(
-                        schemes[i].name, schemes[j].name
-                    )
-                )
-    return
-
-
 if __name__ == "__main__":
     # scheme_ = quadpy.disk.lether(5)
     # scheme_ = quadpy.disk.albrecht_8()
     # test_scheme(scheme_, 1.0e-14)
     # test_show(scheme_)
-    find_equal()
+    from helpers import find_equal
+
+    find_equal(schemes)

@@ -8,30 +8,30 @@ from quadpy.nball.helpers import integrate_monomial_over_unit_nball
 
 from helpers import check_degree
 
+schemes = [
+    quadpy.ball.ditkin_1(),
+    quadpy.ball.ditkin_2(),
+    quadpy.ball.ditkin_3(),
+    quadpy.ball.hammer_stroud_11_3(),
+    quadpy.ball.hammer_stroud_12_3(),
+    quadpy.ball.hammer_stroud_14_3(),
+    quadpy.ball.hammer_stroud_15_3a(),
+    quadpy.ball.hammer_stroud_15_3b(),
+    quadpy.ball.mysovskih(),
+    quadpy.ball.stroud_3_1(),
+    quadpy.ball.stroud_5_1(),
+    quadpy.ball.stroud_5_2(),
+    quadpy.ball.stroud_7_1a(),
+    quadpy.ball.stroud_7_1b(),
+    quadpy.ball.stroud_7_2(),
+    quadpy.ball.stroud_7_3(),
+    quadpy.ball.stroud_7_4(),
+    quadpy.ball.stroud_14_1(),
+]
 
-@pytest.mark.parametrize(
-    "scheme,tol",
-    [(quadpy.ball.HammerStroud[k](), 1.0e-14) for k in ["11-3", "12-3", "14-3", "15-3"]]
-    + [
-        (quadpy.ball.HammerStroud[k](variant_a=False), 1.0e-14)
-        for k in ["14-3", "15-3"]
-    ]
-    + [
-        (quadpy.ball.Stroud[k](), 1.0e-14)
-        for k in [
-            "S3 3-1",
-            "S3 5-1",
-            "S3 5-2",
-            "S3 7-1a",
-            "S3 7-1b",
-            "S3 7-2",
-            "S3 7-3",
-            "S3 7-4",
-            "S3 14-1",
-        ]
-    ],
-)
-def test_scheme(scheme, tol):
+
+@pytest.mark.parametrize("scheme", schemes)
+def test_scheme(scheme, tol=1.0e-14):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
@@ -48,9 +48,9 @@ def test_scheme(scheme, tol):
     return
 
 
-@pytest.mark.parametrize("scheme", [quadpy.ball.HammerStroud["11-3"]()])
+@pytest.mark.parametrize("scheme", [quadpy.ball.hammer_stroud_11_3()])
 def test_show(scheme, backend="mpl"):
-    quadpy.ball.show(scheme, backend=backend)
+    scheme.show(backend=backend)
     plt.close()
     return
 
