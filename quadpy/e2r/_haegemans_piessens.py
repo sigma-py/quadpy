@@ -2,7 +2,7 @@
 #
 import numpy
 
-from .helpers import E2rScheme
+from ._helpers import E2rScheme
 from ..helpers import article
 
 _citation = article(

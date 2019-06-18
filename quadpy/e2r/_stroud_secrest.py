@@ -5,7 +5,7 @@ from __future__ import division
 import numpy
 import sympy
 
-from .helpers import E2rScheme
+from ._helpers import E2rScheme
 from ..helpers import untangle, pm_array, pm, fsd, article
 
 
