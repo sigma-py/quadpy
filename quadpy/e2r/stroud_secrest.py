@@ -1,18 +1,23 @@
 # -*- coding: utf-8 -*-
 #
-"""
-A.H. Stroud and D. Secrest,
-Approximate integration formulas for certain spherically symmetric regions,
-Math. Comp. 17 (1963), 105-135,
-<https://doi.org/10.1090/S0025-5718-1963-0161473-0>.
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
 from .helpers import E2rScheme
-from ..helpers import untangle, pm_array, pm, fsd
+from ..helpers import untangle, pm_array, pm, fsd, article
+
+
+_citation = article(
+    authors=["A.H. Stroud", "D. Secrest"],
+    title="Approximate integration formulas for certain spherically symmetric regions",
+    journal="Math. Comp.",
+    volume="17",
+    year="1963",
+    pages="105-135",
+    url="https://doi.org/10.1090/S0025-5718-1963-0161473-0",
+)
 
 
 def stroud_secrest_v(symbolic=False):
@@ -31,7 +36,7 @@ def stroud_secrest_v(symbolic=False):
     ]
     points, weights = untangle(data)
     weights *= 2 * pi
-    return E2rScheme("Stroud-Secrest V", 5, weights, points)
+    return E2rScheme("Stroud-Secrest V", weights, points, 5, _citation)
 
 
 def stroud_secrest_vi(symbolic=False):
@@ -50,7 +55,4 @@ def stroud_secrest_vi(symbolic=False):
 
     points, weights = untangle(data)
     weights *= 2 * pi
-    return E2rScheme("Stroud-Secrest VI", 7, weights, points)
-
-
-StroudSecrest = {"V": stroud_secrest_v, "VI": stroud_secrest_vi}
+    return E2rScheme("Stroud-Secrest VI", weights, points, 7, _citation)

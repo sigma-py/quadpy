@@ -1,19 +1,31 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Arthur Stroud,
-Approximate Calculation of Multiple Integrals,
-Prentice Hall, 1971.
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
-from .rabinowitz_richter import RabinowitzRichter
-from .stroud_secrest import StroudSecrest
+from .rabinowitz_richter import (
+    rabinowitz_richter_1 as stroud_9_1,
+    rabinowitz_richter_2 as stroud_11_1,
+    rabinowitz_richter_3 as stroud_11_2,
+    # ERR misprint in Stroud copied from original article
+    # rabinowitz_richter_4 as stroud_13_1,
+    rabinowitz_richter_5 as stroud_15_1,
+)
+from .stroud_secrest import (
+    stroud_secrest_v as stroud_5_1,
+    stroud_secrest_vi as stroud_7_1,
+)
 from .helpers import E2rScheme
-from ..helpers import untangle
+from ..helpers import untangle, book
+
+_citation = book(
+    authors=["Arthur Stroud"],
+    title="Approximate Calculation of Multiple Integrals",
+    publisher="Prentice Hall",
+    year="1971",
+)
 
 
 def stroud_4_1(symbolic=False):
@@ -37,30 +49,15 @@ def stroud_4_1(symbolic=False):
 
     points, weights = untangle(data)
     weights *= 2 * pi
-    return E2rScheme("Stroud 4-1", 4, weights, points)
+    return E2rScheme("Stroud 4-1", weights, points, 4, _citation)
 
 
-# # The boolean tells whether the factor 2*pi is already in the weights
-# _gen = {
-#     "4-1": (_gen4_1, False),
-#     "5-1": (stroud_secrest.v, False),
-#     "7-1": (stroud_secrest.vi, False),
-#     "9-1": (rabinowitz_richter.gen1, True),
-#     "11-1": (rabinowitz_richter.gen2, True),
-#     "11-2": (rabinowitz_richter.gen3, True),
-#     # ERR misprint in Stroud copied from original article
-#     # '13-1': (rabinowitz_richter.gen4,
-#     "15-1": (rabinowitz_richter.gen5, True),
-# }
-
-Stroud = {
-    "4-1": stroud_4_1,
-    "5-1": StroudSecrest["V"],
-    "7-1": StroudSecrest["VI"],
-    "9-1": RabinowitzRichter[1],
-    "11-1": RabinowitzRichter[2],
-    "11-2": RabinowitzRichter[3],
-    # ERR misprint in Stroud copied from original article
-    # '13-1': RabinowitzRichter[4],
-    "15-1": RabinowitzRichter[5],
-}
+__all__ = [
+    "stroud_4_1",
+    "stroud_5_1",
+    "stroud_7_1",
+    "stroud_9_1",
+    "stroud_11_1",
+    "stroud_11_2",
+    "stroud_15_1",
+]
