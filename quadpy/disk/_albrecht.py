@@ -5,7 +5,7 @@ from mpmath import mp
 import sympy
 
 from ..helpers import untangle, z, fsd, pm, article
-from .helpers import DiskScheme
+from ._helpers import DiskScheme
 
 _citation = article(
     authors=["J. Albrecht"],

@@ -2,7 +2,7 @@
 #
 import numpy
 
-from .helpers import DiskScheme
+from ._helpers import DiskScheme
 from ..helpers import untangle, article
 
 _citation = article(

@@ -6,7 +6,7 @@ import numpy
 import sympy
 
 from ..helpers import fsd, pm, untangle, fs_array, phdthesis
-from .helpers import DiskScheme
+from ._helpers import DiskScheme
 
 
 _citation = phdthesis(
