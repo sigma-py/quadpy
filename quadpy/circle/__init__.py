@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 #
 
-from .krylov import Krylov
+from ._krylov import krylov
 
-from .tools import show, plot, integrate
-
-__all__ = ["Krylov", "show", "plot", "integrate"]
+__all__ = ["krylov"]
