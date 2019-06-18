@@ -1,21 +1,26 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Preston C. Hammer and A. Wayne Wymore,
-Numerical evaluation of multiple integrals. I,
-Math. Comp. 11 (1957), 59-67,
-<https://doi.org/10.1090/S0025-5718-1957-0087220-6>.
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
-from .helpers import fs_r00, fs_rr0, pm_rrr, HexahedronScheme
-from ..helpers import untangle
+from ._helpers import fs_r00, fs_rr0, pm_rrr, HexahedronScheme
+from ..helpers import untangle, article
 
 
-def HammerWymore(lmbda=1, symbolic=False):
+_citation = article(
+    authors=["Preston C. Hammer", "A. Wayne Wymore"],
+    title="Numerical evaluation of multiple integrals. I",
+    journal="Math. Comp.",
+    volume="11",
+    year="1957",
+    pages="59-67",
+    url="https://doi.org/10.1090/S0025-5718-1957-0087220-6",
+)
+
+
+def hammer_wymore(lmbda=1, symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
@@ -54,4 +59,4 @@ def HammerWymore(lmbda=1, symbolic=False):
     data = [(a1, fs_r00(x1)), (a2, fs_rr0(x2)), (a3, pm_rrr(x3)), (a4, pm_rrr(x4))]
 
     points, weights = untangle(data)
-    return HexahedronScheme("Hammer-Wymore", 7, weights, points)
+    return HexahedronScheme("Hammer-Wymore", weights, points, 7, _citation)

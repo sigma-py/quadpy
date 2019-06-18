@@ -1,17 +1,22 @@
 # -*- coding: utf-8 -*-
 #
-"""
-D. Mustard, J.N. Lyness, J.M. Blatt,
-Numerical quadrature in n dimensions,
-Comput J (1963) 6 (1): 75-87,
-<https://doi.org/10.1093/comjnl/6.1.75>.
-"""
 from __future__ import division
 
 import sympy
 
-from .helpers import fs_rr0, fs_r00, pm_rrr, z, HexahedronScheme
-from ..helpers import untangle
+from ._helpers import fs_rr0, fs_r00, pm_rrr, z, HexahedronScheme
+from ..helpers import untangle, article
+
+_citation = article(
+    authors=["D. Mustard", "J.N. Lyness", "J.M. Blatt"],
+    title="Numerical quadrature in n dimensions",
+    journal="Comput J",
+    year="1963",
+    volume="6",
+    number="1",
+    pages="75-87",
+    url="https://doi.org/10.1093/comjnl/6.1.75",
+)
 
 
 def mustard_lyness_blatt_1(symbolic=False):
@@ -19,7 +24,7 @@ def mustard_lyness_blatt_1(symbolic=False):
     data = [(frac(1, 2), z()), (frac(1, 24), fs_rr0(1))]
     points, weights = untangle(data)
     weights *= 8
-    return HexahedronScheme("Mustard-Lyness-Blatt 1", 3, weights, points)
+    return HexahedronScheme("Mustard-Lyness-Blatt 1", weights, points, 3, _citation)
 
 
 def mustard_lyness_blatt_2(symbolic=False):
@@ -28,7 +33,7 @@ def mustard_lyness_blatt_2(symbolic=False):
     data = [(frac(2, 9), z()), (frac(1, 9), fs_r00(1)), (frac(1, 72), pm_rrr(1))]
     points, weights = untangle(data)
     weights *= 8
-    return HexahedronScheme("Mustard-Lyness-Blatt 2", 3, weights, points)
+    return HexahedronScheme("Mustard-Lyness-Blatt 2", weights, points, 3, _citation)
 
 
 def mustard_lyness_blatt_3(symbolic=False):
@@ -37,7 +42,7 @@ def mustard_lyness_blatt_3(symbolic=False):
     data = [(+frac(1, 6), fs_rr0(1)), (-frac(1, 8), pm_rrr(1))]
     points, weights = untangle(data)
     weights *= 8
-    return HexahedronScheme("Mustard-Lyness-Blatt 3", 3, weights, points)
+    return HexahedronScheme("Mustard-Lyness-Blatt 3", weights, points, 3, _citation)
 
 
 def mustard_lyness_blatt_4(symbolic=False):
@@ -52,7 +57,7 @@ def mustard_lyness_blatt_4(symbolic=False):
 
     points, weights = untangle(data)
     weights *= 8
-    return HexahedronScheme("Mustard-Lyness-Blatt 4", 5, weights, points)
+    return HexahedronScheme("Mustard-Lyness-Blatt 4", weights, points, 5, _citation)
 
 
 def mustard_lyness_blatt_5(symbolic=False):
@@ -66,7 +71,7 @@ def mustard_lyness_blatt_5(symbolic=False):
     ]
     points, weights = untangle(data)
     weights *= 8
-    return HexahedronScheme("Mustard-Lyness-Blatt 5", 5, weights, points)
+    return HexahedronScheme("Mustard-Lyness-Blatt 5", weights, points, 5, _citation)
 
 
 def mustard_lyness_blatt_6(symbolic=False):
@@ -80,7 +85,7 @@ def mustard_lyness_blatt_6(symbolic=False):
     ]
     points, weights = untangle(data)
     weights *= 8
-    return HexahedronScheme("Mustard-Lyness-Blatt 6", 5, weights, points)
+    return HexahedronScheme("Mustard-Lyness-Blatt 6", weights, points, 5, _citation)
 
 
 def mustard_lyness_blatt_7(symbolic=False):
@@ -94,15 +99,4 @@ def mustard_lyness_blatt_7(symbolic=False):
     ]
     points, weights = untangle(data)
     weights *= 8
-    return HexahedronScheme("Mustard-Lyness-Blatt 7", 5, weights, points)
-
-
-MustardLynessBlatt = {
-    1: mustard_lyness_blatt_1,
-    2: mustard_lyness_blatt_2,
-    3: mustard_lyness_blatt_3,
-    4: mustard_lyness_blatt_4,
-    5: mustard_lyness_blatt_5,
-    6: mustard_lyness_blatt_6,
-    7: mustard_lyness_blatt_7,
-}
+    return HexahedronScheme("Mustard-Lyness-Blatt 7", weights, points, 5, _citation)

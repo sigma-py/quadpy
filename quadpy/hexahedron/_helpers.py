@@ -7,12 +7,12 @@ from ..ncube import transform, NCubeScheme, ncube_points as cube_points
 
 
 class HexahedronScheme(NCubeScheme):
-
-    def __init__(self, name, weights, points, degree):
+    def __init__(self, name, weights, points, degree, citation=None):
         self.name = name
         self.weights = weights
         self.points = points
         self.degree = degree
+        self.citation = citation
         return
 
     def show(self, hexa=cube_points([0.0, 1.0], [0.0, 1.0], [0.0, 1.0]), backend="vtk"):

@@ -1,17 +1,22 @@
 # -*- coding: utf-8 -*-
 #
-"""
-G.W. Tyler,
-Numerical integration of functions of several variables,
-Canad. J. Math. 5(1953), 393-412,
-<https://doi.org/10.4153/CJM-1953-044-1>.
-"""
 from __future__ import division
 
 import sympy
 
-from .helpers import fs_r00, pm_rrr, z, HexahedronScheme
-from ..helpers import untangle
+from ._helpers import fs_r00, pm_rrr, z, HexahedronScheme
+from ..helpers import untangle, article
+
+
+citation = article(
+    authors=["G.W. Tyler"],
+    title="Numerical integration of functions of several variables",
+    journal="Canad. J. Math.",
+    volume="5",
+    year="1953",
+    pages="393-412",
+    url="https://doi.org/10.4153/CJM-1953-044-1",
+)
 
 
 def tyler_1(symbolic=False):
@@ -20,7 +25,7 @@ def tyler_1(symbolic=False):
     data = [(frac(1, 6), fs_r00(1))]
     points, weights = untangle(data)
     weights *= 8
-    return HexahedronScheme("Tyler 1", 3, weights, points)
+    return HexahedronScheme("Tyler 1", weights, points, 3, citation)
 
 
 def tyler_2(symbolic=False):
@@ -34,7 +39,4 @@ def tyler_2(symbolic=False):
     ]
     points, weights = untangle(data)
     weights *= 8
-    return HexahedronScheme("Tyler 2", 5, weights, points)
-
-
-Tyler = {1: tyler_1, 2: tyler_2}
+    return HexahedronScheme("Tyler 2", weights, points, 5, citation)
