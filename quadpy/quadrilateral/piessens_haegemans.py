@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Robert Piessens and Ann Haegemans,
-Cubature Formulas of Degree Nine for Symmetric Planar Regions,
-Mathematics of Computation, Volume 29, Number 11, July 1975, Pages 810-815,
-<https://doi.org/10.2307/2005291>.
-"""
 from .helpers import concat, pm2, pm, QuadrilateralScheme
+from ..helpers import article
+
+citation = article(
+    authors=["Robert Piessens", "Ann Haegemans"],
+    title="Cubature Formulas of Degree Nine for Symmetric Planar Regions",
+    journal="Mathematics of Computation",
+    volume="29",
+    number="11",
+    month="jul",
+    year="1975",
+    pages="810-815",
+    url="https://doi.org/10.2307/2005291",
+)
 
 
 def piessens_haegemans_1():
@@ -22,7 +29,7 @@ def piessens_haegemans_1():
             [0.45321488105170985638, 0, 0.39364057271848893512],
         ),
     )
-    return QuadrilateralScheme("Piessens-Haegemans 1", 9, weights, points)
+    return QuadrilateralScheme("Piessens-Haegemans 1", weights, points, 9, citation)
 
 
 def piessens_haegemans_2():
@@ -38,7 +45,4 @@ def piessens_haegemans_2():
             [0.45601422352687001122, 0, 0.48311469619727965642],
         ),
     )
-    return QuadrilateralScheme("Piessens-Haegemans 2", 9, weights, points)
-
-
-PiessensHaegemans = {1: piessens_haegemans_1, 2: piessens_haegemans_2}
+    return QuadrilateralScheme("Piessens-Haegemans 2", weights, points, 9, citation)

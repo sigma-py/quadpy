@@ -17,7 +17,7 @@ citation = article(
     month="oct",
     year="1985",
     pages="1777–1784",
-    url="https://doi.org/10.1002/nme.1620211004"
+    url="https://doi.org/10.1002/nme.1620211004",
 )
 
 

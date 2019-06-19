@@ -16,7 +16,17 @@ from .cools_haegemans_1985 import (
 )
 from .cools_haegemans_1988 import CoolsHaegemans1988
 from .dunavant import Dunavant
-from .franke import Franke
+from .franke import (
+    franke_1,
+    franke_2a,
+    franke_2b,
+    franke_3a,
+    franke_3b,
+    franke_3c,
+    franke_5,
+    franke_6,
+    franke_8,
+)
 from .hammer_stroud import HammerStroud
 from .haegemans_piessens import HaegemansPiessens
 from .irwin import Irwin
@@ -52,7 +62,15 @@ __all__ = [
     "cools_haegemans_1985_2",
     "cools_haegemans_1985_3",
     "Dunavant",
-    "Franke",
+    "franke_1",
+    "franke_2a",
+    "franke_2b",
+    "franke_3a",
+    "franke_3b",
+    "franke_3c",
+    "franke_5",
+    "franke_6",
+    "franke_8",
     "HammerStroud",
     "HaegemansPiessens",
     "Irwin",

@@ -1,20 +1,25 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Shayne Waldron,
-Symmetries of linear functionals,
-University of Wisconsin-Madison, Center for Mathematical Sciences,
-CMS Technical Summary Report #95-04, October 1994,
-<http://ftp.cs.wisc.edu/Approx/symmetries.pdf>.
-"""
 from __future__ import division
 
 import numpy
 
 from .helpers import QuadrilateralScheme
+from ..helpers import techreport
 
 
-def Waldron(r, alpha):
+citation = techreport(
+    authors=["Shayne Waldron"],
+    title="Symmetries of linear functionals",
+    institution="University of Wisconsin-Madison, Center for Mathematical Sciences",
+    note="CMS Technical Summary Report",
+    month="oct",
+    year="1994",
+    url="http://ftp.cs.wisc.edu/Approx/symmetries.pdf"
+)
+
+
+def daldron(r, alpha):
     assert r ** 2 >= 1 / 3
 
     R = r / numpy.sqrt(3 * r ** 2 - 1)
@@ -33,4 +38,4 @@ def Waldron(r, alpha):
     weights = numpy.array(
         [2 / 3 / r ** 2, 2 / 3 / r ** 2, 2 / 3 / R ** 2, 2 / 3 / R ** 2]
     )
-    return QuadrilateralScheme("Waldron", 3, weights, points)
+    return QuadrilateralScheme("Waldron", weights, points, 3, citation)

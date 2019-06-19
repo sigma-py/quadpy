@@ -1,17 +1,22 @@
 # -*- coding: utf-8 -*-
 #
-"""
-G.W. Tyler,
-Numerical integration of functions of several variables,
-Canad. J. Math. 5(1953), 393-412,
-<https://doi.org/10.4153/CJM-1953-044-1>.
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
 from .helpers import zero, symm_s, symm_r0, concat, QuadrilateralScheme
+from .helpers import article
+
+citation = article(
+    authors=["G.W. Tyler"],
+    title="Numerical integration of functions of several variables",
+    journal="Canad. J. Math.",
+    volume="5",
+    year="1953",
+    pages="393-412",
+    url="https://doi.org/10.4153/CJM-1953-044-1",
+)
 
 
 def tyler_1(symbolic=False):
@@ -22,7 +27,7 @@ def tyler_1(symbolic=False):
         symm_r0([frac(1, 45), 1], [frac(16, 45), frac(1, 2)]),
     )
     weights *= 4
-    return QuadrilateralScheme("Tyler 1", 5, weights, points)
+    return QuadrilateralScheme("Tyler 1", weights, points, 5, citation)
 
 
 def tyler_2(symbolic=False):
@@ -35,7 +40,7 @@ def tyler_2(symbolic=False):
     B2, B3 = (178981 + pm * 2769 * sqrt(583)) / 1888920
     weights, points = concat(symm_r0([B1, r]), symm_s([B2, s], [B3, t]))
     weights *= 4
-    return QuadrilateralScheme("Tyler 2", 7, weights, points)
+    return QuadrilateralScheme("Tyler 2", weights, points, 7, citation)
 
 
 def tyler_3(symbolic=False):
@@ -48,7 +53,4 @@ def tyler_3(symbolic=False):
         symm_s([frac(7, 540), 1], [frac(32, 135), frac(1, 2)]),
     )
     weights *= 4
-    return QuadrilateralScheme("Tyler 3", 7, weights, points)
-
-
-Tyler = {1: tyler_1, 2: tyler_2, 3: tyler_3}
+    return QuadrilateralScheme("Tyler 3", weights, points, 7, citation)
