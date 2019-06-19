@@ -101,9 +101,9 @@ Stroud = {
     "C2 1-1": lambda symbolic=False: ProductTrapezoidal(symbolic),
     "C2 1-2": lambda symbolic=False: Miller(symbolic),
     "C2 3-1": lambda symbolic=False: ProductGauss3(symbolic),
-    "C2 3-2": lambda symbolic=False: ncube.Ewing(2, symbolic),
+    "C2 3-2": lambda symbolic=False: ncube.ewing(2, symbolic),
     # product Simpson:
-    "C2 3-3": lambda symbolic=False: ncube.Stroud(2, "Cn 3-6", symbolic),
+    "C2 3-3": lambda symbolic=False: ncube.stroud_cn_3_6(2, symbolic),
     "C2 3-4": albrecht_collatz_1,
     "C2 3-5": lambda symbolic=False: Irwin[1](symbolic),
     "C2 5-1": albrecht_collatz_2,

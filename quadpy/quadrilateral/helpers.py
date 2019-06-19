@@ -8,11 +8,12 @@ from ..ncube import ncube_points as rectangle_points
 
 
 class QuadrilateralScheme(NCubeScheme):
-    def __init__(self, name, weights, points, degree):
+    def __init__(self, name, weights, points, degree, citation=None):
         self.name = name
         self.weights = weights
         self.points = points
         self.degree = degree
+        self.citation = citation
         return
 
     def show(self, *args, **kwargs):

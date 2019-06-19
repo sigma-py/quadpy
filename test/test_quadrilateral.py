@@ -50,9 +50,15 @@ def _integrate_exact2(k, x0, x1, y0, y1):
 
 @pytest.mark.parametrize(
     "scheme,tol",
-    [(quadpy.quadrilateral.AlbrechtCollatz[k](), 1.0e-14) for k in [1, 2, 3, 4]]
-    + [(quadpy.quadrilateral.CohenGismalla[k](), 1.0e-6) for k in [1, 2]]
-    + [(quadpy.quadrilateral.CoolsHaegemans1985[k](), 1.0e-10) for k in range(1, 4)]
+    [(quadpy.quadrilateral.albrecht_collatz_1(), 1.0e-14) for k in [1, 2, 3, 4]]
+    + [(quadpy.quadrilateral.albrecht_collatz_2(), 1.0e-14) for k in [1, 2, 3, 4]]
+    + [(quadpy.quadrilateral.albrecht_collatz_3(), 1.0e-14) for k in [1, 2, 3, 4]]
+    + [(quadpy.quadrilateral.albrecht_collatz_4(), 1.0e-14) for k in [1, 2, 3, 4]]
+    + [(quadpy.quadrilateral.cohen_gismalla_1(), 1.0e-6)]
+    + [(quadpy.quadrilateral.cohen_gismalla_2(), 1.0e-6)]
+    + [(quadpy.quadrilateral.cools_haegemans_1985_1(), 1.0e-10)]
+    + [(quadpy.quadrilateral.cools_haegemans_1985_2(), 1.0e-10)]
+    + [(quadpy.quadrilateral.cools_haegemans_1985_3(), 1.0e-10)]
     + [(quadpy.quadrilateral.CoolsHaegemans1988[k](), 1.0e-14) for k in [1, 2]]
     + [(scheme(), 1.0e-13) for scheme in quadpy.quadrilateral.Dunavant.values()]
     + [(quadpy.quadrilateral.Franke["1"](lmbda), 1.0e-13) for lmbda in [0.0, 1.0, -0.8]]
@@ -66,34 +72,34 @@ def _integrate_exact2(k, x0, x1, y0, y1):
         (quadpy.quadrilateral.Stroud[k](), 1.0e-13)
         for k in quadpy.quadrilateral.Stroud.keys()
     ]
-    + [
-        (quadpy.quadrilateral.StroudN(k), 1.0e-14)
-        for k in [
-            "Cn 1-1",
-            "Cn 1-2",
-            "Cn 2-1",
-            "Cn 2-2",
-            "Cn 3-1",
-            "Cn 3-2",
-            "Cn 3-3",
-            "Cn 3-4",
-            "Cn 3-5",
-            "Cn 3-6",
-            "Cn 5-2",
-            "Cn 5-3",
-            "Cn 5-4",
-            "Cn 5-5",
-            "Cn 5-6",
-            "Cn 5-7",
-            "Cn 5-9",
-        ]
-    ]
+    # + [
+    #     (quadpy.quadrilateral.StroudN(k), 1.0e-14)
+    #     for k in [
+    #         "Cn 1-1",
+    #         "Cn 1-2",
+    #         "Cn 2-1",
+    #         "Cn 2-2",
+    #         "Cn 3-1",
+    #         "Cn 3-2",
+    #         "Cn 3-3",
+    #         "Cn 3-4",
+    #         "Cn 3-5",
+    #         "Cn 3-6",
+    #         "Cn 5-2",
+    #         "Cn 5-3",
+    #         "Cn 5-4",
+    #         "Cn 5-5",
+    #         "Cn 5-6",
+    #         "Cn 5-7",
+    #         "Cn 5-9",
+    #         "cn 7-1"
+    #     ]
+    # ]
     + [(quadpy.quadrilateral.HaegemansPiessens(), 1.0e-14)]
     + [(quadpy.quadrilateral.PiessensHaegemans[k](), 1.0e-14) for k in [1, 2]]
     # TODO better-quality points/weights for Schmidt
     + [(quadpy.quadrilateral.Schmid[k](), 1.0e-10) for k in [2, 4, 6]]
     + [(scheme(), 1.0e-13) for scheme in quadpy.quadrilateral.Sommariva.values()]
-    + [(quadpy.quadrilateral.StroudN(k), 1.0e-8) for k in ["Cn 7-1"]]
     + [(quadpy.quadrilateral.Waldron(0.6, numpy.pi / 7), 1.0e-14)]
     + [(scheme(), 1.0e-14) for scheme in quadpy.quadrilateral.WissmannBecker.values()]
     + [(scheme(), 1.0e-14) for scheme in quadpy.quadrilateral.WitherdenVincent.values()]
@@ -109,6 +115,7 @@ def _integrate_exact2(k, x0, x1, y0, y1):
 def test_scheme(scheme, tol):
     # Test integration until we get to a polynomial degree `d` that can no
     # longer be integrated exactly. The scheme's degree is `d-1`.
+    print(scheme.name)
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
@@ -118,7 +125,7 @@ def test_scheme(scheme, tol):
         )
 
     quad = quadpy.quadrilateral.rectangle_points([-1.0, +1.0], [-1.0, +1.0])
-    vals = quadpy.quadrilateral.integrate(eval_orthopolys, quad, scheme)
+    vals = scheme.integrate(eval_orthopolys, quad)
     # Put vals back into the tree structure:
     # len(approximate[k]) == k+1
     approximate = [

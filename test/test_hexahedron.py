@@ -11,70 +11,7 @@ import quadpy
 
 from helpers import check_degree
 
-
-def _integrate_exact(f, hexa):
-    xi = sympy.DeferredVector("xi")
-    pxi = (
-        +hexa[0] * 0.125 * (1.0 - xi[0]) * (1.0 - xi[1]) * (1.0 - xi[2])
-        + hexa[1] * 0.125 * (1.0 + xi[0]) * (1.0 - xi[1]) * (1.0 - xi[2])
-        + hexa[2] * 0.125 * (1.0 + xi[0]) * (1.0 + xi[1]) * (1.0 - xi[2])
-        + hexa[3] * 0.125 * (1.0 - xi[0]) * (1.0 + xi[1]) * (1.0 - xi[2])
-        + hexa[4] * 0.125 * (1.0 - xi[0]) * (1.0 - xi[1]) * (1.0 + xi[2])
-        + hexa[5] * 0.125 * (1.0 + xi[0]) * (1.0 - xi[1]) * (1.0 + xi[2])
-        + hexa[6] * 0.125 * (1.0 + xi[0]) * (1.0 + xi[1]) * (1.0 + xi[2])
-        + hexa[7] * 0.125 * (1.0 - xi[0]) * (1.0 + xi[1]) * (1.0 + xi[2])
-    )
-    pxi = [sympy.expand(pxi[0]), sympy.expand(pxi[1]), sympy.expand(pxi[2])]
-    # determinant of the transformation matrix
-    J = sympy.Matrix(
-        [
-            [
-                sympy.diff(pxi[0], xi[0]),
-                sympy.diff(pxi[0], xi[1]),
-                sympy.diff(pxi[0], xi[2]),
-            ],
-            [
-                sympy.diff(pxi[1], xi[0]),
-                sympy.diff(pxi[1], xi[1]),
-                sympy.diff(pxi[1], xi[2]),
-            ],
-            [
-                sympy.diff(pxi[2], xi[0]),
-                sympy.diff(pxi[2], xi[1]),
-                sympy.diff(pxi[2], xi[2]),
-            ],
-        ]
-    )
-    det_J = sympy.det(J)
-    # we cannot use abs(), see <https://github.com/sympy/sympy/issues/4212>.
-
-    abs_det_J = sympy.Piecewise((det_J, det_J >= 0), (-det_J, det_J < 0))
-    g_xi = f(pxi)
-    exact = sympy.integrate(
-        sympy.integrate(
-            sympy.integrate(abs_det_J * g_xi, (xi[2], -1, 1)), (xi[1], -1, 1)
-        ),
-        (xi[0], -1, 1),
-    )
-    return float(exact)
-
-
-def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
-    return (
-        1.0
-        / (k[0] + 1)
-        * (x1 ** (k[0] + 1) - x0 ** (k[0] + 1))
-        * 1.0
-        / (k[1] + 1)
-        * (y1 ** (k[1] + 1) - y0 ** (k[1] + 1))
-        * 1.0
-        / (k[2] + 1)
-        * (z1 ** (k[2] + 1) - z0 ** (k[2] + 1))
-    )
-
-
-@pytest.mark.parametrize(
-    "scheme",
+schemes = (
     [quadpy.hexahedron.product(quadpy.line_segment.Midpoint())]
     + [quadpy.hexahedron.product(quadpy.line_segment.Trapezoidal())]
     + [
@@ -154,6 +91,70 @@ def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
         quadpy.ncube.stroud_cn_7_1(3),
     ]
 )
+
+
+def _integrate_exact(f, hexa):
+    xi = sympy.DeferredVector("xi")
+    pxi = (
+        +hexa[0] * 0.125 * (1.0 - xi[0]) * (1.0 - xi[1]) * (1.0 - xi[2])
+        + hexa[1] * 0.125 * (1.0 + xi[0]) * (1.0 - xi[1]) * (1.0 - xi[2])
+        + hexa[2] * 0.125 * (1.0 + xi[0]) * (1.0 + xi[1]) * (1.0 - xi[2])
+        + hexa[3] * 0.125 * (1.0 - xi[0]) * (1.0 + xi[1]) * (1.0 - xi[2])
+        + hexa[4] * 0.125 * (1.0 - xi[0]) * (1.0 - xi[1]) * (1.0 + xi[2])
+        + hexa[5] * 0.125 * (1.0 + xi[0]) * (1.0 - xi[1]) * (1.0 + xi[2])
+        + hexa[6] * 0.125 * (1.0 + xi[0]) * (1.0 + xi[1]) * (1.0 + xi[2])
+        + hexa[7] * 0.125 * (1.0 - xi[0]) * (1.0 + xi[1]) * (1.0 + xi[2])
+    )
+    pxi = [sympy.expand(pxi[0]), sympy.expand(pxi[1]), sympy.expand(pxi[2])]
+    # determinant of the transformation matrix
+    J = sympy.Matrix(
+        [
+            [
+                sympy.diff(pxi[0], xi[0]),
+                sympy.diff(pxi[0], xi[1]),
+                sympy.diff(pxi[0], xi[2]),
+            ],
+            [
+                sympy.diff(pxi[1], xi[0]),
+                sympy.diff(pxi[1], xi[1]),
+                sympy.diff(pxi[1], xi[2]),
+            ],
+            [
+                sympy.diff(pxi[2], xi[0]),
+                sympy.diff(pxi[2], xi[1]),
+                sympy.diff(pxi[2], xi[2]),
+            ],
+        ]
+    )
+    det_J = sympy.det(J)
+    # we cannot use abs(), see <https://github.com/sympy/sympy/issues/4212>.
+
+    abs_det_J = sympy.Piecewise((det_J, det_J >= 0), (-det_J, det_J < 0))
+    g_xi = f(pxi)
+    exact = sympy.integrate(
+        sympy.integrate(
+            sympy.integrate(abs_det_J * g_xi, (xi[2], -1, 1)), (xi[1], -1, 1)
+        ),
+        (xi[0], -1, 1),
+    )
+    return float(exact)
+
+
+def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
+    return (
+        1.0
+        / (k[0] + 1)
+        * (x1 ** (k[0] + 1) - x0 ** (k[0] + 1))
+        * 1.0
+        / (k[1] + 1)
+        * (y1 ** (k[1] + 1) - y0 ** (k[1] + 1))
+        * 1.0
+        / (k[2] + 1)
+        * (z1 ** (k[2] + 1) - z0 ** (k[2] + 1))
+    )
+
+
+@pytest.mark.parametrize("scheme", schemes)
 def test_scheme(scheme, tol=1.0e-14, print_degree=False):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
@@ -186,7 +187,10 @@ def test_show(scheme):
 
 if __name__ == "__main__":
     # scheme_ = Product(quadpy.line_segment.NewtonCotesOpen(5))
-    scheme_ = quadpy.hexahedron.HammerStroud("6-3")
-    test_scheme(scheme_, 1.0e-14, print_degree=True)
+    # scheme_ = quadpy.hexahedron.HammerStroud("6-3")
+    # test_scheme(scheme_, 1.0e-14, print_degree=True)
     # test_show(scheme_)
-    quadpy.hexahedron.show(scheme_, backend="vtk")
+    # scheme_.show(backend="vtk")
+    from helpers import find_equal
+
+    find_equal(schemes)

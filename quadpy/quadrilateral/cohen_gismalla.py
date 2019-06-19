@@ -1,11 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-"""
-A. M. Cohen, D. A. Gismalla,
-Some integration formulae for symmetric functions of two variables,
-International Journal of Computer Mathematics, 1986, 19:1, 57-68,
-<https://doi.org/10.1080/00207168608803504>.
-"""
 from __future__ import division
 
 import warnings
@@ -13,6 +7,18 @@ import warnings
 import sympy
 
 from .helpers import concat, zero, pm, QuadrilateralScheme
+from ..helpers import article
+
+citation = article(
+    authors=["A.M. Cohen", "D.A. Gismalla"],
+    title="Some integration formulae for symmetric functions of two variables",
+    journal="International Journal of Computer Mathematics",
+    year="1986",
+    volume="19",
+    number="1",
+    pages="57-68",
+    url="https://doi.org/10.1080/00207168608803504",
+)
 
 
 def cohen_gismalla_1(symbolic=False):
@@ -27,7 +33,7 @@ def cohen_gismalla_1(symbolic=False):
         zero(frac(8, 7)), pm([frac(5, 7), u, -v], [frac(5, 7), v, u])
     )
     # This scheme is of order 5 for symmetric integrands
-    return QuadrilateralScheme("CohenGismalla 1", 3, weights, points)
+    return QuadrilateralScheme("CohenGismalla 1", weights, points, 3, citation)
 
 
 def cohen_gismalla_2():
@@ -45,7 +51,4 @@ def cohen_gismalla_2():
     # ERR this scheme only has order 1
     # According to the article, it has order 7 for symmetric integrands.
     # Something is fishy...
-    return QuadrilateralScheme("CohenGismalla 2", 1, weights, points)
-
-
-CohenGismalla = {1: cohen_gismalla_1, 2: cohen_gismalla_2}
+    return QuadrilateralScheme("CohenGismalla 2", weights, points, 1, citation)

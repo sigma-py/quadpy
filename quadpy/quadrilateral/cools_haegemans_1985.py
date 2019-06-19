@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
 #
-"""
-R. Cools, A. Haegemans,
-Construction of fully symmetric cubature formulae of degree 4k-3 for fully symmetric
-planar regions,
-1985, Report TW 71, Dept. of Computer Science, KU Leuven,
-<https://lirias.kuleuven.be/bitstream/123456789/131870/1/TW71.pdf>.
-"""
 # TODO There are three more schemes in the technical report
 from .helpers import QuadrilateralScheme, concat, symm_s_t, symm_r0, s4a
+from ..helpers import techreport
+
+citation = techreport(
+    authors=["R. Cools", "A. Haegemans"],
+    title="Construction of fully symmetric cubature formulae of degree 4k-3 for fully symmetric planar regions",
+    year="1985",
+    institution="Dept. of Computer Science, KU Leuven",
+    number="Report TW 71",
+    url="https://lirias.kuleuven.be/bitstream/123456789/131870/1/TW71.pdf",
+)
 
 
 def cools_haegemans_1985_1():
@@ -18,7 +21,7 @@ def cools_haegemans_1985_1():
         symm_r0([0.113540990172e00, 0.488926856974]),
     )
     weights *= 4
-    return QuadrilateralScheme("Cools-Haegemans 1985-1", 9, weights, points)
+    return QuadrilateralScheme("Cools-Haegemans 1985-1", weights, points, 9, citation)
 
 
 def cools_haegemans_1985_2():
@@ -32,7 +35,7 @@ def cools_haegemans_1985_2():
         s4a([0.475325029082e-01, 0.551473280570], [0.325703974952e-02, 0.968340720218]),
     )
     weights *= 4
-    return QuadrilateralScheme("Cools-Haegemans 1985-2", 13, weights, points)
+    return QuadrilateralScheme("Cools-Haegemans 1985-2", weights, points, 13, citation)
 
 
 def cools_haegemans_1985_3():
@@ -46,11 +49,4 @@ def cools_haegemans_1985_3():
         s4a([0.361061434781e-01, 0.178898689064], [0.116671271121e-01, 0.914197956909]),
     )
     weights *= 4
-    return QuadrilateralScheme("Cools-Haegemans 1985-3", 13, weights, points)
-
-
-CoolsHaegemans1985 = {
-    1: cools_haegemans_1985_1,
-    2: cools_haegemans_1985_2,
-    3: cools_haegemans_1985_3,
-}
+    return QuadrilateralScheme("Cools-Haegemans 1985-3", weights, points, 13, citation)

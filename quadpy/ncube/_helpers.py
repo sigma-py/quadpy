@@ -129,8 +129,7 @@ def _fs11(n, r, s):
 
 
 def _s(n, a, b):
-    """Get all permutations of [a, b, ..., b] of length n.
-    len(out) == n.
+    """Get all permutations of [a, b, ..., b] of length n. len(out) == n.
     """
     out = numpy.full((n, n), b)
     numpy.fill_diagonal(out, a)
