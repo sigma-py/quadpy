@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Philip Rabinowitz and Nira Richter,
-Perfectly Symmetric Two-Dimensional Integration Formulas with Minimal Numbers of Points,
-Mathematics of Computation, Vol. 23, No. 108 (Oct., 1969), pp. 765-779,
-<https://doi.org/10.2307/2004962>.
-"""
 from .helpers import concat, symm_r0, symm_s, symm_s_t, zero, QuadrilateralScheme
+from ..helpers import article
+
+citation = article(
+    authors=["Philip Rabinowitz", "Nira Richter"],
+    title="Perfectly Symmetric Two-Dimensional Integration Formulas with Minimal Numbers of Points",
+    journal="Mathematics of Computation",
+    volume="23",
+    number="108",
+    month="oct",
+    year="1969",
+    pages="765-779",
+    url="https://doi.org/10.2307/2004962",
+)
 
 
 def rabinowitz_richter_1():
@@ -20,7 +27,7 @@ def rabinowitz_richter_1():
         symm_s([0.0427846154667780, 0.9395672874215217]),
         symm_s_t([0.2157558036359328, 0.8367103250239890, 0.5073767736746132]),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme(name, weights, points, degree, citation)
 
 
 def rabinowitz_richter_2():
@@ -38,7 +45,7 @@ def rabinowitz_richter_2():
         ),
         symm_s_t([0.1466843776513117, 0.5756535958404649, 0.8830255085256902]),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme(name, weights, points, degree, citation)
 
 
 def rabinowitz_richter_3():
@@ -56,7 +63,7 @@ def rabinowitz_richter_3():
         ),
         symm_s_t([0.0813422207533089, 0.9602661668053869, 0.4347413023856830]),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme(name, weights, points, degree, citation)
 
 
 def rabinowitz_richter_4():
@@ -78,7 +85,7 @@ def rabinowitz_richter_4():
             [0.1169047000557597, 0.8623637916722844, 0.3162277660168378],
         ),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme(name, weights, points, degree, citation)
 
 
 def rabinowitz_richter_5():
@@ -101,7 +108,7 @@ def rabinowitz_richter_5():
             [0.1135237357315838, 0.8607803779721935, 0.3368688874716777],
         ),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme(name, weights, points, degree, citation)
 
 
 def rabinowitz_richter_6():
@@ -124,14 +131,4 @@ def rabinowitz_richter_6():
             [0.1150144605755996, 0.6122485619312083, 0.4078983303613935],
         ),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
-
-
-RabinowitzRichter = {
-    1: rabinowitz_richter_1,
-    2: rabinowitz_richter_2,
-    3: rabinowitz_richter_3,
-    4: rabinowitz_richter_4,
-    5: rabinowitz_richter_5,
-    6: rabinowitz_richter_6,
-}
+    return QuadrilateralScheme(name, weights, points, degree, citation)

@@ -10,7 +10,7 @@ citation = article(
     volume="40",
     pages="139-146",
     year="1988",
-    url="https://doi.org/10.1007/BF02247942"
+    url="https://doi.org/10.1007/BF02247942",
 )
 
 

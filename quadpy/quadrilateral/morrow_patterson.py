@@ -1,22 +1,19 @@
 # -*- coding: utf-8 -*-
 #
-"""
-C.R. Morrow and T.N.L. Patterson,
-The Construction of Algebraic Cubature Formulae by the Distribution of
-Nodes Along Selected Lines,
-SIAM J. Numer. Anal., 22(6), 1178–1190, 13 pages,
-<https://doi.org/10.1137/0722071>.
-
-Abstract:
-A new technique for developing general cubature rules is discussed. By distributing the
-nodes strategically along selected lines the solution is reduced to dealing with a
-series of one-dimensional moment problems.  Several analytical and numerical
-illustrative examples are provided. The extension to higher dimensions is also
-considered.
-"""
 import warnings
 
 from .helpers import QuadrilateralScheme, pm, pm2, concat
+from ..helpers import article
+
+citation = article(
+    authors=["C.R. Morrow", "T.N.L. Patterson"],
+    title="The Construction of Algebraic Cubature Formulae by the Distribution of Nodes Along Selected Lines",
+    journal="SIAM J. Numer. Anal.",
+    volume="22",
+    number="6",
+    pages="1178–1190",
+    url="https://doi.org/10.1137/0722071",
+)
 
 
 def morrow_patterson_1():
@@ -33,7 +30,7 @@ def morrow_patterson_1():
         ),
         pm([0.2755861791, 0.6612093865, 0.0]),
     )
-    return QuadrilateralScheme("Morrow-Patterson 1", 11, weights, points)
+    return QuadrilateralScheme("Morrow-Patterson 1", weights, points, 11, citation)
 
 
 def morrow_patterson_2():
@@ -97,7 +94,4 @@ def morrow_patterson_2():
         ),
     )
     # TODO The article claims degree 31. Check for errors.
-    return QuadrilateralScheme("Morrow-Patterson 2", 25, weights, points)
-
-
-MorrowPatterson = {1: morrow_patterson_1, 2: morrow_patterson_2}
+    return QuadrilateralScheme("Morrow-Patterson 2", weights, points, 25, citation)

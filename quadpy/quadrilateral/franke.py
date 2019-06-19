@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Richard Franke,
-Obtaining cubatures for rectangles and other planar regions by using orthogonal
-polynomials,
-Math. Comp. 25 (1971), 803-817,
-<https://doi.org/10.1090/S0025-5718-1971-0300440-5>.
-"""
 from __future__ import division
 
 import warnings
@@ -14,6 +7,7 @@ import warnings
 import numpy
 import sympy
 
+from ..helpers import article
 from .helpers import (
     pm,
     pm2,
@@ -24,7 +18,16 @@ from .helpers import (
     symm_s,
     symm_s_t,
 )
-from .rabinowitz_richter import rabinowitz_richter_1
+
+citation = article(
+    authors=["Richard Franke"],
+    title="Obtaining cubatures for rectangles and other planar regions by using orthogonal polynomials",
+    journal="Math. Comp.",
+    volume="25",
+    year="1971",
+    pages="803-817",
+    url="https://doi.org/10.1090/S0025-5718-1971-0300440-5",
+)
 
 
 def franke_1(lmbda, symbolic=False):
@@ -45,7 +48,9 @@ def franke_1(lmbda, symbolic=False):
             [frac(40 * (1 - lmbda), 9 * (9 - 4 * lmbda)), 0, c],
         ),
     )
-    return QuadrilateralScheme("Franke(1, {})".format(lmbda), 5, weights, points)
+    return QuadrilateralScheme(
+        "Franke(1, {})".format(lmbda), weights, points, 5, citation
+    )
 
 
 def franke_2a(symbolic=False):
@@ -63,7 +68,7 @@ def franke_2a(symbolic=False):
         ),
         pm([0.579684582100041, 0, b]),
     )
-    return QuadrilateralScheme("Franke 2a", 7, weights, points)
+    return QuadrilateralScheme("Franke 2a", weights, points, 7, citation)
 
 
 def franke_2b(symbolic=False):
@@ -81,7 +86,7 @@ def franke_2b(symbolic=False):
         ),
         pm([0.309204306788848, 0, a]),
     )
-    return QuadrilateralScheme("Franke 2b", 7, weights, points)
+    return QuadrilateralScheme("Franke 2b", weights, points, 7, citation)
 
 
 def franke_3a(symbolic=False):
@@ -105,7 +110,7 @@ def franke_3a(symbolic=False):
         ),
         zero(0.505679012345679),
     )
-    return QuadrilateralScheme("Franke 3a", 9, weights, points)
+    return QuadrilateralScheme("Franke 3a", weights, points, 9, citation)
 
 
 def franke_3b(symbolic=False):
@@ -129,7 +134,7 @@ def franke_3b(symbolic=False):
             [0.414194459963155, 0.0, b],
         ),
     )
-    return QuadrilateralScheme("Franke 3b", 9, weights, points)
+    return QuadrilateralScheme("Franke 3b", weights, points, 9, citation)
 
 
 def franke_3c(symbolic=False):
@@ -153,7 +158,7 @@ def franke_3c(symbolic=False):
         ),
         zero(-0.481503595164821e-1),
     )
-    return QuadrilateralScheme("Franke 3c", 9, weights, points)
+    return QuadrilateralScheme("Franke 3c", weights, points, 9, citation)
 
 
 def franke_5(symbolic=False):
@@ -171,7 +176,7 @@ def franke_5(symbolic=False):
             [frac(178981 - 2769 * sqrt(583), 472230), t],
         ),
     )
-    return QuadrilateralScheme("Franke 5", 7, weights, points)
+    return QuadrilateralScheme("Franke 5", weights, points, 7, citation)
 
 
 def franke_6(symbolic=False):
@@ -187,7 +192,7 @@ def franke_6(symbolic=False):
         symm_s([frac(16, 2025), a]),
         symm_s_t([frac(1519, 4050), b, c]),
     )
-    return QuadrilateralScheme("Franke 6", 7, weights, points)
+    return QuadrilateralScheme("Franke 6", weights, points, 7, citation)
 
 
 def franke_8():
@@ -205,18 +210,4 @@ def franke_8():
         symm_s([0.214200360926862, b], [0.427312318657758e-1, c]),
         symm_s_t([0.144452223260307, r, s]),
     )
-    return QuadrilateralScheme("Franke 8", 1, weights, points)
-
-
-Franke = {
-    "1": franke_1,
-    "2a": franke_2a,
-    "2b": franke_2b,
-    "3a": franke_3a,
-    "3b": franke_3b,
-    "3c": franke_3c,
-    "5": franke_5,
-    "6": franke_6,
-    "7": rabinowitz_richter_1,
-    "8": franke_8,
-}
+    return QuadrilateralScheme("Franke 8", weights, points, 1, citation)

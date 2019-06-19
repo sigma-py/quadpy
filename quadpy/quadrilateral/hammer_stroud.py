@@ -1,29 +1,33 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Preston C. Hammer and Arthur H. Stroud,
-Numerical Evaluation of Multiple Integrals II,
-Math. Comp. 12 (1958), 272-280,
-<https://doi.org/10.1090/S0025-5718-1958-0102176-6>.
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
 from .helpers import QuadrilateralScheme
-from ..helpers import untangle, fsd, z, pm
+from ..helpers import untangle, fsd, z, pm, article
+
+citation = article(
+    authors=["Preston C. Hammer", "Arthur H. Stroud"],
+    title="Numerical Evaluation of Multiple Integrals II",
+    journal="Math. Comp.",
+    volume="12",
+    year="1958",
+    pages="272-280",
+    url="https://doi.org/10.1090/S0025-5718-1958-0102176-6",
+)
 
 
-def hammer_stroud_12(symbolic=False):
+def hammer_stroud_1_2(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
     data = [(1, fsd(2, (sqrt(frac(2, 3)), 1)))]
     points, weights = untangle(data)
-    return QuadrilateralScheme("Hammer-Stroud 1-2", 3, weights, points)
+    return QuadrilateralScheme("Hammer-Stroud 1-2", weights, points, 3, citation)
 
 
-def hammer_stroud_22(symbolic=False):
+def hammer_stroud_2_2(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
     alpha = sqrt(frac(3, 5))
@@ -33,10 +37,10 @@ def hammer_stroud_22(symbolic=False):
         (frac(25, 81), pm(2, alpha)),
     ]
     points, weights = untangle(data)
-    return QuadrilateralScheme("Hammer-Stroud 2-2", 5, weights, points)
+    return QuadrilateralScheme("Hammer-Stroud 2-2", weights, points, 5, citation)
 
 
-def hammer_stroud_32(symbolic=False):
+def hammer_stroud_3_2(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
     xi1, xi2 = [sqrt(frac(3, 287) * (38 - i * sqrt(583))) for i in [+1, -1]]
@@ -46,11 +50,4 @@ def hammer_stroud_32(symbolic=False):
         (0.2374317746906302, pm(2, xi2)),
     ]
     points, weights = untangle(data)
-    return QuadrilateralScheme("Hammer-Stroud 3-2", 7, weights, points)
-
-
-HammerStroud = {
-    "1-2": hammer_stroud_12,
-    "2-2": hammer_stroud_22,
-    "3-2": hammer_stroud_32,
-}
+    return QuadrilateralScheme("Hammer-Stroud 3-2", weights, points, 7, citation)

@@ -1,26 +1,24 @@
 # -*- coding: utf-8 -*-
 #
-"""
-H.J. Schmid,
-On cubature formulae with a minimal number of knots,
-Numerische Mathematik, September 1978, Volume 31, Issue 3, pp 281–297,
-<https://eudml.org/doc/132580>.
-
-Abstract:
-In this paper an approach is outlined to the two-dimensional analogon of the Gaussian
-quadrature problem. The main results are necessary and sufficient conditions for the
-existence of cubature formulae which are exact for all polynomials of degree ≦m and
-which have a minimal number of 1/2k(k+1) knots,k=[m/2]+1. Ifm is odd, similar results
-are due to I.P. Mysovskikh ([5, 6]) which will be derived in a new way as a special case
-of the general characterization given here. Furthermore, it will be shown how this
-characterization can be used to construct minimal formulae of even degree.
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
 from .helpers import QuadrilateralScheme
+from ..helpers import article
+
+citation = article(
+    authors=["H.J. Schmid"],
+    title="On cubature formulae with a minimal number of knots",
+    journal="Numerische Mathematik",
+    month="sep",
+    year="1978",
+    volume="31",
+    number="3",
+    pages="281–297",
+    url="https://eudml.org/doc/132580"
+)
 
 
 def schmid_2(symbolic=False):
@@ -36,7 +34,7 @@ def schmid_2(symbolic=False):
     )
     weights = numpy.array([frac(1, 4), frac(1, 4), frac(1, 2)])
     weights *= 4
-    return QuadrilateralScheme("Schmid 2", 2, weights, points)
+    return QuadrilateralScheme("Schmid 2", weights, points, 2, citation)
 
 
 def schmid_4(symbolic=False):
@@ -64,7 +62,7 @@ def schmid_4(symbolic=False):
         ]
     )
     weights *= 4
-    return QuadrilateralScheme("Schmid 4", 4, weights, points)
+    return QuadrilateralScheme("Schmid 4", weights, points, 4, citation)
 
 
 def schmid_6(symbolic=False):
@@ -97,7 +95,4 @@ def schmid_6(symbolic=False):
         ]
     )
     weights *= 4
-    return QuadrilateralScheme("Schmid 6", 6, weights, points)
-
-
-Schmid = {2: schmid_2, 4: schmid_4, 6: schmid_6}
+    return QuadrilateralScheme("Schmid 6", weights, points, 6, citation)

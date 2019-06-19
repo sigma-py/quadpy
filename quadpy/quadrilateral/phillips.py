@@ -1,24 +1,27 @@
 # -*- coding: utf-8 -*-
 #
-"""
-G.M. Phillips,
-Numerical integration in two and three dimensions,
-Comput J (1967) 10 (2): 202-204,
-<https://doi.org/10.1093/comjnl/10.2.202>.
-
-Abstract:
-Gaussian-type quadrature formulae are derived for a rectangular region of two or three
-dimensions.
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
 from .helpers import concat, symm_r0, pm2, QuadrilateralScheme
+from ..helpers import article
+
+citation = article(
+    authors=["G.M. Phillips"],
+    title="Numerical integration in two and three dimensions",
+    journal="Comput J",
+    year="1967",
+    volume="10",
+    number="2",
+    pages="202-204",
+    url="https://doi.org/10.1093/comjnl/10.2.202",
+)
+# TODO add scheme for hex
 
 
-def Phillips(symbolic=False):
+def phillips(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
     pm = numpy.array([+1, -1])
@@ -32,4 +35,4 @@ def Phillips(symbolic=False):
 
     weights, points = concat(symm_r0([B1, r], [B2, s]), pm2([B3, t, t]))
     weights *= 4
-    return QuadrilateralScheme("Phillips", 7, weights, points)
+    return QuadrilateralScheme("Phillips", weights, points, 7, citation)

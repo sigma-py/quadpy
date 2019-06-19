@@ -1,16 +1,21 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Johannes W. Wissmann and Thomas Becker,
-Partially Symmetric Cubature Formulas for Even Degrees of Exactness,
-SIAM J. Numer. Anal., 23(3), 676–685, 10 pages,
-<https://doi.org/10.1137/0723043>.
-"""
 from __future__ import division
 
 import sympy
 
 from .helpers import concat, pmx, QuadrilateralScheme
+from ..helpers import article
+
+citation = article(
+    authors=["Johannes W. Wissmann", "Thomas Becker"],
+    title="Partially Symmetric Cubature Formulas for Even Degrees of Exactness",
+    journal="SIAM J. Numer. Anal.",
+    volume="23",
+    number="3",
+    pages="676–685",
+    url="https://doi.org/10.1137/0723043",
+)
 
 
 def wissmann_becker_41(symbolic=False):
@@ -23,7 +28,7 @@ def wissmann_becker_41(symbolic=False):
             [0.642719001783677, 0.630912788976754, -0.731629951573135],
         ),
     )
-    return QuadrilateralScheme("Wissmann-Becker 4-1", 4, weights, points)
+    return QuadrilateralScheme("Wissmann-Becker 4-1", weights, points, 4, citation)
 
 
 def wissmann_becker_42():
@@ -35,7 +40,7 @@ def wissmann_becker_42():
             [0.349227402025498, 0.774596669241483, -0.852765377881771],
         ),
     )
-    return QuadrilateralScheme("Wissmann-Becker 4-2", 4, weights, points)
+    return QuadrilateralScheme("Wissmann-Becker 4-2", weights, points, 4, citation)
 
 
 def wissmann_becker_61():
@@ -49,7 +54,7 @@ def wissmann_becker_61():
             [0.320896396788441, 0.565459993438754, -0.872869311156879],
         ),
     )
-    return QuadrilateralScheme("Wissmann-Becker 6-1", 6, weights, points)
+    return QuadrilateralScheme("Wissmann-Becker 6-1", weights, points, 6, citation)
 
 
 def wissmann_becker_62():
@@ -63,7 +68,7 @@ def wissmann_becker_62():
             [0.269567586086061, 0.608977536016356, -0.896608632762453],
         ),
     )
-    return QuadrilateralScheme("Wissmann-Becker 6-2", 6, weights, points)
+    return QuadrilateralScheme("Wissmann-Becker 6-2", weights, points, 6, citation)
 
 
 def wissmann_becker_81():
@@ -81,7 +86,7 @@ def wissmann_becker_81():
             [0.085464254086247, 0.897495818279768, -0.900390774211580],
         ),
     )
-    return QuadrilateralScheme("Wissmann-Becker 8-1", 8, weights, points)
+    return QuadrilateralScheme("Wissmann-Becker 8-1", weights, points, 8, citation)
 
 
 def wissmann_becker_82():
@@ -98,14 +103,4 @@ def wissmann_becker_82():
             [0.125618791640072, 0.837503640422812, -0.888477650535971],
         ),
     )
-    return QuadrilateralScheme("Wissmann-Becker 8-2", 8, weights, points)
-
-
-WissmannBecker = {
-    "4-1": wissmann_becker_41,
-    "4-2": wissmann_becker_42,
-    "6-1": wissmann_becker_61,
-    "6-2": wissmann_becker_62,
-    "8-1": wissmann_becker_81,
-    "8-2": wissmann_becker_82,
-}
+    return QuadrilateralScheme("Wissmann-Becker 8-2", weights, points, 8, citation)
