@@ -8,8 +8,12 @@ from .albrecht_collatz import (
     albrecht_collatz_4,
 )
 from .burnside import Burnside
-from .cohen_gismalla import CohenGismalla
-from .cools_haegemans_1985 import CoolsHaegemans1985
+from .cohen_gismalla import cohen_gismalla_1, cohen_gismalla_2
+from .cools_haegemans_1985 import (
+    cools_haegemans_1985_1,
+    cools_haegemans_1985_2,
+    cools_haegemans_1985_3,
+)
 from .cools_haegemans_1988 import CoolsHaegemans1988
 from .dunavant import Dunavant
 from .franke import Franke
@@ -42,9 +46,11 @@ __all__ = [
     "albrecht_collatz_3",
     "albrecht_collatz_4",
     "Burnside",
-    "CohenGismalla",
-    "CoolsHaegemans1985",
-    "CoolsHaegemans1988",
+    "cohen_gismalla_1",
+    "cohen_gismalla_2",
+    "cools_haegemans_1985_1",
+    "cools_haegemans_1985_2",
+    "cools_haegemans_1985_3",
     "Dunavant",
     "Franke",
     "HammerStroud",
@@ -65,7 +71,6 @@ __all__ = [
     "Product",
     "Schmid",
     "Sommariva",
-    "StroudN",
     "transform",
     "rectangle_points",
 ]

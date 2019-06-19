@@ -1,26 +1,20 @@
 # -*- coding: utf-8 -*-
 #
-"""
-R. Cools and Ann Haegemans,
-Another Step Forward in Searching for Cubature Formulae with a Minimal Number of Knots
-for the Square,
-Computing 40, 139- 146 (1988),
-<https://doi.org/10.1007/BF02247942>.
-
-Abstract:
-The knots and weights of a cubature formula are determined by a system of nonlinear
-equations. The number of equations and unknowns can be reduced by imposing some
-structure on the formula.  We are concerned with the construction of cubature formulae
-which are invariant under rotations.  Using invariant theory, we obtain a smaller system
-of algebraically independent equations.  This is used to construct cubature formulae for
-the square. One of the results is a 24-point formula of degree 11.
-"""
 from .helpers import QuadrilateralScheme, s4, zero, concat
+from ..helpers import article
+
+citation = article(
+    authors=["R. Cools", "Ann Haegemans"],
+    title="Another Step Forward in Searching for Cubature Formulae with a Minimal Number of Knots for the Square",
+    journal="Computing",
+    volume="40",
+    pages="139-146",
+    year="1988",
+    url="https://doi.org/10.1007/BF02247942"
+)
 
 
 def cools_haegemans_1988_1():
-    name = "Cools-Haegemans 1988-1"
-    degree = 11
     weights, points = s4(
         [
             0.0480207633507238145627631759775806,
@@ -53,12 +47,10 @@ def cools_haegemans_1988_1():
             0.424847248848669250615430111511957,
         ],
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Cools-Haegemans 1988-1", weights, points, 11, citation)
 
 
 def cools_haegemans_1988_2():
-    name = "Cools-Haegemans 1988-2"
-    degree = 13
     weights, points = concat(
         s4(
             [
@@ -104,7 +96,7 @@ def cools_haegemans_1988_2():
         ),
         zero(0.30038211543122536139e00),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Cools-Haegemans 1988-2", weights, points, 13, citation)
 
 
 CoolsHaegemans1988 = {1: cools_haegemans_1988_1, 2: cools_haegemans_1988_2}

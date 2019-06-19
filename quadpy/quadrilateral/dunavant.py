@@ -1,62 +1,54 @@
 # -*- coding: utf-8 -*-
 #
-"""
-D.A. Dunavant,
-Economical symmetrical quadrature rules for complete polynomials over a
-square domain,
-Numerical Methods in Engineering, Volume 21, Issue 10, October 1985,
-Pages 1777–1784,
-<https://doi.org/10.1002/nme.1620211004>.
-
-Abstract:
-It is of interest in numerical analysis to develop symmetrical quadrature
-rules for integration of complete polynomial functions over a square domain
-with minimum computational effort. Gaussian product quadrature rules
-integrate such functions with maximum effort. Symmetrical quadrature rules
-are developed and presented for integration of complete polynomial
-functions up to 21st order with minimum computational effort.
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
 from .helpers import concat, zero, symm_r0, symm_s, symm_s_t, QuadrilateralScheme
+from ..helpers import article
+
+citation = article(
+    authors=["D.A. Dunavant"],
+    title="Economical symmetrical quadrature rules for complete polynomials over a square domain",
+    journal="Numerical Methods in Engineering",
+    volume="21",
+    number="10",
+    month="oct",
+    year="1985",
+    pages="1777–1784",
+    url="https://doi.org/10.1002/nme.1620211004"
+)
 
 
 def dunavant_0(symbolic=False):
-    name = "Dunavant 0"
-    degree = 1
     weights, points = zero(4)
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Dunavant 0", weights, points, 1, citation)
 
 
 def dunavant_1(symbolic=False):
-    name = "Dunavant 1"
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    degree = 3
+
     weights, points = symm_s([1, sqrt(frac(1, 3))])
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Dunavant 1", weights, points, 3, citation)
 
 
 def dunavant_2(symbolic=False):
-    name = "Dunavant 2"
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    degree = 5
+
     weights, points = concat(
         symm_r0([frac(40, 49), sqrt(frac(7, 15))]),
         symm_s([frac(9, 49), sqrt(frac(7, 9))]),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Dunavant 2", weights, points, 5, citation)
 
 
 def dunavant_3(symbolic=False):
-    name = "Dunavant 3"
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    degree = 7
+
     weights, points = concat(
         symm_r0([frac(98, 405), sqrt(frac(6, 7))]),
         symm_s(
@@ -64,12 +56,10 @@ def dunavant_3(symbolic=False):
             [0.520592916667394, 0.380554433208316],
         ),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Dunavant 3", weights, points, 7, citation)
 
 
 def dunavant_4(symbolic=False):
-    name = "Dunavant 4"
-    degree = 9
     weights, points = concat(
         symm_r0(
             [0.018475842507491, 1.121225763866564],
@@ -78,12 +68,10 @@ def dunavant_4(symbolic=False):
         symm_s([0.083095178026482, 0.891849420851512]),
         symm_s_t([0.254188020152646, 0.824396370749276, 0.411623426336542]),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Dunavant 4", weights, points, 9, citation)
 
 
 def dunavant_5(symbolic=False):
-    name = "Dunavant 5"
-    degree = 11
     weights, points = concat(
         zero(0.365379525585903),
         symm_r0(
@@ -96,12 +84,10 @@ def dunavant_5(symbolic=False):
         ),
         symm_s_t([0.146684377651312, 0.883025508525690, 0.575653595840465]),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Dunavant 5", weights, points, 11, citation)
 
 
 def dunavant_6(symbolic=False):
-    name = "Dunavant 6"
-    degree = 13
     weights, points = concat(
         symm_r0(
             [0.005656169693764, 1.086056158573971],
@@ -117,12 +103,10 @@ def dunavant_6(symbolic=False):
             [0.066655770186205, 0.929866705560780, 0.745052720131169],
         ),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Dunavant 6", weights, points, 13, citation)
 
 
 def dunavant_7(symbolic=False):
-    name = "Dunavant 7"
-    degree = 15
     weights, points = concat(
         zero(-0.001768979827207),
         symm_r0(
@@ -140,12 +124,10 @@ def dunavant_7(symbolic=False):
             [0.028794154400064, 0.960457474887516, 0.809863684081217],
         ),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Dunavant 7", weights, points, 15, citation)
 
 
 def dunavant_8(symbolic=False):
-    name = "Dunavant 8"
-    degree = 17
     weights, points = concat(
         symm_r0(
             [0.020614915919991, 0.989353074512600],
@@ -164,13 +146,10 @@ def dunavant_8(symbolic=False):
             [0.021922559481864, 0.981321179805452, 0.706000287798646],
         ),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Dunavant 8", weights, points, 17, citation)
 
 
 def dunavant_9(symbolic=False):
-    name = "Dunavant 9"
-    # TODO ERR the article claims 19
-    degree = 16
     weights, points = concat(
         symm_r0(
             [0.038205406871462, 0.943962831808239],
@@ -191,12 +170,11 @@ def dunavant_9(symbolic=False):
             [0.024839207949609, 0.945161453573471, 0.829501421477824],
         ),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    # TODO ERR the article claims 19
+    return QuadrilateralScheme("Dunavant 9", weights, points, 16, citation)
 
 
 def dunavant_10():
-    name = "Dunavant 10"
-    degree = 21
     weights, points = concat(
         symm_r0(
             [0.019503841092684, 0.980883148832881],
@@ -219,7 +197,7 @@ def dunavant_10():
             [0.103507336515645, 0.469570217710647, 0.237333359193547],
         ),
     )
-    return QuadrilateralScheme(name, degree, weights, points)
+    return QuadrilateralScheme("Dunavant 10", weights, points, 21, citation)
 
 
 Dunavant = {
