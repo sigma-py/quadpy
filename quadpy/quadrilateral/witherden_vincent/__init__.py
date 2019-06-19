@@ -1,30 +1,27 @@
 # -*- coding: utf-8 -*-
 #
 """
-F.D. Witherden, P.E. Vincent,
-On the identification of symmetric quadrature rules for finite
-element methods,
-Computers & Mathematics with Applications,
-Volume 69, Issue 10, May 2015, Pages 1232–1241,
-<https://doi.org/10.1016/j.camwa.2015.03.017>.
-
-Abstract:
-In this paper we describe a methodology for the identification of symmetric quadrature
-rules inside of quadrilaterals, triangles, tetrahedra, prisms, pyramids, and hexahedra.
-The methodology is free from manual intervention and is capable of identifying a set of
-rules with a given strength and a given number of points. We also present polyquad which
-is an implementation of our methodology. Using polyquad v1.0 we proceed to derive a
-complete set of symmetric rules on the aforementioned domains. All rules possess purely
-positive weights and have all points inside the domain. Many of the rules appear to be
-new, and an improvement over those tabulated in the literature.
 """
 import json
 import os
 
 from ..helpers import concat, zero, symm_r0, symm_s, symm_s_t, QuadrilateralScheme
+from ...helpers import article
+
+_citation = article(
+    authors=["F.D. Witherden", "P.E. Vincent"],
+    title="On the identification of symmetric quadrature rules for finite element methods",
+    journal="Computers & Mathematics with Applications",
+    volume="69",
+    number="10",
+    month="may",
+    year="2015",
+    pages="1232–1241",
+    url="https://doi.org/10.1016/j.camwa.2015.03.017",
+)
 
 
-def witherden_vincent(degree, symbolic=False):
+def _read(degree):
     this_dir = os.path.dirname(os.path.realpath(__file__))
     filename = "wv{:02d}.json".format(degree)
     with open(os.path.join(this_dir, filename), "r") as f:
@@ -44,11 +41,49 @@ def witherden_vincent(degree, symbolic=False):
 
     weights, points = concat(*d)
     return QuadrilateralScheme(
-        "Witherden-Vincent {}".format(degree), degree, weights, points
+        "Witherden-Vincent {}".format(degree), weights, points, degree, _citation
     )
 
 
-WitherdenVincent = {
-    k: lambda symbolic=False: witherden_vincent(k, symbolic)
-    for k in [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21]
-}
+def witherden_vincent_01():
+    return _read(1)
+
+
+def witherden_vincent_03():
+    return _read(3)
+
+
+def witherden_vincent_05():
+    return _read(5)
+
+
+def witherden_vincent_07():
+    return _read(7)
+
+
+def witherden_vincent_09():
+    return _read(9)
+
+
+def witherden_vincent_11():
+    return _read(11)
+
+
+def witherden_vincent_13():
+    return _read(13)
+
+
+def witherden_vincent_15():
+    return _read(15)
+
+
+def witherden_vincent_17():
+    return _read(17)
+
+
+def witherden_vincent_19():
+    return _read(19)
+
+
+def witherden_vincent_21():
+    return _read(21)

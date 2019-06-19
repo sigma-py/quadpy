@@ -14,7 +14,7 @@ citation = article(
     journal="Messenger of Math.",
     volume="37",
     year="1908",
-    pages="166-167"
+    pages="166-167",
 )
 
 

@@ -22,6 +22,7 @@ from .misc import (
     book,
     techreport,
     phdthesis,
+    online,
 )
 from .plot import (
     plot_disks_1d,

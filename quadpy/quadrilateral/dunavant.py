@@ -21,12 +21,12 @@ citation = article(
 )
 
 
-def dunavant_0(symbolic=False):
+def dunavant_00():
     weights, points = zero(4)
     return QuadrilateralScheme("Dunavant 0", weights, points, 1, citation)
 
 
-def dunavant_1(symbolic=False):
+def dunavant_01(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
 
@@ -34,7 +34,7 @@ def dunavant_1(symbolic=False):
     return QuadrilateralScheme("Dunavant 1", weights, points, 3, citation)
 
 
-def dunavant_2(symbolic=False):
+def dunavant_02(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
 
@@ -45,7 +45,7 @@ def dunavant_2(symbolic=False):
     return QuadrilateralScheme("Dunavant 2", weights, points, 5, citation)
 
 
-def dunavant_3(symbolic=False):
+def dunavant_03(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
 
@@ -59,7 +59,7 @@ def dunavant_3(symbolic=False):
     return QuadrilateralScheme("Dunavant 3", weights, points, 7, citation)
 
 
-def dunavant_4(symbolic=False):
+def dunavant_04():
     weights, points = concat(
         symm_r0(
             [0.018475842507491, 1.121225763866564],
@@ -71,7 +71,7 @@ def dunavant_4(symbolic=False):
     return QuadrilateralScheme("Dunavant 4", weights, points, 9, citation)
 
 
-def dunavant_5(symbolic=False):
+def dunavant_05():
     weights, points = concat(
         zero(0.365379525585903),
         symm_r0(
@@ -87,7 +87,7 @@ def dunavant_5(symbolic=False):
     return QuadrilateralScheme("Dunavant 5", weights, points, 11, citation)
 
 
-def dunavant_6(symbolic=False):
+def dunavant_06():
     weights, points = concat(
         symm_r0(
             [0.005656169693764, 1.086056158573971],
@@ -106,7 +106,7 @@ def dunavant_6(symbolic=False):
     return QuadrilateralScheme("Dunavant 6", weights, points, 13, citation)
 
 
-def dunavant_7(symbolic=False):
+def dunavant_07():
     weights, points = concat(
         zero(-0.001768979827207),
         symm_r0(
@@ -127,7 +127,7 @@ def dunavant_7(symbolic=False):
     return QuadrilateralScheme("Dunavant 7", weights, points, 15, citation)
 
 
-def dunavant_8(symbolic=False):
+def dunavant_08():
     weights, points = concat(
         symm_r0(
             [0.020614915919991, 0.989353074512600],
@@ -149,7 +149,7 @@ def dunavant_8(symbolic=False):
     return QuadrilateralScheme("Dunavant 8", weights, points, 17, citation)
 
 
-def dunavant_9(symbolic=False):
+def dunavant_09():
     weights, points = concat(
         symm_r0(
             [0.038205406871462, 0.943962831808239],
@@ -198,18 +198,3 @@ def dunavant_10():
         ),
     )
     return QuadrilateralScheme("Dunavant 10", weights, points, 21, citation)
-
-
-Dunavant = {
-    0: dunavant_0,
-    1: dunavant_1,
-    2: dunavant_2,
-    3: dunavant_3,
-    4: dunavant_4,
-    5: dunavant_5,
-    6: dunavant_6,
-    7: dunavant_7,
-    8: dunavant_8,
-    9: dunavant_9,
-    10: dunavant_10,
-}
