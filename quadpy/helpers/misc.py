@@ -41,6 +41,9 @@ phdthesis = namedtuple(
 )
 phdthesis.__new__.__defaults__ = (None,) * len(phdthesis._fields)
 
+online = namedtuple("Online", ["authors", "title", "year", "url", "note"])
+online.__new__.__defaults__ = (None,) * len(online._fields)
+
 
 def untangle(data):
     weights, points = zip(*data)

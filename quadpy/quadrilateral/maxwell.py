@@ -13,7 +13,7 @@ citation = article(
     title="On Approximate Multiple Integration between Limits by Summation",
     journal="Cambridge Library Collection - Physical Sciences",
     pages="604-611",
-    publisher="Cambridge University Press",
+    # publisher="Cambridge University Press",
     url="https://doi.org/10.1017/CBO9780511710377.061",
     note="In W. Niven (Ed.), The Scientific Papers of James Clerk Maxwell. First published in 1890.",
 )

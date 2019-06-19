@@ -18,7 +18,7 @@ citation = article(
 )
 
 
-def wissmann_becker_41(symbolic=False):
+def wissmann_becker_4_1(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     weights, points = concat(
         ([frac(8, 7)], [[0, 0]]),
@@ -31,7 +31,7 @@ def wissmann_becker_41(symbolic=False):
     return QuadrilateralScheme("Wissmann-Becker 4-1", weights, points, 4, citation)
 
 
-def wissmann_becker_42():
+def wissmann_becker_4_2():
     weights, points = concat(
         ([1.286412084888852], [[0, -0.356822089773090]]),
         ([0.491365692888926], [[0, 0.934172358962716]]),
@@ -43,7 +43,7 @@ def wissmann_becker_42():
     return QuadrilateralScheme("Wissmann-Becker 4-2", weights, points, 4, citation)
 
 
-def wissmann_becker_61():
+def wissmann_becker_6_1():
     weights, points = concat(
         ([0.455343245714174], [[0, 0.836405633697626]]),
         ([0.827395973202966], [[0, -0.357460165391307]]),
@@ -57,7 +57,7 @@ def wissmann_becker_61():
     return QuadrilateralScheme("Wissmann-Becker 6-1", weights, points, 6, citation)
 
 
-def wissmann_becker_62():
+def wissmann_becker_6_2():
     weights, points = concat(
         ([0.392750590964348], [[0, 0.869833375250059]]),
         ([0.754762881242610], [[0, -0.479406351612111]]),
@@ -71,7 +71,7 @@ def wissmann_becker_62():
     return QuadrilateralScheme("Wissmann-Becker 6-2", weights, points, 6, citation)
 
 
-def wissmann_becker_81():
+def wissmann_becker_8_1():
     weights, points = concat(
         ([0.055364705621440], [[0, 0]]),
         ([0.404389368726076], [[0, 0.757629177660505]]),
@@ -89,7 +89,7 @@ def wissmann_becker_81():
     return QuadrilateralScheme("Wissmann-Becker 8-1", weights, points, 8, citation)
 
 
-def wissmann_becker_82():
+def wissmann_becker_8_2():
     weights, points = concat(
         ([0.450276776305590], [[0, 0.659560131960342]]),
         ([0.166570426777813], [[0, -0.949142923043125]]),

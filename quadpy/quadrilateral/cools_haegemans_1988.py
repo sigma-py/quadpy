@@ -97,6 +97,3 @@ def cools_haegemans_1988_2():
         zero(0.30038211543122536139e00),
     )
     return QuadrilateralScheme("Cools-Haegemans 1988-2", weights, points, 13, citation)
-
-
-CoolsHaegemans1988 = {1: cools_haegemans_1988_1, 2: cools_haegemans_1988_2}

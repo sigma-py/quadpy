@@ -17,7 +17,7 @@ citation = article(
     volume="31",
     number="3",
     pages="281–297",
-    url="https://eudml.org/doc/132580"
+    url="https://eudml.org/doc/132580",
 )
 
 

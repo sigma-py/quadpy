@@ -15,11 +15,11 @@ citation = techreport(
     note="CMS Technical Summary Report",
     month="oct",
     year="1994",
-    url="http://ftp.cs.wisc.edu/Approx/symmetries.pdf"
+    url="http://ftp.cs.wisc.edu/Approx/symmetries.pdf",
 )
 
 
-def daldron(r, alpha):
+def waldron(r, alpha):
     assert r ** 2 >= 1 / 3
 
     R = r / numpy.sqrt(3 * r ** 2 - 1)
