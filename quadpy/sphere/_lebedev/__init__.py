@@ -4,7 +4,7 @@ import json
 import os
 import re
 
-from ..helpers import untangle2, cartesian_to_spherical, SphereScheme
+from .._helpers import untangle2, cartesian_to_spherical, SphereScheme
 from ...helpers import article
 
 

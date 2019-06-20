@@ -11,7 +11,7 @@ import numpy
 
 from .stroud_secrest import StroudSecrest
 
-from ..sphere import stroud as sphere_stroud
+from ..sphere import _stroud as sphere_stroud
 from ..helpers import untangle
 from .helpers import E3r2Scheme
 

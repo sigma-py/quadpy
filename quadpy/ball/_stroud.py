@@ -18,7 +18,7 @@ from ._hammer_stroud import (
 from ._mysovskih import mysovskih as stroud_7_2
 
 from ._helpers import BallScheme
-from ..sphere import stroud as sphere_stroud
+from ..sphere import _stroud as sphere_stroud
 from ..helpers import untangle, book
 
 _citation = book(

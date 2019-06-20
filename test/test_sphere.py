@@ -5,7 +5,7 @@ import numpy
 import pytest
 import orthopy
 import quadpy
-from quadpy.sphere.helpers import cartesian_to_spherical
+from quadpy.sphere._helpers import cartesian_to_spherical
 
 # Note
 # ====
@@ -16,7 +16,7 @@ from quadpy.sphere.helpers import cartesian_to_spherical
 
 
 @pytest.mark.parametrize(
-    "scheme", [quadpy.sphere.Lebedev("3a"), quadpy.sphere.Stroud("U3 14-1")]
+    "scheme", [quadpy.sphere.lebedev_003a(), quadpy.sphere.stroud_u3_14_1()]
 )
 def test_spherical_harmonic(scheme):
     """Assert the norm of the spherical harmonic
@@ -40,7 +40,7 @@ def test_spherical_harmonic(scheme):
         )
         return y11 * numpy.conjugate(y11)
 
-    val = quadpy.sphere.integrate_spherical(spherical_harmonic_11, rule=scheme)
+    val = scheme.integrate_spherical(spherical_harmonic_11)
 
     assert abs(val - 1.0) < 1.0e-14
     return
@@ -48,103 +48,104 @@ def test_spherical_harmonic(scheme):
 
 @pytest.mark.parametrize(
     "scheme,tol",
-    [(quadpy.sphere.BazantOh(index), 1.0e-10) for index in ["9", "11", "13"]]
-    + [
-        (quadpy.sphere.HeoXu(index), 1.0e-6)
-        for index in [
-            "13",
-            "15",
-            "17",
-            "19-1",
-            "19-2",
-            "21-1",
-            "21-2",
-            "21-3",
-            "21-4",
-            "21-5",
-            "21-6",
-            "23-1",
-            "23-2",
-            "23-3",
-            "25-1",
-            "25-2",
-            "27-1",
-            "27-2",
-            "27-3",
-            "29",
-            "31",
-            "33",
-            "35",
-            "37",
-            "39-1",
-            "39-2",
-        ]
-    ]
-    + [(quadpy.sphere.FliegeMaier(index), 1.0e-6) for index in ["4", "9", "16", "25"]]
-    + [
-        (quadpy.sphere.Lebedev(index), 1.0e-11)
-        for index in [
-            "3a",
-            "3b",
-            "3c",
-            "5",
-            "7",
-            "9",
-            "11",
-            "13",
-            "15",
-            "17",
-            "19",
-            "21",
-            "23",
-            "25",
-            "27",
-            "29",
-            "31",
-            "35",
-            "41",
-            "47",
-            "53",
-            "59",
-            "65",
-            "71",
-            "77",
-            "83",
-            "89",
-            "95",
-            "101",
-            "107",
-            "113",
-            "119",
-            # The highest degree formulas are too memory-intensive for circleci,
-            # and the tests are oom-killed. A workaround would be to not test the
-            # entire tree at once, but split it up.
-            # Check <https://stackoverflow.com/q/47474140/353337>.
-            # TODO reenable
-            # "125", "131"
-        ]
+    [
+        (quadpy.sphere.bazant_oh_09(), 1.0e-10),
+        (quadpy.sphere.bazant_oh_11(), 1.0e-10),
+        (quadpy.sphere.bazant_oh_13(), 1.0e-10),
     ]
     + [
-        (quadpy.sphere.Stroud(k), 1.0e-13)
-        for k in [
-            "U3 3-1",
-            "U3 5-1",
-            "U3 5-2",
-            "U3 5-3",
-            "U3 5-4",
-            "U3 5-5",
-            "U3 7-1",
-            "U3 7-2",
-            "U3 8-1",
-            "U3 9-1",
-            "U3 9-2",
-            "U3 9-3",
-            "U3 11-1",
-            "U3 11-3",
-            "U3 14-1",
-        ]
+        (quadpy.sphere.heo_xu_13(), 1.0e-6),
+        (quadpy.sphere.heo_xu_15(), 1.0e-6),
+        (quadpy.sphere.heo_xu_17(), 1.0e-6),
+        (quadpy.sphere.heo_xu_19_1(), 1.0e-6),
+        (quadpy.sphere.heo_xu_19_2(), 1.0e-6),
+        (quadpy.sphere.heo_xu_21_1(), 1.0e-6),
+        (quadpy.sphere.heo_xu_21_2(), 1.0e-6),
+        (quadpy.sphere.heo_xu_21_3(), 1.0e-6),
+        (quadpy.sphere.heo_xu_21_4(), 1.0e-6),
+        (quadpy.sphere.heo_xu_21_5(), 1.0e-6),
+        (quadpy.sphere.heo_xu_21_6(), 1.0e-6),
+        (quadpy.sphere.heo_xu_23_1(), 1.0e-6),
+        (quadpy.sphere.heo_xu_23_2(), 1.0e-6),
+        (quadpy.sphere.heo_xu_23_3(), 1.0e-6),
+        (quadpy.sphere.heo_xu_25_1(), 1.0e-6),
+        (quadpy.sphere.heo_xu_25_2(), 1.0e-6),
+        (quadpy.sphere.heo_xu_27_1(), 1.0e-6),
+        (quadpy.sphere.heo_xu_27_2(), 1.0e-6),
+        (quadpy.sphere.heo_xu_27_3(), 1.0e-6),
+        (quadpy.sphere.heo_xu_29(), 1.0e-6),
+        (quadpy.sphere.heo_xu_31(), 1.0e-6),
+        (quadpy.sphere.heo_xu_33(), 1.0e-6),
+        (quadpy.sphere.heo_xu_35(), 1.0e-6),
+        (quadpy.sphere.heo_xu_37(), 1.0e-6),
+        (quadpy.sphere.heo_xu_39_1(), 1.0e-6),
+        (quadpy.sphere.heo_xu_39_2(), 1.0e-6),
     ]
-    + [(quadpy.sphere.Stroud(k), 1.0e-12) for k in ["U3 11-2"]],
+    + [
+        (quadpy.sphere.fliege_maier_04(), 1.0e-6),
+        (quadpy.sphere.fliege_maier_09(), 1.0e-6),
+        (quadpy.sphere.fliege_maier_16(), 1.0e-6),
+        (quadpy.sphere.fliege_maier_25(), 1.0e-6),
+    ]
+    + [
+        (quadpy.sphere.lebedev_003a(), 1.0e-11),
+        (quadpy.sphere.lebedev_003b(), 1.0e-11),
+        (quadpy.sphere.lebedev_003c(), 1.0e-11),
+        (quadpy.sphere.lebedev_005(), 1.0e-11),
+        (quadpy.sphere.lebedev_007(), 1.0e-11),
+        (quadpy.sphere.lebedev_009(), 1.0e-11),
+        (quadpy.sphere.lebedev_011(), 1.0e-11),
+        (quadpy.sphere.lebedev_013(), 1.0e-11),
+        (quadpy.sphere.lebedev_015(), 1.0e-11),
+        (quadpy.sphere.lebedev_017(), 1.0e-11),
+        (quadpy.sphere.lebedev_019(), 1.0e-11),
+        (quadpy.sphere.lebedev_021(), 1.0e-11),
+        (quadpy.sphere.lebedev_023(), 1.0e-11),
+        (quadpy.sphere.lebedev_025(), 1.0e-11),
+        (quadpy.sphere.lebedev_027(), 1.0e-11),
+        (quadpy.sphere.lebedev_029(), 1.0e-11),
+        (quadpy.sphere.lebedev_031(), 1.0e-11),
+        (quadpy.sphere.lebedev_035(), 1.0e-11),
+        (quadpy.sphere.lebedev_041(), 1.0e-11),
+        (quadpy.sphere.lebedev_047(), 1.0e-11),
+        (quadpy.sphere.lebedev_053(), 1.0e-11),
+        (quadpy.sphere.lebedev_059(), 1.0e-11),
+        (quadpy.sphere.lebedev_065(), 1.0e-11),
+        (quadpy.sphere.lebedev_071(), 1.0e-11),
+        (quadpy.sphere.lebedev_077(), 1.0e-11),
+        (quadpy.sphere.lebedev_083(), 1.0e-11),
+        (quadpy.sphere.lebedev_089(), 1.0e-11),
+        (quadpy.sphere.lebedev_095(), 1.0e-11),
+        (quadpy.sphere.lebedev_101(), 1.0e-11),
+        (quadpy.sphere.lebedev_107(), 1.0e-11),
+        (quadpy.sphere.lebedev_113(), 1.0e-11),
+        # TODO enable
+        # The highest degree formulas are too memory-intensive for circleci, and the
+        # tests are oom-killed. A workaround would be to not test the entire tree at
+        # once, but split it up.
+        # Check <https://stackoverflow.com/q/47474140/353337>.
+        # (quadpy.sphere.lebedev_119(), 1.0e-11),
+        # (quadpy.sphere.lebedev_125(), 1.0e-11),
+        # (quadpy.sphere.lebedev_131(), 1.0e-11),
+    ]
+    + [
+        (quadpy.sphere.stroud_u3_3_1(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_5_1(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_5_2(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_5_3(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_5_4(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_5_5(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_7_1(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_7_2(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_8_1(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_9_1(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_9_2(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_9_3(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_11_1(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_11_2(), 1.0e-12),
+        (quadpy.sphere.stroud_u3_11_3(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_14_1(), 1.0e-13),
+    ],
 )
 def test_scheme_cartesian(scheme, tol):
     exact_val = numpy.zeros(scheme.degree + 1)
@@ -162,8 +163,8 @@ def test_scheme_cartesian(scheme, tol):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
-    vals = quadpy.sphere.integrate(
-        sph_tree_cartesian, center=numpy.array([0.0, 0.0, 0.0]), radius=1.0, rule=scheme
+    vals = scheme.integrate(
+        sph_tree_cartesian, center=numpy.array([0.0, 0.0, 0.0]), radius=1.0
     )
 
     # The exact value is sqrt(4*pi) for the Y_0^0, and 0 otherwise.
@@ -189,66 +190,69 @@ def test_scheme_cartesian(scheme, tol):
     return
 
 
-# Test a few schemes with integrate_spherical. -- This is basically the same as
-# above, no need to repeat it all in detail.
+# Test a few schemes with integrate_spherical. -- This is basically the same as above,
+# no need to repeat it all in detail.
 @pytest.mark.parametrize(
     "scheme,tol",
     [
-        (quadpy.sphere.HeoXu(index), 1.0e-6)
-        for index in [
-            "13",
-            "15",
-            "17",
-            "19-1",
-            "19-2",
-            "21-1",
-            "21-2",
-            "21-3",
-            "21-4",
-            "21-5",
-            "21-6",
-            "23-1",
-            "23-2",
-            "23-3",
-            "25-1",
-            "25-2",
-            "27-1",
-            "27-2",
-            "27-3",
-            "29",
-            "31",
-            "33",
-            "35",
-            "37",
-            "39-1",
-            "39-2",
-        ]
+        (quadpy.sphere.heo_xu_13(), 1.0e-6),
+        (quadpy.sphere.heo_xu_15(), 1.0e-6),
+        (quadpy.sphere.heo_xu_17(), 1.0e-6),
+        (quadpy.sphere.heo_xu_19_1(), 1.0e-6),
+        (quadpy.sphere.heo_xu_19_2(), 1.0e-6),
+        (quadpy.sphere.heo_xu_21_1(), 1.0e-6),
+        (quadpy.sphere.heo_xu_21_2(), 1.0e-6),
+        (quadpy.sphere.heo_xu_21_3(), 1.0e-6),
+        (quadpy.sphere.heo_xu_21_4(), 1.0e-6),
+        (quadpy.sphere.heo_xu_21_5(), 1.0e-6),
+        (quadpy.sphere.heo_xu_21_6(), 1.0e-6),
+        (quadpy.sphere.heo_xu_23_1(), 1.0e-6),
+        (quadpy.sphere.heo_xu_23_2(), 1.0e-6),
+        (quadpy.sphere.heo_xu_23_3(), 1.0e-6),
+        (quadpy.sphere.heo_xu_25_1(), 1.0e-6),
+        (quadpy.sphere.heo_xu_25_2(), 1.0e-6),
+        (quadpy.sphere.heo_xu_27_1(), 1.0e-6),
+        (quadpy.sphere.heo_xu_27_2(), 1.0e-6),
+        (quadpy.sphere.heo_xu_27_3(), 1.0e-6),
+        (quadpy.sphere.heo_xu_29(), 1.0e-6),
+        (quadpy.sphere.heo_xu_31(), 1.0e-6),
+        (quadpy.sphere.heo_xu_33(), 1.0e-6),
+        (quadpy.sphere.heo_xu_35(), 1.0e-6),
+        (quadpy.sphere.heo_xu_37(), 1.0e-6),
+        (quadpy.sphere.heo_xu_39_1(), 1.0e-6),
+        (quadpy.sphere.heo_xu_39_2(), 1.0e-6),
     ]
     + [
-        (quadpy.sphere.Lebedev(index), 1.0e-11)
-        for index in ["3a", "3b", "3c", "5", "7", "9", "11", "13", "15", "17", "19"]
+        (quadpy.sphere.lebedev_003a(), 1.0e-11),
+        (quadpy.sphere.lebedev_003b(), 1.0e-11),
+        (quadpy.sphere.lebedev_003c(), 1.0e-11),
+        (quadpy.sphere.lebedev_005(), 1.0e-11),
+        (quadpy.sphere.lebedev_007(), 1.0e-11),
+        (quadpy.sphere.lebedev_009(), 1.0e-11),
+        (quadpy.sphere.lebedev_011(), 1.0e-11),
+        (quadpy.sphere.lebedev_013(), 1.0e-11),
+        (quadpy.sphere.lebedev_015(), 1.0e-11),
+        (quadpy.sphere.lebedev_017(), 1.0e-11),
+        (quadpy.sphere.lebedev_019(), 1.0e-11),
     ]
     + [
-        (quadpy.sphere.Stroud(k), 1.0e-13)
-        for k in [
-            "U3 3-1",
-            "U3 5-1",
-            "U3 5-2",
-            "U3 5-3",
-            "U3 5-4",
-            "U3 5-5",
-            "U3 7-1",
-            "U3 7-2",
-            "U3 8-1",
-            "U3 9-1",
-            "U3 9-2",
-            "U3 9-3",
-            "U3 11-1",
-            "U3 11-3",
-            "U3 14-1",
-        ]
-    ]
-    + [(quadpy.sphere.Stroud(k), 1.0e-12) for k in ["U3 11-2"]],
+        (quadpy.sphere.stroud_u3_3_1(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_5_1(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_5_2(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_5_3(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_5_4(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_5_5(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_7_1(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_7_2(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_8_1(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_9_1(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_9_2(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_9_3(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_11_1(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_11_2(), 1.0e-12),
+        (quadpy.sphere.stroud_u3_11_3(), 1.0e-13),
+        (quadpy.sphere.stroud_u3_14_1(), 1.0e-13),
+    ],
 )
 def test_scheme_spherical(scheme, tol):
     exact_val = numpy.zeros(scheme.degree + 1)
@@ -261,7 +265,7 @@ def test_scheme_spherical(scheme, tol):
             )
         )
 
-    vals = quadpy.sphere.integrate_spherical(sph_tree, rule=scheme)
+    vals = scheme.integrate_spherical(sph_tree)
 
     # The exact value is sqrt(4*pi) for the Y_0^0, and 0 otherwise.
     err = vals
@@ -286,9 +290,9 @@ def test_scheme_spherical(scheme, tol):
     return
 
 
-@pytest.mark.parametrize("scheme", [quadpy.sphere.Lebedev("7")])
+@pytest.mark.parametrize("scheme", [quadpy.sphere.lebedev_007()])
 def test_show(scheme):
-    quadpy.sphere.show(scheme)
+    scheme.show()
     plt.close()
     return
 

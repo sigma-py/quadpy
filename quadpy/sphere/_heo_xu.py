@@ -3,7 +3,7 @@
 import math
 import warnings
 
-from .helpers import cartesian_to_spherical, SphereScheme
+from ._helpers import cartesian_to_spherical, SphereScheme
 from ..helpers import untangle, fsd, article
 
 
@@ -73,7 +73,6 @@ def heo_xu_17():
 
 def heo_xu_19_1():
     warnings.warn("The Heo-Xu schemes are only single-precision.")
-    index = 13
 
     name = "Heo-Xu 19-1"
     degree = 19

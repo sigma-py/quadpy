@@ -1,7 +1,27 @@
 # -*- coding: utf-8 -*-
 #
 import math
+
+import numpy
 from sympy import gamma, prod, Rational
+
+
+class NSphereScheme(object):
+    def __init__(self, name, dim, weights, points, degree, citation):
+        self.name = name
+        self.dim = dim
+        self.weights = weights
+        self.points = points
+        self.degree = degree
+        self.citation = citation
+        return
+
+    def integrate(self, f, center, radius, dot=numpy.dot):
+        center = numpy.array(center)
+        rr = numpy.multiply.outer(radius, self.points)
+        rr = numpy.swapaxes(rr, 0, -2)
+        ff = numpy.array(f((rr + center).T))
+        return numpy.array(radius) ** (self.dim - 1) * dot(ff, self.weights)
 
 
 def integrate_monomial_over_unit_nsphere(alpha, symbolic=False):

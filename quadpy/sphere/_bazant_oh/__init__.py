@@ -4,7 +4,7 @@ import json
 import os
 import re
 
-from ..helpers import cartesian_to_spherical, untangle2, SphereScheme
+from .._helpers import cartesian_to_spherical, untangle2, SphereScheme
 from ...helpers import article
 
 citation = article(
@@ -37,12 +37,12 @@ def _read(index):
 
 
 def bazant_oh_09():
-    return _read(9)
+    return _read("9")
 
 
 def bazant_oh_11():
-    return _read(11)
+    return _read("11")
 
 
 def bazant_oh_13():
-    return _read(13)
+    return _read("13")
