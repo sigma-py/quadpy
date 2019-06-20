@@ -26,7 +26,6 @@ setup(
     install_requires=[
         "numpy",
         "orthopy >=0.5, <0.6",
-        "pipdate >=0.3.0, <0.4.0",
         "scipy",
         "sympy",
     ],
