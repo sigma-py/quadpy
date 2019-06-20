@@ -1,20 +1,24 @@
 # -*- coding: utf-8 -*-
 #
-"""
-A.H. Stroud,
-Some Seventh Degree Integration Formulas for Symmetric Regions,
-SIAM J. Numer. Anal., 4(1), 37–44. (8 pages),
-<https://doi.org/10.1137/0704004>.
-"""
 from __future__ import division
 
 import numpy
 import scipy
 import sympy
 
-from .helpers import Enr2Scheme
-from ..helpers import untangle, fsd, pm
+from ._helpers import Enr2Scheme
+from ..helpers import untangle, fsd, pm, article
 from .. import nsphere
+
+citation = article(
+    authors=["A.H. Stroud"],
+    title="Some Seventh Degree Integration Formulas for Symmetric Regions",
+    journal="SIAM J. Numer. Anal.",
+    volume="4",
+    number="1",
+    pages="37–44",
+    url="https://doi.org/10.1137/0704004",
+)
 
 
 def _stroud_1967_7_2(n, variant_a=True, symbolic=False):
@@ -54,7 +58,7 @@ def _stroud_1967_7_2(n, variant_a=True, symbolic=False):
     weights *= sqrt(pi) ** n
 
     name = "Stroud 1967-7 2 (variant {})".format("a" if variant_a else "b")
-    return Enr2Scheme(name, n, 7, weights, points)
+    return Enr2Scheme(name, n, weights, points, 7, citation)
 
 
 def stroud_1967_7_2a(n, symbolic=False):
@@ -77,11 +81,8 @@ def stroud_1967_7_4(n, symbolic=False):
     g = gamma(frac(n, 2))
     A1, A2 = [(n + 2 + p_m * sqrt2n2) / 4 / (n + 2) * g for p_m in [+1, -1]]
 
-    s = nsphere.Stroud1967(n, symbolic=symbolic)
+    s = nsphere.stroud_1967(n, symbolic=symbolic)
 
     points = numpy.concatenate([r1 * s.points, r2 * s.points])
     weights = numpy.concatenate([A1 * s.weights, A2 * s.weights])
-    return Enr2Scheme("Stroud 1967-7 4", n, 7, weights, points)
-
-
-Stroud_1967_7 = {"2a": stroud_1967_7_2a, "2b": stroud_1967_7_2b, "4": stroud_1967_7_4}
+    return Enr2Scheme("Stroud 1967-7 4", n, weights, points, 7, citation)

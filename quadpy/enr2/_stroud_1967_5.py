@@ -1,18 +1,24 @@
 # -*- coding: utf-8 -*-
 #
-"""
-A.H. Stroud,
-Some fifth degree integration formulas for symmetric regions II,
-Numerische Mathematik, Volume 9 Issue 5, April 1967, Pages 460-468
-<https://doi.org/10.1007/BF02162160>.
-"""
 # TODO sympyfy
 from __future__ import division
 
 import numpy
 
-from .helpers import Enr2Scheme
-from ..helpers import untangle, rd
+from ._helpers import Enr2Scheme
+from ..helpers import untangle, rd, article
+
+citation = article(
+    authors=["A.H. Stroud"],
+    title="Some fifth degree integration formulas for symmetric regions II",
+    journal="Numerische Mathematik",
+    volume="9",
+    number="5",
+    month="apr",
+    year="1967",
+    pages="460-468",
+    url="https://doi.org/10.1007/BF02162160",
+)
 
 
 def stroud_1967_5_a(n):
@@ -62,7 +68,7 @@ def stroud_1967_5_a(n):
         C = A
     else:
         assert n == 7
-        eta = 0.0
+        eta = 0
         lmbda = 0.959724318748357
         xi = -0.772326488820521
         mu = -0.141214270131942e1
@@ -91,7 +97,7 @@ def stroud_1967_5_a(n):
     points, weights = untangle(data)
     weights *= numpy.sqrt(numpy.pi) ** n
 
-    return Enr2Scheme("Stroud 1967-5 a", n, 5, weights, points)
+    return Enr2Scheme("Stroud 1967-5 a", n, weights, points, 5, citation)
 
 
 def stroud_1967_5_b(n):
@@ -115,7 +121,7 @@ def stroud_1967_5_b(n):
         B = A
         C = 0.641509853510569e-2
     else:
-        assert n == 6
+        assert n == 6, "n must be in [3, 5, 6]"
         eta = 1.0
         lmbda = 0.942809041582063
         xi = -0.471404520791032
@@ -146,7 +152,4 @@ def stroud_1967_5_b(n):
     points, weights = untangle(data)
     weights *= numpy.sqrt(numpy.pi) ** n
 
-    return Enr2Scheme("Stroud 1967-5 a", n, 5, weights, points)
-
-
-Stroud_1967_5 = {"a": stroud_1967_5_a, "b": stroud_1967_5_b}
+    return Enr2Scheme("Stroud 1967-5 b", n, weights, points, 5, citation)

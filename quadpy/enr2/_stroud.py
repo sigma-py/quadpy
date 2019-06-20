@@ -1,35 +1,50 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Arthur Stroud,
-Approximate Calculation of Multiple Integrals,
-Prentice Hall, 1971.
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
-from .stenger import (
-    stenger_7a,
-    stenger_7b,
-    stenger_9a,
-    stenger_9b,
-    stenger_11a,
-    stenger_11b,
+from ._stenger import (
+    stenger_7a as stroud_enr2_7_3a,
+    stenger_7b as stroud_enr2_7_3b,
+    stenger_9a as stroud_enr2_9_1a,
+    stenger_9b as stroud_enr2_9_1b,
+    stenger_11a as stroud_enr2_11_1a,
+    stenger_11b as stroud_enr2_11_1b,
 )
-from .stroud_1967_5 import stroud_1967_5_a, stroud_1967_5_b
-from .stroud_1967_7 import stroud_1967_7_2a, stroud_1967_7_2b, stroud_1967_7_4
-from .stroud_secrest import stroud_secrest_i, stroud_secrest_iii, stroud_secrest_iv
+from ._stroud_1967_5 import (
+    stroud_1967_5_a as stroud_enr2_5_1a,
+    stroud_1967_5_b as stroud_enr2_5_1b,
+)
+from ._stroud_1967_7 import (
+    stroud_1967_7_2a as stroud_enr2_7_1a,
+    stroud_1967_7_2b as stroud_enr2_7_1b,
+    stroud_1967_7_4 as stroud_enr2_7_2
+)
+from ._stroud_secrest import (
+    stroud_secrest_i as stroud_enr2_3_1,
+    stroud_secrest_iii as stroud_enr2_3_2,
+    stroud_secrest_iv as stroud_enr2_5_2,
+)
 
-from .helpers import Enr2Scheme
-from ..helpers import untangle, fsd, pm, pm_array0
+from ._helpers import Enr2Scheme
+from ..helpers import untangle, fsd, pm, pm_array0, book
+
+citation = book(
+    authors=["Arthur Stroud"],
+    title="Approximate Calculation of Multiple Integrals",
+    publisher="Prentice Hall",
+    year="1971",
+)
 
 
-def stroud_5_3(n, symbolic=False):
+def stroud_enr2_5_3(n, symbolic=False):
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
     pi = sympy.pi if symbolic else numpy.pi
     frac = sympy.Rational if symbolic else lambda x, y: x / y
+
+    assert n > 2
 
     r = sqrt(frac(n + 2, 4))
     s = sqrt(frac(n + 2, 2 * (n - 2)))
@@ -39,10 +54,10 @@ def stroud_5_3(n, symbolic=False):
     data = [(A, fsd(n, (r, 1))), (B, pm(n, s))]
     points, weights = untangle(data)
     weights *= sqrt(pi) ** n
-    return Enr2Scheme("Stroud 5-3", n, 5, weights, points)
+    return Enr2Scheme("Stroud Enr2 5-3", n, weights, points, 5, citation)
 
 
-def stroud_5_4(n, symbolic=False):
+def stroud_enr2_5_4(n, symbolic=False):
     # Spherical product Lobatto
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     pi = sympy.pi if symbolic else numpy.pi
@@ -60,7 +75,7 @@ def stroud_5_4(n, symbolic=False):
 
     points, weights = untangle(data)
     weights *= sqrt(pi) ** n
-    return Enr2Scheme("Stroud 5-4", n, 5, weights, points)
+    return Enr2Scheme("Stroud Enr2 5-4", n, weights, points, 5, citation)
 
 
 def _stroud_5_5(n, variant_a, symbolic=False):
@@ -80,19 +95,19 @@ def _stroud_5_5(n, variant_a, symbolic=False):
 
     points, weights = untangle(data)
     weights *= sqrt(pi) ** n
-    name = "Stroud 5-5{}".format("a" if variant_a else "b")
-    return Enr2Scheme(name, n, 5, weights, points)
+    name = "Stroud Enr2 5-5{}".format("a" if variant_a else "b")
+    return Enr2Scheme(name, n, weights, points, 5, citation)
 
 
-def stroud_5_5a(n, symbolic=False):
+def stroud_enr2_5_5a(n, symbolic=False):
     return _stroud_5_5(n, True, symbolic)
 
 
-def stroud_5_5b(n, symbolic=False):
+def stroud_enr2_5_5b(n, symbolic=False):
     return _stroud_5_5(n, False, symbolic)
 
 
-def stroud_5_6(n, symbolic=False):
+def stroud_enr2_5_6(n, symbolic=False):
     assert n >= 5
 
     frac = sympy.Rational if symbolic else lambda x, y: x / y
@@ -110,27 +125,27 @@ def stroud_5_6(n, symbolic=False):
 
     points, weights = untangle(data)
     weights *= sqrt(pi) ** n
-    return Enr2Scheme("Stroud 5-6", n, 5, weights, points)
+    return Enr2Scheme("Stroud Enr2 5-6", n, weights, points, 5, citation)
 
 
-Stroud = {
-    "3-1": stroud_secrest_i,
-    "3-2": stroud_secrest_iii,
-    "5-1a": stroud_1967_5_a,
-    "5-1b": stroud_1967_5_b,
-    "5-2": stroud_secrest_iv,
-    "5-3": stroud_5_3,
-    "5-4": stroud_5_4,
-    "5-5a": stroud_5_5a,
-    "5-5b": stroud_5_5b,
-    "5-6": stroud_5_6,
-    "7-1a": stroud_1967_7_2a,
-    "7-1b": stroud_1967_7_2b,
-    "7-2": stroud_1967_7_4,
-    "7-3a": stenger_7a,
-    "7-3b": stenger_7b,
-    "9-1a": stenger_9a,
-    "9-1b": stenger_9b,
-    "11-1a": stenger_11a,
-    "11-1b": stenger_11b,
-}
+__all__ = [
+    "stroud_enr2_3_1",
+    "stroud_enr2_3_2",
+    "stroud_enr2_5_1a",
+    "stroud_enr2_5_1b",
+    "stroud_enr2_5_2",
+    "stroud_enr2_5_3",
+    "stroud_enr2_5_4",
+    "stroud_enr2_5_5a",
+    "stroud_enr2_5_5b",
+    "stroud_enr2_5_6",
+    "stroud_enr2_7_1a",
+    "stroud_enr2_7_1b",
+    "stroud_enr2_7_2",
+    "stroud_enr2_7_3a",
+    "stroud_enr2_7_3b",
+    "stroud_enr2_9_1a",
+    "stroud_enr2_9_1b",
+    "stroud_enr2_11_1a",
+    "stroud_enr2_11_1b",
+]

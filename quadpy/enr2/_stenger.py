@@ -1,17 +1,23 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Review: Tabulation of Certain Fully Symmetric Numerical Integration Formulas of Degree
-7, 9 and 11 by Frank Stenger,
-Mathematics of Computation,
-Vol. 25, No. 116 (Oct., 1971), pp. 935+s58-s125,
-<https://www.jstor.org/stable/2004361>.
-"""
 # TODO According to Stroud, Stenger's original article has data up to n == 20.
 from __future__ import division
 
-from .helpers import Enr2Scheme
-from ..helpers import untangle, fsd, z
+from ._helpers import Enr2Scheme
+from ..helpers import untangle, fsd, z, article
+
+
+citation = article(
+    authors=["W.G."],
+    title="Review: Tabulation of Certain Fully Symmetric Numerical Integration Formulas of Degree 7, 9 and 11 by Frank Stenger",
+    journal="Mathematics of Computation",
+    volume="25",
+    number="116",
+    month="oct",
+    year="1971",
+    pages="935+s58-s125",
+    url="https://www.jstor.org/stable/2004361"
+)
 
 
 def stenger_7a(dim):
@@ -76,7 +82,7 @@ def stenger_7a(dim):
         (B[5], fsd(dim, (u, 3))),
     ]
     points, weights = untangle(data)
-    return Enr2Scheme("Stenger 7a", dim, 7, weights, points)
+    return Enr2Scheme("Stenger 7a", dim, weights, points, 7, citation)
 
 
 def stenger_7b(dim):
@@ -140,7 +146,7 @@ def stenger_7b(dim):
         (B[5], fsd(dim, (u, 3))),
     ]
     points, weights = untangle(data)
-    return Enr2Scheme("Stenger 7b", dim, 7, weights, points)
+    return Enr2Scheme("Stenger 7b", dim, weights, points, 7, citation)
 
 
 def stenger_9a(dim):
@@ -220,7 +226,7 @@ def stenger_9a(dim):
         data += [(B[8], fsd(dim, (u, 4)))]
 
     points, weights = untangle(data)
-    return Enr2Scheme("Stenger 9a", dim, 9, weights, points)
+    return Enr2Scheme("Stenger 9a", dim, weights, points, 9, citation)
 
 
 def stenger_9b(dim):
@@ -286,7 +292,7 @@ def stenger_9b(dim):
         data += [(B[8], fsd(dim, (u, 4)))]
 
     points, weights = untangle(data)
-    return Enr2Scheme("Stenger 9b", dim, 9, weights, points)
+    return Enr2Scheme("Stenger 9b", dim, weights, points, 9, citation)
 
 
 def stenger_11a(dim):
@@ -380,7 +386,7 @@ def stenger_11a(dim):
         data += [(B[15], fsd(dim, (u, 5)))]
 
     points, weights = untangle(data)
-    return Enr2Scheme("Stenger 11a", dim, 11, weights, points)
+    return Enr2Scheme("Stenger 11a", dim, weights, points, 11, citation)
 
 
 def stenger_11b(dim):
@@ -473,14 +479,4 @@ def stenger_11b(dim):
         data += [(B[15], fsd(dim, (u, 5)))]
 
     points, weights = untangle(data)
-    return Enr2Scheme("Stenger 11b", dim, 11, weights, points)
-
-
-Stenger = {
-    "7a": stenger_7a,
-    "7b": stenger_7b,
-    "9a": stenger_9a,
-    "9b": stenger_9b,
-    "11a": stenger_11a,
-    "11b": stenger_11b,
-}
+    return Enr2Scheme("Stenger 11b", dim, weights, points, 11, citation)
