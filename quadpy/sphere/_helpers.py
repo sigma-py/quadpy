@@ -4,6 +4,108 @@ import numpy
 import sympy
 
 
+class SphereScheme(object):
+    def __init__(self, name, weights, points, azimuthal_polar, degree, citation):
+        self.name = name
+        self.weights = weights
+        self.points = points
+        self.azimuthal_polar = azimuthal_polar
+        self.degree = degree
+        self.citation = citation
+        return
+
+    def show(self, *args, **kwargs):
+        import matplotlib.pyplot as plt
+
+        self.plot(*args, **kwargs)
+        plt.show()
+        return
+
+    def plot(self):
+        import matplotlib.pyplot as plt
+        from mpl_toolkits.mplot3d import Axes3D
+
+        fig = plt.figure()
+        ax = fig.gca(projection=Axes3D.name)
+        # ax.set_aspect("equal")
+
+        flt = numpy.vectorize(float)
+        pts = flt(self.points)
+        wgs = flt(self.weights)
+
+        for p, w in zip(pts, wgs):
+            # <https://en.wikipedia.org/wiki/Spherical_cap>
+            w *= 4 * numpy.pi
+            theta = numpy.arccos(1.0 - abs(w) / (2 * numpy.pi))
+            color = "#1f77b4" if w >= 0 else "#d62728"
+            _plot_spherical_cap_mpl(ax, p, theta, color)
+
+        ax.set_axis_off()
+        return
+
+    def integrate(self, f, center, radius, dot=numpy.dot):
+        """Quadrature where `f` is defined in Cartesian coordinates.
+        """
+        center = numpy.array(center)
+        rr = numpy.multiply.outer(radius, self.points)
+        rr = numpy.swapaxes(rr, 0, -2)
+        ff = numpy.array(f((rr + center).T))
+        return area(radius) * dot(ff, self.weights)
+
+    def integrate_spherical(self, f, dot=numpy.dot):
+        """Quadrature where `f` is a function of the spherical coordinates
+        `azimuthal` and `polar` (in this order).
+        """
+        flt = numpy.vectorize(float)
+        rr = numpy.swapaxes(flt(self.azimuthal_polar), 0, -2)
+        ff = numpy.array(f(rr.T[0], rr.T[1]))
+        return area(1.0) * dot(ff, flt(self.weights))
+
+
+def area(radius):
+    return 4 * numpy.pi * numpy.array(radius) ** 2
+
+
+def _plot_spherical_cap_mpl(ax, b, opening_angle, color, elevation=1.01):
+    r = elevation
+    azimuthal = numpy.linspace(0, 2 * numpy.pi, 30)
+    polar = numpy.linspace(0, opening_angle, 20)
+    X = r * numpy.stack(
+        [
+            numpy.outer(numpy.cos(azimuthal), numpy.sin(polar)),
+            numpy.outer(numpy.sin(azimuthal), numpy.sin(polar)),
+            numpy.outer(numpy.ones(numpy.size(azimuthal)), numpy.cos(polar)),
+        ],
+        axis=-1,
+    )
+
+    # rotate X such that [0, 0, 1] gets rotated to `c`;
+    # <https://math.stackexchange.com/a/476311/36678>.
+    a = numpy.array([0.0, 0.0, 1.0])
+    a_x_b = numpy.cross(a, b)
+    a_dot_b = numpy.dot(a, b)
+    if a_dot_b == -1.0:
+        X_rot = -X
+    else:
+        X_rot = (
+            X
+            + numpy.cross(a_x_b, X)
+            + numpy.cross(a_x_b, numpy.cross(a_x_b, X)) / (1.0 + a_dot_b)
+        )
+
+    ax.plot_surface(
+        X_rot[..., 0],
+        X_rot[..., 1],
+        X_rot[..., 2],
+        rstride=3,
+        cstride=3,
+        color=color,
+        alpha=0.5,
+        linewidth=0,
+    )
+    return
+
+
 def cartesian_to_spherical(X):
     return numpy.stack([numpy.arctan2(X[:, 1], X[:, 0]), numpy.arccos(X[:, 2])], axis=1)
 

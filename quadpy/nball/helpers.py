@@ -2,7 +2,7 @@
 #
 import collections
 
-from ..nsphere.helpers import integrate_monomial_over_unit_nsphere
+from ..nsphere._helpers import integrate_monomial_over_unit_nsphere
 
 
 NBallScheme = collections.namedtuple(

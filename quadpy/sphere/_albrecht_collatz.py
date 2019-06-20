@@ -5,7 +5,7 @@ from __future__ import division
 import numpy
 import sympy
 
-from .helpers import cartesian_to_spherical_sympy, SphereScheme
+from ._helpers import cartesian_to_spherical_sympy, SphereScheme
 from ..helpers import untangle, pm_array0, fsd, pm, article
 
 citation = article(
