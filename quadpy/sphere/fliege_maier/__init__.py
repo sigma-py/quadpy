@@ -7,33 +7,50 @@ import warnings
 
 import numpy
 
-from ..helpers import cartesian_to_spherical
+from ..helpers import cartesian_to_spherical, SphereScheme
+from ...helpers import online
 
 
-class FliegeMaier(object):
-    """
-    Jörg Fliege, Ulrike Maier,
-    A Two-Stage Approach for Computing Cubature Formulae for the Sphere,
-    <https://www.personal.soton.ac.uk/jf1w07/nodes/nodes.html>.
-    """
+citation = online(
+    authors=["Jörg Fliege", "Ulrike Maier"],
+    title="A Two-Stage Approach for Computing Cubature Formulae for the Sphere",
+    url="https://www.personal.soton.ac.uk/jf1w07/nodes/nodes.html",
+)
 
-    def __init__(self, index):
-        warnings.warn("The Fliege-Maier schemes are only single-precision.")
 
-        self.name = "FliegeMaier({})".format(index)
+def _read(index):
+    warnings.warn("The Fliege-Maier schemes are only single-precision.")
 
-        this_dir = os.path.dirname(os.path.realpath(__file__))
+    name = "FliegeMaier({})".format(index)
 
-        m = re.match("([0-9]+)([a-z]*)", index)
-        filename = "fliege_maier_{:03d}{}.json".format(int(m.group(1)), m.group(2))
-        with open(os.path.join(this_dir, filename), "r") as f:
-            data = json.load(f)
+    this_dir = os.path.dirname(os.path.realpath(__file__))
 
-        self.degree = data.pop("degree")
+    m = re.match("([0-9]+)([a-z]*)", index)
+    filename = "fliege_maier_{:03d}{}.json".format(int(m.group(1)), m.group(2))
+    with open(os.path.join(this_dir, filename), "r") as f:
+        data = json.load(f)
 
-        data = numpy.array(data["data"])
-        self.points = data[:, :3]
-        self.weights = data[:, 3] / 4 / numpy.pi
+    degree = data.pop("degree")
 
-        self.azimuthal_polar = cartesian_to_spherical(self.points)
-        return
+    data = numpy.array(data["data"])
+    points = data[:, :3]
+    weights = data[:, 3] / 4 / numpy.pi
+
+    azimuthal_polar = cartesian_to_spherical(points)
+    return SphereScheme(name, weights, points, azimuthal_polar, degree, citation)
+
+
+def fliege_maier_04():
+    return _read(4)
+
+
+def fliege_maier_09():
+    return _read(9)
+
+
+def fliege_maier_16():
+    return _read(16)
+
+
+def fliege_maier_25():
+    return _read(25)
