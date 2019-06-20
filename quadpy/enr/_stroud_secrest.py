@@ -8,7 +8,7 @@ import sympy
 
 from ._helpers import EnrScheme
 from ..helpers import untangle, fsd, pm, article
-from ..enr2.stroud_secrest import _nsimplex
+from ..enr2._stroud_secrest import _nsimplex
 
 
 citation = article(

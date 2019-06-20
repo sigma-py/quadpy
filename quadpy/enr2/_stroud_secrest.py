@@ -1,18 +1,22 @@
 # -*- coding: utf-8 -*-
 #
-"""
-A.H. Stroud and D. Secrest,
-Approximate integration formulas for certain spherically symmetric regions,
-Math. Comp. 17 (1963), 105-135,
-<https://doi.org/10.1090/S0025-5718-1963-0161473-0>.
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
-from .helpers import Enr2Scheme
-from ..helpers import untangle, pm, fsd
+from ._helpers import Enr2Scheme
+from ..helpers import untangle, pm, fsd, article
+
+citation = article(
+    authors=["A.H. Stroud", "D. Secrest"],
+    title="Approximate integration formulas for certain spherically symmetric regions",
+    journal="Math. Comp.",
+    volume="17",
+    year="1963",
+    pages="105-135",
+    url="https://doi.org/10.1090/S0025-5718-1963-0161473-0",
+)
 
 
 def stroud_secrest_i(n, symbolic=False):
@@ -23,7 +27,7 @@ def stroud_secrest_i(n, symbolic=False):
     data = [(frac(1, n + 1), sqrt(frac(1, 2)) * _nsimplex(n, symbolic=symbolic))]
     points, weights = untangle(data)
     weights *= sqrt(pi) ** n
-    return Enr2Scheme("Stroud-Secrest I", n, 2, weights, points)
+    return Enr2Scheme("Stroud-Secrest I", n, weights, points, 2, citation)
 
 
 def stroud_secrest_ii(n, symbolic=False):
@@ -35,7 +39,7 @@ def stroud_secrest_ii(n, symbolic=False):
     data = [(frac(1, 2 * n), fsd(n, (nu, 1)))]
     points, weights = untangle(data)
     weights *= sqrt(pi) ** n
-    return Enr2Scheme("Stroud-Secrest II", n, 3, weights, points)
+    return Enr2Scheme("Stroud-Secrest II", n, weights, points, 3, citation)
 
 
 def stroud_secrest_iii(n, symbolic=False):
@@ -47,7 +51,7 @@ def stroud_secrest_iii(n, symbolic=False):
     data = [(frac(1, 2 ** n), pm(n, nu))]
     points, weights = untangle(data)
     weights *= sqrt(pi) ** n
-    return Enr2Scheme("Stroud-Secrest III", n, 3, weights, points)
+    return Enr2Scheme("Stroud-Secrest III", n, weights, points, 3, citation)
 
 
 def stroud_secrest_iv(n, symbolic=False):
@@ -64,7 +68,7 @@ def stroud_secrest_iv(n, symbolic=False):
     data = [(A, numpy.full((1, n), 0)), (B, fsd(n, (nu, 1))), (C, fsd(n, (xi, 2)))]
     points, weights = untangle(data)
     weights *= sqrt(pi) ** n
-    return Enr2Scheme("Stroud-Secrest IV", n, 5, weights, points)
+    return Enr2Scheme("Stroud-Secrest IV", n, weights, points, 5, citation)
 
 
 def _nsimplex(n, symbolic):
@@ -81,11 +85,3 @@ def _nsimplex(n, symbolic):
         ]
         + [[-sqrt(frac(n + 1, (n + 1 - i) * (n - i))) for i in range(n)]]
     )
-
-
-StroudSecrest = {
-    "I": stroud_secrest_i,
-    "II": stroud_secrest_ii,
-    "III": stroud_secrest_iii,
-    "IV": stroud_secrest_iv,
-}
