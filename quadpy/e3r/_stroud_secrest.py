@@ -1,11 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-"""
-A.H. Stroud and D. Secrest,
-Approximate integration formulas for certain spherically symmetric regions,
-Math. Comp. 17 (1963), 105-135,
-<https://doi.org/10.1090/S0025-5718-1963-0161473-0>.
-"""
 from __future__ import division
 
 import warnings
@@ -13,8 +7,18 @@ import warnings
 import numpy
 import sympy
 
-from .helpers import E3rScheme
-from ..helpers import untangle, pm, fsd, pm_roll
+from ._helpers import E3rScheme
+from ..helpers import untangle, pm, fsd, pm_roll, article
+
+citation = article(
+    authors=["A.H. Stroud", "D. Secrest"],
+    title="Approximate integration formulas for certain spherically symmetric regions",
+    journal="Math. Comp.",
+    volume="17",
+    year="1963",
+    pages="105-135",
+    url="https://doi.org/10.1090/S0025-5718-1963-0161473-0",
+)
 
 
 def stroud_secrest_vii(symbolic=False):
@@ -30,7 +34,7 @@ def stroud_secrest_vii(symbolic=False):
     points, weights = untangle(data)
     pi = sympy.pi if symbolic else numpy.pi
     weights *= 8 * pi
-    return E3rScheme("Stroud-Secrest VII", 5, weights, points)
+    return E3rScheme("Stroud-Secrest VII", weights, points, 5, citation)
 
 
 def stroud_secrest_viii(symbolic=False):
@@ -47,7 +51,7 @@ def stroud_secrest_viii(symbolic=False):
     points, weights = untangle(data)
     pi = sympy.pi if symbolic else numpy.pi
     weights *= 8 * pi
-    return E3rScheme("Stroud-Secrest VIII", 5, weights, points)
+    return E3rScheme("Stroud-Secrest VIII", weights, points, 5, citation)
 
 
 def stroud_secrest_ix(symbolic=False):
@@ -63,7 +67,7 @@ def stroud_secrest_ix(symbolic=False):
     points, weights = untangle(data)
     pi = sympy.pi if symbolic else numpy.pi
     weights *= 8 * pi
-    return E3rScheme("Stroud-Secrest IX", 5, weights, points)
+    return E3rScheme("Stroud-Secrest IX", weights, points, 5, citation)
 
 
 def stroud_secrest_x(symbolic=False):
@@ -93,7 +97,7 @@ def stroud_secrest_x(symbolic=False):
 
     # TODO ERR find out what's wrong
     warnings.warn("Stroud-Secrest X for E_3^r has degree 3, not 7.")
-    return E3rScheme("Stroud-Secrest X", 3, weights, points)
+    return E3rScheme("Stroud-Secrest X", weights, points, 4, citation)
 
 
 def stroud_secrest_xi(symbolic=False):
@@ -125,13 +129,4 @@ def stroud_secrest_xi(symbolic=False):
     points, weights = untangle(data)
     pi = sympy.pi if symbolic else numpy.pi
     weights *= 8 * pi
-    return E3rScheme("Stroud-Secrest XI", 7, weights, points)
-
-
-StroudSecrest = {
-    "VII": stroud_secrest_vii,
-    "VIII": stroud_secrest_viii,
-    "IX": stroud_secrest_ix,
-    "X": stroud_secrest_x,
-    "XI": stroud_secrest_xi,
-}
+    return E3rScheme("Stroud-Secrest XI", weights, points, 7, citation)

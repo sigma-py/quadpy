@@ -2,7 +2,7 @@
 #
 import orthopy
 
-from .helpers import E1rScheme
+from ._helpers import E1rScheme
 from ..tools import scheme_from_rc
 
 

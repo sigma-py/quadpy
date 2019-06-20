@@ -142,6 +142,7 @@ def test_spherical_harmonic(scheme):
         (quadpy.sphere.stroud_u3_9_2(), 1.0e-13),
         (quadpy.sphere.stroud_u3_9_3(), 1.0e-13),
         (quadpy.sphere.stroud_u3_11_1(), 1.0e-13),
+        # TODO fix equation system in 11_2 for higher precision
         (quadpy.sphere.stroud_u3_11_2(), 1.0e-12),
         (quadpy.sphere.stroud_u3_11_3(), 1.0e-13),
         (quadpy.sphere.stroud_u3_14_1(), 1.0e-13),
@@ -249,6 +250,7 @@ def test_scheme_cartesian(scheme, tol):
         (quadpy.sphere.stroud_u3_9_2(), 1.0e-13),
         (quadpy.sphere.stroud_u3_9_3(), 1.0e-13),
         (quadpy.sphere.stroud_u3_11_1(), 1.0e-13),
+        # TODO fix equation system in 11_2 for higher precision
         (quadpy.sphere.stroud_u3_11_2(), 1.0e-12),
         (quadpy.sphere.stroud_u3_11_3(), 1.0e-13),
         (quadpy.sphere.stroud_u3_14_1(), 1.0e-13),

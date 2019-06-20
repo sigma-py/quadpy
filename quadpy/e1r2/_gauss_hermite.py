@@ -3,7 +3,7 @@
 import numpy
 import orthopy
 
-from .helpers import E1r2Scheme
+from ._helpers import E1r2Scheme
 from ..tools import scheme_from_rc
 
 
