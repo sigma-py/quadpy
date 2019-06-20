@@ -35,9 +35,9 @@ def transform(bary, simplex):
 
 def get_vol(simplex):
     # Compute the volume via the Cayley-Menger determinant
-    # <http://mathworld.wolfram.com/Cayley-MengerDeterminant.html>. One
-    # advantage is that it can compute the volume of the simplex indenpendent
-    # of the dimension of the space where it's embedded.
+    # <http://mathworld.wolfram.com/Cayley-MengerDeterminant.html>. One advantage is
+    # that it can compute the volume of the simplex indenpendent of the dimension of the
+    # space where it's embedded.
 
     # compute all edge lengths
     edges = numpy.subtract(simplex[:, None], simplex[None, :])

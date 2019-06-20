@@ -32,7 +32,8 @@ book = namedtuple("Book", ["authors", "title", "publisher", "year", "url", "note
 book.__new__.__defaults__ = (None,) * len(book._fields)
 
 techreport = namedtuple(
-    "Techreport", ["authors", "title", "year", "institution", "number", "url", "note"]
+    "Techreport",
+    ["authors", "title", "year", "month", "institution", "number", "url", "note"],
 )
 techreport.__new__.__defaults__ = (None,) * len(techreport._fields)
 

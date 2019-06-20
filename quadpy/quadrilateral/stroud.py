@@ -71,7 +71,7 @@ def stroud_c2_3_3(symbolic=False):
     return ncube.stroud_cn_3_6(2, symbolic)
 
 
-def stroud_c2_5_4(symbolic):
+def stroud_c2_5_4(symbolic=False):
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 

@@ -74,7 +74,7 @@ def stroud_1966_d(n, symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
 
-    assert n >= 3
+    assert n >= 3, "Only works for n >= 3, not n = {}".format(n)
     r = sqrt((5 * n - 2 * sqrt(5) + 2 * (n - 1) * sqrt(5 * n + 5)) / (15 * n))
     # This sqrt() is imaginary for negative for n=2.
     s = sqrt((5 * n - 2 * sqrt(5) - 2 * sqrt(5 * n + 5)) / (15 * n))

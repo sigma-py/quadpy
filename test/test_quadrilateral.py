@@ -8,7 +8,6 @@ import sympy
 
 import orthopy
 import quadpy
-from quadpy.quadrilateral import Product
 
 from helpers import check_degree_ortho
 
@@ -50,76 +49,216 @@ def _integrate_exact2(k, x0, x1, y0, y1):
 
 @pytest.mark.parametrize(
     "scheme,tol",
-    [(quadpy.quadrilateral.albrecht_collatz_1(), 1.0e-14) for k in [1, 2, 3, 4]]
-    + [(quadpy.quadrilateral.albrecht_collatz_2(), 1.0e-14) for k in [1, 2, 3, 4]]
-    + [(quadpy.quadrilateral.albrecht_collatz_3(), 1.0e-14) for k in [1, 2, 3, 4]]
-    + [(quadpy.quadrilateral.albrecht_collatz_4(), 1.0e-14) for k in [1, 2, 3, 4]]
-    + [(quadpy.quadrilateral.cohen_gismalla_1(), 1.0e-6)]
-    + [(quadpy.quadrilateral.cohen_gismalla_2(), 1.0e-6)]
-    + [(quadpy.quadrilateral.cools_haegemans_1985_1(), 1.0e-10)]
-    + [(quadpy.quadrilateral.cools_haegemans_1985_2(), 1.0e-10)]
-    + [(quadpy.quadrilateral.cools_haegemans_1985_3(), 1.0e-10)]
-    + [(quadpy.quadrilateral.CoolsHaegemans1988[k](), 1.0e-14) for k in [1, 2]]
-    + [(scheme(), 1.0e-13) for scheme in quadpy.quadrilateral.Dunavant.values()]
+    [
+        (quadpy.quadrilateral.albrecht_collatz_1(), 1.0e-14),
+        (quadpy.quadrilateral.albrecht_collatz_2(), 1.0e-14),
+        (quadpy.quadrilateral.albrecht_collatz_3(), 1.0e-14),
+        (quadpy.quadrilateral.albrecht_collatz_4(), 1.0e-14),
+    ]
+    + [
+        (quadpy.quadrilateral.cohen_gismalla_1(), 1.0e-6),
+        (quadpy.quadrilateral.cohen_gismalla_2(), 1.0e-6),
+    ]
+    + [
+        (quadpy.quadrilateral.cools_haegemans_1985_1(), 1.0e-10),
+        (quadpy.quadrilateral.cools_haegemans_1985_2(), 1.0e-10),
+        (quadpy.quadrilateral.cools_haegemans_1985_3(), 1.0e-10),
+    ]
+    + [
+        (quadpy.quadrilateral.cools_haegemans_1988_1(), 1.0e-14),
+        (quadpy.quadrilateral.cools_haegemans_1988_2(), 1.0e-14),
+    ]
+    + [
+        (quadpy.quadrilateral.dunavant_00(), 1.0e-13),
+        (quadpy.quadrilateral.dunavant_01(), 1.0e-13),
+        (quadpy.quadrilateral.dunavant_02(), 1.0e-13),
+        (quadpy.quadrilateral.dunavant_03(), 1.0e-13),
+        (quadpy.quadrilateral.dunavant_04(), 1.0e-13),
+        (quadpy.quadrilateral.dunavant_05(), 1.0e-13),
+        (quadpy.quadrilateral.dunavant_06(), 1.0e-13),
+        (quadpy.quadrilateral.dunavant_07(), 1.0e-13),
+        (quadpy.quadrilateral.dunavant_08(), 1.0e-13),
+        (quadpy.quadrilateral.dunavant_09(), 1.0e-13),
+        (quadpy.quadrilateral.dunavant_10(), 1.0e-13),
+    ]
     + [(quadpy.quadrilateral.franke_1(lmbda), 1.0e-13) for lmbda in [0.0, 1.0, -0.8]]
     + [
-        (scheme(), 1.0e-13)
-        for scheme in [
-            quadpy.quadrilateral.franke_2a,
-            quadpy.quadrilateral.franke_2b,
-            quadpy.quadrilateral.franke_3a,
-            quadpy.quadrilateral.franke_3b,
-            quadpy.quadrilateral.franke_3c,
-            quadpy.quadrilateral.franke_5,
-            quadpy.quadrilateral.franke_6,
-            quadpy.quadrilateral.franke_8,
-        ]
+        (quadpy.quadrilateral.franke_2a(), 1.0e-13),
+        (quadpy.quadrilateral.franke_3a(), 1.0e-13),
+        (quadpy.quadrilateral.franke_3b(), 1.0e-13),
+        (quadpy.quadrilateral.franke_3c(), 1.0e-13),
+        (quadpy.quadrilateral.franke_5(), 1.0e-13),
+        (quadpy.quadrilateral.franke_6(), 1.0e-13),
+        (quadpy.quadrilateral.franke_8(), 1.0e-13),
     ]
-    + [(quadpy.quadrilateral.HammerStroud[k](), 1.0e-14) for k in ["1-2", "2-2", "3-2"]]
-    + [(quadpy.quadrilateral.MorrowPatterson[k](), 1.0e-5) for k in [1, 2]]
     + [
-        (quadpy.quadrilateral.Stroud[k](), 1.0e-13)
-        for k in quadpy.quadrilateral.Stroud.keys()
+        (quadpy.quadrilateral.hammer_stroud_1_2(), 1.0e-13),
+        (quadpy.quadrilateral.hammer_stroud_2_2(), 1.0e-13),
+        (quadpy.quadrilateral.hammer_stroud_3_2(), 1.0e-13),
     ]
-    # + [
-    #     (quadpy.quadrilateral.StroudN(k), 1.0e-14)
-    #     for k in [
-    #         "Cn 1-1",
-    #         "Cn 1-2",
-    #         "Cn 2-1",
-    #         "Cn 2-2",
-    #         "Cn 3-1",
-    #         "Cn 3-2",
-    #         "Cn 3-3",
-    #         "Cn 3-4",
-    #         "Cn 3-5",
-    #         "Cn 3-6",
-    #         "Cn 5-2",
-    #         "Cn 5-3",
-    #         "Cn 5-4",
-    #         "Cn 5-5",
-    #         "Cn 5-6",
-    #         "Cn 5-7",
-    #         "Cn 5-9",
-    #         "cn 7-1"
-    #     ]
-    # ]
-    + [(quadpy.quadrilateral.HaegemansPiessens(), 1.0e-14)]
-    + [(quadpy.quadrilateral.PiessensHaegemans[k](), 1.0e-14) for k in [1, 2]]
-    # TODO better-quality points/weights for Schmidt
-    + [(quadpy.quadrilateral.Schmid[k](), 1.0e-10) for k in [2, 4, 6]]
-    + [(scheme(), 1.0e-13) for scheme in quadpy.quadrilateral.Sommariva.values()]
-    + [(quadpy.quadrilateral.Waldron(0.6, numpy.pi / 7), 1.0e-14)]
-    + [(scheme(), 1.0e-14) for scheme in quadpy.quadrilateral.WissmannBecker.values()]
-    + [(scheme(), 1.0e-14) for scheme in quadpy.quadrilateral.WitherdenVincent.values()]
-    + [(Product(quadpy.line_segment.Midpoint()), 1.0e-14)]
-    + [(Product(quadpy.line_segment.Trapezoidal()), 1.0e-14)]
-    + [(Product(quadpy.line_segment.GaussLegendre(k)), 1.0e-14) for k in range(1, 5)]
     + [
-        (Product(quadpy.line_segment.NewtonCotesClosed(k)), 1.0e-14)
+        (quadpy.quadrilateral.morrow_patterson_1(), 1.0e-5),
+        (quadpy.quadrilateral.morrow_patterson_2(), 1.0e-5),
+    ]
+    + [
+        (quadpy.quadrilateral.stroud_c2_1_1(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_1_2(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_3_1(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_3_2(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_3_3(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_3_4(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_3_5(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_5_1(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_5_2(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_5_3(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_5_4(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_5_5(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_5_6(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_5_7(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_7_1(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_7_2(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_7_3(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_7_4(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_7_5(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_7_6(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_9_1(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_11_1(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_11_2(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_13_1(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_15_1(), 1.0e-13),
+        (quadpy.quadrilateral.stroud_c2_15_2(), 1.0e-13),
+    ]
+    + [(quadpy.quadrilateral.haegemans_piessens(), 1.0e-14)]
+    + [
+        (quadpy.quadrilateral.piessens_haegemans_1(), 1.0e-14),
+        (quadpy.quadrilateral.piessens_haegemans_2(), 1.0e-14),
+    ]
+    + [
+        (quadpy.quadrilateral.schmid_2(), 1.0e-14),
+        (quadpy.quadrilateral.schmid_4(), 1.0e-14),
+        (quadpy.quadrilateral.schmid_6(), 1.0e-10),
+    ]
+    + [
+        (quadpy.quadrilateral.sommariva_01(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_02(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_03(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_04(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_05(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_06(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_07(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_08(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_09(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_10(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_11(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_12(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_13(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_14(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_15(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_16(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_17(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_18(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_19(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_20(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_21(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_22(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_23(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_24(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_25(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_26(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_27(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_28(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_29(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_30(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_31(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_32(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_33(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_34(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_35(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_36(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_37(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_38(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_39(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_40(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_41(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_42(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_43(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_44(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_45(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_46(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_47(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_48(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_49(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_50(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_51(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_52(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_53(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_54(), 1.0e-10),
+        (quadpy.quadrilateral.sommariva_55(), 1.0e-10),
+    ]
+    + [(quadpy.quadrilateral.waldron(0.6, numpy.pi / 7), 1.0e-14)]
+    + [
+        (quadpy.quadrilateral.wissmann_becker_4_1(), 1.0e-14),
+        (quadpy.quadrilateral.wissmann_becker_4_2(), 1.0e-14),
+        (quadpy.quadrilateral.wissmann_becker_6_1(), 1.0e-14),
+        (quadpy.quadrilateral.wissmann_becker_6_2(), 1.0e-14),
+        (quadpy.quadrilateral.wissmann_becker_8_1(), 1.0e-14),
+        (quadpy.quadrilateral.wissmann_becker_8_2(), 1.0e-14),
+    ]
+    + [
+        (quadpy.quadrilateral.witherden_vincent_01(), 1.0e-14),
+        (quadpy.quadrilateral.witherden_vincent_03(), 1.0e-14),
+        (quadpy.quadrilateral.witherden_vincent_05(), 1.0e-14),
+        # (quadpy.quadrilateral.witherden_vincent_07(), 1.0e-14), TODO
+        (quadpy.quadrilateral.witherden_vincent_09(), 1.0e-14),
+        (quadpy.quadrilateral.witherden_vincent_11(), 1.0e-14),
+        (quadpy.quadrilateral.witherden_vincent_13(), 1.0e-14),
+        (quadpy.quadrilateral.witherden_vincent_15(), 1.0e-14),
+        (quadpy.quadrilateral.witherden_vincent_17(), 1.0e-14),
+        (quadpy.quadrilateral.witherden_vincent_19(), 1.0e-14),
+        (quadpy.quadrilateral.witherden_vincent_21(), 1.0e-14),
+    ]
+    + [(quadpy.quadrilateral.product(quadpy.line_segment.Midpoint()), 1.0e-14)]
+    + [(quadpy.quadrilateral.product(quadpy.line_segment.Trapezoidal()), 1.0e-14)]
+    + [
+        (quadpy.quadrilateral.product(quadpy.line_segment.GaussLegendre(k)), 1.0e-14)
         for k in range(1, 5)
     ]
-    + [(Product(quadpy.line_segment.NewtonCotesOpen(k)), 1.0e-14) for k in range(6)],
+    + [
+        (
+            quadpy.quadrilateral.product(quadpy.line_segment.NewtonCotesClosed(k)),
+            1.0e-14,
+        )
+        for k in range(1, 5)
+    ]
+    + [
+        (quadpy.quadrilateral.product(quadpy.line_segment.NewtonCotesOpen(k)), 1.0e-14)
+        for k in range(6)
+    ]
+    + [
+        # (quadpy.ncube.dobrodeev_1970(2), 1.0e-14),
+        (quadpy.ncube.dobrodeev_1978(2), 1.0e-14),
+        (quadpy.ncube.hammer_stroud_1n(2), 1.0e-14),
+        (quadpy.ncube.hammer_stroud_2n(2), 1.0e-14),
+        (quadpy.ncube.stroud_cn_1_1(2), 1.0e-14),
+        (quadpy.ncube.stroud_cn_1_2(2), 1.0e-14),
+        (quadpy.ncube.stroud_cn_2_1(2), 1.0e-14),
+        (quadpy.ncube.stroud_cn_2_2(2), 1.0e-14),
+        (quadpy.ncube.stroud_cn_3_1(2), 1.0e-14),
+        (quadpy.ncube.stroud_cn_3_2(2), 1.0e-14),
+        (quadpy.ncube.stroud_cn_3_3(2), 1.0e-14),
+        (quadpy.ncube.stroud_cn_3_4(2), 1.0e-14),
+        (quadpy.ncube.stroud_cn_3_5(2), 1.0e-14),
+        (quadpy.ncube.stroud_cn_3_6(2), 1.0e-14),
+        (quadpy.ncube.stroud_cn_5_2(2), 1.0e-14),
+        (quadpy.ncube.stroud_cn_5_3(2), 1.0e-14),
+        (quadpy.ncube.stroud_cn_5_4(2), 1.0e-14),
+        (quadpy.ncube.stroud_cn_5_5(2), 1.0e-14),
+        (quadpy.ncube.stroud_cn_5_6(2), 1.0e-14),
+        (quadpy.ncube.stroud_cn_5_7(2), 1.0e-14),
+        # (quadpy.ncube.stroud_cn_5_8(2), 1.0e-14),
+        (quadpy.ncube.stroud_cn_5_9(2), 1.0e-14),
+        (quadpy.ncube.stroud_cn_7_1(2), 1.0e-14),
+    ],
 )
 def test_scheme(scheme, tol):
     # Test integration until we get to a polynomial degree `d` that can no
@@ -153,9 +292,11 @@ def test_scheme(scheme, tol):
     return
 
 
-@pytest.mark.parametrize("scheme", [Product(quadpy.line_segment.GaussLegendre(5))])
+@pytest.mark.parametrize(
+    "scheme", [quadpy.quadrilateral.product(quadpy.line_segment.GaussLegendre(5))]
+)
 def test_show(scheme):
-    quadpy.quadrilateral.show(scheme)
+    scheme.show()
     return
 
 

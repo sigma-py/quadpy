@@ -5,6 +5,7 @@ import numpy
 from .. import helpers
 from ..ncube import transform, NCubeScheme
 from ..ncube import ncube_points as rectangle_points
+from ..nsimplex import get_vol
 
 
 class QuadrilateralScheme(NCubeScheme):
@@ -41,8 +42,10 @@ class QuadrilateralScheme(NCubeScheme):
 
         transformed_pts = transform(self.points.T, quad)
 
-        # from .stroud import Stroud
-        vol = self.integrate(lambda x: 1.0, quad, Stroud["C2 1-1"]())
+        # compute volume by splitting it in two triangles
+        vol = get_vol(numpy.array([quad[0][0], quad[1][0], quad[0][1]])) + get_vol(
+            numpy.array([quad[0][0], quad[0][1], quad[1][1]])
+        )
         helpers.plot_disks(plt, transformed_pts, self.weights, vol)
         return
 
