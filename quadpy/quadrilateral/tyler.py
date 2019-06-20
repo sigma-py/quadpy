@@ -6,7 +6,7 @@ import numpy
 import sympy
 
 from .helpers import zero, symm_s, symm_r0, concat, QuadrilateralScheme
-from .helpers import article
+from ..helpers import article
 
 citation = article(
     authors=["G.W. Tyler"],

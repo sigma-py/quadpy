@@ -66,6 +66,7 @@ def schmid_4(symbolic=False):
 
 
 def schmid_6(symbolic=False):
+    # TODO better-quality points/weights for Schmidt
     points = numpy.array(
         [
             [+0.000000000000, +0.774596669241],

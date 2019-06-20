@@ -24,6 +24,8 @@ def dobrodeev_1970(n, symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
 
+    assert n >= 3, "Only works for n >= 3, not n = {}".format(n)
+
     A = frac(1, 8)
     B = frac(19 - 5 * n, 20)
     alpha = 35 * n * (5 * n - 33)
