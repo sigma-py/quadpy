@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import concat, symm_r0, symm_s, symm_s_t, zero, QuadrilateralScheme
+from ._helpers import concat, symm_r0, symm_s, symm_s_t, zero, QuadrilateralScheme
 from ..helpers import article
 
 citation = article(

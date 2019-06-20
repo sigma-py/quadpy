@@ -5,7 +5,7 @@ from __future__ import division
 import numpy
 import sympy
 
-from .helpers import zero, symm_s, symm_r0, concat, QuadrilateralScheme
+from ._helpers import zero, symm_s, symm_r0, concat, QuadrilateralScheme
 from ..helpers import article
 
 citation = article(

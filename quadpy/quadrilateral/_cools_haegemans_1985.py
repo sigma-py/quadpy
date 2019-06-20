@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # TODO There are three more schemes in the technical report
-from .helpers import QuadrilateralScheme, concat, symm_s_t, symm_r0, s4a
+from ._helpers import QuadrilateralScheme, concat, symm_s_t, symm_r0, s4a
 from ..helpers import techreport
 
 citation = techreport(

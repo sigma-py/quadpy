@@ -11,44 +11,7 @@ import quadpy
 
 from helpers import check_degree_ortho
 
-
-def _integrate_exact(f, quadrilateral):
-    xi = sympy.DeferredVector("xi")
-    pxi = (
-        quadrilateral[0] * 0.25 * (1.0 + xi[0]) * (1.0 + xi[1])
-        + quadrilateral[1] * 0.25 * (1.0 - xi[0]) * (1.0 + xi[1])
-        + quadrilateral[2] * 0.25 * (1.0 - xi[0]) * (1.0 - xi[1])
-        + quadrilateral[3] * 0.25 * (1.0 + xi[0]) * (1.0 - xi[1])
-    )
-    pxi = [sympy.expand(pxi[0]), sympy.expand(pxi[1])]
-    # determinant of the transformation matrix
-    det_J = +sympy.diff(pxi[0], xi[0]) * sympy.diff(pxi[1], xi[1]) - sympy.diff(
-        pxi[1], xi[0]
-    ) * sympy.diff(pxi[0], xi[1])
-    # we cannot use abs(), see <https://github.com/sympy/sympy/issues/4212>.
-    abs_det_J = sympy.Piecewise((det_J, det_J >= 0), (-det_J, det_J < 0))
-
-    g_xi = f(pxi)
-
-    exact = sympy.integrate(
-        sympy.integrate(abs_det_J * g_xi, (xi[1], -1, 1)), (xi[0], -1, 1)
-    )
-    return float(exact)
-
-
-def _integrate_exact2(k, x0, x1, y0, y1):
-    return (
-        1.0
-        / (k[0] + 1)
-        * (x1 ** (k[0] + 1) - x0 ** (k[0] + 1))
-        * 1.0
-        / (k[1] + 1)
-        * (y1 ** (k[1] + 1) - y0 ** (k[1] + 1))
-    )
-
-
-@pytest.mark.parametrize(
-    "scheme,tol",
+schemes = (
     [
         (quadpy.quadrilateral.albrecht_collatz_1(), 1.0e-14),
         (quadpy.quadrilateral.albrecht_collatz_2(), 1.0e-14),
@@ -258,8 +221,46 @@ def _integrate_exact2(k, x0, x1, y0, y1):
         # (quadpy.ncube.stroud_cn_5_8(2), 1.0e-14),
         (quadpy.ncube.stroud_cn_5_9(2), 1.0e-14),
         (quadpy.ncube.stroud_cn_7_1(2), 1.0e-14),
-    ],
+    ]
 )
+
+
+def _integrate_exact(f, quadrilateral):
+    xi = sympy.DeferredVector("xi")
+    pxi = (
+        quadrilateral[0] * 0.25 * (1.0 + xi[0]) * (1.0 + xi[1])
+        + quadrilateral[1] * 0.25 * (1.0 - xi[0]) * (1.0 + xi[1])
+        + quadrilateral[2] * 0.25 * (1.0 - xi[0]) * (1.0 - xi[1])
+        + quadrilateral[3] * 0.25 * (1.0 + xi[0]) * (1.0 - xi[1])
+    )
+    pxi = [sympy.expand(pxi[0]), sympy.expand(pxi[1])]
+    # determinant of the transformation matrix
+    det_J = +sympy.diff(pxi[0], xi[0]) * sympy.diff(pxi[1], xi[1]) - sympy.diff(
+        pxi[1], xi[0]
+    ) * sympy.diff(pxi[0], xi[1])
+    # we cannot use abs(), see <https://github.com/sympy/sympy/issues/4212>.
+    abs_det_J = sympy.Piecewise((det_J, det_J >= 0), (-det_J, det_J < 0))
+
+    g_xi = f(pxi)
+
+    exact = sympy.integrate(
+        sympy.integrate(abs_det_J * g_xi, (xi[1], -1, 1)), (xi[0], -1, 1)
+    )
+    return float(exact)
+
+
+def _integrate_exact2(k, x0, x1, y0, y1):
+    return (
+        1.0
+        / (k[0] + 1)
+        * (x1 ** (k[0] + 1) - x0 ** (k[0] + 1))
+        * 1.0
+        / (k[1] + 1)
+        * (y1 ** (k[1] + 1) - y0 ** (k[1] + 1))
+    )
+
+
+@pytest.mark.parametrize("scheme,tol", schemes)
 def test_scheme(scheme, tol):
     # Test integration until we get to a polynomial degree `d` that can no
     # longer be integrated exactly. The scheme's degree is `d-1`.
@@ -303,6 +304,10 @@ def test_show(scheme):
 if __name__ == "__main__":
     # scheme_ = Product(quadpy.line_segment.GaussLegendre(6))
     # scheme_ = quadpy.quadrilateral.HammerStroud("3-2")
-    scheme_ = quadpy.quadrilateral.Stroud["C2 3-2"]()
-    test_show(scheme_)
-    test_scheme(scheme_, 1.0e-14)
+    # scheme_ = quadpy.quadrilateral.Stroud["C2 3-2"]()
+    # test_show(scheme_)
+    # test_scheme(scheme_, 1.0e-14)
+    from helpers import find_equal
+
+    schemes_ = [scheme[0] for scheme in schemes]
+    find_equal(schemes_)

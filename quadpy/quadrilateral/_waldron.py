@@ -4,7 +4,7 @@ from __future__ import division
 
 import numpy
 
-from .helpers import QuadrilateralScheme
+from ._helpers import QuadrilateralScheme
 from ..helpers import techreport
 
 
