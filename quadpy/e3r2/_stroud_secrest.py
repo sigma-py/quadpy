@@ -1,18 +1,23 @@
 # -*- coding: utf-8 -*-
 #
-"""
-A.H. Stroud and D. Secrest,
-Approximate integration formulas for certain spherically symmetric regions,
-Math. Comp. 17 (1963), 105-135,
-<https://doi.org/10.1090/S0025-5718-1963-0161473-0>.
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
-from .helpers import E3r2Scheme
-from ..helpers import untangle, pm_roll, fsd, pm
+from ._helpers import E3r2Scheme
+from ..helpers import untangle, pm_roll, fsd, pm, article
+
+
+citation = article(
+    authors=["A.H. Stroud", "D. Secrest"],
+    title="Approximate integration formulas for certain spherically symmetric regions",
+    journal="Math. Comp.",
+    volume="17",
+    year="1963",
+    pages="105-135",
+    url="https://doi.org/10.1090/S0025-5718-1963-0161473-0",
+)
 
 
 def stroud_secrest_vii(symbolic=False):
@@ -33,7 +38,7 @@ def stroud_secrest_vii(symbolic=False):
     data = [(A, numpy.array([[0, 0, 0]])), (B, pm_roll(3, [nu, xi]))]
     points, weights = untangle(data)
     weights *= sqrt(pi) ** 3
-    return E3r2Scheme("Stroud-Secrest VII", 5, weights, points)
+    return E3r2Scheme("Stroud-Secrest VII", weights, points, 5, citation)
 
 
 def stroud_secrest_viii_a(symbolic=False):
@@ -46,7 +51,7 @@ def stroud_secrest_viii_a(symbolic=False):
     data = [(frac(4, 25), fsd(3, (r, 1))), (frac(1, 200), pm(3, s))]
     points, weights = untangle(data)
     weights *= sqrt(pi) ** 3
-    return E3r2Scheme("Stroud-Secrest VIIIa", 5, weights, points)
+    return E3r2Scheme("Stroud-Secrest VIIIa", weights, points, 5, citation)
 
 
 def stroud_secrest_viii_b(symbolic=False):
@@ -63,7 +68,7 @@ def stroud_secrest_viii_b(symbolic=False):
     ]
     points, weights = untangle(data)
     weights *= sqrt(pi) ** 3
-    return E3r2Scheme("Stroud-Secrest VIIIb", 5, weights, points)
+    return E3r2Scheme("Stroud-Secrest VIIIb", weights, points, 5, citation)
 
 
 def stroud_secrest_ix(symbolic=False):
@@ -81,10 +86,10 @@ def stroud_secrest_ix(symbolic=False):
     ]
     points, weights = untangle(data)
     weights *= sqrt(pi) ** 3
-    return E3r2Scheme("Stroud-Secrest IX", 5, weights, points)
+    return E3r2Scheme("Stroud-Secrest IX", weights, points, 5, citation)
 
 
-def stroud_secrest_x(positive, symbolic=False):
+def _stroud_secrest_x(positive, symbolic=False):
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
     pi = sympy.pi if symbolic else numpy.pi
 
@@ -108,10 +113,24 @@ def stroud_secrest_x(positive, symbolic=False):
     ]
     points, weights = untangle(data)
     weights *= sqrt(pi) ** 3
-    return E3r2Scheme("Stroud-Secrest X", 7, weights, points)
+    return E3r2Scheme(
+        "Stroud-Secrest X{}".format("a" if positive else "b"),
+        weights,
+        points,
+        7,
+        citation,
+    )
 
 
-def stroud_secrest_xi(positive, symbolic=False):
+def stroud_secrest_x_a(symbolic=False):
+    return _stroud_secrest_x(True, symbolic)
+
+
+def stroud_secrest_x_b(symbolic=False):
+    return _stroud_secrest_x(False, symbolic)
+
+
+def _stroud_secrest_xi(positive, symbolic=False):
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
     pi = sympy.pi if symbolic else numpy.pi
 
@@ -139,16 +158,12 @@ def stroud_secrest_xi(positive, symbolic=False):
     ]
     points, weights = untangle(data)
     weights *= sqrt(pi) ** 3
-    return E3r2Scheme("Stroud-Secrest X", 7, weights, points)
+    return E3r2Scheme("Stroud-Secrest XI", weights, points, 7, citation)
 
 
-StroudSecrest = {
-    "VII": stroud_secrest_vii,
-    "VIIIa": stroud_secrest_viii_a,
-    "VIIIb": stroud_secrest_viii_b,
-    "IX": stroud_secrest_ix,
-    "Xa": lambda symbolic=False: stroud_secrest_x(True, symbolic),
-    "Xb": lambda symbolic=False: stroud_secrest_x(False, symbolic),
-    "XIa": lambda symbolic=False: stroud_secrest_xi(True, symbolic),
-    "XIb": lambda symbolic=False: stroud_secrest_xi(False, symbolic),
-}
+def stroud_secrest_xi_a(symbolic=False):
+    return _stroud_secrest_xi(True, symbolic)
+
+
+def stroud_secrest_xi_b(symbolic=False):
+    return _stroud_secrest_xi(False, symbolic)
