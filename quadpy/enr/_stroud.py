@@ -11,10 +11,22 @@ import numpy
 import scipy.special
 import sympy
 
-from .stroud_secrest import StroudSecrest
+from ._stroud_secrest import (
+    stroud_secrest_ii as stroud_enr_3_1,
+    stroud_secrest_iii as stroud_enr_3_2,
+    stroud_secrest_iv as stroud_enr_5_1,
+)
 
-from .helpers import EnrScheme
-from ..helpers import untangle, pm_array0, fsd
+from ._helpers import EnrScheme
+from ..helpers import untangle, pm_array0, fsd, book
+
+
+citation = book(
+    authors=["Arthur Stroud"],
+    title="Approximate Calculation of Multiple Integrals",
+    publisher="Prentice Hall",
+    year="1971",
+)
 
 # ERR
 # TODO find mistake
@@ -35,7 +47,7 @@ from ..helpers import untangle, pm_array0, fsd
 #     return 5, data
 
 
-def stroud_5_3(n, symbolic=False):
+def stroud_enr_5_3(n, symbolic=False):
     """Spherical product Lobatto formula.
     """
     frac = sympy.Rational if symbolic else lambda x, y: x / y
@@ -55,10 +67,10 @@ def stroud_5_3(n, symbolic=False):
 
     points, weights = untangle(data)
     weights *= 2 * sqrt(pi) ** n * gamma(n) / gamma(frac(n, 2))
-    return EnrScheme("Stroud 5-3", n, 5, weights, points)
+    return EnrScheme("Stroud Enr 5-3", n, weights, points, 5, citation)
 
 
-def stroud_5_4(n, symbolic=False):
+def stroud_enr_5_4(n, symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
     pi = sympy.pi if symbolic else numpy.pi
@@ -72,7 +84,7 @@ def stroud_5_4(n, symbolic=False):
 
     points, weights = untangle(data)
     weights *= 2 * sqrt(pi) ** n * gamma(n) / gamma(frac(n, 2))
-    return EnrScheme("Stroud 5-4", n, 5, weights, points)
+    return EnrScheme("Stroud Enr 5-4", n, weights, points, 5, citation)
 
 
 # math domain error
@@ -118,13 +130,10 @@ def stroud_5_4(n, symbolic=False):
 #     return 7, data
 
 
-Stroud = {
-    "3-1": StroudSecrest["II"],
-    "3-2": StroudSecrest["III"],
-    "5-1": StroudSecrest["IV"],
-    # '5-2': _gen5_2,
-    "5-3": stroud_5_3,
-    "5-4": stroud_5_4,
-    # '5-5': _gen5_5,
-    # '7-1': _gen7_1,
-}
+__all__ = [
+    "stroud_enr_3_1",
+    "stroud_enr_3_2",
+    "stroud_enr_5_1",
+    "stroud_enr_5_3",
+    "stroud_enr_5_4",
+]
