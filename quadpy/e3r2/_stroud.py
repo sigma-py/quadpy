@@ -1,22 +1,33 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Arthur Stroud,
-Approximate Calculation of Multiple Integrals,
-Prentice Hall, 1971.
-"""
 from __future__ import division
 
 import numpy
 
-from .stroud_secrest import StroudSecrest
-
 from ..sphere import _stroud as sphere_stroud
-from ..helpers import untangle
-from .helpers import E3r2Scheme
+from ..helpers import untangle, book
+from ._helpers import E3r2Scheme
+
+from ._stroud_secrest import (
+    stroud_secrest_vii as stroud_e3r2_5_1,
+    stroud_secrest_viii_a as stroud_e3r2_5_2a,
+    stroud_secrest_viii_b as stroud_e3r2_5_2b,
+    stroud_secrest_ix as stroud_e3r2_5_3,
+    stroud_secrest_x_a as stroud_e3r2_7_1a,
+    stroud_secrest_x_b as stroud_e3r2_7_1b,
+    stroud_secrest_xi_a as stroud_e3r2_7_2a,
+    stroud_secrest_xi_b as stroud_e3r2_7_2b,
+)
+
+citation = book(
+    authors=["Arthur Stroud"],
+    title="Approximate Calculation of Multiple Integrals",
+    publisher="Prentice Hall",
+    year="1971",
+)
 
 
-def stroud_14_1(symbolic=False):
+def stroud_e3r2_14_1(symbolic=False):
     # Get the moments corresponding to monomials and the weight function omega(x) = x^2
     # * exp(-x^2):
     #
@@ -57,7 +68,7 @@ def stroud_14_1(symbolic=False):
         ]
     )
 
-    spherical_scheme = sphere_stroud.Stroud("U3 14-1")
+    spherical_scheme = sphere_stroud.stroud_u3_14_1()
     v = spherical_scheme.points
     B = spherical_scheme.weights
 
@@ -70,17 +81,17 @@ def stroud_14_1(symbolic=False):
 
     points, weights = untangle(data)
     weights *= numpy.sqrt(numpy.pi) ** 3
-    return E3r2Scheme("Stroud 14-1", 14, weights, points)
+    return E3r2Scheme("Stroud E3r2 14-1", weights, points, 14, citation)
 
 
-Stroud = {
-    "5-1": StroudSecrest["VII"],
-    "5-2a": StroudSecrest["VIIIa"],
-    "5-2b": StroudSecrest["VIIIb"],
-    "5-3": StroudSecrest["IX"],
-    "7-1a": StroudSecrest["Xa"],
-    "7-1b": StroudSecrest["Xb"],
-    "7-2a": StroudSecrest["XIa"],
-    "7-2b": StroudSecrest["XIb"],
-    "14-1": stroud_14_1,
-}
+__all__ = [
+    "stroud_e3r2_5_1",
+    "stroud_e3r2_5_2a",
+    "stroud_e3r2_5_2b",
+    "stroud_e3r2_5_3",
+    "stroud_e3r2_7_1a",
+    "stroud_e3r2_7_1b",
+    "stroud_e3r2_7_2a",
+    "stroud_e3r2_7_2b",
+    "stroud_e3r2_14_1",
+]
