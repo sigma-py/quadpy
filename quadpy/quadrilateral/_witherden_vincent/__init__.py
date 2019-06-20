@@ -5,7 +5,7 @@
 import json
 import os
 
-from ..helpers import concat, zero, symm_r0, symm_s, symm_s_t, QuadrilateralScheme
+from .._helpers import concat, zero, symm_r0, symm_s, symm_s_t, QuadrilateralScheme
 from ...helpers import article
 
 _citation = article(

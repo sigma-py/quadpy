@@ -8,7 +8,7 @@ import numpy
 import sympy
 
 from ..helpers import article
-from .helpers import (
+from ._helpers import (
     pm,
     pm2,
     concat,
@@ -18,6 +18,7 @@ from .helpers import (
     symm_s,
     symm_s_t,
 )
+from ._tyler import tyler_2
 
 citation = article(
     authors=["Richard Franke"],
@@ -162,21 +163,8 @@ def franke_3c(symbolic=False):
 
 
 def franke_5(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
-    r = sqrt(frac(6, 7))
-    s = sqrt(frac(114 - 3 * sqrt(583), 287))
-    t = sqrt(frac(114 + 3 * sqrt(583), 287))
-
-    weights, points = concat(
-        symm_r0([frac(98, 405), r]),
-        symm_s(
-            [frac(178981 + 2769 * sqrt(583), 472230), s],
-            [frac(178981 - 2769 * sqrt(583), 472230), t],
-        ),
-    )
-    return QuadrilateralScheme("Franke 5", weights, points, 7, citation)
+    # DUP
+    return tyler_2(symbolic)
 
 
 def franke_6(symbolic=False):

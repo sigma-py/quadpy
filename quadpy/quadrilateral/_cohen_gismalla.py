@@ -6,7 +6,7 @@ import warnings
 
 import sympy
 
-from .helpers import concat, zero, pm, QuadrilateralScheme
+from ._helpers import concat, zero, pm, QuadrilateralScheme
 from ..helpers import article
 
 citation = article(

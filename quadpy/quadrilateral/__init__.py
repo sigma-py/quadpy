@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 #
 
-from .albrecht_collatz import (
+from ._albrecht_collatz import (
     albrecht_collatz_1,
     albrecht_collatz_2,
     albrecht_collatz_3,
     albrecht_collatz_4,
 )
-from .burnside import burnside
-from .cohen_gismalla import cohen_gismalla_1, cohen_gismalla_2
-from .cools_haegemans_1985 import (
+from ._burnside import burnside
+from ._cohen_gismalla import cohen_gismalla_1, cohen_gismalla_2
+from ._cools_haegemans_1985 import (
     cools_haegemans_1985_1,
     cools_haegemans_1985_2,
     cools_haegemans_1985_3,
 )
-from .cools_haegemans_1988 import cools_haegemans_1988_1, cools_haegemans_1988_2
-from .dunavant import (
+from ._cools_haegemans_1988 import cools_haegemans_1988_1, cools_haegemans_1988_2
+from ._dunavant import (
     dunavant_00,
     dunavant_01,
     dunavant_02,
@@ -28,7 +28,7 @@ from .dunavant import (
     dunavant_09,
     dunavant_10,
 )
-from .franke import (
+from ._franke import (
     franke_1,
     franke_2a,
     franke_2b,
@@ -39,16 +39,16 @@ from .franke import (
     franke_6,
     franke_8,
 )
-from .hammer_stroud import hammer_stroud_1_2, hammer_stroud_2_2, hammer_stroud_3_2
-from .haegemans_piessens import haegemans_piessens
-from .irwin import irwin_1, irwin_2
-from .maxwell import maxwell
-from .meister import meister
-from .miller import miller
-from .morrow_patterson import morrow_patterson_1, morrow_patterson_2
-from .phillips import phillips
-from .piessens_haegemans import piessens_haegemans_1, piessens_haegemans_2
-from .rabinowitz_richter import (
+from ._hammer_stroud import hammer_stroud_1_2, hammer_stroud_2_2, hammer_stroud_3_2
+from ._haegemans_piessens import haegemans_piessens
+from ._irwin import irwin_1, irwin_2
+from ._maxwell import maxwell
+from ._meister import meister
+from ._miller import miller
+from ._morrow_patterson import morrow_patterson_1, morrow_patterson_2
+from ._phillips import phillips
+from ._piessens_haegemans import piessens_haegemans_1, piessens_haegemans_2
+from ._rabinowitz_richter import (
     rabinowitz_richter_1,
     rabinowitz_richter_2,
     rabinowitz_richter_3,
@@ -56,8 +56,8 @@ from .rabinowitz_richter import (
     rabinowitz_richter_5,
     rabinowitz_richter_6,
 )
-from .schmid import schmid_2, schmid_4, schmid_6
-from .sommariva import (
+from ._schmid import schmid_2, schmid_4, schmid_6
+from ._sommariva import (
     sommariva_01,
     sommariva_02,
     sommariva_03,
@@ -114,7 +114,7 @@ from .sommariva import (
     sommariva_54,
     sommariva_55,
 )
-from .stroud import (
+from ._stroud import (
     stroud_c2_1_1,
     stroud_c2_1_2,
     stroud_c2_3_1,
@@ -142,9 +142,9 @@ from .stroud import (
     stroud_c2_15_1,
     stroud_c2_15_2,
 )
-from .tyler import tyler_1, tyler_2, tyler_3
-from .waldron import waldron
-from .wissmann_becker import (
+from ._tyler import tyler_1, tyler_2, tyler_3
+from ._waldron import waldron
+from ._wissmann_becker import (
     wissmann_becker_4_1,
     wissmann_becker_4_2,
     wissmann_becker_6_1,
@@ -152,7 +152,7 @@ from .wissmann_becker import (
     wissmann_becker_8_1,
     wissmann_becker_8_2,
 )
-from .witherden_vincent import (
+from ._witherden_vincent import (
     witherden_vincent_01,
     witherden_vincent_03,
     witherden_vincent_05,
@@ -165,7 +165,7 @@ from .witherden_vincent import (
     witherden_vincent_19,
     witherden_vincent_21,
 )
-from .product import product
+from ._product import product
 
 from ..ncube import transform
 from ..ncube import ncube_points as rectangle_points

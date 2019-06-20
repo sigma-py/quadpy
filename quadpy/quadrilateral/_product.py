@@ -2,7 +2,7 @@
 #
 import numpy
 
-from .helpers import QuadrilateralScheme
+from ._helpers import QuadrilateralScheme
 
 
 def product(scheme1d):
