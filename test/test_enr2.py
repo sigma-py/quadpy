@@ -42,7 +42,7 @@ from helpers import check_degree, integrate_monomial_over_enr2
     + [quadpy.enr2.stroud_secrest_i(n) for n in range(2, 8)]
     + [quadpy.enr2.stroud_secrest_ii(n) for n in range(2, 8)]
     + [quadpy.enr2.stroud_secrest_iii(n) for n in range(2, 8)]
-    + [quadpy.enr2.stroud_secrest_iv(n) for n in range(2, 8)]
+    + [quadpy.enr2.stroud_secrest_iv(n) for n in range(2, 8)],
 )
 def test_scheme(scheme, tol=1.0e-14):
     assert scheme.points.dtype == numpy.float64, scheme.name

@@ -29,15 +29,8 @@ from ._stroud import (
     stroud_enr2_11_1a,
     stroud_enr2_11_1b,
 )
-from ._stroud_1967_5 import (
-    stroud_1967_5_a,
-    stroud_1967_5_b,
-)
-from ._stroud_1967_7 import (
-    stroud_1967_7_2a,
-    stroud_1967_7_2b,
-    stroud_1967_7_4,
-)
+from ._stroud_1967_5 import stroud_1967_5_a, stroud_1967_5_b
+from ._stroud_1967_7 import stroud_1967_7_2a, stroud_1967_7_2b, stroud_1967_7_4
 from ._stroud_secrest import (
     stroud_secrest_i,
     stroud_secrest_ii,

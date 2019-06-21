@@ -71,32 +71,36 @@ def _integrate_monomial_over_unit_wedge(k):
 
 @pytest.mark.parametrize(
     "scheme",
-    [scheme() for scheme in quadpy.wedge.Felippa.values()]
+    [
+        quadpy.wedge.felippa_1(),
+        quadpy.wedge.felippa_2(),
+        quadpy.wedge.felippa_3(),
+        quadpy.wedge.felippa_4(),
+        quadpy.wedge.felippa_5(),
+        quadpy.wedge.felippa_6(),
+    ]
     + [
-        quadpy.wedge.KubatkoYeagerMaggi[k]()
-        for k in [
-            "1",
-            "2a",
-            "2b",
-            "3a",
-            "3b",
-            "3c",
-            "3d",
-            "4a",
-            "4b",
-            "5a",
-            "5b",
-            "5c",
-            "6a",
-            "6b",
-            "6c",
-            "7a",
-            "7b",
-            "7c",
-            "8a",
-            "8b",
-            "9",
-        ]
+        quadpy.wedge.kubatko_yeager_maggi_1(),
+        quadpy.wedge.kubatko_yeager_maggi_2a(),
+        quadpy.wedge.kubatko_yeager_maggi_2b(),
+        quadpy.wedge.kubatko_yeager_maggi_3a(),
+        quadpy.wedge.kubatko_yeager_maggi_3b(),
+        quadpy.wedge.kubatko_yeager_maggi_3c(),
+        quadpy.wedge.kubatko_yeager_maggi_3d(),
+        quadpy.wedge.kubatko_yeager_maggi_4a(),
+        quadpy.wedge.kubatko_yeager_maggi_4b(),
+        quadpy.wedge.kubatko_yeager_maggi_5a(),
+        quadpy.wedge.kubatko_yeager_maggi_5b(),
+        quadpy.wedge.kubatko_yeager_maggi_5c(),
+        quadpy.wedge.kubatko_yeager_maggi_6a(),
+        quadpy.wedge.kubatko_yeager_maggi_6b(),
+        quadpy.wedge.kubatko_yeager_maggi_6c(),
+        quadpy.wedge.kubatko_yeager_maggi_7a(),
+        quadpy.wedge.kubatko_yeager_maggi_7b(),
+        quadpy.wedge.kubatko_yeager_maggi_7c(),
+        quadpy.wedge.kubatko_yeager_maggi_8a(),
+        quadpy.wedge.kubatko_yeager_maggi_8b(),
+        quadpy.wedge.kubatko_yeager_maggi_9(),
     ],
 )
 def test_scheme(scheme):
@@ -111,7 +115,7 @@ def test_scheme(scheme):
     )
 
     degree = check_degree(
-        lambda poly: quadpy.wedge.integrate(poly, wedge, scheme),
+        lambda poly: scheme.integrate(poly, wedge),
         # lambda k: _integrate_exact(k, wedge),
         _integrate_monomial_over_unit_wedge,
         3,
@@ -121,9 +125,9 @@ def test_scheme(scheme):
     return
 
 
-@pytest.mark.parametrize("scheme", [quadpy.wedge.Felippa[4]()])
+@pytest.mark.parametrize("scheme", [quadpy.wedge.felippa_4()])
 def test_show(scheme):
-    quadpy.wedge.show(scheme)
+    scheme.show(backend="mpl")
     return
 
 

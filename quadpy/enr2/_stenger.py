@@ -16,7 +16,7 @@ citation = article(
     month="oct",
     year="1971",
     pages="935+s58-s125",
-    url="https://www.jstor.org/stable/2004361"
+    url="https://www.jstor.org/stable/2004361",
 )
 
 
