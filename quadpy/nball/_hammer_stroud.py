@@ -1,18 +1,22 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Preston C. Hammer and Arthur H. Stroud,
-Numerical Evaluation of Multiple Integrals II,
-Math. Comp. 12 (1958), 272-280,
-<https://doi.org/10.1090/S0025-5718-1958-0102176-6>.
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
-from ..helpers import untangle, fsd, z
-from .helpers import volume_unit_ball, NBallScheme
+from ..helpers import untangle, fsd, z, article
+from ._helpers import volume_unit_ball, NBallScheme
+
+citation = article(
+    authors=["Preston C. Hammer", "Arthur H. Stroud"],
+    title="Numerical Evaluation of Multiple Integrals II",
+    journal="Math. Comp.",
+    volume="12",
+    year="1958",
+    pages="272-280",
+    url="https://doi.org/10.1090/S0025-5718-1958-0102176-6",
+)
 
 
 def hammer_stroud_11n(n, alpha, symbolic=False):
@@ -24,7 +28,7 @@ def hammer_stroud_11n(n, alpha, symbolic=False):
 
     points, weights = untangle(data)
     weights *= volume_unit_ball(n, symbolic=symbolic)
-    return NBallScheme("Hammer-Stroud 11n", n, 3, weights, points)
+    return NBallScheme("Hammer-Stroud 11n", n, weights, points, 3, citation)
 
 
 def hammer_stroud_12n(n, alpha, symbolic=False):
@@ -42,7 +46,4 @@ def hammer_stroud_12n(n, alpha, symbolic=False):
 
     points, weights = untangle(data)
     weights *= volume_unit_ball(n, symbolic=symbolic)
-    return NBallScheme("Hammer-Stroud 12n", n, 5, weights, points)
-
-
-HammerStroud = {"11n": hammer_stroud_11n, "12n": hammer_stroud_12n}
+    return NBallScheme("Hammer-Stroud 12n", n, weights, points, 5, citation)

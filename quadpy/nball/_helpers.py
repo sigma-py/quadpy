@@ -1,13 +1,26 @@
 # -*- coding: utf-8 -*-
 #
-import collections
+import numpy
 
 from ..nsphere._helpers import integrate_monomial_over_unit_nsphere
 
 
-NBallScheme = collections.namedtuple(
-    "NBallScheme", ["name", "dim", "degree", "weights", "points"]
-)
+class NBallScheme(object):
+    def __init__(self, name, dim, weights, points, degree, citation):
+        self.name = name
+        self.dim = dim
+        self.weights = weights
+        self.points = points
+        self.degree = degree
+        self.citation = citation
+        return
+
+    def integrate(self, f, center, radius, dot=numpy.dot):
+        center = numpy.array(center)
+        rr = numpy.multiply.outer(radius, self.points)
+        rr = numpy.swapaxes(rr, 0, -2)
+        ff = numpy.array(f((rr + center).T))
+        return numpy.array(radius) ** self.dim * dot(ff, self.weights)
 
 
 def volume_unit_ball(n, symbolic=False):

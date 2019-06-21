@@ -1,26 +1,23 @@
 # -*- coding: utf-8 -*-
 #
-"""
-L.N. Dobrodeev,
-Cubature rules with equal coefficients for integrating functions with
-respect to symmetric domains,
-USSR Computational Mathematics and Mathematical Physics,
-Volume 18, Issue 4, 1978, Pages 27-34,
-<https://doi.org/10.1016/0041-5553(78)90064-2>.
-
-Abstract:
-Three-parameter cubature sums, whose values have to be the same as the values of the
-computed integral on all polynomials of degree p <= 5, are investigated. The parameters
-are selected on the basis of a specific optimality criterion for a number of symmetric
-domains of integration, of dimensionalities 2 <= n <= 20.
-"""
 from __future__ import division
 
-from ..helpers import untangle, fsd, compute_dobrodeev
-from .helpers import integrate_monomial_over_unit_nball, NBallScheme
+from ..helpers import untangle, fsd, compute_dobrodeev, article
+from ._helpers import integrate_monomial_over_unit_nball, NBallScheme
+
+citation = article(
+    authors=["L.N. Dobrodeev"],
+    title="Cubature rules with equal coefficients for integrating functions with respect to symmetric domains",
+    journal="USSR Computational Mathematics and Mathematical Physics",
+    volume="18",
+    number="4",
+    year="1978",
+    pages="27-34",
+    url="https://doi.org/10.1016/0041-5553(78)90064-2",
+)
 
 
-def Dobrodeev1978(n, symbolic=False):
+def dobrodeev_1978(n, symbolic=False):
     assert 2 <= n <= 20
 
     dim_config = {
@@ -58,4 +55,4 @@ def Dobrodeev1978(n, symbolic=False):
 
     points, weights = untangle(data)
     weights *= I0
-    return NBallScheme("Dobrodeev 1978", n, 5, weights, points)
+    return NBallScheme("Dobrodeev 1978", n, weights, points, 5, citation)

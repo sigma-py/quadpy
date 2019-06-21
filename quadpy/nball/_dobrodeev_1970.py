@@ -1,23 +1,26 @@
 # -*- coding: utf-8 -*-
 #
-"""
-L.N. Dobrodeev,
-Cubature formulas of the seventh order of accuracy for a hypersphere and a
-hypercube,
-USSR Computational Mathematics and Mathematical Physics,
-Volume 10, Issue 1, 1970, Pages 252–253,
-<https://doi.org/10.1016/0041-5553(70)90084-4>.
-"""
 from __future__ import division
 import numpy
 import scipy.special
 import sympy
 
-from ..helpers import untangle, fsd, z
-from .helpers import NBallScheme
+from ..helpers import untangle, fsd, z, article
+from ._helpers import NBallScheme
+
+citation = article(
+    authors=["L.N. Dobrodeev"],
+    title="Cubature formulas of the seventh order of accuracy for a hypersphere and a hypercube",
+    journal="USSR Computational Mathematics and Mathematical Physics",
+    volume="10",
+    number="1",
+    year="1970",
+    pages="252–253",
+    url="https://doi.org/10.1016/0041-5553(70)90084-4",
+)
 
 
-def Dobrodeev1970(n, symbolic=False):
+def dobrodeev_1970(n, symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     pi = sympy.pi if symbolic else numpy.pi
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
@@ -48,4 +51,4 @@ def Dobrodeev1970(n, symbolic=False):
         / sqrt(pi) ** n
         * frac(27 * (n + 2) * (n + 4), (n + 6) ** 2)
     )
-    return NBallScheme("Dobrodeev 1970", n, 7, weights, points)
+    return NBallScheme("Dobrodeev 1970", n, weights, points, 7, citation)
