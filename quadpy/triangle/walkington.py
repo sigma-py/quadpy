@@ -5,7 +5,7 @@ from __future__ import division
 import numpy
 import sympy
 
-from ..nsimplex import walkington
+# from ..nsimplex import walkington
 
 
 class Walkington(object):
