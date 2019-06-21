@@ -10,44 +10,31 @@ from helpers import check_degree
 
 @pytest.mark.parametrize(
     "scheme",
-    [quadpy.nsimplex.GrundmannMoeller(dim, k) for dim in range(3, 7) for k in range(5)]
+    [quadpy.nsimplex.grundmann_moeller(dim, k) for dim in range(3, 7) for k in range(5)]
     #
-    + [
-        quadpy.nsimplex.Stroud(dim, index)
-        for dim in range(3, 7)
-        for index in [
-            "Tn 1-1",
-            "Tn 1-2",
-            "Tn 2-1a",
-            "Tn 2-1b",
-            "Tn 2-2",
-            "Tn 3-1",
-            "Tn 3-2",
-            "Tn 3-3",
-            "Tn 3-4",
-            "Tn 3-5",
-            "Tn 3-6a",
-            "Tn 3-6b",
-            "Tn 3-7",
-            "Tn 3-8",
-            "Tn 3-9",
-            "Tn 4-1",
-            "Tn 5-1",
-        ]
-    ]
-    + [
-        quadpy.nsimplex.Stroud(dim, index)
-        for dim in [3, 4, 6, 7]
-        for index in ["Tn 3-10", "Tn 3-11"]
-    ]
-    + [
-        quadpy.nsimplex.Stroud(dim, index)
-        for dim in range(4, 8)
-        for index in ["Tn 5-2"]
-    ]
+    + [quadpy.nsimplex.stroud_tn_1_1(dim) for dim in range(3, 7)]
+    + [quadpy.nsimplex.stroud_tn_1_2(dim) for dim in range(3, 7)]
+    + [quadpy.nsimplex.stroud_tn_2_1a(dim) for dim in range(3, 7)]
+    + [quadpy.nsimplex.stroud_tn_2_1b(dim) for dim in range(3, 7)]
+    + [quadpy.nsimplex.stroud_tn_2_2(dim) for dim in range(3, 7)]
+    + [quadpy.nsimplex.stroud_tn_3_1(dim) for dim in range(3, 7)]
+    + [quadpy.nsimplex.stroud_tn_3_2(dim) for dim in range(3, 7)]
+    + [quadpy.nsimplex.stroud_tn_3_3(dim) for dim in range(3, 7)]
+    + [quadpy.nsimplex.stroud_tn_3_4(dim) for dim in range(3, 7)]
+    + [quadpy.nsimplex.stroud_tn_3_5(dim) for dim in range(3, 7)]
+    + [quadpy.nsimplex.stroud_tn_3_6a(dim) for dim in range(3, 7)]
+    + [quadpy.nsimplex.stroud_tn_3_6b(dim) for dim in range(3, 7)]
+    + [quadpy.nsimplex.stroud_tn_3_7(dim) for dim in range(3, 7)]
+    + [quadpy.nsimplex.stroud_tn_3_8(dim) for dim in range(3, 7)]
+    + [quadpy.nsimplex.stroud_tn_3_9(dim) for dim in range(3, 7)]
+    + [quadpy.nsimplex.stroud_tn_4_1(dim) for dim in range(3, 7)]
+    + [quadpy.nsimplex.stroud_tn_5_1(dim) for dim in range(3, 7)]
+    + [quadpy.nsimplex.stroud_tn_3_10(dim) for dim in [3, 4, 6, 7]]
+    + [quadpy.nsimplex.stroud_tn_3_11(dim) for dim in [3, 4, 6, 7]]
+    + [quadpy.nsimplex.stroud_tn_52(dim) for dim in range(4, 8)]
     #
-    + [quadpy.nsimplex.Walkington(3, k) for k in [1, 2, 3, 5, 7]]
-    + [quadpy.nsimplex.Walkington(4, k) for dim in range(4, 7) for k in [1, 2, 3]],
+    + [quadpy.nsimplex.walkington_3(k) for k in [1, 2, 3, 5, 7]]
+    + [quadpy.nsimplex.walkington_4(k) for dim in range(4, 7) for k in [1, 2, 3]],
 )
 def test_scheme(scheme):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
