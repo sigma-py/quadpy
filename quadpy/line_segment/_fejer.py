@@ -2,10 +2,10 @@
 #
 import numpy
 
-from .helpers import LineSegmentScheme
+from ._helpers import LineSegmentScheme
 
 
-def Fejer1(n):
+def fejer_1(n):
     """
     Fejér-type-1 quadrature.
 
@@ -42,7 +42,7 @@ def Fejer1(n):
     return LineSegmentScheme("Fejér 1", degree, weights, points)
 
 
-def Fejer2(n):
+def fejer_2(n):
     """
     Fejér-type-2 quadrature.
 

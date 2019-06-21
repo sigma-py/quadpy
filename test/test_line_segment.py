@@ -13,18 +13,18 @@ from helpers import check_degree_1d
 
 @pytest.mark.parametrize(
     "scheme",
-    [quadpy.line_segment.Midpoint()]
-    + [quadpy.line_segment.Trapezoidal()]
-    + [quadpy.line_segment.ClenshawCurtis(k) for k in range(2, 10)]
-    + [quadpy.line_segment.GaussLegendre(k) for k in range(1, 6)]
-    + [quadpy.line_segment.GaussLobatto(k) for k in range(2, 7)]
-    + [quadpy.line_segment.GaussKronrod(k) for k in range(2, 7)]
-    + [quadpy.line_segment.GaussPatterson(k) for k in range(7)]
-    + [quadpy.line_segment.GaussRadau(k) for k in range(2, 10)]
-    + [quadpy.line_segment.Fejer1(k) for k in range(1, 10)]
-    + [quadpy.line_segment.Fejer2(k) for k in range(1, 10)]
-    + [quadpy.line_segment.NewtonCotesClosed(k) for k in range(1, 5)]
-    + [quadpy.line_segment.NewtonCotesOpen(k) for k in range(1, 5)],
+    [quadpy.line_segment.midpoint()]
+    + [quadpy.line_segment.trapezoidal()]
+    + [quadpy.line_segment.clenshaw_curtis(k) for k in range(2, 10)]
+    + [quadpy.line_segment.gauss_legendre(k) for k in range(1, 6)]
+    + [quadpy.line_segment.gauss_lobatto(k) for k in range(2, 7)]
+    + [quadpy.line_segment.gauss_kronrod(k) for k in range(2, 7)]
+    + [quadpy.line_segment.gauss_patterson(k) for k in range(7)]
+    + [quadpy.line_segment.gauss_radau(k) for k in range(2, 10)]
+    + [quadpy.line_segment.fejer_1(k) for k in range(1, 10)]
+    + [quadpy.line_segment.fejer_2(k) for k in range(1, 10)]
+    + [quadpy.line_segment.newton_cotes_closed(k) for k in range(1, 5)]
+    + [quadpy.line_segment.newton_cotes_open(k) for k in range(1, 5)],
 )
 def test_scheme(scheme):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
@@ -41,12 +41,12 @@ def test_scheme(scheme):
             ]
         )
         interval = numpy.array([[0.3], [0.5]])
-        val = quadpy.line_segment.integrate(lambda x: x[0] ** degree, interval, scheme)
+        val = scheme.integrate(lambda x: x[0] ** degree, interval)
         # same test with line embedded in R^2
         interval = numpy.array(
             [[0.5 ** (1.0 / (degree + 1)), 0.0], [1.5 ** (1.0 / (degree + 1)), 0.0]]
         )
-        val = quadpy.line_segment.integrate(lambda x: x[0] ** degree, interval, scheme)
+        val = scheme.integrate(lambda x: x[0] ** degree, interval)
         if abs(exact_val - val) > 1.0e-12 * abs(exact_val):
             break
         if degree >= scheme.degree:
@@ -57,7 +57,7 @@ def test_scheme(scheme):
 
 
 @pytest.mark.parametrize(
-    "scheme", [quadpy.line_segment.ChebyshevGauss1(k) for k in range(1, 10)]
+    "scheme", [quadpy.line_segment.chebyshev_gauss_1(k) for k in range(1, 10)]
 )
 def test_cheb1_scheme(scheme):
     def integrate_exact(k):
@@ -75,9 +75,7 @@ def test_cheb1_scheme(scheme):
         )
 
     degree = check_degree_1d(
-        lambda poly: quadpy.line_segment.integrate(
-            poly, numpy.array([[-1.0], [1.0]]), scheme
-        ),
+        lambda poly: scheme.integrate(poly, numpy.array([[-1.0], [1.0]])),
         integrate_exact,
         scheme.degree + 1,
     )
@@ -86,7 +84,7 @@ def test_cheb1_scheme(scheme):
 
 
 @pytest.mark.parametrize(
-    "scheme", [quadpy.line_segment.ChebyshevGauss2(k) for k in range(1, 10)]
+    "scheme", [quadpy.line_segment.chebyshev_gauss_2(k) for k in range(1, 10)]
 )
 def test_cheb2_scheme(scheme):
     def integrate_exact(k):
@@ -104,9 +102,7 @@ def test_cheb2_scheme(scheme):
         )
 
     degree = check_degree_1d(
-        lambda poly: quadpy.line_segment.integrate(
-            poly, numpy.array([[-1.0], [1.0]]), scheme
-        ),
+        lambda poly: scheme.integrate(poly, numpy.array([[-1.0], [1.0]])),
         integrate_exact,
         scheme.degree + 1,
     )
@@ -114,21 +110,20 @@ def test_cheb2_scheme(scheme):
     return
 
 
-@pytest.mark.parametrize("scheme", [quadpy.line_segment.NewtonCotesClosed(5)])
+@pytest.mark.parametrize("scheme", [quadpy.line_segment.newton_cotes_closed(5)])
 def test_show(scheme):
-    quadpy.line_segment.show(scheme)
+    scheme.show()
     return
 
 
 def test_integrate_split():
-    val = quadpy.line_segment.integrate_split(
+    val = quadpy.line_segment.trapezoidal().integrate_split(
         lambda r: 0.5108
         / r ** 2
         / numpy.sqrt(2 * 1.158 + 2 / r - 0.5108 ** 2 / (2 * r ** 2)),
         0.15,
         0.702,
         100,
-        quadpy.line_segment.Trapezoidal(),
     )
     reference = 0.961715
     assert abs(val - reference) < 1.0e-3 * reference
@@ -136,7 +131,7 @@ def test_integrate_split():
 
 
 def test_legendre_mpmath():
-    scheme = quadpy.line_segment.GaussLegendre(4, mode="mpmath", decimal_places=50)
+    scheme = quadpy.line_segment.gauss_legendre(4, mode="mpmath", decimal_places=50)
 
     tol = 1.0e-50
 
@@ -151,7 +146,7 @@ def test_legendre_mpmath():
 
 
 def test_chebyshev1_mpmath():
-    scheme = quadpy.line_segment.ChebyshevGauss1(4, mode="mpmath", decimal_places=50)
+    scheme = quadpy.line_segment.chebyshev_gauss_1(4, mode="mpmath", decimal_places=50)
     tol = 1.0e-50
 
     x1 = mp.cos(3 * mp.pi / 8)
@@ -165,7 +160,7 @@ def test_chebyshev1_mpmath():
 
 
 def test_chebyshev2_mpmath():
-    scheme = quadpy.line_segment.ChebyshevGauss2(4, mode="mpmath", decimal_places=51)
+    scheme = quadpy.line_segment.chebyshev_gauss_2(4, mode="mpmath", decimal_places=51)
 
     tol = 1.0e-50
 
@@ -180,7 +175,7 @@ def test_chebyshev2_mpmath():
 
 
 def test_jacobi_mpmath():
-    scheme = quadpy.line_segment.GaussJacobi(4, 1, 1, mode="mpmath", decimal_places=51)
+    scheme = quadpy.line_segment.gauss_jacobi(4, 1, 1, mode="mpmath", decimal_places=51)
 
     tol = 1.0e-50
 

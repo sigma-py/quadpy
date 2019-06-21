@@ -1,43 +1,39 @@
 # -*- coding: utf-8 -*-
 #
-from .chebyshev_gauss import ChebyshevGauss1, ChebyshevGauss2
-from .clenshaw_curtis import ClenshawCurtis
-from .fejer import Fejer1, Fejer2
-from .gauss_jacobi import GaussJacobi
-from .gauss_kronrod import GaussKronrod
-from .gauss_legendre import GaussLegendre
-from .gauss_lobatto import GaussLobatto
-from .gauss_patterson import GaussPatterson
-from .gauss_radau import GaussRadau
-from .midpoint import Midpoint
-from .newton_cotes import NewtonCotesOpen, NewtonCotesClosed
-from .trapezoidal import Trapezoidal
+from ._chebyshev_gauss import chebyshev_gauss_1, chebyshev_gauss_2
+from ._clenshaw_curtis import clenshaw_curtis
+from ._fejer import fejer_1, fejer_2
+from ._gauss_jacobi import gauss_jacobi
+from ._gauss_kronrod import gauss_kronrod
+from ._gauss_legendre import gauss_legendre
+from ._gauss_lobatto import gauss_lobatto
+from ._gauss_patterson import gauss_patterson
+from ._gauss_radau import gauss_radau
+from ._midpoint import midpoint
+from ._newton_cotes import newton_cotes_open, newton_cotes_closed
+from ._trapezoidal import trapezoidal
 
 from .tanh_sinh import tanh_sinh, tanh_sinh_lr
 
-from .tools import integrate, integrate_split, integrate_adaptive, show, plot
+from ._tools import integrate_adaptive
 
 __all__ = [
-    "ChebyshevGauss1",
-    "ChebyshevGauss2",
-    "ClenshawCurtis",
-    "Fejer1",
-    "Fejer2",
-    "GaussJacobi",
-    "GaussKronrod",
-    "GaussLegendre",
-    "GaussLobatto",
-    "GaussPatterson",
-    "GaussRadau",
-    "Midpoint",
-    "NewtonCotesOpen",
-    "NewtonCotesClosed",
-    "Trapezoidal",
+    "chebyshev_gauss_1",
+    "chebyshev_gauss_2",
+    "clenshaw_curtis",
+    "fejer_1",
+    "fejer_2",
+    "gauss_jacobi",
+    "gauss_kronrod",
+    "gauss_legendre",
+    "gauss_lobatto",
+    "gauss_patterson",
+    "gauss_radau",
+    "midpoint",
+    "newton_cotes_open",
+    "newton_cotes_closed",
+    "trapezoidal",
     "tanh_sinh",
     "tanh_sinh_lr",
-    "integrate",
-    "integrate_split",
     "integrate_adaptive",
-    "show",
-    "plot",
 ]

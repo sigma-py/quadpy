@@ -3,13 +3,10 @@
 import orthopy
 
 from ..tools import scheme_from_rc
-from .helpers import LineSegmentScheme
+from ._helpers import LineSegmentScheme
 
 
-def GaussJacobi(n, alpha, beta, mode="numpy", decimal_places=None):
-    """
-    Gauss-Jacobi quadrature.
-    """
+def gauss_jacobi(n, alpha, beta, mode="numpy", decimal_places=None):
     degree = 2 * n - 1
 
     _, _, a, b = orthopy.line_segment.recurrence_coefficients.jacobi(

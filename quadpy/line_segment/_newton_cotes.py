@@ -4,10 +4,10 @@ import math
 import numpy
 import sympy
 
-from .helpers import LineSegmentScheme
+from ._helpers import LineSegmentScheme
 
 
-def NewtonCotesClosed(index):
+def newton_cotes_closed(index):
     """
     Closed Newton-Cotes formulae.
     <https://en.wikipedia.org/wiki/Newton%E2%80%93Cotes_formulas#Closed_Newton.E2.80.93Cotes_formulae>,
@@ -37,7 +37,7 @@ def NewtonCotesClosed(index):
     return LineSegmentScheme("Newton-Cotes (closed)", degree, weights, points)
 
 
-def NewtonCotesOpen(index):
+def newton_cotes_open(index):
     """
     Open Newton-Cotes formulae.
     <https://math.stackexchange.com/a/1959071/36678>

@@ -13,12 +13,12 @@ from .albrecht_collatz import AlbrechtCollatz
 from .hammer_marlowe_stroud import HammerMarloweStroud
 
 from .helpers import TriangleScheme
-from ..line_segment.gauss_legendre import GaussLegendre
+from ..line_segment import gauss_legendre
 
 
 def stroud_7_1():
     # conical product Gauss
-    gl4 = GaussLegendre(4)
+    gl4 = gauss_legendre(4)
     r = (gl4.points + 1) / 2
     A = gl4.weights / 2
 

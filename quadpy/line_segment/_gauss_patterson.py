@@ -2,12 +2,11 @@
 #
 import numpy
 
-from .gauss_legendre import GaussLegendre
-from .tools import integrate
-from .helpers import LineSegmentScheme
+from ._gauss_legendre import gauss_legendre
+from ._helpers import LineSegmentScheme
 
 
-def GaussPatterson(index):
+def gauss_patterson(index):
     """
     Gauss-Patterson quadrature.
     <https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_patterson/quadrature_rules_patterson.html>
@@ -216,10 +215,8 @@ def _get_weights(pts):
     k = (n // 2) - 1 if n % 2 == 0 else (n + 1) // 2
     out = numpy.array(
         [
-            integrate(
-                lambda x, i=i: L(i, x[0]),
-                numpy.array([[-1.0], [1.0]]),
-                GaussLegendre(k),
+            gauss_legendre(k).integrate(
+                lambda x, i=i: L(i, x[0]), numpy.array([[-1.0], [1.0]])
             )
             / numpy.prod([(pts[i] - pts[j]) for j in range(n) if j != i])
             for i in range(n)

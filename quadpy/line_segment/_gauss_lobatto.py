@@ -4,13 +4,10 @@ import numpy
 import orthopy
 
 from ..tools import scheme_from_rc
-from .helpers import LineSegmentScheme
+from ._helpers import LineSegmentScheme
 
 
-def GaussLobatto(n, a=0.0, b=0.0):
-    """
-    Gauss-Lobatto quadrature.
-    """
+def gauss_lobatto(n, a=0.0, b=0.0):
     assert n >= 2
     degree = 2 * n - 3
     # TODO use symbolic=False instead of float()
