@@ -1,26 +1,31 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Carlos Felippa,
-A compendium of FEM integration formulas for symbolic work,
-Engineering Computation,
-Volume 21, Number 8, 2004, pages 867-890.
-
-<https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_wedge/quadrature_rules_wedge.html>
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
-from ..helpers import untangle
-from .helpers import WedgeScheme
+from ..helpers import untangle, article
+from ._helpers import WedgeScheme
+
+citation = article(
+    authors=["Carlos Felippa"],
+    title="A compendium of FEM integration formulas for symbolic work",
+    journal="Engineering Computation",
+    volume="21",
+    number="8",
+    year="2004",
+    pages="867-890",
+    url="https://doi.org/10.1108/02644400410554362",
+)
+
+# <https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_wedge/quadrature_rules_wedge.html>
 
 
 def felippa_1(symbolic=False):
     data = [(1, _s3(symbolic))]
     points, weights = untangle(data)
-    return WedgeScheme("Felippa 1", 1, weights, points)
+    return WedgeScheme("Felippa 1", weights, points, 1, citation)
 
 
 def felippa_2(symbolic=False):
@@ -29,7 +34,7 @@ def felippa_2(symbolic=False):
 
     data = [(frac(1, 6), _s21_z(frac(1, 6), sqrt(frac(1, 3))))]
     points, weights = untangle(data)
-    return WedgeScheme("Felippa 2", 2, weights, points)
+    return WedgeScheme("Felippa 2", weights, points, 2, citation)
 
 
 def felippa_3(symbolic=False):
@@ -38,7 +43,7 @@ def felippa_3(symbolic=False):
 
     data = [(frac(1, 6), _s21_z(frac(1, 2), sqrt(frac(1, 3))))]
     points, weights = untangle(data)
-    return WedgeScheme("Felippa 3", 2, weights, points)
+    return WedgeScheme("Felippa 3", weights, points, 2, citation)
 
 
 def felippa_4(symbolic=False):
@@ -56,7 +61,7 @@ def felippa_4(symbolic=False):
         (0.4886744162458750e-01, _s21(a1)),
     ]
     points, weights = untangle(data)
-    return WedgeScheme("Felippa 4", 4, weights, points)
+    return WedgeScheme("Felippa 4", weights, points, 4, citation)
 
 
 def felippa_5(symbolic=False):
@@ -73,7 +78,7 @@ def felippa_5(symbolic=False):
         (frac(1, 10), _s3(symbolic)),
     ]
     points, weights = untangle(data)
-    return WedgeScheme("Felippa 5", 5, weights, points)
+    return WedgeScheme("Felippa 5", weights, points, 5, citation)
 
 
 def felippa_6():
@@ -92,7 +97,7 @@ def felippa_6():
         ),
     ]
     points, weights = untangle(data)
-    return WedgeScheme("Felippa 6", 6, weights, points)
+    return WedgeScheme("Felippa 6", weights, points, 6, citation)
 
 
 def _s3(symbolic):
@@ -131,13 +136,3 @@ def _s111_z(a, b, z):
         [a, c, -z],
         [b, a, -z],
     ]
-
-
-Felippa = {
-    1: felippa_1,
-    2: felippa_2,
-    3: felippa_3,
-    4: felippa_4,
-    5: felippa_5,
-    6: felippa_6,
-}

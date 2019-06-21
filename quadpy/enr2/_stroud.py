@@ -20,7 +20,7 @@ from ._stroud_1967_5 import (
 from ._stroud_1967_7 import (
     stroud_1967_7_2a as stroud_enr2_7_1a,
     stroud_1967_7_2b as stroud_enr2_7_1b,
-    stroud_1967_7_4 as stroud_enr2_7_2
+    stroud_1967_7_4 as stroud_enr2_7_2,
 )
 from ._stroud_secrest import (
     stroud_secrest_i as stroud_enr2_3_1,
