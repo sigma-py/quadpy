@@ -4,12 +4,10 @@ import numpy
 import orthopy
 
 from ..tools import scheme_from_rc
-from .helpers import LineSegmentScheme
+from ._helpers import LineSegmentScheme
 
 
-def GaussRadau(n, a=0.0, b=0.0):
-    """Gauss-Radau quadrature.
-    """
+def gauss_radau(n, a=0.0, b=0.0):
     assert n >= 2
     degree = 2 * n - 1
     _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.jacobi(

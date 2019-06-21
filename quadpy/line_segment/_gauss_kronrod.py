@@ -5,12 +5,13 @@ import math
 import numpy
 import orthopy
 
-from .gauss_legendre import GaussLegendre
+from ._gauss_legendre import gauss_legendre
 
+from ._helpers import LineSegmentScheme
 from ..tools import scheme_from_rc
 
 
-class GaussKronrod(object):
+def gauss_kronrod(n, a=0.0, b=0.0):
     """
     Gauss-Kronrod quadrature; see
     <https://en.wikipedia.org/wiki/Gauss%E2%80%93Kronrod_quadrature_formula>.
@@ -35,76 +36,75 @@ class GaussKronrod(object):
     Jacobi-Kronrod matrix analytically. The nodes and weights can then be computed
     directly by standard software for Gaussian quadrature formulas.
     """
+    # The general scheme is:
+    # Get the Jacobi recurrence coefficients, get the Kronrod vectors alpha and
+    # beta, and hand those off to scheme_from_rc. There, the eigenproblem for a
+    # tridiagonal matrix with alpha and beta is solved to retrieve the points and
+    # weights.
+    # TODO replace math.ceil by -(-k//n)
+    length = int(math.ceil(3 * n / 2.0)) + 1
+    degree = 2 * length + 1
+    _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.jacobi(
+        length, a, b, "monic"
+    )
+    flt = numpy.vectorize(float)
+    alpha = flt(alpha)
+    beta = flt(beta)
+    a, b = _r_kronrod(n, alpha, beta)
+    x, w = scheme_from_rc(a, b, mode="numpy")
+    # sort by x
+    i = numpy.argsort(x)
+    points = x[i]
+    weights = w[i]
+    return LineSegmentScheme("Gauss-Kronrod ({})".format(n), degree, weights, points)
 
-    def __init__(self, n, a=0.0, b=0.0):
-        # The general scheme is:
-        # Get the Jacobi recurrence coefficients, get the Kronrod vectors alpha and
-        # beta, and hand those off to scheme_from_rc. There, the eigenproblem for a
-        # tridiagonal matrix with alpha and beta is solved to retrieve the points and
-        # weights.
-        # TODO replace math.ceil by -(-k//n)
-        length = int(math.ceil(3 * n / 2.0)) + 1
-        self.degree = 2 * length + 1
-        _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.jacobi(
-            length, a, b, "monic"
+
+def _r_kronrod(n, a0, b0):
+    assert len(a0) == int(math.ceil(3 * n / 2.0)) + 1
+    assert len(b0) == int(math.ceil(3 * n / 2.0)) + 1
+
+    a = numpy.zeros(2 * n + 1)
+    b = numpy.zeros(2 * n + 1)
+
+    k = int(math.floor(3 * n / 2.0)) + 1
+    a[:k] = a0[:k]
+    k = int(math.ceil(3 * n / 2.0)) + 1
+    b[:k] = b0[:k]
+    s = numpy.zeros(int(math.floor(n / 2.0)) + 2)
+    t = numpy.zeros(int(math.floor(n / 2.0)) + 2)
+    t[1] = b[n + 1]
+    for m in range(n - 1):
+        k0 = int(math.floor((m + 1) / 2.0))
+        k = numpy.arange(k0, -1, -1)
+        L = m - k
+        s[k + 1] = numpy.cumsum(
+            (a[k + n + 1] - a[L]) * t[k + 1] + b[k + n + 1] * s[k] - b[L] * s[k + 1]
         )
-        flt = numpy.vectorize(float)
-        alpha = flt(alpha)
-        beta = flt(beta)
-        a, b = self.r_kronrod(n, alpha, beta)
-        x, w = scheme_from_rc(a, b, mode="numpy")
-        # sort by x
-        i = numpy.argsort(x)
-        self.points = x[i]
-        self.weights = w[i]
-        return
+        s, t = t, s
 
-    def r_kronrod(self, n, a0, b0):
-        assert len(a0) == int(math.ceil(3 * n / 2.0)) + 1
-        assert len(b0) == int(math.ceil(3 * n / 2.0)) + 1
+    j = int(math.floor(n / 2.0)) + 1
+    s[1 : j + 1] = s[:j]
+    for m in range(n - 1, 2 * n - 2):
+        k0 = m + 1 - n
+        k1 = int(math.floor((m - 1) / 2.0))
+        k = numpy.arange(k0, k1 + 1)
+        L = m - k
+        j = n - 1 - L
+        s[j + 1] = numpy.cumsum(
+            -(a[k + n + 1] - a[L]) * t[j + 1]
+            - b[k + n + 1] * s[j + 1]
+            + b[L] * s[j + 2]
+        )
+        j = j[-1]
+        k = int(math.floor((m + 1) / 2.0))
+        if m % 2 == 0:
+            a[k + n + 1] = a[k] + (s[j + 1] - b[k + n + 1] * s[j + 2]) / t[j + 2]
+        else:
+            b[k + n + 1] = s[j + 1] / s[j + 2]
+        s, t = t, s
 
-        a = numpy.zeros(2 * n + 1)
-        b = numpy.zeros(2 * n + 1)
-
-        k = int(math.floor(3 * n / 2.0)) + 1
-        a[:k] = a0[:k]
-        k = int(math.ceil(3 * n / 2.0)) + 1
-        b[:k] = b0[:k]
-        s = numpy.zeros(int(math.floor(n / 2.0)) + 2)
-        t = numpy.zeros(int(math.floor(n / 2.0)) + 2)
-        t[1] = b[n + 1]
-        for m in range(n - 1):
-            k0 = int(math.floor((m + 1) / 2.0))
-            k = numpy.arange(k0, -1, -1)
-            L = m - k
-            s[k + 1] = numpy.cumsum(
-                (a[k + n + 1] - a[L]) * t[k + 1] + b[k + n + 1] * s[k] - b[L] * s[k + 1]
-            )
-            s, t = t, s
-
-        j = int(math.floor(n / 2.0)) + 1
-        s[1 : j + 1] = s[:j]
-        for m in range(n - 1, 2 * n - 2):
-            k0 = m + 1 - n
-            k1 = int(math.floor((m - 1) / 2.0))
-            k = numpy.arange(k0, k1 + 1)
-            L = m - k
-            j = n - 1 - L
-            s[j + 1] = numpy.cumsum(
-                -(a[k + n + 1] - a[L]) * t[j + 1]
-                - b[k + n + 1] * s[j + 1]
-                + b[L] * s[j + 2]
-            )
-            j = j[-1]
-            k = int(math.floor((m + 1) / 2.0))
-            if m % 2 == 0:
-                a[k + n + 1] = a[k] + (s[j + 1] - b[k + n + 1] * s[j + 2]) / t[j + 2]
-            else:
-                b[k + n + 1] = s[j + 1] / s[j + 2]
-            s, t = t, s
-
-        a[2 * n] = a[n - 1] - b[2 * n] * s[1] / t[1]
-        return a, b
+    a[2 * n] = a[n - 1] - b[2 * n] * s[1] / t[1]
+    return a, b
 
 
 def _gauss_kronrod_integrate(k, f, interval, dot=numpy.dot):
@@ -118,10 +118,10 @@ def _gauss_kronrod_integrate(k, f, interval, dot=numpy.dot):
         """
         return 0.5 * interval_length * dot(values, weights)
 
-    # Compute the integral estimations according to Gauss and Gauss-Kronrod,
-    # sharing the function evaluations
-    scheme = GaussKronrod(k)
-    gauss_weights = GaussLegendre(k).weights
+    # Compute the integral estimations according to Gauss and Gauss-Kronrod, sharing the
+    # function evaluations
+    scheme = gauss_kronrod(k)
+    gauss_weights = gauss_legendre(k).weights
     sp = _scale_points(scheme.points, interval)
     point_vals_gk = f(sp)
     assert point_vals_gk.shape[-len(sp.shape) :] == sp.shape, (

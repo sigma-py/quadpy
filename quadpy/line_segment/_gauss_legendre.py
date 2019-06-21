@@ -4,13 +4,10 @@ import numpy
 import orthopy
 
 from ..tools import scheme_from_rc
-from .helpers import LineSegmentScheme
+from ._helpers import LineSegmentScheme
 
 
-def GaussLegendre(n, mode="numpy", decimal_places=None):
-    """
-    Gauss-Legendre quadrature.
-    """
+def gauss_legendre(n, mode="numpy", decimal_places=None):
     degree = 2 * n - 1
 
     if mode == "numpy":

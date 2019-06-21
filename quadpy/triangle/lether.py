@@ -19,12 +19,12 @@ from __future__ import division
 
 import numpy
 
-from ..line_segment import GaussLegendre
+from ..line_segment import gauss_legendre
 from .helpers import TriangleScheme
 
 
 def Lether(n):
-    gl = GaussLegendre(n)
+    gl = gauss_legendre(n)
 
     w = numpy.outer((1 + gl.points) * gl.weights, gl.weights) / 4
     x = numpy.outer(1 - gl.points, numpy.ones(n)) / 2

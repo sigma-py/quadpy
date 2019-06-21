@@ -4,10 +4,10 @@ import numpy
 import orthopy
 
 from ..tools import scheme_from_rc
-from .helpers import LineSegmentScheme
+from ._helpers import LineSegmentScheme
 
 
-def ChebyshevGauss1(n, mode="numpy", decimal_places=None):
+def chebyshev_gauss_1(n, mode="numpy", decimal_places=None):
     """
     Chebyshev-Gauss quadrature for \\int_{-1}^1 f(x) / sqrt(1+x^2) dx.
     """
@@ -25,7 +25,7 @@ def ChebyshevGauss1(n, mode="numpy", decimal_places=None):
     return LineSegmentScheme("Chebyshev-Gauss 1", degree, weights, points)
 
 
-def ChebyshevGauss2(n, mode="numpy", decimal_places=None):
+def chebyshev_gauss_2(n, mode="numpy", decimal_places=None):
     """
     Chebyshev-Gauss quadrature for \\int_{-1}^1 f(x) * sqrt(1+x^2) dx.
     """

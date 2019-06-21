@@ -2,10 +2,10 @@
 #
 import numpy
 
-from .helpers import LineSegmentScheme
+from ._helpers import LineSegmentScheme
 
 
-def ClenshawCurtis(n):
+def clenshaw_curtis(n):
     """
     Clenshaw-Curtis quadrature.
 
@@ -14,7 +14,6 @@ def ClenshawCurtis(n):
     J. Waldvogel,
     Fast Construction of the Fejér and Clenshaw–Curtis Quadrature Rules,
     BIT Numerical Mathematics, March 2006, Volume 46, Issue 1, pp 195–202,
-    DOI: 10.1007/s10543-006-0045-4,
     <https://doi.org/10.1007/s10543-006-0045-4>.
     """
     degree = n

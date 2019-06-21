@@ -4,7 +4,7 @@ from __future__ import division
 
 import numpy
 
-from ..line_segment.gauss_legendre import GaussLegendre
+from ..line_segment import gauss_legendre
 from ..nsimplex.stroud import Stroud as nsimplex_Stroud
 
 
@@ -34,7 +34,7 @@ class T371(object):
     def __init__(self):
         self.degree = 7
 
-        gl4 = GaussLegendre(4)
+        gl4 = gauss_legendre(4)
         r = (gl4.points + 1) / 2
         A = gl4.weights / 2
 

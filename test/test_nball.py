@@ -30,7 +30,7 @@ from helpers import check_degree
     + [quadpy.nball.stroud_sn_9_1a(dim) for dim in range(3, 7)]
     + [quadpy.nball.stroud_sn_9_1b(dim) for dim in range(4, 7)]
     + [quadpy.nball.stroud_sn_11_1a(dim) for dim in [3, 4]]
-    + [quadpy.nball.stroud_sn_11_1b(dim) for dim in [4, 5]]
+    + [quadpy.nball.stroud_sn_11_1b(dim) for dim in [4, 5]],
 )
 def test_scheme(scheme):
     assert scheme.points.dtype == numpy.float64, scheme.name
