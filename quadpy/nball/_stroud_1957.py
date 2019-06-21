@@ -1,22 +1,27 @@
 # -*- coding: utf-8 -*-
 #
-"""
-A. H. Stroud,
-Remarks on the Disposition of Points in Numerical Integration Formulas,
-Mathematical Tables and Other Aids to Computation,
-Vol. 11, No. 60 (Oct., 1957), pp. 257-261,
-<https://doi.org/10.2307/2001945>.
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
-from ..helpers import untangle
-from .helpers import volume_unit_ball, NBallScheme
+from ..helpers import untangle, article
+from ._helpers import volume_unit_ball, NBallScheme
+
+citation = article(
+    authors=["A.H. Stroud"],
+    title="Remarks on the Disposition of Points in Numerical Integration Formulas",
+    journal="Mathematical Tables and Other Aids to Computation",
+    volume="11",
+    number="60",
+    month="oct",
+    year="1957",
+    pages="257-261",
+    url="https://doi.org/10.2307/2001945",
+)
 
 
-def Stroud_1957(n, symbolic=False):
+def stroud_1957(n, symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     pi = sympy.pi if symbolic else numpy.pi
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
@@ -48,4 +53,4 @@ def Stroud_1957(n, symbolic=False):
     points, weights = untangle(data)
 
     weights *= volume_unit_ball(n, symbolic=symbolic)
-    return NBallScheme("Stroud 1957", n, 2, weights, points)
+    return NBallScheme("Stroud 1957", n, weights, points, 2, citation)

@@ -1,15 +1,21 @@
 # -*- coding: utf-8 -*-
 #
-"""
-A.H. Stroud,
-Some fifth degree integration formulas for symmetric regions II,
-Numerische Mathematik, Volume 9 Issue 5, April 1967, Pages 460-468
-<https://doi.org/10.1007/BF02162160>.
-"""
 import numpy
 
-from ..helpers import untangle, combine
-from .helpers import volume_unit_ball, NBallScheme
+from ..helpers import untangle, combine, article
+from ._helpers import volume_unit_ball, NBallScheme
+
+citation = article(
+    authors=["A.H. Stroud"],
+    title="Some fifth degree integration formulas for symmetric regions II",
+    journal="Numerische Mathematik",
+    volume="9",
+    number="5",
+    month="apr",
+    year="1967",
+    pages="460-468",
+    url="https://doi.org/10.1007/BF02162160",
+)
 
 
 def stroud_1967_5_a(n):
@@ -64,7 +70,7 @@ def stroud_1967_5_a(n):
 
     points, weights = untangle(data)
     weights *= volume_unit_ball(n, symbolic=False)
-    return NBallScheme("Stroud 1967-5 a", n, 5, weights, points)
+    return NBallScheme("Stroud 1967-5 a", n, weights, points, 5, citation)
 
 
 def stroud_1967_5_b(n):
@@ -119,7 +125,4 @@ def stroud_1967_5_b(n):
 
     points, weights = untangle(data)
     weights *= volume_unit_ball(n, symbolic=False)
-    return NBallScheme("Stroud 1967-5 b", n, 5, weights, points)
-
-
-Stroud_1967_5 = {"a": stroud_1967_5_a, "b": stroud_1967_5_b}
+    return NBallScheme("Stroud 1967-5 b", n, weights, points, 5, citation)

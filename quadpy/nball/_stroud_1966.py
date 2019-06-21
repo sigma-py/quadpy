@@ -1,20 +1,24 @@
 # -*- coding: utf-8 -*-
 #
-"""
-A.H. Stroud,
-Some Fifth Degree Integration Formulas for Symmetric Regions,
-Mathematics of Computation,
-Vol. 20, No. 93 (Jan., 1966), pp. 90-97,
-Published by: American Mathematical Society,
-<https://doi.org/10.1090/S0025-5718-1966-0191094-8>.
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
-from .helpers import volume_unit_ball, NBallScheme
-from ..helpers import untangle, fsd, pm, combine, z, pm_array
+from ._helpers import volume_unit_ball, NBallScheme
+from ..helpers import untangle, fsd, pm, combine, z, pm_array, article
+
+citation = article(
+    authors=["A.H. Stroud"],
+    title="Some Fifth Degree Integration Formulas for Symmetric Regions",
+    journal="Mathematics of Computation",
+    volume="20",
+    number="93",
+    month="jan",
+    year="1966",
+    pages="90-97",
+    url="https://doi.org/10.1090/S0025-5718-1966-0191094-8",
+)
 
 
 def stroud_1966_a(n, symbolic=False):
@@ -34,7 +38,7 @@ def stroud_1966_a(n, symbolic=False):
     data = [(B1, fsd(n, (r, 1))), (B2, pm(n, s))]
     points, weights = untangle(data)
     weights *= volume_unit_ball(n, symbolic=symbolic)
-    return NBallScheme("Stroud 1966a", n, 5, weights, points)
+    return NBallScheme("Stroud 1966a", n, weights, points, 5, citation)
 
 
 def stroud_1966_b(n, symbolic=False):
@@ -64,7 +68,7 @@ def stroud_1966_b(n, symbolic=False):
 
     points, weights = untangle(data)
     weights *= volume_unit_ball(n, symbolic=symbolic)
-    return NBallScheme("Stroud 1966b", n, 5, weights, points)
+    return NBallScheme("Stroud 1966b", n, weights, points, 5, citation)
 
 
 def stroud_1966_c(n, symbolic=False):
@@ -82,7 +86,7 @@ def stroud_1966_c(n, symbolic=False):
 
     points, weights = untangle(data)
     weights *= volume_unit_ball(n, symbolic=symbolic)
-    return NBallScheme("Stroud 1966c", n, 5, weights, points)
+    return NBallScheme("Stroud 1966c", n, weights, points, 5, citation)
 
 
 def stroud_1966_d(n, symbolic=False):
@@ -105,12 +109,4 @@ def stroud_1966_d(n, symbolic=False):
 
     points, weights = untangle(data)
     weights *= volume_unit_ball(n, symbolic=symbolic)
-    return NBallScheme("Stroud 1966d", n, 5, weights, points)
-
-
-Stroud_1966 = {
-    "a": stroud_1966_a,
-    "b": stroud_1966_b,
-    "c": stroud_1966_c,
-    "d": stroud_1966_d,
-}
+    return NBallScheme("Stroud 1966d", n, weights, points, 5, citation)

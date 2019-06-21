@@ -1,20 +1,24 @@
 # -*- coding: utf-8 -*-
 #
-"""
-A.H. Stroud,
-Some Seventh Degree Integration Formulas for Symmetric Regions,
-SIAM J. Numer. Anal., 4(1), 37–44. (8 pages),
-<https://doi.org/10.1137/0704004>.
-"""
 from __future__ import division
 
 import numpy
 import sympy
 
-from ..helpers import untangle, fsd, pm, z
-from .helpers import volume_unit_ball, NBallScheme
+from ..helpers import untangle, fsd, pm, z, article
+from ._helpers import volume_unit_ball, NBallScheme
 
 from .. import nsphere
+
+citation = article(
+    authors=["A.H. Stroud"],
+    title="Some Seventh Degree Integration Formulas for Symmetric Regions",
+    journal="SIAM J. Numer. Anal.",
+    volume="4",
+    number="1",
+    pages="37–44",
+    url="https://doi.org/10.1137/0704004",
+)
 
 
 def _stroud_1967_7_ab(n, variant_a, symbolic=False):
@@ -50,7 +54,7 @@ def _stroud_1967_7_ab(n, variant_a, symbolic=False):
     weights *= volume_unit_ball(n, symbolic=symbolic)
 
     name = "Stroud 1967-7{}".format("a" if variant_a else "b")
-    return NBallScheme(name, n, 7, weights, points)
+    return NBallScheme(name, n, weights, points, 7, citation)
 
 
 def stroud_1967_7_a(n, symbolic=False):
@@ -72,12 +76,9 @@ def stroud_1967_7_c(n, symbolic=False):
     r1, r2 = sqrt(((n + 2) * (n + 4) + pm_ * 2 * alpha) / (n + 4) / (n + 6))
     A1, A2 = (2 * (n + 2) ** 2 + pm_ * (n - 2) * alpha) / (4 * n * (n + 2) ** 2)
 
-    s = nsphere.Stroud1967(n, symbolic=symbolic)
+    s = nsphere.stroud_1967(n, symbolic=symbolic)
 
     points = numpy.concatenate([r1 * s.points, r2 * s.points])
     weights = numpy.concatenate([A1 * s.weights, A2 * s.weights])
 
-    return NBallScheme("Stroud 1967-7 a", n, 7, weights, points)
-
-
-Stroud_1967_7 = {"a": stroud_1967_7_a, "b": stroud_1967_7_b, "c": stroud_1967_7_c}
+    return NBallScheme("Stroud 1967-7 a", n, weights, points, 7, citation)

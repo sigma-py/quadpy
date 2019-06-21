@@ -1,17 +1,22 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Review: Tabulation of Certain Fully Symmetric Numerical Integration
-Formulas of Degree 7, 9 and 11 by Frank Stenger,
-Mathematics of Computation,
-Vol. 25, No. 116 (Oct., 1971), pp. 935+s58-s125,
-<https://www.jstor.org/stable/2004361>.
-"""
 # TODO According to Stroud, Stenger's original article has data up to n == 20.
 from __future__ import division
 
-from ..helpers import untangle, fsd, z
-from .helpers import NBallScheme
+from ..helpers import untangle, fsd, z, article
+from ._helpers import NBallScheme
+
+citation = article(
+    authors=["W.G."],
+    title="Review: Tabulation of Certain Fully Symmetric Numerical Integration Formulas of Degree 7, 9 and 11 by Frank Stenger",
+    journal="Mathematics of Computation",
+    volume="25",
+    number="116",
+    month="oct",
+    year="1971",
+    pages="935+s58-s125",
+    url="https://www.jstor.org/stable/2004361",
+)
 
 
 def stenger_7a(n):
@@ -77,7 +82,7 @@ def stenger_7a(n):
     ]
 
     points, weights = untangle(data)
-    return NBallScheme("Stenger 7a", n, 7, weights, points)
+    return NBallScheme("Stenger 7a", n, weights, points, 7, citation)
 
 
 def stenger_7b(n):
@@ -142,7 +147,7 @@ def stenger_7b(n):
     ]
 
     points, weights = untangle(data)
-    return NBallScheme("Stenger 7b", n, 7, weights, points)
+    return NBallScheme("Stenger 7b", n, weights, points, 7, citation)
 
 
 def stenger_9a(n):
@@ -222,7 +227,7 @@ def stenger_9a(n):
         data += [(B[8], fsd(n, (u, 4)))]
 
     points, weights = untangle(data)
-    return NBallScheme("Stenger 9a", n, 9, weights, points)
+    return NBallScheme("Stenger 9a", n, weights, points, 9, citation)
 
 
 def stenger_9b(n):
@@ -288,7 +293,7 @@ def stenger_9b(n):
         data += [(B[8], fsd(n, (u, 4)))]
 
     points, weights = untangle(data)
-    return NBallScheme("Stenger 9b", n, 9, weights, points)
+    return NBallScheme("Stenger 9b", n, weights, points, 9, citation)
 
 
 def stenger_11a(n):
@@ -382,7 +387,7 @@ def stenger_11a(n):
         data += [(B[15], fsd(n, (u, 5)))]
 
     points, weights = untangle(data)
-    return NBallScheme("Stenger 11a", n, 11, weights, points)
+    return NBallScheme("Stenger 11a", n, weights, points, 11, citation)
 
 
 def stenger_11b(n):
@@ -476,14 +481,4 @@ def stenger_11b(n):
         data += [(B[15], fsd(n, (u, 5)))]
 
     points, weights = untangle(data)
-    return NBallScheme("Stenger 11b", n, 11, weights, points)
-
-
-Stenger = {
-    "7a": stenger_7a,
-    "7b": stenger_7b,
-    "9a": stenger_9a,
-    "9b": stenger_9b,
-    "11a": stenger_11a,
-    "11b": stenger_11b,
-}
+    return NBallScheme("Stenger 11b", n, weights, points, 11, citation)
