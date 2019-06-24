@@ -253,17 +253,16 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * [Strang](https://bookstore.siam.org/wc08/)/[Cowper](https://doi.org/10.1002/nme.1620070316) (1973, 10 schemes up to
    degree 7),
  * [Lyness-Jespersen](https://doi.org/10.1093/imamat/15.1.19) (1975, 21
-   schemes up to degree 11),
+   schemes up to degree 11, two of which are used in [TRIEX](https://doi.org/10.1145/356068.356070)),
  * [Lether](https://doi.org/10.1016/0771-050X(76)90008-5) (1976, degree 2n-2, arbitrary
    n, not symmetric; reproduced in
-   [Rathod-Nagaraja-Venkatesudu](https://doi.org/10.1016/j.amc.2006.10.041), 2007)
+   [Rathod-Nagaraja-Venkatesudu](https://doi.org/10.1016/j.amc.2006.10.041), 2007),
  * [Hillion](https://doi.org/10.1002/nme.1620110504) (1977, 10 schemes up to
    degree 3),
  * [Grundmann-Möller](https://doi.org/10.1137/0715019) (1978, arbitrary degree),
  * [Laursen-Gellert](https://doi.org/10.1002/nme.1620120107) (1978, 17
    schemes up to degree 10),
  * [CUBTRI](https://dl.acm.org/citation.cfm?id=356001) (Laurie, 1982, degree 8),
- * [TRIEX](https://dl.acm.org/citation.cfm?id=356070) (de Doncker-Robinson, 1984, degrees 9 and 11),
  * [Dunavant](https://doi.org/10.1002/nme.1620210612) (1985, 20 schemes up
    to degree 20),
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131869) (1987,
