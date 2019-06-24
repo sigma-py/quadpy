@@ -44,7 +44,7 @@ from ._walkington import (
     walkington_7,
 )
 
-from ._helpers import transform, get_vol
+from ._helpers import transform, get_vol, NSimplexScheme
 
 __all__ = [
     "grundmann_moeller",
@@ -90,4 +90,5 @@ __all__ = [
     #
     "transform",
     "get_vol",
+    "NSimplexScheme",
 ]
