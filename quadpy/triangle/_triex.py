@@ -30,6 +30,7 @@ def triex_19():
 
 
 def triex_28():
+    # DUP Lyness-Jespersen 21
     weights, bary = concat(
         s3(8.797730116222190e-2),
         s2(

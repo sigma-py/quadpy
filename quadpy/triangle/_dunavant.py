@@ -93,6 +93,7 @@ def dunavant_08():
 
 
 def dunavant_09():
+    # DUP equals TRIEX 19
     weights, bary = concat(
         s3(0.097135796282799),
         s2(
