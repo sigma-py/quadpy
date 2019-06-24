@@ -18,10 +18,7 @@ from ._lauffer import (
     lauffer_5 as stroud_tn_5_2,
 )
 from ._stroud_1961 import stroud_1961 as stroud_tn_3_3
-from ._stroud_1964 import (
-    stroud_1964a as stroud_tn_3_6a,
-    stroud_1964b as stroud_tn_3_6b,
-)
+from ._stroud_1964 import stroud_1964a as stroud_tn_3_6a, stroud_1964b as stroud_tn_3_6b
 from ._stroud_1966 import (
     stroud_1966_i as stroud_tn_3_2,
     stroud_1966_ii as stroud_tn_3_4,

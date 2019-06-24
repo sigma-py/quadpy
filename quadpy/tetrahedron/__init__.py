@@ -9,20 +9,17 @@ from .keast import Keast
 from .liu_vinokur import LiuVinokur
 from .maeztu_sainz import MaeztuSainz
 from .newton_cotes import NewtonCotesClosed, NewtonCotesOpen
-from .stroud import Stroud
+from .stroud import stroud_t3_5_1, stroud_t3_7_1
 from .shunn_ham import ShunnHam
 from .vioreanu_rokhlin import VioreanuRokhlin
 from .xiao_gimbutas import XiaoGimbutas
 from .yu import Yu
 from .zhang_cui_liu import ZhangCuiLiu
 from .zienkiewicz import Zienkiewicz
-from .walkington import Walkington
+from .walkington import walkington_p5
 from .williams_shunn_jameson import WilliamsShunnJameson
 from .witherden_vincent import WitherdenVincent
 
-from .tools import show
-
-from ..nsimplex import integrate
 
 __all__ = [
     "BeckersHaegemans",
@@ -45,6 +42,4 @@ __all__ = [
     "Walkington",
     "WilliamsShunnJameson",
     "WitherdenVincent",
-    "show",
-    "integrate",
 ]
