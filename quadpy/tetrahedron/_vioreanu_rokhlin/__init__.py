@@ -4,7 +4,7 @@ import os
 import json
 
 from .._helpers import untangle2, TetrahedronScheme
-from ..helpers import article
+from ...helpers import article
 
 citation = article(
     authors=["B. Vioreanu", "V. Rokhlin"],

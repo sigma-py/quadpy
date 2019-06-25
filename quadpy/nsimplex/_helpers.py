@@ -8,11 +8,11 @@ import sympy
 
 
 class NSimplexScheme(object):
-    def __init__(self, name, dim, weights, points, degree, citation):
+    def __init__(self, name, dim, weights, bary, degree, citation):
         self.name = name
         self.dim = dim
         self.weights = weights
-        self.points = points
+        self.bary = bary
         self.degree = degree
         self.citation = citation
         return

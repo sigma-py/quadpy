@@ -6,7 +6,7 @@ from ..nsimplex import NSimplexScheme, transform, get_vol
 from ..helpers import backend_to_function
 
 
-class TriangleScheme(NSimplexScheme):
+class TetrahedronScheme(NSimplexScheme):
     def __init__(self, name, weights, bary, degree, citation=None):
         self.name = name
         self.weights = weights
