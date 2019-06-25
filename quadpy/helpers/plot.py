@@ -260,10 +260,10 @@ def show_vtk(points, weights, volume, edges, balls=None, render=True):
     # Create an interactor
     interactor = vtk.vtkRenderWindowInteractor()
     interactor.SetRenderWindow(render_window)
-    # Initialize the interactor and start the rendering loop
-    interactor.Initialize()
 
     if render:
+        # Initialize the interactor and start the rendering loop
+        interactor.Initialize()
         render_window.Render()
         interactor.Start()
 
