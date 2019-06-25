@@ -36,4 +36,6 @@ def williams_shunn_jameson():
         ],
     }
     points, weights = untangle2(data)
-    return TetrahedronScheme("Williams-Shunn-Jameson", weights, points, degree, citation)
+    return TetrahedronScheme(
+        "Williams-Shunn-Jameson", weights, points, degree, citation
+    )

@@ -317,7 +317,7 @@ def _integrate_exact(f, triangle):
 
 @pytest.mark.parametrize("scheme,tol", schemes_tol)
 def test_scheme(scheme, tol):
-    assert scheme.bary.dtype in [numpy.float64, numpy.int64], scheme.name
+    assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
     triangle = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]])

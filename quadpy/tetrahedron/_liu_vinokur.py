@@ -106,7 +106,9 @@ def liu_vinokur_08(symbolic=False):
             numpy.full(6, frac(2, 105)),
         ]
     )
-    points = numpy.concatenate([_r_alpha(alpha1), _r_alpha(alpha2), _r_beta(frac(1, 2))])
+    points = numpy.concatenate(
+        [_r_alpha(alpha1), _r_alpha(alpha2), _r_beta(frac(1, 2))]
+    )
     degree = 4
     return TetrahedronScheme("Liu-Vinokur 8", weights, points, degree, citation)
 

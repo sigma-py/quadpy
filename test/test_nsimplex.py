@@ -48,7 +48,7 @@ def test_scheme(scheme):
     for k in range(n):
         simplex[k + 1, k] = 1.0
     degree = check_degree(
-        lambda poly: quadpy.nsimplex.integrate(poly, simplex, scheme),
+        lambda poly: scheme.integrate(poly, simplex),
         integrate_monomial_over_unit_simplex,
         n,
         scheme.degree + 1,
