@@ -35,4 +35,4 @@ def hammer_stroud_3(symbolic=False):
     degree = 3
     data = {"s4": [[-frac(4, 5)]], "s31": [[+frac(9, 20), frac(1, 6)]]}
     points, weights = untangle2(data)
-    return TetrahedronScheme("Hammer-Stroud 2", weights, points, degree, citation)
+    return TetrahedronScheme("Hammer-Stroud 3", weights, points, degree, citation)

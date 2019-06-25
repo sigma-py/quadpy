@@ -23,7 +23,7 @@ citation = article(
 # https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tet/quadrature_rules_tet.html
 
 
-def keast_00(symbolic=False):
+def keast_0(symbolic=False):
     # Does not appear in Keast's article.
     degree = 1
     data = {"s4": [[1.0]]}
@@ -31,7 +31,7 @@ def keast_00(symbolic=False):
     return TetrahedronScheme("Keast 0", weights, points, degree, citation)
 
 
-def keast_01(symbolic=False):
+def keast_1(symbolic=False):
     # Does not appear in Keast's article.
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
@@ -41,7 +41,7 @@ def keast_01(symbolic=False):
     return TetrahedronScheme("Keast 1", weights, points, degree, citation)
 
 
-def keast_02(symbolic=False):
+def keast_2(symbolic=False):
     # Does not appear in Keast's article.
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
@@ -51,7 +51,7 @@ def keast_02(symbolic=False):
     return TetrahedronScheme("Keast 2", weights, points, degree, citation)
 
 
-def keast_03(symbolic=False):
+def keast_3(symbolic=False):
     # Does not appear in Keast's article.
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
@@ -64,7 +64,7 @@ def keast_03(symbolic=False):
     return TetrahedronScheme("Keast 3", weights, points, degree, citation)
 
 
-def keast_04(symbolic=False):
+def keast_4(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
     degree = 4
@@ -77,7 +77,7 @@ def keast_04(symbolic=False):
     return TetrahedronScheme("Keast 4", weights, points, degree, citation)
 
 
-def keast_05(symbolic=False):
+def keast_5(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
     degree = 4
@@ -92,7 +92,7 @@ def keast_05(symbolic=False):
     return TetrahedronScheme("Keast 5", weights, points, degree, citation)
 
 
-def keast_06(symbolic=False):
+def keast_6(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
     degree = 5
@@ -105,7 +105,7 @@ def keast_06(symbolic=False):
     return TetrahedronScheme("Keast 6", weights, points, degree, citation)
 
 
-def keast_07(symbolic=False):
+def keast_7(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
     degree = 6
@@ -121,7 +121,7 @@ def keast_07(symbolic=False):
     return TetrahedronScheme("Keast 7", weights, points, degree, citation)
 
 
-def keast_08(symbolic=False):
+def keast_8(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
     degree = 7
@@ -139,7 +139,7 @@ def keast_08(symbolic=False):
     return TetrahedronScheme("Keast 8", weights, points, degree, citation)
 
 
-def keast_09(symbolic=False):
+def keast_9():
     degree = 8
     data = {
         "s4": [[-0.2359620398477557]],
@@ -158,35 +158,3 @@ def keast_09(symbolic=False):
     }
     points, weights = untangle2(data)
     return TetrahedronScheme("Keast 9", weights, points, degree, citation)
-
-
-def keast_10(symbolic=False):
-    degree = 8
-    # ERR In Keast's article, the first weight is incorrectly given with a positive
-    # sign.
-    data = {
-        "s4": [[-0.393270066412926145e-01]],
-        "s31": [
-            [+0.408131605934270525e-02, 0.127470936566639015e-00],
-            [+0.658086773304341943e-03, 0.320788303926322960e-01],
-        ],
-        "s22": [
-            [+0.438425882512284693e-02, 0.497770956432810185e-01],
-            [+0.138300638425098166e-01, 0.183730447398549945e-00],
-        ],
-        "s211": [
-            [
-                +0.424043742468372453e-02,
-                0.231901089397150906e-00,
-                0.229177878448171174e-01,
-            ],
-            [
-                +0.223873973961420164e-02,
-                0.379700484718286102e-01,
-                0.730313427807538396e-00,
-            ],
-        ],
-    }
-    points, weights = untangle2(data)
-    weights *= 6
-    return TetrahedronScheme("Keast 10", weights, points, degree, citation)
