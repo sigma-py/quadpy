@@ -31,7 +31,6 @@ def _newton_cotes(n, point_fun):
         ]
     )
     points = point_fun(idx, n)
-    points = points[:, [1, 2, 3]]
 
     # weights
     if n == 0:

@@ -150,7 +150,7 @@ def _integrate_exact(f, tetrahedron):
     ],
 )
 def test_scheme(scheme):
-    assert scheme.bary.dtype in [numpy.float64, numpy.int64], scheme.name
+    assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
     # Test integration until we get to a polynomial degree `d` that can no
