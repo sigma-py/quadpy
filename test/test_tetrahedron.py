@@ -96,8 +96,6 @@ schemes = [
     quadpy.tetrahedron.yu_5(),
     quadpy.tetrahedron.zhang_cui_liu_1(),
     quadpy.tetrahedron.zhang_cui_liu_2(),
-    quadpy.tetrahedron.zienkiewicz_4(),
-    quadpy.tetrahedron.zienkiewicz_5(),
     quadpy.tetrahedron.walkington_p5(),
     quadpy.tetrahedron.williams_shunn_jameson(),
     quadpy.tetrahedron.witherden_vincent_01(),

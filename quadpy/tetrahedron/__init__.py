@@ -78,7 +78,6 @@ from ._xiao_gimbutas import (
 )
 from ._yu import yu_1, yu_2, yu_3, yu_4, yu_5
 from ._zhang_cui_liu import zhang_cui_liu_1, zhang_cui_liu_2
-from ._zienkiewicz import zienkiewicz_4, zienkiewicz_5
 from ._walkington import walkington_p5
 from ._williams_shunn_jameson import williams_shunn_jameson
 from ._witherden_vincent import (
@@ -171,8 +170,6 @@ __all__ = [
     "yu_5",
     "zhang_cui_liu_1",
     "zhang_cui_liu_2",
-    "zienkiewicz_4",
-    "zienkiewicz_5",
     "walkington_p5",
     "williams_shunn_jameson",
     "witherden_vincent_01",
