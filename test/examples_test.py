@@ -64,13 +64,14 @@ def test_line_segment():
 
 
 def test_pyramid():
-    quadpy.pyramid.integrate(
+    scheme = quadpy.pyramid.felippa_3()
+    scheme.integrate(
         lambda x: numpy.exp(x[0]),
         numpy.array([[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0, 0, 1]]),
-        quadpy.pyramid.Felippa(3),
     )
 
-    quadpy.pyramid.integrate(
+    scheme = quadpy.pyramid.felippa_5()
+    scheme.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         numpy.array(
             [
@@ -81,7 +82,6 @@ def test_pyramid():
                 [[0, 0, 1], [0, 0, 1], [0, 0, 1], [0, 0, 1], [0, 0, 1]],
             ]
         ),
-        quadpy.pyramid.Felippa(5),
     )
     return
 

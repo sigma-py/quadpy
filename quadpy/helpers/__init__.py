@@ -24,14 +24,7 @@ from .misc import (
     phdthesis,
     online,
 )
-from .plot import (
-    plot_disks_1d,
-    plot_disks,
-    show_mpl,
-    show_mayavi,
-    show_vtk,
-    backend_to_function,
-)
+from .plot import plot_disks_1d, plot_disks, show_mpl, show_vtk, backend_to_function
 
 __all__ = [
     "z",
@@ -56,7 +49,6 @@ __all__ = [
     "plot_disks_1d",
     "plot_disks",
     "show_mpl",
-    "show_mayavi",
     "show_vtk",
     "backend_to_function",
 ]
