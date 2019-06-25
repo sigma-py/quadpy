@@ -7,7 +7,7 @@ import numpy
 from ..helpers import n_outer
 
 
-class NCubeScheme(object):
+class NCubeScheme:
     def __init__(self, name, dim, weights, points, degree, citation):
         self.name = name
         self.dim = dim

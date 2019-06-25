@@ -5,7 +5,7 @@ import numpy
 from ..helpers import plot_disks_1d
 
 
-class LineSegmentScheme(object):
+class LineSegmentScheme:
     def __init__(self, name, degree, weights, points):
         self.name = name
         self.degree = degree

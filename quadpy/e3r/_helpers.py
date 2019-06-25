@@ -4,7 +4,7 @@ import numpy
 from ..helpers import backend_to_function
 
 
-class E3rScheme(object):
+class E3rScheme:
     def __init__(self, name, weights, points, degree, citation):
         self.name = name
         self.citation = citation

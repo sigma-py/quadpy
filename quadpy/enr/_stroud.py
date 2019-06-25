@@ -5,7 +5,6 @@ Arthur Stroud,
 Approximate Calculation of Multiple Integrals,
 Prentice Hall, 1971.
 """
-from __future__ import division
 
 import numpy
 import scipy.special

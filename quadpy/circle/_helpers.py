@@ -5,7 +5,7 @@ import numpy
 from .. import helpers
 
 
-class CircleScheme(object):
+class CircleScheme:
     def __init__(self, name, citation, degree, weights, points):
         self.name = name
         self.citation = citation

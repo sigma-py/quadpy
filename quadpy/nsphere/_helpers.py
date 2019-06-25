@@ -6,7 +6,7 @@ import numpy
 from sympy import gamma, prod, Rational
 
 
-class NSphereScheme(object):
+class NSphereScheme:
     def __init__(self, name, dim, weights, points, degree, citation):
         self.name = name
         self.dim = dim

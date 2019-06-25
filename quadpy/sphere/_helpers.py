@@ -4,7 +4,7 @@ import numpy
 import sympy
 
 
-class SphereScheme(object):
+class SphereScheme:
     def __init__(self, name, weights, points, azimuthal_polar, degree, citation):
         self.name = name
         self.weights = weights

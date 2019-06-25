@@ -5,7 +5,7 @@ import numpy
 from ..helpers import backend_to_function
 
 
-class PyramidScheme(object):
+class PyramidScheme:
     def __init__(self, name, weights, points, degree, citation):
         self.name = name
         self.weights = weights

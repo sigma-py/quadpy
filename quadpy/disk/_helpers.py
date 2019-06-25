@@ -5,7 +5,7 @@ import numpy
 from ..helpers import plot_disks
 
 
-class DiskScheme(object):
+class DiskScheme:
     def __init__(self, name, weights, points, degree: int, citation=None):
         self.name = name
         self.weights = weights

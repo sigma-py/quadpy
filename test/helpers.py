@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division, print_function
 
 import math
 import numpy
@@ -120,9 +119,7 @@ def find_equal(schemes):
                     b += " ({})".format(schemes[j].citation.year)
                 except AttributeError:
                     pass
-                print(
-                    "Schemes {} and {} are equal.".format(a, b)
-                )
+                print("Schemes {} and {} are equal.".format(a, b))
         if found_equal:
             print()
     return

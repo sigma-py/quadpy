@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 #
 # TODO sympyfy
-from __future__ import division
 
 import numpy
 

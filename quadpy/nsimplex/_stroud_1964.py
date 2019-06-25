@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
 
 from mpmath import mp
 import numpy

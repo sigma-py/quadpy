@@ -10,7 +10,6 @@
 #
 # Reported to Elsevier on June 24, 2019.
 #
-from __future__ import division
 
 import numpy
 
