@@ -51,14 +51,14 @@ def stroud_t2_7_1():
     )
 
     weights = numpy.array([2 * A[i] * B[j] for i in range(4) for j in range(4)])
-    bary = numpy.array(
+    points = numpy.array(
         [
             [s[j], r[i] * (1 - s[j]), (1 - r[i]) * (1 - s[j])]
             for i in range(4)
             for j in range(4)
         ]
     )
-    return TriangleScheme("Stroud 7-1", weights, bary, 7, citation)
+    return TriangleScheme("Stroud 7-1", weights, points, 7, citation)
 
 
 __all__ = ["stroud_t2_3_1", "stroud_t2_5_1", "stroud_t2_7_1"]

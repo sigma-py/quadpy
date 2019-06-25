@@ -31,29 +31,29 @@ citation = article(
 
 
 def hammer_marlowe_stroud_1(symbolic=False):
-    weights, bary = s3(1)
-    return TriangleScheme("Hammer-Marlowe-Stroud 1", weights, bary, 1, citation)
+    weights, points = s3(1)
+    return TriangleScheme("Hammer-Marlowe-Stroud 1", weights, points, 1, citation)
 
 
 def hammer_marlowe_stroud_2(symbolic=False):
     frac = sympy.frac if symbolic else lambda x, y: x / y
 
-    weights, bary = r([frac(1, 3), frac(1, 2)])
-    return TriangleScheme("Hammer-Marlowe-Stroud 1", weights, bary, 2, citation)
+    weights, points = r([frac(1, 3), frac(1, 2)])
+    return TriangleScheme("Hammer-Marlowe-Stroud 1", weights, points, 2, citation)
 
 
 def hammer_marlowe_stroud_3(symbolic=False):
     frac = sympy.frac if symbolic else lambda x, y: x / y
 
-    weights, bary = r([frac(1, 3), -frac(1, 2)])
-    return TriangleScheme("Hammer-Marlowe-Stroud 3", weights, bary, 2, citation)
+    weights, points = r([frac(1, 3), -frac(1, 2)])
+    return TriangleScheme("Hammer-Marlowe-Stroud 3", weights, points, 2, citation)
 
 
 def hammer_marlowe_stroud_4(symbolic=False):
     frac = sympy.frac if symbolic else lambda x, y: x / y
 
-    weights, bary = concat(s3(-frac(9, 16)), r([frac(25, 48), frac(2, 5)]))
-    return TriangleScheme("Hammer-Marlowe-Stroud 4", weights, bary, 3, citation)
+    weights, points = concat(s3(-frac(9, 16)), r([frac(25, 48), frac(2, 5)]))
+    return TriangleScheme("Hammer-Marlowe-Stroud 4", weights, points, 3, citation)
 
 
 def hammer_marlowe_stroud_5(symbolic=False):
@@ -62,5 +62,5 @@ def hammer_marlowe_stroud_5(symbolic=False):
 
     w1, w2 = [(155 - i * sqrt(15)) / 1200 for i in [+1, -1]]
     x1, x2 = [(1 + i * sqrt(15)) / 7 for i in [+1, -1]]
-    weights, bary = concat(s3(frac(9, 40)), r([w1, x1], [w2, x2]))
-    return TriangleScheme("Hammer-Marlowe-Stroud 5", weights, bary, 5, citation)
+    weights, points = concat(s3(frac(9, 40)), r([w1, x1], [w2, x2]))
+    return TriangleScheme("Hammer-Marlowe-Stroud 5", weights, points, 5, citation)

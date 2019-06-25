@@ -19,7 +19,7 @@ def cubtri():
     Se also
     https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
     """
-    weights, bary = concat(
+    weights, points = concat(
         s3(0.0378610912003147),
         s2(
             [0.0376204254131829, 0.1012865073234563],
@@ -29,4 +29,4 @@ def cubtri():
         ),
         s1([0.0375097224552317, 0.7384168123405100, 0.2321023267750504]),
     )
-    return TriangleScheme("CUBTRI", weights, bary, 8, citation)
+    return TriangleScheme("CUBTRI", weights, points, 8, citation)

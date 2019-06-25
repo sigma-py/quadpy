@@ -35,5 +35,5 @@ def williams_shunn_jameson():
             [0.015595140078259, 0.541184412800237, 0.133558160703568, 0.296501020543124]
         ],
     }
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Williams-Shunn-Jameson", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Williams-Shunn-Jameson", weights, points, degree, citation)

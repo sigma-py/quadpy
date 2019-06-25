@@ -70,9 +70,9 @@ def franke_09():
             0.515921753448585e-1,
         ]
     )
-    bary = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
+    points = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
 
-    return TriangleScheme("Franke 9", weights, bary, 7, citation)
+    return TriangleScheme("Franke 9", weights, points, 7, citation)
 
 
 def franke_10():
@@ -127,6 +127,6 @@ def franke_10():
             0.526193854900464e-1,
         ]
     )
-    bary = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
+    points = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
 
-    return TriangleScheme("Franke 10", weights, bary, 7, citation)
+    return TriangleScheme("Franke 10", weights, points, 7, citation)

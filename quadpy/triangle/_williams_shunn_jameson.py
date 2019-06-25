@@ -19,35 +19,35 @@ citation = article(
 
 
 def williams_shunn_jameson_1():
-    weights, bary = s3(1)
-    return TriangleScheme("Williams-Shunn-Jameson 1", weights, bary, 1, citation)
+    weights, points = s3(1)
+    return TriangleScheme("Williams-Shunn-Jameson 1", weights, points, 1, citation)
 
 
 def williams_shunn_jameson_2(symbolic=False):
     frac = sympy.frac if symbolic else lambda x, y: x / y
 
-    weights, bary = s2([frac(1, 3), frac(1, 6)])
-    return TriangleScheme("Williams-Shunn-Jameson 2", weights, bary, 2, citation)
+    weights, points = s2([frac(1, 3), frac(1, 6)])
+    return TriangleScheme("Williams-Shunn-Jameson 2", weights, points, 2, citation)
 
 
 def williams_shunn_jameson_3():
-    weights, bary = s2(
+    weights, points = s2(
         [0.109951743655333, 0.091576213509780], [0.223381589678000, 0.445948490915964]
     )
-    return TriangleScheme("Williams-Shunn-Jameson 3", weights, bary, 4, citation)
+    return TriangleScheme("Williams-Shunn-Jameson 3", weights, points, 4, citation)
 
 
 def williams_shunn_jameson_4():
-    weights, bary = concat(
+    weights, points = concat(
         s3(0.201542988584730),
         s2([0.041955512996649, 0.055564052669793]),
         s1([0.112098412070887, 0.295533711735893, 0.634210747745723]),
     )
-    return TriangleScheme("Williams-Shunn-Jameson 4", weights, bary, 5, citation)
+    return TriangleScheme("Williams-Shunn-Jameson 4", weights, points, 5, citation)
 
 
 def williams_shunn_jameson_5():
-    weights, bary = concat(
+    weights, points = concat(
         s2(
             [0.017915455012303, 0.035870877695734],
             [0.127712195881265, 0.241729395767967],
@@ -55,11 +55,11 @@ def williams_shunn_jameson_5():
         ),
         s1([0.055749810027115, 0.201503881881800, 0.751183631106484]),
     )
-    return TriangleScheme("Williams-Shunn-Jameson 5", weights, bary, 7, citation)
+    return TriangleScheme("Williams-Shunn-Jameson 5", weights, points, 7, citation)
 
 
 def williams_shunn_jameson_6():
-    weights, bary = concat(
+    weights, points = concat(
         s2(
             [0.010359374696538, 0.028112952182664],
             [0.075394884326738, 0.177139098469317],
@@ -70,11 +70,11 @@ def williams_shunn_jameson_6():
             [0.046046366595935, 0.357196298615681, 0.604978911775132],
         ),
     )
-    return TriangleScheme("Williams-Shunn-Jameson 6", weights, bary, 8, citation)
+    return TriangleScheme("Williams-Shunn-Jameson 6", weights, points, 8, citation)
 
 
 def williams_shunn_jameson_7():
-    weights, bary = concat(
+    weights, points = concat(
         s3(0.083608212215637),
         s2(
             [0.005272170280495, 0.019977187122193],
@@ -87,11 +87,11 @@ def williams_shunn_jameson_7():
             [0.066995957127830, 0.316549598844617, 0.536654684206138],
         ),
     )
-    return TriangleScheme("Williams-Shunn-Jameson 7", weights, bary, 10, citation)
+    return TriangleScheme("Williams-Shunn-Jameson 7", weights, points, 10, citation)
 
 
 def williams_shunn_jameson_8():
-    weights, bary = concat(
+    weights, points = concat(
         s2(
             [0.005639123786910, 0.021171422779465],
             [0.027148968192278, 0.100584397395888],
@@ -105,4 +105,4 @@ def williams_shunn_jameson_8():
             [0.044326238118914, 0.635737183263105, 0.249079227621332],
         ),
     )
-    return TriangleScheme("Williams-Shunn-Jameson 8", weights, bary, 12, citation)
+    return TriangleScheme("Williams-Shunn-Jameson 8", weights, points, 12, citation)

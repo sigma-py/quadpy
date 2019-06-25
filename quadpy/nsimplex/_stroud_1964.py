@@ -61,10 +61,10 @@ def _stroud_1964(variant_a, n, symbolic=False):
 
         data = [(frac(1, n * (n + 1)), rd(n + 1, [(r, n - 1), (s, 1), (t, 1)]))]
 
-    bary, weights = untangle(data)
+    points, weights = untangle(data)
 
     name = "Stroud 1964{}".format("a" if variant_a else "b")
-    return NSimplexScheme(name, n, weights, bary, degree, citation)
+    return NSimplexScheme(name, n, weights, points, degree, citation)
 
 
 def stroud_1964a(n, symbolic=False):

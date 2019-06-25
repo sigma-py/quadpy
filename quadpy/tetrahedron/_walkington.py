@@ -23,14 +23,14 @@ def walkington_p5():
             numpy.full(6, 0.0070910034628469110730),
         ]
     )
-    bary = numpy.concatenate(
+    points = numpy.concatenate(
         [
             _xi1(0.31088591926330060980),
             _xi1(0.092735250310891226402),
             _xi11(0.045503704125649649492),
         ]
     )
-    return TetrahedronScheme("Walkington p5", weights, bary, degree, citation)
+    return TetrahedronScheme("Walkington p5", weights, points, degree, citation)
 
 
 def _xi1(a):

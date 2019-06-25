@@ -8,18 +8,18 @@ import sympy
 
 
 class NSimplexScheme(object):
-    def __init__(self, name, dim, weights, bary, degree, citation):
+    def __init__(self, name, dim, weights, points, degree, citation):
         self.name = name
         self.dim = dim
         self.weights = weights
-        self.bary = bary
+        self.points = points
         self.degree = degree
         self.citation = citation
         return
 
     def integrate(self, f, simplex, dot=numpy.dot):
         flt = numpy.vectorize(float)
-        x = transform(flt(self.bary).T, simplex.T)
+        x = transform(flt(self.points).T, simplex.T)
         vol = get_vol(simplex)
 
         fx = numpy.array(f(x))
@@ -33,7 +33,7 @@ class NSimplexScheme(object):
         return vol * dot(fx, flt(self.weights))
 
 
-def transform(bary, simplex):
+def transform(points, simplex):
     """Transform the points `xi` from the reference simplex onto `simplex`.
     """
     # For n == 2:
@@ -42,7 +42,7 @@ def transform(bary, simplex):
     #     + outer(triangle[1].T, xi[0])
     #     + outer(triangle[2].T, xi[1])
     #     )
-    return numpy.dot(simplex, bary)
+    return numpy.dot(simplex, points)
 
 
 def get_vol(simplex):

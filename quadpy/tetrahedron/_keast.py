@@ -27,8 +27,8 @@ def keast_00(symbolic=False):
     # Does not appear in Keast's article.
     degree = 1
     data = {"s4": [[1.0]]}
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Keast 0", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Keast 0", weights, points, degree, citation)
 
 
 def keast_01(symbolic=False):
@@ -37,8 +37,8 @@ def keast_01(symbolic=False):
 
     degree = 2
     data = {"s31": [[frac(1, 4), 0.1381966011250105]]}
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Keast 1", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Keast 1", weights, points, degree, citation)
 
 
 def keast_02(symbolic=False):
@@ -47,8 +47,8 @@ def keast_02(symbolic=False):
 
     degree = 3
     data = {"s4": [[-frac(4, 5)]], "s31": [[frac(9, 20), frac(1, 6)]]}
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Keast 2", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Keast 2", weights, points, degree, citation)
 
 
 def keast_03(symbolic=False):
@@ -60,8 +60,8 @@ def keast_03(symbolic=False):
         "s31": [[0.2177650698804054, 0.1438564719343852]],
         "s22": [[0.0214899534130631, frac(1, 2)]],
     }
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Keast 3", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Keast 3", weights, points, degree, citation)
 
 
 def keast_04(symbolic=False):
@@ -73,8 +73,8 @@ def keast_04(symbolic=False):
         "s31": [[+frac(343, 7500), frac(1, 14)]],
         "s22": [[+frac(56, 375), 0.3994035761667992]],
     }
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Keast 4", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Keast 4", weights, points, degree, citation)
 
 
 def keast_05(symbolic=False):
@@ -88,8 +88,8 @@ def keast_05(symbolic=False):
             [0.1328387466855907, 0.3143728734931922],
         ],
     }
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Keast 5", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Keast 5", weights, points, degree, citation)
 
 
 def keast_06(symbolic=False):
@@ -101,8 +101,8 @@ def keast_06(symbolic=False):
         "s31": [[frac(81, 2240), frac(1, 3)], [frac(161051, 2304960), frac(1, 11)]],
         "s22": [[frac(338, 5145), 0.0665501535736643]],
     }
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Keast 6", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Keast 6", weights, points, degree, citation)
 
 
 def keast_07(symbolic=False):
@@ -117,8 +117,8 @@ def keast_07(symbolic=False):
         ],
         "s211": [[frac(27, 560), 0.0636610018750175, 0.2696723314583159]],
     }
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Keast 7", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Keast 7", weights, points, degree, citation)
 
 
 def keast_08(symbolic=False):
@@ -135,8 +135,8 @@ def keast_08(symbolic=False):
         "s22": [[+0.0058201058201058, frac(1, 2)]],
         "s211": [[+0.1653439153439105, frac(1, 10), frac(1, 5)]],
     }
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Keast 8", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Keast 8", weights, points, degree, citation)
 
 
 def keast_09(symbolic=False):
@@ -156,8 +156,8 @@ def keast_09(symbolic=False):
             [+0.0134324384376852, 0.0379700484718286, 0.1937464752488044],
         ],
     }
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Keast 9", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Keast 9", weights, points, degree, citation)
 
 
 def keast_10(symbolic=False):
@@ -187,6 +187,6 @@ def keast_10(symbolic=False):
             ],
         ],
     }
-    bary, weights = untangle2(data)
+    points, weights = untangle2(data)
     weights *= 6
-    return TetrahedronScheme("Keast 10", weights, bary, degree, citation)
+    return TetrahedronScheme("Keast 10", weights, points, degree, citation)

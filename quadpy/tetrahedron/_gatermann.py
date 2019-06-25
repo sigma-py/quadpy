@@ -32,6 +32,6 @@ def gatermann():
             ]
         ],
     }
-    bary, weights = untangle2(data)
+    points, weights = untangle2(data)
     weights *= 6
-    return TetrahedronScheme("Gatermann", weights, bary, degree, citation)
+    return TetrahedronScheme("Gatermann", weights, points, degree, citation)

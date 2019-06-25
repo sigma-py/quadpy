@@ -20,82 +20,82 @@ citation = article(
 
 
 def laursen_gellert_01(symbolic=False):
-    weights, bary = s3(1)
-    return TriangleScheme("Laursen-Gellert 1", weights, bary, 1, citation)
+    weights, points = s3(1)
+    return TriangleScheme("Laursen-Gellert 1", weights, points, 1, citation)
 
 
 def laursen_gellert_02a(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
-    weights, bary = s2([frac(1, 3), frac(1, 6)])
-    return TriangleScheme("Laursen-Gellert 2a", weights, bary, 2, citation)
+    weights, points = s2([frac(1, 3), frac(1, 6)])
+    return TriangleScheme("Laursen-Gellert 2a", weights, points, 2, citation)
 
 
 def laursen_gellert_02b(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
-    weights, bary = s2([frac(1, 3), frac(1, 2)])
-    return TriangleScheme("Laursen-Gellert 2b", weights, bary, 2, citation)
+    weights, points = s2([frac(1, 3), frac(1, 2)])
+    return TriangleScheme("Laursen-Gellert 2b", weights, points, 2, citation)
 
 
 def laursen_gellert_03(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
-    weights, bary = concat(s3(-frac(9, 16)), s2([frac(25, 48), frac(1, 5)]))
-    return TriangleScheme("Laursen-Gellert 3", weights, bary, 3, citation)
+    weights, points = concat(s3(-frac(9, 16)), s2([frac(25, 48), frac(1, 5)]))
+    return TriangleScheme("Laursen-Gellert 3", weights, points, 3, citation)
 
 
 def laursen_gellert_04(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
-    weights, bary = s1([frac(1, 6), 0.659027622374092, 0.231933368553031])
-    return TriangleScheme("Laursen-Gellert 4", weights, bary, 3, citation)
+    weights, points = s1([frac(1, 6), 0.659027622374092, 0.231933368553031])
+    return TriangleScheme("Laursen-Gellert 4", weights, points, 3, citation)
 
 
 def laursen_gellert_05():
-    weights, bary = s2(
+    weights, points = s2(
         [0.109951743655322, 0.091576213509771], [0.223381589678011, 0.445948490915965]
     )
-    return TriangleScheme("Laursen-Gellert 5", weights, bary, 4, citation)
+    return TriangleScheme("Laursen-Gellert 5", weights, points, 4, citation)
 
 
 def laursen_gellert_06(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
-    weights, bary = concat(
+    weights, points = concat(
         s3(frac(3, 8)), s1([frac(5, 48), 0.736712498968435, 0.237932366472434])
     )
-    return TriangleScheme("Laursen-Gellert 6", weights, bary, 4, citation)
+    return TriangleScheme("Laursen-Gellert 6", weights, points, 4, citation)
 
 
 def laursen_gellert_07(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
-    weights, bary = concat(
+    weights, points = concat(
         s3(frac(9, 40)),
         s2(
             [0.125939180544827, 0.101286507323456],
             [0.132394152788506, 0.470142064105115],
         ),
     )
-    return TriangleScheme("Laursen-Gellert 7", weights, bary, 5, citation)
+    return TriangleScheme("Laursen-Gellert 7", weights, points, 5, citation)
 
 
 def laursen_gellert_08():
-    weights, bary = concat(
+    weights, points = concat(
         s2([0.205950504760887, 0.437525248383384]),
         s1([0.063691414286223, 0.797112651860071, 0.165409927389841]),
     )
-    return TriangleScheme("Laursen-Gellert 8", weights, bary, 5, citation)
+    return TriangleScheme("Laursen-Gellert 8", weights, points, 5, citation)
 
 
 def laursen_gellert_09():
-    weights, bary = concat(
+    weights, points = concat(
         s2(
             [0.050844906370207, 0.063089014491502],
             [0.116786275726379, 0.249286745170910],
         ),
         s1([0.082851075618374, 0.636502499121399, 0.310352451033785]),
     )
-    return TriangleScheme("Laursen-Gellert 9", weights, bary, 6, citation)
+    return TriangleScheme("Laursen-Gellert 9", weights, points, 6, citation)
 
 
 def laursen_gellert_10():
-    weights, bary = concat(
+    weights, points = concat(
         s3(-0.149570044467670),
         s2(
             [+0.175615257433204, 0.260345966079038],
@@ -103,22 +103,22 @@ def laursen_gellert_10():
         ),
         s1([+0.077113760890257, 0.638444188569809, 0.312865496004875]),
     )
-    return TriangleScheme("Laursen-Gellert 10", weights, bary, 7, citation)
+    return TriangleScheme("Laursen-Gellert 10", weights, points, 7, citation)
 
 
 def laursen_gellert_11():
-    weights, bary = concat(
+    weights, points = concat(
         s2([0.053077801790233, 0.064930513159165]),
         s1(
             [0.070853083692136, 0.284575584249173, 0.517039939069325],
             [0.069274682079415, 0.313559184384932, 0.043863471792371],
         ),
     )
-    return TriangleScheme("Laursen-Gellert 11", weights, bary, 7, citation)
+    return TriangleScheme("Laursen-Gellert 11", weights, points, 7, citation)
 
 
 def laursen_gellert_12():
-    weights, bary = concat(
+    weights, points = concat(
         s3(0.144315607677787),
         s2(
             [0.103217370534718, 0.170569307751761],
@@ -127,11 +127,11 @@ def laursen_gellert_12():
         ),
         s1([0.027230314174435, 0.008394777409958, 0.263112829634638]),
     )
-    return TriangleScheme("Laursen-Gellert 12", weights, bary, 8, citation)
+    return TriangleScheme("Laursen-Gellert 12", weights, points, 8, citation)
 
 
 def laursen_gellert_13():
-    weights, bary = concat(
+    weights, points = concat(
         s3(0.097135796282799),
         s2(
             [0.031334700227139, 0.489682519198738],
@@ -141,11 +141,11 @@ def laursen_gellert_13():
         ),
         s1([0.043283539377289, 0.036838412054736, 0.221962989160766]),
     )
-    return TriangleScheme("Laursen-Gellert 13", weights, bary, 9, citation)
+    return TriangleScheme("Laursen-Gellert 13", weights, points, 9, citation)
 
 
 def laursen_gellert_14():
-    weights, bary = concat(
+    weights, points = concat(
         s2(
             [0.051617202569021, 0.481519834783311],
             [0.094080073458356, 0.403603979817940],
@@ -156,11 +156,11 @@ def laursen_gellert_14():
             [0.035351705089199, 0.030424361728820, 0.222063165537318],
         ),
     )
-    return TriangleScheme("Laursen-Gellert 14", weights, bary, 9, citation)
+    return TriangleScheme("Laursen-Gellert 14", weights, points, 9, citation)
 
 
 def laursen_gellert_15a():
-    weights, bary = concat(
+    weights, points = concat(
         s3(0.079894504741240),
         s2(
             [0.071123802232377, 0.425086210602091],
@@ -172,11 +172,11 @@ def laursen_gellert_15a():
             [0.030886656884564, 0.035632559587504, 0.143295370426867],
         ),
     )
-    return TriangleScheme("Laursen-Gellert 15a", weights, bary, 10, citation)
+    return TriangleScheme("Laursen-Gellert 15a", weights, points, 10, citation)
 
 
 def laursen_gellert_15b():
-    weights, bary = concat(
+    weights, points = concat(
         s3(0.081743329146286),
         s2(
             [0.045957963604745, 0.142161101056564],
@@ -188,4 +188,4 @@ def laursen_gellert_15b():
             [0.025297757707288, 0.028367665339938, 0.163701733737182],
         ),
     )
-    return TriangleScheme("Laursen-Gellert 15b", weights, bary, 10, citation)
+    return TriangleScheme("Laursen-Gellert 15b", weights, points, 10, citation)

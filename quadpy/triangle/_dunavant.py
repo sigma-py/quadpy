@@ -21,54 +21,54 @@ citation = article(
 
 
 def dunavant_01():
-    weights, bary = s3(1)
-    return TriangleScheme("Dunavant 1", weights, bary, 1, citation)
+    weights, points = s3(1)
+    return TriangleScheme("Dunavant 1", weights, points, 1, citation)
 
 
 def dunavant_02(symbolic=False):
     frac = sympy.frac if symbolic else lambda x, y: x / y
 
-    weights, bary = s2([frac(1, 3), frac(1, 6)])
-    return TriangleScheme("Dunavant 2", weights, bary, 2, citation)
+    weights, points = s2([frac(1, 3), frac(1, 6)])
+    return TriangleScheme("Dunavant 2", weights, points, 2, citation)
 
 
 def dunavant_03(symbolic=False):
     frac = sympy.frac if symbolic else lambda x, y: x / y
 
-    weights, bary = concat(s3(-frac(9, 16)), s2([frac(25, 48), frac(1, 5)]))
-    return TriangleScheme("Dunavant 3", weights, bary, 3, citation)
+    weights, points = concat(s3(-frac(9, 16)), s2([frac(25, 48), frac(1, 5)]))
+    return TriangleScheme("Dunavant 3", weights, points, 3, citation)
 
 
 def dunavant_04():
-    weights, bary = s2(
+    weights, points = s2(
         [0.223381589678011, 0.445948490915965], [0.109951743655322, 0.091576213509771]
     )
-    return TriangleScheme("Dunavant 4", weights, bary, 4, citation)
+    return TriangleScheme("Dunavant 4", weights, points, 4, citation)
 
 
 def dunavant_05():
-    weights, bary = concat(
+    weights, points = concat(
         s3(0.225),
         s2(
             [0.132394152788506, 0.4701420641051], [0.125939180544827, 0.101286507323456]
         ),
     )
-    return TriangleScheme("Dunavant 5", weights, bary, 5, citation)
+    return TriangleScheme("Dunavant 5", weights, points, 5, citation)
 
 
 def dunavant_06():
-    weights, bary = concat(
+    weights, points = concat(
         s2(
             [0.116786275726379, 0.249286745170910],
             [0.050844906370207, 0.063089014491502],
         ),
         s1([0.082851075618374, 0.053145049844817, 0.310352451033784]),
     )
-    return TriangleScheme("Dunavant 6", weights, bary, 6, citation)
+    return TriangleScheme("Dunavant 6", weights, points, 6, citation)
 
 
 def dunavant_07():
-    weights, bary = concat(
+    weights, points = concat(
         s3(-0.149570044467682),
         s2(
             [0.175615257433208, 0.260345966079040],
@@ -76,11 +76,11 @@ def dunavant_07():
         ),
         s1([0.077113760890257, 0.048690315425316, 0.312865496004874]),
     )
-    return TriangleScheme("Dunavant 7", weights, bary, 7, citation)
+    return TriangleScheme("Dunavant 7", weights, points, 7, citation)
 
 
 def dunavant_08():
-    weights, bary = concat(
+    weights, points = concat(
         s3(0.144315607677787),
         s2(
             [0.095091634267285, 0.459292588292723],
@@ -89,12 +89,12 @@ def dunavant_08():
         ),
         s1([0.027230314174435, 0.008394777409958, 0.263112829634638]),
     )
-    return TriangleScheme("Dunavant 8", weights, bary, 8, citation)
+    return TriangleScheme("Dunavant 8", weights, points, 8, citation)
 
 
 def dunavant_09():
     # DUP equals TRIEX 19
-    weights, bary = concat(
+    weights, points = concat(
         s3(0.097135796282799),
         s2(
             [0.031334700227139, 0.489682519198738],
@@ -104,11 +104,11 @@ def dunavant_09():
         ),
         s1([0.043283539377289, 0.036838412054736, 0.221962989160766]),
     )
-    return TriangleScheme("Dunavant 9", weights, bary, 9, citation)
+    return TriangleScheme("Dunavant 9", weights, points, 9, citation)
 
 
 def dunavant_10():
-    weights, bary = concat(
+    weights, points = concat(
         s3(0.090817990382754),
         s2(
             [0.036725957756467, 0.485577633383657],
@@ -120,11 +120,11 @@ def dunavant_10():
             [0.009421666963733, 0.009540815400299, 0.066803251012200],
         ),
     )
-    return TriangleScheme("Dunavant 10", weights, bary, 10, citation)
+    return TriangleScheme("Dunavant 10", weights, points, 10, citation)
 
 
 def dunavant_11():
-    weights, bary = concat(
+    weights, points = concat(
         s2(
             [0.000927006328961, 0.534611048270758],
             [0.077149534914813, 0.398969302965855],
@@ -137,11 +137,11 @@ def dunavant_11():
             [0.020707659639141, 0.021022016536166, 0.171488980304042],
         ),
     )
-    return TriangleScheme("Dunavant 11", weights, bary, 11, citation)
+    return TriangleScheme("Dunavant 11", weights, points, 11, citation)
 
 
 def dunavant_12():
-    weights, bary = concat(
+    weights, points = concat(
         s2(
             [0.025731066440455, 0.488217389773805],
             [0.043692544538038, 0.439724392294460],
@@ -155,11 +155,11 @@ def dunavant_12():
             [0.017316231108659, 0.025734050548330, 0.116251915907597],
         ),
     )
-    return TriangleScheme("Dunavant 12", weights, bary, 12, citation)
+    return TriangleScheme("Dunavant 12", weights, points, 12, citation)
 
 
 def dunavant_13():
-    weights, bary = concat(
+    weights, points = concat(
         s3(0.052520923400802),
         s2(
             [0.011280145209330, 0.495048184939705],
@@ -175,11 +175,11 @@ def dunavant_13():
             [0.015521786839045, 0.022233076674090, 0.126357385491669],
         ),
     )
-    return TriangleScheme("Dunavant 13", weights, bary, 13, citation)
+    return TriangleScheme("Dunavant 13", weights, points, 13, citation)
 
 
 def dunavant_14():
-    weights, bary = concat(
+    weights, points = concat(
         s2(
             [0.021883581369429, 0.488963910362179],
             [0.032788353544125, 0.417644719340454],
@@ -195,11 +195,11 @@ def dunavant_14():
             [0.005010228838501, 0.001268330932872, 0.118974497696957],
         ),
     )
-    return TriangleScheme("Dunavant 14", weights, bary, 14, citation)
+    return TriangleScheme("Dunavant 14", weights, points, 14, citation)
 
 
 def dunavant_15():
-    weights, bary = concat(
+    weights, points = concat(
         s2(
             [0.001916875642849, 0.506972916858243],
             [0.044249027271145, 0.431406354283023],
@@ -216,11 +216,11 @@ def dunavant_15():
             [0.007673942631049, +0.012459809331199, 0.103575616576386],
         ),
     )
-    return TriangleScheme("Dunavant 15", weights, bary, 15, citation)
+    return TriangleScheme("Dunavant 15", weights, points, 15, citation)
 
 
 def dunavant_16():
-    weights, bary = concat(
+    weights, points = concat(
         s3(0.046875697427642),
         s2(
             [0.006405878578585, 0.497380541948438],
@@ -239,11 +239,11 @@ def dunavant_16():
             [0.006850054546542, +0.014317320230681, 0.085283615682657],
         ),
     )
-    return TriangleScheme("Dunavant 16", weights, bary, 16, citation)
+    return TriangleScheme("Dunavant 16", weights, points, 16, citation)
 
 
 def dunavant_17():
-    weights, bary = concat(
+    weights, points = concat(
         s3(0.033437199290803),
         s2(
             [0.005093415440507, 0.497170540556774],
@@ -264,11 +264,11 @@ def dunavant_17():
             [0.006665632004165, 0.080711313679564, 0.904625504095608],
         ),
     )
-    return TriangleScheme("Dunavant 17", weights, bary, 17, citation)
+    return TriangleScheme("Dunavant 17", weights, points, 17, citation)
 
 
 def dunavant_18(symbolic=False):
-    weights, bary = concat(
+    weights, points = concat(
         s3(+0.030809939937647),
         s2(
             [+0.009072436679404, 0.493344808630921],
@@ -291,11 +291,11 @@ def dunavant_18(symbolic=False):
             [+0.000046187660794, 0.020874755282586, 1.014347260005363],
         ),
     )
-    return TriangleScheme("Dunavant 18", weights, bary, 18, citation)
+    return TriangleScheme("Dunavant 18", weights, points, 18, citation)
 
 
 def dunavant_19():
-    weights, bary = concat(
+    weights, points = concat(
         s3(0.032906331388919),
         s2(
             [0.010330731891272, 0.489609987073006],
@@ -318,11 +318,11 @@ def dunavant_19():
             [0.003799928855302, 0.065494628082938, 0.924344252620784],
         ),
     )
-    return TriangleScheme("Dunavant 19", weights, bary, 19, citation)
+    return TriangleScheme("Dunavant 19", weights, points, 19, citation)
 
 
 def dunavant_20():
-    weights, bary = concat(
+    weights, points = concat(
         s3(+0.033057055541624),
         s2(
             [+0.000867019185663, 0.500950464352200],
@@ -347,4 +347,4 @@ def dunavant_20():
             [+0.003573909385950, 0.059696109149007, 0.929756171556853],
         ),
     )
-    return TriangleScheme("Dunavant 20", weights, bary, 20, citation)
+    return TriangleScheme("Dunavant 20", weights, points, 20, citation)

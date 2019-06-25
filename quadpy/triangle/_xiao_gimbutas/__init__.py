@@ -31,8 +31,8 @@ def _read(degree, symbolic=False):
 
     degree = data.pop("degree")
     name = "Xiao-Gimbutas {}".format(degree)
-    bary, weights = untangle2(data)
-    return TriangleScheme(name, weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TriangleScheme(name, weights, points, degree, citation)
 
 
 def xiao_gimbutas_01():

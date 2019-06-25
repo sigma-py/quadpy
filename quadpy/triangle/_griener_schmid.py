@@ -58,8 +58,8 @@ def griener_schmid_1():
             0.21132829566806631803,
         ]
     )
-    bary = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
-    return TriangleScheme("Griener-Schmid 1", weights, bary, 6, citation)
+    points = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
+    return TriangleScheme("Griener-Schmid 1", weights, points, 6, citation)
 
 
 def griener_schmid_2():
@@ -92,5 +92,5 @@ def griener_schmid_2():
         ]
     )
 
-    bary = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
-    return TriangleScheme("Griener-Schmid 2", weights, bary, 6, citation)
+    points = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
+    return TriangleScheme("Griener-Schmid 2", weights, points, 6, citation)

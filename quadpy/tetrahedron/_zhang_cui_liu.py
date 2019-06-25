@@ -53,8 +53,8 @@ def zhang_cui_liu_1():
             ],
         ],
     }
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Zhang-Cui-Liu 1", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Zhang-Cui-Liu 1", weights, points, degree, citation)
 
 
 def zhang_cui_liu_2():
@@ -149,5 +149,5 @@ def zhang_cui_liu_2():
             ],
         ],
     }
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Zhang-Cui-Liu 2", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Zhang-Cui-Liu 2", weights, points, degree, citation)

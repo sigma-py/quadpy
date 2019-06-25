@@ -36,8 +36,8 @@ def hammer_marlowe_stroud_1(symbolic=False):
 
     degree = 2
     data = {"r": [[frac(1, 4), 1 / sqrt(5)]]}
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Hammer-Marlowe-Stroud 1", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Hammer-Marlowe-Stroud 1", weights, points, degree, citation)
 
 
 def hammer_marlowe_stroud_2(symbolic=False):
@@ -47,8 +47,8 @@ def hammer_marlowe_stroud_2(symbolic=False):
     degree = 2
     data = {"r": [[frac(1, 4), -1 / sqrt(5)]]}
 
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Hammer-Marlowe-Stroud 1", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Hammer-Marlowe-Stroud 1", weights, points, degree, citation)
 
 
 def hammer_marlowe_stroud_3(symbolic=False):
@@ -57,5 +57,5 @@ def hammer_marlowe_stroud_3(symbolic=False):
     degree = 3
     data = {"s4": [[-frac(4, 5)]], "r": [[frac(9, 20), frac(1, 3)]]}
 
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Hammer-Marlowe-Stroud 1", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Hammer-Marlowe-Stroud 1", weights, points, degree, citation)

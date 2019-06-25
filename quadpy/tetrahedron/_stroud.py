@@ -81,7 +81,7 @@ def stroud_t3_7_1():
         [6 * A[i] * B[j] * C[k] for i in range(4) for j in range(4) for k in range(4)]
     )
 
-    bary = numpy.array(
+    points = numpy.array(
         [
             [
                 t[k],
@@ -94,4 +94,4 @@ def stroud_t3_7_1():
             for k in range(4)
         ]
     )
-    return TetrahedronScheme("Stroud T3 7-1", weights, bary, degree, citation)
+    return TetrahedronScheme("Stroud T3 7-1", weights, points, degree, citation)

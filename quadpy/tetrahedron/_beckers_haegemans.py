@@ -30,10 +30,10 @@ def beckers_haegemans_8():
         ],
     }
 
-    bary, weights = untangle2(data)
+    points, weights = untangle2(data)
 
     weights *= 6
-    return TetrahedronScheme("Beckers-Haegemans", weights, bary, degree, citation)
+    return TetrahedronScheme("Beckers-Haegemans", weights, points, degree, citation)
 
 
 def beckers_haegemans_9():
@@ -53,7 +53,7 @@ def beckers_haegemans_9():
             [+4.3162887555699692e-4, -1.3762773181382007e-3, 0.27655347263680734],
         ],
     }
-    bary, weights = untangle2(data)
+    points, weights = untangle2(data)
 
     weights *= 6
-    return TetrahedronScheme("Beckers-Haegemans", weights, bary, degree, citation)
+    return TetrahedronScheme("Beckers-Haegemans", weights, points, degree, citation)

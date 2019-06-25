@@ -32,10 +32,10 @@ def _read(degree):
 
     degree = data.pop("degree")
 
-    bary = numpy.array(data["bary"])
+    points = numpy.array(data["bary"])
     weights = numpy.array(data["weights"])
     return TetrahedronScheme(
-        "Xiao-Gimbutas {}".format(degree), weights, bary, degree, citation
+        "Xiao-Gimbutas {}".format(degree), weights, points, degree, citation
     )
 
 

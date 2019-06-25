@@ -24,25 +24,25 @@ citation = article(
 def hillion_01(symbolic=False):
     frac = sympy.frac if symbolic else lambda x, y: x / y
 
-    weights, bary = s3(frac(1, 2))
+    weights, points = s3(frac(1, 2))
     weights *= 2
-    return TriangleScheme("Hillion 1", weights, bary, 1, citation)
+    return TriangleScheme("Hillion 1", weights, points, 1, citation)
 
 
 def hillion_02(symbolic=False):
     frac = sympy.frac if symbolic else lambda x, y: x / y
 
-    weights, bary = s2([frac(1, 6), frac(1, 2)])
+    weights, points = s2([frac(1, 6), frac(1, 2)])
     weights *= 2
-    return TriangleScheme("Hillion 2", weights, bary, 2, citation)
+    return TriangleScheme("Hillion 2", weights, points, 2, citation)
 
 
 def hillion_03(symbolic=False):
     frac = sympy.frac if symbolic else lambda x, y: x / y
 
-    weights, bary = s2([frac(1, 6), frac(1, 6)])
+    weights, points = s2([frac(1, 6), frac(1, 6)])
     weights *= 2
-    return TriangleScheme("Hillion 3", weights, bary, 2, citation)
+    return TriangleScheme("Hillion 3", weights, points, 2, citation)
 
 
 def hillion_04(symbolic=False):
@@ -50,9 +50,9 @@ def hillion_04(symbolic=False):
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
     a0, a1 = [(3 + i * sqrt(3)) / 8 for i in [+1, -1]]
-    weights, bary = concat(([frac(1, 18)], [[0, 0, 1]]), mirror([frac(2, 9), a0, a1]))
+    weights, points = concat(([frac(1, 18)], [[0, 0, 1]]), mirror([frac(2, 9), a0, a1]))
     weights *= 2
-    return TriangleScheme("Hillion 4", weights, bary, 2, citation)
+    return TriangleScheme("Hillion 4", weights, points, 2, citation)
 
 
 def hillion_05(symbolic=False):
@@ -60,12 +60,12 @@ def hillion_05(symbolic=False):
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
     a0, a1 = [(3 + i * sqrt(3)) / 8 for i in [+1, -1]]
-    weights, bary = concat(
+    weights, points = concat(
         ([frac(1, 18)], [[frac(2, 3), frac(2, 3), -frac(1, 3)]]),
         mirror([frac(2, 9), frac(2, 3) - a0, frac(2, 3) - a1]),
     )
     weights *= 2
-    return TriangleScheme("Hillion 5", weights, bary, 2, citation)
+    return TriangleScheme("Hillion 5", weights, points, 2, citation)
 
 
 def hillion_06(symbolic=False):
@@ -73,11 +73,11 @@ def hillion_06(symbolic=False):
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
     lm, mu = [(2 + i * sqrt(2 + i * sqrt(3))) / 6 for i in [+1, -1]]
-    weights, bary = mirror(
+    weights, points = mirror(
         [frac(1, 8), lm, mu], [frac(1, 8), frac(2, 3) - lm, frac(2, 3) - mu]
     )
     weights *= 2
-    return TriangleScheme("Hillion 6", weights, bary, 2, citation)
+    return TriangleScheme("Hillion 6", weights, points, 2, citation)
 
 
 def hillion_07(symbolic=False):
@@ -90,9 +90,9 @@ def hillion_07(symbolic=False):
     w1 = (2 - 3 * (b + c)) / 12 / (a + d - b - c)
     w2 = (2 - 3 * (a + d)) / 12 / (b + c - a - d)
 
-    weights, bary = mirror([w1, a, d], [w2, c, b])
+    weights, points = mirror([w1, a, d], [w2, c, b])
     weights *= 2
-    return TriangleScheme("Hillion 7", weights, bary, 3, citation)
+    return TriangleScheme("Hillion 7", weights, points, 3, citation)
 
 
 def hillion_08(symbolic=False):
@@ -101,22 +101,22 @@ def hillion_08(symbolic=False):
 
     lambda2, lambda3 = [(32 + i * 2 * sqrt(46)) / 105 for i in [+1, -1]]
     w1, w2 = [(3266 + i * 19 * sqrt(46)) / 17664 for i in [+1, -1]]
-    weights, bary = concat(
+    weights, points = concat(
         mirror([frac(25, 384), 0, frac(4, 5)]),
         ([w1], [[lambda2, lambda2, 1 - 2 * lambda2]]),
         ([w2], [[lambda3, lambda3, 1 - 2 * lambda3]]),
     )
     weights *= 2
-    return TriangleScheme("Hillion 8", weights, bary, 3, citation)
+    return TriangleScheme("Hillion 8", weights, points, 3, citation)
 
 
 def hillion_09(symbolic=False):
     frac = sympy.frac if symbolic else lambda x, y: x / y
 
     # ERR the article is missing the minus sign
-    weights, bary = concat(s3(-frac(9, 32)), s2([frac(25, 96), frac(1, 5)]))
+    weights, points = concat(s3(-frac(9, 32)), s2([frac(25, 96), frac(1, 5)]))
     weights *= 2
-    return TriangleScheme("Hillion 9", weights, bary, 3, citation)
+    return TriangleScheme("Hillion 9", weights, points, 3, citation)
 
 
 def hillion_10(symbolic=False):
@@ -125,9 +125,9 @@ def hillion_10(symbolic=False):
 
     lambda1, lambda2 = [(16 + i * 2 * sqrt(14)) / 25 for i in [+1, -1]]
     w1, w2 = [(161 + i * 17 * sqrt(14)) / 2688 for i in [+1, -1]]
-    weights, bary = concat(
+    weights, points = concat(
         mirror([w2, lambda1, 0], [w1, 0, lambda2]),
         ([frac(25, 96)], [[frac(2, 5), frac(2, 5), frac(1, 5)]]),
     )
     weights *= 2
-    return TriangleScheme("Hillion 10", weights, bary, 3, citation)
+    return TriangleScheme("Hillion 10", weights, points, 3, citation)

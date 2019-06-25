@@ -20,7 +20,7 @@ def cools_haegemans_1(mpmath=False):
     flt = mp.mpf if mpmath else float
 
     mp.dps = 20
-    weights, bary = rot_ab(
+    weights, points = rot_ab(
         [
             flt("0.16058343856681218798E-09"),
             flt("0.34579201116826902882E+00"),
@@ -48,7 +48,7 @@ def cools_haegemans_1(mpmath=False):
         ],
     )
     weights *= 2
-    return TriangleScheme("Cools-Haegemans 1", weights, bary, 8, citation)
+    return TriangleScheme("Cools-Haegemans 1", weights, points, 8, citation)
 
 
 # TODO find error
@@ -88,6 +88,6 @@ def cools_haegemans_1(mpmath=False):
 #         (0.47910534861520060665e-01, numpy.array([[1.0 / 3.0, 1.0 / 3.0, 1.0 / 3.0]])),
 #     ]
 #
-#     bary, weights = untangle2(data)
+#     points, weights = untangle2(data)
 #     weights *= 2
-#     return TriangleScheme("Cools-Haegemans 1", 10, weights, bary)
+#     return TriangleScheme("Cools-Haegemans 1", 10, weights, points)
