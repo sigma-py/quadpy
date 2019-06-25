@@ -86,3 +86,35 @@ def integrate_monomial_over_enr(k):
         * numpy.prod([math.gamma((kk + 1) / 2.0) for kk in k])
         / math.gamma((sum(k) + n) / 2)
     )
+
+
+def find_equal(schemes):
+    tol = 1.0e-13
+    n = len(schemes)
+    for i in range(n):
+        found_equal = False
+        for j in range(n):
+            if schemes[i].name == schemes[j].name:
+                continue
+            if len(schemes[i].points) != len(schemes[j].points):
+                continue
+            # Check if the point sets are equal
+            x = numpy.column_stack([schemes[i].weights, schemes[i].points])
+            y = numpy.column_stack([schemes[j].weights, schemes[j].points])
+            is_equal = True
+            for x_i in x:
+                diff = y - x_i
+                diff = numpy.min(numpy.sum(diff ** 2, axis=-1))
+                if diff > tol:
+                    is_equal = False
+                    break
+            if is_equal:
+                found_equal = True
+                print(
+                    "Schemes '{}' and '{}' are equal.".format(
+                        schemes[i].name, schemes[j].name
+                    )
+                )
+        if found_equal:
+            print()
+    return

@@ -4,20 +4,20 @@ import matplotlib.pyplot as plt
 import numpy
 import pytest
 import quadpy
-from quadpy.nball.helpers import integrate_monomial_over_unit_nsphere
+from quadpy.nball._helpers import integrate_monomial_over_unit_nsphere
 
 from helpers import check_degree
 
 
 @pytest.mark.parametrize(
-    "scheme", [quadpy.circle.Krylov(k, symbolic=False) for k in range(1, 6)]
+    "scheme", [quadpy.circle.krylov(k, symbolic=False) for k in range(1, 6)]
 )
 def test_scheme(scheme):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
     degree = check_degree(
-        lambda poly: quadpy.circle.integrate(poly, [0.0, 0.0], 1.0, scheme),
+        lambda poly: scheme.integrate(poly, [0.0, 0.0], 1.0),
         integrate_monomial_over_unit_nsphere,
         2,
         scheme.degree + 1,
@@ -26,9 +26,9 @@ def test_scheme(scheme):
     return
 
 
-@pytest.mark.parametrize("scheme", [quadpy.circle.Krylov(3)])
+@pytest.mark.parametrize("scheme", [quadpy.circle.krylov(3)])
 def test_show(scheme):
-    quadpy.circle.show(scheme)
+    scheme.show(scheme)
     plt.close()
     return
 

@@ -14,15 +14,17 @@ from .combinatorics import (
     partition,
     get_all_exponents,
 )
-from .misc import untangle, n_outer, compute_dobrodeev
-from .plot import (
-    plot_disks_1d,
-    plot_disks,
-    show_mpl,
-    show_mayavi,
-    show_vtk,
-    backend_to_function,
+from .misc import (
+    untangle,
+    n_outer,
+    compute_dobrodeev,
+    article,
+    book,
+    techreport,
+    phdthesis,
+    online,
 )
+from .plot import plot_disks_1d, plot_disks, show_mpl, show_vtk, backend_to_function
 
 __all__ = [
     "z",
@@ -39,10 +41,14 @@ __all__ = [
     "untangle",
     "n_outer",
     "compute_dobrodeev",
+    "article",
+    "book",
+    "techreport",
+    "phdthesis",
+    "online",
     "plot_disks_1d",
     "plot_disks",
     "show_mpl",
-    "show_mayavi",
     "show_vtk",
     "backend_to_function",
 ]

@@ -11,7 +11,11 @@ Your one-stop shop for numerical integration in Python.
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?logo=github&label=Stars&logoColor=white)](https://github.com/nschloe/quadpy)
 [![PyPi downloads](https://img.shields.io/pypi/dd/quadpy.svg)](https://pypistats.org/packages/quadpy)
 
-Hundreds of numerical integration schemes for
+<p align="center">
+  <img src="https://nschloe.github.io/quadpy/quad.png" width="20%">
+</p>
+
+More than 1500 numerical integration schemes for
 [line segments](#line-segment),
 [circles](#circle),
 [disks](#disk),
@@ -27,7 +31,8 @@ Hundreds of numerical integration schemes for
 [n-balls](#n-ball),
 [n-cubes](#n-cube),
 [n-simplices](#n-simplex), and the
-1D/2D/3D/nD spaces with weight functions exp(-r) and exp(-r<sup>2</sup>).
+1D/2D/3D/nD spaces with weight functions exp(-r) and exp(-r<sup>2</sup>)
+for fast integration of real-, complex-, and vector-valued functions.
 
 To numerically integrate any function over any given triangle, install quadpy [from the
 Python Package Index](https://pypi.org/project/quadpy/) with
@@ -44,13 +49,12 @@ def f(x):
 
 triangle = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.7, 0.5]])
 
-val = quadpy.triangle.integrate(f, triangle, quadpy.triangle.Strang(9))
+val = quadpy.triangle.strang_9().integrate(f, triangle)
 ```
 This uses Strang's rule of degree 6.
 
-quadpy is fully vectorized, so if you like to compute the integral of a
-function on many domains at once, you can provide them all in one `integrate()`
-call, e.g.,
+quadpy is fully vectorized, so if you like to compute the integral of a function on many
+domains at once, you can provide them all in one `integrate()` call, e.g.,
 ```python
 # shape (3, 5, 2), i.e., (corners, num_triangles, xy_coords)
 triangles = numpy.stack([
@@ -132,7 +136,7 @@ to the singularity.)
 If there are singularities at both ends, the function can be shifted both ways and be
 handed off to `tanh_sinh_lr`; For example, for the function `1 / sqrt(1 - x**2)`, this
 gives
-```
+```python
 import numpy
 import quadpy
 
@@ -188,11 +192,12 @@ generate Gauss formulas for your own weight functions.
 
 Example:
 ```python
-val = quadpy.line_segment.integrate(
-    lambda x: numpy.exp(x),
-    [0.0, 1.0],
-    quadpy.line_segment.GaussPatterson(5)
-    )
+import numpy
+import quadpy
+
+scheme = quadpy.line_segment.gauss_patterson(5)
+scheme.show()
+val = scheme.integrate(lambda x: numpy.exp(x), [0.0, 1.0])
 ```
 
 ### 1D half-space with weight function exp(-r)
@@ -202,10 +207,11 @@ val = quadpy.line_segment.integrate(
 
 Example:
 ```python
-val = quadpy.e1r.integrate(
-    lambda x: x**2,
-    quadpy.e1r.GaussLaguerre(5, alpha=0)
-    )
+import quadpy
+
+scheme = quadpy.e1r.gauss_laguerre(5, alpha=0)
+scheme.show()
+val = scheme.integrate(lambda x: x**2)
 ```
 
 
@@ -217,10 +223,11 @@ val = quadpy.e1r.integrate(
 
 Example:
 ```python
-val = quadpy.e1r2.integrate(
-    lambda x: x**2,
-    quadpy.e1r2.GaussHermite(5)
-    )
+import quadpy
+
+scheme = quadpy.e1r2.gauss_hermite(5)
+scheme.show()
+val = scheme.integrate(lambda x: x**2)
 ```
 
 ### Circle
@@ -230,11 +237,11 @@ val = quadpy.e1r2.integrate(
 
 Example:
 ```python
-val = quadpy.circle.integrate(
-    lambda x: numpy.exp(x[0]),
-    [0.0, 0.0], 1.0,
-    quadpy.circle.Krylov(7)
-    )
+import quadpy
+
+scheme = quadpy.circle.krylov(7)
+scheme.show()
+val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0], 1.0)
 ```
 
 ### Triangle
@@ -253,17 +260,16 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
  * [Strang](https://bookstore.siam.org/wc08/)/[Cowper](https://doi.org/10.1002/nme.1620070316) (1973, 10 schemes up to
    degree 7),
  * [Lyness-Jespersen](https://doi.org/10.1093/imamat/15.1.19) (1975, 21
-   schemes up to degree 11),
+   schemes up to degree 11, two of which are used in [TRIEX](https://doi.org/10.1145/356068.356070)),
  * [Lether](https://doi.org/10.1016/0771-050X(76)90008-5) (1976, degree 2n-2, arbitrary
    n, not symmetric; reproduced in
-   [Rathod-Nagaraja-Venkatesudu](https://doi.org/10.1016/j.amc.2006.10.041), 2007)
+   [Rathod-Nagaraja-Venkatesudu](https://doi.org/10.1016/j.amc.2006.10.041), 2007),
  * [Hillion](https://doi.org/10.1002/nme.1620110504) (1977, 10 schemes up to
    degree 3),
  * [Grundmann-Möller](https://doi.org/10.1137/0715019) (1978, arbitrary degree),
  * [Laursen-Gellert](https://doi.org/10.1002/nme.1620120107) (1978, 17
    schemes up to degree 10),
  * [CUBTRI](https://dl.acm.org/citation.cfm?id=356001) (Laurie, 1982, degree 8),
- * [TRIEX](https://dl.acm.org/citation.cfm?id=356070) (de Doncker-Robinson, 1984, degrees 9 and 11),
  * [Dunavant](https://doi.org/10.1002/nme.1620210612) (1985, 20 schemes up
    to degree 20),
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131869) (1987,
@@ -295,11 +301,11 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
 
 Example:
 ```python
-val = quadpy.triangle.integrate(
-    lambda x: numpy.exp(x[0]),
-    [[0.0, 0.0], [1.0, 0.0], [0.5, 0.7]],
-    quadpy.triangle.XiaoGimbutas(5)
-    )
+import quadpy
+
+scheme = quadpy.triangle.xiao_gimbutas_05()
+scheme.show()
+val = scheme.integrate(lambda x: numpy.exp(x[0]), [[0.0, 0.0], [1.0, 0.0], [0.5, 0.7]])
 ```
 
 ### Disk
@@ -324,11 +330,12 @@ val = quadpy.triangle.integrate(
 
 Example:
 ```python
-val = quadpy.disk.integrate(
-    lambda x: numpy.exp(x[0]),
-    [0.0, 0.0], 1.0,
-    quadpy.disk.Lether(6)
-    )
+import numpy
+import quadpy
+
+scheme = quadpy.disk.lether(6)
+scheme.show()
+val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0], 1.0)
 ```
 
 ### Quadrilateral
@@ -364,10 +371,13 @@ val = quadpy.disk.integrate(
 
 Example:
 ```python
-val = quadpy.quadrilateral.integrate(
+import numpy
+import quadpy
+
+scheme = quadpy.quadrilateral.stroud_c2_7_2()
+val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
     [[[0.0, 0.0], [1.0, 0.0]], [[0.0, 1.0], [1.0, 1.0]]],
-    quadpy.quadrilateral.Stroud('C2 7-2')
     )
 ```
 The points are specified in an array of shape (2, 2, ...) such that `arr[0][0]`
@@ -391,10 +401,11 @@ to generate the array.
 
 Example:
 ```python
-val = quadpy.e2r.integrate(
-    lambda x: x[0]**2,
-    quadpy.e2r.RabinowitzRichter(5)
-    )
+import quadpy
+
+scheme = quadpy.e2r.rabinowitz_richter_5()
+scheme.show()
+val = scheme.integrate(lambda x: x[0]**2)
 ```
 
 
@@ -409,10 +420,11 @@ val = quadpy.e2r.integrate(
 
 Example:
 ```python
-val = quadpy.e2r2.integrate(
-    lambda x: x[0]**2,
-    quadpy.e2r2.RabinowitzRichter(3)
-    )
+import quadpy
+
+scheme = quadpy.e2r2.rabinowitz_richter_3()
+scheme.show()
+val = scheme.integrate(lambda x: x[0]**2)
 ```
 
 
@@ -433,18 +445,22 @@ val = quadpy.e2r2.integrate(
 
 Example:
 ```python
-val = quadpy.sphere.integrate(
-    lambda x: numpy.exp(x[0]),
-    [0.0, 0.0, 0.0], 1.0,
-    quadpy.sphere.Lebedev("19")
-    )
+import numpy
+import quadpy
+
+scheme = quadpy.sphere.lebedev_019()
+scheme.show()
+val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0, 0.0], 1.0)
 ```
 Integration on the sphere can also be done for function defined in spherical
 coordinates:
 ```python
-val = quadpy.sphere.integrate_spherical(
+import numpy
+import quadpy
+
+scheme = quadpy.sphere.lebedev_019()
+val = scheme.integrate_spherical(
     lambda azimuthal, polar: numpy.sin(azimuthal)**2 * numpy.sin(polar),
-    rule=quadpy.sphere.Lebedev("19")
     )
 ```
 
@@ -459,10 +475,14 @@ val = quadpy.sphere.integrate_spherical(
 
 Example:
 ```python
-val = quadpy.ball.integrate(
+import numpy
+import quadpy
+
+scheme = quadpy.ball.hammer_stroud_14_3a()
+scheme.show()
+val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
     [0.0, 0.0, 0.0], 1.0,
-    quadpy.ball.HammerStroud('14-3a')
     )
 ```
 
@@ -471,22 +491,18 @@ val = quadpy.ball.integrate(
 <img src="https://nschloe.github.io/quadpy/tet.png" width="25%">
 
  * [Hammer-Marlowe-Stroud](https://doi.org/10.1090/S0025-5718-1956-0086389-6)
-   (1956, 3 schemes up to degree 3)
- * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 2 schemes up to degree 3)
+   (1956, 3 schemes up to degree 3, also appearing in [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6))
  * open and closed Newton-Cotes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6)) (arbitrary degree)
  * [Stroud](https://cds.cern.ch/record/104291?ln=en) (1971, degree 7)
  * [Grundmann-Möller](https://doi.org/10.1137/0715019) (1978, arbitrary degree),
  * [Yu](https://doi.org/10.1016/0045-7825(84)90072-0) (1984, 5 schemes up to degree 6)
- * [Keast](https://doi.org/10.1016/0045-7825(86)90059-9) (1986, 11 schemes up to
-   degree 8)
+ * [Keast](https://doi.org/10.1016/0045-7825(86)90059-9) (1986, 10 schemes up to degree 8)
  * [Beckers-Haegemans](https://lirias.kuleuven.be/handle/123456789/132648) (1990, degrees 8 and 9)
  * [Gatermann](https://doi.org/10.1007/978-94-011-2646-5_2) (1992, degree 5)
  * [Liu-Vinokur](https://doi.org/10.1006/jcph.1998.5884) (1998, 14 schemes up to
    degree 5)
  * [Walkington](https://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
    (2000, 6 schemes up to degree 7)
- * [Zienkiewicz](https://www.sciencedirect.com/science/book/9780750664318)
-   (2005, 2 schemes up to degree 3)
  * [Zhang-Cui-Liu](https://www.jstor.org/stable/43693493) (2009, 2 schemes up to
    degree 14)
  * [Xiao-Gimbutas](https://doi.org/10.1016/j.camwa.2009.10.027) (2010, 15
@@ -502,10 +518,14 @@ val = quadpy.ball.integrate(
 
 Example:
 ```python
-val = quadpy.tetrahedron.integrate(
+import numpy
+import quadpy
+
+scheme = quadpy.tetrahedron.keast_10()
+scheme.show()
+val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
     [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.5, 0.7, 0.0], [0.3, 0.9, 1.0]],
-    quadpy.tetrahedron.Keast(10)
     )
 ```
 
@@ -526,28 +546,35 @@ val = quadpy.tetrahedron.integrate(
 
 Example:
 ```python
-val = quadpy.hexahedron.integrate(
+import numpy
+import quadpy
+
+scheme = quadpy.hexahedron.product(quadpy.line_segment.newton_cotes_closed(3))
+scheme.show()
+val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
     quadpy.hexahedron.cube_points([0.0, 1.0], [-0.3, 0.4], [1.0, 2.1]),
-    quadpy.hexahedron.Product(quadpy.line_segment.NewtonCotesClosed(3))
     )
 ```
 
 ### Pyramid
 <img src="https://nschloe.github.io/quadpy/pyra.png" width="25%">
 
- * [Felippa](https://doi.org/10.1108/02644400410554362) (9 schemes
-   up to degree 5)
+ * [Felippa](https://doi.org/10.1108/02644400410554362) (9 schemes up to degree 5)
 
 Example:
 ```python
-val = quadpy.pyramid.integrate(
+import numpy
+import quadpy
+
+scheme = quadpy.pyramid.felippa_5()
+
+val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
     [
       [0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.5, 0.7, 0.0], [0.3, 0.9, 0.0],
       [0.0, 0.1, 1.0],
-    ],
-    quadpy.pyramid.Felippa(5)
+    ]
     )
 ```
 
@@ -560,13 +587,16 @@ val = quadpy.pyramid.integrate(
 
 Example:
 ```python
+import numpy
+import quadpy
+
+scheme = quadpy.wedge.felippa_3
 val = quadpy.wedge.integrate(
     lambda x: numpy.exp(x[0]),
     [
       [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.5, 0.7, 0.0]],
       [[0.0, 0.0, 1.0], [1.0, 0.0, 1.0], [0.5, 0.7, 1.0]],
-    ],
-    quadpy.wedge.Felippa(3)
+    ]
     )
 ```
 
@@ -579,10 +609,11 @@ val = quadpy.wedge.integrate(
 
 Example:
 ```python
-val = quadpy.e3r.integrate(
-    lambda x: x[0]**2,
-    quadpy.e3r.StroudSecrest('IX')
-    )
+import quadpy
+
+scheme = quadpy.e3r.stroud_secrest_ix()
+scheme.show()
+val = scheme.integrate(lambda x: x[0]**2)
 ```
 
 
@@ -595,10 +626,11 @@ val = quadpy.e3r.integrate(
 
 Example:
 ```python
-val = quadpy.e3r2.integrate(
-    lambda x: x[0]**2,
-    quadpy.e3r2.StroudSecrest("Xa")
-    )
+import quadpy
+
+scheme = quadpy.e3r2.stroud_secrest_xa
+scheme.show()
+val = scheme.integrate(lambda x: x[0]**2)
 ```
 
 ### n-Simplex
@@ -613,8 +645,12 @@ val = quadpy.e3r2.integrate(
 
 Example:
 ```python
+import numpy
+import quadpy
+
+scheme = quadpy.nsimplex.GrundmannMoeller(dim, 3)
 dim = 4
-val = quadpy.nsimplex.integrate(
+val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
     numpy.array([
         [0.0, 0.0, 0.0, 0.0],
@@ -622,8 +658,7 @@ val = quadpy.nsimplex.integrate(
         [0.0, 1.0, 0.0, 0.0],
         [0.0, 3.0, 1.0, 0.0],
         [0.0, 0.0, 4.0, 1.0],
-        ]),
-    quadpy.nsimplex.GrundmannMoeller(dim, 3)
+        ])
     )
 ```
 
@@ -636,12 +671,12 @@ val = quadpy.nsimplex.integrate(
 
 Example:
 ```python
+import numpy
+import quadpy
+
+scheme = quadpy.nsphere.dobrodeev_1978(dim)
 dim = 4
-quadpy.nsphere.integrate(
-    lambda x: numpy.exp(x[0]),
-    numpy.zeros(dim), 1.0,
-    quadpy.nsphere.Dobrodeev1978(dim)
-    )
+val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
 ```
 
 
@@ -658,12 +693,12 @@ quadpy.nsphere.integrate(
 
 Example:
 ```python
+import numpy
+import quadpy
+
+scheme = quadpy.nball.dobrodeev_1970(dim)
 dim = 4
-quadpy.nball.integrate(
-    lambda x: numpy.exp(x[0]),
-    numpy.zeros(dim), 1.0,
-    quadpy.nball.Dobrodeev1970(dim)
-    )
+val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
 ```
 
 ### n-Cube
@@ -682,13 +717,16 @@ quadpy.nball.integrate(
 
 Example:
 ```python
+import numpy
+import quadpy
+
 dim = 4
+scheme = quadpy.ncube.stroud_cn_3_3(dim)
 quadpy.ncube.integrate(
     lambda x: numpy.exp(x[0]),
     quadpy.ncube.ncube_points(
         [0.0, 1.0], [0.1, 0.9], [-1.0, 1.0], [-1.0, -0.5]
-        ),
-    quadpy.ncube.Stroud(dim, 'Cn 3-3')
+        )
     )
 ```
 
@@ -700,11 +738,11 @@ quadpy.ncube.integrate(
 
 Example:
 ```python
+import quadpy
+
 dim = 4
-val = quadpy.enr.integrate(
-    lambda x: x[0]**2,
-    quadpy.enr.Stroud(dim, '5-4')
-    )
+scheme = quadpy.enr.stroud_5_4(dim)
+val = scheme.integrate(lambda x: x[0]**2)
 ```
 
 ### nD space with weight function exp(-r<sup>2</sup>)
@@ -718,11 +756,11 @@ val = quadpy.enr.integrate(
 
 Example:
 ```python
+import quadpy
+
 dim = 4
-val = quadpy.enr2.integrate(
-    lambda x: x[0]**2,
-    quadpy.enr2.Stroud(dim, '5-2')
-    )
+scheme = quadpy.enr2.stroud_5_2(dim)
+val = scheme.integrate(lambda x: x[0]**2)
 ```
 
 ### Extras
@@ -734,19 +772,19 @@ listed in, e.g., [Stroud & Secrest](https://books.google.de/books/about/Gaussian
 
 Some examples:
 ```python
-scheme = quadpy.line_segment.GaussLegendre(96, mode='mpmath', decimal_places=30)
-scheme = quadpy.e1r2.GaussHermite(14, mode='mpmath', decimal_places=20)
-scheme = quadpy.e1r.GaussLaguerre(13, mode='mpmath', decimal_places=50)
+scheme = quadpy.line_segment.gauss_legendre(96, mode='mpmath', decimal_places=30)
+scheme = quadpy.e1r2.gauss_hermite(14, mode='mpmath', decimal_places=20)
+scheme = quadpy.e1r.gauss_laguerre(13, mode='mpmath', decimal_places=50)
 ```
 
 #### Generating your own Gauss quadrature in three simple steps
 
-You have a measure (or, more colloquially speaking, a domain and a nonnegative
-weight function) and would like to generate the matching Gauss quadrature?
-Great, here's how to do it.
+You have a measure (or, more colloquially speaking, a domain and a nonnegative weight
+function) and would like to generate the matching Gauss quadrature?  Great, here's how
+to do it.
 
-As an example, let's try and generate the Gauss quadrature with 10 points for
-the weight function `x^2` on the interval `[-1, +1]`.
+As an example, let's try and generate the Gauss quadrature with 10 points for the weight
+function `x^2` on the interval `[-1, +1]`.
 
 TLDR:
 ```python

@@ -1,0 +1,36 @@
+# -*- coding: utf-8 -*-
+#
+from __future__ import division
+
+import numpy
+import sympy
+
+from ._helpers import fs_r00, fs_rr0, fs_rrs, HexahedronScheme
+from ..helpers import untangle, article
+
+
+citation = article(
+    authors=["Michael Sadowsky"],
+    title="A Formula for Approximate Computation of a Triple Integral",
+    journal="The American Mathematical Monthly",
+    volume="47",
+    number="8",
+    month="oct",
+    year="1940",
+    pages="539-543",
+    url="https://doi.org/10.2307/2303834",
+)
+
+
+def sadowsky(symbolic=False):
+    frac = sympy.Rational if symbolic else lambda x, y: x / y
+    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+
+    data = [
+        (frac(91, 450), fs_r00(1)),
+        (frac(-20, 225), fs_rr0(1)),
+        (frac(8, 225), fs_rrs(sqrt(frac(5, 8)), 1)),
+    ]
+    points, weights = untangle(data)
+    weights *= 8
+    return HexahedronScheme("Sadowsky", weights, points, 5, citation)

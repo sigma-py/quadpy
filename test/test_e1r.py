@@ -11,14 +11,14 @@ from helpers import check_degree
 
 
 @pytest.mark.parametrize(
-    "scheme,tol", [(quadpy.e1r.GaussLaguerre(n), 1.0e-14) for n in range(1, 10)]
+    "scheme,tol", [(quadpy.e1r.gauss_laguerre(n), 1.0e-14) for n in range(1, 10)]
 )
 def test_scheme(scheme, tol):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
     degree = check_degree(
-        lambda poly: quadpy.e1r.integrate(poly, scheme),
+        lambda poly: scheme.integrate(poly),
         lambda k: math.factorial(k[0]),
         1,
         scheme.degree + 1,
@@ -30,14 +30,14 @@ def test_scheme(scheme, tol):
     return
 
 
-@pytest.mark.parametrize("scheme", [quadpy.e1r.GaussLaguerre(1)])
+@pytest.mark.parametrize("scheme", [quadpy.e1r.gauss_laguerre(1)])
 def test_show(scheme):
-    quadpy.e1r.show(scheme)
+    scheme.show()
     return
 
 
 def test_laguerre_mpmath():
-    scheme = quadpy.e1r.GaussLaguerre(2, mode="mpmath", decimal_places=51)
+    scheme = quadpy.e1r.gauss_laguerre(2, mode="mpmath", decimal_places=51)
 
     tol = 1.0e-50
 
@@ -52,7 +52,7 @@ def test_laguerre_mpmath():
 
 
 def test_laguerre_generalized_mpmath():
-    scheme = quadpy.e1r.GaussLaguerre(2, alpha=1, mode="mpmath", decimal_places=51)
+    scheme = quadpy.e1r.gauss_laguerre(2, alpha=1, mode="mpmath", decimal_places=51)
 
     tol = 1.0e-50
 
@@ -67,6 +67,6 @@ def test_laguerre_generalized_mpmath():
 
 
 if __name__ == "__main__":
-    scheme_ = quadpy.e1r.GaussLaguerre(3)
+    scheme_ = quadpy.e1r.gauss_laguerre(3)
     test_scheme(scheme_, 1.0e-14)
     test_show(scheme_)
