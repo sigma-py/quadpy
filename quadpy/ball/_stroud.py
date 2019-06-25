@@ -26,12 +26,12 @@ _citation = book(
     year="1971",
 )
 
+pi = sympy.pi
+sqrt = numpy.vectorize(sympy.sqrt)
 
-def stroud_7_4(symbolic=False):
+
+def stroud_7_4():
     # spherical product gauss
-    pi = sympy.pi if symbolic else numpy.pi
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
     # ENH Stroud only gives decimals, sophisticated guesswork gives the analytical
     # expressions.
     pm = numpy.array([+1, -1])
@@ -133,7 +133,7 @@ def stroud_14_1():
         ]
     )
 
-    spherical_scheme = sphere_stroud.stroud_u3_14_1(symbolic=False)
+    spherical_scheme = sphere_stroud.stroud_u3_14_1()
     v = spherical_scheme.points
     B = spherical_scheme.weights
 

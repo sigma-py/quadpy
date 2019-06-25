@@ -47,18 +47,18 @@ _citation = book(
 )
 
 
-def stroud_s2_5_1(symbolic=False):
-    return radon(0, symbolic)
+def stroud_s2_5_1():
+    return radon(0)
 
 
-def stroud_s2_9_3(symbolic=False):
+def stroud_s2_9_3():
     # spherical product gauss 9
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+    sqrt = numpy.vectorize(sympy.sqrt)
     pm_ = numpy.array([+1, -1])
-    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
-    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
+    cos = numpy.vectorize(sympy.cos)
+    sin = numpy.vectorize(sympy.sin)
+    frac = sympy.Rational
+    pi = sympy.pi
 
     r1, r2 = sqrt((6 - pm_ * sqrt(6)) / 10)
 

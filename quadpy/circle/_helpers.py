@@ -10,8 +10,21 @@ class CircleScheme:
         self.name = name
         self.citation = citation
         self.degree = degree
-        self.weights = weights
-        self.points = points
+
+        flt = numpy.vectorize(float)
+        if weights.dtype == numpy.float64:
+            self.weights = weights
+        else:
+            assert weights.dtype == numpy.dtype("O")
+            self.weights = flt(weights)
+            self.weights_symbolic = weights
+
+        if points.dtype == numpy.float64:
+            self.points = points
+        else:
+            assert points.dtype == numpy.dtype("O")
+            self.points = flt(points)
+            self.points_symbolic = points
         return
 
     def show(self, *args, **kwargs):

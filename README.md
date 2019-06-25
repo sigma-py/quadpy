@@ -49,7 +49,7 @@ def f(x):
 
 triangle = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.7, 0.5]])
 
-val = quadpy.triangle.strang_fix_cowper_9().integrate(f, triangle)
+val = quadpy.triangle.strang_fix_cowper_09().integrate(f, triangle)
 ```
 This uses [Strang's rule](https://bookstore.siam.org/wc08/) of degree 6.
 
