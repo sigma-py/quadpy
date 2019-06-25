@@ -28,8 +28,17 @@ citation = article(
     pages="130-137",
     url="https://doi.org/10.1090/S0025-5718-1956-0086389-6",
 )
+# citation = book(
+#     authors=["Olgierd Zienkiewicz"],
+#     title="The Finite Element Method, Sixth Edition",
+#     publisher="Butterworth-Heinemann",
+#     year="2005",
+#     isbn="0750663200",
+#     url="http://www.sciencedirect.com/science/book/9780750664318",
+# )
 
 
+# Used in Zienkiewicz 4
 def hammer_marlowe_stroud_1(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
@@ -55,6 +64,7 @@ def hammer_marlowe_stroud_2(symbolic=False):
     )
 
 
+# Used in Zienkiewicz 5
 def hammer_marlowe_stroud_3(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
