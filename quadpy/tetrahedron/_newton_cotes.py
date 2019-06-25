@@ -4,16 +4,21 @@ import math
 import numpy
 import sympy
 
+from ._helpers import TetrahedronScheme
+from ..helpers import article
+
+citation = article(
+    authors=["P. Silvester"],
+    title="Symmetric quadrature formulae for simplexes",
+    journal="Math. Comp.",
+    volume="24",
+    pages="95-100",
+    year="1970",
+    url="https://doi.org/10.1090/S0025-5718-1970-0258283-6",
+)
+
 
 def _newton_cotes(n, point_fun):
-    """
-    Construction after
-
-    P. Silvester,
-    Symmetric quadrature formulae for simplexes
-    Math. Comp., 24, 95-100 (1970),
-    <https://doi.org/10.1090/S0025-5718-1970-0258283-6>.
-    """
     degree = n
 
     # points
@@ -69,22 +74,23 @@ def _newton_cotes(n, point_fun):
                     ]
                 )
                 idx += 1
-    return points, bary, weights, degree
+    return weights, bary, degree, citation
 
 
 class NewtonCotesClosed(object):
     def __init__(self, n):
-        self.points, self.bary, self.weights, self.degree = _newton_cotes(
-            n, lambda k, n: k / float(n)
+        return TetrahedronScheme(
+            "Newton-Cotes (closed, {})".format(n),
+            *_newton_cotes(n, lambda k, n: k / float(n))
         )
-        return
 
 
 class NewtonCotesOpen(object):
     def __init__(self, n):
-        self.points, self.bary, self.weights, self.degree = _newton_cotes(
-            n, lambda k, n: (k + 1) / float(n + 4)
+        scheme = TetrahedronScheme(
+            "Newton-Cotes (open, {})".format(n),
+            *_newton_cotes(n, lambda k, n: (k + 1) / float(n + 4))
         )
         if n == 0:
-            self.degree = 1
-        return
+            scheme.degree = 1
+        return scheme

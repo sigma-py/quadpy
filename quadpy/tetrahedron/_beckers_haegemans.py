@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from .helpers import untangle2, TetrahedronScheme
+from ._helpers import untangle2, TetrahedronScheme
 from ..helpers import techreport
 
 citation = techreport(

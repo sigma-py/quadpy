@@ -6,6 +6,16 @@ import numpy
 
 from ..line_segment import gauss_legendre
 from ..nsimplex._stroud import stroud_tn_5_1
+from ..helpers import book
+from ._helpers import TetrahedronScheme
+
+
+citation = book(
+    authors=["Arthur Stroud"],
+    title="Approximate Calculation of Multiple Integrals",
+    publisher="Prentice Hall",
+    year="1971",
+)
 
 
 def stroud_t3_5_1():
@@ -84,4 +94,4 @@ def stroud_t3_7_1():
             for k in range(4)
         ]
     )
-    return
+    return TetrahedronScheme("Stroud T3 7-1", weights, bary, degree, citation)

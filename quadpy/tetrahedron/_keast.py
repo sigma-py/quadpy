@@ -4,7 +4,7 @@ from __future__ import division
 
 import sympy
 
-from .helpers import untangle2, TetrahedronScheme
+from ._helpers import untangle2, TetrahedronScheme
 from ..helpers import article
 
 
@@ -162,8 +162,8 @@ def keast_09(symbolic=False):
 
 def keast_10(symbolic=False):
     degree = 8
-    # ERR In Keast's article, the first weight is incorrectly given
-    # with a positive sign.
+    # ERR In Keast's article, the first weight is incorrectly given with a positive
+    # sign.
     data = {
         "s4": [[-0.393270066412926145e-01]],
         "s31": [

@@ -5,7 +5,7 @@ from __future__ import division
 import numpy
 import sympy
 
-from .helpers import _s4, TetrahedronScheme
+from ._helpers import _s4, TetrahedronScheme
 from ..helpers import article
 
 citation = article(

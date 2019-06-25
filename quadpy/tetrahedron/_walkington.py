@@ -2,6 +2,17 @@
 #
 import numpy
 
+from ._helpers import TetrahedronScheme
+from ..helpers import techreport
+
+citation = techreport(
+    authors=["Noel J. Walkington"],
+    title="Quadrature on simplices of arbitrary dimension",
+    institution="CMU",
+    year="2000",
+    url="https://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/",
+)
+
 
 def walkington_p5():
     degree = 5
@@ -19,7 +30,7 @@ def walkington_p5():
             _xi11(0.045503704125649649492),
         ]
     )
-    return
+    return TetrahedronScheme("Walkington p5", weights, bary, degree, citation)
 
 
 def _xi1(a):
