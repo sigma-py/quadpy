@@ -39,7 +39,7 @@ def hammer_marlowe_stroud_2(symbolic=False):
     frac = sympy.frac if symbolic else lambda x, y: x / y
 
     weights, points = r([frac(1, 3), frac(1, 2)])
-    return TriangleScheme("Hammer-Marlowe-Stroud 1", weights, points, 2, citation)
+    return TriangleScheme("Hammer-Marlowe-Stroud 2", weights, points, 2, citation)
 
 
 def hammer_marlowe_stroud_3(symbolic=False):
