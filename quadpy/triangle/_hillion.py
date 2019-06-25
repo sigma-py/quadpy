@@ -2,7 +2,6 @@
 #
 # ENH in the article, most schemes are given only in single precision. quadpy adds
 # symbolic expressions
-from __future__ import division
 
 import numpy
 import sympy

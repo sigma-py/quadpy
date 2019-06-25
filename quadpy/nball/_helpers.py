@@ -5,7 +5,7 @@ import numpy
 from ..nsphere._helpers import integrate_monomial_over_unit_nsphere
 
 
-class NBallScheme(object):
+class NBallScheme:
     def __init__(self, name, dim, weights, points, degree, citation):
         self.name = name
         self.dim = dim

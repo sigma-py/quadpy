@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
 
 from ..helpers import untangle, fsd, compute_dobrodeev, article
 from ._helpers import integrate_monomial_over_unit_nball, NBallScheme

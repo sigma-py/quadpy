@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
 
 from math import factorial as fact
 

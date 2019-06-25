@@ -7,7 +7,7 @@ import numpy
 from ..helpers import plot_disks
 
 
-class E2rScheme(object):
+class E2rScheme:
     def __init__(self, name, weights, points, degree, citation):
         self.name = name
         self.citation = citation

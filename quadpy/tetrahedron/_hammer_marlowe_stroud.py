@@ -9,7 +9,6 @@ Mathematical Tables and Other Aids to Computation.
 Vol. 12, No. 64 (Oct., 1958), pp. 272-280,
 <https://www.jstor.org/stable/2002370>
 """
-from __future__ import division
 
 import numpy
 import sympy

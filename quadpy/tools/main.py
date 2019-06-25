@@ -28,7 +28,6 @@
     Inverse Problems, 1987, Volume 3, Number 4,
     <https://doi.org/10.1088/0266-5611/3/4/010>.
 """
-from __future__ import division
 
 from mpmath import mp
 from mpmath.matrices.eigen_symmetric import tridiag_eigen

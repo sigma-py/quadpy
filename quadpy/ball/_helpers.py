@@ -7,7 +7,7 @@ from .. import helpers
 
 
 # @dataclass
-class BallScheme(object):
+class BallScheme:
     # name: str
     # degree: int
     # weights: list

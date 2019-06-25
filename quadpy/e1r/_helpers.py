@@ -5,7 +5,7 @@ import numpy
 from ..helpers import plot_disks_1d
 
 
-class E1rScheme(object):
+class E1rScheme:
     def __init__(self, name, weights, points, degree):
         self.name = name
         self.weights = weights

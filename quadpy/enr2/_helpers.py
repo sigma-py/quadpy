@@ -3,7 +3,7 @@
 import numpy
 
 
-class Enr2Scheme(object):
+class Enr2Scheme:
     def __init__(self, name, dim, weights, points, degree, citation):
         self.name = name
         self.dim = dim
