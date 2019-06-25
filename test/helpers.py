@@ -92,7 +92,8 @@ def find_equal(schemes):
     tol = 1.0e-13
     n = len(schemes)
     for i in range(n):
-        for j in range(i + 1, n):
+        found_equal = False
+        for j in range(n):
             if schemes[i].name == schemes[j].name:
                 continue
             if len(schemes[i].bary) != len(schemes[j].bary):
@@ -108,9 +109,12 @@ def find_equal(schemes):
                     is_equal = False
                     break
             if is_equal:
+                found_equal = True
                 print(
                     "Schemes '{}' and '{}' are equal.".format(
                         schemes[i].name, schemes[j].name
                     )
                 )
+        if found_equal:
+            print()
     return

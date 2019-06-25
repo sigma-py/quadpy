@@ -4,32 +4,33 @@ from __future__ import division
 
 import sympy
 
-from .helpers import untangle2
+from ._helpers import untangle2, TetrahedronScheme
+from ..helpers import book
+
+citation = book(
+    authors=["Olgierd Zienkiewicz"],
+    title="The Finite Element Method, Sixth Edition",
+    publisher="Butterworth-Heinemann",
+    year="2005",
+    isbn="0750663200",
+    url="http://www.sciencedirect.com/science/book/9780750664318",
+)
+# https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tet/quadrature_rules_tet.html
 
 
-class Zienkiewicz(object):
-    """
-    Olgierd Zienkiewicz,
-    The Finite Element Method,
-    Sixth Edition,
-    Butterworth-Heinemann, 2005,
-    ISBN: 0750663200,
-    <http://www.sciencedirect.com/science/book/9780750664318>,
-    <https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tet/quadrature_rules_tet.html>.
-    """
+def zienkiewicz_4(symbolic=False):
+    frac = sympy.Rational if symbolic else lambda x, y: x / y
 
-    def __init__(self, index, symbolic=False):
-        frac = sympy.Rational if symbolic else lambda x, y: x / y
+    degree = 2
+    data = {"s31": [[frac(1, 4), 0.1381966011250105]]}
+    bary, weights = untangle2(data)
+    return TetrahedronScheme("Zienkiewicz 4", weights, bary, degree, citation)
 
-        self.name = "Zienkiewicz({})".format(index)
 
-        data = {
-            4: {"degree": 2, "s31": [[frac(1, 4), 0.1381966011250105]]},
-            5: {"degree": 3, "s4": [[-frac(4, 5)]], "s31": [[frac(9, 20), frac(1, 6)]]},
-        }[index]
+def zienkiewicz_5(symbolic=False):
+    frac = sympy.Rational if symbolic else lambda x, y: x / y
 
-        self.degree = data.pop("degree")
-
-        self.bary, self.weights = untangle2(data)
-        self.points = self.bary[:, 1:]
-        return
+    degree = 3
+    data = {"s4": [[-frac(4, 5)]], "s31": [[frac(9, 20), frac(1, 6)]]}
+    bary, weights = untangle2(data)
+    return TetrahedronScheme("Zienkiewicz 5", weights, bary, degree, citation)

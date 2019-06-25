@@ -2,6 +2,38 @@
 #
 import numpy
 
+from ..nsimplex import NSimplexScheme, transform, get_vol
+from ..helpers import backend_to_function
+
+
+class TriangleScheme(NSimplexScheme):
+    def __init__(self, name, weights, bary, degree, citation=None):
+        self.name = name
+        self.weights = weights
+        self.bary = bary
+        self.degree = degree
+        self.citation = citation
+        return
+
+    def show(
+        self,
+        tet=numpy.array(
+            [
+                [+1, 0, -1.0 / numpy.sqrt(2.0)],
+                [-1, 0, -1.0 / numpy.sqrt(2.0)],
+                [0, +1, +1.0 / numpy.sqrt(2.0)],
+                [0, -1, +1.0 / numpy.sqrt(2.0)],
+            ]
+        ),
+        backend="vtk",
+    ):
+        edges = numpy.array([[tet[i], tet[j]] for i in range(4) for j in range(i)])
+        edges = numpy.moveaxis(edges, 1, 2)
+        backend_to_function[backend](
+            transform(self.bary.T, tet.T).T, self.weights, get_vol(tet), edges
+        )
+        return
+
 
 def _s4():
     return numpy.array([[0.25, 0.25, 0.25, 0.25]])
