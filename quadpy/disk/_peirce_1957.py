@@ -18,6 +18,7 @@ _citation = article(
 )
 
 
+# TODO symbolic
 def peirce_1957(m):
     k = 4 * m + 3
     theta = 2 * numpy.pi * numpy.arange(1, k + 2) / (k + 1)

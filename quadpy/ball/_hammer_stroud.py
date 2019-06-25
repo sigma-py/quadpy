@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-
-import numpy
 import sympy
 
 from ._helpers import BallScheme
@@ -17,23 +15,19 @@ _citation = article(
     url="https://doi.org/10.1090/S0025-5718-1958-0102176-6",
 )
 
+frac = sympy.Rational
+sqrt = sympy.sqrt
+pi = sympy.pi
 
-def hammer_stroud_11_3(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
 
+def hammer_stroud_11_3():
     data = [(frac(1, 6), fsd(3, (sqrt(frac(3, 5)), 1)))]
     points, weights = untangle(data)
     weights *= frac(4, 3) * pi
     return BallScheme("Hammer-Stroud 11-3", _citation, 3, weights, points)
 
 
-def hammer_stroud_12_3(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-
+def hammer_stroud_12_3():
     alpha = sqrt(frac(3, 7))
     data = [
         (frac(1, 15), z(3)),
@@ -45,11 +39,7 @@ def hammer_stroud_12_3(symbolic=False):
     return BallScheme("Hammer-Stroud 12-3", _citation, 5, weights, points)
 
 
-def hammer_stroud_14_3(variant_a=True, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-
+def hammer_stroud_14_3(variant_a=True):
     t = 1 if variant_a else -1
 
     sqrt14 = sqrt(14)
@@ -69,11 +59,7 @@ def hammer_stroud_14_3(variant_a=True, symbolic=False):
     return BallScheme(name, _citation, 5, weights, points)
 
 
-def _hammer_stroud_15_3(variant_a, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-
+def _hammer_stroud_15_3(variant_a):
     t = 1 if variant_a else -1
 
     sqrt30 = sqrt(30)
@@ -99,9 +85,9 @@ def _hammer_stroud_15_3(variant_a, symbolic=False):
     return BallScheme(name, _citation, 7, weights, points)
 
 
-def hammer_stroud_15_3a(symbolic=False):
-    return _hammer_stroud_15_3(True, symbolic)
+def hammer_stroud_15_3a():
+    return _hammer_stroud_15_3(True)
 
 
-def hammer_stroud_15_3b(symbolic=False):
-    return _hammer_stroud_15_3(False, symbolic)
+def hammer_stroud_15_3b():
+    return _hammer_stroud_15_3(False)

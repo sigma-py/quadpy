@@ -20,12 +20,12 @@ _citation = article(
     url="https://eudml.org/doc/176796",
 )
 
+frac = sympy.Rational
+pi = sympy.pi
+sqrt = numpy.vectorize(sympy.sqrt)
 
-def radon(alpha, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
+def radon(alpha):
     r = sqrt(frac(alpha + 4, alpha + 6))
     s = sqrt(frac(alpha + 4, 4 * (alpha + 6)))
     t = sqrt(frac(3 * (alpha + 4), 4 * (alpha + 6)))

@@ -18,15 +18,18 @@ _citation = article(
     url="https://doi.org/10.1002/zamm.19600401014",
 )
 
+frac = sympy.Rational
+pi = sympy.pi
+cos = numpy.vectorize(sympy.cos)
+sin = numpy.vectorize(sympy.sin)
+sqrt = numpy.vectorize(sympy.sqrt)
+pm_ = numpy.array([+1, -1])
+roots = mp.polyroots
+linear_solve = mp.lu_solve
 
-def albrecht_1(symbolic=False):
+
+def albrecht_1():
     # Equals Albrecht-Collatz, Lether(2)
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
-    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
     alpha = (2 * numpy.arange(4) + 1) * pi / 4
     t = numpy.array([cos(alpha), sin(alpha)]).T
 
@@ -37,13 +40,7 @@ def albrecht_1(symbolic=False):
     return DiskScheme("Albrecht 1", weights, points, 3, _citation)
 
 
-def albrecht_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
-    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def albrecht_2():
     alpha = (2 * numpy.arange(6) + 1) * pi / 6
     t = numpy.array([cos(alpha), sin(alpha)]).T
 
@@ -54,14 +51,7 @@ def albrecht_2(symbolic=False):
     return DiskScheme("Albrecht 2", weights, points, 5, _citation)
 
 
-def albrecht_3(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
-    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pm_ = numpy.array([+1, -1])
-
+def albrecht_3():
     alpha = 2 * numpy.arange(4) * pi / 4
     s = numpy.array([cos(alpha), sin(alpha)]).T
 
@@ -79,14 +69,7 @@ def albrecht_3(symbolic=False):
     return DiskScheme("Albrecht 3", weights, points, 7, _citation)
 
 
-def albrecht_4(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
-    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pm_ = numpy.array([+1, -1])
-
+def albrecht_4():
     sqrt111 = sqrt(111)
     rho1, rho2 = sqrt((96 - pm_ * 4 * sqrt(111)) / 155)
 
@@ -107,16 +90,7 @@ def albrecht_4(symbolic=False):
     return DiskScheme("Albrecht 4", weights, points, 9, _citation)
 
 
-def albrecht_5(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
-    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pm_ = numpy.array([+1, -1])
-    roots = mp.polyroots if symbolic else numpy.roots
-    linear_solve = mp.lu_solve if symbolic else numpy.linalg.solve
-
+def albrecht_5():
     # The values are solutions of
     # 6317094x^3 - 10022245*x^2 + 4149900*x - 336375 = 0
     sigma2 = roots([6317094, -10022245, 4149900, -336375])
@@ -150,15 +124,7 @@ def albrecht_5(symbolic=False):
     return DiskScheme("Albrecht 5", weights, points, 11, _citation)
 
 
-def albrecht_6(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
-    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    roots = mp.polyroots if symbolic else numpy.roots
-    linear_solve = mp.lu_solve if symbolic else numpy.linalg.solve
-
+def albrecht_6():
     # The values are solutions of
     # 11025*x^3 - 19020*x^2 + 9370*x - 1212 = 0
     sigma2 = roots([11025, -19020, 9370, -1212])
@@ -188,16 +154,7 @@ def albrecht_6(symbolic=False):
     return DiskScheme("Albrecht 6", weights, points, 13, _citation)
 
 
-def albrecht_7(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
-    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pm_ = numpy.array([+1, -1])
-    roots = mp.polyroots if symbolic else numpy.roots
-    linear_solve = mp.lu_solve if symbolic else numpy.linalg.solve
-
+def albrecht_7():
     alpha = 2 * numpy.arange(8) * pi / 8
     s = numpy.array([cos(alpha), sin(alpha)]).T
 
@@ -231,16 +188,7 @@ def albrecht_7(symbolic=False):
     return DiskScheme("Albrecht 7", weights, points, 15, _citation)
 
 
-def albrecht_8(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
-    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pm_ = numpy.array([+1, -1])
-    roots = mp.polyroots if symbolic else numpy.roots
-    linear_solve = mp.lu_solve if symbolic else numpy.linalg.solve
-
+def albrecht_8():
     alpha = 2 * numpy.arange(10) * pi / 10
     s = numpy.array([cos(alpha), sin(alpha)]).T
 

@@ -42,9 +42,9 @@ def rabinowitz_richter_2():
     return DiskScheme("Rabinowitz-Richter 2", weights, points, 9, _citation)
 
 
-def rabinowitz_richter_3(symbolic=False):
+def rabinowitz_richter_3():
     # ENH Given analytically by Mysovskih.
-    return mysovskih_2(symbolic)
+    return mysovskih_2()
 
 
 def rabinowitz_richter_4():
@@ -75,6 +75,6 @@ def rabinowitz_richter_5():
     return DiskScheme("Rabinowitz-Richter 5", weights, points, 13, _citation)
 
 
-def rabinowitz_richter_6(symbolic=False):
+def rabinowitz_richter_6():
     # ENH Given analytically by Mysovskih.
-    return mysovskih_3(symbolic)
+    return mysovskih_3()

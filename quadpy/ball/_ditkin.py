@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-
-import numpy
 import sympy
 
 from ..helpers import untangle, z, pm_array0, pm, article
@@ -17,17 +15,16 @@ _citation = article(
     note="Russian",
 )
 
+frac = sympy.Rational
+sqrt = sympy.sqrt
+pi = sympy.pi
 
-def ditkin_1(alpha=0, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-    pm_ = numpy.array([+1, -1])
 
+def ditkin_1(alpha=0):
     B0 = frac(4, (alpha + 5) ** 2)
     B1 = frac((alpha + 3) * (alpha + 7), 12 * (alpha + 5) ** 2)
 
-    r_s = sqrt((alpha + 5) * (5 + pm_ * sqrt(5)) / 10 / (alpha + 7))
+    r_s = [sqrt((alpha + 5) * (5 + i * sqrt(5)) / 10 / (alpha + 7)) for i in [+1, -1]]
 
     data = [
         (B0, z(3)),
@@ -41,16 +38,11 @@ def ditkin_1(alpha=0, symbolic=False):
     return BallScheme("Ditkin 1", _citation, 5, weights, points)
 
 
-def ditkin_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-    pm_ = numpy.array([+1, -1])
-
+def ditkin_2():
     B0 = frac(4, 25)
     B1 = frac(21, 500)
 
-    r_s = sqrt((15 + pm_ * 5 * sqrt(5)) / 42)
+    r_s = [sqrt((15 + i * 5 * sqrt(5)) / 42) for i in [+1, -1]]
     t = sqrt(frac(5, 21))
 
     data = [
@@ -66,20 +58,15 @@ def ditkin_2(symbolic=False):
     return BallScheme("Ditkin 2", _citation, 5, weights, points)
 
 
-def ditkin_3(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-    pm_ = numpy.array([+1, -1])
-
+def ditkin_3():
     B0 = frac(16, 175)
     B1 = frac(81, 1400)
     B2 = frac(3, 280)
 
     sqrt5 = sqrt(5)
-    r_s = sqrt((5 + pm_ * sqrt5) / 18)
+    r_s = [sqrt((5 + i * sqrt5) / 18) for i in [+1, -1]]
     t = sqrt(frac(1, 3))
-    u_v = sqrt((3 - pm_ * sqrt5) / 6)
+    u_v = [sqrt((3 - i * sqrt5) / 6) for i in [+1, -1]]
 
     data = [
         (B0, z(3)),

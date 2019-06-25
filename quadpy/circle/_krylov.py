@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-
 import numpy
 import sympy
 
@@ -17,12 +16,12 @@ _citation = book(
     url="https://books.google.de/books/about/Approximate_Calculation_of_Integrals.html?id=ELeRwR27IRIC",
 )
 
+cos = numpy.vectorize(sympy.cos)
+sin = numpy.vectorize(sympy.sin)
+pi = sympy.pi
 
-def krylov(n, symbolic=False):
-    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
-    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
-    pi = sympy.pi if symbolic else numpy.pi
 
+def krylov(n):
     weights = numpy.full(n, 2 * pi / n)
     alpha = 2 * numpy.arange(n) * pi / n
     points = numpy.column_stack([cos(alpha), sin(alpha)])

@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-
-import numpy
 import sympy
 
 from ..helpers import untangle, pm, article
@@ -19,15 +17,13 @@ _citation = article(
     url="https://doi.org/10.1002/zamm.19580380102",
 )
 
+frac = sympy.Rational
+pi = sympy.pi
 
-def albrecht_collatz(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
 
-    data = [
-        # ERR Wrongly stated in Stroud as sqrt(1/2) instead of 1/2
-        (frac(1, 4), pm(2, frac(1, 2)))
-    ]
+def albrecht_collatz():
+    # ERR Wrongly stated in Stroud as sqrt(1/2) instead of 1/2
+    data = [(frac(1, 4), pm(2, frac(1, 2)))]
     points, weights = untangle(data)
     weights *= pi
     return DiskScheme("Albrecht-Collatz", weights, points, 3, _citation)
