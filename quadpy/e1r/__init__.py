@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-from .gauss_laguerre import GaussLaguerre
+from ._gauss_laguerre import gauss_laguerre
 
-from .tools import integrate, show, plot
-
-__all__ = ["GaussLaguerre", "integrate", "show", "plot"]
+__all__ = ["gauss_laguerre"]

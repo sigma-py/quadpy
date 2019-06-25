@@ -3,59 +3,92 @@
 import numpy
 import pytest
 import quadpy
-from quadpy.nball.helpers import integrate_monomial_over_unit_nball
+from quadpy.nball._helpers import integrate_monomial_over_unit_nball
 
 from helpers import check_degree
 
+schemes = [
+    quadpy.disk.albrecht_1(),
+    quadpy.disk.albrecht_2(),
+    quadpy.disk.albrecht_3(),
+    quadpy.disk.albrecht_4(),
+    quadpy.disk.albrecht_5(),
+    quadpy.disk.albrecht_6(),
+    quadpy.disk.albrecht_7(),
+    quadpy.disk.albrecht_8(),
+    quadpy.disk.albrecht_collatz(),
+    quadpy.disk.cools_haegemans_1(),
+    quadpy.disk.cools_haegemans_2(),
+    quadpy.disk.cools_haegemans_3(),
+    quadpy.disk.cools_kim_1(),
+    quadpy.disk.cools_kim_2(),
+    quadpy.disk.cools_kim_3(),
+    quadpy.disk.haegemans_piessens(),
+    quadpy.disk.hammer_stroud_11_2(),
+    quadpy.disk.hammer_stroud_12_2(),
+    quadpy.disk.hammer_stroud_13_2(),
+    quadpy.disk.hammer_stroud_17(),
+    quadpy.disk.hammer_stroud_18(),
+    quadpy.disk.hammer_stroud_19(),
+    quadpy.disk.hammer_stroud_20(),
+    quadpy.disk.hammer_stroud_21(),
+    quadpy.disk.lether(1),
+    quadpy.disk.lether(2),
+    quadpy.disk.lether(3),
+    quadpy.disk.lether(4),
+    quadpy.disk.lether(5),
+    quadpy.disk.lether(6),
+    quadpy.disk.mysovskih_1(),
+    quadpy.disk.mysovskih_2(),
+    quadpy.disk.mysovskih_3(),
+    quadpy.disk.peirce_1956_1(),
+    quadpy.disk.peirce_1956_2(),
+    quadpy.disk.peirce_1956_3(),
+    quadpy.disk.peirce_1957(1),
+    quadpy.disk.peirce_1957(2),
+    quadpy.disk.peirce_1957(3),
+    quadpy.disk.peirce_1957(5),
+    quadpy.disk.piessens_haegemans(),
+    quadpy.disk.rabinowitz_richter_1(),
+    quadpy.disk.rabinowitz_richter_2(),
+    quadpy.disk.rabinowitz_richter_3(),
+    quadpy.disk.rabinowitz_richter_4(),
+    quadpy.disk.rabinowitz_richter_5(),
+    quadpy.disk.rabinowitz_richter_6(),
+    quadpy.disk.stroud_s2_3_1(),
+    quadpy.disk.stroud_s2_3_2(),
+    quadpy.disk.stroud_s2_4_1(),
+    quadpy.disk.stroud_s2_5_1(),
+    quadpy.disk.stroud_s2_5_2(),
+    quadpy.disk.stroud_s2_7_1(),
+    quadpy.disk.stroud_s2_7_2(),
+    quadpy.disk.stroud_s2_9_1(),
+    quadpy.disk.stroud_s2_9_2(),
+    quadpy.disk.stroud_s2_9_3(),
+    quadpy.disk.stroud_s2_9_4(),
+    quadpy.disk.stroud_s2_9_5(),
+    quadpy.disk.stroud_s2_11_1(),
+    quadpy.disk.stroud_s2_11_2(),
+    quadpy.disk.stroud_s2_11_3(),
+    quadpy.disk.stroud_s2_11_4(),
+    quadpy.disk.stroud_s2_13_1(),
+    quadpy.disk.stroud_s2_13_2(),
+    quadpy.disk.stroud_s2_15_1(),
+    quadpy.disk.stroud_s2_15_2(),
+    quadpy.disk.stroud_s2_17_1(),
+    quadpy.disk.wissmann_becker_6_1(),
+    quadpy.disk.wissmann_becker_6_2(),
+    quadpy.disk.wissmann_becker_8_1(),
+]
 
-@pytest.mark.parametrize(
-    "scheme,tol",
-    [(quadpy.disk.Albrecht(k), 1.0e-14) for k in range(1, 9)]
-    + [(quadpy.disk.CoolsHaegemans(k), 1.0e-14) for k in range(1, 4)]
-    + [(quadpy.disk.CoolsKim(k), 1.0e-14) for k in range(1, 4)]
-    + [(quadpy.disk.HaegemansPiessens(), 1.0e-14)]
-    + [
-        (quadpy.disk.HammerStroud(k), 1.0e-14)
-        for k in ["11-2", "12-2", "13-2", "17", "18", "19", "20", "21"]
-    ]
-    + [(quadpy.disk.Lether(k), 1.0e-14) for k in range(1, 6)]
-    + [(quadpy.disk.Peirce1957(k), 1.0e-14) for k in range(1, 6)]
-    + [(quadpy.disk.PiessensHaegemans(), 1.0e-14)]
-    + [(quadpy.disk.RabinowitzRichter(k), 1.0e-14) for k in range(1, 7)]
-    + [
-        (quadpy.disk.Stroud(k), 1.0e-14)
-        for k in [
-            "S2 3-1",
-            "S2 3-2",
-            "S2 4-1",
-            "S2 5-1",
-            "S2 5-2",
-            "S2 7-1",
-            "S2 7-2",
-            "S2 9-1",
-            "S2 9-2",
-            "S2 9-3",
-            "S2 9-4",
-            "S2 9-5",
-            "S2 11-1",
-            "S2 11-2",
-            "S2 11-3",
-            "S2 11-4",
-            "S2 13-1",
-            "S2 13-2",
-            "S2 15-1",
-            "S2 15-2",
-            "S2 17-1",
-        ]
-    ]
-    + [(quadpy.disk.WissmannBecker(k), 1.0e-14) for k in ["6-1", "6-2", "8-1"]],
-)
-def test_scheme(scheme, tol):
+
+@pytest.mark.parametrize("scheme", schemes)
+def test_scheme(scheme, tol=1.0e-14):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
     degree = check_degree(
-        lambda poly: quadpy.disk.integrate(poly, [0.0, 0.0], 1.0, scheme),
+        lambda poly: scheme.integrate(poly, [0.0, 0.0], 1.0),
         integrate_monomial_over_unit_nball,
         2,
         scheme.degree + 1,
@@ -67,14 +100,17 @@ def test_scheme(scheme, tol):
     return
 
 
-@pytest.mark.parametrize("scheme", [quadpy.disk.Lether(3)])
+@pytest.mark.parametrize("scheme", [quadpy.disk.lether(3)])
 def test_show(scheme):
-    quadpy.disk.show(scheme)
+    scheme.show()
     return
 
 
 if __name__ == "__main__":
-    # scheme_ = quadpy.disk.Lether(5)
-    scheme_ = quadpy.disk.Albrecht(8)
-    test_scheme(scheme_, 1.0e-14)
-    test_show(scheme_)
+    # scheme_ = quadpy.disk.lether(5)
+    # scheme_ = quadpy.disk.albrecht_8()
+    # test_scheme(scheme_, 1.0e-14)
+    # test_show(scheme_)
+    from helpers import find_equal
+
+    find_equal(schemes)

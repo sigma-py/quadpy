@@ -1,9 +1,58 @@
 # -*- coding: utf-8 -*-
 #
 
-from .felippa import Felippa
-from .kubatko_yeager_maggi import KubatkoYeagerMaggi
+from ._felippa import felippa_1, felippa_2, felippa_3, felippa_4, felippa_5, felippa_6
+from ._kubatko_yeager_maggi import (
+    kubatko_yeager_maggi_1,
+    kubatko_yeager_maggi_2a,
+    kubatko_yeager_maggi_2b,
+    kubatko_yeager_maggi_3a,
+    kubatko_yeager_maggi_3b,
+    kubatko_yeager_maggi_3c,
+    kubatko_yeager_maggi_3d,
+    kubatko_yeager_maggi_4a,
+    kubatko_yeager_maggi_4b,
+    kubatko_yeager_maggi_5a,
+    kubatko_yeager_maggi_5b,
+    kubatko_yeager_maggi_5c,
+    kubatko_yeager_maggi_6a,
+    kubatko_yeager_maggi_6b,
+    kubatko_yeager_maggi_6c,
+    kubatko_yeager_maggi_7a,
+    kubatko_yeager_maggi_7b,
+    kubatko_yeager_maggi_7c,
+    kubatko_yeager_maggi_8a,
+    kubatko_yeager_maggi_8b,
+    kubatko_yeager_maggi_9,
+)
 
-from .tools import integrate, show
 
-__all__ = ["Felippa", "KubatkoYeagerMaggi", "integrate", "show"]
+__all__ = [
+    "felippa_1",
+    "felippa_2",
+    "felippa_3",
+    "felippa_4",
+    "felippa_5",
+    "felippa_6",
+    "kubatko_yeager_maggi_1",
+    "kubatko_yeager_maggi_2a",
+    "kubatko_yeager_maggi_2b",
+    "kubatko_yeager_maggi_3a",
+    "kubatko_yeager_maggi_3b",
+    "kubatko_yeager_maggi_3c",
+    "kubatko_yeager_maggi_3d",
+    "kubatko_yeager_maggi_4a",
+    "kubatko_yeager_maggi_4b",
+    "kubatko_yeager_maggi_5a",
+    "kubatko_yeager_maggi_5b",
+    "kubatko_yeager_maggi_5c",
+    "kubatko_yeager_maggi_6a",
+    "kubatko_yeager_maggi_6b",
+    "kubatko_yeager_maggi_6c",
+    "kubatko_yeager_maggi_7a",
+    "kubatko_yeager_maggi_7b",
+    "kubatko_yeager_maggi_7c",
+    "kubatko_yeager_maggi_8a",
+    "kubatko_yeager_maggi_8b",
+    "kubatko_yeager_maggi_9",
+]

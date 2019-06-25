@@ -1,11 +1,32 @@
 # -*- coding: utf-8 -*-
 #
 
-from .dobrodeev1978 import Dobrodeev1978
-from .stroud import Stroud
-from .stroud1967 import Stroud1967
-from .stroud1969 import Stroud1969
+from ._dobrodeev_1978 import dobrodeev_1978
+from ._stroud import (
+    stroud_un_3_1,
+    stroud_un_3_2,
+    stroud_un_5_1,
+    stroud_un_5_2,
+    stroud_un_5_3,
+    stroud_un_5_4,
+    stroud_un_7_2,
+    stroud_un_7_1,
+    stroud_un_11_1,
+)
+from ._stroud_1967 import stroud_1967
+from ._stroud_1969 import stroud_1969
 
-from .tools import integrate
-
-__all__ = ["Dobrodeev1978", "Stroud", "Stroud1967", "Stroud1969", "integrate"]
+__all__ = [
+    "dobrodeev_1978",
+    "stroud_un_3_1",
+    "stroud_un_3_2",
+    "stroud_un_5_1",
+    "stroud_un_5_2",
+    "stroud_un_5_3",
+    "stroud_un_5_4",
+    "stroud_un_7_2",
+    "stroud_un_7_1",
+    "stroud_un_11_1",
+    "stroud_1967",
+    "stroud_1969",
+]

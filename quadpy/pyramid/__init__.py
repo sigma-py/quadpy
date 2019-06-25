@@ -1,8 +1,26 @@
 # -*- coding: utf-8 -*-
 #
 
-from .felippa import Felippa
+from ._felippa import (
+    felippa_1,
+    felippa_2,
+    felippa_3,
+    felippa_4,
+    felippa_5,
+    felippa_6,
+    felippa_7,
+    felippa_8,
+    felippa_9,
+)
 
-from .tools import integrate, show
-
-__all__ = ["Felippa", "integrate", "show"]
+__all__ = [
+    "felippa_1",
+    "felippa_2",
+    "felippa_3",
+    "felippa_4",
+    "felippa_5",
+    "felippa_6",
+    "felippa_7",
+    "felippa_8",
+    "felippa_9",
+]

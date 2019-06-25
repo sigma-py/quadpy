@@ -4,38 +4,39 @@ import matplotlib.pyplot as plt
 import numpy
 import pytest
 import quadpy
-from quadpy.nball.helpers import integrate_monomial_over_unit_nball
+from quadpy.nball._helpers import integrate_monomial_over_unit_nball
 
 from helpers import check_degree
 
+schemes = [
+    quadpy.ball.ditkin_1(),
+    quadpy.ball.ditkin_2(),
+    quadpy.ball.ditkin_3(),
+    quadpy.ball.hammer_stroud_11_3(),
+    quadpy.ball.hammer_stroud_12_3(),
+    quadpy.ball.hammer_stroud_14_3(),
+    quadpy.ball.hammer_stroud_15_3a(),
+    quadpy.ball.hammer_stroud_15_3b(),
+    quadpy.ball.mysovskih(),
+    quadpy.ball.stroud_3_1(),
+    quadpy.ball.stroud_5_1(),
+    quadpy.ball.stroud_5_2(),
+    quadpy.ball.stroud_7_1a(),
+    quadpy.ball.stroud_7_1b(),
+    quadpy.ball.stroud_7_2(),
+    quadpy.ball.stroud_7_3(),
+    quadpy.ball.stroud_7_4(),
+    quadpy.ball.stroud_14_1(),
+]
 
-@pytest.mark.parametrize(
-    "scheme,tol",
-    [
-        (quadpy.ball.HammerStroud(k), 1.0e-14)
-        for k in ["11-3", "12-3", "14-3a", "14-3b", "15-3a", "15-3b"]
-    ]
-    + [
-        (quadpy.ball.Stroud(k), 1.0e-14)
-        for k in [
-            "S3 3-1",
-            "S3 5-1",
-            "S3 5-2",
-            "S3 7-1a",
-            "S3 7-1b",
-            "S3 7-2",
-            "S3 7-3",
-            "S3 7-4",
-            "S3 14-1",
-        ]
-    ],
-)
-def test_scheme(scheme, tol):
+
+@pytest.mark.parametrize("scheme", schemes)
+def test_scheme(scheme, tol=1.0e-14):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
     degree = check_degree(
-        lambda poly: quadpy.ball.integrate(poly, [0.0, 0.0, 0.0], 1.0, scheme),
+        lambda poly: scheme.integrate(poly, [0.0, 0.0, 0.0], 1.0),
         integrate_monomial_over_unit_nball,
         3,
         scheme.degree + 1,
@@ -47,14 +48,17 @@ def test_scheme(scheme, tol):
     return
 
 
-@pytest.mark.parametrize("scheme", [quadpy.ball.HammerStroud("11-3")])
+@pytest.mark.parametrize("scheme", [quadpy.ball.hammer_stroud_11_3()])
 def test_show(scheme, backend="mpl"):
-    quadpy.ball.show(scheme, backend=backend)
+    scheme.show(backend=backend)
     plt.close()
     return
 
 
 if __name__ == "__main__":
-    scheme_ = quadpy.ball.Stroud("S3 14-1")
-    test_scheme(scheme_, 1.0e-14)
+    # scheme_ = quadpy.ball.Stroud("S3 14-1")
+    # test_scheme(scheme_, 1.0e-14)
     # test_show(scheme_, backend='vtk')
+    from helpers import find_equal
+
+    find_equal(schemes)

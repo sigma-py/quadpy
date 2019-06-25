@@ -9,15 +9,25 @@ from helpers import check_degree, integrate_monomial_over_enr2
 
 
 @pytest.mark.parametrize(
-    "scheme,tol",
-    [(quadpy.e3r2.Stroud(key), 1.0e-14) for key in quadpy.e3r2.Stroud.keys],
+    "scheme",
+    [
+        quadpy.e3r2.stroud_e3r2_5_1(),
+        quadpy.e3r2.stroud_e3r2_5_2a(),
+        quadpy.e3r2.stroud_e3r2_5_2b(),
+        quadpy.e3r2.stroud_e3r2_5_3(),
+        quadpy.e3r2.stroud_e3r2_7_1a(),
+        quadpy.e3r2.stroud_e3r2_7_1b(),
+        quadpy.e3r2.stroud_e3r2_7_2a(),
+        quadpy.e3r2.stroud_e3r2_7_2b(),
+        quadpy.e3r2.stroud_e3r2_14_1(),
+    ],
 )
-def test_scheme(scheme, tol):
+def test_scheme(scheme, tol=1.0e-14):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
     degree = check_degree(
-        lambda poly: quadpy.e3r2.integrate(poly, scheme),
+        lambda poly: scheme.integrate(poly),
         integrate_monomial_over_enr2,
         3,
         scheme.degree + 1,
@@ -29,9 +39,9 @@ def test_scheme(scheme, tol):
     return
 
 
-@pytest.mark.parametrize("scheme", [quadpy.e3r2.Stroud("5-1")])
+@pytest.mark.parametrize("scheme", [quadpy.e3r2.stroud_e3r2_5_1()])
 def test_show(scheme, backend="mpl"):
-    quadpy.e3r2.show(scheme, backend=backend)
+    scheme.show(backend=backend)
     plt.close()
     return
 

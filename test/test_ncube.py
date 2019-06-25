@@ -3,47 +3,38 @@
 import numpy
 import pytest
 import quadpy
-from quadpy.ncube.helpers import integrate_monomial_over_ncube
+from quadpy.ncube._helpers import integrate_monomial_over_ncube
 
 from helpers import check_degree
 
 
 @pytest.mark.parametrize(
-    "scheme, tol",
-    [(quadpy.ncube.Dobrodeev1970(dim, False), 1.0e-14) for dim in range(5, 8)]
-    + [(quadpy.ncube.Dobrodeev1978(dim, False), 1.0e-14) for dim in range(2, 8)]
-    + [
-        (quadpy.ncube.HammerStroud(n, k, False), 1.0e-14)
-        for n in range(3, 7)
-        for k in ["1-n", "2-n"]
-    ]
-    + [
-        (quadpy.ncube.Stroud(n, k, False), 1.0e-14)
-        for n in range(3, 7)
-        for k in [
-            "Cn 1-1",
-            "Cn 1-2",
-            "Cn 2-1",
-            "Cn 2-2",
-            "Cn 3-1",
-            "Cn 3-2",
-            "Cn 3-3",
-            "Cn 3-4",
-            "Cn 3-5",
-            "Cn 3-6",
-            "Cn 5-2",
-            "Cn 5-3",
-            "Cn 5-4",
-            "Cn 5-5",
-            "Cn 5-6",
-            "Cn 5-7",
-            "Cn 5-8",
-            "Cn 5-9",
-            "Cn 7-1",
-        ]
-    ],
+    "scheme",
+    [quadpy.ncube.dobrodeev_1970(n) for n in range(5, 8)]
+    + [quadpy.ncube.dobrodeev_1978(n) for n in range(2, 8)]
+    + [quadpy.ncube.hammer_stroud_1n(n) for n in range(3, 7)]
+    + [quadpy.ncube.hammer_stroud_2n(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_1_1(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_1_2(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_2_1(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_2_2(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_3_1(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_3_2(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_3_3(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_3_4(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_3_5(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_3_6(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_5_2(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_5_3(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_5_4(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_5_5(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_5_6(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_5_7(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_5_8(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_5_9(n) for n in range(3, 7)]
+    + [quadpy.ncube.stroud_cn_7_1(n) for n in range(3, 7)],
 )
-def test_scheme(scheme, tol):
+def test_scheme(scheme, tol=1.0e-14):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
@@ -51,7 +42,7 @@ def test_scheme(scheme, tol):
     ncube_limits = [[0.0, 1.0]] * n
     ncube = quadpy.ncube.ncube_points(*ncube_limits)
     degree = check_degree(
-        lambda poly: quadpy.ncube.integrate(poly, ncube, scheme),
+        lambda poly: scheme.integrate(poly, ncube),
         lambda exp: integrate_monomial_over_ncube(ncube_limits, exp),
         n,
         scheme.degree + 1,

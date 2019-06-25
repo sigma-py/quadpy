@@ -1,0 +1,29 @@
+# -*- coding: utf-8 -*-
+#
+
+from ._hammer_wymore import hammer_wymore
+
+from ._helpers import HexahedronScheme
+from ..helpers import article
+
+citation = article(
+    authors=["V.L.N. Sarma", "A. H. Stroud"],
+    title="Eberlein Measure and Mechanical Quadrature Formulae. II. Numerical Results",
+    journal="Mathematics of Computation",
+    volume="23",
+    number="108",
+    month="oct",
+    year="1969",
+    pages="781-784",
+    url="https://doi.org/10.2307/2004963",
+)
+
+
+def sarma_stroud(symbolic=False):
+    # Hammer-Wymore is a one-parameter family of schemes, and the parameter lambda is
+    # chosen to minimize the standard deviation of Sarma's error functional. The
+    # particular value of lambda is not explicitly given in the article, but computed
+    # from the specified values. Note that it is only given in single precision.
+    lmbda = 1.0329785305
+    hw = hammer_wymore(lmbda=lmbda, symbolic=symbolic)
+    return HexahedronScheme("Sarma-Stroud", hw.weights, hw.points, hw.degree, citation)
