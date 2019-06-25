@@ -491,8 +491,7 @@ val = scheme.integrate(
 <img src="https://nschloe.github.io/quadpy/tet.png" width="25%">
 
  * [Hammer-Marlowe-Stroud](https://doi.org/10.1090/S0025-5718-1956-0086389-6)
-   (1956, 3 schemes up to degree 3)
- * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 2 schemes up to degree 3)
+   (1956, 3 schemes up to degree 3, also appearing in [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6))
  * open and closed Newton-Cotes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6)) (arbitrary degree)
  * [Stroud](https://cds.cern.ch/record/104291?ln=en) (1971, degree 7)
  * [Grundmann-Möller](https://doi.org/10.1137/0715019) (1978, arbitrary degree),
@@ -504,8 +503,6 @@ val = scheme.integrate(
    degree 5)
  * [Walkington](https://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
    (2000, 6 schemes up to degree 7)
- * [Zienkiewicz](https://www.sciencedirect.com/science/book/9780750664318)
-   (2005, 2 schemes up to degree 3)
  * [Zhang-Cui-Liu](https://www.jstor.org/stable/43693493) (2009, 2 schemes up to
    degree 14)
  * [Xiao-Gimbutas](https://doi.org/10.1016/j.camwa.2009.10.027) (2010, 15
