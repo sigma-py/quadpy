@@ -62,18 +62,31 @@ def _integrate_exact(k, pyra):
     return float(exact)
 
 
-@pytest.mark.parametrize("scheme", [quadpy.pyramid.Felippa(k) for k in range(1, 10)])
+@pytest.mark.parametrize(
+    "scheme",
+    [
+        quadpy.pyramid.felippa_1(),
+        quadpy.pyramid.felippa_2(),
+        quadpy.pyramid.felippa_3(),
+        quadpy.pyramid.felippa_4(),
+        quadpy.pyramid.felippa_5(),
+        quadpy.pyramid.felippa_6(),
+        quadpy.pyramid.felippa_7(),
+        quadpy.pyramid.felippa_8(),
+        quadpy.pyramid.felippa_9(),
+    ],
+)
 def test_scheme(scheme):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
-    # Test integration until we get to a polynomial degree `d` that can no
-    # longer be integrated exactly. The scheme's degree is `d-1`.
+    # Test integration until we get to a polynomial degree `d` that can no longer be
+    # integrated exactly. The scheme's degree is `d-1`.
     pyra = numpy.array(
         [[-1, -1, -1], [+1, -1, -1], [+1, +1, -1], [-1, +1, -1], [0, 0, 1]]
     )
     degree = check_degree(
-        lambda poly: quadpy.pyramid.integrate(poly, pyra, scheme),
+        lambda poly: scheme.integrate(poly, pyra),
         lambda k: _integrate_exact(k, pyra),
         3,
         scheme.degree + 1,
@@ -82,9 +95,9 @@ def test_scheme(scheme):
     return
 
 
-@pytest.mark.parametrize("scheme", [quadpy.pyramid.Felippa(5)])
+@pytest.mark.parametrize("scheme", [quadpy.pyramid.felippa_5()])
 def test_show(scheme):
-    quadpy.pyramid.show(scheme)
+    scheme.show()
     plt.close()
     return
 

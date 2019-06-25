@@ -2,18 +2,53 @@
 #
 import numpy
 
-from .felippa import Felippa
-from .. import helpers
+from ..helpers import backend_to_function
 
 
-def integrate(f, pyra, scheme, dot=numpy.dot):
-    flt = numpy.vectorize(float)
+class PyramidScheme(object):
+    def __init__(self, name, weights, points, degree, citation):
+        self.name = name
+        self.weights = weights
+        self.points = points
+        self.degree = degree
+        self.citation = citation
+        return
 
-    xi = flt(scheme.points).T
-    x = _transform(xi, pyra)
-    det = _get_det_J(pyra, xi)
+    def integrate(self, f, pyra, dot=numpy.dot):
+        flt = numpy.vectorize(float)
 
-    return dot(f(x) * abs(det.T), flt(scheme.weights))
+        xi = flt(self.points).T
+        x = _transform(xi, pyra)
+        det = _get_det_J(pyra, xi)
+
+        return dot(f(x) * abs(det.T), flt(self.weights))
+
+    def show(
+        self,
+        pyra=numpy.array([[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0.5, 0.5, 1.0]]),
+        backend="mpl",
+    ):
+        edges = numpy.array(
+            [
+                [pyra[0], pyra[1]],
+                [pyra[1], pyra[2]],
+                [pyra[2], pyra[3]],
+                [pyra[3], pyra[0]],
+                #
+                [pyra[0], pyra[4]],
+                [pyra[1], pyra[4]],
+                [pyra[2], pyra[4]],
+                [pyra[3], pyra[4]],
+            ]
+        )
+        edges = numpy.moveaxis(edges, 1, 2)
+
+        # vol = integrate(lambda x: 1.0, pyra, Felippa(1))
+        vol = 1.0
+        backend_to_function[backend](
+            _transform(self.points.T, pyra).T, self.weights, vol, edges
+        )
+        return
 
 
 def _transform(xi, pyra):
@@ -58,30 +93,9 @@ def _get_det_J(pyra, xi):
     return det.T
 
 
-def show(
-    scheme,
-    pyra=numpy.array([[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0.5, 0.5, 1.0]]),
-    backend="mpl",
-):
-    edges = numpy.array(
-        [
-            [pyra[0], pyra[1]],
-            [pyra[1], pyra[2]],
-            [pyra[2], pyra[3]],
-            [pyra[3], pyra[0]],
-            #
-            [pyra[0], pyra[4]],
-            [pyra[1], pyra[4]],
-            [pyra[2], pyra[4]],
-            [pyra[3], pyra[4]],
-        ]
-    )
-    edges = numpy.moveaxis(edges, 1, 2)
+def _s4(a, z):
+    return [[+a, +a, z], [-a, +a, z], [+a, -a, z], [-a, -a, z]]
 
-    helpers.backend_to_function[backend](
-        _transform(scheme.points.T, pyra).T,
-        scheme.weights,
-        integrate(lambda x: 1.0, pyra, Felippa(1)),
-        edges,
-    )
-    return
+
+def _s4_0(a, z):
+    return [[+a, 0.0, z], [-a, 0.0, z], [0.0, +a, z], [0.0, -a, z]]
