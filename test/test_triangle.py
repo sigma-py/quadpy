@@ -144,7 +144,7 @@ schemes_tol = [
     (quadpy.triangle.papanicolopulos_sym_5(), 1.0e-14),
     (quadpy.triangle.papanicolopulos_sym_6(), 1.0e-14),
     (quadpy.triangle.papanicolopulos_sym_7(), 1.0e-14),
-    (quadpy.triangle.papanicolopulos_sym_8(), 1.0e-14),
+    (quadpy.triangle.papanicolopulos_sym_8(), 1.0e-13),
     (quadpy.triangle.papanicolopulos_rot_08(), 1.0e-14),
     (quadpy.triangle.papanicolopulos_rot_09(), 1.0e-14),
     (quadpy.triangle.papanicolopulos_rot_10(), 1.0e-14),
