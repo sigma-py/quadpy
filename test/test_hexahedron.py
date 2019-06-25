@@ -12,18 +12,18 @@ import quadpy
 from helpers import check_degree
 
 schemes = (
-    [quadpy.hexahedron.product(quadpy.line_segment.Midpoint())]
-    + [quadpy.hexahedron.product(quadpy.line_segment.Trapezoidal())]
+    [quadpy.hexahedron.product(quadpy.line_segment.midpoint())]
+    + [quadpy.hexahedron.product(quadpy.line_segment.trapezoidal())]
     + [
-        quadpy.hexahedron.product(quadpy.line_segment.GaussLegendre(k))
+        quadpy.hexahedron.product(quadpy.line_segment.gauss_legendre(k))
         for k in range(1, 6)
     ]
     + [
-        quadpy.hexahedron.product(quadpy.line_segment.NewtonCotesClosed(k))
+        quadpy.hexahedron.product(quadpy.line_segment.newton_cotes_closed(k))
         for k in range(1, 5)
     ]
     + [
-        quadpy.hexahedron.product(quadpy.line_segment.NewtonCotesOpen(k))
+        quadpy.hexahedron.product(quadpy.line_segment.newton_cotes_open(k))
         for k in range(5)
     ]
     + [
@@ -177,7 +177,7 @@ def test_scheme(scheme, tol=1.0e-14, print_degree=False):
 
 
 @pytest.mark.parametrize(
-    "scheme", [quadpy.hexahedron.product(quadpy.line_segment.NewtonCotesClosed(2))]
+    "scheme", [quadpy.hexahedron.product(quadpy.line_segment.newton_cotes_closed(2))]
 )
 def test_show(scheme):
     scheme.show(backend="mpl")

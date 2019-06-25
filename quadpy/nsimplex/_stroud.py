@@ -42,7 +42,7 @@ citation = book(
 )
 
 
-def stroud_tn_1_1(n, symbolic):
+def stroud_tn_1_1(n, symbolic=False):
     # midpoint rule
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
