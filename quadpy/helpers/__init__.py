@@ -52,6 +52,7 @@ __all__ = [
     "book",
     "techreport",
     "phdthesis",
+    "online",
     "plot_disks_1d",
     "plot_disks",
     "show_mpl",
