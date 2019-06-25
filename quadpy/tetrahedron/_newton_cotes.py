@@ -77,20 +77,18 @@ def _newton_cotes(n, point_fun):
     return weights, bary, degree, citation
 
 
-class NewtonCotesClosed(object):
-    def __init__(self, n):
-        return TetrahedronScheme(
-            "Newton-Cotes (closed, {})".format(n),
-            *_newton_cotes(n, lambda k, n: k / float(n))
-        )
+def newton_cotes_closed(n):
+    return TetrahedronScheme(
+        "Newton-Cotes (closed, {})".format(n),
+        *_newton_cotes(n, lambda k, n: k / float(n))
+    )
 
 
-class NewtonCotesOpen(object):
-    def __init__(self, n):
-        scheme = TetrahedronScheme(
-            "Newton-Cotes (open, {})".format(n),
-            *_newton_cotes(n, lambda k, n: (k + 1) / float(n + 4))
-        )
-        if n == 0:
-            scheme.degree = 1
-        return scheme
+def newton_cotes_open(n):
+    scheme = TetrahedronScheme(
+        "Newton-Cotes (open, {})".format(n),
+        *_newton_cotes(n, lambda k, n: (k + 1) / float(n + 4))
+    )
+    if n == 0:
+        scheme.degree = 1
+    return scheme
