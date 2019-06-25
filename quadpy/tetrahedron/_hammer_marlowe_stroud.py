@@ -51,7 +51,7 @@ def hammer_marlowe_stroud_2(symbolic=False):
 
     points, weights = untangle2(data)
     return TetrahedronScheme(
-        "Hammer-Marlowe-Stroud 1", weights, points, degree, citation
+        "Hammer-Marlowe-Stroud 2", weights, points, degree, citation
     )
 
 
@@ -63,5 +63,5 @@ def hammer_marlowe_stroud_3(symbolic=False):
 
     points, weights = untangle2(data)
     return TetrahedronScheme(
-        "Hammer-Marlowe-Stroud 1", weights, points, degree, citation
+        "Hammer-Marlowe-Stroud 3", weights, points, degree, citation
     )

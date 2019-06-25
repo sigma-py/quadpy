@@ -497,8 +497,7 @@ val = scheme.integrate(
  * [Stroud](https://cds.cern.ch/record/104291?ln=en) (1971, degree 7)
  * [Grundmann-Möller](https://doi.org/10.1137/0715019) (1978, arbitrary degree),
  * [Yu](https://doi.org/10.1016/0045-7825(84)90072-0) (1984, 5 schemes up to degree 6)
- * [Keast](https://doi.org/10.1016/0045-7825(86)90059-9) (1986, 11 schemes up to
-   degree 8)
+ * [Keast](https://doi.org/10.1016/0045-7825(86)90059-9) (1986, 10 schemes up to degree 8)
  * [Beckers-Haegemans](https://lirias.kuleuven.be/handle/123456789/132648) (1990, degrees 8 and 9)
  * [Gatermann](https://doi.org/10.1007/978-94-011-2646-5_2) (1992, degree 5)
  * [Liu-Vinokur](https://doi.org/10.1006/jcph.1998.5884) (1998, 14 schemes up to
