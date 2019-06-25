@@ -26,11 +26,16 @@ class TetrahedronScheme(NSimplexScheme):
             ]
         ),
         backend="vtk",
+        render=True,
     ):
         edges = numpy.array([[tet[i], tet[j]] for i in range(4) for j in range(i)])
         edges = numpy.moveaxis(edges, 1, 2)
         backend_to_function[backend](
-            transform(self.points.T, tet.T).T, self.weights, get_vol(tet), edges
+            transform(self.points.T, tet.T).T,
+            self.weights,
+            get_vol(tet),
+            edges,
+            render=render,
         )
         return
 

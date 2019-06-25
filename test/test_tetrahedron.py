@@ -176,7 +176,7 @@ def test_show(scheme):
             [0.0, 0.0, 1.0],
         ]
     )
-    scheme.show(tet)
+    scheme.show(tet, render=False)
     plt.close()
     return
 
