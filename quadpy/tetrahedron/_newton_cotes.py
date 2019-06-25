@@ -30,13 +30,13 @@ def _newton_cotes(n, point_fun):
             for k in range(n + 1 - i - j)
         ]
     )
-    bary = point_fun(idx, n)
-    points = bary[:, [1, 2, 3]]
+    points = point_fun(idx, n)
+    points = points[:, [1, 2, 3]]
 
     # weights
     if n == 0:
         weights = numpy.ones(1)
-        return points, bary, weights, degree
+        return points, points, weights, degree
 
     def get_poly(t, m, n):
         return sympy.prod(
@@ -74,7 +74,7 @@ def _newton_cotes(n, point_fun):
                     ]
                 )
                 idx += 1
-    return weights, bary, degree, citation
+    return weights, points, degree, citation
 
 
 def newton_cotes_closed(n):

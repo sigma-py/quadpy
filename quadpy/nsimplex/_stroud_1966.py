@@ -37,8 +37,8 @@ def stroud_1966_i(n, symbolic=False):
 
     data = [(B, rd(n + 1, [(1, 1)])), (C, rd(n + 1, [(r, n), (s, 1)]))]
 
-    bary, weights = untangle(data)
-    return NSimplexScheme("Stroud 1966-I", n, weights, bary, degree, citation)
+    points, weights = untangle(data)
+    return NSimplexScheme("Stroud 1966-I", n, weights, points, degree, citation)
 
 
 def stroud_1966_ii(n, symbolic=False):
@@ -60,8 +60,8 @@ def stroud_1966_ii(n, symbolic=False):
 
     data = [(B, rd(n + 1, [(r, n), (s, 1)])), (C, rd(n + 1, [(t, 2)]))]
 
-    bary, weights = untangle(data)
-    return NSimplexScheme("Stroud 1966-II", n, weights, bary, degree, citation)
+    points, weights = untangle(data)
+    return NSimplexScheme("Stroud 1966-II", n, weights, points, degree, citation)
 
 
 def stroud_1966_iii(n, symbolic=False):
@@ -84,8 +84,8 @@ def stroud_1966_iii(n, symbolic=False):
         (D, rd(n + 1, [(s, n)])),
     ]
 
-    bary, weights = untangle(data)
-    return NSimplexScheme("Stroud 1966-III", n, weights, bary, degree, citation)
+    points, weights = untangle(data)
+    return NSimplexScheme("Stroud 1966-III", n, weights, points, degree, citation)
 
 
 def stroud_1966_iv(n, symbolic=False):
@@ -106,8 +106,8 @@ def stroud_1966_iv(n, symbolic=False):
         (B, rd(n + 1, [(1, 1)])),
         (C, rd(n + 1, [(s, 3)])),
     ]
-    bary, weights = untangle(data)
-    return NSimplexScheme("Stroud 1966-IV", n, weights, bary, degree, citation)
+    points, weights = untangle(data)
+    return NSimplexScheme("Stroud 1966-IV", n, weights, points, degree, citation)
 
 
 def stroud_1966_v(n, symbolic=False):
@@ -127,8 +127,8 @@ def stroud_1966_v(n, symbolic=False):
         (B, rd(n + 1, [(r, n)])),
         (C, rd(n + 1, [(s, 3)])),
     ]
-    bary, weights = untangle(data)
-    return NSimplexScheme("Stroud 1966-I", n, weights, bary, degree, citation)
+    points, weights = untangle(data)
+    return NSimplexScheme("Stroud 1966-I", n, weights, points, degree, citation)
 
 
 def stroud_1966_vi(n, symbolic=False):
@@ -153,8 +153,8 @@ def stroud_1966_vi(n, symbolic=False):
         (C, rd(n + 1, [(t, n - 2)])),
     ]
 
-    bary, weights = untangle(data)
-    return NSimplexScheme("Stroud 1966-VI", n, weights, bary, degree, citation)
+    points, weights = untangle(data)
+    return NSimplexScheme("Stroud 1966-VI", n, weights, points, degree, citation)
 
 
 def stroud_1966_vii(n, symbolic=False):
@@ -178,5 +178,5 @@ def stroud_1966_vii(n, symbolic=False):
         (C, rd(n + 1, [(t, n - 2)])),
     ]
 
-    bary, weights = untangle(data)
-    return NSimplexScheme("Stroud 1966-VII", n, weights, bary, degree, citation)
+    points, weights = untangle(data)
+    return NSimplexScheme("Stroud 1966-VII", n, weights, points, degree, citation)

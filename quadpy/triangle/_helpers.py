@@ -10,10 +10,10 @@ from ..nsimplex import transform, get_vol, NSimplexScheme
 
 
 class TriangleScheme(NSimplexScheme):
-    def __init__(self, name, weights, bary, degree, citation=None):
+    def __init__(self, name, weights, points, degree, citation=None):
         self.name = name
         self.weights = weights
-        self.bary = bary
+        self.points = points
         self.degree = degree
         self.citation = citation
         return
@@ -43,7 +43,7 @@ class TriangleScheme(NSimplexScheme):
         if not show_axes:
             plt.gca().set_axis_off()
 
-        transformed_pts = transform(self.bary.T, triangle.T).T
+        transformed_pts = transform(self.points.T, triangle.T).T
 
         vol = get_vol(triangle)
         plot_disks(plt, transformed_pts, self.weights, vol)
@@ -93,35 +93,35 @@ def _collapse0(a):
 
 
 def untangle2(data, symbolic=False):
-    bary = []
+    points = []
     weights = []
 
     if "s3" in data:
         d = numpy.array(data["s3"]).T
-        bary.append(_s3(symbolic).T)
+        points.append(_s3(symbolic).T)
         weights.append(numpy.tile(d[0], 1))
 
     if "s2" in data:
         d = numpy.array(data["s2"]).T
         s2_data = _s21(d[1])
-        bary.append(_collapse0(s2_data))
+        points.append(_collapse0(s2_data))
         weights.append(numpy.tile(d[0], 3))
 
     if "s1" in data:
         d = numpy.array(data["s1"]).T
         s1_data = _s111ab(*d[1:])
-        bary.append(_collapse0(s1_data))
+        points.append(_collapse0(s1_data))
         weights.append(numpy.tile(d[0], 6))
 
     if "rot" in data:
         d = numpy.array(data["rot"]).T
         rot_data = _rot_ab(*d[1:])
-        bary.append(_collapse0(rot_data))
+        points.append(_collapse0(rot_data))
         weights.append(numpy.tile(d[0], 3))
 
-    bary = numpy.column_stack(bary).T
+    points = numpy.column_stack(points).T
     weights = numpy.concatenate(weights)
-    return bary, weights
+    return points, weights
 
 
 def s3(weight, symbolic=False):

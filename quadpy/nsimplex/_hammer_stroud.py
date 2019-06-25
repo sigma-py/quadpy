@@ -30,8 +30,8 @@ def hammer_stroud_1a(n, symbolic=False):
     s = (n + 2 + n * sqrt(n + 2)) / (n + 1) / (n + 2)
     data = [(frac(1, n + 1), rd(n + 1, [(r, n), (s, 1)]))]
 
-    bary, weights = untangle(data)
-    return NSimplexScheme("Hammer-Stround 1a", n, weights, bary, degree, citation)
+    points, weights = untangle(data)
+    return NSimplexScheme("Hammer-Stround 1a", n, weights, points, degree, citation)
 
 
 def hammer_stroud_1b(n, symbolic=False):
@@ -43,8 +43,8 @@ def hammer_stroud_1b(n, symbolic=False):
     s = (n + 2 - n * sqrt(n + 2)) / (n + 1) / (n + 2)
     data = [(frac(1, n + 1), rd(n + 1, [(r, n), (s, 1)]))]
 
-    bary, weights = untangle(data)
-    return NSimplexScheme("Hammer-Stround 1b", n, weights, bary, degree, citation)
+    points, weights = untangle(data)
+    return NSimplexScheme("Hammer-Stround 1b", n, weights, points, degree, citation)
 
 
 def hammer_stroud_2(n, symbolic=False):
@@ -61,5 +61,5 @@ def hammer_stroud_2(n, symbolic=False):
 
     data = [(B, [(n + 1) * [r]]), (C, rd(n + 1, [(t, 1), (s, n)]))]
 
-    bary, weights = untangle(data)
-    return NSimplexScheme("Hammer-Stround 2", n, weights, bary, degree, citation)
+    points, weights = untangle(data)
+    return NSimplexScheme("Hammer-Stround 2", n, weights, points, degree, citation)

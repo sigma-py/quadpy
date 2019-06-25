@@ -24,39 +24,39 @@ citation = article(
 def lyness_jespersen_01(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
-    weights, bary = s2([frac(1, 3), frac(1, 2)])
-    return TriangleScheme("Lyness-Jespersen 1", weights, bary, 2, citation)
+    weights, points = s2([frac(1, 3), frac(1, 2)])
+    return TriangleScheme("Lyness-Jespersen 1", weights, points, 2, citation)
 
 
 def lyness_jespersen_02(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
-    weights, bary = concat(s3(frac(3, 4)), s2([frac(1, 12), 0]))
-    return TriangleScheme("Lyness-Jespersen 2", weights, bary, 2, citation)
+    weights, points = concat(s3(frac(3, 4)), s2([frac(1, 12), 0]))
+    return TriangleScheme("Lyness-Jespersen 2", weights, points, 2, citation)
 
 
 def lyness_jespersen_03(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
-    weights, bary = concat(s3(-frac(9, 16)), s2([frac(25, 48), frac(1, 5)]))
-    return TriangleScheme("Lyness-Jespersen 3", weights, bary, 3, citation)
+    weights, points = concat(s3(-frac(9, 16)), s2([frac(25, 48), frac(1, 5)]))
+    return TriangleScheme("Lyness-Jespersen 3", weights, points, 3, citation)
 
 
 def lyness_jespersen_04(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
-    weights, bary = concat(
+    weights, points = concat(
         s3(frac(9, 20)), s2([frac(1, 20), 0], [frac(2, 15), frac(1, 2)])
     )
-    return TriangleScheme("Lyness-Jespersen 4", weights, bary, 3, citation)
+    return TriangleScheme("Lyness-Jespersen 4", weights, points, 3, citation)
 
 
 def lyness_jespersen_05():
-    weights, bary = s2(
+    weights, points = s2(
         [3.298552309659655e-01 / 3, 9.157621350977073e-02],
         [6.701447690340345e-01 / 3, 4.459484909159649e-01],
     )
-    return TriangleScheme("Lyness-Jespersen 5", weights, bary, 4, citation)
+    return TriangleScheme("Lyness-Jespersen 5", weights, points, 4, citation)
 
 
 def lyness_jespersen_06(symbolic=False):
@@ -65,10 +65,10 @@ def lyness_jespersen_06(symbolic=False):
 
     a0, a1 = [(3 + i * sqrt(3)) / 6 for i in [+1, -1]]
 
-    weights, bary = concat(
+    weights, points = concat(
         s3(+frac(9, 20)), s2([-frac(1, 60), 0]), s1([+frac(1, 10), a0, a1])
     )
-    return TriangleScheme("Lyness-Jespersen 6", weights, bary, 4, citation)
+    return TriangleScheme("Lyness-Jespersen 6", weights, points, 4, citation)
 
 
 def lyness_jespersen_07(symbolic=False):
@@ -77,12 +77,12 @@ def lyness_jespersen_07(symbolic=False):
 
     sqrt13 = sqrt(13)
 
-    weights, bary = s2(
+    weights, points = s2(
         [(11 - sqrt13) / 360, 0],
         [(10 - 2 * sqrt13) / 45, frac(1, 2)],
         [(29 + 17 * sqrt13) / 360, (7 - sqrt13) / 18],
     )
-    return TriangleScheme("Lyness-Jespersen 7", weights, bary, 4, citation)
+    return TriangleScheme("Lyness-Jespersen 7", weights, points, 4, citation)
 
 
 def lyness_jespersen_08(symbolic=False):
@@ -93,14 +93,14 @@ def lyness_jespersen_08(symbolic=False):
     b1, b2 = [(155 - i * sqrt15) / 1200 for i in [+1, -1]]
     r1, r2 = [(6 - i * sqrt15) / 21 for i in [+1, -1]]
 
-    weights, bary = concat(s3(frac(9, 40)), s2([b1, r1], [b2, r2]))
-    return TriangleScheme("Lyness-Jespersen 8", weights, bary, 5, citation)
+    weights, points = concat(s3(frac(9, 40)), s2([b1, r1], [b2, r2]))
+    return TriangleScheme("Lyness-Jespersen 8", weights, points, 5, citation)
 
 
 def lyness_jespersen_09(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
-    weights, bary = concat(
+    weights, points = concat(
         s3(frac(81, 320)),
         s2(
             [frac(1, 90), 0],
@@ -108,18 +108,18 @@ def lyness_jespersen_09(symbolic=False):
             [frac(2401, 14400), frac(1, 7)],
         ),
     )
-    return TriangleScheme("Lyness-Jespersen 9", weights, bary, 5, citation)
+    return TriangleScheme("Lyness-Jespersen 9", weights, points, 5, citation)
 
 
 def lyness_jespersen_10():
-    weights, bary = concat(
+    weights, points = concat(
         s2(
             [3.503588271790222e-01 / 3, 2.492867451709329e-01],
             [1.525347191106164e-01 / 3, 6.308901449150177e-02],
         ),
         s1([4.971064537103375e-01 / 6, 6.365024991213939e-01, 5.314504984483216e-02]),
     )
-    return TriangleScheme("Lyness-Jespersen 10", weights, bary, 6, citation)
+    return TriangleScheme("Lyness-Jespersen 10", weights, points, 6, citation)
 
 
 def lyness_jespersen_11(symbolic=False):
@@ -128,7 +128,7 @@ def lyness_jespersen_11(symbolic=False):
 
     c, d = [(3 + i * sqrt(6)) / 6 for i in [+1, -1]]
 
-    weights, bary = concat(
+    weights, points = concat(
         s3(-frac(81, 140)),
         s2(
             [-frac(5, 252), 0],
@@ -137,11 +137,11 @@ def lyness_jespersen_11(symbolic=False):
         ),
         s1([frac(9, 210), c, d]),
     )
-    return TriangleScheme("Lyness-Jespersen 11", weights, bary, 6, citation)
+    return TriangleScheme("Lyness-Jespersen 11", weights, points, 6, citation)
 
 
 def lyness_jespersen_12():
-    weights, bary = concat(
+    weights, points = concat(
         s3(1.527089667883523e-01),
         s2(
             [2.944076042366762e-01 / 3, 4.738308139536513e-01],
@@ -149,11 +149,11 @@ def lyness_jespersen_12():
         ),
         s1([1.641781411330949e-01 / 6, 0, 8.653073540834571e-01]),
     )
-    return TriangleScheme("Lyness-Jespersen 12", weights, bary, 6, citation)
+    return TriangleScheme("Lyness-Jespersen 12", weights, points, 6, citation)
 
 
 def lyness_jespersen_13():
-    weights, bary = concat(
+    weights, points = concat(
         s3(-1.495700444677495e-01),
         s2(
             [+5.268457722996328e-01 / 3, 2.603459660790466e-01],
@@ -161,11 +161,11 @@ def lyness_jespersen_13():
         ),
         s1([+4.626825653415500e-01 / 6, 6.384441885698096e-01, 4.869031542531756e-02]),
     )
-    return TriangleScheme("Lyness-Jespersen 13", weights, bary, 7, citation)
+    return TriangleScheme("Lyness-Jespersen 13", weights, points, 7, citation)
 
 
 def lyness_jespersen_14():
-    weights, bary = concat(
+    weights, points = concat(
         s3(1.763126156005252e-01),
         s2(
             [1.210901532763310e-02 / 3, 0],
@@ -174,11 +174,11 @@ def lyness_jespersen_14():
         ),
         s1([1.421102178595603e-01 / 6, 0, 8.392991722729236e-01]),
     )
-    return TriangleScheme("Lyness-Jespersen 14", weights, bary, 7, citation)
+    return TriangleScheme("Lyness-Jespersen 14", weights, points, 7, citation)
 
 
 def lyness_jespersen_15():
-    weights, bary = concat(
+    weights, points = concat(
         s3(1.443156076777862e-01),
         s2(
             [2.852749028018549e-01 / 3, 4.592925882927229e-01],
@@ -187,11 +187,11 @@ def lyness_jespersen_15():
         ),
         s1([1.633818850466092e-01 / 6, 8.394777409957211e-03, 7.284923929554041e-01]),
     )
-    return TriangleScheme("Lyness-Jespersen 15", weights, bary, 8, citation)
+    return TriangleScheme("Lyness-Jespersen 15", weights, points, 8, citation)
 
 
 def lyness_jespersen_16():
-    weights, bary = concat(
+    weights, points = concat(
         s2(
             [+1.207273935292775e-02 / 3, 0],
             [-8.491579879151455e-01 / 3, 0.5],
@@ -201,11 +201,11 @@ def lyness_jespersen_16():
         ),
         s1([+1.488095238055238e-01 / 6, 0, 7.236067977499750e-01]),
     )
-    return TriangleScheme("Lyness-Jespersen 16", weights, bary, 8, citation)
+    return TriangleScheme("Lyness-Jespersen 16", weights, points, 8, citation)
 
 
 def lyness_jespersen_17():
-    weights, bary = concat(
+    weights, points = concat(
         s3(-2.834183851113958e-01),
         s2(
             [2.097208857979572e-01 / 3, 4.766654393821525e-01],
@@ -214,11 +214,11 @@ def lyness_jespersen_17():
         ),
         s1([3.659351143072855e-01 / 6, 5.146433548666149e-02, 7.458294907672514e-01]),
     )
-    return TriangleScheme("Lyness-Jespersen 17", weights, bary, 8, citation)
+    return TriangleScheme("Lyness-Jespersen 17", weights, points, 8, citation)
 
 
 def lyness_jespersen_18():
-    weights, bary = concat(
+    weights, points = concat(
         s3(9.713579628279610e-02),
         s2(
             [9.400410068141950e-02 / 3, 4.896825191987370e-01],
@@ -228,11 +228,11 @@ def lyness_jespersen_18():
         ),
         s1([2.597012362637364e-01 / 6, 3.683841205473626e-02, 7.411985987844980e-01]),
     )
-    return TriangleScheme("Lyness-Jespersen 18", weights, bary, 9, citation)
+    return TriangleScheme("Lyness-Jespersen 18", weights, points, 9, citation)
 
 
 def lyness_jespersen_19():
-    weights, bary = concat(
+    weights, points = concat(
         s3(1.133624844599192e-01),
         s2(
             [1.062573789846330e-03 / 3, 0],
@@ -243,11 +243,11 @@ def lyness_jespersen_19():
         ),
         s1([2.597012362637364e-01 / 6, 3.683841205473626e-02, 7.411985987844980e-01]),
     )
-    return TriangleScheme("Lyness-Jespersen 19", weights, bary, 9, citation)
+    return TriangleScheme("Lyness-Jespersen 19", weights, points, 9, citation)
 
 
 def lyness_jespersen_20():
-    weights, bary = concat(
+    weights, points = concat(
         s2(
             [4.097919300803106e-02 / 3, 3.236494811127173e-02],
             [1.085536215102866e-01 / 3, 1.193509122825931e-01],
@@ -260,11 +260,11 @@ def lyness_jespersen_20():
             [1.242459578348437e-01 / 6, 2.102201653616613e-02, 8.074890031597923e-01],
         ),
     )
-    return TriangleScheme("Lyness-Jespersen 20", weights, bary, 11, citation)
+    return TriangleScheme("Lyness-Jespersen 20", weights, points, 11, citation)
 
 
 def lyness_jespersen_21():
-    weights, bary = concat(
+    weights, points = concat(
         s3(8.797730116222190e-02),
         s2(
             [2.623293466120857e-02 / 3, 2.598914092828833e-02],
@@ -278,4 +278,4 @@ def lyness_jespersen_21():
             [2.463378925757316e-01 / 6, 4.484167758913055e-02, 6.779376548825902e-01],
         ),
     )
-    return TriangleScheme("Lyness-Jespersen 21", weights, bary, 11, citation)
+    return TriangleScheme("Lyness-Jespersen 21", weights, points, 11, citation)

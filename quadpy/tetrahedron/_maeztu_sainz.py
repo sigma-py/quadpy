@@ -36,5 +36,5 @@ def maeztu_sainz():
         ],
     }
 
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Maeztu-Sainz", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Maeztu-Sainz", weights, points, degree, citation)

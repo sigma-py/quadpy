@@ -31,10 +31,10 @@ def _read(index):
         data = json.load(f)
 
     degree = data.pop("degree")
-    bary, weights = untangle2(data)
+    points, weights = untangle2(data)
     weights /= 2
     return TriangleScheme(
-        "Vioreanu-Rokhlin {}".format(index), weights, bary, degree, citation
+        "Vioreanu-Rokhlin {}".format(index), weights, points, degree, citation
     )
 
 

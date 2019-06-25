@@ -22,7 +22,7 @@ def zhang_cui_liu_1(mpmath=False):
     flt = mp.mpf if mpmath else float
 
     mp.dps = 35
-    weights, bary = concat(
+    weights, points = concat(
         s3(flt("0.1443156076777871682510911104890646")),
         s2(
             [
@@ -46,14 +46,14 @@ def zhang_cui_liu_1(mpmath=False):
             ]
         ),
     )
-    return TriangleScheme("Zhang-Cui-Liu 1", weights, bary, 8, citation)
+    return TriangleScheme("Zhang-Cui-Liu 1", weights, points, 8, citation)
 
 
 def zhang_cui_liu_2(mpmath=False):
     flt = mp.mpf if mpmath else float
 
     mp.dps = 35
-    weights, bary = concat(
+    weights, points = concat(
         s3(flt("0.0585962852260285941278938063477560")),
         s2(
             [
@@ -108,14 +108,14 @@ def zhang_cui_liu_2(mpmath=False):
             ],
         ),
     )
-    return TriangleScheme("Zhang-Cui-Liu 2", weights, bary, 14, citation)
+    return TriangleScheme("Zhang-Cui-Liu 2", weights, points, 14, citation)
 
 
 def zhang_cui_liu_3(mpmath=False):
     flt = mp.mpf if mpmath else float
 
     mp.dps = 35
-    weights, bary = concat(
+    weights, points = concat(
         s3(flt("0.0125376079944966565735856367723948")),
         s2(
             [
@@ -202,4 +202,4 @@ def zhang_cui_liu_3(mpmath=False):
             ],
         ),
     )
-    return TriangleScheme("Zhang-Cui-Liu 3", weights, bary, 20, citation)
+    return TriangleScheme("Zhang-Cui-Liu 3", weights, points, 20, citation)

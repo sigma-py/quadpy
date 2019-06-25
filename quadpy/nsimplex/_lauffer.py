@@ -22,8 +22,8 @@ def lauffer_1(n, symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
     data = [(frac(1, n + 1), rd(n + 1, [(1, 1)]))]
-    bary, weights = untangle(data)
-    return NSimplexScheme("Lauffer 1", n, weights, bary, 1, citation)
+    points, weights = untangle(data)
+    return NSimplexScheme("Lauffer 1", n, weights, points, 1, citation)
 
 
 def lauffer_2(n, symbolic=False):
@@ -32,8 +32,8 @@ def lauffer_2(n, symbolic=False):
     B = frac(2 - n, (n + 1) * (n + 2))
     C = frac(4, (n + 1) * (n + 2))
     data = [(B, rd(n + 1, [(1, 1)])), (C, rd(n + 1, [(frac(1, 2), 2)]))]
-    bary, weights = untangle(data)
-    return NSimplexScheme("Lauffer 2", n, weights, bary, 2, citation)
+    points, weights = untangle(data)
+    return NSimplexScheme("Lauffer 2", n, weights, points, 2, citation)
 
 
 def lauffer_3(n, symbolic=False):
@@ -51,8 +51,8 @@ def lauffer_3(n, symbolic=False):
         (C, rd(n + 1, [(r, 1), (s, 1)])),
         (D, rd(n + 1, [(r, 3)])),
     ]
-    bary, weights = untangle(data)
-    return NSimplexScheme("Lauffer 3", n, weights, bary, 3, citation)
+    points, weights = untangle(data)
+    return NSimplexScheme("Lauffer 3", n, weights, points, 3, citation)
 
 
 def lauffer_4(n, symbolic=False):
@@ -79,8 +79,8 @@ def lauffer_4(n, symbolic=False):
         (B5, rd(n + 1, [(r, 4)])),
     ]
 
-    bary, weights = untangle(data)
-    return NSimplexScheme("Lauffer 4", n, weights, bary, 4, citation)
+    points, weights = untangle(data)
+    return NSimplexScheme("Lauffer 4", n, weights, points, 4, citation)
 
 
 def lauffer_5(n, symbolic=False):
@@ -114,5 +114,5 @@ def lauffer_5(n, symbolic=False):
         (B7, rd(n + 1, [(r, 5)])),
     ]
 
-    bary, weights = untangle(data)
-    return NSimplexScheme("Lauffer 5", n, weights, bary, 5, citation)
+    points, weights = untangle(data)
+    return NSimplexScheme("Lauffer 5", n, weights, points, 5, citation)

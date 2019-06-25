@@ -17,11 +17,11 @@ citation = article(
 
 
 def gatermann():
-    weights, bary = rot_ab(
+    weights, points = rot_ab(
         [0.2651702815743450e-01, 0.6238226509439084e-01, 0.6751786707392436e-01],
         [0.4388140871444811e-01, 0.5522545665692000e-01, 0.3215024938520156],
         [0.2877504278497528e-01, 0.3432430294509488e-01, 0.6609491961867980],
         [0.6749318700980879e-01, 0.5158423343536001, 0.2777161669764050],
     )
     weights *= 2
-    return TriangleScheme("Gatermann", weights, bary, 7, citation)
+    return TriangleScheme("Gatermann", weights, points, 7, citation)

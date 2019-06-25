@@ -25,12 +25,12 @@ def _newton_cotes(n, point_fun):
     idx = numpy.array(
         [[i, j, n - i - j] for i in range(n + 1) for j in range(n + 1 - i)]
     )
-    bary = point_fun(idx, n)
+    points = point_fun(idx, n)
 
     # weights
     if n == 0:
         weights = numpy.ones(1)
-        return bary, weights, degree
+        return points, weights, degree
 
     def get_poly(t, m, n):
         return sympy.prod(
@@ -40,7 +40,7 @@ def _newton_cotes(n, point_fun):
             ]
         )
 
-    weights = numpy.empty(len(bary))
+    weights = numpy.empty(len(points))
     idx = 0
     for i in range(n + 1):
         for j in range(n + 1 - i):
@@ -61,18 +61,18 @@ def _newton_cotes(n, point_fun):
                 ]
             )
             idx += 1
-    return bary, weights, degree
+    return points, weights, degree
 
 
 def newton_cotes_closed(n):
-    bary, weights, degree = _newton_cotes(n, lambda k, n: k / float(n))
+    points, weights, degree = _newton_cotes(n, lambda k, n: k / float(n))
     return TriangleScheme(
-        "Newton-Cotes (closed, {})".format(n), weights, bary, degree, citation
+        "Newton-Cotes (closed, {})".format(n), weights, points, degree, citation
     )
 
 
 def newton_cotes_open(n):
-    bary, weights, degree = _newton_cotes(n, lambda k, n: (k + 1) / float(n + 3))
+    points, weights, degree = _newton_cotes(n, lambda k, n: (k + 1) / float(n + 3))
     return TriangleScheme(
-        "Newton-Cotes (open, {})".format(n), weights, bary, degree, citation
+        "Newton-Cotes (open, {})".format(n), weights, points, degree, citation
     )

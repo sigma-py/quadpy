@@ -36,5 +36,5 @@ def stroud_1961(n, symbolic=False):
 
     data = [(A, [(n + 1) * [r]]), (B, rd(n + 1, [(1, 1)])), (C, rd(n + 1, [(s, n)]))]
 
-    bary, weights = untangle(data)
-    return NSimplexScheme("Stroud 1961", n, weights, bary, degree, citation)
+    points, weights = untangle(data)
+    return NSimplexScheme("Stroud 1961", n, weights, points, degree, citation)

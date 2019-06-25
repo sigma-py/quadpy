@@ -7,10 +7,10 @@ from ..helpers import backend_to_function
 
 
 class TetrahedronScheme(NSimplexScheme):
-    def __init__(self, name, weights, bary, degree, citation=None):
+    def __init__(self, name, weights, points, degree, citation=None):
         self.name = name
         self.weights = weights
-        self.bary = bary
+        self.points = points
         self.degree = degree
         self.citation = citation
         return
@@ -30,7 +30,7 @@ class TetrahedronScheme(NSimplexScheme):
         edges = numpy.array([[tet[i], tet[j]] for i in range(4) for j in range(i)])
         edges = numpy.moveaxis(edges, 1, 2)
         backend_to_function[backend](
-            transform(self.bary.T, tet.T).T, self.weights, get_vol(tet), edges
+            transform(self.points.T, tet.T).T, self.weights, get_vol(tet), edges
         )
         return
 
@@ -118,49 +118,49 @@ def _s1111(a, b, c):
 
 
 def untangle2(data):
-    bary = []
+    points = []
     weights = []
 
     if "s4" in data:
         assert len(data["s4"]) == 1
         w = numpy.array(data["s4"]).T
-        bary.append(_s4())
+        points.append(_s4())
         weights.append(w[0])
 
     if "s31" in data:
         d = numpy.array(data["s31"]).T
         s31_data = numpy.moveaxis(_s31(d[1]), 0, 1)
-        bary.append(_collapse0(s31_data).T)
+        points.append(_collapse0(s31_data).T)
         weights.append(numpy.tile(d[0], 4))
 
     if "s22" in data:
         d = numpy.array(data["s22"]).T
         s22_data = numpy.moveaxis(_s22(d[1]), 0, 1)
-        bary.append(_collapse0(s22_data).T)
+        points.append(_collapse0(s22_data).T)
         weights.append(numpy.tile(d[0], 6))
 
     if "s211" in data:
         d = numpy.array(data["s211"]).T
         s211_data = numpy.moveaxis(_s211(*d[1:]), 0, 1)
-        bary.append(_collapse0(s211_data).T)
+        points.append(_collapse0(s211_data).T)
         weights.append(numpy.tile(d[0], 12))
 
     if "s1111" in data:
         d = numpy.array(data["s1111"]).T
         s1111_data = numpy.moveaxis(_s1111(*d[1:]), 0, 1)
-        bary.append(_collapse0(s1111_data).T)
+        points.append(_collapse0(s1111_data).T)
         weights.append(numpy.tile(d[0], 24))
 
     if "r" in data:
         d = numpy.array(data["r"]).T
         r_data = numpy.moveaxis(_r(d[1]), 0, 1)
-        bary.append(_collapse0(r_data).T)
+        points.append(_collapse0(r_data).T)
         weights.append(numpy.tile(d[0], 4))
 
-    bary = numpy.concatenate(bary)
+    points = numpy.concatenate(points)
     weights = numpy.concatenate(weights)
 
-    return bary, weights
+    return points, weights
 
 
 def _collapse0(a):

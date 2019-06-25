@@ -34,7 +34,7 @@ def berntsen_espelid_1(mpmath=False):
     flt = mp.mpf if mpmath else float
 
     mp.dps = 30
-    weights, bary = concat(
+    weights, points = concat(
         s3(flt("0.051739766065744133555179145422")),
         s2(
             [
@@ -80,14 +80,14 @@ def berntsen_espelid_1(mpmath=False):
             ],
         ),
     )
-    return TriangleScheme("Berntsen-Espelid 1 (DCUTRI)", weights, bary, 13, citation)
+    return TriangleScheme("Berntsen-Espelid 1 (DCUTRI)", weights, points, 13, citation)
 
 
 def berntsen_espelid_2(mpmath=False):
     flt = mp.mpf if mpmath else float
 
     mp.dps = 30
-    weights, bary = concat(
+    weights, points = concat(
         s3(flt("0.058696079612719031799193912788")),
         s2(
             [
@@ -130,14 +130,14 @@ def berntsen_espelid_2(mpmath=False):
             ],
         ),
     )
-    return TriangleScheme("Berntsen-Espelid 2", weights, bary, 13, citation)
+    return TriangleScheme("Berntsen-Espelid 2", weights, points, 13, citation)
 
 
 def berntsen_espelid_3(mpmath=False):
     flt = mp.mpf if mpmath else float
 
     mp.dps = 30
-    weights, bary = concat(
+    weights, points = concat(
         s2(
             [flt("-4.438917939249711e-15"), flt("-1.097321247106281159287766916114")],
             [
@@ -179,14 +179,14 @@ def berntsen_espelid_3(mpmath=False):
             ],
         ),
     )
-    return TriangleScheme("Berntsen-Espelid 3", weights, bary, 13, citation)
+    return TriangleScheme("Berntsen-Espelid 3", weights, points, 13, citation)
 
 
 def berntsen_espelid_4(mpmath=False):
     flt = mp.mpf if mpmath else float
 
     mp.dps = 30
-    weights, bary = concat(
+    weights, points = concat(
         s3(flt("0.055141401445961668095892272765")),
         s2(
             [flt("0.000011142520455322162070507537"), flt("0")],
@@ -230,4 +230,4 @@ def berntsen_espelid_4(mpmath=False):
             ],
         ),
     )
-    return TriangleScheme("Berntsen-Espelid 4", weights, bary, 13, citation)
+    return TriangleScheme("Berntsen-Espelid 4", weights, points, 13, citation)

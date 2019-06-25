@@ -19,15 +19,15 @@ citation = article(
 def witherden_vincent_01():
     degree = 1
     data = {"s4": [[1.000000000000000e00]]}
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Witherden-Vincent 1", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Witherden-Vincent 1", weights, points, degree, citation)
 
 
 def witherden_vincent_02():
     degree = 2
     data = {"s31": [[2.500000000000000e-01, 1.381966011250105e-01]]}
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Witherden-Vincent 2", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Witherden-Vincent 2", weights, points, degree, citation)
 
 
 def witherden_vincent_03():
@@ -38,8 +38,8 @@ def witherden_vincent_03():
             [1.137821574629126e-01, 1.080472498984286e-01],
         ]
     }
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Witherden-Vincent 3", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Witherden-Vincent 3", weights, points, degree, citation)
 
 
 def witherden_vincent_05():
@@ -51,8 +51,8 @@ def witherden_vincent_05():
         ],
         "s22": [[4.254602077708147e-02, 4.550370412564964e-02]],
     }
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Witherden-Vincent 5", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Witherden-Vincent 5", weights, points, degree, citation)
 
 
 def witherden_vincent_06():
@@ -65,8 +65,8 @@ def witherden_vincent_06():
         ],
         "s211": [[4.821428571428571e-02, 6.366100187501744e-02, 6.030056647916492e-01]],
     }
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Witherden-Vincent 6", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Witherden-Vincent 6", weights, points, degree, citation)
 
 
 def witherden_vincent_07():
@@ -80,8 +80,8 @@ def witherden_vincent_07():
             [8.110770829903342e-03, 2.126547254148314e-02, 8.108302410985486e-01],
         ],
     }
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Witherden-Vincent 7", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Witherden-Vincent 7", weights, points, degree, citation)
 
 
 def witherden_vincent_08():
@@ -99,8 +99,8 @@ def witherden_vincent_08():
             [1.545348615096034e-02, 2.041393338760291e-01, 5.837973783021444e-01],
         ],
     }
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Witherden-Vincent 8", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Witherden-Vincent 8", weights, points, degree, citation)
 
 
 def witherden_vincent_09():
@@ -120,8 +120,8 @@ def witherden_vincent_09():
             [2.052491596798814e-02, 1.836413698099279e-01, 3.441591057817528e-02],
         ],
     }
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Witherden-Vincent 9", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Witherden-Vincent 9", weights, points, degree, citation)
 
 
 def witherden_vincent_10():
@@ -141,5 +141,5 @@ def witherden_vincent_10():
             [1.290703579886199e-02, 1.749793421839390e-01, 6.280718454753660e-01],
         ],
     }
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Witherden-Vincent 10", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Witherden-Vincent 10", weights, points, degree, citation)

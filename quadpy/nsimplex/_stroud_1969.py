@@ -67,5 +67,5 @@ def stroud_1969(n, symbolic=False):
 
     data = [(x[i], pts[i]) for i in range(len(x))]
 
-    bary, weights = untangle(data)
-    return NSimplexScheme("Stroud 1969", n, weights, bary, degree, citation)
+    points, weights = untangle(data)
+    return NSimplexScheme("Stroud 1969", n, weights, points, degree, citation)

@@ -30,9 +30,9 @@ def _read(index):
     degree = data.pop("degree")
 
     data = data
-    bary, weights = untangle2(data)
+    points, weights = untangle2(data)
     return TriangleScheme(
-        "Wandzura-Xiao {}".format(index), weights, bary, degree, citation
+        "Wandzura-Xiao {}".format(index), weights, points, degree, citation
     )
 
 

@@ -23,8 +23,8 @@ def zienkiewicz_4(symbolic=False):
 
     degree = 2
     data = {"s31": [[frac(1, 4), 0.1381966011250105]]}
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Zienkiewicz 4", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Zienkiewicz 4", weights, points, degree, citation)
 
 
 def zienkiewicz_5(symbolic=False):
@@ -32,5 +32,5 @@ def zienkiewicz_5(symbolic=False):
 
     degree = 3
     data = {"s4": [[-frac(4, 5)]], "s31": [[frac(9, 20), frac(1, 6)]]}
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Zienkiewicz 5", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Zienkiewicz 5", weights, points, degree, citation)

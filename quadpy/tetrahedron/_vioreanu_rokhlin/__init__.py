@@ -28,10 +28,10 @@ def _read(index):
         data = json.load(f)
 
     degree = data.pop("degree")
-    bary, weights = untangle2(data)
+    points, weights = untangle2(data)
     weights *= 3.0 / 4.0
     return TetrahedronScheme(
-        "Vioreanu-Rokhlin {}".format(index), weights, bary, degree, citation
+        "Vioreanu-Rokhlin {}".format(index), weights, points, degree, citation
     )
 
 

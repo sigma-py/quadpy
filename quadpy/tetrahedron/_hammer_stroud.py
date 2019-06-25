@@ -25,8 +25,8 @@ def hammer_stroud_2(symbolic=False):
 
     degree = 2
     data = {"s31": [[frac(1, 4), (5 - sqrt(5)) / 20]]}
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Hammer-Stroud 2", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Hammer-Stroud 2", weights, points, degree, citation)
 
 
 def hammer_stroud_3(symbolic=False):
@@ -34,5 +34,5 @@ def hammer_stroud_3(symbolic=False):
 
     degree = 3
     data = {"s4": [[-frac(4, 5)]], "s31": [[+frac(9, 20), frac(1, 6)]]}
-    bary, weights = untangle2(data)
-    return TetrahedronScheme("Hammer-Stroud 2", weights, bary, degree, citation)
+    points, weights = untangle2(data)
+    return TetrahedronScheme("Hammer-Stroud 2", weights, points, degree, citation)

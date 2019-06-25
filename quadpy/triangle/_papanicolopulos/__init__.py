@@ -25,8 +25,8 @@ def _read(filename):
         data = json.load(f)
 
     degree = data.pop("degree")
-    bary, weights = untangle2(data)
-    return weights, bary, degree, citation
+    points, weights = untangle2(data)
+    return weights, points, degree, citation
 
 
 def papanicolopulos_sym_0():

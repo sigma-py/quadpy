@@ -22,18 +22,18 @@ citation = article(
 
 def liu_vinokur_01(symbolic=False):
     weights = numpy.concatenate([numpy.full(1, 1)])
-    bary = numpy.concatenate([_s4()])
+    points = numpy.concatenate([_s4()])
     degree = 1
-    return TetrahedronScheme("Liu-Vinokur 1", weights, bary, degree, citation)
+    return TetrahedronScheme("Liu-Vinokur 1", weights, points, degree, citation)
 
 
 def liu_vinokur_02(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
     weights = numpy.concatenate([numpy.full(4, frac(1, 4))])
-    bary = numpy.concatenate([_r_alpha(1.0)])
+    points = numpy.concatenate([_r_alpha(1.0)])
     degree = 1
-    return TetrahedronScheme("Liu-Vinokur 2", weights, bary, degree, citation)
+    return TetrahedronScheme("Liu-Vinokur 2", weights, points, degree, citation)
 
 
 def liu_vinokur_03(symbolic=False):
@@ -41,18 +41,18 @@ def liu_vinokur_03(symbolic=False):
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
 
     weights = numpy.concatenate([numpy.full(4, frac(1, 4))])
-    bary = numpy.concatenate([_r_alpha(1 / sqrt(5))])
+    points = numpy.concatenate([_r_alpha(1 / sqrt(5))])
     degree = 2
-    return TetrahedronScheme("Liu-Vinokur 3", weights, bary, degree, citation)
+    return TetrahedronScheme("Liu-Vinokur 3", weights, points, degree, citation)
 
 
 def liu_vinokur_04(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
     weights = numpy.concatenate([numpy.full(1, frac(4, 5)), numpy.full(4, frac(1, 20))])
-    bary = numpy.concatenate([_s4(), _r_alpha(1)])
+    points = numpy.concatenate([_s4(), _r_alpha(1)])
     degree = 2
-    return TetrahedronScheme("Liu-Vinokur 4", weights, bary, degree, citation)
+    return TetrahedronScheme("Liu-Vinokur 4", weights, points, degree, citation)
 
 
 def liu_vinokur_05(symbolic=False):
@@ -61,9 +61,9 @@ def liu_vinokur_05(symbolic=False):
     weights = numpy.concatenate(
         [numpy.full(1, -frac(4, 5)), numpy.full(4, frac(9, 20))]
     )
-    bary = numpy.concatenate([_s4(), _r_alpha(frac(1, 3))])
+    points = numpy.concatenate([_s4(), _r_alpha(frac(1, 3))])
     degree = 3
-    return TetrahedronScheme("Liu-Vinokur 5", weights, bary, degree, citation)
+    return TetrahedronScheme("Liu-Vinokur 5", weights, points, degree, citation)
 
 
 def liu_vinokur_06(symbolic=False):
@@ -72,9 +72,9 @@ def liu_vinokur_06(symbolic=False):
     weights = numpy.concatenate(
         [numpy.full(4, frac(1, 40)), numpy.full(4, frac(9, 40))]
     )
-    bary = numpy.concatenate([_r_alpha(1), _r_alpha(-frac(1, 3))])
+    points = numpy.concatenate([_r_alpha(1), _r_alpha(-frac(1, 3))])
     degree = 3
-    return TetrahedronScheme("Liu-Vinokur 6", weights, bary, degree, citation)
+    return TetrahedronScheme("Liu-Vinokur 6", weights, points, degree, citation)
 
 
 def liu_vinokur_07(symbolic=False):
@@ -88,9 +88,9 @@ def liu_vinokur_07(symbolic=False):
             numpy.full(6, frac(56, 375)),
         ]
     )
-    bary = numpy.concatenate([_s4(), _r_alpha(frac(5, 7)), _r_beta(sqrt(70) / 28)])
+    points = numpy.concatenate([_s4(), _r_alpha(frac(5, 7)), _r_beta(sqrt(70) / 28)])
     degree = 4
-    return TetrahedronScheme("Liu-Vinokur 7", weights, bary, degree, citation)
+    return TetrahedronScheme("Liu-Vinokur 7", weights, points, degree, citation)
 
 
 def liu_vinokur_08(symbolic=False):
@@ -106,9 +106,9 @@ def liu_vinokur_08(symbolic=False):
             numpy.full(6, frac(2, 105)),
         ]
     )
-    bary = numpy.concatenate([_r_alpha(alpha1), _r_alpha(alpha2), _r_beta(frac(1, 2))])
+    points = numpy.concatenate([_r_alpha(alpha1), _r_alpha(alpha2), _r_beta(frac(1, 2))])
     degree = 4
-    return TetrahedronScheme("Liu-Vinokur 8", weights, bary, degree, citation)
+    return TetrahedronScheme("Liu-Vinokur 8", weights, points, degree, citation)
 
 
 def liu_vinokur_09(symbolic=False):
@@ -122,11 +122,11 @@ def liu_vinokur_09(symbolic=False):
             numpy.full(6, frac(2, 105)),
         ]
     )
-    bary = numpy.concatenate(
+    points = numpy.concatenate(
         [_s4(), _r_alpha(1), _r_alpha(frac(1, 5)), _r_beta(frac(1, 2))]
     )
     degree = 4
-    return TetrahedronScheme("Liu-Vinokur 9", weights, bary, degree, citation)
+    return TetrahedronScheme("Liu-Vinokur 9", weights, points, degree, citation)
 
 
 def liu_vinokur_10(symbolic=False):
@@ -141,7 +141,7 @@ def liu_vinokur_10(symbolic=False):
             numpy.full(12, frac(4, 105)),
         ]
     )
-    bary = numpy.concatenate(
+    points = numpy.concatenate(
         [
             _s4(),
             _r_alpha(1),
@@ -150,7 +150,7 @@ def liu_vinokur_10(symbolic=False):
         ]
     )
     degree = 4
-    return TetrahedronScheme("Liu-Vinokur 10", weights, bary, degree, citation)
+    return TetrahedronScheme("Liu-Vinokur 10", weights, points, degree, citation)
 
 
 def liu_vinokur_11(symbolic=False):
@@ -165,11 +165,11 @@ def liu_vinokur_11(symbolic=False):
             numpy.full(6, frac(2, 105)),
         ]
     )
-    bary = numpy.concatenate(
+    points = numpy.concatenate(
         [_r_alpha(1), _r_alpha(-frac(1, 3)), _r_alpha(sqrt(2) - 1), _r_beta(frac(1, 2))]
     )
     degree = 4
-    return TetrahedronScheme("Liu-Vinokur 11", weights, bary, degree, citation)
+    return TetrahedronScheme("Liu-Vinokur 11", weights, points, degree, citation)
 
 
 def liu_vinokur_12(symbolic=False):
@@ -192,12 +192,12 @@ def liu_vinokur_12(symbolic=False):
     weights = numpy.concatenate(
         [numpy.full(4, w1), numpy.full(4, w2), numpy.full(6, lmbda ** 2 / 840)]
     )
-    bary = numpy.concatenate(
+    points = numpy.concatenate(
         [_r_alpha(alpha1), _r_alpha(alpha2), _r_beta(1 / sqrt(lmbda))]
     )
     degree = 5
 
-    return TetrahedronScheme("Liu-Vinokur 12", weights, bary, degree, citation)
+    return TetrahedronScheme("Liu-Vinokur 12", weights, points, degree, citation)
 
 
 def liu_vinokur_13(symbolic=False):
@@ -212,7 +212,7 @@ def liu_vinokur_13(symbolic=False):
             numpy.full(6, frac(2, 105)),
         ]
     )
-    bary = numpy.concatenate(
+    points = numpy.concatenate(
         [
             _s4(),
             _r_alpha((2 + sqrt(13)) / 9),
@@ -222,7 +222,7 @@ def liu_vinokur_13(symbolic=False):
     )
     degree = 5
 
-    return TetrahedronScheme("Liu-Vinokur 13", weights, bary, degree, citation)
+    return TetrahedronScheme("Liu-Vinokur 13", weights, points, degree, citation)
 
 
 def liu_vinokur_14(symbolic=False):
@@ -237,7 +237,7 @@ def liu_vinokur_14(symbolic=False):
             numpy.full(6, frac(2, 105)),
         ]
     )
-    bary = numpy.concatenate(
+    points = numpy.concatenate(
         [
             _s4(),
             _r_alpha(1),
@@ -248,7 +248,7 @@ def liu_vinokur_14(symbolic=False):
     )
     degree = 5
 
-    return TetrahedronScheme("Liu-Vinokur 14", weights, bary, degree, citation)
+    return TetrahedronScheme("Liu-Vinokur 14", weights, points, degree, citation)
 
 
 def _r_alpha(alpha):

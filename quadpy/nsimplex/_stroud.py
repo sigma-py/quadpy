@@ -48,8 +48,8 @@ def stroud_tn_1_1(n, symbolic=False):
 
     degree = 1
     data = [(1, numpy.full((1, n + 1), frac(1, n + 1)))]
-    bary, weights = untangle(data)
-    return NSimplexScheme("Stroud Tn 1-1", n, weights, bary, degree, citation)
+    points, weights = untangle(data)
+    return NSimplexScheme("Stroud Tn 1-1", n, weights, points, degree, citation)
 
 
 __all__ = [

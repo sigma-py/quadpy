@@ -24,10 +24,10 @@ def walkington_1(d, symbolic=False):
 
     degree = 1
     data = [(frac(1, factorial(d)), _c(d, frac))]
-    bary, weights = untangle(data)
+    points, weights = untangle(data)
     # normalize weights
     weights /= numpy.sum(weights)
-    return NSimplexScheme("Walkington 1", d, weights, bary, degree, citation)
+    return NSimplexScheme("Walkington 1", d, weights, points, degree, citation)
 
 
 def walkington_2(d, symbolic=False):
@@ -42,10 +42,10 @@ def walkington_2(d, symbolic=False):
     # Not sure what this means, but for d>=2, the points are outside the simplex.
     degree = 1
     data = [(frac(1, factorial(d + 1)), _xi1(d, 1 / sqrt(d + 1)))]
-    bary, weights = untangle(data)
+    points, weights = untangle(data)
     # normalize weights
     weights /= numpy.sum(weights)
-    return NSimplexScheme("Walkington 2", d, weights, bary, degree, citation)
+    return NSimplexScheme("Walkington 2", d, weights, points, degree, citation)
 
 
 def walkington_3(d, symbolic=False):
@@ -56,10 +56,10 @@ def walkington_3(d, symbolic=False):
         (frac(-(d + 1) ** 3, 4 * factorial(d + 2)), _c(d, frac)),
         (frac(+(d + 3) ** 3, 4 * factorial(d + 3)), _xi1(d, frac(1, (d + 3)))),
     ]
-    bary, weights = untangle(data)
+    points, weights = untangle(data)
     # normalize weights
     weights /= numpy.sum(weights)
-    return NSimplexScheme("Walkington 3", d, weights, bary, degree, citation)
+    return NSimplexScheme("Walkington 3", d, weights, points, degree, citation)
 
 
 def walkington_5(d, symbolic=False):
@@ -76,10 +76,10 @@ def walkington_5(d, symbolic=False):
         (w2, _xi11(d, frac(1, d + 5), frac)),
     ]
 
-    bary, weights = untangle(data)
+    points, weights = untangle(data)
     # normalize weights
     weights /= numpy.sum(weights)
-    return NSimplexScheme("Walkington 5", d, weights, bary, degree, citation)
+    return NSimplexScheme("Walkington 5", d, weights, points, degree, citation)
 
 
 def walkington_7(d, symbolic=False):
@@ -100,10 +100,10 @@ def walkington_7(d, symbolic=False):
         (w3, _xi111(d, frac(1, d + 7), frac)),
     ]
 
-    bary, weights = untangle(data)
+    points, weights = untangle(data)
     # normalize weights
     weights /= numpy.sum(weights)
-    return NSimplexScheme("Walkington 7", d, weights, bary, degree, citation)
+    return NSimplexScheme("Walkington 7", d, weights, points, degree, citation)
 
 
 def _c(d, frac):

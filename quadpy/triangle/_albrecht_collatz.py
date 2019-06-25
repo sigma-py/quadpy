@@ -22,6 +22,6 @@ citation = article(
 def albrecht_collatz(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
-    weights, bary = s2([frac(2, 30), frac(1, 2)], [frac(9, 15), frac(1, 6)])
+    weights, points = s2([frac(2, 30), frac(1, 2)], [frac(9, 15), frac(1, 6)])
     weights /= 2
-    return TriangleScheme("Albrecht-Collatz", weights, bary, 3, citation)
+    return TriangleScheme("Albrecht-Collatz", weights, points, 3, citation)

@@ -26,21 +26,21 @@ citation = article(
 def taylor_wingate_bos_1(symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
 
-    weights, bary = s2([frac(2, 3), frac(1, 6)])
+    weights, points = s2([frac(2, 3), frac(1, 6)])
     weights /= 2
-    return TriangleScheme("Taylor-Wingate-Bos 1", weights, bary, 2, citation)
+    return TriangleScheme("Taylor-Wingate-Bos 1", weights, points, 2, citation)
 
 
 def taylor_wingate_bos_2():
-    weights, bary = s2(
+    weights, points = s2(
         [0.2199034873106, 0.0915762135098], [0.4467631793560, 0.4459484909160]
     )
     weights /= 2
-    return TriangleScheme("Taylor-Wingate-Bos 2", weights, bary, 4, citation)
+    return TriangleScheme("Taylor-Wingate-Bos 2", weights, points, 4, citation)
 
 
 def taylor_wingate_bos_4():
-    weights, bary = concat(
+    weights, points = concat(
         s2(
             [0.0102558174092, 0],
             [0.1679775595335, 0.4743880861752],
@@ -49,11 +49,11 @@ def taylor_wingate_bos_4():
         s1([0.1116047046647, 0.7839656651012, 0.0421382841642]),
     )
     weights /= 2
-    return TriangleScheme("Taylor-Wingate-Bos 4", weights, bary, 7, citation)
+    return TriangleScheme("Taylor-Wingate-Bos 4", weights, points, 7, citation)
 
 
 def taylor_wingate_bos_5():
-    weights, bary = concat(
+    weights, points = concat(
         s2(
             [0.0519871420646, 0.0451890097844],
             [0.1032344051380, 0.4815198347833],
@@ -65,11 +65,11 @@ def taylor_wingate_bos_5():
         ),
     )
     weights /= 2
-    return TriangleScheme("Taylor-Wingate-Bos 5", weights, bary, 9, citation)
+    return TriangleScheme("Taylor-Wingate-Bos 5", weights, points, 9, citation)
 
 
 def taylor_wingate_bos_8(symbolic=False):
-    weights, bary = concat(
+    weights, points = concat(
         s2(
             [0.0010616711990, 0],
             [0.0349317947036, 0.4903668903754],
@@ -86,4 +86,4 @@ def taylor_wingate_bos_8(symbolic=False):
         ),
     )
     weights /= 2
-    return TriangleScheme("Taylor-Wingate-Bos 8", weights, bary, 14, citation)
+    return TriangleScheme("Taylor-Wingate-Bos 8", weights, points, 14, citation)

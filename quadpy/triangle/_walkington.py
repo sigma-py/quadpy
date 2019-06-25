@@ -29,8 +29,8 @@ def walkington_p5(symbolic=False):
     )
 
     x1, x2 = [(6 + i * sqrt(15)) / 21 for i in [+1, -1]]
-    bary = numpy.concatenate([_c(frac), _xi1(x1), _xi1(x2)])
-    return TriangleScheme("Walkington p5", weights, bary, degree, citation)
+    points = numpy.concatenate([_c(frac), _xi1(x1), _xi1(x2)])
+    return TriangleScheme("Walkington p5", weights, points, degree, citation)
 
 
 def _c(frac):
