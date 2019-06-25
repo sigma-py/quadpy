@@ -38,6 +38,7 @@ from ._rabinowitz_richter import (
     rabinowitz_richter_5,
     rabinowitz_richter_6,
 )
+from ._radon import radon
 from ._stroud import (
     stroud_s2_3_1,
     stroud_s2_3_2,
@@ -107,6 +108,7 @@ __all__ = [
     "rabinowitz_richter_4",
     "rabinowitz_richter_5",
     "rabinowitz_richter_6",
+    "radon",
     "stroud_s2_3_1",
     "stroud_s2_3_2",
     "stroud_s2_4_1",

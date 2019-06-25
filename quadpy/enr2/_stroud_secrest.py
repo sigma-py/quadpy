@@ -4,8 +4,8 @@
 import numpy
 import sympy
 
+from ..helpers import article, fsd, pm, untangle
 from ._helpers import Enr2Scheme
-from ..helpers import untangle, pm, fsd, article
 
 citation = article(
     authors=["A.H. Stroud", "D. Secrest"],

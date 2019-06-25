@@ -3,21 +3,16 @@
 import numpy
 import sympy
 
-from ._ditkin import (
-    ditkin_1 as stroud_5_1,
-    ditkin_2 as stroud_5_2,
-    ditkin_3 as stroud_7_3,
-)
-from ._hammer_stroud import (
-    hammer_stroud_11_3 as stroud_3_1,
-    hammer_stroud_15_3a as stroud_7_1a,
-    hammer_stroud_15_3b as stroud_7_1b,
-)
-from ._mysovskih import mysovskih as stroud_7_2
-
-from ._helpers import BallScheme
+from ..helpers import book, untangle
 from ..sphere import _stroud as sphere_stroud
-from ..helpers import untangle, book
+from ._ditkin import ditkin_1 as stroud_5_1
+from ._ditkin import ditkin_2 as stroud_5_2
+from ._ditkin import ditkin_3 as stroud_7_3
+from ._hammer_stroud import hammer_stroud_11_3 as stroud_3_1
+from ._hammer_stroud import hammer_stroud_15_3a as stroud_7_1a
+from ._hammer_stroud import hammer_stroud_15_3b as stroud_7_1b
+from ._helpers import BallScheme
+from ._mysovskih import mysovskih as stroud_7_2
 
 _citation = book(
     authors=["Arthur Stroud"],

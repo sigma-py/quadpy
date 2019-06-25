@@ -4,8 +4,8 @@
 import numpy
 import sympy
 
-from ._helpers import _s4, _s4_0, PyramidScheme
-from ..helpers import untangle, article
+from ..helpers import article, untangle
+from ._helpers import PyramidScheme, _s4, _s4_0
 
 citation = article(
     authors=["Carlos Felippa"],

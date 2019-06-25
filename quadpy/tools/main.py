@@ -29,14 +29,13 @@
     <https://doi.org/10.1088/0266-5611/3/4/010>.
 """
 
-from mpmath import mp
-from mpmath.matrices.eigen_symmetric import tridiag_eigen
 import numpy
 import scipy
-from scipy.linalg import eig_banded
-
-from scipy.linalg.lapack import get_lapack_funcs
 import sympy
+from mpmath import mp
+from mpmath.matrices.eigen_symmetric import tridiag_eigen
+from scipy.linalg import eig_banded
+from scipy.linalg.lapack import get_lapack_funcs
 
 
 def golub_welsch(moments):

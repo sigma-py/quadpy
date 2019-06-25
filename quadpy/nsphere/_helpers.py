@@ -3,7 +3,7 @@
 import math
 
 import numpy
-from sympy import gamma, prod, Rational
+from sympy import Rational, gamma, prod
 
 
 class NSphereScheme:

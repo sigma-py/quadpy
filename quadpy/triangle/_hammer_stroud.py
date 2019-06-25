@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 
-from ._hammer_marlowe_stroud import (
-    hammer_marlowe_stroud_1 as hammer_stroud_2,
-    hammer_marlowe_stroud_4 as hammer_stroud_3,
-)
+from ._hammer_marlowe_stroud import hammer_marlowe_stroud_1 as hammer_stroud_2
+from ._hammer_marlowe_stroud import hammer_marlowe_stroud_4 as hammer_stroud_3
 
 # citation = article(
 #     authors=["Preston C. Hammer", "Arthur H. Stroud"],

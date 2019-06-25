@@ -4,8 +4,8 @@
 import numpy
 import sympy
 
-from ._helpers import cartesian_to_spherical_sympy, SphereScheme
-from ..helpers import untangle, pm_array0, fsd, pm, article
+from ..helpers import article, fsd, pm, pm_array0, untangle
+from ._helpers import SphereScheme, cartesian_to_spherical_sympy
 
 citation = article(
     authors=["J. Albrecht", "L. Collatz"],

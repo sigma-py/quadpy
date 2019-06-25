@@ -4,8 +4,8 @@
 import numpy
 import sympy
 
-from ..helpers import untangle, fsd, pm, article
-from ._helpers import integrate_monomial_over_unit_nsphere, NSphereScheme
+from ..helpers import article, fsd, pm, untangle
+from ._helpers import NSphereScheme, integrate_monomial_over_unit_nsphere
 
 citation = article(
     authors=["A.H. Stroud"],

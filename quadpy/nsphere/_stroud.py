@@ -4,11 +4,10 @@
 import numpy
 import sympy
 
-from ..helpers import untangle, fsd, pm_array0, pm, book
-
+from ..helpers import book, fsd, pm, pm_array0, untangle
+from ._helpers import NSphereScheme, integrate_monomial_over_unit_nsphere
 from ._stroud_1967 import stroud_1967 as stroud_un_7_1
 from ._stroud_1969 import stroud_1969 as stroud_un_11_1
-from ._helpers import integrate_monomial_over_unit_nsphere, NSphereScheme
 
 citation = book(
     authors=["Arthur Stroud"],

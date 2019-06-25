@@ -3,8 +3,8 @@
 
 import sympy
 
-from ._helpers import concat, zero, symm_s, symm_r0, symm_s_t, QuadrilateralScheme
 from ..helpers import article
+from ._helpers import QuadrilateralScheme, concat, symm_r0, symm_s, symm_s_t, zero
 
 citation = article(
     authors=["Bernd Meister"],

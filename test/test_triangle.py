@@ -8,7 +8,6 @@ import sympy
 
 import orthopy
 import quadpy
-
 from helpers import check_degree_ortho
 
 schemes_tol = [

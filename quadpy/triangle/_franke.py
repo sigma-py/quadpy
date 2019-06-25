@@ -3,8 +3,8 @@
 
 import numpy
 
-from ._helpers import TriangleScheme
 from ..helpers import article
+from ._helpers import TriangleScheme
 
 citation = article(
     authors=["Richard Franke"],

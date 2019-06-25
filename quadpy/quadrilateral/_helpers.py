@@ -3,8 +3,9 @@
 import numpy
 
 from .. import helpers
-from ..ncube import transform, NCubeScheme
+from ..ncube import NCubeScheme
 from ..ncube import ncube_points as rectangle_points
+from ..ncube import transform
 from ..nsimplex import get_vol
 
 

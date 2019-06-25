@@ -3,8 +3,8 @@
 
 import sympy
 
+from ..helpers import article, pm, untangle, z
 from ._helpers import NCubeScheme
-from ..helpers import untangle, z, pm, article
 
 _citation = article(
     authors=["G.M. Ewing"],

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
+
 import orthopy
 import quadpy
 from quadpy.nsimplex.helpers import integrate_monomial_over_unit_simplex
-
-from quadpy.triangle.helpers import _s3, _s21, _s111ab, _rot_ab
+from quadpy.triangle.helpers import _rot_ab, _s3, _s21, _s111ab
 
 
 def with_monomials(degree):

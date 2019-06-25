@@ -4,8 +4,8 @@
 import numpy
 import sympy
 
-from ._helpers import _s2, _s11, NCubeScheme
-from ..helpers import untangle, fsd, z, article
+from ..helpers import article, fsd, untangle, z
+from ._helpers import NCubeScheme, _s2, _s11
 
 _citation = article(
     authors=["A.H. Stroud"],

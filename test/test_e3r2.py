@@ -3,8 +3,8 @@
 import matplotlib.pyplot as plt
 import numpy
 import pytest
-import quadpy
 
+import quadpy
 from helpers import check_degree, integrate_monomial_over_enr2
 
 

@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 #
 
-import sympy
 import numpy
+import sympy
 
-from ..helpers import untangle, fsd, pm, z, fs_array as fs, article
+from ..helpers import article
+from ..helpers import fs_array as fs
+from ..helpers import fsd, pm, untangle, z
 from ._helpers import DiskScheme
-
-from ._radon import radon
 from ._peirce_1956 import peirce_1956_1, peirce_1956_3
-
+from ._radon import radon
 
 _citation = article(
     authors=["Preston C. Hammer", "Arthur H. Stroud"],

@@ -4,8 +4,8 @@
 import numpy
 import sympy
 
-from ._helpers import QuadrilateralScheme
 from ..helpers import article
+from ._helpers import QuadrilateralScheme
 
 citation = article(
     authors=["H.J. Schmid"],

@@ -3,12 +3,12 @@
 import math
 
 import numpy
+
 import orthopy
 
-from ._gauss_legendre import gauss_legendre
-
-from ._helpers import LineSegmentScheme
 from ..tools import scheme_from_rc
+from ._gauss_legendre import gauss_legendre
+from ._helpers import LineSegmentScheme
 
 
 def gauss_kronrod(n, a=0.0, b=0.0):

@@ -6,34 +6,29 @@ import warnings
 import numpy
 import sympy
 
-from ._albrecht_collatz import (
-    albrecht_collatz_1 as stroud_c2_3_4,
-    albrecht_collatz_2 as stroud_c2_5_1,
-    albrecht_collatz_3 as stroud_c2_5_2,
-    albrecht_collatz_4 as stroud_c2_5_6,
-)
+from .. import ncube
+from ..helpers import book
+from ._albrecht_collatz import albrecht_collatz_1 as stroud_c2_3_4
+from ._albrecht_collatz import albrecht_collatz_2 as stroud_c2_5_1
+from ._albrecht_collatz import albrecht_collatz_3 as stroud_c2_5_2
+from ._albrecht_collatz import albrecht_collatz_4 as stroud_c2_5_6
 from ._burnside import burnside as stroud_c2_5_3
-from ._irwin import irwin_1 as stroud_c2_3_5, irwin_2 as stroud_c2_5_7
+from ._helpers import QuadrilateralScheme, concat, symm_r0, symm_s, symm_s_t, zero
+from ._irwin import irwin_1 as stroud_c2_3_5
+from ._irwin import irwin_2 as stroud_c2_5_7
 from ._maxwell import maxwell as stroud_c2_7_3
 from ._meister import meister as stroud_c2_7_6
 from ._miller import miller as stroud_c2_1_2
 from ._phillips import phillips as stroud_c2_7_2
-from ._rabinowitz_richter import (
-    rabinowitz_richter_1 as stroud_c2_9_1,
-    rabinowitz_richter_2 as stroud_c2_11_1,
-    rabinowitz_richter_3 as stroud_c2_11_2,
-    rabinowitz_richter_4 as stroud_c2_13_1,
-    rabinowitz_richter_5 as stroud_c2_15_1,
-    rabinowitz_richter_6 as stroud_c2_15_2,
-)
-from ._tyler import (
-    tyler_1 as stroud_c2_5_5,
-    tyler_2 as stroud_c2_7_1,
-    tyler_3 as stroud_c2_7_5,
-)
-from .. import ncube
-from ._helpers import concat, zero, symm_r0, symm_s, symm_s_t, QuadrilateralScheme
-from ..helpers import book
+from ._rabinowitz_richter import rabinowitz_richter_1 as stroud_c2_9_1
+from ._rabinowitz_richter import rabinowitz_richter_2 as stroud_c2_11_1
+from ._rabinowitz_richter import rabinowitz_richter_3 as stroud_c2_11_2
+from ._rabinowitz_richter import rabinowitz_richter_4 as stroud_c2_13_1
+from ._rabinowitz_richter import rabinowitz_richter_5 as stroud_c2_15_1
+from ._rabinowitz_richter import rabinowitz_richter_6 as stroud_c2_15_2
+from ._tyler import tyler_1 as stroud_c2_5_5
+from ._tyler import tyler_2 as stroud_c2_7_1
+from ._tyler import tyler_3 as stroud_c2_7_5
 
 citation = book(
     authors=["Arthur Stroud"],

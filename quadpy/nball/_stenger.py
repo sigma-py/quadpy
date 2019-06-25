@@ -2,7 +2,7 @@
 #
 # TODO According to Stroud, Stenger's original article has data up to n == 20.
 
-from ..helpers import untangle, fsd, z, article
+from ..helpers import article, fsd, untangle, z
 from ._helpers import NBallScheme
 
 citation = article(

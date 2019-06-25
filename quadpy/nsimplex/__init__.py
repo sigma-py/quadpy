@@ -2,6 +2,7 @@
 #
 from ._grundmann_moeller import grundmann_moeller
 from ._hammer_stroud import hammer_stroud_1a, hammer_stroud_1b, hammer_stroud_2
+from ._helpers import NSimplexScheme, get_vol, transform
 from ._stroud import (
     stroud_tn_1_1,
     stroud_tn_1_2,
@@ -43,8 +44,6 @@ from ._walkington import (
     walkington_5,
     walkington_7,
 )
-
-from ._helpers import transform, get_vol, NSimplexScheme
 
 __all__ = [
     "grundmann_moeller",

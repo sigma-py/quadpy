@@ -4,8 +4,8 @@
 import numpy
 import sympy
 
-from ..helpers import untangle, article
-from ._helpers import volume_unit_ball, NBallScheme
+from ..helpers import article, untangle
+from ._helpers import NBallScheme, volume_unit_ball
 
 citation = article(
     authors=["A.H. Stroud"],

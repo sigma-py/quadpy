@@ -4,8 +4,8 @@
 import numpy
 import sympy
 
-from ._helpers import concat, zero, symm_r0, symm_s_t, QuadrilateralScheme
 from ..helpers import article
+from ._helpers import QuadrilateralScheme, concat, symm_r0, symm_s_t, zero
 
 citation = article(
     authors=["J.C. Maxwell"],

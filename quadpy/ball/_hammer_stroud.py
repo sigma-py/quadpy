@@ -2,8 +2,8 @@
 #
 import sympy
 
+from ..helpers import article, fsd, pm, untangle, z
 from ._helpers import BallScheme
-from ..helpers import untangle, fsd, pm, z, article
 
 _citation = article(
     authors=["Preston C. Hammer", "Arthur H. Stroud"],

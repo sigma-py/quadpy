@@ -4,7 +4,7 @@
 import numpy
 import sympy
 
-from ..helpers import untangle, fsd, z, pm, article
+from ..helpers import article, fsd, pm, untangle, z
 from ._helpers import NCubeScheme
 
 _citation = article(

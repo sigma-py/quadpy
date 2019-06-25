@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 #
 
-from mpmath import mp
 import numpy
 import sympy
+from mpmath import mp
 
-
-from ..helpers import untangle, rd, article
+from ..helpers import article, rd, untangle
 from ._helpers import NSimplexScheme
 
 citation = article(

@@ -4,8 +4,8 @@
 import numpy
 import sympy
 
-from ._helpers import rss_pm, z, HexahedronScheme
-from ..helpers import untangle, article
+from ..helpers import article, untangle
+from ._helpers import HexahedronScheme, rss_pm, z
 
 citation = article(
     authors=["A.H. Stroud"],

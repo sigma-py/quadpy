@@ -4,24 +4,21 @@
 import numpy
 import sympy
 
-from ._helpers import NCubeScheme
-
-from ..helpers import fsd, pm, book
-
-from ._stroud_1957 import stroud_1957_2 as stroud_cn_2_1, stroud_1957_3 as stroud_cn_3_1
-from ._thacher import thacher as stroud_cn_2_2
-from ._tyler import tyler as stroud_cn_3_3
+from ..helpers import book, fsd, pm
 from ._ewing import ewing as stroud_cn_3_5
 from ._hammer_stroud import hammer_stroud_2n as stroud_cn_5_2
-from ._stroud_1968 import stroud_1968 as stroud_cn_5_3
-from ._stroud_1966 import (
-    stroud_1966_a as stroud_cn_5_4,
-    stroud_1966_b as stroud_cn_5_6,
-    stroud_1966_c as stroud_cn_5_7,
-    stroud_1966_d as stroud_cn_5_8,
-)
+from ._helpers import NCubeScheme
 from ._mustard_lyness_blatt import mustard_lyness_blatt as stroud_cn_5_5
 from ._phillips import phillips as stroud_cn_7_1
+from ._stroud_1957 import stroud_1957_2 as stroud_cn_2_1
+from ._stroud_1957 import stroud_1957_3 as stroud_cn_3_1
+from ._stroud_1966 import stroud_1966_a as stroud_cn_5_4
+from ._stroud_1966 import stroud_1966_b as stroud_cn_5_6
+from ._stroud_1966 import stroud_1966_c as stroud_cn_5_7
+from ._stroud_1966 import stroud_1966_d as stroud_cn_5_8
+from ._stroud_1968 import stroud_1968 as stroud_cn_5_3
+from ._thacher import thacher as stroud_cn_2_2
+from ._tyler import tyler as stroud_cn_3_3
 
 _citation = book(
     authors=["Arthur Stroud"],

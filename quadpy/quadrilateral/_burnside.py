@@ -4,8 +4,8 @@
 import numpy
 import sympy
 
-from ._helpers import concat, symm_r0, symm_s, QuadrilateralScheme
 from ..helpers import article
+from ._helpers import QuadrilateralScheme, concat, symm_r0, symm_s
 
 citation = article(
     authors=["W. Burnside"],

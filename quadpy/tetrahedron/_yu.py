@@ -3,8 +3,8 @@
 
 import sympy
 
-from ._helpers import untangle2, TetrahedronScheme
 from ..helpers import article
+from ._helpers import TetrahedronScheme, untangle2
 
 citation = article(
     authors=["Yu Jinyun"],

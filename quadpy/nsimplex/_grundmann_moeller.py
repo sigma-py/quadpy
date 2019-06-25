@@ -6,8 +6,8 @@ from math import factorial as fact
 import numpy
 import sympy
 
+from ..helpers import article, get_all_exponents, untangle
 from ._helpers import NSimplexScheme
-from ..helpers import untangle, get_all_exponents, article
 
 citation = article(
     authors=["A. Grundmann", "H.M. Moeller"],

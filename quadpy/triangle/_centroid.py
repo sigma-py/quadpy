@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-from ._helpers import s3, TriangleScheme
+from ._helpers import TriangleScheme, s3
 
 
 def centroid(symbolic=False):

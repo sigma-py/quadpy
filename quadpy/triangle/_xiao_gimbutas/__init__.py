@@ -3,9 +3,8 @@
 import json
 import os
 
-from .._helpers import untangle2, TriangleScheme
 from ...helpers import article
-
+from .._helpers import TriangleScheme, untangle2
 
 citation = article(
     authors=["Hong Xiao", "Zydrunas Gimbutas"],

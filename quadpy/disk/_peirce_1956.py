@@ -4,9 +4,8 @@
 import numpy
 import sympy
 
-from ..helpers import fsd, pm, untangle, fs_array, phdthesis
+from ..helpers import fs_array, fsd, phdthesis, pm, untangle
 from ._helpers import DiskScheme
-
 
 _citation = phdthesis(
     authors=["William Hollis Peirce"],

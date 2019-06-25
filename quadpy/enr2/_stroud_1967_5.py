@@ -4,8 +4,8 @@
 
 import numpy
 
+from ..helpers import article, rd, untangle
 from ._helpers import Enr2Scheme
-from ..helpers import untangle, rd, article
 
 citation = article(
     authors=["A.H. Stroud"],

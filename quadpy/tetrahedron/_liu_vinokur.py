@@ -4,8 +4,8 @@
 import numpy
 import sympy
 
-from ._helpers import _s4, TetrahedronScheme
 from ..helpers import article
+from ._helpers import TetrahedronScheme, _s4
 
 citation = article(
     authors=["Y. Liu", "M. Vinokur"],

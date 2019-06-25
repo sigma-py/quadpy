@@ -6,8 +6,8 @@
 import numpy
 import sympy
 
-from ._helpers import TriangleScheme, s3, s2, mirror, concat
 from ..helpers import article
+from ._helpers import TriangleScheme, concat, mirror, s2, s3
 
 citation = article(
     authors=["P. Hillion"],

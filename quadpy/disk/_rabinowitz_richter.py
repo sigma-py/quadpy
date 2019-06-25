@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from ._helpers import _s40, _s8, _s4, _z, DiskScheme
-from ..helpers import untangle, article
-
+from ..helpers import article, untangle
+from ._helpers import DiskScheme, _s4, _s8, _s40, _z
 from ._mysovskih import mysovskih_2, mysovskih_3
-
 
 _citation = article(
     authors=["Philip Rabinowitz", "Nira Richter"],

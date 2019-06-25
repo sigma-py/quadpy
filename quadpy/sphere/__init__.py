@@ -14,6 +14,7 @@ from ._fliege_maier import (
     fliege_maier_16,
     fliege_maier_25,
 )
+from ._helpers import area
 from ._heo_xu import (
     heo_xu_13,
     heo_xu_15,
@@ -97,8 +98,8 @@ from ._stroud import (
     stroud_u3_5_3,
     stroud_u3_5_4,
     stroud_u3_5_5,
-    stroud_u3_7_2,
     stroud_u3_7_1,
+    stroud_u3_7_2,
     stroud_u3_8_1,
     stroud_u3_9_1,
     stroud_u3_9_2,
@@ -108,8 +109,6 @@ from ._stroud import (
     stroud_u3_11_3,
     stroud_u3_14_1,
 )
-
-from ._helpers import area
 
 __all__ = [
     "albrecht_collatz_1",

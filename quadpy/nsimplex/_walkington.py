@@ -6,8 +6,8 @@ from math import factorial
 import numpy
 import sympy
 
+from ..helpers import techreport, untangle
 from ._helpers import NSimplexScheme
-from ..helpers import untangle, techreport
 
 citation = techreport(
     authors=["Noel J. Walkington"],

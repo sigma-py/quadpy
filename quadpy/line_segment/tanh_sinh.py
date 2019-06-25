@@ -2,9 +2,9 @@
 #
 import math
 
-from mpmath import mp
 import numpy
 import scipy.special
+from mpmath import mp
 
 
 def tanh_sinh(f, a, b, eps, max_steps=10, f_derivatives=None, mode="numpy"):

@@ -3,7 +3,7 @@
 
 import sympy
 
-from ._helpers import s2, TriangleScheme
+from ._helpers import TriangleScheme, s2
 
 
 def vertex(symbolic=False):

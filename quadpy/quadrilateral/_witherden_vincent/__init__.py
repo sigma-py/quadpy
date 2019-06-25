@@ -5,8 +5,8 @@
 import json
 import os
 
-from .._helpers import concat, zero, symm_r0, symm_s, symm_s_t, QuadrilateralScheme
 from ...helpers import article
+from .._helpers import QuadrilateralScheme, concat, symm_r0, symm_s, symm_s_t, zero
 
 _citation = article(
     authors=["F.D. Witherden", "P.E. Vincent"],

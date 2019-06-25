@@ -4,8 +4,8 @@
 import numpy
 import sympy
 
-from ._helpers import zero, symm_s, symm_r0, concat, QuadrilateralScheme
 from ..helpers import article
+from ._helpers import QuadrilateralScheme, concat, symm_r0, symm_s, zero
 
 citation = article(
     authors=["G.W. Tyler"],

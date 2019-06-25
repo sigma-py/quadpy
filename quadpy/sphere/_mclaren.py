@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 #
 
-from mpmath import mp
 import numpy
 import sympy
+from mpmath import mp
 
-from ._helpers import cartesian_to_spherical_sympy, SphereScheme
-from ..helpers import untangle, pm_array0, fsd, pm_array, pm, article
+from ..helpers import article, fsd, pm, pm_array, pm_array0, untangle
+from ._helpers import SphereScheme, cartesian_to_spherical_sympy
 
 citation = article(
     authors=["A.D. McLaren"],

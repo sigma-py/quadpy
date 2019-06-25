@@ -4,35 +4,26 @@
 import numpy
 import sympy
 
+from ..helpers import book, pm, untangle
 from ._hammer_stroud import hammer_stroud_11n, hammer_stroud_12n
+from ._helpers import NBallScheme, volume_unit_ball
 from ._stenger import (
-    # TODO fix
-    # stenger_7a as stroud_sn_7_3a,
     stenger_7b as stroud_sn_7_3b,
-    stenger_9a as stroud_sn_9_1a,
-    stenger_9b as stroud_sn_9_1b,
-    stenger_11a as stroud_sn_11_1a,
-    stenger_11b as stroud_sn_11_1b,
-)
+)  # TODO fix; stenger_7a as stroud_sn_7_3a,
+from ._stenger import stenger_9a as stroud_sn_9_1a
+from ._stenger import stenger_9b as stroud_sn_9_1b
+from ._stenger import stenger_11a as stroud_sn_11_1a
+from ._stenger import stenger_11b as stroud_sn_11_1b
 from ._stroud_1957 import stroud_1957 as stroud_sn_2_1
-from ._stroud_1966 import (
-    stroud_1966_a as stroud_sn_5_3,
-    stroud_1966_b as stroud_sn_5_4,
-    stroud_1966_c as stroud_sn_5_5,
-    stroud_1966_d as stroud_sn_5_6,
-)
-from ._stroud_1967_5 import (
-    stroud_1967_5_a as stroud_sn_5_1a,
-    stroud_1967_5_b as stroud_sn_5_1b,
-)
-from ._stroud_1967_7 import (
-    stroud_1967_7_a as stroud_sn_7_1a,
-    stroud_1967_7_b as stroud_sn_7_1b,
-    stroud_1967_7_c as stroud_sn_7_2,
-)
-
-from ._helpers import volume_unit_ball, NBallScheme
-from ..helpers import pm, untangle, book
+from ._stroud_1966 import stroud_1966_a as stroud_sn_5_3
+from ._stroud_1966 import stroud_1966_b as stroud_sn_5_4
+from ._stroud_1966 import stroud_1966_c as stroud_sn_5_5
+from ._stroud_1966 import stroud_1966_d as stroud_sn_5_6
+from ._stroud_1967_5 import stroud_1967_5_a as stroud_sn_5_1a
+from ._stroud_1967_5 import stroud_1967_5_b as stroud_sn_5_1b
+from ._stroud_1967_7 import stroud_1967_7_a as stroud_sn_7_1a
+from ._stroud_1967_7 import stroud_1967_7_b as stroud_sn_7_1b
+from ._stroud_1967_7 import stroud_1967_7_c as stroud_sn_7_2
 
 citation = book(
     authors=["Arthur Stroud"],

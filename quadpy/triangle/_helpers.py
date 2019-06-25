@@ -5,7 +5,7 @@ import numpy
 import sympy
 
 from ..helpers import plot_disks
-from ..nsimplex import transform, get_vol, NSimplexScheme
+from ..nsimplex import NSimplexScheme, get_vol, transform
 
 
 class TriangleScheme(NSimplexScheme):

@@ -2,7 +2,7 @@
 #
 import sympy
 
-from ..helpers import untangle, z, pm_array0, pm, article
+from ..helpers import article, pm, pm_array0, untangle, z
 from ._helpers import BallScheme
 
 _citation = article(

@@ -2,8 +2,8 @@
 #
 from mpmath import mp
 
-from ._helpers import rot_ab, TriangleScheme
 from ..helpers import techreport
+from ._helpers import TriangleScheme, rot_ab
 
 citation = techreport(
     authors=["R. Cools", "A. Haegemans"],

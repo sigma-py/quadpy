@@ -4,8 +4,8 @@
 import numpy
 import sympy
 
-from ._helpers import s3, TriangleScheme, alpha, concat, gamma_delta
 from ..helpers import article
+from ._helpers import TriangleScheme, alpha, concat, gamma_delta, s3
 
 citation = article(
     authors=["Y. Liu", "M. Vinokur"],

@@ -2,6 +2,7 @@
 #
 
 import math
+
 import numpy
 
 from quadpy.helpers import get_all_exponents

@@ -4,7 +4,7 @@
 import numpy
 import sympy
 
-from ..helpers import untangle, article
+from ..helpers import article, untangle
 from ._helpers import WedgeScheme
 
 citation = article(

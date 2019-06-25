@@ -4,8 +4,8 @@
 import numpy
 import sympy
 
-from ._helpers import concat, symm_r0, symm_s, pm2, pm, zero, QuadrilateralScheme
 from ..helpers import article
+from ._helpers import QuadrilateralScheme, concat, pm, pm2, symm_r0, symm_s, zero
 
 citation = article(
     authors=["J. Albrecht", "L. Collatz"],

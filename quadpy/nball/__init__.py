@@ -4,9 +4,9 @@
 from ._dobrodeev_1970 import dobrodeev_1970
 from ._dobrodeev_1978 import dobrodeev_1978
 from ._hammer_stroud import hammer_stroud_11n, hammer_stroud_12n
+from ._stroud import stroud_sn_3_1  # stroud_sn_7_3a,
 from ._stroud import (
     stroud_sn_2_1,
-    stroud_sn_3_1,
     stroud_sn_3_2,
     stroud_sn_5_1a,
     stroud_sn_5_1b,
@@ -18,7 +18,6 @@ from ._stroud import (
     stroud_sn_7_1a,
     stroud_sn_7_1b,
     stroud_sn_7_2,
-    # stroud_sn_7_3a,
     stroud_sn_7_3b,
     stroud_sn_9_1a,
     stroud_sn_9_1b,

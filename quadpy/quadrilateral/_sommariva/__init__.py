@@ -5,9 +5,8 @@ import os
 
 import numpy
 
-from .._helpers import QuadrilateralScheme
 from ...helpers import online
-
+from .._helpers import QuadrilateralScheme
 
 _citation = online(
     authors=["Alvise Sommariva"],

@@ -4,8 +4,8 @@
 import numpy
 import sympy
 
+from ..helpers import article, fsd, pm, untangle, z
 from ._helpers import HexahedronScheme
-from ..helpers import untangle, fsd, pm, z, article
 
 _citation = article(
     authors=["Preston C. Hammer", "Arthur H. Stroud"],

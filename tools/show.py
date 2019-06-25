@@ -2,8 +2,8 @@
 #
 import matplotlib.pyplot as plt
 import numpy
-import quadpy
 
+import quadpy
 
 schemes = [
     [quadpy.triangle.BerntsenEspelid(k) for k in range(1, 5)],

@@ -3,8 +3,8 @@
 
 import sympy
 
-from ._helpers import fs_rr0, fs_r00, pm_rrr, z, HexahedronScheme
-from ..helpers import untangle, article
+from ..helpers import article, untangle
+from ._helpers import HexahedronScheme, fs_r00, fs_rr0, pm_rrr, z
 
 _citation = article(
     authors=["D. Mustard", "J.N. Lyness", "J.M. Blatt"],

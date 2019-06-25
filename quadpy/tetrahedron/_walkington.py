@@ -2,8 +2,8 @@
 #
 import numpy
 
-from ._helpers import TetrahedronScheme
 from ..helpers import techreport
+from ._helpers import TetrahedronScheme
 
 citation = techreport(
     authors=["Noel J. Walkington"],

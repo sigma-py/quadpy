@@ -4,10 +4,9 @@
 import numpy
 import sympy
 
-from ..helpers import untangle, fsd, pm, z, article
-from ._helpers import volume_unit_ball, NBallScheme
-
 from .. import nsphere
+from ..helpers import article, fsd, pm, untangle, z
+from ._helpers import NBallScheme, volume_unit_ball
 
 citation = article(
     authors=["A.H. Stroud"],

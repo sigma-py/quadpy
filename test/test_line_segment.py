@@ -2,12 +2,11 @@
 #
 import math
 
-from mpmath import mp
 import numpy
 import pytest
+from mpmath import mp
 
 import quadpy
-
 from helpers import check_degree_1d
 
 

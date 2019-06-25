@@ -4,31 +4,22 @@
 import numpy
 import sympy
 
-from ._stenger import (
-    stenger_7a as stroud_enr2_7_3a,
-    stenger_7b as stroud_enr2_7_3b,
-    stenger_9a as stroud_enr2_9_1a,
-    stenger_9b as stroud_enr2_9_1b,
-    stenger_11a as stroud_enr2_11_1a,
-    stenger_11b as stroud_enr2_11_1b,
-)
-from ._stroud_1967_5 import (
-    stroud_1967_5_a as stroud_enr2_5_1a,
-    stroud_1967_5_b as stroud_enr2_5_1b,
-)
-from ._stroud_1967_7 import (
-    stroud_1967_7_2a as stroud_enr2_7_1a,
-    stroud_1967_7_2b as stroud_enr2_7_1b,
-    stroud_1967_7_4 as stroud_enr2_7_2,
-)
-from ._stroud_secrest import (
-    stroud_secrest_i as stroud_enr2_3_1,
-    stroud_secrest_iii as stroud_enr2_3_2,
-    stroud_secrest_iv as stroud_enr2_5_2,
-)
-
+from ..helpers import book, fsd, pm, pm_array0, untangle
 from ._helpers import Enr2Scheme
-from ..helpers import untangle, fsd, pm, pm_array0, book
+from ._stenger import stenger_7a as stroud_enr2_7_3a
+from ._stenger import stenger_7b as stroud_enr2_7_3b
+from ._stenger import stenger_9a as stroud_enr2_9_1a
+from ._stenger import stenger_9b as stroud_enr2_9_1b
+from ._stenger import stenger_11a as stroud_enr2_11_1a
+from ._stenger import stenger_11b as stroud_enr2_11_1b
+from ._stroud_1967_5 import stroud_1967_5_a as stroud_enr2_5_1a
+from ._stroud_1967_5 import stroud_1967_5_b as stroud_enr2_5_1b
+from ._stroud_1967_7 import stroud_1967_7_2a as stroud_enr2_7_1a
+from ._stroud_1967_7 import stroud_1967_7_2b as stroud_enr2_7_1b
+from ._stroud_1967_7 import stroud_1967_7_4 as stroud_enr2_7_2
+from ._stroud_secrest import stroud_secrest_i as stroud_enr2_3_1
+from ._stroud_secrest import stroud_secrest_iii as stroud_enr2_3_2
+from ._stroud_secrest import stroud_secrest_iv as stroud_enr2_5_2
 
 citation = book(
     authors=["Arthur Stroud"],
