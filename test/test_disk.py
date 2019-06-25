@@ -3,7 +3,7 @@
 import numpy
 import pytest
 import quadpy
-from quadpy.nball.helpers import integrate_monomial_over_unit_nball
+from quadpy.nball._helpers import integrate_monomial_over_unit_nball
 
 from helpers import check_degree
 

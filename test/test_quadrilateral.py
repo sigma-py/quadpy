@@ -180,21 +180,24 @@ schemes = (
         (quadpy.quadrilateral.witherden_vincent_19(), 1.0e-14),
         (quadpy.quadrilateral.witherden_vincent_21(), 1.0e-14),
     ]
-    + [(quadpy.quadrilateral.product(quadpy.line_segment.Midpoint()), 1.0e-14)]
-    + [(quadpy.quadrilateral.product(quadpy.line_segment.Trapezoidal()), 1.0e-14)]
+    + [(quadpy.quadrilateral.product(quadpy.line_segment.midpoint()), 1.0e-14)]
+    + [(quadpy.quadrilateral.product(quadpy.line_segment.trapezoidal()), 1.0e-14)]
     + [
-        (quadpy.quadrilateral.product(quadpy.line_segment.GaussLegendre(k)), 1.0e-14)
+        (quadpy.quadrilateral.product(quadpy.line_segment.gauss_legendre(k)), 1.0e-14)
         for k in range(1, 5)
     ]
     + [
         (
-            quadpy.quadrilateral.product(quadpy.line_segment.NewtonCotesClosed(k)),
+            quadpy.quadrilateral.product(quadpy.line_segment.newton_cotes_closed(k)),
             1.0e-14,
         )
         for k in range(1, 5)
     ]
     + [
-        (quadpy.quadrilateral.product(quadpy.line_segment.NewtonCotesOpen(k)), 1.0e-14)
+        (
+            quadpy.quadrilateral.product(quadpy.line_segment.newton_cotes_open(k)),
+            1.0e-14,
+        )
         for k in range(6)
     ]
     + [
@@ -294,7 +297,7 @@ def test_scheme(scheme, tol):
 
 
 @pytest.mark.parametrize(
-    "scheme", [quadpy.quadrilateral.product(quadpy.line_segment.GaussLegendre(5))]
+    "scheme", [quadpy.quadrilateral.product(quadpy.line_segment.gauss_legendre(5))]
 )
 def test_show(scheme):
     scheme.show()
@@ -302,7 +305,7 @@ def test_show(scheme):
 
 
 if __name__ == "__main__":
-    # scheme_ = Product(quadpy.line_segment.GaussLegendre(6))
+    # scheme_ = Product(quadpy.line_segment.gauss_legendre(6))
     # scheme_ = quadpy.quadrilateral.HammerStroud("3-2")
     # scheme_ = quadpy.quadrilateral.Stroud["C2 3-2"]()
     # test_show(scheme_)

@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy
 import pytest
 import quadpy
-from quadpy.nball.helpers import integrate_monomial_over_unit_nsphere
+from quadpy.nball._helpers import integrate_monomial_over_unit_nsphere
 
 from helpers import check_degree
 

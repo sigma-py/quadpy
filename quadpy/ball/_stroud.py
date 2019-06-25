@@ -135,7 +135,7 @@ def stroud_14_1():
         ]
     )
 
-    spherical_scheme = sphere_stroud.Stroud("U3 14-1", symbolic=False)
+    spherical_scheme = sphere_stroud.stroud_u3_14_1(symbolic=False)
     v = spherical_scheme.points
     B = spherical_scheme.weights
 
