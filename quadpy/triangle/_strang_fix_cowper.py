@@ -3,8 +3,8 @@
 
 import sympy
 
+from ..helpers import article, book
 from ._helpers import TriangleScheme, concat, s1, s2, s3
-from ..helpers import book, article
 
 citation = book(
     authors=["Gilbert Strang", "George Fix"],

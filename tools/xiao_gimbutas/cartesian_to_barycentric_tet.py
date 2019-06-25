@@ -1,8 +1,9 @@
 '''
 Generate code from cartesian coordinates.
 '''
-import numpy
 import mpmath
+import numpy
+
 # set precision
 mpmath.mp.dps = 15
 

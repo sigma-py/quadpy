@@ -8,14 +8,14 @@ import sympy
 
 from ..helpers import article
 from ._helpers import (
+    QuadrilateralScheme,
+    concat,
     pm,
     pm2,
-    concat,
-    zero,
-    QuadrilateralScheme,
     symm_r0,
     symm_s,
     symm_s_t,
+    zero,
 )
 from ._tyler import tyler_2
 

@@ -3,8 +3,8 @@
 
 import sympy
 
-from ._helpers import concat, symm_s, symm_s_t, QuadrilateralScheme
 from ..helpers import book
+from ._helpers import QuadrilateralScheme, concat, symm_s, symm_s_t
 
 citation = book(
     authors=["Joseph Oscar Irwin"],

@@ -4,8 +4,8 @@
 import numpy
 import sympy
 
-from ._helpers import integrate_monomial_over_unit_simplex, NSimplexScheme
-from ..helpers import untangle, rd, article
+from ..helpers import article, rd, untangle
+from ._helpers import NSimplexScheme, integrate_monomial_over_unit_simplex
 
 citation = article(
     authors=["A.H. Stroud"],

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 
+from ..ncube import ncube_points as rectangle_points
+from ..ncube import transform
 from ._albrecht_collatz import (
     albrecht_collatz_1,
     albrecht_collatz_2,
@@ -39,8 +41,8 @@ from ._franke import (
     franke_6,
     franke_8,
 )
-from ._hammer_stroud import hammer_stroud_1_2, hammer_stroud_2_2, hammer_stroud_3_2
 from ._haegemans_piessens import haegemans_piessens
+from ._hammer_stroud import hammer_stroud_1_2, hammer_stroud_2_2, hammer_stroud_3_2
 from ._irwin import irwin_1, irwin_2
 from ._maxwell import maxwell
 from ._meister import meister
@@ -48,6 +50,7 @@ from ._miller import miller
 from ._morrow_patterson import morrow_patterson_1, morrow_patterson_2
 from ._phillips import phillips
 from ._piessens_haegemans import piessens_haegemans_1, piessens_haegemans_2
+from ._product import product
 from ._rabinowitz_richter import (
     rabinowitz_richter_1,
     rabinowitz_richter_2,
@@ -165,10 +168,6 @@ from ._witherden_vincent import (
     witherden_vincent_19,
     witherden_vincent_21,
 )
-from ._product import product
-
-from ..ncube import transform
-from ..ncube import ncube_points as rectangle_points
 
 __all__ = [
     "albrecht_collatz_1",

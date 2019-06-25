@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from ._helpers import untangle2, TetrahedronScheme
 from ..helpers import techreport
+from ._helpers import TetrahedronScheme, untangle2
 
 citation = techreport(
     authors=["M. Beckers", "A. Haegemans"],

@@ -3,7 +3,7 @@
 
 import sympy
 
-from ._helpers import concat, s2, s3, TriangleScheme
+from ._helpers import TriangleScheme, concat, s2, s3
 
 
 def seven_point(symbolic=False):

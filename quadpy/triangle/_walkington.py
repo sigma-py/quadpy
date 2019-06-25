@@ -4,8 +4,8 @@
 import numpy
 import sympy
 
-from ._helpers import TriangleScheme
 from ..helpers import techreport
+from ._helpers import TriangleScheme
 
 citation = techreport(
     authors=["Noel J. Walkington"],

@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 #
 
+import math
 from distutils.version import LooseVersion
 
-import math
-
-from mpmath import mp
 import numpy
 import pytest
 import scipy
 import sympy
+from mpmath import mp
 
 import orthopy
-
 import quadpy
 
 

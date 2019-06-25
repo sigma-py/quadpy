@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from ._helpers import QuadrilateralScheme, s4, zero, concat
 from ..helpers import article
+from ._helpers import QuadrilateralScheme, concat, s4, zero
 
 citation = article(
     authors=["R. Cools", "Ann Haegemans"],

@@ -4,8 +4,8 @@
 import numpy
 import sympy
 
+from ..helpers import article, fsd, untangle, z
 from ._helpers import NCubeScheme
-from ..helpers import untangle, fsd, z, article
 
 _citation = article(
     authors=["L.N. Dobrodeev"],

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from mpmath import mp
 import sympy
+from mpmath import mp
 
-from ..helpers import untangle, z, fsd, pm, article
+from ..helpers import article, fsd, pm, untangle, z
 from ._helpers import DiskScheme
 
 _citation = article(

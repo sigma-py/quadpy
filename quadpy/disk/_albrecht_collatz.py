@@ -2,9 +2,8 @@
 #
 import sympy
 
-from ..helpers import untangle, pm, article
+from ..helpers import article, pm, untangle
 from ._helpers import DiskScheme
-
 
 _citation = article(
     authors=["J. Albrecht", "L. Collatz"],

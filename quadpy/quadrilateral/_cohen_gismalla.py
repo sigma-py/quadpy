@@ -5,8 +5,8 @@ import warnings
 
 import sympy
 
-from ._helpers import concat, zero, pm, QuadrilateralScheme
 from ..helpers import article
+from ._helpers import QuadrilateralScheme, concat, pm, zero
 
 citation = article(
     authors=["A.M. Cohen", "D.A. Gismalla"],

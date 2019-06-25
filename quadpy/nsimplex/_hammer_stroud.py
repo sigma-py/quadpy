@@ -4,7 +4,7 @@
 import numpy
 import sympy
 
-from ..helpers import untangle, rd, article
+from ..helpers import article, rd, untangle
 from ._helpers import NSimplexScheme
 
 citation = article(

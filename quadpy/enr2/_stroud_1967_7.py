@@ -5,9 +5,9 @@ import numpy
 import scipy
 import sympy
 
-from ._helpers import Enr2Scheme
-from ..helpers import untangle, fsd, pm, article
 from .. import nsphere
+from ..helpers import article, fsd, pm, untangle
+from ._helpers import Enr2Scheme
 
 citation = article(
     authors=["A.H. Stroud"],

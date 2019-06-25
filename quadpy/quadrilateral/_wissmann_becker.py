@@ -3,8 +3,8 @@
 
 import sympy
 
-from ._helpers import concat, pmx, QuadrilateralScheme
 from ..helpers import article
+from ._helpers import QuadrilateralScheme, concat, pmx
 
 citation = article(
     authors=["Johannes W. Wissmann", "Thomas Becker"],

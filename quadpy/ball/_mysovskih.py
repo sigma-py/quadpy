@@ -3,8 +3,8 @@
 import numpy
 import sympy
 
+from ..helpers import article, fsd, pm, untangle
 from ._helpers import BallScheme
-from ..helpers import untangle, fsd, pm, article
 
 _citation = article(
     authors=["I.P. Mysovskih"],

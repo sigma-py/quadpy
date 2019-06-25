@@ -5,11 +5,9 @@ from ._dobrodeev1970 import dobrodeev_1970
 from ._dobrodeev1978 import dobrodeev_1978
 from ._ewing import ewing
 from ._hammer_stroud import hammer_stroud_1n, hammer_stroud_2n
+from ._helpers import NCubeScheme, ncube_points, transform
 from ._mustard_lyness_blatt import mustard_lyness_blatt
 from ._phillips import phillips
-from ._stroud_1957 import stroud_1957_2, stroud_1957_3
-from ._stroud_1966 import stroud_1966_a, stroud_1966_b, stroud_1966_c, stroud_1966_d
-from ._stroud_1968 import stroud_1968
 from ._stroud import (
     stroud_cn_1_1,
     stroud_cn_1_2,
@@ -31,10 +29,11 @@ from ._stroud import (
     stroud_cn_5_9,
     stroud_cn_7_1,
 )
+from ._stroud_1957 import stroud_1957_2, stroud_1957_3
+from ._stroud_1966 import stroud_1966_a, stroud_1966_b, stroud_1966_c, stroud_1966_d
+from ._stroud_1968 import stroud_1968
 from ._thacher import thacher
 from ._tyler import tyler
-
-from ._helpers import ncube_points, transform, NCubeScheme
 
 __all__ = [
     "dobrodeev_1970",

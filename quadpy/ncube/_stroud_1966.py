@@ -3,9 +3,8 @@
 import numpy
 import sympy
 
-from ._helpers import _fs11, NCubeScheme
-from ..helpers import untangle, fsd, z, pm, article
-
+from ..helpers import article, fsd, pm, untangle, z
+from ._helpers import NCubeScheme, _fs11
 
 _citation = article(
     authors=["A.H. Stroud"],

@@ -4,8 +4,8 @@ import json
 import os
 import re
 
-from .._helpers import cartesian_to_spherical, untangle2, SphereScheme
 from ...helpers import article
+from .._helpers import SphereScheme, cartesian_to_spherical, untangle2
 
 citation = article(
     authors=["P. Bažant", "B.H. Oh"],

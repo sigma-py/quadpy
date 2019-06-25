@@ -13,8 +13,8 @@ Vol. 12, No. 64 (Oct., 1958), pp. 272-280,
 import numpy
 import sympy
 
-from ._helpers import untangle2, TetrahedronScheme
 from ..helpers import article
+from ._helpers import TetrahedronScheme, untangle2
 
 citation = article(
     authors=["P.C. Hammer", "O.J. Marlowe", "A.H. Stroud"],

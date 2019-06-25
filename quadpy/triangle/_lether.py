@@ -13,9 +13,9 @@
 
 import numpy
 
+from ..helpers import article
 from ..line_segment import gauss_legendre
 from ._helpers import TriangleScheme
-from ..helpers import article
 
 citation = article(
     authors=["Frank G. Lether"],

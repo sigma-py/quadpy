@@ -5,9 +5,8 @@
 
 import sympy
 
-from ._helpers import TriangleScheme, s1, s2, concat
 from ..helpers import article
-
+from ._helpers import TriangleScheme, concat, s1, s2
 
 citation = article(
     authors=["Mark A. Taylor", "Beth A. Wingate", "Len P. Bos"],

@@ -3,9 +3,8 @@
 import numpy
 import sympy
 
-from ._helpers import _s, NCubeScheme
-from ..helpers import untangle, article
-
+from ..helpers import article, untangle
+from ._helpers import NCubeScheme, _s
 
 _citation = article(
     authors=["Henry C. Thacher"],

@@ -4,8 +4,8 @@
 import numpy
 import sympy
 
+from ..helpers import article, fsd, pm, untangle, z
 from ._helpers import QuadrilateralScheme
-from ..helpers import untangle, fsd, z, pm, article
 
 citation = article(
     authors=["Preston C. Hammer", "Arthur H. Stroud"],

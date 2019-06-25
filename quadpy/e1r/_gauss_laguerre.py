@@ -2,8 +2,8 @@
 #
 import orthopy
 
-from ._helpers import E1rScheme
 from ..tools import scheme_from_rc
+from ._helpers import E1rScheme
 
 
 def gauss_laguerre(n, alpha=0, mode="numpy", decimal_places=None):

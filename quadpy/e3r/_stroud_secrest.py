@@ -6,8 +6,8 @@ import warnings
 import numpy
 import sympy
 
+from ..helpers import article, fsd, pm, pm_roll, untangle
 from ._helpers import E3rScheme
-from ..helpers import untangle, pm, fsd, pm_roll, article
 
 citation = article(
     authors=["A.H. Stroud", "D. Secrest"],

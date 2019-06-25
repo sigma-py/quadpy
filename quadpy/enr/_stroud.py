@@ -10,15 +10,11 @@ import numpy
 import scipy.special
 import sympy
 
-from ._stroud_secrest import (
-    stroud_secrest_ii as stroud_enr_3_1,
-    stroud_secrest_iii as stroud_enr_3_2,
-    stroud_secrest_iv as stroud_enr_5_1,
-)
-
+from ..helpers import book, fsd, pm_array0, untangle
 from ._helpers import EnrScheme
-from ..helpers import untangle, pm_array0, fsd, book
-
+from ._stroud_secrest import stroud_secrest_ii as stroud_enr_3_1
+from ._stroud_secrest import stroud_secrest_iii as stroud_enr_3_2
+from ._stroud_secrest import stroud_secrest_iv as stroud_enr_5_1
 
 citation = book(
     authors=["Arthur Stroud"],

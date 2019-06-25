@@ -4,9 +4,8 @@
 import numpy
 import sympy
 
-from ..helpers import z, untangle, article
+from ..helpers import article, untangle, z
 from ._helpers import DiskScheme
-
 
 _citation = article(
     authors=["J. Radon"],

@@ -3,9 +3,8 @@
 
 import numpy
 
-from ._helpers import QuadrilateralScheme
 from ..helpers import techreport
-
+from ._helpers import QuadrilateralScheme
 
 citation = techreport(
     authors=["Shayne Waldron"],

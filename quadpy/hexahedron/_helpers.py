@@ -3,7 +3,9 @@
 import numpy
 
 from .. import helpers
-from ..ncube import transform, NCubeScheme, ncube_points as cube_points
+from ..ncube import NCubeScheme
+from ..ncube import ncube_points as cube_points
+from ..ncube import transform
 
 
 class HexahedronScheme(NCubeScheme):

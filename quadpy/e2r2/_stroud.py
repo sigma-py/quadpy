@@ -6,20 +6,15 @@ import warnings
 import numpy
 import sympy
 
-from ._rabinowitz_richter import (
-    rabinowitz_richter_1 as stroud_9_1,
-    rabinowitz_richter_2 as stroud_11_1,
-    rabinowitz_richter_3 as stroud_11_2,
-    rabinowitz_richter_4 as stroud_13_1,
-    rabinowitz_richter_5 as stroud_15_1,
-)
-from ._stroud_secrest import (
-    stroud_secrest_v as stroud_5_1,
-    stroud_secrest_vi as stroud_7_1,
-)
-
+from ..helpers import book, fsd, pm, untangle
 from ._helpers import E2r2Scheme
-from ..helpers import untangle, fsd, pm, book
+from ._rabinowitz_richter import rabinowitz_richter_1 as stroud_9_1
+from ._rabinowitz_richter import rabinowitz_richter_2 as stroud_11_1
+from ._rabinowitz_richter import rabinowitz_richter_3 as stroud_11_2
+from ._rabinowitz_richter import rabinowitz_richter_4 as stroud_13_1
+from ._rabinowitz_richter import rabinowitz_richter_5 as stroud_15_1
+from ._stroud_secrest import stroud_secrest_v as stroud_5_1
+from ._stroud_secrest import stroud_secrest_vi as stroud_7_1
 
 _citation = book(
     authors=["Arthur Stroud"],

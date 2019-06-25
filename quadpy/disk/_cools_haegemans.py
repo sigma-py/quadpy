@@ -3,8 +3,8 @@
 # TODO There are more schemes in the technical report
 import math
 
-from ._helpers import _s4, _s40, _s8, DiskScheme
-from ..helpers import untangle, techreport
+from ..helpers import techreport, untangle
+from ._helpers import DiskScheme, _s4, _s8, _s40
 
 _citation = techreport(
     authors=["R. Cools", "A. Haegemans"],

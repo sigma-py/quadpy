@@ -2,10 +2,10 @@
 #
 import numpy
 import pytest
-import quadpy
-from quadpy.nsphere._helpers import integrate_monomial_over_unit_nsphere
 
+import quadpy
 from helpers import check_degree
+from quadpy.nsphere._helpers import integrate_monomial_over_unit_nsphere
 
 
 @pytest.mark.parametrize(

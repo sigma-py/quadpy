@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
+import math
 from collections import namedtuple
 
-import math
 import numpy
 import scipy.special
 import sympy

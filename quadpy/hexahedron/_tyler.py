@@ -3,9 +3,8 @@
 
 import sympy
 
-from ._helpers import fs_r00, pm_rrr, z, HexahedronScheme
-from ..helpers import untangle, article
-
+from ..helpers import article, untangle
+from ._helpers import HexahedronScheme, fs_r00, pm_rrr, z
 
 citation = article(
     authors=["G.W. Tyler"],

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import math
+
 import numpy
 
 __all__ = ["plot_disks_1d", "plot_disks"]

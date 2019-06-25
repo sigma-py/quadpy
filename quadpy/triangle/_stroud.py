@@ -3,13 +3,11 @@
 
 import numpy
 
-from ._albrecht_collatz import albrecht_collatz as stroud_t2_3_1
-from ._hammer_marlowe_stroud import hammer_marlowe_stroud_5 as stroud_t2_5_1
-
-from ._helpers import TriangleScheme
 from ..helpers import book
 from ..line_segment import gauss_legendre
-
+from ._albrecht_collatz import albrecht_collatz as stroud_t2_3_1
+from ._hammer_marlowe_stroud import hammer_marlowe_stroud_5 as stroud_t2_5_1
+from ._helpers import TriangleScheme
 
 citation = book(
     authors=["Arthur Stroud"],

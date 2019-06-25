@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 #
+from ..nsimplex import get_vol, transform
 from ._albrecht_collatz import albrecht_collatz
-from ._centroid import centroid
-from ._cools_haegemans import cools_haegemans_1  # cools_haegemans_2
-from ._cubtri import cubtri
 from ._berntsen_espelid import (
     berntsen_espelid_1,
     berntsen_espelid_2,
@@ -11,6 +9,9 @@ from ._berntsen_espelid import (
     berntsen_espelid_4,
     dcutri,
 )
+from ._centroid import centroid
+from ._cools_haegemans import cools_haegemans_1  # cools_haegemans_2
+from ._cubtri import cubtri
 from ._dunavant import (
     dunavant_01,
     dunavant_02,
@@ -116,17 +117,7 @@ from ._lyness_jespersen import (
 )
 from ._newton_cotes import newton_cotes_closed, newton_cotes_open
 from ._papanicolopulos import (
-    papanicolopulos_sym_0,
-    papanicolopulos_sym_1,
-    papanicolopulos_sym_2,
-    papanicolopulos_sym_3,
-    papanicolopulos_sym_4,
-    papanicolopulos_sym_5,
-    papanicolopulos_sym_6,
-    papanicolopulos_sym_7,
-    papanicolopulos_sym_8,
-    #
-    papanicolopulos_rot_08,
+    papanicolopulos_rot_08,  #
     papanicolopulos_rot_09,
     papanicolopulos_rot_10,
     papanicolopulos_rot_11,
@@ -136,6 +127,15 @@ from ._papanicolopulos import (
     papanicolopulos_rot_15,
     papanicolopulos_rot_16,
     papanicolopulos_rot_17,
+    papanicolopulos_sym_0,
+    papanicolopulos_sym_1,
+    papanicolopulos_sym_2,
+    papanicolopulos_sym_3,
+    papanicolopulos_sym_4,
+    papanicolopulos_sym_5,
+    papanicolopulos_sym_6,
+    papanicolopulos_sym_7,
+    papanicolopulos_sym_8,
 )
 from ._seven_point import seven_point
 from ._strang_fix_cowper import (
@@ -158,6 +158,7 @@ from ._taylor_wingate_bos import (
     taylor_wingate_bos_5,
     taylor_wingate_bos_8,
 )
+from ._tools import integrate_adaptive
 from ._triex import triex_19, triex_28
 from ._vertex import vertex
 from ._vioreanu_rokhlin import (
@@ -201,10 +202,9 @@ from ._williams_shunn_jameson import (
     williams_shunn_jameson_7,
     williams_shunn_jameson_8,
 )
+from ._witherden_vincent import witherden_vincent_01  # witherden_vincent_03,
 from ._witherden_vincent import (
-    witherden_vincent_01,
     witherden_vincent_02,
-    # witherden_vincent_03,
     witherden_vincent_04,
     witherden_vincent_05,
     witherden_vincent_06,
@@ -276,10 +276,6 @@ from ._xiao_gimbutas import (
     xiao_gimbutas_50,
 )
 from ._zhang_cui_liu import zhang_cui_liu_1, zhang_cui_liu_2, zhang_cui_liu_3
-
-from ._tools import integrate_adaptive
-
-from ..nsimplex import transform, get_vol
 
 __all__ = [
     "albrecht_collatz",

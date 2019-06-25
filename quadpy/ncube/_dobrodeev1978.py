@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 
-from ..helpers import untangle, fsd, compute_dobrodeev, article
-from ._helpers import integrate_monomial_over_ncube, NCubeScheme
+from ..helpers import article, compute_dobrodeev, fsd, untangle
+from ._helpers import NCubeScheme, integrate_monomial_over_ncube
 
 _citation = article(
     authors=["L.N. Dobrodeev"],

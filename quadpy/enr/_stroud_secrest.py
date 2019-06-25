@@ -5,10 +5,9 @@ import numpy
 import scipy.special
 import sympy
 
-from ._helpers import EnrScheme
-from ..helpers import untangle, fsd, pm, article
 from ..enr2._stroud_secrest import _nsimplex
-
+from ..helpers import article, fsd, pm, untangle
+from ._helpers import EnrScheme
 
 citation = article(
     authors=["A.H. Stroud", "D. Secrest"],

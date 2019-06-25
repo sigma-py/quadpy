@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
+
 import orthopy
 
-from ._helpers import E1r2Scheme
 from ..tools import scheme_from_rc
+from ._helpers import E1r2Scheme
 
 
 def gauss_hermite(n, mode="numpy", decimal_places=None):

@@ -3,7 +3,7 @@
 import numpy
 import sympy
 
-from ..helpers import untangle, z, fsd, fs_array, article
+from ..helpers import article, fs_array, fsd, untangle, z
 from ._helpers import DiskScheme
 
 _citation = article(

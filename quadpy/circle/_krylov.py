@@ -3,8 +3,8 @@
 import numpy
 import sympy
 
-from ._helpers import CircleScheme
 from ..helpers import book
+from ._helpers import CircleScheme
 
 # Pages 73-74 in
 _citation = book(

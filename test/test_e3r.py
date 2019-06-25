@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 #
+import accupy
 import matplotlib.pyplot as plt
 import numpy
 import pytest
-import accupy
 
 import quadpy
-
 from helpers import check_degree, integrate_monomial_over_enr
 
 

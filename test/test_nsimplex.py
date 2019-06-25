@@ -2,10 +2,10 @@
 #
 import numpy
 import pytest
-import quadpy
-from quadpy.nsimplex._helpers import integrate_monomial_over_unit_simplex
 
+import quadpy
 from helpers import check_degree
+from quadpy.nsimplex._helpers import integrate_monomial_over_unit_simplex
 
 
 @pytest.mark.parametrize(

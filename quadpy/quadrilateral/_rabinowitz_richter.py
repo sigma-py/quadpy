@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from ._helpers import concat, symm_r0, symm_s, symm_s_t, zero, QuadrilateralScheme
 from ..helpers import article
+from ._helpers import QuadrilateralScheme, concat, symm_r0, symm_s, symm_s_t, zero
 
 citation = article(
     authors=["Philip Rabinowitz", "Nira Richter"],

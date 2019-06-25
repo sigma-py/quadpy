@@ -2,8 +2,8 @@
 #
 import numpy
 
-from ..nsimplex import NSimplexScheme, transform, get_vol
 from ..helpers import backend_to_function
+from ..nsimplex import NSimplexScheme, get_vol, transform
 
 
 class TetrahedronScheme(NSimplexScheme):

@@ -4,9 +4,8 @@
 import numpy
 import sympy
 
+from ..helpers import article, fsd, pm, pm_array, untangle
 from ._helpers import E2rScheme
-from ..helpers import untangle, pm_array, pm, fsd, article
-
 
 _citation = article(
     authors=["A.H. Stroud", "D. Secrest"],
