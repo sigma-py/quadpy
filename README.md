@@ -93,7 +93,7 @@ wiki](https://github.com/nschloe/quadpy/wiki#dimensionality-of-input-and-output-
    [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.legendre.leggauss.html), arbitrary degree)
  * Gauss-Lobatto (arbitrary degree)
  * Gauss-Kronrod (after [Laurie](https://doi.org/10.1090/S0025-5718-97-00861-2), arbitrary degree)
- * [Gauss-Patterson](https://doi.org/10.1090/S0025-5718-68-99866-9) (9 schemes up to degree 767)
+ * [Gauss-Patterson](https://doi.org/10.1090/S0025-5718-68-99866-9) (9 nested schemes up to degree 767)
  * Gauss-Radau (arbitrary degree)
  * closed Newton-Cotes (arbitrary degree)
  * open Newton-Cotes (arbitrary degree)
@@ -131,8 +131,9 @@ val = scheme.integrate(lambda x: x**2)
 ### 1D space with weight function exp(-r<sup>2</sup>)
 <img src="https://nschloe.github.io/quadpy/e1r2.png" width="50%">
 
- * Gauss-Hermite (via
+ * [Gauss-Hermite](https://en.wikipedia.org/wiki/Gauss%E2%80%93Hermite_quadrature) (via
    [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.hermite.hermgauss.html), arbitrary degree)
+ * [Genz-Keister](https://doi.org/10.1016/0377-0427(95)00232-4) (1996, 8 nested schemes up to degree 67)
 
 Example:
 ```python

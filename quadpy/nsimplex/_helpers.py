@@ -22,11 +22,10 @@ class NSimplexScheme:
         x = transform(flt(self.points).T, simplex.T)
         vol = get_vol(simplex)
 
-        fx = numpy.array(f(x))
+        fx = numpy.asarray(f(x))
 
-        s = x.shape[1:]
         assert (
-            s == fx.shape[-len(s) :]
+            x.shape[1:] == fx.shape[-len(x.shape[1:]) :]
         ), "Illegal shape of f(x) (expected (..., {}), got {})".format(
             ", ".join([str(k) for k in x.shape[1:]]), fx.shape
         )
