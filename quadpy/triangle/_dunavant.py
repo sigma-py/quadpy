@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-
-import sympy
+from sympy import Rational as frac
 
 from ..helpers import article
 from ._helpers import TriangleScheme, concat, s1, s2, s3
@@ -24,16 +23,12 @@ def dunavant_01():
     return TriangleScheme("Dunavant 1", weights, points, 1, citation)
 
 
-def dunavant_02(symbolic=False):
-    frac = sympy.frac if symbolic else lambda x, y: x / y
-
+def dunavant_02():
     weights, points = s2([frac(1, 3), frac(1, 6)])
     return TriangleScheme("Dunavant 2", weights, points, 2, citation)
 
 
-def dunavant_03(symbolic=False):
-    frac = sympy.frac if symbolic else lambda x, y: x / y
-
+def dunavant_03():
     weights, points = concat(s3(-frac(9, 16)), s2([frac(25, 48), frac(1, 5)]))
     return TriangleScheme("Dunavant 3", weights, points, 3, citation)
 
@@ -266,7 +261,7 @@ def dunavant_17():
     return TriangleScheme("Dunavant 17", weights, points, 17, citation)
 
 
-def dunavant_18(symbolic=False):
+def dunavant_18():
     weights, points = concat(
         s3(+0.030809939937647),
         s2(
