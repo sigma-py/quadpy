@@ -4,18 +4,22 @@ import numpy
 
 from ._gauss_legendre import gauss_legendre
 from ._helpers import LineSegmentScheme
+from ..helpers import article
+
+citation = article(
+    authors=["T.N.L. Patterson"],
+    title="The optimum addition of points to quadrature formulae",
+    journal="Math. Comp.",
+    volume="22",
+    year="1968",
+    pages="847-856",
+    url="https://doi.org/10.1090/S0025-5718-68-99866-9",
+)
 
 
 def gauss_patterson(index):
-    """
-    Gauss-Patterson quadrature.
-    <https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_patterson/quadrature_rules_patterson.html>
-
-    The optimum addition of points to quadrature formulae,
-    T.N.L. Patterson,
-    Math. Comp. 22 (1968), 847-856,
-    <https://doi.org/10.1090/S0025-5718-68-99866-9>.
-    """
+    # Gauss-Patterson quadrature.
+    # <https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_patterson/quadrature_rules_patterson.html>
     degree = 3 * 2 ** index - 1 if index > 0 else 1
 
     points = numpy.array(_get_points(index))
@@ -24,8 +28,7 @@ def gauss_patterson(index):
     if index < 6:
         weights = _get_weights(points)
     else:
-        # _get_weights is flawed with round-off for index == 6. Use
-        # explicit values.
+        # _get_weights is flawed with round-off for index == 6. Use explicit values.
         assert index == 6
         weights = numpy.array(
             [0.2818881418019236e-01]
@@ -94,7 +97,9 @@ def gauss_patterson(index):
             + 2 * [0.5053609520786252e-04]
         )
 
-    return LineSegmentScheme("Gauss-Patterson", degree, weights, points)
+    return LineSegmentScheme(
+        "Gauss-Patterson ({})".format(index), degree, weights, points, citation
+    )
 
 
 def _get_points(index):
@@ -209,9 +214,8 @@ def _get_weights(pts):
     def L(i, x):
         return numpy.prod([(x - pts[j]) for j in range(n) if j != i], axis=0)
 
-    # Gauss-Legendre of order k integrates polynomials of degree 2*k-1 exactly.
-    # L has degree n-1, so k needs to be n/2 if n is even, and (n+1)/2 if n is
-    # odd.
+    # Gauss-Legendre of order k integrates polynomials of degree 2*k-1 exactly. L has
+    # degree n-1, so k needs to be n/2 if n is even, and (n+1)/2 if n is odd.
     k = (n // 2) - 1 if n % 2 == 0 else (n + 1) // 2
     out = numpy.array(
         [
