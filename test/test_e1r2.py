@@ -11,7 +11,7 @@ import quadpy
 @pytest.mark.parametrize(
     "scheme",
     [quadpy.e1r2.gauss_hermite(n) for n in range(5, 12)]
-    # + [quadpy.e1r2.genz_keister(n) for n in range(1, 10)],
+    + [quadpy.e1r2.genz_keister(n) for n in range(1, 8)],
 )
 def test_scheme(scheme):
     print(scheme.name)
@@ -20,12 +20,9 @@ def test_scheme(scheme):
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
     def eval_orthopolys(x):
-        out = numpy.concatenate(
-            orthopy.e1r2.tree(
-                x, scheme.degree + 1, standardization="normal", symbolic=False
-            )
+        return orthopy.e1r2.tree(
+            x, scheme.degree + 1, standardization="normal", symbolic=False
         )
-        return out
 
     approximate = scheme.integrate(eval_orthopolys)
 
@@ -33,7 +30,11 @@ def test_scheme(scheme):
     exact[0] = numpy.sqrt(numpy.sqrt(numpy.pi))
 
     diff = numpy.abs(approximate - exact)
-    degree = numpy.where(diff > tol)[0][0] - 1
+    k, _ = numpy.where(diff > tol)
+    assert len(k) > 0, "{} -- Degree is higher than {}.".format(
+        scheme.name, scheme.degree
+    )
+    degree = k[0] - 1
 
     assert degree == scheme.degree, "{} -- Observed: {}   expected: {}".format(
         scheme.name, degree, scheme.degree
