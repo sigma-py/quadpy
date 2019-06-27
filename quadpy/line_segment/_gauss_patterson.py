@@ -28,7 +28,7 @@ def gauss_patterson(index):
     if index < 6:
         weights = _get_weights(points)
     elif index == 6:
-        # _get_weights is flawed with round-off for index == 6. Use explicit values from
+        # _get_weights is flawed with round-off for index > 5. Use explicit values from
         # <https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_patterson/gp_o127_w.txt>.
         s = numpy.sort(
             [
@@ -98,14 +98,6 @@ def gauss_patterson(index):
             ]
         )
         weights = numpy.concatenate([s, numpy.array([0.2818881418019236e-01]), s[::-1]])
-
-        # weights2 = _get_weights(points)
-        # import math
-
-        # print(weights - weights2)
-        # print(math.fsum(weights))
-        # print(math.fsum(weights2))
-        # exit(1)
     elif index == 7:
         s = numpy.array(
             [
@@ -828,7 +820,7 @@ def _get_weights(pts):
                     [(x - pts[j]) / (pts[i] - pts[j]) for j in range(n) if j != i],
                     axis=0,
                 ),
-                numpy.array([[-1], [1]]),
+                numpy.array([-1, 1]),
             )
             for i in range(n)
         ]

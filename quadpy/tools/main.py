@@ -9,8 +9,8 @@
     <https://pdfs.semanticscholar.org/c715/119d5464f614fd8ec590b732ccfea53e72c4.pdf>.
 
 [2] W. Gautschi,
-    Algorithm 726: ORTHPOL–a package of routines for generating orthogonal
-    polynomials and Gauss-type quadrature rules,
+    Algorithm 726: ORTHPOL–a package of routines for generating orthogonal polynomials
+    and Gauss-type quadrature rules,
     ACM Transactions on Mathematical Software (TOMS),
     Volume 20, Issue 1, March 1994,
     Pages 21-62,
@@ -42,10 +42,10 @@ def golub_welsch(moments):
 
     mu_k = int_a^b omega(x) x^k dx,  k = {0, 1,...,2N}
 
-    (with omega being a nonnegative weight function), this method creates the
-    recurrence coefficients of the corresponding orthogonal polynomials, see
-    section 4 ("Determining the Three Term Relationship from the Moments") in
-    Golub-Welsch [1]. Numerically unstable, see [2].
+    (with omega being a nonnegative weight function), this method creates the recurrence
+    coefficients of the corresponding orthogonal polynomials, see section 4
+    ("Determining the Three Term Relationship from the Moments") in Golub-Welsch [1].
+    Numerically unstable, see [2].
     """
     assert len(moments) % 2 == 1
     n = (len(moments) - 1) // 2
@@ -96,9 +96,8 @@ def stieltjes(w, a, b, n):
 
 
 def chebyshev(moments):
-    """Given the first 2n moments `int t^k dt`, this method uses the Chebyshev
-    algorithm (see, e.g., [2]) for computing the associated recurrence
-    coefficients.
+    """Given the first 2n moments `int t^k dt`, this method uses the Chebyshev algorithm
+    (see, e.g., [2]) for computing the associated recurrence coefficients.
 
     WARNING: Ill-conditioned, see [2].
     """
@@ -113,10 +112,10 @@ def chebyshev(moments):
 
 
 def chebyshev_modified(nu, a, b):
-    """Given the first 2n modified moments `nu_k = int p_k(t) dt`, where the
-    p_k are orthogonal polynomials with recurrence coefficients a, b, this
-    method implements the modified Chebyshev algorithm (see, e.g., [2]) for
-    computing the associated recurrence coefficients.
+    """Given the first 2n modified moments `nu_k = int p_k(t) dt`, where the p_k are
+    orthogonal polynomials with recurrence coefficients a, b, this method implements the
+    modified Chebyshev algorithm (see, e.g., [2]) for computing the associated
+    recurrence coefficients.
     """
     m = len(nu)
     assert m % 2 == 0
@@ -125,8 +124,8 @@ def chebyshev_modified(nu, a, b):
 
     alpha = numpy.empty(n, dtype=a.dtype)
     beta = numpy.empty(n, dtype=a.dtype)
-    # Actually overkill. One could alternatively make sigma a list, and store
-    # the shrinking rows there, only ever keeping the last two.
+    # Actually overkill. One could alternatively make sigma a list, and store the
+    # shrinking rows there, only ever keeping the last two.
     sigma = numpy.empty((n, 2 * n), dtype=a.dtype)
 
     if n > 0:
@@ -182,10 +181,10 @@ def integrate(f, a, b):
 
 def coefficients_from_gauss(points, weights):
     """Given the points and weights of a Gaussian quadrature rule, this method
-    reconstructs the recurrence coefficients alpha, beta as appearing in the
-    tridiagonal Jacobi matrix tri(b, a, b).
-    This is using "Method 2--orthogonal reduction" from (section 3.2 in [4]).
-    The complexity is O(n^3); a faster method is suggested in 3.3 in [4].
+    reconstructs the recurrence coefficients alpha, beta as appearing in the tridiagonal
+    Jacobi matrix tri(b, a, b). This is using "Method 2--orthogonal reduction" from
+    (section 3.2 in [4]).  The complexity is O(n^3); a faster method is suggested in 3.3
+    in [4].
     """
     n = len(points)
     assert n == len(weights)
@@ -219,9 +218,8 @@ def coefficients_from_gauss(points, weights):
 
 
 def check_coefficients(moments, alpha, beta):
-    """In his article [3], Walter Gautschi suggests a method for checking if a
-    Gauss quadrature rule is sane. This method implements test #3 for the
-    article.
+    """In his article [3], Walter Gautschi suggests a method for checking if a Gauss
+    quadrature rule is sane. This method implements test #3 for the article.
     """
     n = len(alpha)
     assert len(beta) == n
