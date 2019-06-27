@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-
 import numpy
-import sympy
+from sympy import sqrt, pi, Rational as frac
 
 from ..helpers import article, fsd, pm, pm_roll, untangle
 from ._helpers import E3r2Scheme
@@ -18,11 +17,7 @@ citation = article(
 )
 
 
-def stroud_secrest_vii(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-
+def stroud_secrest_07():
     # article:
     # nu, xi = numpy.sqrt((15 + plus_minus * 3*numpy.sqrt(5)))
     # A = 3/5
@@ -39,11 +34,7 @@ def stroud_secrest_vii(symbolic=False):
     return E3r2Scheme("Stroud-Secrest VII", weights, points, 5, citation)
 
 
-def stroud_secrest_viii_a(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-
+def stroud_secrest_08a():
     r = sqrt(frac(5, 4))
     s = sqrt(frac(5, 2))
     data = [(frac(4, 25), fsd(3, (r, 1))), (frac(1, 200), pm(3, s))]
@@ -52,11 +43,7 @@ def stroud_secrest_viii_a(symbolic=False):
     return E3r2Scheme("Stroud-Secrest VIIIa", weights, points, 5, citation)
 
 
-def stroud_secrest_viii_b(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-
+def stroud_secrest_08b():
     r = sqrt(frac(5, 2))
     s = sqrt(frac(5, 6))
     data = [
@@ -69,11 +56,7 @@ def stroud_secrest_viii_b(symbolic=False):
     return E3r2Scheme("Stroud-Secrest VIIIb", weights, points, 5, citation)
 
 
-def stroud_secrest_ix(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-
+def stroud_secrest_09():
     r, s = [sqrt((15 - p_m * 5 * sqrt(5)) / 12) for p_m in [+1, -1]]
     t = sqrt(frac(5, 6))
 
@@ -87,10 +70,7 @@ def stroud_secrest_ix(symbolic=False):
     return E3r2Scheme("Stroud-Secrest IX", weights, points, 5, citation)
 
 
-def _stroud_secrest_x(positive, symbolic=False):
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-
+def _stroud_secrest_10(positive):
     plus_minus = 1 if positive else -1
 
     sqrt15 = sqrt(15)
@@ -120,18 +100,15 @@ def _stroud_secrest_x(positive, symbolic=False):
     )
 
 
-def stroud_secrest_x_a(symbolic=False):
-    return _stroud_secrest_x(True, symbolic)
+def stroud_secrest_10a():
+    return _stroud_secrest_10(True)
 
 
-def stroud_secrest_x_b(symbolic=False):
-    return _stroud_secrest_x(False, symbolic)
+def stroud_secrest_10b():
+    return _stroud_secrest_10(False)
 
 
-def _stroud_secrest_xi(positive, symbolic=False):
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-
+def _stroud_secrest_11(positive):
     p_m = 1 if positive else -1
 
     sqrt2 = sqrt(2)
@@ -159,9 +136,9 @@ def _stroud_secrest_xi(positive, symbolic=False):
     return E3r2Scheme("Stroud-Secrest XI", weights, points, 7, citation)
 
 
-def stroud_secrest_xi_a(symbolic=False):
-    return _stroud_secrest_xi(True, symbolic)
+def stroud_secrest_11a():
+    return _stroud_secrest_11(True)
 
 
-def stroud_secrest_xi_b(symbolic=False):
-    return _stroud_secrest_xi(False, symbolic)
+def stroud_secrest_11b():
+    return _stroud_secrest_11(False)

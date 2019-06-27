@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-
 import numpy
-import sympy
+from sympy import Rational as frac, sqrt
 from mpmath import mp
 
 from ..helpers import article, fsd, pm, pm_array, pm_array0, untangle
@@ -21,10 +20,7 @@ citation = article(
 )
 
 
-def mclaren_01(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def mclaren_01():
     degree = 3
     data = [(frac(1, 12), fsd(3, (sqrt(frac(1, 2)), 2)))]
 
@@ -33,10 +29,7 @@ def mclaren_01(symbolic=False):
     return SphereScheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
 
 
-def mclaren_02(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def mclaren_02():
     degree = 5
     # Stroud doesn't mention u=1, but it's implied. (After all, this is integration on a
     # sphere.)
@@ -57,18 +50,14 @@ def mclaren_02(symbolic=False):
     return SphereScheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
 
 
-def mclaren_03(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    roots = mp.polyroots if symbolic else numpy.roots
-
+def mclaren_03():
     degree = 7
 
     # the positive roots of
     #  z^6 - z^4 + 0.2*z^2 - 1/105 = 0,
     # i.e., the square roots of the roots of
     #  z^3 - z^2 + 0.2*z^1 - 1/105 = 0,
-    r2, s2, t2 = roots([1, -1, frac(1, 5), -frac(1, 105)])
+    r2, s2, t2 = mp.polyroots([1, -1, frac(1, 5), -frac(1, 105)])
     r = sqrt(r2)
     s = sqrt(s2)
     t = sqrt(t2)
@@ -89,18 +78,14 @@ def mclaren_03(symbolic=False):
     return SphereScheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
 
 
-def mclaren_04(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    roots = mp.polyroots if symbolic else numpy.roots
-
+def mclaren_04():
     degree = 8
 
     # the positive roots of
     #  z^6 - z^4 + 5/21 * z^2 - 5/441 = 0,
     # i.e., the square roots of the roots of
     #  z^3 - z^2 + 5/21 * z^1 - 5/441 = 0,
-    r2, s2, t2 = roots([1, -1, frac(5, 21), -frac(5, 441)])
+    r2, s2, t2 = mp.polyroots([1, -1, frac(5, 21), -frac(5, 441)])
     r = sqrt(r2)
     s = sqrt(s2)
     t = sqrt(t2)
@@ -121,10 +106,7 @@ def mclaren_04(symbolic=False):
     return SphereScheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
 
 
-def mclaren_05(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def mclaren_05():
     degree = 9
 
     r, s = [sqrt((5 + pm_ * sqrt(5)) / 10) for pm_ in [+1, -1]]
@@ -150,10 +132,7 @@ def mclaren_05(symbolic=False):
     return SphereScheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
 
 
-def mclaren_06(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def mclaren_06():
     degree = 9
 
     r, s = [sqrt((5 + pm_ * sqrt(5)) / 10) for pm_ in [+1, -1]]
@@ -181,10 +160,7 @@ def mclaren_06(symbolic=False):
     return SphereScheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
 
 
-def mclaren_07(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def mclaren_07():
     degree = 9
 
     r, s = [sqrt((3 - pm_ * sqrt(5)) / 6) for pm_ in [+1, -1]]
@@ -214,10 +190,7 @@ def mclaren_07(symbolic=False):
     return SphereScheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
 
 
-def mclaren_08(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def mclaren_08():
     degree = 11
 
     r = 1
@@ -243,10 +216,7 @@ def mclaren_08(symbolic=False):
     return SphereScheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
 
 
-def mclaren_09(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def mclaren_09():
     degree = 11
 
     sqrt5 = sqrt(5)
@@ -284,10 +254,7 @@ def mclaren_09(symbolic=False):
     return SphereScheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
 
 
-def mclaren_10(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def mclaren_10():
     degree = 14
 
     r, s = [sqrt((5 - pm_ * sqrt(5)) / 10) for pm_ in [+1, -1]]

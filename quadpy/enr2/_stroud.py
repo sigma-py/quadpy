@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-
-import numpy
-import sympy
+from sympy import sqrt, pi, Rational as frac
 
 from ..helpers import book, fsd, pm, pm_array0, untangle
 from ._helpers import Enr2Scheme
@@ -29,11 +27,7 @@ citation = book(
 )
 
 
-def stroud_enr2_5_3(n, symbolic=False):
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def stroud_enr2_5_3(n):
     assert n > 2
 
     r = sqrt(frac(n + 2, 4))
@@ -47,12 +41,8 @@ def stroud_enr2_5_3(n, symbolic=False):
     return Enr2Scheme("Stroud Enr2 5-3", n, weights, points, 5, citation)
 
 
-def stroud_enr2_5_4(n, symbolic=False):
+def stroud_enr2_5_4(n):
     # Spherical product Lobatto
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
     B0 = frac(2, (n + 2))
     data = [(B0, [n * [0]])]
     for k in range(1, n + 1):
@@ -68,11 +58,7 @@ def stroud_enr2_5_4(n, symbolic=False):
     return Enr2Scheme("Stroud Enr2 5-4", n, weights, points, 5, citation)
 
 
-def _stroud_5_5(n, variant_a, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def _stroud_5_5(n, variant_a):
     p_m = +1 if variant_a else -1
 
     # r is complex-valued for n >= 3
@@ -89,20 +75,16 @@ def _stroud_5_5(n, variant_a, symbolic=False):
     return Enr2Scheme(name, n, weights, points, 5, citation)
 
 
-def stroud_enr2_5_5a(n, symbolic=False):
-    return _stroud_5_5(n, True, symbolic)
+def stroud_enr2_5_5a(n):
+    return _stroud_5_5(n, True)
 
 
-def stroud_enr2_5_5b(n, symbolic=False):
-    return _stroud_5_5(n, False, symbolic)
+def stroud_enr2_5_5b(n):
+    return _stroud_5_5(n, False)
 
 
-def stroud_enr2_5_6(n, symbolic=False):
+def stroud_enr2_5_6(n):
     assert n >= 5
-
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
 
     sqrt2 = sqrt(2)
     sqrt2n1 = sqrt(2 * (n + 1))

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
 import sympy
 
 from ..helpers import book
@@ -30,12 +29,11 @@ citation = book(
 )
 
 
-def stroud_u3_11_2(symbolic=False):
-    scheme = stroud_1969(3, symbolic=symbolic)
+def stroud_u3_11_2():
+    scheme = stroud_1969(3)
     degree = scheme.degree
     weights = scheme.weights
-    pi = sympy.pi if symbolic else numpy.pi
-    weights /= 4 * pi
+    weights /= 4 * sympy.pi
     points = scheme.points
     azimuthal_polar = cartesian_to_spherical(points)
     return SphereScheme(

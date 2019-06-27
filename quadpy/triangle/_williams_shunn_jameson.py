@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-
-import sympy
+from sympy import Rational as frac
 
 from ..helpers import article
 from ._helpers import TriangleScheme, concat, s1, s2, s3
@@ -22,9 +21,7 @@ def williams_shunn_jameson_1():
     return TriangleScheme("Williams-Shunn-Jameson 1", weights, points, 1, citation)
 
 
-def williams_shunn_jameson_2(symbolic=False):
-    frac = sympy.frac if symbolic else lambda x, y: x / y
-
+def williams_shunn_jameson_2():
     weights, points = s2([frac(1, 3), frac(1, 6)])
     return TriangleScheme("Williams-Shunn-Jameson 2", weights, points, 2, citation)
 

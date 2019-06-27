@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
-import scipy.special
-import sympy
+from sympy import pi, sqrt, gamma, Rational as frac
 
 from ..helpers import article, fsd, untangle, z
 from ._helpers import NBallScheme
@@ -19,12 +17,7 @@ citation = article(
 )
 
 
-def dobrodeev_1970(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    gamma = sympy.gamma if symbolic else scipy.special.gamma
-
+def dobrodeev_1970(n):
     A = frac(1, 8)
     B = frac(5 - n, 4)
     C = frac((6 - n) * (1 - n ** 2) + 36, 4 * (n + 3))
