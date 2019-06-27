@@ -4,26 +4,39 @@ import numpy
 import pytest
 from mpmath import mp
 
+import orthopy
 import quadpy
-from helpers import check_degree, integrate_monomial_over_enr2
 
 
 @pytest.mark.parametrize(
-    "scheme,tol", [(quadpy.e1r2.gauss_hermite(n), 1.0e-14) for n in range(1, 10)]
+    "scheme",
+    [quadpy.e1r2.gauss_hermite(n) for n in range(5, 12)]
+    # + [quadpy.e1r2.genz_keister(n) for n in range(1, 10)],
 )
-def test_scheme(scheme, tol):
+def test_scheme(scheme):
+    print(scheme.name)
+    tol = 1.0e-14
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
-    degree = check_degree(
-        lambda poly: scheme.integrate(poly),
-        integrate_monomial_over_enr2,
-        1,
-        scheme.degree + 1,
-        tol=tol,
-    )
-    assert degree == scheme.degree, "Observed: {}   expected: {}".format(
-        degree, scheme.degree
+    def eval_orthopolys(x):
+        out = numpy.concatenate(
+            orthopy.e1r2.tree(
+                x, scheme.degree + 1, standardization="normal", symbolic=False
+            )
+        )
+        return out
+
+    approximate = scheme.integrate(eval_orthopolys)
+
+    exact = numpy.zeros(approximate.shape)
+    exact[0] = numpy.sqrt(numpy.sqrt(numpy.pi))
+
+    diff = numpy.abs(approximate - exact)
+    degree = numpy.where(diff > tol)[0][0] - 1
+
+    assert degree == scheme.degree, "{} -- Observed: {}   expected: {}".format(
+        scheme.name, degree, scheme.degree
     )
     return
 
@@ -35,7 +48,8 @@ def test_show(scheme):
 
 
 def test_hermite_mpmath():
-    scheme = quadpy.e1r2.gauss_hermite(4, mode="mpmath", decimal_places=51)
+    mp.dps = 51
+    scheme = quadpy.e1r2.gauss_hermite(4, mode="mpmath")
 
     tol = 1.0e-50
 
