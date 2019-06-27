@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+from mpmath import mp
 import numpy
+import sympy
 
-import orthopy
-
-from ..tools import scheme_from_rc
 from ._helpers import LineSegmentScheme
 
 
@@ -13,15 +12,23 @@ def chebyshev_gauss_1(n, mode="numpy"):
     """
     degree = n if n % 2 == 1 else n + 1
 
-    # TODO make explicit for all modes
     if mode == "numpy":
         points = numpy.cos((2 * numpy.arange(1, n + 1) - 1) / (2 * n) * numpy.pi)
         weights = numpy.full(n, numpy.pi / n)
-    else:
-        _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.chebyshev1(
-            n, "monic", symbolic=True
+    elif mode == "sympy":
+        points = numpy.array(
+            [
+                sympy.cos(sympy.Rational(2 * k - 1, 2 * n) * sympy.pi)
+                for k in range(1, n + 1)
+            ]
         )
-        points, weights = scheme_from_rc(alpha, beta, mode)
+        weights = numpy.full(n, sympy.pi / n)
+    else:
+        assert mode == "mpmath"
+        points = numpy.array(
+            [mp.cos(mp.mpf(2 * k - 1) / (2 * n) * mp.pi) for k in range(1, n + 1)]
+        )
+        weights = numpy.full(n, mp.pi / n)
     return LineSegmentScheme("Chebyshev-Gauss 1", degree, weights, points)
 
 
@@ -38,9 +45,25 @@ def chebyshev_gauss_2(n, mode="numpy", decimal_places=None):
             / (n + 1)
             * (numpy.sin(numpy.pi * numpy.arange(1, n + 1) / (n + 1))) ** 2
         )
-    else:
-        _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.chebyshev2(
-            n, "monic", symbolic=True
+    elif mode == "sympy":
+        points = numpy.array(
+            [sympy.cos(sympy.Rational(k, n + 1) * sympy.pi) for k in range(1, n + 1)]
         )
-        points, weights = scheme_from_rc(alpha, beta, mode)
+        weights = numpy.array(
+            [
+                sympy.pi / (n + 1) * sympy.sin(sympy.pi * sympy.Rational(k, n + 1)) ** 2
+                for k in range(1, n + 1)
+            ]
+        )
+    else:
+        assert mode == "mpmath"
+        points = numpy.array(
+            [mp.cos(mp.mpf(k) / (n + 1) * mp.pi) for k in range(1, n + 1)]
+        )
+        weights = numpy.array(
+            [
+                mp.pi / (n + 1) * mp.sin(mp.pi * mp.mpf(k) / (n + 1)) ** 2
+                for k in range(1, n + 1)
+            ]
+        )
     return LineSegmentScheme("Chebyshev-Gauss 2", degree, weights, points)
