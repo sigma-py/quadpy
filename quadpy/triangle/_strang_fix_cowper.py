@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-
-import sympy
+from sympy import Rational as frac
 
 from ..helpers import article, book
 from ._helpers import TriangleScheme, concat, s1, s2, s3
@@ -29,31 +28,23 @@ citation = article(
 # https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
 
 
-def strang_fix_cowper_01(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def strang_fix_cowper_01():
     weights, points = s2([frac(1, 3), frac(1, 6)])
     return TriangleScheme("Strang-Fix-Cowper 1", weights, points, 2, citation)
 
 
-def strang_fix_cowper_02(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def strang_fix_cowper_02():
     weights, points = s2([frac(1, 3), frac(1, 2)])
     return TriangleScheme("Strang-Fix-Cowper 2", weights, points, 2, citation)
 
 
-def strang_fix_cowper_03(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def strang_fix_cowper_03():
     weights, points = concat(s3(-frac(9, 16)), s2([frac(25, 48), frac(1, 5)]))
     return TriangleScheme("Strang-Fix-Cowper 3", weights, points, 3, citation)
 
 
-def strang_fix_cowper_04(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
-    weights, points = s1([frac(1, 6), 0.659027622374092, 0.231933368553031])
+def strang_fix_cowper_04():
+    weights, points = s1([1.0 / 6.0, 0.659027622374092, 0.231933368553031])
     return TriangleScheme("Strang-Fix-Cowper 4", weights, points, 3, citation)
 
 
@@ -64,20 +55,16 @@ def strang_fix_cowper_05():
     return TriangleScheme("Strang-Fix-Cowper 5", weights, points, 4, citation)
 
 
-def strang_fix_cowper_06(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def strang_fix_cowper_06():
     weights, points = concat(
-        s3(frac(3, 8)), s1([frac(5, 48), 0.736712498968435, 0.237932366472434])
+        s3(3.0 / 8.0), s1([5.0 / 48.0, 0.736712498968435, 0.237932366472434])
     )
     return TriangleScheme("Strang-Fix-Cowper 6", weights, points, 4, citation)
 
 
-def strang_fix_cowper_07(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def strang_fix_cowper_07():
     weights, points = concat(
-        s3(frac(9, 40)),
+        s3(9.0 / 40.0),
         s2(
             [0.12593918054482717, 0.10128650732345633],
             [0.13239415278850616, 0.47014206410511505],
@@ -86,7 +73,7 @@ def strang_fix_cowper_07(symbolic=False):
     return TriangleScheme("Strang-Fix-Cowper 7", weights, points, 5, citation)
 
 
-def strang_fix_cowper_08(symbolic=False):
+def strang_fix_cowper_08():
     weights, points = concat(
         s2([0.205950504760887, 0.437525248383384]),
         s1([0.063691414286223, 0.797112651860071, 0.165409927389841]),
@@ -94,7 +81,7 @@ def strang_fix_cowper_08(symbolic=False):
     return TriangleScheme("Strang-Fix-Cowper 8", weights, points, 5, citation)
 
 
-def strang_fix_cowper_09(symbolic=False):
+def strang_fix_cowper_09():
     weights, points = concat(
         s2(
             [0.050844906370207, 0.063089014491502],

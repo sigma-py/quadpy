@@ -123,7 +123,8 @@ def untangle2(data, symbolic=False):
     return points, weights
 
 
-def s3(weight, symbolic=False):
+def s3(weight):
+    symbolic = isinstance(weight, float)
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     return numpy.array([weight]), numpy.full((1, 3), frac(1, 3))
 
