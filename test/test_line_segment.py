@@ -130,7 +130,8 @@ def test_integrate_split():
 
 
 def test_legendre_mpmath():
-    scheme = quadpy.line_segment.gauss_legendre(4, mode="mpmath", decimal_places=50)
+    mp.dps = 50
+    scheme = quadpy.line_segment.gauss_legendre(4, mode="mpmath")
 
     tol = 1.0e-50
 
@@ -145,7 +146,8 @@ def test_legendre_mpmath():
 
 
 def test_chebyshev1_mpmath():
-    scheme = quadpy.line_segment.chebyshev_gauss_1(4, mode="mpmath", decimal_places=50)
+    mp.dps = 50
+    scheme = quadpy.line_segment.chebyshev_gauss_1(4, mode="mpmath")
     tol = 1.0e-50
 
     x1 = mp.cos(3 * mp.pi / 8)
@@ -159,7 +161,8 @@ def test_chebyshev1_mpmath():
 
 
 def test_chebyshev2_mpmath():
-    scheme = quadpy.line_segment.chebyshev_gauss_2(4, mode="mpmath", decimal_places=51)
+    mp.dps = 51
+    scheme = quadpy.line_segment.chebyshev_gauss_2(4, mode="mpmath")
 
     tol = 1.0e-50
 
@@ -174,7 +177,8 @@ def test_chebyshev2_mpmath():
 
 
 def test_jacobi_mpmath():
-    scheme = quadpy.line_segment.gauss_jacobi(4, 1, 1, mode="mpmath", decimal_places=51)
+    mp.dps = 51
+    scheme = quadpy.line_segment.gauss_jacobi(4, 1, 1, mode="mpmath")
 
     tol = 1.0e-50
 

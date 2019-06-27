@@ -24,6 +24,9 @@ clean:
 	@find . | grep -E "(__pycache__|\.pyc|\.pyo$\)" | xargs rm -rf
 	@rm -rf *.egg-info/ build/ dist/ MANIFEST
 
+black:
+	black setup.py quadpy/ test/*.py
+
 format:
 	isort -rc -y
 	black setup.py quadpy/ test/*.py

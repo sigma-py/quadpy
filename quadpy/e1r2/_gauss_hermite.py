@@ -8,7 +8,7 @@ from ..tools import scheme_from_rc
 from ._helpers import E1r2Scheme
 
 
-def gauss_hermite(n, mode="numpy", decimal_places=None):
+def gauss_hermite(n, mode="numpy"):
     """
     Gauss-Hermite quadrature for integrals of the form
 
@@ -20,12 +20,8 @@ def gauss_hermite(n, mode="numpy", decimal_places=None):
         _, _, alpha, beta = orthopy.e1r2.recurrence_coefficients(
             n, "monic", symbolic=True
         )
-
         # For some reason, the parameters have to be adapted here.
         # TODO find out why
         beta[1:] /= 2
-
-        points, weights = scheme_from_rc(
-            alpha, beta, mode=mode, decimal_places=decimal_places
-        )
+        points, weights = scheme_from_rc(alpha, beta, mode=mode)
     return E1r2Scheme("Gauss-Hermite", weights, points, 2 * n - 1)
