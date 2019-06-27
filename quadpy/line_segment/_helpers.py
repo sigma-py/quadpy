@@ -6,11 +6,12 @@ from ..helpers import plot_disks_1d
 
 
 class LineSegmentScheme:
-    def __init__(self, name, degree, weights, points):
+    def __init__(self, name, degree, weights, points, citation=None):
         self.name = name
         self.degree = degree
         self.weights = weights
         self.points = points
+        self.citation = citation
         return
 
     def integrate(self, f, interval, dot=numpy.dot):
