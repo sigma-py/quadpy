@@ -93,7 +93,7 @@ wiki](https://github.com/nschloe/quadpy/wiki#dimensionality-of-input-and-output-
    [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.legendre.leggauss.html), arbitrary degree)
  * Gauss-Lobatto (arbitrary degree)
  * Gauss-Kronrod (after [Laurie](https://doi.org/10.1090/S0025-5718-97-00861-2), arbitrary degree)
- * [Gauss-Patterson](https://doi.org/10.1090/S0025-5718-68-99866-9) (7 schemes up to degree 191)
+ * [Gauss-Patterson](https://doi.org/10.1090/S0025-5718-68-99866-9) (9 schemes up to degree 767)
  * Gauss-Radau (arbitrary degree)
  * closed Newton-Cotes (arbitrary degree)
  * open Newton-Cotes (arbitrary degree)

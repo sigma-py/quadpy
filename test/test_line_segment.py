@@ -18,7 +18,7 @@ from helpers import check_degree_1d
     + [quadpy.line_segment.gauss_legendre(k) for k in range(1, 6)]
     + [quadpy.line_segment.gauss_lobatto(k) for k in range(2, 7)]
     + [quadpy.line_segment.gauss_kronrod(k) for k in range(2, 7)]
-    + [quadpy.line_segment.gauss_patterson(k) for k in range(7)]
+    + [quadpy.line_segment.gauss_patterson(k) for k in range(9)]
     + [quadpy.line_segment.gauss_radau(k) for k in range(2, 10)]
     + [quadpy.line_segment.fejer_1(k) for k in range(1, 10)]
     + [quadpy.line_segment.fejer_2(k) for k in range(1, 10)]
