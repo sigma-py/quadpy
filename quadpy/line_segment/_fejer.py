@@ -14,7 +14,7 @@ citation = article(
     volume="46",
     number="1",
     pages="195–202",
-    url="https://doi.org/10.1007/s10543-006-0045-4"
+    url="https://doi.org/10.1007/s10543-006-0045-4",
 )
 
 

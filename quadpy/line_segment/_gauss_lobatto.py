@@ -11,13 +11,9 @@ from ._helpers import LineSegmentScheme
 def gauss_lobatto(n, a=0.0, b=0.0):
     assert n >= 2
     degree = 2 * n - 3
-    # TODO use symbolic=False instead of float()
     _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.jacobi(
-        n, a, b, "monic"
+        n, a, b, "monic", symbolic=False
     )
-    flt = numpy.vectorize(float)
-    alpha = flt(alpha)
-    beta = flt(beta)
     points, weights = _lobatto(alpha, beta, -1.0, 1.0)
     return LineSegmentScheme("Gauss-Lobatto", degree, weights, points)
 
