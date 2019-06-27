@@ -145,6 +145,30 @@ def test_legendre_mpmath():
     return
 
 
+def test_chebyshev1_sympy():
+    scheme = quadpy.line_segment.chebyshev_gauss_1(4, mode="sympy")
+    scheme_numpy = quadpy.line_segment.chebyshev_gauss_1(4, mode="numpy")
+
+    flt = numpy.vectorize(float)
+    tol = 1.0e-15
+
+    assert (abs(flt(scheme.points) - scheme_numpy.points) < tol).all()
+    assert (abs(flt(scheme.weights) - scheme_numpy.weights) < tol).all()
+    return
+
+
+def test_chebyshev2_sympy():
+    scheme = quadpy.line_segment.chebyshev_gauss_2(4, mode="sympy")
+    scheme_numpy = quadpy.line_segment.chebyshev_gauss_2(4, mode="numpy")
+
+    flt = numpy.vectorize(float)
+    tol = 1.0e-15
+
+    assert (abs(flt(scheme.points) - scheme_numpy.points) < tol).all()
+    assert (abs(flt(scheme.weights) - scheme_numpy.weights) < tol).all()
+    return
+
+
 def test_chebyshev1_mpmath():
     mp.dps = 50
     scheme = quadpy.line_segment.chebyshev_gauss_1(4, mode="mpmath")
@@ -152,7 +176,7 @@ def test_chebyshev1_mpmath():
 
     x1 = mp.cos(3 * mp.pi / 8)
     x2 = mp.cos(1 * mp.pi / 8)
-    assert (abs(scheme.points - [-x2, -x1, +x1, +x2]) < tol).all()
+    assert (abs(scheme.points - [+x2, +x1, -x1, -x2]) < tol).all()
 
     w = mp.pi / 4
     tol = 1.0e-49
@@ -168,7 +192,7 @@ def test_chebyshev2_mpmath():
 
     x1 = mp.cos(2 * mp.pi / 5)
     x2 = mp.cos(1 * mp.pi / 5)
-    assert (abs(scheme.points - [-x2, -x1, +x1, +x2]) < tol).all()
+    assert (abs(scheme.points - [+x2, +x1, -x1, -x2]) < tol).all()
 
     w1 = mp.pi / 5 * mp.sin(2 * mp.pi / 5) ** 2
     w2 = mp.pi / 5 * mp.sin(1 * mp.pi / 5) ** 2
