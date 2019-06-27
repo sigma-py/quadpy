@@ -30,11 +30,10 @@
 """
 
 import numpy
-import scipy
 import sympy
 from mpmath import mp
 from mpmath.matrices.eigen_symmetric import tridiag_eigen
-from scipy.linalg import eig_banded
+from scipy.linalg import eigh_tridiagonal
 from scipy.linalg.lapack import get_lapack_funcs
 
 
@@ -252,18 +251,6 @@ def check_coefficients(moments, alpha, beta):
     return errors_alpha, errors_beta
 
 
-def scheme_from_rc(alpha, beta, mode="mpmath", decimal_places=32):
-    """Compute the Gauss nodes and weights from the recurrence coefficients
-    associated with a set of orthogonal polynomials. See [2] and
-    <http://www.scientificpython.net/pyblog/radau-quadrature>.
-    """
-    return {
-        "sympy": lambda: _gauss_from_coefficients_sympy(alpha, beta),
-        "mpmath": lambda: _gauss_from_coefficients_mpmath(alpha, beta, decimal_places),
-        "numpy": lambda: _gauss_from_coefficients_numpy(alpha, beta),
-    }[mode]()
-
-
 def _sympy_tridiag(a, b):
     """Creates the tridiagonal sympy matrix tridiag(b, a, b).
     """
@@ -278,7 +265,20 @@ def _sympy_tridiag(a, b):
     return sympy.Matrix(A)
 
 
-def _gauss_from_coefficients_sympy(alpha, beta):
+def scheme_from_rc(alpha, beta, mode):
+    if mode == "sympy":
+        return _scheme_from_rc_sympy(alpha, beta)
+    elif mode == "numpy":
+        return _scheme_from_rc_numpy(alpha, beta)
+
+    assert mode == "mpmath"
+    return _scheme_from_rc_mpmath(alpha, beta)
+
+
+# Compute the Gauss nodes and weights from the recurrence coefficients associated with a
+# set of orthogonal polynomials. See [2] and
+# <http://www.scientificpython.net/pyblog/radau-quadrature>.
+def _scheme_from_rc_sympy(alpha, beta):
     # Construct the triadiagonal matrix [sqrt(beta), alpha, sqrt(beta)]
     A = _sympy_tridiag(alpha, [sympy.sqrt(bta) for bta in beta])
 
@@ -302,18 +302,12 @@ def _gauss_from_coefficients_sympy(alpha, beta):
     return x, w
 
 
-def _gauss_from_coefficients_mpmath(alpha, beta, decimal_places):
-    mp.dps = decimal_places
-
+def _scheme_from_rc_mpmath(alpha, beta):
     # Create vector cut of the first value of beta
     n = len(alpha)
     b = mp.zeros(n, 1)
     for i in range(n - 1):
-        # work around <https://github.com/fredrik-johansson/mpmath/issues/382>
-        x = beta[i + 1]
-        if isinstance(x, numpy.int64):
-            x = int(x)
-        b[i] = mp.sqrt(x)
+        b[i] = mp.sqrt(beta[i + 1])
 
     z = mp.zeros(1, n)
     z[0, 0] = 1
@@ -321,32 +315,14 @@ def _gauss_from_coefficients_mpmath(alpha, beta, decimal_places):
     tridiag_eigen(mp, d, b, z)
 
     # nx1 matrix -> list of mpf
-    x = numpy.array([mp.mpf(sympy.N(xx, decimal_places)) for xx in d])
-    w = numpy.array(
-        [mp.mpf(sympy.N(beta[0], decimal_places)) * mp.power(ww, 2) for ww in z]
-    )
+    x = numpy.array([mp.mpf(sympy.N(xx, mp.dps)) for xx in d])
+    w = numpy.array([mp.mpf(sympy.N(beta[0], mp.dps)) * mp.power(ww, 2) for ww in z])
     return x, w
 
 
-def _gauss_from_coefficients_numpy(alpha, beta):
-    # assert isinstance(alpha, numpy.ndarray)
-    # assert isinstance(beta, numpy.ndarray)
+def _scheme_from_rc_numpy(alpha, beta):
     alpha = alpha.astype(numpy.float64)
     beta = beta.astype(numpy.float64)
-
-    x, V = eig_banded(numpy.vstack((numpy.sqrt(beta), alpha)), lower=False)
-    w = beta[0] * scipy.real(scipy.power(V[0, :], 2))
-    # eigh_tridiagonal is only available from scipy 1.0.0, and has problems
-    # with precision. TODO find out how/why/what
-    # try:
-    #     from scipy.linalg import eigh_tridiagonal
-    # except ImportError:
-    #     # Use eig_banded
-    #     x, V = \
-    #         eig_banded(numpy.vstack((numpy.sqrt(beta), alpha)), lower=False)
-    #     w = beta[0]*scipy.real(scipy.power(V[0, :], 2))
-    # else:
-    #     x, V = eigh_tridiagonal(alpha, numpy.sqrt(beta[1:]))
-    #     w = beta[0] * V[0, :]**2
-
+    x, V = eigh_tridiagonal(alpha, numpy.sqrt(beta[1:]))
+    w = beta[0] * V[0, :] ** 2
     return x, w
