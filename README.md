@@ -2,14 +2,14 @@
 
 Your one-stop shop for numerical integration in Python.
 
-[![CircleCI](https://img.shields.io/circleci/project/github/nschloe/quadpy/master.svg)](https://circleci.com/gh/nschloe/quadpy/tree/master)
-[![codecov](https://img.shields.io/codecov/c/github/nschloe/quadpy.svg)](https://codecov.io/gh/nschloe/quadpy)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
-[![awesome](https://img.shields.io/badge/awesome-yes-brightgreen.svg)](https://github.com/nschloe/quadpy)
-[![PyPi Version](https://img.shields.io/pypi/v/quadpy.svg)](https://pypi.org/project/quadpy)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1173132.svg)](https://doi.org/10.5281/zenodo.1173132)
-[![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?logo=github&label=Stars&logoColor=white)](https://github.com/nschloe/quadpy)
-[![PyPi downloads](https://img.shields.io/pypi/dd/quadpy.svg)](https://pypistats.org/packages/quadpy)
+[![CircleCI](https://img.shields.io/circleci/project/github/nschloe/quadpy/master.svg?style=flat-square)](https://circleci.com/gh/nschloe/quadpy/tree/master)
+[![codecov](https://img.shields.io/codecov/c/github/nschloe/quadpy.svg?style=flat-square)](https://codecov.io/gh/nschloe/quadpy)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/ambv/black)
+[![awesome](https://img.shields.io/badge/awesome-yes-brightgreen.svg?style=flat-square)](https://github.com/nschloe/quadpy)
+[![PyPi Version](https://img.shields.io/pypi/v/quadpy.svg?style=flat-square)](https://pypi.org/project/quadpy)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1173132.svg?style=flat-square)](https://doi.org/10.5281/zenodo.1173132)
+[![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?style=flat-square&logo=github&label=Stars&logoColor=white)](https://github.com/nschloe/quadpy)
+[![PyPi downloads](https://img.shields.io/pypi/dd/quadpy.svg?style=flat-square)](https://pypistats.org/packages/quadpy)
 
 <p align="center">
   <img src="https://nschloe.github.io/quadpy/quad.png" width="20%">
