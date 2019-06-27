@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-
 import numpy
-import sympy
+from sympy import sqrt, pi, Rational as frac
 
 from ..helpers import article, fsd, pm, untangle
 from ._helpers import Enr2Scheme
@@ -18,22 +17,14 @@ citation = article(
 )
 
 
-def stroud_secrest_i(n, symbolic=False):
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
-    data = [(frac(1, n + 1), sqrt(frac(1, 2)) * _nsimplex(n, symbolic=symbolic))]
+def stroud_secrest_i(n):
+    data = [(frac(1, n + 1), sqrt(frac(1, 2)) * _nsimplex(n))]
     points, weights = untangle(data)
     weights *= sqrt(pi) ** n
     return Enr2Scheme("Stroud-Secrest I", n, weights, points, 2, citation)
 
 
-def stroud_secrest_ii(n, symbolic=False):
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def stroud_secrest_ii(n):
     nu = sqrt(frac(n, 2))
     data = [(frac(1, 2 * n), fsd(n, (nu, 1)))]
     points, weights = untangle(data)
@@ -41,11 +32,7 @@ def stroud_secrest_ii(n, symbolic=False):
     return Enr2Scheme("Stroud-Secrest II", n, weights, points, 3, citation)
 
 
-def stroud_secrest_iii(n, symbolic=False):
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def stroud_secrest_iii(n):
     nu = sqrt(frac(1, 2))
     data = [(frac(1, 2 ** n), pm(n, nu))]
     points, weights = untangle(data)
@@ -53,11 +40,7 @@ def stroud_secrest_iii(n, symbolic=False):
     return Enr2Scheme("Stroud-Secrest III", n, weights, points, 3, citation)
 
 
-def stroud_secrest_iv(n, symbolic=False):
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def stroud_secrest_iv(n):
     nu = sqrt(frac(n + 2, 2))
     xi = sqrt(frac(n + 2, 4))
     A = frac(2, n + 2)
@@ -70,11 +53,8 @@ def stroud_secrest_iv(n, symbolic=False):
     return Enr2Scheme("Stroud-Secrest IV", n, weights, points, 5, citation)
 
 
-def _nsimplex(n, symbolic):
+def _nsimplex(n):
     # construct the regular n-simplex points with 0 center
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
     return numpy.array(
         [
             [-sqrt(frac(n + 1, (n + 1 - k) * (n - k))) for k in range(i)]

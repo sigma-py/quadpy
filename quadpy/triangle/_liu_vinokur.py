@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-
-import numpy
-import sympy
+from sympy import Rational as frac, sqrt
 
 from ..helpers import article
 from ._helpers import TriangleScheme, alpha, concat, gamma_delta, s3
@@ -18,35 +16,27 @@ citation = article(
 )
 
 
-def liu_vinokur_01(symbolic=False):
+def liu_vinokur_01():
     weights, points = s3(1)
     return TriangleScheme("Liu-Vinokur 1", weights, points, 1, citation)
 
 
-def liu_vinokur_02(symbolic=False):
-    frac = sympy.frac if symbolic else lambda x, y: x / y
-
+def liu_vinokur_02():
     weights, points = alpha([frac(1, 3), 1])
     return TriangleScheme("Liu-Vinokur 2", weights, points, 1, citation)
 
 
-def liu_vinokur_03(symbolic=False):
-    frac = sympy.frac if symbolic else lambda x, y: x / y
-
+def liu_vinokur_03():
     weights, points = alpha([frac(1, 3), -frac(1, 2)])
     return TriangleScheme("Liu-Vinokur 3", weights, points, 2, citation)
 
 
-def liu_vinokur_04(symbolic=False):
-    frac = sympy.frac if symbolic else lambda x, y: x / y
-
+def liu_vinokur_04():
     weights, points = concat(s3(frac(3, 4)), alpha([frac(1, 12), 1]))
     return TriangleScheme("Liu-Vinokur 4", weights, points, 2, citation)
 
 
-def liu_vinokur_05(symbolic=False):
-    frac = sympy.frac if symbolic else lambda x, y: x / y
-
+def liu_vinokur_05():
     weights, points = concat(
         s3(-frac(9, 16)),
         # ERR Wrongly specified in the article as 25 (instead of 2/5).
@@ -55,9 +45,7 @@ def liu_vinokur_05(symbolic=False):
     return TriangleScheme("Liu-Vinokur 5", weights, points, 3, citation)
 
 
-def liu_vinokur_06(symbolic=False):
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def liu_vinokur_06():
     sqrt21 = sqrt(21)
     weights, points = alpha(
         [(1 + sqrt21) / 120, 1], [(39 - sqrt21) / 120, (1 - sqrt21) / 10]
@@ -65,18 +53,14 @@ def liu_vinokur_06(symbolic=False):
     return TriangleScheme("Liu-Vinokur 6", weights, points, 3, citation)
 
 
-def liu_vinokur_07(symbolic=False):
-    frac = sympy.frac if symbolic else lambda x, y: x / y
-
+def liu_vinokur_07():
     weights, points = concat(
         s3(frac(9, 20)), alpha([frac(1, 20), 1], [frac(2, 15), -frac(1, 2)])
     )
     return TriangleScheme("Liu-Vinokur 7", weights, points, 3, citation)
 
 
-def liu_vinokur_08(symbolic=False):
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def liu_vinokur_08():
     sqrt10 = sqrt(10)
     sqrt_b = sqrt(950 - 220 * sqrt10)
     a1 = (-10 + 5 * sqrt10 + sqrt_b) / 30
@@ -88,9 +72,7 @@ def liu_vinokur_08(symbolic=False):
     return TriangleScheme("Liu-Vinokur 8", weights, points, 4, citation)
 
 
-def liu_vinokur_09(symbolic=False):
-    frac = sympy.frac if symbolic else lambda x, y: x / y
-
+def liu_vinokur_09():
     weights, points = concat(
         s3(frac(27, 80)),
         alpha([frac(8, 105), -frac(1, 2)], [frac(81, 560), frac(2, 3)]),
@@ -98,10 +80,7 @@ def liu_vinokur_09(symbolic=False):
     return TriangleScheme("Liu-Vinokur 9", weights, points, 4, citation)
 
 
-def liu_vinokur_10(symbolic=False):
-    frac = sympy.frac if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def liu_vinokur_10():
     sqrt13 = sqrt(13)
     weights, points = alpha(
         [(11 - 1 * sqrt13) / 360, 1],
@@ -111,10 +90,7 @@ def liu_vinokur_10(symbolic=False):
     return TriangleScheme("Liu-Vinokur 10", weights, points, 4, citation)
 
 
-def liu_vinokur_11(symbolic=False):
-    frac = sympy.frac if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def liu_vinokur_11():
     sqrt3 = sqrt(3)
     weights, points = concat(
         s3(+frac(9, 20)),
@@ -124,10 +100,7 @@ def liu_vinokur_11(symbolic=False):
     return TriangleScheme("Liu-Vinokur 11", weights, points, 4, citation)
 
 
-def liu_vinokur_12(symbolic=False):
-    frac = sympy.frac if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def liu_vinokur_12():
     sqrt15 = sqrt(15)
     weights, points = concat(
         s3(frac(9, 40)),
@@ -139,9 +112,7 @@ def liu_vinokur_12(symbolic=False):
     return TriangleScheme("Liu-Vinokur 12", weights, points, 5, citation)
 
 
-def liu_vinokur_13(symbolic=False):
-    frac = sympy.frac if symbolic else lambda x, y: x / y
-
+def liu_vinokur_13():
     weights, points = concat(
         s3(frac(81, 320)),
         alpha(

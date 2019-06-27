@@ -16,7 +16,7 @@ citation = article(
 )
 
 
-def dobrodeev_1978(n, symbolic=False):
+def dobrodeev_1978(n):
     assert 2 <= n <= 20
 
     dim_config = {
@@ -41,13 +41,13 @@ def dobrodeev_1978(n, symbolic=False):
         20: ("I", 20, 1, 3),
     }
 
-    I0 = integrate_monomial_over_unit_nball(n * [0], symbolic=symbolic)
-    I2 = integrate_monomial_over_unit_nball([2] + (n - 1) * [0], symbolic=symbolic)
-    I22 = integrate_monomial_over_unit_nball([2, 2] + (n - 2) * [0], symbolic=symbolic)
-    I4 = integrate_monomial_over_unit_nball([4] + (n - 1) * [0], symbolic=symbolic)
+    I0 = integrate_monomial_over_unit_nball(n * [0])
+    I2 = integrate_monomial_over_unit_nball([2] + (n - 1) * [0])
+    I22 = integrate_monomial_over_unit_nball([2, 2] + (n - 2) * [0])
+    I4 = integrate_monomial_over_unit_nball([4] + (n - 1) * [0])
     pm_type, i, j, k = dim_config[n]
     G, a, b, c = compute_dobrodeev(
-        n, I0, I2, I22, I4, pm_type, i, j, k, symbolic=symbolic
+        n, I0, I2, I22, I4, pm_type, i, j, k
     )
 
     data = [(G, fsd(n, (a, i))), (G, fsd(n, (b, j), (c, k)))]
