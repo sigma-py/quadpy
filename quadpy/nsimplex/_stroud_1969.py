@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-
 import numpy
-import sympy
+from sympy import Rational as frac, sqrt
 
 from ..helpers import article, rd, untangle
 from ._helpers import NSimplexScheme, integrate_monomial_over_unit_simplex
@@ -18,11 +17,8 @@ citation = article(
 )
 
 
-def stroud_1969(n, symbolic=False):
+def stroud_1969(n):
     assert n >= 3
-
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
     degree = 5
 
@@ -50,10 +46,10 @@ def stroud_1969(n, symbolic=False):
         pts.append(rd(n + 1, [(u2, n - 1), (v2, 2)]))
         k_range.append(5)
 
-    b0 = integrate_monomial_over_unit_simplex(n * [0], symbolic=symbolic)
+    b0 = integrate_monomial_over_unit_simplex(n * [0], symbolic=True)
     b = [
         integrate_monomial_over_unit_simplex(
-            numpy.array([k] + (n - 1) * [0]), symbolic=symbolic
+            numpy.array([k] + (n - 1) * [0]), symbolic=True
         )
         / b0
         for k in k_range

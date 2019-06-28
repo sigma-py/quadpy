@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-
 import numpy
-import sympy
+from sympy import Rational as frac, sqrt, pi
 
 from ..helpers import article, fsd, pm, pm_array, pm_array0, untangle
 from ._helpers import E2r2Scheme
@@ -18,11 +17,7 @@ _citation = article(
 )
 
 
-def stroud_secrest_v(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-
+def stroud_secrest_5():
     nu = sqrt(2)
     xi = nu / 2
     eta = sqrt(6) / 2
@@ -40,11 +35,7 @@ def stroud_secrest_v(symbolic=False):
     return E2r2Scheme("Stroud-Secrest V", weights, points, 5, _citation)
 
 
-def stroud_secrest_vi(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-
+def stroud_secrest_6():
     sqrt5 = sqrt(5)
     nu = sqrt(3)
     xi, eta = [sqrt((9 - p_m * 3 * sqrt5) / 8) for p_m in [+1, -1]]

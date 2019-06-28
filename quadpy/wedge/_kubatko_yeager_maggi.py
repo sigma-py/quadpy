@@ -97,7 +97,10 @@ def kubatko_yeager_maggi_3b():
 
 def kubatko_yeager_maggi_3c():
     alpha = 4 * sqrt(3) / 15
-    data = [(-frac(9, 4), _s3(symbolic=True)), (frac(25, 24), _s21_z(-frac(3, 5), alpha))]
+    data = [
+        (-frac(9, 4), _s3(symbolic=True)),
+        (frac(25, 24), _s21_z(-frac(3, 5), alpha)),
+    ]
     points, weights = untangle(data)
     weights = weights / 4
     points[:, :2] += 1

@@ -18,11 +18,10 @@ citation = article(
 )
 
 
-def sarma_stroud(symbolic=False):
+def sarma_stroud():
     # Hammer-Wymore is a one-parameter family of schemes, and the parameter lambda is
     # chosen to minimize the standard deviation of Sarma's error functional. The
     # particular value of lambda is not explicitly given in the article, but computed
     # from the specified values. Note that it is only given in single precision.
-    lmbda = 1.0329785305
-    hw = hammer_wymore(lmbda=lmbda, symbolic=symbolic)
+    hw = hammer_wymore(lmbda=1.0329785305)
     return HexahedronScheme("Sarma-Stroud", hw.weights, hw.points, hw.degree, citation)

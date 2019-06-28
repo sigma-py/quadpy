@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-
 import warnings
 
 import numpy
-import sympy
+from sympy import Rational as frac, sqrt, cos, sin, pi
 
 from ..helpers import book, fsd, pm, untangle
 from ._helpers import E2r2Scheme
@@ -24,13 +23,7 @@ _citation = book(
 )
 
 
-def stroud_4_1(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
-    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
-    pi = sympy.pi if symbolic else numpy.pi
-
+def stroud_4_1():
     pts = (
         sqrt(2)
         * numpy.array(
@@ -47,11 +40,7 @@ def stroud_4_1(symbolic=False):
     return E2r2Scheme("Stroud 4-1", weights, points, 4, _citation)
 
 
-def stroud_5_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-
+def stroud_5_2():
     # Cartesian product Gauss formula
     r = sqrt(frac(3, 2))
     data = [
@@ -65,11 +54,7 @@ def stroud_5_2(symbolic=False):
     return E2r2Scheme("Stroud 5-2", weights, points, 5, _citation)
 
 
-def stroud_7_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-
+def stroud_7_2():
     # Cartesian product Gauss formula
     sqrt6 = sqrt(6)
     r, s = [sqrt((3 + p_m * sqrt6) / 2) for p_m in [+1, -1]]

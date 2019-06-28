@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
-import sympy
+from sympy import sqrt
 
 from ..helpers import article, untangle
 from ._helpers import NCubeScheme, _s
@@ -19,13 +18,9 @@ _citation = article(
 )
 
 
-def thacher(n, symbolic=False):
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def thacher(n):
     r = sqrt(3) / 6
-    data = [(1.0, [n * [2 * r]]), (+r, _s(n, -1, r)), (-r, _s(n, +1, r))]
-
+    data = [(1, [n * [2 * r]]), (+r, _s(n, -1, r)), (-r, _s(n, +1, r))]
     points, weights = untangle(data)
-    reference_volume = 2 ** n
-    weights *= reference_volume
+    weights *= 2 ** n
     return NCubeScheme("Thacher", n, weights, points, 2, _citation)

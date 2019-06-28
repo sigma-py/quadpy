@@ -56,9 +56,9 @@ def felippa_4():
 def felippa_5():
     a1, a2 = [(6 - i * sqrt(15)) / 21 for i in [+1, -1]]
     data = [
-        (0.3498310570689643e-01, _s21_z(a1, numpy.sqrt(3.0/5.0))),
-        (0.3677615355236283e-01, _s21_z(a2, numpy.sqrt(3.0/5.0))),
-        (1.0/16.0, _s3_z(numpy.sqrt(3.0 / 5.0), symbolic=False)),
+        (0.3498310570689643e-01, _s21_z(a1, numpy.sqrt(3.0 / 5.0))),
+        (0.3677615355236283e-01, _s21_z(a2, numpy.sqrt(3.0 / 5.0))),
+        (1.0 / 16.0, _s3_z(numpy.sqrt(3.0 / 5.0), symbolic=False)),
         (0.5597296913103428e-01, _s21(a1)),
         (0.5884184568378053e-01, _s21(a2)),
         (0.1, _s3(symbolic=False)),

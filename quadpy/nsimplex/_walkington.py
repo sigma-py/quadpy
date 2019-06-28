@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-
 from math import factorial
 
 import numpy
-import sympy
+from sympy import Rational as frac, sqrt
 
 from ..helpers import techreport, untangle
 from ._helpers import NSimplexScheme
@@ -18,9 +17,7 @@ citation = techreport(
 )
 
 
-def walkington_1(d, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def walkington_1(d):
     degree = 1
     data = [(frac(1, factorial(d)), _c(d, frac))]
     points, weights = untangle(data)
@@ -29,10 +26,7 @@ def walkington_1(d, symbolic=False):
     return NSimplexScheme("Walkington 1", d, weights, points, degree, citation)
 
 
-def walkington_2(d, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def walkington_2(d):
     # The article claims order 2, but tests really only show order 1. Also, the article
     # says:
     #
@@ -47,9 +41,7 @@ def walkington_2(d, symbolic=False):
     return NSimplexScheme("Walkington 2", d, weights, points, degree, citation)
 
 
-def walkington_3(d, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def walkington_3(d):
     degree = 3
     data = [
         (frac(-(d + 1) ** 3, 4 * factorial(d + 2)), _c(d, frac)),
@@ -61,9 +53,7 @@ def walkington_3(d, symbolic=False):
     return NSimplexScheme("Walkington 3", d, weights, points, degree, citation)
 
 
-def walkington_5(d, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def walkington_5(d):
     degree = 5
     w0 = frac(+(d + 1) ** 5, 32 * factorial(d + 3))
     w1 = frac(-(d + 3) ** 5, 16 * factorial(d + 4))
@@ -81,9 +71,7 @@ def walkington_5(d, symbolic=False):
     return NSimplexScheme("Walkington 5", d, weights, points, degree, citation)
 
 
-def walkington_7(d, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def walkington_7(d):
     degree = 7
     w0 = -frac(1, 384) * frac((d + 1) ** 7, factorial(d + 4))
     w1 = +frac(1, 128) * frac((d + 3) ** 7, factorial(d + 5))

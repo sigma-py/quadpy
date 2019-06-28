@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-
 import numpy
-import sympy
+from sympy import sqrt, Rational as frac
 from mpmath import mp
 
 from ..helpers import article, rd, untangle
@@ -21,9 +20,7 @@ citation = article(
 )
 
 
-def stroud_1966_i(n, symbolic=False):
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def stroud_1966_1(n):
     degree = 3
     sqrt4n13 = sqrt(4 * n + 13)
 
@@ -39,7 +36,7 @@ def stroud_1966_i(n, symbolic=False):
     return NSimplexScheme("Stroud 1966-I", n, weights, points, degree, citation)
 
 
-def stroud_1966_ii(n, symbolic=False):
+def stroud_1966_2(n, symbolic=False):
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     roots = mp.polyroots if symbolic else numpy.roots
 
@@ -62,9 +59,7 @@ def stroud_1966_ii(n, symbolic=False):
     return NSimplexScheme("Stroud 1966-II", n, weights, points, degree, citation)
 
 
-def stroud_1966_iii(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def stroud_1966_3(n):
     degree = 3
     assert n > 2
 
@@ -86,9 +81,7 @@ def stroud_1966_iii(n, symbolic=False):
     return NSimplexScheme("Stroud 1966-III", n, weights, points, degree, citation)
 
 
-def stroud_1966_iv(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def stroud_1966_4(n):
     degree = 3
     assert n >= 3
 
@@ -108,9 +101,7 @@ def stroud_1966_iv(n, symbolic=False):
     return NSimplexScheme("Stroud 1966-IV", n, weights, points, degree, citation)
 
 
-def stroud_1966_v(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def stroud_1966_5(n):
     degree = 3
     r = frac(1, n)
     s = frac(1, 3)
@@ -129,9 +120,7 @@ def stroud_1966_v(n, symbolic=False):
     return NSimplexScheme("Stroud 1966-I", n, weights, points, degree, citation)
 
 
-def stroud_1966_vi(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def stroud_1966_6(n):
     degree = 3
     assert n >= 3
     assert n != 5
@@ -155,9 +144,7 @@ def stroud_1966_vi(n, symbolic=False):
     return NSimplexScheme("Stroud 1966-VI", n, weights, points, degree, citation)
 
 
-def stroud_1966_vii(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def stroud_1966_7(n):
     degree = 3
     assert n >= 3
     assert n != 5
