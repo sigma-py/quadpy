@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from sympy import Rational as frac
-from sympy import sqrt
+from numpy import sqrt
 
 from ..helpers import article, fsd, pm, untangle
 from ._helpers import NSphereScheme, integrate_monomial_over_unit_nsphere
@@ -20,17 +19,21 @@ citation = article(
 
 def stroud_1969(n):
     assert n > 2
-    p_m = numpy.array([+1, -1])
-
     degree = 11
 
     sqrt3 = sqrt(3)
 
-    t = sqrt(frac(1, n))
-    r1, r2 = sqrt((n + 6 - p_m * 4 * sqrt3) / (n ** 2 + 12 * n - 12))
-    s1, s2 = sqrt((7 * n - 6 + p_m * 4 * (n - 1) * sqrt3) / (n ** 2 + 12 * n - 12))
-    u1, u2 = sqrt((n + 12 + p_m * 8 * sqrt3) / (n ** 2 + 24 * n - 48))
-    v1, v2 = sqrt((7 * n - 12 - p_m * 4 * (n - 2) * sqrt3) / (n ** 2 + 24 * n - 48))
+    t = sqrt(1 / n)
+    r1, r2 = [sqrt((n + 6 - i * 4 * sqrt3) / (n ** 2 + 12 * n - 12)) for i in [+1, -1]]
+    s1, s2 = [
+        sqrt((7 * n - 6 + i * 4 * (n - 1) * sqrt3) / (n ** 2 + 12 * n - 12))
+        for i in [+1, -1]
+    ]
+    u1, u2 = [sqrt((n + 12 + i * 8 * sqrt3) / (n ** 2 + 24 * n - 48)) for i in [+1, -1]]
+    v1, v2 = [
+        sqrt((7 * n - 12 - i * 4 * (n - 2) * sqrt3) / (n ** 2 + 24 * n - 48))
+        for i in [+1, -1]
+    ]
 
     # Solve linear equation system for x^k, k={0, 4, 6, 8, 10}, for the weights (the
     # same is done in Stroud's article).
@@ -44,12 +47,11 @@ def stroud_1969(n):
         k_range.append(10)
     # TODO build the equation system from orthogonal polynomials
     b = [
-        integrate_monomial_over_unit_nsphere([k] + (n - 1) * [0], symbolic=True)
+        integrate_monomial_over_unit_nsphere([k] + (n - 1) * [0], symbolic=False)
         for k in k_range
     ]
     A = [[sum(p[:, 0] ** k) for p in pts] for k in k_range]
-    flt = numpy.vectorize(float)
-    w = numpy.linalg.solve(flt(A), flt(b))
+    w = numpy.linalg.solve(A, b)
 
     data = [(w[k], pts[k]) for k in range(len(w))]
 

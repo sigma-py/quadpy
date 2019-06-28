@@ -6,14 +6,14 @@ import numpy
 from ..helpers import book, untangle
 from ..sphere import _stroud as sphere_stroud
 from ._helpers import E3r2Scheme
-from ._stroud_secrest import stroud_secrest_ix as stroud_e3r2_5_3
-from ._stroud_secrest import stroud_secrest_vii as stroud_e3r2_5_1
-from ._stroud_secrest import stroud_secrest_viii_a as stroud_e3r2_5_2a
-from ._stroud_secrest import stroud_secrest_viii_b as stroud_e3r2_5_2b
-from ._stroud_secrest import stroud_secrest_x_a as stroud_e3r2_7_1a
-from ._stroud_secrest import stroud_secrest_x_b as stroud_e3r2_7_1b
-from ._stroud_secrest import stroud_secrest_xi_a as stroud_e3r2_7_2a
-from ._stroud_secrest import stroud_secrest_xi_b as stroud_e3r2_7_2b
+from ._stroud_secrest import stroud_secrest_09 as stroud_e3r2_5_3
+from ._stroud_secrest import stroud_secrest_07 as stroud_e3r2_5_1
+from ._stroud_secrest import stroud_secrest_08a as stroud_e3r2_5_2a
+from ._stroud_secrest import stroud_secrest_08b as stroud_e3r2_5_2b
+from ._stroud_secrest import stroud_secrest_10a as stroud_e3r2_7_1a
+from ._stroud_secrest import stroud_secrest_10b as stroud_e3r2_7_1b
+from ._stroud_secrest import stroud_secrest_11a as stroud_e3r2_7_2a
+from ._stroud_secrest import stroud_secrest_11b as stroud_e3r2_7_2b
 
 citation = book(
     authors=["Arthur Stroud"],

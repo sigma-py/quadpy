@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-import sympy
+import numpy
 
 from ..helpers import book
 from ..nsphere._stroud_1969 import stroud_1969
@@ -33,7 +33,7 @@ def stroud_u3_11_2():
     scheme = stroud_1969(3)
     degree = scheme.degree
     weights = scheme.weights
-    weights /= 4 * sympy.pi
+    weights /= 4 * numpy.pi
     points = scheme.points
     azimuthal_polar = cartesian_to_spherical(points)
     return SphereScheme(

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-import numpy
 from sympy import Rational as frac
 from sympy import sqrt
 
@@ -29,11 +28,10 @@ def tyler_1():
 
 
 def tyler_2():
-    pm = numpy.array([+1, -1])
     r = sqrt(frac(6, 7))
-    s, t = sqrt((114 - pm * 3 * sqrt(583)) / 287)
+    s, t = [sqrt((114 - i * 3 * sqrt(583)) / 287) for i in [+1, -1]]
     B1 = frac(49, 810)
-    B2, B3 = (178981 + pm * 2769 * sqrt(583)) / 1888920
+    B2, B3 = [(178981 + i * 2769 * sqrt(583)) / 1888920 for i in [+1, -1]]
     weights, points = concat(symm_r0([B1, r]), symm_s([B2, s], [B3, t]))
     weights *= 4
     return QuadrilateralScheme("Tyler 2", weights, points, 7, citation)

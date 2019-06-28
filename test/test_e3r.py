@@ -36,7 +36,7 @@ def test_scheme(scheme, tol=1.0e-14):
     return
 
 
-@pytest.mark.parametrize("scheme", [quadpy.e3r.stroud_secrest_x()])
+@pytest.mark.parametrize("scheme", [quadpy.e3r.stroud_secrest_10()])
 def test_show(scheme, backend="mpl"):
     scheme.show(backend=backend)
     plt.close()

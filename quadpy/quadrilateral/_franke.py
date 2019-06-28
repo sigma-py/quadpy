@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 #
+import math
 import warnings
 
 from sympy import Rational as frac
@@ -50,8 +51,8 @@ def franke_1(lmbda):
 
 
 def franke_2a():
-    a = sqrt(frac(15 + 2 * sqrt(30), 35))
-    b = sqrt(frac(15 - 2 * sqrt(30), 35))
+    a = math.sqrt((15 + 2 * sqrt(30)) / 35)
+    b = math.sqrt((15 - 2 * sqrt(30)) / 35)
 
     weights, points = concat(
         pm2(
@@ -65,8 +66,8 @@ def franke_2a():
 
 
 def franke_2b():
-    a = sqrt(frac(15 + 2 * sqrt(30), 35))
-    b = sqrt(frac(15 - 2 * sqrt(30), 35))
+    a = math.sqrt((15 + 2 * sqrt(30)) / 35)
+    b = math.sqrt((15 - 2 * sqrt(30)) / 35)
 
     weights, points = concat(
         pm2(
@@ -80,8 +81,8 @@ def franke_2b():
 
 
 def franke_3a():
-    a = sqrt(frac(5, 9) + frac(2, 63) * sqrt(70))
-    b = sqrt(frac(5, 9) - frac(2, 63) * sqrt(70))
+    a = math.sqrt(5.0 / 9.0 + 2.0 / 63.0 * math.sqrt(70))
+    b = math.sqrt(5.0 / 9.0 - 2.0 / 63.0 * math.sqrt(70))
 
     weights, points = concat(
         pm2(
@@ -101,8 +102,8 @@ def franke_3a():
 
 
 def franke_3b():
-    a = sqrt(frac(5, 9) + frac(2, 63) * sqrt(70))
-    b = sqrt(frac(5, 9) - frac(2, 63) * sqrt(70))
+    a = math.sqrt(5.0 / 9.0 + 2.0 / 63.0 * math.sqrt(70))
+    b = math.sqrt(5.0 / 9.0 - 2.0 / 63.0 * math.sqrt(70))
 
     weights, points = concat(
         pm2(
@@ -122,8 +123,8 @@ def franke_3b():
 
 
 def franke_3c():
-    a = sqrt(frac(5, 9) + frac(2, 63) * sqrt(70))
-    b = sqrt(frac(5, 9) - frac(2, 63) * sqrt(70))
+    a = math.sqrt(5.0 / 9.0 + 2.0 / 63.0 * math.sqrt(70))
+    b = math.sqrt(5.0 / 9.0 - 2.0 / 63.0 * math.sqrt(70))
 
     weights, points = concat(
         pm2(
