@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-
 import numpy
-import sympy
+from sympy import Rational as frac, sqrt
 
 from ..helpers import article
 from ._helpers import QuadrilateralScheme, concat, pm, pm2, symm_r0, symm_s, zero
@@ -19,8 +18,7 @@ citation = article(
 )
 
 
-def albrecht_collatz_1(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
+def albrecht_collatz_1():
     weights, points = concat(
         zero(frac(5, 12)), symm_r0([frac(1, 8), 1]), symm_s([frac(1, 48), 1])
     )
@@ -28,10 +26,7 @@ def albrecht_collatz_1(symbolic=False):
     return QuadrilateralScheme("Albrecht-Collatz 1", weights, points, 3, citation)
 
 
-def albrecht_collatz_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def albrecht_collatz_2():
     r = sqrt(frac(3, 5))
     s = sqrt(frac(1, 3))
     t = sqrt(frac(14, 15))
@@ -42,10 +37,7 @@ def albrecht_collatz_2(symbolic=False):
     return QuadrilateralScheme("Albrecht-Collatz 2", weights, points, 5, citation)
 
 
-def albrecht_collatz_3(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def albrecht_collatz_3():
     r = sqrt(frac(7, 15))
     s, t = [sqrt((7 + i * sqrt(24)) / 15) for i in [+1, -1]]
     weights, points = concat(
@@ -56,9 +48,7 @@ def albrecht_collatz_3(symbolic=False):
     return QuadrilateralScheme("Albrecht-Collatz 3", weights, points, 5, citation)
 
 
-def albrecht_collatz_4(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def albrecht_collatz_4():
     weights, points = concat(
         zero(frac(2, 45)),
         symm_r0([frac(2, 45), 1]),

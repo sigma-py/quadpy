@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-
-import numpy
-import sympy
+from sympy import sqrt, Rational as frac
 
 from ..helpers import article, fsd, pm, untangle, z
 from ._helpers import QuadrilateralScheme
@@ -18,17 +16,13 @@ citation = article(
 )
 
 
-def hammer_stroud_1_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
+def hammer_stroud_1_2():
     data = [(1, fsd(2, (sqrt(frac(2, 3)), 1)))]
     points, weights = untangle(data)
     return QuadrilateralScheme("Hammer-Stroud 1-2", weights, points, 3, citation)
 
 
-def hammer_stroud_2_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
+def hammer_stroud_2_2():
     alpha = sqrt(frac(3, 5))
     data = [
         (frac(64, 81), z(2)),
@@ -39,9 +33,7 @@ def hammer_stroud_2_2(symbolic=False):
     return QuadrilateralScheme("Hammer-Stroud 2-2", weights, points, 5, citation)
 
 
-def hammer_stroud_3_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
+def hammer_stroud_3_2():
     xi1, xi2 = [sqrt(frac(3, 287) * (38 - i * sqrt(583))) for i in [+1, -1]]
     data = [
         (frac(98, 405), fsd(2, (sqrt(frac(6, 7)), 1))),

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
+import sympy
 
 from ..helpers import backend_to_function
 from ..nsimplex import NSimplexScheme, get_vol, transform
@@ -40,8 +41,9 @@ class TetrahedronScheme(NSimplexScheme):
         return
 
 
-def _s4():
-    return numpy.array([[0.25, 0.25, 0.25, 0.25]])
+def _s4(symbolic):
+    frac = sympy.Rational if symbolic else lambda x, y: x / y
+    return numpy.full((1, 4), frac(1, 4))
 
 
 def _s31(a):

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-
-import sympy
+from sympy import Rational as frac
 
 from ..helpers import article, pm, untangle, z
 from ._helpers import NCubeScheme
@@ -19,12 +18,9 @@ _citation = article(
 )
 
 
-def ewing(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def ewing(n):
     data = [(frac(2, 3), z(n)), (frac(1, 3 * 2 ** n), pm(n, 1))]
 
     points, weights = untangle(data)
-    reference_volume = 2 ** n
-    weights *= reference_volume
+    weights *= 2 ** n
     return NCubeScheme("Ewing", n, weights, points, 3, _citation)

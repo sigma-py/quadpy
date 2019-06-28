@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-
 import numpy
-import sympy
+from sympy import Rational as frac, sqrt
 
 from ..helpers import article
 from ._helpers import QuadrilateralScheme, concat, symm_r0, symm_s, zero
@@ -18,8 +17,7 @@ citation = article(
 )
 
 
-def tyler_1(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
+def tyler_1():
     weights, points = concat(
         zero(-frac(28, 45)),
         symm_s([frac(1, 36), 1]),
@@ -29,9 +27,7 @@ def tyler_1(symbolic=False):
     return QuadrilateralScheme("Tyler 1", weights, points, 5, citation)
 
 
-def tyler_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+def tyler_2():
     pm = numpy.array([+1, -1])
     r = sqrt(frac(6, 7))
     s, t = sqrt((114 - pm * 3 * sqrt(583)) / 287)
@@ -42,8 +38,7 @@ def tyler_2(symbolic=False):
     return QuadrilateralScheme("Tyler 2", weights, points, 7, citation)
 
 
-def tyler_3(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
+def tyler_3():
     weights, points = concat(
         zero(frac(449, 315)),
         symm_r0(
