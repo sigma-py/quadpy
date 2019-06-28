@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-
 import numpy
-import sympy
+from sympy import Rational as frac, sqrt
 
 from ..helpers import article, fsd, pm, untangle
 from ._helpers import NSphereScheme, integrate_monomial_over_unit_nsphere
@@ -18,11 +17,8 @@ citation = article(
 )
 
 
-def stroud_1969(n, symbolic=False):
+def stroud_1969(n):
     assert n > 2
-
-    sqrt = numpy.vecorize(sympy.sqrt) if symbolic else numpy.sqrt
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
     p_m = numpy.array([+1, -1])
 
     degree = 11
@@ -47,7 +43,7 @@ def stroud_1969(n, symbolic=False):
         k_range.append(10)
     # TODO build the equation system from orthogonal polynomials
     b = [
-        integrate_monomial_over_unit_nsphere([k] + (n - 1) * [0], symbolic)
+        integrate_monomial_over_unit_nsphere([k] + (n - 1) * [0], symbolic=True)
         for k in k_range
     ]
     A = [[sum(p[:, 0] ** k) for p in pts] for k in k_range]

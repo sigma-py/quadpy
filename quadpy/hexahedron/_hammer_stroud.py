@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-
-import numpy
-import sympy
+from sympy import Rational as frac, sqrt
 
 from ..helpers import article, fsd, pm, untangle, z
 from ._helpers import HexahedronScheme
@@ -18,16 +16,13 @@ _citation = article(
 )
 
 
-def hammer_stroud_1_3(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
+def hammer_stroud_1_3():
     data = [(frac(4, 3), fsd(3, (1, 1)))]
     points, weights = untangle(data)
     return HexahedronScheme("Hammer-Stroud 1-3", weights, points, 3, _citation)
 
 
-def hammer_stroud_2_3(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+def hammer_stroud_2_3():
     alpha = sqrt(frac(3, 5))
     data = [
         (+frac(56, 27), z(3)),
@@ -38,10 +33,7 @@ def hammer_stroud_2_3(symbolic=False):
     return HexahedronScheme("Hammer-Stroud 2-3", weights, points, 5, _citation)
 
 
-def hammer_stroud_4_3(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def hammer_stroud_4_3():
     data = [
         (frac(320, 361), fsd(3, (sqrt(frac(19, 30)), 1))),
         (frac(121, 361), pm(3, sqrt(frac(19, 33)))),
@@ -50,9 +42,7 @@ def hammer_stroud_4_3(symbolic=False):
     return HexahedronScheme("Hammer-Stroud 4-3", weights, points, 5, _citation)
 
 
-def _hammer_stroud_5_3(variant_a, symbolic=False):
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def _hammer_stroud_5_3(variant_a):
     i = 1 if variant_a else -1
 
     r2 = (33 - i * sqrt(165)) / 28
@@ -79,18 +69,15 @@ def _hammer_stroud_5_3(variant_a, symbolic=False):
     )
 
 
-def hammer_stroud_5_3a(symbolic=False):
-    return _hammer_stroud_5_3(True, symbolic)
+def hammer_stroud_5_3a():
+    return _hammer_stroud_5_3(True)
 
 
-def hammer_stroud_5_3b(symbolic=False):
-    return _hammer_stroud_5_3(False, symbolic)
+def hammer_stroud_5_3b():
+    return _hammer_stroud_5_3(False)
 
 
-def hammer_stroud_6_3(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def hammer_stroud_6_3():
     alpha = sqrt(frac(6, 7))
     data = [
         (frac(1078, 3645), fsd(3, (alpha, 1))),

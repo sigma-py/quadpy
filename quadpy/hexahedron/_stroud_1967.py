@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-
-import numpy
-import sympy
+from sympy import sqrt, Rational as frac
 
 from ..helpers import article, untangle
 from ._helpers import HexahedronScheme, rss_pm, z
@@ -20,16 +18,13 @@ citation = article(
 )
 
 
-def stroud_1967(symbolic=False):
+def stroud_1967():
     # Analytic expression for all quantities are given in
     #
     # J.W. Peterson,
     # Analytical Formulae for Two of A. H. Stroud's Quadrature Rules,
     # Sep. 2009,
     # <https://arxiv.org/pdf/0909.5106.pdf>.
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
     sqrt19 = sqrt(19)
     t = sqrt(71440 + 6802 * sqrt19)
 

@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-
 import numpy
-import sympy
+from sympy import sqrt, Rational as frac
 
 from ..helpers import article, untangle
 from ._helpers import WedgeScheme
@@ -21,34 +20,25 @@ citation = article(
 # <https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_wedge/quadrature_rules_wedge.html>
 
 
-def felippa_1(symbolic=False):
-    data = [(1, _s3(symbolic))]
+def felippa_1():
+    data = [(1, _s3(symbolic=True))]
     points, weights = untangle(data)
     return WedgeScheme("Felippa 1", weights, points, 1, citation)
 
 
-def felippa_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def felippa_2():
     data = [(frac(1, 6), _s21_z(frac(1, 6), sqrt(frac(1, 3))))]
     points, weights = untangle(data)
     return WedgeScheme("Felippa 2", weights, points, 2, citation)
 
 
-def felippa_3(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def felippa_3():
     data = [(frac(1, 6), _s21_z(frac(1, 2), sqrt(frac(1, 3))))]
     points, weights = untangle(data)
     return WedgeScheme("Felippa 3", weights, points, 2, citation)
 
 
-def felippa_4(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def felippa_4():
     # roots of  135 x^4 - 240 x^3 + 120 x^2 - 20 x + 1
     a1, a2 = [
         (40 - 5 * sqrt(10) - i * sqrt(950 - 220 * sqrt(10))) / 90 for i in [+1, -1]
@@ -63,18 +53,15 @@ def felippa_4(symbolic=False):
     return WedgeScheme("Felippa 4", weights, points, 4, citation)
 
 
-def felippa_5(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def felippa_5():
     a1, a2 = [(6 - i * sqrt(15)) / 21 for i in [+1, -1]]
     data = [
-        (0.3498310570689643e-01, _s21_z(a1, sqrt(frac(3, 5)))),
-        (0.3677615355236283e-01, _s21_z(a2, sqrt(frac(3, 5)))),
-        (frac(1, 16), _s3_z(sqrt(frac(3, 5)), symbolic)),
+        (0.3498310570689643e-01, _s21_z(a1, numpy.sqrt(3.0/5.0))),
+        (0.3677615355236283e-01, _s21_z(a2, numpy.sqrt(3.0/5.0))),
+        (1.0/16.0, _s3_z(numpy.sqrt(3.0 / 5.0), symbolic=False)),
         (0.5597296913103428e-01, _s21(a1)),
         (0.5884184568378053e-01, _s21(a2)),
-        (frac(1, 10), _s3(symbolic)),
+        (0.1, _s3(symbolic=False)),
     ]
     points, weights = untangle(data)
     return WedgeScheme("Felippa 5", weights, points, 5, citation)

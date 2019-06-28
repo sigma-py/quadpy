@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-
 import warnings
 
-import numpy
-import sympy
+from sympy import sqrt, Rational as frac
 
 from ..helpers import article
 from ._helpers import (
@@ -30,10 +28,7 @@ citation = article(
 )
 
 
-def franke_1(lmbda, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def franke_1(lmbda):
     assert -frac(9, 5) <= lmbda <= frac(9, 4)
 
     a = sqrt(frac(9 + 5 * lmbda, 15))
@@ -53,10 +48,7 @@ def franke_1(lmbda, symbolic=False):
     )
 
 
-def franke_2a(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def franke_2a():
     a = sqrt(frac(15 + 2 * sqrt(30), 35))
     b = sqrt(frac(15 - 2 * sqrt(30), 35))
 
@@ -71,10 +63,7 @@ def franke_2a(symbolic=False):
     return QuadrilateralScheme("Franke 2a", weights, points, 7, citation)
 
 
-def franke_2b(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def franke_2b():
     a = sqrt(frac(15 + 2 * sqrt(30), 35))
     b = sqrt(frac(15 - 2 * sqrt(30), 35))
 
@@ -89,10 +78,7 @@ def franke_2b(symbolic=False):
     return QuadrilateralScheme("Franke 2b", weights, points, 7, citation)
 
 
-def franke_3a(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def franke_3a():
     a = sqrt(frac(5, 9) + frac(2, 63) * sqrt(70))
     b = sqrt(frac(5, 9) - frac(2, 63) * sqrt(70))
 
@@ -113,10 +99,7 @@ def franke_3a(symbolic=False):
     return QuadrilateralScheme("Franke 3a", weights, points, 9, citation)
 
 
-def franke_3b(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def franke_3b():
     a = sqrt(frac(5, 9) + frac(2, 63) * sqrt(70))
     b = sqrt(frac(5, 9) - frac(2, 63) * sqrt(70))
 
@@ -137,10 +120,7 @@ def franke_3b(symbolic=False):
     return QuadrilateralScheme("Franke 3b", weights, points, 9, citation)
 
 
-def franke_3c(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def franke_3c():
     a = sqrt(frac(5, 9) + frac(2, 63) * sqrt(70))
     b = sqrt(frac(5, 9) - frac(2, 63) * sqrt(70))
 
@@ -161,15 +141,12 @@ def franke_3c(symbolic=False):
     return QuadrilateralScheme("Franke 3c", weights, points, 9, citation)
 
 
-def franke_5(symbolic=False):
+def franke_5():
     # DUP
-    return tyler_2(symbolic)
+    return tyler_2()
 
 
-def franke_6(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def franke_6():
     a = sqrt(frac(3, 2))
     b = sqrt(frac(3, 7) * (1 + sqrt(frac(10, 31))))
     c = sqrt(frac(3, 7) * (1 - sqrt(frac(10, 31))))

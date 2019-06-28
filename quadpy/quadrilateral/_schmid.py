@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-
 import numpy
-import sympy
+from sympy import sqrt, Rational as frac
 
 from ..helpers import article
 from ._helpers import QuadrilateralScheme
@@ -20,10 +19,7 @@ citation = article(
 )
 
 
-def schmid_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def schmid_2():
     points = numpy.array(
         [
             [-sqrt(frac(1, 3)), +sqrt(frac(2, 3))],
@@ -36,10 +32,7 @@ def schmid_2(symbolic=False):
     return QuadrilateralScheme("Schmid 2", weights, points, 2, citation)
 
 
-def schmid_4(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def schmid_4():
     points = numpy.array(
         [
             [0, (sqrt(3) + sqrt(15)) / 6],
@@ -64,7 +57,7 @@ def schmid_4(symbolic=False):
     return QuadrilateralScheme("Schmid 4", weights, points, 4, citation)
 
 
-def schmid_6(symbolic=False):
+def schmid_6():
     # TODO better-quality points/weights for Schmidt
     points = numpy.array(
         [

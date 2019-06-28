@@ -9,9 +9,7 @@ Mathematical Tables and Other Aids to Computation.
 Vol. 12, No. 64 (Oct., 1958), pp. 272-280,
 <https://www.jstor.org/stable/2002370>
 """
-
-import numpy
-import sympy
+from sympy import sqrt, Rational as frac
 
 from ..helpers import article
 from ._helpers import TetrahedronScheme, untangle2
@@ -38,10 +36,7 @@ citation = article(
 
 
 # Used in Zienkiewicz 4
-def hammer_marlowe_stroud_1(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def hammer_marlowe_stroud_1():
     degree = 2
     data = {"r": [[frac(1, 4), 1 / sqrt(5)]]}
     points, weights = untangle2(data)
@@ -50,10 +45,7 @@ def hammer_marlowe_stroud_1(symbolic=False):
     )
 
 
-def hammer_marlowe_stroud_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def hammer_marlowe_stroud_2():
     degree = 2
     data = {"r": [[frac(1, 4), -1 / sqrt(5)]]}
 
@@ -64,9 +56,7 @@ def hammer_marlowe_stroud_2(symbolic=False):
 
 
 # Used in Zienkiewicz 5
-def hammer_marlowe_stroud_3(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def hammer_marlowe_stroud_3():
     degree = 3
     data = {"s4": [[-frac(4, 5)]], "r": [[frac(9, 20), frac(1, 3)]]}
 

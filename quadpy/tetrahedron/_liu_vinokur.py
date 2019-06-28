@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-
 import numpy
-import sympy
+from sympy import Rational as frac, sqrt, cos, acos
 
 from ..helpers import article
 from ._helpers import TetrahedronScheme, _s4
@@ -19,55 +18,44 @@ citation = article(
 # TODO update weight/points specification
 
 
-def liu_vinokur_01(symbolic=False):
+def liu_vinokur_01():
     weights = numpy.concatenate([numpy.full(1, 1)])
-    points = numpy.concatenate([_s4()])
+    points = numpy.concatenate([_s4(symbolic=True)])
     degree = 1
     return TetrahedronScheme("Liu-Vinokur 1", weights, points, degree, citation)
 
 
-def liu_vinokur_02(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def liu_vinokur_02():
     weights = numpy.concatenate([numpy.full(4, frac(1, 4))])
     points = numpy.concatenate([_r_alpha(1.0)])
     degree = 1
     return TetrahedronScheme("Liu-Vinokur 2", weights, points, degree, citation)
 
 
-def liu_vinokur_03(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def liu_vinokur_03():
     weights = numpy.concatenate([numpy.full(4, frac(1, 4))])
     points = numpy.concatenate([_r_alpha(1 / sqrt(5))])
     degree = 2
     return TetrahedronScheme("Liu-Vinokur 3", weights, points, degree, citation)
 
 
-def liu_vinokur_04(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def liu_vinokur_04():
     weights = numpy.concatenate([numpy.full(1, frac(4, 5)), numpy.full(4, frac(1, 20))])
-    points = numpy.concatenate([_s4(), _r_alpha(1)])
+    points = numpy.concatenate([_s4(symbolic=True), _r_alpha(1)])
     degree = 2
     return TetrahedronScheme("Liu-Vinokur 4", weights, points, degree, citation)
 
 
-def liu_vinokur_05(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def liu_vinokur_05():
     weights = numpy.concatenate(
         [numpy.full(1, -frac(4, 5)), numpy.full(4, frac(9, 20))]
     )
-    points = numpy.concatenate([_s4(), _r_alpha(frac(1, 3))])
+    points = numpy.concatenate([_s4(symbolic=True), _r_alpha(frac(1, 3))])
     degree = 3
     return TetrahedronScheme("Liu-Vinokur 5", weights, points, degree, citation)
 
 
-def liu_vinokur_06(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def liu_vinokur_06():
     weights = numpy.concatenate(
         [numpy.full(4, frac(1, 40)), numpy.full(4, frac(9, 40))]
     )
@@ -76,10 +64,7 @@ def liu_vinokur_06(symbolic=False):
     return TetrahedronScheme("Liu-Vinokur 6", weights, points, degree, citation)
 
 
-def liu_vinokur_07(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def liu_vinokur_07():
     weights = numpy.concatenate(
         [
             numpy.full(1, -frac(148, 1875)),
@@ -87,15 +72,12 @@ def liu_vinokur_07(symbolic=False):
             numpy.full(6, frac(56, 375)),
         ]
     )
-    points = numpy.concatenate([_s4(), _r_alpha(frac(5, 7)), _r_beta(sqrt(70) / 28)])
+    points = numpy.concatenate([_s4(symbolic=True), _r_alpha(frac(5, 7)), _r_beta(sqrt(70) / 28)])
     degree = 4
     return TetrahedronScheme("Liu-Vinokur 7", weights, points, degree, citation)
 
 
-def liu_vinokur_08(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def liu_vinokur_08():
     alpha1 = (+sqrt(65944 - 19446 * sqrt(11)) + 51 * sqrt(11) - 154) / 89
     alpha2 = (-sqrt(65944 - 19446 * sqrt(11)) + 51 * sqrt(11) - 154) / 89
     weights = numpy.concatenate(
@@ -112,9 +94,7 @@ def liu_vinokur_08(symbolic=False):
     return TetrahedronScheme("Liu-Vinokur 8", weights, points, degree, citation)
 
 
-def liu_vinokur_09(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def liu_vinokur_09():
     weights = numpy.concatenate(
         [
             numpy.full(1, -frac(32, 15)),
@@ -124,16 +104,13 @@ def liu_vinokur_09(symbolic=False):
         ]
     )
     points = numpy.concatenate(
-        [_s4(), _r_alpha(1), _r_alpha(frac(1, 5)), _r_beta(frac(1, 2))]
+        [_s4(symbolic=True), _r_alpha(1), _r_alpha(frac(1, 5)), _r_beta(frac(1, 2))]
     )
     degree = 4
     return TetrahedronScheme("Liu-Vinokur 9", weights, points, degree, citation)
 
 
-def liu_vinokur_10(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def liu_vinokur_10():
     weights = numpy.concatenate(
         [
             numpy.full(1, frac(32, 105)),
@@ -144,7 +121,7 @@ def liu_vinokur_10(symbolic=False):
     )
     points = numpy.concatenate(
         [
-            _s4(),
+            _s4(symbolic=True),
             _r_alpha(1),
             _r_alpha(-frac(1, 3)),
             _r_gamma_delta((2 + sqrt(2)) / 4, (2 - sqrt(2)) / 4),
@@ -154,10 +131,7 @@ def liu_vinokur_10(symbolic=False):
     return TetrahedronScheme("Liu-Vinokur 10", weights, points, degree, citation)
 
 
-def liu_vinokur_11(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def liu_vinokur_11():
     weights = numpy.concatenate(
         [
             (11 - 4 * sqrt(2)) / numpy.full(4, 840),
@@ -173,12 +147,7 @@ def liu_vinokur_11(symbolic=False):
     return TetrahedronScheme("Liu-Vinokur 11", weights, points, degree, citation)
 
 
-def liu_vinokur_12(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    cos = sympy.cos if symbolic else numpy.cos
-    acos = sympy.acos if symbolic else numpy.arccos
-
+def liu_vinokur_12():
     lmbda = frac(4, 27) * (
         4 * sqrt(79) * cos((acos(67 * sqrt(79) / 24964) + 2 * numpy.pi) / 3) + 71
     )
@@ -201,10 +170,7 @@ def liu_vinokur_12(symbolic=False):
     return TetrahedronScheme("Liu-Vinokur 12", weights, points, degree, citation)
 
 
-def liu_vinokur_13(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def liu_vinokur_13():
     weights = numpy.concatenate(
         [
             numpy.full(1, -frac(16, 21)),
@@ -215,7 +181,7 @@ def liu_vinokur_13(symbolic=False):
     )
     points = numpy.concatenate(
         [
-            _s4(),
+            _s4(symbolic=True),
             _r_alpha((2 + sqrt(13)) / 9),
             _r_alpha((2 - sqrt(13)) / 9),
             _r_beta(frac(1, 2)),
@@ -226,9 +192,7 @@ def liu_vinokur_13(symbolic=False):
     return TetrahedronScheme("Liu-Vinokur 13", weights, points, degree, citation)
 
 
-def liu_vinokur_14(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def liu_vinokur_14():
     weights = numpy.concatenate(
         [
             numpy.full(1, frac(16, 105)),
@@ -240,7 +204,7 @@ def liu_vinokur_14(symbolic=False):
     )
     points = numpy.concatenate(
         [
-            _s4(),
+            _s4(symbolic=True),
             _r_alpha(1),
             _r_alpha(-frac(1, 3)),
             _r_alpha(frac(1, 2)),
