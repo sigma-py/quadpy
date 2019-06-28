@@ -62,13 +62,6 @@ def pmx(*data):
     return weights, points
 
 
-def pmy(*data):
-    w, x, y = numpy.array(data).T
-    points = _stack_first_last([[x, +y], [x, -y]])
-    weights = numpy.tile(w, 2)
-    return weights, points
-
-
 def pm(*data):
     w, s, t = numpy.array(data).T
     points = _stack_first_last([[+s, +t], [-s, -t]])
