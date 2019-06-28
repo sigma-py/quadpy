@@ -3,7 +3,8 @@
 from math import factorial
 
 import numpy
-from sympy import Rational as frac, sqrt
+from sympy import Rational as frac
+from sympy import sqrt
 
 from ..helpers import techreport, untangle
 from ._helpers import NSimplexScheme

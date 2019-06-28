@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from sympy import sqrt, Rational as frac, pi, sin, cos
+from sympy import Rational as frac
+from sympy import cos, pi, sin, sqrt
 
 from ..helpers import article, untangle
 from ._helpers import NCubeScheme, _s

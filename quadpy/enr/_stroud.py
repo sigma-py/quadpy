@@ -7,7 +7,8 @@ Prentice Hall, 1971.
 """
 import numpy
 import scipy.special
-from sympy import Rational as frac, pi, sqrt, gamma
+from sympy import Rational as frac
+from sympy import gamma, pi, sqrt
 
 from ..helpers import book, fsd, pm_array0, untangle
 from ._helpers import EnrScheme

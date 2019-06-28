@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import Rational as frac, sqrt
+from sympy import Rational as frac
+from sympy import sqrt
 
 from ..helpers import article, fsd, pm, pm_array0, untangle
 from ._helpers import SphereScheme, cartesian_to_spherical_sympy

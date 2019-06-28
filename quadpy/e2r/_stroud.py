@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-
 import numpy
-import sympy
+from sympy import Rational as frac
+from sympy import cos, pi, sin, sqrt
 
 from ..helpers import book, untangle
 from ._helpers import E2rScheme
@@ -23,13 +23,7 @@ _citation = book(
 )
 
 
-def stroud_4_1(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
-    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
-    pi = sympy.pi if symbolic else numpy.pi
-
+def stroud_4_1():
     pts = (
         2
         * sqrt(5)

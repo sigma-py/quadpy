@@ -2,8 +2,8 @@
 #
 import numpy
 
-from ._helpers import LineSegmentScheme
 from ..helpers import article
+from ._helpers import LineSegmentScheme
 
 citation = article(
     authors=["J. Waldvogel"],

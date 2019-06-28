@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from sympy import sqrt, pi, Rational as frac, gamma
+from sympy import Rational as frac
+from sympy import gamma, pi, sqrt
 
 from ..enr2._stroud_secrest import _nsimplex
 from ..helpers import article, fsd, pm, untangle

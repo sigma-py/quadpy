@@ -2,8 +2,8 @@
 #
 import numpy
 
-from ._helpers import E1r2Scheme
 from ..helpers import article
+from ._helpers import E1r2Scheme
 
 citation = article(
     authors=["Alan Genz", "B.D. Keister"],

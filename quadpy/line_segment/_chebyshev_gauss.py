@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from mpmath import mp
 import numpy
 import sympy
+from mpmath import mp
 
 from ._helpers import LineSegmentScheme
 

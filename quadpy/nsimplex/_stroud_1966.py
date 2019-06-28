@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from sympy import sqrt, Rational as frac
-from mpmath import mp
+from sympy import Rational as frac
+from sympy import sqrt
 
 from ..helpers import article, rd, untangle
 from ._helpers import NSimplexScheme
@@ -36,22 +36,19 @@ def stroud_1966_1(n):
     return NSimplexScheme("Stroud 1966-I", n, weights, points, degree, citation)
 
 
-def stroud_1966_2(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    roots = mp.polyroots if symbolic else numpy.roots
-
+def stroud_1966_2(n):
     degree = 3
     # r is a smallest real-valued root of a polynomial of degree 3
-    rts = roots(
+    rts = numpy.roots(
         [2 * (n - 2) * (n + 1) * (n + 3), -(5 * n ** 2 + 5 * n - 18), 4 * n, -1]
     )
     r = numpy.min([r.real for r in rts if abs(r.imag) < 1.0e-15])
 
     s = 1 - n * r
-    t = frac(1, 2)
+    t = 0.5
 
     B = (n - 2) / (1 - 2 * n * r ** 2 - 2 * (1 - n * r) ** 2) / (n + 1) / (n + 2)
-    C = 2 * (frac(1, n + 1) - B) / n
+    C = 2 * (1 / (n + 1) - B) / n
 
     data = [(B, rd(n + 1, [(r, n), (s, 1)])), (C, rd(n + 1, [(t, 2)]))]
 

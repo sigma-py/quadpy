@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import Rational as frac, sqrt
+from sympy import Rational as frac
+from sympy import sqrt
 
 from ..helpers import book, fsd, pm, pm_array0, untangle
 from ._helpers import NSphereScheme, integrate_monomial_over_unit_nsphere
@@ -44,7 +45,7 @@ def stroud_un_5_1(n):
     return NSphereScheme("Stroud Un 5-1", n, weights, points, degree, citation)
 
 
-def stroud_un_5_2(n, symbolic=False):
+def stroud_un_5_2(n):
     degree = 5
 
     B1 = frac(1, n * (n + 2))

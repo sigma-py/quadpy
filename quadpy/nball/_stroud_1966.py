@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from sympy import sqrt, Rational as frac
+from sympy import Rational as frac
+from sympy import sqrt
 
 from ..helpers import article, combine, fsd, pm, pm_array, untangle, z
 from ._helpers import NBallScheme, volume_unit_ball

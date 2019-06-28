@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-
-import numpy
-import sympy
+from sympy import Rational as frac
+from sympy import sqrt
 
 from ..helpers import article, fsd, untangle, z
 from ._helpers import NCubeScheme
@@ -19,10 +18,7 @@ _citation = article(
 )
 
 
-def dobrodeev_1970(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def dobrodeev_1970(n):
     assert n >= 3, "Only works for n >= 3, not n = {}".format(n)
 
     A = frac(1, 8)

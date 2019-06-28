@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import Rational as frac, sqrt
+from sympy import Rational as frac
+from sympy import sqrt
 
 from ..helpers import article
 from ._helpers import TriangleScheme, concat, s1, s2, s3

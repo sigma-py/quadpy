@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-
 import numpy
-import sympy
+from sympy import Rational as frac
 
 from ..helpers import book, untangle
 from ._hammer_stroud import hammer_stroud_1a as stroud_tn_2_1a
@@ -34,10 +33,8 @@ citation = book(
 )
 
 
-def stroud_tn_1_1(n, symbolic=False):
+def stroud_tn_1_1(n):
     # midpoint rule
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
     degree = 1
     data = [(1, numpy.full((1, n + 1), frac(1, n + 1)))]
     points, weights = untangle(data)

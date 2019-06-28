@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from sympy import sqrt, Rational as frac
+from sympy import Rational as frac
+from sympy import sqrt
 
 from ..helpers import article, untangle
 from ._helpers import PyramidScheme, _s4, _s4_0

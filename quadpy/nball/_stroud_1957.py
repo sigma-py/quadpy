@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from sympy import Rational as frac, pi, sqrt, cos, sin
+from sympy import Rational as frac
+from sympy import cos, pi, sin, sqrt
 
 from ..helpers import article, untangle
 from ._helpers import NBallScheme, volume_unit_ball

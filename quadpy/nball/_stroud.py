@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import sqrt, Rational as frac
+from sympy import Rational as frac
+from sympy import sqrt
 
 from ..helpers import book, pm, untangle
 from ._hammer_stroud import hammer_stroud_11n, hammer_stroud_12n
