@@ -15,6 +15,7 @@ from quadpy.nsphere._helpers import integrate_monomial_over_unit_nsphere
     + [quadpy.nsphere.stroud_un_3_2(n) for n in range(2, 7)]
     + [quadpy.nsphere.stroud_un_5_1(n) for n in range(2, 7)]
     + [quadpy.nsphere.stroud_un_5_2(n) for n in range(2, 7)]
+    + [quadpy.nsphere.stroud_un_5_3(n) for n in range(2, 7)]
     + [quadpy.nsphere.stroud_un_5_4(n) for n in range(2, 7)]
     + [quadpy.nsphere.stroud_un_5_4(n) for n in range(2, 7)]
     + [quadpy.nsphere.stroud_un_7_1(n) for n in range(2, 7)]

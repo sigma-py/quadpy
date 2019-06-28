@@ -62,13 +62,6 @@ def _s21(a):
     return numpy.array([[a, a, b], [a, b, a], [b, a, a]])
 
 
-def _s111(a, b):
-    c = 1 - a - b
-    return numpy.array(
-        [[a, b, c], [c, a, b], [b, c, a], [b, a, c], [c, b, a], [a, c, b]]
-    )
-
-
 def _s111ab(a, b):
     c = 1 - a - b
     out = numpy.array(
