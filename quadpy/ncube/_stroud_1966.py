@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from sympy import Rational as frac
+from sympy import Rational as frac, S
 from sympy import sqrt
 
 from ..helpers import article, fsd, pm, untangle, z
@@ -38,7 +38,7 @@ def stroud_1966_b(n):
     data = [(frac(4, 5 * n + 4), z(n))]
     for k in range(1, n + 1):
         r = sqrt(frac(5 * k + 4, 15))
-        arr = numpy.full((2 ** (n - k + 1), n), 0)
+        arr = numpy.full((2 ** (n - k + 1), n), S(0))
         arr[:, k - 1 :] = pm(n - k + 1, 1)
         arr[:, k - 1] *= r
         arr[:, k:] *= s

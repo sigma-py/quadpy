@@ -65,9 +65,13 @@ def stroud_1967_7_c(n):
 
     alpha = sqrt(2 * (n + 2) * (n + 4))
 
-    pm_ = numpy.array([+1, -1])
-    r1, r2 = sqrt(((n + 2) * (n + 4) + pm_ * 2 * alpha) / (n + 4) / (n + 6))
-    A1, A2 = (2 * (n + 2) ** 2 + pm_ * (n - 2) * alpha) / (4 * n * (n + 2) ** 2)
+    r1, r2 = [
+        sqrt(((n + 2) * (n + 4) + i * 2 * alpha) / (n + 4) / (n + 6)) for i in [+1, -1]
+    ]
+    A1, A2 = [
+        (2 * (n + 2) ** 2 + i * (n - 2) * alpha) / (4 * n * (n + 2) ** 2)
+        for i in [+1, -1]
+    ]
 
     s = nsphere.stroud_1967(n)
 

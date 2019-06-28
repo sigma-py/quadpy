@@ -16,13 +16,13 @@ from ._lauffer import lauffer_5 as stroud_tn_5_2
 from ._stroud_1961 import stroud_1961 as stroud_tn_3_3
 from ._stroud_1964 import stroud_1964a as stroud_tn_3_6a
 from ._stroud_1964 import stroud_1964b as stroud_tn_3_6b
-from ._stroud_1966 import stroud_1966_i as stroud_tn_3_2
-from ._stroud_1966 import stroud_1966_ii as stroud_tn_3_4
-from ._stroud_1966 import stroud_1966_iii as stroud_tn_3_5
-from ._stroud_1966 import stroud_1966_iv as stroud_tn_3_7
-from ._stroud_1966 import stroud_1966_v as stroud_tn_3_8
-from ._stroud_1966 import stroud_1966_vi as stroud_tn_3_10
-from ._stroud_1966 import stroud_1966_vii as stroud_tn_3_11
+from ._stroud_1966 import stroud_1966_1 as stroud_tn_3_2
+from ._stroud_1966 import stroud_1966_2 as stroud_tn_3_4
+from ._stroud_1966 import stroud_1966_3 as stroud_tn_3_5
+from ._stroud_1966 import stroud_1966_4 as stroud_tn_3_7
+from ._stroud_1966 import stroud_1966_5 as stroud_tn_3_8
+from ._stroud_1966 import stroud_1966_6 as stroud_tn_3_10
+from ._stroud_1966 import stroud_1966_7 as stroud_tn_3_11
 from ._stroud_1969 import stroud_1969 as stroud_tn_5_1
 
 citation = book(

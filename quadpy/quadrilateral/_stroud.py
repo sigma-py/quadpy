@@ -71,11 +71,9 @@ def stroud_c2_5_4():
 
 def stroud_c2_7_4():
     # product Gauss 7
-    pm = numpy.array([+1, -1])
+    r, s = [sqrt((15 - i * 2 * sqrt(30)) / 35) for i in [+1, -1]]
 
-    r, s = sqrt((15 - pm * 2 * sqrt(30)) / 35)
-
-    B1, B2 = (59 + pm * 6 * sqrt(30)) / 864
+    B1, B2 = [(59 + i * 6 * sqrt(30)) / 864 for i in [+1, -1]]
     B3 = frac(49, 864)
 
     r = sqrt(frac(3, 5))

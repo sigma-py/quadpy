@@ -28,13 +28,13 @@ from ._stroud import (
 from ._stroud_1961 import stroud_1961
 from ._stroud_1964 import stroud_1964a, stroud_1964b
 from ._stroud_1966 import (
-    stroud_1966_i,
-    stroud_1966_ii,
-    stroud_1966_iii,
-    stroud_1966_iv,
-    stroud_1966_v,
-    stroud_1966_vi,
-    stroud_1966_vii,
+    stroud_1966_1,
+    stroud_1966_2,
+    stroud_1966_3,
+    stroud_1966_4,
+    stroud_1966_5,
+    stroud_1966_6,
+    stroud_1966_7,
 )
 from ._stroud_1969 import stroud_1969
 from ._walkington import (
@@ -53,13 +53,13 @@ __all__ = [
     "stroud_1961",
     "stroud_1964a",
     "stroud_1964b",
-    "stroud_1966_i",
-    "stroud_1966_ii",
-    "stroud_1966_iii",
-    "stroud_1966_iv",
-    "stroud_1966_v",
-    "stroud_1966_vi",
-    "stroud_1966_vii",
+    "stroud_1966_1",
+    "stroud_1966_2",
+    "stroud_1966_3",
+    "stroud_1966_4",
+    "stroud_1966_5",
+    "stroud_1966_6",
+    "stroud_1966_7",
     "stroud_1969",
     "stroud_tn_1_1",
     "stroud_tn_1_2",

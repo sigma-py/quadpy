@@ -20,7 +20,7 @@ from ._stroud import (
     stroud_13_1,
     stroud_15_1,
 )
-from ._stroud_secrest import stroud_secrest_v, stroud_secrest_vi
+from ._stroud_secrest import stroud_secrest_5, stroud_secrest_6
 
 __all__ = [
     "haegemans_piessens_a",
@@ -40,6 +40,6 @@ __all__ = [
     "stroud_11_2",
     "stroud_13_1",
     "stroud_15_1",
-    "stroud_secrest_v",
-    "stroud_secrest_vi",
+    "stroud_secrest_5",
+    "stroud_secrest_6",
 ]
