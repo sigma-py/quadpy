@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-
-import sympy
+from sympy import Rational as frac, sqrt
 
 from ..helpers import article
 from ._helpers import TetrahedronScheme, untangle2
@@ -17,18 +16,14 @@ citation = article(
 )
 
 
-def yu_1(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def yu_1():
     degree = 2
-    data = {"s31": [[frac(1, 4), 0.138196601125015]]}
+    data = {"s31": [[frac(1, 4), frac(1, 4) - sqrt(5) * frac(1, 20)]]}
     points, weights = untangle2(data)
     return TetrahedronScheme("Yu 1", weights, points, degree, citation)
 
 
 def yu_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
     degree = 3
     data = {"s4": [[-frac(4, 5)]], "s31": [[frac(9, 20), frac(1, 6)]]}
     points, weights = untangle2(data)
@@ -56,7 +51,7 @@ def yu_4():
     return TetrahedronScheme("Yu 4", weights, points, degree, citation)
 
 
-def yu_5(symbolic=False):
+def yu_5():
     degree = 6
     data = {
         "s4": [[0.9040129046014750e-01]],

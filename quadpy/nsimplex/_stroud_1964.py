@@ -22,7 +22,6 @@ citation = article(
 
 
 def _stroud_1964(variant_a, n, symbolic=False):
-
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     roots = mp.polyroots if symbolic else numpy.roots
 

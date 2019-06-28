@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-
 from math import factorial as fact
 
 import numpy
-import sympy
+from sympy import Rational as frac
 
 from ..helpers import article, get_all_exponents, untangle
 from ._helpers import NSimplexScheme
@@ -20,9 +19,7 @@ citation = article(
 )
 
 
-def grundmann_moeller(n, s, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def grundmann_moeller(n, s):
     d = 2 * s + 1
 
     exponents = get_all_exponents(n + 1, s)

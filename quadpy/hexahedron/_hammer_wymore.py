@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
+import math
 
-import numpy
 import sympy
 
 from ..helpers import article, untangle
@@ -18,9 +18,10 @@ _citation = article(
 )
 
 
-def hammer_wymore(lmbda=1, symbolic=False):
+def hammer_wymore(lmbda=1):
+    symbolic = not isinstance(lmbda, float)
     frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+    sqrt = sympy.sqrt if symbolic else math.sqrt
 
     I0 = 8
     I2 = frac(8, 3)
@@ -57,4 +58,4 @@ def hammer_wymore(lmbda=1, symbolic=False):
     data = [(a1, fs_r00(x1)), (a2, fs_rr0(x2)), (a3, pm_rrr(x3)), (a4, pm_rrr(x4))]
 
     points, weights = untangle(data)
-    return HexahedronScheme("Hammer-Wymore", weights, points, 7, _citation)
+    return HexahedronScheme("Hammer-Wymore (lambda = {})".format(lmbda), weights, points, 7, _citation)

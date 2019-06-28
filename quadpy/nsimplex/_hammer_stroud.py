@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-
-import numpy
-import sympy
+from sympy import sqrt, Rational as frac
 
 from ..helpers import article, rd, untangle
 from ._helpers import NSimplexScheme
@@ -20,10 +18,7 @@ citation = article(
 )
 
 
-def hammer_stroud_1a(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def hammer_stroud_1a(n):
     degree = 2
     r = (n + 2 - sqrt(n + 2)) / (n + 1) / (n + 2)
     s = (n + 2 + n * sqrt(n + 2)) / (n + 1) / (n + 2)
@@ -33,10 +28,7 @@ def hammer_stroud_1a(n, symbolic=False):
     return NSimplexScheme("Hammer-Stround 1a", n, weights, points, degree, citation)
 
 
-def hammer_stroud_1b(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def hammer_stroud_1b(n):
     degree = 2
     r = (n + 2 + sqrt(n + 2)) / (n + 1) / (n + 2)
     s = (n + 2 - n * sqrt(n + 2)) / (n + 1) / (n + 2)
@@ -46,9 +38,7 @@ def hammer_stroud_1b(n, symbolic=False):
     return NSimplexScheme("Hammer-Stround 1b", n, weights, points, degree, citation)
 
 
-def hammer_stroud_2(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def hammer_stroud_2(n):
     degree = 3
 
     B = -frac((n + 1) ** 2, 4 * (n + 2))

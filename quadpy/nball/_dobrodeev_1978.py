@@ -46,9 +46,7 @@ def dobrodeev_1978(n):
     I22 = integrate_monomial_over_unit_nball([2, 2] + (n - 2) * [0])
     I4 = integrate_monomial_over_unit_nball([4] + (n - 1) * [0])
     pm_type, i, j, k = dim_config[n]
-    G, a, b, c = compute_dobrodeev(
-        n, I0, I2, I22, I4, pm_type, i, j, k
-    )
+    G, a, b, c = compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k)
 
     data = [(G, fsd(n, (a, i))), (G, fsd(n, (b, j), (c, k)))]
 
