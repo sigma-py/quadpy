@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import sqrt, Rational as frac
+from sympy import Rational as frac
+from sympy import sqrt
 
 from ..helpers import article, fsd, pm, untangle
 from ._helpers import NSphereScheme, integrate_monomial_over_unit_nsphere

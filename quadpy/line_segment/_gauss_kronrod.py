@@ -6,10 +6,10 @@ import numpy
 
 import orthopy
 
+from ..helpers import article
 from ..tools import scheme_from_rc
 from ._gauss_legendre import gauss_legendre
 from ._helpers import LineSegmentScheme
-from ..helpers import article
 
 citation = article(
     authors=["Dirk P. Laurie"],

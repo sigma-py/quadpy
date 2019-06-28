@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-
 import warnings
-
-import sympy
 
 from ..helpers import article
 from ._helpers import QuadrilateralScheme, concat, pm, zero
@@ -20,17 +17,13 @@ citation = article(
 )
 
 
-def cohen_gismalla_1(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def cohen_gismalla_1():
     # TODO improve precision
     warnings.warn("The Cohen-Gismalla schemes are only given in single-precision.")
 
     u = 0.84623312
     v = 0.46607171
-    weights, points = concat(
-        zero(frac(8, 7)), pm([frac(5, 7), u, -v], [frac(5, 7), v, u])
-    )
+    weights, points = concat(zero(8.0 / 7.0), pm([5.0 / 7.0, u, -v], [5.0 / 7.0, v, u]))
     # This scheme is of order 5 for symmetric integrands
     return QuadrilateralScheme("CohenGismalla 1", weights, points, 3, citation)
 

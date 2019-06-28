@@ -9,7 +9,8 @@ Mathematical Tables and Other Aids to Computation.
 Vol. 12, No. 64 (Oct., 1958), pp. 272-280,
 <https://www.jstor.org/stable/2002370>
 """
-from sympy import Rational as frac, sqrt
+from sympy import Rational as frac
+from sympy import sqrt
 
 from ..helpers import article
 from ._helpers import TriangleScheme, concat, r, s3

@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-
-import numpy
-import sympy
+from sympy import Rational as frac
+from sympy import sqrt
 
 from ..helpers import article, fsd, untangle, z
 from ._helpers import NCubeScheme, _s2, _s11
@@ -20,10 +19,7 @@ _citation = article(
 )
 
 
-def stroud_1968(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def stroud_1968(n):
     r = sqrt(frac(7, 15))
     s, t = [sqrt((7 + i * sqrt(24)) / 15) for i in [+1, -1]]
     data = [

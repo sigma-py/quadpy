@@ -58,4 +58,6 @@ def hammer_wymore(lmbda=1):
     data = [(a1, fs_r00(x1)), (a2, fs_rr0(x2)), (a3, pm_rrr(x3)), (a4, pm_rrr(x4))]
 
     points, weights = untangle(data)
-    return HexahedronScheme("Hammer-Wymore (lambda = {})".format(lmbda), weights, points, 7, _citation)
+    return HexahedronScheme(
+        "Hammer-Wymore (lambda = {})".format(lmbda), weights, points, 7, _citation
+    )

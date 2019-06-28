@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from sympy import Rational as frac, sqrt, cos, acos
+from sympy import Rational as frac
+from sympy import acos, cos, sqrt
 
 from ..helpers import article
 from ._helpers import TetrahedronScheme, _s4

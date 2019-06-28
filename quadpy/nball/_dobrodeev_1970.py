@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import pi, sqrt, gamma, Rational as frac
+from sympy import Rational as frac
+from sympy import gamma, pi, sqrt
 
 from ..helpers import article, fsd, untangle, z
 from ._helpers import NBallScheme

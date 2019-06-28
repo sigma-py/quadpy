@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import Rational as frac, sqrt
+from sympy import Rational as frac
+from sympy import sqrt
 
 from ..helpers import article
 from ._helpers import TetrahedronScheme, untangle2
@@ -23,7 +24,7 @@ def yu_1():
     return TetrahedronScheme("Yu 1", weights, points, degree, citation)
 
 
-def yu_2(symbolic=False):
+def yu_2():
     degree = 3
     data = {"s4": [[-frac(4, 5)]], "s31": [[frac(9, 20), frac(1, 6)]]}
     points, weights = untangle2(data)

@@ -16,7 +16,7 @@ _citation = article(
 )
 
 
-def dobrodeev_1978(n, symbolic=False):
+def dobrodeev_1978(n):
     assert 2 <= n <= 20
 
     dim_config = {
@@ -49,9 +49,7 @@ def dobrodeev_1978(n, symbolic=False):
 
     pm_type, i, j, k = dim_config[n]
 
-    G, a, b, c = compute_dobrodeev(
-        n, I0, I2, I22, I4, pm_type, i, j, k, symbolic=symbolic
-    )
+    G, a, b, c = compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k, symbolic=True)
 
     data = [(G, fsd(n, (a, i))), (G, fsd(n, (b, j), (c, k)))]
 

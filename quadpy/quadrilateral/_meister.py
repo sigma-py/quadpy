@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-
-import sympy
+from sympy import Rational as frac
 
 from ..helpers import article
 from ._helpers import QuadrilateralScheme, concat, symm_r0, symm_s, symm_s_t, zero
@@ -18,9 +17,7 @@ citation = article(
 )
 
 
-def meister(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def meister():
     r = frac(2, 3)
     s = frac(1, 3)
 

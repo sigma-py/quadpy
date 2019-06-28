@@ -3,7 +3,8 @@
 import warnings
 
 import numpy
-from sympy import Rational as frac, sqrt, pi
+from sympy import Rational as frac
+from sympy import pi, sqrt
 
 from ..helpers import article, fsd, pm, pm_roll, untangle
 from ._helpers import E3rScheme

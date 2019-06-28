@@ -2,9 +2,9 @@
 #
 import numpy
 
+from ..helpers import article
 from ._gauss_legendre import gauss_legendre
 from ._helpers import LineSegmentScheme
-from ..helpers import article
 
 citation = article(
     authors=["T.N.L. Patterson"],

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from sympy import Rational as frac, sqrt, pi
+from sympy import Rational as frac
+from sympy import pi, sqrt
 
 from ..helpers import article, fsd, pm, pm_array, pm_array0, untangle
 from ._helpers import E2r2Scheme

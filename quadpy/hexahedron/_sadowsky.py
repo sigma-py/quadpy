@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from sympy import sqrt, Rational as frac
+from sympy import Rational as frac
+from sympy import sqrt
 
 from ..helpers import article, untangle
 from ._helpers import HexahedronScheme, fs_r00, fs_rr0, fs_rrs

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from sympy import Rational as frac, sqrt
+from sympy import Rational as frac
+from sympy import sqrt
 
 from ..helpers import article, rd, untangle
 from ._helpers import NSimplexScheme, integrate_monomial_over_unit_simplex

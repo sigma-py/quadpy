@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-
-import numpy
-import sympy
+from sympy import Rational as frac
+from sympy import sqrt
 
 from ..helpers import book, untangle
 from ..ncube import ewing
@@ -33,19 +32,16 @@ _citation = book(
 )
 
 
-def stroud_c3_3_2(symbolic=False):
+def stroud_c3_3_2():
     # Product Gauss scheme
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
     data = [(frac(1, 8), pm_rrr(sqrt(frac(1, 3))))]
     points, weights = untangle(data)
     weights *= 8
     return HexahedronScheme("Stroud C3 3-2", weights, points, 3, _citation)
 
 
-def stroud_c3_3_3(symbolic=False):
-    return ewing(3, symbolic)
+def stroud_c3_3_3():
+    return ewing(3)
 
 
 __all__ = [

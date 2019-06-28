@@ -3,7 +3,8 @@
 from math import factorial as fact
 
 import numpy
-from sympy import sqrt, Rational as frac
+from sympy import Rational as frac
+from sympy import sqrt
 
 from ..helpers import article, fsd, untangle
 from ._helpers import NSphereScheme, integrate_monomial_over_unit_nsphere

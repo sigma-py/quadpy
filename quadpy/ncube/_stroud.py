@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-
 import numpy
-import sympy
+from sympy import Rational as frac
+from sympy import sqrt
 
 from ..helpers import book, fsd, pm
 from ._ewing import ewing as stroud_cn_3_5
@@ -43,10 +43,7 @@ def stroud_cn_1_2(n):
     return NCubeScheme("Stroud Cn 1-2", n, weights, points, 1, _citation)
 
 
-def stroud_cn_3_2(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def stroud_cn_3_2(n):
     reference_volume = 2 ** n
 
     weights = numpy.full(2 * n, frac(reference_volume, 2 * n))
@@ -55,10 +52,7 @@ def stroud_cn_3_2(n, symbolic=False):
     return NCubeScheme("Stroud Cn 3-2", n, weights, points, 3, _citation)
 
 
-def stroud_cn_3_4(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def stroud_cn_3_4(n):
     reference_volume = 2 ** n
     weights = numpy.full(2 ** n, frac(reference_volume, 2 ** n))
     r = sqrt(3) / 3
@@ -66,9 +60,7 @@ def stroud_cn_3_4(n, symbolic=False):
     return NCubeScheme("Stroud Cn 3-4", n, weights, points, 3, _citation)
 
 
-def stroud_cn_3_6(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def stroud_cn_3_6(n):
     lst = n * [[frac(1, 3), frac(4, 3), frac(1, 3)]]
     weights = numpy.product(numpy.array(numpy.meshgrid(*lst)).T.reshape(-1, n), axis=-1)
     lst = n * [[-1, 0, +1]]
@@ -76,10 +68,7 @@ def stroud_cn_3_6(n, symbolic=False):
     return NCubeScheme("Stroud Cn 3-6", n, weights, points, 3, _citation)
 
 
-def stroud_cn_5_9(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def stroud_cn_5_9(n):
     lst = n * [[frac(5, 9), frac(8, 9), frac(5, 9)]]
     weights = numpy.product(numpy.array(numpy.meshgrid(*lst)).T.reshape(-1, n), axis=-1)
     sqrt35 = sqrt(frac(3, 5))
