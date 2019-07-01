@@ -30,10 +30,10 @@ from ._stroud import (
 from ._stroud_1967_5 import stroud_1967_5_a, stroud_1967_5_b
 from ._stroud_1967_7 import stroud_1967_7_2a, stroud_1967_7_2b, stroud_1967_7_4
 from ._stroud_secrest import (
-    stroud_secrest_i,
-    stroud_secrest_ii,
-    stroud_secrest_iii,
-    stroud_secrest_iv,
+    stroud_secrest_1,
+    stroud_secrest_2,
+    stroud_secrest_3,
+    stroud_secrest_4,
 )
 
 __all__ = [
@@ -67,8 +67,8 @@ __all__ = [
     "stroud_1967_7_2a",
     "stroud_1967_7_2b",
     "stroud_1967_7_4",
-    "stroud_secrest_i",
-    "stroud_secrest_ii",
-    "stroud_secrest_iii",
-    "stroud_secrest_iv",
+    "stroud_secrest_1",
+    "stroud_secrest_2",
+    "stroud_secrest_3",
+    "stroud_secrest_4",
 ]
