@@ -34,7 +34,7 @@ def _newton_cotes(n, point_fun):
     # weights
     if n == 0:
         weights = numpy.ones(1)
-        return points, points, weights, degree
+        return weights, points, weights, degree
 
     def get_poly(t, m, n):
         return sympy.prod(

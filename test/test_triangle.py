@@ -125,6 +125,7 @@ schemes_tol = [
     (quadpy.triangle.newton_cotes_closed(4), 1.0e-14),
     (quadpy.triangle.newton_cotes_closed(5), 1.0e-14),
     (quadpy.triangle.newton_cotes_closed(6), 1.0e-13),
+    (quadpy.triangle.newton_cotes_open(0), 1.0e-14),
     (quadpy.triangle.newton_cotes_open(1), 1.0e-14),
     (quadpy.triangle.newton_cotes_open(2), 1.0e-14),
     (quadpy.triangle.newton_cotes_open(3), 1.0e-14),

@@ -82,7 +82,7 @@ _points_7 = _points_3 + [
 
 
 def genz_keister(n):
-    assert n >= 1
+    assert n >= 0
 
     if n == 0:
         degree = 1

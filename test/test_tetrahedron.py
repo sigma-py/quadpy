@@ -47,6 +47,7 @@ schemes = [
     quadpy.tetrahedron.newton_cotes_closed(4),
     quadpy.tetrahedron.newton_cotes_closed(5),
     quadpy.tetrahedron.newton_cotes_closed(6),
+    quadpy.tetrahedron.newton_cotes_open(0),
     quadpy.tetrahedron.newton_cotes_open(1),
     quadpy.tetrahedron.newton_cotes_open(2),
     quadpy.tetrahedron.newton_cotes_open(3),
@@ -151,6 +152,7 @@ def test_scheme(scheme):
     tetrahedron = numpy.array(
         [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
     )
+
     degree = check_degree(
         lambda poly: scheme.integrate(poly, tetrahedron),
         integrate_monomial_over_unit_simplex,
