@@ -316,7 +316,6 @@ def test_scheme(scheme, tol):
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
     triangle = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]])
-    print(scheme.name)
 
     def eval_orthopolys(x):
         bary = numpy.array([x[0], x[1], 1.0 - x[0] - x[1]])
