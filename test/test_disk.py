@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
+import orthopy
 import pytest
 
 import quadpy
-from helpers import check_degree
-from quadpy.nball._helpers import integrate_monomial_over_unit_nball
+from helpers import check_degree_ortho
 
 schemes = [
     quadpy.disk.albrecht_1(),
@@ -83,18 +83,44 @@ schemes = [
 
 
 @pytest.mark.parametrize("scheme", schemes)
-def test_scheme(scheme, tol=1.0e-14):
+def test_scheme(scheme, tol=1.0e-11):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
-    degree = check_degree(
-        lambda poly: scheme.integrate(poly, [0.0, 0.0], 1.0),
-        integrate_monomial_over_unit_nball,
-        2,
-        scheme.degree + 1,
-        tol=tol,
-    )
-    assert degree == scheme.degree, "{}  -- Observed: {}   expected: {}".format(
+    # degree = check_degree(
+    #     lambda poly: scheme.integrate(poly, [0.0, 0.0], 1.0),
+    #     integrate_monomial_over_unit_nball,
+    #     2,
+    #     scheme.degree + 1,
+    #     tol=tol,
+    # )
+    # assert degree == scheme.degree, "{}  -- Observed: {}   expected: {}".format(
+    #     scheme.name, degree, scheme.degree
+    # )
+
+    def eval_orthopolys(x):
+        return numpy.concatenate(
+            orthopy.disk.tree(x, scheme.degree + 1, symbolic=False)
+        )
+
+    vals = scheme.integrate(eval_orthopolys, [0, 0], 1)
+    # Put vals back into the tree structure:
+    # len(approximate[k]) == k+1
+    approximate = [
+        vals[k * (k + 1) // 2 : (k + 1) * (k + 2) // 2]
+        for k in range(scheme.degree + 2)
+    ]
+
+    exact = [numpy.zeros(k + 1) for k in range(scheme.degree + 2)]
+    exact[0][0] = numpy.sqrt(numpy.pi)
+
+    print(approximate)
+    print(exact)
+
+    degree = check_degree_ortho(approximate, exact, abs_tol=tol)
+    print(degree)
+
+    assert degree >= scheme.degree, "{} -- Observed: {}, expected: {}".format(
         scheme.name, degree, scheme.degree
     )
     return
