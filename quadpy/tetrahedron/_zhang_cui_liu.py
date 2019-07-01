@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 from ..helpers import article
-from ._helpers import TetrahedronScheme, untangle2
+from ._helpers import TetrahedronScheme, concat, s22, s31, s211, s1111
 
 citation = article(
     authors=["Linbo Zhang", "Tao Cui", "Hui Liu"],
@@ -18,8 +18,8 @@ citation = article(
 
 def zhang_cui_liu_1():
     degree = 8
-    data = {
-        "s31": [
+    weights, points = concat(
+        s31(
             [
                 0.0063971477799023213214514203351730,
                 0.0396754230703899012650713295393895,
@@ -36,11 +36,11 @@ def zhang_cui_liu_1():
                 0.0548588924136974404669241239903914,
                 0.1842036969491915122759464173489092,
             ],
-        ],
-        "s22": [
+        ),
+        s22(
             [0.0357196122340991824649509689966176, 0.0634362877545398924051412387018983]
-        ],
-        "s211": [
+        ),
+        s211(
             [
                 0.0071831906978525394094511052198038,
                 0.0216901620677280048026624826249302,
@@ -51,16 +51,15 @@ def zhang_cui_liu_1():
                 0.2044800806367957142413355748727453,
                 0.5805771901288092241753981713906204,
             ],
-        ],
-    }
-    points, weights = untangle2(data)
+        ),
+    )
     return TetrahedronScheme("Zhang-Cui-Liu 1", weights, points, degree, citation)
 
 
 def zhang_cui_liu_2():
     degree = 14
-    data = {
-        "s31": [
+    weights, points = concat(
+        s31(
             [
                 0.0040651136652707670436208836835636,
                 0.3272533625238485639093096692685289,
@@ -81,8 +80,8 @@ def zhang_cui_liu_2():
                 0.0003875737905908214364538721248394,
                 0.0141049738029209600635879152102928,
             ],
-        ],
-        "s211": [
+        ),
+        s211(
             [
                 0.0116429719721770369855213401005552,
                 0.1021653241807768123476692526982584,
@@ -103,8 +102,8 @@ def zhang_cui_liu_2():
                 0.2254963562525029053780724154201103,
                 0.4769063974420887115860583354107011,
             ],
-        ],
-        "s1111": [
+        ),
+        s1111(
             [
                 0.0030099245347082451376888748208987,
                 0.3905984281281458000000000000000000,
@@ -147,7 +146,6 @@ def zhang_cui_liu_2():
                 0.3447815506171641228703671870920331,
                 0.0867217283322215394629438740085828,
             ],
-        ],
-    }
-    points, weights = untangle2(data)
+        ),
+    )
     return TetrahedronScheme("Zhang-Cui-Liu 2", weights, points, degree, citation)
