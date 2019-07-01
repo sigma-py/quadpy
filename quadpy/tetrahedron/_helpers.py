@@ -242,6 +242,41 @@ def s211(*data):
     return weights, points
 
 
+def s1111(*data):
+    w, a, b, c = numpy.array(data).T
+    d = 1 - a - b - c
+    points = _stack_first_last(
+        [
+            [a, b, c, d],
+            [a, b, d, c],
+            [a, c, b, d],
+            [a, c, d, b],
+            [a, d, b, c],
+            [a, d, c, b],
+            [b, a, c, d],
+            [b, a, d, c],
+            [b, c, a, d],
+            [b, c, d, a],
+            [b, d, a, c],
+            [b, d, c, a],
+            [c, a, b, d],
+            [c, a, d, b],
+            [c, b, a, d],
+            [c, b, d, a],
+            [c, d, a, b],
+            [c, d, b, a],
+            [d, a, b, c],
+            [d, a, c, b],
+            [d, b, a, c],
+            [d, b, c, a],
+            [d, c, a, b],
+            [d, c, b, a],
+        ]
+    )
+    weights = numpy.tile(w, 24)
+    return weights, points
+
+
 def r(*data):
     w, r = numpy.array(data).T
     a = (1 - r) / 4
