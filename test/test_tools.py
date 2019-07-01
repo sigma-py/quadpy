@@ -1,4 +1,3 @@
-
 import math
 from distutils.version import LooseVersion
 

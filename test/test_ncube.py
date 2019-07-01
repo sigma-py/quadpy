@@ -3,8 +3,8 @@ import math
 import numpy
 import pytest
 
-import quadpy
 import orthopy
+import quadpy
 from helpers import check_degree_ortho
 
 

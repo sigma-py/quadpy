@@ -1,4 +1,3 @@
-
 import numpy
 
 from ..helpers import book
