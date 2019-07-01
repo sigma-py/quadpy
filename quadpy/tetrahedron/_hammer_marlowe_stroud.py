@@ -13,7 +13,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import TetrahedronScheme, untangle2
+from ._helpers import TetrahedronScheme, concat, r, s4
 
 citation = article(
     authors=["P.C. Hammer", "O.J. Marlowe", "A.H. Stroud"],
@@ -39,8 +39,7 @@ citation = article(
 # Used in Zienkiewicz 4
 def hammer_marlowe_stroud_1():
     degree = 2
-    data = {"r": [[frac(1, 4), 1 / sqrt(5)]]}
-    points, weights = untangle2(data)
+    weights, points = r([frac(1, 4), 1 / sqrt(5)])
     return TetrahedronScheme(
         "Hammer-Marlowe-Stroud 1", weights, points, degree, citation
     )
@@ -48,9 +47,7 @@ def hammer_marlowe_stroud_1():
 
 def hammer_marlowe_stroud_2():
     degree = 2
-    data = {"r": [[frac(1, 4), -1 / sqrt(5)]]}
-
-    points, weights = untangle2(data)
+    weights, points = r([frac(1, 4), -1 / sqrt(5)])
     return TetrahedronScheme(
         "Hammer-Marlowe-Stroud 2", weights, points, degree, citation
     )
@@ -59,9 +56,7 @@ def hammer_marlowe_stroud_2():
 # Used in Zienkiewicz 5
 def hammer_marlowe_stroud_3():
     degree = 3
-    data = {"s4": [[-frac(4, 5)]], "r": [[frac(9, 20), frac(1, 3)]]}
-
-    points, weights = untangle2(data)
+    weights, points = concat(s4(-frac(4, 5)), r([frac(9, 20), frac(1, 3)]))
     return TetrahedronScheme(
         "Hammer-Marlowe-Stroud 3", weights, points, degree, citation
     )

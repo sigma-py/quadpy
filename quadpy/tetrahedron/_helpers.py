@@ -10,10 +10,22 @@ from ..nsimplex import NSimplexScheme, get_vol, transform
 class TetrahedronScheme(NSimplexScheme):
     def __init__(self, name, weights, points, degree, citation=None):
         self.name = name
-        self.weights = weights
-        self.points = points
         self.degree = degree
         self.citation = citation
+
+        if weights.dtype == numpy.float64:
+            self.weights = weights
+        else:
+            assert weights.dtype in [numpy.dtype("O"), numpy.int64]
+            self.weights = weights.astype(numpy.float64)
+            self.weights_symbolic = weights
+
+        if points.dtype == numpy.float64:
+            self.points = points
+        else:
+            assert points.dtype in [numpy.dtype("O"), numpy.int64]
+            self.points = points.astype(numpy.float64)
+            self.points_symbolic = points
         return
 
     def show(
@@ -47,7 +59,7 @@ def _s4(symbolic):
 
 
 def _s31(a):
-    b = 1.0 - 3 * a
+    b = 1 - 3 * a
     return numpy.array([[a, a, a, b], [a, a, b, a], [a, b, a, a], [b, a, a, a]])
 
 
@@ -131,7 +143,7 @@ def untangle2(data):
     if "s4" in data:
         assert len(data["s4"]) == 1
         w = numpy.array(data["s4"]).T
-        points.append(_s4())
+        points.append(_s4(symbolic=False))
         weights.append(w[0])
 
     if "s31" in data:
@@ -174,3 +186,81 @@ def _collapse0(a):
     """Collapse all dimensions of `a` except the first.
     """
     return a.reshape(a.shape[0], -1)
+
+
+def s4(weight):
+    symbolic = not isinstance(weight, float)
+    frac = sympy.Rational if symbolic else lambda x, y: x / y
+    return numpy.array([weight]), numpy.full((1, 4), frac(1, 4))
+
+
+def s31(*data):
+    w, a = numpy.array(data).T
+    b = 1 - 3 * a
+    points = _stack_first_last([[a, a, a, b], [a, a, b, a], [a, b, a, a], [b, a, a, a]])
+    weights = numpy.tile(w, 4)
+    return weights, points
+
+
+def s22(*data):
+    w, a = numpy.array(data).T
+    b = (1 - 2 * a) / 2
+    points = _stack_first_last(
+        [
+            [a, a, b, b],
+            [a, b, a, b],
+            [b, a, a, b],
+            [a, b, b, a],
+            [b, a, b, a],
+            [b, b, a, a],
+        ]
+    )
+    weights = numpy.tile(w, 6)
+    return weights, points
+
+
+def s211(*data):
+    w, a, b = numpy.array(data).T
+    c = 1 - 2 * a - b
+    points = _stack_first_last(
+        [
+            [a, a, b, c],
+            [a, b, a, c],
+            [b, a, a, c],
+            [a, b, c, a],
+            [b, a, c, a],
+            [b, c, a, a],
+            [a, a, c, b],
+            [a, c, a, b],
+            [c, a, a, b],
+            [a, c, b, a],
+            [c, a, b, a],
+            [c, b, a, a],
+        ]
+    )
+    weights = numpy.tile(w, 12)
+    return weights, points
+
+
+def r(*data):
+    w, r = numpy.array(data).T
+    a = (1 - r) / 4
+    b = 1 - 3 * a
+    # like s31
+    points = _stack_first_last([[a, a, a, b], [a, a, b, a], [a, b, a, a], [b, a, a, a]])
+    weights = numpy.tile(w, 4)
+    return weights, points
+
+
+def _stack_first_last(arr):
+    """Stacks an input array of shape (i, j, k) such that the output array is of shape
+    (i*k, j).
+    """
+    arr = numpy.swapaxes(arr, 0, 1)
+    return arr.reshape(arr.shape[0], -1).T
+
+
+def concat(*data):
+    weights = numpy.concatenate([t[0] for t in data])
+    points = numpy.vstack([t[1] for t in data])
+    return weights, points

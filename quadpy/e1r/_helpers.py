@@ -14,7 +14,9 @@ class E1rScheme:
         return
 
     def integrate(self, f, dot=numpy.dot):
-        return dot(f(self.points.T), self.weights)
+        x = numpy.array([self.points.T])
+        fx = numpy.asarray(f(x))
+        return dot(fx, self.weights)
 
     def show(self, *args, **kwargs):
         import matplotlib.pyplot as plt

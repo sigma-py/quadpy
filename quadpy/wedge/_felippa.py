@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
+import sympy
 from sympy import Rational as frac
 from sympy import sqrt
 

@@ -3,8 +3,8 @@
 import numpy
 import pytest
 from mpmath import mp
-import orthopy
 
+import orthopy
 import quadpy
 
 
