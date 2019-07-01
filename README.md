@@ -524,7 +524,7 @@ Example:
 ```python
 import quadpy
 
-scheme = quadpy.e3r.stroud_secrest_ix()
+scheme = quadpy.e3r.stroud_secrest_09()
 scheme.show()
 val = scheme.integrate(lambda x: x[0]**2)
 ```
@@ -541,7 +541,7 @@ Example:
 ```python
 import quadpy
 
-scheme = quadpy.e3r2.stroud_secrest_xa
+scheme = quadpy.e3r2.stroud_secrest_10a
 scheme.show()
 val = scheme.integrate(lambda x: x[0]**2)
 ```

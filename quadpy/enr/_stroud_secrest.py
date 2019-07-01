@@ -17,14 +17,14 @@ citation = article(
 )
 
 
-def stroud_secrest_i(n):
+def stroud_secrest_1(n):
     data = [(frac(1, n + 1), sqrt(n + 1) * _nsimplex(n))]
     points, weights = untangle(data)
     weights *= 2 * sqrt(pi) ** n * gamma(n) / gamma(frac(n, 2))
     return EnrScheme("Stroud-Secrest I", n, weights, points, 2, citation)
 
 
-def stroud_secrest_ii(n):
+def stroud_secrest_2(n):
     nu = sqrt(n * (n + 1))
     data = [(frac(1, 2 * n), fsd(n, (nu, 1)))]
     points, weights = untangle(data)
@@ -32,7 +32,7 @@ def stroud_secrest_ii(n):
     return EnrScheme("Stroud-Secrest II", n, weights, points, 3, citation)
 
 
-def stroud_secrest_iii(n):
+def stroud_secrest_3(n):
     nu = sqrt(n + 1)
     data = [(frac(1, 2 ** n), pm(n, nu))]
     points, weights = untangle(data)
@@ -40,7 +40,7 @@ def stroud_secrest_iii(n):
     return EnrScheme("Stroud-Secrest III", n, weights, points, 3, citation)
 
 
-def stroud_secrest_iv(n):
+def stroud_secrest_4(n):
     nu = sqrt((n + 2) * (n + 3))
     xi = sqrt(frac((n + 2) * (n + 3), 2))
     A = frac(2 * (2 * n + 3), (n + 2) * (n + 3))

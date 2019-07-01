@@ -54,7 +54,9 @@ def test_scheme(scheme, tol=1.0e-14):
         scheme.degree + 1,
         tol=tol,
     )
-    assert degree == scheme.degree, "{} (dim: {}) -- Observed: {}   expected: {}".format(
+    assert (
+        degree == scheme.degree
+    ), "{} (dim: {}) -- Observed: {}   expected: {}".format(
         scheme.name, scheme.dim, degree, scheme.degree
     )
     return
