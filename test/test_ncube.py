@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 #
+import math
+
 import numpy
 import pytest
 
 import quadpy
-from helpers import check_degree
-from quadpy.ncube._helpers import integrate_monomial_over_ncube
+import orthopy
+from helpers import check_degree_ortho
 
 
 @pytest.mark.parametrize(
@@ -34,22 +36,50 @@ from quadpy.ncube._helpers import integrate_monomial_over_ncube
     + [quadpy.ncube.stroud_cn_5_9(n) for n in range(3, 7)]
     + [quadpy.ncube.stroud_cn_7_1(n) for n in range(3, 7)],
 )
-def test_scheme(scheme, tol=1.0e-14):
+def test_scheme(scheme, tol=1.0e-11):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
     n = scheme.dim
-    ncube_limits = [[0.0, 1.0]] * n
+    ncube_limits = [[-1.0, 1.0]] * n
     ncube = quadpy.ncube.ncube_points(*ncube_limits)
-    degree = check_degree(
-        lambda poly: scheme.integrate(poly, ncube),
-        lambda exp: integrate_monomial_over_ncube(ncube_limits, exp),
-        n,
-        scheme.degree + 1,
-        tol=tol,
-    )
-    assert degree >= scheme.degree, "observed: {}, expected: {}".format(
-        degree, scheme.degree
+
+    # degree = check_degree(
+    #     lambda poly: scheme.integrate(poly, ncube),
+    #     lambda exp: integrate_monomial_over_ncube(ncube_limits, exp),
+    #     n,
+    #     scheme.degree + 1,
+    #     tol=tol,
+    # )
+    # assert degree >= scheme.degree, "observed: {}, expected: {}".format(
+    #     degree, scheme.degree
+    # )
+
+    def eval_orthopolys(x):
+        return numpy.concatenate(
+            orthopy.ncube.tree(x, scheme.degree + 1, symbolic=False)
+        )
+
+    vals = scheme.integrate(eval_orthopolys, ncube)
+
+    # Put vals back into the tree structure:
+    # len(approximate[k]) == k+1
+    approximate = [
+        vals[
+            numpy.prod(range(k, k + n))
+            // math.factorial(n) : numpy.prod(range(k + 1, k + 1 + n))
+            // math.factorial(n)
+        ]
+        for k in range(scheme.degree + 2)
+    ]
+
+    exact = [numpy.zeros(len(s)) for s in approximate]
+    exact[0][0] = numpy.sqrt(2.0) ** n
+
+    degree = check_degree_ortho(approximate, exact, abs_tol=tol)
+
+    assert degree >= scheme.degree, "{} (dim: {}) -- Observed: {}, expected: {}".format(
+        scheme.name, scheme.dim, degree, scheme.degree
     )
     return
 
