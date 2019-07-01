@@ -1,12 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Arthur Stroud,
-Approximate Calculation of Multiple Integrals,
-Prentice Hall, 1971.
-"""
 import numpy
-import scipy.special
 from sympy import Rational as frac
 from sympy import gamma, pi, sqrt
 
