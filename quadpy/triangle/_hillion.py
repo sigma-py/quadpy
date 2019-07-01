@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 # ENH in the article, most schemes are given only in single precision. quadpy adds
 # symbolic expressions
 

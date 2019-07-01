@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 
 from ..helpers import article, compute_dobrodeev, fsd, untangle
 from ._helpers import NCubeScheme, integrate_monomial_over_ncube

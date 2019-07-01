@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 """
 Arthur Stroud,
 Approximate Calculation of Multiple Integrals,

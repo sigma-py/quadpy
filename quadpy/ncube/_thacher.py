@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from sympy import sqrt
 
 from ..helpers import article, untangle

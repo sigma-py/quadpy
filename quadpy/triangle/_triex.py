@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from ._lyness_jespersen import lyness_jespersen_18 as triex_19
 from ._lyness_jespersen import lyness_jespersen_21 as triex_28
 

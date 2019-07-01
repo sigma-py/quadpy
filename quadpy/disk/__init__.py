@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 
 from ._albrecht import (
     albrecht_1,

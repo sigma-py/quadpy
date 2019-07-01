@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 # TODO There are three more schemes in the technical report
 from ..helpers import techreport
 from ._helpers import QuadrilateralScheme, concat, s4a, symm_r0, symm_s_t

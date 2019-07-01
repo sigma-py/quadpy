@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 # The results have later been reproduced in:
 #
 # H.T. Rathod, K.V. Nagaraja, B. Venkatesudu,

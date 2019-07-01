@@ -1,6 +1,5 @@
 """
 Import data from Witherden/Vincent.
-
 zip file: https://www.sciencedirect.com/science/article/pii/S0898122115001224
 """
 import json

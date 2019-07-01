@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from ._beckers_haegemans import beckers_haegemans_8, beckers_haegemans_9
 from ._gatermann import gatermann
 from ._hammer_marlowe_stroud import (

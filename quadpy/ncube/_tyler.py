@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from sympy import Rational as frac
 
 from ..helpers import article, fsd, untangle, z

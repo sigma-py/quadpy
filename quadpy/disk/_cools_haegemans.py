@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 # TODO There are more schemes in the technical report
 import math
 

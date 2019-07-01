@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from ..helpers import article, untangle
 from ._helpers import E2r2Scheme, _s4, _s8, _s40, _z
 

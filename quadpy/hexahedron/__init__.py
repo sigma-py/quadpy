@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from ..ncube import ncube_points as cube_points
 from ..ncube import transform
 from ._hammer_stroud import (

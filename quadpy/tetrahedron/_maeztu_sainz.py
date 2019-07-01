@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from ..helpers import article
 from ._helpers import TetrahedronScheme, concat, s4, s22, s31, s211
 

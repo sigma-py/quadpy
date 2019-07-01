@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 import numpy
 from sympy import Rational as frac
 

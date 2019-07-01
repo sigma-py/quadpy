@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 import numpy
 
 from ..nsphere._helpers import integrate_monomial_over_unit_nsphere
