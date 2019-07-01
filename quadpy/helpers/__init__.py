@@ -1,4 +1,3 @@
-
 from .combinatorics import (
     combine,
     fs_array,

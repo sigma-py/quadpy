@@ -1,4 +1,3 @@
-
 from ..helpers import article
 from ._hammer_wymore import hammer_wymore
 from ._helpers import HexahedronScheme

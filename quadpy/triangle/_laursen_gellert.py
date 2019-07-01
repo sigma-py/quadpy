@@ -1,4 +1,3 @@
-
 from sympy import Rational as frac
 
 from ..helpers import article
