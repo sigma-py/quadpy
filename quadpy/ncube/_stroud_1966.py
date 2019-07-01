@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-from sympy import Rational as frac, S
-from sympy import sqrt
+from sympy import Rational as frac
+from sympy import S, sqrt
 
 from ..helpers import article, fsd, pm, untangle, z
 from ._helpers import NCubeScheme, _fs11

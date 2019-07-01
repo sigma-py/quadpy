@@ -59,9 +59,9 @@ def stroud_1969(n):
     A = [[sum(p[:, 0] ** k) for p in pts] for k in k_range]
 
     flt = numpy.vectorize(float)
-    x = numpy.linalg.solve(flt(A), flt(b))
+    w = numpy.linalg.solve(flt(A), flt(b))
 
-    data = [(x[i], pts[i]) for i in range(len(x))]
+    data = [(w[i], pts[i]) for i in range(len(w))]
 
     points, weights = untangle(data)
     return NSimplexScheme("Stroud 1969", n, weights, points, degree, citation)

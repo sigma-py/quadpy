@@ -12,10 +12,22 @@ from ..nsimplex import get_vol
 class QuadrilateralScheme(NCubeScheme):
     def __init__(self, name, weights, points, degree, citation=None):
         self.name = name
-        self.weights = weights
-        self.points = points
         self.degree = degree
         self.citation = citation
+
+        if weights.dtype == numpy.float64:
+            self.weights = weights
+        else:
+            assert weights.dtype in [numpy.dtype("O"), numpy.int64]
+            self.weights = weights.astype(numpy.float64)
+            self.weights_symbolic = weights
+
+        if points.dtype == numpy.float64:
+            self.points = points
+        else:
+            assert points.dtype in [numpy.dtype("O"), numpy.int64]
+            self.points = points.astype(numpy.float64)
+            self.points_symbolic = points
         return
 
     def show(self, *args, **kwargs):

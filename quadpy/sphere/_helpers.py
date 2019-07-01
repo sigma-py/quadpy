@@ -7,11 +7,29 @@ import sympy
 class SphereScheme:
     def __init__(self, name, weights, points, azimuthal_polar, degree, citation):
         self.name = name
-        self.weights = weights
-        self.points = points
-        self.azimuthal_polar = azimuthal_polar
         self.degree = degree
         self.citation = citation
+
+        if weights.dtype == numpy.float64:
+            self.weights = weights
+        else:
+            assert weights.dtype in [numpy.dtype("O"), numpy.int64]
+            self.weights = weights.astype(numpy.float64)
+            self.weights_symbolic = weights
+
+        if points.dtype == numpy.float64:
+            self.points = points
+        else:
+            assert points.dtype in [numpy.dtype("O"), numpy.int64]
+            self.points = points.astype(numpy.float64)
+            self.points_symbolic = points
+
+        if azimuthal_polar.dtype == numpy.float64:
+            self.azimuthal_polar = azimuthal_polar
+        else:
+            assert azimuthal_polar.dtype in [numpy.dtype("O"), numpy.int64]
+            self.azimuthal_polar = azimuthal_polar.astype(numpy.float64)
+            self.azimuthal_polar_symbolic = azimuthal_polar
         return
 
     def show(self, *args, **kwargs):
