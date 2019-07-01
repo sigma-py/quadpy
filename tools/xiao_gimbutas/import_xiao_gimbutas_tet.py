@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 """
 Parse Fortran code to extract points and weight of the Xiao-Gimbutas schemes.
 """

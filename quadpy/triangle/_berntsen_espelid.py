@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from mpmath import mp
 
 from ..helpers import article, techreport

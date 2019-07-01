@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-#
-
 import numpy
 
 from ..helpers import book, untangle

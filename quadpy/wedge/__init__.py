@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-#
-
 from ._felippa import felippa_1, felippa_2, felippa_3, felippa_4, felippa_5, felippa_6
 from ._kubatko_yeager_maggi import (
     kubatko_yeager_maggi_1,

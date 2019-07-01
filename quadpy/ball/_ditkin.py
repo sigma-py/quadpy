@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 import sympy
 
 from ..helpers import article, pm, pm_array0, untangle, z

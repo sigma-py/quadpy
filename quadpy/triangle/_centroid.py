@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from ._helpers import TriangleScheme, s3
 
 
