@@ -14,10 +14,10 @@ from helpers import check_degree, integrate_monomial_over_enr
     + [quadpy.enr.stroud_enr_5_3(n) for n in range(4, 6)]
     + [quadpy.enr.stroud_enr_5_4(n) for n in range(4, 6)]
     #
-    + [quadpy.enr.stroud_secrest_i(n) for n in range(2, 6)]
-    + [quadpy.enr.stroud_secrest_ii(n) for n in range(2, 6)]
-    + [quadpy.enr.stroud_secrest_ii(n) for n in range(2, 6)]
-    + [quadpy.enr.stroud_secrest_iv(n) for n in range(2, 6)],
+    + [quadpy.enr.stroud_secrest_1(n) for n in range(2, 6)]
+    + [quadpy.enr.stroud_secrest_2(n) for n in range(2, 6)]
+    + [quadpy.enr.stroud_secrest_3(n) for n in range(2, 6)]
+    + [quadpy.enr.stroud_secrest_4(n) for n in range(2, 6)],
 )
 def test_scheme(scheme, tol=1.0e-14):
     assert scheme.points.dtype == numpy.float64, scheme.name
