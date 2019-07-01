@@ -5,6 +5,7 @@ import pytest
 import orthopy
 import quadpy
 from quadpy.sphere._helpers import cartesian_to_spherical
+from helpers import check_degree_ortho
 
 # Note
 # ====
@@ -148,12 +149,8 @@ def test_spherical_harmonic(scheme):
     ],
 )
 def test_scheme_cartesian(scheme, tol):
-    exact_val = numpy.zeros(scheme.degree + 1)
-    exact_val[0] = numpy.sqrt(4 * numpy.pi)
-
     def sph_tree_cartesian(x):
-        flt = numpy.vectorize(float)
-        azimuthal, polar = cartesian_to_spherical(flt(x).T).T
+        azimuthal, polar = cartesian_to_spherical(x.T).T
         return numpy.concatenate(
             orthopy.sphere.tree_sph(
                 polar, azimuthal, scheme.degree + 1, standardization="quantum mechanic"
@@ -163,26 +160,15 @@ def test_scheme_cartesian(scheme, tol):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
-    vals = scheme.integrate(
-        sph_tree_cartesian, center=numpy.array([0.0, 0.0, 0.0]), radius=1.0
-    )
+    vals = scheme.integrate(sph_tree_cartesian, center=numpy.array([0, 0, 0]), radius=1)
+    # Put vals back into the tree structure:
+    # len(approximate[k]) == k+1
+    approximate = [vals[k ** 2 : (k + 1) ** 2] for k in range(scheme.degree + 2)]
 
-    # The exact value is sqrt(4*pi) for the Y_0^0, and 0 otherwise.
-    err = vals
-    err[0] -= numpy.sqrt(4.0 * numpy.pi)
+    exact = [numpy.zeros(len(s)) for s in approximate]
+    exact[0][0] = numpy.sqrt(4 * numpy.pi)
 
-    # check in which level the first significant errors occur
-    k = 0
-    first_error_level = None
-    for L in range(scheme.degree + 2):
-        m = 2 * L + 1
-        if numpy.any(abs(err[k : k + m]) > tol):
-            first_error_level = L
-            break
-        k += m
-    assert first_error_level is not None
-
-    degree = first_error_level - 1
+    degree = check_degree_ortho(approximate, exact, abs_tol=tol)
 
     assert degree == scheme.degree, "{}  --  Observed: {}, expected: {}".format(
         scheme.name, degree, scheme.degree
@@ -256,9 +242,6 @@ def test_scheme_cartesian(scheme, tol):
     ],
 )
 def test_scheme_spherical(scheme, tol):
-    exact_val = numpy.zeros(scheme.degree + 1)
-    exact_val[0] = numpy.sqrt(4 * numpy.pi)
-
     def sph_tree(azimuthal, polar):
         return numpy.concatenate(
             orthopy.sphere.tree_sph(
@@ -267,23 +250,14 @@ def test_scheme_spherical(scheme, tol):
         )
 
     vals = scheme.integrate_spherical(sph_tree)
+    # Put vals back into the tree structure:
+    # len(approximate[k]) == k+1
+    approximate = [vals[k ** 2 : (k + 1) ** 2] for k in range(scheme.degree + 2)]
 
-    # The exact value is sqrt(4*pi) for the Y_0^0, and 0 otherwise.
-    err = vals
-    err[0] -= numpy.sqrt(4 * numpy.pi)
+    exact = [numpy.zeros(len(s)) for s in approximate]
+    exact[0][0] = numpy.sqrt(4 * numpy.pi)
 
-    # check in which level the first significant errors occur
-    k = 0
-    first_error_level = None
-    for L in range(scheme.degree + 2):
-        m = 2 * L + 1
-        if numpy.any(abs(err[k : k + m]) > tol):
-            first_error_level = L
-            break
-        k += m
-    assert first_error_level is not None
-
-    degree = first_error_level - 1
+    degree = check_degree_ortho(approximate, exact, abs_tol=tol)
 
     assert degree == scheme.degree, "Observed: {}, expected: {}".format(
         degree, scheme.degree
