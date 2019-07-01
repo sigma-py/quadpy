@@ -4,7 +4,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import TetrahedronScheme, concat, s31, s4, s211
+from ._helpers import TetrahedronScheme, concat, s4, s31, s211
 
 citation = article(
     authors=["Yu Jinyun"],
@@ -33,7 +33,7 @@ def yu_3():
     degree = 4
     weights, points = concat(
         s31([0.5037379410012282e-01, 0.7611903264425430e-01]),
-        s211([0.6654206863329239e-01, 0.4042339134672644, 0.1197005277978019])
+        s211([0.6654206863329239e-01, 0.4042339134672644, 0.1197005277978019]),
     )
     return TetrahedronScheme("Yu 3", weights, points, degree, citation)
 
