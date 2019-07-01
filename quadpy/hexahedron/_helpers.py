@@ -3,16 +3,31 @@
 import numpy
 
 from .. import helpers
-from ..ncube import transform, NCubeScheme, ncube_points as cube_points
+from ..ncube import NCubeScheme
+from ..ncube import ncube_points as cube_points
+from ..ncube import transform
 
 
 class HexahedronScheme(NCubeScheme):
     def __init__(self, name, weights, points, degree, citation=None):
         self.name = name
         self.weights = weights
-        self.points = points
-        self.degree = degree
         self.citation = citation
+        self.degree = degree
+
+        if weights.dtype == numpy.float64:
+            self.weights = weights
+        else:
+            assert weights.dtype in [numpy.dtype("O"), numpy.int64]
+            self.weights = weights.astype(numpy.float64)
+            self.weights_symbolic = weights
+
+        if points.dtype == numpy.float64:
+            self.points = points
+        else:
+            assert points.dtype in [numpy.dtype("O"), numpy.int64]
+            self.points = points.astype(numpy.float64)
+            self.points_symbolic = points
         return
 
     def show(self, hexa=cube_points([0.0, 1.0], [0.0, 1.0], [0.0, 1.0]), backend="vtk"):

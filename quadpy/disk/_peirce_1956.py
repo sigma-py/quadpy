@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
 
 import numpy
 import sympy
 
-from ..helpers import fsd, pm, untangle, fs_array, phdthesis
+from ..helpers import fs_array, fsd, phdthesis, pm, untangle
 from ._helpers import DiskScheme
-
 
 _citation = phdthesis(
     authors=["William Hollis Peirce"],
@@ -17,13 +15,15 @@ _citation = phdthesis(
     url="https://books.google.de/books/about/Numerical_integration_over_planar_region.html?id=WR9SAAAAMAAJ",
 )
 
+frac = sympy.Rational
+pi = sympy.pi
+sqrt = numpy.vectorize(sympy.sqrt)
+cos = numpy.vectorize(sympy.cos)
+sin = numpy.vectorize(sympy.sin)
+pm_ = numpy.array([+1, -1])
 
-def peirce_1956_1(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pm_ = numpy.array([+1, -1])
 
+def peirce_1956_1():
     sqrt29 = sqrt(29)
     r = sqrt(frac(3, 4))
     s, t = sqrt((27 - pm_ * 3 * sqrt29) / 104)
@@ -39,14 +39,7 @@ def peirce_1956_1(symbolic=False):
     return DiskScheme("Peirce 1956-1", weights, points, 7, _citation)
 
 
-def peirce_1956_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
-    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
-    pm_ = numpy.array([+1, -1])
-
+def peirce_1956_2():
     sqrt15 = sqrt(15)
     cos_pi8 = cos(pi / 8)
     sin_pi8 = sin(pi / 8)
@@ -75,12 +68,7 @@ def peirce_1956_2(symbolic=False):
     return DiskScheme("Peirce 1956-2", weights, points, 9, _citation)
 
 
-def peirce_1956_3(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pm_ = numpy.array([+1, -1])
-
+def peirce_1956_3():
     sqrt15 = sqrt(15)
 
     B1 = frac(5, 144)

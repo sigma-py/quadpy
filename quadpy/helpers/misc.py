@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+import math
 from collections import namedtuple
 
-import math
 import numpy
 import scipy.special
 import sympy

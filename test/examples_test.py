@@ -1,4 +1,5 @@
 import numpy
+
 import quadpy
 
 
@@ -270,7 +271,7 @@ def test_e1r():
 
 
 def test_e3r():
-    quadpy.e3r.stroud_secrest_ix().integrate(lambda x: numpy.exp(x[0]))
+    quadpy.e3r.stroud_secrest_09().integrate(lambda x: numpy.exp(x[0]))
     return
 
 

@@ -5,13 +5,25 @@ import numpy
 from ..helpers import backend_to_function
 
 
-class E3r2Scheme(object):
+class E3r2Scheme:
     def __init__(self, name, weights, points, degree, citation):
         self.name = name
         self.citation = citation
         self.degree = degree
-        self.weights = weights
-        self.points = points
+
+        if weights.dtype == numpy.float64:
+            self.weights = weights
+        else:
+            assert weights.dtype in [numpy.dtype("O"), numpy.int64]
+            self.weights = weights.astype(numpy.float64)
+            self.weights_symbolic = weights
+
+        if points.dtype == numpy.float64:
+            self.points = points
+        else:
+            assert points.dtype in [numpy.dtype("O"), numpy.int64]
+            self.points = points.astype(numpy.float64)
+            self.points_symbolic = points
         return
 
     def integrate(self, f, dot=numpy.dot):

@@ -1,14 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-"""
-"""
-from __future__ import division
+from sympy import Rational as frac
 
-import sympy
-
-from ._helpers import TriangleScheme, s1, s2, concat
 from ..helpers import article
-
+from ._helpers import TriangleScheme, concat, s1, s2
 
 citation = article(
     authors=["Mark A. Taylor", "Beth A. Wingate", "Len P. Bos"],
@@ -23,9 +18,7 @@ citation = article(
 # TODO missing Taylor-Wingate-Bos schemes
 
 
-def taylor_wingate_bos_1(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def taylor_wingate_bos_1():
     weights, points = s2([frac(2, 3), frac(1, 6)])
     weights /= 2
     return TriangleScheme("Taylor-Wingate-Bos 1", weights, points, 2, citation)
@@ -68,7 +61,7 @@ def taylor_wingate_bos_5():
     return TriangleScheme("Taylor-Wingate-Bos 5", weights, points, 9, citation)
 
 
-def taylor_wingate_bos_8(symbolic=False):
+def taylor_wingate_bos_8():
     weights, points = concat(
         s2(
             [0.0010616711990, 0],

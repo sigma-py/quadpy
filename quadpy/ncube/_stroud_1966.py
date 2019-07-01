@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 #
 import numpy
-import sympy
+from sympy import Rational as frac
+from sympy import S, sqrt
 
-from ._helpers import _fs11, NCubeScheme
-from ..helpers import untangle, fsd, z, pm, article
-
+from ..helpers import article, fsd, pm, untangle, z
+from ._helpers import NCubeScheme, _fs11
 
 _citation = article(
     authors=["A.H. Stroud"],
@@ -20,10 +20,7 @@ _citation = article(
 )
 
 
-def stroud_1966_a(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def stroud_1966_a(n):
     r = sqrt(frac(5 * n + 4, 30))
     s = sqrt(frac(5 * n + 4, 15 * n - 12))
     data = [
@@ -36,16 +33,12 @@ def stroud_1966_a(n, symbolic=False):
     return NCubeScheme("Stroud 1966a", n, weights, points, 5, _citation)
 
 
-def stroud_1966_b(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    zero = sympy.S.Zero if symbolic else 0.0
-
+def stroud_1966_b(n):
     s = 1 / sqrt(3)
     data = [(frac(4, 5 * n + 4), z(n))]
     for k in range(1, n + 1):
         r = sqrt(frac(5 * k + 4, 15))
-        arr = numpy.full((2 ** (n - k + 1), n), zero)
+        arr = numpy.full((2 ** (n - k + 1), n), S(0))
         arr[:, k - 1 :] = pm(n - k + 1, 1)
         arr[:, k - 1] *= r
         arr[:, k:] *= s
@@ -57,10 +50,7 @@ def stroud_1966_b(n, symbolic=False):
     return NCubeScheme("Stroud 1966b", n, weights, points, 5, _citation)
 
 
-def stroud_1966_c(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def stroud_1966_c(n):
     r = sqrt((5 * n + 4 + 2 * (n - 1) * sqrt(5 * n + 4)) / (15 * n))
     s = sqrt((5 * n + 4 - 2 * sqrt(5 * n + 4)) / (15 * n))
     data = [(frac(4, 5 * n + 4), z(n)), (frac(5, (5 * n + 4) * 2 ** n), _fs11(n, r, s))]
@@ -70,11 +60,7 @@ def stroud_1966_c(n, symbolic=False):
     return NCubeScheme("Stroud 1966c", n, weights, points, 5, _citation)
 
 
-def stroud_1966_d(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
-    assert n >= 3, "Only works for n >= 3, not n = {}".format(n)
+def stroud_1966_d(n):
     r = sqrt((5 * n - 2 * sqrt(5) + 2 * (n - 1) * sqrt(5 * n + 5)) / (15 * n))
     # This sqrt() is imaginary for negative for n=2.
     s = sqrt((5 * n - 2 * sqrt(5) - 2 * sqrt(5 * n + 5)) / (15 * n))

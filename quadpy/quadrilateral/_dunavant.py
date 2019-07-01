@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+from sympy import Rational as frac
+from sympy import sqrt
 
-import numpy
-import sympy
-
-from ._helpers import concat, zero, symm_r0, symm_s, symm_s_t, QuadrilateralScheme
 from ..helpers import article
+from ._helpers import QuadrilateralScheme, concat, symm_r0, symm_s, symm_s_t, zero
 
 citation = article(
     authors=["D.A. Dunavant"],
@@ -26,18 +24,12 @@ def dunavant_00():
     return QuadrilateralScheme("Dunavant 0", weights, points, 1, citation)
 
 
-def dunavant_01(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def dunavant_01():
     weights, points = symm_s([1, sqrt(frac(1, 3))])
     return QuadrilateralScheme("Dunavant 1", weights, points, 3, citation)
 
 
-def dunavant_02(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def dunavant_02():
     weights, points = concat(
         symm_r0([frac(40, 49), sqrt(frac(7, 15))]),
         symm_s([frac(9, 49), sqrt(frac(7, 9))]),
@@ -45,10 +37,7 @@ def dunavant_02(symbolic=False):
     return QuadrilateralScheme("Dunavant 2", weights, points, 5, citation)
 
 
-def dunavant_03(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def dunavant_03():
     weights, points = concat(
         symm_r0([frac(98, 405), sqrt(frac(6, 7))]),
         symm_s(

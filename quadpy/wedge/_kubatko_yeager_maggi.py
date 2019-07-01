@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+from sympy import Rational as frac
+from sympy import sqrt
 
-import numpy
-import sympy
-
-from ..helpers import untangle, article
+from ..helpers import article, untangle
 from ._helpers import WedgeScheme
 
 citation = article(
@@ -19,9 +17,7 @@ citation = article(
 )
 
 
-def kubatko_yeager_maggi_1(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def kubatko_yeager_maggi_1():
     data = [(4, [[-frac(1, 3), -frac(1, 3), 0]])]
     points, weights = untangle(data)
     # quadpy's reference wedge is 0 <= X, 0 <= Y, X + Y <= 1, -1 <= Z <= 1.
@@ -44,10 +40,8 @@ def kubatko_yeager_maggi_2a():
     return WedgeScheme("Kubatko-Yeager-Maggi 2a", weights, points, 2, citation)
 
 
-def kubatko_yeager_maggi_2b(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
-    data = [(frac(1, 3), _s21(-1)), (frac(3, 2), _s3_z(frac(2, 3), symbolic))]
+def kubatko_yeager_maggi_2b():
+    data = [(frac(1, 3), _s21(-1)), (frac(3, 2), _s3_z(frac(2, 3)))]
     points, weights = untangle(data)
     weights = weights / 4
     points[:, :2] += 1
@@ -89,13 +83,11 @@ def kubatko_yeager_maggi_3a():
     return WedgeScheme("Kubatko-Yeager-Maggi 3a", weights, points, 3, citation)
 
 
-def kubatko_yeager_maggi_3b(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def kubatko_yeager_maggi_3b():
     data = [
-        (-frac(43, 12), _s3(symbolic)),
+        (-frac(43, 12), _s3(symbolic=True)),
         (frac(25, 12), _s21(-frac(3, 5))),
-        (frac(2, 3), _s3_z(1, symbolic)),
+        (frac(2, 3), _s3_z(1)),
     ]
     points, weights = untangle(data)
     weights = weights / 4
@@ -104,12 +96,12 @@ def kubatko_yeager_maggi_3b(symbolic=False):
     return WedgeScheme("Kubatko-Yeager-Maggi 3b", weights, points, 3, citation)
 
 
-def kubatko_yeager_maggi_3c(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def kubatko_yeager_maggi_3c():
     alpha = 4 * sqrt(3) / 15
-    data = [(-frac(9, 4), _s3(symbolic)), (frac(25, 24), _s21_z(-frac(3, 5), alpha))]
+    data = [
+        (-frac(9, 4), _s3(symbolic=True)),
+        (frac(25, 24), _s21_z(-frac(3, 5), alpha)),
+    ]
     points, weights = untangle(data)
     weights = weights / 4
     points[:, :2] += 1
@@ -117,12 +109,10 @@ def kubatko_yeager_maggi_3c(symbolic=False):
     return WedgeScheme("Kubatko-Yeager-Maggi 3c", weights, points, 3, citation)
 
 
-def kubatko_yeager_maggi_3d(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def kubatko_yeager_maggi_3d():
     data = [
         (frac(4, 9), _s30(-0.525248027124695, -0.924672547414225, 0.449920574538920)),
-        (frac(2, 3), _s3_z(1, symbolic)),
+        (frac(2, 3), _s3_z(1)),
     ]
     points, weights = untangle(data)
     weights = weights / 4
@@ -298,7 +288,7 @@ def kubatko_yeager_maggi_5b():
 
 def kubatko_yeager_maggi_5c():
     data = [
-        (0.711455555931488, _s3()),
+        (0.711455555931488, _s3(symbolic=False)),
         (0.224710067228267, _s21(-0.025400070899509)),
         (0.185661421316158, _s21_z(-0.108803790659256, 0.871002934865444)),
         (0.250074285747794, _s21_z(-0.798282108034583, 0.570426980705159)),
@@ -317,7 +307,7 @@ def kubatko_yeager_maggi_6a():
             _s30(0.513019949700545, -0.930094391938207, -0.582925557762337),
         ),
         (0.000079282874851, _s21(-1.830988812620400)),
-        (0.544286440652304, _s3()),
+        (0.544286440652304, _s3(symbolic=False)),
         (0.026293733850586, _s3_z(1.250521622121900)),
         (0.283472344926041, _s21_z(-0.098283514203544, 0.685008566774710)),
         (0.115195615637235, _s21_z(-0.812603471654584, 0.809574716992997)),
@@ -331,7 +321,7 @@ def kubatko_yeager_maggi_6a():
 
 def kubatko_yeager_maggi_6b():
     data = [
-        (-0.515987215963885, _s3()),
+        (-0.515987215963885, _s3(symbolic=False)),
         (0.113384887025471, _s21(-0.891966687066689)),
         (0.489402517688430, _s21(-0.489005016481638)),
         (0.205362200002623, _s3_z(0.932807703184800)),
@@ -414,7 +404,7 @@ def kubatko_yeager_maggi_7b():
 
 def kubatko_yeager_maggi_7c():
     data = [
-        (0.187125249811092, _s3()),
+        (0.187125249811092, _s3(symbolic=False)),
         (0.279712056646351, _s21(-0.622563924496121)),
         #
         (0.192663794476979, _s21_z(-0.150946831636914, 0.739705153646415)),
@@ -437,7 +427,7 @@ def kubatko_yeager_maggi_7c():
 
 def kubatko_yeager_maggi_8a():
     data = [
-        (-0.628896123664332, _s3()),
+        (-0.628896123664332, _s3(symbolic=False)),
         (-0.000009664501734, _s21(+0.732570431730499)),
         (+0.290043889959886, _s21(-0.111280133398729)),
         (+0.164125220310641, _s21(-0.744234499888195)),
@@ -461,7 +451,7 @@ def kubatko_yeager_maggi_8a():
 
 def kubatko_yeager_maggi_8b():
     data = [
-        (0.064622878644877, _s3()),
+        (0.064622878644877, _s3(symbolic=False)),
         (0.212815083510681, _s21(-0.080724796383744)),
         #
         (0.222859308690085, _s3_z(0.656906854028118)),
@@ -531,14 +521,15 @@ def _az(a, z):
     return [[a, a, +z], [a, a, -z]]
 
 
-def _s3(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    return [[-frac(1, 3), -frac(1, 3), 0]]
+def _s3(symbolic):
+    fra = frac if symbolic else lambda x, y: x / y
+    return [[-fra(1, 3), -fra(1, 3), 0]]
 
 
-def _s3_z(z, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    return [[-frac(1, 3), -frac(1, 3), +z], [-frac(1, 3), -frac(1, 3), -z]]
+def _s3_z(z):
+    symbolic = not isinstance(z, float)
+    fra = frac if symbolic else lambda x, y: x / y
+    return [[-fra(1, 3), -fra(1, 3), +z], [-fra(1, 3), -fra(1, 3), -z]]
 
 
 def _s21(a):

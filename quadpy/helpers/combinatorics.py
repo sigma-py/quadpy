@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 import itertools
+
 import numpy
 
 
@@ -126,24 +127,6 @@ def pm_roll(n, v):
     r0[:, :k] = pm_v
 
     return numpy.concatenate([numpy.roll(r0, i, axis=1) for i in range(n)])
-
-
-# TODO remove
-def partition(boxes, balls):
-    """Create all nonnegative tuples of length d which sum up to n.
-    """
-    # <https://stackoverflow.com/a/36748940/353337>
-    # See <https://stackoverflow.com/a/45348441/353337> for an alterative
-    # solution.
-    def rec(boxes, balls, parent=tuple()):
-        if boxes > 1:
-            for i in range(balls + 1):
-                for x in rec(boxes - 1, i, parent + (balls - i,)):
-                    yield x
-        else:
-            yield parent + (balls,)
-
-    return list(rec(boxes, balls))
 
 
 def get_all_exponents(dim, max_degree):

@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+from sympy import Rational as frac
+from sympy import sqrt
 
-import numpy
-import sympy
-
-from ._helpers import concat, symm_r0, pm2, QuadrilateralScheme
 from ..helpers import article
+from ._helpers import QuadrilateralScheme, concat, pm2, symm_r0
 
 citation = article(
     authors=["G.M. Phillips"],
@@ -21,16 +19,12 @@ citation = article(
 # TODO add scheme for hex
 
 
-def phillips(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pm = numpy.array([+1, -1])
-
+def phillips():
     c = 3 * sqrt(385)
-    r, s = sqrt((105 + pm * c) / 140)
+    r, s = [sqrt((105 + i * c) / 140) for i in [+1, -1]]
     t = sqrt(frac(3, 5))
 
-    B1, B2 = (77 - pm * c) / 891
+    B1, B2 = [(77 - i * c) / 891 for i in [+1, -1]]
     B3 = frac(25, 324)
 
     weights, points = concat(symm_r0([B1, r], [B2, s]), pm2([B3, t, t]))

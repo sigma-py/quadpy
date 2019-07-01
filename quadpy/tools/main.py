@@ -9,8 +9,8 @@
     <https://pdfs.semanticscholar.org/c715/119d5464f614fd8ec590b732ccfea53e72c4.pdf>.
 
 [2] W. Gautschi,
-    Algorithm 726: ORTHPOL–a package of routines for generating orthogonal
-    polynomials and Gauss-type quadrature rules,
+    Algorithm 726: ORTHPOL–a package of routines for generating orthogonal polynomials
+    and Gauss-type quadrature rules,
     ACM Transactions on Mathematical Software (TOMS),
     Volume 20, Issue 1, March 1994,
     Pages 21-62,
@@ -28,16 +28,13 @@
     Inverse Problems, 1987, Volume 3, Number 4,
     <https://doi.org/10.1088/0266-5611/3/4/010>.
 """
-from __future__ import division
 
+import numpy
+import sympy
 from mpmath import mp
 from mpmath.matrices.eigen_symmetric import tridiag_eigen
-import numpy
-import scipy
-from scipy.linalg import eig_banded
-
+from scipy.linalg import eigh_tridiagonal
 from scipy.linalg.lapack import get_lapack_funcs
-import sympy
 
 
 def golub_welsch(moments):
@@ -45,10 +42,10 @@ def golub_welsch(moments):
 
     mu_k = int_a^b omega(x) x^k dx,  k = {0, 1,...,2N}
 
-    (with omega being a nonnegative weight function), this method creates the
-    recurrence coefficients of the corresponding orthogonal polynomials, see
-    section 4 ("Determining the Three Term Relationship from the Moments") in
-    Golub-Welsch [1]. Numerically unstable, see [2].
+    (with omega being a nonnegative weight function), this method creates the recurrence
+    coefficients of the corresponding orthogonal polynomials, see section 4
+    ("Determining the Three Term Relationship from the Moments") in Golub-Welsch [1].
+    Numerically unstable, see [2].
     """
     assert len(moments) % 2 == 1
     n = (len(moments) - 1) // 2
@@ -99,9 +96,8 @@ def stieltjes(w, a, b, n):
 
 
 def chebyshev(moments):
-    """Given the first 2n moments `int t^k dt`, this method uses the Chebyshev
-    algorithm (see, e.g., [2]) for computing the associated recurrence
-    coefficients.
+    """Given the first 2n moments `int t^k dt`, this method uses the Chebyshev algorithm
+    (see, e.g., [2]) for computing the associated recurrence coefficients.
 
     WARNING: Ill-conditioned, see [2].
     """
@@ -116,10 +112,10 @@ def chebyshev(moments):
 
 
 def chebyshev_modified(nu, a, b):
-    """Given the first 2n modified moments `nu_k = int p_k(t) dt`, where the
-    p_k are orthogonal polynomials with recurrence coefficients a, b, this
-    method implements the modified Chebyshev algorithm (see, e.g., [2]) for
-    computing the associated recurrence coefficients.
+    """Given the first 2n modified moments `nu_k = int p_k(t) dt`, where the p_k are
+    orthogonal polynomials with recurrence coefficients a, b, this method implements the
+    modified Chebyshev algorithm (see, e.g., [2]) for computing the associated
+    recurrence coefficients.
     """
     m = len(nu)
     assert m % 2 == 0
@@ -128,8 +124,8 @@ def chebyshev_modified(nu, a, b):
 
     alpha = numpy.empty(n, dtype=a.dtype)
     beta = numpy.empty(n, dtype=a.dtype)
-    # Actually overkill. One could alternatively make sigma a list, and store
-    # the shrinking rows there, only ever keeping the last two.
+    # Actually overkill. One could alternatively make sigma a list, and store the
+    # shrinking rows there, only ever keeping the last two.
     sigma = numpy.empty((n, 2 * n), dtype=a.dtype)
 
     if n > 0:
@@ -185,10 +181,10 @@ def integrate(f, a, b):
 
 def coefficients_from_gauss(points, weights):
     """Given the points and weights of a Gaussian quadrature rule, this method
-    reconstructs the recurrence coefficients alpha, beta as appearing in the
-    tridiagonal Jacobi matrix tri(b, a, b).
-    This is using "Method 2--orthogonal reduction" from (section 3.2 in [4]).
-    The complexity is O(n^3); a faster method is suggested in 3.3 in [4].
+    reconstructs the recurrence coefficients alpha, beta as appearing in the tridiagonal
+    Jacobi matrix tri(b, a, b). This is using "Method 2--orthogonal reduction" from
+    (section 3.2 in [4]).  The complexity is O(n^3); a faster method is suggested in 3.3
+    in [4].
     """
     n = len(points)
     assert n == len(weights)
@@ -222,9 +218,8 @@ def coefficients_from_gauss(points, weights):
 
 
 def check_coefficients(moments, alpha, beta):
-    """In his article [3], Walter Gautschi suggests a method for checking if a
-    Gauss quadrature rule is sane. This method implements test #3 for the
-    article.
+    """In his article [3], Walter Gautschi suggests a method for checking if a Gauss
+    quadrature rule is sane. This method implements test #3 for the article.
     """
     n = len(alpha)
     assert len(beta) == n
@@ -254,18 +249,6 @@ def check_coefficients(moments, alpha, beta):
     return errors_alpha, errors_beta
 
 
-def scheme_from_rc(alpha, beta, mode="mpmath", decimal_places=32):
-    """Compute the Gauss nodes and weights from the recurrence coefficients
-    associated with a set of orthogonal polynomials. See [2] and
-    <http://www.scientificpython.net/pyblog/radau-quadrature>.
-    """
-    return {
-        "sympy": lambda: _gauss_from_coefficients_sympy(alpha, beta),
-        "mpmath": lambda: _gauss_from_coefficients_mpmath(alpha, beta, decimal_places),
-        "numpy": lambda: _gauss_from_coefficients_numpy(alpha, beta),
-    }[mode]()
-
-
 def _sympy_tridiag(a, b):
     """Creates the tridiagonal sympy matrix tridiag(b, a, b).
     """
@@ -280,7 +263,20 @@ def _sympy_tridiag(a, b):
     return sympy.Matrix(A)
 
 
-def _gauss_from_coefficients_sympy(alpha, beta):
+def scheme_from_rc(alpha, beta, mode):
+    if mode == "sympy":
+        return _scheme_from_rc_sympy(alpha, beta)
+    elif mode == "numpy":
+        return _scheme_from_rc_numpy(alpha, beta)
+
+    assert mode == "mpmath"
+    return _scheme_from_rc_mpmath(alpha, beta)
+
+
+# Compute the Gauss nodes and weights from the recurrence coefficients associated with a
+# set of orthogonal polynomials. See [2] and
+# <http://www.scientificpython.net/pyblog/radau-quadrature>.
+def _scheme_from_rc_sympy(alpha, beta):
     # Construct the triadiagonal matrix [sqrt(beta), alpha, sqrt(beta)]
     A = _sympy_tridiag(alpha, [sympy.sqrt(bta) for bta in beta])
 
@@ -304,18 +300,12 @@ def _gauss_from_coefficients_sympy(alpha, beta):
     return x, w
 
 
-def _gauss_from_coefficients_mpmath(alpha, beta, decimal_places):
-    mp.dps = decimal_places
-
+def _scheme_from_rc_mpmath(alpha, beta):
     # Create vector cut of the first value of beta
     n = len(alpha)
     b = mp.zeros(n, 1)
     for i in range(n - 1):
-        # work around <https://github.com/fredrik-johansson/mpmath/issues/382>
-        x = beta[i + 1]
-        if isinstance(x, numpy.int64):
-            x = int(x)
-        b[i] = mp.sqrt(x)
+        b[i] = mp.sqrt(beta[i + 1])
 
     z = mp.zeros(1, n)
     z[0, 0] = 1
@@ -323,32 +313,14 @@ def _gauss_from_coefficients_mpmath(alpha, beta, decimal_places):
     tridiag_eigen(mp, d, b, z)
 
     # nx1 matrix -> list of mpf
-    x = numpy.array([mp.mpf(sympy.N(xx, decimal_places)) for xx in d])
-    w = numpy.array(
-        [mp.mpf(sympy.N(beta[0], decimal_places)) * mp.power(ww, 2) for ww in z]
-    )
+    x = numpy.array([mp.mpf(sympy.N(xx, mp.dps)) for xx in d])
+    w = numpy.array([mp.mpf(sympy.N(beta[0], mp.dps)) * mp.power(ww, 2) for ww in z])
     return x, w
 
 
-def _gauss_from_coefficients_numpy(alpha, beta):
-    # assert isinstance(alpha, numpy.ndarray)
-    # assert isinstance(beta, numpy.ndarray)
+def _scheme_from_rc_numpy(alpha, beta):
     alpha = alpha.astype(numpy.float64)
     beta = beta.astype(numpy.float64)
-
-    x, V = eig_banded(numpy.vstack((numpy.sqrt(beta), alpha)), lower=False)
-    w = beta[0] * scipy.real(scipy.power(V[0, :], 2))
-    # eigh_tridiagonal is only available from scipy 1.0.0, and has problems
-    # with precision. TODO find out how/why/what
-    # try:
-    #     from scipy.linalg import eigh_tridiagonal
-    # except ImportError:
-    #     # Use eig_banded
-    #     x, V = \
-    #         eig_banded(numpy.vstack((numpy.sqrt(beta), alpha)), lower=False)
-    #     w = beta[0]*scipy.real(scipy.power(V[0, :], 2))
-    # else:
-    #     x, V = eigh_tridiagonal(alpha, numpy.sqrt(beta[1:]))
-    #     w = beta[0] * V[0, :]**2
-
+    x, V = eigh_tridiagonal(alpha, numpy.sqrt(beta[1:]))
+    w = beta[0] * V[0, :] ** 2
     return x, w

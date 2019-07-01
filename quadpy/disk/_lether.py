@@ -2,9 +2,8 @@
 #
 import numpy
 
-from ._helpers import DiskScheme
 from ..helpers import article
-
+from ._helpers import DiskScheme
 
 _citation = article(
     authors=["Frank G. Lether"],

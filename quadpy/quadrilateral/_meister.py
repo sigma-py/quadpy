@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+from sympy import Rational as frac
 
-import sympy
-
-from ._helpers import concat, zero, symm_s, symm_r0, symm_s_t, QuadrilateralScheme
 from ..helpers import article
+from ._helpers import QuadrilateralScheme, concat, symm_r0, symm_s, symm_s_t, zero
 
 citation = article(
     authors=["Bernd Meister"],
@@ -19,9 +17,7 @@ citation = article(
 )
 
 
-def meister(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def meister():
     r = frac(2, 3)
     s = frac(1, 3)
 

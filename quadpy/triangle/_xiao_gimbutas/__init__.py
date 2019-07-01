@@ -3,9 +3,8 @@
 import json
 import os
 
-from .._helpers import untangle2, TriangleScheme
 from ...helpers import article
-
+from .._helpers import TriangleScheme, untangle2
 
 citation = article(
     authors=["Hong Xiao", "Zydrunas Gimbutas"],
@@ -23,7 +22,7 @@ citation = article(
 
 
 # TODO mpmath
-def _read(degree, symbolic=False):
+def _read(degree):
     this_dir = os.path.dirname(os.path.realpath(__file__))
     filename = "xg{:02d}.json".format(degree)
     with open(os.path.join(this_dir, filename), "r") as f:

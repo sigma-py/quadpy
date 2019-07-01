@@ -2,6 +2,7 @@
 Generate code from cartesian coordinates.
 '''
 import mpmath
+
 # set precision
 mpmath.mp.dps = 32
 

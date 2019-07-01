@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-import os
 import json
+import os
 
-from .._helpers import untangle2, TetrahedronScheme
 from ...helpers import article
+from .._helpers import TetrahedronScheme, untangle2
 
 citation = article(
     authors=["B. Vioreanu", "V. Rokhlin"],

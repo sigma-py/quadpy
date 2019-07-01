@@ -6,7 +6,6 @@ import pytest
 import sympy
 
 import quadpy
-
 from helpers import check_degree
 
 

@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+from sympy import Rational as frac
 
-import sympy
-
-from ._helpers import concat, zero, symm_r0, symm_s, QuadrilateralScheme
 from ..helpers import article
-
+from ._helpers import QuadrilateralScheme, concat, symm_r0, symm_s, zero
 
 citation = article(
     authors=["J.C.P. Miller"],
@@ -21,9 +18,7 @@ citation = article(
 )
 
 
-def miller(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def miller():
     weights, points = concat(
         zero(frac(250, 225)), symm_r0([-frac(8, 225), 1]), symm_s([frac(7, 900), 1])
     )

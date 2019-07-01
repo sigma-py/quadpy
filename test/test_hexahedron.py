@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import print_function
 
 import matplotlib.pyplot as plt
 import numpy
@@ -8,7 +7,6 @@ import pytest
 import sympy
 
 import quadpy
-
 from helpers import check_degree
 
 schemes = (

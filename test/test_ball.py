@@ -3,10 +3,10 @@
 import matplotlib.pyplot as plt
 import numpy
 import pytest
-import quadpy
-from quadpy.nball._helpers import integrate_monomial_over_unit_nball
 
+import quadpy
 from helpers import check_degree
+from quadpy.nball._helpers import integrate_monomial_over_unit_nball
 
 schemes = [
     quadpy.ball.ditkin_1(),

@@ -1,21 +1,32 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
 
 import numpy
 import sympy
 
 from ..helpers import plot_disks
-from ..nsimplex import transform, get_vol, NSimplexScheme
+from ..nsimplex import NSimplexScheme, get_vol, transform
 
 
 class TriangleScheme(NSimplexScheme):
     def __init__(self, name, weights, points, degree, citation=None):
         self.name = name
-        self.weights = weights
-        self.points = points
         self.degree = degree
         self.citation = citation
+
+        if weights.dtype == numpy.float64:
+            self.weights = weights
+        else:
+            assert weights.dtype in [numpy.dtype("O"), numpy.int64]
+            self.weights = weights.astype(numpy.float64)
+            self.weights_symbolic = weights
+
+        if points.dtype == numpy.float64:
+            self.points = points
+        else:
+            assert points.dtype in [numpy.dtype("O"), numpy.int64]
+            self.points = points.astype(numpy.float64)
+            self.points_symbolic = points
         return
 
     def show(self, *args, **kwargs):
@@ -61,13 +72,6 @@ def _s21(a):
     a = numpy.array(a)
     b = 1 - 2 * a
     return numpy.array([[a, a, b], [a, b, a], [b, a, a]])
-
-
-def _s111(a, b):
-    c = 1 - a - b
-    return numpy.array(
-        [[a, b, c], [c, a, b], [b, c, a], [b, a, c], [c, b, a], [a, c, b]]
-    )
 
 
 def _s111ab(a, b):
@@ -124,7 +128,8 @@ def untangle2(data, symbolic=False):
     return points, weights
 
 
-def s3(weight, symbolic=False):
+def s3(weight):
+    symbolic = isinstance(weight, float)
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     return numpy.array([weight]), numpy.full((1, 3), frac(1, 3))
 

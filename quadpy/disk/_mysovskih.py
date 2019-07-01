@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
-
 import numpy
 import sympy
 
-from ..helpers import untangle, z, fsd, fs_array, article
+from ..helpers import article, fs_array, fsd, untangle, z
 from ._helpers import DiskScheme
 
 _citation = article(
@@ -17,14 +15,15 @@ _citation = article(
     year="1964",
 )
 
+frac = sympy.Rational
+pi = sympy.pi
+sqrt = numpy.vectorize(sympy.sqrt)
+cos = numpy.vectorize(sympy.cos)
+sin = numpy.vectorize(sympy.sin)
+pm_ = numpy.array([+1, -1])
 
-def mysovskih_1(alpha=0, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
-    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
 
+def mysovskih_1(alpha=0):
     b = sqrt(frac(alpha + 4, alpha + 6))
 
     a = 2 * numpy.arange(5) * pi / 5
@@ -40,12 +39,7 @@ def mysovskih_1(alpha=0, symbolic=False):
     return DiskScheme("Mysovskih 1", weights, points, 4, _citation)
 
 
-def mysovskih_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pm_ = numpy.array([+1, -1])
-
+def mysovskih_2():
     sqrt10 = sqrt(10)
     sqrt601 = sqrt(601)
 
@@ -72,14 +66,7 @@ def mysovskih_2(symbolic=False):
     return DiskScheme("Mysovskih 2", weights, points, 11, _citation)
 
 
-def mysovskih_3(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
-    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
-    pm_ = numpy.array([+1, -1])
-
+def mysovskih_3():
     sqrt21 = sqrt(21)
     sqrt1401 = sqrt(1401)
 

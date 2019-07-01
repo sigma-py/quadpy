@@ -6,9 +6,8 @@ import pytest
 import sympy
 
 import quadpy
-from quadpy.nsimplex._helpers import integrate_monomial_over_unit_simplex
-
 from helpers import check_degree
+from quadpy.nsimplex._helpers import integrate_monomial_over_unit_simplex
 
 schemes = [
     quadpy.tetrahedron.beckers_haegemans_8(),

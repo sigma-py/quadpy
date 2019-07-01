@@ -2,8 +2,8 @@
 #
 import warnings
 
-from ._helpers import QuadrilateralScheme, pm, pm2, concat
 from ..helpers import article
+from ._helpers import QuadrilateralScheme, concat, pm, pm2
 
 citation = article(
     authors=["C.R. Morrow", "T.N.L. Patterson"],

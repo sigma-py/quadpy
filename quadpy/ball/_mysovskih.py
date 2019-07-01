@@ -3,8 +3,8 @@
 import numpy
 import sympy
 
+from ..helpers import article, fsd, pm, untangle
 from ._helpers import BallScheme
-from ..helpers import untangle, fsd, pm, article
 
 _citation = article(
     authors=["I.P. Mysovskih"],
@@ -15,13 +15,13 @@ _citation = article(
     year="1964",
 )
 
+frac = sympy.Rational
+sqrt = numpy.vectorize(sympy.sqrt)
+pi = sympy.pi
+pm_ = numpy.array([+1, -1])
 
-def mysovskih(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-    pm_ = numpy.array([+1, -1])
 
+def mysovskih():
     sqrt17770 = sqrt(17770)
     r, s = sqrt((1715 - pm_ * 7 * sqrt17770) / 2817)
     t = sqrt(frac(7, 18))

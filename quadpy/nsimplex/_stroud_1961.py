@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+from sympy import Rational as frac
 
-import sympy
-
-from ..helpers import untangle, rd, article
+from ..helpers import article, rd, untangle
 from ._helpers import NSimplexScheme
-
 
 citation = article(
     authors=["A.H. Stroud"],
@@ -21,9 +18,7 @@ citation = article(
 )
 
 
-def stroud_1961(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def stroud_1961(n):
     degree = 3
 
     r = frac(1, n + 1)

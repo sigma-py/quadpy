@@ -2,10 +2,10 @@
 #
 import numpy
 import pytest
-import quadpy
-from quadpy.ncube._helpers import integrate_monomial_over_ncube
 
+import quadpy
 from helpers import check_degree
+from quadpy.ncube._helpers import integrate_monomial_over_ncube
 
 
 @pytest.mark.parametrize(

@@ -5,7 +5,7 @@ import numpy
 from ..helpers import plot_disks_1d
 
 
-class E1rScheme(object):
+class E1rScheme:
     def __init__(self, name, weights, points, degree):
         self.name = name
         self.weights = weights
@@ -14,7 +14,9 @@ class E1rScheme(object):
         return
 
     def integrate(self, f, dot=numpy.dot):
-        return dot(f(self.points.T), self.weights)
+        x = numpy.array([self.points.T])
+        fx = numpy.asarray(f(x))
+        return dot(fx, self.weights)
 
     def show(self, *args, **kwargs):
         import matplotlib.pyplot as plt

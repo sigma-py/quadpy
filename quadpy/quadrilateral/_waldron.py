@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
 
 import numpy
 
-from ._helpers import QuadrilateralScheme
 from ..helpers import techreport
-
+from ._helpers import QuadrilateralScheme
 
 citation = techreport(
     authors=["Shayne Waldron"],

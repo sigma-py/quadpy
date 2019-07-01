@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
-
 import numpy
-import scipy
-import sympy
+from sympy import Rational as frac
+from sympy import gamma, pi, sqrt
 
-from ._helpers import Enr2Scheme
-from ..helpers import untangle, fsd, pm, article
 from .. import nsphere
+from ..helpers import article, fsd, pm, untangle
+from ._helpers import Enr2Scheme
 
 citation = article(
     authors=["A.H. Stroud"],
@@ -21,10 +19,7 @@ citation = article(
 )
 
 
-def _stroud_1967_7_2(n, variant_a=True, symbolic=False):
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-
+def _stroud_1967_7_2(n, variant_a=True):
     if variant_a:
         # the points/weights are complex-valued for n >= 9; one could permit that
         assert n in [2, 3, 4, 6, 7]
@@ -61,19 +56,15 @@ def _stroud_1967_7_2(n, variant_a=True, symbolic=False):
     return Enr2Scheme(name, n, weights, points, 7, citation)
 
 
-def stroud_1967_7_2a(n, symbolic=False):
-    return _stroud_1967_7_2(n, True, symbolic)
+def stroud_1967_7_2a(n):
+    return _stroud_1967_7_2(n, True)
 
 
-def stroud_1967_7_2b(n, symbolic=False):
-    return _stroud_1967_7_2(n, False, symbolic)
+def stroud_1967_7_2b(n):
+    return _stroud_1967_7_2(n, False)
 
 
-def stroud_1967_7_4(n, symbolic=False):
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    gamma = sympy.gamma if symbolic else scipy.special.gamma
-
+def stroud_1967_7_4(n):
     assert n >= 3
 
     sqrt2n2 = sqrt(2 * (n + 2))
@@ -81,7 +72,7 @@ def stroud_1967_7_4(n, symbolic=False):
     g = gamma(frac(n, 2))
     A1, A2 = [(n + 2 + p_m * sqrt2n2) / 4 / (n + 2) * g for p_m in [+1, -1]]
 
-    s = nsphere.stroud_1967(n, symbolic=symbolic)
+    s = nsphere.stroud_1967(n)
 
     points = numpy.concatenate([r1 * s.points, r2 * s.points])
     weights = numpy.concatenate([A1 * s.weights, A2 * s.weights])

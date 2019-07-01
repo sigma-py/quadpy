@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
-
 import numpy
-import sympy
+from sympy import Rational as frac
+from sympy import cos, pi, sin, sqrt
 
-from ._helpers import _s, NCubeScheme
-
-from ..helpers import untangle, article
+from ..helpers import article, untangle
+from ._helpers import NCubeScheme, _s
 
 _citation = article(
     authors=["A.H. Stroud"],
@@ -22,9 +20,7 @@ _citation = article(
 )
 
 
-def stroud_1957_2(n, symbolic=False):
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def stroud_1957_2(n):
     r = sqrt(3) / 6
     data = [
         (1.0, numpy.array([numpy.full(n, 2 * r)])),
@@ -38,13 +34,7 @@ def stroud_1957_2(n, symbolic=False):
     return NCubeScheme("Stroud 1957-2", n, weights, points, 2, _citation)
 
 
-def stroud_1957_3(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-    sin = sympy.sin if symbolic else numpy.sin
-    cos = sympy.cos if symbolic else numpy.cos
-
+def stroud_1957_3(n):
     n2 = n // 2 if n % 2 == 0 else (n - 1) // 2
     i_range = range(1, 2 * n + 1)
     pts = [

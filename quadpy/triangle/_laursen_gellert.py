@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
 
-import sympy
+from sympy import Rational as frac
 
-from ._helpers import s3, TriangleScheme, s2, concat, s1
 from ..helpers import article
+from ._helpers import TriangleScheme, concat, s1, s2, s3
 
 citation = article(
     authors=["M.E. Laursen", "M. Gellert"],
@@ -19,32 +18,28 @@ citation = article(
 )
 
 
-def laursen_gellert_01(symbolic=False):
+def laursen_gellert_01():
     weights, points = s3(1)
     return TriangleScheme("Laursen-Gellert 1", weights, points, 1, citation)
 
 
-def laursen_gellert_02a(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
+def laursen_gellert_02a():
     weights, points = s2([frac(1, 3), frac(1, 6)])
     return TriangleScheme("Laursen-Gellert 2a", weights, points, 2, citation)
 
 
-def laursen_gellert_02b(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
+def laursen_gellert_02b():
     weights, points = s2([frac(1, 3), frac(1, 2)])
     return TriangleScheme("Laursen-Gellert 2b", weights, points, 2, citation)
 
 
-def laursen_gellert_03(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
+def laursen_gellert_03():
     weights, points = concat(s3(-frac(9, 16)), s2([frac(25, 48), frac(1, 5)]))
     return TriangleScheme("Laursen-Gellert 3", weights, points, 3, citation)
 
 
-def laursen_gellert_04(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    weights, points = s1([frac(1, 6), 0.659027622374092, 0.231933368553031])
+def laursen_gellert_04():
+    weights, points = s1([1.0 / 6.0, 0.659027622374092, 0.231933368553031])
     return TriangleScheme("Laursen-Gellert 4", weights, points, 3, citation)
 
 
@@ -55,18 +50,16 @@ def laursen_gellert_05():
     return TriangleScheme("Laursen-Gellert 5", weights, points, 4, citation)
 
 
-def laursen_gellert_06(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
+def laursen_gellert_06():
     weights, points = concat(
-        s3(frac(3, 8)), s1([frac(5, 48), 0.736712498968435, 0.237932366472434])
+        s3(3.0 / 8.0), s1([5.0 / 48.0, 0.736712498968435, 0.237932366472434])
     )
     return TriangleScheme("Laursen-Gellert 6", weights, points, 4, citation)
 
 
-def laursen_gellert_07(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
+def laursen_gellert_07():
     weights, points = concat(
-        s3(frac(9, 40)),
+        s3(9.0 / 40.0),
         s2(
             [0.125939180544827, 0.101286507323456],
             [0.132394152788506, 0.470142064105115],

@@ -10,12 +10,10 @@ from ._gauss_lobatto import gauss_lobatto
 from ._gauss_patterson import gauss_patterson
 from ._gauss_radau import gauss_radau
 from ._midpoint import midpoint
-from ._newton_cotes import newton_cotes_open, newton_cotes_closed
-from ._trapezoidal import trapezoidal
-
-from .tanh_sinh import tanh_sinh, tanh_sinh_lr
-
+from ._newton_cotes import newton_cotes_closed, newton_cotes_open
 from ._tools import integrate_adaptive
+from ._trapezoidal import trapezoidal
+from .tanh_sinh import tanh_sinh, tanh_sinh_lr
 
 __all__ = [
     "chebyshev_gauss_1",

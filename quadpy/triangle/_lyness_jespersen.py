@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+from sympy import Rational as frac
+from sympy import sqrt
 
-import numpy
-import sympy
-
-from ._helpers import TriangleScheme, s2, concat, s3, s1
 from ..helpers import article
+from ._helpers import TriangleScheme, concat, s1, s2, s3
 
 citation = article(
     authors=["J.N. Lyness", "D. Jespersen"],
@@ -21,30 +19,22 @@ citation = article(
 )
 
 
-def lyness_jespersen_01(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def lyness_jespersen_01():
     weights, points = s2([frac(1, 3), frac(1, 2)])
     return TriangleScheme("Lyness-Jespersen 1", weights, points, 2, citation)
 
 
-def lyness_jespersen_02(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def lyness_jespersen_02():
     weights, points = concat(s3(frac(3, 4)), s2([frac(1, 12), 0]))
     return TriangleScheme("Lyness-Jespersen 2", weights, points, 2, citation)
 
 
-def lyness_jespersen_03(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def lyness_jespersen_03():
     weights, points = concat(s3(-frac(9, 16)), s2([frac(25, 48), frac(1, 5)]))
     return TriangleScheme("Lyness-Jespersen 3", weights, points, 3, citation)
 
 
-def lyness_jespersen_04(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def lyness_jespersen_04():
     weights, points = concat(
         s3(frac(9, 20)), s2([frac(1, 20), 0], [frac(2, 15), frac(1, 2)])
     )
@@ -59,10 +49,7 @@ def lyness_jespersen_05():
     return TriangleScheme("Lyness-Jespersen 5", weights, points, 4, citation)
 
 
-def lyness_jespersen_06(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def lyness_jespersen_06():
     a0, a1 = [(3 + i * sqrt(3)) / 6 for i in [+1, -1]]
 
     weights, points = concat(
@@ -71,10 +58,7 @@ def lyness_jespersen_06(symbolic=False):
     return TriangleScheme("Lyness-Jespersen 6", weights, points, 4, citation)
 
 
-def lyness_jespersen_07(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def lyness_jespersen_07():
     sqrt13 = sqrt(13)
 
     weights, points = s2(
@@ -85,10 +69,7 @@ def lyness_jespersen_07(symbolic=False):
     return TriangleScheme("Lyness-Jespersen 7", weights, points, 4, citation)
 
 
-def lyness_jespersen_08(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def lyness_jespersen_08():
     sqrt15 = sqrt(15)
     b1, b2 = [(155 - i * sqrt15) / 1200 for i in [+1, -1]]
     r1, r2 = [(6 - i * sqrt15) / 21 for i in [+1, -1]]
@@ -97,9 +78,7 @@ def lyness_jespersen_08(symbolic=False):
     return TriangleScheme("Lyness-Jespersen 8", weights, points, 5, citation)
 
 
-def lyness_jespersen_09(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def lyness_jespersen_09():
     weights, points = concat(
         s3(frac(81, 320)),
         s2(
@@ -122,10 +101,7 @@ def lyness_jespersen_10():
     return TriangleScheme("Lyness-Jespersen 10", weights, points, 6, citation)
 
 
-def lyness_jespersen_11(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def lyness_jespersen_11():
     c, d = [(3 + i * sqrt(6)) / 6 for i in [+1, -1]]
 
     weights, points = concat(

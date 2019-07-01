@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+from sympy import Rational as frac
+from sympy import sqrt
 
-import numpy
-import sympy
-
-from ._helpers import zero, symm_s, symm_r0, concat, QuadrilateralScheme
 from ..helpers import article
+from ._helpers import QuadrilateralScheme, concat, symm_r0, symm_s, zero
 
 citation = article(
     authors=["G.W. Tyler"],
@@ -19,8 +17,7 @@ citation = article(
 )
 
 
-def tyler_1(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
+def tyler_1():
     weights, points = concat(
         zero(-frac(28, 45)),
         symm_s([frac(1, 36), 1]),
@@ -30,21 +27,17 @@ def tyler_1(symbolic=False):
     return QuadrilateralScheme("Tyler 1", weights, points, 5, citation)
 
 
-def tyler_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pm = numpy.array([+1, -1])
+def tyler_2():
     r = sqrt(frac(6, 7))
-    s, t = sqrt((114 - pm * 3 * sqrt(583)) / 287)
+    s, t = [sqrt((114 - i * 3 * sqrt(583)) / 287) for i in [+1, -1]]
     B1 = frac(49, 810)
-    B2, B3 = (178981 + pm * 2769 * sqrt(583)) / 1888920
+    B2, B3 = [(178981 + i * 2769 * sqrt(583)) / 1888920 for i in [+1, -1]]
     weights, points = concat(symm_r0([B1, r]), symm_s([B2, s], [B3, t]))
     weights *= 4
     return QuadrilateralScheme("Tyler 2", weights, points, 7, citation)
 
 
-def tyler_3(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
+def tyler_3():
     weights, points = concat(
         zero(frac(449, 315)),
         symm_r0(

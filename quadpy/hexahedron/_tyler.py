@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+from sympy import Rational as frac
 
-import sympy
-
-from ._helpers import fs_r00, pm_rrr, z, HexahedronScheme
-from ..helpers import untangle, article
-
+from ..helpers import article, untangle
+from ._helpers import HexahedronScheme, fs_r00, pm_rrr, z
 
 citation = article(
     authors=["G.W. Tyler"],
@@ -19,18 +16,14 @@ citation = article(
 )
 
 
-def tyler_1(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def tyler_1():
     data = [(frac(1, 6), fs_r00(1))]
     points, weights = untangle(data)
     weights *= 8
     return HexahedronScheme("Tyler 1", weights, points, 3, citation)
 
 
-def tyler_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def tyler_2():
     data = [
         (-frac(62, 45), z()),
         (frac(16, 45), fs_r00(frac(1, 2))),

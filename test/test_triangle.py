@@ -8,7 +8,6 @@ import sympy
 
 import orthopy
 import quadpy
-
 from helpers import check_degree_ortho
 
 schemes_tol = [
@@ -52,8 +51,6 @@ schemes_tol = [
     (quadpy.triangle.hammer_marlowe_stroud_3(), 1.0e-14),
     (quadpy.triangle.hammer_marlowe_stroud_4(), 1.0e-14),
     (quadpy.triangle.hammer_marlowe_stroud_5(), 1.0e-14),
-    (quadpy.triangle.hammer_stroud_2(), 1.0e-14),
-    (quadpy.triangle.hammer_stroud_3(), 1.0e-14),
     (quadpy.triangle.hillion_01(), 1.0e-14),
     (quadpy.triangle.hillion_02(), 1.0e-14),
     (quadpy.triangle.hillion_03(), 1.0e-14),
@@ -174,8 +171,6 @@ schemes_tol = [
     (quadpy.triangle.taylor_wingate_bos_4(), 1.0e-12),
     (quadpy.triangle.taylor_wingate_bos_5(), 1.0e-12),
     (quadpy.triangle.taylor_wingate_bos_8(), 1.0e-12),
-    (quadpy.triangle.triex_19(), 1.0e-14),
-    (quadpy.triangle.triex_28(), 1.0e-13),
     (quadpy.triangle.vertex(), 1.0e-14),
     (quadpy.triangle.vioreanu_rokhlin_00(), 1.0e-14),
     (quadpy.triangle.vioreanu_rokhlin_01(), 1.0e-14),

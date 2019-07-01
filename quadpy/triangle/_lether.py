@@ -10,13 +10,12 @@
 #
 # Reported to Elsevier on June 24, 2019.
 #
-from __future__ import division
 
 import numpy
 
+from ..helpers import article
 from ..line_segment import gauss_legendre
 from ._helpers import TriangleScheme
-from ..helpers import article
 
 citation = article(
     authors=["Frank G. Lether"],

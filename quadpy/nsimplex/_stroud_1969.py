@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
-
 import numpy
-import sympy
+from sympy import Rational as frac
+from sympy import sqrt
 
-from ._helpers import integrate_monomial_over_unit_simplex, NSimplexScheme
-from ..helpers import untangle, rd, article
+from ..helpers import article, rd, untangle
+from ._helpers import NSimplexScheme, integrate_monomial_over_unit_simplex
 
 citation = article(
     authors=["A.H. Stroud"],
@@ -19,11 +18,8 @@ citation = article(
 )
 
 
-def stroud_1969(n, symbolic=False):
+def stroud_1969(n):
     assert n >= 3
-
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
     degree = 5
 
@@ -51,10 +47,10 @@ def stroud_1969(n, symbolic=False):
         pts.append(rd(n + 1, [(u2, n - 1), (v2, 2)]))
         k_range.append(5)
 
-    b0 = integrate_monomial_over_unit_simplex(n * [0], symbolic=symbolic)
+    b0 = integrate_monomial_over_unit_simplex(n * [0], symbolic=True)
     b = [
         integrate_monomial_over_unit_simplex(
-            numpy.array([k] + (n - 1) * [0]), symbolic=symbolic
+            numpy.array([k] + (n - 1) * [0]), symbolic=True
         )
         / b0
         for k in k_range
@@ -63,9 +59,9 @@ def stroud_1969(n, symbolic=False):
     A = [[sum(p[:, 0] ** k) for p in pts] for k in k_range]
 
     flt = numpy.vectorize(float)
-    x = numpy.linalg.solve(flt(A), flt(b))
+    w = numpy.linalg.solve(flt(A), flt(b))
 
-    data = [(x[i], pts[i]) for i in range(len(x))]
+    data = [(w[i], pts[i]) for i in range(len(w))]
 
     points, weights = untangle(data)
     return NSimplexScheme("Stroud 1969", n, weights, points, degree, citation)

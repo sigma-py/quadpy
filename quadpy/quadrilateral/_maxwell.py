@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+from sympy import Rational as frac
+from sympy import sqrt
 
-import numpy
-import sympy
-
-from ._helpers import concat, zero, symm_r0, symm_s_t, QuadrilateralScheme
 from ..helpers import article
+from ._helpers import QuadrilateralScheme, concat, symm_r0, symm_s_t, zero
 
 citation = article(
     authors=["J.C. Maxwell"],
@@ -19,10 +17,7 @@ citation = article(
 )
 
 
-def maxwell(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def maxwell():
     r = sqrt(frac(12, 35))
     s, t = [sqrt((93 + i * 3 * sqrt(186)) / 155) for i in [+1, -1]]
 

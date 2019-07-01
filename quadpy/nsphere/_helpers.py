@@ -3,17 +3,29 @@
 import math
 
 import numpy
-from sympy import gamma, prod, Rational
+from sympy import Rational, gamma, prod
 
 
-class NSphereScheme(object):
+class NSphereScheme:
     def __init__(self, name, dim, weights, points, degree, citation):
         self.name = name
         self.dim = dim
-        self.weights = weights
-        self.points = points
         self.degree = degree
         self.citation = citation
+
+        if weights.dtype == numpy.float64:
+            self.weights = weights
+        else:
+            assert weights.dtype in [numpy.dtype("O"), numpy.int64]
+            self.weights = weights.astype(numpy.float64)
+            self.weights_symbolic = weights
+
+        if points.dtype == numpy.float64:
+            self.points = points
+        else:
+            assert points.dtype in [numpy.dtype("O"), numpy.int64]
+            self.points = points.astype(numpy.float64)
+            self.points_symbolic = points
         return
 
     def integrate(self, f, center, radius, dot=numpy.dot):
@@ -36,11 +48,9 @@ def integrate_monomial_over_unit_nsphere(alpha, symbolic=False):
         return 0
 
     if symbolic:
-        # Explicitly cast a to int (from numpy.int64) to work around bug
-        # <https://github.com/sympy/sympy/issues/13618>.
         return 2 * (
-            prod([gamma(Rational(int(a) + 1, 2)) for a in alpha])
-            / gamma(sum([Rational(int(a) + 1, 2) for a in alpha]))
+            prod([gamma(Rational(a + 1, 2)) for a in alpha])
+            / gamma(sum([Rational(a + 1, 2) for a in alpha]))
         )
 
     # Use lgamma since other with ordinary gamma, numerator and denominator

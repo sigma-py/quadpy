@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division, print_function
-
-from distutils.version import LooseVersion
 
 import math
+from distutils.version import LooseVersion
 
-from mpmath import mp
 import numpy
 import pytest
 import scipy
 import sympy
+from mpmath import mp
 
 import orthopy
-
 import quadpy
 
 
@@ -104,7 +101,9 @@ def test_chebyshev_modified(tol=1.0e-14):
     moments = numpy.zeros(2 * n)
     moments[0] = 2.0 / 3.0
     moments[2] = 8.0 / 45.0
-    _, _, b, c = orthopy.line_segment.recurrence_coefficients.legendre(2 * n, "monic")
+    _, _, b, c = orthopy.line_segment.recurrence_coefficients.legendre(
+        2 * n, "monic", symbolic=False
+    )
 
     alpha, beta = quadpy.tools.chebyshev_modified(moments, b, c)
 
@@ -115,62 +114,61 @@ def test_chebyshev_modified(tol=1.0e-14):
     return
 
 
-@pytest.mark.parametrize("mode", ["sympy", "numpy", "mpmath"])
-def test_gauss(mode):
-    if mode == "sympy":
-        n = 3
-        a = sympy.S(0) / 1
-        b = sympy.S(0) / 1
-        _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.jacobi(
-            n, a, b, "monic", symbolic=True
-        )
-        points, weights = quadpy.tools.scheme_from_rc(alpha, beta, mode=mode)
+def test_gauss_sympy():
+    n = 3
+    a = 0
+    b = 0
+    _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.jacobi(
+        n, a, b, "monic", symbolic=True
+    )
+    points, weights = quadpy.tools.scheme_from_rc(alpha, beta, "sympy")
 
-        assert points == [-sympy.sqrt(sympy.S(3) / 5), 0, +sympy.sqrt(sympy.S(3) / 5)]
+    assert points == [-sympy.sqrt(sympy.S(3) / 5), 0, +sympy.sqrt(sympy.S(3) / 5)]
+    assert weights == [sympy.S(5) / 9, sympy.S(8) / 9, sympy.S(5) / 9]
+    return
 
-        assert weights == [sympy.S(5) / 9, sympy.S(8) / 9, sympy.S(5) / 9]
 
-    elif mode == "mpmath":
-        n = 5
-        a = sympy.S(0) / 1
-        b = sympy.S(0) / 1
-        _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.jacobi(
-            n, a, b, "monic"
-        )
-        points, weights = quadpy.tools.scheme_from_rc(
-            alpha, beta, mode=mode, decimal_places=50
-        )
+def test_gauss_mpmath():
+    n = 5
+    a = 0
+    b = 0
+    _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.jacobi(
+        n, a, b, "monic", symbolic=True
+    )
+    mp.dps = 50
+    points, weights = quadpy.tools.scheme_from_rc(alpha, beta, "mpmath")
 
-        tol = 1.0e-50
-        mp.dps = 50
-        s = mp.sqrt(5 + 2 * mp.sqrt(mp.mpf(10) / mp.mpf(7))) / 3
-        t = mp.sqrt(5 - 2 * mp.sqrt(mp.mpf(10) / mp.mpf(7))) / 3
-        assert (abs(points - [-s, -t, 0.0, +t, +s]) < tol).all()
+    tol = 1.0e-50
+    s = mp.sqrt(5 + 2 * mp.sqrt(mp.mpf(10) / mp.mpf(7))) / 3
+    t = mp.sqrt(5 - 2 * mp.sqrt(mp.mpf(10) / mp.mpf(7))) / 3
+    assert (abs(points - [-s, -t, 0.0, +t, +s]) < tol).all()
 
-        u = mp.mpf(128) / mp.mpf(225)
-        v = (322 + 13 * mp.sqrt(70)) / 900
-        w = (322 - 13 * mp.sqrt(70)) / 900
-        assert (abs(weights - [w, v, u, v, w]) < tol).all()
+    u = mp.mpf(128) / mp.mpf(225)
+    v = (322 + 13 * mp.sqrt(70)) / 900
+    w = (322 - 13 * mp.sqrt(70)) / 900
+    assert (abs(weights - [w, v, u, v, w]) < tol).all()
+    return
 
-    else:
-        assert mode == "numpy"
-        n = 5
-        tol = 1.0e-14
-        _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.legendre(
-            n, "monic"
-        )
-        alpha = numpy.array([float(a) for a in alpha])
-        beta = numpy.array([float(b) for b in beta])
-        points, weights = quadpy.tools.scheme_from_rc(alpha, beta, mode=mode)
 
-        s = math.sqrt(5.0 + 2 * math.sqrt(10.0 / 7.0)) / 3.0
-        t = math.sqrt(5.0 - 2 * math.sqrt(10.0 / 7.0)) / 3.0
-        assert (abs(points - [-s, -t, 0.0, +t, +s]) < tol).all()
+def test_gauss_numpy():
+    n = 5
+    tol = 1.0e-14
+    _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.legendre(
+        n, "monic", symbolic=False
+    )
+    flt = numpy.vectorize(float)
+    alpha = flt(alpha)
+    beta = flt(beta)
+    points, weights = quadpy.tools.scheme_from_rc(alpha, beta, "numpy")
 
-        u = 128.0 / 225.0
-        v = (322.0 + 13 * math.sqrt(70)) / 900.0
-        w = (322.0 - 13 * math.sqrt(70)) / 900.0
-        assert (abs(weights - [w, v, u, v, w]) < tol).all()
+    s = math.sqrt(5.0 + 2 * math.sqrt(10.0 / 7.0)) / 3.0
+    t = math.sqrt(5.0 - 2 * math.sqrt(10.0 / 7.0)) / 3.0
+    assert (abs(points - [-s, -t, 0.0, +t, +s]) < tol).all()
+
+    u = 128.0 / 225.0
+    v = (322.0 + 13 * math.sqrt(70)) / 900.0
+    w = (322.0 - 13 * math.sqrt(70)) / 900.0
+    assert (abs(weights - [w, v, u, v, w]) < tol).all()
     return
 
 
@@ -179,9 +177,9 @@ def test_gauss(mode):
 )
 def test_jacobi_reconstruction(tol=1.0e-14):
     _, _, alpha1, beta1 = orthopy.line_segment.recurrence_coefficients.jacobi(
-        4, 2, 1, "monic"
+        4, 2, 1, "monic", symbolic=False
     )
-    points, weights = quadpy.tools.scheme_from_rc(alpha1, beta1)
+    points, weights = quadpy.tools.scheme_from_rc(alpha1, beta1, "numpy")
 
     alpha2, beta2 = quadpy.tools.coefficients_from_gauss(points, weights)
 

@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
 
-from ..helpers import untangle, fsd, compute_dobrodeev, article
-from ._helpers import integrate_monomial_over_ncube, NCubeScheme
+from ..helpers import article, compute_dobrodeev, fsd, untangle
+from ._helpers import NCubeScheme, integrate_monomial_over_ncube
 
 _citation = article(
     authors=["L.N. Dobrodeev"],
@@ -17,7 +16,7 @@ _citation = article(
 )
 
 
-def dobrodeev_1978(n, symbolic=False):
+def dobrodeev_1978(n):
     assert 2 <= n <= 20
 
     dim_config = {
@@ -50,9 +49,7 @@ def dobrodeev_1978(n, symbolic=False):
 
     pm_type, i, j, k = dim_config[n]
 
-    G, a, b, c = compute_dobrodeev(
-        n, I0, I2, I22, I4, pm_type, i, j, k, symbolic=symbolic
-    )
+    G, a, b, c = compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k, symbolic=True)
 
     data = [(G, fsd(n, (a, i))), (G, fsd(n, (b, j), (c, k)))]
 

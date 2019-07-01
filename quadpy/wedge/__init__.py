@@ -26,7 +26,6 @@ from ._kubatko_yeager_maggi import (
     kubatko_yeager_maggi_9,
 )
 
-
 __all__ = [
     "felippa_1",
     "felippa_2",

@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 #
 # TODO According to Stroud, Stenger's original article has data up to n == 20.
-from __future__ import division
 
+from ..helpers import article, fsd, untangle, z
 from ._helpers import Enr2Scheme
-from ..helpers import untangle, fsd, z, article
-
 
 citation = article(
     authors=["W.G."],

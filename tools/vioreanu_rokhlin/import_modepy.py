@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-import modepy
 import numpy
+
+import modepy
 
 from . import import_helpers
 

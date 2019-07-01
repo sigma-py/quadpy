@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 #
+import accupy
 import numpy
 import pytest
-import accupy
 
 import quadpy
-
 from helpers import check_degree, integrate_monomial_over_enr
 
 schemes = [
@@ -23,8 +22,8 @@ schemes = [
     quadpy.e2r.stroud_11_1(),
     quadpy.e2r.stroud_11_2(),
     quadpy.e2r.stroud_15_1(),
-    quadpy.e2r.stroud_secrest_v(),
-    quadpy.e2r.stroud_secrest_vi(),
+    quadpy.e2r.stroud_secrest_5(),
+    quadpy.e2r.stroud_secrest_6(),
 ]
 
 

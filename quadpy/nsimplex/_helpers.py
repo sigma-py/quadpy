@@ -7,14 +7,26 @@ import scipy.special
 import sympy
 
 
-class NSimplexScheme(object):
+class NSimplexScheme:
     def __init__(self, name, dim, weights, points, degree, citation):
         self.name = name
         self.dim = dim
-        self.weights = weights
-        self.points = points
         self.degree = degree
         self.citation = citation
+
+        if weights.dtype == numpy.float64:
+            self.weights = weights
+        else:
+            assert weights.dtype in [numpy.dtype("O"), numpy.int64]
+            self.weights = weights.astype(numpy.float64)
+            self.weights_symbolic = weights
+
+        if points.dtype == numpy.float64:
+            self.points = points
+        else:
+            assert points.dtype in [numpy.dtype("O"), numpy.int64]
+            self.points = points.astype(numpy.float64)
+            self.points_symbolic = points
         return
 
     def integrate(self, f, simplex, dot=numpy.dot):
@@ -22,11 +34,10 @@ class NSimplexScheme(object):
         x = transform(flt(self.points).T, simplex.T)
         vol = get_vol(simplex)
 
-        fx = numpy.array(f(x))
+        fx = numpy.asarray(f(x))
 
-        s = x.shape[1:]
         assert (
-            s == fx.shape[-len(s) :]
+            x.shape[1:] == fx.shape[-len(x.shape[1:]) :]
         ), "Illegal shape of f(x) (expected (..., {}), got {})".format(
             ", ".join([str(k) for k in x.shape[1:]]), fx.shape
         )

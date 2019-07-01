@@ -2,20 +2,23 @@
 #
 import numpy
 
+from ..helpers import article
 from ._helpers import LineSegmentScheme
+
+citation = article(
+    authors=["J. Waldvogel"],
+    title="Fast Construction of the Fejér and Clenshaw–Curtis Quadrature Rules",
+    journal="BIT Numerical Mathematics",
+    month="mar",
+    year="2006",
+    volume="46",
+    number="1",
+    pages="195–202",
+    url="https://doi.org/10.1007/s10543-006-0045-4",
+)
 
 
 def clenshaw_curtis(n):
-    """
-    Clenshaw-Curtis quadrature.
-
-    Weights are constructed after
-
-    J. Waldvogel,
-    Fast Construction of the Fejér and Clenshaw–Curtis Quadrature Rules,
-    BIT Numerical Mathematics, March 2006, Volume 46, Issue 1, pp 195–202,
-    <https://doi.org/10.1007/s10543-006-0045-4>.
-    """
     degree = n
 
     points = -numpy.cos((numpy.pi * numpy.arange(n)) / (n - 1))
@@ -46,4 +49,4 @@ def clenshaw_curtis(n):
     else:
         weights = numpy.concatenate([w, w[len(w) - 2 :: -1]])
 
-    return LineSegmentScheme("Clenshaw-Curtis", degree, weights, points)
+    return LineSegmentScheme("Clenshaw-Curtis", degree, weights, points, citation)

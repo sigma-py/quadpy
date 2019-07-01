@@ -5,9 +5,7 @@ import pytest
 import scipy.special
 
 import quadpy
-
 from helpers import check_degree
-
 
 # def _integrate_exact(k, wedge):
 #     import sympy

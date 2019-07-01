@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division, print_function
 
 import math
+
 import numpy
 
 from quadpy.helpers import get_all_exponents
@@ -110,11 +110,17 @@ def find_equal(schemes):
                     break
             if is_equal:
                 found_equal = True
-                print(
-                    "Schemes '{}' and '{}' are equal.".format(
-                        schemes[i].name, schemes[j].name
-                    )
-                )
+                a = "'{}'".format(schemes[i].name)
+                try:
+                    a += " ({})".format(schemes[i].citation.year)
+                except AttributeError:
+                    pass
+                b = "'{}'".format(schemes[j].name)
+                try:
+                    b += " ({})".format(schemes[j].citation.year)
+                except AttributeError:
+                    pass
+                print("Schemes {} and {} are equal.".format(a, b))
         if found_equal:
             print()
     return

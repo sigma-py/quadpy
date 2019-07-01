@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
-
-import numpy
 import scipy.special
-import sympy
+from sympy import Rational as frac
+from sympy import sqrt
 
-from ..helpers import untangle, fsd, z, article
+from ..helpers import article, fsd, untangle, z
 from ._helpers import NCubeScheme
 
 _citation = article(
@@ -21,10 +19,7 @@ _citation = article(
 )
 
 
-def phillips(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def phillips(n):
     if n == 2:
         p1 = 1
         p2 = frac(14, 3)

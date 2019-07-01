@@ -2,9 +2,8 @@
 #
 import numpy
 
-from ._dunavant import dunavant_05, dunavant_10
-
 from ..nsimplex import get_vol
+from ._dunavant import dunavant_05, dunavant_10
 
 
 def _numpy_all_except(a, axis=-1):

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 #
+from ..ncube import ncube_points as cube_points
+from ..ncube import transform
 from ._hammer_stroud import (
     hammer_stroud_1_3,
     hammer_stroud_2_3,
@@ -18,6 +20,7 @@ from ._mustard_lyness_blatt import (
     mustard_lyness_blatt_6,
     mustard_lyness_blatt_7,
 )
+from ._product import product
 from ._sadowsky import sadowsky
 from ._stroud import (
     stroud_c3_3_1,
@@ -42,11 +45,6 @@ from ._stroud import (
 )
 from ._stroud_1967 import stroud_1967
 from ._tyler import tyler_1, tyler_2
-
-from ._product import product
-
-from ..ncube import transform
-from ..ncube import ncube_points as cube_points
 
 __all__ = [
     "hammer_stroud_1_3",

@@ -7,9 +7,8 @@ import warnings
 
 import numpy
 
-from .._helpers import cartesian_to_spherical, SphereScheme
 from ...helpers import online
-
+from .._helpers import SphereScheme, cartesian_to_spherical
 
 citation = online(
     authors=["Jörg Fliege", "Ulrike Maier"],

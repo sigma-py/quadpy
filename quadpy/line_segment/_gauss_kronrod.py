@@ -3,15 +3,26 @@
 import math
 
 import numpy
+
 import orthopy
 
-from ._gauss_legendre import gauss_legendre
-
-from ._helpers import LineSegmentScheme
+from ..helpers import article
 from ..tools import scheme_from_rc
+from ._gauss_legendre import gauss_legendre
+from ._helpers import LineSegmentScheme
+
+citation = article(
+    authors=["Dirk P. Laurie"],
+    title="Calculation of Gauss-Kronrod quadrature rules",
+    journal="Math. Comp.",
+    volume="66",
+    year="1997",
+    pages="1133-1145",
+    url="https://doi.org/10.1090/S0025-5718-97-00861-2",
+)
 
 
-def gauss_kronrod(n, a=0.0, b=0.0):
+def gauss_kronrod(n, a=0, b=0):
     """
     Gauss-Kronrod quadrature; see
     <https://en.wikipedia.org/wiki/Gauss%E2%80%93Kronrod_quadrature_formula>.
@@ -22,25 +33,11 @@ def gauss_kronrod(n, a=0.0, b=0.0):
     Code adapted from
     <https://www.cs.purdue.edu/archives/2002/wxg/codes/r_kronrod.m>,
     <https://www.cs.purdue.edu/archives/2002/wxg/codes/kronrod.m>.
-    See
-
-    Calculation of Gauss-Kronrod quadrature rules,
-    Dirk P. Laurie,
-    Math. Comp. 66 (1997), 1133-1145,
-    <https://doi.org/10.1090/S0025-5718-97-00861-2>
-
-    Abstract:
-    The Jacobi matrix of the $(2n+1)$-point Gauss-Kronrod quadrature rule for a given
-    measure is calculated efficiently by a five-term recurrence relation. The algorithm
-    uses only rational operations and is therefore also useful for obtaining the
-    Jacobi-Kronrod matrix analytically. The nodes and weights can then be computed
-    directly by standard software for Gaussian quadrature formulas.
     """
     # The general scheme is:
-    # Get the Jacobi recurrence coefficients, get the Kronrod vectors alpha and
-    # beta, and hand those off to scheme_from_rc. There, the eigenproblem for a
-    # tridiagonal matrix with alpha and beta is solved to retrieve the points and
-    # weights.
+    # Get the Jacobi recurrence coefficients, get the Kronrod vectors alpha and beta,
+    # and hand those off to scheme_from_rc. There, the eigenproblem for a tridiagonal
+    # matrix with alpha and beta is solved to retrieve the points and weights.
     # TODO replace math.ceil by -(-k//n)
     length = int(math.ceil(3 * n / 2.0)) + 1
     degree = 2 * length + 1
@@ -56,7 +53,9 @@ def gauss_kronrod(n, a=0.0, b=0.0):
     i = numpy.argsort(x)
     points = x[i]
     weights = w[i]
-    return LineSegmentScheme("Gauss-Kronrod ({})".format(n), degree, weights, points)
+    return LineSegmentScheme(
+        "Gauss-Kronrod ({})".format(n), degree, weights, points, citation
+    )
 
 
 def _r_kronrod(n, a0, b0):
@@ -137,8 +136,8 @@ def _gauss_kronrod_integrate(k, f, interval, dot=numpy.dot):
 
     # Get an error estimate. According to
     #
-    #   A Review of Error Estimation in Adaptive Quadrature
     #   Pedro Gonnet,
+    #   A Review of Error Estimation in Adaptive Quadrature,
     #   ACM Computing Surveys (CSUR) Surveys,
     #   Volume 44, Issue 4, August 2012
     #   <https://doi.org/10.1145/2333112.2333117>,

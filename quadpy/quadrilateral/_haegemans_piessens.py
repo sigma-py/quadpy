@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from ._helpers import QuadrilateralScheme, concat, pm, pm2
 from ..helpers import article
+from ._helpers import QuadrilateralScheme, concat, pm, pm2
 
 citation = article(
     authors=["Ann Haegemans", "Robert Piessens"],

@@ -2,8 +2,8 @@
 #
 import numpy
 
-from ._helpers import E2rScheme
 from ..helpers import article
+from ._helpers import E2rScheme
 
 _citation = article(
     authors=["Ann Haegemans", "Robert Piessens"],

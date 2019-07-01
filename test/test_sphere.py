@@ -3,6 +3,7 @@
 import matplotlib.pyplot as plt
 import numpy
 import pytest
+
 import orthopy
 import quadpy
 from quadpy.sphere._helpers import cartesian_to_spherical
