@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from ._chebyshev_gauss import chebyshev_gauss_1, chebyshev_gauss_2
 from ._clenshaw_curtis import clenshaw_curtis
 from ._fejer import fejer_1, fejer_2

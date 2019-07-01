@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 """
 [1] Gene H. Golub and John H. Welsch,
     Calculation of Gauss Quadrature Rules,

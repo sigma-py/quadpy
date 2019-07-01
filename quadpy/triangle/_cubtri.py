@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from ..helpers import article
 from ._helpers import TriangleScheme, concat, s1, s2, s3
 

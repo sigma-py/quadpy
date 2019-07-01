@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 import scipy.special
 from sympy import Rational as frac
 from sympy import sqrt

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from ._stroud import (
     stroud_e3r2_5_1,
     stroud_e3r2_5_2a,

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 import orthopy
 
 from ..tools import scheme_from_rc

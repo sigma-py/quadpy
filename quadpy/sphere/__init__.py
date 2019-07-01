@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from ._albrecht_collatz import (
     albrecht_collatz_1,
     albrecht_collatz_2,

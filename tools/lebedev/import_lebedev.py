@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 '''
 This little helper takes Lebedev point and weight data from [1] and produces JSON files.
 

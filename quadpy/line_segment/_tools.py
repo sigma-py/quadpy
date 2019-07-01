@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 import numpy
 
 from ._gauss_kronrod import _gauss_kronrod_integrate

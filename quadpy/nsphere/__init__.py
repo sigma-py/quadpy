@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 
 from ._dobrodeev_1978 import dobrodeev_1978
 from ._stroud import (

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from math import factorial as fact
 
 from sympy import Rational as frac

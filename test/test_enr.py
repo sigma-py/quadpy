@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 import accupy
 import numpy
 import pytest

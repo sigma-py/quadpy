@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from ._stenger import (
     stenger_7a,
     stenger_7b,
