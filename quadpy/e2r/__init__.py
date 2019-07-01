@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from ._haegemans_piessens import haegemans_piessens_a, haegemans_piessens_b
 from ._rabinowitz_richter import (  # rabinowitz_richter_4,
     rabinowitz_richter_1,

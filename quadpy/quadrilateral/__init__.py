@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-#
-
 from ..ncube import ncube_points as rectangle_points
 from ..ncube import transform
 from ._albrecht_collatz import (

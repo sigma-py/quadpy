@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-#
-
 from .combinatorics import (
     combine,
     fs_array,

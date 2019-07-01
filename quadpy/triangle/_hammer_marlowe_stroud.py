@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 """
 Two of the schemes also appear in
 

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from ._ditkin import ditkin_1, ditkin_2, ditkin_3
 from ._hammer_stroud import (
     hammer_stroud_11_3,

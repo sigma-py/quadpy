@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from ..nsimplex import get_vol, transform
 from ._albrecht_collatz import albrecht_collatz
 from ._berntsen_espelid import (

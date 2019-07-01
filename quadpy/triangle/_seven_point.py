@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 from sympy import Rational as frac
 
 from ._helpers import TriangleScheme, concat, s2, s3
