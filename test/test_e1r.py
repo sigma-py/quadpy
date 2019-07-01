@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 #
-import math
-
 import numpy
 import pytest
 from mpmath import mp
+import orthopy
 
 import quadpy
-from helpers import check_degree
 
 
 @pytest.mark.parametrize(
@@ -17,15 +15,23 @@ def test_scheme(scheme, tol):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
-    degree = check_degree(
-        lambda poly: scheme.integrate(poly),
-        lambda k: math.factorial(k[0]),
-        1,
-        scheme.degree + 1,
-        tol=tol,
+    def eval_orthopolys(x):
+        return orthopy.e1r.tree(x, scheme.degree + 1, symbolic=False)
+
+    approximate = scheme.integrate(eval_orthopolys)
+
+    exact = numpy.zeros(approximate.shape)
+    exact[0] = 1
+
+    diff = numpy.abs(approximate - exact)
+    k = numpy.where(diff > tol)[0]
+    assert len(k) > 0, "{} -- Degree is higher than {}.".format(
+        scheme.name, scheme.degree
     )
-    assert degree == scheme.degree, "Observed: {}   expected: {}".format(
-        degree, scheme.degree
+    degree = k[0] - 1
+
+    assert degree == scheme.degree, "{} -- Observed: {}   expected: {}".format(
+        scheme.name, degree, scheme.degree
     )
     return
 
@@ -37,7 +43,8 @@ def test_show(scheme):
 
 
 def test_laguerre_mpmath():
-    scheme = quadpy.e1r.gauss_laguerre(2, mode="mpmath", decimal_places=51)
+    mp.dps = 51
+    scheme = quadpy.e1r.gauss_laguerre(2, mode="mpmath")
 
     tol = 1.0e-50
 
@@ -52,7 +59,8 @@ def test_laguerre_mpmath():
 
 
 def test_laguerre_generalized_mpmath():
-    scheme = quadpy.e1r.gauss_laguerre(2, alpha=1, mode="mpmath", decimal_places=51)
+    mp.dps = 51
+    scheme = quadpy.e1r.gauss_laguerre(2, alpha=1, mode="mpmath")
 
     tol = 1.0e-50
 
