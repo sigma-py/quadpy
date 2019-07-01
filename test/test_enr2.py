@@ -15,7 +15,7 @@ from helpers import check_degree, integrate_monomial_over_enr2
     + [quadpy.enr2.stenger_11b(n) for n in range(3, 6)]
     + [quadpy.enr2.stroud_enr2_3_1(n) for n in range(2, 8)]
     + [quadpy.enr2.stroud_enr2_3_2(n) for n in range(2, 8)]
-    + [quadpy.enr2.stroud_enr2_5_1a(n) for n in range(2, 8)]
+    + [quadpy.enr2.stroud_enr2_5_1a(n) for n in range(2, 7)]
     + [quadpy.enr2.stroud_enr2_5_1b(n) for n in [3, 5, 6]]
     + [quadpy.enr2.stroud_enr2_5_2(n) for n in range(2, 8)]
     + [quadpy.enr2.stroud_enr2_5_3(n) for n in range(3, 8)]
@@ -32,15 +32,15 @@ from helpers import check_degree, integrate_monomial_over_enr2
     + [quadpy.enr2.stroud_enr2_9_1b(n) for n in range(4, 7)]
     + [quadpy.enr2.stroud_enr2_11_1a(n) for n in range(3, 5)]
     + [quadpy.enr2.stroud_enr2_11_1b(n) for n in range(3, 6)]
-    + [quadpy.enr2.stroud_1967_5_a(n) for n in range(2, 8)]
-    + [quadpy.enr2.stroud_1967_5_b(n) for n in [3, 5, 6]]
+    + [quadpy.enr2.stroud_1967_5_a(n) for n in range(2, 7)]
+    + [quadpy.enr2.stroud_1967_5_b(n) for n in [3, 5, 6, 7]]
     + [quadpy.enr2.stroud_1967_7_2a(n) for n in [2, 3, 4, 6, 7]]
     + [quadpy.enr2.stroud_1967_7_2b(n) for n in [3, 4]]
     + [quadpy.enr2.stroud_1967_7_4(n) for n in range(3, 8)]
-    + [quadpy.enr2.stroud_secrest_i(n) for n in range(2, 8)]
-    + [quadpy.enr2.stroud_secrest_ii(n) for n in range(2, 8)]
-    + [quadpy.enr2.stroud_secrest_iii(n) for n in range(2, 8)]
-    + [quadpy.enr2.stroud_secrest_iv(n) for n in range(2, 8)],
+    + [quadpy.enr2.stroud_secrest_1(n) for n in range(2, 8)]
+    + [quadpy.enr2.stroud_secrest_2(n) for n in range(2, 8)]
+    + [quadpy.enr2.stroud_secrest_3(n) for n in range(2, 8)]
+    + [quadpy.enr2.stroud_secrest_4(n) for n in range(2, 8)],
 )
 def test_scheme(scheme, tol=1.0e-14):
     assert scheme.points.dtype == numpy.float64, scheme.name
@@ -54,8 +54,10 @@ def test_scheme(scheme, tol=1.0e-14):
         scheme.degree + 1,
         tol=tol,
     )
-    assert degree == scheme.degree, "{} -- Observed: {}   expected: {}".format(
-        scheme.name, degree, scheme.degree
+    assert (
+        degree == scheme.degree
+    ), "{} (dim: {}) -- Observed: {}   expected: {}".format(
+        scheme.name, scheme.dim, degree, scheme.degree
     )
     return
 

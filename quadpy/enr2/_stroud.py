@@ -14,9 +14,9 @@ from ._stroud_1967_5 import stroud_1967_5_b as stroud_enr2_5_1b
 from ._stroud_1967_7 import stroud_1967_7_2a as stroud_enr2_7_1a
 from ._stroud_1967_7 import stroud_1967_7_2b as stroud_enr2_7_1b
 from ._stroud_1967_7 import stroud_1967_7_4 as stroud_enr2_7_2
-from ._stroud_secrest import stroud_secrest_i as stroud_enr2_3_1
-from ._stroud_secrest import stroud_secrest_iii as stroud_enr2_3_2
-from ._stroud_secrest import stroud_secrest_iv as stroud_enr2_5_2
+from ._stroud_secrest import stroud_secrest_1 as stroud_enr2_3_1
+from ._stroud_secrest import stroud_secrest_2 as stroud_enr2_3_2
+from ._stroud_secrest import stroud_secrest_4 as stroud_enr2_5_2
 
 citation = book(
     authors=["Arthur Stroud"],

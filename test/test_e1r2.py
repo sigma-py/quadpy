@@ -9,7 +9,7 @@ import quadpy
 @pytest.mark.parametrize(
     "scheme",
     [quadpy.e1r2.gauss_hermite(n) for n in range(5, 12)]
-    + [quadpy.e1r2.genz_keister(n) for n in range(1, 8)],
+    + [quadpy.e1r2.genz_keister(n) for n in range(8)],
 )
 def test_scheme(scheme):
     print(scheme.name)
