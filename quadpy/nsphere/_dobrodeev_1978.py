@@ -2,7 +2,6 @@
 #
 from math import factorial as fact
 
-import numpy
 from sympy import Rational as frac
 from sympy import sqrt
 
