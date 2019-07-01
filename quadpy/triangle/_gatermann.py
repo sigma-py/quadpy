@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from ._helpers import TriangleScheme, rot_ab
 from ..helpers import article
+from ._helpers import TriangleScheme, rot_ab
 
 citation = article(
     authors=["Karin Gatermann"],

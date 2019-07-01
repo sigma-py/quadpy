@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+import math
 
-import numpy
 import sympy
 
-from ._helpers import fs_r00, fs_rr0, pm_rrr, HexahedronScheme
-from ..helpers import untangle, article
-
+from ..helpers import article, untangle
+from ._helpers import HexahedronScheme, fs_r00, fs_rr0, pm_rrr
 
 _citation = article(
     authors=["Preston C. Hammer", "A. Wayne Wymore"],
@@ -20,9 +18,10 @@ _citation = article(
 )
 
 
-def hammer_wymore(lmbda=1, symbolic=False):
+def hammer_wymore(lmbda=1):
+    symbolic = not isinstance(lmbda, float)
     frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
+    sqrt = sympy.sqrt if symbolic else math.sqrt
 
     I0 = 8
     I2 = frac(8, 3)
@@ -59,4 +58,6 @@ def hammer_wymore(lmbda=1, symbolic=False):
     data = [(a1, fs_r00(x1)), (a2, fs_rr0(x2)), (a3, pm_rrr(x3)), (a4, pm_rrr(x4))]
 
     points, weights = untangle(data)
-    return HexahedronScheme("Hammer-Wymore", weights, points, 7, _citation)
+    return HexahedronScheme(
+        "Hammer-Wymore (lambda = {})".format(lmbda), weights, points, 7, _citation
+    )

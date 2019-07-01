@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
-
 from math import factorial as fact
 
-import numpy
-import sympy
+from sympy import Rational as frac
+from sympy import sqrt
 
-from ._helpers import integrate_monomial_over_unit_nsphere, NSphereScheme
-from ..helpers import untangle, fsd, article
-
+from ..helpers import article, fsd, untangle
+from ._helpers import NSphereScheme, integrate_monomial_over_unit_nsphere
 
 citation = article(
     authors=["L.N. Dobrodeev"],
@@ -23,7 +20,7 @@ citation = article(
 )
 
 
-def dobrodeev_1978(n, symbolic=False):
+def dobrodeev_1978(n):
     # from sympy import sqrt, factorial as fact, Rational as fr
 
     assert 2 <= n <= 20
@@ -53,29 +50,23 @@ def dobrodeev_1978(n, symbolic=False):
     }
 
     pm_type, i, j, k = dim_config[n]
-    I0 = integrate_monomial_over_unit_nsphere(n * [0], symbolic=symbolic)
+    I0 = integrate_monomial_over_unit_nsphere(n * [0], symbolic=True)
     if i is None:
-        G, b, c = _generate_jk(n, pm_type, j, k, symbolic)
+        G, b, c = _generate_jk(n, pm_type, j, k)
         data = [(G, fsd(n, (b, j), (c, k)))]
     elif j is None:
         assert k is None
         assert pm_type is None
-        G, a = _generate_i(n, i, symbolic)
+        G, a = _generate_i(n, i)
         data = [(G, fsd(n, (a, i)))]
     else:
-        I2 = integrate_monomial_over_unit_nsphere(
-            [2] + (n - 1) * [0], symbolic=symbolic
-        )
+        I2 = integrate_monomial_over_unit_nsphere([2] + (n - 1) * [0], symbolic=True)
         I22 = integrate_monomial_over_unit_nsphere(
-            [2, 2] + (n - 2) * [0], symbolic=symbolic
+            [2, 2] + (n - 2) * [0], symbolic=True
         )
-        I4 = integrate_monomial_over_unit_nsphere(
-            [4] + (n - 1) * [0], symbolic=symbolic
-        )
+        I4 = integrate_monomial_over_unit_nsphere([4] + (n - 1) * [0], symbolic=True)
 
-        G, a, b, c = _compute_dobrodeev(
-            n, I0, I2, I22, I4, pm_type, i, j, k, symbolic=symbolic
-        )
+        G, a, b, c = _compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k)
 
         data = [(G, fsd(n, (a, i))), (G, fsd(n, (b, j), (c, k)))]
 
@@ -84,20 +75,14 @@ def dobrodeev_1978(n, symbolic=False):
     return NSphereScheme("Dobrodeev 1978", n, weights, points, degree, citation)
 
 
-def _generate_i(n, i, symbolic):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def _generate_i(n, i):
     L = fact(n) // fact(i) // fact(n - i) * 2 ** i
     G = frac(1, L)
     a = sqrt(frac(3, n + 2))
     return G, a
 
 
-def _generate_jk(n, pm_type, j, k, symbolic):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def _generate_jk(n, pm_type, j, k):
     M = fact(n) // fact(j) // fact(k) // fact(n - j - k) * 2 ** (j + k)
     G = frac(1, M)
 
@@ -107,13 +92,10 @@ def _generate_jk(n, pm_type, j, k, symbolic):
     return G, b, c
 
 
-def _compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k, symbolic):
+def _compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k):
     """Same as the helper function in ..helpers, making use of the fact that
     `F == 0` for the sphere
     """
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
     # TODO prove F==0 analytically
     t = 1 if pm_type == "I" else -1
 

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
 
 import numpy
-import sympy
+from sympy import Rational as frac
+from sympy import sqrt
 
-from ._helpers import TriangleScheme
 from ..helpers import techreport
+from ._helpers import TriangleScheme
 
 citation = techreport(
     authors=["Noel J. Walkington"],
@@ -17,10 +17,7 @@ citation = techreport(
 )
 
 
-def walkington_p5(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def walkington_p5():
     degree = 5
 
     a1, a2 = [(155 + i * sqrt(15)) / 1200 for i in [+1, -1]]

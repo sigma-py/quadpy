@@ -38,7 +38,6 @@ from ._liu_vinokur import (
 )
 from ._maeztu_sainz import maeztu_sainz
 from ._newton_cotes import newton_cotes_closed, newton_cotes_open
-from ._stroud import stroud_t3_5_1, stroud_t3_7_1
 from ._shunn_ham import (
     shunn_ham_1,
     shunn_ham_2,
@@ -47,6 +46,7 @@ from ._shunn_ham import (
     shunn_ham_5,
     shunn_ham_6,
 )
+from ._stroud import stroud_t3_5_1, stroud_t3_7_1
 from ._vioreanu_rokhlin import (
     vioreanu_rokhlin_0,
     vioreanu_rokhlin_1,
@@ -58,6 +58,19 @@ from ._vioreanu_rokhlin import (
     vioreanu_rokhlin_7,
     vioreanu_rokhlin_8,
     vioreanu_rokhlin_9,
+)
+from ._walkington import walkington_p5
+from ._williams_shunn_jameson import williams_shunn_jameson
+from ._witherden_vincent import witherden_vincent_01  # witherden_vincent_04,
+from ._witherden_vincent import (
+    witherden_vincent_02,
+    witherden_vincent_03,
+    witherden_vincent_05,
+    witherden_vincent_06,
+    witherden_vincent_07,
+    witherden_vincent_08,
+    witherden_vincent_09,
+    witherden_vincent_10,
 )
 from ._xiao_gimbutas import (
     xiao_gimbutas_01,
@@ -78,21 +91,6 @@ from ._xiao_gimbutas import (
 )
 from ._yu import yu_1, yu_2, yu_3, yu_4, yu_5
 from ._zhang_cui_liu import zhang_cui_liu_1, zhang_cui_liu_2
-from ._walkington import walkington_p5
-from ._williams_shunn_jameson import williams_shunn_jameson
-from ._witherden_vincent import (
-    witherden_vincent_01,
-    witherden_vincent_02,
-    witherden_vincent_03,
-    # witherden_vincent_04,
-    witherden_vincent_05,
-    witherden_vincent_06,
-    witherden_vincent_07,
-    witherden_vincent_08,
-    witherden_vincent_09,
-    witherden_vincent_10,
-)
-
 
 __all__ = [
     "beckers_haegemans_8",

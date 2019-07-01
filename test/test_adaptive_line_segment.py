@@ -1,5 +1,6 @@
-from numpy import pi, sin, cos, array
 import pytest
+from numpy import array, cos, pi, sin
+
 import quadpy
 
 

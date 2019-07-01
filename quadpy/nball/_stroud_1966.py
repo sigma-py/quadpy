@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
-
 import numpy
-import sympy
+from sympy import Rational as frac
+from sympy import sqrt
 
-from ._helpers import volume_unit_ball, NBallScheme
-from ..helpers import untangle, fsd, pm, combine, z, pm_array, article
+from ..helpers import article, combine, fsd, pm, pm_array, untangle, z
+from ._helpers import NBallScheme, volume_unit_ball
 
 citation = article(
     authors=["A.H. Stroud"],
@@ -21,9 +20,7 @@ citation = article(
 )
 
 
-def stroud_1966_a(n, symbolic=False):
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def stroud_1966_a(n):
     a = sqrt(2 * (n + 4))
 
     r2 = (n + 4 - a) / (n + 4)
@@ -37,14 +34,11 @@ def stroud_1966_a(n, symbolic=False):
 
     data = [(B1, fsd(n, (r, 1))), (B2, pm(n, s))]
     points, weights = untangle(data)
-    weights *= volume_unit_ball(n, symbolic=symbolic)
+    weights *= volume_unit_ball(n)
     return NBallScheme("Stroud 1966a", n, weights, points, 5, citation)
 
 
-def stroud_1966_b(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def stroud_1966_b(n):
     alpha = 0
     s = sqrt(frac(n + alpha + 2, (n + 2) * (n + alpha + 4)))
     data = []
@@ -67,14 +61,11 @@ def stroud_1966_b(n, symbolic=False):
     data.append((B0, z(n)))
 
     points, weights = untangle(data)
-    weights *= volume_unit_ball(n, symbolic=symbolic)
+    weights *= volume_unit_ball(n)
     return NBallScheme("Stroud 1966b", n, weights, points, 5, citation)
 
 
-def stroud_1966_c(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def stroud_1966_c(n):
     a = sqrt(2 * (n + 2))
     r = sqrt((n + 2 + (n - 1) * a) / (n * (n + 4)))
     s = sqrt((n + 2 - a) / (n * (n + 4)))
@@ -85,14 +76,11 @@ def stroud_1966_c(n, symbolic=False):
     data = [(B0, z(n)), (B1, combine(((+r, -r), 1), ((+s, -s), (n - 1))))]
 
     points, weights = untangle(data)
-    weights *= volume_unit_ball(n, symbolic=symbolic)
+    weights *= volume_unit_ball(n)
     return NBallScheme("Stroud 1966c", n, weights, points, 5, citation)
 
 
-def stroud_1966_d(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def stroud_1966_d(n):
     a = 2 * sqrt(n + 4)
     b = sqrt(2 * (n + 1) * (n + 2) * (n + 4))
 
@@ -108,5 +96,5 @@ def stroud_1966_d(n, symbolic=False):
     data = [(B, combine(((+r, -r), 1), ((+s, -s), (n - 1)))), (B, pm(n, t))]
 
     points, weights = untangle(data)
-    weights *= volume_unit_ball(n, symbolic=symbolic)
+    weights *= volume_unit_ball(n)
     return NBallScheme("Stroud 1966d", n, weights, points, 5, citation)

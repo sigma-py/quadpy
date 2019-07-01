@@ -2,8 +2,8 @@
 #
 import numpy
 
-from ..helpers import untangle, combine, article
-from ._helpers import volume_unit_ball, NBallScheme
+from ..helpers import article, combine, untangle
+from ._helpers import NBallScheme, volume_unit_ball
 
 citation = article(
     authors=["A.H. Stroud"],

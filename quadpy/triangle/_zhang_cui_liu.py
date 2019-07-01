@@ -2,8 +2,8 @@
 #
 from mpmath import mp
 
-from ._helpers import TriangleScheme, concat, s3, s2, s1
 from ..helpers import article
+from ._helpers import TriangleScheme, concat, s1, s2, s3
 
 citation = article(
     authors=["Linbo Zhang", "Tao Cui", "Hui Liu"],

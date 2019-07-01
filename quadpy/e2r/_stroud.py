@@ -1,24 +1,19 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
-
 import numpy
-import sympy
+from sympy import Rational as frac
+from sympy import cos, pi, sin, sqrt
 
+from ..helpers import book, untangle
+from ._helpers import E2rScheme
 from ._rabinowitz_richter import (
     rabinowitz_richter_1 as stroud_9_1,
-    rabinowitz_richter_2 as stroud_11_1,
-    rabinowitz_richter_3 as stroud_11_2,
-    # ERR misprint in Stroud copied from original article
-    # rabinowitz_richter_4 as stroud_13_1,
-    rabinowitz_richter_5 as stroud_15_1,
-)
-from ._stroud_secrest import (
-    stroud_secrest_v as stroud_5_1,
-    stroud_secrest_vi as stroud_7_1,
-)
-from ._helpers import E2rScheme
-from ..helpers import untangle, book
+)  # ERR misprint in Stroud copied from original article; rabinowitz_richter_4 as stroud_13_1,
+from ._rabinowitz_richter import rabinowitz_richter_2 as stroud_11_1
+from ._rabinowitz_richter import rabinowitz_richter_3 as stroud_11_2
+from ._rabinowitz_richter import rabinowitz_richter_5 as stroud_15_1
+from ._stroud_secrest import stroud_secrest_5 as stroud_5_1
+from ._stroud_secrest import stroud_secrest_6 as stroud_7_1
 
 _citation = book(
     authors=["Arthur Stroud"],
@@ -28,13 +23,7 @@ _citation = book(
 )
 
 
-def stroud_4_1(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
-    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
-    pi = sympy.pi if symbolic else numpy.pi
-
+def stroud_4_1():
     pts = (
         2
         * sqrt(5)

@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+from sympy import Rational as frac
+from sympy import sqrt
 
-import numpy
-import sympy
-
-from ..helpers import untangle, fsd, pm_array0, pm, book
-
+from ..helpers import book, fsd, pm, pm_array0, untangle
+from ._helpers import NSphereScheme, integrate_monomial_over_unit_nsphere
 from ._stroud_1967 import stroud_1967 as stroud_un_7_1
 from ._stroud_1969 import stroud_1969 as stroud_un_11_1
-from ._helpers import integrate_monomial_over_unit_nsphere, NSphereScheme
 
 citation = book(
     authors=["Arthur Stroud"],
@@ -19,31 +16,23 @@ citation = book(
 )
 
 
-def stroud_un_3_1(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def stroud_un_3_1(n):
     degree = 3
     data = [(frac(1, 2 * n), fsd(n, (1, 1)))]
     points, weights = untangle(data)
-    weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic)
+    weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic=True)
     return NSphereScheme("Stroud Un 3-1", n, weights, points, degree, citation)
 
 
-def stroud_un_3_2(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def stroud_un_3_2(n):
     degree = 3
     data = [(frac(1, 2 ** n), pm(n, sqrt(frac(1, n))))]
     points, weights = untangle(data)
-    weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic)
+    weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic=True)
     return NSphereScheme("Stroud Un 3-2", n, weights, points, degree, citation)
 
 
-def stroud_un_5_1(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def stroud_un_5_1(n):
     degree = 5
 
     B1 = frac(4 - n, 2 * n * (n + 2))
@@ -52,14 +41,11 @@ def stroud_un_5_1(n, symbolic=False):
     data = [(B1, fsd(n, (1, 1))), (B2, fsd(n, (sqrt(frac(1, 2)), 2)))]
 
     points, weights = untangle(data)
-    weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic)
+    weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic=True)
     return NSphereScheme("Stroud Un 5-1", n, weights, points, degree, citation)
 
 
-def stroud_un_5_2(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def stroud_un_5_2(n):
     degree = 5
 
     B1 = frac(1, n * (n + 2))
@@ -68,14 +54,11 @@ def stroud_un_5_2(n, symbolic=False):
     data = [(B1, fsd(n, (1, 1))), (B2, pm(n, sqrt(frac(1, n))))]
 
     points, weights = untangle(data)
-    weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic)
+    weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic=True)
     return NSphereScheme("Stroud Un 5-2", n, weights, points, degree, citation)
 
 
-def stroud_un_5_3(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def stroud_un_5_3(n):
     degree = 5
 
     s = sqrt(frac(1, n + 2))
@@ -86,14 +69,11 @@ def stroud_un_5_3(n, symbolic=False):
     ]
 
     points, weights = untangle(data)
-    weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic)
+    weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic=True)
     return NSphereScheme("Stroud Un 5-3", n, weights, points, degree, citation)
 
 
-def stroud_un_5_4(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def stroud_un_5_4(n):
     degree = 5
 
     s = sqrt(2 * (n + 2))
@@ -103,14 +83,11 @@ def stroud_un_5_4(n, symbolic=False):
     data = [(frac(1, 2 ** n * n), fsd(n, (u, 1), (v, n - 1)))]
 
     points, weights = untangle(data)
-    weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic)
+    weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic=True)
     return NSphereScheme("Stroud Un 5-4", n, weights, points, degree, citation)
 
 
-def stroud_un_7_2(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def stroud_un_7_2(n):
     degree = 7
 
     A = frac(-n ** 2, 2 ** (n + 3) * (n + 2))
@@ -123,7 +100,7 @@ def stroud_un_7_2(n, symbolic=False):
     data = [(A, pm(n, r)), (B, fsd(n, (s, 1), (t, n - 1)))]
 
     points, weights = untangle(data)
-    weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic)
+    weights *= integrate_monomial_over_unit_nsphere(n * [0])
     return NSphereScheme("Stroud Un 7-1", n, weights, points, degree, citation)
 
 

@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+from sympy import Rational as frac
+from sympy import sqrt
 
-import numpy
-import sympy
-
-from ._helpers import fs_r00, fs_rr0, fs_rrs, HexahedronScheme
-from ..helpers import untangle, article
-
+from ..helpers import article, untangle
+from ._helpers import HexahedronScheme, fs_r00, fs_rr0, fs_rrs
 
 citation = article(
     authors=["Michael Sadowsky"],
@@ -22,10 +19,7 @@ citation = article(
 )
 
 
-def sadowsky(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def sadowsky():
     data = [
         (frac(91, 450), fs_r00(1)),
         (frac(-20, 225), fs_rr0(1)),

@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
 
-import sympy
 import numpy
+import sympy
 
-from ..helpers import untangle, fsd, pm, z, fs_array as fs, article
+from ..helpers import article
+from ..helpers import fs_array as fs
+from ..helpers import fsd, pm, untangle, z
 from ._helpers import DiskScheme
-
-from ._radon import radon
 from ._peirce_1956 import peirce_1956_1, peirce_1956_3
-
+from ._radon import radon
 
 _citation = article(
     authors=["Preston C. Hammer", "Arthur H. Stroud"],
@@ -22,12 +21,15 @@ _citation = article(
     url="https://doi.org/10.1090/S0025-5718-1958-0102176-6",
 )
 
+frac = sympy.Rational
+pi = sympy.pi
+sqrt = numpy.vectorize(sympy.sqrt)
+pm_ = numpy.array([+1, -1])
+cos = numpy.vectorize(sympy.cos)
+sin = numpy.vectorize(sympy.sin)
 
-def hammer_stroud_11_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
 
+def hammer_stroud_11_2():
     # ERR Wrongly stated in Stroud with 0.5 instead of sqrt(0.5)
     data = [(frac(1, 4), fsd(2, (sqrt(frac(1, 2)), 1)))]
     points, weights = untangle(data)
@@ -35,11 +37,7 @@ def hammer_stroud_11_2(symbolic=False):
     return DiskScheme("Hammer-Stroud 11-2", weights, points, 3, _citation)
 
 
-def hammer_stroud_12_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def hammer_stroud_12_2():
     data = [
         (frac(1, 6), z(2)),
         (frac(1, 6), fsd(2, (sqrt(frac(1, 2)), 1))),
@@ -50,16 +48,16 @@ def hammer_stroud_12_2(symbolic=False):
     return DiskScheme("Hammer-Stroud 12-2", weights, points, 5, _citation)
 
 
-def hammer_stroud_13_2(symbolic=False):
-    return peirce_1956_1(symbolic)
+def hammer_stroud_13_2():
+    return peirce_1956_1()
 
 
-def hammer_stroud_17(symbolic=False):
-    # ENH This is Radon's formula.
-    return radon(0, symbolic)
+def hammer_stroud_17():
+    # DUP ENH This is Radon's formula.
+    return radon(0)
 
 
-def hammer_stroud_18(symbolic=False):
+def hammer_stroud_18():
     # ENH The article only gives floats, but really this is the spherical-product gauss
     # formula as described in Strouds book, S2 7-2.
     #
@@ -67,13 +65,6 @@ def hammer_stroud_18(symbolic=False):
     #     (frac(1, 16), fs([0.4247082002778669, 0.1759198966061612])),
     #     (frac(1, 16), fs([0.8204732385702833, 0.3398511429799874])),
     # ]
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pm_ = numpy.array([+1, -1])
-    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
-    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-
     r1, r2 = sqrt((3 - pm_ * sqrt(3)) / 6)
 
     a = (2 * numpy.arange(8) + 1) * pi / 8
@@ -85,11 +76,7 @@ def hammer_stroud_18(symbolic=False):
     return DiskScheme("Hammer-Stroud 18", weights, points, 7, _citation)
 
 
-def hammer_stroud_19(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    pi = sympy.pi if symbolic else numpy.pi
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def hammer_stroud_19():
     sqrt6 = sqrt(6)
     alpha1 = (16 + sqrt6) / 288
     alpha2 = (137 - 32 * sqrt6) / 1818
@@ -106,17 +93,15 @@ def hammer_stroud_19(symbolic=False):
     return DiskScheme("Hammer-Stroud 19", weights, points, 9, _citation)
 
 
-def hammer_stroud_20(symbolic=False):
+def hammer_stroud_20():
     # ENH Also Peirce's formula, even given symbolically.
-    return peirce_1956_3(symbolic)
+    return peirce_1956_3()
 
 
-def hammer_stroud_21(symbolic=False):
-    pi = sympy.pi if symbolic else numpy.pi
-
-    alpha0 = 0.0341505695624825 / pi
-    alpha1 = 0.0640242008621985 / pi
-    alpha2 = 0.0341505695624825 / pi
+def hammer_stroud_21():
+    alpha0 = 0.0341505695624825 / numpy.pi
+    alpha1 = 0.0640242008621985 / numpy.pi
+    alpha2 = 0.0341505695624825 / numpy.pi
 
     data = [
         (alpha0, fs([0.2584361661674054, 0.0514061496288813])),
@@ -130,5 +115,5 @@ def hammer_stroud_21(symbolic=False):
     ]
 
     points, weights = untangle(data)
-    weights *= pi
+    weights *= numpy.pi
     return DiskScheme("Hammer-Stroud 21", weights, points, 15, _citation)

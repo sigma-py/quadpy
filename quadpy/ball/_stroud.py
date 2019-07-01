@@ -1,25 +1,18 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
-
 import numpy
 import sympy
 
-from ._ditkin import (
-    ditkin_1 as stroud_5_1,
-    ditkin_2 as stroud_5_2,
-    ditkin_3 as stroud_7_3,
-)
-from ._hammer_stroud import (
-    hammer_stroud_11_3 as stroud_3_1,
-    hammer_stroud_15_3a as stroud_7_1a,
-    hammer_stroud_15_3b as stroud_7_1b,
-)
-from ._mysovskih import mysovskih as stroud_7_2
-
-from ._helpers import BallScheme
+from ..helpers import book, untangle
 from ..sphere import _stroud as sphere_stroud
-from ..helpers import untangle, book
+from ._ditkin import ditkin_1 as stroud_5_1
+from ._ditkin import ditkin_2 as stroud_5_2
+from ._ditkin import ditkin_3 as stroud_7_3
+from ._hammer_stroud import hammer_stroud_11_3 as stroud_3_1
+from ._hammer_stroud import hammer_stroud_15_3a as stroud_7_1a
+from ._hammer_stroud import hammer_stroud_15_3b as stroud_7_1b
+from ._helpers import BallScheme
+from ._mysovskih import mysovskih as stroud_7_2
 
 _citation = book(
     authors=["Arthur Stroud"],
@@ -28,12 +21,12 @@ _citation = book(
     year="1971",
 )
 
+pi = sympy.pi
+sqrt = numpy.vectorize(sympy.sqrt)
 
-def stroud_7_4(symbolic=False):
+
+def stroud_7_4():
     # spherical product gauss
-    pi = sympy.pi if symbolic else numpy.pi
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
     # ENH Stroud only gives decimals, sophisticated guesswork gives the analytical
     # expressions.
     pm = numpy.array([+1, -1])
@@ -135,7 +128,7 @@ def stroud_14_1():
         ]
     )
 
-    spherical_scheme = sphere_stroud.stroud_u3_14_1(symbolic=False)
+    spherical_scheme = sphere_stroud.stroud_u3_14_1()
     v = spherical_scheme.points
     B = spherical_scheme.weights
 

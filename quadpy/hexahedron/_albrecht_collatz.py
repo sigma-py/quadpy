@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+from sympy import Rational as frac
 
-import sympy
-
-from ._helpers import fs_r00, fs_rr0, z, HexahedronScheme
-from ..helpers import untangle, article
+from ..helpers import article, untangle
+from ._helpers import HexahedronScheme, fs_r00, fs_rr0, z
 
 _citation = article(
     authors=["J. Albrecht", "L. Collatz"],
@@ -19,11 +17,8 @@ _citation = article(
 )
 
 
-def albrecht_collatz(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def albrecht_collatz():
     data = [(frac(1, 4), z()), (frac(1, 12), fs_r00(1)), (frac(1, 48), fs_rr0(1))]
-
     points, weights = untangle(data)
     weights *= 8
     return HexahedronScheme("Albrecht-Collatz", weights, points, 3, _citation)

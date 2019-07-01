@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+from sympy import Rational as frac
+from sympy import sqrt
 
-import numpy
-import sympy
-
-from ..helpers import untangle, fsd, z, pm, article
+from ..helpers import article, fsd, pm, untangle, z
 from ._helpers import NCubeScheme
 
 _citation = article(
@@ -20,10 +18,7 @@ _citation = article(
 )
 
 
-def mustard_lyness_blatt(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-
+def mustard_lyness_blatt(n):
     r = sqrt(frac(2, 5))
     data = [
         (frac(8 - 5 * n, 9), z(n)),

@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
-
 import numpy
-import sympy
-
-from ..helpers import untangle, fsd, pm, z, article
-from ._helpers import volume_unit_ball, NBallScheme
+from sympy import sqrt
 
 from .. import nsphere
+from ..helpers import article, fsd, pm, untangle, z
+from ._helpers import NBallScheme, volume_unit_ball
 
 citation = article(
     authors=["A.H. Stroud"],
@@ -21,9 +18,7 @@ citation = article(
 )
 
 
-def _stroud_1967_7_ab(n, variant_a, symbolic=False):
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def _stroud_1967_7_ab(n, variant_a):
     if variant_a:
         assert 3 <= n <= 7
         t = 1
@@ -51,32 +46,34 @@ def _stroud_1967_7_ab(n, variant_a, symbolic=False):
     data = [(A, z(n)), (B, fsd(n, (r, 1))), (C, pm(n, s)), (D, fsd(n, (t, 2)))]
     points, weights = untangle(data)
 
-    weights *= volume_unit_ball(n, symbolic=symbolic)
+    weights *= volume_unit_ball(n)
 
     name = "Stroud 1967-7{}".format("a" if variant_a else "b")
     return NBallScheme(name, n, weights, points, 7, citation)
 
 
-def stroud_1967_7_a(n, symbolic=False):
-    return _stroud_1967_7_ab(n, variant_a=True, symbolic=symbolic)
+def stroud_1967_7_a(n):
+    return _stroud_1967_7_ab(n, variant_a=True)
 
 
-def stroud_1967_7_b(n, symbolic=False):
-    return _stroud_1967_7_ab(n, variant_a=False, symbolic=symbolic)
+def stroud_1967_7_b(n):
+    return _stroud_1967_7_ab(n, variant_a=False)
 
 
-def stroud_1967_7_c(n, symbolic=False):
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def stroud_1967_7_c(n):
     assert n >= 3
 
     alpha = sqrt(2 * (n + 2) * (n + 4))
 
-    pm_ = numpy.array([+1, -1])
-    r1, r2 = sqrt(((n + 2) * (n + 4) + pm_ * 2 * alpha) / (n + 4) / (n + 6))
-    A1, A2 = (2 * (n + 2) ** 2 + pm_ * (n - 2) * alpha) / (4 * n * (n + 2) ** 2)
+    r1, r2 = [
+        sqrt(((n + 2) * (n + 4) + i * 2 * alpha) / (n + 4) / (n + 6)) for i in [+1, -1]
+    ]
+    A1, A2 = [
+        (2 * (n + 2) ** 2 + i * (n - 2) * alpha) / (4 * n * (n + 2) ** 2)
+        for i in [+1, -1]
+    ]
 
-    s = nsphere.stroud_1967(n, symbolic=symbolic)
+    s = nsphere.stroud_1967(n)
 
     points = numpy.concatenate([r1 * s.points, r2 * s.points])
     weights = numpy.concatenate([A1 * s.weights, A2 * s.weights])

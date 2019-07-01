@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from ._helpers import _s40, _s8, _s4, _z, DiskScheme
-from ..helpers import untangle, article
-
+from ..helpers import article, untangle
+from ._helpers import DiskScheme, _s4, _s8, _s40, _z
 from ._mysovskih import mysovskih_2, mysovskih_3
-
 
 _citation = article(
     authors=["Philip Rabinowitz", "Nira Richter"],
@@ -42,9 +40,9 @@ def rabinowitz_richter_2():
     return DiskScheme("Rabinowitz-Richter 2", weights, points, 9, _citation)
 
 
-def rabinowitz_richter_3(symbolic=False):
+def rabinowitz_richter_3():
     # ENH Given analytically by Mysovskih.
-    return mysovskih_2(symbolic)
+    return mysovskih_2()
 
 
 def rabinowitz_richter_4():
@@ -75,6 +73,6 @@ def rabinowitz_richter_5():
     return DiskScheme("Rabinowitz-Richter 5", weights, points, 13, _citation)
 
 
-def rabinowitz_richter_6(symbolic=False):
+def rabinowitz_richter_6():
     # ENH Given analytically by Mysovskih.
-    return mysovskih_3(symbolic)
+    return mysovskih_3()

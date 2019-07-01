@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+from sympy import Rational as frac
+from sympy import sqrt
 
-import numpy
-import sympy
-
-from ..helpers import untangle, fsd, pm, article
-from ._helpers import integrate_monomial_over_unit_nsphere, NSphereScheme
+from ..helpers import article, fsd, pm, untangle
+from ._helpers import NSphereScheme, integrate_monomial_over_unit_nsphere
 
 citation = article(
     authors=["A.H. Stroud"],
@@ -19,10 +17,7 @@ citation = article(
 )
 
 
-def stroud_1967(n, symbolic=False):
-    sqrt = sympy.sqrt if symbolic else numpy.sqrt
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def stroud_1967(n):
     degree = 7
 
     r = 1
@@ -35,11 +30,11 @@ def stroud_1967(n, symbolic=False):
     data = [
         (B, fsd(n, (r, 1))),
         (C, pm(n, s)),
-        # ERR Stroud's book wrongly states (t, t,..., t)_FS instead of
+        # ERR Stroud's book falsely states (t, t,..., t)_FS instead of
         # (t, t, 0, ..., 0)_FS.
         (D, fsd(n, (t, 2))),
     ]
 
     points, weights = untangle(data)
-    weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic=symbolic)
+    weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic=True)
     return NSphereScheme("Stroud 1967", n, weights, points, degree, citation)

@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from ._helpers import _pm, _pmx, _pmy, DiskScheme
-
-from ..helpers import untangle, article
-
+from ..helpers import article, untangle
+from ._helpers import DiskScheme, _pm, _pmx, _pmy
 
 _citation = article(
     authors=["Robert Piessens", "Ann Haegemans"],

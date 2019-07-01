@@ -27,6 +27,10 @@ clean:
 black:
 	black setup.py quadpy/ test/*.py
 
+format:
+	isort -rc -y
+	black setup.py quadpy/ test/*.py
+
 lint:
 	black --check setup.py quadpy/ test/*.py
 	flake8 setup.py quadpy/ test/*.py

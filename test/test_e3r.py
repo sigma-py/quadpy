@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 #
+import accupy
 import matplotlib.pyplot as plt
 import numpy
 import pytest
-import accupy
 
 import quadpy
-
 from helpers import check_degree, integrate_monomial_over_enr
 
 
@@ -37,7 +36,7 @@ def test_scheme(scheme, tol=1.0e-14):
     return
 
 
-@pytest.mark.parametrize("scheme", [quadpy.e3r.stroud_secrest_x()])
+@pytest.mark.parametrize("scheme", [quadpy.e3r.stroud_secrest_10()])
 def test_show(scheme, backend="mpl"):
     scheme.show(backend=backend)
     plt.close()

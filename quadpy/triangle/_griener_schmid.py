@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
 
 import numpy
 
-from ._helpers import TriangleScheme
 from ..helpers import article
+from ._helpers import TriangleScheme
 
 citation = article(
     authors=["Bernhard Griener", "Hans Joachim Schmid"],

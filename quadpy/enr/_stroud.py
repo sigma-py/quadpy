@@ -1,25 +1,14 @@
 # -*- coding: utf-8 -*-
 #
-"""
-Arthur Stroud,
-Approximate Calculation of Multiple Integrals,
-Prentice Hall, 1971.
-"""
-from __future__ import division
-
 import numpy
-import scipy.special
-import sympy
+from sympy import Rational as frac
+from sympy import gamma, pi, sqrt
 
-from ._stroud_secrest import (
-    stroud_secrest_ii as stroud_enr_3_1,
-    stroud_secrest_iii as stroud_enr_3_2,
-    stroud_secrest_iv as stroud_enr_5_1,
-)
-
+from ..helpers import book, fsd, pm_array0, untangle
 from ._helpers import EnrScheme
-from ..helpers import untangle, pm_array0, fsd, book
-
+from ._stroud_secrest import stroud_secrest_ii as stroud_enr_3_1
+from ._stroud_secrest import stroud_secrest_iii as stroud_enr_3_2
+from ._stroud_secrest import stroud_secrest_iv as stroud_enr_5_1
 
 citation = book(
     authors=["Arthur Stroud"],
@@ -30,7 +19,7 @@ citation = book(
 
 # ERR
 # TODO find mistake
-# def _gen5_2(n, symbolic):
+# def _gen5_2(n):
 #     assert n != 3
 #
 #     r2 = -(n+1)*(n+3) + (n+3)*sqrt((n+1)*(2*n+3))
@@ -47,14 +36,9 @@ citation = book(
 #     return 5, data
 
 
-def stroud_enr_5_3(n, symbolic=False):
+def stroud_enr_5_3(n):
     """Spherical product Lobatto formula.
     """
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-    gamma = sympy.gamma if symbolic else scipy.special.gamma
-
     data = []
     s = sqrt(n + 3)
     for k in range(1, n + 1):
@@ -70,12 +54,7 @@ def stroud_enr_5_3(n, symbolic=False):
     return EnrScheme("Stroud Enr 5-3", n, weights, points, 5, citation)
 
 
-def stroud_enr_5_4(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-    gamma = sympy.gamma if symbolic else scipy.special.gamma
-
+def stroud_enr_5_4(n):
     r = sqrt(((n + 2) * (n + 3) + (n - 1) * (n + 3) * sqrt(2 * (n + 2))) / n)
     s = sqrt(((n + 2) * (n + 3) - (n + 3) * sqrt(2 * (n + 2))) / n)
     A = frac(4 * n + 6, (n + 2) * (n + 3))
@@ -88,7 +67,7 @@ def stroud_enr_5_4(n, symbolic=False):
 
 
 # math domain error
-# def _gen5_5(n, symbolic):
+# def _gen5_5(n):
 #     r = sqrt((n*(n+1) - sqrt((n+1)*(4*n+6)) + (n-1)*(n+1)*sqrt(4*n+6)) / n)
 #     s = sqrt((n*(n+1) - sqrt((n+1)*(4*n+6)) - (n+1)*sqrt(4*n+6)) / n)
 #     t = n + 1 + sqrt((n+1)*(4*n+6))
@@ -101,7 +80,7 @@ def stroud_enr_5_4(n, symbolic=False):
 
 
 # TODO find out what's wrong
-# def _gen7_1(n, symbolic):
+# def _gen7_1(n):
 #     assert 3 <= n <= 7
 #
 #     alpha = sqrt(3*(n+3)*(2*n+7)*(8-n))

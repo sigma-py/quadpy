@@ -7,13 +7,25 @@ import numpy
 from ..helpers import plot_disks
 
 
-class E2rScheme(object):
+class E2rScheme:
     def __init__(self, name, weights, points, degree, citation):
         self.name = name
         self.citation = citation
         self.degree = degree
-        self.weights = weights
-        self.points = points
+
+        if weights.dtype == numpy.float64:
+            self.weights = weights
+        else:
+            assert weights.dtype in [numpy.dtype("O"), numpy.int64]
+            self.weights = weights.astype(numpy.float64)
+            self.weights_symbolic = weights
+
+        if points.dtype == numpy.float64:
+            self.points = points
+        else:
+            assert points.dtype in [numpy.dtype("O"), numpy.int64]
+            self.points = points.astype(numpy.float64)
+            self.points_symbolic = points
         return
 
     def show(self, *args, **kwargs):

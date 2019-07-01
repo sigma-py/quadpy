@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+from sympy import Rational as frac
 
-import sympy
-
-from ..helpers import untangle, rd, article
+from ..helpers import article, rd, untangle
 from ._helpers import NSimplexScheme
 
 citation = article(
@@ -18,17 +16,13 @@ citation = article(
 )
 
 
-def lauffer_1(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def lauffer_1(n):
     data = [(frac(1, n + 1), rd(n + 1, [(1, 1)]))]
     points, weights = untangle(data)
     return NSimplexScheme("Lauffer 1", n, weights, points, 1, citation)
 
 
-def lauffer_2(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def lauffer_2(n):
     B = frac(2 - n, (n + 1) * (n + 2))
     C = frac(4, (n + 1) * (n + 2))
     data = [(B, rd(n + 1, [(1, 1)])), (C, rd(n + 1, [(frac(1, 2), 2)]))]
@@ -36,9 +30,7 @@ def lauffer_2(n, symbolic=False):
     return NSimplexScheme("Lauffer 2", n, weights, points, 2, citation)
 
 
-def lauffer_3(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def lauffer_3(n):
     B = frac(n ** 2 - 4 * n + 6, (n + 1) * (n + 2) * (n + 3))
     C = frac(27 - 9 * n, 2 * (n + 1) * (n + 2) * (n + 3))
     D = frac(27, (n + 1) * (n + 2) * (n + 3))
@@ -55,9 +47,7 @@ def lauffer_3(n, symbolic=False):
     return NSimplexScheme("Lauffer 3", n, weights, points, 3, citation)
 
 
-def lauffer_4(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def lauffer_4(n):
     assert n >= 3
 
     nprod = (n + 1) * (n + 2) * (n + 3) * (n + 4)
@@ -83,9 +73,7 @@ def lauffer_4(n, symbolic=False):
     return NSimplexScheme("Lauffer 4", n, weights, points, 4, citation)
 
 
-def lauffer_5(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def lauffer_5(n):
     assert n >= 4
 
     nprod = (n + 1) * (n + 2) * (n + 3) * (n + 4) * (n + 5)

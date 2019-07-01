@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
+from sympy import Rational as frac
 
-import sympy
-
-from ..helpers import untangle, fsd, z, article
+from ..helpers import article, fsd, untangle, z
 from ._helpers import NCubeScheme
 
 _citation = article(
@@ -18,9 +16,7 @@ _citation = article(
 )
 
 
-def tyler(n, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def tyler(n):
     data = [(frac(3 - n, 3), z(n)), (frac(1, 6), fsd(n, (1, 1)))]
 
     points, weights = untangle(data)

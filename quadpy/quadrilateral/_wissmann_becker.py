@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
-
-import sympy
-
-from ._helpers import concat, pmx, QuadrilateralScheme
 from ..helpers import article
+from ._helpers import QuadrilateralScheme, concat, pmx
 
 citation = article(
     authors=["Johannes W. Wissmann", "Thomas Becker"],
@@ -18,10 +14,9 @@ citation = article(
 )
 
 
-def wissmann_becker_4_1(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
+def wissmann_becker_4_1():
     weights, points = concat(
-        ([frac(8, 7)], [[0, 0]]),
+        ([8.0 / 7.0], [[0, 0]]),
         ([0.439560439560440], [[0, 0.966091783079296]]),
         pmx(
             [0.566072207007532, 0.851914653304601, 0.455603727836193],

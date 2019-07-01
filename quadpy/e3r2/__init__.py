@@ -11,18 +11,16 @@ from ._stroud import (
     stroud_e3r2_7_2b,
     stroud_e3r2_14_1,
 )
-
 from ._stroud_secrest import (
-    stroud_secrest_vii,
-    stroud_secrest_viii_a,
-    stroud_secrest_viii_b,
-    stroud_secrest_ix,
-    stroud_secrest_x_a,
-    stroud_secrest_x_b,
-    stroud_secrest_xi_a,
-    stroud_secrest_xi_b,
+    stroud_secrest_07,
+    stroud_secrest_08a,
+    stroud_secrest_08b,
+    stroud_secrest_09,
+    stroud_secrest_10a,
+    stroud_secrest_10b,
+    stroud_secrest_11a,
+    stroud_secrest_11b,
 )
-
 
 __all__ = [
     "stroud_e3r2_5_1",
@@ -34,12 +32,12 @@ __all__ = [
     "stroud_e3r2_7_2a",
     "stroud_e3r2_7_2b",
     "stroud_e3r2_14_1",
-    "stroud_secrest_vii",
-    "stroud_secrest_viii_a",
-    "stroud_secrest_viii_b",
-    "stroud_secrest_ix",
-    "stroud_secrest_x_a",
-    "stroud_secrest_x_b",
-    "stroud_secrest_xi_a",
-    "stroud_secrest_xi_b",
+    "stroud_secrest_07",
+    "stroud_secrest_08a",
+    "stroud_secrest_08b",
+    "stroud_secrest_09",
+    "stroud_secrest_10a",
+    "stroud_secrest_10b",
+    "stroud_secrest_11a",
+    "stroud_secrest_11b",
 ]

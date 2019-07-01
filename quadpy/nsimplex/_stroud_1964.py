@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
-
-from mpmath import mp
 import numpy
-import sympy
+from mpmath import mp
 
-from ..helpers import untangle, rd, article
+from ..helpers import article, rd, untangle
 from ._helpers import NSimplexScheme
 
 citation = article(
@@ -22,24 +19,20 @@ citation = article(
 )
 
 
-def _stroud_1964(variant_a, n, symbolic=False):
-
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    roots = mp.polyroots if symbolic else numpy.roots
-
+def _stroud_1964(variant_a, n):
     degree = 3
 
     if n == 2:
         # The roots sum up to 1
-        r, s, t = mp.polyroots([1, -1, frac(1, 4), -frac(1, 60)])
-        data = [(frac(1, n * (n + 1)), rd(n + 1, [(r, 1), (s, 1), (t, 1)]))]
+        r, s, t = mp.polyroots([1, -1, 0.25, -1.0 / 60.0])
+        data = [(1.0 / (n * (n + 1)), rd(n + 1, [(r, 1), (s, 1), (t, 1)]))]
     else:
         assert n > 2
 
         # Stroud's book only gives numerical values for certain n; the article explains
         # it in more detail, namely: r is a root of a polynomial of degree 3.
         rts = numpy.sort(
-            roots([n + 1, -3, frac(3, n + 2), -frac(1, (n + 2) * (n + 3))])
+            numpy.roots([n + 1, -3, 3 / (n + 2), -1 / ((n + 2) * (n + 3))])
         )
 
         # all roots are real-valued
@@ -50,16 +43,16 @@ def _stroud_1964(variant_a, n, symbolic=False):
 
         # s and t are zeros of a polynomial of degree 2
         s, t = numpy.sort(
-            roots(
+            numpy.roots(
                 [
                     1,
                     -(1 - (n - 1) * r),
-                    frac(n, 2 * (n + 2)) - (n - 1) * r + frac(n * (n - 1), 2) * r ** 2,
+                    n / (2 * (n + 2)) - (n - 1) * r + n * (n - 1) / 2 * r ** 2,
                 ]
             )
         )
 
-        data = [(frac(1, n * (n + 1)), rd(n + 1, [(r, n - 1), (s, 1), (t, 1)]))]
+        data = [(1 / (n * (n + 1)), rd(n + 1, [(r, n - 1), (s, 1), (t, 1)]))]
 
     points, weights = untangle(data)
 
@@ -67,9 +60,9 @@ def _stroud_1964(variant_a, n, symbolic=False):
     return NSimplexScheme(name, n, weights, points, degree, citation)
 
 
-def stroud_1964a(n, symbolic=False):
-    return _stroud_1964(True, n, symbolic)
+def stroud_1964a(n):
+    return _stroud_1964(True, n)
 
 
-def stroud_1964b(n, symbolic=False):
-    return _stroud_1964(False, n, symbolic)
+def stroud_1964b(n):
+    return _stroud_1964(False, n)

@@ -2,8 +2,8 @@
 #
 import numpy
 
+from ..helpers import article, untangle
 from ._helpers import DiskScheme
-from ..helpers import untangle, article
 
 _citation = article(
     authors=["R. Cools", "K.J. Kim"],

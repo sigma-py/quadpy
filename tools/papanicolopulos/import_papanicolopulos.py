@@ -3,6 +3,7 @@ Import data from
 https://arxiv.org/src/1411.5631v2/anc/fullsymmetry.txt
 """
 import re
+
 import numpy
 
 

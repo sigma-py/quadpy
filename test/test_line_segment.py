@@ -2,12 +2,11 @@
 #
 import math
 
-from mpmath import mp
 import numpy
 import pytest
+from mpmath import mp
 
 import quadpy
-
 from helpers import check_degree_1d
 
 
@@ -19,7 +18,7 @@ from helpers import check_degree_1d
     + [quadpy.line_segment.gauss_legendre(k) for k in range(1, 6)]
     + [quadpy.line_segment.gauss_lobatto(k) for k in range(2, 7)]
     + [quadpy.line_segment.gauss_kronrod(k) for k in range(2, 7)]
-    + [quadpy.line_segment.gauss_patterson(k) for k in range(7)]
+    + [quadpy.line_segment.gauss_patterson(k) for k in range(9)]
     + [quadpy.line_segment.gauss_radau(k) for k in range(2, 10)]
     + [quadpy.line_segment.fejer_1(k) for k in range(1, 10)]
     + [quadpy.line_segment.fejer_2(k) for k in range(1, 10)]
@@ -131,7 +130,8 @@ def test_integrate_split():
 
 
 def test_legendre_mpmath():
-    scheme = quadpy.line_segment.gauss_legendre(4, mode="mpmath", decimal_places=50)
+    mp.dps = 50
+    scheme = quadpy.line_segment.gauss_legendre(4, mode="mpmath")
 
     tol = 1.0e-50
 
@@ -145,13 +145,38 @@ def test_legendre_mpmath():
     return
 
 
+def test_chebyshev1_sympy():
+    scheme = quadpy.line_segment.chebyshev_gauss_1(4, mode="sympy")
+    scheme_numpy = quadpy.line_segment.chebyshev_gauss_1(4, mode="numpy")
+
+    flt = numpy.vectorize(float)
+    tol = 1.0e-15
+
+    assert (abs(flt(scheme.points) - scheme_numpy.points) < tol).all()
+    assert (abs(flt(scheme.weights) - scheme_numpy.weights) < tol).all()
+    return
+
+
+def test_chebyshev2_sympy():
+    scheme = quadpy.line_segment.chebyshev_gauss_2(4, mode="sympy")
+    scheme_numpy = quadpy.line_segment.chebyshev_gauss_2(4, mode="numpy")
+
+    flt = numpy.vectorize(float)
+    tol = 1.0e-15
+
+    assert (abs(flt(scheme.points) - scheme_numpy.points) < tol).all()
+    assert (abs(flt(scheme.weights) - scheme_numpy.weights) < tol).all()
+    return
+
+
 def test_chebyshev1_mpmath():
-    scheme = quadpy.line_segment.chebyshev_gauss_1(4, mode="mpmath", decimal_places=50)
+    mp.dps = 50
+    scheme = quadpy.line_segment.chebyshev_gauss_1(4, mode="mpmath")
     tol = 1.0e-50
 
     x1 = mp.cos(3 * mp.pi / 8)
     x2 = mp.cos(1 * mp.pi / 8)
-    assert (abs(scheme.points - [-x2, -x1, +x1, +x2]) < tol).all()
+    assert (abs(scheme.points - [+x2, +x1, -x1, -x2]) < tol).all()
 
     w = mp.pi / 4
     tol = 1.0e-49
@@ -160,13 +185,14 @@ def test_chebyshev1_mpmath():
 
 
 def test_chebyshev2_mpmath():
-    scheme = quadpy.line_segment.chebyshev_gauss_2(4, mode="mpmath", decimal_places=51)
+    mp.dps = 51
+    scheme = quadpy.line_segment.chebyshev_gauss_2(4, mode="mpmath")
 
     tol = 1.0e-50
 
     x1 = mp.cos(2 * mp.pi / 5)
     x2 = mp.cos(1 * mp.pi / 5)
-    assert (abs(scheme.points - [-x2, -x1, +x1, +x2]) < tol).all()
+    assert (abs(scheme.points - [+x2, +x1, -x1, -x2]) < tol).all()
 
     w1 = mp.pi / 5 * mp.sin(2 * mp.pi / 5) ** 2
     w2 = mp.pi / 5 * mp.sin(1 * mp.pi / 5) ** 2
@@ -175,7 +201,8 @@ def test_chebyshev2_mpmath():
 
 
 def test_jacobi_mpmath():
-    scheme = quadpy.line_segment.gauss_jacobi(4, 1, 1, mode="mpmath", decimal_places=51)
+    mp.dps = 51
+    scheme = quadpy.line_segment.gauss_jacobi(4, 1, 1, mode="mpmath")
 
     tol = 1.0e-50
 

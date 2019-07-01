@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import print_function
 
 import numpy
 import pytest
@@ -8,7 +7,6 @@ import sympy
 
 import orthopy
 import quadpy
-
 from helpers import check_degree_ortho
 
 schemes = (
@@ -47,6 +45,7 @@ schemes = (
     + [(quadpy.quadrilateral.franke_1(lmbda), 1.0e-13) for lmbda in [0.0, 1.0, -0.8]]
     + [
         (quadpy.quadrilateral.franke_2a(), 1.0e-13),
+        (quadpy.quadrilateral.franke_2b(), 1.0e-13),
         (quadpy.quadrilateral.franke_3a(), 1.0e-13),
         (quadpy.quadrilateral.franke_3b(), 1.0e-13),
         (quadpy.quadrilateral.franke_3c(), 1.0e-13),

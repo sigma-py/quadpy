@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
-
 import numpy
-import sympy
+from sympy import Rational as frac
+from sympy import sqrt
 
-from ._helpers import _s4, _s4_0, PyramidScheme
-from ..helpers import untangle, article
+from ..helpers import article, untangle
+from ._helpers import PyramidScheme, _s4, _s4_0
 
 citation = article(
     authors=["Carlos Felippa"],
@@ -20,19 +19,14 @@ citation = article(
 )
 
 
-def felippa_1(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-
+def felippa_1():
     degree = 1
     data = [(frac(128, 27), numpy.array([[0, 0, -frac(1, 2)]]))]
     points, weights = untangle(data)
     return PyramidScheme("Felippa 1", weights, points, degree, citation)
 
 
-def felippa_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def felippa_2():
     degree = 2
     data = [
         (frac(81, 100), _s4(8 * sqrt(frac(2, 15)) / 5, -frac(2, 3))),
@@ -42,10 +36,7 @@ def felippa_2(symbolic=False):
     return PyramidScheme("Felippa 2", weights, points, degree, citation)
 
 
-def felippa_3(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def felippa_3():
     degree = 2
     data = [
         (frac(504, 625), _s4(sqrt(frac(12, 35)), -frac(2, 3))),
@@ -56,10 +47,7 @@ def felippa_3(symbolic=False):
     return PyramidScheme("Felippa 3", weights, points, degree, citation)
 
 
-def felippa_4(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def felippa_4():
     degree = 3
     w1 = 5 * (68 + 5 * sqrt(10)) / 432
     w2 = frac(85, 54) - w1
@@ -70,10 +58,7 @@ def felippa_4(symbolic=False):
     return PyramidScheme("Felippa 4", weights, points, degree, citation)
 
 
-def felippa_5(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def felippa_5():
     degree = 2
     w1 = (11764 - 461 * sqrt(51)) / 15300
     w2 = frac(346, 225) - w1
@@ -84,10 +69,7 @@ def felippa_5(symbolic=False):
     return PyramidScheme("Felippa 5", weights, points, degree, citation)
 
 
-def felippa_6(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def felippa_6():
     degree = 2
     w1 = 7 * (11472415 - 70057 * sqrt(2865)) / 130739500
     w2 = frac(84091, 68450) - w1
@@ -105,10 +87,7 @@ def felippa_6(symbolic=False):
     return PyramidScheme("Felippa 6", weights, points, degree, citation)
 
 
-def felippa_7(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def felippa_7():
     degree = 2
     w1 = frac(170569, 331200)
     w2 = frac(276710106577408, 1075923777052725)
@@ -129,10 +108,7 @@ def felippa_7(symbolic=False):
     return PyramidScheme("Felippa 7", weights, points, degree, citation)
 
 
-def felippa_8(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def felippa_8():
     wg9 = numpy.array([frac(64, 81), frac(40, 81), frac(25, 81)])
 
     degree = 3
@@ -153,10 +129,7 @@ def felippa_8(symbolic=False):
     return PyramidScheme("Felippa 8", weights, points, degree, citation)
 
 
-def felippa_9(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def felippa_9():
     wg9 = numpy.array([frac(64, 81), frac(40, 81), frac(25, 81)])
 
     degree = 5

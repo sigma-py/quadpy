@@ -2,14 +2,14 @@
 
 Your one-stop shop for numerical integration in Python.
 
-[![CircleCI](https://img.shields.io/circleci/project/github/nschloe/quadpy/master.svg)](https://circleci.com/gh/nschloe/quadpy/tree/master)
-[![codecov](https://img.shields.io/codecov/c/github/nschloe/quadpy.svg)](https://codecov.io/gh/nschloe/quadpy)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
-[![awesome](https://img.shields.io/badge/awesome-yes-brightgreen.svg)](https://github.com/nschloe/quadpy)
-[![PyPi Version](https://img.shields.io/pypi/v/quadpy.svg)](https://pypi.org/project/quadpy)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1173132.svg)](https://doi.org/10.5281/zenodo.1173132)
-[![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?logo=github&label=Stars&logoColor=white)](https://github.com/nschloe/quadpy)
-[![PyPi downloads](https://img.shields.io/pypi/dd/quadpy.svg)](https://pypistats.org/packages/quadpy)
+[![CircleCI](https://img.shields.io/circleci/project/github/nschloe/quadpy/master.svg?style=flat-square)](https://circleci.com/gh/nschloe/quadpy/tree/master)
+[![codecov](https://img.shields.io/codecov/c/github/nschloe/quadpy.svg?style=flat-square)](https://codecov.io/gh/nschloe/quadpy)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/ambv/black)
+[![awesome](https://img.shields.io/badge/awesome-yes-brightgreen.svg?style=flat-square)](https://github.com/nschloe/quadpy)
+[![PyPi Version](https://img.shields.io/pypi/v/quadpy.svg?style=flat-square)](https://pypi.org/project/quadpy)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1173132.svg?style=flat-square)](https://doi.org/10.5281/zenodo.1173132)
+[![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?style=flat-square&logo=github&label=Stars&logoColor=white)](https://github.com/nschloe/quadpy)
+[![PyPi downloads](https://img.shields.io/pypi/dd/quadpy.svg?style=flat-square)](https://pypistats.org/packages/quadpy)
 
 <p align="center">
   <img src="https://nschloe.github.io/quadpy/quad.png" width="20%">
@@ -49,9 +49,9 @@ def f(x):
 
 triangle = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.7, 0.5]])
 
-val = quadpy.triangle.strang_9().integrate(f, triangle)
+val = quadpy.triangle.strang_fix_cowper_09().integrate(f, triangle)
 ```
-This uses Strang's rule of degree 6.
+This uses [Strang's rule](https://bookstore.siam.org/wc08/) of degree 6.
 
 quadpy is fully vectorized, so if you like to compute the integral of a function on many
 domains at once, you can provide them all in one `integrate()` call, e.g.,
@@ -76,93 +76,6 @@ More examples under [test/examples_test.py](https://github.com/nschloe/quadpy/bl
 Read more about the dimensionality of the input/output arrays [in the
 wiki](https://github.com/nschloe/quadpy/wiki#dimensionality-of-input-and-output-arrays).
 
-### Adaptive quadrature
-
-quadpy can do adaptive quadrature for certain domains.
-Again, everything is fully vectorized, so you can provide multiple intervals
-and vector-valued functions.
-
-#### Line segments
-```python
-val, error_estimate = quadpy.line_segment.integrate_adaptive(
-        lambda x: x * sin(5 * x),
-        [0.0, pi],
-        1.0e-10
-        )
-```
-
-#### tanh-sinh quadrature
-
-The more modern tanh-sinh quadrature is different from all other methods in quadpy in
-that it doesn't exactly integrate any function exactly, not even polynomials of low
-degree. Its tremendous usefulness rather comes from the fact that a wide variety of
-function, even seemingly difficult ones with (integrable) singularities at the end
-points, can be integrated with _arbitrary_ precision.
-```python
-import quadpy
-import numpy
-
-val, error_estimate = quadpy.line_segment.tanh_sinh(
-    lambda x: numpy.exp(x) * numpy.cos(x),
-    0,
-    numpy.pi / 2,
-    1.0e-14,
-    # Optional: Specify first and second derivative for better error estimation
-    # f_derivatives={
-    #     1: lambda x: numpy.exp(x) * (numpy.cos(x) - numpy.sin(x)),
-    #     2: lambda x: -2 * numpy.exp(x) * numpy.sin(x),
-    # },
-)
-```
-If you want more digits, use [mpmath](http://mpmath.org/) for arbitrary precision arithmetic:
-```python
-import quadpy
-from mpmath import mp
-import sympy
-
-mp.dps = 50
-
-val, error_estimate = quadpy.line_segment.tanh_sinh(
-        lambda x: mp.exp(x) * sympy.cos(x),
-        0, mp.pi/2,
-        1.0e-50,  # !
-        mode="mpmath"
-        )
-```
-
-If the function has a singularity at a boundary, it needs to be shifted such that the
-singularity is at 0. (This is to avoid round-off errors for points that are very close
-to the singularity.)
-If there are singularities at both ends, the function can be shifted both ways and be
-handed off to `tanh_sinh_lr`; For example, for the function `1 / sqrt(1 - x**2)`, this
-gives
-```python
-import numpy
-import quadpy
-
-# def f(x):
-#    return 1 / numpy.sqrt(1 - x ** 2)
-
-val, error_estimate = quadpy.line_segment.tanh_sinh_lr(
-      [lambda x: 1 / numpy.sqrt(-x**2 + 2*x)],  # = 1 / sqrt(1 - (x-1)**2)
-      [lambda x: 1 / numpy.sqrt(-x**2 + 2*x)],  # = 1 / sqrt(1 - (-(x-1))**2)
-      2,  # length of the interval
-      1.0e-10
-      )
-```
-
-
-#### Triangles
-```python
-val, error_estimate = quadpy.triangle.integrate_adaptive(
-        lambda x: x[0] * sin(5 * x[1]),
-        [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
-        1.0e-10
-        )
-```
-_ProTip:_ You can provide many triangles that together form a domain to get an
-approximation of the integral over the domain.
-
 ## Schemes
 
 ### Line segment
@@ -180,7 +93,7 @@ approximation of the integral over the domain.
    [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.legendre.leggauss.html), arbitrary degree)
  * Gauss-Lobatto (arbitrary degree)
  * Gauss-Kronrod (after [Laurie](https://doi.org/10.1090/S0025-5718-97-00861-2), arbitrary degree)
- * [Gauss-Patterson](https://doi.org/10.1090/S0025-5718-68-99866-9) (7 schemes up to degree 191)
+ * [Gauss-Patterson](https://doi.org/10.1090/S0025-5718-68-99866-9) (9 nested schemes up to degree 767)
  * Gauss-Radau (arbitrary degree)
  * closed Newton-Cotes (arbitrary degree)
  * open Newton-Cotes (arbitrary degree)
@@ -218,8 +131,9 @@ val = scheme.integrate(lambda x: x**2)
 ### 1D space with weight function exp(-r<sup>2</sup>)
 <img src="https://nschloe.github.io/quadpy/e1r2.png" width="50%">
 
- * Gauss-Hermite (via
+ * [Gauss-Hermite](https://en.wikipedia.org/wiki/Gauss%E2%80%93Hermite_quadrature) (via
    [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.hermite.hermgauss.html), arbitrary degree)
+ * [Genz-Keister](https://doi.org/10.1016/0377-0427(95)00232-4) (1996, 8 nested schemes up to degree 67)
 
 Example:
 ```python
@@ -250,14 +164,13 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0], 1.0)
 Apart from the classical centroid, vertex, and seven-point schemes we have
 
  * [Hammer-Marlowe-Stroud](https://doi.org/10.1090/S0025-5718-1956-0086389-6)
-   (1956, 5 schemes up to degree 5),
- * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 2 schemes up to degree 3)
+   (1956, 5 schemes up to degree 5, also appearing in [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6))
  * open and closed Newton-Cotes schemes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6), arbitrary degree),
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
    - [Albrecht-Collatz](https://doi.org/10.1002/zamm.19580380102) (1958, degree 3)
    - conical product scheme (degree 7)
  * [Franke](https://doi.org/10.1090/S0025-5718-1971-0300440-5) (1971, 2 schemes of degree 7)
- * [Strang](https://bookstore.siam.org/wc08/)/[Cowper](https://doi.org/10.1002/nme.1620070316) (1973, 10 schemes up to
+ * [Strang-Fix](https://bookstore.siam.org/wc08/)/[Cowper](https://doi.org/10.1002/nme.1620070316) (1973, 10 schemes up to
    degree 7),
  * [Lyness-Jespersen](https://doi.org/10.1093/imamat/15.1.19) (1975, 21
    schemes up to degree 11, two of which are used in [TRIEX](https://doi.org/10.1145/356068.356070)),
@@ -763,152 +676,6 @@ scheme = quadpy.enr2.stroud_5_2(dim)
 val = scheme.integrate(lambda x: x[0]**2)
 ```
 
-### Extras
-
-#### Classical schemes
-
-With quadpy, it's easy to regenerate classical Gauss quadrature schemes are
-listed in, e.g., [Stroud & Secrest](https://books.google.de/books/about/Gaussian_quadrature_formulas.html?id=X7M-AAAAIAAJ).
-
-Some examples:
-```python
-scheme = quadpy.line_segment.gauss_legendre(96, mode='mpmath', decimal_places=30)
-scheme = quadpy.e1r2.gauss_hermite(14, mode='mpmath', decimal_places=20)
-scheme = quadpy.e1r.gauss_laguerre(13, mode='mpmath', decimal_places=50)
-```
-
-#### Generating your own Gauss quadrature in three simple steps
-
-You have a measure (or, more colloquially speaking, a domain and a nonnegative weight
-function) and would like to generate the matching Gauss quadrature?  Great, here's how
-to do it.
-
-As an example, let's try and generate the Gauss quadrature with 10 points for the weight
-function `x^2` on the interval `[-1, +1]`.
-
-TLDR:
-```python
-moments = quadpy.tools.integrate(
-    lambda x: [x**(2+k) for k in range(20)],
-    -1, +1
-    )
-alpha, beta = quadpy.tools.chebyshev(moments)
-points, weights = quadpy.tools.scheme_from_rc(alpha, beta, decimal_places=20)
-```
-
-Some explanations:
-
-  1. You need to compute the first `2*n` _moments_ of your measure
-     ```
-     integral(w(x) p_k(x) dx)
-     ```
-     with a particular set of polynomials `p_k`. A common choice are the
-     monomials `x^k`. You can do that by hand or use
-     ```python
-     moments = quadpy.tools.integrate(lambda x: [x**(2+k) for k in range(20)], -1, +1)
-     ```
-     ```
-     [2/3, 0, 2/5, 0, 2/7, 0, 2/9, 0, 2/11, 0, 2/13, 0, 2/15, 0, 2/17, 0, 2/19, 0, 2/21, 0]
-     ```
-     Note that the moments have all been computed symbolically here.
-
-     If you have the moments in floating point (for example because you need to
-     compute the scheme fast), it makes sense to think about the numerical
-     implications here. That's because the map to the recurrence coefficients
-     (step 2) can be _very_ ill-conditioned, meaning that small round-off
-     errors can lead to an unusable scheme.
-     For further computation, it's numerically beneficial if the moments are either 0 or
-     in the same order of magnitude. The above numbers are alright, but if you want to
-     max it out, you could try Legendre polynomials from
-     [orthopy](https://github.com/nschloe/orthopy)
-     for `p_k`:
-     ```python
-     import orthopy
-
-     def leg_polys(x):
-         return orthopy.line_segment.tree_legendre(x, 20, "monic", symbolic=True)
-
-     moments = quadpy.tools.integrate(
-         lambda x: [x**2 * leg_poly for leg_poly in leg_polys(x)],
-         -1, +1
-     )
-     ```
-     ```
-     [2/3, 0, 8/45, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-     ```
-     Better!
-
-  2. From the moments, we generate the recurrence coefficients of our custom
-     orthogonal polynomials. There are a few choices to accomplish this:
-
-       * `golub_welsch`: uses Cholesky at its core; can be numerically unstable
-       * `stieltjes`: moments not even needed here, but can also be numerically
-         unstable
-       * `chebyshev`: can be used if you chose monomials in the first step;
-         again, potentially numerically unstable
-       * `chebyshev_modified`: to be used if you chose something other than
-         monomials in the first step; stable if the `polynomial_class` was
-         chosen wisely
-
-       Since we have computed modified moments in step one, let's use the
-       latter method:
-       ```python
-       _, _, a, b = \
-          orthopy.line_segment.recurrence_coefficients.legendre(20, "monic", symbolic=True)
-       alpha, beta = quadpy.tools.chebyshev_modified(moments, a, b)
-       ```
-       ```
-       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-       [2/3, 3/5, 4/35, 25/63, 16/99, 49/143, 12/65, 27/85, 64/323, 121/399]
-       ```
-       (Note that, since everything is done symbolically in this example,
-       we could have used Stieltjes's or Chebyshev's unmodified method; the
-       results are the same.)
-
-  3. Lastly, we generate the Gauss points and weights from `alpha` and `beta`.
-     Since symbolic computation can take _very_ long even for small sizes, we
-     convert `alpha` and `beta` to numpy arrays first. (If you need more digits, look at
-     [mpmath](http://mpmath.org/) arrays.)
-     ```python
-     points, weights = quadpy.tools.scheme_from_rc(
-         numpy.array([sympy.N(a) for a in alpha], dtype=float),
-         numpy.array([sympy.N(b) for b in beta], dtype=float),
-         mode='numpy'
-     )
-     ```
-     ```
-     [-0.97822866 -0.8870626  -0.73015201 -0.51909613 -0.26954316  0.26954316
-      0.51909613  0.73015201  0.8870626   0.97822866]
-     ```
-     ```
-     [0.05327099 0.09881669 0.0993154  0.06283658 0.01909367 0.01909367
-      0.06283658 0.0993154  0.09881669 0.05327099]
-     ```
-     Congratulations! Your Gaussian quadrature rule.
-
-
-#### Other tools
-
- * Transforming Gaussian points and weights back to recurrence coefficients:
-   ```python
-   alpha, beta = quadpy.tools.coefficients_from_gauss(points, weights)
-   ```
-
- * The Gautschi test: [As recommended by
-   Gautschi](https://doi.org/10.1007/BF02218441), you can test your
-   moment-based scheme with
-   ```python
-   err = quadpy.tools.check_coefficients(moments, alpha, beta)
-   ```
-
-### Relevant publications
-
- * [A.H. Stroud and D. Secrest, Gaussian Quadrature Formulas, 1966, Prentice Hall, Series in Automatic Computation](https://books.google.de/books/about/Gaussian_quadrature_formulas.html?id=X7M-AAAAIAAJ)
- * [Gene H. Golub and John H. Welsch, Calculation of Gauss Quadrature Rules, Mathematics of Computation, Vol. 23, No. 106 (Apr., 1969), pp. 221-230+s1-s10](https://dx.doi.org/10.2307/2004418)
- * [W. Gautschi, On Generating Orthogonal Polynomials, SIAM J. Sci. and Stat. Comput., 3(3), 289–317](https://doi.org/10.1137/0903018)
- * [W. Gautschi, How and how not to check Gaussian quadrature formulae, BIT Numerical Mathematics, June 1983, Volume 23, Issue 2, pp 209–216](https://doi.org/10.1007/BF02218441)
- * [D. Boley and G.H. Golub, A survey of matrix inverse eigenvalue problems, Inverse Problems, 1987, Volume 3, Number 4](https://doi.org/10.1088/0266-5611/3/4/010)
- * [W. Gautschi, Algorithm 726: ORTHPOL–a package of routines for generating orthogonal polynomials and Gauss-type quadrature rules, ACM Transactions on Mathematical Software (TOMS), Volume 20, Issue 1, March 1994, Pages 21-62](https://doi.org/10.1145/174603.174605)
 
 ### Installation
 

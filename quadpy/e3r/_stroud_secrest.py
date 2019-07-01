@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
-
 import warnings
 
 import numpy
-import sympy
+from sympy import Rational as frac
+from sympy import pi, sqrt
 
+from ..helpers import article, fsd, pm, pm_roll, untangle
 from ._helpers import E3rScheme
-from ..helpers import untangle, pm, fsd, pm_roll, article
 
 citation = article(
     authors=["A.H. Stroud", "D. Secrest"],
@@ -21,10 +20,7 @@ citation = article(
 )
 
 
-def stroud_secrest_vii(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def stroud_secrest_07():
     nu, xi = [sqrt(15 - p_m * 3 * sqrt(5)) for p_m in [+1, -1]]
     A = frac(3, 5)
     B = frac(1, 30)
@@ -32,15 +28,11 @@ def stroud_secrest_vii(symbolic=False):
     data = [(A, numpy.array([[0, 0, 0]])), (B, pm_roll(3, [xi, nu]))]
 
     points, weights = untangle(data)
-    pi = sympy.pi if symbolic else numpy.pi
     weights *= 8 * pi
     return E3rScheme("Stroud-Secrest VII", weights, points, 5, citation)
 
 
-def stroud_secrest_viii(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def stroud_secrest_08():
     nu = sqrt(30)
     eta = sqrt(10)
     A = frac(3, 5)
@@ -49,15 +41,11 @@ def stroud_secrest_viii(symbolic=False):
 
     data = [(A, numpy.array([[0, 0, 0]])), (B, fsd(3, (nu, 1))), (C, pm(3, eta))]
     points, weights = untangle(data)
-    pi = sympy.pi if symbolic else numpy.pi
     weights *= 8 * pi
     return E3rScheme("Stroud-Secrest VIII", weights, points, 5, citation)
 
 
-def stroud_secrest_ix(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def stroud_secrest_09():
     eta = sqrt(10)
     xi, nu = [sqrt(15 - p_m * 5 * sqrt(5)) for p_m in [+1, -1]]
     A = frac(3, 5)
@@ -65,14 +53,11 @@ def stroud_secrest_ix(symbolic=False):
 
     data = [(A, numpy.array([[0, 0, 0]])), (B, pm(3, eta)), (B, pm_roll(3, [xi, nu]))]
     points, weights = untangle(data)
-    pi = sympy.pi if symbolic else numpy.pi
     weights *= 8 * pi
     return E3rScheme("Stroud-Secrest IX", weights, points, 5, citation)
 
 
-def stroud_secrest_x(symbolic=False):
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def stroud_secrest_10():
     sqrt130 = sqrt(130)
 
     nu = sqrt((720 - 24 * sqrt130) / 11)
@@ -92,7 +77,6 @@ def stroud_secrest_x(symbolic=False):
     ]
 
     points, weights = untangle(data)
-    pi = sympy.pi if symbolic else numpy.pi
     weights *= 8 * pi
 
     # TODO ERR find out what's wrong
@@ -100,9 +84,7 @@ def stroud_secrest_x(symbolic=False):
     return E3rScheme("Stroud-Secrest X", weights, points, 4, citation)
 
 
-def stroud_secrest_xi(symbolic=False):
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def stroud_secrest_11():
     sqrt5 = sqrt(5)
     sqrt39 = sqrt(39)
     sqrt195 = sqrt(195)
@@ -127,6 +109,5 @@ def stroud_secrest_xi(symbolic=False):
     ]
 
     points, weights = untangle(data)
-    pi = sympy.pi if symbolic else numpy.pi
     weights *= 8 * pi
     return E3rScheme("Stroud-Secrest XI", weights, points, 7, citation)

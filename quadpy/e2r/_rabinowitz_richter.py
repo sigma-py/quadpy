@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-from ._helpers import _s40, _s8, _s4, E2rScheme
-from ..helpers import untangle, article
+from ..helpers import article, untangle
+from ._helpers import E2rScheme, _s4, _s8, _s40
 
 _citation = article(
     authors=["Philip Rabinowitz", "Nira Richter"],

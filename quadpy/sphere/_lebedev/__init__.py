@@ -4,9 +4,8 @@ import json
 import os
 import re
 
-from .._helpers import untangle2, cartesian_to_spherical, SphereScheme
 from ...helpers import article
-
+from .._helpers import SphereScheme, cartesian_to_spherical, untangle2
 
 # Sphere integration schemes from a series of publications, in chronological order
 # <https://en.wikipedia.org/wiki/Lebedev_quadrature>

@@ -9,13 +9,11 @@ Mathematical Tables and Other Aids to Computation.
 Vol. 12, No. 64 (Oct., 1958), pp. 272-280,
 <https://www.jstor.org/stable/2002370>
 """
-from __future__ import division
+from sympy import Rational as frac
+from sympy import sqrt
 
-import numpy
-import sympy
-
-from ._helpers import TriangleScheme, s3, r, concat
 from ..helpers import article
+from ._helpers import TriangleScheme, concat, r, s3
 
 citation = article(
     authors=["P.C. Hammer", "O.J. Marlowe", "A.H. Stroud"],
@@ -30,36 +28,27 @@ citation = article(
 )
 
 
-def hammer_marlowe_stroud_1(symbolic=False):
+def hammer_marlowe_stroud_1():
     weights, points = s3(1)
     return TriangleScheme("Hammer-Marlowe-Stroud 1", weights, points, 1, citation)
 
 
-def hammer_marlowe_stroud_2(symbolic=False):
-    frac = sympy.frac if symbolic else lambda x, y: x / y
-
+def hammer_marlowe_stroud_2():
     weights, points = r([frac(1, 3), frac(1, 2)])
-    return TriangleScheme("Hammer-Marlowe-Stroud 1", weights, points, 2, citation)
+    return TriangleScheme("Hammer-Marlowe-Stroud 2", weights, points, 2, citation)
 
 
-def hammer_marlowe_stroud_3(symbolic=False):
-    frac = sympy.frac if symbolic else lambda x, y: x / y
-
+def hammer_marlowe_stroud_3():
     weights, points = r([frac(1, 3), -frac(1, 2)])
     return TriangleScheme("Hammer-Marlowe-Stroud 3", weights, points, 2, citation)
 
 
-def hammer_marlowe_stroud_4(symbolic=False):
-    frac = sympy.frac if symbolic else lambda x, y: x / y
-
+def hammer_marlowe_stroud_4():
     weights, points = concat(s3(-frac(9, 16)), r([frac(25, 48), frac(2, 5)]))
     return TriangleScheme("Hammer-Marlowe-Stroud 4", weights, points, 3, citation)
 
 
-def hammer_marlowe_stroud_5(symbolic=False):
-    frac = sympy.frac if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-
+def hammer_marlowe_stroud_5():
     w1, w2 = [(155 - i * sqrt(15)) / 1200 for i in [+1, -1]]
     x1, x2 = [(1 + i * sqrt(15)) / 7 for i in [+1, -1]]
     weights, points = concat(s3(frac(9, 40)), r([w1, x1], [w2, x2]))

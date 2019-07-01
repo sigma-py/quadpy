@@ -3,18 +3,31 @@
 import numpy
 
 from .. import helpers
-from ..ncube import transform, NCubeScheme
+from ..ncube import NCubeScheme
 from ..ncube import ncube_points as rectangle_points
+from ..ncube import transform
 from ..nsimplex import get_vol
 
 
 class QuadrilateralScheme(NCubeScheme):
     def __init__(self, name, weights, points, degree, citation=None):
         self.name = name
-        self.weights = weights
-        self.points = points
         self.degree = degree
         self.citation = citation
+
+        if weights.dtype == numpy.float64:
+            self.weights = weights
+        else:
+            assert weights.dtype in [numpy.dtype("O"), numpy.int64]
+            self.weights = weights.astype(numpy.float64)
+            self.weights_symbolic = weights
+
+        if points.dtype == numpy.float64:
+            self.points = points
+        else:
+            assert points.dtype in [numpy.dtype("O"), numpy.int64]
+            self.points = points.astype(numpy.float64)
+            self.points_symbolic = points
         return
 
     def show(self, *args, **kwargs):
@@ -57,13 +70,6 @@ def zero(weight):
 def pmx(*data):
     w, x, y = numpy.array(data).T
     points = _stack_first_last([[+x, y], [-x, y]])
-    weights = numpy.tile(w, 2)
-    return weights, points
-
-
-def pmy(*data):
-    w, x, y = numpy.array(data).T
-    points = _stack_first_last([[x, +y], [x, -y]])
     weights = numpy.tile(w, 2)
     return weights, points
 

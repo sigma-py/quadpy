@@ -1,26 +1,20 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
-
 import warnings
 
 import numpy
-import sympy
+from sympy import Rational as frac
+from sympy import cos, pi, sin, sqrt
 
-from ._rabinowitz_richter import (
-    rabinowitz_richter_1 as stroud_9_1,
-    rabinowitz_richter_2 as stroud_11_1,
-    rabinowitz_richter_3 as stroud_11_2,
-    rabinowitz_richter_4 as stroud_13_1,
-    rabinowitz_richter_5 as stroud_15_1,
-)
-from ._stroud_secrest import (
-    stroud_secrest_v as stroud_5_1,
-    stroud_secrest_vi as stroud_7_1,
-)
-
+from ..helpers import book, fsd, pm, untangle
 from ._helpers import E2r2Scheme
-from ..helpers import untangle, fsd, pm, book
+from ._rabinowitz_richter import rabinowitz_richter_1 as stroud_9_1
+from ._rabinowitz_richter import rabinowitz_richter_2 as stroud_11_1
+from ._rabinowitz_richter import rabinowitz_richter_3 as stroud_11_2
+from ._rabinowitz_richter import rabinowitz_richter_4 as stroud_13_1
+from ._rabinowitz_richter import rabinowitz_richter_5 as stroud_15_1
+from ._stroud_secrest import stroud_secrest_5 as stroud_5_1
+from ._stroud_secrest import stroud_secrest_6 as stroud_7_1
 
 _citation = book(
     authors=["Arthur Stroud"],
@@ -30,13 +24,7 @@ _citation = book(
 )
 
 
-def stroud_4_1(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    cos = numpy.vectorize(sympy.cos) if symbolic else numpy.cos
-    sin = numpy.vectorize(sympy.sin) if symbolic else numpy.sin
-    pi = sympy.pi if symbolic else numpy.pi
-
+def stroud_4_1():
     pts = (
         sqrt(2)
         * numpy.array(
@@ -53,11 +41,7 @@ def stroud_4_1(symbolic=False):
     return E2r2Scheme("Stroud 4-1", weights, points, 4, _citation)
 
 
-def stroud_5_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-
+def stroud_5_2():
     # Cartesian product Gauss formula
     r = sqrt(frac(3, 2))
     data = [
@@ -71,11 +55,7 @@ def stroud_5_2(symbolic=False):
     return E2r2Scheme("Stroud 5-2", weights, points, 5, _citation)
 
 
-def stroud_7_2(symbolic=False):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    sqrt = numpy.vectorize(sympy.sqrt) if symbolic else numpy.sqrt
-    pi = sympy.pi if symbolic else numpy.pi
-
+def stroud_7_2():
     # Cartesian product Gauss formula
     sqrt6 = sqrt(6)
     r, s = [sqrt((3 + p_m * sqrt6) / 2) for p_m in [+1, -1]]

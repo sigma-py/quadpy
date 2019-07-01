@@ -2,8 +2,8 @@
 #
 from mpmath import mp
 
-from ._helpers import TriangleScheme, s1, s2, s3, concat
-from ..helpers import techreport, article
+from ..helpers import article, techreport
+from ._helpers import TriangleScheme, concat, s1, s2, s3
 
 citation = techreport(
     authors=["J. Berntsen", "T.O. Espelid"],

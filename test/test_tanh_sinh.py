@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 #
-from mpmath import mp
 import numpy
 import pytest
 import sympy
+from mpmath import mp
 
 import quadpy
 

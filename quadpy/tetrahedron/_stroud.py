@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 #
-from __future__ import division
 
 import numpy
 
+from ..helpers import book
 from ..line_segment import gauss_legendre
 from ..nsimplex._stroud import stroud_tn_5_1
-from ..helpers import book
 from ._helpers import TetrahedronScheme
-
 
 citation = book(
     authors=["Arthur Stroud"],
