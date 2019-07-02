@@ -308,5 +308,65 @@ def heo_xu_19_2():
     return
 
 
+def stenger_7a_5():
+    from quadpy.helpers import fsd, untangle, z, get_all_exponents
+    from quadpy.nball._helpers import integrate_monomial_over_unit_nball
+
+    def f(x):
+        degree = 7
+        n = 5
+        u = x[0]
+        v = x[1]
+        B = x[2:]
+        data = [
+            (B[0], z(n)),
+            (B[1], fsd(n, (u, 1))),
+            (B[2], fsd(n, (v, 1))),
+            (B[3], fsd(n, (u, 2))),
+            (B[4], fsd(n, (v, 2))),
+            (B[5], fsd(n, (u, 3))),
+        ]
+        points, weights = untangle(data)
+
+        exponents = get_all_exponents(n, degree)
+        # flatten list
+        exponents = numpy.array([item for sublist in exponents for item in sublist])
+
+        def evaluate_all_monomials(x):
+            return numpy.prod(x[..., None] ** exponents.T[:, None], axis=0).T
+
+        flt = numpy.vectorize(float)
+        exact_vals = flt([integrate_monomial_over_unit_nball(k) for k in exponents])
+
+        A = evaluate_all_monomials(points.T)
+
+        out = numpy.dot(A, weights)
+        out -= exact_vals
+
+        norm_v = numpy.sqrt(numpy.dot(out, out))
+        print(norm_v)
+        return norm_v
+
+    x0 = [
+        0.250_562_808_085_732,
+        0.694_746_590_606_866,
+        -0.220_221_371_883_822e03,
+        +0.730_167_125_339_176e02,
+        +0.143_281_369_027_706,
+        -0.203_714_128_400_494e02,
+        +0.448_293_291_677_155e-01,
+        +0.383_685_702_879_441e01,
+    ]
+
+    out = minimize(f, x0, method="Powell", tol=1.0e-12, options={"maxiter": 10000})
+    print(out.status, out.nfev)
+    print(out.message)
+    assert out.success
+    print()
+    for x in out.x:
+        print(f"{x:.15e}")
+    return
+
+
 if __name__ == "__main__":
-    heo_xu_19_2()
+    stenger_7a_5()
