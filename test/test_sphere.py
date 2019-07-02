@@ -56,9 +56,9 @@ def test_spherical_harmonic(scheme):
     + [
         (quadpy.sphere.heo_xu_13(), 1.0e-14),
         (quadpy.sphere.heo_xu_15(), 1.0e-14),
-        (quadpy.sphere.heo_xu_17(), 1.0e-10),
-        (quadpy.sphere.heo_xu_19_1(), 1.0e-9),
-        (quadpy.sphere.heo_xu_19_2(), 1.0e-9),
+        (quadpy.sphere.heo_xu_17(), 1.0e-13),
+        (quadpy.sphere.heo_xu_19_1(), 1.0e-13),
+        (quadpy.sphere.heo_xu_19_2(), 1.0e-12),
         (quadpy.sphere.heo_xu_21_1(), 1.0e-9),
         (quadpy.sphere.heo_xu_21_2(), 1.0e-9),
         (quadpy.sphere.heo_xu_21_3(), 1.0e-9),
