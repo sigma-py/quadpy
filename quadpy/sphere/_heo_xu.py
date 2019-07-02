@@ -18,15 +18,13 @@ citation = article(
 
 
 def heo_xu_13():
-    warnings.warn("The Heo-Xu schemes are only single-precision.")
-
     name = "Heo-Xu 13"
     degree = 13
     data = [
-        (0.013866592105, _f((1.0, 1))),
-        (0.013050931863, _f2(0.286640146767)),
-        (0.013206423223, _f2(0.659905001656)),
-        (0.011942663555, _f1(0.539490098706)),
+        (1.386659210450214e-02, _f((1.0, 1))),
+        (1.305093186259182e-02, _f2(2.866401467665037e-01)),
+        (1.320642322308065e-02, _f2(6.599050016563905e-01)),
+        (1.194266355486864e-02, _f1(5.394900987058648e-01)),
     ]
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical(points)
