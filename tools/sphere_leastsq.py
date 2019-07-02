@@ -1,3 +1,4 @@
+import math
 import numpy
 import orthopy
 import quadpy
@@ -63,7 +64,7 @@ def two():
     from quadpy.helpers import untangle
     from quadpy.sphere._helpers import cartesian_to_spherical
 
-    def f(x):
+    def heo_xu_13(x):
         degree = 13
         data = [
             (x[0], _f((1.0, 1))),
@@ -88,22 +89,56 @@ def two():
         print(norm_v)
         return norm_v
 
-    x0 = numpy.array(
-        [
-            0.013_866_592_105,
-            0.013_050_931_863,
-            0.013_206_423_223,
-            0.011_942_663_555,
-            0.286_640_146_767,
-            0.659_905_001_656,
-            0.539_490_098_706,
+    # heo_xu_13_x0 = [
+    #     0.013_866_592_105,
+    #     0.013_050_931_863,
+    #     0.013_206_423_223,
+    #     0.011_942_663_555,
+    #     0.286_640_146_767,
+    #     0.659_905_001_656,
+    #     0.539_490_098_706,
+    # ]
+    # out = minimize(heo_xu_13, heo_xu_13_x0, method="Nelder-Mead", tol=1.0e-17)
+
+    def heo_xu_15(x):
+        degree = 15
+        data = [
+            (x[0], _f((1.0, 1))),
+            (x[1], _f((math.sqrt(0.5), 2))),
+            (x[2], _f2(x[5])),
+            (x[3], _f2(x[6])),
+            (x[4], _f1(x[7])),
         ]
-    )
-    # out = least_squares(f, x0, jac="3-point", gtol=1.0e-15, xtol=1.0e-50, ftol=1.0e-15)
-    out = minimize(f, x0, method="Nelder-Mead", tol=1.0e-17)
-    assert out.success
+        points, weights = untangle(data)
+        azimuthal, polar = cartesian_to_spherical(points).T
+
+        out = orthopy.sphere.tree_sph(
+            polar, azimuthal, degree, standardization="quantum mechanic"
+        )
+
+        A = numpy.array([row for level in out for row in level])
+        out = numpy.dot(A, weights)
+        out[0] -= 1.0 / (2 * numpy.sqrt(numpy.pi))
+        v = numpy.sqrt(out.real ** 2 + out.imag ** 2)
+        norm_v = numpy.sqrt(numpy.vdot(v, v))
+        print(norm_v)
+        return norm_v
+
+    heo_xu_15_x0 = [
+        0.013_191_522_874,
+        0.011_024_070_845,
+        0.010_538_971_114,
+        0.011_656_960_715,
+        0.010_660_818_696,
+        0.337_785_899_794,
+        0.658_511_676_782,
+        0.399_194_381_765,
+    ]
+    out = minimize(heo_xu_15, heo_xu_15_x0, method="Nelder-Mead", tol=1.5e-16,
+            options={"maxiter": 10000})
     print(out.status, out.nfev)
     print(out.message)
+    assert out.success
     print()
     for x in out.x:
         print(f"{x:.15e}")
