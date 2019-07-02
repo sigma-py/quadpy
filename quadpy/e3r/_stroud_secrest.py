@@ -1,5 +1,3 @@
-import warnings
-
 import numpy
 from sympy import Rational as frac
 from sympy import pi, sqrt
@@ -77,9 +75,7 @@ def stroud_secrest_10():
     points, weights = untangle(data)
     weights *= 8 * pi
 
-    # TODO ERR find out what's wrong
-    warnings.warn("Stroud-Secrest X for E_3^r has degree 3, not 7.")
-    return E3rScheme("Stroud-Secrest X", weights, points, 4, citation)
+    return E3rScheme("Stroud-Secrest X", weights, points, 7, citation)
 
 
 def stroud_secrest_11():
