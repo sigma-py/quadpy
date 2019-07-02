@@ -12,7 +12,7 @@ Your one-stop shop for numerical integration in Python.
 [![PyPi downloads](https://img.shields.io/pypi/dd/quadpy.svg?style=flat-square)](https://pypistats.org/packages/quadpy)
 
 <p align="center">
-  <img src="https://nschloe.github.io/quadpy/quad.png" width="20%">
+  <img src="https://nschloe.github.io/quadpy/quad.png" alt="Maxwell's quad scheme from 1890" width="20%">
 </p>
 
 More than 1500 numerical integration schemes for
@@ -34,8 +34,8 @@ More than 1500 numerical integration schemes for
 1D/2D/3D/nD spaces with weight functions exp(-r) and exp(-r<sup>2</sup>)
 for fast integration of real-, complex-, and vector-valued functions.
 
-To numerically integrate any function over any given triangle, install quadpy [from the
-Python Package Index](https://pypi.org/project/quadpy/) with
+For example, to numerically integrate any function over any given triangle, install
+quadpy [from the Python Package Index](https://pypi.org/project/quadpy/) with
 ```
 pip3 install quadpy --user
 ```
@@ -52,6 +52,24 @@ triangle = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.7, 0.5]])
 val = quadpy.triangle.strang_fix_cowper_09().integrate(f, triangle)
 ```
 This uses [Strang's rule](https://bookstore.siam.org/wc08/) of degree 6.
+
+All schemese have
+```python
+scheme.points
+scheme.weights
+scheme.degree
+scheme.citation
+
+scheme.show()
+scheme.integrate(
+    # ...
+)
+```
+and many have
+```python
+scheme.points_symbolic
+scheme.weights_symbolic
+```
 
 quadpy is fully vectorized, so if you like to compute the integral of a function on many
 domains at once, you can provide them all in one `integrate()` call, e.g.,
@@ -75,6 +93,13 @@ More examples under [test/examples_test.py](https://github.com/nschloe/quadpy/bl
 
 Read more about the dimensionality of the input/output arrays [in the
 wiki](https://github.com/nschloe/quadpy/wiki#dimensionality-of-input-and-output-arrays).
+
+Advanced topics:
+
+  * [Adaptive quadrature](https://github.com/nschloe/quadpy/wiki/Adaptive-quadrature)
+  * [Creating your own Gauss scheme](https://github.com/nschloe/quadpy/wiki/Creating-your-own-Gauss-quadrature-in-three-simple-steps)
+  * [tanh-sinh quadrature](https://github.com/nschloe/quadpy/wiki/tanh-sinh-quadrature)
+
 
 ## Schemes
 
