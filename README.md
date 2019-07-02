@@ -12,7 +12,7 @@ Your one-stop shop for numerical integration in Python.
 [![PyPi downloads](https://img.shields.io/pypi/dd/quadpy.svg?style=flat-square)](https://pypistats.org/packages/quadpy)
 
 <p align="center">
-  <img src="https://nschloe.github.io/quadpy/quad.png" width="20%">
+  <img src="https://nschloe.github.io/quadpy/quad.png" alt="Maxwell's quad scheme from 1890" width="20%">
 </p>
 
 More than 1500 numerical integration schemes for
