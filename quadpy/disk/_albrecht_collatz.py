@@ -19,7 +19,7 @@ pi = sympy.pi
 
 
 def albrecht_collatz():
-    # ERR Wrongly stated in Stroud as sqrt(1/2) instead of 1/2
+    # ERR Incorrectly stated in Stroud as sqrt(1/2) instead of 1/2
     data = [(frac(1, 4), pm(2, frac(1, 2)))]
     points, weights = untangle(data)
     weights *= pi

@@ -38,7 +38,7 @@ def liu_vinokur_04():
 def liu_vinokur_05():
     weights, points = concat(
         s3(-frac(9, 16)),
-        # ERR Wrongly specified in the article as 25 (instead of 2/5).
+        # ERR Incorrectly specified in the article as 25 (instead of 2/5).
         alpha([frac(25, 48), frac(2, 5)]),
     )
     return TriangleScheme("Liu-Vinokur 5", weights, points, 3, citation)

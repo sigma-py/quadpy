@@ -27,7 +27,7 @@ sin = numpy.vectorize(sympy.sin)
 
 
 def hammer_stroud_11_2():
-    # ERR Wrongly stated in Stroud with 0.5 instead of sqrt(0.5)
+    # ERR Incorrectly stated in Stroud with 0.5 instead of sqrt(0.5)
     data = [(frac(1, 4), fsd(2, (sqrt(frac(1, 2)), 1)))]
     points, weights = untangle(data)
     weights *= pi

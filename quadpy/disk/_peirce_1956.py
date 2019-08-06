@@ -26,7 +26,7 @@ def peirce_1956_1():
     s, t = sqrt((27 - pm_ * 3 * sqrt29) / 104)
 
     B1 = frac(2, 27)
-    # ERR Stroud falsely lists 4 instead of 41 here.
+    # ERR Stroud incorrectly lists 4 instead of 41 here.
     B2, B3 = (551 + pm_ * 41 * sqrt29) / 6264
 
     data = [(B1, fsd(2, (r, 1))), (B2, pm(2, s)), (B3, pm(2, t))]
