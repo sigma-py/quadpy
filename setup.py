@@ -21,7 +21,7 @@ setup(
     url="https://github.com/nschloe/quadpy",
     author=about["__author__"],
     author_email=about["__email__"],
-    install_requires=["numpy", "orthopy >=0.5, <0.6", "scipy", "sympy"],
+    install_requires=["numpy", "orthopy >=0.6, <0.7", "scipy", "sympy"],
     extras_require={"all": ["matplotlib"], "plot": ["matplotlib"]},
     python_requires=">=3",
     description="Numerical integration, quadrature for various domains",
