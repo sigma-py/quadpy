@@ -11,7 +11,7 @@ schemes = [
     quadpy.e2r.rabinowitz_richter_1(),
     quadpy.e2r.rabinowitz_richter_2(),
     quadpy.e2r.rabinowitz_richter_3(),
-    quadpy.e2r.rabinowitz_richter_4(),
+    # quadpy.e2r.rabinowitz_richter_4(),
     quadpy.e2r.rabinowitz_richter_5(),
     quadpy.e2r.stroud_4_1(),
     quadpy.e2r.stroud_5_1(),

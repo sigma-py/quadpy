@@ -9,6 +9,35 @@ from quadpy.helpers import untangle
 from quadpy.sphere._helpers import cartesian_to_spherical
 
 
+def partition(boxes, balls):
+    """Create all nonnegative tuples of length d which sum up to n.
+    """
+    # <https://stackoverflow.com/a/36748940/353337>
+    # See <https://stackoverflow.com/a/45348441/353337> for an alterative
+    # solution.
+    def rec(boxes, balls, parent=tuple()):
+        if boxes > 1:
+            for i in range(balls + 1):
+                for x in rec(boxes - 1, i, parent + (balls - i,)):
+                    yield x
+        else:
+            yield parent + (balls,)
+
+    return list(rec(boxes, balls))
+
+
+def integrate_monomial_over_enr(k):
+    if numpy.any(k % 2 == 1):
+        return 0
+    n = len(k)
+    return (
+        2
+        * math.factorial(sum(k) + n - 1)
+        * numpy.prod([math.gamma((kk + 1) / 2.0) for kk in k])
+        / math.gamma((sum(k) + n) / 2)
+    )
+
+
 def one():
     def weights_from_points(azimuthal, polar):
         out = orthopy.sphere.tree_sph(
@@ -557,9 +586,7 @@ def stroud_e2r2_gauss():
         points, weights = untangle(data)
         weights *= numpy.pi
 
-        A = numpy.concatenate(
-            orthopy.e2r2.tree(points.T, degree, symbolic=False)
-        )
+        A = numpy.concatenate(orthopy.e2r2.tree(points.T, degree, symbolic=False))
 
         out = numpy.dot(A, weights)
         out[0] -= numpy.sqrt(numpy.pi)
@@ -587,5 +614,78 @@ def stroud_e2r2_gauss():
     return
 
 
+def rabinowitz_richter_4():
+    from quadpy.e2r._helpers import _s4, _s8, _s40
+
+    def f(x):
+        degree = 0
+        data = [
+            (x[0], [[x[8], x[9]]]),
+            (x[1], _s40(x[10])),
+            (x[2], _s40(x[11])),
+            (x[3], _s4(x[12])),
+            (x[4], _s4(x[13])),
+            (x[5], _s4(x[14])),
+            (x[6], _s8(x[15], x[16])),
+            (x[7], _s8(x[17], x[18])),
+        ]
+        points, weights = untangle(data)
+
+        exponents = numpy.concatenate([partition(2, d) for d in range(degree + 1)])
+        exact_vals = numpy.array([integrate_monomial_over_enr(k) for k in exponents])
+
+        def fun(x):
+            k = exponents.T
+            # <https://stackoverflow.com/a/46689653/353337>
+            s = x.shape[1:] + k.shape[1:]
+            return (
+                (x.reshape(x.shape[0], -1, 1) ** k.reshape(k.shape[0], 1, -1))
+                .prod(0)
+                .reshape(s)
+            )
+
+        A = fun(points.T).T
+        print(A)
+        print(exact_vals)
+        print(sum(weights))
+        out = numpy.dot(A, weights) - exact_vals
+        nrm = numpy.sqrt(numpy.dot(out, out))
+        print(nrm)
+        exit(1)
+        return nrm
+
+    x0 = [
+        +0.349_777_602_241_248_0e1,
+        +0.442_580_256_591_559_0e-6,
+        +0.455_340_971_239_599_4e-2,
+        +0.277_530_326_587_565_2e-4,
+        +0.331_277_792_488_418_2e1,
+        -0.101_044_092_999_506_7e1,
+        +0.112_721_370_308_653_4e-3,
+        +0.492_114_301_738_741_9e2,
+        #
+        0.0,
+        0.0,
+        19.676_381_860_412_46,
+        8.770_037_945_037_203,
+        10.205_685_192_384_36,
+        3.591_105_603_680_783,
+        3.242_171_893_025_389,
+        11.941_693_015_408_18,
+        4.911_904_665_577_694,
+        3.287_383_483_530_638,
+        3.162_277_660_168_379,
+    ]
+
+    out = minimize(f, x0, method="Nelder-Mead", tol=1.0e-17)
+    print(out.status, out.nfev)
+    print(out.message)
+    assert out.success
+    print()
+    for x in out.x:
+        print(f"{x:.15e}")
+    return
+
+
 if __name__ == "__main__":
-    stroud_e2r2_gauss()
+    rabinowitz_richter_4()

@@ -3,7 +3,7 @@ from ._rabinowitz_richter import (
     rabinowitz_richter_1,
     rabinowitz_richter_2,
     rabinowitz_richter_3,
-    rabinowitz_richter_4,
+    # rabinowitz_richter_4,
     rabinowitz_richter_5,
 )
 from ._stroud import (
@@ -23,7 +23,7 @@ __all__ = [
     "rabinowitz_richter_1",
     "rabinowitz_richter_2",
     "rabinowitz_richter_3",
-    "rabinowitz_richter_4",
+    # "rabinowitz_richter_4",
     "rabinowitz_richter_5",
     "stroud_4_1",
     "stroud_5_1",
