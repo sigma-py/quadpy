@@ -11,7 +11,7 @@ schemes = [
     quadpy.e2r.rabinowitz_richter_1(),
     quadpy.e2r.rabinowitz_richter_2(),
     quadpy.e2r.rabinowitz_richter_3(),
-    # quadpy.e2r.rabinowitz_richter_4(),
+    quadpy.e2r.rabinowitz_richter_4(),
     quadpy.e2r.rabinowitz_richter_5(),
     quadpy.e2r.stroud_4_1(),
     quadpy.e2r.stroud_5_1(),
@@ -37,7 +37,7 @@ def test_scheme(scheme, tol=1.0e-14):
         scheme.degree + 1,
         tol=tol,
     )
-    assert degree == scheme.degree, "({}) Observed: {}   expected: {}".format(
+    assert degree == scheme.degree, "{}  --  Observed: {}   expected: {}".format(
         scheme.name, degree, scheme.degree
     )
     return

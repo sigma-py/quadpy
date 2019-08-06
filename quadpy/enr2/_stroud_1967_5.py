@@ -106,7 +106,7 @@ def stroud_1967_5_b(n):
         lmbda = 0.128679320334269e1
         xi = -0.379873463323979
         mu = -0.192386729447751e1
-        # ERR Stroud's book falsely lists 0.31_33_0068...
+        # ERR Stroud's book incorrectly lists 0.31_33_0068...
         gamma = 0.312200683022281
         A = 0.242
         B = 0.81e-1

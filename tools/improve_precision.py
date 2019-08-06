@@ -368,5 +368,224 @@ def stenger_7a_5():
     return
 
 
+def stenger_11a_5():
+    from quadpy.helpers import fsd, untangle, z, get_all_exponents
+    from quadpy.nball._helpers import integrate_monomial_over_unit_nball
+
+    def f(x):
+        degree = 11
+        n = 5
+        u = x[0]
+        v = x[1]
+        w = x[2]
+        B = x[3:]
+        data = [
+            (B[0], z(n)),
+            (B[1], fsd(n, (u, 1))),
+            (B[2], fsd(n, (v, 1))),
+            (B[3], fsd(n, (w, 1))),
+            (B[4], fsd(n, (u, 2))),
+            (B[5], fsd(n, (v, 2))),
+            (B[6], fsd(n, (w, 2))),
+            (B[7], fsd(n, (u, 1), (v, 1))),
+            (B[8], fsd(n, (u, 1), (w, 1))),
+            (B[9], fsd(n, (u, 3))),
+            (B[10], fsd(n, (v, 3))),
+            (B[11], fsd(n, (w, 3))),
+            (B[12], fsd(n, (u, 2), (v, 1))),
+        ]
+        if n > 3:
+            data += [(B[13], fsd(n, (u, 4))), (B[14], fsd(n, (v, 4)))]
+        if n > 4:
+            data += [(B[15], fsd(n, (u, 5)))]
+        points, weights = untangle(data)
+
+        exponents = get_all_exponents(n, degree)
+        # flatten list
+        exponents = numpy.array([item for sublist in exponents for item in sublist])
+
+        def evaluate_all_monomials(x):
+            return numpy.prod(x[..., None] ** exponents.T[:, None], axis=0).T
+
+        flt = numpy.vectorize(float)
+        exact_vals = flt([integrate_monomial_over_unit_nball(k) for k in exponents])
+
+        A = evaluate_all_monomials(points.T)
+
+        out = numpy.dot(A, weights)
+        out -= exact_vals
+
+        norm_v = numpy.sqrt(numpy.dot(out, out))
+        print()
+        print(norm_v)
+        print()
+        for xx in x:
+            print(f"{xx:.15e}")
+        return norm_v
+
+    x0 = [
+        0.819_845_995_463_488,
+        0.540_604_637_387_361,
+        0.188_677_422_490_785,
+        -0.455_346_412_352_218e03,
+        -0.643_198_057_179_463,
+        -0.313_723_910_937_508,
+        +0.142_863_899_851_242e03,
+        -0.115_044_196_304_602e-02,
+        +0.149_484_688_898_586,
+        -0.373_831_314_185_824e02,
+        -0.141_469_445_049_282e-01,
+        +0.104_863_970_436_266,
+        -0.973_070_178_977_534e-03,
+        -0.862_234_640_073_899e-02,
+        +0.654_476_925_250_512e01,
+        +0.153_312_717_360_660e-02,
+        -0.611_928_443_128_898e-04,
+        +0.622_126_777_947_090e-02,
+        +0.887_274_197_302_674e-05,
+    ]
+
+    out = minimize(f, x0, method="Powell", tol=1.0e-12, options={"maxiter": 10000})
+    print(out.status, out.nfev)
+    print(out.message)
+    assert out.success
+    print()
+    for x in out.x:
+        print(f"{x:.15e}")
+    return
+
+
+def stenger_11b_3():
+    from quadpy.helpers import fsd, untangle, z, get_all_exponents
+    from quadpy.nball._helpers import integrate_monomial_over_unit_nball
+
+    def f(x):
+        degree = 11
+        n = 3
+
+        u = 0.871_740_148_509_601
+        v = 0.591_700_181_433_148
+        w = 0.209_299_217_902_484
+
+        # u = x[0]
+        # v = x[1]
+        # w = x[2]
+        # B = x[3:]
+        B = x
+
+        data = [
+            (B[0], z(n)),
+            (B[1], fsd(n, (u, 1))),
+            (B[2], fsd(n, (v, 1))),
+            (B[3], fsd(n, (w, 1))),
+            (B[4], fsd(n, (u, 2))),
+            (B[5], fsd(n, (v, 2))),
+            (B[6], fsd(n, (w, 2))),
+            (B[7], fsd(n, (u, 1), (v, 1))),
+            (B[8], fsd(n, (u, 1), (w, 1))),
+            (B[9], fsd(n, (u, 3))),
+            (B[10], fsd(n, (v, 3))),
+            (B[11], fsd(n, (w, 3))),
+            (B[12], fsd(n, (u, 2), (v, 1))),
+        ]
+
+        points, weights = untangle(data)
+
+        exponents = get_all_exponents(n, degree)
+        # flatten list
+        exponents = numpy.array([item for sublist in exponents for item in sublist])
+
+        def evaluate_all_monomials(x):
+            return numpy.prod(x[..., None] ** exponents.T[:, None], axis=0).T
+
+        flt = numpy.vectorize(float)
+        exact_vals = flt([integrate_monomial_over_unit_nball(k) for k in exponents])
+
+        A = evaluate_all_monomials(points.T)
+
+        out = numpy.dot(A, weights)
+        out -= exact_vals
+
+        norm_v = numpy.sqrt(numpy.dot(out, out))
+        # print()
+        print(norm_v)
+        # print()
+        # for xx in x:
+        #     print(f"{xx:.15e}")
+        return norm_v
+
+    x0 = [
+        # 0.871_740_148_509_601,
+        # 0.591_700_181_433_148,
+        # 0.209_299_217_902_484,
+        -0.369_608_422_804_220e02,
+        -0.292_281_498_761_429,
+        +0.981_554_121_166_593e-01,
+        +0.200_417_005_906_264e02,
+        +0.915_649_460_852_702e-03,
+        +0.140_881_585_655_056,
+        -0.109_681_663_185_532e02,
+        -0.867_910_432_951_898e-02,
+        +0.118_181_679_110_079,
+        -0.172_723_379_038_583e-02,
+        +0.153_215_767_717_862e-01,
+        +0.614_931_311_140_891e01,
+        +0.205_381_636_291_801e-02,
+    ]
+
+    out = minimize(f, x0, method="Powell", tol=1.0e-15, options={"maxiter": 20000})
+    print(out.status, out.nfev)
+    print(out.message)
+    print()
+    for x in out.x:
+        print(f"{x:.15e}")
+    assert out.success
+    return
+
+
+def stroud_e2r2_gauss():
+    from quadpy.helpers import fsd
+
+    def f(x):
+        degree = 5
+        data = [
+            (x[0], fsd(2, (x[3], 1))),
+            (x[1], fsd(2, (x[4], 1))),
+            (x[2], fsd(2, (x[3], 1), (x[4], 1))),
+        ]
+
+        points, weights = untangle(data)
+        weights *= numpy.pi
+
+        A = numpy.concatenate(
+            orthopy.e2r2.tree(points.T, degree, symbolic=False)
+        )
+
+        out = numpy.dot(A, weights)
+        out[0] -= numpy.sqrt(numpy.pi)
+
+        norm_v = numpy.sqrt(numpy.vdot(out, out))
+        # print(norm_v)
+        return norm_v
+
+    # Cartesian product Gauss formula
+    sqrt6 = numpy.sqrt(6)
+    r, s = [numpy.sqrt((3 + p_m * sqrt6) / 2) for p_m in [+1, -1]]
+    A, B = [(5 - p_m * 2 * sqrt6) / 48 for p_m in [+1, -1]]
+    C = 1.0 / 48.0
+    x0 = [A, B, C, r, s]
+
+    print("x0", x0)
+
+    out = minimize(f, x0, method="Nelder-Mead", tol=1.0e-15, options={"maxiter": 20000})
+    print(out.status, out.nfev)
+    print(out.message, out.fun)
+    print()
+    for x in out.x:
+        print(f"{x:.15e}")
+    assert out.success
+    return
+
+
 if __name__ == "__main__":
-    stenger_7a_5()
+    stroud_e2r2_gauss()

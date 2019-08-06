@@ -126,7 +126,7 @@ def _xi11(d, a, frac):
 def _xi21(d, a, frac):
     assert d > 1
     b = frac(1 - (d - 2) * a, 3)
-    # ERR Note that the article wrongly states (d-2) the the expression for c.
+    # ERR Note that the article incorrectly states (d-2) the the expression for c.
     c = 1 - (d - 1) * a - b
     if d == 2:
         out = numpy.array(

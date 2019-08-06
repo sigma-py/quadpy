@@ -23,6 +23,7 @@ setup(
     author_email=about["__email__"],
     install_requires=["numpy", "orthopy >=0.5, <0.6", "scipy", "sympy"],
     extras_require={"all": ["matplotlib"], "plot": ["matplotlib"]},
+    python_requires=">=3",
     description="Numerical integration, quadrature for various domains",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
