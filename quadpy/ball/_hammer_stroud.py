@@ -42,7 +42,7 @@ def hammer_stroud_14_3(variant_a=True):
 
     sqrt14 = sqrt(14)
 
-    # ERR The article falsely gives 0.50824... instead of 0.050824...
+    # ERR The article incorrectly gives 0.50824... instead of 0.050824...
     a1 = frac(1, 125) * (9 + t * 2 * sqrt14)
     c1 = (71 - t * 12 * sqrt14) / 1000
 

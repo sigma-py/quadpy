@@ -13,7 +13,7 @@ from helpers import check_degree, integrate_monomial_over_enr
         quadpy.e3r.stroud_e3r_5_1(),
         quadpy.e3r.stroud_e3r_5_2(),
         quadpy.e3r.stroud_e3r_5_3(),
-        # quadpy.e3r.stroud_e3r_7_1(),
+        quadpy.e3r.stroud_e3r_7_1(),
         quadpy.e3r.stroud_e3r_7_2(),
     ],
 )

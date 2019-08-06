@@ -23,7 +23,7 @@ from quadpy.nball._helpers import integrate_monomial_over_unit_nball
     + [quadpy.nball.stroud_sn_7_1a(dim) for dim in range(3, 8)]
     + [quadpy.nball.stroud_sn_7_1b(dim) for dim in range(3, 7)]
     + [quadpy.nball.stroud_sn_7_2(dim) for dim in range(3, 7)]
-    # + [quadpy.nball.stroud_sn_7_3a(dim) for dim in range(3, 7)]
+    + [quadpy.nball.stroud_sn_7_3a(dim) for dim in range(3, 7)]
     + [quadpy.nball.stroud_sn_7_3b(dim) for dim in range(3, 7)]
     + [quadpy.nball.stroud_sn_9_1a(dim) for dim in range(3, 7)]
     + [quadpy.nball.stroud_sn_9_1b(dim) for dim in range(4, 7)]
@@ -45,8 +45,10 @@ def test_scheme(scheme):
         scheme.degree + 1,
         tol=tol,
     )
-    assert degree >= scheme.degree, "observed: {}, expected: {}".format(
-        degree, scheme.degree
+    assert (
+        degree >= scheme.degree
+    ), "{} (dim={})  --  observed: {}, expected: {}".format(
+        scheme.name, scheme.dim, degree, scheme.degree
     )
     return
 
