@@ -98,10 +98,10 @@ def albrecht_5():
 
     sqrt19 = sqrt(19)
 
-    # ERR Stroud falsely lists sqrt(10) for s1.
+    # ERR Stroud incorrectly lists sqrt(10) for s1.
     s1, s2 = sqrt((125 - pm_ * 10 * sqrt19) / 366)
 
-    # ERR Stroud falsely lists 749489_3_.0 instead of 749489_2_.0
+    # ERR Stroud incorrectly lists 749489_3_.0 instead of 749489_2_.0
     C1, C2 = (7494892 + pm_ * 1053263 * sqrt19) / 205200000
     D = frac(81, 3125)
 

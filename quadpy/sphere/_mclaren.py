@@ -164,7 +164,7 @@ def mclaren_07():
 
     r, s = [sqrt((3 - pm_ * sqrt(5)) / 6) for pm_ in [+1, -1]]
     t = sqrt(frac(1, 3))
-    # ERR Stroud falsely gives sqrt(0.5)
+    # ERR Stroud incorrectly gives sqrt(0.5)
     u = frac(1, 2)
     v, w = [(sqrt(5) + pm_) / 4 for pm_ in [+1, -1]]
 

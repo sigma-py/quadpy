@@ -157,8 +157,7 @@ def dunavant_09():
             [0.024839207949609, 0.945161453573471, 0.829501421477824],
         ),
     )
-    # TODO ERR the article claims 19
-    return QuadrilateralScheme("Dunavant 9", weights, points, 16, citation)
+    return QuadrilateralScheme("Dunavant 9", weights, points, 19, citation)
 
 
 def dunavant_10():
