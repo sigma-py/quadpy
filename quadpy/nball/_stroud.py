@@ -4,7 +4,8 @@ from sympy import sqrt
 from ..helpers import book, pm, untangle
 from ._hammer_stroud import hammer_stroud_11n, hammer_stroud_12n
 from ._helpers import NBallScheme, volume_unit_ball
-from ._stenger import stenger_7a as stroud_sn_7_3a, stenger_7b as stroud_sn_7_3b
+from ._stenger import stenger_7a as stroud_sn_7_3a
+from ._stenger import stenger_7b as stroud_sn_7_3b
 from ._stenger import stenger_9a as stroud_sn_9_1a
 from ._stenger import stenger_9b as stroud_sn_9_1b
 from ._stenger import stenger_11a as stroud_sn_11_1a
