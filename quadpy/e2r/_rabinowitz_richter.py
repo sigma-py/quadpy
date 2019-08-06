@@ -51,22 +51,24 @@ def rabinowitz_richter_3():
 
 
 # ERR There's a misprint here somewhere.
-# When replacing -.1010440929995067e+1 by -.1010440929995067e+3,
-# the scheme has order 3.
+# The sum of the weights is 406.4177935852262, not 6.283185307179584 as it should be.
+# When replacing -.1010440929995067e+1 by -.1010440929995067e+3, this is fixed, but the
+# scheme still only has order 3.
+# We can better tackle this once we have orthogonal polynomials for E2r.
 # TODO find out what's going wrong
-def rabinowitz_richter_4():
-    data = [
-        (+.3497776022412480e+1, [[0.0, 0.0]]),
-        (+.4425802565915590e-6, _s40(19.67638186041246)),
-        (+.4553409712395994e-2, _s40(8.770037945037203)),
-        (+.2775303265875652e-4, _s4(10.20568519238436)),
-        (+.3312777924884182e+1, _s4(3.591105603680783)),
-        (-.1010440929995067e+1, _s4(3.242171893025389)),
-        (+.1127213703086534e-3, _s8(11.94169301540818, 4.911904665577694)),
-        (+.4921143017387419e+2, _s8(3.287383483530638, 3.162277660168379)),
-    ]
-    points, weights = untangle(data)
-    return E2rScheme("Rabinowitz-Richter 4", weights, points, 13, _citation)
+# def rabinowitz_richter_4():
+#     data = [
+#         (+.3497776022412480e+1, [[0.0, 0.0]]),
+#         (+.4425802565915590e-6, _s40(19.67638186041246)),
+#         (+.4553409712395994e-2, _s40(8.770037945037203)),
+#         (+.2775303265875652e-4, _s4(10.20568519238436)),
+#         (+.3312777924884182e+1, _s4(3.591105603680783)),
+#         (-.1010440929995067e+3, _s4(3.242171893025389)),
+#         (+.1127213703086534e-3, _s8(11.94169301540818, 4.911904665577694)),
+#         (+.4921143017387419e+2, _s8(3.287383483530638, 3.162277660168379)),
+#     ]
+#     points, weights = untangle(data)
+#     return E2rScheme("Rabinowitz-Richter 4", weights, points, 13, _citation)
 
 
 def rabinowitz_richter_5():
