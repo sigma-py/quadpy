@@ -1,12 +1,13 @@
 import math
+
 import numpy
-import orthopy
-import quadpy
 from scipy.optimize import least_squares, lsq_linear, minimize
 
-from quadpy.sphere._heo_xu import _f, _f1, _f2, _f11
+import orthopy
+import quadpy
 from quadpy.helpers import untangle
 from quadpy.sphere._helpers import cartesian_to_spherical
+from quadpy.sphere._heo_xu import _f, _f1, _f2, _f11
 
 
 def partition(boxes, balls):
@@ -583,23 +584,25 @@ def stroud_e2r2_gauss():
             (x[2], fsd(2, (x[3], 1), (x[4], 1))),
         ]
 
-        points = numpy.array([
-            [0.0, +x[3]],
-            [0.0, -x[3]],
-            [+x[3], 0.0],
-            [-x[3], 0.0],
-            #
-            [0.0, +x[4]],
-            [0.0, -x[4]],
-            [+x[4], 0.0],
-            [-x[4], 0.0],
-            #
-            #
-            [+x[3], +x[4]],
-            [+x[3], -x[4]],
-            [-x[3], +x[4]],
-            [-x[3], -x[4]],
-        ])
+        points = numpy.array(
+            [
+                [0.0, +x[3]],
+                [0.0, -x[3]],
+                [+x[3], 0.0],
+                [-x[3], 0.0],
+                #
+                [0.0, +x[4]],
+                [0.0, -x[4]],
+                [+x[4], 0.0],
+                [-x[4], 0.0],
+                #
+                #
+                [+x[3], +x[4]],
+                [+x[3], -x[4]],
+                [-x[3], +x[4]],
+                [-x[3], -x[4]],
+            ]
+        )
 
         points, weights = untangle(data)
 
@@ -628,7 +631,9 @@ def stroud_e2r2_gauss():
         print()
         print("x0", x0)
 
-        out = minimize(f, x0, method="Nelder-Mead", tol=1.0e-15, options={"maxiter": 20000})
+        out = minimize(
+            f, x0, method="Nelder-Mead", tol=1.0e-15, options={"maxiter": 20000}
+        )
         print(out.status, out.nfev, out.message, "Function value", out.fun)
         # assert out.success
         if abs(out.fun) < 1.0e-10:
@@ -712,5 +717,69 @@ def rabinowitz_richter_4():
     return
 
 
+def stroud_1967_5():
+    from quadpy.helpers import rd
+
+    def f(x):
+        degree = 5
+        n = 7
+
+        lmbda, xi, mu, gamma = x
+        eta = 0
+        A = 1 / 9
+        B = 1 / 72
+        C = B
+
+        # data = [
+        #     (B, rd(n, [(+lmbda, 1), (+xi, n - 1)])),
+        #     (B, rd(n, [(-lmbda, 1), (-xi, n - 1)])),
+        #     (C, rd(n, [(+mu, 2), (+gamma, n - 2)])),
+        #     (C, rd(n, [(-mu, 2), (-gamma, n - 2)])),
+        #     (2 * A, numpy.full((1, n), eta)),
+        # ]
+        # points, weights = untangle(data)
+        # weights *= numpy.sqrt(numpy.pi) ** n
+
+        data = [
+            (B, rd(n, [(+lmbda, 1), (+xi, n - 1)])),
+            (B, rd(n, [(-lmbda, 1), (-xi, n - 1)])),
+            (C, rd(n, [(+mu, 2), (+gamma, n - 2)])),
+            (C, rd(n, [(-mu, 2), (-gamma, n - 2)])),
+            (2 * A, numpy.full((1, n), eta)),
+        ]
+
+        points, weights = untangle(data)
+        weights *= numpy.sqrt(numpy.pi) ** n
+
+        A = numpy.concatenate(orthopy.enr2.tree(points.T, degree, symbolic=False))
+
+        out = numpy.dot(A, weights)
+        out[0] -= numpy.sqrt(numpy.sqrt(numpy.pi)) ** n
+
+        norm_v = numpy.sqrt(numpy.vdot(out, out))
+        return norm_v
+
+    x0 = [
+        2.009505637083749e+00,
+        2.774548295173737e-01,
+        -1.062215595206724e+00,
+        6.698352123613097e-01,
+        # 2.009_505_6,
+        # 0.277_454_83,
+        # -1.062_215_60,
+        # 0.669_835_21,
+    ]
+
+    out = minimize(
+        f, x0, method="Powell", tol=1.0e-20, options={"maxiter": 20000}
+    )
+    print(out.status, out.nfev, out.message, "Function value", out.fun)
+    assert out.success
+    print()
+    for x in out.x:
+        print(f"{x:.15e}")
+    return
+
+
 if __name__ == "__main__":
-    stroud_e2r2_gauss()
+    stroud_1967_5()

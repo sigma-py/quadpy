@@ -4,8 +4,8 @@ import pytest
 
 import orthopy
 import quadpy
-from quadpy.sphere._helpers import cartesian_to_spherical
 from helpers import check_degree_ortho
+from quadpy.sphere._helpers import cartesian_to_spherical
 
 # Note
 # ====

@@ -4,6 +4,7 @@ import numpy
 
 import orthopy
 import quadpy
+
 # from quadpy.nsimplex.helpers import integrate_monomial_over_unit_simplex
 # from quadpy.triangle.helpers import _rot_ab, _s3, _s21, _s111ab
 

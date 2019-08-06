@@ -64,14 +64,16 @@ def stroud_1967_5_a(n):
         A = 0.78125e-2
         B = 0.625e-1
         C = A
-    # TODO double precision
     # else:
     #     assert n == 7
+    #     # ENH These double-precision values have been obtained via a minimization.
+    #     # The original reference only has single-prevision.
+    #     # TODO make them even more precise
     #     eta = 0
-    #     lmbda = 2.0095056
-    #     xi = 0.27745483
-    #     mu = -1.06221560
-    #     gamma = 0.66983521
+    #     lmbda = 2.009505637083749e+00
+    #     xi = 2.774548295173737e-01
+    #     mu = -1.062215595206724e+00
+    #     gamma = 6.698352123613097e-01
     #     A = 1 / 9
     #     B = 1 / 72
     #     C = B
@@ -90,7 +92,7 @@ def stroud_1967_5_a(n):
         ]
 
     if n == 7:
-        data += [(2 * A, numpy.full((1, n), 0.0))]
+        data += [(2 * A, numpy.full((1, n), eta))]
     else:
         data += [(A, numpy.full((1, n), +eta)), (A, numpy.full((1, n), -eta))]
 

@@ -1,6 +1,7 @@
-import numpy
 import math
 import warnings
+
+import numpy
 
 from ..helpers import article, fsd, untangle
 from ._helpers import SphereScheme, cartesian_to_spherical
