@@ -576,15 +576,32 @@ def stroud_e2r2_gauss():
     from quadpy.helpers import fsd
 
     def f(x):
-        degree = 5
+        degree = 7
         data = [
             (x[0], fsd(2, (x[3], 1))),
             (x[1], fsd(2, (x[4], 1))),
             (x[2], fsd(2, (x[3], 1), (x[4], 1))),
         ]
 
+        points = numpy.array([
+            [0.0, +x[3]],
+            [0.0, -x[3]],
+            [+x[3], 0.0],
+            [-x[3], 0.0],
+            #
+            [0.0, +x[4]],
+            [0.0, -x[4]],
+            [+x[4], 0.0],
+            [-x[4], 0.0],
+            #
+            #
+            [+x[3], +x[4]],
+            [+x[3], -x[4]],
+            [-x[3], +x[4]],
+            [-x[3], -x[4]],
+        ])
+
         points, weights = untangle(data)
-        weights *= numpy.pi
 
         A = numpy.concatenate(orthopy.e2r2.tree(points.T, degree, symbolic=False))
 
@@ -596,21 +613,29 @@ def stroud_e2r2_gauss():
         return norm_v
 
     # Cartesian product Gauss formula
-    sqrt6 = numpy.sqrt(6)
-    r, s = [numpy.sqrt((3 + p_m * sqrt6) / 2) for p_m in [+1, -1]]
-    A, B = [(5 - p_m * 2 * sqrt6) / 48 for p_m in [+1, -1]]
-    C = 1.0 / 48.0
-    x0 = [A, B, C, r, s]
+    # sqrt6 = numpy.sqrt(6)
+    # r, s = [numpy.sqrt((3 + p_m * sqrt6) / 2) for p_m in [+1, -1]]
+    # A, B = [(5 - p_m * 2 * sqrt6) / 48 for p_m in [+1, -1]]
+    # C = 1.0 / 48.0
+    # A *= math.pi
+    # B *= math.pi
+    # C *= math.pi
+    # x0 = [A, B, C, r, s]
 
-    print("x0", x0)
+    while True:
+        x0 = numpy.random.rand(5) * 10 - 5
 
-    out = minimize(f, x0, method="Nelder-Mead", tol=1.0e-15, options={"maxiter": 20000})
-    print(out.status, out.nfev)
-    print(out.message, out.fun)
-    print()
-    for x in out.x:
-        print(f"{x:.15e}")
-    assert out.success
+        print()
+        print("x0", x0)
+
+        out = minimize(f, x0, method="Nelder-Mead", tol=1.0e-15, options={"maxiter": 20000})
+        print(out.status, out.nfev, out.message, "Function value", out.fun)
+        # assert out.success
+        if abs(out.fun) < 1.0e-10:
+            print()
+            for x in out.x:
+                print(f"{x:.15e}")
+            break
     return
 
 
@@ -618,7 +643,7 @@ def rabinowitz_richter_4():
     from quadpy.e2r._helpers import _s4, _s8, _s40
 
     def f(x):
-        degree = 0
+        degree = 13
         data = [
             (x[0], [[x[8], x[9]]]),
             (x[1], _s40(x[10])),
@@ -688,4 +713,4 @@ def rabinowitz_richter_4():
 
 
 if __name__ == "__main__":
-    rabinowitz_richter_4()
+    stroud_e2r2_gauss()
