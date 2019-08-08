@@ -46,8 +46,6 @@ class QuadrilateralScheme(NCubeScheme):
         plt.plot(quad[1][1], quad[0][1], "-k")
         plt.plot(quad[0][1], quad[0][0], "-k")
 
-        plt.axis("equal")
-
         if not show_axes:
             plt.gca().set_axis_off()
 
@@ -58,6 +56,9 @@ class QuadrilateralScheme(NCubeScheme):
             numpy.array([quad[0][0], quad[0][1], quad[1][1]])
         )
         helpers.plot_disks(plt, transformed_pts, self.weights, vol)
+        plt.axis("equal")
+        plt.xlim(-0.1, 1.1)
+        plt.ylim(-0.1, 1.1)
         return
 
 
