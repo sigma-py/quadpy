@@ -1,6 +1,7 @@
-# quadpy
-
-Your one-stop shop for numerical integration in Python.
+<p align="center">
+  <a href="https://github.com/nschloe/quadpy"><img alt="quadpy" src="https://nschloe.github.io/quadpy/logo-with-text.svg" width="60%"></a>
+  <p align="center">Your one-stop shop for numerical integration in Python.</p>
+</p>
 
 [![CircleCI](https://img.shields.io/circleci/project/github/nschloe/quadpy/master.svg?style=flat-square)](https://circleci.com/gh/nschloe/quadpy/tree/master)
 [![codecov](https://img.shields.io/codecov/c/github/nschloe/quadpy.svg?style=flat-square)](https://codecov.io/gh/nschloe/quadpy)
@@ -10,10 +11,6 @@ Your one-stop shop for numerical integration in Python.
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1173132.svg?style=flat-square)](https://doi.org/10.5281/zenodo.1173132)
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?style=flat-square&logo=github&label=Stars&logoColor=white)](https://github.com/nschloe/quadpy)
 [![PyPi downloads](https://img.shields.io/pypi/dd/quadpy.svg?style=flat-square)](https://pypistats.org/packages/quadpy)
-
-<p align="center">
-  <img src="https://nschloe.github.io/quadpy/quad.png" alt="Maxwell's quad scheme from 1890" width="20%">
-</p>
 
 More than 1500 numerical integration schemes for
 [line segments](#line-segment),
