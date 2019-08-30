@@ -30,6 +30,13 @@ class WedgeScheme:
         det = _get_detJ(flt(self.points).T, wedge)
         return dot(f(x) * abs(det), flt(self.weights))
 
+    def integrate_discrete(self, data, wedge, dot=numpy.dot):
+        """Quadrature where `data` are pointwise values defined at self.points.
+        """
+        flt = numpy.vectorize(float)
+        det = _get_detJ(flt(self.points).T, wedge)
+        return dot(data.T * abs(det), flt(self.weights))
+
     def show(
         self,
         wedge=numpy.array(

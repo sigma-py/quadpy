@@ -77,6 +77,12 @@ class SphereScheme:
         ff = numpy.array(f(rr.T[0], rr.T[1]))
         return area(1.0) * dot(ff, flt(self.weights))
 
+    def integrate_discrete(self, data, radius, dot=numpy.dot):
+        """Quadrature where `data` are pointwise values expected to be
+        defined at self.points.
+        """
+        return area(radius) * dot(data.T, self.weights)
+
 
 def area(radius):
     return 4 * numpy.pi * numpy.array(radius) ** 2

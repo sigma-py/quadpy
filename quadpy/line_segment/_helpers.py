@@ -35,6 +35,16 @@ class LineSegmentScheme:
         # sum over the intervals
         return numpy.sum(out)
 
+    def integrate_discrete(self, data, interval, dot=numpy.dot):
+        """Quadrature where `data` are pointwise values expected to be
+        defined at self.points.
+        """
+        diff = interval[1] - interval[0]
+        # numpy.sum is slower than dot() and friends, but allows for scalar input.
+        len_intervals = numpy.sqrt(numpy.sum(diff ** 2, axis=-1))
+        # The factor 0.5 is from the length of the reference line [-1, 1].
+        return 0.5 * len_intervals * dot(data.T, self.weights)
+
     def show(self, *args, **kwargs):
         import matplotlib.pyplot as plt
 

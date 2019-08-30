@@ -46,3 +46,9 @@ class BallScheme:
         rr = numpy.swapaxes(rr, 0, -2)
         ff = numpy.asarray(f((rr + center).T))
         return numpy.asarray(radius) ** 3 * dot(ff, self.weights)
+
+    def integrate_discrete(self, data, radius, dot=numpy.dot):
+        """Quadrature where `data` are pointwise values expected to be
+        defined at self.points.
+        """
+        return radius**3 * dot(data.T, self.weights)

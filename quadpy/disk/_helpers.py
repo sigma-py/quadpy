@@ -58,6 +58,12 @@ class DiskScheme:
         ff = numpy.array(f((rr + center).T))
         return numpy.array(radius) ** 2 * dot(ff, self.weights)
 
+    def integrate_discrete(self, data, radius, dot=numpy.dot):
+        """Quadrature where `data` are pointwise values expected to be
+        defined at self.points.
+        """
+        return radius**2 * dot(data.T, self.weights)
+
 
 def _z():
     return numpy.array([[0.0, 0.0]])

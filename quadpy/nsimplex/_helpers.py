@@ -41,6 +41,13 @@ class NSimplexScheme:
         )
         return vol * dot(fx, flt(self.weights))
 
+    def integrate_discrete(self, data, simplex, dot=numpy.dot):
+        """Quadrature where `data` are pointwise values defined at self.points.
+        """
+        flt = numpy.vectorize(float)
+        vol = get_vol(simplex)
+
+        return vol * dot(data.T, flt(self.weights))
 
 def transform(points, simplex):
     """Transform the points `xi` from the reference simplex onto `simplex`.

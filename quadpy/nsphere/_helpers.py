@@ -33,6 +33,11 @@ class NSphereScheme:
         ff = numpy.array(f((rr + center).T))
         return numpy.array(radius) ** (self.dim - 1) * dot(ff, self.weights)
 
+    def integrate_discrete(self, data, radius, dot=numpy.dot):
+        """Quadrature where `data` are pointwise values defined at self.points.
+        """
+        return numpy.array(radius) ** (self.dim - 1) * dot(data.T, self.weights)
+
 
 def integrate_monomial_over_unit_nsphere(alpha, symbolic=False):
     """

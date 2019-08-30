@@ -60,3 +60,9 @@ class CircleScheme:
         rr = numpy.swapaxes(rr, 0, -2)
         ff = numpy.array(f((rr + center).T))
         return radius * dot(ff, self.weights)
+
+    def integrate_discrete(self, data, radius, dot=numpy.dot):
+        """Quadrature where `data` are pointwise values expected to be
+        defined at self.points.
+        """
+        return radius * dot(data.T, self.weights)

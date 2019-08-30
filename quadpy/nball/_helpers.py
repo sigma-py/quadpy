@@ -32,6 +32,11 @@ class NBallScheme:
         ff = numpy.array(f((rr + center).T))
         return numpy.array(radius) ** self.dim * dot(ff, self.weights)
 
+    def integrate_discrete(self, data, radius, dot=numpy.dot):
+        """Quadrature where `data` are pointwise values defined at self.points.
+        """
+        return numpy.array(radius) ** self.dim * dot(data.T, self.weights)
+
 
 def volume_unit_ball(n, symbolic=False):
     return integrate_monomial_over_unit_nball(n * [0], symbolic=symbolic)

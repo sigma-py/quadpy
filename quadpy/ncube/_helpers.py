@@ -32,6 +32,12 @@ class NCubeScheme:
         detJ = get_detJ(self.points.T, ncube)
         return dot(f(x) * abs(detJ), self.weights)
 
+    def integrate_discrete(self, data, dot=numpy.dot):
+        """Quadrature where `data` are pointwise values defined at self.points.
+        """
+        detJ = get_detJ(self.points.T, ncube)
+        return dot(data.T * abs(detJ), self.weights)
+
 
 def transform(xi, cube):
     """Transform the points `xi` from the reference cube to `cube`.

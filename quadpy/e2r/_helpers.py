@@ -52,6 +52,12 @@ class E2rScheme:
         flt = numpy.vectorize(float)
         return dot(f(flt(self.points).T), flt(self.weights))
 
+    def integrate_discrete(self, data, dot=numpy.dot):
+        """Quadrature where `data` are pointwise values expected to be
+        defined at self.points.
+        """
+        flt = numpy.vectorize(float)
+        return dot(data.T, flt(self.weights))
 
 def _s8(a, b):
     return numpy.array(

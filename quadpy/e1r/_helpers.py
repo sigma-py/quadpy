@@ -16,6 +16,13 @@ class E1rScheme:
         fx = numpy.asarray(f(x))
         return dot(fx, self.weights)
 
+    def integrate_discrete(self, data, dot=numpy.dot):
+        """Quadrature where `data` are pointwise values expected to be
+        defined at self.points.
+        """
+        return dot(data.T, self.weights)
+
+
     def show(self, *args, **kwargs):
         import matplotlib.pyplot as plt
 

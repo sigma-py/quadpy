@@ -33,6 +33,16 @@ class PyramidScheme:
 
         return dot(f(x) * abs(det.T), flt(self.weights))
 
+    def integrate_discrete(self, data, pyra, dot=numpy.dot):
+        """Quadrature where `data` are pointwise values defined at self.points.
+        """
+        flt = numpy.vectorize(float)
+
+        xi = flt(self.points).T
+        det = _get_det_J(pyra, xi)
+
+        return dot(data.T * abs(det.T), flt(self.weights))
+
     def show(
         self,
         pyra=numpy.array([[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0.5, 0.5, 1.0]]),
