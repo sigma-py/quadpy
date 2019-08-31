@@ -23,12 +23,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/setup-python@v1
-      with:
-        python-version: "3.x"
     - uses: actions/checkout@v1
     - name: Install dependencies
-      run: sudo apt-get install -y python3-vtk7
+      run: sudo apt-get install -y python3-pip python3-vtk7
     - name: Install package
       run: |
         pip install --upgrade pip

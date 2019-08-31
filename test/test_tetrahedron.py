@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import numpy
 import pytest
 import sympy
@@ -176,7 +175,6 @@ def test_show(scheme):
         ]
     )
     scheme.show(tet, render=False)
-    plt.close()
     return
 
 
