@@ -25,7 +25,7 @@ clean:
 	@rm -rf *.egg-info/ build/ dist/ MANIFEST
 
 black:
-	black setup.py quadpy/ test/*.py
+	black .
 
 format:
 	isort -rc -y

@@ -114,7 +114,7 @@ if __name__ == "__main__":
     directory = "data/"
     for k, file in enumerate(os.listdir(directory)):
         filename = os.fsdecode(file)
-        m = re.match("lebedev_([0-9]+)\.txt", filename)
+        m = re.match("lebedev_([0-9]+)\\.txt", filename)
         degree = int(m.group(1))
         azimuthal_polar, weights = read(os.path.join("data", filename))
         chunks = chunk_data(weights)
