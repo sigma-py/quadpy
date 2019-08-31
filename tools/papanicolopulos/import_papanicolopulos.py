@@ -20,11 +20,11 @@ def read_data(filename, num_orbit_types):
                 continue
 
             orbit_pattern = (
-                "orbits:\s+\[" + ",\s*".join(num_orbit_types * ["([0-9]+)"]) + "\]\s+"
+                "orbits:\\s+\\[" + ",\\s*".join(num_orbit_types * ["([0-9]+)"]) + "\\]\\s+"
             )
             if line[:6] == "degree":
                 pattern = (
-                    "degree:\s+([0-9]+)\s+" + "points:\s+([0-9]+)\s+" + orbit_pattern
+                    "degree:\\s+([0-9]+)\\s+" + "points:\\s+([0-9]+)\\s+" + orbit_pattern
                 )
                 out = re.match(pattern, line)
                 degree = int(out.group(1))
