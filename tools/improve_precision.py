@@ -760,19 +760,17 @@ def stroud_1967_5():
         return norm_v
 
     x0 = [
-        2.009505637083749e+00,
-        2.774548295173737e-01,
-        -1.062215595206724e+00,
-        6.698352123613097e-01,
+        2.009_505_637_083_749e00,
+        2.774_548_295_173_737e-01,
+        -1.062_215_595_206_724e00,
+        6.698_352_123_613_097e-01,
         # 2.009_505_6,
         # 0.277_454_83,
         # -1.062_215_60,
         # 0.669_835_21,
     ]
 
-    out = minimize(
-        f, x0, method="Powell", tol=1.0e-20, options={"maxiter": 20000}
-    )
+    out = minimize(f, x0, method="Powell", tol=1.0e-20, options={"maxiter": 20000})
     print(out.status, out.nfev, out.message, "Function value", out.fun)
     assert out.success
     print()

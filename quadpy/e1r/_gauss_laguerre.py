@@ -13,9 +13,9 @@ def gauss_laguerre(n, alpha=0, mode="numpy"):
     _, _, a, b = orthopy.e1r.recurrence_coefficients(n, alpha, "monic", symbolic=True)
     points, weights = scheme_from_rc(a, b, mode=mode)
 
-    if alpha != 0:
-        name = "Generalized Gauss-Laguerre (n={}, alpha={})".format(n, alpha)
+    if alpha == 0:
+        name = f"Gauss-Laguerre ({n})"
     else:
-        name = "Gauss-Laguerre ({})".format(n, alpha)
+        name = f"Generalized Gauss-Laguerre (n={n}, alpha={alpha})"
 
     return E1rScheme(name, weights, points, 2 * n - 1)

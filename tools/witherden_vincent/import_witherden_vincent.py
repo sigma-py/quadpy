@@ -2,11 +2,40 @@
 Import data from Witherden/Vincent.
 zip file: https://www.sciencedirect.com/science/article/pii/S0898122115001224
 """
-import json
 import os
 import re
 
 import numpy
+
+
+def data_to_code(data, f):
+    for k, item in enumerate(data):
+        print("elif index == {}:".format(k))
+        print("    self.degree = {}".format(item["degree"]))
+        print("    data = {")
+
+        if len(item["data"][0]) > 0:
+            print(8 * " " + "'s3': [")
+            for d0 in item["data"][0]:
+                print(12 * " " + "[{:.16e}],".format(d0[0]))
+            print(12 * " " + "],")
+
+        # for d1 in item['data'][1]:
+        #     # find the value that appears twice
+        #     if abs(d1[0] - d1[1]) < 1.0e-12:
+        #         alpha = d1[0]
+        #     else:
+        #         alpha = d1[2]
+        #     print(8*' ' + '({:.16e}, {}({:.16e})),'.format(d1[0], f[1], alpha))
+
+        if len(item["data"][1]) > 0:
+            print(8 * " " + "'rot': [")
+            for d2 in item["data"][1]:
+                print(12 * " " + "[{:.16e}, {:.16e}, {:.16e}],".format(*d2))
+            print(12 * " " + "],")
+
+        print(8 * " " + "}")
+    return
 
 
 def read_data_tri(filename):
@@ -42,10 +71,10 @@ def read_data_tet(filename):
 
 
 def _grp_start_len(a, tol):
-    '''Given a sorted 1D input array `a`, e.g., [0 0, 1, 2, 3, 4, 4, 4], this
+    """Given a sorted 1D input array `a`, e.g., [0 0, 1, 2, 3, 4, 4, 4], this
     routine returns the indices where the blocks of equal integers start and
     how long the blocks are.
-    '''
+    """
     # https://stackoverflow.com/a/50394587/353337
     m = numpy.concatenate([[True], numpy.abs((a[:-1] - a[1:])) > tol, [True]])
     idx = numpy.flatnonzero(m)
@@ -62,7 +91,7 @@ def data_to_json(degree, points, weights):
     # get groups of equal weights
     for s, length in zip(*_grp_start_len(weights, 1.0e-12)):
         weight = weights[s]
-        pts = points[s: s + length]
+        pts = points[s : s + length]
         if length == 1:
             d["s3"].append([weight])
         elif length == 3:
@@ -94,7 +123,7 @@ def data_to_json(degree, points, weights):
     # some work here. Compare with <https://stackoverflow.com/a/1733105/353337>.
     class PrettyFloat(float):
         def __repr__(self):
-            return '{:.16e}'.format(self)
+            return "{:.16e}".format(self)
 
     def pretty_floats(obj):
         if isinstance(obj, float):
@@ -105,22 +134,25 @@ def data_to_json(degree, points, weights):
             return list(map(pretty_floats, obj))
         return obj
 
-    with open('wv{:02d}.json'.format(degree), "w") as f:
-        string = pretty_floats(d).__repr__() \
-            .replace("'", "\"") \
-            .replace("[[", "[\n  [") \
-            .replace("],", "],\n   ") \
+    with open("wv{:02d}.json".format(degree), "w") as f:
+        string = (
+            pretty_floats(d)
+            .__repr__()
+            .replace("'", '"')
+            .replace("[[", "[\n  [")
+            .replace("],", "],\n   ")
             .replace("]],", "]\n  ],")
+        )
         f.write(string)
 
     return
 
 
 def import_triangle():
-    directory = 'zip/expanded/tri/'
+    directory = "zip/expanded/tri/"
     for k, file in enumerate(os.listdir(directory)):
         filename = os.fsdecode(file)
-        out = re.match("([0-9]+)-([0-9]+)\.txt", filename)
+        out = re.match("([0-9]+)-([0-9]+)\\.txt", filename)
         degree = int(out.group(1))
         x, weights = read_data_tri(os.path.join(directory, filename))
         data_to_json(degree, x, weights)
@@ -140,7 +172,7 @@ def import_tet():
         "10-81.txt",
     ]
     for k, filename in enumerate(filenames):
-        out = re.match("([0-9]+)-([0-9]+)\.txt", filename)
+        out = re.match("([0-9]+)-([0-9]+)\\.txt", filename)
         strength = out.group(1)
         print("elif degree == {}:".format(strength))
         print("    data = [")

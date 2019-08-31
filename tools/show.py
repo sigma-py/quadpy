@@ -12,10 +12,28 @@ schemes = [
     [quadpy.triangle.Gatermann()],
     [quadpy.triangle.GrundmannMoeller(k) for k in range(7)],
     [quadpy.triangle.HammerMarloweStroud(k) for k in range(1, 6)],
-    [quadpy.triangle.LaursenGellert(key) for key in [
-      '1', '2a', '2b', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
-      '13', '14', '15a', '15b'
-      ]],
+    [
+        quadpy.triangle.LaursenGellert(key)
+        for key in [
+            "1",
+            "2a",
+            "2b",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15a",
+            "15b",
+        ]
+    ],
     [quadpy.triangle.LiuVinokur(k) for k in range(1, 14)],
     [quadpy.triangle.LynessJespersen(k) for k in range(1, 22)],
     [quadpy.triangle.NewtonCotesClosed(k) for k in range(1, 6)],
@@ -27,12 +45,12 @@ schemes = [
     [quadpy.triangle.Triex(19), quadpy.triangle.Triex(28)],
     [quadpy.triangle.Vertex()],
     [quadpy.triangle.VioreanuRokhlin(k) for k in range(10)],
-    [quadpy.triangle.Walkington(k) for k in [1, 2, 3, 5, 'p5']],
+    [quadpy.triangle.Walkington(k) for k in [1, 2, 3, 5, "p5"]],
     [quadpy.triangle.WandzuraXiao(k) for k in range(1, 5)],
     [quadpy.triangle.WilliamsShunnJameson(k) for k in range(1, 9)],
     [quadpy.triangle.XiaoGimbutas(k) for k in range(1, 20)],
     [quadpy.triangle.ZhangCuiLiu(k) for k in [1, 2, 3]],
-    ]
+]
 
 for scheme in schemes:
     # filter out schemes with negative weights
@@ -45,14 +63,10 @@ for scheme in schemes:
         degree = [s.degree for s in pi_scheme]
         num_points = [len(s.points) for s in pi_scheme]
         # plot
-        plt.plot(
-                degree, num_points,
-                'o',
-                label=pi_scheme[0].name
-                )
+        plt.plot(degree, num_points, "o", label=pi_scheme[0].name)
 
 plt.legend(bbox_to_anchor=(1.05, 1), loc=2)
-plt.xlabel('degree')
-plt.ylabel('number of points')
-plt.grid('on')
+plt.xlabel("degree")
+plt.ylabel("number of points")
+plt.grid("on")
 plt.show()
