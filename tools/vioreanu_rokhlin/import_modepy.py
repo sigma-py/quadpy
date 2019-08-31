@@ -23,8 +23,8 @@ def _import_tri():
         bary = numpy.vstack([bary, 1.0 - numpy.sum(bary, axis=0)]).T
         sorted_points = bary[idx]
 
-        print('elif index == {}:'.format(k))
-        print('    data = [')
+        print("elif index == {}:".format(k))
+        print("    data = [")
         # identify groups of equal weights and put them out as numpy.full(x, y)
         tol = 1.0e-12
         count = 0
@@ -35,21 +35,22 @@ def _import_tri():
             if abs(last_value - w) < tol:
                 count += 1
             else:
-                pts = sorted_points[kk:kk+count]
+                pts = sorted_points[kk : kk + count]
                 kk += count
                 print(
-                    8*' ' + '(%.15e, %s),' %
-                    (last_value, import_helpers.get_symmetry_code_tri(pts))
-                    )
+                    8 * " "
+                    + "(%.15e, %s),"
+                    % (last_value, import_helpers.get_symmetry_code_tri(pts))
+                )
                 last_value = w
                 count = 1
 
-        pts = sorted_points[kk:kk+count]
+        pts = sorted_points[kk : kk + count]
         print(
-            8*' ' + '(%.15e, %s),' %
-            (last_value, import_helpers.get_symmetry_code_tri(pts))
-            )
-        print(8*' ' + ']')
+            8 * " "
+            + "(%.15e, %s)," % (last_value, import_helpers.get_symmetry_code_tri(pts))
+        )
+        print(8 * " " + "]")
 
     return
 
@@ -67,8 +68,8 @@ def _import_tet():
         bary = numpy.vstack([bary, 1.0 - numpy.sum(bary, axis=0)]).T
         sorted_points = bary[idx]
 
-        print('elif index == {}:'.format(k))
-        print('    data = [')
+        print("elif index == {}:".format(k))
+        print("    data = [")
         # identify groups of equal weights
         tol = 1.0e-12
         count = 0
@@ -79,25 +80,26 @@ def _import_tet():
             if abs(last_value - w) < tol:
                 count += 1
             else:
-                pts = sorted_points[kk:kk+count]
+                pts = sorted_points[kk : kk + count]
                 kk += count
                 print(
-                    8*' ' + '(%.15e, %s),'
+                    8 * " "
+                    + "(%.15e, %s),"
                     % (last_value, import_helpers.get_symmetry_code_tet(pts))
-                    )
+                )
                 last_value = w
                 count = 1
 
-        pts = sorted_points[kk:kk+count]
+        pts = sorted_points[kk : kk + count]
         print(
-            8*' ' + '(%.15e, %s),'
-            % (last_value, import_helpers.get_symmetry_code_tet(pts))
-            )
-        print(8*' ' + ']')
+            8 * " "
+            + "(%.15e, %s)," % (last_value, import_helpers.get_symmetry_code_tet(pts))
+        )
+        print(8 * " " + "]")
 
     return
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     _import_tri()
     # _import_tet()

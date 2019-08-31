@@ -20,11 +20,15 @@ def read_data(filename, num_orbit_types):
                 continue
 
             orbit_pattern = (
-                "orbits:\s+\[" + ",\s*".join(num_orbit_types * ["([0-9]+)"]) + "\]\s+"
+                "orbits:\\s+\\["
+                + ",\\s*".join(num_orbit_types * ["([0-9]+)"])
+                + "\\]\\s+"
             )
             if line[:6] == "degree":
                 pattern = (
-                    "degree:\s+([0-9]+)\s+" + "points:\s+([0-9]+)\s+" + orbit_pattern
+                    "degree:\\s+([0-9]+)\\s+"
+                    + "points:\\s+([0-9]+)\\s+"
+                    + orbit_pattern
                 )
                 out = re.match(pattern, line)
                 degree = int(out.group(1))
@@ -93,13 +97,13 @@ def data_to_json(data, f):
                     else:
                         alpha = d1[2]
                     fh.write("    [{:.16e}, {:.16e}],\n".format(d1[0], alpha))
-                fh.write('  ],\n')
+                fh.write("  ],\n")
 
             if len(item["data"][2]) > 0:
                 fh.write('  "s1": [\n')
                 for d1 in item["data"][2]:
                     fh.write("    [{:.16e}, {:.16e}, {:.16e}],\n".format(*d1[:-1]))
-                fh.write('  ],\n')
+                fh.write("  ],\n")
 
             # for "rot"
             # if len(item['data'][1]) > 0:
