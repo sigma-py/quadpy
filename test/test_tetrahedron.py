@@ -164,6 +164,7 @@ def test_scheme(scheme):
     return
 
 
+@pytest.mark.skip(reason="gh-actions's python cannot use system vtk")
 @pytest.mark.parametrize("scheme", [quadpy.tetrahedron.hammer_marlowe_stroud_3()])
 def test_show(scheme):
     tet = numpy.array(
