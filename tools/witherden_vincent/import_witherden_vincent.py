@@ -42,10 +42,10 @@ def read_data_tet(filename):
 
 
 def _grp_start_len(a, tol):
-    '''Given a sorted 1D input array `a`, e.g., [0 0, 1, 2, 3, 4, 4, 4], this
+    """Given a sorted 1D input array `a`, e.g., [0 0, 1, 2, 3, 4, 4, 4], this
     routine returns the indices where the blocks of equal integers start and
     how long the blocks are.
-    '''
+    """
     # https://stackoverflow.com/a/50394587/353337
     m = numpy.concatenate([[True], numpy.abs((a[:-1] - a[1:])) > tol, [True]])
     idx = numpy.flatnonzero(m)
@@ -62,7 +62,7 @@ def data_to_json(degree, points, weights):
     # get groups of equal weights
     for s, length in zip(*_grp_start_len(weights, 1.0e-12)):
         weight = weights[s]
-        pts = points[s: s + length]
+        pts = points[s : s + length]
         if length == 1:
             d["s3"].append([weight])
         elif length == 3:
@@ -94,7 +94,7 @@ def data_to_json(degree, points, weights):
     # some work here. Compare with <https://stackoverflow.com/a/1733105/353337>.
     class PrettyFloat(float):
         def __repr__(self):
-            return '{:.16e}'.format(self)
+            return "{:.16e}".format(self)
 
     def pretty_floats(obj):
         if isinstance(obj, float):
@@ -105,19 +105,22 @@ def data_to_json(degree, points, weights):
             return list(map(pretty_floats, obj))
         return obj
 
-    with open('wv{:02d}.json'.format(degree), "w") as f:
-        string = pretty_floats(d).__repr__() \
-            .replace("'", "\"") \
-            .replace("[[", "[\n  [") \
-            .replace("],", "],\n   ") \
+    with open("wv{:02d}.json".format(degree), "w") as f:
+        string = (
+            pretty_floats(d)
+            .__repr__()
+            .replace("'", '"')
+            .replace("[[", "[\n  [")
+            .replace("],", "],\n   ")
             .replace("]],", "]\n  ],")
+        )
         f.write(string)
 
     return
 
 
 def import_triangle():
-    directory = 'zip/expanded/tri/'
+    directory = "zip/expanded/tri/"
     for k, file in enumerate(os.listdir(directory)):
         filename = os.fsdecode(file)
         out = re.match("([0-9]+)-([0-9]+)\.txt", filename)

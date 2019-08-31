@@ -1,9 +1,9 @@
-'''
+"""
 This little helper takes Lebedev point and weight data from [1] and produces JSON files.
 
 [1]
 https://people.sc.fsu.edu/~jburkardt/datasets/sphere_lebedev_rule/sphere_lebedev_rule.html
-'''
+"""
 import os
 import re
 
@@ -69,21 +69,20 @@ def sort_into_symmetry_classes(weights, azimuthal_polar):
             # To make things easier later on, out of the 6 smallest polar
             # angle, take the one with the smallest positive phi.
             min_polar = numpy.min(azimuthal_polar[c, 1])
-            k = numpy.where(
-                abs(azimuthal_polar[c, 1] - min_polar) < 1.0e-12
-                )[0]
+            k = numpy.where(abs(azimuthal_polar[c, 1] - min_polar) < 1.0e-12)[0]
             k2 = numpy.where(azimuthal_polar[c, 0][k] > 0.0)[0]
             min_azimuthal = numpy.min(azimuthal_polar[c, 0][k][k2])
             data["rsw"].append([weights[c[0]], min_azimuthal, min_polar])
 
     return data
 
+
 def write_json(filename, d):
     # Getting floats in scientific notation in python.json is almost impossible, so do
     # some work here. Compare with <https://stackoverflow.com/a/1733105/353337>.
     class PrettyFloat(float):
         def __repr__(self):
-            return '{:.16e}'.format(self)
+            return "{:.16e}".format(self)
 
     def pretty_floats(obj):
         if isinstance(obj, float):
@@ -104,20 +103,20 @@ def write_json(filename, d):
             .replace("], [", "],\n    [")
             .replace(']], "', ']\n  ],\n  "')
             .replace("}", "\n}")
-            .replace(']]', ']\n  ]')
+            .replace("]]", "]\n  ]")
         )
         f.write(string)
 
     return
 
 
-if __name__ == '__main__':
-    directory = 'data/'
+if __name__ == "__main__":
+    directory = "data/"
     for k, file in enumerate(os.listdir(directory)):
         filename = os.fsdecode(file)
         m = re.match("lebedev_([0-9]+)\.txt", filename)
         degree = int(m.group(1))
-        azimuthal_polar, weights = read(os.path.join('data', filename))
+        azimuthal_polar, weights = read(os.path.join("data", filename))
         chunks = chunk_data(weights)
         data = sort_into_symmetry_classes(weights, azimuthal_polar)
 
@@ -129,4 +128,4 @@ if __name__ == '__main__':
             data.pop(key)
         data["degree"] = degree
 
-        write_json('lebedev_{:03d}.json'.format(degree), data)
+        write_json("lebedev_{:03d}.json".format(degree), data)
