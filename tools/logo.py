@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
-import quadpy
 
+import quadpy
 
 quadpy.quadrilateral.maxwell().plot()
 

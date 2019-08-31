@@ -29,8 +29,8 @@ black:
 
 format:
 	isort -rc -y
-	black setup.py quadpy/ test/*.py
+	black .
 
 lint:
-	black --check setup.py quadpy/ test/*.py
-	flake8 setup.py quadpy/ test/*.py
+	black --check .
+	flake8 .
