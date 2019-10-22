@@ -52,7 +52,7 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10, mode="numpy"):
           f(a)`, `f_left(b-a) = f(b)`,
 
         * `f_right(s) = f(b - s)`, i.e., `f` linearly scaled such that `f_right(0) =
-          f(b)`, `f_left(b-a) = f(a)`.
+          f(b)`, `f_right(b-a) = f(a)`.
 
     Implemented are Bailey's enhancements plus a few more tricks.
 
