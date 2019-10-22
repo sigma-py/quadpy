@@ -11,7 +11,6 @@ from ._midpoint import midpoint
 from ._newton_cotes import newton_cotes_closed, newton_cotes_open
 from ._tools import integrate_adaptive
 from ._trapezoidal import trapezoidal
-from .tanh_sinh import tanh_sinh, tanh_sinh_lr
 
 __all__ = [
     "chebyshev_gauss_1",
@@ -29,7 +28,5 @@ __all__ = [
     "newton_cotes_open",
     "newton_cotes_closed",
     "trapezoidal",
-    "tanh_sinh",
-    "tanh_sinh_lr",
     "integrate_adaptive",
 ]
