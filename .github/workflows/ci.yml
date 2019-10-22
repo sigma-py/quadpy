@@ -38,5 +38,5 @@ jobs:
         pip install pytest pytest-cov
         pip install -r test_requirements.txt
         cd test/ && MPLBACKEND=Agg pytest --cov quadpy
-    - name: Submit to codecov
-      run: bash <(curl -s https://codecov.io/bash)
+    # - name: Submit to codecov
+    #   run: bash <(curl -s https://codecov.io/bash)
