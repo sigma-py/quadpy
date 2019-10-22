@@ -68,13 +68,13 @@ def test_tanh_sinh(f, a, b, exact):
         2: sympy.lambdify(t, sympy.diff(f(t), t, 2), modules=["mpmath"]),
     }
 
-    value, _ = quadpy.line_segment.tanh_sinh(
+    value, _ = quadpy.tanh_sinh(
         f, a, b, tol, f_derivatives=f_derivatives, mode="mpmath"
     )
     assert abs(value - exact) < tol2
 
     # test with crude estimate
-    value, _ = quadpy.line_segment.tanh_sinh(f, a, b, tol, mode="mpmath")
+    value, _ = quadpy.tanh_sinh(f, a, b, tol, mode="mpmath")
     assert abs(value - exact) < tol2
     return
 
@@ -95,18 +95,18 @@ def test_tanh_sinh_numpy(f, a, b, exact):
     a = float(a)
     b = float(b)
 
-    value, _ = quadpy.line_segment.tanh_sinh(f, a, b, tol, f_derivatives=f_derivatives)
+    value, _ = quadpy.tanh_sinh(f, a, b, tol, f_derivatives=f_derivatives)
     assert abs(value - exact) < tol2
 
     # test with crude estimate
-    value, _ = quadpy.line_segment.tanh_sinh(f, a, b, tol)
+    value, _ = quadpy.tanh_sinh(f, a, b, tol)
     assert abs(value - exact) < tol2
     return
 
 
 def test_tanh_sinh_numpy_example():
     tol = 1.0e-14
-    val, error_estimate = quadpy.line_segment.tanh_sinh(
+    val, error_estimate = quadpy.tanh_sinh(
         lambda x: numpy.exp(x) * numpy.cos(x),
         0,
         numpy.pi / 2,
@@ -176,14 +176,14 @@ def test_singularities_at_both_ends(f_left, f_right, b, exact):
         2: sympy.lambdify(t, sympy.diff(f_right(t), t, 2), modules=["mpmath"]),
     }
 
-    value, _ = quadpy.line_segment.tanh_sinh_lr(fl, fr, b, tol, mode="mpmath")
+    value, _ = quadpy.tanh_sinh_lr(fl, fr, b, tol, mode="mpmath")
     tol2 = 10 ** (-mp.dps + 1)
     assert abs(value - exact) < tol2
 
     # # test with crude estimate
     # fl = {0: f_left}
     # fr = {0: f_right}
-    # value, _ = quadpy.line_segment.tanh_sinh_lr(fl, fr, b, tol)
+    # value, _ = quadpy.tanh_sinh_lr(fl, fr, b, tol)
     # tol2 = 10**(-mp.dps + 2)
     # assert abs(value - exact) < tol2
     return
@@ -202,7 +202,7 @@ def test_low_precision(f, a, b, exact):
     }
 
     tol = 1.0e-2
-    value, _ = quadpy.line_segment.tanh_sinh(
+    value, _ = quadpy.tanh_sinh(
         f, a, b, tol, f_derivatives=f_derivatives, mode="mpmath"
     )
     assert abs(value - exact) < tol
