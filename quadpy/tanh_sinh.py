@@ -173,7 +173,7 @@ def tanh_sinh_lr(f_left, f_right, alpha, eps, max_steps=10, mode="numpy"):
         #
         # Note further that h*j is ever decreasing as h decreases.
         assert eps ** 2 * kernel.exp(kernel.pi / 2) < kernel.pi * h
-        j = int(ln(-2 / kernel.pi * lambertw(-eps ** 2 / h / 2, -1)) / h)
+        j = int(ln(-2 / kernel.pi * lambertw(-(eps ** 2) / h / 2, -1)) / h)
 
         # At level 0, one only takes the midpoint, for all greater levels every other
         # point. The value estimation is later completed with the estimation from the

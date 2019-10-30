@@ -265,7 +265,7 @@ def test_integrate():
 
     # Example from Gautschi's "How to and how not to" article
     moments = quadpy.tools.integrate(
-        lambda x: [x ** k * sympy.exp(-x ** 3 / 3) for k in range(5)], 0, sympy.oo
+        lambda x: [x ** k * sympy.exp(-(x ** 3) / 3) for k in range(5)], 0, sympy.oo
     )
     S = numpy.vectorize(sympy.S)
     gamma = numpy.vectorize(sympy.gamma)

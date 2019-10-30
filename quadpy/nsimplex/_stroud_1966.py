@@ -102,7 +102,7 @@ def stroud_1966_5(n):
     s = frac(1, 3)
 
     prod = (n + 1) * (n + 2) * (n + 3)
-    A = frac(-n ** 2 + 11 * n - 12, 2 * (n - 1) * prod)
+    A = frac(-(n ** 2) + 11 * n - 12, 2 * (n - 1) * prod)
     B = frac(n ** 3, (n - 1) * prod)
     C = frac(27, (n - 1) * prod)
 
