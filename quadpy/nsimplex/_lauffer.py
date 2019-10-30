@@ -79,7 +79,7 @@ def lauffer_5(n):
     # ERR Stroud is missing the factor 1/12 in B1.
     B1 = frac((12 * n ** 4 - 82 * n ** 3 + 477 * n ** 2 - 1277 * n + 1440), 12 * nprod)
     B2 = frac(5 ** 2 * (-3 * n ** 3 + 19 * n ** 2 - 96 * n + 170), 12 * nprod)
-    B3 = frac(5 ** 2 * (-n ** 3 + 13 * n ** 2 - 47 * n + 65), 6 * nprod)
+    B3 = frac(5 ** 2 * (-(n ** 3) + 13 * n ** 2 - 47 * n + 65), 6 * nprod)
     B4 = frac(5 ** 3 * (n ** 2 - 6 * n + 20), 3 * nprod)
     B5 = frac(5 ** 3 * (n ** 2 - 11 * n + 20), 4 * nprod)
     B6 = frac(5 ** 4 * (5 - n), 2 * nprod)
