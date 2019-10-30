@@ -43,7 +43,7 @@ test_cases = [
     # Bailey example 11:
     (lambda s: 1 / (1 - 2 * s + 2 * s ** 2), 0, 1, mp.pi / 2),
     # Bailey example 13:
-    (lambda s: sympy.exp(-(1 / s - 1) ** 2 / 2) / s ** 2, 0, 1, mp.sqrt(mp.pi / 2)),
+    (lambda s: sympy.exp(-((1 / s - 1) ** 2) / 2) / s ** 2, 0, 1, mp.sqrt(mp.pi / 2)),
     # Bailey example 14:
     (
         lambda s: sympy.exp(1 - 1 / s) * sympy.cos(1 / s - 1) / s ** 2,
