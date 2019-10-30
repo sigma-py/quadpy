@@ -29,6 +29,7 @@ class NSimplexScheme:
 
     def integrate(self, f, simplex, dot=numpy.dot):
         flt = numpy.vectorize(float)
+        simplex = numpy.asarray(simplex)
         x = transform(flt(self.points).T, simplex.T)
         vol = get_vol(simplex)
 

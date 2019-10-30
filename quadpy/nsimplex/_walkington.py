@@ -43,8 +43,8 @@ def walkington_2(d):
 def walkington_3(d):
     degree = 3
     data = [
-        (frac(-(d + 1) ** 3, 4 * factorial(d + 2)), _c(d, frac)),
-        (frac(+(d + 3) ** 3, 4 * factorial(d + 3)), _xi1(d, frac(1, (d + 3)))),
+        (frac(-((d + 1) ** 3), 4 * factorial(d + 2)), _c(d, frac)),
+        (frac(+((d + 3) ** 3), 4 * factorial(d + 3)), _xi1(d, frac(1, (d + 3)))),
     ]
     points, weights = untangle(data)
     # normalize weights
@@ -54,9 +54,9 @@ def walkington_3(d):
 
 def walkington_5(d):
     degree = 5
-    w0 = frac(+(d + 1) ** 5, 32 * factorial(d + 3))
-    w1 = frac(-(d + 3) ** 5, 16 * factorial(d + 4))
-    w2 = frac(+(d + 5) ** 5, 16 * factorial(d + 5))
+    w0 = frac(+((d + 1) ** 5), 32 * factorial(d + 3))
+    w1 = frac(-((d + 3) ** 5), 16 * factorial(d + 4))
+    w2 = frac(+((d + 5) ** 5), 16 * factorial(d + 5))
     data = [
         (w0, _c(d, frac)),
         (w1, _xi1(d, frac(1, d + 3))),

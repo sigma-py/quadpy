@@ -24,8 +24,8 @@ from . import (
     triangle,
     wedge,
 )
-from .tanh_sinh import tanh_sinh, tanh_sinh_lr
 from .__about__ import __author__, __email__, __license__, __status__, __version__
+from .tanh_sinh import tanh_sinh, tanh_sinh_lr
 
 __all__ = [
     "__author__",

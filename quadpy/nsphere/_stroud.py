@@ -88,7 +88,7 @@ def stroud_un_5_4(n):
 def stroud_un_7_2(n):
     degree = 7
 
-    A = frac(-n ** 2, 2 ** (n + 3) * (n + 2))
+    A = frac(-(n ** 2), 2 ** (n + 3) * (n + 2))
     B = frac((n + 4) ** 2, 2 ** (n + 3) * n * (n + 2))
 
     r = sqrt(frac(1, n))
