@@ -119,14 +119,9 @@ def test_spherical_harmonic(scheme):
         (quadpy.sphere.lebedev_101(), 1.0e-11),
         (quadpy.sphere.lebedev_107(), 1.0e-11),
         (quadpy.sphere.lebedev_113(), 1.0e-11),
-        # TODO enable
-        # The highest degree formulas are too memory-intensive for circleci, and the
-        # tests are oom-killed. A workaround would be to not test the entire tree at
-        # once, but split it up.
-        # Check <https://stackoverflow.com/q/47474140/353337>.
-        # (quadpy.sphere.lebedev_119(), 1.0e-11),
-        # (quadpy.sphere.lebedev_125(), 1.0e-11),
-        # (quadpy.sphere.lebedev_131(), 1.0e-11),
+        (quadpy.sphere.lebedev_119(), 1.0e-11),
+        (quadpy.sphere.lebedev_125(), 1.0e-11),
+        (quadpy.sphere.lebedev_131(), 1.0e-11),
     ]
     + [
         (quadpy.sphere.stroud_u3_3_1(), 1.0e-13),
@@ -160,15 +155,27 @@ def test_scheme_cartesian(scheme, tol):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
-    vals = scheme.integrate(sph_tree_cartesian, center=numpy.array([0, 0, 0]), radius=1)
-    # Put vals back into the tree structure:
-    # len(approximate[k]) == k+1
-    approximate = [vals[k ** 2 : (k + 1) ** 2] for k in range(scheme.degree + 2)]
+    # We're using the spherical harmonic iterator here; it's much less memory-intensive
+    # than computing the full tree at once. Unfortunately, we cannot use
+    # scheme.integrate with it, but that's okay.
+    azimuthal, polar = cartesian_to_spherical(scheme.points).T
+    sph_iterator = orthopy.sphere.Iterator(
+        polar, azimuthal, standardization="quantum mechanic"
+    )
+    degree = None
+    for k in range(scheme.degree + 2):
+        vals = next(sph_iterator)
+        approximate = 4 * numpy.pi * numpy.dot(vals, scheme.weights)
 
-    exact = [numpy.zeros(len(s)) for s in approximate]
-    exact[0][0] = numpy.sqrt(4 * numpy.pi)
+        # construct exact value
+        if k == 0:
+            exact = [numpy.sqrt(4 * numpy.pi)]
+        else:
+            exact = numpy.zeros_like(approximate)
 
-    degree = check_degree_ortho(approximate, exact, abs_tol=tol)
+        if numpy.any(numpy.abs(approximate - exact) > tol):
+            degree = k - 1
+            break
 
     assert degree == scheme.degree, "{}  --  Observed: {}, expected: {}".format(
         scheme.name, degree, scheme.degree
