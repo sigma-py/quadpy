@@ -26,6 +26,7 @@ from . import (
 )
 from .__about__ import __author__, __email__, __license__, __status__, __version__
 from .tanh_sinh import tanh_sinh, tanh_sinh_lr
+from ._scipy_compat import quad
 
 __all__ = [
     "__author__",
@@ -59,4 +60,5 @@ __all__ = [
     "tetrahedron",
     "wedge",
     "tools",
+    "quad",
 ]
