@@ -31,7 +31,7 @@ def integrate_adaptive(
     )
 
     # Mark intervals with acceptable approximations. For this, take all() across every
-    # dimension except the last one, which is the interval index.
+    # dimension except the last one (which is the interval index).
     is_good = _numpy_all_except(error_estimate < eps * lengths / total_length, axis=-1)
     # add values from good intervals to sum
     quad_sum = sumfun(val_g[..., is_good], axis=-1)
