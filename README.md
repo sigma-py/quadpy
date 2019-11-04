@@ -86,6 +86,19 @@ def f(x):
     return [numpy.sin(x[0]), numpy.sin(x[1])]
 ```
 
+For convenience, there are some compatibility functions for
+[scipy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html),
+e.g.,
+```python
+import numpy
+import quadpy
+
+def f(x):
+   return numpy.sin(x) - x
+
+val, err = quadpy.quad(f, 0.0, 6.0)
+```
+
 More examples under [test/examples_test.py](https://github.com/nschloe/quadpy/blob/master/test/examples_test.py).
 
 Read more about the dimensionality of the input/output arrays [in the
