@@ -27,8 +27,9 @@ jobs:
       with:
         python-version: "3.x"
     - uses: actions/checkout@v1
+    # for accupy
     - name: Install dependencies
-      run: sudo apt-get install -y python3-pybind11 libeigen3-dev  # python3-vtk7
+      run: sudo apt-get install -y libeigen3-dev  # python3-vtk7
     - name: Install package
       run: |
         pip install --upgrade pip
