@@ -27,9 +27,9 @@ jobs:
       with:
         python-version: "3.x"
     - uses: actions/checkout@v1
-    # for accupy
+    # eigen for accupy, blas for numpy
     - name: Install dependencies
-      run: sudo apt-get install -y libeigen3-dev  # python3-vtk7
+      run: sudo apt-get install -y libeigen3-dev libblas-dev # python3-vtk7
     - name: Install package
       run: |
         pip install --upgrade pip
