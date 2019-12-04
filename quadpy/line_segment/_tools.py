@@ -72,7 +72,8 @@ def integrate_adaptive(
         is_good = _numpy_all_except(
             error_estimate < eps_abs * lengths / total_length, axis=-1
         ) & _numpy_all_except(
-            error_estimate < eps_rel * numpy.abs(val_g) * lengths / total_length, axis=-1
+            error_estimate < eps_rel * numpy.abs(val_g) * lengths / total_length,
+            axis=-1,
         )
         # add values from good intervals to sum
         quad_sum += sumfun(val_g[..., is_good], axis=-1)
