@@ -14,7 +14,13 @@ class IntegrationError(Exception):
 
 
 def integrate_adaptive(
-    f, intervals, eps, kronrod_degree=7, minimum_interval_length=0.0, dot=numpy.dot
+    f,
+    intervals,
+    eps_abs=1.0e-10,
+    eps_rel=1.0e-10,
+    kronrod_degree=7,
+    minimum_interval_length=0.0,
+    dot=numpy.dot,
 ):
     sumfun = numpy.sum
 
@@ -32,15 +38,18 @@ def integrate_adaptive(
 
     # Mark intervals with acceptable approximations. For this, take all() across every
     # dimension except the last one (which is the interval index).
-    is_good = _numpy_all_except(error_estimate < eps * lengths / total_length, axis=-1)
+    is_good = _numpy_all_except(
+        error_estimate < eps_abs * lengths / total_length, axis=-1
+    ) & _numpy_all_except(
+        error_estimate < eps_rel * numpy.abs(val_g) * lengths / total_length, axis=-1
+    )
     # add values from good intervals to sum
     quad_sum = sumfun(val_g[..., is_good], axis=-1)
     global_error_estimate = sumfun(error_estimate[..., is_good], axis=-1)
 
-    is_bad = numpy.logical_not(is_good)
-    while any(is_bad):
+    while any(~is_good):
         # split the bad intervals in half
-        intervals = intervals[..., is_bad]
+        intervals = intervals[..., ~is_good]
         midpoints = 0.5 * (intervals[0] + intervals[1])
         intervals = numpy.array(
             [
@@ -56,16 +65,18 @@ def integrate_adaptive(
         lengths = abs(intervals[1] - intervals[0])
         if any(lengths < minimum_interval_length):
             raise IntegrationError(
-                "Tolerance ({}) could not be reached with the minimum_interval_length (= {}).".format(
-                    eps, minimum_interval_length
+                "Tolerances (abs: {}, rel: {}) could not be reached with the minimum_interval_length (= {}).".format(
+                    eps_abs, eps_rel, minimum_interval_length
                 )
             )
         is_good = _numpy_all_except(
-            error_estimate < eps * lengths / total_length, axis=-1
+            error_estimate < eps_abs * lengths / total_length, axis=-1
+        ) & _numpy_all_except(
+            error_estimate < eps_rel * numpy.abs(val_g) * lengths / total_length,
+            axis=-1,
         )
         # add values from good intervals to sum
         quad_sum += sumfun(val_g[..., is_good], axis=-1)
         global_error_estimate += sumfun(error_estimate[..., is_good], axis=-1)
-        is_bad = numpy.logical_not(is_good)
 
     return quad_sum, global_error_estimate

@@ -27,6 +27,9 @@ def test_scheme(scheme):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
+    # https://github.com/nschloe/quadpy/issues/227
+    assert scheme.weights.ndim == 1
+
     degree = 0
     while True:
         # Set bounds such that the values are between 0.5 and 1.5.
