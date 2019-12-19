@@ -36,7 +36,6 @@ def test_golub_welsch(tol=1.0e-14):
     assert abs(beta[4] - 16.0 / 99.0) < tol
 
     quadpy.tools.check_coefficients(moments, alpha, beta)
-    return
 
 
 @pytest.mark.parametrize("dtype", [numpy.float, sympy.S])
@@ -81,7 +80,6 @@ def test_chebyshev(dtype):
             abs(beta - [2.0 / 3.0, 3.0 / 5.0, 4.0 / 35.0, 25.0 / 63.0, 16.0 / 99.0])
             < tol
         )
-    return
 
 
 def test_chebyshev_modified(tol=1.0e-14):
@@ -108,7 +106,6 @@ def test_chebyshev_modified(tol=1.0e-14):
     assert numpy.all(
         abs(beta - [2.0 / 3.0, 3.0 / 5.0, 4.0 / 35.0, 25.0 / 63.0, 16.0 / 99.0]) < tol
     )
-    return
 
 
 def test_gauss_sympy():
@@ -122,7 +119,6 @@ def test_gauss_sympy():
 
     assert points == [-sympy.sqrt(sympy.S(3) / 5), 0, +sympy.sqrt(sympy.S(3) / 5)]
     assert weights == [sympy.S(5) / 9, sympy.S(8) / 9, sympy.S(5) / 9]
-    return
 
 
 def test_gauss_mpmath():
@@ -144,7 +140,6 @@ def test_gauss_mpmath():
     v = (322 + 13 * mp.sqrt(70)) / 900
     w = (322 - 13 * mp.sqrt(70)) / 900
     assert (abs(weights - [w, v, u, v, w]) < tol).all()
-    return
 
 
 def test_gauss_numpy():
@@ -166,7 +161,6 @@ def test_gauss_numpy():
     v = (322.0 + 13 * math.sqrt(70)) / 900.0
     w = (322.0 - 13 * math.sqrt(70)) / 900.0
     assert (abs(weights - [w, v, u, v, w]) < tol).all()
-    return
 
 
 @pytest.mark.skipif(
@@ -182,7 +176,6 @@ def test_jacobi_reconstruction(tol=1.0e-14):
 
     assert numpy.all(abs(alpha1 - alpha2) < tol)
     assert numpy.all(abs(beta1 - beta2) < tol)
-    return
 
 
 @pytest.mark.skipif(
@@ -249,7 +242,6 @@ def test_gautschi_how_to_and_how_not_to():
 
     assert numpy.max(errors_alpha) > 1.0e-2
     assert numpy.max(errors_beta) > 1.0e-2
-    return
 
 
 def test_integrate():
@@ -273,17 +265,14 @@ def test_integrate():
     reference = 3 ** (S(n - 2) / 3) * gamma(S(n + 1) / 3)
     assert numpy.all([sympy.simplify(m - r) == 0 for m, r in zip(moments, reference)])
 
-    return
-
 
 def test_stieltjes():
     alpha0, beta0 = quadpy.tools.stieltjes(lambda t: 1, -1, +1, 5)
     _, _, alpha1, beta1 = orthopy.line_segment.recurrence_coefficients.legendre(
-        5, "monic"
+        5, "monic", symbolic=True
     )
     assert (alpha0 == alpha1).all()
     assert (beta0 == beta1).all()
-    return
 
 
 # def test_expt3():
@@ -304,7 +293,6 @@ def test_stieltjes():
 #             )
 #     print(alpha)
 #     print(beta)
-#     return
 
 
 @pytest.mark.parametrize("k", [0, 2, 4])
@@ -349,7 +337,6 @@ def test_xk(k):
         numpy.array([sympy.N(b) for b in beta], dtype=float),
         mode="numpy",
     )
-    return
 
 
 if __name__ == "__main__":
