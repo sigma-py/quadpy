@@ -426,7 +426,7 @@ Example:
 import numpy
 import quadpy
 
-scheme = quadpy.ball.hammer_stroud_14_3a()
+scheme = quadpy.ball.hammer_stroud_14_3()
 scheme.show()
 val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
