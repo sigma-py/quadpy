@@ -31,12 +31,26 @@ More than 1500 numerical integration schemes for
 1D/2D/3D/nD spaces with weight functions exp(-r) and exp(-r<sup>2</sup>)
 for fast integration of real-, complex-, and vector-valued functions.
 
-For example, to numerically integrate any function over any given triangle, install
+For example, to numerically integrate any function over any given interval, install
 quadpy [from the Python Package Index](https://pypi.org/project/quadpy/) with
 ```
 pip3 install quadpy --user
 ```
 and do
+```python
+import numpy
+import quadpy
+
+def f(x):
+   return numpy.sin(x) - x
+
+val, err = quadpy.quad(f, 0.0, 6.0)
+```
+(This is just like
+[scipy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html).)
+
+To integrate over a _triangle_ with [Strang's rule](https://bookstore.siam.org/wc08/) of
+degree 6, do
 ```python
 import numpy
 import quadpy
@@ -48,7 +62,6 @@ triangle = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.7, 0.5]])
 
 val = quadpy.triangle.strang_fix_cowper_09().integrate(f, triangle)
 ```
-This uses [Strang's rule](https://bookstore.siam.org/wc08/) of degree 6.
 
 All schemes have
 ```python
@@ -84,19 +97,6 @@ The same goes for functions with vectorized output, e.g.,
 ```python
 def f(x):
     return [numpy.sin(x[0]), numpy.sin(x[1])]
-```
-
-For convenience, there are some compatibility functions for
-[scipy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html),
-e.g.,
-```python
-import numpy
-import quadpy
-
-def f(x):
-   return numpy.sin(x) - x
-
-val, err = quadpy.quad(f, 0.0, 6.0)
 ```
 
 More examples under [test/examples_test.py](https://github.com/nschloe/quadpy/blob/master/test/examples_test.py).
