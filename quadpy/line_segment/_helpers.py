@@ -26,6 +26,8 @@ class LineSegmentScheme:
                     break
                 dim -= 1
 
+        assert len(iv.shape) > dim
+
         # numpy.sum is slower than dot() and friends, but allows for scalar input.
         diff = iv[1] - iv[0]
         len_intervals = numpy.sqrt(
@@ -33,17 +35,6 @@ class LineSegmentScheme:
         )
         # The factor 0.5 is from the length of the reference line [-1, 1].
         return 0.5 * len_intervals * dot(fx, self.weights)
-
-    def integrate_split(self, f, a, b, n, dot=numpy.dot):
-        """Integrates f between a and b with n subintervals.
-        """
-        # prepare the intervals
-        x = numpy.linspace(a, b, n + 1)
-        intervals = numpy.expand_dims(numpy.stack([x[:-1], x[1:]]), axis=-1)
-        # integrate
-        out = self.integrate(f, intervals, dot=dot)[0]
-        # sum over the intervals
-        return numpy.sum(out)
 
     def show(self, *args, **kwargs):
         import matplotlib.pyplot as plt
