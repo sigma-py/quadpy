@@ -339,7 +339,6 @@ def test_scheme(scheme, tol):
     assert degree >= scheme.degree, "{} -- Observed: {}, expected: {}".format(
         scheme.name, degree, scheme.degree
     )
-    return
 
 
 @pytest.mark.parametrize("scheme", [quadpy.triangle.xiao_gimbutas_10()])
@@ -352,7 +351,6 @@ def test_show(scheme):
         ]
     )
     scheme.show(triangle)
-    return
 
 
 def test_volume():
@@ -364,14 +362,57 @@ def test_volume():
     triangle = numpy.array([[0.0, 0.0, 0.0], [0.3, 0.4, 0.5], [0.7, 0.4, 1.1]])
     ref = numpy.sqrt(0.0209)
     assert abs(quadpy.triangle.get_vol(triangle) - ref) < 1.0e-14 * ref
-    return
+
+
+def test_multidim():
+    scheme = quadpy.triangle.dunavant_05()
+
+    numpy.random.seed(0)
+    # simple scalar integration
+    tri = numpy.random.rand(3, 2)
+    val = scheme.integrate(lambda x: numpy.sin(x[0]), tri)
+    assert val.shape == ()
+
+    # scalar integration on 4 subdomains
+    tri = numpy.random.rand(3, 4, 2)
+    val = scheme.integrate(lambda x: numpy.sin(x[0]), tri)
+    assert val.shape == (4,)
+
+    # scalar integration in 4D
+    tri = numpy.random.rand(3, 4)
+    val = scheme.integrate(lambda x: numpy.sin(x[0]), tri)
+    assert val.shape == ()
+
+    # vector-valued integration on 4 subdomains
+    tri = numpy.random.rand(3, 4, 2)
+    val = scheme.integrate(lambda x: [numpy.sin(x[0]), numpy.cos(x[1])], tri)
+    assert val.shape == (2, 4)
+
+    # vector-valued integration in 4D
+    tri = numpy.random.rand(3, 4)
+    val = scheme.integrate(lambda x: [numpy.sin(x[0]), numpy.cos(x[1])], tri)
+    assert val.shape == (2,)
+
+    # # another vector-valued integration in 3D
+    # # This is one case where the integration routine may not properly recognize the
+    # # dimensionality of the domain. Use the `dim` parameter.
+    # val = scheme.integrate(
+    #     lambda x: [
+    #         x[0] + numpy.sin(x[1]),
+    #         numpy.cos(x[0]) * x[2],
+    #         numpy.sin(x[0]) + x[1] + x[2],
+    #     ],
+    #     [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]],
+    #     dim=1,
+    # )
+    # assert val.shape == (3,)
 
 
 if __name__ == "__main__":
+    test_multidim()
     # scheme_ = quadpy.triangle.WandzuraXiao(3)
     # test_scheme(scheme_, 1.0e-14)
     # test_show(scheme_)
-    from helpers import find_equal
-
-    schemes_ = [scheme[0] for scheme in schemes_tol]
-    find_equal(schemes_)
+    # from helpers import find_equal
+    # schemes_ = [scheme[0] for scheme in schemes_tol]
+    # find_equal(schemes_)
