@@ -113,14 +113,16 @@ def test_show(scheme):
 
 
 def test_integrate_split():
-    val = quadpy.line_segment.trapezoidal().integrate_split(
+    x = numpy.linspace(0.15, 0.702, 101)
+    intervals = numpy.array([x[:-1], x[1:]])
+    scheme = quadpy.line_segment.trapezoidal()
+    val = scheme.integrate(
         lambda r: 0.5108
         / r ** 2
         / numpy.sqrt(2 * 1.158 + 2 / r - 0.5108 ** 2 / (2 * r ** 2)),
-        0.15,
-        0.702,
-        100,
+        intervals,
     )
+    val = numpy.sum(val)
     reference = 0.961715
     assert abs(val - reference) < 1.0e-3 * reference
 
@@ -253,7 +255,7 @@ def test_multidim():
 
 
 if __name__ == "__main__":
-    test_multidim()
+    test_integrate_split()
     # scheme_ = quadpy.line_segment.Fejer2(20)
     # # scheme_ = quadpy.line_segment.Midpoint()
     # test_scheme(scheme_)
