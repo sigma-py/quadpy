@@ -53,7 +53,6 @@ def test_scheme(scheme):
             break
         degree += 1
     assert degree == scheme.degree
-    return
 
 
 @pytest.mark.parametrize(
@@ -80,7 +79,6 @@ def test_cheb1_scheme(scheme):
         scheme.degree + 1,
     )
     assert degree >= scheme.degree
-    return
 
 
 @pytest.mark.parametrize(
@@ -107,13 +105,11 @@ def test_cheb2_scheme(scheme):
         scheme.degree + 1,
     )
     assert degree >= scheme.degree
-    return
 
 
 @pytest.mark.parametrize("scheme", [quadpy.line_segment.newton_cotes_closed(5)])
 def test_show(scheme):
     scheme.show()
-    return
 
 
 def test_integrate_split():
@@ -127,7 +123,6 @@ def test_integrate_split():
     )
     reference = 0.961715
     assert abs(val - reference) < 1.0e-3 * reference
-    return
 
 
 def test_legendre_mpmath():
@@ -143,7 +138,6 @@ def test_legendre_mpmath():
     w1 = (18 + mp.sqrt(30)) / 36
     w2 = (18 - mp.sqrt(30)) / 36
     assert (abs(scheme.weights - [w2, w1, w1, w2]) < tol).all()
-    return
 
 
 def test_chebyshev1_sympy():
@@ -155,7 +149,6 @@ def test_chebyshev1_sympy():
 
     assert (abs(flt(scheme.points) - scheme_numpy.points) < tol).all()
     assert (abs(flt(scheme.weights) - scheme_numpy.weights) < tol).all()
-    return
 
 
 def test_chebyshev2_sympy():
@@ -167,7 +160,6 @@ def test_chebyshev2_sympy():
 
     assert (abs(flt(scheme.points) - scheme_numpy.points) < tol).all()
     assert (abs(flt(scheme.weights) - scheme_numpy.weights) < tol).all()
-    return
 
 
 def test_chebyshev1_mpmath():
@@ -182,7 +174,6 @@ def test_chebyshev1_mpmath():
     w = mp.pi / 4
     tol = 1.0e-49
     assert (abs(scheme.weights - [w, w, w, w]) < tol).all()
-    return
 
 
 def test_chebyshev2_mpmath():
@@ -198,7 +189,6 @@ def test_chebyshev2_mpmath():
     w1 = mp.pi / 5 * mp.sin(2 * mp.pi / 5) ** 2
     w2 = mp.pi / 5 * mp.sin(1 * mp.pi / 5) ** 2
     assert (abs(scheme.weights - [w2, w1, w1, w2]) < tol).all()
-    return
 
 
 def test_jacobi_mpmath():
@@ -214,13 +204,46 @@ def test_jacobi_mpmath():
     w1 = (5 + mp.sqrt(7)) / 15
     w2 = (5 - mp.sqrt(7)) / 15
     assert (abs(scheme.weights - [w2, w1, w1, w2]) < tol).all()
-    return
+
+
+def test_multidim():
+    scheme = quadpy.line_segment.gauss_legendre(5)
+
+    # simple scalar integration
+    val = scheme.integrate(numpy.sin, [0.0, 1.0])
+    assert val.shape == ()
+
+    # scalar integration on 3 subdomains
+    val = scheme.integrate(numpy.sin, [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]])
+    assert val.shape == (3,)
+
+    # scalar integration in 3D
+    val = scheme.integrate(
+        lambda x: x[0] + numpy.sin(x[1]) + numpy.cos(x[2]),
+        [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]],
+    )
+    assert val.shape == ()
+
+    # vector-valued integration on 3 subdomains
+    val = scheme.integrate(
+        lambda x: [numpy.sin(x), numpy.cos(x)],
+        [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]]
+    )
+    assert val.shape == (2, 3)
+
+    # vector-valued integration in 3D
+    val = scheme.integrate(
+        lambda x: [x[0] + numpy.sin(x[1]), numpy.cos(x[0]) * x[2]],
+        [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]]
+    )
+    assert val.shape == (2,)
 
 
 if __name__ == "__main__":
-    scheme_ = quadpy.line_segment.Fejer2(20)
-    # scheme_ = quadpy.line_segment.Midpoint()
-    test_scheme(scheme_)
-    test_show(scheme_)
-    # import matplotlib.pyplot as plt
-    # plt.savefig('demo.png', transparent=True)
+    test_multidim()
+    # scheme_ = quadpy.line_segment.Fejer2(20)
+    # # scheme_ = quadpy.line_segment.Midpoint()
+    # test_scheme(scheme_)
+    # test_show(scheme_)
+    # # import matplotlib.pyplot as plt
+    # # plt.savefig('demo.png', transparent=True)
