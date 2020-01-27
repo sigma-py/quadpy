@@ -226,17 +226,30 @@ def test_multidim():
 
     # vector-valued integration on 3 subdomains
     val = scheme.integrate(
-        lambda x: [numpy.sin(x), numpy.cos(x)],
-        [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]]
+        lambda x: [numpy.sin(x), numpy.cos(x)], [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]]
     )
     assert val.shape == (2, 3)
 
     # vector-valued integration in 3D
     val = scheme.integrate(
         lambda x: [x[0] + numpy.sin(x[1]), numpy.cos(x[0]) * x[2]],
-        [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]]
+        [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]],
     )
     assert val.shape == (2,)
+
+    # another vector-valued integration in 3D
+    # This is one case where the integration routine may not properly recognize the
+    # dimensionality of the domain. Use the `dim` parameter.
+    val = scheme.integrate(
+        lambda x: [
+            x[0] + numpy.sin(x[1]),
+            numpy.cos(x[0]) * x[2],
+            numpy.sin(x[0]) + x[1] + x[2],
+        ],
+        [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]],
+        dim=1,
+    )
+    assert val.shape == (3,)
 
 
 if __name__ == "__main__":
