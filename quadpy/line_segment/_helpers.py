@@ -10,19 +10,29 @@ class LineSegmentScheme:
         self.weights = weights
         self.points = points
         self.citation = citation
-        return
 
-    def integrate(self, f, interval, dot=numpy.dot):
-        xi = self.points
-        x = +numpy.multiply.outer(0.5 * (1.0 - xi), interval[0]) + numpy.multiply.outer(
-            0.5 * (1.0 + xi), interval[1]
-        )
-        x = x.T
-        diff = interval[1] - interval[0]
+    def integrate(self, f, intervals, dim=None, dot=numpy.dot):
+        iv = numpy.asarray(intervals)
+        x0 = 0.5 * (1.0 - self.points)
+        x1 = 0.5 * (1.0 + self.points)
+        x = numpy.multiply.outer(iv[0], x0) + numpy.multiply.outer(iv[1], x1)
+        fx = numpy.asarray(f(x))
+        if dim is None:
+            # Try to guess the dimensionality of x by comparing the shapes of x and
+            # f(x).
+            dim = len(x.shape)
+            for a, b in zip(x.shape[::-1], fx.shape[::-1]):
+                if a != b:
+                    break
+                dim -= 1
+
         # numpy.sum is slower than dot() and friends, but allows for scalar input.
-        len_intervals = numpy.sqrt(numpy.sum(diff ** 2, axis=-1))
+        diff = iv[1] - iv[0]
+        len_intervals = numpy.sqrt(
+            numpy.sum(diff ** 2, axis=tuple(-d for d in range(dim)))
+        )
         # The factor 0.5 is from the length of the reference line [-1, 1].
-        return 0.5 * len_intervals * dot(f(x), self.weights)
+        return 0.5 * len_intervals * dot(fx, self.weights)
 
     def integrate_split(self, f, a, b, n, dot=numpy.dot):
         """Integrates f between a and b with n subintervals.
@@ -40,7 +50,6 @@ class LineSegmentScheme:
 
         self.plot(*args, **kwargs)
         plt.show()
-        return
 
     def plot(self, interval=numpy.array([[-1.0], [1.0]]), show_axes=False):
         import matplotlib.pyplot as plt
@@ -59,4 +68,3 @@ class LineSegmentScheme:
 
         total_area = interval[1] - interval[0]
         plot_disks_1d(plt, pts, self.weights, total_area)
-        return
