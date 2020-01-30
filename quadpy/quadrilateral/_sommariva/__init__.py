@@ -24,9 +24,7 @@ def _read(index):
     data = numpy.array(data["data"])
     points = data[:, :2]
     weights = data[:, 2]
-    return QuadrilateralScheme(
-        f"Sommariva {index}", weights, points, degree, _citation
-    )
+    return QuadrilateralScheme(f"Sommariva {index}", weights, points, degree, _citation)
 
 
 def sommariva_01():

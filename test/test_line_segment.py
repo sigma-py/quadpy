@@ -249,13 +249,13 @@ def test_multidim():
             numpy.sin(x[0]) + x[1] + x[2],
         ],
         [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]],
-        dim=1,
+        domain_shape=(3,),
     )
     assert val.shape == (3,)
 
 
 if __name__ == "__main__":
-    test_integrate_split()
+    test_multidim()
     # scheme_ = quadpy.line_segment.Fejer2(20)
     # # scheme_ = quadpy.line_segment.Midpoint()
     # test_scheme(scheme_)
