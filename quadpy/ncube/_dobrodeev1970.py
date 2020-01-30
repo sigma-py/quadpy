@@ -17,7 +17,7 @@ _citation = article(
 
 
 def dobrodeev_1970(n):
-    assert n >= 3, "Only works for n >= 3, not n = {}".format(n)
+    assert n >= 3, f"Only works for n >= 3, not n = {n}"
 
     A = frac(1, 8)
     B = frac(19 - 5 * n, 20)

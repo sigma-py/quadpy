@@ -44,7 +44,7 @@ def franke_1(lmbda):
         ),
     )
     return QuadrilateralScheme(
-        "Franke(1, {})".format(lmbda), weights, points, 5, citation
+        f"Franke(1, {lmbda})", weights, points, 5, citation
     )
 
 

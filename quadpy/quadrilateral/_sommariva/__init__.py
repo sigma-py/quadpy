@@ -15,7 +15,7 @@ _citation = online(
 
 def _read(index):
     this_dir = os.path.dirname(os.path.realpath(__file__))
-    filename = "sommariva_{:02d}.json".format(index)
+    filename = f"sommariva_{index:02d}.json"
     with open(os.path.join(this_dir, filename), "r") as f:
         data = json.load(f)
 
@@ -25,7 +25,7 @@ def _read(index):
     points = data[:, :2]
     weights = data[:, 2]
     return QuadrilateralScheme(
-        "Sommariva {}".format(index), weights, points, degree, _citation
+        f"Sommariva {index}", weights, points, degree, _citation
     )
 
 

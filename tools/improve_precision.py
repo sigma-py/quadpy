@@ -19,8 +19,7 @@ def partition(boxes, balls):
     def rec(boxes, balls, parent=tuple()):
         if boxes > 1:
             for i in range(balls + 1):
-                for x in rec(boxes - 1, i, parent + (balls - i,)):
-                    yield x
+                yield from rec(boxes - 1, i, parent + (balls - i,))
         else:
             yield parent + (balls,)
 
@@ -80,7 +79,7 @@ def one():
     w = numpy.real(w)
     print("weights:")
     for item in w:
-        print("{:.15e}".format(item))
+        print(f"{item:.15e}")
 
     x = numpy.sin(polar) * numpy.cos(azimuthal)
     y = numpy.sin(polar) * numpy.sin(azimuthal)

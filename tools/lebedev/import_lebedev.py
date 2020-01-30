@@ -82,13 +82,13 @@ def write_json(filename, d):
     # some work here. Compare with <https://stackoverflow.com/a/1733105/353337>.
     class PrettyFloat(float):
         def __repr__(self):
-            return "{:.16e}".format(self)
+            return f"{self:.16e}"
 
     def pretty_floats(obj):
         if isinstance(obj, float):
             return PrettyFloat(obj)
         elif isinstance(obj, dict):
-            return dict((k, pretty_floats(v)) for k, v in obj.items())
+            return {k: pretty_floats(v) for k, v in obj.items()}
         elif isinstance(obj, (list, tuple)):
             return list(map(pretty_floats, obj))
         return obj
@@ -128,4 +128,4 @@ if __name__ == "__main__":
             data.pop(key)
         data["degree"] = degree
 
-        write_json("lebedev_{:03d}.json".format(degree), data)
+        write_json(f"lebedev_{degree:03d}.json", data)

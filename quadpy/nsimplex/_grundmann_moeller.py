@@ -41,5 +41,5 @@ def grundmann_moeller(n, s):
     points, weights = untangle(data)
     weights /= sum(weights)
 
-    name = "GrundmannMöller(dim={}, {})".format(n, s)
+    name = f"GrundmannMöller(dim={n}, {s})"
     return NSimplexScheme(name, n, weights, points, d, citation)

@@ -18,7 +18,7 @@ citation = article(
 
 
 def _read(index):
-    name = "BazantOh({})".format(index)
+    name = f"BazantOh({index})"
 
     this_dir = os.path.dirname(os.path.realpath(__file__))
 
