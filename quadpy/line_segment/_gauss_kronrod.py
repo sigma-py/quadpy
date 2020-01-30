@@ -51,9 +51,7 @@ def gauss_kronrod(n, a=0, b=0):
     i = numpy.argsort(x)
     points = x[i]
     weights = w[i]
-    return LineSegmentScheme(
-        "Gauss-Kronrod ({})".format(n), degree, weights, points, citation
-    )
+    return LineSegmentScheme(f"Gauss-Kronrod ({n})", degree, weights, points, citation)
 
 
 def _r_kronrod(n, a0, b0):
@@ -104,33 +102,77 @@ def _r_kronrod(n, a0, b0):
     return a, b
 
 
-def _gauss_kronrod_integrate(k, f, interval, dot=numpy.dot):
-    def _scale_points(points, interval):
-        alpha = 0.5 * (interval[1] - interval[0])
-        beta = 0.5 * (interval[0] + interval[1])
-        return (numpy.multiply.outer(points, alpha) + beta).T
-
-    def _integrate(values, weights, interval_length, dot):
-        """Integration with point values explicitly specified.
-        """
-        return 0.5 * interval_length * dot(values, weights)
-
+def _gauss_kronrod_integrate(
+    k, f, intervals, dot=numpy.dot, domain_shape=None, range_shape=None,
+):
     # Compute the integral estimations according to Gauss and Gauss-Kronrod, sharing the
     # function evaluations
-    scheme = gauss_kronrod(k)
-    gauss_weights = gauss_legendre(k).weights
-    sp = _scale_points(scheme.points, interval)
-    point_vals_gk = numpy.asarray(f(sp))
-    assert point_vals_gk.shape[-len(sp.shape) :] == sp.shape, (
-        "Function evaluation returned numpy array of wrong shape. "
-        "(Input shape: {}, expected output shape: (..., {}), got: {})".format(
-            sp.shape, ", ".join(str(k) for k in sp.shape), point_vals_gk.shape
-        )
-    )
-    point_vals_g = point_vals_gk[..., 1::2]
-    alpha = abs(interval[1] - interval[0])
-    val_gauss_kronrod = _integrate(point_vals_gk, scheme.weights, alpha, dot=dot)
-    val_gauss = _integrate(point_vals_g, gauss_weights, alpha, dot=dot)
+    gk = gauss_kronrod(k)
+    gl = gauss_legendre(k)
+    # scale points
+    # alpha = 0.5 * (interval[1] - interval[0])
+    # beta = 0.5 * (interval[0] + interval[1])
+    # sp = (numpy.multiply.outer(points, alpha) + beta).T
+    x0 = 0.5 * (1.0 - gk.points)
+    x1 = 0.5 * (1.0 + gk.points)
+    sp = numpy.multiply.outer(intervals[0], x0) + numpy.multiply.outer(intervals[1], x1)
+    fx_gk = numpy.asarray(f(sp))
+
+    # try and guess shapes of domain, range, intervals
+    assert len(gk.points.shape) == 1
+
+    # This following logic is based on the belowassertions
+    #
+    # assert intervals.shape == (2,) + domain_shape + interval_set_shape
+    # assert fx_gk.shape == range_shape + interval_set_shape + gk.points.shape
+    #
+    if domain_shape is not None and range_shape is not None:
+        # Only needed for some assertions
+        interval_set_shape = intervals.shape[1 + len(domain_shape) :]
+    elif domain_shape is not None:
+        interval_set_shape = intervals.shape[1 + len(domain_shape) :]
+        range_shape = fx_gk.shape[: -len(interval_set_shape) - 1]
+    elif range_shape is not None:
+        interval_set_shape = fx_gk.shape[len(range_shape) : -1]
+        if len(interval_set_shape) == 0:
+            domain_shape = intervals.shape[1:]
+        else:
+            domain_shape = intervals.shape[1 : -len(interval_set_shape)]
+    else:
+        # find the common tail of fx_gk.shape[:-1] and intervals.shape. That is the
+        # interval_set_shape unless the tails of domain_shape and range_shape coincide
+        # to some degree. (For this case, one can specify domain_shape, range_shape
+        # explicitly.)
+        interval_set_shape = []
+        for k in range(min(len(intervals.shape) - 1, len(fx_gk.shape) - 1)):
+            d = intervals.shape[-k - 1]
+            if fx_gk.shape[-k - 2] != d:
+                break
+            interval_set_shape.append(d)
+        interval_set_shape = tuple(reversed(interval_set_shape))
+
+        if len(interval_set_shape) == 0:
+            domain_shape = intervals.shape[1:]
+        else:
+            domain_shape = intervals.shape[1 : -len(interval_set_shape)]
+        range_shape = fx_gk.shape[: -len(interval_set_shape) - 1]
+
+    assert intervals.shape == (2,) + domain_shape + interval_set_shape
+    assert fx_gk.shape == range_shape + interval_set_shape + gk.points.shape
+
+    fx_gl = fx_gk[..., 1::2]
+
+    diff = intervals[1] - intervals[0]
+    alpha = numpy.sqrt(numpy.sum(diff ** 2, axis=tuple(range(len(domain_shape)))))
+
+    assert alpha.shape == interval_set_shape
+
+    # integrate
+    val_gauss_kronrod = 0.5 * alpha * dot(fx_gk, gk.weights)
+    val_gauss_legendr = 0.5 * alpha * dot(fx_gl, gl.weights)
+
+    assert val_gauss_kronrod.shape == range_shape + interval_set_shape
+    assert val_gauss_legendr.shape == range_shape + interval_set_shape
 
     # Get an error estimate. According to
     #
@@ -143,8 +185,9 @@ def _gauss_kronrod_integrate(k, f, interval, dot=numpy.dot):
     #
     # the classicial QUADPACK still compares favorably with other approaches.
     average = val_gauss_kronrod / alpha
-    point_vals_abs = abs(point_vals_gk - average[..., None])
-    I_tilde = _integrate(point_vals_abs, scheme.weights, alpha, dot=dot)
+    fx_avg_abs = numpy.abs(fx_gk - average[..., None])
+    I_tilde = 0.5 * alpha * dot(fx_avg_abs, gk.weights)
+
     # The exponent 1.5 is chosen such that (200*x)**1.5 is approximately x at 1.0e-6,
     # the machine precision on IEEE 754 32-bit floating point arithmentic. This could be
     # adapted to
@@ -154,6 +197,15 @@ def _gauss_kronrod_integrate(k, f, interval, dot=numpy.dot):
     #
     error_estimate = I_tilde * numpy.minimum(
         numpy.ones(I_tilde.shape),
-        (200 * abs(val_gauss_kronrod - val_gauss) / I_tilde) ** 1.5,
+        (200 * abs(val_gauss_kronrod - val_gauss_legendr) / I_tilde) ** 1.5,
     )
-    return val_gauss_kronrod, val_gauss, error_estimate
+    assert error_estimate.shape == range_shape + interval_set_shape
+
+    return (
+        val_gauss_kronrod,
+        val_gauss_legendr,
+        alpha,
+        error_estimate,
+        domain_shape,
+        range_shape,
+    )

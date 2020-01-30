@@ -3,10 +3,8 @@ import numpy
 from ._gauss_kronrod import _gauss_kronrod_integrate
 
 
-def _numpy_all_except(a, axis=-1):
-    axes = numpy.arange(a.ndim)
-    axes = numpy.delete(axes, axis)
-    return numpy.all(a, axis=tuple(axes))
+def _numpy_all_except_last(a):
+    return numpy.all(a, axis=tuple(range(len(a.shape) - 1)))
 
 
 class IntegrationError(Exception):
@@ -21,62 +19,86 @@ def integrate_adaptive(
     kronrod_degree=7,
     minimum_interval_length=0.0,
     dot=numpy.dot,
+    domain_shape=None,
+    range_shape=None,
 ):
-    sumfun = numpy.sum
+    intervals = numpy.asarray(intervals)
+    assert intervals.shape[0] == 2
 
-    intervals = numpy.array(intervals)
-    if len(intervals.shape) == 1:
-        intervals = intervals[..., None]
-
-    lengths = abs(intervals[1] - intervals[0])
-    total_length = sumfun(lengths)
-
-    # Use Gauss-Kronrod 7/15 scheme for error estimation and adaptivity.
-    _, val_g, error_estimate = _gauss_kronrod_integrate(
-        kronrod_degree, f, intervals, dot=dot
+    # Use Gauss-Kronrod scheme for error estimation and adaptivity.
+    # The method also returns guesses for the domain_shape and range_shape (if any of
+    # them is None).
+    _, val_gl, a, error_estimate, domain_shape, range_shape = _gauss_kronrod_integrate(
+        kronrod_degree,
+        f,
+        intervals,
+        dot=dot,
+        domain_shape=domain_shape,
+        range_shape=range_shape,
     )
+
+    # Flatten the list of intervals so we can do good-bad bookkeeping via a list.
+    intervals = intervals.reshape((2,) + domain_shape + (-1,))
+    a = a.reshape(-1)
+    val_gl_shape = val_gl.shape
+    val_gl = val_gl.reshape(range_shape + (-1,))
+    error_estimate = error_estimate.reshape(range_shape + (-1,))
+
+    total_val_gl = numpy.zeros(val_gl.shape)
+    total_error_estimate = numpy.zeros(error_estimate.shape)
 
     # Mark intervals with acceptable approximations. For this, take all() across every
     # dimension except the last one (which is the interval index).
-    is_good = _numpy_all_except(
-        error_estimate < eps_abs * lengths / total_length, axis=-1
-    ) & _numpy_all_except(
-        error_estimate < eps_rel * numpy.abs(val_g) * lengths / total_length, axis=-1
+    is_good = numpy.logical_and(
+        _numpy_all_except_last(error_estimate < eps_abs * a),
+        _numpy_all_except_last(error_estimate < eps_rel * a * numpy.abs(val_gl)),
     )
-    # add values from good intervals to sum
-    quad_sum = sumfun(val_g[..., is_good], axis=-1)
-    global_error_estimate = sumfun(error_estimate[..., is_good], axis=-1)
+    idx = numpy.arange(intervals.shape[-1])
 
-    while any(~is_good):
+    total_val_gl[..., is_good] += val_gl[..., is_good]
+    total_error_estimate[..., is_good] += error_estimate[..., is_good]
+
+    k = 0
+    while numpy.any(~is_good):
         # split the bad intervals in half
         intervals = intervals[..., ~is_good]
+        idx = idx[~is_good]
         midpoints = 0.5 * (intervals[0] + intervals[1])
         intervals = numpy.array(
             [
-                numpy.concatenate([intervals[0], midpoints]),
-                numpy.concatenate([midpoints, intervals[1]]),
+                numpy.concatenate([intervals[0], midpoints], axis=-1),
+                numpy.concatenate([midpoints, intervals[1]], axis=-1),
             ]
         )
-        # compute values and error estimates for the new intervals
-        _, val_g, error_estimate = _gauss_kronrod_integrate(
-            kronrod_degree, f, intervals, dot=dot
-        )
-        # mark good intervals, gather values and error estimates
-        lengths = abs(intervals[1] - intervals[0])
-        if any(lengths < minimum_interval_length):
-            raise IntegrationError(
-                "Tolerances (abs: {}, rel: {}) could not be reached with the minimum_interval_length (= {}).".format(
-                    eps_abs, eps_rel, minimum_interval_length
-                )
-            )
-        is_good = _numpy_all_except(
-            error_estimate < eps_abs * lengths / total_length, axis=-1
-        ) & _numpy_all_except(
-            error_estimate < eps_rel * numpy.abs(val_g) * lengths / total_length,
-            axis=-1,
-        )
-        # add values from good intervals to sum
-        quad_sum += sumfun(val_g[..., is_good], axis=-1)
-        global_error_estimate += sumfun(error_estimate[..., is_good], axis=-1)
+        idx = numpy.concatenate([idx[~is_good], idx[~is_good]])
 
-    return quad_sum, global_error_estimate
+        # compute values and error estimates for the new intervals
+        _, val_gl, a, error_estimate, _, _ = _gauss_kronrod_integrate(
+            kronrod_degree,
+            f,
+            intervals,
+            dot=dot,
+            domain_shape=domain_shape,
+            range_shape=range_shape,
+        )
+
+        # mark good intervals, gather values and error estimates
+        if numpy.any(a < minimum_interval_length):
+            raise IntegrationError(
+                f"Tolerances (abs: {eps_abs}, rel: {eps_rel}) could not be reached "
+                f"with the minimum_interval_length (= {minimum_interval_length})."
+            )
+        is_good = numpy.logical_and(
+            _numpy_all_except_last(error_estimate < eps_abs * a),
+            _numpy_all_except_last(error_estimate < eps_rel * a * numpy.abs(val_gl)),
+        )
+
+        # TODO speed up
+        for j, i in enumerate(idx[is_good]):
+            total_val_gl[..., i] += val_gl[..., is_good][..., j]
+            total_error_estimate[..., i] += error_estimate[..., is_good][..., j]
+        k += 1
+
+    total_val_gl = total_val_gl.reshape(val_gl_shape)
+    total_error_estimate = total_error_estimate.reshape(val_gl_shape)
+    return total_val_gl, total_error_estimate
