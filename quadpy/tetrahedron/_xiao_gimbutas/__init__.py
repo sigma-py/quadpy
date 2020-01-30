@@ -23,7 +23,7 @@ citation = article(
 
 def _read(degree):
     this_dir = os.path.dirname(os.path.realpath(__file__))
-    filename = "xg{:02d}.json".format(degree)
+    filename = f"xg{degree:02d}.json"
     with open(os.path.join(this_dir, filename), "r") as f:
         data = json.load(f)
 
@@ -32,7 +32,7 @@ def _read(degree):
     points = numpy.array(data["bary"])
     weights = numpy.array(data["weights"])
     return TetrahedronScheme(
-        "Xiao-Gimbutas {}".format(degree), weights, points, degree, citation
+        f"Xiao-Gimbutas {degree}", weights, points, degree, citation
     )
 
 

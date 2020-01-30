@@ -233,4 +233,4 @@ def genz_keister(n):
     p = numpy.sort(points)
     points = numpy.concatenate([-p[1:][::-1], [p[0]], p[1:]])
 
-    return E1r2Scheme("Genz-Keister ({})".format(n), weights, points, degree, citation)
+    return E1r2Scheme(f"Genz-Keister ({n})", weights, points, degree, citation)

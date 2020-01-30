@@ -12,7 +12,7 @@ def get_symmetry_code_tri(pts):
         ct = numpy.count_nonzero(abs(beta) < tol)
         assert ct in [1, 2], beta
         val = pts[0][0] if ct == 2 else pts[0][1]
-        return "_s21({:.15e})".format(val)
+        return f"_s21({val:.15e})"
 
     # Symmetry group [[a, b, c], [c, a, b], ...].
     assert len(pts) == 6

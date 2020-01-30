@@ -64,7 +64,7 @@ citations = [
 
 
 def _read(index):
-    name = "Lebedev({})".format(index)
+    name = f"Lebedev({index})"
 
     this_dir = os.path.dirname(os.path.realpath(__file__))
 

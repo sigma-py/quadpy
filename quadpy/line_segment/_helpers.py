@@ -3,6 +3,49 @@ import numpy
 from ..helpers import plot_disks_1d
 
 
+def _find_shapes(fx, intervals, x, domain_shape=None, range_shape=None):
+    # This following logic is based on the below assertions
+    #
+    # assert intervals.shape == (2,) + domain_shape + interval_set_shape
+    # assert fx_gk.shape == range_shape + interval_set_shape + gk.points.shape
+    #
+    assert len(x.shape) == 1
+    if domain_shape is not None and range_shape is not None:
+        # Only needed for some assertions
+        interval_set_shape = intervals.shape[1 + len(domain_shape) :]
+    elif domain_shape is not None:
+        interval_set_shape = intervals.shape[1 + len(domain_shape) :]
+        range_shape = fx.shape[: -len(interval_set_shape) - 1]
+    elif range_shape is not None:
+        interval_set_shape = fx.shape[len(range_shape) : -1]
+        if len(interval_set_shape) == 0:
+            domain_shape = intervals.shape[1:]
+        else:
+            domain_shape = intervals.shape[1 : -len(interval_set_shape)]
+    else:
+        # find the common tail of fx_gk.shape[:-1] and intervals.shape. That is the
+        # interval_set_shape unless the tails of domain_shape and range_shape coincide
+        # to some degree. (For this case, one can specify domain_shape, range_shape
+        # explicitly.)
+        interval_set_shape = []
+        for k in range(min(len(intervals.shape) - 1, len(fx.shape) - 1)):
+            d = intervals.shape[-k - 1]
+            if fx.shape[-k - 2] != d:
+                break
+            interval_set_shape.append(d)
+        interval_set_shape = tuple(reversed(interval_set_shape))
+
+        if len(interval_set_shape) == 0:
+            domain_shape = intervals.shape[1:]
+        else:
+            domain_shape = intervals.shape[1 : -len(interval_set_shape)]
+        range_shape = fx.shape[: -len(interval_set_shape) - 1]
+
+    assert intervals.shape == (2,) + domain_shape + interval_set_shape
+    assert fx.shape == range_shape + interval_set_shape + x.shape
+    return domain_shape, range_shape, interval_set_shape
+
+
 class LineSegmentScheme:
     def __init__(self, name, degree, weights, points, citation=None):
         self.name = name
@@ -10,37 +53,33 @@ class LineSegmentScheme:
         self.weights = weights
         self.points = points
         self.citation = citation
-        return
 
-    def integrate(self, f, interval, dot=numpy.dot):
-        xi = self.points
-        x = +numpy.multiply.outer(0.5 * (1.0 - xi), interval[0]) + numpy.multiply.outer(
-            0.5 * (1.0 + xi), interval[1]
+    def integrate(
+        self, f, intervals, domain_shape=None, range_shape=None, dot=numpy.dot
+    ):
+        iv = numpy.asarray(intervals)
+        x0 = 0.5 * (1.0 - self.points)
+        x1 = 0.5 * (1.0 + self.points)
+        x = numpy.multiply.outer(iv[0], x0) + numpy.multiply.outer(iv[1], x1)
+        fx = numpy.asarray(f(x))
+
+        domain_shape, range_shape, interval_set_shape = _find_shapes(
+            fx, iv, self.points, domain_shape=domain_shape, range_shape=range_shape
         )
-        x = x.T
-        diff = interval[1] - interval[0]
-        # numpy.sum is slower than dot() and friends, but allows for scalar input.
-        len_intervals = numpy.sqrt(numpy.sum(diff ** 2, axis=-1))
-        # The factor 0.5 is from the length of the reference line [-1, 1].
-        return 0.5 * len_intervals * dot(f(x), self.weights)
 
-    def integrate_split(self, f, a, b, n, dot=numpy.dot):
-        """Integrates f between a and b with n subintervals.
-        """
-        # prepare the intervals
-        x = numpy.linspace(a, b, n + 1)
-        intervals = numpy.expand_dims(numpy.stack([x[:-1], x[1:]]), axis=-1)
-        # integrate
-        out = self.integrate(f, intervals, dot=dot)[0]
-        # sum over the intervals
-        return numpy.sum(out)
+        # numpy.sum is slower than dot() and friends, but allows for scalar input.
+        diff = iv[1] - iv[0]
+        len_intervals = numpy.sqrt(
+            numpy.sum(diff ** 2, axis=tuple(range(len(domain_shape))))
+        )
+        # The factor 0.5 is from the length of the reference line [-1, 1].
+        return 0.5 * len_intervals * dot(fx, self.weights)
 
     def show(self, *args, **kwargs):
         import matplotlib.pyplot as plt
 
         self.plot(*args, **kwargs)
         plt.show()
-        return
 
     def plot(self, interval=numpy.array([[-1.0], [1.0]]), show_axes=False):
         import matplotlib.pyplot as plt
@@ -59,4 +98,3 @@ class LineSegmentScheme:
 
         total_area = interval[1] - interval[0]
         plot_disks_1d(plt, pts, self.weights, total_area)
-        return

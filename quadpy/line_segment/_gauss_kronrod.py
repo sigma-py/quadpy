@@ -7,7 +7,7 @@ import orthopy
 from ..helpers import article
 from ..tools import scheme_from_rc
 from ._gauss_legendre import gauss_legendre
-from ._helpers import LineSegmentScheme
+from ._helpers import LineSegmentScheme, _find_shapes
 
 citation = article(
     authors=["Dirk P. Laurie"],
@@ -51,9 +51,7 @@ def gauss_kronrod(n, a=0, b=0):
     i = numpy.argsort(x)
     points = x[i]
     weights = w[i]
-    return LineSegmentScheme(
-        "Gauss-Kronrod ({})".format(n), degree, weights, points, citation
-    )
+    return LineSegmentScheme(f"Gauss-Kronrod ({n})", degree, weights, points, citation)
 
 
 def _r_kronrod(n, a0, b0):
@@ -104,33 +102,37 @@ def _r_kronrod(n, a0, b0):
     return a, b
 
 
-def _gauss_kronrod_integrate(k, f, interval, dot=numpy.dot):
-    def _scale_points(points, interval):
-        alpha = 0.5 * (interval[1] - interval[0])
-        beta = 0.5 * (interval[0] + interval[1])
-        return (numpy.multiply.outer(points, alpha) + beta).T
-
-    def _integrate(values, weights, interval_length, dot):
-        """Integration with point values explicitly specified.
-        """
-        return 0.5 * interval_length * dot(values, weights)
-
+def _gauss_kronrod_integrate(
+    k, f, intervals, dot=numpy.dot, domain_shape=None, range_shape=None,
+):
     # Compute the integral estimations according to Gauss and Gauss-Kronrod, sharing the
     # function evaluations
-    scheme = gauss_kronrod(k)
-    gauss_weights = gauss_legendre(k).weights
-    sp = _scale_points(scheme.points, interval)
-    point_vals_gk = numpy.asarray(f(sp))
-    assert point_vals_gk.shape[-len(sp.shape) :] == sp.shape, (
-        "Function evaluation returned numpy array of wrong shape. "
-        "(Input shape: {}, expected output shape: (..., {}), got: {})".format(
-            sp.shape, ", ".join(str(k) for k in sp.shape), point_vals_gk.shape
-        )
+    gk = gauss_kronrod(k)
+    gl = gauss_legendre(k)
+    # scale points
+    x0 = 0.5 * (1.0 - gk.points)
+    x1 = 0.5 * (1.0 + gk.points)
+    sp = numpy.multiply.outer(intervals[0], x0) + numpy.multiply.outer(intervals[1], x1)
+    fx_gk = numpy.asarray(f(sp))
+
+    # try and guess shapes of domain, range, intervals
+    domain_shape, range_shape, interval_set_shape = _find_shapes(
+        fx_gk, intervals, gk.points, domain_shape, range_shape
     )
-    point_vals_g = point_vals_gk[..., 1::2]
-    alpha = abs(interval[1] - interval[0])
-    val_gauss_kronrod = _integrate(point_vals_gk, scheme.weights, alpha, dot=dot)
-    val_gauss = _integrate(point_vals_g, gauss_weights, alpha, dot=dot)
+
+    fx_gl = fx_gk[..., 1::2]
+
+    diff = intervals[1] - intervals[0]
+    alpha = numpy.sqrt(numpy.sum(diff ** 2, axis=tuple(range(len(domain_shape)))))
+
+    assert alpha.shape == interval_set_shape
+
+    # integrate
+    val_gauss_kronrod = 0.5 * alpha * dot(fx_gk, gk.weights)
+    val_gauss_legendr = 0.5 * alpha * dot(fx_gl, gl.weights)
+
+    assert val_gauss_kronrod.shape == range_shape + interval_set_shape
+    assert val_gauss_legendr.shape == range_shape + interval_set_shape
 
     # Get an error estimate. According to
     #
@@ -143,8 +145,9 @@ def _gauss_kronrod_integrate(k, f, interval, dot=numpy.dot):
     #
     # the classicial QUADPACK still compares favorably with other approaches.
     average = val_gauss_kronrod / alpha
-    point_vals_abs = abs(point_vals_gk - average[..., None])
-    I_tilde = _integrate(point_vals_abs, scheme.weights, alpha, dot=dot)
+    fx_avg_abs = numpy.abs(fx_gk - average[..., None])
+    I_tilde = 0.5 * alpha * dot(fx_avg_abs, gk.weights)
+
     # The exponent 1.5 is chosen such that (200*x)**1.5 is approximately x at 1.0e-6,
     # the machine precision on IEEE 754 32-bit floating point arithmentic. This could be
     # adapted to
@@ -154,6 +157,15 @@ def _gauss_kronrod_integrate(k, f, interval, dot=numpy.dot):
     #
     error_estimate = I_tilde * numpy.minimum(
         numpy.ones(I_tilde.shape),
-        (200 * abs(val_gauss_kronrod - val_gauss) / I_tilde) ** 1.5,
+        (200 * abs(val_gauss_kronrod - val_gauss_legendr) / I_tilde) ** 1.5,
     )
-    return val_gauss_kronrod, val_gauss, error_estimate
+    assert error_estimate.shape == range_shape + interval_set_shape
+
+    return (
+        val_gauss_kronrod,
+        val_gauss_legendr,
+        alpha,
+        error_estimate,
+        domain_shape,
+        range_shape,
+    )

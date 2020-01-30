@@ -38,4 +38,4 @@ def radon(alpha):
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Radon({})".format(alpha), weights, points, 5, _citation)
+    return DiskScheme(f"Radon({alpha})", weights, points, 5, _citation)
