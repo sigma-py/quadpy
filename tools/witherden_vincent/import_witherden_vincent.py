@@ -10,7 +10,7 @@ import numpy
 
 def data_to_code(data, f):
     for k, item in enumerate(data):
-        print("elif index == {}:".format(k))
+        print(f"elif index == {k}:")
         print("    self.degree = {}".format(item["degree"]))
         print("    data = {")
 
@@ -76,7 +76,7 @@ def _grp_start_len(a, tol):
     how long the blocks are.
     """
     # https://stackoverflow.com/a/50394587/353337
-    m = numpy.concatenate([[True], numpy.abs((a[:-1] - a[1:])) > tol, [True]])
+    m = numpy.concatenate([[True], numpy.abs(a[:-1] - a[1:]) > tol, [True]])
     idx = numpy.flatnonzero(m)
     return idx[:-1], numpy.diff(idx)
 
@@ -123,18 +123,18 @@ def data_to_json(degree, points, weights):
     # some work here. Compare with <https://stackoverflow.com/a/1733105/353337>.
     class PrettyFloat(float):
         def __repr__(self):
-            return "{:.16e}".format(self)
+            return f"{self:.16e}"
 
     def pretty_floats(obj):
         if isinstance(obj, float):
             return PrettyFloat(obj)
         elif isinstance(obj, dict):
-            return dict((k, pretty_floats(v)) for k, v in obj.items())
+            return {k: pretty_floats(v) for k, v in obj.items()}
         elif isinstance(obj, (list, tuple)):
             return list(map(pretty_floats, obj))
         return obj
 
-    with open("wv{:02d}.json".format(degree), "w") as f:
+    with open(f"wv{degree:02d}.json", "w") as f:
         string = (
             pretty_floats(d)
             .__repr__()
@@ -174,7 +174,7 @@ def import_tet():
     for k, filename in enumerate(filenames):
         out = re.match("([0-9]+)-([0-9]+)\\.txt", filename)
         strength = out.group(1)
-        print("elif degree == {}:".format(strength))
+        print(f"elif degree == {strength}:")
         print("    data = [")
         x, weights = read_data_tet(filename)
         data_to_code(x, weights)

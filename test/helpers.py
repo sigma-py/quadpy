@@ -117,7 +117,7 @@ def find_equal(schemes):
                     b += " ({})".format(schemes[j].citation.year)
                 except AttributeError:
                     pass
-                print("Schemes {} and {} are equal.".format(a, b))
+                print(f"Schemes {a} and {b} are equal.")
         if found_equal:
             print()
     return

@@ -12,5 +12,5 @@ def product(scheme1d):
     )
     degree = min([s.degree for s in schemes])
     return QuadrilateralScheme(
-        "Product scheme ({})".format(scheme1d.name), weights, points, degree
+        f"Product scheme ({scheme1d.name})", weights, points, degree
     )

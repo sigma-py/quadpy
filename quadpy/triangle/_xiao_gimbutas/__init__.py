@@ -22,12 +22,12 @@ citation = article(
 # TODO mpmath
 def _read(degree):
     this_dir = os.path.dirname(os.path.realpath(__file__))
-    filename = "xg{:02d}.json".format(degree)
+    filename = f"xg{degree:02d}.json"
     with open(os.path.join(this_dir, filename), "r") as f:
         data = json.load(f)
 
     degree = data.pop("degree")
-    name = "Xiao-Gimbutas {}".format(degree)
+    name = f"Xiao-Gimbutas {degree}"
     points, weights = untangle2(data)
     return TriangleScheme(name, weights, points, degree, citation)
 

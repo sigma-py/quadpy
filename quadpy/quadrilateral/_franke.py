@@ -43,9 +43,7 @@ def franke_1(lmbda):
             [frac(40 * (1 - lmbda), 9 * (9 - 4 * lmbda)), 0, c],
         ),
     )
-    return QuadrilateralScheme(
-        "Franke(1, {})".format(lmbda), weights, points, 5, citation
-    )
+    return QuadrilateralScheme(f"Franke(1, {lmbda})", weights, points, 5, citation)
 
 
 def franke_2a():

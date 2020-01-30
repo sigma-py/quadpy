@@ -18,8 +18,7 @@ def partition(boxes, balls):
     def rec(boxes, balls, parent=tuple()):
         if boxes > 1:
             for i in range(balls + 1):
-                for x in rec(boxes - 1, i, parent + (balls - i,)):
-                    yield x
+                yield from rec(boxes - 1, i, parent + (balls - i,))
         else:
             yield parent + (balls,)
 
@@ -118,13 +117,13 @@ if __name__ == "__main__":
     (x, _, rank, sv), res = e2r_compute_weights(scheme.points.T, 13)
 
     print("num unknowns: {}".format(len(x)))
-    print("rank A: {}".format(rank))
+    print(f"rank A: {rank}")
     res_norm = numpy.sqrt(numpy.dot(res, res))
-    print("res norm: {}".format(res_norm))
+    print(f"res norm: {res_norm}")
     assert res_norm < 1.0e-14
     print("singular values:")
     for val in sv:
-        print("  {:.15e}".format(val))
+        print(f"  {val:.15e}")
 
     print()
     print("solution:")
@@ -134,4 +133,4 @@ if __name__ == "__main__":
     print()
     print("hardcoded weights:")
     for val in scheme.weights:
-        print("  {:.15e}".format(val))
+        print(f"  {val:.15e}")

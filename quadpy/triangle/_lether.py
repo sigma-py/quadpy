@@ -41,4 +41,4 @@ def lether(n):
     points = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
 
     degree = 2 * (n - 1)
-    return TriangleScheme("Lether({})".format(n), weights, points, degree, citation)
+    return TriangleScheme(f"Lether({n})", weights, points, degree, citation)

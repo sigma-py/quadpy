@@ -47,7 +47,7 @@ def read_data(filename, num_orbit_types):
 
 def data_to_code(data, f):
     for k, item in enumerate(data):
-        print("elif index == {}:".format(k))
+        print(f"elif index == {k}:")
         print("    self.degree = {}".format(item["degree"]))
         print("    data = {")
 
@@ -77,7 +77,7 @@ def data_to_code(data, f):
 
 def data_to_json(data, f):
     for k, item in enumerate(data):
-        filename = "full{:02d}.json".format(k)
+        filename = f"full{k:02d}.json"
 
         with open(filename, "w") as fh:
             fh.write("{\n")

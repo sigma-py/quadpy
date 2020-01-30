@@ -23,4 +23,4 @@ def krylov(n):
     weights = numpy.full(n, 2 * pi / n)
     alpha = 2 * numpy.arange(n) * pi / n
     points = numpy.column_stack([cos(alpha), sin(alpha)])
-    return CircleScheme("Krylov {}".format(n), _citation, n - 1, weights, points)
+    return CircleScheme(f"Krylov {n}", _citation, n - 1, weights, points)

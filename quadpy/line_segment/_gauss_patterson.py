@@ -497,7 +497,7 @@ def gauss_patterson(index):
         )
 
     return LineSegmentScheme(
-        "Gauss-Patterson {}".format(index), degree, weights, points, citation
+        f"Gauss-Patterson {index}", degree, weights, points, citation
     )
 
 
