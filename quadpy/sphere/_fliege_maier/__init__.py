@@ -18,7 +18,7 @@ citation = online(
 def _read(index):
     warnings.warn("The Fliege-Maier schemes are only single-precision.")
 
-    name = "FliegeMaier({})".format(index)
+    name = f"FliegeMaier({index})"
 
     this_dir = os.path.dirname(os.path.realpath(__file__))
 

@@ -66,7 +66,7 @@ def _newton_cotes(n, point_fun):
 def newton_cotes_closed(n):
     points, weights, degree = _newton_cotes(n, lambda k, n: k / float(n))
     return TriangleScheme(
-        "Newton-Cotes (closed, {})".format(n), weights, points, degree, citation
+        f"Newton-Cotes (closed, {n})", weights, points, degree, citation
     )
 
 
@@ -75,5 +75,5 @@ def newton_cotes_open(n):
     if n == 0:
         degree = 1
     return TriangleScheme(
-        "Newton-Cotes (open, {})".format(n), weights, points, degree, citation
+        f"Newton-Cotes (open, {n})", weights, points, degree, citation
     )

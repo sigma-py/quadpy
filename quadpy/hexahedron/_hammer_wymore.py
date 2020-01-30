@@ -57,5 +57,5 @@ def hammer_wymore(lmbda=1):
 
     points, weights = untangle(data)
     return HexahedronScheme(
-        "Hammer-Wymore (lambda = {})".format(lmbda), weights, points, 7, _citation
+        f"Hammer-Wymore (lambda = {lmbda})", weights, points, 7, _citation
     )

@@ -77,14 +77,14 @@ def _newton_cotes(n, point_fun):
 
 def newton_cotes_closed(n):
     return TetrahedronScheme(
-        "Newton-Cotes (closed, {})".format(n),
+        f"Newton-Cotes (closed, {n})",
         *_newton_cotes(n, lambda k, n: k / float(n))
     )
 
 
 def newton_cotes_open(n):
     scheme = TetrahedronScheme(
-        "Newton-Cotes (open, {})".format(n),
+        f"Newton-Cotes (open, {n})",
         *_newton_cotes(n, lambda k, n: (k + 1) / float(n + 4))
     )
     if n == 0:

@@ -21,7 +21,7 @@ _citation = article(
 
 def _read(degree):
     this_dir = os.path.dirname(os.path.realpath(__file__))
-    filename = "wv{:02d}.json".format(degree)
+    filename = f"wv{degree:02d}.json"
     with open(os.path.join(this_dir, filename), "r") as f:
         data = json.load(f)
 
@@ -39,7 +39,7 @@ def _read(degree):
 
     weights, points = concat(*d)
     return QuadrilateralScheme(
-        "Witherden-Vincent {}".format(degree), weights, points, degree, _citation
+        f"Witherden-Vincent {degree}", weights, points, degree, _citation
     )
 
 

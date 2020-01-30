@@ -21,4 +21,4 @@ def gauss_hermite(n, mode="numpy"):
         # For some reason, the parameters have to be adapted here. TODO find out why
         beta[1:] /= 2
         points, weights = scheme_from_rc(alpha, beta, mode=mode)
-    return E1r2Scheme("Gauss-Hermite ({})".format(n), weights, points, 2 * n - 1)
+    return E1r2Scheme(f"Gauss-Hermite ({n})", weights, points, 2 * n - 1)

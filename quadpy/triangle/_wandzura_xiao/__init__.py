@@ -22,7 +22,7 @@ citation = article(
 
 def _read(index):
     this_dir = os.path.dirname(os.path.realpath(__file__))
-    filename = "wx{:02d}.json".format(index)
+    filename = f"wx{index:02d}.json"
     with open(os.path.join(this_dir, filename), "r") as f:
         data = json.load(f)
     degree = data.pop("degree")
@@ -30,7 +30,7 @@ def _read(index):
     data = data
     points, weights = untangle2(data)
     return TriangleScheme(
-        "Wandzura-Xiao {}".format(index), weights, points, degree, citation
+        f"Wandzura-Xiao {index}", weights, points, degree, citation
     )
 
 
