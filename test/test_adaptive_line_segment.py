@@ -94,7 +94,7 @@ def test_multidim():
     # This is one case where the integration routine may not properly recognize the
     # dimensionality of the domain. Use the `dim` parameter.
     val, err = quadpy.line_segment.integrate_adaptive(
-        lambda x: [x[0] + sin(x[1]), cos(x[0]) * x[2], sin(x[0]) + x[1] + x[2],],
+        lambda x: [x[0] + sin(x[1]), cos(x[0]) * x[2], sin(x[0]) + x[1] + x[2]],
         [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]],
         domain_shape=(3,),
         range_shape=(3,),

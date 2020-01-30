@@ -48,7 +48,9 @@ def _import_tri():
         pts = sorted_points[kk : kk + count]
         print(
             8 * " "
-            + "({:.15e}, {}),".format(last_value, import_helpers.get_symmetry_code_tri(pts))
+            + "({:.15e}, {}),".format(
+                last_value, import_helpers.get_symmetry_code_tri(pts)
+            )
         )
         print(8 * " " + "]")
 
@@ -93,7 +95,9 @@ def _import_tet():
         pts = sorted_points[kk : kk + count]
         print(
             8 * " "
-            + "({:.15e}, {}),".format(last_value, import_helpers.get_symmetry_code_tet(pts))
+            + "({:.15e}, {}),".format(
+                last_value, import_helpers.get_symmetry_code_tet(pts)
+            )
         )
         print(8 * " " + "]")
 

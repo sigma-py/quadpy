@@ -7,7 +7,7 @@ import orthopy
 from ..helpers import article
 from ..tools import scheme_from_rc
 from ._gauss_legendre import gauss_legendre
-from ._helpers import LineSegmentScheme
+from ._helpers import LineSegmentScheme, _find_shapes
 
 citation = article(
     authors=["Dirk P. Laurie"],
@@ -110,55 +110,15 @@ def _gauss_kronrod_integrate(
     gk = gauss_kronrod(k)
     gl = gauss_legendre(k)
     # scale points
-    # alpha = 0.5 * (interval[1] - interval[0])
-    # beta = 0.5 * (interval[0] + interval[1])
-    # sp = (numpy.multiply.outer(points, alpha) + beta).T
     x0 = 0.5 * (1.0 - gk.points)
     x1 = 0.5 * (1.0 + gk.points)
     sp = numpy.multiply.outer(intervals[0], x0) + numpy.multiply.outer(intervals[1], x1)
     fx_gk = numpy.asarray(f(sp))
 
     # try and guess shapes of domain, range, intervals
-    assert len(gk.points.shape) == 1
-
-    # This following logic is based on the belowassertions
-    #
-    # assert intervals.shape == (2,) + domain_shape + interval_set_shape
-    # assert fx_gk.shape == range_shape + interval_set_shape + gk.points.shape
-    #
-    if domain_shape is not None and range_shape is not None:
-        # Only needed for some assertions
-        interval_set_shape = intervals.shape[1 + len(domain_shape) :]
-    elif domain_shape is not None:
-        interval_set_shape = intervals.shape[1 + len(domain_shape) :]
-        range_shape = fx_gk.shape[: -len(interval_set_shape) - 1]
-    elif range_shape is not None:
-        interval_set_shape = fx_gk.shape[len(range_shape) : -1]
-        if len(interval_set_shape) == 0:
-            domain_shape = intervals.shape[1:]
-        else:
-            domain_shape = intervals.shape[1 : -len(interval_set_shape)]
-    else:
-        # find the common tail of fx_gk.shape[:-1] and intervals.shape. That is the
-        # interval_set_shape unless the tails of domain_shape and range_shape coincide
-        # to some degree. (For this case, one can specify domain_shape, range_shape
-        # explicitly.)
-        interval_set_shape = []
-        for k in range(min(len(intervals.shape) - 1, len(fx_gk.shape) - 1)):
-            d = intervals.shape[-k - 1]
-            if fx_gk.shape[-k - 2] != d:
-                break
-            interval_set_shape.append(d)
-        interval_set_shape = tuple(reversed(interval_set_shape))
-
-        if len(interval_set_shape) == 0:
-            domain_shape = intervals.shape[1:]
-        else:
-            domain_shape = intervals.shape[1 : -len(interval_set_shape)]
-        range_shape = fx_gk.shape[: -len(interval_set_shape) - 1]
-
-    assert intervals.shape == (2,) + domain_shape + interval_set_shape
-    assert fx_gk.shape == range_shape + interval_set_shape + gk.points.shape
+    domain_shape, range_shape, interval_set_shape = _find_shapes(
+        fx_gk, intervals, gk.points, domain_shape, range_shape
+    )
 
     fx_gl = fx_gk[..., 1::2]
 
