@@ -25,6 +25,10 @@ def integrate_adaptive(
     intervals = numpy.asarray(intervals)
     assert intervals.shape[0] == 2
 
+    assert (
+        eps_abs is not None or eps_rel is not None
+    ), "One of eps_abs, eps_rel must be specified."
+
     # Use Gauss-Kronrod scheme for error estimation and adaptivity.
     # The method also returns guesses for the domain_shape and range_shape (if any of
     # them is None).
@@ -39,7 +43,7 @@ def integrate_adaptive(
 
     # Flatten the list of intervals so we can do good-bad bookkeeping via a list.
     intervals = intervals.reshape((2,) + domain_shape + (-1,))
-    a = a.reshape(-1)
+    a_orig = a.reshape(-1)
     val_shape = val.shape
     val = val.reshape(range_shape + (-1,))
     error_estimate = error_estimate.reshape(range_shape + (-1,))
@@ -49,10 +53,15 @@ def integrate_adaptive(
 
     # Mark intervals with acceptable approximations. For this, take all() across every
     # dimension except the last one (which is the interval index).
-    is_good = numpy.logical_and(
-        _numpy_all_except_last(error_estimate < eps_abs * a),
-        _numpy_all_except_last(error_estimate < eps_rel * a * numpy.abs(val)),
-    )
+    is_good = numpy.ones(error_estimate.shape[-1], dtype=bool)
+    if eps_abs is not None:
+        is_good = numpy.logical_and(
+            is_good, _numpy_all_except_last(error_estimate < eps_abs)
+        )
+    if eps_rel is not None:
+        is_good = numpy.logical_and(
+            is_good, _numpy_all_except_last(error_estimate < eps_rel * numpy.abs(val)),
+        )
     idx = numpy.arange(intervals.shape[-1])
 
     total_val[..., is_good] += val[..., is_good]
@@ -81,6 +90,9 @@ def integrate_adaptive(
             range_shape=range_shape,
         )
 
+        # relative interval lenghts
+        b = a / a_orig
+
         # mark good intervals, gather values and error estimates
         if numpy.any(a < minimum_interval_length):
             raise IntegrationError(
@@ -94,10 +106,16 @@ def integrate_adaptive(
         for j, i in enumerate(idx):
             ttv[..., i] += val[..., j]
 
-        is_good = numpy.logical_and(
-            _numpy_all_except_last(error_estimate < eps_abs * a),
-            _numpy_all_except_last(error_estimate < eps_rel * a * numpy.abs(ttv)),
-        )
+        is_good = numpy.ones(error_estimate.shape[-1], dtype=bool)
+        if eps_abs is not None:
+            is_good = numpy.logical_and(
+                is_good, _numpy_all_except_last(error_estimate < eps_abs * b),
+            )
+        if eps_rel is not None:
+            is_good = numpy.logical_and(
+                is_good,
+                _numpy_all_except_last(error_estimate < eps_rel * b * numpy.abs(ttv)),
+            )
 
         # TODO speed up
         for j, i in enumerate(idx[is_good]):
