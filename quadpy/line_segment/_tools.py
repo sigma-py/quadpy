@@ -28,7 +28,7 @@ def integrate_adaptive(
     # Use Gauss-Kronrod scheme for error estimation and adaptivity.
     # The method also returns guesses for the domain_shape and range_shape (if any of
     # them is None).
-    _, val_gl, a, error_estimate, domain_shape, range_shape = _gauss_kronrod_integrate(
+    _, val, a, error_estimate, domain_shape, range_shape = _gauss_kronrod_integrate(
         kronrod_degree,
         f,
         intervals,
@@ -40,29 +40,28 @@ def integrate_adaptive(
     # Flatten the list of intervals so we can do good-bad bookkeeping via a list.
     intervals = intervals.reshape((2,) + domain_shape + (-1,))
     a = a.reshape(-1)
-    val_gl_shape = val_gl.shape
-    val_gl = val_gl.reshape(range_shape + (-1,))
+    val_shape = val.shape
+    val = val.reshape(range_shape + (-1,))
     error_estimate = error_estimate.reshape(range_shape + (-1,))
 
-    total_val_gl = numpy.zeros(val_gl.shape)
+    total_val = numpy.zeros(val.shape)
     total_error_estimate = numpy.zeros(error_estimate.shape)
 
     # Mark intervals with acceptable approximations. For this, take all() across every
     # dimension except the last one (which is the interval index).
     is_good = numpy.logical_and(
         _numpy_all_except_last(error_estimate < eps_abs * a),
-        _numpy_all_except_last(error_estimate < eps_rel * a * numpy.abs(val_gl)),
+        _numpy_all_except_last(error_estimate < eps_rel * a * numpy.abs(val)),
     )
     idx = numpy.arange(intervals.shape[-1])
 
-    total_val_gl[..., is_good] += val_gl[..., is_good]
+    total_val[..., is_good] += val[..., is_good]
     total_error_estimate[..., is_good] += error_estimate[..., is_good]
 
     k = 0
     while numpy.any(~is_good):
         # split the bad intervals in half
         intervals = intervals[..., ~is_good]
-        idx = idx[~is_good]
         midpoints = 0.5 * (intervals[0] + intervals[1])
         intervals = numpy.array(
             [
@@ -73,7 +72,7 @@ def integrate_adaptive(
         idx = numpy.concatenate([idx[~is_good], idx[~is_good]])
 
         # compute values and error estimates for the new intervals
-        _, val_gl, a, error_estimate, _, _ = _gauss_kronrod_integrate(
+        _, val, a, error_estimate, _, _ = _gauss_kronrod_integrate(
             kronrod_degree,
             f,
             intervals,
@@ -88,17 +87,24 @@ def integrate_adaptive(
                 f"Tolerances (abs: {eps_abs}, rel: {eps_rel}) could not be reached "
                 f"with the minimum_interval_length (= {minimum_interval_length})."
             )
+
+        # TODO speed up
+        # tentative total value (as if all intervals were good)
+        ttv = total_val.copy()
+        for j, i in enumerate(idx):
+            ttv[..., i] += val[..., j]
+
         is_good = numpy.logical_and(
             _numpy_all_except_last(error_estimate < eps_abs * a),
-            _numpy_all_except_last(error_estimate < eps_rel * a * numpy.abs(val_gl)),
+            _numpy_all_except_last(error_estimate < eps_rel * a * numpy.abs(ttv)),
         )
 
         # TODO speed up
         for j, i in enumerate(idx[is_good]):
-            total_val_gl[..., i] += val_gl[..., is_good][..., j]
+            total_val[..., i] += val[..., is_good][..., j]
             total_error_estimate[..., i] += error_estimate[..., is_good][..., j]
         k += 1
 
-    total_val_gl = total_val_gl.reshape(val_gl_shape)
-    total_error_estimate = total_error_estimate.reshape(val_gl_shape)
-    return total_val_gl, total_error_estimate
+    total_val = total_val.reshape(val_shape)
+    total_error_estimate = total_error_estimate.reshape(val_shape)
+    return total_val, total_error_estimate
