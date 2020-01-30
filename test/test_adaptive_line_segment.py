@@ -112,8 +112,19 @@ def test_sink(k):
     assert abs(exact - val) < 1.0e-10
 
 
+def test_236():
+    # https://github.com/nschloe/quadpy/issues/236
+    def f(x):
+        return numpy.exp(-1.0 / (1 - x ** 2))
+
+    val, err = quadpy.quad(f, -1, 1)
+    print(val)
+    print(err)
+    assert err < 1.0e-9
+
+
 if __name__ == "__main__":
-    test_multidim()
+    test_236()
     # test_vector_valued(1)
     # test_simple()
     # test_sink(5)
