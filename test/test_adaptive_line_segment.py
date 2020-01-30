@@ -19,8 +19,10 @@ def test_simple():
 
 @pytest.mark.parametrize("k", range(1, 6))
 def test_vector_valued(k):
+    # We need to set eps_rel=None here since the second integral can be 0. This leads to
+    # an unreachable stopping criterion.
     val, err = quadpy.line_segment.integrate_adaptive(
-        lambda x: [x * sin(k * x), x * cos(k * x)], [0.0, pi], 1.0e-10
+        lambda x: [x * sin(k * x), x * cos(k * x)], [0.0, pi], 1.0e-10, eps_rel=None
     )
     exact = [
         (sin(pi * k) - pi * k * cos(pi * k)) / k ** 2,
@@ -106,7 +108,7 @@ def test_multidim():
 @pytest.mark.parametrize("k", range(4, 12))
 def test_sink(k):
     val, _ = quadpy.line_segment.integrate_adaptive(
-        lambda x: sin(k * x), [0.0, pi], 1.0e-10
+        lambda x: sin(k * x), [0.0, pi], 1.0e-10, eps_rel=None
     )
     exact = (1.0 - cos(k * pi)) / k
     assert abs(exact - val) < 1.0e-10
@@ -118,13 +120,12 @@ def test_236():
         return numpy.exp(-1.0 / (1 - x ** 2))
 
     val, err = quadpy.quad(f, -1, 1)
-    print(val)
-    print(err)
     assert err < 1.0e-9
 
 
 if __name__ == "__main__":
-    test_236()
+    test_vector_valued(2)
+    # test_236()
     # test_vector_valued(1)
     # test_simple()
-    # test_sink(5)
+    test_sink(6)
