@@ -41,10 +41,13 @@ class QuadrilateralScheme(NCubeScheme):
         """
         import matplotlib.pyplot as plt
 
-        plt.plot(quad[0][0], quad[1][0], "-k")
-        plt.plot(quad[1][0], quad[1][1], "-k")
-        plt.plot(quad[1][1], quad[0][1], "-k")
-        plt.plot(quad[0][1], quad[0][0], "-k")
+        def plot_segment(a, b):
+            plt.plot((a[0], b[0]), (a[1], b[1]), "-k")
+
+        plot_segment(quad[0][0], quad[1][0])
+        plot_segment(quad[1][0], quad[1][1])
+        plot_segment(quad[1][1], quad[0][1])
+        plot_segment(quad[0][1], quad[0][0])
 
         if not show_axes:
             plt.gca().set_axis_off()
