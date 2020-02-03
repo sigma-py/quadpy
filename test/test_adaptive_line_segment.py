@@ -123,8 +123,24 @@ def test_236():
     assert err < 1.0e-9
 
 
+def test_infinite_limits():
+    tol = 1.0e-9
+    val, err = quadpy.quad(lambda x: numpy.exp(-(x ** 2)), -numpy.inf, numpy.inf)
+    assert abs(val - numpy.sqrt(numpy.pi)) < tol
+    assert err < tol
+
+    val, err = quadpy.quad(lambda x: numpy.exp(-x), 0.0, numpy.inf)
+    assert abs(val - 1.0) < tol
+    assert err < tol
+
+    val, err = quadpy.quad(lambda x: numpy.exp(+x), -numpy.inf, 0)
+    assert abs(val - 1.0) < tol
+    assert err < tol
+
+
 if __name__ == "__main__":
-    test_vector_valued(2)
+    test_infinite_limits()
+    # test_vector_valued(2)
     # test_236()
     # test_vector_valued(1)
     # test_simple()
