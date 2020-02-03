@@ -34,7 +34,7 @@ for fast integration of real-, complex-, and vector-valued functions.
 For example, to numerically integrate any function over any given interval, install
 quadpy [from the Python Package Index](https://pypi.org/project/quadpy/) with
 ```
-pip3 install quadpy
+pip install quadpy
 ```
 and do
 ```python
@@ -46,8 +46,10 @@ def f(x):
 
 val, err = quadpy.quad(f, 0.0, 6.0)
 ```
-(This is just like
-[scipy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html).)
+This is just like
+[scipy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html)
+with the addition that quadpy handles complex-, vector-, matrix-valued integrands,
+and lines in spaces of arbitrary dimension.
 
 To integrate over a _triangle_ with [Strang's rule](https://bookstore.siam.org/wc08/) of
 degree 6, do
@@ -716,7 +718,7 @@ val = scheme.integrate(lambda x: x[0]**2)
 
 quadpy is [available from the Python Package Index](https://pypi.org/project/quadpy/), so with
 ```
-pip3 install quadpy
+pip install quadpy
 ```
 you can install.
 
