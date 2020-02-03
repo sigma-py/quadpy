@@ -34,7 +34,7 @@ for fast integration of real-, complex-, and vector-valued functions.
 For example, to numerically integrate any function over any given interval, install
 quadpy [from the Python Package Index](https://pypi.org/project/quadpy/) with
 ```
-pip3 install quadpy
+pip install quadpy
 ```
 and do
 ```python
@@ -716,7 +716,7 @@ val = scheme.integrate(lambda x: x[0]**2)
 
 quadpy is [available from the Python Package Index](https://pypi.org/project/quadpy/), so with
 ```
-pip3 install quadpy
+pip install quadpy
 ```
 you can install.
 
