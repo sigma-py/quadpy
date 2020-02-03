@@ -112,13 +112,20 @@ def _gauss_kronrod_integrate(
     # scale points
     x0 = 0.5 * (1.0 - gk.points)
     x1 = 0.5 * (1.0 + gk.points)
-    sp = numpy.multiply.outer(intervals[0], x0) + numpy.multiply.outer(intervals[1], x1)
-    fx_gk = numpy.asarray(f(sp))
 
-    # try and guess shapes of domain, range, intervals
-    domain_shape, range_shape, interval_set_shape = _find_shapes(
-        fx_gk, intervals, gk.points, domain_shape, range_shape
-    )
+    sp = numpy.multiply.outer(intervals[0], x0) + numpy.multiply.outer(intervals[1], x1)
+    if domain_shape is not None and range_shape is not None:
+        # Make it easy on the f by flattening out interval_set
+        interval_set_shape = intervals.shape[1 + len(domain_shape) :]
+        sp = sp.reshape(*domain_shape, -1)
+        fx_gk = numpy.asarray(f(sp))
+        fx_gk = fx_gk.reshape(*range_shape, *interval_set_shape, *x0.shape)
+    else:
+        fx_gk = numpy.asarray(f(sp))
+        # try and guess shapes of domain, range, intervals
+        domain_shape, range_shape, interval_set_shape = _find_shapes(
+            fx_gk, intervals, gk.points, domain_shape, range_shape
+        )
 
     fx_gl = fx_gk[..., 1::2]
 
