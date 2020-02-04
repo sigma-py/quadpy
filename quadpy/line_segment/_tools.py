@@ -18,6 +18,7 @@ def integrate_adaptive(
     eps_rel=1.0e-10,
     kronrod_degree=7,
     minimum_interval_length=0.0,
+    max_num_subintervals=numpy.inf,
     dot=numpy.dot,
     domain_shape=None,
     range_shape=None,
@@ -43,6 +44,7 @@ def integrate_adaptive(
 
     # Flatten the list of intervals so we can do good-bad bookkeeping via a list.
     intervals = intervals.reshape((2,) + domain_shape + (-1,))
+    num_subintervals = 1
     a_orig = a.reshape(-1)
     val_shape = val.shape
     val = val.reshape(range_shape + (-1,))
@@ -79,6 +81,13 @@ def integrate_adaptive(
             ]
         )
         idx = numpy.concatenate([idx[~is_good], idx[~is_good]])
+        num_subintervals += numpy.sum(~is_good)
+
+        if num_subintervals > max_num_subintervals:
+            raise IntegrationError(
+                f"Tolerances (abs: {eps_abs}, rel: {eps_rel}) could not be reached "
+                f"with the given max_num_subintervals (= {max_num_subintervals})."
+            )
 
         # compute values and error estimates for the new intervals
         _, val, a, error_estimate, _, _ = _gauss_kronrod_integrate(
@@ -97,7 +106,7 @@ def integrate_adaptive(
         if numpy.any(a < minimum_interval_length):
             raise IntegrationError(
                 f"Tolerances (abs: {eps_abs}, rel: {eps_rel}) could not be reached "
-                f"with the minimum_interval_length (= {minimum_interval_length})."
+                f"with the given minimum_interval_length (= {minimum_interval_length})."
             )
 
         # TODO speed up
