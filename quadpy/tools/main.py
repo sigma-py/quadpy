@@ -270,7 +270,9 @@ def scheme_from_rc(alpha, beta, mode=None):
         if alpha.dtype in [numpy.float32, numpy.float64]:
             mode = "numpy"
         else:
-            raise ValueError("Please specify the `mode` (\"sympy\", \"numpy\", or \"mpmath\").")
+            raise ValueError(
+                'Please specify the `mode` ("sympy", "numpy", or "mpmath").'
+            )
 
     if mode == "sympy":
         return _scheme_from_rc_sympy(alpha, beta)
