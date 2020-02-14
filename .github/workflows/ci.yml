@@ -9,7 +9,7 @@ jobs:
     - uses: actions/setup-python@v1
       with:
         python-version: "3.x"
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Lint with flake8
       run: |
         pip install --upgrade pip
@@ -22,11 +22,14 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6, 3.7, 3.8]
     steps:
     - uses: actions/setup-python@v1
       with:
-        python-version: "3.x"
-    - uses: actions/checkout@v1
+        python-version: ${{ matrix.python-version }}
+    - uses: actions/checkout@v2
     # eigen for accupy, blas for numpy
     - name: Install dependencies
       run: sudo apt-get install -y libeigen3-dev libblas-dev # python3-vtk7

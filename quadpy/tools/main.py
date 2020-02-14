@@ -116,7 +116,7 @@ def chebyshev_modified(nu, a, b):
     recurrence coefficients.
     """
     m = len(nu)
-    assert m % 2 == 0
+    assert m % 2 == 0, "Need an even number of moments."
 
     n = m // 2
 
@@ -261,7 +261,19 @@ def _sympy_tridiag(a, b):
     return sympy.Matrix(A)
 
 
-def scheme_from_rc(alpha, beta, mode):
+def scheme_from_rc(alpha, beta, mode=None):
+    alpha = numpy.asarray(alpha)
+    beta = numpy.asarray(beta)
+
+    if mode is None:
+        # try and guess the mode
+        if alpha.dtype in [numpy.float32, numpy.float64]:
+            mode = "numpy"
+        else:
+            raise ValueError(
+                'Please specify the `mode` ("sympy", "numpy", or "mpmath").'
+            )
+
     if mode == "sympy":
         return _scheme_from_rc_sympy(alpha, beta)
     elif mode == "numpy":
