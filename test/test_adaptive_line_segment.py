@@ -138,10 +138,16 @@ def test_infinite_limits():
     assert err < tol
 
 
+def test_245():
+    # https://github.com/nschloe/quadpy/issues/245
+    def f(x):
+        return x + x * 1j
+
+    val, err = quadpy.quad(f, -1, 1)
+    assert err < 1.0e-9
+
+
 if __name__ == "__main__":
-    test_infinite_limits()
-    # test_vector_valued(2)
-    # test_236()
+    test_245()
     # test_vector_valued(1)
     # test_simple()
-    test_sink(6)

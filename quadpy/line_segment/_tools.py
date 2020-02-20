@@ -50,7 +50,7 @@ def integrate_adaptive(
     val = val.reshape(range_shape + (-1,))
     error_estimate = error_estimate.reshape(range_shape + (-1,))
 
-    total_val = numpy.zeros(val.shape)
+    total_val = numpy.zeros(val.shape, dtype=val.dtype)
     total_error_estimate = numpy.zeros(error_estimate.shape)
 
     # Mark intervals with acceptable approximations. For this, take all() across every
