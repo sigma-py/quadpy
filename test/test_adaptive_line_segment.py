@@ -143,7 +143,7 @@ def test_245():
     def f(x):
         return x + x * 1j
 
-    val, err = quadpy.quad(f, -1, 1)
+    val, err = quadpy.quad(f, 0, 1)
     assert err < 1.0e-9
 
 
