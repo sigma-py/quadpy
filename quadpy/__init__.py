@@ -24,16 +24,12 @@ from . import (
     triangle,
     wedge,
 )
-from .__about__ import __author__, __email__, __license__, __status__, __version__
+from .__about__ import __version__
 from ._scipy_compat import quad
 from .tanh_sinh import tanh_sinh, tanh_sinh_lr
 
 __all__ = [
-    "__author__",
-    "__email__",
-    "__license__",
     "__version__",
-    "__status__",
     "helpers",
     "ball",
     "circle",
