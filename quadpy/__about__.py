@@ -1,7 +1,10 @@
-__author__ = "Nico Schlömer"
-__email__ = "nico.schloemer@gmail.com"
-__copyright__ = f"Copyright (c) 2016-2020, {__author__} <{__email__}>"
-__license__ = "License :: OSI Approved :: MIT License"
-__version__ = "0.14.5"
-__maintainer__ = "Nico Schlömer"
-__status__ = "Development Status :: 4 - Beta"
+try:
+    # Python 3.8
+    from importlib import metadata
+except ImportError:
+    import importlib_metadata as metadata
+
+try:
+    __version__ = metadata.version("quadpy")
+except Exception:
+    __version__ = "unknown"
