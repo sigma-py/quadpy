@@ -111,7 +111,7 @@ wiki](https://github.com/nschloe/quadpy/wiki#dimensionality-of-input-and-output-
 Advanced topics:
 
   * [Adaptive quadrature](https://github.com/nschloe/quadpy/wiki/Adaptive-quadrature)
-  * [Creating your own Gauss scheme](https://github.com/nschloe/quadpy/wiki/Creating-your-own-Gauss-quadrature-in-three-simple-steps)
+  * [Creating your own Gauss scheme](https://github.com/nschloe/quadpy/wiki/Creating-your-own-Gauss-quadrature-in-two-simple-steps)
   * [tanh-sinh quadrature](https://github.com/nschloe/quadpy/wiki/tanh-sinh-quadrature)
 
 
