@@ -247,6 +247,9 @@ def show_vtk(points, weights, volume, edges, balls=None, render=True):
     # Create a renderer and add the sphere actor to it
     renderer = vtk.vtkRenderer()
     renderer.SetBackground(1.0, 1.0, 1.0)
+    # Available in more recent versions of VTK
+    # <https://vtk.org/doc/nightly/html/classvtkViewport.html#aed4374e05dbbea1692f7c9c865407664>
+    # renderer.SetBackgroundAlpha(1.0)
     for sphere_actor in sphere_actors:
         renderer.AddActor(sphere_actor)
     for line_actor in line_actors:
