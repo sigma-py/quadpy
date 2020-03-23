@@ -64,7 +64,7 @@ def golub_welsch(moments):
     return alpha, beta
 
 
-def stieltjes(w, a, b, n):
+def stieltjes(w, a, b, n, **kwargs):
     t = sympy.Symbol("t")
 
     alpha = n * [None]
@@ -74,20 +74,20 @@ def stieltjes(w, a, b, n):
 
     k = 0
     pi[k] = 1
-    mu[k] = sympy.integrate(pi[k] ** 2 * w(t), (t, a, b))
-    alpha[k] = sympy.integrate(t * pi[k] ** 2 * w(t), (t, a, b)) / mu[k]
+    mu[k] = sympy.integrate(pi[k] ** 2 * w(t), (t, a, b), **kwargs)
+    alpha[k] = sympy.integrate(t * pi[k] ** 2 * w(t), (t, a, b), **kwargs) / mu[k]
     beta[k] = mu[0]  # not used, by convention mu[0]
 
     k = 1
     pi[k] = (t - alpha[k - 1]) * pi[k - 1]
-    mu[k] = sympy.integrate(pi[k] ** 2 * w(t), (t, a, b))
-    alpha[k] = sympy.integrate(t * pi[k] ** 2 * w(t), (t, a, b)) / mu[k]
+    mu[k] = sympy.integrate(pi[k] ** 2 * w(t), (t, a, b), **kwargs)
+    alpha[k] = sympy.integrate(t * pi[k] ** 2 * w(t), (t, a, b), **kwargs) / mu[k]
     beta[k] = mu[k] / mu[k - 1]
 
     for k in range(2, n):
         pi[k] = (t - alpha[k - 1]) * pi[k - 1] - beta[k - 1] * pi[k - 2]
-        mu[k] = sympy.integrate(pi[k] ** 2 * w(t), (t, a, b))
-        alpha[k] = sympy.integrate(t * pi[k] ** 2 * w(t), (t, a, b)) / mu[k]
+        mu[k] = sympy.integrate(pi[k] ** 2 * w(t), (t, a, b), **kwargs)
+        alpha[k] = sympy.integrate(t * pi[k] ** 2 * w(t), (t, a, b), **kwargs) / mu[k]
         beta[k] = mu[k] / mu[k - 1]
 
     return alpha, beta
@@ -161,7 +161,7 @@ def chebyshev_modified(nu, a, b):
     return alpha, beta
 
 
-def integrate(f, a, b):
+def integrate(f, a, b, **kwargs):
     """Symbolically calculate the integrals
 
       int_a^b f_k(x) dx.
@@ -172,9 +172,11 @@ def integrate(f, a, b):
             lambda x: [x**k for k in range(5)],
             -1, +1
             )
+
+    Any keyword arguments are passed directly to `sympy.integrate` function.
     """
     x = sympy.Symbol("x")
-    return numpy.array([sympy.integrate(fun, (x, a, b)) for fun in f(x)])
+    return numpy.array([sympy.integrate(fun, (x, a, b), **kwargs) for fun in f(x)])
 
 
 def coefficients_from_gauss(points, weights):
