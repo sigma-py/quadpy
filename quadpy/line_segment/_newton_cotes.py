@@ -6,7 +6,7 @@ import sympy
 from ._helpers import LineSegmentScheme
 
 
-def newton_cotes_closed(index):
+def newton_cotes_closed(index, **kwargs):
     """
     Closed Newton-Cotes formulae.
     <https://en.wikipedia.org/wiki/Newton%E2%80%93Cotes_formulas#Closed_Newton.E2.80.93Cotes_formulae>,
@@ -28,7 +28,7 @@ def newton_cotes_closed(index):
         alpha = (
             2
             * (-1) ** (n - r)
-            * sympy.integrate(f, (t, 0, n))
+            * sympy.integrate(f, (t, 0, n), **kwargs)
             / (math.factorial(r) * math.factorial(n - r))
             / index
         )
@@ -36,7 +36,7 @@ def newton_cotes_closed(index):
     return LineSegmentScheme("Newton-Cotes (closed)", degree, weights, points)
 
 
-def newton_cotes_open(index):
+def newton_cotes_open(index, **kwargs):
     """
     Open Newton-Cotes formulae.
     <https://math.stackexchange.com/a/1959071/36678>
@@ -53,7 +53,7 @@ def newton_cotes_open(index):
         alpha = (
             2
             * (-1) ** (n - r + 1)
-            * sympy.integrate(f, (t, 0, n))
+            * sympy.integrate(f, (t, 0, n), **kwargs)
             / (math.factorial(r - 1) * math.factorial(n - 1 - r))
             / n
         )
