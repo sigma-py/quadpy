@@ -161,7 +161,7 @@ def chebyshev_modified(nu, a, b):
     return alpha, beta
 
 
-def integrate(f, a, b):
+def integrate(f, a, b, **kwargs):
     """Symbolically calculate the integrals
 
       int_a^b f_k(x) dx.
@@ -172,9 +172,11 @@ def integrate(f, a, b):
             lambda x: [x**k for k in range(5)],
             -1, +1
             )
+
+    Any keyword arguments are passed directly to `sympy.integrate` function.
     """
     x = sympy.Symbol("x")
-    return numpy.array([sympy.integrate(fun, (x, a, b)) for fun in f(x)])
+    return numpy.array([sympy.integrate(fun, (x, a, b), **kwargs) for fun in f(x)])
 
 
 def coefficients_from_gauss(points, weights):
