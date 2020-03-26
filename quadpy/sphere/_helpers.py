@@ -11,21 +11,21 @@ class SphereScheme:
         if weights.dtype == numpy.float64:
             self.weights = weights
         else:
-            assert weights.dtype in [numpy.dtype("O"), numpy.int64]
+            assert weights.dtype in [numpy.dtype("O"), numpy.int_]
             self.weights = weights.astype(numpy.float64)
             self.weights_symbolic = weights
 
         if points.dtype == numpy.float64:
             self.points = points
         else:
-            assert points.dtype in [numpy.dtype("O"), numpy.int64]
+            assert points.dtype in [numpy.dtype("O"), numpy.int_]
             self.points = points.astype(numpy.float64)
             self.points_symbolic = points
 
         if azimuthal_polar.dtype == numpy.float64:
             self.azimuthal_polar = azimuthal_polar
         else:
-            assert azimuthal_polar.dtype in [numpy.dtype("O"), numpy.int64]
+            assert azimuthal_polar.dtype in [numpy.dtype("O"), numpy.int_]
             self.azimuthal_polar = azimuthal_polar.astype(numpy.float64)
             self.azimuthal_polar_symbolic = azimuthal_polar
         return
