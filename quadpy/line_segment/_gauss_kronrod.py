@@ -162,10 +162,23 @@ def _gauss_kronrod_integrate(
     #   eps = numpy.finfo(float).eps
     #   exponent = numpy.log(eps) / numpy.log(200*eps)
     #
-    error_estimate = I_tilde * numpy.minimum(
-        numpy.ones(I_tilde.shape),
-        (200 * abs(val_gauss_kronrod - val_gauss_legendr) / I_tilde) ** 1.5,
-    )
+    # The following expression is
+    #
+    # error_estimate = I_tilde * numpy.minimum(
+    #     numpy.ones(I_tilde.shape),
+    #     (200 * abs(val_gauss_kronrod - val_gauss_legendr) / I_tilde) ** 1.5,
+    # )
+    #
+    # with handling NaNs (if I_tilde is 0).
+    error_estimate = numpy.empty(I_tilde.shape)
+    idx = numpy.abs(I_tilde) > 1.0e-15
+    vals = (
+        200 * abs(val_gauss_kronrod[idx] - val_gauss_legendr[idx]) / I_tilde[idx]
+    ) ** 1.5
+    error_estimate[idx] = numpy.minimum(numpy.ones(numpy.sum(idx)), vals)
+    error_estimate[~idx] = 1.0
+    error_estimate *= I_tilde
+
     assert error_estimate.shape == range_shape + interval_set_shape
 
     return (
