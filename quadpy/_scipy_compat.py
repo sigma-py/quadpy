@@ -43,8 +43,3 @@ def quad(f, a, b, args=(), epsabs=1.49e-08, epsrel=1.49e-08, limit=50):
     return integrate_adaptive(
         g, [a, b], eps_abs=epsabs, eps_rel=epsrel, max_num_subintervals=limit
     )
-
-
-def dblquad(f, a, b, gfun, hfun, args=(), epsabs=1.49e-08, epsrel=1.49e-08, limit=50):
-
-    bla
