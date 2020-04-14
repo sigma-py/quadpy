@@ -150,7 +150,7 @@ def _gauss_kronrod_integrate(
     #   <https://doi.org/10.1145/2333112.2333117>,
     #   <https://arxiv.org/pdf/1003.4629.pdf>
     #
-    # the classicial QUADPACK still compares favorably with other approaches.
+    # the classical QUADPACK still compares favorably with other approaches.
     average = val_gauss_kronrod / alpha
     fx_avg_abs = numpy.abs(fx_gk - average[..., None])
     I_tilde = 0.5 * alpha * dot(fx_avg_abs, gk.weights)
