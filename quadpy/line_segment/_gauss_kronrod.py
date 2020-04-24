@@ -1,4 +1,5 @@
 import math
+from collections import namedtuple
 
 import numpy
 
@@ -130,15 +131,17 @@ def _gauss_kronrod_integrate(
     fx_gl = fx_gk[..., 1::2]
 
     diff = intervals[1] - intervals[0]
-    alpha = numpy.sqrt(numpy.sum(diff ** 2, axis=tuple(range(len(domain_shape)))))
+    interval_lengths = numpy.sqrt(
+        numpy.sum(diff ** 2, axis=tuple(range(len(domain_shape))))
+    )
 
-    assert alpha.shape == interval_set_shape
+    assert interval_lengths.shape == interval_set_shape
 
     # integrate
     # average value of gk over the interval
-    average = 0.5 * dot(fx_gk, gk.weights)
-    val_gauss_kronrod = average * alpha
-    val_gauss_legendr = 0.5 * alpha * dot(fx_gl, gl.weights)
+    average_gk = 0.5 * dot(fx_gk, gk.weights)
+    val_gauss_kronrod = average_gk * interval_lengths
+    val_gauss_legendr = 0.5 * interval_lengths * dot(fx_gl, gl.weights)
 
     assert val_gauss_kronrod.shape == range_shape + interval_set_shape
     assert val_gauss_legendr.shape == range_shape + interval_set_shape
@@ -153,8 +156,8 @@ def _gauss_kronrod_integrate(
     #   <https://arxiv.org/pdf/1003.4629.pdf>
     #
     # the classical QUADPACK still compares favorably with other approaches.
-    fx_avg_abs = numpy.abs(fx_gk - average[..., None])
-    I_tilde = 0.5 * alpha * dot(fx_avg_abs, gk.weights)
+    fx_avg_abs = numpy.abs(fx_gk - average_gk[..., None])
+    I_tilde = 0.5 * interval_lengths * dot(fx_avg_abs, gk.weights)
 
     # The exponent 1.5 is chosen such that (200*x)**1.5 is approximately x at 1.0e-6,
     # the machine precision on IEEE 754 32-bit floating point arithmentic. This could be
@@ -182,10 +185,22 @@ def _gauss_kronrod_integrate(
 
     assert error_estimate.shape == range_shape + interval_set_shape
 
-    return (
+    gk_return = namedtuple(
+        "gauss_kronrod_return_values",
+        [
+            "val_gauss_kronrod",
+            "val_gauss_legendre",
+            "interval_lengths",
+            "error_estimate",
+            "domain_shape",
+            "range_shape",
+        ],
+    )
+
+    return gk_return(
         val_gauss_kronrod,
         val_gauss_legendr,
-        alpha,
+        interval_lengths,
         error_estimate,
         domain_shape,
         range_shape,
