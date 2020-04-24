@@ -13,7 +13,7 @@ class IntegrationError(Exception):
 
 def integrate_adaptive(
     f,
-    intervals,
+    interval,
     eps_abs=1.0e-10,
     eps_rel=1.0e-10,
     kronrod_degree=7,
@@ -23,7 +23,7 @@ def integrate_adaptive(
     domain_shape=None,
     range_shape=None,
 ):
-    intervals = numpy.asarray(intervals)
+    intervals = numpy.asarray(interval)
     assert intervals.shape[0] == 2
 
     assert (
@@ -33,7 +33,7 @@ def integrate_adaptive(
     # Use Gauss-Kronrod scheme for error estimation and adaptivity.
     # The method also returns guesses for the domain_shape and range_shape (if any of
     # them is None).
-    _, val, a, error_estimate, domain_shape, range_shape = _gauss_kronrod_integrate(
+    out = _gauss_kronrod_integrate(
         kronrod_degree,
         f,
         intervals,
@@ -41,47 +41,54 @@ def integrate_adaptive(
         domain_shape=domain_shape,
         range_shape=range_shape,
     )
+    value_estimates = out.val_gauss_legendre
+    interval_lengths = out.interval_lengths
+    error_estimates = out.error_estimate
+    domain_shape = out.domain_shape
+    range_shape = out.range_shape
 
     # Flatten the list of intervals so we can do good-bad bookkeeping via a list.
     intervals = intervals.reshape((2,) + domain_shape + (-1,))
     num_subintervals = 1
-    a_orig = a.reshape(-1)
-    val_shape = val.shape
-    val = val.reshape(range_shape + (-1,))
-    error_estimate = error_estimate.reshape(range_shape + (-1,))
-
-    total_val = numpy.zeros(val.shape, dtype=val.dtype)
-    total_error_estimate = numpy.zeros(error_estimate.shape)
+    orig_shape = value_estimates.shape
+    value_estimates = value_estimates.reshape(range_shape + (-1,))
+    error_estimates = error_estimates.reshape(range_shape + (-1,))
 
     # Mark intervals with acceptable approximations. For this, take all() across every
     # dimension except the last one (which is the interval index).
-    is_good = numpy.ones(error_estimate.shape[-1], dtype=bool)
+    is_good = numpy.ones(error_estimates.shape[-1], dtype=bool)
     if eps_abs is not None:
-        is_good = numpy.logical_and(
-            is_good, _numpy_all_except_last(error_estimate < eps_abs)
-        )
+        is_okay = error_estimates < eps_abs
+        is_good &= _numpy_all_except_last(is_okay)
     if eps_rel is not None:
-        is_good = numpy.logical_and(
-            is_good, _numpy_all_except_last(error_estimate < eps_rel * numpy.abs(val)),
-        )
-    idx = numpy.arange(intervals.shape[-1])
+        is_okay = error_estimates < eps_rel * numpy.abs(value_estimates)
+        is_good &= _numpy_all_except_last(is_okay)
 
-    total_val[..., is_good] += val[..., is_good]
-    total_error_estimate[..., is_good] += error_estimate[..., is_good]
+    # idx = numpy.arange(intervals.shape[-1])
+
+    good_values_sum = numpy.sum(value_estimates[..., is_good], axis=-1)
+    good_errors_sum = numpy.sum(error_estimates[..., is_good], axis=-1)
+
+    print(good_values_sum)
+    print(good_errors_sum)
+    print(error_estimates)
 
     k = 0
     while numpy.any(~is_good):
+        print()
+        print(k)
         # split the bad intervals in half
-        intervals = intervals[..., ~is_good]
-        midpoints = 0.5 * (intervals[0] + intervals[1])
+        bad_intervals = intervals[..., ~is_good]
+        midpoints = 0.5 * (bad_intervals[0] + bad_intervals[1])
         intervals = numpy.array(
             [
-                numpy.concatenate([intervals[0], midpoints], axis=-1),
-                numpy.concatenate([midpoints, intervals[1]], axis=-1),
+                numpy.concatenate([bad_intervals[0], midpoints], axis=-1),
+                numpy.concatenate([midpoints, bad_intervals[1]], axis=-1),
             ]
         )
-        idx = numpy.concatenate([idx[~is_good], idx[~is_good]])
-        num_subintervals += numpy.sum(~is_good)
+        print("intervals", intervals)
+        # idx = numpy.concatenate([idx[~is_good], idx[~is_good]])
+        num_subintervals += numpy.sum(is_good)
 
         if num_subintervals > max_num_subintervals:
             raise IntegrationError(
@@ -90,7 +97,7 @@ def integrate_adaptive(
             )
 
         # compute values and error estimates for the new intervals
-        _, val, a, error_estimate, _, _ = _gauss_kronrod_integrate(
+        out = _gauss_kronrod_integrate(
             kronrod_degree,
             f,
             intervals,
@@ -98,12 +105,14 @@ def integrate_adaptive(
             domain_shape=domain_shape,
             range_shape=range_shape,
         )
+        value_estimates = out.val_gauss_legendre
+        interval_lengths = out.interval_lengths
+        error_estimates = out.error_estimate
 
-        # relative interval lenghts
-        b = a / a_orig
+        print("interval_lengths", interval_lengths)
 
         # mark good intervals, gather values and error estimates
-        if numpy.any(a < minimum_interval_length):
+        if numpy.any(interval_lengths < minimum_interval_length):
             raise IntegrationError(
                 f"Tolerances (abs: {eps_abs}, rel: {eps_rel}) could not be reached "
                 f"with the given minimum_interval_length (= {minimum_interval_length})."
@@ -111,27 +120,47 @@ def integrate_adaptive(
 
         # TODO speed up
         # tentative total value (as if all intervals were good)
-        ttv = total_val.copy()
-        for j, i in enumerate(idx):
-            ttv[..., i] += val[..., j]
+        ttv = good_values_sum + numpy.sum(value_estimates, axis=-1)
+        # for j, i in enumerate(idx):
+        #     ttv[..., i] += val[..., j]
 
-        is_good = numpy.ones(error_estimate.shape[-1], dtype=bool)
+        allowance_abs = eps_abs - numpy.sum(good_errors_sum, axis=-1)
+        allowance_rel = eps_rel - numpy.sum(good_errors_sum, axis=-1) / numpy.abs(ttv)
+
+        # distribute the remaining allowances according to the interval lengths
+        tau = interval_lengths / numpy.sum(interval_lengths)
+
+        print("val", value_estimates)
+        print("err", error_estimates)
+
+        is_good = numpy.ones(error_estimates.shape[-1], dtype=bool)
         if eps_abs is not None:
-            is_good = numpy.logical_and(
-                is_good, _numpy_all_except_last(error_estimate < eps_abs * b),
-            )
+            is_okay = error_estimates < tau * allowance_abs
+            is_good &= _numpy_all_except_last(is_okay)
+            print("eps_abs", is_good)
         if eps_rel is not None:
-            is_good = numpy.logical_and(
-                is_good,
-                _numpy_all_except_last(error_estimate < eps_rel * b * numpy.abs(ttv)),
-            )
+            is_okay = error_estimates < tau * allowance_rel * numpy.abs(ttv)
+            is_good &= _numpy_all_except_last(is_okay)
+            print("eps_rel", is_good)
 
-        # TODO speed up
-        for j, i in enumerate(idx[is_good]):
-            total_val[..., i] += val[..., is_good][..., j]
-            total_error_estimate[..., i] += error_estimate[..., is_good][..., j]
+        good_values_sum += numpy.sum(value_estimates[..., is_good], axis=-1)
+        good_errors_sum += numpy.sum(error_estimates[..., is_good], axis=-1)
+        # # TODO speed up
+        # for j, i in enumerate(idx[is_good]):
+        #     good_values_sum[..., i] += value_estimates[..., is_good][..., j]
+        #     good_errors_sum[..., i] += error_estimates[..., is_good][..., j]
+
+        # ttv = good_values_sum.copy()
+        # for j, i in enumerate(idx):
+        #     ttv[..., i] += val[..., j]
+
+        print("good_values_sum", good_values_sum)
+        print("good_errors_sum", good_errors_sum)
         k += 1
 
-    total_val = total_val.reshape(val_shape)
-    total_error_estimate = total_error_estimate.reshape(val_shape)
-    return total_val, total_error_estimate
+        if k == 100:
+            exit(1)
+
+    good_values_sum = good_values_sum.reshape(orig_shape)
+    good_errors_sum = good_errors_sum.reshape(orig_shape)
+    return good_values_sum, good_errors_sum
