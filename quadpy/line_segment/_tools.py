@@ -66,8 +66,6 @@ def integrate_adaptive(
         is_okay = error_estimates < eps_rel * numpy.abs(value_estimates)
         is_good &= _numpy_all_except_last(is_okay)
 
-    # idx = numpy.arange(intervals.shape[-1])
-
     good_values_sum = numpy.sum(value_estimates[..., is_good], axis=-1)
     good_errors_sum = numpy.sum(error_estimates[..., is_good], axis=-1)
 
@@ -113,18 +111,19 @@ def integrate_adaptive(
         # tentative total value (as if all intervals were good)
         ttv = good_values_sum + numpy.sum(value_estimates, axis=-1)
 
-        allowance_abs = eps_abs - numpy.sum(good_errors_sum, axis=-1)
-        allowance_rel = eps_rel - numpy.sum(good_errors_sum, axis=-1) / numpy.abs(ttv)
-
         # distribute the remaining allowances according to the interval lengths
         tau = interval_lengths / numpy.sum(interval_lengths)
 
         is_good = numpy.ones(error_estimates.shape[-1], dtype=bool)
         if eps_abs is not None:
+            allowance_abs = eps_abs - good_errors_sum
             is_okay = error_estimates < tau * allowance_abs
             is_good &= _numpy_all_except_last(is_okay)
         if eps_rel is not None:
-            is_okay = error_estimates < tau * allowance_rel * numpy.abs(ttv)
+            # allowance_rel = eps_rel - good_errors_sum / numpy.abs(ttv)
+            # is_okay = error_estimates < tau * allowance_rel * numpy.abs(ttv)
+            allowance_rel_ttv = eps_rel * numpy.abs(ttv) - good_errors_sum
+            is_okay = error_estimates < tau * allowance_rel_ttv
             is_good &= _numpy_all_except_last(is_okay)
 
         good_values_sum += numpy.sum(value_estimates[..., is_good], axis=-1)
