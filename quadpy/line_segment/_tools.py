@@ -16,7 +16,9 @@ def integrate_adaptive(
     interval,
     eps_abs=1.0e-10,
     eps_rel=1.0e-10,
-    kronrod_degree=7,
+    # Use 21-point Gauss-Kronrod like QUADPACK
+    # <https://en.wikipedia.org/wiki/QUADPACK#General-purpose_routines>
+    kronrod_degree=10,
     minimum_interval_length=0.0,
     max_num_subintervals=numpy.inf,
     dot=numpy.dot,
@@ -69,14 +71,7 @@ def integrate_adaptive(
     good_values_sum = numpy.sum(value_estimates[..., is_good], axis=-1)
     good_errors_sum = numpy.sum(error_estimates[..., is_good], axis=-1)
 
-    print(good_values_sum)
-    print(good_errors_sum)
-    print(error_estimates)
-
-    k = 0
     while numpy.any(~is_good):
-        print()
-        print(k)
         # split the bad intervals in half
         bad_intervals = intervals[..., ~is_good]
         midpoints = 0.5 * (bad_intervals[0] + bad_intervals[1])
@@ -86,7 +81,6 @@ def integrate_adaptive(
                 numpy.concatenate([midpoints, bad_intervals[1]], axis=-1),
             ]
         )
-        print("intervals", intervals)
         # idx = numpy.concatenate([idx[~is_good], idx[~is_good]])
         num_subintervals += numpy.sum(is_good)
 
@@ -109,8 +103,6 @@ def integrate_adaptive(
         interval_lengths = out.interval_lengths
         error_estimates = out.error_estimate
 
-        print("interval_lengths", interval_lengths)
-
         # mark good intervals, gather values and error estimates
         if numpy.any(interval_lengths < minimum_interval_length):
             raise IntegrationError(
@@ -118,11 +110,8 @@ def integrate_adaptive(
                 f"with the given minimum_interval_length (= {minimum_interval_length})."
             )
 
-        # TODO speed up
         # tentative total value (as if all intervals were good)
         ttv = good_values_sum + numpy.sum(value_estimates, axis=-1)
-        # for j, i in enumerate(idx):
-        #     ttv[..., i] += val[..., j]
 
         allowance_abs = eps_abs - numpy.sum(good_errors_sum, axis=-1)
         allowance_rel = eps_rel - numpy.sum(good_errors_sum, axis=-1) / numpy.abs(ttv)
@@ -130,36 +119,16 @@ def integrate_adaptive(
         # distribute the remaining allowances according to the interval lengths
         tau = interval_lengths / numpy.sum(interval_lengths)
 
-        print("val", value_estimates)
-        print("err", error_estimates)
-
         is_good = numpy.ones(error_estimates.shape[-1], dtype=bool)
         if eps_abs is not None:
             is_okay = error_estimates < tau * allowance_abs
             is_good &= _numpy_all_except_last(is_okay)
-            print("eps_abs", is_good)
         if eps_rel is not None:
             is_okay = error_estimates < tau * allowance_rel * numpy.abs(ttv)
             is_good &= _numpy_all_except_last(is_okay)
-            print("eps_rel", is_good)
 
         good_values_sum += numpy.sum(value_estimates[..., is_good], axis=-1)
         good_errors_sum += numpy.sum(error_estimates[..., is_good], axis=-1)
-        # # TODO speed up
-        # for j, i in enumerate(idx[is_good]):
-        #     good_values_sum[..., i] += value_estimates[..., is_good][..., j]
-        #     good_errors_sum[..., i] += error_estimates[..., is_good][..., j]
-
-        # ttv = good_values_sum.copy()
-        # for j, i in enumerate(idx):
-        #     ttv[..., i] += val[..., j]
-
-        print("good_values_sum", good_values_sum)
-        print("good_errors_sum", good_errors_sum)
-        k += 1
-
-        if k == 100:
-            exit(1)
 
     good_values_sum = good_values_sum.reshape(orig_shape)
     good_errors_sum = good_errors_sum.reshape(orig_shape)
