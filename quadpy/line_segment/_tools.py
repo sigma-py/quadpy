@@ -13,7 +13,7 @@ class IntegrationError(Exception):
 
 def integrate_adaptive(
     f,
-    interval,
+    intervals,
     eps_abs=1.0e-10,
     eps_rel=1.0e-10,
     # Use 21-point Gauss-Kronrod like QUADPACK
@@ -25,7 +25,7 @@ def integrate_adaptive(
     domain_shape=None,
     range_shape=None,
 ):
-    intervals = numpy.asarray(interval)
+    intervals = numpy.asarray(intervals)
     assert intervals.shape[0] == 2
 
     assert (
@@ -117,13 +117,13 @@ def integrate_adaptive(
         is_good = numpy.ones(error_estimates.shape[-1], dtype=bool)
         if eps_abs is not None:
             allowance_abs = eps_abs - good_errors_sum
-            is_okay = error_estimates < tau * allowance_abs
+            is_okay = error_estimates < numpy.multiply.outer(allowance_abs, tau)
             is_good &= _numpy_all_except_last(is_okay)
         if eps_rel is not None:
             # allowance_rel = eps_rel - good_errors_sum / numpy.abs(ttv)
             # is_okay = error_estimates < tau * allowance_rel * numpy.abs(ttv)
             allowance_rel_ttv = eps_rel * numpy.abs(ttv) - good_errors_sum
-            is_okay = error_estimates < tau * allowance_rel_ttv
+            is_okay = error_estimates < numpy.multiply.outer(allowance_rel_ttv, tau)
             is_good &= _numpy_all_except_last(is_okay)
 
         good_values_sum += numpy.sum(value_estimates[..., is_good], axis=-1)
