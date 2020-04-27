@@ -3,6 +3,7 @@ from ._dobrodeev1978 import dobrodeev_1978
 from ._ewing import ewing
 from ._hammer_stroud import hammer_stroud_1n, hammer_stroud_2n
 from ._helpers import NCubeScheme, ncube_points, transform
+from ._mcnamee_stenger import mcnamee_stenger_3
 from ._mustard_lyness_blatt import mustard_lyness_blatt
 from ._phillips import phillips
 from ._stroud import (
@@ -38,6 +39,7 @@ __all__ = [
     "ewing",
     "hammer_stroud_1n",
     "hammer_stroud_2n",
+    "mcnamee_stenger_3",
     "mustard_lyness_blatt",
     "phillips",
     "stroud_1957_2",

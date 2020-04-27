@@ -51,7 +51,7 @@ val, err = quadpy.quad(f, 0.0, 6.0)
 This is just like
 [scipy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html)
 with the addition that quadpy handles complex-, vector-, matrix-valued integrands,
-and lines in spaces of arbitrary dimension.
+and "intervals" in spaces of arbitrary dimension.
 
 To integrate over a _triangle_ with [Strang's rule](https://bookstore.siam.org/wc08/) of
 degree 6, do

@@ -17,7 +17,7 @@ citation = article(
 
 
 _points_0 = [0.0]
-_points_1 = _points_0 + [1.2247448713915889e00]
+_points_1 = _points_0 + [numpy.sqrt(1.5)]
 _points_2 = _points_1 + [
     5.2403354748695763e-01,
     2.0232301911005157e00,
