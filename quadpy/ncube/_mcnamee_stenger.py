@@ -1,5 +1,5 @@
 from sympy import Rational as frac
-from sympy import sqrt, binomial
+from sympy import binomial, sqrt
 
 from ..helpers import article, fsd, untangle, z
 from ._helpers import NCubeScheme

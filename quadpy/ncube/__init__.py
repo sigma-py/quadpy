@@ -4,9 +4,10 @@ from ._ewing import ewing
 from ._hammer_stroud import hammer_stroud_1n, hammer_stroud_2n
 from ._helpers import NCubeScheme, ncube_points, transform
 from ._mcnamee_stenger import (
-    mcnamee_stenger_3, mcnamee_stenger_5,
+    mcnamee_stenger_3,
+    mcnamee_stenger_5,
     mcnamee_stenger_7a,
-    mcnamee_stenger_7b
+    mcnamee_stenger_7b,
 )
 from ._mustard_lyness_blatt import mustard_lyness_blatt
 from ._phillips import phillips
