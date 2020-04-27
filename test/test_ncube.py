@@ -16,6 +16,7 @@ from helpers import check_degree_ortho
     + [quadpy.ncube.hammer_stroud_2n(n) for n in range(3, 7)]
     + [quadpy.ncube.mcnamee_stenger_3(n) for n in range(3, 7)]
     + [quadpy.ncube.mcnamee_stenger_5(n) for n in range(3, 7)]
+    + [quadpy.ncube.mcnamee_stenger_7(n) for n in range(3, 7)]
     + [quadpy.ncube.stroud_cn_1_1(n) for n in range(3, 7)]
     + [quadpy.ncube.stroud_cn_1_2(n) for n in range(3, 7)]
     + [quadpy.ncube.stroud_cn_2_1(n) for n in range(3, 7)]
@@ -36,7 +37,7 @@ from helpers import check_degree_ortho
     + [quadpy.ncube.stroud_cn_5_9(n) for n in range(3, 7)]
     + [quadpy.ncube.stroud_cn_7_1(n) for n in range(3, 7)],
 )
-def test_scheme(scheme, tol=1.0e-11):
+def test_scheme(scheme, tol=1.0e-10):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
