@@ -1,5 +1,5 @@
 from sympy import Rational as frac
-from sympy import sqrt
+from sympy import sqrt, binomial
 
 from ..helpers import article, fsd, untangle, z
 from ._helpers import NCubeScheme
@@ -55,3 +55,73 @@ def mcnamee_stenger_5(n):
     points, weights = untangle(data)
     # weights *= 2 ** n
     return NCubeScheme("McNamee-Stenger 5", n, weights, points, 5, _citation)
+
+
+def mcnamee_stenger_7(n):
+    I0 = 2 ** n
+    I2 = frac(2 ** n, 3)
+    I4 = frac(2 ** n, 5)
+    I6 = frac(2 ** n, 7)
+    I22 = frac(2 ** n, 9)
+    I24 = frac(2 ** n, 15)
+    I222 = frac(2 ** n, 27)
+
+    # Choose u, v as solutions of a u**4 - b u**2 + c = 0.
+    a = I2 ** 2 - I0 * I4
+    b = I2 * I4 - I0 * I6
+    c = I4 ** 2 - I2 * I6
+    #
+    u2 = (b + sqrt(b ** 2 - 4 * a * c)) / (2 * a)
+    v2 = (b - sqrt(b ** 2 - 4 * a * c)) / (2 * a)
+
+    u4 = u2 ** 2
+    u6 = u2 ** 3
+    v4 = v2 ** 2
+    v6 = v2 ** 3
+
+    A111 = I222 / (2 * u2) ** 3
+
+    # mat = [[u4, v4], [u6, v6]]
+    det = u4 * v6 - v4 * u6
+    inv = [[v6 / det, -v4 / det], [-u6 / det, u4 / det]]
+    # vector
+    vec = [
+        I22 - 2 ** 3 * (n - 2) * u4 * A111,
+        I24 - 2 ** 3 * (n - 2) * u6 * A111,
+    ]
+    A11 = frac(1, 4) * (inv[0][0] * vec[0] + inv[0][1] * vec[1])
+    A22 = frac(1, 4) * (inv[1][0] * vec[0] + inv[1][1] * vec[1])
+
+    # mat = [[u2, v2], [u4, v4]]
+    det = u2 * v4 - v2 * u4
+    inv = [[v4 / det, -v2 / det], [-u4 / det, u2 / det]]
+    vec = [
+        I2 - 2 ** 3 * binomial(n - 1, 2) * u2 * A111,
+        I4 - 2 ** 3 * binomial(n - 1, 2) * u4 * A111,
+    ]
+    A1 = -2 * (n - 1) * A11 + frac(1, 2) * (inv[0][0] * vec[0] + inv[0][1] * vec[1])
+    A2 = -2 * (n - 1) * A22 + frac(1, 2) * (inv[1][0] * vec[0] + inv[1][1] * vec[1])
+
+    A0 = (
+        I0
+        - 2 * n * (A1 + A2)
+        - 2 ** 2 * binomial(n, 2) * (A11 + A22)
+        - 2 ** 3 * binomial(n, 3) * A111
+    )
+
+    u = sqrt(u2)
+    v = sqrt(v2)
+
+    data = [
+        (A0, z(n)),
+        (A1, fsd(n, (u, 1))),
+        (A2, fsd(n, (v, 1))),
+        (A11, fsd(n, (u, 2))),
+        (A22, fsd(n, (v, 2))),
+        (A111, fsd(n, (u, 3))),
+    ]
+
+    points, weights = untangle(data)
+
+    # weights *= 2 ** n
+    return NCubeScheme("McNamee-Stenger 7", n, weights, points, 7, _citation)
