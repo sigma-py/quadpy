@@ -654,6 +654,7 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
 ```
 
 ### n-Cube
+ * [McNamee-Stenger](https://doi.org/10.1007/BF02162032) (1967, 6 schemes up to degree 9)
  * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1970, n >= 5, degree 7)
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
     - [Ewing](https://doi.org/doi.org/10.2307/2303604) (1941, degree 3)
