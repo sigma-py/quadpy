@@ -43,10 +43,10 @@ def _mcnamee_stenger_5(n, integrator):
     I4 = integrator(n, [4])
     I22 = integrator(n, [2, 2])
 
-    u = sqrt(frac(I4, I2))
+    u = sqrt(I4 / I2)
     A0 = I0 - n * (I2 / I4) ** 2 * (I4 - frac(n - 1, 2) * I22)
-    A1 = frac(1, 2) * frac(I2, I4) ** 2 * (I4 - (n - 1) * I22)
-    A11 = frac(1, 4) * frac(I2, I4) ** 2 * I22
+    A1 = frac(1, 2) * (I2 / I4) ** 2 * (I4 - (n - 1) * I22)
+    A11 = frac(1, 4) * (I2 / I4) ** 2 * I22
 
     data = [
         (A0, z(n)),
@@ -246,11 +246,14 @@ def integrator(n, k):
     """Returns the integral of the polynomial given by the coefficients k over the
     n-dimensional cube.
     """
-    from functools import reduce
-    import operator
     assert len(k) <= n
 
-    return frac(2 ** n, reduce(operator.mul, [kk + 1 for kk in k], 1))
+    def prod(factors):
+        from functools import reduce
+        import operator
+        return reduce(operator.mul, factors, 1)
+
+    return frac(2 ** n, prod([kk + 1 for kk in k]))
 
 
 def mcnamee_stenger_3(n):
