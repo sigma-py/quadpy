@@ -15,13 +15,13 @@ _citation = article(
 )
 
 
-def mcnamee_stenger_3(n):
-    I0 = 2 ** n
-    I2 = frac(2 ** n, 3)
+def _mcnamee_stenger_3(n, integrator):
+    I0 = integrator(n, [])
+    I2 = integrator(n, [2])
 
-    u2 = frac(I2, I0)
+    u2 = I2 / I0
     # ERR The article says I0 / (2 * u**2)
-    A1 = frac(I2, 2 * u2)
+    A1 = I2 / (2 * u2)
     A0 = (1 - n) * I0
     u = sqrt(u2)
 
@@ -32,16 +32,16 @@ def mcnamee_stenger_3(n):
 
     points, weights = untangle(data)
     # weights *= 2 ** n
-    return NCubeScheme("McNamee-Stenger 3", n, weights, points, 3, _citation)
+    return "McNamee-Stenger 3", n, weights, points, 3, _citation
 
 
-def mcnamee_stenger_5(n):
+def _mcnamee_stenger_5(n, integrator):
     assert n >= 2
 
-    I0 = 2 ** n
-    I2 = frac(2 ** n, 3)
-    I4 = frac(2 ** n, 5)
-    I22 = frac(2 ** n, 9)
+    I0 = integrator(n, [])
+    I2 = integrator(n, [2])
+    I4 = integrator(n, [4])
+    I22 = integrator(n, [2, 2])
 
     u = sqrt(frac(I4, I2))
     A0 = I0 - n * (I2 / I4) ** 2 * (I4 - frac(n - 1, 2) * I22)
@@ -56,19 +56,19 @@ def mcnamee_stenger_5(n):
 
     points, weights = untangle(data)
     # weights *= 2 ** n
-    return NCubeScheme("McNamee-Stenger 5", n, weights, points, 5, _citation)
+    return "McNamee-Stenger 5", n, weights, points, 5, _citation
 
 
-def _mcnamee_stenger_7(n, switch_uv):
+def _mcnamee_stenger_7(n, integrator, switch_uv):
     assert n >= 3
 
-    I0 = 2 ** n
-    I2 = frac(2 ** n, 3)
-    I4 = frac(2 ** n, 5)
-    I6 = frac(2 ** n, 7)
-    I22 = frac(2 ** n, 9)
-    I24 = frac(2 ** n, 15)
-    I222 = frac(2 ** n, 27)
+    I0 = integrator(n, [])
+    I2 = integrator(n, [2])
+    I4 = integrator(n, [4])
+    I6 = integrator(n, [6])
+    I22 = integrator(n, [2, 2])
+    I24 = integrator(n, [2, 4])
+    I222 = integrator(n, [2, 2, 2])
 
     # Choose u, v as solutions of a u**4 - b u**2 + c = 0.
     a = I2 ** 2 - I0 * I4
@@ -131,31 +131,23 @@ def _mcnamee_stenger_7(n, switch_uv):
     points, weights = untangle(data)
 
     # weights *= 2 ** n
-    return NCubeScheme("McNamee-Stenger 7", n, weights, points, 7, _citation)
+    return "McNamee-Stenger 7", n, weights, points, 7, _citation
 
 
-def mcnamee_stenger_7a(n):
-    return _mcnamee_stenger_7(n, switch_uv=False)
-
-
-def mcnamee_stenger_7b(n):
-    return _mcnamee_stenger_7(n, switch_uv=True)
-
-
-def _mcnamee_stenger_9(n, switch_uv):
+def _mcnamee_stenger_9(n, integrator, switch_uv):
     assert n >= 4
 
-    I0 = 2 ** n
-    I2 = frac(2 ** n, 3)
-    I4 = frac(2 ** n, 5)
-    I6 = frac(2 ** n, 7)
-    I8 = frac(2 ** n, 9)
-    I24 = frac(2 ** n, 15)
-    I26 = frac(2 ** n, 21)
-    I44 = frac(2 ** n, 25)
-    I222 = frac(2 ** n, 27)
-    I224 = frac(2 ** n, 45)
-    I2222 = frac(2 ** n, 81)
+    I0 = integrator(n, [])
+    I2 = integrator(n, [2])
+    I4 = integrator(n, [4])
+    I6 = integrator(n, [6])
+    I8 = integrator(n, [8])
+    I24 = integrator(n, [2, 4])
+    I26 = integrator(n, [2, 6])
+    I44 = integrator(n, [4, 4])
+    I222 = integrator(n, [2, 2, 2])
+    I224 = integrator(n, [2, 2, 4])
+    I2222 = integrator(n, [2, 2, 2, 2])
 
     # Choose u, v as solutions of a u**4 - b u**2 + c = 0.
     a = I4 ** 2 - I2 * I6
@@ -246,12 +238,40 @@ def _mcnamee_stenger_9(n, switch_uv):
     points, weights = untangle(data)
 
     # weights *= 2 ** n
-    return NCubeScheme("McNamee-Stenger 9", n, weights, points, 9, _citation)
+    return "McNamee-Stenger 9", n, weights, points, 9, _citation
+
+
+# Here starts the cube-specific section.
+def integrator(n, k):
+    """Returns the integral of the polynomial given by the coefficients k over the
+    n-dimensional cube.
+    """
+    from functools import reduce
+    import operator
+    assert len(k) <= n
+
+    return frac(2 ** n, reduce(operator.mul, [kk + 1 for kk in k], 1))
+
+
+def mcnamee_stenger_3(n):
+    return NCubeScheme(*_mcnamee_stenger_3(n, integrator))
+
+
+def mcnamee_stenger_5(n):
+    return NCubeScheme(*_mcnamee_stenger_5(n, integrator))
+
+
+def mcnamee_stenger_7a(n):
+    return NCubeScheme(*_mcnamee_stenger_7(n, integrator, False))
+
+
+def mcnamee_stenger_7b(n):
+    return NCubeScheme(*_mcnamee_stenger_7(n, integrator, True))
 
 
 def mcnamee_stenger_9a(n):
-    return _mcnamee_stenger_9(n, switch_uv=False)
+    return NCubeScheme(*_mcnamee_stenger_9(n, integrator, False))
 
 
 def mcnamee_stenger_9b(n):
-    return _mcnamee_stenger_9(n, switch_uv=True)
+    return NCubeScheme(*_mcnamee_stenger_9(n, integrator, True))
