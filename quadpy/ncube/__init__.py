@@ -8,6 +8,8 @@ from ._mcnamee_stenger import (
     mcnamee_stenger_5,
     mcnamee_stenger_7a,
     mcnamee_stenger_7b,
+    mcnamee_stenger_9a,
+    mcnamee_stenger_9b,
 )
 from ._mustard_lyness_blatt import mustard_lyness_blatt
 from ._phillips import phillips
@@ -48,6 +50,8 @@ __all__ = [
     "mcnamee_stenger_5",
     "mcnamee_stenger_7a",
     "mcnamee_stenger_7b",
+    "mcnamee_stenger_9a",
+    "mcnamee_stenger_9b",
     "mustard_lyness_blatt",
     "phillips",
     "stroud_1957_2",
