@@ -57,7 +57,7 @@ def mcnamee_stenger_5(n):
     return NCubeScheme("McNamee-Stenger 5", n, weights, points, 5, _citation)
 
 
-def mcnamee_stenger_7(n):
+def _mcnamee_stenger_7(n, switch_uv):
     I0 = 2 ** n
     I2 = frac(2 ** n, 3)
     I4 = frac(2 ** n, 5)
@@ -73,6 +73,9 @@ def mcnamee_stenger_7(n):
     #
     u2 = (b + sqrt(b ** 2 - 4 * a * c)) / (2 * a)
     v2 = (b - sqrt(b ** 2 - 4 * a * c)) / (2 * a)
+
+    if switch_uv:
+        u2, v2 = v2, u2
 
     u4 = u2 ** 2
     u6 = u2 ** 3
@@ -125,3 +128,11 @@ def mcnamee_stenger_7(n):
 
     # weights *= 2 ** n
     return NCubeScheme("McNamee-Stenger 7", n, weights, points, 7, _citation)
+
+
+def mcnamee_stenger_7a(n):
+    return _mcnamee_stenger_7(n, switch_uv=False)
+
+
+def mcnamee_stenger_7b(n):
+    return _mcnamee_stenger_7(n, switch_uv=True)
