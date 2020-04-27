@@ -15,6 +15,7 @@ from helpers import check_degree_ortho
     + [quadpy.ncube.hammer_stroud_1n(n) for n in range(3, 7)]
     + [quadpy.ncube.hammer_stroud_2n(n) for n in range(3, 7)]
     + [quadpy.ncube.mcnamee_stenger_3(n) for n in range(3, 7)]
+    + [quadpy.ncube.mcnamee_stenger_5(n) for n in range(3, 7)]
     + [quadpy.ncube.stroud_cn_1_1(n) for n in range(3, 7)]
     + [quadpy.ncube.stroud_cn_1_2(n) for n in range(3, 7)]
     + [quadpy.ncube.stroud_cn_2_1(n) for n in range(3, 7)]
