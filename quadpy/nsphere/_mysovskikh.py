@@ -17,11 +17,11 @@ citation = article(
 # Compute the area of a hypersphere, <https://tauday.com/tau-manifesto>.
 # No roots, no gamma functions. Such a nice recursion!
 def surface_hypersphere(n):
-    assert n > 1
-    if n == 2:
+    assert n > 0
+    if n == 1:
+        return 2
+    elif n == 2:
         return 2 * pi
-    elif n == 3:
-        return 4 * pi
     return 2 * pi / (n - 2) * surface_hypersphere(n - 2)
 
 
