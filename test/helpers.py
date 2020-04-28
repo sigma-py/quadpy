@@ -67,12 +67,6 @@ def check_degree_ortho(approximate, exact, abs_tol=1.0e-14):
     return len(approximate)
 
 
-def integrate_monomial_over_enr2(k):
-    if numpy.any(k % 2 == 1):
-        return 0
-    return numpy.prod([math.gamma((kk + 1) / 2.0) for kk in k])
-
-
 def integrate_monomial_over_enr(k):
     if numpy.any(k % 2 == 1):
         return 0
