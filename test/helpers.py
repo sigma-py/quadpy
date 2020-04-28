@@ -1,5 +1,3 @@
-import math
-
 import numpy
 
 from quadpy.helpers import get_all_exponents
@@ -65,24 +63,6 @@ def check_degree_ortho(approximate, exact, abs_tol=1.0e-14):
 
     # All values are equal; the degree is at least this.
     return len(approximate)
-
-
-def integrate_monomial_over_enr2(k):
-    if numpy.any(k % 2 == 1):
-        return 0
-    return numpy.prod([math.gamma((kk + 1) / 2.0) for kk in k])
-
-
-def integrate_monomial_over_enr(k):
-    if numpy.any(k % 2 == 1):
-        return 0
-    n = len(k)
-    return (
-        2
-        * math.factorial(sum(k) + n - 1)
-        * numpy.prod([math.gamma((kk + 1) / 2.0) for kk in k])
-        / math.gamma((sum(k) + n) / 2)
-    )
 
 
 def find_equal(schemes):

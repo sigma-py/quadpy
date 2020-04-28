@@ -51,7 +51,7 @@ val, err = quadpy.quad(f, 0.0, 6.0)
 This is just like
 [scipy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html)
 with the addition that quadpy handles complex-, vector-, matrix-valued integrands,
-and lines in spaces of arbitrary dimension.
+and "intervals" in spaces of arbitrary dimension.
 
 To integrate over a _triangle_ with [Strang's rule](https://bookstore.siam.org/wc08/) of
 degree 6, do
@@ -633,6 +633,7 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
 
 
 ### n-Ball
+ * [McNamee-Stenger](https://doi.org/10.1007/BF02162032) (1967, 6 schemes up to degree 9)
  * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1970, n >= 3, degree 7)
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
    - [Stroud](https://doi.org/10.2307/2001945) (1957, degree 2)
@@ -654,6 +655,7 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
 ```
 
 ### n-Cube
+ * [McNamee-Stenger](https://doi.org/10.1007/BF02162032) (1967, 6 schemes up to degree 9)
  * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1970, n >= 5, degree 7)
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
     - [Ewing](https://doi.org/doi.org/10.2307/2303604) (1941, degree 3)
@@ -683,7 +685,7 @@ quadpy.ncube.integrate(
 ```
 
 ### nD space with weight function exp(-r)
-
+ * [McNamee-Stenger](https://doi.org/10.1007/BF02162032) (1967, 6 schemes up to degree 9)
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
    - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 4 schemes up to degree 5)
    - 2 schemes up to degree 5
@@ -698,7 +700,7 @@ val = scheme.integrate(lambda x: x[0]**2)
 ```
 
 ### nD space with weight function exp(-r<sup>2</sup>)
-
+ * [McNamee-Stenger](https://doi.org/10.1007/BF02162032) (1967, 6 schemes up to degree 9)
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
    - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 4 schemes up to degree 5)
    - [Stroud](https://doi.org/10.1007/BF02162160) (1967, 2 schemes of degree 5)

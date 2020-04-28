@@ -3,7 +3,8 @@ import numpy
 import pytest
 
 import quadpy
-from helpers import check_degree, integrate_monomial_over_enr
+from quadpy.enr._helpers import integrate_monomial_over_enr
+from helpers import check_degree
 
 schemes = [
     quadpy.e2r.haegemans_piessens_a(),
