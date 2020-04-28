@@ -10,6 +10,12 @@ from quadpy.nball._helpers import integrate_monomial_over_unit_nball
     "scheme",
     [quadpy.nball.dobrodeev_1970(n) for n in range(3, 9)]
     + [quadpy.nball.dobrodeev_1978(n) for n in range(2, 7)]
+    + [quadpy.nball.mcnamee_stenger_3(n) for n in range(2, 7)]
+    + [quadpy.nball.mcnamee_stenger_5(n) for n in range(2, 7)]
+    + [quadpy.nball.mcnamee_stenger_7a(n) for n in range(3, 7)]
+    + [quadpy.nball.mcnamee_stenger_7b(n) for n in range(3, 7)]
+    + [quadpy.nball.mcnamee_stenger_9a(n) for n in range(4, 7)]
+    + [quadpy.nball.mcnamee_stenger_9b(n) for n in range(4, 7)]
     + [quadpy.nball.stroud_sn_2_1(dim) for dim in range(2, 9)]
     + [quadpy.nball.stroud_sn_3_1(dim) for dim in range(2, 9)]
     + [quadpy.nball.stroud_sn_3_2(dim) for dim in range(2, 9)]
