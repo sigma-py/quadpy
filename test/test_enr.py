@@ -13,6 +13,8 @@ from quadpy.enr._helpers import integrate_monomial_over_enr
     + [quadpy.enr.mcnamee_stenger_5(n) for n in range(2, 6)]
     + [quadpy.enr.mcnamee_stenger_7a(n) for n in range(3, 6)]
     + [quadpy.enr.mcnamee_stenger_7b(n) for n in range(3, 6)]
+    # The condition of the degree-9 schemes is so bad that the tolerence had to be
+    # 1.0e-2
     # + [quadpy.enr.mcnamee_stenger_9a(n) for n in range(4, 6)]
     # + [quadpy.enr.mcnamee_stenger_9b(n) for n in range(4, 6)]
     + [quadpy.enr.stroud_enr_3_1(n) for n in range(4, 6)]

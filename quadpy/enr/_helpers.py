@@ -59,7 +59,7 @@ def integrate_monomial_over_enr(alpha, symbolic=False):
             # b = sqrt(pi) * fact(2 * sum(alpha2) + n) / fact(k) / 4 ** k
             b = sqrt(pi) * fact(2 * k) / fact(k) / 4 ** k
 
-        out = (
+        return (
             2
             * fact(sum(alpha) + n - 1)
             * numpy.prod(
@@ -67,7 +67,6 @@ def integrate_monomial_over_enr(alpha, symbolic=False):
             )
             / b
         )
-        return out
 
     n = len(alpha)
     return (
