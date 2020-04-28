@@ -615,6 +615,7 @@ val = scheme.integrate(
 ```
 
 ### n-Sphere
+ * [McNamee-Stenger](https://doi.org/10.1007/BF02162032) (1967, 6 schemes up to degree 9)
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
    - [Stroud](https://doi.org/10.1137/0704004) (1967, degree 7)
    - [Stroud](https://doi.org/10.1137/0706009) (1969, 3 <= n <= 16, degree 11)

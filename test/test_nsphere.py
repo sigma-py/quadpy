@@ -9,6 +9,12 @@ from quadpy.nsphere._helpers import integrate_monomial_over_unit_nsphere
 @pytest.mark.parametrize(
     "scheme",
     [quadpy.nsphere.dobrodeev_1978(n) for n in range(2, 7)]
+    + [quadpy.nsphere.mcnamee_stenger_3(n) for n in range(2, 7)]
+    + [quadpy.nsphere.mcnamee_stenger_5(n) for n in range(2, 7)]
+    + [quadpy.nsphere.mcnamee_stenger_7a(n) for n in range(3, 7)]
+    + [quadpy.nsphere.mcnamee_stenger_7b(n) for n in range(3, 7)]
+    + [quadpy.nsphere.mcnamee_stenger_9a(n) for n in range(4, 7)]
+    + [quadpy.nsphere.mcnamee_stenger_9b(n) for n in range(4, 7)]
     + [quadpy.nsphere.stroud_un_3_1(n) for n in range(2, 7)]
     + [quadpy.nsphere.stroud_un_3_2(n) for n in range(2, 7)]
     + [quadpy.nsphere.stroud_un_5_1(n) for n in range(2, 7)]

@@ -9,22 +9,24 @@ from ..ncube._mcnamee_stenger import (
 )
 
 
-# Here starts the cube-specific section.
 def integrator(n, k):
     """Returns the integral of the polynomial given by the coefficients k over Enr2.
     """
     assert len(k) <= n
+
+    if any(kk % 2 == 1 for kk in k):
+        return 0
 
     def prod(factors):
         from functools import reduce
         import operator
         return reduce(operator.mul, factors, 1)
 
-    if any(kk % 2 == 1 for kk in k):
-        return 0
     # return numpy.prod([math.gamma((kk + 1) / 2.0) for kk in k])
     k2 = [kk // 2 for kk in k]
-    return prod([factorial(2 * kk) / 4 ** kk / factorial(kk) * sqrt(pi) for kk in k2])
+    out = prod([factorial(2 * kk) / 4 ** kk / factorial(kk) * sqrt(pi) for kk in k2])
+    out *= sqrt(pi) ** n
+    return out
 
 
 def mcnamee_stenger_3(n):
