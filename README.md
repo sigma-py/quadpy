@@ -685,7 +685,6 @@ quadpy.ncube.integrate(
 ```
 
 ### nD space with weight function exp(-r)
-
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
    - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 4 schemes up to degree 5)
    - 2 schemes up to degree 5
@@ -700,7 +699,7 @@ val = scheme.integrate(lambda x: x[0]**2)
 ```
 
 ### nD space with weight function exp(-r<sup>2</sup>)
-
+ * [McNamee-Stenger](https://doi.org/10.1007/BF02162032) (1967, 6 schemes up to degree 9)
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
    - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 4 schemes up to degree 5)
    - [Stroud](https://doi.org/10.1007/BF02162160) (1967, 2 schemes of degree 5)

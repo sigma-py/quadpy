@@ -23,10 +23,9 @@ def integrator(n, k):
         return reduce(operator.mul, factors, 1)
 
     # return numpy.prod([math.gamma((kk + 1) / 2.0) for kk in k])
-    k2 = [kk // 2 for kk in k]
-    out = prod([factorial(2 * kk) / 4 ** kk / factorial(kk) * sqrt(pi) for kk in k2])
-    out *= sqrt(pi) ** n
-    return out
+    alpha = k + [0] * (n - len(k))
+    k2 = [kk // 2 for kk in alpha]
+    return prod([factorial(2 * kk) / 4 ** kk / factorial(kk) * sqrt(pi) for kk in k2])
 
 
 def mcnamee_stenger_3(n):
