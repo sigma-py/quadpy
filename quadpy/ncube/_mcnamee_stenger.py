@@ -254,6 +254,7 @@ def integrator(n, k):
     def prod(factors):
         from functools import reduce
         import operator
+
         return reduce(operator.mul, factors, 1)
 
     return frac(2 ** n, prod([kk + 1 for kk in k]))

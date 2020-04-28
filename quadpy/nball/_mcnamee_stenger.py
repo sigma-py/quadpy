@@ -1,10 +1,10 @@
-from ._helpers import NBallScheme, integrate_monomial_over_unit_nball
 from ..ncube._mcnamee_stenger import (
     _mcnamee_stenger_3,
     _mcnamee_stenger_5,
     _mcnamee_stenger_7,
     _mcnamee_stenger_9,
 )
+from ._helpers import NBallScheme, integrate_monomial_over_unit_nball
 
 
 def integrator(n, k):

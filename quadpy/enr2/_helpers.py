@@ -1,9 +1,8 @@
-from functools import reduce
 import operator
-import math
+from functools import reduce
 
 import numpy
-from sympy import sqrt, pi
+from sympy import pi, sqrt
 
 
 class Enr2Scheme:
