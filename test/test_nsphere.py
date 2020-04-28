@@ -9,6 +9,8 @@ from quadpy.nsphere._helpers import integrate_monomial_over_unit_nsphere
 @pytest.mark.parametrize(
     "scheme",
     [quadpy.nsphere.dobrodeev_1978(n) for n in range(2, 7)]
+    + [quadpy.nsphere.mysovskikh_1(n) for n in range(2, 7)]
+    + [quadpy.nsphere.mysovskikh_2(n) for n in range(2, 7)]
     + [quadpy.nsphere.stroud_un_3_1(n) for n in range(2, 7)]
     + [quadpy.nsphere.stroud_un_3_2(n) for n in range(2, 7)]
     + [quadpy.nsphere.stroud_un_5_1(n) for n in range(2, 7)]

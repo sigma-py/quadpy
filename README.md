@@ -620,6 +620,7 @@ val = scheme.integrate(
    - [Stroud](https://doi.org/10.1137/0706009) (1969, 3 <= n <= 16, degree 11)
    - 6 schemes up to degree 5
  * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1978, n >= 2, degree 5)
+ * [Mysovskikh](https://doi.org/10.1016/B978-0-12-213650-4.50025-8) (1980, 2 schemes up to degree 5)
 
 Example:
 ```python
