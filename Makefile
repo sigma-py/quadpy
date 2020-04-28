@@ -4,7 +4,7 @@ default:
 	@echo "\"make publish\"?"
 
 # https://packaging.python.org/distributing/#id72
-upload: setup.py
+upload:
 	# Make sure we're on the master branch
 	@if [ "$(shell git rev-parse --abbrev-ref HEAD)" != "master" ]; then exit 1; fi
 	rm -f dist/*
