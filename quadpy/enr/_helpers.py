@@ -75,3 +75,15 @@ def integrate_monomial_over_enr(alpha, symbolic=False):
         * numpy.prod([math.gamma((k + 1) / 2.0) for k in alpha])
         / math.gamma((sum(alpha) + n) / 2)
     )
+
+
+# 2 * sqrt(pi) ** n * gamma(n) / gamma(frac(n, 2))
+def enr_volume(n):
+    if n == 1:
+        return 2
+    elif n == 2:
+        return 2 * pi
+    return 2 * pi * (n - 1) * enr_volume(n - 2)
+    # Then n-sphere has
+    # return 2 * pi / (n - 2) * surface_hypersphere(n - 2)
+    # here.
