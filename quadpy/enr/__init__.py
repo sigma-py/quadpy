@@ -1,3 +1,11 @@
+from ._mcnamee_stenger import (
+    mcnamee_stenger_3,
+    mcnamee_stenger_5,
+    mcnamee_stenger_7a,
+    mcnamee_stenger_7b,
+    mcnamee_stenger_9a,
+    mcnamee_stenger_9b,
+)
 from ._stroud import (
     stroud_enr_3_1,
     stroud_enr_3_2,
@@ -13,6 +21,12 @@ from ._stroud_secrest import (
 )
 
 __all__ = [
+    "mcnamee_stenger_3",
+    "mcnamee_stenger_5",
+    "mcnamee_stenger_7a",
+    "mcnamee_stenger_7b",
+    "mcnamee_stenger_9a",
+    "mcnamee_stenger_9b",
     "stroud_enr_3_1",
     "stroud_enr_3_2",
     "stroud_enr_5_1",

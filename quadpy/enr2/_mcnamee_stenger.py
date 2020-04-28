@@ -1,6 +1,4 @@
-from sympy import sqrt, pi, factorial
-
-from ._helpers import Enr2Scheme
+from ._helpers import Enr2Scheme, integrate_monomial_over_enr2
 from ..ncube._mcnamee_stenger import (
     _mcnamee_stenger_3,
     _mcnamee_stenger_5,
@@ -12,20 +10,9 @@ from ..ncube._mcnamee_stenger import (
 def integrator(n, k):
     """Returns the integral of the polynomial given by the coefficients k over Enr2.
     """
-    assert len(k) <= n
-
-    if any(kk % 2 == 1 for kk in k):
-        return 0
-
-    def prod(factors):
-        from functools import reduce
-        import operator
-        return reduce(operator.mul, factors, 1)
-
-    # return numpy.prod([math.gamma((kk + 1) / 2.0) for kk in k])
     alpha = k + [0] * (n - len(k))
-    k2 = [kk // 2 for kk in alpha]
-    return prod([factorial(2 * kk) / 4 ** kk / factorial(kk) * sqrt(pi) for kk in k2])
+    out = integrate_monomial_over_enr2(alpha, symbolic=True)
+    return out
 
 
 def mcnamee_stenger_3(n):
