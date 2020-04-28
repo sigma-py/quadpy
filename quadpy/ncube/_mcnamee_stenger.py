@@ -248,6 +248,9 @@ def integrator(n, k):
     """
     assert len(k) <= n
 
+    if any(kk % 2 == 1 for kk in k):
+        return 0
+
     def prod(factors):
         from functools import reduce
         import operator
