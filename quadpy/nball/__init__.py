@@ -1,5 +1,6 @@
 from ._dobrodeev_1970 import dobrodeev_1970
 from ._dobrodeev_1978 import dobrodeev_1978
+from ._hammer_stroud import hammer_stroud_11n, hammer_stroud_12n
 from ._mcnamee_stenger import (
     mcnamee_stenger_3,
     mcnamee_stenger_5,
@@ -8,7 +9,6 @@ from ._mcnamee_stenger import (
     mcnamee_stenger_9a,
     mcnamee_stenger_9b,
 )
-from ._hammer_stroud import hammer_stroud_11n, hammer_stroud_12n
 from ._stroud import stroud_sn_3_1  # stroud_sn_7_3a,
 from ._stroud import (
     stroud_sn_2_1,

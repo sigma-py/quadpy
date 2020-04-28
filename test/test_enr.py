@@ -3,15 +3,16 @@ import numpy
 import pytest
 
 import quadpy
-from helpers import check_degree, integrate_monomial_over_enr
+from helpers import check_degree
+from quadpy.enr._helpers import integrate_monomial_over_enr
 
 
 @pytest.mark.parametrize(
     "scheme",
     [quadpy.enr.mcnamee_stenger_3(n) for n in range(1, 6)]
-    # + [quadpy.enr.mcnamee_stenger_5(n) for n in range(2, 6)]
-    # + [quadpy.enr.mcnamee_stenger_7a(n) for n in range(3, 6)]
-    # + [quadpy.enr.mcnamee_stenger_7b(n) for n in range(3, 6)]
+    + [quadpy.enr.mcnamee_stenger_5(n) for n in range(2, 6)]
+    + [quadpy.enr.mcnamee_stenger_7a(n) for n in range(3, 6)]
+    + [quadpy.enr.mcnamee_stenger_7b(n) for n in range(3, 6)]
     # + [quadpy.enr.mcnamee_stenger_9a(n) for n in range(4, 6)]
     # + [quadpy.enr.mcnamee_stenger_9b(n) for n in range(4, 6)]
     + [quadpy.enr.stroud_enr_3_1(n) for n in range(4, 6)]
