@@ -126,3 +126,16 @@ def compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k, symbolic=False):
     b = sqrt(n / (j + k) * (I2 / I0 - t * sqrt(L / M * F) + t * sqrt(k / j * Q)))
     c = sqrt(n / (j + k) * (I2 / I0 - t * sqrt(L / M * F) - t * sqrt(j / k * Q)))
     return G, a, b, c
+
+
+def get_nsimplex_points(n):
+    from sympy import sqrt, Rational as frac
+    # vertices of the n-simplex
+    points = []
+    for r in range(n + 1):
+        point = [-sqrt(frac(n + 1, n * (n - i + 1) * (n - i))) for i in range(r)]
+        if r < n:
+            point += [sqrt(frac((n + 1) * (n - r), n * (n - r + 1)))]
+            point += [0] * (n - r - 1)
+        points.append(point)
+    return numpy.array(points)

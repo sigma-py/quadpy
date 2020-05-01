@@ -1,5 +1,6 @@
 from ._lu_darmofal import (
-    lu_darmofal_i
+    lu_darmofal_1,
+    lu_darmofal_2,
 )
 from ._mcnamee_stenger import (
     mcnamee_stenger_3,

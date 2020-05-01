@@ -42,8 +42,7 @@ class E2rScheme:
         if not show_axes:
             ax.set_axis_off()
 
-        n = 2
-        I0 = 2 * math.factorial(n - 1) * math.pi ** (0.5 * n) / math.gamma(0.5 * n)
+        I0 = 2 * math.pi
 
         plot_disks(plt, self.points, self.weights, I0)
         return
