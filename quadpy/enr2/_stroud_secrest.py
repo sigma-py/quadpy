@@ -2,7 +2,7 @@ import numpy
 from sympy import Rational as frac
 from sympy import pi, sqrt
 
-from ..helpers import article, fsd, get_nsimplex_points, pm, untangle
+from ..helpers import article, fsd, pm, untangle
 from ._helpers import Enr2Scheme
 
 citation = article(
