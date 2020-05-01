@@ -1,6 +1,9 @@
 from ._lu_darmofal import (
     lu_darmofal_1,
     lu_darmofal_2,
+    lu_darmofal_3,
+    lu_darmofal_4a,
+    lu_darmofal_4b,
 )
 from ._mcnamee_stenger import (
     mcnamee_stenger_3,
@@ -52,6 +55,9 @@ from ._stroud_secrest import (
 __all__ = [
     "lu_darmofal_1",
     "lu_darmofal_2",
+    "lu_darmofal_3",
+    "lu_darmofal_4a",
+    "lu_darmofal_4b",
     "mcnamee_stenger_3",
     "mcnamee_stenger_5",
     "mcnamee_stenger_7a",
