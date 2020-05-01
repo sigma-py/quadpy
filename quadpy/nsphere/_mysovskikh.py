@@ -1,5 +1,6 @@
 import numpy
-from sympy import sqrt, Rational as frac, pi
+from sympy import Rational as frac
+from sympy import pi, sqrt
 
 from ..helpers import article, get_nsimplex_points
 from ._helpers import NSphereScheme
@@ -36,18 +37,22 @@ def mysovskikh_2(n):
     B = frac(2 * (n - 1) ** 2, n * (n + 1) ** 2 * (n + 2)) * surface_hypersphere(n)
 
     a = get_nsimplex_points(n)
-    b = numpy.array([
-        sqrt(frac(n, 2 * (n - 1))) * (a[k] + a[l])
-        for k in range(n + 1)
-        for l in range(k)
-    ])
+    b = numpy.array(
+        [
+            sqrt(frac(n, 2 * (n - 1))) * (a[k] + a[l])
+            for k in range(n + 1)
+            for l in range(k)
+        ]
+    )
 
     points = numpy.concatenate([a, -a, b, -b])
-    weights = numpy.concatenate([
-        numpy.full(len(a), A),
-        numpy.full(len(a), A),
-        numpy.full(len(b), B),
-        numpy.full(len(b), B),
-    ])
+    weights = numpy.concatenate(
+        [
+            numpy.full(len(a), A),
+            numpy.full(len(a), A),
+            numpy.full(len(b), B),
+            numpy.full(len(b), B),
+        ]
+    )
 
     return NSphereScheme("Mysovskikh 2", n, weights, points, 5, citation)

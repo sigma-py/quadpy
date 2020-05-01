@@ -1,11 +1,15 @@
 import numpy
-from sympy import sqrt, pi, Rational as frac
+from sympy import Rational as frac
+from sympy import pi, sqrt
+
 from ..helpers import article
 from ..nsphere._mysovskikh import get_nsimplex_points
 from ._helpers import Enr2Scheme
-from ._stroud_secrest import stroud_secrest_4, _nsimplex
-from ._stroud import stroud_enr2_5_1a, stroud_enr2_5_1b
-from ._phillips import phillips
+from ._phillips import phillips as lu_darmofal_3
+from ._stroud import stroud_enr2_5_1a as lu_darmofal_4a
+from ._stroud import stroud_enr2_5_1b as lu_darmofal_4b
+from ._stroud_secrest import _nsimplex
+from ._stroud_secrest import stroud_secrest_4 as lu_darmofal_2
 
 citation = article(
     authors=["James Lu", "David L. Darmofal"],
@@ -23,36 +27,45 @@ def lu_darmofal_1(n):
     assert n >= 4
     # a = get_nsimplex_points(n)
     a = _nsimplex(n)
-    b = numpy.array([
-        sqrt(frac(n, 2 * (n - 1))) * (a[k] + a[l])
-        for k in range(n + 1)
-        for l in range(k)
-    ])
-    points = numpy.concatenate([
-        [[0] * n],
-        +sqrt(frac(n, 2) - 1) * a,
-        -sqrt(frac(n, 2) - 1) * a,
-        +sqrt(frac(n, 2) - 1) * b,
-        -sqrt(frac(n, 2) - 1) * b,
-    ])
+    b = numpy.array(
+        [
+            sqrt(frac(n, 2 * (n - 1))) * (a[k] + a[l])
+            for k in range(n + 1)
+            for l in range(k)
+        ]
+    )
+    points = numpy.concatenate(
+        [
+            [[0] * n],
+            +sqrt(frac(n, 2) - 1) * a,
+            -sqrt(frac(n, 2) - 1) * a,
+            +sqrt(frac(n, 2) - 1) * b,
+            -sqrt(frac(n, 2) - 1) * b,
+        ]
+    )
 
     p = frac(2, n + 2)
     A = frac(n ** 2 * (7 - n), 2 * (n + 1) ** 2 * (n + 2) ** 2)
     B = frac(2 * (n - 1) ** 2, (n + 1) ** 2 * (n + 2) ** 2)
-    weights = numpy.concatenate([
-        [p],
-        numpy.full(len(a), A),
-        numpy.full(len(a), A),
-        numpy.full(len(b), B),
-        numpy.full(len(b), B),
-    ])
+    weights = numpy.concatenate(
+        [
+            [p],
+            numpy.full(len(a), A),
+            numpy.full(len(a), A),
+            numpy.full(len(b), B),
+            numpy.full(len(b), B),
+        ]
+    )
     weights *= sqrt(pi) ** n
 
     # ERR the article lists degree 5
     return Enr2Scheme("Lu-Darmofal I", n, weights, points, 1, citation)
 
 
-lu_darmofal_2 = stroud_secrest_4
-lu_darmofal_3 = phillips
-lu_darmofal_4a = stroud_enr2_5_1a
-lu_darmofal_4b = stroud_enr2_5_1b
+__all__ = [
+    "lu_darmofal_1",
+    "lu_darmofal_2",
+    "lu_darmofal_3",
+    "lu_darmofal_4a",
+    "lu_darmofal_4b",
+]
