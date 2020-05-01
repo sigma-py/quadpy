@@ -2,7 +2,8 @@ import numpy
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, fsd, get_nsimplex_points, pm, untangle
+from ..enr2._stroud_secrest import _nsimplex
+from ..helpers import article, fsd, pm, untangle
 from ._helpers import EnrScheme, enr_volume
 
 citation = article(
@@ -17,7 +18,7 @@ citation = article(
 
 
 def stroud_secrest_1(n):
-    data = [(frac(1, n + 1), sqrt(n + 1) * get_nsimplex_points(n))]
+    data = [(frac(1, n + 1), sqrt(n + 1) * _nsimplex(n))]
     points, weights = untangle(data)
     weights *= enr_volume(n)
     return EnrScheme("Stroud-Secrest I", n, weights, points, 2, citation)
