@@ -5,7 +5,7 @@ from ..helpers import article, fs_array, fsd, untangle, z
 from ._helpers import DiskScheme
 
 _citation = article(
-    authors=["I.P. Mysovskih"],
+    authors=["I.P. Mysovskikh"],
     title="On the construction of cubature formulas for the simplest regions",
     journal="Z. Vychisl. Mat. i. Mat. Fiz.",
     number="4",

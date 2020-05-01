@@ -316,8 +316,8 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0], 1.0)
  * [Wissmann-Becker](https://doi.org/10.1137/0723043) (1986, 6 schemes up to degree 8)
  * [Cools-Haegemans](https://doi.org/10.1007/BF02247942) (1988, 2 schemes up to degree 13)
  * [Waldron](http://ftp.cs.wisc.edu/Approx/symmetries.pdf) (1994, infinitely many schemes of degree 3)
- * [Witherden-Vincent](https://doi.org/10.1016/j.camwa.2015.03.017) (2015, 11 schemes up to degree 21)
  * [Sommariva](https://www.math.unipd.it/~alvise/POINTSETS/set_amr_square.m) (2012, 55 schemes up to degree 55)
+ * [Witherden-Vincent](https://doi.org/10.1016/j.camwa.2015.03.017) (2015, 11 schemes up to degree 21)
  * products of line segment schemes
  * all formulas from the n-cube
 
@@ -620,6 +620,7 @@ val = scheme.integrate(
    - [Stroud](https://doi.org/10.1137/0706009) (1969, 3 <= n <= 16, degree 11)
    - 6 schemes up to degree 5
  * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1978, n >= 2, degree 5)
+ * [Mysovskikh](https://doi.org/10.1016/B978-0-12-213650-4.50025-8) (1980, 2 schemes up to degree 5)
 
 Example:
 ```python
@@ -707,6 +708,8 @@ val = scheme.integrate(lambda x: x[0]**2)
    - [Stroud](https://doi.org/10.1137/0704004) (1967, 3 schemes of degree 7)
    - [Stenger](https://www.jstor.org/stable/2004361) (1971, 6 schemes up to degree 11, varying dimensionality restrictions)
    - 5 schemes up to degree 5
+ * [Phillips](https://doi.org/10.1016/0010-4655(80)90102-2) (1980, degree 5)
+ * [Lu-Darmofal](https://doi.org/10.1137/S1064827503426863) (2004, degree 5)
 
 Example:
 ```python

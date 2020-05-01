@@ -17,6 +17,11 @@ citation = article(
 
 
 def stroud_secrest_1(n):
+    # TODO check which is more appropriate
+    # print(_nsimplex(n))
+    # print()
+    # print(get_nsimplex_points(n))
+    # exit(1)
     data = [(frac(1, n + 1), sqrt(frac(1, 2)) * _nsimplex(n))]
     points, weights = untangle(data)
     weights *= sqrt(pi) ** n
