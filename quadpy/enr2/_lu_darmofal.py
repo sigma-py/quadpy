@@ -8,7 +8,6 @@ from ._helpers import Enr2Scheme
 from ._phillips import phillips as lu_darmofal_3
 from ._stroud import stroud_enr2_5_1a as lu_darmofal_4a
 from ._stroud import stroud_enr2_5_1b as lu_darmofal_4b
-from ._stroud_secrest import _nsimplex
 from ._stroud_secrest import stroud_secrest_4 as lu_darmofal_2
 
 citation = article(
@@ -24,23 +23,23 @@ citation = article(
 
 
 def lu_darmofal_1(n):
-    assert n >= 4
-    # a = get_nsimplex_points(n)
-    a = _nsimplex(n)
+    # ENH The article says n>=4, but the scheme also works for 2, 3
+    assert n >= 2
+    a = get_nsimplex_points(n)
     b = numpy.array(
         [
             sqrt(frac(n, 2 * (n - 1))) * (a[k] + a[l])
-            for k in range(n + 1)
+            for k in range(len(a))
             for l in range(k)
         ]
     )
     points = numpy.concatenate(
         [
             [[0] * n],
-            +sqrt(frac(n, 2) - 1) * a,
-            -sqrt(frac(n, 2) - 1) * a,
-            +sqrt(frac(n, 2) - 1) * b,
-            -sqrt(frac(n, 2) - 1) * b,
+            +sqrt(frac(n, 2) + 1) * a,
+            -sqrt(frac(n, 2) + 1) * a,
+            +sqrt(frac(n, 2) + 1) * b,
+            -sqrt(frac(n, 2) + 1) * b,
         ]
     )
 
@@ -58,8 +57,7 @@ def lu_darmofal_1(n):
     )
     weights *= sqrt(pi) ** n
 
-    # ERR the article lists degree 5
-    return Enr2Scheme("Lu-Darmofal I", n, weights, points, 1, citation)
+    return Enr2Scheme("Lu-Darmofal I", n, weights, points, 5, citation)
 
 
 __all__ = [
