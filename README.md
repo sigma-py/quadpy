@@ -708,6 +708,7 @@ val = scheme.integrate(lambda x: x[0]**2)
    - [Stroud](https://doi.org/10.1137/0704004) (1967, 3 schemes of degree 7)
    - [Stenger](https://www.jstor.org/stable/2004361) (1971, 6 schemes up to degree 11, varying dimensionality restrictions)
    - 5 schemes up to degree 5
+ * [Phillips](https://doi.org/10.1016/0010-4655(80)90102-2) (1980, degree 5)
 
 Example:
 ```python
