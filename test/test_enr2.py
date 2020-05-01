@@ -8,12 +8,14 @@ from quadpy.enr2._helpers import integrate_monomial_over_enr2
 
 @pytest.mark.parametrize(
     "scheme",
-    [quadpy.enr2.mcnamee_stenger_3(n) for n in range(1, 6)]
+    [quadpy.enr2.lu_darmofal_1(n) for n in range(2, 6)]
+    + [quadpy.enr2.mcnamee_stenger_3(n) for n in range(1, 6)]
     + [quadpy.enr2.mcnamee_stenger_5(n) for n in range(2, 6)]
     + [quadpy.enr2.mcnamee_stenger_7a(n) for n in range(3, 6)]
     + [quadpy.enr2.mcnamee_stenger_7b(n) for n in range(3, 6)]
     + [quadpy.enr2.mcnamee_stenger_9a(n) for n in range(4, 6)]
     + [quadpy.enr2.mcnamee_stenger_9b(n) for n in range(4, 6)]
+    + [quadpy.enr2.phillips(n) for n in range(2, 6)]
     + [quadpy.enr2.stenger_7a(n) for n in [3, 4]]
     + [quadpy.enr2.stenger_7b(n) for n in range(3, 6)]
     + [quadpy.enr2.stenger_9a(n) for n in range(3, 6)]
