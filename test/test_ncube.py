@@ -12,6 +12,7 @@ from helpers import check_degree_ortho
     "scheme",
     [quadpy.ncube.cools_haegemans_1(n) for n in range(1, 7)]
     + [quadpy.ncube.cools_haegemans_2(n) for n in range(2, 7)]
+    + [quadpy.ncube.cools_haegemans_3(n) for n in range(2, 7)]
     # [quadpy.ncube.dobrodeev_1970(n) for n in range(5, 8)]
     + [quadpy.ncube.dobrodeev_1978(n) for n in range(2, 8)]
     + [quadpy.ncube.hammer_stroud_1n(n) for n in range(3, 7)]
