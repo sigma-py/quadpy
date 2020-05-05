@@ -1,9 +1,9 @@
 import math
 
 import numpy
+import orthopy
 import pytest
 
-import orthopy
 import quadpy
 from helpers import check_degree_ortho
 

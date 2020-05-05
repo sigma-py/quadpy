@@ -1,7 +1,4 @@
-from ._cools_haegemans import (
-    cools_haegemans_1,
-    cools_haegemans_2,
-)
+from ._cools_haegemans import cools_haegemans_1, cools_haegemans_2
 from ._dobrodeev1970 import dobrodeev_1970
 from ._dobrodeev1978 import dobrodeev_1978
 from ._ewing import ewing
