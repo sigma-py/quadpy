@@ -1,7 +1,8 @@
-from sympy import sqrt, Rational as frac
 import numpy
+from sympy import Rational as frac
+from sympy import sqrt
 
-from ..helpers import article, fsd, untangle, z, pm
+from ..helpers import article, fsd, pm, untangle, z
 from ._helpers import NCubeScheme
 
 _citation = article(
