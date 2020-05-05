@@ -669,6 +669,7 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
     - [Phillips](https://doi.org/10.1093/comjnl/10.3.297) (1967, degree 7)
     - [Stroud](https://doi.org/10.2307/2004655) (1968, degree 5)
  * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1978, n >= 2, degree 5)
+ * [Cools-Haegemans](https://doi.org/10.1016/0377-0427(92)00007-V) (1994, 2 schemes up to degree 5)
 
 Example:
 ```python
@@ -709,6 +710,7 @@ val = scheme.integrate(lambda x: x[0]**2)
    - [Stenger](https://www.jstor.org/stable/2004361) (1971, 6 schemes up to degree 11, varying dimensionality restrictions)
    - 5 schemes up to degree 5
  * [Phillips](https://doi.org/10.1016/0010-4655(80)90102-2) (1980, degree 5)
+ * [Cools-Haegemans](https://doi.org/10.1016/0377-0427(92)00007-V) (1994, 3 schemes up to degree 7)
  * [Lu-Darmofal](https://doi.org/10.1137/S1064827503426863) (2004, degree 5)
 
 Example:

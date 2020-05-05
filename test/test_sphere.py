@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy
+import orthopy
 import pytest
 
-import orthopy
 import quadpy
 from helpers import check_degree_ortho
 from quadpy.sphere._helpers import cartesian_to_spherical

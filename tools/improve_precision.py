@@ -1,9 +1,9 @@
 import math
 
 import numpy
+import orthopy
 from scipy.optimize import least_squares, lsq_linear, minimize
 
-import orthopy
 import quadpy
 from quadpy.helpers import untangle
 from quadpy.sphere._helpers import cartesian_to_spherical

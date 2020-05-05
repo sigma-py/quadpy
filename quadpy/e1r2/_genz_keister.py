@@ -1,3 +1,5 @@
+from math import pi, sqrt
+
 import numpy
 
 from ..helpers import article
@@ -17,12 +19,27 @@ citation = article(
 
 
 _points_0 = [0.0]
-_points_1 = _points_0 + [numpy.sqrt(1.5)]
+_points_1 = _points_0 + [sqrt(3 / 2)]
+
+# roots of
+# x ** 6 - 105 / 4 * x ** 4 + 315 / 2 x ** 2 - 315 / 4
+# divided by sqrt(2)
 _points_2 = _points_1 + [
     5.2403354748695763e-01,
     2.0232301911005157e00,
     2.9592107790638380e00,
 ]
+# TODO x ** 8 - (104/3) * x ** 6 + 658 * x ** 4 - 2940 * x ** 2 + 1785
+# Q[1 + 2 + 8], degree 19
+
+# roots of
+# x ** 10
+# - 8845705/102946 * x ** 8
+# + 125244020/51473 * x ** 6
+# - 1373974085/51473 * x ** 4
+# + 5691209975/51473 * x ** 2
+# - 11757510985/102946
+# divided by sqrt(2)
 _points_3 = _points_2 + [
     8.7004089535290285e-01,
     1.8357079751751868e00,
@@ -86,12 +103,12 @@ def genz_keister(n):
 
     if n == 0:
         degree = 1
-        weights = [1.7724538509055159e00]
         points = _points_0
+        weights = [numpy.sqrt(numpy.pi)]
     elif n == 1:
         degree = 5
         points = _points_1
-        weights = [1.1816359006036772e00, 2.9540897515091930e-01]
+        weights = [2 / 3 * sqrt(pi), 1 / 6 * sqrt(pi)]
     elif n == 2:
         degree = 15
         points = _points_2
