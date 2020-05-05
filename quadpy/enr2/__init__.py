@@ -1,6 +1,7 @@
 from ._cools_haegemans import (
     cools_haegemans_1,
     cools_haegemans_2,
+    cools_haegemans_3,
 )
 from ._lu_darmofal import (
     lu_darmofal_1,
@@ -59,6 +60,7 @@ from ._stroud_secrest import (
 __all__ = [
     "cools_haegemans_1",
     "cools_haegemans_2",
+    "cools_haegemans_3",
     "lu_darmofal_1",
     "lu_darmofal_2",
     "lu_darmofal_3",
