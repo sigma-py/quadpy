@@ -2,6 +2,7 @@ import math
 from collections import namedtuple
 
 import numpy
+
 import orthopy
 
 from ..helpers import article
