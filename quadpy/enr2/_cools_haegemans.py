@@ -112,3 +112,91 @@ def cools_haegemans_3(n, delta2=frac(2, 3)):
     points, weights = untangle(data)
     weights *= sqrt(pi) ** n
     return Enr2Scheme("Cools-Haegemans 3", n, weights, points, 7, _citation)
+
+
+# ERR There is a mistake here somewhere in the weights, but it's unclear where.
+# TODO fix this
+# def cools_haegemans_4(n, delta2=frac(2, 3)):
+#     assert n >= 2
+#     m = 4
+#
+#     lmbdas2 = _gener(delta2, 3, _mu)
+#
+#     delta4 = delta2 ** 2
+#     delta6 = delta2 ** 3
+#     delta8 = delta2 ** 4
+#
+#     w2 = -frac(
+#         (
+#             delta8 * (48 * n - 160)
+#             + delta6 * (192 * n - 480)
+#             + delta4 * (-408 * n + 96)
+#             + delta2 * (240 * n + 600)
+#             + (-45 * n - 270)
+#         )
+#         * (2 * delta2 - 3) ** 3,
+#         4608 * (4 * delta4 + 20 * delta2 - 15) * (4 * delta2 - 3) * delta8,
+#     )
+#     w11 = -frac(
+#         (12 * delta4 * n - 40 * delta4 - 12 * delta2 * n + 3 * n + 18)
+#         * (2 * delta2 - 1) ** 2,
+#         1536 * delta8,
+#     )
+#     w3 = frac(
+#         (4 * delta4 - 24 * delta2 + 15) ** 4 * (2 * delta2 - 3) ** 3,
+#         4608
+#         * (8 * delta6 - 324 * delta4 + 414 * delta2 - 135)
+#         * (4 * delta4 + 20 * delta2 - 15)
+#         * (22 * delta2 - 15)
+#         * delta8,
+#     )
+#     w21 = frac(
+#         (2 * delta2 - 1) ** 2 * (2 * delta2 - 3) ** 3, 3072 * (4 * delta2 - 3) * delta8
+#     )
+#     w111 = frac((2 * delta2 - 1) ** 4, 1024 * delta8)
+#
+#     w = frac(_mu(2) ** m * _mu(0) ** (n - m), 2 ** n * delta2 ** m)
+#
+#     delta = sqrt(delta2)
+#     lmbdas = [sqrt(lmbda2) for lmbda2 in lmbdas2]
+#
+#     data = [
+#         (w2, fsd(n, (lmbdas[1], 1))),
+#         (w11, fsd(n, (lmbdas[0], 2))),
+#         (w3, fsd(n, (lmbdas[2], 1))),
+#         (w21, fsd(n, (lmbdas[1], 1), (lmbdas[0], 1))),
+#         (w111, fsd(n, (lmbdas[0], 3))),
+#         (w, pm(n, delta)),
+#     ]
+#
+#     # This is an attempt to find the correct symmetries, but to no avail. Something
+#     # appears to be wrong with the weights.
+#     print(n)
+#     maxk = 30
+#     k = 2 ** n
+#     print("try")
+#     for k2 in range(0, maxk, 2):
+#         for k11 in range(0, maxk, 2):
+#             for k3 in range(0, maxk, 2):
+#                 for k21 in range(0, maxk, 2):
+#                     for k111 in range(0, maxk, 2):
+#                         val = (
+#                             k2 * w2
+#                             + k11 * w11
+#                             + k3 * w3
+#                             + k21 * w21
+#                             + k111 * w111
+#                             + k * w
+#                         )
+#                         if val == 1:
+#                             print("SUCCESS", k2, k11, k3, k21, k111, k)
+#     exit(1)
+#
+#     points, weights = untangle(data)
+#
+#     print(points)
+#     print(weights)
+#     print(sum(weights))
+#     exit(1)
+#     weights *= sqrt(pi) ** n
+#     return Enr2Scheme("Cools-Haegemans 4", n, weights, points, 9, _citation)
