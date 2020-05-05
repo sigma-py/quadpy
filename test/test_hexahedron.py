@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy
+import orthopy
 import pytest
 import sympy
 
-import orthopy
 import quadpy
 from helpers import check_degree_ortho
 
