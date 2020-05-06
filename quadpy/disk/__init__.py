@@ -31,6 +31,13 @@ from ._kim_song import (
     kim_song_6,
     kim_song_7,
     kim_song_8,
+    kim_song_9,
+    kim_song_10,
+    kim_song_11,
+    kim_song_12,
+    kim_song_13,
+    kim_song_14,
+    kim_song_15,
 )
 from ._lether import lether
 from ._mysovskih import mysovskih_1, mysovskih_2, mysovskih_3
@@ -108,6 +115,13 @@ __all__ = [
     "kim_song_6",
     "kim_song_7",
     "kim_song_8",
+    "kim_song_9",
+    "kim_song_10",
+    "kim_song_11",
+    "kim_song_12",
+    "kim_song_13",
+    "kim_song_14",
+    "kim_song_15",
     "lether",
     "mysovskih_1",
     "mysovskih_2",
