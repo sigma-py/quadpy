@@ -278,7 +278,7 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [[0.0, 0.0], [1.0, 0.0], [0.5,
  * [Haegemans-Piessens](https://www.jstor.org/stable/2156699) (1977, degree 9)
  * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 9)
  * [Wissmann-Becker](https://doi.org/10.1137/0723043) (1986, 3 schemes up to degree 8)
- * [Kim-Song](../blob/master/quadpy/disk/_kim_song.py) (1997, 15 schemes up to degree 17)
+ * [Kim-Song](../quadpy/disk/_kim_song.py) (1997, 15 schemes up to degree 17)
  * [Cools-Kim](https://link.springer.com/article/10.1007/BF03012263) (2000, 3 schemes up to degree 21)
 
 Example:
