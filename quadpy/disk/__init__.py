@@ -22,6 +22,16 @@ from ._hammer_stroud import (
     hammer_stroud_20,
     hammer_stroud_21,
 )
+from ._kim_song import (
+    kim_song_1,
+    kim_song_2,
+    kim_song_3,
+    kim_song_4,
+    kim_song_5,
+    kim_song_6,
+    kim_song_7,
+    kim_song_8,
+)
 from ._lether import lether
 from ._mysovskih import mysovskih_1, mysovskih_2, mysovskih_3
 from ._peirce_1956 import peirce_1956_1, peirce_1956_2, peirce_1956_3
@@ -90,6 +100,14 @@ __all__ = [
     "hammer_stroud_19",
     "hammer_stroud_20",
     "hammer_stroud_21",
+    "kim_song_1",
+    "kim_song_2",
+    "kim_song_3",
+    "kim_song_4",
+    "kim_song_5",
+    "kim_song_6",
+    "kim_song_7",
+    "kim_song_8",
     "lether",
     "mysovskih_1",
     "mysovskih_2",
