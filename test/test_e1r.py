@@ -1,8 +1,8 @@
 import numpy
-import orthopy
 import pytest
 from mpmath import mp
 
+import orthopy
 import quadpy
 
 
