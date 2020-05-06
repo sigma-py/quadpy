@@ -1,5 +1,3 @@
-import math
-
 import numpy
 import pytest
 from mpmath import mp
@@ -59,19 +57,14 @@ def test_scheme(scheme):
     "scheme", [quadpy.line_segment.chebyshev_gauss_1(k) for k in range(1, 10)]
 )
 def test_cheb1_scheme(scheme):
+    # \int_-1^1 x^k / sqrt(1 - x^2)
+    # <https://github.com/nschloe/note-no-gamma>
     def integrate_exact(k):
-        # \int_-1^1 x^k / sqrt(1 - x^2)
         if k == 0:
             return numpy.pi
-        if k % 2 == 1:
-            return 0.0
-        return (
-            numpy.sqrt(numpy.pi)
-            * ((-1) ** k + 1)
-            * math.gamma(0.5 * (k + 1))
-            / math.gamma(0.5 * k)
-            / k
-        )
+        elif k == 1:
+            return 0
+        return integrate_exact(k - 2) * (k - 1) / k
 
     degree = check_degree_1d(
         lambda poly: scheme.integrate(poly, numpy.array([[-1.0], [1.0]])),
@@ -85,19 +78,15 @@ def test_cheb1_scheme(scheme):
     "scheme", [quadpy.line_segment.chebyshev_gauss_2(k) for k in range(1, 10)]
 )
 def test_cheb2_scheme(scheme):
+    # \int_-1^1 x^k * sqrt(1 - x^2)
+    # <https://github.com/nschloe/note-no-gamma>
     def integrate_exact(k):
-        # \int_-1^1 x^k * sqrt(1 - x^2)
+        assert k >= 0
         if k == 0:
             return 0.5 * numpy.pi
-        if k % 2 == 1:
-            return 0.0
-        return (
-            numpy.sqrt(numpy.pi)
-            * ((-1) ** k + 1)
-            * math.gamma(0.5 * (k + 1))
-            / math.gamma(0.5 * k + 2)
-            / 4
-        )
+        elif k == 1:
+            return 0
+        return integrate_exact(k - 2) * (k - 1) / (k + 2)
 
     degree = check_degree_1d(
         lambda poly: scheme.integrate(poly, numpy.array([[-1.0], [1.0]])),

@@ -1,8 +1,8 @@
 import math
 
 import numpy
-import orthopy
 
+import orthopy
 import quadpy
 
 # from quadpy.nsimplex.helpers import integrate_monomial_over_unit_simplex

@@ -2,12 +2,12 @@ import math
 from distutils.version import LooseVersion
 
 import numpy
-import orthopy
 import pytest
 import scipy
 import sympy
 from mpmath import mp
 
+import orthopy
 import quadpy
 
 
