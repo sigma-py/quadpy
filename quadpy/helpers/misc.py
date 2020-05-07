@@ -128,9 +128,7 @@ def compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k, symbolic=False):
     return G, a, b, c
 
 
-def get_nsimplex_points(n):
-    from sympy import sqrt, Rational as frac
-
+def get_nsimplex_points(n, sqrt, frac):
     # vertices of the n-simplex
     points = []
     for r in range(n + 1):
