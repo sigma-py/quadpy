@@ -23,12 +23,12 @@ def stoyanova(n, delta=None, variant_v_plus=True):
         # pick a delta that "works" (points real-valued etc.)
         if variant_v_plus:
             if n < 10:
-                delta = {5: 0.98945, 6: 1.005, 7: 1.017, 8: 1.026, 9: 1.04,}[n]
+                delta = {5: 0.98945, 6: 1.005, 7: 1.017, 8: 1.026, 9: 1.04}[n]
             else:
                 delta = 1
         else:
             if n < 10:
-                delta = {5: 0.98928, 6: 0.818, 7: 0.81, 8: 0.8, 9: 0.8,}[n]
+                delta = {5: 0.98928, 6: 0.818, 7: 0.81, 8: 0.8, 9: 0.8}[n]
             else:
                 delta = sympy.Rational(4, 5)
 

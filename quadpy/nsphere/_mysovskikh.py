@@ -27,7 +27,7 @@ def surface_hypersphere(n):
 
 
 def mysovskikh_1(n):
-    points = get_nsimplex_points(n)
+    points = get_nsimplex_points(n, sqrt, frac)
     weights = numpy.full(n + 1, surface_hypersphere(n) / (n + 1))
     return NSphereScheme("Mysovskikh 1", n, weights, points, 2, citation)
 
@@ -36,7 +36,7 @@ def mysovskikh_2(n):
     A = frac((7 - n) * n, 2 * (n + 1) ** 2 * (n + 2)) * surface_hypersphere(n)
     B = frac(2 * (n - 1) ** 2, n * (n + 1) ** 2 * (n + 2)) * surface_hypersphere(n)
 
-    a = get_nsimplex_points(n)
+    a = get_nsimplex_points(n, sqrt, frac)
     b = numpy.array(
         [
             sqrt(frac(n, 2 * (n - 1))) * (a[k] + a[l])

@@ -25,7 +25,7 @@ citation = article(
 def lu_darmofal_1(n):
     # ENH The article says n>=4, but the scheme also works for 2, 3
     assert n >= 2
-    a = get_nsimplex_points(n)
+    a = get_nsimplex_points(n, sqrt, frac)
     b = numpy.array(
         [
             sqrt(frac(n, 2 * (n - 1))) * (a[k] + a[l])
