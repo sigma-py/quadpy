@@ -9,6 +9,7 @@ from ._mcnamee_stenger import (
     mcnamee_stenger_9a,
     mcnamee_stenger_9b,
 )
+from ._stoyanova import stoyanova
 from ._stroud import stroud_sn_3_1  # stroud_sn_7_3a,
 from ._stroud import (
     stroud_sn_2_1,
@@ -46,6 +47,7 @@ __all__ = [
     "mcnamee_stenger_7b",
     "mcnamee_stenger_9a",
     "mcnamee_stenger_9b",
+    "stoyanova",
     "stroud_sn_2_1",
     "stroud_sn_3_1",
     "stroud_sn_3_2",

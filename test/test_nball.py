@@ -16,6 +16,7 @@ from quadpy.nball._helpers import integrate_monomial_over_unit_nball
     + [quadpy.nball.mcnamee_stenger_7b(n) for n in range(3, 7)]
     + [quadpy.nball.mcnamee_stenger_9a(n) for n in range(4, 7)]
     + [quadpy.nball.mcnamee_stenger_9b(n) for n in range(4, 7)]
+    + [quadpy.nball.stoyanova(n) for n in range(5, 8)]
     + [quadpy.nball.stroud_sn_2_1(dim) for dim in range(2, 9)]
     + [quadpy.nball.stroud_sn_3_1(dim) for dim in range(2, 9)]
     + [quadpy.nball.stroud_sn_3_2(dim) for dim in range(2, 9)]
