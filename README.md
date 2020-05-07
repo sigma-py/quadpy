@@ -645,6 +645,7 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
    - [Stroud](https://doi.org/10.1137/0704004) (1967, n >= 3, 3 schemes of degree 7)
    - [Stenger](https://www.jstor.org/stable/2004361) (1967, 6 schemes up to degree 11)
  * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1978, 2 <= n <= 20, degree 5)
+ * [Stoyanova](quadpy/nball/_stoyanova.py) (1997, n >= 5, degree 7)
 
 Example:
 ```python

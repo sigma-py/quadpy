@@ -1,4 +1,5 @@
 import numpy
+import sympy
 
 from ..nsphere._helpers import integrate_monomial_over_unit_nsphere
 
@@ -34,7 +35,13 @@ class NBallScheme:
 
 
 def volume_unit_ball(n, symbolic=False):
-    return integrate_monomial_over_unit_nball(n * [0], symbolic=symbolic)
+    pi = sympy.pi if symbolic else numpy.pi
+
+    if n == 0:
+        return 1
+    elif n == 1:
+        return 2
+    return volume_unit_ball(n - 2) * 2 * pi / n
 
 
 def integrate_monomial_over_unit_nball(exponents, symbolic=False, radius=1):
@@ -45,6 +52,7 @@ def integrate_monomial_over_unit_nball(exponents, symbolic=False, radius=1):
     Vol. 108, No. 5 (May, 2001), pp. 446-448,
     <https://doi.org/10.2307/2695802>.
     """
+    # TODO replace by recurrence
     n = len(exponents)
     alpha = n + sum(exponents)
     return (
