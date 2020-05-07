@@ -1,8 +1,9 @@
-import numpy
-from sympy import Rational as frac
-from sympy import pi, sqrt
+import math
 
-from ..helpers import article, get_nsimplex_points, fsd
+import numpy
+import sympy
+
+from ..helpers import article, get_nsimplex_points, untangle, z
 from ._helpers import NBallScheme
 
 citation = article(
@@ -15,21 +16,26 @@ citation = article(
 )
 
 
-# Compute the area of a hypersphere, <https://tauday.com/tau-manifesto>.
-# No roots, no gamma functions. Such a nice recursion!
-def surface_hypersphere(n):
-    assert n > 0
-    if n == 1:
-        return 2
-    elif n == 2:
-        return 2 * pi
-    return 2 * pi / (n - 2) * surface_hypersphere(n - 2)
+def stoyanova(n, delta=None, variant_v_plus=True):
+    assert n >= 5
 
+    # if delta is None:
+    #     if n == 5:
+    #         delta = 0.98945
+    #     else:
+    #         delta = 1
+    delta = 1.005
 
-def stoyanova(n, delta=1):
-    delta = 0.98945
+    if isinstance(delta, int):
+        frac = sympy.Rational
+        sqrt = sympy.sqrt
+    else:
+        def frac(a, b):
+            return a / b
+        sqrt = math.sqrt
 
-    pts_a = get_nsimplex_points(n)
+    pts_a = get_nsimplex_points(n, sqrt, frac)
+
     # simplex edge midpoints projected onto the sphere
     pts_b = numpy.array(
         [
@@ -60,21 +66,22 @@ def stoyanova(n, delta=1):
         ]
     )
 
+    pts_a = numpy.concatenate([pts_a, -pts_a])
+    pts_b = numpy.concatenate([pts_b, -pts_b])
+    if n > 5:
+        # for n==5, the points are already symmetric
+        pts_c = numpy.concatenate([pts_c, -pts_c])
+    pts_b14 = numpy.concatenate([pts_b14, -pts_b14])
+
     n1 = 2 * (n + 1)
     n2 = n * (n + 1)
+    n3 = (n + 1) * n * (n - 1) // 6 if n == 5 else (n + 1) * n * (n - 1) // 3
     n4 = 2 * n * (n + 1)
-
-    print(n)
-    print()
-    print(len(pts_a), n1)
-    print(len(pts_b), n2)
 
     assert len(pts_a) == n1
     assert len(pts_b) == n2
-
-    exit(1)
-
-    assert n >= 5
+    assert len(pts_c) == n3
+    assert len(pts_b14) == n4
 
     s1 = (n - 2) ** 5 + 243
     s2 = (n - 1) ** 5 + 32
@@ -113,29 +120,32 @@ def stoyanova(n, delta=1):
         + 12 * (n - 1) * s4 * s12
         - 3 * n ** 2 * (n - 3) * s2
     )
-    b1 = (
+    b1 = frac(
         2
         * (n - 1)
-        * (3 * (n + 1) * s5 * s7 * q2 - s12 * q1 - 36 * (n - 1) ** 2 * s7 * q2)
-        / (s10 * s17 * q2)
+        * (3 * (n + 1) * s5 * s7 * q2 - s12 * q1 - 36 * (n - 1) ** 2 * s7 * q2),
+        s10 * s17 * q2
     )
-    c1 = s9 * q1 / (2 * s10 * q2)
-    e1 = 4 * n * s11 / (9 * s10)
-    a1 = n / (n + 6) - b1 - c1 - e1
-    y1 = n / (n + 2) - e1 / delta ** 4
-    y2 = n / (n + 4) - e1 / delta ** 2
-    y3 = 3 * n ** 2 / ((n + 2) * (n + 4)) - e1 * (
+    c1 = frac(s9 * q1, 2 * s10 * q2)
+    e1 = frac(4 * n * s11, 9 * s10)
+    a1 = frac(n, n + 6) - b1 - c1 - e1
+    y1 = frac(n, n + 2) - frac(e1, delta ** 4)
+    y2 = frac(n, n + 4) - frac(e1, delta ** 2)
+    y3 = frac(3 * n ** 2, (n + 2) * (n + 4)) - frac(e1 * (
         41 * n ** 3 - 101 * n ** 2 + 155 * n - 87
-    ) / (2 * (5 * n - 3) ** 2 * delta ** 2)
-    w0 = s17 * (y3 * (s15 - s14 * s17) + s13 * s14 * y2) / (s13 * s15 * c1)
-    u0 = n * (s17 * y3 - s13 * y2) / (s15 * a1)
-    p1 = n * (n - 4) * b1 / (4 * s12 * a1)
-    p2 = s16 * s17 * b1 / (4 * s12 * s13 * c1)
+    ), 2 * (5 * n - 3) ** 2 * delta ** 2)
+    w0 = frac(s17 * (y3 * (s15 - s14 * s17) + s13 * s14 * y2), s13 * s15 * c1)
+    u0 = frac(n * (s17 * y3 - s13 * y2), s15 * a1)
+    p1 = frac(n * (n - 4) * b1, 4 * s12 * a1)
+    p2 = frac(s16 * s17 * b1, 4 * s12 * s13 * c1)
     d1 = a1 * p1 ** 2 + c1 * p2 ** 2 + b1
     d2 = a1 * p1 * u0 + c1 * p2 * w0
     d3 = a1 * u0 ** 2 + c1 * w0 ** 2 - y1
     d0 = d2 ** 2 - d1 * d3
-    v = (d2 + numpy.sqrt(d0)) / d1  # TODO pm
+    if variant_v_plus:
+        v = (d2 + sqrt(d0)) / d1
+    else:
+        v = (d2 - sqrt(d0)) / d1
     u = u0 - p1 * v
     w = w0 - p2 * v
     lmbda2 = 1 / u
@@ -148,30 +158,28 @@ def stoyanova(n, delta=1):
     gamma6 = gamma2 ** 3
     delta6 = delta2 ** 3
 
-    n1 = 2 * (n + 1)
-    n2 = n * (n + 1)
-    n4 = 2 * n * (n + 1)
-    if n == 5:
-        n3 = cn1 ** 3
-    else:
-        assert n > 5
-        n3 = 2 * cn1 ** 3
-
     a = a1 / n1 / lmbda6
     b = b1 / n2 / beta6
     c = c1 / n3 / gamma6
     e = e1 / n4 / delta6
     d = 1 - n1 * a - n2 * b - n3 * c - n4 * e
 
+    lmbda = sqrt(lmbda2)
+    beta = sqrt(beta2)
+    gamma = sqrt(gamma2)
+
+    data = [
+        (a, lmbda * pts_a),
+        (b, beta * pts_b),
+        (c, gamma * pts_c),
+        (e, delta * pts_b14),
+        (d, z(n))
+    ]
+    points, weights = untangle(data)
+
+    # print(points)
+    # print(weights)
     print(n)
-    print()
-    print(numpy.sqrt(lmbda2))
-    print(numpy.sqrt(beta2))
-    print(numpy.sqrt(gamma2))
-    print()
-    exit(1)
-    print(a)
-
-    exit(1)
-
-    return NBallScheme("Stoyanova", n, weights, points, 7, citation)
+    out = NBallScheme("Stoyanova", n, weights, points, 7, citation)
+    # exit(1)
+    return out
