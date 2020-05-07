@@ -4,7 +4,7 @@ import numpy
 import sympy
 
 from ..helpers import article, get_nsimplex_points, untangle, z
-from ._helpers import NBallScheme
+from ._helpers import NBallScheme, volume_unit_ball
 
 citation = article(
     authors=["Srebra B. Stoyanova"],
@@ -19,20 +19,28 @@ citation = article(
 def stoyanova(n, delta=None, variant_v_plus=True):
     assert n >= 5
 
-    # if delta is None:
-    #     if n == 5:
-    #         delta = 0.98945
-    #     else:
-    #         delta = 1
-    delta = 1.005
+    if delta is None:
+        # pick a delta that "works" (points real-valued etc.)
+        if variant_v_plus:
+            if n < 10:
+                delta = {5: 0.98945, 6: 1.005, 7: 1.017, 8: 1.026, 9: 1.04,}[n]
+            else:
+                delta = 1
+        else:
+            if n < 10:
+                delta = {5: 0.98928, 6: 0.818, 7: 0.81, 8: 0.8, 9: 0.8,}[n]
+            else:
+                delta = sympy.Rational(4, 5)
 
-    if isinstance(delta, int):
-        frac = sympy.Rational
-        sqrt = sympy.sqrt
-    else:
+    if isinstance(delta, float):
+
         def frac(a, b):
             return a / b
+
         sqrt = math.sqrt
+    else:
+        frac = sympy.Rational
+        sqrt = sympy.sqrt
 
     pts_a = get_nsimplex_points(n, sqrt, frac)
 
@@ -59,7 +67,8 @@ def stoyanova(n, delta=None, variant_v_plus=True):
             sqrt(frac(n, 10 * n - 6)) * (pts_a[k] + 3 * pts_a[l])
             for k in range(n + 1)
             for l in range(k)
-        ] + [
+        ]
+        + [
             sqrt(frac(n, 10 * n - 6)) * (3 * pts_a[k] + pts_a[l])
             for k in range(n + 1)
             for l in range(k)
@@ -124,16 +133,17 @@ def stoyanova(n, delta=None, variant_v_plus=True):
         2
         * (n - 1)
         * (3 * (n + 1) * s5 * s7 * q2 - s12 * q1 - 36 * (n - 1) ** 2 * s7 * q2),
-        s10 * s17 * q2
+        s10 * s17 * q2,
     )
     c1 = frac(s9 * q1, 2 * s10 * q2)
     e1 = frac(4 * n * s11, 9 * s10)
     a1 = frac(n, n + 6) - b1 - c1 - e1
     y1 = frac(n, n + 2) - frac(e1, delta ** 4)
     y2 = frac(n, n + 4) - frac(e1, delta ** 2)
-    y3 = frac(3 * n ** 2, (n + 2) * (n + 4)) - frac(e1 * (
-        41 * n ** 3 - 101 * n ** 2 + 155 * n - 87
-    ), 2 * (5 * n - 3) ** 2 * delta ** 2)
+    y3 = frac(3 * n ** 2, (n + 2) * (n + 4)) - frac(
+        e1 * (41 * n ** 3 - 101 * n ** 2 + 155 * n - 87),
+        2 * (5 * n - 3) ** 2 * delta ** 2,
+    )
     w0 = frac(s17 * (y3 * (s15 - s14 * s17) + s13 * s14 * y2), s13 * s15 * c1)
     u0 = frac(n * (s17 * y3 - s13 * y2), s15 * a1)
     p1 = frac(n * (n - 4) * b1, 4 * s12 * a1)
@@ -173,13 +183,8 @@ def stoyanova(n, delta=None, variant_v_plus=True):
         (b, beta * pts_b),
         (c, gamma * pts_c),
         (e, delta * pts_b14),
-        (d, z(n))
+        (d, z(n)),
     ]
     points, weights = untangle(data)
-
-    # print(points)
-    # print(weights)
-    print(n)
-    out = NBallScheme("Stoyanova", n, weights, points, 7, citation)
-    # exit(1)
-    return out
+    weights *= volume_unit_ball(n)
+    return NBallScheme("Stoyanova", n, weights, points, 7, citation)
