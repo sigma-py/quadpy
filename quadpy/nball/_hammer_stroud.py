@@ -1,5 +1,4 @@
-from sympy import Rational as frac
-from sympy import sqrt
+from sympy import Rational as frac, sqrt
 
 from ..helpers import article, fsd, untangle, z
 from ._helpers import NBallScheme, volume_unit_ball
