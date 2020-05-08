@@ -20,9 +20,9 @@ citation = article(
 # https://onlinelibrary.wiley.com/doi/abs/10.1002/nme.6313
 
 
-def _read(degree):
+def _read(string):
     this_dir = os.path.dirname(os.path.realpath(__file__))
-    filename = f"js{degree:02d}.json"
+    filename = f"js{string}.json"
     with open(os.path.join(this_dir, filename), "r") as f:
         data = json.load(f)
 
@@ -38,4 +38,40 @@ def _read(degree):
 
 
 def jaskowiec_sukumar_02():
-    return _read(2)
+    return _read("02")
+
+
+def jaskowiec_sukumar_03():
+    return _read("03")
+
+
+def jaskowiec_sukumar_04():
+    return _read("04")
+
+
+def jaskowiec_sukumar_05():
+    return _read("05")
+
+
+def jaskowiec_sukumar_06():
+    return _read("06")
+
+
+def jaskowiec_sukumar_07():
+    return _read("07")
+
+
+def jaskowiec_sukumar_08():
+    return _read("08")
+
+
+def jaskowiec_sukumar_09():
+    return _read("09")
+
+
+def jaskowiec_sukumar_10():
+    return _read("10")
+
+
+def jaskowiec_sukumar_11():
+    return _read("11")

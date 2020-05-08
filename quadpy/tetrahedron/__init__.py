@@ -7,7 +7,16 @@ from ._hammer_marlowe_stroud import (
 )
 from ._hammer_stroud import hammer_stroud_2, hammer_stroud_3
 from ._jaskowiec_sukumar import (
-    jaskowiec_sukumar_02
+    jaskowiec_sukumar_02,
+    jaskowiec_sukumar_03,
+    jaskowiec_sukumar_04,
+    jaskowiec_sukumar_05,
+    jaskowiec_sukumar_06,
+    jaskowiec_sukumar_07,
+    jaskowiec_sukumar_08,
+    jaskowiec_sukumar_09,
+    jaskowiec_sukumar_10,
+    jaskowiec_sukumar_11,
 )
 from ._keast import (
     keast_0,
@@ -103,6 +112,15 @@ __all__ = [
     "hammer_stroud_2",
     "hammer_stroud_3",
     "jaskowiec_sukumar_02",
+    "jaskowiec_sukumar_03",
+    "jaskowiec_sukumar_04",
+    "jaskowiec_sukumar_05",
+    "jaskowiec_sukumar_06",
+    "jaskowiec_sukumar_07",
+    "jaskowiec_sukumar_08",
+    "jaskowiec_sukumar_09",
+    "jaskowiec_sukumar_10",
+    "jaskowiec_sukumar_11",
     "keast_0",
     "keast_1",
     "keast_2",
