@@ -25,6 +25,8 @@ schemes = [
     quadpy.tetrahedron.jaskowiec_sukumar_09(),
     quadpy.tetrahedron.jaskowiec_sukumar_10(),
     quadpy.tetrahedron.jaskowiec_sukumar_11(),
+    quadpy.tetrahedron.jaskowiec_sukumar_12(),
+    quadpy.tetrahedron.jaskowiec_sukumar_13(),
     quadpy.tetrahedron.keast_0(),
     quadpy.tetrahedron.keast_1(),
     quadpy.tetrahedron.keast_2(),
