@@ -15,6 +15,7 @@ schemes = [
     quadpy.tetrahedron.hammer_marlowe_stroud_3(),
     quadpy.tetrahedron.hammer_stroud_2(),
     quadpy.tetrahedron.hammer_stroud_3(),
+    quadpy.tetrahedron.jaskowiec_sukumar_02(),
     quadpy.tetrahedron.keast_0(),
     quadpy.tetrahedron.keast_1(),
     quadpy.tetrahedron.keast_2(),

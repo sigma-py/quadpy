@@ -6,6 +6,9 @@ from ._hammer_marlowe_stroud import (
     hammer_marlowe_stroud_3,
 )
 from ._hammer_stroud import hammer_stroud_2, hammer_stroud_3
+from ._jaskowiec_sukumar import (
+    jaskowiec_sukumar_02
+)
 from ._keast import (
     keast_0,
     keast_1,
@@ -99,6 +102,7 @@ __all__ = [
     "hammer_marlowe_stroud_3",
     "hammer_stroud_2",
     "hammer_stroud_3",
+    "jaskowiec_sukumar_02",
     "keast_0",
     "keast_1",
     "keast_2",
