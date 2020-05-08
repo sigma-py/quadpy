@@ -75,3 +75,11 @@ def jaskowiec_sukumar_10():
 
 def jaskowiec_sukumar_11():
     return _read("11")
+
+
+def jaskowiec_sukumar_12():
+    return _read("12")
+
+
+def jaskowiec_sukumar_13():
+    return _read("13")

@@ -17,6 +17,8 @@ from ._jaskowiec_sukumar import (
     jaskowiec_sukumar_09,
     jaskowiec_sukumar_10,
     jaskowiec_sukumar_11,
+    jaskowiec_sukumar_12,
+    jaskowiec_sukumar_13,
 )
 from ._keast import (
     keast_0,
@@ -121,6 +123,8 @@ __all__ = [
     "jaskowiec_sukumar_09",
     "jaskowiec_sukumar_10",
     "jaskowiec_sukumar_11",
+    "jaskowiec_sukumar_12",
+    "jaskowiec_sukumar_13",
     "keast_0",
     "keast_1",
     "keast_2",
