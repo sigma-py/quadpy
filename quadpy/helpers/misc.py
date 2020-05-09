@@ -1,6 +1,6 @@
 import math
-from collections import namedtuple
 import sys
+from collections import namedtuple
 
 import numpy
 import scipy.special
