@@ -4,7 +4,7 @@ import numpy
 import sympy
 
 from .. import nsphere
-from ..helpers import article, fsd, pm, untangle
+from ..helpers import article, fsd, pm, untangle, gamma_n_2
 from ._helpers import Enr2Scheme
 
 citation = article(
@@ -66,19 +66,6 @@ def stroud_1967_7_2b(n, symbolic=False):
     return _stroud_1967_7_2(n, False, symbolic)
 
 
-def _gamma_n_2(n, symbolic):
-    # gamma(n / 2)
-    frac = sympy.Rational if symbolic else lambda a, b: a / b
-    sqrt = sympy.sqrt if symbolic else math.sqrt
-    pi = sympy.pi if symbolic else math.pi
-
-    if n % 2 == 0:
-        return math.factorial(n // 2 - 1)
-
-    n2 = n // 2
-    return frac(math.factorial(2 * n2), 4 ** n2 * math.factorial(n2)) * sqrt(pi)
-
-
 def stroud_1967_7_4(n, symbolic=False):
     sqrt = sympy.sqrt if symbolic else math.sqrt
 
@@ -86,7 +73,7 @@ def stroud_1967_7_4(n, symbolic=False):
 
     sqrt2n2 = sqrt(2 * (n + 2))
     r1, r2 = [sqrt((n + 2 - p_m * sqrt2n2) / 2) for p_m in [+1, -1]]
-    g = _gamma_n_2(n, symbolic)
+    g = gamma_n_2(n, symbolic)
     A1, A2 = [(n + 2 + p_m * sqrt2n2) / 4 / (n + 2) * g for p_m in [+1, -1]]
 
     s = nsphere.stroud_1967(n)
