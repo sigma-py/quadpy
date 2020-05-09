@@ -3,7 +3,7 @@ import math
 import numpy
 import sympy
 
-from ..helpers import article, fsd, pm, untangle, z, prod
+from ..helpers import article, fsd, pm, prod, untangle, z
 from ._helpers import NCubeScheme
 
 _citation = article(
@@ -54,7 +54,7 @@ def cools_haegemans_2(n, delta2=1, symbolic=False):
         36 * delta2 ** 2,
     )
     w1 = frac(5 * (3 * delta2 - 1) ** 2, 72 * delta2)
-    w = frac(_mu(2) ** m * _mu(0) ** (n - m), 2 ** n * delta2 ** m)
+    w = frac(_mu(2, symbolic) ** m * _mu(0, symbolic) ** (n - m), 2 ** n * delta2 ** m)
 
     lmbdas = [sqrt(lmbda2) for lmbda2 in lmbdas2]
 

@@ -1,5 +1,7 @@
+import math
+
 import numpy
-from sympy import sqrt
+import sympy
 
 from .. import nsphere
 from ..helpers import article, fsd, pm, untangle, z
@@ -16,7 +18,9 @@ citation = article(
 )
 
 
-def _stroud_1967_7_ab(n, variant_a):
+def _stroud_1967_7_ab(n, variant_a, symbolic):
+    sqrt = sympy.sqrt if symbolic else math.sqrt
+
     if variant_a:
         assert 3 <= n <= 7
         t = 1
@@ -44,21 +48,22 @@ def _stroud_1967_7_ab(n, variant_a):
     data = [(A, z(n)), (B, fsd(n, (r, 1))), (C, pm(n, s)), (D, fsd(n, (t, 2)))]
     points, weights = untangle(data)
 
-    weights *= volume_unit_ball(n)
+    weights *= volume_unit_ball(n, symbolic)
 
     name = "Stroud 1967-7{}".format("a" if variant_a else "b")
     return NBallScheme(name, n, weights, points, 7, citation)
 
 
-def stroud_1967_7_a(n):
-    return _stroud_1967_7_ab(n, variant_a=True)
+def stroud_1967_7_a(n, symbolic=False):
+    return _stroud_1967_7_ab(n, variant_a=True, symbolic=symbolic)
 
 
-def stroud_1967_7_b(n):
-    return _stroud_1967_7_ab(n, variant_a=False)
+def stroud_1967_7_b(n, symbolic=False):
+    return _stroud_1967_7_ab(n, variant_a=False, symbolic=symbolic)
 
 
-def stroud_1967_7_c(n):
+def stroud_1967_7_c(n, symbolic=False):
+    sqrt = sympy.sqrt if symbolic else math.sqrt
     assert n >= 3
 
     alpha = sqrt(2 * (n + 2) * (n + 4))

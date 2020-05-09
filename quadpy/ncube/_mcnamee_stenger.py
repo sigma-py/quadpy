@@ -2,7 +2,7 @@ import math
 
 import sympy
 
-from ..helpers import article, fsd, untangle, z, prod
+from ..helpers import article, fsd, prod, untangle, z
 from ._helpers import NCubeScheme
 
 _citation = article(

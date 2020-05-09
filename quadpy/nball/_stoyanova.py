@@ -16,7 +16,9 @@ citation = article(
 )
 
 
-def stoyanova(n, delta=None, variant_v_plus=True):
+def stoyanova(n, delta=None, variant_v_plus=True, symbolic=False):
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
+    sqrt = sympy.sqrt if symbolic else math.sqrt
     assert n >= 5
 
     if delta is None:
@@ -31,16 +33,6 @@ def stoyanova(n, delta=None, variant_v_plus=True):
                 delta = {5: 0.98928, 6: 0.818, 7: 0.81, 8: 0.8, 9: 0.8}[n]
             else:
                 delta = sympy.Rational(4, 5)
-
-    if isinstance(delta, float):
-
-        def frac(a, b):
-            return a / b
-
-        sqrt = math.sqrt
-    else:
-        frac = sympy.Rational
-        sqrt = sympy.sqrt
 
     pts_a = get_nsimplex_points(n, sqrt, frac)
 
@@ -186,5 +178,5 @@ def stoyanova(n, delta=None, variant_v_plus=True):
         (d, z(n)),
     ]
     points, weights = untangle(data)
-    weights *= volume_unit_ball(n)
+    weights *= volume_unit_ball(n, symbolic)
     return NBallScheme("Stoyanova", n, weights, points, 7, citation)

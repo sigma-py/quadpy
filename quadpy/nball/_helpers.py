@@ -34,14 +34,14 @@ class NBallScheme:
         return numpy.array(radius) ** self.dim * dot(ff, self.weights)
 
 
-def volume_unit_ball(n, symbolic=False):
+def volume_unit_ball(n, symbolic):
     pi = sympy.pi if symbolic else numpy.pi
 
     if n == 0:
         return 1
     elif n == 1:
         return 2
-    return volume_unit_ball(n - 2) * 2 * pi / n
+    return volume_unit_ball(n - 2, symbolic) * 2 * pi / n
 
 
 def integrate_monomial_over_unit_nball(exponents, symbolic=False, radius=1):

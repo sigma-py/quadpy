@@ -1,5 +1,6 @@
-from sympy import Rational as frac
-from sympy import sqrt
+import math
+
+import sympy
 
 from ..helpers import book, pm, untangle
 from ._hammer_stroud import hammer_stroud_11n, hammer_stroud_12n
@@ -33,11 +34,14 @@ def stroud_sn_3_1(n):
     return hammer_stroud_11n(n, 0)
 
 
-def stroud_sn_3_2(n):
+def stroud_sn_3_2(n, symbolic=False):
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
+    sqrt = sympy.sqrt if symbolic else math.sqrt
+
     r = sqrt(frac(1, n + 2))
     data = [(frac(1, 2 ** n), pm(n, r))]
     points, weights = untangle(data)
-    weights *= volume_unit_ball(n)
+    weights *= volume_unit_ball(n, symbolic)
     return NBallScheme("Stroud Sn 3-2", n, weights, points, 3, citation)
 
 
