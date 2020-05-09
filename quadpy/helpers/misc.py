@@ -3,7 +3,6 @@ import sys
 from collections import namedtuple
 
 import numpy
-import scipy.special
 import sympy
 
 article = namedtuple(
