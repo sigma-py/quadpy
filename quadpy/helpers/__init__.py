@@ -13,6 +13,7 @@ from .combinatorics import (
 from .misc import (
     article,
     book,
+    comb,
     compute_dobrodeev,
     gamma_n_2,
     get_nsimplex_points,
@@ -39,6 +40,7 @@ __all__ = [
     "get_all_exponents",
     "untangle",
     "n_outer",
+    "comb",
     "compute_dobrodeev",
     "get_nsimplex_points",
     "article",
