@@ -1,5 +1,6 @@
-from sympy import Rational as frac
-from sympy import pi, sqrt
+import math
+
+import sympy
 
 from ..helpers import book, fsd, pm, pm_array0, untangle
 from ._helpers import Enr2Scheme
@@ -26,7 +27,10 @@ citation = book(
 )
 
 
-def stroud_enr2_5_3(n):
+def stroud_enr2_5_3(n, symbolic=False):
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
+    sqrt = sympy.sqrt if symbolic else math.sqrt
+    pi = sympy.pi if symbolic else math.pi
     assert n > 2
 
     r = sqrt(frac(n + 2, 4))
@@ -40,7 +44,10 @@ def stroud_enr2_5_3(n):
     return Enr2Scheme("Stroud Enr2 5-3", n, weights, points, 5, citation)
 
 
-def stroud_enr2_5_4(n):
+def stroud_enr2_5_4(n, symbolic=False):
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
+    sqrt = sympy.sqrt if symbolic else math.sqrt
+    pi = sympy.pi if symbolic else math.pi
     # Spherical product Lobatto
     B0 = frac(2, (n + 2))
     data = [(B0, [n * [0]])]
@@ -57,7 +64,10 @@ def stroud_enr2_5_4(n):
     return Enr2Scheme("Stroud Enr2 5-4", n, weights, points, 5, citation)
 
 
-def _stroud_5_5(n, variant_a):
+def _stroud_5_5(n, variant_a, symbolic=False):
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
+    sqrt = sympy.sqrt if symbolic else math.sqrt
+    pi = sympy.pi if symbolic else math.pi
     p_m = +1 if variant_a else -1
 
     # r is complex-valued for n >= 3
@@ -70,8 +80,8 @@ def _stroud_5_5(n, variant_a):
 
     points, weights = untangle(data)
     weights *= sqrt(pi) ** n
-    name = "Stroud Enr2 5-5{}".format("a" if variant_a else "b")
-    return Enr2Scheme(name, n, weights, points, 5, citation)
+    variant = "a" if variant_a else "b"
+    return Enr2Scheme(f"Stroud Enr2 5-5{variant}", n, weights, points, 5, citation)
 
 
 def stroud_enr2_5_5a(n):
@@ -82,7 +92,10 @@ def stroud_enr2_5_5b(n):
     return _stroud_5_5(n, False)
 
 
-def stroud_enr2_5_6(n):
+def stroud_enr2_5_6(n, symbolic=False):
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
+    sqrt = sympy.sqrt if symbolic else math.sqrt
+    pi = sympy.pi if symbolic else math.pi
     assert n >= 5
 
     sqrt2 = sqrt(2)
