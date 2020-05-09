@@ -35,6 +35,7 @@ class NBallScheme:
 
 
 def volume_unit_ball(n, symbolic):
+    #
     pi = sympy.pi if symbolic else numpy.pi
 
     if n == 0:
