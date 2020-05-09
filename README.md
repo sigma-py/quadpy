@@ -467,6 +467,7 @@ val = scheme.integrate(
  * [Williams-Shunn-Jameson](https://doi.org/10.1016/j.cam.2014.01.007) (2014, 1
    scheme with degree 9)
  * [Witherden-Vincent](https://doi.org/10.1016/j.camwa.2015.03.017) (2015, 9
+   schemes up to degree 10)
  * [Jaśkowiec-Sukumar](quadpy/tetrahedron/_jaskowiec_sukumar/) (2020, 21
    schemes up to degree 20)
 
