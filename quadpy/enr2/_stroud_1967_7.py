@@ -1,6 +1,7 @@
+import math
+
 import numpy
-from sympy import Rational as frac
-from sympy import gamma, pi, sqrt
+import sympy
 
 from .. import nsphere
 from ..helpers import article, fsd, pm, untangle
@@ -17,7 +18,10 @@ citation = article(
 )
 
 
-def _stroud_1967_7_2(n, variant_a=True):
+def _stroud_1967_7_2(n, variant_a, symbolic):
+    sqrt = sympy.sqrt if symbolic else math.sqrt
+    pi = sympy.pi if symbolic else math.pi
+
     if variant_a:
         # the points/weights are complex-valued for n >= 9; one could permit that
         assert n in [2, 3, 4, 6, 7]
@@ -54,15 +58,19 @@ def _stroud_1967_7_2(n, variant_a=True):
     return Enr2Scheme(name, n, weights, points, 7, citation)
 
 
-def stroud_1967_7_2a(n):
-    return _stroud_1967_7_2(n, True)
+def stroud_1967_7_2a(n, symbolic=False):
+    return _stroud_1967_7_2(n, True, symbolic)
 
 
-def stroud_1967_7_2b(n):
-    return _stroud_1967_7_2(n, False)
+def stroud_1967_7_2b(n, symbolic=False):
+    return _stroud_1967_7_2(n, False, symbolic)
 
 
-def stroud_1967_7_4(n):
+def stroud_1967_7_4(n, symbolic=False):
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
+    sqrt = sympy.sqrt if symbolic else math.sqrt
+    gamma = sympy.gamma if symbolic else math.gamma
+
     assert n >= 3
 
     sqrt2n2 = sqrt(2 * (n + 2))
