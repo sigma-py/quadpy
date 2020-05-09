@@ -120,27 +120,21 @@ Advanced topics:
 ### Line segment
 <img src="https://nschloe.github.io/quadpy/line_segment.png" width="50%">
 
- * Chebyshev-Gauss (both variants, arbitrary degree)
- * Clenshaw-Curtis (after
-   [Waldvogel](https://doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
- * Fejér-type-1 (after
-   [Waldvogel](https://doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
- * Fejér-type-2 (after
-   [Waldvogel](https://doi.org/10.1007/s10543-006-0045-4), arbitrary degree)
- * Gauss-Jacobi
- * Gauss-Legendre (via
-   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.legendre.leggauss.html), arbitrary degree)
- * Gauss-Lobatto (arbitrary degree)
- * Gauss-Kronrod (after [Laurie](https://doi.org/10.1090/S0025-5718-97-00861-2), arbitrary degree)
- * [Gauss-Patterson](https://doi.org/10.1090/S0025-5718-68-99866-9) (9 nested schemes up to degree 767)
- * Gauss-Radau (arbitrary degree)
- * closed Newton-Cotes (arbitrary degree)
- * open Newton-Cotes (arbitrary degree)
- * [tanh-sinh quadrature](https://en.wikipedia.org/wiki/Tanh-sinh_quadrature)
-   (see above)
+ * [Chebyshev-Gauss](quadpy/line_segment/_chebyshev_gauss.py) (type 1 and 2, arbitrary degree)
+ * [Clenshaw-Curtis](quadpy/line_segment/_clenshaw_curtis.py) (arbitrary degree)
+ * [Fejér](quadpy/line_segment/_fejer.py) (type 1 and 2, arbitrary degree)
+ * [Gauss-Jacobi](quadpy/line_segment/_gauss_jacobi.py)
+ * [Gauss-Legendre](line_segment/_gauss_legendre.py) (arbitrary degree)
+ * [Gauss-Lobatto](quadpy/line_segment/_gauss_lobatto.py) (arbitrary degree)
+ * [Gauss-Kronrod](quadpy/line_segment/_gauss_kronrod.py) (arbitrary degree)
+ * [Gauss-Patterson](quadpy/line_segment/_gauss_patterson.py) (9 nested schemes up to degree 767)
+ * [Gauss-Radau](quadpy/line_segment/_gauss_radau.py) (arbitrary degree)
+ * [Newton-Cotes](quadpy/line_segment/_newton_cotes.py) (open and closed, arbitrary degree)
+ * [tanh-sinh quadrature](quadpy/tanh_sinh.py) (see above)
 
-[See below](#generating-your-own-gauss-quadrature-in-three-simple-steps) for how to
-generate Gauss formulas for your own weight functions.
+[See
+her](https://github.com/nschloe/quadpy/wiki/Creating-your-own-Gauss-quadrature-in-two-simple-steps)
+for how to generate Gauss formulas for your own weight functions.
 
 Example:
 ```python
@@ -155,7 +149,7 @@ val = scheme.integrate(lambda x: numpy.exp(x), [0.0, 1.0])
 ### 1D half-space with weight function exp(-r)
 <img src="https://nschloe.github.io/quadpy/e1r.png" width="50%">
 
- * Generalized Gauss-Laguerre
+ * [Generalized Gauss-Laguerre](quadpy/e1r/_gauss_laguerre.py)
 
 Example:
 ```python
@@ -170,9 +164,8 @@ val = scheme.integrate(lambda x: x**2)
 ### 1D space with weight function exp(-r<sup>2</sup>)
 <img src="https://nschloe.github.io/quadpy/e1r2.png" width="50%">
 
- * [Gauss-Hermite](https://en.wikipedia.org/wiki/Gauss%E2%80%93Hermite_quadrature) (via
-   [NumPy](https://docs.scipy.org/doc/numpy/reference/generated/numpy.polynomial.hermite.hermgauss.html), arbitrary degree)
- * [Genz-Keister](https://doi.org/10.1016/0377-0427(95)00232-4) (1996, 8 nested schemes up to degree 67)
+ * [Gauss-Hermite](quadpy/e1r2/_gauss_hermite.py) (arbitrary degree)
+ * [Genz-Keister](quadpy/e1r2/_genz_keister.py) (1996, 8 nested schemes up to degree 67)
 
 Example:
 ```python
@@ -186,7 +179,7 @@ val = scheme.integrate(lambda x: x**2)
 ### Circle
 <img src="https://nschloe.github.io/quadpy/circle.png" width="25%">
 
- * [Krylov](https://books.google.de/books/about/Approximate_Calculation_of_Integrals.html?id=ELeRwR27IRIC&redir_esc=y) (1959, arbitrary degree)
+ * [Krylov](quadpy/circle/_krylov.py) (1959, arbitrary degree)
 
 Example:
 ```python
@@ -202,54 +195,48 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0], 1.0)
 
 Apart from the classical centroid, vertex, and seven-point schemes we have
 
- * [Hammer-Marlowe-Stroud](https://doi.org/10.1090/S0025-5718-1956-0086389-6)
+ * [Hammer-Marlowe-Stroud](quadpy/triangle/_hammer_marlowe_stroud.py)
    (1956, 5 schemes up to degree 5, also appearing in [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6))
- * open and closed Newton-Cotes schemes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6), arbitrary degree),
- * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
-   - [Albrecht-Collatz](https://doi.org/10.1002/zamm.19580380102) (1958, degree 3)
+ * [Newton-Cotes](quadpy/triangle/_newton_cotes.py) (open and closed, 1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6), arbitrary degree),
+ * via [Stroud](quadpy/triangle/_stroud.py) (1971):
+   - [Albrecht-Collatz](quadpy/triangle/_albrecht_collatz.py) (1958, degree 3)
    - conical product scheme (degree 7)
- * [Franke](https://doi.org/10.1090/S0025-5718-1971-0300440-5) (1971, 2 schemes of degree 7)
- * [Strang-Fix](https://bookstore.siam.org/wc08/)/[Cowper](https://doi.org/10.1002/nme.1620070316) (1973, 10 schemes up to
-   degree 7),
- * [Lyness-Jespersen](https://doi.org/10.1093/imamat/15.1.19) (1975, 21
+ * [Franke](quadpy/triangle/_franke.py) (1971, 2 schemes of degree 7)
+ * [Strang-Fix/Cowper](quadpy/triangle/_strang_fix_cowper.py) (1973, 10 schemes up to degree 7),
+ * [Lyness-Jespersen](quadpy/triangle/_lyness_jespersen.py) (1975, 21
    schemes up to degree 11, two of which are used in [TRIEX](https://doi.org/10.1145/356068.356070)),
- * [Lether](https://doi.org/10.1016/0771-050X(76)90008-5) (1976, degree 2n-2, arbitrary
-   n, not symmetric; reproduced in
-   [Rathod-Nagaraja-Venkatesudu](https://doi.org/10.1016/j.amc.2006.10.041), 2007),
- * [Hillion](https://doi.org/10.1002/nme.1620110504) (1977, 10 schemes up to
+ * [Lether](quadpy/triangle/_lether.py) (1976, degree 2n-2, arbitrary
+   n, not symmetric),
+ * [Hillion](quadpy/triangle/_hillion.py) (1977, 10 schemes up to
    degree 3),
- * [Grundmann-Möller](https://doi.org/10.1137/0715019) (1978, arbitrary degree),
- * [Laursen-Gellert](https://doi.org/10.1002/nme.1620120107) (1978, 17
-   schemes up to degree 10),
- * [CUBTRI](https://dl.acm.org/citation.cfm?id=356001) (Laurie, 1982, degree 8),
- * [Dunavant](https://doi.org/10.1002/nme.1620210612) (1985, 20 schemes up
-   to degree 20),
- * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131869) (1987,
-   degrees 8 and 11),
- * [Gatermann](https://doi.org/10.1007/BF02251251) (1988, degree 7)
- * Berntsen-Espelid (1990, 4 schemes of degree 13, the first one being
-   [DCUTRI](https://dl.acm.org/citation.cfm?id=131772)),
- * [Liu-Vinokur](https://doi.org/10.1006/jcph.1998.5884) (1998, 13 schemes
-   up to degree 5),
- * [Griener-Schmid](https://doi.org/10.1016/S0377-0427(99)00215-0), (1999, 2 schemes of degree 6),
- * [Walkington](https://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
-   (2000, 5 schemes up to degree 5),
- * [Wandzura-Xiao](https://doi.org/10.1016/S0898-1221(03)90004-6) (2003, 6
-   schemes up to degree 30),
- * [Taylor-Wingate-Bos](https://arxiv.org/abs/math/0501496) (2005, 5 schemes up
-   to degree 14),
- * [Zhang-Cui-Liu](https://www.jstor.org/stable/43693493) (2009, 3 schemes up to
+ * [Laursen-Gellert](quadpy/triangle/_laursen_gellert.py) (1978, 17 schemes up to degree
+   10),
+ * [CUBTRI](quadpy/triangle/_cubtri.py) (Laurie, 1982, degree 8),
+ * [Dunavant](quadpy/triangle/_dunavant.py) (1985, 20 schemes up to degree 20),
+ * [Cools-Haegemans](quadpy/triangle/_cools_haegemans.py) (1987, degrees 8 and 11),
+ * [Gatermann](quadpy/triangle/_gatermann.py) (1988, degree 7)
+ * [Berntsen-Espelid](quadpy/triangle/_berntsen_espelid.py) (1990, 4 schemes of degree
+   13, the first one being [DCUTRI](https://dl.acm.org/citation.cfm?id=131772)),
+ * [Liu-Vinokur](quadpy/triangle/_liu_vinokur.py) (1998, 13 schemes up to degree 5),
+ * [Griener-Schmid](quadpy/triangle/_griener_schmid.py), (1999, 2 schemes of degree 6),
+ * [Walkington](quadpy/triangle/_walkington.py) (2000, 5 schemes up to degree 5),
+ * [Wandzura-Xiao](quadpy/triangle/_wandzura_xiao) (2003, 6 schemes up to degree 30),
+ * [Taylor-Wingate-Bos](quadpy/triangle/_taylor_wingate_bos.py) (2005, 5 schemes up to
+   degree 14),
+ * [Zhang-Cui-Liu](quadpy/triangle/_zhang_cui_liu.py) (2009, 3 schemes up to
    degree 20),
- * [Xiao-Gimbutas](https://doi.org/10.1016/j.camwa.2009.10.027) (2010, 50
+ * [Xiao-Gimbutas](quadpy/triangle/_xiao_gimbutas) (2010, 50
    schemes up to degree 50),
- * [Vioreanu-Rokhlin](https://doi.org/10.1137/110860082) (2014, 20
-   schemes up to degree 62),
- * [Williams-Shunn-Jameson](https://doi.org/10.1016/j.cam.2014.01.007) (2014, 8
-   schemes up to degree 12),
- * [Witherden-Vincent](https://doi.org/10.1016/j.camwa.2015.03.017) (2015, 19
-   schemes up to degree 20),
- * [Papanicolopulos](https://doi.org/10.1016/j.cam.2015.08.001) (2016, 27
-   schemes up to degree 25).
+ * [Vioreanu-Rokhlin](quadpy/triangle/_vioreanu_rokhlin) (2014, 20 schemes up to degree
+   62),
+ * [Williams-Shunn-Jameson](quadpy/triangle/_williams_shunn_jameson.py) (2014, 8 schemes
+   up to degree 12),
+ * [Witherden-Vincent](quadpy/triangle/_witherden_vincent) (2015, 19 schemes up to
+   degree 20),
+ * [Papanicolopulos](quadpy/triangle/_papanicolopulos) (2016, 27 schemes up to degree
+   25),
+
+as well as [all schemes for the n-simplex](#n-simplex).
 
 Example:
 ```python
@@ -263,23 +250,22 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [[0.0, 0.0], [1.0, 0.0], [0.5,
 ### Disk
 <img src="https://nschloe.github.io/quadpy/disk.png" width="25%">
 
- * [Peirce](https://www.jstor.org/stable/2098722) (1957, arbitrary degree)
- * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y):
-   - [Radon](https://eudml.org/doc/176796) (1948, degree 5)
-   - [Peirce](https://books.google.de/books/about/Numerical_integration_over_planar_region.html?id=WR9SAAAAMAAJ&redir_esc=y)
-     (1956, 3 schemes up to degree 11)
-   - [Albrecht-Collatz](https://doi.org/10.1002/zamm.19580380102) (1958, degree 3)
-   - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 8 schemes up to degree 15)
-   - [Albrecht](https://doi.org/10.1002/zamm.19600401014) (1960, 8 schemes up to degree 17)
-   - Mysovskih (1964, 3 schemes up to degree 15)
-   - [Rabinowitz-Richter](https://doi.org/10.2307/2004962) (1969, 6 schemes up to degree 15)
- * [Lether](https://www.jstor.org/stable/2949473) (1971, arbitrary degree)
- * [Piessens-Haegemans](https://doi.org/10.2307/2005291) (1975, 1 scheme of degree 9)
- * [Haegemans-Piessens](https://www.jstor.org/stable/2156699) (1977, degree 9)
- * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 9)
- * [Wissmann-Becker](https://doi.org/10.1137/0723043) (1986, 3 schemes up to degree 8)
+ * [Peirce](quadpy/disk/_peirce_1957.py) (1957, arbitrary degree)
+ * via [Stroud](quadpy/disk/_stroud.py):
+   - [Radon](quadpy/disk/_radon.py) (1948, degree 5)
+   - [Peirce](quadpy/disk/_peirce_1956.py) (1956, 3 schemes up to degree 11)
+   - [Albrecht-Collatz](quadpy/disk/_albrecht_collatz.py) (1958, degree 3)
+   - [Hammer-Stroud](quadpy/disk/_hammer_stroud.py) (1958, 8 schemes up to degree 15)
+   - [Albrecht](quadpy/disk/_albrecht.py) (1960, 8 schemes up to degree 17)
+   - [Mysovskih](quadpy/disk/_mysovskih.py) (1964, 3 schemes up to degree 15)
+   - [Rabinowitz-Richter](quadpy/disk/_rabinowitz_richter.py) (1969, 6 schemes up to degree 15)
+ * [Lether](quadpy/disk/_lether.py) (1971, arbitrary degree)
+ * [Piessens-Haegemans](quadpy/disk/_piessens_haegemans.py) (1975, 1 scheme of degree 9)
+ * [Haegemans-Piessens](quadpy/disk/_haegemans_piessens.py) (1977, degree 9)
+ * [Cools-Haegemans](quadpy/disk/_cools_haegemans.py) (1985, 3 schemes up to degree 9)
+ * [Wissmann-Becker](quadpy/disk/_wissmann_becker.py) (1986, 3 schemes up to degree 8)
  * [Kim-Song](quadpy/disk/_kim_song.py) (1997, 15 schemes up to degree 17)
- * [Cools-Kim](https://link.springer.com/article/10.1007/BF03012263) (2000, 3 schemes up to degree 21)
+ * [Cools-Kim](quadpy/disk/_cools_kim.py) (2000, 3 schemes up to degree 21)
 
 Example:
 ```python
