@@ -148,3 +148,16 @@ def prod(lst):
 
         return reduce(operator.mul, lst, 1)
     return math.prod(lst)
+
+
+def gamma_n_2(n, symbolic):
+    # gamma(n / 2)
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
+    sqrt = sympy.sqrt if symbolic else math.sqrt
+    pi = sympy.pi if symbolic else math.pi
+
+    if n % 2 == 0:
+        return math.factorial(n // 2 - 1)
+
+    n2 = n // 2
+    return frac(math.factorial(2 * n2), 4 ** n2 * math.factorial(n2)) * sqrt(pi)
