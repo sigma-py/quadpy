@@ -99,11 +99,10 @@ def compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k, symbolic=False):
     """
     t = 1 if pm_type == "I" else -1
 
-    binomial = sympy.binomial if symbolic else scipy.special.binom
     fact = sympy.factorial if symbolic else math.factorial
     sqrt = sympy.sqrt if symbolic else numpy.sqrt
 
-    L = binomial(n, i) * 2 ** i
+    L = comb(n, i) * 2 ** i
     M = fact(n) // (fact(j) * fact(k) * fact(n - j - k)) * 2 ** (j + k)
     N = L + M
     F = I22 / I0 - I2 ** 2 / I0 ** 2 + (I4 / I0 - I22 / I0) / n
@@ -148,6 +147,16 @@ def prod(lst):
 
         return reduce(operator.mul, lst, 1)
     return math.prod(lst)
+
+
+def comb(a, b):
+    if sys.version < "3.8":
+        try:
+            binom = math.factorial(a) // math.factorial(b) // math.factorial(a - b)
+        except ValueError:
+            binom = 0
+        return binom
+    return math.comb(a, b)
 
 
 def gamma_n_2(n, symbolic):

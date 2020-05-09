@@ -4,7 +4,7 @@ import numpy
 import sympy
 
 from .. import nsphere
-from ..helpers import article, fsd, pm, untangle, gamma_n_2
+from ..helpers import article, fsd, gamma_n_2, pm, untangle
 from ._helpers import Enr2Scheme
 
 citation = article(
