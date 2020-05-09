@@ -1,5 +1,6 @@
 import math
 from collections import namedtuple
+import sys
 
 import numpy
 import scipy.special
@@ -138,3 +139,12 @@ def get_nsimplex_points(n, sqrt, frac):
             point += [0] * (n - r - 1)
         points.append(point)
     return numpy.array(points)
+
+
+def prod(lst):
+    if sys.version < "3.8":
+        from functools import reduce
+        import operator
+
+        return reduce(operator.mul, lst, 1)
+    return math.prod(lst)

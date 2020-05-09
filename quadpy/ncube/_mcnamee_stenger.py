@@ -1,7 +1,8 @@
-from sympy import Rational as frac
-from sympy import binomial, sqrt
+import math
 
-from ..helpers import article, fsd, untangle, z
+import sympy
+
+from ..helpers import article, fsd, untangle, z, prod
 from ._helpers import NCubeScheme
 
 _citation = article(
@@ -15,9 +16,11 @@ _citation = article(
 )
 
 
-def _mcnamee_stenger_3(n, integrator):
-    I0 = integrator(n, [])
-    I2 = integrator(n, [2])
+def _mcnamee_stenger_3(n, integrator, symbolic):
+    sqrt = sympy.sqrt if symbolic else math.sqrt
+
+    I0 = integrator(n, [], symbolic)
+    I2 = integrator(n, [2], symbolic)
 
     u2 = I2 / I0
     # ERR The article says I0 / (2 * u**2)
@@ -35,13 +38,15 @@ def _mcnamee_stenger_3(n, integrator):
     return "McNamee-Stenger 3", n, weights, points, 3, _citation
 
 
-def _mcnamee_stenger_5(n, integrator):
+def _mcnamee_stenger_5(n, integrator, symbolic):
     assert n >= 2
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
+    sqrt = sympy.sqrt if symbolic else math.sqrt
 
-    I0 = integrator(n, [])
-    I2 = integrator(n, [2])
-    I4 = integrator(n, [4])
-    I22 = integrator(n, [2, 2])
+    I0 = integrator(n, [], symbolic)
+    I2 = integrator(n, [2], symbolic)
+    I4 = integrator(n, [4], symbolic)
+    I22 = integrator(n, [2, 2], symbolic)
 
     u = sqrt(I4 / I2)
     A0 = I0 - n * (I2 / I4) ** 2 * (I4 - frac(n - 1, 2) * I22)
@@ -59,16 +64,19 @@ def _mcnamee_stenger_5(n, integrator):
     return "McNamee-Stenger 5", n, weights, points, 5, _citation
 
 
-def _mcnamee_stenger_7(n, integrator, switch_uv):
+def _mcnamee_stenger_7(n, integrator, switch_uv, symbolic):
     assert n >= 3
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
+    sqrt = sympy.sqrt if symbolic else math.sqrt
+    binomial = sympy.binomial if symbolic else math.comb
 
-    I0 = integrator(n, [])
-    I2 = integrator(n, [2])
-    I4 = integrator(n, [4])
-    I6 = integrator(n, [6])
-    I22 = integrator(n, [2, 2])
-    I24 = integrator(n, [2, 4])
-    I222 = integrator(n, [2, 2, 2])
+    I0 = integrator(n, [], symbolic)
+    I2 = integrator(n, [2], symbolic)
+    I4 = integrator(n, [4], symbolic)
+    I6 = integrator(n, [6], symbolic)
+    I22 = integrator(n, [2, 2], symbolic)
+    I24 = integrator(n, [2, 4], symbolic)
+    I222 = integrator(n, [2, 2, 2], symbolic)
 
     # Choose u, v as solutions of a u**4 - b u**2 + c = 0.
     a = I2 ** 2 - I0 * I4
@@ -134,20 +142,23 @@ def _mcnamee_stenger_7(n, integrator, switch_uv):
     return "McNamee-Stenger 7", n, weights, points, 7, _citation
 
 
-def _mcnamee_stenger_9(n, integrator, switch_uv):
+def _mcnamee_stenger_9(n, integrator, switch_uv, symbolic):
     assert n >= 4
+    sqrt = sympy.sqrt if symbolic else math.sqrt
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
+    binomial = sympy.binomial if symbolic else math.comb
 
-    I0 = integrator(n, [])
-    I2 = integrator(n, [2])
-    I4 = integrator(n, [4])
-    I6 = integrator(n, [6])
-    I8 = integrator(n, [8])
-    I24 = integrator(n, [2, 4])
-    I26 = integrator(n, [2, 6])
-    I44 = integrator(n, [4, 4])
-    I222 = integrator(n, [2, 2, 2])
-    I224 = integrator(n, [2, 2, 4])
-    I2222 = integrator(n, [2, 2, 2, 2])
+    I0 = integrator(n, [], symbolic)
+    I2 = integrator(n, [2], symbolic)
+    I4 = integrator(n, [4], symbolic)
+    I6 = integrator(n, [6], symbolic)
+    I8 = integrator(n, [8], symbolic)
+    I24 = integrator(n, [2, 4], symbolic)
+    I26 = integrator(n, [2, 6], symbolic)
+    I44 = integrator(n, [4, 4], symbolic)
+    I222 = integrator(n, [2, 2, 2], symbolic)
+    I224 = integrator(n, [2, 2, 4], symbolic)
+    I2222 = integrator(n, [2, 2, 2, 2], symbolic)
 
     # Choose u, v as solutions of a u**4 - b u**2 + c = 0.
     a = I4 ** 2 - I2 * I6
@@ -242,7 +253,7 @@ def _mcnamee_stenger_9(n, integrator, switch_uv):
 
 
 # Here starts the cube-specific section.
-def integrator(n, k):
+def integrator(n, k, symbolic):
     """Returns the integral of the polynomial given by the coefficients k over the
     n-dimensional cube.
     """
@@ -251,34 +262,29 @@ def integrator(n, k):
     if any(kk % 2 == 1 for kk in k):
         return 0
 
-    def prod(factors):
-        from functools import reduce
-        import operator
-
-        return reduce(operator.mul, factors, 1)
-
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
     return frac(2 ** n, prod([kk + 1 for kk in k]))
 
 
-def mcnamee_stenger_3(n):
-    return NCubeScheme(*_mcnamee_stenger_3(n, integrator))
+def mcnamee_stenger_3(n, symbolic=False):
+    return NCubeScheme(*_mcnamee_stenger_3(n, integrator, symbolic=symbolic))
 
 
-def mcnamee_stenger_5(n):
-    return NCubeScheme(*_mcnamee_stenger_5(n, integrator))
+def mcnamee_stenger_5(n, symbolic=False):
+    return NCubeScheme(*_mcnamee_stenger_5(n, integrator, symbolic=symbolic))
 
 
-def mcnamee_stenger_7a(n):
-    return NCubeScheme(*_mcnamee_stenger_7(n, integrator, False))
+def mcnamee_stenger_7a(n, symbolic=False):
+    return NCubeScheme(*_mcnamee_stenger_7(n, integrator, False, symbolic=symbolic))
 
 
-def mcnamee_stenger_7b(n):
-    return NCubeScheme(*_mcnamee_stenger_7(n, integrator, True))
+def mcnamee_stenger_7b(n, symbolic=False):
+    return NCubeScheme(*_mcnamee_stenger_7(n, integrator, True, symbolic=symbolic))
 
 
-def mcnamee_stenger_9a(n):
-    return NCubeScheme(*_mcnamee_stenger_9(n, integrator, False))
+def mcnamee_stenger_9a(n, symbolic=False):
+    return NCubeScheme(*_mcnamee_stenger_9(n, integrator, False, symbolic=symbolic))
 
 
-def mcnamee_stenger_9b(n):
-    return NCubeScheme(*_mcnamee_stenger_9(n, integrator, True))
+def mcnamee_stenger_9b(n, symbolic=False):
+    return NCubeScheme(*_mcnamee_stenger_9(n, integrator, True, symbolic=symbolic))

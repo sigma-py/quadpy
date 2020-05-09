@@ -18,6 +18,7 @@ from .misc import (
     n_outer,
     online,
     phdthesis,
+    prod,
     techreport,
     untangle,
 )
@@ -42,6 +43,7 @@ __all__ = [
     "book",
     "techreport",
     "phdthesis",
+    "prod",
     "online",
     "plot_disks_1d",
     "plot_disks",
