@@ -33,7 +33,7 @@ def _read(string):
     weights = numpy.array(data["weights"])
 
     return TetrahedronScheme(
-        f"Jaśkowiec-Sukumar {degree}", weights, points, degree, citation
+        f"Jaśkowiec-Sukumar {string}", weights, points, degree, citation
     )
 
 
@@ -83,3 +83,35 @@ def jaskowiec_sukumar_12():
 
 def jaskowiec_sukumar_13():
     return _read("13")
+
+
+def jaskowiec_sukumar_14():
+    return _read("14")
+
+
+def jaskowiec_sukumar_15():
+    return _read("15")
+
+
+def jaskowiec_sukumar_16():
+    return _read("16")
+
+
+def jaskowiec_sukumar_17():
+    return _read("17")
+
+
+def jaskowiec_sukumar_18():
+    return _read("18")
+
+
+def jaskowiec_sukumar_19a():
+    return _read("19a")
+
+
+def jaskowiec_sukumar_19b():
+    return _read("19b")
+
+
+def jaskowiec_sukumar_20():
+    return _read("20")
