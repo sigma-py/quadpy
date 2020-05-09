@@ -1,6 +1,7 @@
+import math
+
 import numpy
-from sympy import Rational as frac
-from sympy import cos, pi, sin, sqrt
+import sympy
 
 from ..helpers import article, untangle
 from ._helpers import NBallScheme, volume_unit_ball
@@ -18,7 +19,13 @@ citation = article(
 )
 
 
-def stroud_1957(n):
+def stroud_1957(n, symbolic=False):
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
+    sqrt = sympy.sqrt if symbolic else math.sqrt
+    sin = sympy.sin if symbolic else math.sin
+    cos = sympy.cos if symbolic else math.cos
+    pi = sympy.pi if symbolic else math.pi
+
     pts = [
         [
             [
@@ -42,5 +49,5 @@ def stroud_1957(n):
 
     points, weights = untangle(data)
 
-    weights *= volume_unit_ball(n)
+    weights *= volume_unit_ball(n, symbolic)
     return NBallScheme("Stroud 1957", n, weights, points, 2, citation)

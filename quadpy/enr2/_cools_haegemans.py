@@ -1,5 +1,6 @@
-from sympy import Rational as frac
-from sympy import pi, sqrt
+import math
+
+import sympy
 
 from ..helpers import article, fsd, pm, untangle, z
 from ..ncube._cools_haegemans import _gener
@@ -16,21 +17,25 @@ _citation = article(
 )
 
 
-def _mu(j):
+def _mu(j, symbolic):
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
     # 1/sqrt(pi) ** n int int ... int exp(-r ** 2) dr
     if j == 0:
         return 1
     elif j == 1:
         return 0
-    return frac(j - 1, 2) * _mu(j - 2)
+    return frac(j - 1, 2) * _mu(j - 2, symbolic)
 
 
-def cools_haegemans_1(n, delta2=1):
+def cools_haegemans_1(n, delta2=1, symbolic=False):
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
+    sqrt = sympy.sqrt if symbolic else math.sqrt
+    pi = sympy.pi if symbolic else math.pi
     assert frac(1, 2) <= delta2
     m = 1
 
     w0 = frac(2 * delta2 - 1, 2 * delta2)
-    w = frac(_mu(2) ** m * _mu(0) ** (n - m), 2 ** n * delta2 ** m)
+    w = frac(_mu(2, symbolic) ** m * _mu(0, symbolic) ** (n - m), 2 ** n * delta2 ** m)
 
     data = [
         (w0, z(n)),
@@ -42,20 +47,23 @@ def cools_haegemans_1(n, delta2=1):
     return Enr2Scheme("Cools-Haegemans 1", n, weights, points, 3, _citation)
 
 
-def cools_haegemans_2(n, delta2=1):
+def cools_haegemans_2(n, delta2=1, symbolic=False):
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
+    sqrt = sympy.sqrt if symbolic else math.sqrt
+    pi = sympy.pi if symbolic else math.pi
     assert n >= 1
     assert frac(1, 2) <= delta2
     if n > 2:
         assert delta2 <= frac(n + 2, 2 * n - 4)
     m = 2
 
-    lmbdas2 = _gener(delta2, 1, _mu)
+    lmbdas2 = _gener(delta2, 1, _mu, symbolic)
 
     w0 = frac(
         -(2 * delta2 - 1) * (2 * delta2 * n - 4 * delta2 - n - 2), 8 * delta2 ** 2
     )
     w1 = frac((2 * delta2 - 1) ** 2, 16 * delta2 ** 2)
-    w = frac(_mu(2) ** m * _mu(0) ** (n - m), 2 ** n * delta2 ** m)
+    w = frac(_mu(2, symbolic) ** m * _mu(0, symbolic) ** (n - m), 2 ** n * delta2 ** m)
 
     lmbdas = [sqrt(lmbda2) for lmbda2 in lmbdas2]
 
@@ -70,11 +78,18 @@ def cools_haegemans_2(n, delta2=1):
     return Enr2Scheme("Cools-Haegemans 2", n, weights, points, 5, _citation)
 
 
-def cools_haegemans_3(n, delta2=frac(2, 3)):
+def cools_haegemans_3(n, delta2=(2, 3), symbolic=False):
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
+    sqrt = sympy.sqrt if symbolic else math.sqrt
+    pi = sympy.pi if symbolic else math.pi
+
+    if isinstance(delta2, tuple):
+        delta2 = frac(*delta2)
+
     assert n >= 2
     m = 3
 
-    lmbdas2 = _gener(delta2, 2, _mu)
+    lmbdas2 = _gener(delta2, 2, _mu, symbolic)
 
     delta4 = delta2 ** 2
     delta6 = delta2 ** 3
@@ -97,7 +112,7 @@ def cools_haegemans_3(n, delta2=frac(2, 3)):
     w2 = frac((2 * delta2 - 1) * (2 * delta2 - 3) ** 3, 384 * (4 * delta2 - 3) * delta6)
     w11 = frac((2 * delta2 - 1) ** 3, 128 * delta6)
 
-    w = frac(_mu(2) ** m * _mu(0) ** (n - m), 2 ** n * delta2 ** m)
+    w = frac(_mu(2, symbolic) ** m * _mu(0, symbolic) ** (n - m), 2 ** n * delta2 ** m)
 
     delta = sqrt(delta2)
     lmbdas = [sqrt(lmbda2) for lmbda2 in lmbdas2]
