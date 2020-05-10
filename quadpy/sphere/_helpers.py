@@ -53,7 +53,7 @@ class SphereScheme:
             # <https://en.wikipedia.org/wiki/Spherical_cap>
             w *= 4 * numpy.pi
             theta = numpy.arccos(1.0 - abs(w) / (2 * numpy.pi))
-            color = "#1f77b4" if w >= 0 else "#d62728"
+            color = "tab:blue" if w >= 0 else "tab:red"
             _plot_spherical_cap_mpl(ax, p, theta, color)
 
         ax.set_axis_off()
