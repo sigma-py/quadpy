@@ -79,6 +79,8 @@ class LineSegmentScheme:
         import matplotlib.pyplot as plt
 
         self.plot(*args, **kwargs)
+        # mpl keeps a hidden background patch that renders bbox_inches ineffective.
+        # keep an eye out for https://stackoverflow.com/q/61712551/353337
         plt.savefig(filename, transparent=True, bbox_inches="tight")
 
     def show(self, *args, **kwargs):
