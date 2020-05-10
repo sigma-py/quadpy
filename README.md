@@ -162,7 +162,7 @@ val = scheme.integrate(lambda x: x**2)
 
 
 ### 1D space with weight function exp(-r<sup>2</sup>)
-<img src="https://nschloe.github.io/quadpy/e2r2-rabinowitz-richter-3.svg" width="50%">
+<img src="https://nschloe.github.io/quadpy/e1r2-gauss-hermite-8.svg" width="50%">
 
  * [Gauss-Hermite](quadpy/e1r2/_gauss_hermite.py) (arbitrary degree)
  * [Genz-Keister](quadpy/e1r2/_genz_keister.py) (1996, 8 nested schemes up to degree 67)
@@ -191,7 +191,7 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0], 1.0)
 ```
 
 ### Triangle
-<img src="triangle-dunavant-15.svg" width="25%">
+<img src="https://nschloe.github.io/quadpy/triangle-dunavant-15.svg" width="25%">
 
 Apart from the classical centroid, vertex, and seven-point schemes we have
 
