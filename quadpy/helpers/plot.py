@@ -10,10 +10,7 @@ def plot_disks_1d(plt, pts, weights, total_area):
     sum up to the total area.
     """
     radii = 0.5 * abs(weights) / math.fsum(weights) * total_area
-    colors = [
-        "tab:blue" if weight >= 0 else "tab:red"
-        for weight in weights
-    ]
+    colors = ["tab:blue" if weight >= 0 else "tab:red" for weight in weights]
     _plot_disks_helpers(plt, pts, radii, colors)
     return
 
