@@ -118,7 +118,7 @@ Advanced topics:
 ## Schemes
 
 ### Line segment
-<img src="https://nschloe.github.io/quadpy/line_segment.png" width="50%">
+<img src="https://nschloe.github.io/quadpy/line-segment-gauss-legendre-20.svg" width="50%">
 
  * [Chebyshev-Gauss](quadpy/line_segment/_chebyshev_gauss.py) (type 1 and 2, arbitrary degree)
  * [Clenshaw-Curtis](quadpy/line_segment/_clenshaw_curtis.py) (arbitrary degree)
@@ -147,7 +147,7 @@ val = scheme.integrate(lambda x: numpy.exp(x), [0.0, 1.0])
 ```
 
 ### 1D half-space with weight function exp(-r)
-<img src="https://nschloe.github.io/quadpy/e1r.png" width="50%">
+<img src="https://nschloe.github.io/quadpy/e1r-gauss-laguerre-3.svg" width="50%">
 
  * [Generalized Gauss-Laguerre](quadpy/e1r/_gauss_laguerre.py)
 
@@ -162,7 +162,7 @@ val = scheme.integrate(lambda x: x**2)
 
 
 ### 1D space with weight function exp(-r<sup>2</sup>)
-<img src="https://nschloe.github.io/quadpy/e1r2.png" width="50%">
+<img src="https://nschloe.github.io/quadpy/e1r2-gauss-hermite-8.svg" width="50%">
 
  * [Gauss-Hermite](quadpy/e1r2/_gauss_hermite.py) (arbitrary degree)
  * [Genz-Keister](quadpy/e1r2/_genz_keister.py) (1996, 8 nested schemes up to degree 67)
@@ -177,7 +177,7 @@ val = scheme.integrate(lambda x: x**2)
 ```
 
 ### Circle
-<img src="https://nschloe.github.io/quadpy/circle.png" width="25%">
+<img src="https://nschloe.github.io/quadpy/circle-krylov-30.svg" width="25%">
 
  * [Krylov](quadpy/circle/_krylov.py) (1959, arbitrary degree)
 
@@ -191,7 +191,7 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0], 1.0)
 ```
 
 ### Triangle
-<img src="https://nschloe.github.io/quadpy/triangle.png" width="25%">
+<img src="https://nschloe.github.io/quadpy/triangle-dunavant-15.svg" width="25%">
 
 Apart from the classical centroid, vertex, and seven-point schemes we have
 
@@ -248,7 +248,7 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [[0.0, 0.0], [1.0, 0.0], [0.5,
 ```
 
 ### Disk
-<img src="https://nschloe.github.io/quadpy/disk.png" width="25%">
+<img src="https://nschloe.github.io/quadpy/disk-hammer-stroud-20.svg" width="25%">
 
  * [Peirce](quadpy/disk/_peirce_1957.py) (1957, arbitrary degree)
  * via [Stroud](quadpy/disk/_stroud.py):
@@ -278,7 +278,7 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0], 1.0)
 ```
 
 ### Quadrilateral
-<img src="https://nschloe.github.io/quadpy/quad.png" width="25%">
+<img src="https://nschloe.github.io/quadpy/quad-maxwell.svg" width="25%">
 
  * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 3
    schemes up to degree 7)
@@ -330,7 +330,7 @@ to generate the array.
 
 
 ### 2D space with weight function exp(-r)
-<img src="https://nschloe.github.io/quadpy/e2r.png" width="25%">
+<img src="https://nschloe.github.io/quadpy/e2r-rabinowitz-richter-5.svg" width="25%">
 
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
    - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 2 schemes up to degree 7)
@@ -349,7 +349,7 @@ val = scheme.integrate(lambda x: x[0]**2)
 
 
 ### 2D space with weight function exp(-r<sup>2</sup>)
-<img src="https://nschloe.github.io/quadpy/e2r2.png" width="25%">
+<img src="https://nschloe.github.io/quadpy/e2r2-rabinowitz-richter-3.svg" width="25%">
 
  * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
    - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 2 schemes up to degree 7)

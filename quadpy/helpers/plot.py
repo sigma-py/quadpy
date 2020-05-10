@@ -10,11 +10,7 @@ def plot_disks_1d(plt, pts, weights, total_area):
     sum up to the total area.
     """
     radii = 0.5 * abs(weights) / math.fsum(weights) * total_area
-    colors = [
-        # use matplotlib 2.0's color scheme
-        "#1f77b4" if weight >= 0 else "#d62728"
-        for weight in weights
-    ]
+    colors = ["tab:blue" if weight >= 0 else "tab:red" for weight in weights]
     _plot_disks_helpers(plt, pts, radii, colors)
     return
 
@@ -28,11 +24,10 @@ def plot_disks(plt, pts, weights, total_area):
     radii = numpy.sqrt(abs(weights) / math.fsum(weights) * total_area / math.pi)
     colors = [
         # use matplotlib 2.0's color scheme
-        "#1f77b4" if weight >= 0 else "#d62728"
+        "tab:blue" if weight >= 0 else "tab:red"
         for weight in weights
     ]
     _plot_disks_helpers(plt, pts, radii, colors)
-    return
 
 
 def _plot_disks_helpers(plt, pts, radii, colors):
@@ -43,7 +38,6 @@ def _plot_disks_helpers(plt, pts, radii, colors):
         # total_area.
         circ = plt.Circle((tp[0], tp[1]), radius, color=color, alpha=0.5)
         plt.gca().add_artist(circ)
-    return
 
 
 def show_mpl(points, weights, volume, edges, balls=None):
@@ -107,7 +101,7 @@ def show_mpl(points, weights, volume, edges, balls=None):
         radii=numpy.cbrt(
             abs(weights) / math.fsum(weights) * volume / (4.0 / 3.0 * numpy.pi)
         ),
-        colors=["#1f77b4" if weight >= 0 else "#d62728" for weight in weights],
+        colors=["tab:blue" if weight >= 0 else "tab:red" for weight in weights],
     )
 
     for ball in balls:
