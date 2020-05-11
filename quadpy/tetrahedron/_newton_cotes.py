@@ -45,33 +45,28 @@ def _newton_cotes(n, point_fun):
         )
 
     weights = numpy.empty(len(points))
-    idx = 0
-    for i in range(n + 1):
-        for j in range(n + 1 - i):
-            for k in range(n + 1 - i - j):
-                L = n - i - j - k
-                # Compute weight.
-                # Define the polynomial which to integrate over the
-                # tetrahedron.
-                t = sympy.DeferredVector("t")
-                g = (
-                    get_poly(t[0], i, n)
-                    * get_poly(t[1], j, n)
-                    * get_poly(t[2], k, n)
-                    * get_poly(t[3], L, n)
-                )
-                # The integral of monomials over a tetrahedron are well-known,
-                # see Silvester.
-                weights[idx] = numpy.sum(
-                    [
-                        c
-                        * numpy.prod([math.factorial(k) for k in m])
-                        * 6.0
-                        / math.factorial(numpy.sum(m) + 3)
-                        for m, c in zip(g.monoms(), g.coeffs())
-                    ]
-                )
-                idx += 1
+    kk = 0
+    for i, j, k, L in idx:
+        # Compute weight.
+        # Define the polynomial which to integrate over the tetrahedron.
+        t = sympy.DeferredVector("t")
+        g = (
+            get_poly(t[0], i, n)
+            * get_poly(t[1], j, n)
+            * get_poly(t[2], k, n)
+            * get_poly(t[3], L, n)
+        )
+        # The integral of monomials over a tetrahedron are well-known, see Silvester.
+        weights[kk] = numpy.sum(
+            [
+                c
+                * numpy.prod([math.factorial(k) for k in m])
+                * 6.0
+                / math.factorial(numpy.sum(m) + 3)
+                for m, c in zip(g.monoms(), g.coeffs())
+            ]
+        )
+        kk += 1
     return weights, points, degree, citation
 
 
