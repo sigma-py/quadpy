@@ -197,7 +197,6 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
 
  * [Hammer-Marlowe-Stroud](quadpy/triangle/_hammer_marlowe_stroud.py)
    (1956, 5 schemes up to degree 5, also appearing in [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6))
- * [Newton-Cotes](quadpy/triangle/_newton_cotes.py) (open and closed, 1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6), arbitrary degree),
  * via [Stroud](quadpy/triangle/_stroud.py) (1971):
    - [Albrecht-Collatz](quadpy/triangle/_albrecht_collatz.py) (1958, degree 3)
    - conical product scheme (degree 7)
@@ -235,8 +234,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    degree 20),
  * [Papanicolopulos](quadpy/triangle/_papanicolopulos) (2016, 27 schemes up to degree
    25),
-
-as well as [all schemes for the n-simplex](#n-simplex).
+ * [all schemes for the n-simplex](#n-simplex).
 
 Example:
 ```python
@@ -431,7 +429,6 @@ val = scheme.integrate(
 
  * [Hammer-Marlowe-Stroud](https://doi.org/10.1090/S0025-5718-1956-0086389-6)
    (1956, 3 schemes up to degree 3, also appearing in [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6))
- * open and closed Newton-Cotes (1970, after [Silvester](https://doi.org/10.1090/S0025-5718-1970-0258283-6)) (arbitrary degree)
  * [Stroud](https://cds.cern.ch/record/104291?ln=en) (1971, degree 7)
  * [Grundmann-Möller](https://doi.org/10.1137/0715019) (1978, arbitrary degree),
  * [Yu](https://doi.org/10.1016/0045-7825(84)90072-0) (1984, 5 schemes up to degree 6)
@@ -456,6 +453,7 @@ val = scheme.integrate(
    schemes up to degree 10)
  * [Jaśkowiec-Sukumar](quadpy/tetrahedron/_jaskowiec_sukumar/) (2020, 21
    schemes up to degree 20)
+ * [all schemes for the n-simplex](#n-simplex).
 
 Example:
 ```python
@@ -581,6 +579,7 @@ val = scheme.integrate(lambda x: x[0]**2)
    - [Stroud](https://doi.org/10.2307/2002945) (1964, degree 3)
    - [Stroud](https://doi.org/10.1007/BF02165227) (1966, 7 schemes of degree 3)
    - [Stroud](https://doi.org/10.1137/0706009) (1969, degree 5)
+ * [Silvester](quadpy/nsimplex/_silvester.py) (1970, arbitrary degree),
  * [Grundmann-Möller](https://doi.org/10.1137/0715019) (1978, arbitrary degree)
  * [Walkington](https://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/) (2000, 5 schemes up to degree 7)
 

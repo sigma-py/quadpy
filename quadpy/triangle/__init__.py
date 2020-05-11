@@ -113,7 +113,6 @@ from ._lyness_jespersen import (
     lyness_jespersen_20,
     lyness_jespersen_21,
 )
-from ._newton_cotes import newton_cotes_closed, newton_cotes_open
 from ._papanicolopulos import (
     papanicolopulos_rot_08,  #
     papanicolopulos_rot_09,
