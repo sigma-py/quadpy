@@ -4,6 +4,8 @@ import numpy
 import scipy.special
 import sympy
 
+from ..helpers import prod
+
 
 class NSimplexScheme:
     def __init__(self, name, dim, weights, points, degree, citation):
@@ -98,8 +100,8 @@ def integrate_monomial_over_unit_simplex(k, symbolic=False):
     all dimensions.
     """
     if symbolic:
-        return sympy.prod([sympy.gamma(kk + 1) for kk in k]) / sympy.gamma(
-            sum(k) + len(k) + 1
+        return sympy.Rational(
+            prod([math.factorial(kk) for kk in k]), math.factorial(sum(k) + len(k))
         )
     # exp-log to account for large values in numerator and denominator
     # import scipy.special
