@@ -40,26 +40,22 @@ def _newton_cotes(n, point_fun):
         )
 
     weights = numpy.empty(len(points))
-    idx = 0
-    for i in range(n + 1):
-        for j in range(n + 1 - i):
-            k = n - i - j
-            # Define the polynomial which to integrate over the
-            # tetrahedron.
-            t = sympy.DeferredVector("t")
-            g = get_poly(t[0], i, n) * get_poly(t[1], j, n) * get_poly(t[2], k, n)
-            # The integral of monomials over a tetrahedron are well-known,
-            # see Silvester.
-            weights[idx] = numpy.sum(
-                [
-                    c
-                    * numpy.prod([math.factorial(l) for l in m])
-                    * 2
-                    / math.factorial(numpy.sum(m) + 2)
-                    for m, c in zip(g.monoms(), g.coeffs())
-                ]
-            )
-            idx += 1
+    kk = 0
+    for i, j, k in idx:
+        # Define the polynomial which to integrate over the triangle.
+        t = sympy.DeferredVector("t")
+        g = get_poly(t[0], i, n) * get_poly(t[1], j, n) * get_poly(t[2], k, n)
+        # The integral of monomials over a triangle are well-known, see Silvester.
+        weights[kk] = numpy.sum(
+            [
+                c
+                * numpy.prod([math.factorial(l) for l in m])
+                * 2
+                / math.factorial(numpy.sum(m) + 2)
+                for m, c in zip(g.monoms(), g.coeffs())
+            ]
+        )
+        kk += 1
     return points, weights, degree
 
 
