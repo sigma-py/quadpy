@@ -29,8 +29,16 @@ More than 1500 numerical integration schemes for
 [n-spheres](#n-sphere),
 [n-balls](#n-ball),
 [n-cubes](#n-cube),
-[n-simplices](#n-simplex), and the
-1D/2D/3D/nD spaces with weight functions exp(-r) and exp(-r<sup>2</sup>)
+[n-simplices](#n-simplex),
+[the 1D half-space with weight functions exp(-r)](#1d-half-space-with-weight-function-exp-r),
+[the 2D space with weight functions exp(-r)](#2d-space-with-weight-function-exp-r),
+[the 3D space with weight functions exp(-r)](#3d-space-with-weight-function-exp-r),
+[the nD space with weight functions exp(-r)](#nd-space-with-weight-function-exp-r),
+[the 1D space with weight functions exp(-r<sup>2</<sup>)](#1d-space-with-weight-function-exp-r2),
+[the 2D space with weight functions exp(-r<sup>2</<sup>)](#2d-space-with-weight-function-exp-r2),
+[the 3D space with weight functions exp(-r<sup>2</<sup>)](#3d-space-with-weight-function-exp-r2),
+and
+[the nD space with weight functions exp(-r<sup>2</<sup>)](#nd-space-with-weight-function-exp-r2),
 for fast integration of real-, complex-, and vector-valued functions.
 
 For example, to numerically integrate any function over any given interval, install
