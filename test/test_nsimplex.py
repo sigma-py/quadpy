@@ -10,6 +10,13 @@ from quadpy.nsimplex._helpers import integrate_monomial_over_unit_simplex
     "scheme",
     [quadpy.nsimplex.grundmann_moeller(dim, k) for dim in range(3, 7) for k in range(5)]
     #
+    + [
+        quadpy.nsimplex.silvester(dim, variant, n)
+        for dim in range(1, 6)
+        for variant in ["open", "closed"]
+        for n in range(1, 7)
+    ]
+    #
     + [quadpy.nsimplex.stroud_tn_1_1(dim) for dim in range(3, 7)]
     + [quadpy.nsimplex.stroud_tn_1_2(dim) for dim in range(3, 7)]
     + [quadpy.nsimplex.stroud_tn_2_1a(dim) for dim in range(3, 7)]

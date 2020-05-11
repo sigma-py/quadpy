@@ -1,6 +1,7 @@
 from ._grundmann_moeller import grundmann_moeller
 from ._hammer_stroud import hammer_stroud_1a, hammer_stroud_1b, hammer_stroud_2
 from ._helpers import NSimplexScheme, get_vol, transform
+from ._silvester import silvester
 from ._stroud import (
     stroud_tn_1_1,
     stroud_tn_1_2,
@@ -48,6 +49,7 @@ __all__ = [
     "hammer_stroud_1a",
     "hammer_stroud_1b",
     "hammer_stroud_2",
+    "silvester",
     "stroud_1961",
     "stroud_1964a",
     "stroud_1964b",
