@@ -3,7 +3,7 @@ import math
 import numpy
 import sympy
 
-from ..helpers import article, prod, get_all_exponents
+from ..helpers import article, get_all_exponents, prod
 from ._helpers import NSimplexScheme
 
 citation = article(
@@ -63,7 +63,9 @@ def silvester(dim, variant, n):
         weights, points, degree = _newton_cotes(dim, n, lambda k, n: k / float(n))
     else:
         assert variant == "open"
-        weights, points, degree = _newton_cotes(dim, n, lambda k, n: (k + 1) / float(n + 1 + dim))
+        weights, points, degree = _newton_cotes(
+            dim, n, lambda k, n: (k + 1) / float(n + 1 + dim)
+        )
         if n == 0:
             degree = 1
 
