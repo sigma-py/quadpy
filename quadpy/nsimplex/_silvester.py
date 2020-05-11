@@ -17,7 +17,8 @@ citation = article(
 )
 
 
-def _newton_cotes(dim, n, point_fun):
+def _newton_cotes(dim, n, point_fun, symbolic):
+    frac = numpy.vectorize(sympy.Rational) if symbolic else lambda a, b: a / b
     degree = n
 
     # points
@@ -26,9 +27,10 @@ def _newton_cotes(dim, n, point_fun):
 
     # weights
     if n == 0:
-        weights = numpy.ones(1)
+        weights = numpy.array([1])
         return points, weights, degree
 
+    # TODO symbolic
     def get_poly(t, m):
         return sympy.prod(
             [
@@ -47,24 +49,29 @@ def _newton_cotes(dim, n, point_fun):
         weights[kk] = numpy.sum(
             [
                 c
-                * numpy.prod([math.factorial(l) for l in m])
-                * math.factorial(dim)
-                / math.factorial(numpy.sum(m) + dim)
+                * frac(
+                    prod([math.factorial(l) for l in m]) * math.factorial(dim),
+                    math.factorial(numpy.sum(m) + dim),
+                )
                 for m, c in zip(g.monoms(), g.coeffs())
             ]
         )
         kk += 1
+
     return weights, points, degree
 
 
-def silvester(dim, variant, n):
-    # TODO symbolic
+def silvester(dim, variant, n, symbolic=False):
+    frac = numpy.vectorize(sympy.Rational) if symbolic else lambda a, b: a / b
+
     if variant == "closed":
-        weights, points, degree = _newton_cotes(dim, n, lambda k, n: k / float(n))
+        weights, points, degree = _newton_cotes(
+            dim, n, lambda k, n: frac(k, n), symbolic
+        )
     else:
         assert variant == "open"
         weights, points, degree = _newton_cotes(
-            dim, n, lambda k, n: (k + 1) / float(n + 1 + dim)
+            dim, n, lambda k, n: frac(k + 1, n + 1 + dim), symbolic
         )
         if n == 0:
             degree = 1
