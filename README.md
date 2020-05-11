@@ -264,6 +264,7 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [[0.0, 0.0], [1.0, 0.0], [0.5,
  * [Wissmann-Becker](quadpy/disk/_wissmann_becker.py) (1986, 3 schemes up to degree 8)
  * [Kim-Song](quadpy/disk/_kim_song.py) (1997, 15 schemes up to degree 17)
  * [Cools-Kim](quadpy/disk/_cools_kim.py) (2000, 3 schemes up to degree 21)
+ * [all schemes from the n-ball](#n-ball)
 
 Example:
 ```python
@@ -278,33 +279,33 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0], 1.0)
 ### Quadrilateral
 <img src="https://nschloe.github.io/quadpy/quad-maxwell.svg" width="25%">
 
- * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 3
+ * [Hammer-Stroud](quadpy/quadrilateral/_hammer_stroud.py) (1958, 3
    schemes up to degree 7)
- * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971, 15 schemes up to degree 15):
-   - [Maxwell](https://doi.org/10.1017/CBO9780511710377.061) (1890, degree 7)
-   - Burnside (1908, degree 5)
-   - [Irwin](https://books.google.de/books/about/On_quadrature_and_cubature.html?id=SuruAAAAMAAJ&redir_esc=y) (1923, 3 schemes up to degree 5)
-   - [Tyler](https://doi.org/10.4153/CJM-1953-044-1) (1953, 3 schemes up to degree 7)
-   - [Albrecht-Collatz](https://doi.org/10.1002/zamm.19580380102) (1958, 4 schemes up to degree 5)
-   - [Miller](https://doi.org/10.2307/2003163) (1960, degree 1)
-   - [Meister](https://doi.org/10.1093/comjnl/8.4.368) (1966, degree 7)
-   - [Phillips](https://doi.org/10.1093/comjnl/10.2.202) (1967, degree 7)
-   - [Rabinowitz-Richter](https://doi.org/10.2307/2004962) (1969, 6 schemes up to degree 15)
- * [Franke](https://doi.org/10.1090/S0025-5718-1971-0300440-5) (1971, 10 schemes up to degree 9)
- * [Piessens-Haegemans](https://doi.org/10.2307/2005291) (1975, 2 schemes of degree 9)
- * [Haegemans-Piessens](https://www.jstor.org/stable/2156699) (1977, degree 7)
- * [Schmid](https://eudml.org/doc/132580) (1978, 3 schemes up to degree 6)
- * [Cools-Haegemans](https://lirias.kuleuven.be/handle/123456789/131870) (1985, 3 schemes up to degree 13)
- * [Dunavant](https://doi.org/10.1002/nme.1620211004) (1985, 11 schemes up to degree 19)
- * [Morrow-Patterson](https://doi.org/10.1137/0722071) (1985, 2 schemes up to degree 20, single precision)
- * [Cohen-Gismalla](https://doi.org/10.1080/00207168608803504), (1986, 2 schemes up to degree 3, single precision)
- * [Wissmann-Becker](https://doi.org/10.1137/0723043) (1986, 6 schemes up to degree 8)
- * [Cools-Haegemans](https://doi.org/10.1007/BF02247942) (1988, 2 schemes up to degree 13)
- * [Waldron](http://ftp.cs.wisc.edu/Approx/symmetries.pdf) (1994, infinitely many schemes of degree 3)
- * [Sommariva](https://www.math.unipd.it/~alvise/POINTSETS/set_amr_square.m) (2012, 55 schemes up to degree 55)
- * [Witherden-Vincent](https://doi.org/10.1016/j.camwa.2015.03.017) (2015, 11 schemes up to degree 21)
+ * via [Stroud](quadpy/quadrilateral/_stroud.py) (1971, 15 schemes up to degree 15):
+   - [Maxwell](quadpy/quadrilateral/_maxwell.py) (1890, degree 7)
+   - [Burnside](quadpy/quadrilateral/_burnside.py) (1908, degree 5)
+   - [Irwin](quadpy/quadrilateral/_irwin.py) (1923, 3 schemes up to degree 5)
+   - [Tyler](quadpy/quadrilateral/_tyler.py) (1953, 3 schemes up to degree 7)
+   - [Albrecht-Collatz](quadpy/quadrilateral/_albrecht_collatz.py) (1958, 4 schemes up to degree 5)
+   - [Miller](quadpy/quadrilateral/_miller.py) (1960, degree 1)
+   - [Meister](quadpy/quadrilateral/_meister.py) (1966, degree 7)
+   - [Phillips](quadpy/quadrilateral/_phillips.py) (1967, degree 7)
+   - [Rabinowitz-Richter](quadpy/quadrilateral/_rabinowitz_richter.py) (1969, 6 schemes up to degree 15)
+ * [Franke](quadpy/quadrilateral/_franke.py) (1971, 10 schemes up to degree 9)
+ * [Piessens-Haegemans](quadpy/quadrilateral/_piessens_haegemans.py) (1975, 2 schemes of degree 9)
+ * [Haegemans-Piessens](quadpy/quadrilateral/_haegemans_piessens.py) (1977, degree 7)
+ * [Schmid](quadpy/quadrilateral/_schmid.py) (1978, 3 schemes up to degree 6)
+ * [Cools-Haegemans](quadpy/quadrilateral/_cools_haegemans_1985.py) (1985, 3 schemes up to degree 13)
+ * [Dunavant](quadpy/quadrilateral/_dunavant.py) (1985, 11 schemes up to degree 19)
+ * [Morrow-Patterson](quadpy/quadrilateral/_morrow_patterson.py) (1985, 2 schemes up to degree 20, single precision)
+ * [Cohen-Gismalla](quadpy/quadrilateral/_cohen_gismalla.py), (1986, 2 schemes up to degree 3, single precision)
+ * [Wissmann-Becker](quadpy/quadrilateral/_wissmann_becker.py) (1986, 6 schemes up to degree 8)
+ * [Cools-Haegemans](quadpy/quadrilateral/_cools_haegemans_1988.py) (1988, 2 schemes up to degree 13)
+ * [Waldron](quadpy/quadrilateral/_waldron.py) (1994, infinitely many schemes of degree 3)
+ * [Sommariva](quadpy/quadrilateral/_sommariva.py) (2012, 55 schemes up to degree 55)
+ * [Witherden-Vincent](quadpy/quadrilateral/_witherden_vincent.py) (2015, 11 schemes up to degree 21)
  * products of line segment schemes
- * all formulas from the n-cube
+ * [all schemes from the n-cube](#n-cube)
 
 Example:
 ```python
@@ -330,11 +331,12 @@ to generate the array.
 ### 2D space with weight function exp(-r)
 <img src="https://nschloe.github.io/quadpy/e2r-rabinowitz-richter-5.svg" width="25%">
 
- * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
-   - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 2 schemes up to degree 7)
-   - [Rabinowitz-Richter](https://doi.org/10.2307/2004962) (1969, 4 schemes up to degree 15)
-   - a scheme of degree 4
- * [Haegemans-Piessens](https://www.jstor.org/stable/2156699) (1977, 2 schemes up to degree 9)
+ * via [Stroud](quadpy/e2r/_stroud.py) (1971):
+   - [Stroud-Secrest](quadpy/e2r/_stroud_secrest.py) (1963, 2 schemes up to degree 7)
+   - [Rabinowitz-Richter](quadpy/e2r/_rabinowitz_richter.py) (1969, 4 schemes up to degree 15)
+   - [a scheme of degree 4](quadpy/e2r/_stroud.py)
+ * [Haegemans-Piessens](quadpy/e2r/_haegemans_piessens.py) (1977, 2 schemes up to degree 9)
+ * all schemes from the nD space with weight function exp(-r)
 
 Example:
 ```python
@@ -349,11 +351,12 @@ val = scheme.integrate(lambda x: x[0]**2)
 ### 2D space with weight function exp(-r<sup>2</sup>)
 <img src="https://nschloe.github.io/quadpy/e2r2-rabinowitz-richter-3.svg" width="25%">
 
- * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
-   - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 2 schemes up to degree 7)
-   - [Rabinowitz-Richter](https://doi.org/10.2307/2004962) (1969, 5 schemes up to degree 15)
-   - 3 schemes up to degree 7
- * [Haegemans-Piessens](https://www.jstor.org/stable/2156699) (1977, 2 schemes of degree 9)
+ * via [Stroud](quadpy/e2r2/_stroud.py) (1971):
+   - [Stroud-Secrest](quadpy/e2r2/_stroud_secrest.py) (1963, 2 schemes up to degree 7)
+   - [Rabinowitz-Richter](quadpy/e2r2/_rabinowitz_richter.py) (1969, 5 schemes up to degree 15)
+   - [3 schemes up to degree 7](quadpy/e2r2/_stroud.py)
+ * [Haegemans-Piessens](quadpy/e2r2/_haegemans_piessens.py) (1977, 2 schemes of degree 9)
+ * all schemes from the nD space with weight function exp(-r<sup>2<sup>)
 
 Example:
 ```python
@@ -368,17 +371,17 @@ val = scheme.integrate(lambda x: x[0]**2)
 ### Sphere
 <img src="https://nschloe.github.io/quadpy/sphere.png" width="25%">
 
- * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
-   - [Albrecht-Collatz](https://doi.org/10.1002/zamm.19580380102) (1958, 5
+ * via [Stroud](quadpy/sphere/_stroud.py) (1971):
+   - [Albrecht-Collatz](quadpy/sphere/_albrecht_collatz.py) (1958, 5
      schemes up to degree 7)
-   - [McLaren](https://doi.org/10.1090/S0025-5718-1963-0159418-2) (1963, 10 schemes up to degree 14)
- * [Lebedev](https://en.wikipedia.org/wiki/Lebedev_quadrature) (1976, 34
-   schemes up to degree 131)
- * [Bažant-Oh](https://doi.org/10.1002/zamm.19860660108) (1986, 3 schemes up to degree 11)
- * [Heo-Xu](https://doi.org/10.1090/S0025-5718-00-01198-4) (2001, 27 schemes up
-   to degree 39, single-precision)
- * [Fliege-Maier](https://www.personal.soton.ac.uk/jf1w07/nodes/nodes.html) (2007, 4 schemes up
-   to degree 4, single-precision)
+   - [McLaren](quadpy/sphere/_mclaren.py) (1963, 10 schemes up to degree 14)
+ * [Lebedev](quadpy/sphere/_lebedev.py) (1976, 34 schemes up to degree 131)
+ * [Bažant-Oh](quadpy/sphere/_bazant_oh.py) (1986, 3 schemes up to degree 11)
+ * [Heo-Xu](quadpy/sphere/_heo_xu.py) (2001, 27 schemes up to degree 39,
+   single-precision)
+ * [Fliege-Maier](quadpy/sphere/_fliege_maier.py) (2007, 4 schemes up to degree 4,
+   single-precision)
+ * [all schemes from the n-sphere](#n-sphere)
 
 Example:
 ```python
@@ -404,11 +407,12 @@ val = scheme.integrate_spherical(
 ### Ball
 <img src="https://nschloe.github.io/quadpy/ball.png" width="25%">
 
- * [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 6 schemes up to degree 7)
- * via: [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
-   - Ditkin (1948, 3 schemes up to degree 7)
-   - Mysovskih (1964, degree 7)
-   - 2 schemes up to degree 14
+ * [Hammer-Stroud](quadpy/ball/_hammer_stroud.py) (1958, 6 schemes up to degree 7)
+ * via: [Stroud](quadpy/ball/_stroud.py) (1971):
+   - [Ditkin](quadpy/ball/_ditkin.py) (1948, 3 schemes up to degree 7)
+   - [Mysovskih](quadpy/ball/)mysovskih.py) (1964, degree 7)
+   - [2 schemes up to degree 14](quadpy/ball/_stroud.py)
+ * [all schemes from the n-ball](#n-ball)
 
 Example:
 ```python
@@ -427,30 +431,27 @@ val = scheme.integrate(
 ### Tetrahedron
 <img src="https://nschloe.github.io/quadpy/tet.png" width="25%">
 
- * [Hammer-Marlowe-Stroud](https://doi.org/10.1090/S0025-5718-1956-0086389-6)
+ * [Hammer-Marlowe-Stroud](quadpy/tetrahedron/_hammer_marlowe_stroud.py)
    (1956, 3 schemes up to degree 3, also appearing in [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6))
- * [Stroud](https://cds.cern.ch/record/104291?ln=en) (1971, degree 7)
- * [Grundmann-Möller](https://doi.org/10.1137/0715019) (1978, arbitrary degree),
- * [Yu](https://doi.org/10.1016/0045-7825(84)90072-0) (1984, 5 schemes up to degree 6)
- * [Keast](https://doi.org/10.1016/0045-7825(86)90059-9) (1986, 10 schemes up to degree 8)
- * [Beckers-Haegemans](https://lirias.kuleuven.be/handle/123456789/132648) (1990, degrees 8 and 9)
- * [Gatermann](https://doi.org/10.1007/978-94-011-2646-5_2) (1992, degree 5)
- * [Liu-Vinokur](https://doi.org/10.1006/jcph.1998.5884) (1998, 14 schemes up to
-   degree 5)
- * [Walkington](https://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/)
-   (2000, 6 schemes up to degree 7)
- * [Zhang-Cui-Liu](https://www.jstor.org/stable/43693493) (2009, 2 schemes up to
-   degree 14)
- * [Xiao-Gimbutas](https://doi.org/10.1016/j.camwa.2009.10.027) (2010, 15
-   schemes up to degree 15)
- * [Shunn-Ham](https://doi.org/10.1016/j.cam.2012.03.032) (2012, 6 schemes up to
-   degree 7)
- * [Vioreanu-Rokhlin](https://doi.org/10.1137/110860082) (2014, 10
-   schemes up to degree 13)
- * [Williams-Shunn-Jameson](https://doi.org/10.1016/j.cam.2014.01.007) (2014, 1
+ * [Stroud](quadpy/tetrahedron/_stroud.py) (1971, degree 7)
+ * [Grundmann-Möller](quadpy/tetrahedron/_grundmann_moeller.py) (1978, arbitrary degree),
+ * [Yu](quadpy/tetrahedron/_yu.py) (1984, 5 schemes up to degree 6)
+ * [Keast](quadpy/tetrahedron/_keast.py) (1986, 10 schemes up to degree 8)
+ * [Beckers-Haegemans](quadpy/tetrahedron/_beckers_haegemans.py) (1990, degrees 8 and 9)
+ * [Gatermann](quadpy/tetrahedron/_gatermann.py) (1992, degree 5)
+ * [Liu-Vinokur](quadpy/tetrahedron/_liu_vinokur.py) (1998, 14 schemes up to degree 5)
+ * [Walkington](quadpy/tetrahedron/_walkington.py) (2000, 6 schemes up to degree 7)
+ * [Zhang-Cui-Liu](quadpy/tetrahedron/_zhang_cui_liu.py) (2009, 2 schemes up to degree
+   14)
+ * [Xiao-Gimbutas](quadpy/tetrahedron/_xiao_gimbutas/) (2010, 15 schemes up to degree
+   15)
+ * [Shunn-Ham](quadpy/tetrahedron/_shunn_ham.py) (2012, 6 schemes up to degree 7)
+ * [Vioreanu-Rokhlin](quadpy/tetrahedron/_vioreanu_rokhlin.py) (2014, 10 schemes up to
+   degree 13)
+ * [Williams-Shunn-Jameson](quadpy/tetrahedron/_williams_shunn_jameson.py) (2014, 1
    scheme with degree 9)
- * [Witherden-Vincent](https://doi.org/10.1016/j.camwa.2015.03.017) (2015, 9
-   schemes up to degree 10)
+ * [Witherden-Vincent](quadpy/tetrahedron/_witherden_vincent.py) (2015, 9 schemes up to
+   degree 10)
  * [Jaśkowiec-Sukumar](quadpy/tetrahedron/_jaskowiec_sukumar/) (2020, 21
    schemes up to degree 20)
  * [all schemes for the n-simplex](#n-simplex).
@@ -472,16 +473,16 @@ val = scheme.integrate(
 <img src="https://nschloe.github.io/quadpy/hexa.png" width="25%">
 
  * Product schemes derived from line segment schemes
- * via: [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
-   - [Sadowsky](https://doi.org/10.2307/2303834) (1940, degree 5)
-   - [Tyler](https://doi.org/10.4153/CJM-1953-044-1) (1953, 2 schemes up to degree 5)
-   - [Hammer-Wymore](https://doi.org/10.1090/S0025-5718-1957-0087220-6) (1957, degree 7)
-   - [Albrecht-Collatz](https://doi.org/10.1002/zamm.19580380102) (1958, degree 3)
-   - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 6 schemes up to degree 7)
-   - [Mustard-Lyness-Blatt](https://doi.org/10.1093/comjnl/6.1.75) (1963, 6 schemes up to degree 5)
-   - [Stroud](https://doi.org/10.1007/BF02162160) (1967, degree 5)
-   - [Sarma-Stroud](https://doi.org/10.2307/2004963) (1969, degree 7)
- * all formulas from the n-cube
+ * via: [Stroud](quadpy/hexahedron/_stroud.py) (1971):
+   - [Sadowsky](quadpy/hexahedron/_sadowsky.py) (1940, degree 5)
+   - [Tyler](quadpy/hexahedron/_tyler.py) (1953, 2 schemes up to degree 5)
+   - [Hammer-Wymore](quadpy/hexahedron/_hammer_wymore.py) (1957, degree 7)
+   - [Albrecht-Collatz](quadpy/hexahedron/_albrecht_collatz.py) (1958, degree 3)
+   - [Hammer-Stroud](quadpy/hexahedron/_hammer_stroud.py) (1958, 6 schemes up to degree 7)
+   - [Mustard-Lyness-Blatt](quadpy/hexahedron/_mustard_lyness_blatt.py) (1963, 6 schemes up to degree 5)
+   - [Stroud](quadpy/hexahedron/_stroud_1967.py) (1967, degree 5)
+   - [Sarma-Stroud](quadpy/hexahedron/_sarma_stroud.py) (1969, degree 7)
+ * [all schemes from the n-cube](#n-cube)
 
 Example:
 ```python
@@ -499,7 +500,7 @@ val = scheme.integrate(
 ### Pyramid
 <img src="https://nschloe.github.io/quadpy/pyra.png" width="25%">
 
- * [Felippa](https://doi.org/10.1108/02644400410554362) (9 schemes up to degree 5)
+ * [Felippa](quadpy/pyramid/_felippa.py) (2004, 9 schemes up to degree 5)
 
 Example:
 ```python
@@ -520,9 +521,9 @@ val = scheme.integrate(
 ### Wedge
 <img src="https://nschloe.github.io/quadpy/wedge.png" width="15%">
 
- * [Felippa](https://doi.org/10.1108/02644400410554362) (6 schemes up to degree 6)
- * [Kubatko-Yeager-Maggi](https://doi.org/10.1016/j.compfluid.2013.01.002) (21 schemes
-   up to degree 9)
+ * [Felippa](quadpy/wedge/_felippa.py) (2004, 6 schemes up to degree 6)
+ * [Kubatko-Yeager-Maggi](quadpy/wedge/_kubatko_yeager_maggi.py) (2013, 21 schemes up to
+   degree 9)
 
 Example:
 ```python
@@ -543,8 +544,10 @@ val = quadpy.wedge.integrate(
 ### 3D space with weight function exp(-r)
 <img src="https://nschloe.github.io/quadpy/e3r.png" width="25%">
 
- * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
-   - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 5 schemes up to degree 7)
+ * via [Stroud](quadpy/e3r/_stroud.py) (1971):
+   - [Stroud-Secrest](quadpy/e3r/_stroud_secrest.py) (1963, 5 schemes up to degree 7)
+ * [all schemes from the nD space with weight function
+   exp(-r)](nd-space-with-weight-function-exp-r)
 
 Example:
 ```python
@@ -559,9 +562,11 @@ val = scheme.integrate(lambda x: x[0]**2)
 ### 3D space with weight function exp(-r<sup>2</sup>)
 <img src="https://nschloe.github.io/quadpy/e3r2.png" width="25%">
 
- * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
-   - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 7 schemes up to degree 7)
-   - scheme of degree 14
+ * via [Stroud](quadpy/e3r/_stroud.py) (1971):
+   - [Stroud-Secrest](quadpy/e3r/_stroud_secrest.py) (1963, 7 schemes up to degree 7)
+   - [scheme of degree 14](quadpy/e3r/_stroud.py)
+ * [all schemes from the nD space with weight function
+   exp(-r<sup>2</sup>)](nd-space-with-weight-function-exp-r2)
 
 Example:
 ```python
