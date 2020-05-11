@@ -57,7 +57,6 @@ from ._liu_vinokur import (
     liu_vinokur_14,
 )
 from ._maeztu_sainz import maeztu_sainz
-from ._newton_cotes import newton_cotes_closed, newton_cotes_open
 from ._shunn_ham import (
     shunn_ham_1,
     shunn_ham_2,
