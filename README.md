@@ -578,15 +578,15 @@ val = scheme.integrate(lambda x: x[0]**2)
 ```
 
 ### n-Simplex
- * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y):
-   - [Lauffer](https://doi.org/10.1007/BF01900222) (1955, 5 schemes up to degree 5)
-   - [Hammer-Stroud](https://doi.org/10.2307/2002484) (1956, 3 schemes up to degree 3)
-   - [Stroud](https://doi.org/10.2307/2002945) (1964, degree 3)
-   - [Stroud](https://doi.org/10.1007/BF02165227) (1966, 7 schemes of degree 3)
-   - [Stroud](https://doi.org/10.1137/0706009) (1969, degree 5)
+ * via [Stroud](quadpy/nsimplex/_stroud.py):
+   - [Lauffer](quadpy/nsimplex/_lauffer.py) (1955, 5 schemes up to degree 5)
+   - [Hammer-Stroud](quadpy/nsimplex/_hammer_stroud.py) (1956, 3 schemes up to degree 3)
+   - [Stroud](quadpy/nsimplex/_stroud_1964.py) (1964, degree 3)
+   - [Stroud](quadpy/nsimplex/_stroud_1966.py) (1966, 7 schemes of degree 3)
+   - [Stroud](quadpy/nsimplex/_stroud_1969.py) (1969, degree 5)
  * [Silvester](quadpy/nsimplex/_silvester.py) (1970, arbitrary degree),
- * [Grundmann-Möller](https://doi.org/10.1137/0715019) (1978, arbitrary degree)
- * [Walkington](https://www.math.cmu.edu/~nw0z/publications/00-CNA-023/023abs/) (2000, 5 schemes up to degree 7)
+ * [Grundmann-Möller](quadpy/nsimplex/_grundmann_moeller.py) (1978, arbitrary degree)
+ * [Walkington](quadpy/nsimplex/_walkington.py) (2000, 5 schemes up to degree 7)
 
 Example:
 ```python
@@ -608,12 +608,12 @@ val = scheme.integrate(
 ```
 
 ### n-Sphere
- * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
-   - [Stroud](https://doi.org/10.1137/0704004) (1967, degree 7)
-   - [Stroud](https://doi.org/10.1137/0706009) (1969, 3 <= n <= 16, degree 11)
-   - 6 schemes up to degree 5
- * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1978, n >= 2, degree 5)
- * [Mysovskikh](https://doi.org/10.1016/B978-0-12-213650-4.50025-8) (1980, 2 schemes up to degree 5)
+ * via [Stroud](quadpy/nsphere/_stroud.py) (1971):
+   - [Stroud](quadpy/nsphere/_stroud_1967.py) (1967, degree 7)
+   - [Stroud](quadpy/nsphere/_stroud_1969.py) (1969, 3 <= n <= 16, degree 11)
+   - [6 schemes up to degree 5](quadpy/nsphere/_stroud.py)
+ * [Dobrodeev](quadpy/nsphere/_dobrodeev.py) (1978, n >= 2, degree 5)
+ * [Mysovskikh](quadpy/nsphere/_mysovskikh.py) (1980, 2 schemes up to degree 5)
 
 Example:
 ```python
@@ -627,16 +627,16 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
 
 
 ### n-Ball
- * [McNamee-Stenger](https://doi.org/10.1007/BF02162032) (1967, 6 schemes up to degree 9)
- * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1970, n >= 3, degree 7)
- * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
-   - [Stroud](https://doi.org/10.2307/2001945) (1957, degree 2)
-   - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, 2 schemes up to degree 5)
-   - [Stroud](https://doi.org/10.1090/S0025-5718-1966-0191094-8) (1966, 4 schemes of degree 5)
-   - [Stroud](https://doi.org/10.1007/BF02162160) (1967, 4 <= n <= 7, 2 schemes of degree 5)
-   - [Stroud](https://doi.org/10.1137/0704004) (1967, n >= 3, 3 schemes of degree 7)
-   - [Stenger](https://www.jstor.org/stable/2004361) (1967, 6 schemes up to degree 11)
- * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1978, 2 <= n <= 20, degree 5)
+ * [McNamee-Stenger](quadpy/nball/_mcnamee_stenger.py) (1967, 6 schemes up to degree 9)
+ * [Dobrodeev](quadpy/nball/_dobrodeev.py) (1970, n >= 3, degree 7)
+ * via [Stroud](quadpy/nball/_stroud.py) (1971):
+   - [Stroud](quadpy/nball/_stroud_1957.py) (1957, degree 2)
+   - [Hammer-Stroud](quadpy/nball/_hammer_stroud.py) (1958, 2 schemes up to degree 5)
+   - [Stroud](quadpy/nball/_stroud_1966.py) (1966, 4 schemes of degree 5)
+   - [Stroud](quadpy/nball/_stroud_1967a.py) (1967, 4 <= n <= 7, 2 schemes of degree 5)
+   - [Stroud](quadpy/nball/_stroud_1967b.py) (1967, n >= 3, 3 schemes of degree 7)
+   - [Stenger](quadpy/nball/_stenger.py) (1967, 6 schemes up to degree 11)
+ * [Dobrodeev](quadpy/nball/_dobrodeev.py) (1978, 2 <= n <= 20, degree 5)
  * [Stoyanova](quadpy/nball/_stoyanova.py) (1997, n >= 5, degree 7)
 
 Example:
@@ -650,20 +650,20 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
 ```
 
 ### n-Cube
- * [McNamee-Stenger](https://doi.org/10.1007/BF02162032) (1967, 6 schemes up to degree 9)
- * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1970, n >= 5, degree 7)
- * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
-    - [Ewing](https://doi.org/doi.org/10.2307/2303604) (1941, degree 3)
-    - [Tyler](https://doi.org/10.4153/CJM-1953-044-1) (1953, degree 3)
-    - [Stroud](https://doi.org/10.2307/2001945) (1957, 2 schemes up to degree 3)
-    - [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6) (1958, degree 5)
-    - [Mustard-Lyness-Blatt](https://doi.org/10.1093/comjnl/6.1.75) (1963, degree 5)
-    - [Thacher](https://doi.org/10.1145/363872.363897) (1964, degree 2)
-    - [Stroud](https://doi.org/10.1090/S0025-5718-1966-0191094-8) (1966, 4 schemes of degree 5)
-    - [Phillips](https://doi.org/10.1093/comjnl/10.3.297) (1967, degree 7)
-    - [Stroud](https://doi.org/10.2307/2004655) (1968, degree 5)
- * [Dobrodeev](https://doi.org/10.1016/0041-5553(70)90084-4) (1978, n >= 2, degree 5)
- * [Cools-Haegemans](https://doi.org/10.1016/0377-0427(92)00007-V) (1994, 2 schemes up to degree 5)
+ * [McNamee-Stenger](quadpy/ncube/_mcnamee_stenger.py) (1967, 6 schemes up to degree 9)
+ * [Dobrodeev](quadpy/ncube/_dobrodeev.py) (1970, n >= 5, degree 7)
+ * via [Stroud](quadpy/ncube/_stroud.py) (1971):
+    - [Ewing](quadpy/ncube/_ewing.py) (1941, degree 3)
+    - [Tyler](quadpy/ncube/_tyler.py) (1953, degree 3)
+    - [Stroud](quadpy/ncube/_stroud_1957.py) (1957, 2 schemes up to degree 3)
+    - [Hammer-Stroud](quadpy/ncube/_hammer_stroud.py) (1958, degree 5)
+    - [Mustard-Lyness-Blatt](quadpy/ncube/_mustard_lyness_blatt.py) (1963, degree 5)
+    - [Thacher](quadpy/ncube/_thacher.py) (1964, degree 2)
+    - [Stroud](quadpy/ncube/_stroud_1966.py) (1966, 4 schemes of degree 5)
+    - [Phillips](quadpy/ncube/_phillips.py) (1967, degree 7)
+    - [Stroud](quadpy/ncube/_stroud_1968.py) (1968, degree 5)
+ * [Dobrodeev](quadpy/ncube/_dobrodeev.py) (1978, n >= 2, degree 5)
+ * [Cools-Haegemans](quadpy/ncube/_cools_haegemans.py) (1994, 2 schemes up to degree 5)
 
 Example:
 ```python
@@ -681,10 +681,10 @@ quadpy.ncube.integrate(
 ```
 
 ### nD space with weight function exp(-r)
- * [McNamee-Stenger](https://doi.org/10.1007/BF02162032) (1967, 6 schemes up to degree 9)
- * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
-   - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 4 schemes up to degree 5)
-   - 2 schemes up to degree 5
+ * [McNamee-Stenger](quadpy/enr/_mcnamee_stenger.py) (1967, 6 schemes up to degree 9)
+ * via [Stroud](quadpy/enr/_stroud.py) (1971):
+   - [Stroud-Secrest](quadpy/enr/_stroud_secrest.py) (1963, 4 schemes up to degree 5)
+   - [2 schemes up to degree 5](quadpy/enr/_stroud.py)
 
 Example:
 ```python
@@ -696,16 +696,16 @@ val = scheme.integrate(lambda x: x[0]**2)
 ```
 
 ### nD space with weight function exp(-r<sup>2</sup>)
- * [McNamee-Stenger](https://doi.org/10.1007/BF02162032) (1967, 6 schemes up to degree 9)
- * via [Stroud](https://books.google.de/books/about/Approximate_calculation_of_multiple_inte.html?id=L_tQAAAAMAAJ&redir_esc=y) (1971):
-   - [Stroud-Secrest](https://doi.org/10.1090/S0025-5718-1963-0161473-0) (1963, 4 schemes up to degree 5)
-   - [Stroud](https://doi.org/10.1007/BF02162160) (1967, 2 schemes of degree 5)
-   - [Stroud](https://doi.org/10.1137/0704004) (1967, 3 schemes of degree 7)
-   - [Stenger](https://www.jstor.org/stable/2004361) (1971, 6 schemes up to degree 11, varying dimensionality restrictions)
-   - 5 schemes up to degree 5
- * [Phillips](https://doi.org/10.1016/0010-4655(80)90102-2) (1980, degree 5)
- * [Cools-Haegemans](https://doi.org/10.1016/0377-0427(92)00007-V) (1994, 3 schemes up to degree 7)
- * [Lu-Darmofal](https://doi.org/10.1137/S1064827503426863) (2004, degree 5)
+ * [McNamee-Stenger](quadpy/enr2/_mcnamee_stenger.py) (1967, 6 schemes up to degree 9)
+ * via [Stroud](quadpy/enr2/_stroud.py) (1971):
+   - [Stroud-Secrest](quadpy/enr2/_stroud_secrest.py) (1963, 4 schemes up to degree 5)
+   - [Stroud](quadpy/enr2/_stroud_1967a.py) (1967, 2 schemes of degree 5)
+   - [Stroud](quadpy/enr2/_stroud_1967b.py) (1967, 3 schemes of degree 7)
+   - [Stenger](quadpy/enr2/_stenger.py) (1971, 6 schemes up to degree 11, varying dimensionality restrictions)
+   - [5 schemes up to degree 5](quadpy/enr2/_stroud.py)
+ * [Phillips](quadpy/enr2/_phillips.py) (1980, degree 5)
+ * [Cools-Haegemans](quadpy/enr2/_cools_haegemans.py) (1994, 3 schemes up to degree 7)
+ * [Lu-Darmofal](quadpy/enr2/_lu_darmofal.py) (2004, degree 5)
 
 Example:
 ```python
