@@ -28,7 +28,7 @@ from quadpy.enr._helpers import integrate_monomial_over_enr
     + [quadpy.enr.stroud_secrest_3(n) for n in range(2, 6)]
     + [quadpy.enr.stroud_secrest_4(n) for n in range(2, 6)],
 )
-def test_scheme(scheme, tol=1.0e-14):
+def test_scheme(scheme, tol=1.0e-13):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
@@ -40,8 +40,8 @@ def test_scheme(scheme, tol=1.0e-14):
         scheme.degree + 1,
         tol=tol,
     )
-    assert degree == scheme.degree, "Observed: {}   expected: {}".format(
-        degree, scheme.degree
+    assert degree == scheme.degree, "{}: Observed: {}   expected: {}".format(
+        scheme.name, degree, scheme.degree
     )
     return
 
