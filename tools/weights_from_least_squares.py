@@ -1,9 +1,8 @@
-import math
-
 import numpy
 
 import orthopy
 import quadpy
+from quadpy.enr._helpers import integrate_monomial_over_enr
 
 # from quadpy.nsimplex.helpers import integrate_monomial_over_unit_simplex
 # from quadpy.triangle.helpers import _rot_ab, _s3, _s21, _s111ab
@@ -23,18 +22,6 @@ def partition(boxes, balls):
             yield parent + (balls,)
 
     return list(rec(boxes, balls))
-
-
-def integrate_monomial_over_enr(k):
-    if numpy.any(k % 2 == 1):
-        return 0
-    n = len(k)
-    return (
-        2
-        * math.factorial(sum(k) + n - 1)
-        * numpy.prod([math.gamma((kk + 1) / 2.0) for kk in k])
-        / math.gamma((sum(k) + n) / 2)
-    )
 
 
 # def simplex_monomials(degree):
