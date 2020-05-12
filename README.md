@@ -431,7 +431,6 @@ val = scheme.integrate(
  * [Hammer-Marlowe-Stroud](quadpy/t3/_hammer_marlowe_stroud.py)
    (1956, 3 schemes up to degree 3, also appearing in [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6))
  * [Stroud](quadpy/t3/_stroud.py) (1971, degree 7)
- * [Grundmann-Möller](quadpy/t3/_grundmann_moeller.py) (1978, arbitrary degree),
  * [Yu](quadpy/t3/_yu.py) (1984, 5 schemes up to degree 6)
  * [Keast](quadpy/t3/_keast.py) (1986, 10 schemes up to degree 8)
  * [Beckers-Haegemans](quadpy/t3/_beckers_haegemans.py) (1990, degrees 8 and 9)
