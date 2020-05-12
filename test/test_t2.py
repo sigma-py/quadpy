@@ -269,7 +269,7 @@ schemes_tol = [
 ]
 
 
-def _integrate_exact(f, t2):
+def _integrate_exact(f, triangle):
     #
     # Note that
     #
@@ -279,17 +279,17 @@ def _integrate_exact(f, t2):
     #
     #     P(xi) = x0 * (1-xi[0]-xi[1]) + x1 * xi[0] + x2 * xi[1].
     #
-    # and T0 being the reference t2 [(0.0, 0.0), (1.0, 0.0), (0.0,
+    # and T0 being the reference triangle [(0.0, 0.0), (1.0, 0.0), (0.0,
     # 1.0)].
     # The determinant of the transformation matrix J equals twice the volume of
-    # the t2. (See, e.g.,
+    # the triangle. (See, e.g.,
     # <http://math2.uncc.edu/~shaodeng/TEACHING/math5172/Lectures/Lect_15.PDF>).
     #
     xi = sympy.DeferredVector("xi")
     x_xi = (
-        +t2[0] * (1 - xi[0] - xi[1]) + t2[1] * xi[0] + t2[2] * xi[1]
+        +triangle[0] * (1 - xi[0] - xi[1]) + triangle[1] * xi[0] + triangle[2] * xi[1]
     )
-    abs_det_J = 2 * quadpy.t2.volume(t2)
+    abs_det_J = 2 * quadpy.t2.volume(triangle)
     exact = sympy.integrate(
         sympy.integrate(abs_det_J * f(x_xi), (xi[1], 0, 1 - xi[0])), (xi[0], 0, 1)
     )
@@ -301,7 +301,7 @@ def test_scheme(scheme, tol):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
-    t2 = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]])
+    triangle = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]])
 
     def eval_orthopolys(x):
         bary = numpy.array([x[0], x[1], 1.0 - x[0] - x[1]])
@@ -310,7 +310,7 @@ def test_scheme(scheme, tol):
         )
         return out
 
-    vals = scheme.integrate(eval_orthopolys, t2)
+    vals = scheme.integrate(eval_orthopolys, triangle)
     # Put vals back into the tree structure:
     # len(approximate[k]) == k+1
     approximate = [
@@ -330,25 +330,25 @@ def test_scheme(scheme, tol):
 
 @pytest.mark.parametrize("scheme", [quadpy.t2.xiao_gimbutas_10()])
 def test_show(scheme):
-    t2 = numpy.array(
+    triangle = numpy.array(
         [
             [numpy.cos(0.5 * numpy.pi), numpy.sin(0.5 * numpy.pi)],
             [numpy.cos(7.0 / 6.0 * numpy.pi), numpy.sin(7.0 / 6.0 * numpy.pi)],
             [numpy.cos(11.0 / 6.0 * numpy.pi), numpy.sin(11.0 / 6.0 * numpy.pi)],
         ]
     )
-    scheme.show(t2)
+    scheme.show(triangle)
 
 
 def test_volume():
-    # Assert computation of t2 volume in 3D is correct
-    t2 = numpy.array([[0.0, 0.0, 0.0], [1.0, 2.0, 3.0], [0.7, 0.4, 1.1]])
+    # Assert computation of triangle volume in 3D is correct
+    triangle = numpy.array([[0.0, 0.0, 0.0], [1.0, 2.0, 3.0], [0.7, 0.4, 1.1]])
     ref = numpy.sqrt(3.0) / 2.0
-    assert abs(quadpy.t2.get_vol(t2) - ref) < 1.0e-14 * ref
+    assert abs(quadpy.t2.get_vol(triangle) - ref) < 1.0e-14 * ref
 
-    t2 = numpy.array([[0.0, 0.0, 0.0], [0.3, 0.4, 0.5], [0.7, 0.4, 1.1]])
+    triangle = numpy.array([[0.0, 0.0, 0.0], [0.3, 0.4, 0.5], [0.7, 0.4, 1.1]])
     ref = numpy.sqrt(0.0209)
-    assert abs(quadpy.t2.get_vol(t2) - ref) < 1.0e-14 * ref
+    assert abs(quadpy.t2.get_vol(triangle) - ref) < 1.0e-14 * ref
 
 
 def test_multidim():

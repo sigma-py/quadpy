@@ -1,7 +1,7 @@
 import numpy
 
-from ..helpers import book
 from ..c1 import gauss_legendre
+from ..helpers import book
 from ..tn._stroud import stroud_tn_5_1
 from ._helpers import TetrahedronScheme
 

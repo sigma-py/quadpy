@@ -10,9 +10,7 @@ def test_simple():
     exact = 2.0
     assert abs(exact - val) < 1.0e-10
 
-    val, _ = quadpy.c1.integrate_adaptive(
-        lambda x: x * sin(x), [0.0, pi], 1.0e-10
-    )
+    val, _ = quadpy.c1.integrate_adaptive(lambda x: x * sin(x), [0.0, pi], 1.0e-10)
     exact = pi
     assert abs(exact - val) < 1.0e-10
 
@@ -61,9 +59,7 @@ def test_multidim():
     assert abs(val - exact) < 1.0e-10
 
     # vector-valued integration on 1 subdomain
-    val, err = quadpy.c1.integrate_adaptive(
-        lambda x: [sin(x), cos(x)], [0.0, 1.0]
-    )
+    val, err = quadpy.c1.integrate_adaptive(lambda x: [sin(x), cos(x)], [0.0, 1.0])
     assert err.shape == (2,)
     assert all(e < 1.0e-10 for e in err)
     exact = [cos(0.0) - cos(1.0), sin(1.0) - sin(0.0)]

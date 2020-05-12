@@ -13,10 +13,7 @@ schemes = (
         (quadpy.c2.albrecht_collatz_3(), 1.0e-14),
         (quadpy.c2.albrecht_collatz_4(), 1.0e-14),
     ]
-    + [
-        (quadpy.c2.cohen_gismalla_1(), 1.0e-6),
-        (quadpy.c2.cohen_gismalla_2(), 1.0e-6),
-    ]
+    + [(quadpy.c2.cohen_gismalla_1(), 1.0e-6), (quadpy.c2.cohen_gismalla_2(), 1.0e-6),]
     + [
         (quadpy.c2.cools_haegemans_1985_1(), 1.0e-10),
         (quadpy.c2.cools_haegemans_1985_2(), 1.0e-10),
@@ -178,24 +175,12 @@ schemes = (
     ]
     + [(quadpy.c2.product(quadpy.c1.midpoint()), 1.0e-14)]
     + [(quadpy.c2.product(quadpy.c1.trapezoidal()), 1.0e-14)]
+    + [(quadpy.c2.product(quadpy.c1.gauss_legendre(k)), 1.0e-14) for k in range(1, 5)]
     + [
-        (quadpy.c2.product(quadpy.c1.gauss_legendre(k)), 1.0e-14)
+        (quadpy.c2.product(quadpy.c1.newton_cotes_closed(k)), 1.0e-14,)
         for k in range(1, 5)
     ]
-    + [
-        (
-            quadpy.c2.product(quadpy.c1.newton_cotes_closed(k)),
-            1.0e-14,
-        )
-        for k in range(1, 5)
-    ]
-    + [
-        (
-            quadpy.c2.product(quadpy.c1.newton_cotes_open(k)),
-            1.0e-14,
-        )
-        for k in range(6)
-    ]
+    + [(quadpy.c2.product(quadpy.c1.newton_cotes_open(k)), 1.0e-14,) for k in range(6)]
 )
 
 
@@ -267,9 +252,7 @@ def test_scheme(scheme, tol):
     return
 
 
-@pytest.mark.parametrize(
-    "scheme", [quadpy.c2.product(quadpy.c1.gauss_legendre(5))]
-)
+@pytest.mark.parametrize("scheme", [quadpy.c2.product(quadpy.c1.gauss_legendre(5))])
 def test_show(scheme):
     scheme.show()
     return
