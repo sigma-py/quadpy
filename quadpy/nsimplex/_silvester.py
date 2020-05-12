@@ -16,7 +16,7 @@ citation = article(
 
 
 # frac(prod([math.factorial(l) for l in m]), math.factorial(sum(m) + dim))
-def integrate_bary_over_unit_simplex(k, symbolic):
+def integrate_bary(k, symbolic):
     # This is very similar to integrate_monomial_over_unit_simplex, except that n =
     # len(k) - 1, not len(k). This is because we're integrating over a polynomial in
     # barycentric coordinates here. Also the integration for [0, ..., 0] is set equal to
@@ -35,21 +35,15 @@ def integrate_bary_over_unit_simplex(k, symbolic):
     alpha = frac(k[idx], sum(k) + n)
     k2 = k.copy()
     k2[idx] -= 1
-    return integrate_bary_over_unit_simplex(k2, symbolic) * alpha
+    return integrate_bary(k2, symbolic) * alpha
 
 
-def _newton_cotes(dim, n, point_fun, symbolic):
-    degree = n
-
+def _get_data(dim, n, point_fun, symbolic):
     # points
     idxs = numpy.array(get_all_exponents(dim + 1, n)[-1])
     points = point_fun(idxs)
 
     # weights
-    if n == 0:
-        weights = numpy.array([1])
-        return points, weights, degree
-
     weights = numpy.empty(len(points))
     kk = 0
     for idx in idxs:
@@ -60,29 +54,36 @@ def _newton_cotes(dim, n, point_fun, symbolic):
             for i, m in enumerate(idx)
             for k in range(m)
         )
-        # make sure the exponents are all of the correct length
-        exp = [list(m) + [0] * (dim - len(m) + 1) for m in g.monoms()]
-        weights[kk] = sum(
-            c * integrate_bary_over_unit_simplex(m, symbolic)
-            for m, c in zip(exp, g.coeffs())
-        )
+        if isinstance(g, int):
+            exp = [0] * (dim + 1)
+            coeffs = g
+        else:
+            # make sure the exponents are all of the correct length
+            exp = [list(m) + [0] * (dim - len(m) + 1) for m in g.monoms()]
+            coeffs = g.coeffs()
+        weights[kk] = sum(c * integrate_bary(m, symbolic) for c, m in zip(coeffs, exp))
         kk += 1
 
-    return weights, points, degree
+    return weights, points
 
 
 def silvester(dim, variant, n, symbolic=False):
     frac = numpy.vectorize(sympy.Rational) if symbolic else lambda a, b: a / b
 
     if variant == "closed":
-        weights, points, degree = _newton_cotes(dim, n, lambda k: frac(k, n), symbolic)
+        degree = n
+
+        def points1d(k):
+            return frac(k, n)
+
     else:
         assert variant == "open"
-        weights, points, degree = _newton_cotes(
-            dim, n, lambda k: frac(k + 1, n + 1 + dim), symbolic
-        )
-        if n == 0:
-            degree = 1
+        degree = 1 if n == 0 else n
+
+        def points1d(k):
+            return frac(k + 1, n + 1 + dim)
+
+    weights, points = _get_data(dim, n, points1d, symbolic)
 
     return NSimplexScheme(
         f"Silvester ({variant}, {n})", dim, weights, points, degree, citation
