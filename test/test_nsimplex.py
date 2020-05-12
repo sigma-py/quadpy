@@ -65,5 +65,5 @@ def test_scheme(scheme):
 
 
 if __name__ == "__main__":
-    scheme_ = quadpy.nsimplex.grundmann_moeller(3, 0)
+    scheme_ = quadpy.nsimplex.silvester(3, "open", 5)
     test_scheme(scheme_)

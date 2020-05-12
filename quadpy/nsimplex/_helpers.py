@@ -96,19 +96,21 @@ def integrate_monomial_over_unit_simplex(k, symbolic=False):
     all dimensions.
 
     To cope with the huge terms in numerator and denominator, it might make sense to use
-    exp(lgamma()). It's even easier though to represent the above expression by a
-    recurrence.
+    exp(lgamma()). It's even easier though to represent the above expression by the
+    recurrence with the simple factor k_i / (sum(k) + n) which will never overflow. It's
+    also well-suited for symbolic computation.
     """
     frac = sympy.Rational if symbolic else lambda a, b: a / b
 
     assert all(kk >= 0 for kk in k)
 
+    n = len(k)
     if all(kk == 0 for kk in k):
-        return frac(1, math.factorial(len(k)))
+        return frac(1, math.factorial(n))
 
     # find first nonzero
     idx = next((i for i, j in enumerate(k) if j > 0), None)
-    alpha = frac(k[idx], sum(k) + len(k))
+    alpha = frac(k[idx], sum(k) + n)
     k2 = k.copy()
     k2[idx] -= 1
     return integrate_monomial_over_unit_simplex(k2, symbolic) * alpha
