@@ -1,7 +1,7 @@
 import numpy
 
 from ..helpers import article
-from ._helpers import LineSegmentScheme
+from ._helpers import C1Scheme
 
 citation = article(
     authors=["J. Waldvogel"],
@@ -39,7 +39,7 @@ def fejer_1(n):
     assert max(w.imag) < 1.0e-15
     weights = w.real
 
-    return LineSegmentScheme("Fejér 1", degree, weights, points, citation)
+    return C1Scheme("Fejér 1", degree, weights, points, citation)
 
 
 def fejer_2(n):
@@ -67,4 +67,4 @@ def fejer_2(n):
 
     # cut off first and last
     weights = weights[1:-1]
-    return LineSegmentScheme("Fejér 2", degree, weights, points, citation)
+    return C1Scheme("Fejér 2", degree, weights, points, citation)

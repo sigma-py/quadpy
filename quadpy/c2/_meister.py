@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 
 from ..helpers import article
-from ._helpers import QuadrilateralScheme, concat, symm_r0, symm_s, symm_s_t, zero
+from ._helpers import C2Scheme, concat, symm_r0, symm_s, symm_s_t, zero
 
 citation = article(
     authors=["Bernd Meister"],
@@ -27,4 +27,4 @@ def meister():
     )
 
     weights *= 4
-    return QuadrilateralScheme("Meister", weights, points, 7, citation)
+    return C2Scheme("Meister", weights, points, 7, citation)

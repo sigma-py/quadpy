@@ -1,7 +1,7 @@
 from sympy import sqrt
 
 from ..helpers import article, untangle
-from ._helpers import NCubeScheme, _s
+from ._helpers import CnScheme, _s
 
 _citation = article(
     authors=["Henry C. Thacher"],
@@ -21,4 +21,4 @@ def thacher(n):
     data = [(1, [n * [2 * r]]), (+r, _s(n, -1, r)), (-r, _s(n, +1, r))]
     points, weights = untangle(data)
     weights *= 2 ** n
-    return NCubeScheme("Thacher", n, weights, points, 2, _citation)
+    return CnScheme("Thacher", n, weights, points, 2, _citation)

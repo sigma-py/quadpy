@@ -2,7 +2,7 @@ import numpy
 
 from ..helpers import article
 from ._gauss_legendre import gauss_legendre
-from ._helpers import LineSegmentScheme
+from ._helpers import C1Scheme
 
 citation = article(
     authors=["T.N.L. Patterson"],
@@ -496,9 +496,7 @@ def gauss_patterson(index):
             [s, numpy.array([0.704720354504808967346e-02]), s[::-1]]
         )
 
-    return LineSegmentScheme(
-        f"Gauss-Patterson {index}", degree, weights, points, citation
-    )
+    return C1Scheme(f"Gauss-Patterson {index}", degree, weights, points, citation)
 
 
 def _get_points(index):

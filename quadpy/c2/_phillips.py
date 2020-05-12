@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import QuadrilateralScheme, concat, pm2, symm_r0
+from ._helpers import C2Scheme, concat, pm2, symm_r0
 
 citation = article(
     authors=["G.M. Phillips"],
@@ -27,4 +27,4 @@ def phillips():
 
     weights, points = concat(symm_r0([B1, r], [B2, s]), pm2([B3, t, t]))
     weights *= 4
-    return QuadrilateralScheme("Phillips", weights, points, 7, citation)
+    return C2Scheme("Phillips", weights, points, 7, citation)

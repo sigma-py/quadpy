@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from sympy import pi, sqrt
 
 from ..helpers import article, get_nsimplex_points
-from ._helpers import NSphereScheme
+from ._helpers import UnScheme
 
 citation = article(
     authors=["I.P. Mysovskikh"],
@@ -29,7 +29,7 @@ def surface_hypersphere(n):
 def mysovskikh_1(n):
     points = get_nsimplex_points(n, sqrt, frac)
     weights = numpy.full(n + 1, surface_hypersphere(n) / (n + 1))
-    return NSphereScheme("Mysovskikh 1", n, weights, points, 2, citation)
+    return UnScheme("Mysovskikh 1", n, weights, points, 2, citation)
 
 
 def mysovskikh_2(n):
@@ -55,4 +55,4 @@ def mysovskikh_2(n):
         ]
     )
 
-    return NSphereScheme("Mysovskikh 2", n, weights, points, 5, citation)
+    return UnScheme("Mysovskikh 2", n, weights, points, 5, citation)

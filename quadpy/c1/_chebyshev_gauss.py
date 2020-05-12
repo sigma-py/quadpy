@@ -2,7 +2,7 @@ import numpy
 import sympy
 from mpmath import mp
 
-from ._helpers import LineSegmentScheme
+from ._helpers import C1Scheme
 
 
 def chebyshev_gauss_1(n, mode="numpy"):
@@ -27,7 +27,7 @@ def chebyshev_gauss_1(n, mode="numpy"):
             [mp.cos(mp.mpf(2 * k - 1) / (2 * n) * mp.pi) for k in range(1, n + 1)]
         )
         weights = numpy.full(n, mp.pi / n)
-    return LineSegmentScheme("Chebyshev-Gauss 1", degree, weights, points)
+    return C1Scheme("Chebyshev-Gauss 1", degree, weights, points)
 
 
 def chebyshev_gauss_2(n, mode="numpy", decimal_places=None):
@@ -64,4 +64,4 @@ def chebyshev_gauss_2(n, mode="numpy", decimal_places=None):
                 for k in range(1, n + 1)
             ]
         )
-    return LineSegmentScheme("Chebyshev-Gauss 2", degree, weights, points)
+    return C1Scheme("Chebyshev-Gauss 2", degree, weights, points)

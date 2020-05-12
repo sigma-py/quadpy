@@ -1,7 +1,7 @@
 import numpy
 
 from ..helpers import article
-from ._helpers import DiskScheme
+from ._helpers import S2Scheme
 
 _citation = article(
     authors=["Ann Haegemans", "Robert Piessens"],
@@ -63,4 +63,4 @@ def haegemans_piessens():
             0.3378210604282018145,
         ]
     )
-    return DiskScheme("Haegemans-Piessens", weights, points, 9, _citation)
+    return S2Scheme("Haegemans-Piessens", weights, points, 9, _citation)

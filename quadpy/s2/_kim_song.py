@@ -3,7 +3,7 @@ import warnings
 import numpy
 
 from ..helpers import article, fsd, untangle, z
-from ._helpers import DiskScheme
+from ._helpers import S2Scheme
 
 _citation = article(
     authors=["KyoungJoong Kim", "ManSuk Song"],
@@ -22,7 +22,7 @@ def kim_song_1():
     ]
     points, weights = untangle(data)
     points = points.astype(numpy.float)
-    return DiskScheme("Kim-Song 1", weights, points, 1, _citation)
+    return S2Scheme("Kim-Song 1", weights, points, 1, _citation)
 
 
 def kim_song_2():
@@ -30,7 +30,7 @@ def kim_song_2():
         (0.785398163397448, fsd(2, (0.707106781186548, 1))),
     ]
     points, weights = untangle(data)
-    return DiskScheme("Kim-Song 2", weights, points, 3, _citation)
+    return S2Scheme("Kim-Song 2", weights, points, 3, _citation)
 
 
 def kim_song_3():
@@ -38,7 +38,7 @@ def kim_song_3():
         (0.785398163397448, fsd(2, (0.5, 2))),
     ]
     points, weights = untangle(data)
-    return DiskScheme("Kim-Song 3", weights, points, 3, _citation)
+    return S2Scheme("Kim-Song 3", weights, points, 3, _citation)
 
 
 def kim_song_4():
@@ -47,7 +47,7 @@ def kim_song_4():
         (0.052611700904808, fsd(2, (0.888073833977115, 2))),
     ]
     points, weights = untangle(data)
-    return DiskScheme("Kim-Song 4", weights, points, 5, _citation)
+    return S2Scheme("Kim-Song 4", weights, points, 5, _citation)
 
 
 def kim_song_5():
@@ -56,7 +56,7 @@ def kim_song_5():
         (0.294524311274043, fsd(2, (0.754344479484572, 1), (0.312459714103782, 1))),
     ]
     points, weights = untangle(data)
-    return DiskScheme("Kim-Song 5", weights, points, 5, _citation)
+    return S2Scheme("Kim-Song 5", weights, points, 5, _citation)
 
 
 def kim_song_6():
@@ -66,7 +66,7 @@ def kim_song_6():
         (0.165609800458645, fsd(2, (0.644171310389465, 2))),
     ]
     points, weights = untangle(data)
-    return DiskScheme("Kim-Song 6", weights, points, 7, _citation)
+    return S2Scheme("Kim-Song 6", weights, points, 7, _citation)
 
 
 def kim_song_7():
@@ -77,7 +77,7 @@ def kim_song_7():
         (0.190570560169519, fsd(2, (0.740334457173511, 1), (0.379016937530835, 1))),
     ]
     points, weights = untangle(data)
-    return DiskScheme("Kim-Song 7", weights, points, 9, _citation)
+    return S2Scheme("Kim-Song 7", weights, points, 9, _citation)
 
 
 def kim_song_8():
@@ -92,7 +92,7 @@ def kim_song_8():
     points, weights = untangle(data)
     # ERR article claims degree 11
     warnings.warn("Kim-Song claim degree 11, but the scheme is only degree 1.")
-    return DiskScheme("Kim-Song 8", weights, points, 1, _citation)
+    return S2Scheme("Kim-Song 8", weights, points, 1, _citation)
 
 
 def kim_song_9():
@@ -104,7 +104,7 @@ def kim_song_9():
         (0.079067977968328, fsd(2, (0.904823085572323, 1), (0.242446615072141, 1))),
     ]
     points, weights = untangle(data)
-    return DiskScheme("Kim-Song 9", weights, points, 11, _citation)
+    return S2Scheme("Kim-Song 9", weights, points, 11, _citation)
 
 
 def kim_song_10():
@@ -118,7 +118,7 @@ def kim_song_10():
         (0.095780705939433, fsd(2, (0.752042776803954, 1), (0.379717011170077, 1))),
     ]
     points, weights = untangle(data)
-    return DiskScheme("Kim-Song 10", weights, points, 13, _citation)
+    return S2Scheme("Kim-Song 10", weights, points, 13, _citation)
 
 
 def kim_song_11():
@@ -134,7 +134,7 @@ def kim_song_11():
         (0.081539591616413, fsd(2, (0.707438744960070, 1), (0.293030722710664, 1))),
     ]
     points, weights = untangle(data)
-    return DiskScheme("Kim-Song 11", weights, points, 15, _citation)
+    return S2Scheme("Kim-Song 11", weights, points, 15, _citation)
 
 
 def kim_song_12():
@@ -154,7 +154,7 @@ def kim_song_12():
     points, weights = untangle(data)
     # ERR article claims degree 17
     warnings.warn("Kim-Song claim degree 17, but the scheme is only degree 3.")
-    return DiskScheme("Kim-Song 12", weights, points, 3, _citation)
+    return S2Scheme("Kim-Song 12", weights, points, 3, _citation)
 
 
 def kim_song_13():
@@ -171,7 +171,7 @@ def kim_song_13():
         (0.047557517357696, fsd(2, (0.855907714936672, 1), (0.165103693017075, 1))),
     ]
     points, weights = untangle(data)
-    return DiskScheme("Kim-Song 13", weights, points, 17, _citation)
+    return S2Scheme("Kim-Song 13", weights, points, 17, _citation)
 
 
 def kim_song_14():
@@ -193,7 +193,7 @@ def kim_song_14():
     points, weights = untangle(data)
     # ERR article claims degree 19
     warnings.warn("Kim-Song claim degree 19, but the scheme is only degree 3.")
-    return DiskScheme("Kim-Song 14", weights, points, 3, _citation)
+    return S2Scheme("Kim-Song 14", weights, points, 3, _citation)
 
 
 def kim_song_15():
@@ -214,4 +214,4 @@ def kim_song_15():
     points, weights = untangle(data)
     # ERR article claims degree 19
     warnings.warn("Kim-Song claim degree 19, but the scheme is only degree 9.")
-    return DiskScheme("Kim-Song 15", weights, points, 9, _citation)
+    return S2Scheme("Kim-Song 15", weights, points, 9, _citation)

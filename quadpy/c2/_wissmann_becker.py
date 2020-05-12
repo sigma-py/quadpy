@@ -1,5 +1,5 @@
 from ..helpers import article
-from ._helpers import QuadrilateralScheme, concat, pmx
+from ._helpers import C2Scheme, concat, pmx
 
 citation = article(
     authors=["Johannes W. Wissmann", "Thomas Becker"],
@@ -21,7 +21,7 @@ def wissmann_becker_4_1():
             [0.642719001783677, 0.630912788976754, -0.731629951573135],
         ),
     )
-    return QuadrilateralScheme("Wissmann-Becker 4-1", weights, points, 4, citation)
+    return C2Scheme("Wissmann-Becker 4-1", weights, points, 4, citation)
 
 
 def wissmann_becker_4_2():
@@ -33,7 +33,7 @@ def wissmann_becker_4_2():
             [0.349227402025498, 0.774596669241483, -0.852765377881771],
         ),
     )
-    return QuadrilateralScheme("Wissmann-Becker 4-2", weights, points, 4, citation)
+    return C2Scheme("Wissmann-Becker 4-2", weights, points, 4, citation)
 
 
 def wissmann_becker_6_1():
@@ -47,7 +47,7 @@ def wissmann_becker_6_1():
             [0.320896396788441, 0.565459993438754, -0.872869311156879],
         ),
     )
-    return QuadrilateralScheme("Wissmann-Becker 6-1", weights, points, 6, citation)
+    return C2Scheme("Wissmann-Becker 6-1", weights, points, 6, citation)
 
 
 def wissmann_becker_6_2():
@@ -61,7 +61,7 @@ def wissmann_becker_6_2():
             [0.269567586086061, 0.608977536016356, -0.896608632762453],
         ),
     )
-    return QuadrilateralScheme("Wissmann-Becker 6-2", weights, points, 6, citation)
+    return C2Scheme("Wissmann-Becker 6-2", weights, points, 6, citation)
 
 
 def wissmann_becker_8_1():
@@ -79,7 +79,7 @@ def wissmann_becker_8_1():
             [0.085464254086247, 0.897495818279768, -0.900390774211580],
         ),
     )
-    return QuadrilateralScheme("Wissmann-Becker 8-1", weights, points, 8, citation)
+    return C2Scheme("Wissmann-Becker 8-1", weights, points, 8, citation)
 
 
 def wissmann_becker_8_2():
@@ -96,4 +96,4 @@ def wissmann_becker_8_2():
             [0.125618791640072, 0.837503640422812, -0.888477650535971],
         ),
     )
-    return QuadrilateralScheme("Wissmann-Becker 8-2", weights, points, 8, citation)
+    return C2Scheme("Wissmann-Becker 8-2", weights, points, 8, citation)

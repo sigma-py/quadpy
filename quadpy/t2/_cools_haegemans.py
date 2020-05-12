@@ -1,7 +1,7 @@
 from mpmath import mp
 
 from ..helpers import techreport
-from ._helpers import TriangleScheme, rot_ab
+from ._helpers import T2Scheme, rot_ab
 
 citation = techreport(
     authors=["R. Cools", "A. Haegemans"],
@@ -46,7 +46,7 @@ def cools_haegemans_1(mpmath=False):
         ],
     )
     weights *= 2
-    return TriangleScheme("Cools-Haegemans 1", weights, points, 8, citation)
+    return T2Scheme("Cools-Haegemans 1", weights, points, 8, citation)
 
 
 # TODO find error
@@ -88,4 +88,4 @@ def cools_haegemans_1(mpmath=False):
 #
 #     points, weights = untangle2(data)
 #     weights *= 2
-#     return TriangleScheme("Cools-Haegemans 1", 10, weights, points)
+#     return T2Scheme("Cools-Haegemans 1", 10, weights, points)

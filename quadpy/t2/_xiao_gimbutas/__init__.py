@@ -2,7 +2,7 @@ import json
 import os
 
 from ...helpers import article
-from .._helpers import TriangleScheme, untangle2
+from .._helpers import T2Scheme, untangle2
 
 citation = article(
     authors=["Hong Xiao", "Zydrunas Gimbutas"],
@@ -29,7 +29,7 @@ def _read(degree):
     degree = data.pop("degree")
     name = f"Xiao-Gimbutas {degree}"
     points, weights = untangle2(data)
-    return TriangleScheme(name, weights, points, degree, citation)
+    return T2Scheme(name, weights, points, degree, citation)
 
 
 def xiao_gimbutas_01():

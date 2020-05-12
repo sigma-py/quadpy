@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 
 from ..helpers import article
-from ._helpers import TriangleScheme, concat, s1, s2
+from ._helpers import T2Scheme, concat, s1, s2
 
 citation = article(
     authors=["Mark A. Taylor", "Beth A. Wingate", "Len P. Bos"],
@@ -19,7 +19,7 @@ citation = article(
 def taylor_wingate_bos_1():
     weights, points = s2([frac(2, 3), frac(1, 6)])
     weights /= 2
-    return TriangleScheme("Taylor-Wingate-Bos 1", weights, points, 2, citation)
+    return T2Scheme("Taylor-Wingate-Bos 1", weights, points, 2, citation)
 
 
 def taylor_wingate_bos_2():
@@ -27,7 +27,7 @@ def taylor_wingate_bos_2():
         [0.2199034873106, 0.0915762135098], [0.4467631793560, 0.4459484909160]
     )
     weights /= 2
-    return TriangleScheme("Taylor-Wingate-Bos 2", weights, points, 4, citation)
+    return T2Scheme("Taylor-Wingate-Bos 2", weights, points, 4, citation)
 
 
 def taylor_wingate_bos_4():
@@ -40,7 +40,7 @@ def taylor_wingate_bos_4():
         s1([0.1116047046647, 0.7839656651012, 0.0421382841642]),
     )
     weights /= 2
-    return TriangleScheme("Taylor-Wingate-Bos 4", weights, points, 7, citation)
+    return T2Scheme("Taylor-Wingate-Bos 4", weights, points, 7, citation)
 
 
 def taylor_wingate_bos_5():
@@ -56,7 +56,7 @@ def taylor_wingate_bos_5():
         ),
     )
     weights /= 2
-    return TriangleScheme("Taylor-Wingate-Bos 5", weights, points, 9, citation)
+    return T2Scheme("Taylor-Wingate-Bos 5", weights, points, 9, citation)
 
 
 def taylor_wingate_bos_8():
@@ -77,4 +77,4 @@ def taylor_wingate_bos_8():
         ),
     )
     weights /= 2
-    return TriangleScheme("Taylor-Wingate-Bos 8", weights, points, 14, citation)
+    return T2Scheme("Taylor-Wingate-Bos 8", weights, points, 14, citation)

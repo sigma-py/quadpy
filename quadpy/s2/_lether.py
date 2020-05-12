@@ -1,7 +1,7 @@
 import numpy
 
 from ..helpers import article
-from ._helpers import DiskScheme
+from ._helpers import S2Scheme
 
 _citation = article(
     authors=["Frank G. Lether"],
@@ -33,4 +33,4 @@ def lether(n):
         / (n + 1)
         * numpy.outer(w, numpy.sin(mu * numpy.pi / (n + 1)) ** 2).flatten()
     )
-    return DiskScheme(f"Lether({n})", weights, points, 2 * n - 1, _citation)
+    return S2Scheme(f"Lether({n})", weights, points, 2 * n - 1, _citation)

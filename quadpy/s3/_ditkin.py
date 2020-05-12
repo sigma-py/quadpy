@@ -1,7 +1,7 @@
 import sympy
 
 from ..helpers import article, pm, pm_array0, untangle, z
-from ._helpers import BallScheme
+from ._helpers import S3Scheme
 
 _citation = article(
     authors=["V.A. Ditkin"],
@@ -33,7 +33,7 @@ def ditkin_1(alpha=0):
 
     points, weights = untangle(data)
     weights *= frac(4, 3) * pi
-    return BallScheme("Ditkin 1", _citation, 5, weights, points)
+    return S3Scheme("Ditkin 1", _citation, 5, weights, points)
 
 
 def ditkin_2():
@@ -53,7 +53,7 @@ def ditkin_2():
 
     points, weights = untangle(data)
     weights *= frac(4, 3) * pi
-    return BallScheme("Ditkin 2", _citation, 5, weights, points)
+    return S3Scheme("Ditkin 2", _citation, 5, weights, points)
 
 
 def ditkin_3():
@@ -79,4 +79,4 @@ def ditkin_3():
 
     points, weights = untangle(data)
     weights *= frac(4, 3) * pi
-    return BallScheme("Ditkin 3", _citation, 7, weights, points)
+    return S3Scheme("Ditkin 3", _citation, 7, weights, points)

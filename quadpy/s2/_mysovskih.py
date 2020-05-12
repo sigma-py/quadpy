@@ -2,7 +2,7 @@ import numpy
 import sympy
 
 from ..helpers import article, fs_array, fsd, untangle, z
-from ._helpers import DiskScheme
+from ._helpers import S2Scheme
 
 _citation = article(
     authors=["I.P. Mysovskikh"],
@@ -34,7 +34,7 @@ def mysovskih_1(alpha=0):
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Mysovskih 1", weights, points, 4, _citation)
+    return S2Scheme("Mysovskih 1", weights, points, 4, _citation)
 
 
 def mysovskih_2():
@@ -61,7 +61,7 @@ def mysovskih_2():
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Mysovskih 2", weights, points, 11, _citation)
+    return S2Scheme("Mysovskih 2", weights, points, 11, _citation)
 
 
 def mysovskih_3():
@@ -113,4 +113,4 @@ def mysovskih_3():
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Mysovskih 3", weights, points, 15, _citation)
+    return S2Scheme("Mysovskih 3", weights, points, 15, _citation)

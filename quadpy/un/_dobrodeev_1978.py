@@ -4,7 +4,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, fsd, untangle
-from ._helpers import NSphereScheme, integrate_monomial_over_unit_nsphere
+from ._helpers import UnScheme, integrate_monomial_over_unit_nsphere
 
 citation = article(
     authors=["L.N. Dobrodeev"],
@@ -70,7 +70,7 @@ def dobrodeev_1978(n):
 
     points, weights = untangle(data)
     weights *= I0
-    return NSphereScheme("Dobrodeev 1978", n, weights, points, degree, citation)
+    return UnScheme("Dobrodeev 1978", n, weights, points, degree, citation)
 
 
 def _generate_i(n, i):

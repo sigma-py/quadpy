@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from sympy import cos, pi, sin, sqrt
 
 from ..helpers import article, untangle
-from ._helpers import NCubeScheme, _s
+from ._helpers import CnScheme, _s
 
 _citation = article(
     authors=["A.H. Stroud"],
@@ -29,7 +29,7 @@ def stroud_1957_2(n):
     points, weights = untangle(data)
     reference_volume = 2 ** n
     weights *= reference_volume
-    return NCubeScheme("Stroud 1957-2", n, weights, points, 2, _citation)
+    return CnScheme("Stroud 1957-2", n, weights, points, 2, _citation)
 
 
 def stroud_1957_3(n):
@@ -53,4 +53,4 @@ def stroud_1957_3(n):
     points, weights = untangle(data)
     reference_volume = 2 ** n
     weights *= reference_volume
-    return NCubeScheme("Stroud 1957-3", n, weights, points, 3, _citation)
+    return CnScheme("Stroud 1957-3", n, weights, points, 3, _citation)

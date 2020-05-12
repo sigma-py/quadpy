@@ -1,7 +1,7 @@
 import numpy
 
 from ..helpers import article
-from ._helpers import TriangleScheme
+from ._helpers import T2Scheme
 
 citation = article(
     authors=["Richard Franke"],
@@ -68,7 +68,7 @@ def franke_09():
     )
     points = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
 
-    return TriangleScheme("Franke 9", weights, points, 7, citation)
+    return T2Scheme("Franke 9", weights, points, 7, citation)
 
 
 def franke_10():
@@ -125,4 +125,4 @@ def franke_10():
     )
     points = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
 
-    return TriangleScheme("Franke 10", weights, points, 7, citation)
+    return T2Scheme("Franke 10", weights, points, 7, citation)

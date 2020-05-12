@@ -7,7 +7,7 @@ from ._albrecht_collatz import albrecht_collatz_2 as stroud_u3_5_2
 from ._albrecht_collatz import albrecht_collatz_3 as stroud_u3_5_3
 from ._albrecht_collatz import albrecht_collatz_4 as stroud_u3_5_4
 from ._albrecht_collatz import albrecht_collatz_5 as stroud_u3_7_2
-from ._helpers import SphereScheme, cartesian_to_spherical
+from ._helpers import U3Scheme, cartesian_to_spherical
 from ._mclaren import mclaren_01 as stroud_u3_3_1
 from ._mclaren import mclaren_02 as stroud_u3_5_5
 from ._mclaren import mclaren_03 as stroud_u3_7_1
@@ -34,7 +34,7 @@ def stroud_u3_11_2():
     weights /= 4 * numpy.pi
     points = scheme.points
     azimuthal_polar = cartesian_to_spherical(points)
-    return SphereScheme(
+    return U3Scheme(
         "Stroud U3 11-2", weights, points, azimuthal_polar, degree, citation
     )
 

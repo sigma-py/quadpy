@@ -5,7 +5,7 @@ import sympy
 
 from .. import un
 from ..helpers import article, fsd, pm, untangle, z
-from ._helpers import NBallScheme, volume_unit_ball
+from ._helpers import SnScheme, volume_unit_ball
 
 citation = article(
     authors=["A.H. Stroud"],
@@ -51,7 +51,7 @@ def _stroud_1967_7_ab(n, variant_a, symbolic):
     weights *= volume_unit_ball(n, symbolic)
 
     name = "Stroud 1967-7{}".format("a" if variant_a else "b")
-    return NBallScheme(name, n, weights, points, 7, citation)
+    return SnScheme(name, n, weights, points, 7, citation)
 
 
 def stroud_1967_7_a(n, symbolic=False):
@@ -81,4 +81,4 @@ def stroud_1967_7_c(n, symbolic=False):
     points = numpy.concatenate([r1 * s.points, r2 * s.points])
     weights = numpy.concatenate([A1 * s.weights, A2 * s.weights])
 
-    return NBallScheme("Stroud 1967-7 a", n, weights, points, 7, citation)
+    return SnScheme("Stroud 1967-7 a", n, weights, points, 7, citation)

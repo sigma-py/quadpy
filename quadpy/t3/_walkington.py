@@ -1,7 +1,7 @@
 import numpy
 
 from ..helpers import techreport
-from ._helpers import TetrahedronScheme
+from ._helpers import T3Scheme
 
 citation = techreport(
     authors=["Noel J. Walkington"],
@@ -28,7 +28,7 @@ def walkington_p5():
             _xi11(0.045503704125649649492),
         ]
     )
-    return TetrahedronScheme("Walkington p5", weights, points, degree, citation)
+    return T3Scheme("Walkington p5", weights, points, degree, citation)
 
 
 def _xi1(a):

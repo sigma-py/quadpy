@@ -2,7 +2,7 @@ import json
 import os
 
 from ...helpers import article
-from .._helpers import TriangleScheme, untangle2
+from .._helpers import T2Scheme, untangle2
 
 citation = article(
     authors=["F.D. Witherden", "P.E. Vincent"],
@@ -28,76 +28,76 @@ def _read(filename):
 
 
 def witherden_vincent_01():
-    return TriangleScheme("Witherden-Vincent 1", *_read("wv01.json"))
+    return T2Scheme("Witherden-Vincent 1", *_read("wv01.json"))
 
 
 def witherden_vincent_02():
-    return TriangleScheme("Witherden-Vincent 2", *_read("wv02.json"))
+    return T2Scheme("Witherden-Vincent 2", *_read("wv02.json"))
 
 
 def witherden_vincent_04():
-    return TriangleScheme("Witherden-Vincent 4", *_read("wv04.json"))
+    return T2Scheme("Witherden-Vincent 4", *_read("wv04.json"))
 
 
 def witherden_vincent_05():
-    return TriangleScheme("Witherden-Vincent 5", *_read("wv05.json"))
+    return T2Scheme("Witherden-Vincent 5", *_read("wv05.json"))
 
 
 def witherden_vincent_06():
-    return TriangleScheme("Witherden-Vincent 6", *_read("wv06.json"))
+    return T2Scheme("Witherden-Vincent 6", *_read("wv06.json"))
 
 
 def witherden_vincent_07():
-    return TriangleScheme("Witherden-Vincent 7", *_read("wv07.json"))
+    return T2Scheme("Witherden-Vincent 7", *_read("wv07.json"))
 
 
 def witherden_vincent_08():
-    return TriangleScheme("Witherden-Vincent 8", *_read("wv08.json"))
+    return T2Scheme("Witherden-Vincent 8", *_read("wv08.json"))
 
 
 def witherden_vincent_09():
-    return TriangleScheme("Witherden-Vincent 9", *_read("wv09.json"))
+    return T2Scheme("Witherden-Vincent 9", *_read("wv09.json"))
 
 
 def witherden_vincent_10():
-    return TriangleScheme("Witherden-Vincent 10", *_read("wv10.json"))
+    return T2Scheme("Witherden-Vincent 10", *_read("wv10.json"))
 
 
 def witherden_vincent_11():
-    return TriangleScheme("Witherden-Vincent 11", *_read("wv11.json"))
+    return T2Scheme("Witherden-Vincent 11", *_read("wv11.json"))
 
 
 def witherden_vincent_12():
-    return TriangleScheme("Witherden-Vincent 12", *_read("wv12.json"))
+    return T2Scheme("Witherden-Vincent 12", *_read("wv12.json"))
 
 
 def witherden_vincent_13():
-    return TriangleScheme("Witherden-Vincent 13", *_read("wv13.json"))
+    return T2Scheme("Witherden-Vincent 13", *_read("wv13.json"))
 
 
 def witherden_vincent_14():
-    return TriangleScheme("Witherden-Vincent 14", *_read("wv14.json"))
+    return T2Scheme("Witherden-Vincent 14", *_read("wv14.json"))
 
 
 def witherden_vincent_15():
-    return TriangleScheme("Witherden-Vincent 15", *_read("wv15.json"))
+    return T2Scheme("Witherden-Vincent 15", *_read("wv15.json"))
 
 
 def witherden_vincent_16():
-    return TriangleScheme("Witherden-Vincent 16", *_read("wv16.json"))
+    return T2Scheme("Witherden-Vincent 16", *_read("wv16.json"))
 
 
 def witherden_vincent_17():
-    return TriangleScheme("Witherden-Vincent 17", *_read("wv17.json"))
+    return T2Scheme("Witherden-Vincent 17", *_read("wv17.json"))
 
 
 def witherden_vincent_18():
-    return TriangleScheme("Witherden-Vincent 18", *_read("wv18.json"))
+    return T2Scheme("Witherden-Vincent 18", *_read("wv18.json"))
 
 
 def witherden_vincent_19():
-    return TriangleScheme("Witherden-Vincent 19", *_read("wv19.json"))
+    return T2Scheme("Witherden-Vincent 19", *_read("wv19.json"))
 
 
 def witherden_vincent_20():
-    return TriangleScheme("Witherden-Vincent 20", *_read("wv20.json"))
+    return T2Scheme("Witherden-Vincent 20", *_read("wv20.json"))

@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import QuadrilateralScheme, concat, pm, pm2, symm_r0, symm_s, zero
+from ._helpers import C2Scheme, concat, pm, pm2, symm_r0, symm_s, zero
 
 citation = article(
     authors=["J. Albrecht", "L. Collatz"],
@@ -21,7 +21,7 @@ def albrecht_collatz_1():
         zero(frac(5, 12)), symm_r0([frac(1, 8), 1]), symm_s([frac(1, 48), 1])
     )
     weights *= 4
-    return QuadrilateralScheme("Albrecht-Collatz 1", weights, points, 3, citation)
+    return C2Scheme("Albrecht-Collatz 1", weights, points, 3, citation)
 
 
 def albrecht_collatz_2():
@@ -32,7 +32,7 @@ def albrecht_collatz_2():
         zero(frac(2, 7)), pm([frac(5, 63), 0, t]), pm2([frac(5, 36), r, s])
     )
     weights *= 4
-    return QuadrilateralScheme("Albrecht-Collatz 2", weights, points, 5, citation)
+    return C2Scheme("Albrecht-Collatz 2", weights, points, 5, citation)
 
 
 def albrecht_collatz_3():
@@ -43,7 +43,7 @@ def albrecht_collatz_3():
         pm([frac(25, 168), r, r], [frac(5, 48), +s, -t], [frac(5, 48), +t, -s]),
     )
     weights *= 4
-    return QuadrilateralScheme("Albrecht-Collatz 3", weights, points, 5, citation)
+    return C2Scheme("Albrecht-Collatz 3", weights, points, 5, citation)
 
 
 def albrecht_collatz_4():
@@ -53,4 +53,4 @@ def albrecht_collatz_4():
         symm_s([frac(1, 60), 1], [frac(8, 45), frac(1, 2)]),
     )
     weights *= 4
-    return QuadrilateralScheme("Albrecht-Collatz 4", weights, points, 5, citation)
+    return C2Scheme("Albrecht-Collatz 4", weights, points, 5, citation)

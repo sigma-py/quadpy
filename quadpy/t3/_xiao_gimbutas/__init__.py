@@ -4,7 +4,7 @@ import os
 import numpy
 
 from ...helpers import article
-from .._helpers import TetrahedronScheme
+from .._helpers import T3Scheme
 
 citation = article(
     authors=["Hong Xiao", "Zydrunas Gimbutas"],
@@ -31,9 +31,7 @@ def _read(degree):
 
     points = numpy.array(data["bary"])
     weights = numpy.array(data["weights"])
-    return TetrahedronScheme(
-        f"Xiao-Gimbutas {degree}", weights, points, degree, citation
-    )
+    return T3Scheme(f"Xiao-Gimbutas {degree}", weights, points, degree, citation)
 
 
 def xiao_gimbutas_01():

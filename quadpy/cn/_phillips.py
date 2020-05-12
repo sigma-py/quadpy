@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, fsd, untangle, z
-from ._helpers import NCubeScheme
+from ._helpers import CnScheme
 
 _citation = article(
     authors=["G.M. Phillips"],
@@ -76,4 +76,4 @@ def phillips(n):
 
     points, weights = untangle(data)
     weights *= 2 ** n
-    return NCubeScheme("Phillips", n, weights, points, 7, _citation)
+    return CnScheme("Phillips", n, weights, points, 7, _citation)

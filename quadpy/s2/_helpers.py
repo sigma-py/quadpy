@@ -3,7 +3,7 @@ import numpy
 from ..helpers import plot_disks
 
 
-class DiskScheme:
+class S2Scheme:
     def __init__(self, name, weights, points, degree: int, citation=None):
         self.name = name
         self.degree = degree

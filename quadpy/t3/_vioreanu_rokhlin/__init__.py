@@ -2,7 +2,7 @@ import json
 import os
 
 from ...helpers import article
-from .._helpers import TetrahedronScheme, untangle2
+from .._helpers import T3Scheme, untangle2
 
 citation = article(
     authors=["B. Vioreanu", "V. Rokhlin"],
@@ -28,9 +28,7 @@ def _read(index):
     degree = data.pop("degree")
     points, weights = untangle2(data)
     weights *= 3.0 / 4.0
-    return TetrahedronScheme(
-        f"Vioreanu-Rokhlin {index}", weights, points, degree, citation
-    )
+    return T3Scheme(f"Vioreanu-Rokhlin {index}", weights, points, degree, citation)
 
 
 def vioreanu_rokhlin_0():

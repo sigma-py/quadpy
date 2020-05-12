@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import QuadrilateralScheme, concat, symm_r0, symm_s
+from ._helpers import C2Scheme, concat, symm_r0, symm_s
 
 citation = article(
     authors=["W. Burnside"],
@@ -19,4 +19,4 @@ def burnside():
     s = sqrt(frac(7, 9))
     weights, points = concat(symm_r0([frac(10, 49), r]), symm_s([frac(9, 196), s]))
     weights *= 4
-    return QuadrilateralScheme("Burnside", weights, points, 5, citation)
+    return C2Scheme("Burnside", weights, points, 5, citation)

@@ -1,7 +1,7 @@
 import orthopy
 
 from ..tools import scheme_from_rc
-from ._helpers import LineSegmentScheme
+from ._helpers import C1Scheme
 
 
 def gauss_jacobi(n, alpha, beta, mode="numpy"):
@@ -11,4 +11,4 @@ def gauss_jacobi(n, alpha, beta, mode="numpy"):
         n, alpha, beta, "monic", symbolic=True
     )
     points, weights = scheme_from_rc(a, b, mode=mode)
-    return LineSegmentScheme("Gauss-Jacobi", degree, weights, points)
+    return C1Scheme("Gauss-Jacobi", degree, weights, points)

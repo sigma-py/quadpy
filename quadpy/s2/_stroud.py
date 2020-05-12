@@ -11,7 +11,7 @@ from ._albrecht_collatz import albrecht_collatz as stroud_s2_3_2
 from ._hammer_stroud import hammer_stroud_11_2 as stroud_s2_3_1
 from ._hammer_stroud import hammer_stroud_12_2 as stroud_s2_5_2
 from ._hammer_stroud import hammer_stroud_18 as stroud_s2_7_2
-from ._helpers import DiskScheme
+from ._helpers import S2Scheme
 from ._mysovskih import mysovskih_1 as stroud_s2_4_1
 from ._mysovskih import mysovskih_2 as stroud_s2_11_1
 from ._mysovskih import mysovskih_3 as stroud_s2_15_1
@@ -56,7 +56,7 @@ def stroud_s2_9_3():
     data = [(B0, z(2)), (B1, r1 * x), (B2, r2 * x)]
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Stroud S2 9-3", weights, points, 9, _citation)
+    return S2Scheme("Stroud S2 9-3", weights, points, 9, _citation)
 
 
 __all__ = [

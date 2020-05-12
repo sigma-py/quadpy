@@ -2,7 +2,7 @@ import numpy
 import sympy
 
 from ..helpers import fs_array, fsd, phdthesis, pm, untangle
-from ._helpers import DiskScheme
+from ._helpers import S2Scheme
 
 _citation = phdthesis(
     authors=["William Hollis Peirce"],
@@ -33,7 +33,7 @@ def peirce_1956_1():
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Peirce 1956-1", weights, points, 7, _citation)
+    return S2Scheme("Peirce 1956-1", weights, points, 7, _citation)
 
 
 def peirce_1956_2():
@@ -62,7 +62,7 @@ def peirce_1956_2():
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Peirce 1956-2", weights, points, 9, _citation)
+    return S2Scheme("Peirce 1956-2", weights, points, 9, _citation)
 
 
 def peirce_1956_3():
@@ -93,4 +93,4 @@ def peirce_1956_3():
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Peirce 1956-3", weights, points, 11, _citation)
+    return S2Scheme("Peirce 1956-3", weights, points, 11, _citation)

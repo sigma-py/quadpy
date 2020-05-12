@@ -1,6 +1,6 @@
 import numpy
 
-from ._helpers import HexahedronScheme
+from ._helpers import C3Scheme
 
 
 def product(scheme1d):
@@ -16,6 +16,4 @@ def product(scheme1d):
     points = numpy.vstack([x.flatten(), y.flatten(), z.flatten()]).T
 
     degree = min([s.degree for s in schemes])
-    return HexahedronScheme(
-        f"Product scheme ({scheme1d.name})", weights, points, degree
-    )
+    return C3Scheme(f"Product scheme ({scheme1d.name})", weights, points, degree)

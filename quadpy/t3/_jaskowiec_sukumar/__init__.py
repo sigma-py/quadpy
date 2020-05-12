@@ -4,7 +4,7 @@ import os
 import numpy
 
 from ...helpers import article
-from .._helpers import TetrahedronScheme
+from .._helpers import T3Scheme
 
 citation = article(
     authors=["Jan Jaśkowiec", "N. Sukumar"],
@@ -32,9 +32,7 @@ def _read(string):
     points = numpy.column_stack([points, 1.0 - numpy.sum(points, axis=1)])
     weights = numpy.array(data["weights"])
 
-    return TetrahedronScheme(
-        f"Jaśkowiec-Sukumar {string}", weights, points, degree, citation
-    )
+    return T3Scheme(f"Jaśkowiec-Sukumar {string}", weights, points, degree, citation)
 
 
 def jaskowiec_sukumar_02():

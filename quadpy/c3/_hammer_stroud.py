@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, fsd, pm, untangle, z
-from ._helpers import HexahedronScheme
+from ._helpers import C3Scheme
 
 _citation = article(
     authors=["Preston C. Hammer", "Arthur H. Stroud"],
@@ -18,7 +18,7 @@ _citation = article(
 def hammer_stroud_1_3():
     data = [(frac(4, 3), fsd(3, (1, 1)))]
     points, weights = untangle(data)
-    return HexahedronScheme("Hammer-Stroud 1-3", weights, points, 3, _citation)
+    return C3Scheme("Hammer-Stroud 1-3", weights, points, 3, _citation)
 
 
 def hammer_stroud_2_3():
@@ -29,7 +29,7 @@ def hammer_stroud_2_3():
         (+frac(50, 81), fsd(3, (alpha, 2))),
     ]
     points, weights = untangle(data)
-    return HexahedronScheme("Hammer-Stroud 2-3", weights, points, 5, _citation)
+    return C3Scheme("Hammer-Stroud 2-3", weights, points, 5, _citation)
 
 
 def hammer_stroud_4_3():
@@ -38,7 +38,7 @@ def hammer_stroud_4_3():
         (frac(121, 361), pm(3, sqrt(frac(19, 33)))),
     ]
     points, weights = untangle(data)
-    return HexahedronScheme("Hammer-Stroud 4-3", weights, points, 5, _citation)
+    return C3Scheme("Hammer-Stroud 4-3", weights, points, 5, _citation)
 
 
 def _hammer_stroud_5_3(variant_a):
@@ -59,7 +59,7 @@ def _hammer_stroud_5_3(variant_a):
 
     data = [(B0, z(3)), (B1, fsd(3, (r, 1))), (B2, fsd(3, (s, 2))), (B3, pm(3, t))]
     points, weights = untangle(data)
-    return HexahedronScheme(
+    return C3Scheme(
         "Hammer-Stroud 5-3{}".format("a" if variant_a else "b"),
         weights,
         points,
@@ -85,4 +85,4 @@ def hammer_stroud_6_3():
         (0.4123338622714356, pm(3, 0.4067031864267161)),
     ]
     points, weights = untangle(data)
-    return HexahedronScheme("Hammer-Stroud 6-3", weights, points, 7, _citation)
+    return C3Scheme("Hammer-Stroud 6-3", weights, points, 7, _citation)

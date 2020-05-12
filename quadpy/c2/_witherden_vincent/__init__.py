@@ -4,7 +4,7 @@ import json
 import os
 
 from ...helpers import article
-from .._helpers import QuadrilateralScheme, concat, symm_r0, symm_s, symm_s_t, zero
+from .._helpers import C2Scheme, concat, symm_r0, symm_s, symm_s_t, zero
 
 _citation = article(
     authors=["F.D. Witherden", "P.E. Vincent"],
@@ -38,9 +38,7 @@ def _read(degree):
         d += [symm_s_t(*data["symm_s_t"])]
 
     weights, points = concat(*d)
-    return QuadrilateralScheme(
-        f"Witherden-Vincent {degree}", weights, points, degree, _citation
-    )
+    return C2Scheme(f"Witherden-Vincent {degree}", weights, points, degree, _citation)
 
 
 def witherden_vincent_01():

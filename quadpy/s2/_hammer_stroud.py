@@ -4,7 +4,7 @@ import sympy
 from ..helpers import article
 from ..helpers import fs_array as fs
 from ..helpers import fsd, pm, untangle, z
-from ._helpers import DiskScheme
+from ._helpers import S2Scheme
 from ._peirce_1956 import peirce_1956_1, peirce_1956_3
 from ._radon import radon
 
@@ -31,7 +31,7 @@ def hammer_stroud_11_2():
     data = [(frac(1, 4), fsd(2, (sqrt(frac(1, 2)), 1)))]
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Hammer-Stroud 11-2", weights, points, 3, _citation)
+    return S2Scheme("Hammer-Stroud 11-2", weights, points, 3, _citation)
 
 
 def hammer_stroud_12_2():
@@ -42,7 +42,7 @@ def hammer_stroud_12_2():
     ]
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Hammer-Stroud 12-2", weights, points, 5, _citation)
+    return S2Scheme("Hammer-Stroud 12-2", weights, points, 5, _citation)
 
 
 def hammer_stroud_13_2():
@@ -70,7 +70,7 @@ def hammer_stroud_18():
     data = [(frac(1, 16), r1 * x), (frac(1, 16), r2 * x)]
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Hammer-Stroud 18", weights, points, 7, _citation)
+    return S2Scheme("Hammer-Stroud 18", weights, points, 7, _citation)
 
 
 def hammer_stroud_19():
@@ -87,7 +87,7 @@ def hammer_stroud_19():
     ]
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Hammer-Stroud 19", weights, points, 9, _citation)
+    return S2Scheme("Hammer-Stroud 19", weights, points, 9, _citation)
 
 
 def hammer_stroud_20():
@@ -113,4 +113,4 @@ def hammer_stroud_21():
 
     points, weights = untangle(data)
     weights *= numpy.pi
-    return DiskScheme("Hammer-Stroud 21", weights, points, 15, _citation)
+    return S2Scheme("Hammer-Stroud 21", weights, points, 15, _citation)

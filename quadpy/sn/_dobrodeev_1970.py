@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, fsd, untangle, z
-from ._helpers import NBallScheme, volume_unit_ball
+from ._helpers import SnScheme, volume_unit_ball
 
 citation = article(
     authors=["L.N. Dobrodeev"],
@@ -38,4 +38,4 @@ def dobrodeev_1970(n):
 
     weights /= frac(27 * (n + 2) * (n + 4), (n + 6) ** 2)
     weights *= volume_unit_ball(n, symbolic=True)
-    return NBallScheme("Dobrodeev 1970", n, weights, points, 7, citation)
+    return SnScheme("Dobrodeev 1970", n, weights, points, 7, citation)

@@ -3,7 +3,7 @@ import math
 import sympy
 
 from ..helpers import article, fsd, untangle, z
-from ._helpers import NBallScheme, volume_unit_ball
+from ._helpers import SnScheme, volume_unit_ball
 
 citation = article(
     authors=["Preston C. Hammer", "Arthur H. Stroud"],
@@ -25,7 +25,7 @@ def hammer_stroud_11n(n, alpha, symbolic=False):
 
     points, weights = untangle(data)
     weights *= volume_unit_ball(n, symbolic)
-    return NBallScheme("Hammer-Stroud 11n", n, weights, points, 3, citation)
+    return SnScheme("Hammer-Stroud 11n", n, weights, points, 3, citation)
 
 
 def hammer_stroud_12n(n, alpha, symbolic=False):
@@ -43,4 +43,4 @@ def hammer_stroud_12n(n, alpha, symbolic=False):
 
     points, weights = untangle(data)
     weights *= volume_unit_ball(n, symbolic)
-    return NBallScheme("Hammer-Stroud 12n", n, weights, points, 5, citation)
+    return SnScheme("Hammer-Stroud 12n", n, weights, points, 5, citation)

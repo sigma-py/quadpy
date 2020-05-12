@@ -3,7 +3,7 @@ import numpy
 from .. import helpers
 
 
-class CircleScheme:
+class U2Scheme:
     def __init__(self, name, citation, degree, weights, points):
         self.name = name
         self.citation = citation

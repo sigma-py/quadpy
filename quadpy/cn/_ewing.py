@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 
 from ..helpers import article, pm, untangle, z
-from ._helpers import NCubeScheme
+from ._helpers import CnScheme
 
 _citation = article(
     authors=["G.M. Ewing"],
@@ -21,4 +21,4 @@ def ewing(n):
 
     points, weights = untangle(data)
     weights *= 2 ** n
-    return NCubeScheme("Ewing", n, weights, points, 3, _citation)
+    return CnScheme("Ewing", n, weights, points, 3, _citation)

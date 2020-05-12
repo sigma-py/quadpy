@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import techreport
-from ._helpers import TriangleScheme
+from ._helpers import T2Scheme
 
 citation = techreport(
     authors=["Noel J. Walkington"],
@@ -24,7 +24,7 @@ def walkington_p5():
 
     x1, x2 = [(6 + i * sqrt(15)) / 21 for i in [+1, -1]]
     points = numpy.concatenate([_c(frac), _xi1(x1), _xi1(x2)])
-    return TriangleScheme("Walkington p5", weights, points, degree, citation)
+    return T2Scheme("Walkington p5", weights, points, degree, citation)
 
 
 def _c(frac):

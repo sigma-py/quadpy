@@ -3,7 +3,7 @@ import math
 import sympy
 
 from ..helpers import article, comb, fsd, prod, untangle, z
-from ._helpers import NCubeScheme
+from ._helpers import CnScheme
 
 _citation = article(
     authors=["J. McNamee", "F. Stenger"],
@@ -261,24 +261,24 @@ def integrator(n, k, symbolic):
 
 
 def mcnamee_stenger_3(n, symbolic=False):
-    return NCubeScheme(*_mcnamee_stenger_3(n, integrator, symbolic=symbolic))
+    return CnScheme(*_mcnamee_stenger_3(n, integrator, symbolic=symbolic))
 
 
 def mcnamee_stenger_5(n, symbolic=False):
-    return NCubeScheme(*_mcnamee_stenger_5(n, integrator, symbolic=symbolic))
+    return CnScheme(*_mcnamee_stenger_5(n, integrator, symbolic=symbolic))
 
 
 def mcnamee_stenger_7a(n, symbolic=False):
-    return NCubeScheme(*_mcnamee_stenger_7(n, integrator, False, symbolic=symbolic))
+    return CnScheme(*_mcnamee_stenger_7(n, integrator, False, symbolic=symbolic))
 
 
 def mcnamee_stenger_7b(n, symbolic=False):
-    return NCubeScheme(*_mcnamee_stenger_7(n, integrator, True, symbolic=symbolic))
+    return CnScheme(*_mcnamee_stenger_7(n, integrator, True, symbolic=symbolic))
 
 
 def mcnamee_stenger_9a(n, symbolic=False):
-    return NCubeScheme(*_mcnamee_stenger_9(n, integrator, False, symbolic=symbolic))
+    return CnScheme(*_mcnamee_stenger_9(n, integrator, False, symbolic=symbolic))
 
 
 def mcnamee_stenger_9b(n, symbolic=False):
-    return NCubeScheme(*_mcnamee_stenger_9(n, integrator, True, symbolic=symbolic))
+    return CnScheme(*_mcnamee_stenger_9(n, integrator, True, symbolic=symbolic))

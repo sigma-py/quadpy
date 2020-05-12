@@ -46,7 +46,7 @@ def _find_shapes(fx, intervals, x, domain_shape=None, range_shape=None):
     return domain_shape, range_shape, interval_set_shape
 
 
-class LineSegmentScheme:
+class C1Scheme:
     def __init__(self, name, degree, weights, points, citation=None):
         self.name = name
         self.degree = degree

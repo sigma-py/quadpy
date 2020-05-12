@@ -1,5 +1,5 @@
 from ..helpers import article, untangle
-from ._helpers import DiskScheme, _pm, _pmx, _pmy
+from ._helpers import S2Scheme, _pm, _pmx, _pmy
 
 _citation = article(
     authors=["Robert Piessens", "Ann Haegemans"],
@@ -28,4 +28,4 @@ def piessens_haegemans():
     ]
 
     points, weights = untangle(data)
-    return DiskScheme("Piessens-Haegemans", weights, points, 9, _citation)
+    return S2Scheme("Piessens-Haegemans", weights, points, 9, _citation)

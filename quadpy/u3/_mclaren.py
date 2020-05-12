@@ -4,7 +4,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, fsd, pm, pm_array, pm_array0, untangle
-from ._helpers import SphereScheme, cartesian_to_spherical_sympy
+from ._helpers import U3Scheme, cartesian_to_spherical_sympy
 
 citation = article(
     authors=["A.D. McLaren"],
@@ -25,7 +25,7 @@ def mclaren_01():
 
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return SphereScheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
+    return U3Scheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
 
 
 def mclaren_02():
@@ -46,7 +46,7 @@ def mclaren_02():
 
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return SphereScheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
+    return U3Scheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
 
 
 def mclaren_03():
@@ -74,7 +74,7 @@ def mclaren_03():
 
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return SphereScheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
+    return U3Scheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
 
 
 def mclaren_04():
@@ -102,7 +102,7 @@ def mclaren_04():
     ]
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return SphereScheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
+    return U3Scheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
 
 
 def mclaren_05():
@@ -128,7 +128,7 @@ def mclaren_05():
     ]
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return SphereScheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
+    return U3Scheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
 
 
 def mclaren_06():
@@ -156,7 +156,7 @@ def mclaren_06():
     ]
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return SphereScheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
+    return U3Scheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
 
 
 def mclaren_07():
@@ -186,7 +186,7 @@ def mclaren_07():
     ]
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return SphereScheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
+    return U3Scheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
 
 
 def mclaren_08():
@@ -212,7 +212,7 @@ def mclaren_08():
     ]
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return SphereScheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
+    return U3Scheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
 
 
 def mclaren_09():
@@ -250,7 +250,7 @@ def mclaren_09():
     ]
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return SphereScheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
+    return U3Scheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
 
 
 def mclaren_10():
@@ -315,4 +315,4 @@ def mclaren_10():
 
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return SphereScheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)
+    return U3Scheme("McLaren 1", weights, points, azimuthal_polar, degree, citation)

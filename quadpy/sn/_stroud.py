@@ -4,7 +4,7 @@ import sympy
 
 from ..helpers import book, pm, untangle
 from ._hammer_stroud import hammer_stroud_11n, hammer_stroud_12n
-from ._helpers import NBallScheme, volume_unit_ball
+from ._helpers import SnScheme, volume_unit_ball
 from ._stenger import stenger_7a as stroud_sn_7_3a
 from ._stenger import stenger_7b as stroud_sn_7_3b
 from ._stenger import stenger_9a as stroud_sn_9_1a
@@ -42,7 +42,7 @@ def stroud_sn_3_2(n, symbolic=False):
     data = [(frac(1, 2 ** n), pm(n, r))]
     points, weights = untangle(data)
     weights *= volume_unit_ball(n, symbolic)
-    return NBallScheme("Stroud Sn 3-2", n, weights, points, 3, citation)
+    return SnScheme("Stroud Sn 3-2", n, weights, points, 3, citation)
 
 
 def stroud_sn_5_2(n):

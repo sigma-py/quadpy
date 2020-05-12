@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, fsd, pm, untangle
-from ._helpers import NSphereScheme, integrate_monomial_over_unit_nsphere
+from ._helpers import UnScheme, integrate_monomial_over_unit_nsphere
 
 citation = article(
     authors=["A.H. Stroud"],
@@ -35,4 +35,4 @@ def stroud_1967(n):
 
     points, weights = untangle(data)
     weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic=True)
-    return NSphereScheme("Stroud 1967", n, weights, points, degree, citation)
+    return UnScheme("Stroud 1967", n, weights, points, degree, citation)

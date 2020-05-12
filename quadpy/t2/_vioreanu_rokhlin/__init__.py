@@ -2,7 +2,7 @@ import json
 import os
 
 from ...helpers import article
-from .._helpers import TriangleScheme, untangle2
+from .._helpers import T2Scheme, untangle2
 
 citation = article(
     authors=["B. Vioreanu", "V. Rokhlin"],
@@ -31,9 +31,7 @@ def _read(index):
     degree = data.pop("degree")
     points, weights = untangle2(data)
     weights /= 2
-    return TriangleScheme(
-        f"Vioreanu-Rokhlin {index}", weights, points, degree, citation
-    )
+    return T2Scheme(f"Vioreanu-Rokhlin {index}", weights, points, degree, citation)
 
 
 def vioreanu_rokhlin_00():

@@ -1,7 +1,7 @@
 from mpmath import mp
 
 from ..helpers import article
-from ._helpers import TriangleScheme, concat, s1, s2, s3
+from ._helpers import T2Scheme, concat, s1, s2, s3
 
 citation = article(
     authors=["Linbo Zhang", "Tao Cui", "Hui Liu"],
@@ -44,7 +44,7 @@ def zhang_cui_liu_1(mpmath=False):
             ]
         ),
     )
-    return TriangleScheme("Zhang-Cui-Liu 1", weights, points, 8, citation)
+    return T2Scheme("Zhang-Cui-Liu 1", weights, points, 8, citation)
 
 
 def zhang_cui_liu_2(mpmath=False):
@@ -106,7 +106,7 @@ def zhang_cui_liu_2(mpmath=False):
             ],
         ),
     )
-    return TriangleScheme("Zhang-Cui-Liu 2", weights, points, 14, citation)
+    return T2Scheme("Zhang-Cui-Liu 2", weights, points, 14, citation)
 
 
 def zhang_cui_liu_3(mpmath=False):
@@ -200,4 +200,4 @@ def zhang_cui_liu_3(mpmath=False):
             ],
         ),
     )
-    return TriangleScheme("Zhang-Cui-Liu 3", weights, points, 20, citation)
+    return T2Scheme("Zhang-Cui-Liu 3", weights, points, 20, citation)

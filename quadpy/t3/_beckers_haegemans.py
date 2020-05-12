@@ -1,5 +1,5 @@
 from ..helpers import techreport
-from ._helpers import TetrahedronScheme, concat, s4, s22, s31, s211
+from ._helpers import T3Scheme, concat, s4, s22, s31, s211
 
 citation = techreport(
     authors=["M. Beckers", "A. Haegemans"],
@@ -27,7 +27,7 @@ def beckers_haegemans_8():
         ),
     )
     weights *= 6
-    return TetrahedronScheme("Beckers-Haegemans", weights, points, degree, citation)
+    return T3Scheme("Beckers-Haegemans", weights, points, degree, citation)
 
 
 def beckers_haegemans_9():
@@ -47,4 +47,4 @@ def beckers_haegemans_9():
         ),
     )
     weights *= 6
-    return TetrahedronScheme("Beckers-Haegemans", weights, points, degree, citation)
+    return T3Scheme("Beckers-Haegemans", weights, points, degree, citation)

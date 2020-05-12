@@ -1,5 +1,5 @@
 from ..helpers import article
-from ._helpers import TetrahedronScheme, concat, s4, s22, s31, s211
+from ._helpers import T3Scheme, concat, s4, s22, s31, s211
 
 citation = article(
     authors=["Lee Shunn", "Frank Ham"],
@@ -13,13 +13,13 @@ citation = article(
 def shunn_ham_1():
     degree = 1
     weights, points = concat(s4(1))
-    return TetrahedronScheme("Shunn-Ham 1", weights, points, degree, citation)
+    return T3Scheme("Shunn-Ham 1", weights, points, degree, citation)
 
 
 def shunn_ham_2():
     degree = 2
     weights, points = s31([0.25, 0.1381966011250110])
-    return TetrahedronScheme("Shunn-Ham 2", weights, points, degree, citation)
+    return T3Scheme("Shunn-Ham 2", weights, points, degree, citation)
 
 
 def shunn_ham_3():
@@ -28,7 +28,7 @@ def shunn_ham_3():
         s31([0.0476331348432089, 0.0738349017262234]),
         s22([0.1349112434378610, 0.0937556561159491]),
     )
-    return TetrahedronScheme("Shunn-Ham 3", weights, points, degree, citation)
+    return T3Scheme("Shunn-Ham 3", weights, points, degree, citation)
 
 
 def shunn_ham_4():
@@ -40,7 +40,7 @@ def shunn_ham_4():
         ),
         s211([0.0469986689718877, 0.0603604415251421, 0.2626825838877790]),
     )
-    return TetrahedronScheme("Shunn-Ham 4", weights, points, degree, citation)
+    return T3Scheme("Shunn-Ham 4", weights, points, degree, citation)
 
 
 def shunn_ham_5():
@@ -54,7 +54,7 @@ def shunn_ham_5():
             [0.0479839333057554, 0.2232010379623150, 0.0504792790607720],
         ),
     )
-    return TetrahedronScheme("Shunn-Ham 5", weights, points, degree, citation)
+    return T3Scheme("Shunn-Ham 5", weights, points, degree, citation)
 
 
 def shunn_ham_6():
@@ -71,4 +71,4 @@ def shunn_ham_6():
             [0.0293520118375230, 0.3523052600879940, 0.0992057202494530],
         ),
     )
-    return TetrahedronScheme("Shunn-Ham 6", weights, points, degree, citation)
+    return T3Scheme("Shunn-Ham 6", weights, points, degree, citation)

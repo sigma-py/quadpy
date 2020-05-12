@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 
 from ..helpers import article, fsd, untangle, z
-from ._helpers import NCubeScheme
+from ._helpers import CnScheme
 
 _citation = article(
     authors=["G.W. Tyler"],
@@ -20,4 +20,4 @@ def tyler(n):
     points, weights = untangle(data)
     reference_volume = 2 ** n
     weights *= reference_volume
-    return NCubeScheme("Tyler", n, weights, points, 3, _citation)
+    return CnScheme("Tyler", n, weights, points, 3, _citation)

@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 
 from ..helpers import article
-from ._helpers import TriangleScheme, concat, s1, s2, s3
+from ._helpers import T2Scheme, concat, s1, s2, s3
 
 citation = article(
     authors=["D.A. Dunavant"],
@@ -18,24 +18,24 @@ citation = article(
 
 def dunavant_01():
     weights, points = s3(1)
-    return TriangleScheme("Dunavant 1", weights, points, 1, citation)
+    return T2Scheme("Dunavant 1", weights, points, 1, citation)
 
 
 def dunavant_02():
     weights, points = s2([frac(1, 3), frac(1, 6)])
-    return TriangleScheme("Dunavant 2", weights, points, 2, citation)
+    return T2Scheme("Dunavant 2", weights, points, 2, citation)
 
 
 def dunavant_03():
     weights, points = concat(s3(-frac(9, 16)), s2([frac(25, 48), frac(1, 5)]))
-    return TriangleScheme("Dunavant 3", weights, points, 3, citation)
+    return T2Scheme("Dunavant 3", weights, points, 3, citation)
 
 
 def dunavant_04():
     weights, points = s2(
         [0.223381589678011, 0.445948490915965], [0.109951743655322, 0.091576213509771]
     )
-    return TriangleScheme("Dunavant 4", weights, points, 4, citation)
+    return T2Scheme("Dunavant 4", weights, points, 4, citation)
 
 
 def dunavant_05():
@@ -45,7 +45,7 @@ def dunavant_05():
             [0.132394152788506, 0.4701420641051], [0.125939180544827, 0.101286507323456]
         ),
     )
-    return TriangleScheme("Dunavant 5", weights, points, 5, citation)
+    return T2Scheme("Dunavant 5", weights, points, 5, citation)
 
 
 def dunavant_06():
@@ -56,7 +56,7 @@ def dunavant_06():
         ),
         s1([0.082851075618374, 0.053145049844817, 0.310352451033784]),
     )
-    return TriangleScheme("Dunavant 6", weights, points, 6, citation)
+    return T2Scheme("Dunavant 6", weights, points, 6, citation)
 
 
 def dunavant_07():
@@ -68,7 +68,7 @@ def dunavant_07():
         ),
         s1([0.077113760890257, 0.048690315425316, 0.312865496004874]),
     )
-    return TriangleScheme("Dunavant 7", weights, points, 7, citation)
+    return T2Scheme("Dunavant 7", weights, points, 7, citation)
 
 
 def dunavant_08():
@@ -81,7 +81,7 @@ def dunavant_08():
         ),
         s1([0.027230314174435, 0.008394777409958, 0.263112829634638]),
     )
-    return TriangleScheme("Dunavant 8", weights, points, 8, citation)
+    return T2Scheme("Dunavant 8", weights, points, 8, citation)
 
 
 def dunavant_09():
@@ -96,7 +96,7 @@ def dunavant_09():
         ),
         s1([0.043283539377289, 0.036838412054736, 0.221962989160766]),
     )
-    return TriangleScheme("Dunavant 9", weights, points, 9, citation)
+    return T2Scheme("Dunavant 9", weights, points, 9, citation)
 
 
 def dunavant_10():
@@ -112,7 +112,7 @@ def dunavant_10():
             [0.009421666963733, 0.009540815400299, 0.066803251012200],
         ),
     )
-    return TriangleScheme("Dunavant 10", weights, points, 10, citation)
+    return T2Scheme("Dunavant 10", weights, points, 10, citation)
 
 
 def dunavant_11():
@@ -129,7 +129,7 @@ def dunavant_11():
             [0.020707659639141, 0.021022016536166, 0.171488980304042],
         ),
     )
-    return TriangleScheme("Dunavant 11", weights, points, 11, citation)
+    return T2Scheme("Dunavant 11", weights, points, 11, citation)
 
 
 def dunavant_12():
@@ -147,7 +147,7 @@ def dunavant_12():
             [0.017316231108659, 0.025734050548330, 0.116251915907597],
         ),
     )
-    return TriangleScheme("Dunavant 12", weights, points, 12, citation)
+    return T2Scheme("Dunavant 12", weights, points, 12, citation)
 
 
 def dunavant_13():
@@ -167,7 +167,7 @@ def dunavant_13():
             [0.015521786839045, 0.022233076674090, 0.126357385491669],
         ),
     )
-    return TriangleScheme("Dunavant 13", weights, points, 13, citation)
+    return T2Scheme("Dunavant 13", weights, points, 13, citation)
 
 
 def dunavant_14():
@@ -187,7 +187,7 @@ def dunavant_14():
             [0.005010228838501, 0.001268330932872, 0.118974497696957],
         ),
     )
-    return TriangleScheme("Dunavant 14", weights, points, 14, citation)
+    return T2Scheme("Dunavant 14", weights, points, 14, citation)
 
 
 def dunavant_15():
@@ -208,7 +208,7 @@ def dunavant_15():
             [0.007673942631049, +0.012459809331199, 0.103575616576386],
         ),
     )
-    return TriangleScheme("Dunavant 15", weights, points, 15, citation)
+    return T2Scheme("Dunavant 15", weights, points, 15, citation)
 
 
 def dunavant_16():
@@ -231,7 +231,7 @@ def dunavant_16():
             [0.006850054546542, +0.014317320230681, 0.085283615682657],
         ),
     )
-    return TriangleScheme("Dunavant 16", weights, points, 16, citation)
+    return T2Scheme("Dunavant 16", weights, points, 16, citation)
 
 
 def dunavant_17():
@@ -256,7 +256,7 @@ def dunavant_17():
             [0.006665632004165, 0.080711313679564, 0.904625504095608],
         ),
     )
-    return TriangleScheme("Dunavant 17", weights, points, 17, citation)
+    return T2Scheme("Dunavant 17", weights, points, 17, citation)
 
 
 def dunavant_18():
@@ -283,7 +283,7 @@ def dunavant_18():
             [+0.000046187660794, 0.020874755282586, 1.014347260005363],
         ),
     )
-    return TriangleScheme("Dunavant 18", weights, points, 18, citation)
+    return T2Scheme("Dunavant 18", weights, points, 18, citation)
 
 
 def dunavant_19():
@@ -310,7 +310,7 @@ def dunavant_19():
             [0.003799928855302, 0.065494628082938, 0.924344252620784],
         ),
     )
-    return TriangleScheme("Dunavant 19", weights, points, 19, citation)
+    return T2Scheme("Dunavant 19", weights, points, 19, citation)
 
 
 def dunavant_20():
@@ -339,4 +339,4 @@ def dunavant_20():
             [+0.003573909385950, 0.059696109149007, 0.929756171556853],
         ),
     )
-    return TriangleScheme("Dunavant 20", weights, points, 20, citation)
+    return T2Scheme("Dunavant 20", weights, points, 20, citation)

@@ -2,7 +2,7 @@ import numpy
 import sympy
 
 from ..helpers import article, fsd, pm, untangle
-from ._helpers import BallScheme
+from ._helpers import S3Scheme
 
 _citation = article(
     authors=["I.P. Mysovskih"],
@@ -38,4 +38,4 @@ def mysovskih():
 
     points, weights = untangle(data)
     weights *= frac(4, 3) * pi
-    return BallScheme("Mysovskih", _citation, 7, weights, points)
+    return S3Scheme("Mysovskih", _citation, 7, weights, points)

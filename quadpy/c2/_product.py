@@ -1,6 +1,6 @@
 import numpy
 
-from ._helpers import QuadrilateralScheme
+from ._helpers import C2Scheme
 
 
 def product(scheme1d):
@@ -11,6 +11,4 @@ def product(scheme1d):
         -1, 2
     )
     degree = min([s.degree for s in schemes])
-    return QuadrilateralScheme(
-        f"Product scheme ({scheme1d.name})", weights, points, degree
-    )
+    return C2Scheme(f"Product scheme ({scheme1d.name})", weights, points, degree)

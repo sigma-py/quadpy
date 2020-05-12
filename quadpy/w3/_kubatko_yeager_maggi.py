@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, untangle
-from ._helpers import WedgeScheme
+from ._helpers import W3Scheme
 
 citation = article(
     authors=["Ethan J. Kubatko", "Benjamin A. Yeager", "Ashley L. Maggi"],
@@ -22,7 +22,7 @@ def kubatko_yeager_maggi_1():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 1", weights, points, 1, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 1", weights, points, 1, citation)
 
 
 def kubatko_yeager_maggi_2a():
@@ -35,7 +35,7 @@ def kubatko_yeager_maggi_2a():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 2a", weights, points, 2, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 2a", weights, points, 2, citation)
 
 
 def kubatko_yeager_maggi_2b():
@@ -44,7 +44,7 @@ def kubatko_yeager_maggi_2b():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 2b", weights, points, 2, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 2b", weights, points, 2, citation)
 
 
 def kubatko_yeager_maggi_3a():
@@ -78,7 +78,7 @@ def kubatko_yeager_maggi_3a():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 3a", weights, points, 3, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 3a", weights, points, 3, citation)
 
 
 def kubatko_yeager_maggi_3b():
@@ -91,7 +91,7 @@ def kubatko_yeager_maggi_3b():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 3b", weights, points, 3, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 3b", weights, points, 3, citation)
 
 
 def kubatko_yeager_maggi_3c():
@@ -104,7 +104,7 @@ def kubatko_yeager_maggi_3c():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 3c", weights, points, 3, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 3c", weights, points, 3, citation)
 
 
 def kubatko_yeager_maggi_3d():
@@ -116,7 +116,7 @@ def kubatko_yeager_maggi_3d():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 3d", weights, points, 3, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 3d", weights, points, 3, citation)
 
 
 def kubatko_yeager_maggi_4a():
@@ -166,7 +166,7 @@ def kubatko_yeager_maggi_4a():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 4a", weights, points, 4, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 4a", weights, points, 4, citation)
 
 
 def kubatko_yeager_maggi_4b():
@@ -179,7 +179,7 @@ def kubatko_yeager_maggi_4b():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 4b", weights, points, 4, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 4b", weights, points, 4, citation)
 
 
 def kubatko_yeager_maggi_5a():
@@ -211,7 +211,7 @@ def kubatko_yeager_maggi_5a():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 5a", weights, points, 5, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 5a", weights, points, 5, citation)
 
 
 def kubatko_yeager_maggi_5b():
@@ -281,7 +281,7 @@ def kubatko_yeager_maggi_5b():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 5b", weights, points, 5, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 5b", weights, points, 5, citation)
 
 
 def kubatko_yeager_maggi_5c():
@@ -295,7 +295,7 @@ def kubatko_yeager_maggi_5c():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 5c", weights, points, 5, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 5c", weights, points, 5, citation)
 
 
 def kubatko_yeager_maggi_6a():
@@ -314,7 +314,7 @@ def kubatko_yeager_maggi_6a():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 6a", weights, points, 6, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 6a", weights, points, 6, citation)
 
 
 def kubatko_yeager_maggi_6b():
@@ -333,7 +333,7 @@ def kubatko_yeager_maggi_6b():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 6b", weights, points, 6, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 6b", weights, points, 6, citation)
 
 
 def kubatko_yeager_maggi_6c():
@@ -354,7 +354,7 @@ def kubatko_yeager_maggi_6c():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 6c", weights, points, 6, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 6c", weights, points, 6, citation)
 
 
 def kubatko_yeager_maggi_7a():
@@ -377,7 +377,7 @@ def kubatko_yeager_maggi_7a():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 7a", weights, points, 7, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 7a", weights, points, 7, citation)
 
 
 def kubatko_yeager_maggi_7b():
@@ -397,7 +397,7 @@ def kubatko_yeager_maggi_7b():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 7b", weights, points, 7, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 7b", weights, points, 7, citation)
 
 
 def kubatko_yeager_maggi_7c():
@@ -420,7 +420,7 @@ def kubatko_yeager_maggi_7c():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 7c", weights, points, 7, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 7c", weights, points, 7, citation)
 
 
 def kubatko_yeager_maggi_8a():
@@ -444,7 +444,7 @@ def kubatko_yeager_maggi_8a():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 8a", weights, points, 8, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 8a", weights, points, 8, citation)
 
 
 def kubatko_yeager_maggi_8b():
@@ -468,7 +468,7 @@ def kubatko_yeager_maggi_8b():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 8b", weights, points, 8, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 8b", weights, points, 8, citation)
 
 
 def kubatko_yeager_maggi_9():
@@ -500,7 +500,7 @@ def kubatko_yeager_maggi_9():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return WedgeScheme("Kubatko-Yeager-Maggi 9", weights, points, 9, citation)
+    return W3Scheme("Kubatko-Yeager-Maggi 9", weights, points, 9, citation)
 
 
 def _zeta_pm(xi, eta, zeta):

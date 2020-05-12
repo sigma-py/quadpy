@@ -3,7 +3,7 @@ import numpy
 import orthopy
 
 from ..tools import scheme_from_rc
-from ._helpers import LineSegmentScheme
+from ._helpers import C1Scheme
 
 
 def gauss_lobatto(n, a=0.0, b=0.0):
@@ -13,7 +13,7 @@ def gauss_lobatto(n, a=0.0, b=0.0):
         n, a, b, "monic", symbolic=False
     )
     points, weights = _lobatto(alpha, beta, -1.0, 1.0)
-    return LineSegmentScheme("Gauss-Lobatto", degree, weights, points)
+    return C1Scheme("Gauss-Lobatto", degree, weights, points)
 
 
 def _lobatto(alpha, beta, xl1, xl2):

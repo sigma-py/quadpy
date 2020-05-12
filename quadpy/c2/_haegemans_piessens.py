@@ -1,5 +1,5 @@
 from ..helpers import article
-from ._helpers import QuadrilateralScheme, concat, pm, pm2
+from ._helpers import C2Scheme, concat, pm, pm2
 
 citation = article(
     authors=["Ann Haegemans", "Robert Piessens"],
@@ -25,4 +25,4 @@ def haegemans_piessens():
             [0.59001271542103076297, 0.0, +0.62704137378039531763],
         ),
     )
-    return QuadrilateralScheme("Haegemans-Piessens", weights, points, 7, citation)
+    return C2Scheme("Haegemans-Piessens", weights, points, 7, citation)

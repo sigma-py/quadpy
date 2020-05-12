@@ -6,7 +6,7 @@ import warnings
 import numpy
 
 from ...helpers import online
-from .._helpers import SphereScheme, cartesian_to_spherical
+from .._helpers import U3Scheme, cartesian_to_spherical
 
 citation = online(
     authors=["Jörg Fliege", "Ulrike Maier"],
@@ -34,7 +34,7 @@ def _read(index):
     weights = data[:, 3] / 4 / numpy.pi
 
     azimuthal_polar = cartesian_to_spherical(points)
-    return SphereScheme(name, weights, points, azimuthal_polar, degree, citation)
+    return U3Scheme(name, weights, points, azimuthal_polar, degree, citation)
 
 
 def fliege_maier_04():
