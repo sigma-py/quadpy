@@ -2,10 +2,10 @@ import numpy
 import sympy
 
 from ..helpers import plot_disks
-from ..tn import NSimplexScheme, get_vol, transform
+from ..tn import TnScheme, get_vol, transform
 
 
-class TriangleScheme(NSimplexScheme):
+class T2Scheme(TnScheme):
     def __init__(self, name, weights, points, degree, citation=None):
         self.name = name
         self.degree = degree

@@ -1,5 +1,5 @@
 from ..helpers import article
-from ._helpers import TetrahedronScheme, concat, s22, s31
+from ._helpers import T3Scheme, concat, s22, s31
 
 citation = article(
     authors=["Karin Gatermann"],
@@ -31,4 +31,4 @@ def gatermann():
         ),
     )
     weights *= 6
-    return TetrahedronScheme("Gatermann", weights, points, degree, citation)
+    return T3Scheme("Gatermann", weights, points, degree, citation)

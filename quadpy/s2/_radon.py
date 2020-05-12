@@ -2,7 +2,7 @@ import numpy
 import sympy
 
 from ..helpers import article, untangle, z
-from ._helpers import DiskScheme
+from ._helpers import S2Scheme
 
 _citation = article(
     authors=["J. Radon"],
@@ -38,4 +38,4 @@ def radon(alpha):
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme(f"Radon({alpha})", weights, points, 5, _citation)
+    return S2Scheme(f"Radon({alpha})", weights, points, 5, _citation)

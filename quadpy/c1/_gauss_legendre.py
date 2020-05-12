@@ -3,7 +3,7 @@ import numpy
 import orthopy
 
 from ..tools import scheme_from_rc
-from ._helpers import LineSegmentScheme
+from ._helpers import C1Scheme
 
 
 def gauss_legendre(n, mode="numpy"):
@@ -16,4 +16,4 @@ def gauss_legendre(n, mode="numpy"):
             n, "monic", symbolic=True
         )
         points, weights = scheme_from_rc(alpha, beta, mode=mode)
-    return LineSegmentScheme("Gauss-Legendre", degree, weights, points)
+    return C1Scheme("Gauss-Legendre", degree, weights, points)

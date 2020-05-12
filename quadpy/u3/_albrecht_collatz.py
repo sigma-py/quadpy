@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, fsd, pm, pm_array0, untangle
-from ._helpers import SphereScheme, cartesian_to_spherical_sympy
+from ._helpers import U3Scheme, cartesian_to_spherical_sympy
 
 citation = article(
     authors=["J. Albrecht", "L. Collatz"],
@@ -26,9 +26,7 @@ def albrecht_collatz_1():
 
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return SphereScheme(
-        "Albrecht-Collatz 1", weights, points, azimuthal_polar, 5, citation
-    )
+    return U3Scheme("Albrecht-Collatz 1", weights, points, azimuthal_polar, 5, citation)
 
 
 def albrecht_collatz_2():
@@ -38,9 +36,7 @@ def albrecht_collatz_2():
 
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return SphereScheme(
-        "Albrecht-Collatz 2", weights, points, azimuthal_polar, 5, citation
-    )
+    return U3Scheme("Albrecht-Collatz 2", weights, points, azimuthal_polar, 5, citation)
 
 
 def albrecht_collatz_3():
@@ -50,9 +46,7 @@ def albrecht_collatz_3():
 
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return SphereScheme(
-        "Albrecht-Collatz 3", weights, points, azimuthal_polar, 5, citation
-    )
+    return U3Scheme("Albrecht-Collatz 3", weights, points, azimuthal_polar, 5, citation)
 
 
 def albrecht_collatz_4():
@@ -67,9 +61,7 @@ def albrecht_collatz_4():
 
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return SphereScheme(
-        "Albrecht-Collatz 4", weights, points, azimuthal_polar, 5, citation
-    )
+    return U3Scheme("Albrecht-Collatz 4", weights, points, azimuthal_polar, 5, citation)
 
 
 def albrecht_collatz_5():
@@ -85,6 +77,4 @@ def albrecht_collatz_5():
 
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return SphereScheme(
-        "Albrecht-Collatz 5", weights, points, azimuthal_polar, 7, citation
-    )
+    return U3Scheme("Albrecht-Collatz 5", weights, points, azimuthal_polar, 7, citation)

@@ -1,7 +1,7 @@
 import numpy
 
 from ..helpers import article
-from ._helpers import LineSegmentScheme
+from ._helpers import C1Scheme
 
 citation = article(
     authors=["J. Waldvogel"],
@@ -23,7 +23,7 @@ def clenshaw_curtis(n):
 
     if n == 2:
         weights = numpy.array([1.0, 1.0])
-        return LineSegmentScheme("Clenshaw-Curtis", degree, weights, points)
+        return C1Scheme("Clenshaw-Curtis", degree, weights, points)
 
     n -= 1
     N = numpy.arange(1, n, 2)
@@ -47,4 +47,4 @@ def clenshaw_curtis(n):
     else:
         weights = numpy.concatenate([w, w[len(w) - 2 :: -1]])
 
-    return LineSegmentScheme("Clenshaw-Curtis", degree, weights, points, citation)
+    return C1Scheme("Clenshaw-Curtis", degree, weights, points, citation)

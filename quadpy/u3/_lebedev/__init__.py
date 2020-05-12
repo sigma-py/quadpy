@@ -3,7 +3,7 @@ import os
 import re
 
 from ...helpers import article
-from .._helpers import SphereScheme, cartesian_to_spherical, untangle2
+from .._helpers import U3Scheme, cartesian_to_spherical, untangle2
 
 # Sphere integration schemes from a series of publications, in chronological order
 # <https://en.wikipedia.org/wiki/Lebedev_quadrature>
@@ -77,7 +77,7 @@ def _read(index):
 
     points, weights = untangle2(data)
     azimuthal_polar = cartesian_to_spherical(points)
-    return SphereScheme(name, weights, points, azimuthal_polar, degree, citations)
+    return U3Scheme(name, weights, points, azimuthal_polar, degree, citations)
 
 
 def lebedev_003a():

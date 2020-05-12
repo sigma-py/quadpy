@@ -1,7 +1,7 @@
 import sympy
 
 from ..helpers import article, fsd, pm, untangle, z
-from ._helpers import BallScheme
+from ._helpers import S3Scheme
 
 _citation = article(
     authors=["Preston C. Hammer", "Arthur H. Stroud"],
@@ -22,7 +22,7 @@ def hammer_stroud_11_3():
     data = [(frac(1, 6), fsd(3, (sqrt(frac(3, 5)), 1)))]
     points, weights = untangle(data)
     weights *= frac(4, 3) * pi
-    return BallScheme("Hammer-Stroud 11-3", _citation, 3, weights, points)
+    return S3Scheme("Hammer-Stroud 11-3", _citation, 3, weights, points)
 
 
 def hammer_stroud_12_3():
@@ -34,7 +34,7 @@ def hammer_stroud_12_3():
     ]
     points, weights = untangle(data)
     weights *= frac(4, 3) * pi
-    return BallScheme("Hammer-Stroud 12-3", _citation, 5, weights, points)
+    return S3Scheme("Hammer-Stroud 12-3", _citation, 5, weights, points)
 
 
 def hammer_stroud_14_3(variant_a=True):
@@ -54,7 +54,7 @@ def hammer_stroud_14_3(variant_a=True):
     points, weights = untangle(data)
     weights *= frac(4, 3) * pi
     name = "Hammer-Stroud 14-3" + ("a" if variant_a else "b")
-    return BallScheme(name, _citation, 5, weights, points)
+    return S3Scheme(name, _citation, 5, weights, points)
 
 
 def _hammer_stroud_15_3(variant_a):
@@ -80,7 +80,7 @@ def _hammer_stroud_15_3(variant_a):
     points, weights = untangle(data)
     weights *= frac(4, 3) * pi
     name = "Hammer-Stroud 15-3" + ("a" if variant_a else "b")
-    return BallScheme(name, _citation, 7, weights, points)
+    return S3Scheme(name, _citation, 7, weights, points)
 
 
 def hammer_stroud_15_3a():

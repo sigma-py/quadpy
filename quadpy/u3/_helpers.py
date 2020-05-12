@@ -2,7 +2,7 @@ import numpy
 import sympy
 
 
-class SphereScheme:
+class U3Scheme:
     def __init__(self, name, weights, points, azimuthal_polar, degree, citation):
         self.name = name
         self.degree = degree

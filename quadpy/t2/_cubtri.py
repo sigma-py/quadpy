@@ -1,5 +1,5 @@
 from ..helpers import article
-from ._helpers import TriangleScheme, concat, s1, s2, s3
+from ._helpers import T2Scheme, concat, s1, s2, s3
 
 citation = article(
     authors=["D.P. Laurie"],
@@ -26,4 +26,4 @@ def cubtri():
         ),
         s1([0.0375097224552317, 0.7384168123405100, 0.2321023267750504]),
     )
-    return TriangleScheme("CUBTRI", weights, points, 8, citation)
+    return T2Scheme("CUBTRI", weights, points, 8, citation)

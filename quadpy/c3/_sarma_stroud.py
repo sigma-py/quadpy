@@ -1,6 +1,6 @@
 from ..helpers import article
 from ._hammer_wymore import hammer_wymore
-from ._helpers import HexahedronScheme
+from ._helpers import C3Scheme
 
 citation = article(
     authors=["V.L.N. Sarma", "A. H. Stroud"],
@@ -21,4 +21,4 @@ def sarma_stroud():
     # particular value of lambda is not explicitly given in the article, but computed
     # from the specified values. Note that it is only given in single precision.
     hw = hammer_wymore(lmbda=1.0329785305)
-    return HexahedronScheme("Sarma-Stroud", hw.weights, hw.points, hw.degree, citation)
+    return C3Scheme("Sarma-Stroud", hw.weights, hw.points, hw.degree, citation)

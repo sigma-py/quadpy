@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import TriangleScheme, alpha, concat, gamma_delta, s3
+from ._helpers import T2Scheme, alpha, concat, gamma_delta, s3
 
 citation = article(
     authors=["Y. Liu", "M. Vinokur"],
@@ -17,22 +17,22 @@ citation = article(
 
 def liu_vinokur_01():
     weights, points = s3(1)
-    return TriangleScheme("Liu-Vinokur 1", weights, points, 1, citation)
+    return T2Scheme("Liu-Vinokur 1", weights, points, 1, citation)
 
 
 def liu_vinokur_02():
     weights, points = alpha([frac(1, 3), 1])
-    return TriangleScheme("Liu-Vinokur 2", weights, points, 1, citation)
+    return T2Scheme("Liu-Vinokur 2", weights, points, 1, citation)
 
 
 def liu_vinokur_03():
     weights, points = alpha([frac(1, 3), -frac(1, 2)])
-    return TriangleScheme("Liu-Vinokur 3", weights, points, 2, citation)
+    return T2Scheme("Liu-Vinokur 3", weights, points, 2, citation)
 
 
 def liu_vinokur_04():
     weights, points = concat(s3(frac(3, 4)), alpha([frac(1, 12), 1]))
-    return TriangleScheme("Liu-Vinokur 4", weights, points, 2, citation)
+    return T2Scheme("Liu-Vinokur 4", weights, points, 2, citation)
 
 
 def liu_vinokur_05():
@@ -41,7 +41,7 @@ def liu_vinokur_05():
         # ERR Incorrectly specified in the article as 25 (instead of 2/5).
         alpha([frac(25, 48), frac(2, 5)]),
     )
-    return TriangleScheme("Liu-Vinokur 5", weights, points, 3, citation)
+    return T2Scheme("Liu-Vinokur 5", weights, points, 3, citation)
 
 
 def liu_vinokur_06():
@@ -49,14 +49,14 @@ def liu_vinokur_06():
     weights, points = alpha(
         [(1 + sqrt21) / 120, 1], [(39 - sqrt21) / 120, (1 - sqrt21) / 10]
     )
-    return TriangleScheme("Liu-Vinokur 6", weights, points, 3, citation)
+    return T2Scheme("Liu-Vinokur 6", weights, points, 3, citation)
 
 
 def liu_vinokur_07():
     weights, points = concat(
         s3(frac(9, 20)), alpha([frac(1, 20), 1], [frac(2, 15), -frac(1, 2)])
     )
-    return TriangleScheme("Liu-Vinokur 7", weights, points, 3, citation)
+    return T2Scheme("Liu-Vinokur 7", weights, points, 3, citation)
 
 
 def liu_vinokur_08():
@@ -68,7 +68,7 @@ def liu_vinokur_08():
         [(5 * a2 - 2) / (60 * a1 ** 2 * (a2 - a1)), a1],
         [(5 * a1 - 2) / (60 * a2 ** 2 * (a1 - a2)), a2],
     )
-    return TriangleScheme("Liu-Vinokur 8", weights, points, 4, citation)
+    return T2Scheme("Liu-Vinokur 8", weights, points, 4, citation)
 
 
 def liu_vinokur_09():
@@ -76,7 +76,7 @@ def liu_vinokur_09():
         s3(frac(27, 80)),
         alpha([frac(8, 105), -frac(1, 2)], [frac(81, 560), frac(2, 3)]),
     )
-    return TriangleScheme("Liu-Vinokur 9", weights, points, 4, citation)
+    return T2Scheme("Liu-Vinokur 9", weights, points, 4, citation)
 
 
 def liu_vinokur_10():
@@ -86,7 +86,7 @@ def liu_vinokur_10():
         [(80 - 16 * sqrt13) / 360, -frac(1, 2)],
         [(29 + 17 * sqrt13) / 360, (-1 + sqrt13) / 6],
     )
-    return TriangleScheme("Liu-Vinokur 10", weights, points, 4, citation)
+    return T2Scheme("Liu-Vinokur 10", weights, points, 4, citation)
 
 
 def liu_vinokur_11():
@@ -96,7 +96,7 @@ def liu_vinokur_11():
         alpha([-frac(1, 60), 1]),
         gamma_delta([+frac(1, 10), (3 + sqrt3) / 6, (3 - sqrt3) / 6]),
     )
-    return TriangleScheme("Liu-Vinokur 11", weights, points, 4, citation)
+    return T2Scheme("Liu-Vinokur 11", weights, points, 4, citation)
 
 
 def liu_vinokur_12():
@@ -108,7 +108,7 @@ def liu_vinokur_12():
             [(155 + sqrt15) / 1200, (1 - sqrt15) / 7],
         ),
     )
-    return TriangleScheme("Liu-Vinokur 12", weights, points, 5, citation)
+    return T2Scheme("Liu-Vinokur 12", weights, points, 5, citation)
 
 
 def liu_vinokur_13():
@@ -120,4 +120,4 @@ def liu_vinokur_13():
             [frac(2401, 14400), frac(4, 7)],
         ),
     )
-    return TriangleScheme("Liu-Vinokur 13", weights, points, 5, citation)
+    return T2Scheme("Liu-Vinokur 13", weights, points, 5, citation)

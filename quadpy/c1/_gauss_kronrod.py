@@ -8,7 +8,7 @@ import orthopy
 from ..helpers import article
 from ..tools import scheme_from_rc
 from ._gauss_legendre import gauss_legendre
-from ._helpers import LineSegmentScheme, _find_shapes
+from ._helpers import C1Scheme, _find_shapes
 
 citation = article(
     authors=["Dirk P. Laurie"],
@@ -52,7 +52,7 @@ def gauss_kronrod(n, a=0, b=0):
     i = numpy.argsort(x)
     points = x[i]
     weights = w[i]
-    return LineSegmentScheme(f"Gauss-Kronrod ({n})", degree, weights, points, citation)
+    return C1Scheme(f"Gauss-Kronrod ({n})", degree, weights, points, citation)
 
 
 def _r_kronrod(n, a0, b0):

@@ -3,7 +3,7 @@ import math
 import sympy
 
 from ..helpers import article, untangle
-from ._helpers import HexahedronScheme, fs_r00, fs_rr0, pm_rrr
+from ._helpers import C3Scheme, fs_r00, fs_rr0, pm_rrr
 
 _citation = article(
     authors=["Preston C. Hammer", "A. Wayne Wymore"],
@@ -56,6 +56,4 @@ def hammer_wymore(lmbda=1):
     data = [(a1, fs_r00(x1)), (a2, fs_rr0(x2)), (a3, pm_rrr(x3)), (a4, pm_rrr(x4))]
 
     points, weights = untangle(data)
-    return HexahedronScheme(
-        f"Hammer-Wymore (lambda = {lmbda})", weights, points, 7, _citation
-    )
+    return C3Scheme(f"Hammer-Wymore (lambda = {lmbda})", weights, points, 7, _citation)

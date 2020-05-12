@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 
 from ..helpers import article
-from ._helpers import QuadrilateralScheme, concat, symm_r0, symm_s, zero
+from ._helpers import C2Scheme, concat, symm_r0, symm_s, zero
 
 citation = article(
     authors=["J.C.P. Miller"],
@@ -22,4 +22,4 @@ def miller():
     )
     weights *= 4
     # This scheme is exact for _harmonic_ integrands of degree <= 11.
-    return QuadrilateralScheme("Miller", weights, points, 1, citation)
+    return C2Scheme("Miller", weights, points, 1, citation)

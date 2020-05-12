@@ -4,7 +4,7 @@ import sympy
 from ..un._helpers import integrate_monomial_over_unit_nsphere
 
 
-class NBallScheme:
+class SnScheme:
     def __init__(self, name, dim, weights, points, degree, citation):
         self.name = name
         self.dim = dim

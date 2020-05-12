@@ -4,7 +4,7 @@ from ..c1 import gauss_legendre
 from ..helpers import book
 from ._albrecht_collatz import albrecht_collatz as stroud_t2_3_1
 from ._hammer_marlowe_stroud import hammer_marlowe_stroud_5 as stroud_t2_5_1
-from ._helpers import TriangleScheme
+from ._helpers import T2Scheme
 
 citation = book(
     authors=["Arthur Stroud"],
@@ -52,7 +52,7 @@ def stroud_t2_7_1():
             for j in range(4)
         ]
     )
-    return TriangleScheme("Stroud 7-1", weights, points, 7, citation)
+    return T2Scheme("Stroud 7-1", weights, points, 7, citation)
 
 
 __all__ = ["stroud_t2_3_1", "stroud_t2_5_1", "stroud_t2_7_1"]

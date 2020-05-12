@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, untangle
-from ._helpers import HexahedronScheme, fs_r00, fs_rr0, fs_rrs
+from ._helpers import C3Scheme, fs_r00, fs_rr0, fs_rrs
 
 citation = article(
     authors=["Michael Sadowsky"],
@@ -25,4 +25,4 @@ def sadowsky():
     ]
     points, weights = untangle(data)
     weights *= 8
-    return HexahedronScheme("Sadowsky", weights, points, 5, citation)
+    return C3Scheme("Sadowsky", weights, points, 5, citation)

@@ -4,7 +4,7 @@ import numpy
 import sympy
 
 from ..helpers import article, combine, fsd, pm, pm_array, untangle, z
-from ._helpers import NBallScheme, volume_unit_ball
+from ._helpers import SnScheme, volume_unit_ball
 
 citation = article(
     authors=["A.H. Stroud"],
@@ -36,7 +36,7 @@ def stroud_1966_a(n, symbolic=False):
     data = [(B1, fsd(n, (r, 1))), (B2, pm(n, s))]
     points, weights = untangle(data)
     weights *= volume_unit_ball(n, symbolic)
-    return NBallScheme("Stroud 1966a", n, weights, points, 5, citation)
+    return SnScheme("Stroud 1966a", n, weights, points, 5, citation)
 
 
 def stroud_1966_b(n, symbolic=False):
@@ -66,7 +66,7 @@ def stroud_1966_b(n, symbolic=False):
 
     points, weights = untangle(data)
     weights *= volume_unit_ball(n, symbolic)
-    return NBallScheme("Stroud 1966b", n, weights, points, 5, citation)
+    return SnScheme("Stroud 1966b", n, weights, points, 5, citation)
 
 
 def stroud_1966_c(n, symbolic=False):
@@ -84,7 +84,7 @@ def stroud_1966_c(n, symbolic=False):
 
     points, weights = untangle(data)
     weights *= volume_unit_ball(n, symbolic)
-    return NBallScheme("Stroud 1966c", n, weights, points, 5, citation)
+    return SnScheme("Stroud 1966c", n, weights, points, 5, citation)
 
 
 def stroud_1966_d(n, symbolic=False):
@@ -107,4 +107,4 @@ def stroud_1966_d(n, symbolic=False):
 
     points, weights = untangle(data)
     weights *= volume_unit_ball(n, symbolic)
-    return NBallScheme("Stroud 1966d", n, weights, points, 5, citation)
+    return SnScheme("Stroud 1966d", n, weights, points, 5, citation)

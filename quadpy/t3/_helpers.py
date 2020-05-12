@@ -2,10 +2,10 @@ import numpy
 import sympy
 
 from ..helpers import backend_to_function
-from ..tn import NSimplexScheme, get_vol, transform
+from ..tn import TnScheme, get_vol, transform
 
 
-class TetrahedronScheme(NSimplexScheme):
+class T3Scheme(TnScheme):
     def __init__(self, name, weights, points, degree, citation=None):
         self.name = name
         self.degree = degree

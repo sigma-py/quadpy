@@ -1,13 +1,13 @@
 import numpy
 
 from .. import helpers
-from ..cn import NCubeScheme
+from ..cn import CnScheme
 from ..cn import ncube_points as rectangle_points
 from ..cn import transform
 from ..tn import get_vol
 
 
-class QuadrilateralScheme(NCubeScheme):
+class C2Scheme(CnScheme):
     def __init__(self, name, weights, points, degree, citation=None):
         self.name = name
         self.degree = degree

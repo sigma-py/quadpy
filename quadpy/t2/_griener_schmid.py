@@ -1,7 +1,7 @@
 import numpy
 
 from ..helpers import article
-from ._helpers import TriangleScheme
+from ._helpers import T2Scheme
 
 citation = article(
     authors=["Bernhard Griener", "Hans Joachim Schmid"],
@@ -55,7 +55,7 @@ def griener_schmid_1():
         ]
     )
     points = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
-    return TriangleScheme("Griener-Schmid 1", weights, points, 6, citation)
+    return T2Scheme("Griener-Schmid 1", weights, points, 6, citation)
 
 
 def griener_schmid_2():
@@ -89,4 +89,4 @@ def griener_schmid_2():
     )
 
     points = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
-    return TriangleScheme("Griener-Schmid 2", weights, points, 6, citation)
+    return T2Scheme("Griener-Schmid 2", weights, points, 6, citation)

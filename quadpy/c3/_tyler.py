@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 
 from ..helpers import article, untangle
-from ._helpers import HexahedronScheme, fs_r00, pm_rrr, z
+from ._helpers import C3Scheme, fs_r00, pm_rrr, z
 
 citation = article(
     authors=["G.W. Tyler"],
@@ -18,7 +18,7 @@ def tyler_1():
     data = [(frac(1, 6), fs_r00(1))]
     points, weights = untangle(data)
     weights *= 8
-    return HexahedronScheme("Tyler 1", weights, points, 3, citation)
+    return C3Scheme("Tyler 1", weights, points, 3, citation)
 
 
 def tyler_2():
@@ -30,4 +30,4 @@ def tyler_2():
     ]
     points, weights = untangle(data)
     weights *= 8
-    return HexahedronScheme("Tyler 2", weights, points, 5, citation)
+    return C3Scheme("Tyler 2", weights, points, 5, citation)

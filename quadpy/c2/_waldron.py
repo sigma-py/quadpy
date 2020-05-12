@@ -1,7 +1,7 @@
 import numpy
 
 from ..helpers import techreport
-from ._helpers import QuadrilateralScheme
+from ._helpers import C2Scheme
 
 citation = techreport(
     authors=["Shayne Waldron"],
@@ -33,4 +33,4 @@ def waldron(r, alpha):
     weights = numpy.array(
         [2 / 3 / r ** 2, 2 / 3 / r ** 2, 2 / 3 / R ** 2, 2 / 3 / R ** 2]
     )
-    return QuadrilateralScheme("Waldron", weights, points, 3, citation)
+    return C2Scheme("Waldron", weights, points, 3, citation)

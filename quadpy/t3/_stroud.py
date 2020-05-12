@@ -3,7 +3,7 @@ import numpy
 from ..c1 import gauss_legendre
 from ..helpers import book
 from ..tn._stroud import stroud_tn_5_1
-from ._helpers import TetrahedronScheme
+from ._helpers import T3Scheme
 
 citation = book(
     authors=["Arthur Stroud"],
@@ -89,4 +89,4 @@ def stroud_t3_7_1():
             for k in range(4)
         ]
     )
-    return TetrahedronScheme("Stroud T3 7-1", weights, points, degree, citation)
+    return T3Scheme("Stroud T3 7-1", weights, points, degree, citation)

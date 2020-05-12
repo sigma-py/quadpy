@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 
 from ..helpers import article
-from ._helpers import TriangleScheme, s2
+from ._helpers import T2Scheme, s2
 
 citation = article(
     authors=["J. Albrecht", "L. Collatz"],
@@ -18,4 +18,4 @@ citation = article(
 def albrecht_collatz():
     weights, points = s2([frac(2, 30), frac(1, 2)], [frac(9, 15), frac(1, 6)])
     weights /= 2
-    return TriangleScheme("Albrecht-Collatz", weights, points, 3, citation)
+    return T2Scheme("Albrecht-Collatz", weights, points, 3, citation)

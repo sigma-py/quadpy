@@ -1,7 +1,7 @@
 from mpmath import mp
 
 from ..helpers import article, techreport
-from ._helpers import TriangleScheme, concat, s1, s2, s3
+from ._helpers import T2Scheme, concat, s1, s2, s3
 
 citation = techreport(
     authors=["J. Berntsen", "T.O. Espelid"],
@@ -78,7 +78,7 @@ def berntsen_espelid_1(mpmath=False):
             ],
         ),
     )
-    return TriangleScheme("Berntsen-Espelid 1 (DCUTRI)", weights, points, 13, citation)
+    return T2Scheme("Berntsen-Espelid 1 (DCUTRI)", weights, points, 13, citation)
 
 
 def berntsen_espelid_2(mpmath=False):
@@ -128,7 +128,7 @@ def berntsen_espelid_2(mpmath=False):
             ],
         ),
     )
-    return TriangleScheme("Berntsen-Espelid 2", weights, points, 13, citation)
+    return T2Scheme("Berntsen-Espelid 2", weights, points, 13, citation)
 
 
 def berntsen_espelid_3(mpmath=False):
@@ -177,7 +177,7 @@ def berntsen_espelid_3(mpmath=False):
             ],
         ),
     )
-    return TriangleScheme("Berntsen-Espelid 3", weights, points, 13, citation)
+    return T2Scheme("Berntsen-Espelid 3", weights, points, 13, citation)
 
 
 def berntsen_espelid_4(mpmath=False):
@@ -228,4 +228,4 @@ def berntsen_espelid_4(mpmath=False):
             ],
         ),
     )
-    return TriangleScheme("Berntsen-Espelid 4", weights, points, 13, citation)
+    return T2Scheme("Berntsen-Espelid 4", weights, points, 13, citation)

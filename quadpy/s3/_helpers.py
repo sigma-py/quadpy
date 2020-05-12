@@ -5,7 +5,7 @@ import numpy
 from .. import helpers
 
 
-class BallScheme:
+class S3Scheme:
     def __init__(self, name, citation, degree, weights, points):
         self.name = name
         self.citation = citation

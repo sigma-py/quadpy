@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import QuadrilateralScheme, concat, symm_r0, symm_s_t, zero
+from ._helpers import C2Scheme, concat, symm_r0, symm_s_t, zero
 
 citation = article(
     authors=["J.C. Maxwell"],
@@ -26,4 +26,4 @@ def maxwell():
         symm_s_t([frac(31, 648), s, t]),
     )
     weights *= 4
-    return QuadrilateralScheme("Maxwell", weights, points, 7, citation)
+    return C2Scheme("Maxwell", weights, points, 7, citation)

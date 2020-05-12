@@ -3,7 +3,7 @@ import sympy
 from mpmath import mp
 
 from ..helpers import article, fsd, pm, untangle, z
-from ._helpers import DiskScheme
+from ._helpers import S2Scheme
 
 _citation = article(
     authors=["J. Albrecht"],
@@ -35,7 +35,7 @@ def albrecht_1():
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Albrecht 1", weights, points, 3, _citation)
+    return S2Scheme("Albrecht 1", weights, points, 3, _citation)
 
 
 def albrecht_2():
@@ -46,7 +46,7 @@ def albrecht_2():
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Albrecht 2", weights, points, 5, _citation)
+    return S2Scheme("Albrecht 2", weights, points, 5, _citation)
 
 
 def albrecht_3():
@@ -64,7 +64,7 @@ def albrecht_3():
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Albrecht 3", weights, points, 7, _citation)
+    return S2Scheme("Albrecht 3", weights, points, 7, _citation)
 
 
 def albrecht_4():
@@ -85,7 +85,7 @@ def albrecht_4():
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Albrecht 4", weights, points, 9, _citation)
+    return S2Scheme("Albrecht 4", weights, points, 9, _citation)
 
 
 def albrecht_5():
@@ -119,7 +119,7 @@ def albrecht_5():
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Albrecht 5", weights, points, 11, _citation)
+    return S2Scheme("Albrecht 5", weights, points, 11, _citation)
 
 
 def albrecht_6():
@@ -149,7 +149,7 @@ def albrecht_6():
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Albrecht 6", weights, points, 13, _citation)
+    return S2Scheme("Albrecht 6", weights, points, 13, _citation)
 
 
 def albrecht_7():
@@ -183,7 +183,7 @@ def albrecht_7():
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Albrecht 7", weights, points, 15, _citation)
+    return S2Scheme("Albrecht 7", weights, points, 15, _citation)
 
 
 def albrecht_8():
@@ -226,4 +226,4 @@ def albrecht_8():
 
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Albrecht 8", weights, points, 17, _citation)
+    return S2Scheme("Albrecht 8", weights, points, 17, _citation)

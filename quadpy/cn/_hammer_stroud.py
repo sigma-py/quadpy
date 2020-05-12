@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, fsd, untangle, z
-from ._helpers import NCubeScheme
+from ._helpers import CnScheme
 
 _citation = article(
     authors=["Preston C. Hammer", "Arthur H. Stroud"],
@@ -19,7 +19,7 @@ def hammer_stroud_1n(n):
     data = [(frac(1, 2 * n), fsd(n, (sqrt(frac(n, 3)), 1)))]
     points, weights = untangle(data)
     weights *= 2 ** n
-    return NCubeScheme("Hammer-Stroud 1n", n, weights, points, 3, _citation)
+    return CnScheme("Hammer-Stroud 1n", n, weights, points, 3, _citation)
 
 
 def hammer_stroud_2n(n):
@@ -31,4 +31,4 @@ def hammer_stroud_2n(n):
     ]
     points, weights = untangle(data)
     weights *= 2 ** n
-    return NCubeScheme("Hammer-Stroud 2n", n, weights, points, 5, _citation)
+    return CnScheme("Hammer-Stroud 2n", n, weights, points, 5, _citation)

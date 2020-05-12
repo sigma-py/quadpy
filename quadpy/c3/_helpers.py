@@ -1,12 +1,12 @@
 import numpy
 
 from .. import helpers
-from ..cn import NCubeScheme
+from ..cn import CnScheme
 from ..cn import ncube_points as cube_points
 from ..cn import transform
 
 
-class HexahedronScheme(NCubeScheme):
+class C3Scheme(CnScheme):
     def __init__(self, name, weights, points, degree, citation=None):
         self.name = name
         self.weights = weights

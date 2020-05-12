@@ -4,7 +4,7 @@ import numpy
 import sympy
 
 from ..helpers import article, fsd, pm, prod, untangle, z
-from ._helpers import NCubeScheme
+from ._helpers import CnScheme
 
 _citation = article(
     authors=["Ronald Cools", "Ann Haegemans"],
@@ -39,7 +39,7 @@ def cools_haegemans_1(n, delta2=1, symbolic=False):
 
     points, weights = untangle(data)
     weights *= 2 ** n
-    return NCubeScheme("Cools-Haegemans 1", n, weights, points, 3, _citation)
+    return CnScheme("Cools-Haegemans 1", n, weights, points, 3, _citation)
 
 
 def cools_haegemans_2(n, delta2=1, symbolic=False):
@@ -66,7 +66,7 @@ def cools_haegemans_2(n, delta2=1, symbolic=False):
 
     points, weights = untangle(data)
     weights *= 2 ** n
-    return NCubeScheme("Cools-Haegemans 2", n, weights, points, 5, _citation)
+    return CnScheme("Cools-Haegemans 2", n, weights, points, 5, _citation)
 
 
 # ERR There is a mistake here somewhere in the weights, but it's unclear where.
@@ -138,7 +138,7 @@ def cools_haegemans_2(n, delta2=1, symbolic=False):
 #     print(sum(weights))
 #     exit(1)
 #     weights *= 2 ** n
-#     return NCubeScheme("Cools-Haegemans 3", n, weights, points, 7, _citation)
+#     return CnScheme("Cools-Haegemans 3", n, weights, points, 7, _citation)
 
 
 def _gener(delta2, m, mu, symbolic):

@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import TetrahedronScheme, concat, s4, s31, s211
+from ._helpers import T3Scheme, concat, s4, s31, s211
 
 citation = article(
     authors=["Yu Jinyun"],
@@ -18,13 +18,13 @@ citation = article(
 def yu_1():
     degree = 2
     weights, points = s31([frac(1, 4), frac(1, 4) - sqrt(5) * frac(1, 20)])
-    return TetrahedronScheme("Yu 1", weights, points, degree, citation)
+    return T3Scheme("Yu 1", weights, points, degree, citation)
 
 
 def yu_2():
     degree = 3
     weights, points = concat(s4(-frac(4, 5)), s31([frac(9, 20), frac(1, 6)]))
-    return TetrahedronScheme("Yu 2", weights, points, degree, citation)
+    return T3Scheme("Yu 2", weights, points, degree, citation)
 
 
 def yu_3():
@@ -33,7 +33,7 @@ def yu_3():
         s31([0.5037379410012282e-01, 0.7611903264425430e-01]),
         s211([0.6654206863329239e-01, 0.4042339134672644, 0.1197005277978019]),
     )
-    return TetrahedronScheme("Yu 3", weights, points, degree, citation)
+    return T3Scheme("Yu 3", weights, points, degree, citation)
 
 
 def yu_4():
@@ -43,7 +43,7 @@ def yu_4():
         s31([0.6703858372604275e-01, 0.8945436401412733e-01]),
         s211([0.4528559236327399e-01, 0.4214394310662522, 0.1325810999384657]),
     )
-    return TetrahedronScheme("Yu 4", weights, points, degree, citation)
+    return T3Scheme("Yu 4", weights, points, degree, citation)
 
 
 def yu_5():
@@ -56,4 +56,4 @@ def yu_5():
             [0.2581167596199161e-01, 0.4756909881472290e-01, 0.2967538129690260],
         ),
     )
-    return TetrahedronScheme("Yu 5", weights, points, degree, citation)
+    return T3Scheme("Yu 5", weights, points, degree, citation)

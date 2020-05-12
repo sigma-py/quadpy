@@ -3,7 +3,7 @@ import math
 import numpy
 import sympy
 
-from ._helpers import LineSegmentScheme
+from ._helpers import C1Scheme
 
 
 def newton_cotes_closed(index, **kwargs):
@@ -33,7 +33,7 @@ def newton_cotes_closed(index, **kwargs):
             / index
         )
         weights[r] = alpha
-    return LineSegmentScheme("Newton-Cotes (closed)", degree, weights, points)
+    return C1Scheme("Newton-Cotes (closed)", degree, weights, points)
 
 
 def newton_cotes_open(index, **kwargs):
@@ -58,4 +58,4 @@ def newton_cotes_open(index, **kwargs):
             / n
         )
         weights[r - 1] = alpha
-    return LineSegmentScheme("Newton-Cotes (open)", degree, weights, points)
+    return C1Scheme("Newton-Cotes (open)", degree, weights, points)

@@ -4,7 +4,7 @@ import numpy
 import sympy
 
 
-class NSphereScheme:
+class UnScheme:
     def __init__(self, name, dim, weights, points, degree, citation):
         self.name = name
         self.dim = dim

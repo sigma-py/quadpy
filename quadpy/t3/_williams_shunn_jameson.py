@@ -1,5 +1,5 @@
 from ..helpers import article
-from ._helpers import TetrahedronScheme, concat, s22, s31, s211, s1111
+from ._helpers import T3Scheme, concat, s22, s31, s211, s1111
 
 citation = article(
     authors=["D.M. Williams", "L. Shunn", "A. Jameson"],
@@ -33,6 +33,4 @@ def williams_shunn_jameson():
             [0.015595140078259, 0.541184412800237, 0.133558160703568, 0.296501020543124]
         ),
     )
-    return TetrahedronScheme(
-        "Williams-Shunn-Jameson", weights, points, degree, citation
-    )
+    return T3Scheme("Williams-Shunn-Jameson", weights, points, degree, citation)

@@ -3,7 +3,7 @@ import numpy
 from ..helpers import backend_to_function
 
 
-class PyramidScheme:
+class P3Scheme:
     def __init__(self, name, weights, points, degree, citation):
         self.name = name
         self.degree = degree

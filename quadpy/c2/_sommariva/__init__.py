@@ -4,7 +4,7 @@ import os
 import numpy
 
 from ...helpers import online
-from .._helpers import QuadrilateralScheme
+from .._helpers import C2Scheme
 
 _citation = online(
     authors=["Alvise Sommariva"],
@@ -24,7 +24,7 @@ def _read(index):
     data = numpy.array(data["data"])
     points = data[:, :2]
     weights = data[:, 2]
-    return QuadrilateralScheme(f"Sommariva {index}", weights, points, degree, _citation)
+    return C2Scheme(f"Sommariva {index}", weights, points, degree, _citation)
 
 
 def sommariva_01():

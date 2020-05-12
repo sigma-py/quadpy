@@ -1,7 +1,7 @@
 import numpy
 
 from ..helpers import article, combine, untangle
-from ._helpers import NBallScheme, volume_unit_ball
+from ._helpers import SnScheme, volume_unit_ball
 
 citation = article(
     authors=["A.H. Stroud"],
@@ -68,7 +68,7 @@ def stroud_1967_5_a(n):
 
     points, weights = untangle(data)
     weights *= volume_unit_ball(n, symbolic=False)
-    return NBallScheme("Stroud 1967-5 a", n, weights, points, 5, citation)
+    return SnScheme("Stroud 1967-5 a", n, weights, points, 5, citation)
 
 
 def stroud_1967_5_b(n):
@@ -123,4 +123,4 @@ def stroud_1967_5_b(n):
 
     points, weights = untangle(data)
     weights *= volume_unit_ball(n, symbolic=False)
-    return NBallScheme("Stroud 1967-5 b", n, weights, points, 5, citation)
+    return SnScheme("Stroud 1967-5 b", n, weights, points, 5, citation)

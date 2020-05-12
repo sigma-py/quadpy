@@ -1,7 +1,7 @@
 import sympy
 
 from ..helpers import article, pm, untangle
-from ._helpers import DiskScheme
+from ._helpers import S2Scheme
 
 _citation = article(
     authors=["J. Albrecht", "L. Collatz"],
@@ -23,4 +23,4 @@ def albrecht_collatz():
     data = [(frac(1, 4), pm(2, frac(1, 2)))]
     points, weights = untangle(data)
     weights *= pi
-    return DiskScheme("Albrecht-Collatz", weights, points, 3, _citation)
+    return S2Scheme("Albrecht-Collatz", weights, points, 3, _citation)

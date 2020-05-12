@@ -2,7 +2,7 @@
 import math
 
 from ..helpers import techreport, untangle
-from ._helpers import DiskScheme, _s4, _s8, _s40
+from ._helpers import S2Scheme, _s4, _s8, _s40
 
 _citation = techreport(
     authors=["R. Cools", "A. Haegemans"],
@@ -21,7 +21,7 @@ def cools_haegemans_1():
     ]
     points, weights = untangle(data)
     weights *= math.pi
-    return DiskScheme("Cools-Haegemans 1", weights, points, 5, _citation)
+    return S2Scheme("Cools-Haegemans 1", weights, points, 5, _citation)
 
 
 def cools_haegemans_2():
@@ -33,7 +33,7 @@ def cools_haegemans_2():
     ]
     points, weights = untangle(data)
     weights *= math.pi
-    return DiskScheme("Cools-Haegemans 2", weights, points, 9, _citation)
+    return S2Scheme("Cools-Haegemans 2", weights, points, 9, _citation)
 
 
 def cools_haegemans_3():
@@ -45,4 +45,4 @@ def cools_haegemans_3():
     ]
     points, weights = untangle(data)
     weights *= math.pi
-    return DiskScheme("Cools-Haegemans 3", weights, points, 9, _citation)
+    return S2Scheme("Cools-Haegemans 3", weights, points, 9, _citation)

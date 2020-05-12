@@ -1,6 +1,6 @@
 # TODO There are three more schemes in the technical report
 from ..helpers import techreport
-from ._helpers import QuadrilateralScheme, concat, s4a, symm_r0, symm_s_t
+from ._helpers import C2Scheme, concat, s4a, symm_r0, symm_s_t
 
 citation = techreport(
     authors=["R. Cools", "A. Haegemans"],
@@ -19,7 +19,7 @@ def cools_haegemans_1985_1():
         symm_r0([0.113540990172e00, 0.488926856974]),
     )
     weights *= 4
-    return QuadrilateralScheme("Cools-Haegemans 1985-1", weights, points, 9, citation)
+    return C2Scheme("Cools-Haegemans 1985-1", weights, points, 9, citation)
 
 
 def cools_haegemans_1985_2():
@@ -33,7 +33,7 @@ def cools_haegemans_1985_2():
         s4a([0.475325029082e-01, 0.551473280570], [0.325703974952e-02, 0.968340720218]),
     )
     weights *= 4
-    return QuadrilateralScheme("Cools-Haegemans 1985-2", weights, points, 13, citation)
+    return C2Scheme("Cools-Haegemans 1985-2", weights, points, 13, citation)
 
 
 def cools_haegemans_1985_3():
@@ -47,4 +47,4 @@ def cools_haegemans_1985_3():
         s4a([0.361061434781e-01, 0.178898689064], [0.116671271121e-01, 0.914197956909]),
     )
     weights *= 4
-    return QuadrilateralScheme("Cools-Haegemans 1985-3", weights, points, 13, citation)
+    return C2Scheme("Cools-Haegemans 1985-3", weights, points, 13, citation)

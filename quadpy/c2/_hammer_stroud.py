@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, fsd, pm, untangle, z
-from ._helpers import QuadrilateralScheme
+from ._helpers import C2Scheme
 
 citation = article(
     authors=["Preston C. Hammer", "Arthur H. Stroud"],
@@ -18,7 +18,7 @@ citation = article(
 def hammer_stroud_1_2():
     data = [(1, fsd(2, (sqrt(frac(2, 3)), 1)))]
     points, weights = untangle(data)
-    return QuadrilateralScheme("Hammer-Stroud 1-2", weights, points, 3, citation)
+    return C2Scheme("Hammer-Stroud 1-2", weights, points, 3, citation)
 
 
 def hammer_stroud_2_2():
@@ -29,7 +29,7 @@ def hammer_stroud_2_2():
         (frac(25, 81), pm(2, alpha)),
     ]
     points, weights = untangle(data)
-    return QuadrilateralScheme("Hammer-Stroud 2-2", weights, points, 5, citation)
+    return C2Scheme("Hammer-Stroud 2-2", weights, points, 5, citation)
 
 
 def hammer_stroud_3_2():
@@ -40,4 +40,4 @@ def hammer_stroud_3_2():
         (0.2374317746906302, pm(2, xi2)),
     ]
     points, weights = untangle(data)
-    return QuadrilateralScheme("Hammer-Stroud 3-2", weights, points, 7, citation)
+    return C2Scheme("Hammer-Stroud 3-2", weights, points, 7, citation)

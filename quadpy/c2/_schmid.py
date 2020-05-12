@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import QuadrilateralScheme
+from ._helpers import C2Scheme
 
 citation = article(
     authors=["H.J. Schmid"],
@@ -28,7 +28,7 @@ def schmid_2():
     )
     weights = numpy.array([frac(1, 4), frac(1, 4), frac(1, 2)])
     weights *= 4
-    return QuadrilateralScheme("Schmid 2", weights, points, 2, citation)
+    return C2Scheme("Schmid 2", weights, points, 2, citation)
 
 
 def schmid_4():
@@ -53,7 +53,7 @@ def schmid_4():
         ]
     )
     weights *= 4
-    return QuadrilateralScheme("Schmid 4", weights, points, 4, citation)
+    return C2Scheme("Schmid 4", weights, points, 4, citation)
 
 
 def schmid_6():
@@ -87,4 +87,4 @@ def schmid_6():
         ]
     )
     weights *= 4
-    return QuadrilateralScheme("Schmid 6", weights, points, 6, citation)
+    return C2Scheme("Schmid 6", weights, points, 6, citation)

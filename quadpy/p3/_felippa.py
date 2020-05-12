@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, untangle
-from ._helpers import PyramidScheme, _s4, _s4_0
+from ._helpers import P3Scheme, _s4, _s4_0
 
 citation = article(
     authors=["Carlos Felippa"],
@@ -21,7 +21,7 @@ def felippa_1():
     degree = 1
     data = [(frac(128, 27), numpy.array([[0, 0, -frac(1, 2)]]))]
     points, weights = untangle(data)
-    return PyramidScheme("Felippa 1", weights, points, degree, citation)
+    return P3Scheme("Felippa 1", weights, points, degree, citation)
 
 
 def felippa_2():
@@ -31,7 +31,7 @@ def felippa_2():
         (frac(125, 27), numpy.array([[0, 0, frac(2, 5)]])),
     ]
     points, weights = untangle(data)
-    return PyramidScheme("Felippa 2", weights, points, degree, citation)
+    return P3Scheme("Felippa 2", weights, points, degree, citation)
 
 
 def felippa_3():
@@ -42,7 +42,7 @@ def felippa_3():
         (frac(64, 15), numpy.array([[0, 0, frac(1, 2)]])),
     ]
     points, weights = untangle(data)
-    return PyramidScheme("Felippa 3", weights, points, degree, citation)
+    return P3Scheme("Felippa 3", weights, points, degree, citation)
 
 
 def felippa_4():
@@ -53,7 +53,7 @@ def felippa_4():
     g2 = (2 * sqrt(10) - 5) / 15
     data = [(w1, _s4(g1, g2)), (w2, _s4(g1, -frac(2, 3) - g2))]
     points, weights = untangle(data)
-    return PyramidScheme("Felippa 4", weights, points, degree, citation)
+    return P3Scheme("Felippa 4", weights, points, degree, citation)
 
 
 def felippa_5():
@@ -64,7 +64,7 @@ def felippa_5():
     g3, g4 = [-i * (2 * sqrt(51) + i * 13) / 35 for i in [+1, -1]]
     data = [(w1, _s4(g1, g3)), (w2, _s4(g2, g4))]
     points, weights = untangle(data)
-    return PyramidScheme("Felippa 5", weights, points, degree, citation)
+    return P3Scheme("Felippa 5", weights, points, degree, citation)
 
 
 def felippa_6():
@@ -82,7 +82,7 @@ def felippa_6():
         (frac(18, 5), numpy.array([[0, 0, frac(2, 3)]])),
     ]
     points, weights = untangle(data)
-    return PyramidScheme("Felippa 6", weights, points, degree, citation)
+    return P3Scheme("Felippa 6", weights, points, degree, citation)
 
 
 def felippa_7():
@@ -103,7 +103,7 @@ def felippa_7():
         (w4, numpy.array([[0, 0, g5]])),
     ]
     points, weights = untangle(data)
-    return PyramidScheme("Felippa 7", weights, points, degree, citation)
+    return P3Scheme("Felippa 7", weights, points, degree, citation)
 
 
 def felippa_8():
@@ -124,7 +124,7 @@ def felippa_8():
         (w2 * wg9[0], numpy.array([[0, 0, g3]])),
     ]
     points, weights = untangle(data)
-    return PyramidScheme("Felippa 8", weights, points, degree, citation)
+    return P3Scheme("Felippa 8", weights, points, degree, citation)
 
 
 def felippa_9():
@@ -162,4 +162,4 @@ def felippa_9():
         (w3 * wg9[0], numpy.array([[0, 0, g5]])),
     ]
     points, weights = untangle(data)
-    return PyramidScheme("Felippa 9", weights, points, degree, citation)
+    return P3Scheme("Felippa 9", weights, points, degree, citation)

@@ -1,7 +1,7 @@
 import warnings
 
 from ..helpers import article
-from ._helpers import QuadrilateralScheme, concat, pm, zero
+from ._helpers import C2Scheme, concat, pm, zero
 
 citation = article(
     authors=["A.M. Cohen", "D.A. Gismalla"],
@@ -23,7 +23,7 @@ def cohen_gismalla_1():
     v = 0.46607171
     weights, points = concat(zero(8.0 / 7.0), pm([5.0 / 7.0, u, -v], [5.0 / 7.0, v, u]))
     # This scheme is of order 5 for symmetric integrands
-    return QuadrilateralScheme("CohenGismalla 1", weights, points, 3, citation)
+    return C2Scheme("CohenGismalla 1", weights, points, 3, citation)
 
 
 def cohen_gismalla_2():
@@ -41,4 +41,4 @@ def cohen_gismalla_2():
     # ERR this scheme only has order 1
     # According to the article, it has order 7 for symmetric integrands.
     # Something is fishy...
-    return QuadrilateralScheme("CohenGismalla 2", weights, points, 1, citation)
+    return C2Scheme("CohenGismalla 2", weights, points, 1, citation)

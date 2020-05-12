@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import book, fsd, pm, pm_array0, untangle
-from ._helpers import NSphereScheme, integrate_monomial_over_unit_nsphere
+from ._helpers import UnScheme, integrate_monomial_over_unit_nsphere
 from ._stroud_1967 import stroud_1967 as stroud_un_7_1
 from ._stroud_1969 import stroud_1969 as stroud_un_11_1
 
@@ -19,7 +19,7 @@ def stroud_un_3_1(n):
     data = [(frac(1, 2 * n), fsd(n, (1, 1)))]
     points, weights = untangle(data)
     weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic=True)
-    return NSphereScheme("Stroud Un 3-1", n, weights, points, degree, citation)
+    return UnScheme("Stroud Un 3-1", n, weights, points, degree, citation)
 
 
 def stroud_un_3_2(n):
@@ -27,7 +27,7 @@ def stroud_un_3_2(n):
     data = [(frac(1, 2 ** n), pm(n, sqrt(frac(1, n))))]
     points, weights = untangle(data)
     weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic=True)
-    return NSphereScheme("Stroud Un 3-2", n, weights, points, degree, citation)
+    return UnScheme("Stroud Un 3-2", n, weights, points, degree, citation)
 
 
 def stroud_un_5_1(n):
@@ -40,7 +40,7 @@ def stroud_un_5_1(n):
 
     points, weights = untangle(data)
     weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic=True)
-    return NSphereScheme("Stroud Un 5-1", n, weights, points, degree, citation)
+    return UnScheme("Stroud Un 5-1", n, weights, points, degree, citation)
 
 
 def stroud_un_5_2(n):
@@ -53,7 +53,7 @@ def stroud_un_5_2(n):
 
     points, weights = untangle(data)
     weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic=True)
-    return NSphereScheme("Stroud Un 5-2", n, weights, points, degree, citation)
+    return UnScheme("Stroud Un 5-2", n, weights, points, degree, citation)
 
 
 def stroud_un_5_3(n):
@@ -68,7 +68,7 @@ def stroud_un_5_3(n):
 
     points, weights = untangle(data)
     weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic=True)
-    return NSphereScheme("Stroud Un 5-3", n, weights, points, degree, citation)
+    return UnScheme("Stroud Un 5-3", n, weights, points, degree, citation)
 
 
 def stroud_un_5_4(n):
@@ -82,7 +82,7 @@ def stroud_un_5_4(n):
 
     points, weights = untangle(data)
     weights *= integrate_monomial_over_unit_nsphere(n * [0], symbolic=True)
-    return NSphereScheme("Stroud Un 5-4", n, weights, points, degree, citation)
+    return UnScheme("Stroud Un 5-4", n, weights, points, degree, citation)
 
 
 def stroud_un_7_2(n):
@@ -99,7 +99,7 @@ def stroud_un_7_2(n):
 
     points, weights = untangle(data)
     weights *= integrate_monomial_over_unit_nsphere(n * [0])
-    return NSphereScheme("Stroud Un 7-1", n, weights, points, degree, citation)
+    return UnScheme("Stroud Un 7-1", n, weights, points, degree, citation)
 
 
 __all__ = [

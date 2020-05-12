@@ -1,5 +1,5 @@
 from ..helpers import article, compute_dobrodeev, fsd, untangle
-from ._helpers import NBallScheme, integrate_monomial_over_unit_nball
+from ._helpers import SnScheme, integrate_monomial_over_unit_nball
 
 citation = article(
     authors=["L.N. Dobrodeev"],
@@ -49,4 +49,4 @@ def dobrodeev_1978(n):
 
     points, weights = untangle(data)
     weights *= I0
-    return NBallScheme("Dobrodeev 1978", n, weights, points, 5, citation)
+    return SnScheme("Dobrodeev 1978", n, weights, points, 5, citation)

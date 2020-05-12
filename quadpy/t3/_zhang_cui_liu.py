@@ -1,5 +1,5 @@
 from ..helpers import article
-from ._helpers import TetrahedronScheme, concat, s22, s31, s211, s1111
+from ._helpers import T3Scheme, concat, s22, s31, s211, s1111
 
 citation = article(
     authors=["Linbo Zhang", "Tao Cui", "Hui Liu"],
@@ -51,7 +51,7 @@ def zhang_cui_liu_1():
             ],
         ),
     )
-    return TetrahedronScheme("Zhang-Cui-Liu 1", weights, points, degree, citation)
+    return T3Scheme("Zhang-Cui-Liu 1", weights, points, degree, citation)
 
 
 def zhang_cui_liu_2():
@@ -146,4 +146,4 @@ def zhang_cui_liu_2():
             ],
         ),
     )
-    return TetrahedronScheme("Zhang-Cui-Liu 2", weights, points, degree, citation)
+    return T3Scheme("Zhang-Cui-Liu 2", weights, points, degree, citation)

@@ -3,7 +3,7 @@ from ._dobrodeev1970 import dobrodeev_1970
 from ._dobrodeev1978 import dobrodeev_1978
 from ._ewing import ewing
 from ._hammer_stroud import hammer_stroud_1n, hammer_stroud_2n
-from ._helpers import NCubeScheme, ncube_points, transform
+from ._helpers import CnScheme, ncube_points, transform
 from ._mcnamee_stenger import (
     mcnamee_stenger_3,
     mcnamee_stenger_5,
@@ -88,5 +88,5 @@ __all__ = [
     #
     "ncube_points",
     "transform",
-    "NCubeScheme",
+    "CnScheme",
 ]

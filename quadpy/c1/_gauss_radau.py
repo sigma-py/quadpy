@@ -3,7 +3,7 @@ import numpy
 import orthopy
 
 from ..tools import scheme_from_rc
-from ._helpers import LineSegmentScheme
+from ._helpers import C1Scheme
 
 
 def gauss_radau(n, a=0.0, b=0.0):
@@ -16,7 +16,7 @@ def gauss_radau(n, a=0.0, b=0.0):
     alpha = flt(alpha)
     beta = flt(beta)
     points, weights = _radau(alpha, beta, -1.0)
-    return LineSegmentScheme("Gauss-Radau", degree, weights, points)
+    return C1Scheme("Gauss-Radau", degree, weights, points)
 
 
 def _radau(alpha, beta, xr):

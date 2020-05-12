@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, untangle
-from ._helpers import HexahedronScheme, rss_pm, z
+from ._helpers import C3Scheme, rss_pm, z
 
 citation = article(
     authors=["A.H. Stroud"],
@@ -39,4 +39,4 @@ def stroud_1967():
     data = [(frac(32, 19), z()), (B, rss_pm(lmbd, xi)), (C, rss_pm(gmma, mu))]
 
     points, weights = untangle(data)
-    return HexahedronScheme("Stroud 1967", weights, points, 5, citation)
+    return C3Scheme("Stroud 1967", weights, points, 5, citation)
