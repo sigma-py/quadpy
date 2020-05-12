@@ -27,7 +27,6 @@ def stroud_1966_a(n):
     ]
 
     points, weights = untangle(data)
-    weights *= 2 ** n
     return CnScheme("Stroud 1966a", n, weights, points, 5, _citation)
 
 
@@ -44,7 +43,6 @@ def stroud_1966_b(n):
         data.append((b, arr))
 
     points, weights = untangle(data)
-    weights *= 2 ** n
     return CnScheme("Stroud 1966b", n, weights, points, 5, _citation)
 
 
@@ -54,7 +52,6 @@ def stroud_1966_c(n):
     data = [(frac(4, 5 * n + 4), z(n)), (frac(5, (5 * n + 4) * 2 ** n), _fs11(n, r, s))]
 
     points, weights = untangle(data)
-    weights *= 2 ** n
     return CnScheme("Stroud 1966c", n, weights, points, 5, _citation)
 
 
@@ -67,5 +64,4 @@ def stroud_1966_d(n):
     data = [(w, _fs11(n, r, s)), (w, pm(n, t))]
 
     points, weights = untangle(data)
-    weights *= 2 ** n
     return CnScheme("Stroud 1966d", n, weights, points, 5, _citation)

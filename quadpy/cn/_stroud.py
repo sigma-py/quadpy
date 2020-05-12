@@ -28,31 +28,27 @@ _citation = book(
 
 def stroud_cn_1_1(n):
     # centroid scheme
-    reference_volume = 2 ** n
-    weights = numpy.array([reference_volume])
+    weights = numpy.array([1])
     points = numpy.full((1, n), 0)
     return CnScheme("Stroud Cn 1-1", n, weights, points, 1, _citation)
 
 
 def stroud_cn_1_2(n):
     # product trapezoidal scheme
-    weights = numpy.full(2 ** n, 1)
+    weights = numpy.full(2 ** n, frac(1, 2 ** n))
     points = pm(n, 1)
     return CnScheme("Stroud Cn 1-2", n, weights, points, 1, _citation)
 
 
 def stroud_cn_3_2(n):
-    reference_volume = 2 ** n
-
-    weights = numpy.full(2 * n, frac(reference_volume, 2 * n))
+    weights = numpy.full(2 * n, frac(1, 2 * n))
     r = sqrt(frac(n, 3))
     points = fsd(n, (r, 1))
     return CnScheme("Stroud Cn 3-2", n, weights, points, 3, _citation)
 
 
 def stroud_cn_3_4(n):
-    reference_volume = 2 ** n
-    weights = numpy.full(2 ** n, frac(reference_volume, 2 ** n))
+    weights = numpy.full(2 ** n, frac(1, 2 ** n))
     r = sqrt(3) / 3
     points = pm(n, r)
     return CnScheme("Stroud Cn 3-4", n, weights, points, 3, _citation)
@@ -61,6 +57,7 @@ def stroud_cn_3_4(n):
 def stroud_cn_3_6(n):
     lst = n * [[frac(1, 3), frac(4, 3), frac(1, 3)]]
     weights = numpy.product(numpy.array(numpy.meshgrid(*lst)).T.reshape(-1, n), axis=-1)
+    weights /= 2 ** n
     lst = n * [[-1, 0, +1]]
     points = numpy.array(numpy.meshgrid(*lst)).T.reshape(-1, n)
     return CnScheme("Stroud Cn 3-6", n, weights, points, 3, _citation)
@@ -69,6 +66,7 @@ def stroud_cn_3_6(n):
 def stroud_cn_5_9(n):
     lst = n * [[frac(5, 9), frac(8, 9), frac(5, 9)]]
     weights = numpy.product(numpy.array(numpy.meshgrid(*lst)).T.reshape(-1, n), axis=-1)
+    weights /= 2 ** n
     sqrt35 = sqrt(frac(3, 5))
     lst = n * [[-sqrt35, 0, sqrt35]]
     points = numpy.array(numpy.meshgrid(*lst)).T.reshape(-1, n)
