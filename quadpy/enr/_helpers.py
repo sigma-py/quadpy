@@ -1,9 +1,7 @@
 import math
-import operator
-from functools import reduce
 
 import numpy
-from sympy import pi, sqrt
+import sympy
 
 
 class EnrScheme:
@@ -33,52 +31,34 @@ class EnrScheme:
         return dot(f(flt(self.points).T), flt(self.weights))
 
 
-def integrate_monomial_over_enr(alpha, symbolic=False):
-    if any(k % 2 == 1 for k in alpha):
+# The closed formula is
+#
+#   2
+#   * math.factorial(sum(alpha) + n - 1)
+#   * prod([math.gamma((k + 1) / 2.0) for k in alpha])
+#   / math.gamma((sum(alpha) + n) / 2).
+#
+# Care must be taken when evaluating this expression as numerator or denominator will
+# quickly overflow. A better representation is via a recurrence. This numerically stable
+# and can easily be used for symbolic computation.
+def integrate_monomial_over_enr(k, symbolic=False):
+    n = len(k)
+    if any(a % 2 == 1 for a in k):
         return 0
+    if all(a == 0 for a in k):
+        return enr_volume(n, symbolic)
 
-    if symbolic:
-
-        def prod(factors):
-            return reduce(operator.mul, factors, 1)
-
-        def fact(k):
-            return prod(range(1, k + 1))
-
-        n = len(alpha)
-
-        alpha2 = [k // 2 for k in alpha]
-
-        # TODO find a nicer expression for this whole thing
-        # Check out <https://tauday.com/tau-manifesto>
-        if n % 2 == 0:
-            b = fact(sum(alpha2) + n // 2 - 1)
-        else:
-            # b = gamma(sum(alpha2) + n // 2 + 0.5)
-            k = sum(alpha2) + n // 2
-            # b = sqrt(pi) * fact(2 * sum(alpha2) + n) / fact(k) / 4 ** k
-            b = sqrt(pi) * fact(2 * k) / fact(k) / 4 ** k
-
-        return (
-            2
-            * fact(sum(alpha) + n - 1)
-            * numpy.prod(
-                [sqrt(pi) * prod(range(k + 1, 2 * k + 1)) / 4 ** k for k in alpha2]
-            )
-            / b
-        )
-
-    n = len(alpha)
-    return (
-        2
-        * math.factorial(sum(alpha) + n - 1)
-        * numpy.prod([math.gamma((k + 1) / 2.0) for k in alpha])
-        / math.gamma((sum(alpha) + n) / 2)
-    )
+    # find first nonzero
+    idx = next((i for i, j in enumerate(k) if j > 0), None)
+    alpha = (k[idx] - 1) * (sum(k) + n - 1)
+    k2 = k.copy()
+    k2[idx] -= 2
+    return integrate_monomial_over_enr(k2, symbolic) * alpha
 
 
 # 2 * sqrt(pi) ** n * gamma(n) / gamma(frac(n, 2))
-def enr_volume(n):
+def enr_volume(n, symbolic=False):
+    pi = sympy.pi if symbolic else math.pi
     if n == 1:
         return 2
     elif n == 2:
