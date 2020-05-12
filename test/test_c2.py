@@ -13,7 +13,7 @@ schemes = (
         (quadpy.c2.albrecht_collatz_3(), 1.0e-14),
         (quadpy.c2.albrecht_collatz_4(), 1.0e-14),
     ]
-    + [(quadpy.c2.cohen_gismalla_1(), 1.0e-6), (quadpy.c2.cohen_gismalla_2(), 1.0e-6),]
+    + [(quadpy.c2.cohen_gismalla_1(), 1.0e-6), (quadpy.c2.cohen_gismalla_2(), 1.0e-6)]
     + [
         (quadpy.c2.cools_haegemans_1985_1(), 1.0e-10),
         (quadpy.c2.cools_haegemans_1985_2(), 1.0e-10),
