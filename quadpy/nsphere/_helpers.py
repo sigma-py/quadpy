@@ -53,8 +53,6 @@ class NSphereScheme:
 # and denominator. This can be saved by the of exp-lgamma, but a more reasonable
 # approach is to use recurrance.
 def integrate_monomial_over_unit_nsphere(k, symbolic=False):
-    """
-    """
     frac = sympy.Rational if symbolic else lambda a, b: a / b
     if any(a % 2 == 1 for a in k):
         return 0
