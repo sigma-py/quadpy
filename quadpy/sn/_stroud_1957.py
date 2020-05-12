@@ -4,7 +4,7 @@ import numpy
 import sympy
 
 from ..helpers import article, untangle
-from ._helpers import SnScheme, volume_unit_ball
+from ._helpers import SnScheme
 
 citation = article(
     authors=["A.H. Stroud"],
@@ -48,6 +48,4 @@ def stroud_1957(n, symbolic=False):
     data = [(frac(1, n + 1), pts)]
 
     points, weights = untangle(data)
-
-    weights *= volume_unit_ball(n, symbolic)
     return SnScheme("Stroud 1957", n, weights, points, 2, citation)

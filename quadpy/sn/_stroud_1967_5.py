@@ -1,7 +1,7 @@
 import numpy
 
 from ..helpers import article, combine, untangle
-from ._helpers import SnScheme, volume_unit_ball
+from ._helpers import SnScheme
 
 citation = article(
     authors=["A.H. Stroud"],
@@ -67,7 +67,6 @@ def stroud_1967_5_a(n):
         data += [(A, numpy.full((1, n), +eta)), (A, numpy.full((1, n), -eta))]
 
     points, weights = untangle(data)
-    weights *= volume_unit_ball(n, symbolic=False)
     return SnScheme("Stroud 1967-5 a", n, weights, points, 5, citation)
 
 
@@ -122,5 +121,4 @@ def stroud_1967_5_b(n):
         data += [(A, numpy.full((1, n), +eta)), (A, numpy.full((1, n), -eta))]
 
     points, weights = untangle(data)
-    weights *= volume_unit_ball(n, symbolic=False)
     return SnScheme("Stroud 1967-5 b", n, weights, points, 5, citation)

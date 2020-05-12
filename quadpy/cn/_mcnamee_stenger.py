@@ -242,7 +242,7 @@ def _mcnamee_stenger_9(n, integrator, switch_uv, symbolic):
 
     points, weights = untangle(data)
 
-    weights /= 2 ** n
+    weights /= I0
     return "McNamee-Stenger 9", n, weights, points, 9, _citation
 
 
