@@ -11,8 +11,8 @@
 
 import numpy
 
-from ..helpers import article
 from ..c1 import gauss_legendre
+from ..helpers import article
 from ._helpers import TriangleScheme
 
 citation = article(

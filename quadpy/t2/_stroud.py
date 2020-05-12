@@ -1,7 +1,7 @@
 import numpy
 
-from ..helpers import book
 from ..c1 import gauss_legendre
+from ..helpers import book
 from ._albrecht_collatz import albrecht_collatz as stroud_t2_3_1
 from ._hammer_marlowe_stroud import hammer_marlowe_stroud_5 as stroud_t2_5_1
 from ._helpers import TriangleScheme

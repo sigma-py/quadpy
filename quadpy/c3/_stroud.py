@@ -1,8 +1,8 @@
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import book, untangle
 from ..cn import ewing
+from ..helpers import book, untangle
 from ._albrecht_collatz import albrecht_collatz as stroud_c3_3_6
 from ._hammer_stroud import hammer_stroud_2_3 as stroud_c3_5_2
 from ._hammer_stroud import hammer_stroud_5_3a as stroud_c3_7_1a
