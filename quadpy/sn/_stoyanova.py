@@ -4,7 +4,7 @@ import numpy
 import sympy
 
 from ..helpers import article, get_nsimplex_points, untangle, z
-from ._helpers import SnScheme, volume_unit_ball
+from ._helpers import SnScheme
 
 citation = article(
     authors=["Srebra B. Stoyanova"],
@@ -178,5 +178,4 @@ def stoyanova(n, delta=None, variant_v_plus=True, symbolic=False):
         (d, z(n)),
     ]
     points, weights = untangle(data)
-    weights *= volume_unit_ball(n, symbolic)
     return SnScheme("Stoyanova", n, weights, points, 7, citation)

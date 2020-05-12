@@ -31,10 +31,11 @@ class SnScheme:
         rr = numpy.multiply.outer(radius, self.points)
         rr = numpy.swapaxes(rr, 0, -2)
         ff = numpy.array(f((rr + center).T))
-        return numpy.array(radius) ** self.dim * dot(ff, self.weights)
+        ref_vol = volume_unit_nball(self.dim, symbolic=False)
+        return ref_vol * numpy.array(radius) ** self.dim * dot(ff, self.weights)
 
 
-def volume_unit_ball(n, symbolic):
+def volume_unit_nball(n, symbolic):
     #
     pi = sympy.pi if symbolic else numpy.pi
 
@@ -42,7 +43,7 @@ def volume_unit_ball(n, symbolic):
         return 1
     elif n == 1:
         return 2
-    return volume_unit_ball(n - 2, symbolic) * 2 * pi / n
+    return volume_unit_nball(n - 2, symbolic) * 2 * pi / n
 
 
 def integrate_monomial_over_unit_nball(exponents, symbolic=False, radius=1):

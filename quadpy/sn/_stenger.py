@@ -1,7 +1,7 @@
 # TODO According to Stroud, Stenger's original article has data up to n == 20.
 
 from ..helpers import article, fsd, untangle, z
-from ._helpers import SnScheme
+from ._helpers import SnScheme, volume_unit_nball
 
 citation = article(
     authors=["W.G."],
@@ -79,6 +79,7 @@ def stenger_7a(n):
     ]
 
     points, weights = untangle(data)
+    weights /= volume_unit_nball(n, symbolic=False)
     return SnScheme("Stenger 7a", n, weights, points, 7, citation)
 
 
@@ -144,6 +145,7 @@ def stenger_7b(n):
     ]
 
     points, weights = untangle(data)
+    weights /= volume_unit_nball(n, symbolic=False)
     return SnScheme("Stenger 7b", n, weights, points, 7, citation)
 
 
@@ -224,6 +226,7 @@ def stenger_9a(n):
         data += [(B[8], fsd(n, (u, 4)))]
 
     points, weights = untangle(data)
+    weights /= volume_unit_nball(n, symbolic=False)
     return SnScheme("Stenger 9a", n, weights, points, 9, citation)
 
 
@@ -290,6 +293,7 @@ def stenger_9b(n):
         data += [(B[8], fsd(n, (u, 4)))]
 
     points, weights = untangle(data)
+    weights /= volume_unit_nball(n, symbolic=False)
     return SnScheme("Stenger 9b", n, weights, points, 9, citation)
 
 
@@ -384,6 +388,7 @@ def stenger_11a(n):
         data += [(B[15], fsd(n, (u, 5)))]
 
     points, weights = untangle(data)
+    weights /= volume_unit_nball(n, symbolic=False)
     return SnScheme("Stenger 11a", n, weights, points, 11, citation)
 
 
@@ -478,4 +483,5 @@ def stenger_11b(n):
         data += [(B[15], fsd(n, (u, 5)))]
 
     points, weights = untangle(data)
+    weights /= volume_unit_nball(n, symbolic=False)
     return SnScheme("Stenger 11b", n, weights, points, 11, citation)
