@@ -1,7 +1,6 @@
 import math
 
 import numpy
-import scipy.special
 import sympy
 
 
@@ -30,7 +29,6 @@ class NSimplexScheme:
     def integrate(self, f, simplex, dot=numpy.dot):
         flt = numpy.vectorize(float)
         simplex = numpy.asarray(simplex)
-        print(self.points.shape)
         x = transform(flt(self.points).T, simplex.T)
         vol = get_vol(simplex)
 
@@ -85,7 +83,7 @@ def integrate_monomial_over_unit_simplex(k, symbolic=False):
     given by
 
     \\int_T x_0^k0 * x1^k1 = (k0!*k1!) / (2+k0+k1)!,
-    \\int_T x_0^k0 * x1^k1 * x2^k2 = (k0!*k1!*k2!) / (4+k0+k1+k2)!,
+    \\int_T x_0^k0 * x1^k1 * x2^k2 = (k0!*k1!*k2!) / (3+k0+k1+k2)!,
 
     see, e.g.,
     A set of symmetric quadrature rules on triangles and tetrahedra,
@@ -96,14 +94,23 @@ def integrate_monomial_over_unit_simplex(k, symbolic=False):
 
     See, e.g., <https://math.stackexchange.com/q/207073/36678> for a formula in
     all dimensions.
+
+    To cope with the huge terms in numerator and denominator, it might make sense to use
+    exp(lgamma()). It's even easier though to represent the above expression by the
+    recurrence with the simple factor k_i / (sum(k) + n) which will never overflow. It's
+    also well-suited for symbolic computation.
     """
-    if symbolic:
-        return sympy.prod([sympy.gamma(kk + 1) for kk in k]) / sympy.gamma(
-            sum(k) + len(k) + 1
-        )
-    # exp-log to account for large values in numerator and denominator
-    # import scipy.special
-    return math.exp(
-        math.fsum([scipy.special.gammaln(kk + 1) for kk in k])
-        - scipy.special.gammaln(sum([kk + 1 for kk in k]) + 1)
-    )
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
+
+    assert all(kk >= 0 for kk in k)
+
+    n = len(k)
+    if all(kk == 0 for kk in k):
+        return frac(1, math.factorial(n))
+
+    # find first nonzero
+    idx = next((i for i, j in enumerate(k) if j > 0), None)
+    alpha = frac(k[idx], sum(k) + n)
+    k2 = k.copy()
+    k2[idx] -= 1
+    return integrate_monomial_over_unit_simplex(k2, symbolic) * alpha

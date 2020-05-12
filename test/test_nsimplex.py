@@ -51,20 +51,19 @@ def test_scheme(scheme):
     n = scheme.dim
     simplex = numpy.zeros((n + 1, n))
     for k in range(n):
-        simplex[k + 1, k] = 1.0
+        simplex[k + 1, k] = 1
     degree = check_degree(
         lambda poly: scheme.integrate(poly, simplex),
         integrate_monomial_over_unit_simplex,
         n,
         scheme.degree + 1,
     )
-    assert degree >= scheme.degree, "Observed: {}, expected: {}".format(
-        degree, scheme.degree
+    assert degree >= scheme.degree, "{}: Observed: {}, expected: {}".format(
+        scheme.name, degree, scheme.degree
     )
     return
 
 
 if __name__ == "__main__":
-    n_ = 3
-    scheme_ = quadpy.nsimplex.Stroud(n_, "Tn 5-1")
+    scheme_ = quadpy.nsimplex.silvester(3, "open", 5)
     test_scheme(scheme_)
