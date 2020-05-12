@@ -15,30 +15,30 @@
 [![Slack](https://img.shields.io/static/v1?logo=slack&label=slack&message=chat&color=4a154b&style=flat-square)](https://app.slack.com/client/TTL6Q54A3/CT865V1QR)
 
 More than 1500 numerical integration schemes for
-[line segments](#line-segment),
-[circles](#circle),
-[s2s](#s2),
-[triangles](#triangle),
-[c2s](#c2),
-[spheres](#sphere),
-[balls](#ball),
-[tetrahedra](#tetrahedron),
-[hexahedra](#c3),
-[wedges](#wedge),
-[pyramids](#pyramid),
-[n-spheres](#n-sphere),
-[n-balls](#n-ball),
-[n-cubes](#n-cube),
-[n-simplices](#n-simplex),
-[the 1D half-space with weight functions exp(-r)](#1d-half-space-with-weight-function-exp-r),
-[the 2D space with weight functions exp(-r)](#2d-space-with-weight-function-exp-r),
-[the 3D space with weight functions exp(-r)](#3d-space-with-weight-function-exp-r),
-[the nD space with weight functions exp(-r)](#nd-space-with-weight-function-exp-r),
-[the 1D space with weight functions exp(-r<sup>2</<sup>)](#1d-space-with-weight-function-exp-r2),
-[the 2D space with weight functions exp(-r<sup>2</<sup>)](#2d-space-with-weight-function-exp-r2),
-[the 3D space with weight functions exp(-r<sup>2</<sup>)](#3d-space-with-weight-function-exp-r2),
+[line segments](#line-segment-c1),
+[circles](#circle-u2),
+[disks](#disk-s2),
+[triangles](#triangle-t2),
+[quadrilaterals](#quadrilateral-c2),
+[spheres](#sphere-u3),
+[balls](#ball-s3),
+[tetrahedra](#tetrahedron-t3),
+[hexahedra](#hexahedra-c3),
+[wedges](#wedge-w3),
+[pyramids](#pyramid-p3),
+[n-spheres](#n-sphere-un),
+[n-balls](#n-ball-sn),
+[n-cubes](#n-cube-cn),
+[n-simplices](#n-simplex-tn),
+[the 1D half-space with weight functions exp(-r)](#1d-half-space-with-weight-function-exp-r-e1r),
+[the 2D space with weight functions exp(-r)](#2d-space-with-weight-function-exp-r-e2r),
+[the 3D space with weight functions exp(-r)](#3d-space-with-weight-function-exp-r-e3r),
+[the nD space with weight functions exp(-r)](#nd-space-with-weight-function-exp-r-enr),
+[the 1D space with weight functions exp(-r<sup>2</<sup>)](#1d-space-with-weight-function-exp-r2-e1r2),
+[the 2D space with weight functions exp(-r<sup>2</<sup>)](#2d-space-with-weight-function-exp-r2-e2r2),
+[the 3D space with weight functions exp(-r<sup>2</<sup>)](#3d-space-with-weight-function-exp-r2-e3r2),
 and
-[the nD space with weight functions exp(-r<sup>2</<sup>)](#nd-space-with-weight-function-exp-r2),
+[the nD space with weight functions exp(-r<sup>2</<sup>)](#nd-space-with-weight-function-exp-r2-enr3),
 for fast integration of real-, complex-, and vector-valued functions.
 
 For example, to numerically integrate any function over any given interval, install
@@ -234,7 +234,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
    degree 12),
  * [Witherden-Vincent](quadpy/t2/_witherden_vincent) (2015, 19 schemes up to degree 20),
  * [Papanicolopulos](quadpy/t2/_papanicolopulos) (2016, 27 schemes up to degree 25),
- * [all schemes for the n-simplex](#n-simplex).
+ * [all schemes for the n-simplex](#n-simplex-tn).
 
 Example:
 ```python
@@ -246,7 +246,7 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [[0.0, 0.0], [1.0, 0.0], [0.5,
 ```
 
 ### Disk (_S<sub>2</sub>_)
-<img src="https://nschloe.github.io/quadpy/s2-hammer-stroud-20.svg" width="25%">
+<img src="https://nschloe.github.io/quadpy/disk-hammer-stroud-20.svg" width="25%">
 
  * [Peirce](quadpy/s2/_peirce_1957.py) (1957, arbitrary degree)
  * via [Stroud](quadpy/s2/_stroud.py):
@@ -264,7 +264,7 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [[0.0, 0.0], [1.0, 0.0], [0.5,
  * [Wissmann-Becker](quadpy/s2/_wissmann_becker.py) (1986, 3 schemes up to degree 8)
  * [Kim-Song](quadpy/s2/_kim_song.py) (1997, 15 schemes up to degree 17)
  * [Cools-Kim](quadpy/s2/_cools_kim.py) (2000, 3 schemes up to degree 21)
- * [all schemes from the n-ball](#n-ball)
+ * [all schemes from the n-ball](#n-ball-sn)
 
 Example:
 ```python
@@ -304,7 +304,7 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0], 1.0)
  * [Sommariva](quadpy/c2/_sommariva.py) (2012, 55 schemes up to degree 55)
  * [Witherden-Vincent](quadpy/c2/_witherden_vincent.py) (2015, 11 schemes up to degree 21)
  * products of line segment schemes
- * [all schemes from the n-cube](#n-cube)
+ * [all schemes from the n-cube](#n-cube-cn)
 
 Example:
 ```python
@@ -368,7 +368,7 @@ val = scheme.integrate(lambda x: x[0]**2)
 
 
 ### Sphere (_U<sub>3</sub>_)
-<img src="https://nschloe.github.io/quadpy/u3.png" width="25%">
+<img src="https://nschloe.github.io/quadpy/sphere.png" width="25%">
 
  * via [Stroud](quadpy/u3/_stroud.py) (1971):
    - [Albrecht-Collatz](quadpy/u3/_albrecht_collatz.py) (1958, 5 schemes up to degree 7)
@@ -402,14 +402,14 @@ val = scheme.integrate_spherical(
 ```
 
 ### Ball (_S<sub>3</sub>_)
-<img src="https://nschloe.github.io/quadpy/s3.png" width="25%">
+<img src="https://nschloe.github.io/quadpy/ball.png" width="25%">
 
  * [Hammer-Stroud](quadpy/s3/_hammer_stroud.py) (1958, 6 schemes up to degree 7)
  * via: [Stroud](quadpy/s3/_stroud.py) (1971):
    - [Ditkin](quadpy/s3/_ditkin.py) (1948, 3 schemes up to degree 7)
    - [Mysovskih](quadpy/s3/mysovskih.py) (1964, degree 7)
    - [2 schemes up to degree 14](quadpy/s3/_stroud.py)
- * [all schemes from the n-ball](#n-ball)
+ * [all schemes from the n-ball](#n-ball-sn)
 
 Example:
 ```python
@@ -447,7 +447,7 @@ val = scheme.integrate(
  * [Witherden-Vincent](quadpy/t3/_witherden_vincent.py) (2015, 9 schemes up to degree
    10)
  * [Jaśkowiec-Sukumar](quadpy/t3/_jaskowiec_sukumar/) (2020, 21 schemes up to degree 20)
- * [all schemes for the n-simplex](#n-simplex).
+ * [all schemes for the n-simplex](#n-simplex-tn).
 
 Example:
 ```python
@@ -475,7 +475,7 @@ val = scheme.integrate(
    - [Mustard-Lyness-Blatt](quadpy/c3/_mustard_lyness_blatt.py) (1963, 6 schemes up to degree 5)
    - [Stroud](quadpy/c3/_stroud_1967.py) (1967, degree 5)
    - [Sarma-Stroud](quadpy/c3/_sarma_stroud.py) (1969, degree 7)
- * [all schemes from the n-cube](#n-cube)
+ * [all schemes from the n-cube](#n-cube-cn)
 
 Example:
 ```python
