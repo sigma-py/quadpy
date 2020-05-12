@@ -3,7 +3,7 @@ import math
 import numpy
 import sympy
 
-from .. import nsphere
+from .. import un
 from ..helpers import article, fsd, gamma_n_2, pm, untangle
 from ._helpers import Enr2Scheme
 
@@ -76,7 +76,7 @@ def stroud_1967_7_4(n, symbolic=False):
     g = gamma_n_2(n, symbolic)
     A1, A2 = [(n + 2 + p_m * sqrt2n2) / 4 / (n + 2) * g for p_m in [+1, -1]]
 
-    s = nsphere.stroud_1967(n)
+    s = un.stroud_1967(n)
 
     points = numpy.concatenate([r1 * s.points, r2 * s.points])
     weights = numpy.concatenate([A1 * s.weights, A2 * s.weights])
