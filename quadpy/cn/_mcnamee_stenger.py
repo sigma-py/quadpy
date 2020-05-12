@@ -34,7 +34,7 @@ def _mcnamee_stenger_3(n, integrator, symbolic):
     ]
 
     points, weights = untangle(data)
-    # weights *= 2 ** n
+    weights /= 2 ** n
     return "McNamee-Stenger 3", n, weights, points, 3, _citation
 
 
@@ -60,7 +60,7 @@ def _mcnamee_stenger_5(n, integrator, symbolic):
     ]
 
     points, weights = untangle(data)
-    # weights *= 2 ** n
+    weights /= 2 ** n
     return "McNamee-Stenger 5", n, weights, points, 5, _citation
 
 
@@ -137,7 +137,7 @@ def _mcnamee_stenger_7(n, integrator, switch_uv, symbolic):
 
     points, weights = untangle(data)
 
-    # weights *= 2 ** n
+    weights /= 2 ** n
     return "McNamee-Stenger 7", n, weights, points, 7, _citation
 
 
@@ -242,7 +242,7 @@ def _mcnamee_stenger_9(n, integrator, switch_uv, symbolic):
 
     points, weights = untangle(data)
 
-    # weights *= 2 ** n
+    weights /= 2 ** n
     return "McNamee-Stenger 9", n, weights, points, 9, _citation
 
 

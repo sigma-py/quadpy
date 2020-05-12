@@ -20,5 +20,4 @@ def thacher(n):
     r = sqrt(3) / 6
     data = [(1, [n * [2 * r]]), (+r, _s(n, -1, r)), (-r, _s(n, +1, r))]
     points, weights = untangle(data)
-    weights *= 2 ** n
     return CnScheme("Thacher", n, weights, points, 2, _citation)
