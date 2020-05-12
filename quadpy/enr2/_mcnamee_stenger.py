@@ -1,4 +1,4 @@
-from ..ncube._mcnamee_stenger import (
+from ..cn._mcnamee_stenger import (
     _mcnamee_stenger_3,
     _mcnamee_stenger_5,
     _mcnamee_stenger_7,

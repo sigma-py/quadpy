@@ -3,75 +3,71 @@ import numpy
 import quadpy
 
 
-def test_circle():
-    scheme = quadpy.circle.krylov(3)
+def test_u2():
+    scheme = quadpy.u2.krylov(3)
     scheme.integrate(lambda x: numpy.exp(x[0]), numpy.array([0.0, 0.3]), 0.7)
-    scheme = quadpy.circle.krylov(5)
+    scheme = quadpy.u2.krylov(5)
     scheme.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[0])],
         numpy.array([[1.0, 1.0], [0.0, 0.3], [2.0, 2.0]]),
         [1.0, 0.7, 0.333],
     )
-    return
 
 
-def test_disk():
-    scheme = quadpy.disk.peirce_1957(5)
+def test_s2():
+    scheme = quadpy.s2.peirce_1957(5)
     scheme.integrate(lambda x: numpy.exp(x[0]), numpy.array([0.0, 0.3]), 0.7)
-    scheme = quadpy.disk.peirce_1957(5)
+    scheme = quadpy.s2.peirce_1957(5)
     scheme.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         numpy.array([[1.0, 1.0], [0.0, 0.3], [2.0, 2.0]]),
         [1.0, 0.7, 0.333],
     )
-    return
 
 
-def test_hexahedron():
-    scheme = quadpy.hexahedron.product(quadpy.line_segment.newton_cotes_closed(3))
+def test_c3():
+    scheme = quadpy.c3.product(quadpy.c1.newton_cotes_closed(3))
     val = scheme.integrate(
         lambda x: numpy.exp(x[0]),
-        quadpy.hexahedron.cube_points([0.0, 1.0], [0.0, 1.0], [0.0, 1.0]),
+        quadpy.c3.cube_points([0.0, 1.0], [0.0, 1.0], [0.0, 1.0]),
     )
 
-    scheme = quadpy.hexahedron.product(quadpy.line_segment.newton_cotes_closed(3))
+    scheme = quadpy.c3.product(quadpy.c1.newton_cotes_closed(3))
     val = scheme.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         numpy.stack(
             [
-                quadpy.hexahedron.cube_points([0, 1], [0, 1], [0, 1]),
-                quadpy.hexahedron.cube_points([0, 1], [0, 1], [0, 1]),
-                quadpy.hexahedron.cube_points([0, 1], [0, 1], [0, 1]),
-                quadpy.hexahedron.cube_points([0, 1], [0, 1], [0, 1]),
-                quadpy.hexahedron.cube_points([0, 1], [0, 1], [0, 1]),
+                quadpy.c3.cube_points([0, 1], [0, 1], [0, 1]),
+                quadpy.c3.cube_points([0, 1], [0, 1], [0, 1]),
+                quadpy.c3.cube_points([0, 1], [0, 1], [0, 1]),
+                quadpy.c3.cube_points([0, 1], [0, 1], [0, 1]),
+                quadpy.c3.cube_points([0, 1], [0, 1], [0, 1]),
             ],
             axis=-2,
         ),
     )
     assert val.shape == (2, 5)
-    return
 
 
-def test_line_segment():
-    quadpy.line_segment.newton_cotes_closed(4).integrate(numpy.exp, [0.0, 1.0])
-    quadpy.line_segment.newton_cotes_closed(4).integrate(
+def test_c1():
+    quadpy.c1.newton_cotes_closed(4).integrate(numpy.exp, [0.0, 1.0])
+    quadpy.c1.newton_cotes_closed(4).integrate(
         numpy.exp, numpy.array([[0.0], [1.0]])
     )
-    quadpy.line_segment.newton_cotes_closed(4).integrate(
+    quadpy.c1.newton_cotes_closed(4).integrate(
         lambda x: [numpy.exp(x), numpy.sin(x), numpy.cos(x)],
         numpy.array([[0.0, 1.0], [1.0, 2.0]]),
     )
-    return
 
 
-def test_pyramid():
-    scheme = quadpy.pyramid.felippa_3()
+def test_p3():
+    scheme = quadpy.p3.felippa_3()
     scheme.integrate(
         lambda x: numpy.exp(x[0]),
         numpy.array([[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0, 0, 1]]),
     )
 
-    scheme = quadpy.pyramid.felippa_5()
+    scheme = quadpy.p3.felippa_5()
     scheme.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         numpy.array(
@@ -84,79 +80,73 @@ def test_pyramid():
             ]
         ),
     )
-    return
 
 
-def test_quadrilateral():
-    quadpy.quadrilateral.stroud_c2_5_4().integrate(
+def test_c2():
+    quadpy.c2.stroud_c2_5_4().integrate(
         lambda x: numpy.exp(x[0]),
-        quadpy.quadrilateral.rectangle_points([0.0, 1.0], [0.0, 1.0]),
+        quadpy.c2.rectangle_points([0.0, 1.0], [0.0, 1.0]),
     )
 
-    val = quadpy.quadrilateral.stroud_c2_3_1().integrate(
+    val = quadpy.c2.stroud_c2_3_1().integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         numpy.stack(
             [
-                quadpy.quadrilateral.rectangle_points([0.0, 1.0], [0.0, 1.0]),
-                quadpy.quadrilateral.rectangle_points([0.0, 1.0], [0.0, 1.0]),
-                quadpy.quadrilateral.rectangle_points([0.0, 1.0], [0.0, 1.0]),
-                quadpy.quadrilateral.rectangle_points([0.0, 1.0], [0.0, 1.0]),
-                quadpy.quadrilateral.rectangle_points([0.0, 1.0], [0.0, 1.0]),
+                quadpy.c2.rectangle_points([0.0, 1.0], [0.0, 1.0]),
+                quadpy.c2.rectangle_points([0.0, 1.0], [0.0, 1.0]),
+                quadpy.c2.rectangle_points([0.0, 1.0], [0.0, 1.0]),
+                quadpy.c2.rectangle_points([0.0, 1.0], [0.0, 1.0]),
+                quadpy.c2.rectangle_points([0.0, 1.0], [0.0, 1.0]),
             ],
             axis=-2,
         ),
     )
     assert val.shape == (2, 5)
-    return
 
 
 def test_e2r2():
     scheme = quadpy.e2r2.rabinowitz_richter_3()
     scheme.integrate(lambda x: numpy.exp(x[0]))
-    return
 
 
 def test_e2r():
     scheme = quadpy.e2r.rabinowitz_richter_5()
     scheme.integrate(lambda x: numpy.exp(x[0]))
-    return
 
 
-def test_sphere():
-    quadpy.sphere.lebedev_003a().integrate(
+def test_u3():
+    quadpy.u3.lebedev_003a().integrate(
         lambda x: numpy.exp(1j * x[0]) + 1j * x[0] ** 2,
         numpy.array([0.0, 0.3, 0.0]),
         0.7,
     )
 
-    quadpy.sphere.lebedev_003a().integrate(
+    quadpy.u3.lebedev_003a().integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         numpy.array([[1.0, 1.0, 0.0], [0.0, 0.3, 0.0], [2.0, 2.0, 0.0]]),
         [1.0, 0.7, 0.333],
     )
-    return
 
 
-def test_ball():
-    scheme = quadpy.ball.hammer_stroud_15_3a()
+def test_s3():
+    scheme = quadpy.s3.hammer_stroud_15_3a()
     scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0, 0.0], 1.0)
 
-    scheme = quadpy.ball.hammer_stroud_15_3b()
+    scheme = quadpy.s3.hammer_stroud_15_3b()
     scheme.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         [[1.0, 1.0, 0.0], [0.0, 0.3, 0.0], [2.0, 2.0, 0.0]],
         [1.0, 0.7, 0.333],
     )
-    return
 
 
-def test_tetrahedron():
-    quadpy.tetrahedron.shunn_ham_3().integrate(
+def test_t3():
+    quadpy.t3.shunn_ham_3().integrate(
         lambda x: numpy.exp(x[0]),
         numpy.array([[0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, 1]], dtype=float),
     )
 
-    quadpy.tetrahedron.shunn_ham_3().integrate(
+    quadpy.t3.shunn_ham_3().integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         numpy.stack(
             [
@@ -168,15 +158,14 @@ def test_tetrahedron():
             axis=-2,
         ),
     )
-    return
 
 
-def test_triangle():
-    quadpy.triangle.cubtri().integrate(
+def test_t2():
+    quadpy.t2.cubtri().integrate(
         lambda x: numpy.exp(x[0]), numpy.array([[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]])
     )
 
-    val = quadpy.triangle.cubtri().integrate(
+    val = quadpy.t2.cubtri().integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         numpy.stack(
             [
@@ -190,18 +179,17 @@ def test_triangle():
         ),
     )
     assert val.shape == (2, 5)
-    return
 
 
-def test_wedge():
-    quadpy.wedge.felippa_4().integrate(
+def test_w3():
+    quadpy.w3.felippa_4().integrate(
         lambda x: numpy.exp(x[0]),
         numpy.array(
             [[[0, 0, 0], [1, 0, 0], [0, 1, 0]], [[0, 0, 1], [1, 0, 1], [0, 1, 1]]]
         ),
     )
 
-    val = quadpy.wedge.felippa_4().integrate(
+    val = quadpy.w3.felippa_4().integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         numpy.stack(
             [
@@ -213,12 +201,11 @@ def test_wedge():
         ),
     )
     assert val.shape == (2, 3)
-    return
 
 
-def test_nsimplex():
+def test_tn():
     dim = 4
-    quadpy.nsimplex.grundmann_moeller(dim, 3).integrate(
+    quadpy.tn.grundmann_moeller(dim, 3).integrate(
         lambda x: numpy.exp(x[0]),
         numpy.array(
             [
@@ -230,56 +217,48 @@ def test_nsimplex():
             ]
         ),
     )
-    return
 
 
-def test_nball():
+def test_sn():
     dim = 4
-    quadpy.nball.dobrodeev_1970(dim).integrate(
+    quadpy.sn.dobrodeev_1970(dim).integrate(
         lambda x: numpy.exp(x[0]), numpy.zeros(4), 1.0
     )
-    return
 
 
-def test_ncube():
+def test_cn():
     dim = 4
-    quadpy.ncube.stroud_cn_3_3(dim).integrate(
+    quadpy.cn.stroud_cn_3_3(dim).integrate(
         lambda x: numpy.exp(x[0]),
-        quadpy.ncube.ncube_points([0.0, 1.0], [0.1, 0.9], [-1.0, 1.0], [-1.0, -0.5]),
+        quadpy.cn.ncube_points([0.0, 1.0], [0.1, 0.9], [-1.0, 1.0], [-1.0, -0.5]),
     )
-    return
 
 
-def test_nsphere():
+def test_un():
     dim = 4
-    quadpy.nsphere.dobrodeev_1978(dim).integrate(
+    quadpy.un.dobrodeev_1978(dim).integrate(
         lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0
     )
-    return
 
 
 def test_enr2():
     dim = 4
     quadpy.enr2.stroud_enr2_5_2(dim).integrate(lambda x: numpy.exp(x[0]))
-    return
 
 
 def test_e1r():
     scheme = quadpy.e1r.gauss_laguerre(5)
     scheme.integrate(lambda x: x[0] ** 2)
-    return
 
 
 def test_e3r():
     quadpy.e3r.stroud_secrest_09().integrate(lambda x: numpy.exp(x[0]))
-    return
 
 
 def test_e1r2():
     scheme = quadpy.e1r2.gauss_hermite(5)
     scheme.integrate(lambda x: x[0] ** 2)
-    return
 
 
 if __name__ == "__main__":
-    test_sphere()
+    test_u3()
