@@ -1,7 +1,7 @@
 import numpy
 
 from ..helpers import book, untangle
-from ..sphere import _stroud as sphere_stroud
+from ..u3 import _stroud as sphere_stroud
 from ._helpers import E3r2Scheme
 from ._stroud_secrest import stroud_secrest_07 as stroud_e3r2_5_1
 from ._stroud_secrest import stroud_secrest_08a as stroud_e3r2_5_2a

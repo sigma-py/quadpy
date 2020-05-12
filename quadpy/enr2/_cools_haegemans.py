@@ -2,8 +2,8 @@ import math
 
 import sympy
 
+from ..cn._cools_haegemans import _gener
 from ..helpers import article, fsd, pm, untangle, z
-from ..ncube._cools_haegemans import _gener
 from ._helpers import Enr2Scheme
 
 _citation = article(
