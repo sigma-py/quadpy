@@ -5,6 +5,7 @@ from scipy.optimize import least_squares, lsq_linear, minimize
 
 import orthopy
 import quadpy
+from quadpy.enr._helpers import integrate_monomial_over_enr
 from quadpy.helpers import untangle
 from quadpy.sphere._helpers import cartesian_to_spherical
 from quadpy.sphere._heo_xu import _f, _f1, _f2, _f11
@@ -24,18 +25,6 @@ def partition(boxes, balls):
             yield parent + (balls,)
 
     return list(rec(boxes, balls))
-
-
-def integrate_monomial_over_enr(k):
-    if numpy.any(k % 2 == 1):
-        return 0
-    n = len(k)
-    return (
-        2
-        * math.factorial(sum(k) + n - 1)
-        * numpy.prod([math.gamma((kk + 1) / 2.0) for kk in k])
-        / math.gamma((sum(k) + n) / 2)
-    )
 
 
 def one():
