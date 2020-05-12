@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from sympy import pi, sqrt
 
 from ..helpers import article
-from ..nsphere._mysovskikh import get_nsimplex_points
+from ..un._mysovskikh import get_nsimplex_points
 from ._helpers import Enr2Scheme
 from ._phillips import phillips as lu_darmofal_3
 from ._stroud import stroud_enr2_5_1a as lu_darmofal_4a

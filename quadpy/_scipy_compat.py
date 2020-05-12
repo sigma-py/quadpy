@@ -1,6 +1,6 @@
 import numpy
 
-from .line_segment import integrate_adaptive
+from .c1 import integrate_adaptive
 
 
 # compatibility for scipy.quad
