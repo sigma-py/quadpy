@@ -1,7 +1,7 @@
 import math
 
 import numpy
-from sympy import Rational, gamma, prod
+import sympy
 
 
 class NSphereScheme:
@@ -34,26 +34,48 @@ class NSphereScheme:
         return numpy.array(radius) ** (self.dim - 1) * dot(ff, self.weights)
 
 
-def integrate_monomial_over_unit_nsphere(alpha, symbolic=False):
+# The article
+#
+#     Gerald B. Folland,
+#     How to Integrate a Polynomial over a Sphere,
+#     The American Mathematical Monthly,
+#     Vol. 108, No. 5 (May, 2001), pp. 446-448,
+#     <https://doi.org/10.2307/2695802>
+#
+# gives the formula
+#
+#     2 * (
+#         prod([gamma(Rational(a + 1, 2)) for a in alpha])
+#         / gamma(sum([Rational(a + 1, 2) for a in alpha]))
+#     )
+#
+# which is unsuitable for numerical calculations because of quick overflows in numerator
+# and denominator. This can be saved by the of exp-lgamma, but a more reasonable
+# approach is to use recurrance.
+def integrate_monomial_over_unit_nsphere(k, symbolic=False):
     """
-    Gerald B. Folland,
-    How to Integrate a Polynomial over a Sphere,
-    The American Mathematical Monthly,
-    Vol. 108, No. 5 (May, 2001), pp. 446-448,
-    <https://doi.org/10.2307/2695802>.
     """
-    if any(a % 2 == 1 for a in alpha):
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
+    if any(a % 2 == 1 for a in k):
         return 0
 
-    if symbolic:
-        return 2 * (
-            prod([gamma(Rational(a + 1, 2)) for a in alpha])
-            / gamma(sum([Rational(a + 1, 2) for a in alpha]))
-        )
+    n = len(k)
+    if all(a == 0 for a in k):
+        return sphere_volume(n - 1, symbolic)
 
-    # Use lgamma since other with ordinary gamma, numerator and denominator
-    # might overflow.
-    return 2 * math.exp(
-        math.fsum([math.lgamma(0.5 * (a + 1)) for a in alpha])
-        - math.lgamma(math.fsum([0.5 * (a + 1) for a in alpha]))
-    )
+    # find first nonzero
+    idx = next((i for i, j in enumerate(k) if j > 0), None)
+    alpha = frac(k[idx] - 1, sum(k) + n - 2)
+    k2 = k.copy()
+    k2[idx] -= 2
+    return integrate_monomial_over_unit_nsphere(k2, symbolic) * alpha
+
+
+# n sqrt(pi) ** 2 / gamma(n/2 + 1)
+def sphere_volume(n, symbolic=False):
+    pi = sympy.pi if symbolic else math.pi
+    if n == 0:
+        return 2
+    elif n == 1:
+        return 2 * pi
+    return (2 * pi) / (n - 1) * sphere_volume(n - 2)

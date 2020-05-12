@@ -64,6 +64,3 @@ def enr_volume(n, symbolic=False):
     elif n == 2:
         return 2 * pi
     return 2 * pi * (n - 1) * enr_volume(n - 2)
-    # Then n-sphere has
-    # return 2 * pi / (n - 2) * surface_hypersphere(n - 2)
-    # here.
