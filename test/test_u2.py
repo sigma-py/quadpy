@@ -4,7 +4,7 @@ import pytest
 
 import quadpy
 from helpers import check_degree
-from quadpy.sn._helpers import integrate_monomial_over_unit_nsphere
+from quadpy.un._helpers import integrate_monomial_over_unit_nsphere
 
 
 @pytest.mark.parametrize("scheme", [quadpy.u2.krylov(k) for k in range(1, 6)])
