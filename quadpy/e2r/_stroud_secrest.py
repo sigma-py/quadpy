@@ -27,7 +27,6 @@ def stroud_secrest_5():
         (frac(1, 20), pm_array([xi, eta])),
     ]
     points, weights = untangle(data)
-    weights *= 2 * pi
     return E2rScheme("Stroud-Secrest V", weights, points, 5, _citation)
 
 
@@ -42,5 +41,4 @@ def stroud_secrest_6():
     data = [(A, fsd(2, (nu, 1))), (B, pm(2, xi)), (C, pm(2, eta))]
 
     points, weights = untangle(data)
-    weights *= 2 * pi
     return E2rScheme("Stroud-Secrest VI", weights, points, 7, _citation)
