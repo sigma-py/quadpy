@@ -1,3 +1,5 @@
+import math
+
 import numpy
 import sympy
 
@@ -71,6 +73,7 @@ def stroud_7_4():
     ]
 
     points, weights = untangle(data)
+    weights /= 4 / 3 * math.pi
     return S3Scheme("Stroud S3 7-4", _citation, 7, weights, points)
 
 
@@ -135,7 +138,9 @@ def stroud_14_1():
     ]
 
     points, weights = untangle(data)
-    weights *= 4 * numpy.pi
+    weights *= 3
+    # weights *= 4 * math.pi
+    # weights /= 4 / 3 * math.pi
     return S3Scheme("Stroud S3 14-1", _citation, 14, weights, points)
 
 
