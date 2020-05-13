@@ -1,3 +1,5 @@
+from math import pi
+
 import numpy
 
 from ..helpers import backend_to_function
@@ -26,7 +28,8 @@ class E3rScheme:
 
     def integrate(self, f, dot=numpy.dot):
         flt = numpy.vectorize(float)
-        return dot(f(flt(self.points).T), flt(self.weights))
+        ref_vol = 8 * pi
+        return ref_vol * dot(f(flt(self.points).T), flt(self.weights))
 
     def show(scheme, backend="vtk"):
         """Displays scheme for E_3^r quadrature.
