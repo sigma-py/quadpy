@@ -28,7 +28,8 @@ class EnrScheme:
 
     def integrate(self, f, dot=numpy.dot):
         flt = numpy.vectorize(float)
-        return dot(f(flt(self.points).T), flt(self.weights))
+        ref_vol = enr_volume(self.dim)
+        return ref_vol * dot(f(flt(self.points).T), flt(self.weights))
 
 
 # The closed formula is
