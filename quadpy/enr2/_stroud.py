@@ -30,7 +30,6 @@ citation = book(
 def stroud_enr2_5_3(n, symbolic=False):
     frac = sympy.Rational if symbolic else lambda a, b: a / b
     sqrt = sympy.sqrt if symbolic else math.sqrt
-    pi = sympy.pi if symbolic else math.pi
     assert n > 2
 
     r = sqrt(frac(n + 2, 4))
@@ -40,14 +39,12 @@ def stroud_enr2_5_3(n, symbolic=False):
 
     data = [(A, fsd(n, (r, 1))), (B, pm(n, s))]
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** n
     return Enr2Scheme("Stroud Enr2 5-3", n, weights, points, 5, citation)
 
 
 def stroud_enr2_5_4(n, symbolic=False):
     frac = sympy.Rational if symbolic else lambda a, b: a / b
     sqrt = sympy.sqrt if symbolic else math.sqrt
-    pi = sympy.pi if symbolic else math.pi
     # Spherical product Lobatto
     B0 = frac(2, (n + 2))
     data = [(B0, [n * [0]])]
@@ -60,14 +57,12 @@ def stroud_enr2_5_4(n, symbolic=False):
         data += [(alpha, pm_array0(n, arr, idx))]
 
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** n
     return Enr2Scheme("Stroud Enr2 5-4", n, weights, points, 5, citation)
 
 
 def _stroud_5_5(n, variant_a, symbolic=False):
     frac = sympy.Rational if symbolic else lambda a, b: a / b
     sqrt = sympy.sqrt if symbolic else math.sqrt
-    pi = sympy.pi if symbolic else math.pi
     p_m = +1 if variant_a else -1
 
     # r is complex-valued for n >= 3
@@ -79,7 +74,6 @@ def _stroud_5_5(n, variant_a, symbolic=False):
     data = [(A, [n * [0]]), (B, fsd(n, (r, 1), (s, n - 1)))]
 
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** n
     variant = "a" if variant_a else "b"
     return Enr2Scheme(f"Stroud Enr2 5-5{variant}", n, weights, points, 5, citation)
 
@@ -95,7 +89,6 @@ def stroud_enr2_5_5b(n):
 def stroud_enr2_5_6(n, symbolic=False):
     frac = sympy.Rational if symbolic else lambda a, b: a / b
     sqrt = sympy.sqrt if symbolic else math.sqrt
-    pi = sympy.pi if symbolic else math.pi
     assert n >= 5
 
     sqrt2 = sqrt(2)
@@ -108,7 +101,6 @@ def stroud_enr2_5_6(n, symbolic=False):
     data = [(A, fsd(n, (r, 1), (s, n - 1))), (A, pm(n, t))]
 
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** n
     return Enr2Scheme("Stroud Enr2 5-6", n, weights, points, 5, citation)
 
 
