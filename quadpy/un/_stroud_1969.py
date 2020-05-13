@@ -2,7 +2,7 @@ import numpy
 from numpy import sqrt
 
 from ..helpers import article, fsd, pm, untangle
-from ._helpers import UnScheme, integrate_monomial_over_unit_nsphere
+from ._helpers import UnScheme, integrate_monomial_over_unit_nsphere, sphere_volume
 
 citation = article(
     authors=["A.H. Stroud"],
@@ -54,4 +54,5 @@ def stroud_1969(n):
     data = [(w[k], pts[k]) for k in range(len(w))]
 
     points, weights = untangle(data)
+    weights /= sphere_volume(n - 1)
     return UnScheme("Stroud 1969", n, weights, points, degree, citation)
