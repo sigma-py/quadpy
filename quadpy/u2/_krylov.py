@@ -14,13 +14,14 @@ _citation = book(
     url="https://books.google.de/books/about/Approximate_Calculation_of_Integrals.html?id=ELeRwR27IRIC",
 )
 
+frac = sympy.Rational
 cos = numpy.vectorize(sympy.cos)
 sin = numpy.vectorize(sympy.sin)
 pi = sympy.pi
 
 
 def krylov(n):
-    weights = numpy.full(n, 2 * pi / n)
+    weights = numpy.full(n, frac(1, n))
     alpha = 2 * numpy.arange(n) * pi / n
     points = numpy.column_stack([cos(alpha), sin(alpha)])
     return U2Scheme(f"Krylov {n}", _citation, n - 1, weights, points)

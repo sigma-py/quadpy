@@ -59,4 +59,5 @@ class U2Scheme:
         rr = numpy.multiply.outer(radius, self.points)
         rr = numpy.swapaxes(rr, 0, -2)
         ff = numpy.array(f((rr + center).T))
-        return radius * dot(ff, self.weights)
+        ref_vol = 2 * numpy.pi * radius
+        return ref_vol * dot(ff, self.weights)
