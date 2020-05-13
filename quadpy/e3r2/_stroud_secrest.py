@@ -1,6 +1,5 @@
-import numpy
 from sympy import Rational as frac
-from sympy import pi, sqrt
+from sympy import sqrt
 
 from ..helpers import article, fsd, pm, pm_roll, untangle
 from ._helpers import E3r2Scheme
@@ -17,8 +16,9 @@ citation = article(
 
 
 def stroud_secrest_07():
+    # ERR
     # article:
-    # nu, xi = numpy.sqrt((15 + plus_minus * 3*numpy.sqrt(5)))
+    # nu, xi = sqrt((15 + plus_minus * 3*sqrt(5)))
     # A = 3/5
     # B = 1/30
 
@@ -27,9 +27,8 @@ def stroud_secrest_07():
     A = frac(2, 5)
     B = frac(1, 20)
 
-    data = [(A, numpy.array([[0, 0, 0]])), (B, pm_roll(3, [nu, xi]))]
+    data = [(A, [[0, 0, 0]]), (B, pm_roll(3, [nu, xi]))]
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** 3
     return E3r2Scheme("Stroud-Secrest VII", weights, points, 5, citation)
 
 
@@ -38,7 +37,6 @@ def stroud_secrest_08a():
     s = sqrt(frac(5, 2))
     data = [(frac(4, 25), fsd(3, (r, 1))), (frac(1, 200), pm(3, s))]
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** 3
     return E3r2Scheme("Stroud-Secrest VIIIa", weights, points, 5, citation)
 
 
@@ -46,12 +44,11 @@ def stroud_secrest_08b():
     r = sqrt(frac(5, 2))
     s = sqrt(frac(5, 6))
     data = [
-        (frac(2, 5), numpy.array([[0, 0, 0]])),
+        (frac(2, 5), [[0, 0, 0]]),
         (frac(1, 25), fsd(3, (r, 1))),
         (frac(9, 200), pm(3, s)),
     ]
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** 3
     return E3r2Scheme("Stroud-Secrest VIIIb", weights, points, 5, citation)
 
 
@@ -60,12 +57,11 @@ def stroud_secrest_09():
     t = sqrt(frac(5, 6))
 
     data = [
-        (frac(2, 5), numpy.array([[0, 0, 0]])),
+        (frac(2, 5), [[0, 0, 0]]),
         (frac(3, 100), pm_roll(3, [r, s])),
         (frac(3, 100), pm(3, t)),
     ]
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** 3
     return E3r2Scheme("Stroud-Secrest IX", weights, points, 5, citation)
 
 
@@ -83,13 +79,12 @@ def _stroud_secrest_10(positive):
     D = (783 - plus_minus * 202 * sqrt15) / 24696
 
     data = [
-        (A, numpy.array([[0, 0, 0]])),
+        (A, [[0, 0, 0]]),
         (B, fsd(3, (r, 1))),
         (C, fsd(3, (s, 2))),
         (D, pm(3, t)),
     ]
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** 3
     return E3r2Scheme(
         "Stroud-Secrest X{}".format("a" if positive else "b"),
         weights,
@@ -125,13 +120,12 @@ def _stroud_secrest_11(positive):
     C = (45 + p_m * 29 * sqrt2) / 2744
 
     data = [
-        (A, numpy.array([[0, 0, 0]])),
+        (A, [[0, 0, 0]]),
         (B, pm_roll(3, [r, s])),
         (C, pm_roll(3, [u, v])),
         (C, pm(3, t)),
     ]
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** 3
     return E3r2Scheme("Stroud-Secrest XI", weights, points, 7, citation)
 
 
