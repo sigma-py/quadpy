@@ -62,7 +62,7 @@ def integrate_monomial_over_unit_nsphere(k, symbolic=False):
         return sphere_volume(n - 1, symbolic, r=1)
 
     # find first nonzero
-    idx = next((i for i, j in enumerate(k) if j > 0), None)
+    idx = next(i for i, j in enumerate(k) if j > 0)
     alpha = frac(k[idx] - 1, sum(k) + n - 2)
     k2 = k.copy()
     k2[idx] -= 2

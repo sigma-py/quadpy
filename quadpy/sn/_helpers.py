@@ -70,7 +70,7 @@ def integrate_monomial_over_nball(k, symbolic=False, r=1):
         return volume_nball(n, symbolic, r=r)
 
     # find first nonzero
-    idx = next((i for i, j in enumerate(k) if j > 0), None)
+    idx = next(i for i, j in enumerate(k) if j > 0)
     alpha = frac((k[idx] - 1) * r ** 2, sum(k) + n)
     k2 = k.copy()
     k2[idx] -= 2
