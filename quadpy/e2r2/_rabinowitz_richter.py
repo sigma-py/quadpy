@@ -1,3 +1,5 @@
+from math import pi
+
 from ..helpers import article, untangle
 from ._helpers import E2r2Scheme, _s4, _s8, _s40, _z
 
@@ -22,7 +24,8 @@ def rabinowitz_richter_1():
         (0.1349017971918148e-02, _s8(2.607349811958554, 0.9663217712794149)),
     ]
     points, weights = untangle(data)
-    return E2r2Scheme("RabinowitzRichter 1", weights, points, 9, _citation)
+    weights /= pi
+    return E2r2Scheme("Rabinowitz-Richter 1", weights, points, 9, _citation)
 
 
 def rabinowitz_richter_2():
@@ -34,7 +37,8 @@ def rabinowitz_richter_2():
         (0.9817477042468103e-1, _s8(0.7071067811865475, 1.224744871391589)),
     ]
     points, weights = untangle(data)
-    return E2r2Scheme("RabinowitzRichter 2", weights, points, 11, _citation)
+    weights /= pi
+    return E2r2Scheme("Rabinowitz-Richter 2", weights, points, 11, _citation)
 
 
 def rabinowitz_richter_3():
@@ -47,7 +51,8 @@ def rabinowitz_richter_3():
         (0.7542839504417270e-2, _s8(2.061552812808830, 0.8660254037844387)),
     ]
     points, weights = untangle(data)
-    return E2r2Scheme("RabinowitzRichter 3", weights, points, 11, _citation)
+    weights /= pi
+    return E2r2Scheme("Rabinowitz-Richter 3", weights, points, 11, _citation)
 
 
 def rabinowitz_richter_4():
@@ -62,7 +67,8 @@ def rabinowitz_richter_4():
         (+0.1279412775888998e-1, _s8(1.882228401823884, 0.8826073082889659)),
     ]
     points, weights = untangle(data)
-    return E2r2Scheme("RabinowitzRichter 4", weights, points, 13, _citation)
+    weights /= pi
+    return E2r2Scheme("Rabinowitz-Richter 4", weights, points, 13, _citation)
 
 
 def rabinowitz_richter_5():
@@ -78,4 +84,5 @@ def rabinowitz_richter_5():
         (0.2087984556938594e-1, _s8(1.740847514397403, 0.7210826504868960)),
     ]
     points, weights = untangle(data)
-    return E2r2Scheme("RabinowitzRichter 5", weights, points, 15, _citation)
+    weights /= pi
+    return E2r2Scheme("Rabinowitz-Richter 5", weights, points, 15, _citation)
