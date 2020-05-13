@@ -109,7 +109,7 @@ def integrate_monomial_over_unit_simplex(k, symbolic=False):
         return frac(1, math.factorial(n))
 
     # find first nonzero
-    idx = next((i for i, j in enumerate(k) if j > 0), None)
+    idx = next(i for i, j in enumerate(k) if j > 0)
     alpha = frac(k[idx], sum(k) + n)
     k2 = k.copy()
     k2[idx] -= 1
