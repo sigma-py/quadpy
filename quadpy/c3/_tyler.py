@@ -17,7 +17,6 @@ citation = article(
 def tyler_1():
     data = [(frac(1, 6), fs_r00(1))]
     points, weights = untangle(data)
-    weights *= 8
     return C3Scheme("Tyler 1", weights, points, 3, citation)
 
 
@@ -29,5 +28,4 @@ def tyler_2():
         (frac(1, 72), pm_rrr(1)),
     ]
     points, weights = untangle(data)
-    weights *= 8
     return C3Scheme("Tyler 2", weights, points, 5, citation)
