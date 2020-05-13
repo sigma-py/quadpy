@@ -28,6 +28,7 @@ def morrow_patterson_1():
         ),
         pm([0.2755861791, 0.6612093865, 0.0]),
     )
+    weights /= 4
     return C2Scheme("Morrow-Patterson 1", weights, points, 11, citation)
 
 
@@ -91,5 +92,6 @@ def morrow_patterson_2():
             [+0.208441813388e-01, 0.944575023073, 0.0],
         ),
     )
+    weights /= 4
     # TODO The article claims degree 31. Check for errors.
     return C2Scheme("Morrow-Patterson 2", weights, points, 25, citation)

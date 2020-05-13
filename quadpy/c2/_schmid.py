@@ -27,7 +27,6 @@ def schmid_2():
         ]
     )
     weights = numpy.array([frac(1, 4), frac(1, 4), frac(1, 2)])
-    weights *= 4
     return C2Scheme("Schmid 2", weights, points, 2, citation)
 
 
@@ -52,7 +51,6 @@ def schmid_4():
             frac(5, 36) - 5 * sqrt(29) / 18 / 29,
         ]
     )
-    weights *= 4
     return C2Scheme("Schmid 4", weights, points, 4, citation)
 
 
@@ -86,5 +84,4 @@ def schmid_6():
             0.022455640481,
         ]
     )
-    weights *= 4
     return C2Scheme("Schmid 6", weights, points, 6, citation)

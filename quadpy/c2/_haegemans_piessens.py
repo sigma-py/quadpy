@@ -25,4 +25,5 @@ def haegemans_piessens():
             [0.59001271542103076297, 0.0, +0.62704137378039531763],
         ),
     )
+    weights /= 4
     return C2Scheme("Haegemans-Piessens", weights, points, 7, citation)

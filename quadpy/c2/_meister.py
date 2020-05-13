@@ -25,6 +25,4 @@ def meister():
         symm_r0([frac(576, 6720), r]),
         symm_s_t([frac(117, 6720), 1, s]),
     )
-
-    weights *= 4
     return C2Scheme("Meister", weights, points, 7, citation)

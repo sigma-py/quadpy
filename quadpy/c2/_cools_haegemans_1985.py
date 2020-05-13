@@ -18,7 +18,6 @@ def cools_haegemans_1985_1():
         s4a([0.535500902317e-01, 0.690880550486], [0.106828079664e-01, 0.939655258097]),
         symm_r0([0.113540990172e00, 0.488926856974]),
     )
-    weights *= 4
     return C2Scheme("Cools-Haegemans 1985-1", weights, points, 9, citation)
 
 
@@ -32,7 +31,6 @@ def cools_haegemans_1985_2():
         ),
         s4a([0.475325029082e-01, 0.551473280570], [0.325703974952e-02, 0.968340720218]),
     )
-    weights *= 4
     return C2Scheme("Cools-Haegemans 1985-2", weights, points, 13, citation)
 
 
@@ -46,5 +44,4 @@ def cools_haegemans_1985_3():
         ),
         s4a([0.361061434781e-01, 0.178898689064], [0.116671271121e-01, 0.914197956909]),
     )
-    weights *= 4
     return C2Scheme("Cools-Haegemans 1985-3", weights, points, 13, citation)

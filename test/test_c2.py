@@ -246,8 +246,8 @@ def test_scheme(scheme, tol):
 
     degree = check_degree_ortho(approximate, exact, abs_tol=tol)
 
-    assert degree >= scheme.degree, "Observed: {}, expected: {}".format(
-        degree, scheme.degree
+    assert degree >= scheme.degree, "{}  --  Observed: {}, expected: {}".format(
+        scheme.name, degree, scheme.degree
     )
     return
 
