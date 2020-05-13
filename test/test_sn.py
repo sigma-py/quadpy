@@ -3,7 +3,7 @@ import pytest
 
 import quadpy
 from helpers import check_degree
-from quadpy.sn._helpers import integrate_monomial_over_unit_nball
+from quadpy.sn._helpers import integrate_monomial_over_nball
 
 
 @pytest.mark.parametrize(
@@ -48,7 +48,7 @@ def test_scheme(scheme):
     radius = 1
     degree = check_degree(
         lambda poly: scheme.integrate(poly, center, radius),
-        integrate_monomial_over_unit_nball,
+        integrate_monomial_over_nball,
         n,
         scheme.degree + 1,
         tol=tol,

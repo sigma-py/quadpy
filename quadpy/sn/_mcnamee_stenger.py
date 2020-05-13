@@ -4,14 +4,14 @@ from ..cn._mcnamee_stenger import (
     _mcnamee_stenger_7,
     _mcnamee_stenger_9,
 )
-from ._helpers import SnScheme, integrate_monomial_over_unit_nball
+from ._helpers import SnScheme, integrate_monomial_over_nball
 
 
 def integrator(n, k, symbolic):
     """Returns the integral of the polynomial given by the coefficients k over NBall.
     """
     alpha = k + [0] * (n - len(k))
-    return integrate_monomial_over_unit_nball(alpha, symbolic)
+    return integrate_monomial_over_nball(alpha, symbolic)
 
 
 def mcnamee_stenger_3(n, symbolic=False):

@@ -5,7 +5,7 @@ import sympy
 
 from .. import un
 from ..helpers import article, fsd, pm, untangle, z
-from ._helpers import SnScheme, volume_unit_nball
+from ._helpers import SnScheme, volume_nball
 
 citation = article(
     authors=["A.H. Stroud"],
@@ -79,5 +79,5 @@ def stroud_1967_7_c(n, symbolic=False):
     points = numpy.concatenate([r1 * s.points, r2 * s.points])
     weights = numpy.concatenate([A1 * s.weights, A2 * s.weights])
 
-    weights /= volume_unit_nball(n, symbolic)
+    weights /= volume_nball(n, symbolic)
     return SnScheme("Stroud 1967-7 c", n, weights, points, 7, citation)
