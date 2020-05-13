@@ -30,7 +30,6 @@ def hammer_stroud_11_2():
     # ERR Incorrectly stated in Stroud with 0.5 instead of sqrt(0.5)
     data = [(frac(1, 4), fsd(2, (sqrt(frac(1, 2)), 1)))]
     points, weights = untangle(data)
-    weights *= pi
     return S2Scheme("Hammer-Stroud 11-2", weights, points, 3, _citation)
 
 
@@ -41,7 +40,6 @@ def hammer_stroud_12_2():
         (frac(1, 24), pm(2, sqrt(frac(1, 2)))),
     ]
     points, weights = untangle(data)
-    weights *= pi
     return S2Scheme("Hammer-Stroud 12-2", weights, points, 5, _citation)
 
 
@@ -69,7 +67,6 @@ def hammer_stroud_18():
 
     data = [(frac(1, 16), r1 * x), (frac(1, 16), r2 * x)]
     points, weights = untangle(data)
-    weights *= pi
     return S2Scheme("Hammer-Stroud 18", weights, points, 7, _citation)
 
 
@@ -86,7 +83,6 @@ def hammer_stroud_19():
         (alpha3, fs([0.7932084745126058, 0.4645097310495256])),
     ]
     points, weights = untangle(data)
-    weights *= pi
     return S2Scheme("Hammer-Stroud 19", weights, points, 9, _citation)
 
 
@@ -112,5 +108,4 @@ def hammer_stroud_21():
     ]
 
     points, weights = untangle(data)
-    weights *= numpy.pi
     return S2Scheme("Hammer-Stroud 21", weights, points, 15, _citation)

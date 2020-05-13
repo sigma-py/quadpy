@@ -27,10 +27,7 @@ def lether(n):
             numpy.outer(p, numpy.sin(mu * numpy.pi / (n + 1))).flatten(),
         ]
     )
-
-    weights = (
-        numpy.pi
-        / (n + 1)
-        * numpy.outer(w, numpy.sin(mu * numpy.pi / (n + 1)) ** 2).flatten()
+    weights = numpy.outer(w, numpy.sin(mu * numpy.pi / (n + 1)) ** 2).flatten() / (
+        n + 1
     )
     return S2Scheme(f"Lether({n})", weights, points, 2 * n - 1, _citation)
