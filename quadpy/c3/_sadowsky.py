@@ -24,5 +24,4 @@ def sadowsky():
         (frac(8, 225), fs_rrs(sqrt(frac(5, 8)), 1)),
     ]
     points, weights = untangle(data)
-    weights *= 8
     return C3Scheme("Sadowsky", weights, points, 5, citation)

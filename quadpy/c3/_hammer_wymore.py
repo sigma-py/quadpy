@@ -56,4 +56,5 @@ def hammer_wymore(lmbda=1):
     data = [(a1, fs_r00(x1)), (a2, fs_rr0(x2)), (a3, pm_rrr(x3)), (a4, pm_rrr(x4))]
 
     points, weights = untangle(data)
+    weights /= 8
     return C3Scheme(f"Hammer-Wymore (lambda = {lmbda})", weights, points, 7, _citation)

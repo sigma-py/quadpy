@@ -18,5 +18,4 @@ _citation = article(
 def albrecht_collatz():
     data = [(frac(1, 4), z()), (frac(1, 12), fs_r00(1)), (frac(1, 48), fs_rr0(1))]
     points, weights = untangle(data)
-    weights *= 8
     return C3Scheme("Albrecht-Collatz", weights, points, 3, _citation)
