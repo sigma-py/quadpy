@@ -6,7 +6,7 @@ import sympy
 from .. import un
 from ..helpers import article, fsd, gamma_n_2, pm, untangle
 from ..un._helpers import sphere_volume
-from ._helpers import Enr2Scheme
+from ._helpers import Enr2Scheme, volume_enr2
 
 citation = article(
     authors=["A.H. Stroud"],
@@ -67,7 +67,6 @@ def stroud_1967_7_2b(n, symbolic=False):
 
 def stroud_1967_7_4(n, symbolic=False):
     sqrt = sympy.sqrt if symbolic else math.sqrt
-    pi = sympy.pi if symbolic else math.pi
 
     assert n >= 3
 
@@ -81,5 +80,5 @@ def stroud_1967_7_4(n, symbolic=False):
     points = numpy.concatenate([r1 * s.points, r2 * s.points])
     weights = numpy.concatenate([A1 * s.weights, A2 * s.weights])
 
-    weights *= sphere_volume(n - 1) / sqrt(pi) ** n
+    weights *= sphere_volume(n - 1, symbolic) / volume_enr2(n, symbolic)
     return Enr2Scheme("Stroud 1967-7 4", n, weights, points, 7, citation)
