@@ -1,8 +1,7 @@
-import operator
-from functools import reduce
-
 import numpy
 from sympy import pi, sqrt
+
+from ..helpers import prod
 
 
 class Enr2Scheme:
@@ -38,10 +37,6 @@ def integrate_monomial_over_enr2(alpha, symbolic=False):
         return 0
 
     if symbolic:
-
-        def prod(factors):
-            return reduce(operator.mul, factors, 1)
-
         k2 = [kk // 2 for kk in alpha]
         return prod([sqrt(pi) * prod(range(kk + 1, 2 * kk + 1)) / 4 ** kk for kk in k2])
 
