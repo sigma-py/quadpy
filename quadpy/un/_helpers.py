@@ -51,7 +51,7 @@ class UnScheme:
 #
 # which is unsuitable for numerical calculations because of quick overflows in numerator
 # and denominator. This can be saved by the of exp-lgamma, but a more reasonable
-# approach is to use recurrance.
+# approach is to use recurrence.
 def integrate_monomial_over_unit_nsphere(k, symbolic=False):
     frac = sympy.Rational if symbolic else lambda a, b: a / b
     if any(a % 2 == 1 for a in k):
@@ -59,7 +59,7 @@ def integrate_monomial_over_unit_nsphere(k, symbolic=False):
 
     n = len(k)
     if all(a == 0 for a in k):
-        return sphere_volume(n - 1, symbolic)
+        return sphere_volume(n - 1, symbolic, r=1)
 
     # find first nonzero
     idx = next((i for i, j in enumerate(k) if j > 0), None)
@@ -70,10 +70,10 @@ def integrate_monomial_over_unit_nsphere(k, symbolic=False):
 
 
 # n sqrt(pi) ** 2 / gamma(n/2 + 1)
-def sphere_volume(n, symbolic=False):
+def sphere_volume(n, symbolic=False, r=1):
     pi = sympy.pi if symbolic else math.pi
     if n == 0:
         return 2
     elif n == 1:
-        return 2 * pi
-    return (2 * pi) / (n - 1) * sphere_volume(n - 2)
+        return 2 * pi * r
+    return (2 * pi) / (n - 1) * r ** 2 * sphere_volume(n - 2, symbolic, r=r)
