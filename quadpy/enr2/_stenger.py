@@ -1,4 +1,5 @@
 # TODO According to Stroud, Stenger's original article has data up to n == 20.
+import math
 
 from ..helpers import article, fsd, untangle, z
 from ._helpers import Enr2Scheme
@@ -78,6 +79,7 @@ def stenger_7a(dim):
         (B[5], fsd(dim, (u, 3))),
     ]
     points, weights = untangle(data)
+    weights /= math.sqrt(math.pi) ** dim
     return Enr2Scheme("Stenger 7a", dim, weights, points, 7, citation)
 
 
@@ -142,6 +144,7 @@ def stenger_7b(dim):
         (B[5], fsd(dim, (u, 3))),
     ]
     points, weights = untangle(data)
+    weights /= math.sqrt(math.pi) ** dim
     return Enr2Scheme("Stenger 7b", dim, weights, points, 7, citation)
 
 
@@ -222,6 +225,7 @@ def stenger_9a(dim):
         data += [(B[8], fsd(dim, (u, 4)))]
 
     points, weights = untangle(data)
+    weights /= math.sqrt(math.pi) ** dim
     return Enr2Scheme("Stenger 9a", dim, weights, points, 9, citation)
 
 
@@ -288,6 +292,7 @@ def stenger_9b(dim):
         data += [(B[8], fsd(dim, (u, 4)))]
 
     points, weights = untangle(data)
+    weights /= math.sqrt(math.pi) ** dim
     return Enr2Scheme("Stenger 9b", dim, weights, points, 9, citation)
 
 
@@ -382,6 +387,7 @@ def stenger_11a(dim):
         data += [(B[15], fsd(dim, (u, 5)))]
 
     points, weights = untangle(data)
+    weights /= math.sqrt(math.pi) ** dim
     return Enr2Scheme("Stenger 11a", dim, weights, points, 11, citation)
 
 
@@ -475,4 +481,5 @@ def stenger_11b(dim):
         data += [(B[15], fsd(dim, (u, 5)))]
 
     points, weights = untangle(data)
+    weights /= math.sqrt(math.pi) ** dim
     return Enr2Scheme("Stenger 11b", dim, weights, points, 11, citation)

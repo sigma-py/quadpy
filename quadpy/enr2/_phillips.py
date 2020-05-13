@@ -1,6 +1,6 @@
 import numpy
 from sympy import Rational as frac
-from sympy import pi, sqrt
+from sympy import sqrt
 
 from ..helpers import article, fsd, untangle
 from ._helpers import Enr2Scheme
@@ -29,6 +29,4 @@ def phillips(n):
         (w3, fsd(n, (lmbda, 2))),
     ]
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** n
-
     return Enr2Scheme("Phillips", n, weights, points, 5, citation)

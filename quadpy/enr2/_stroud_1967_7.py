@@ -20,7 +20,6 @@ citation = article(
 
 def _stroud_1967_7_2(n, variant_a, symbolic):
     sqrt = sympy.sqrt if symbolic else math.sqrt
-    pi = sympy.pi if symbolic else math.pi
 
     if variant_a:
         # the points/weights are complex-valued for n >= 9; one could permit that
@@ -52,7 +51,6 @@ def _stroud_1967_7_2(n, variant_a, symbolic):
     ]
 
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** n
 
     name = "Stroud 1967-7 2 (variant {})".format("a" if variant_a else "b")
     return Enr2Scheme(name, n, weights, points, 7, citation)
@@ -68,6 +66,7 @@ def stroud_1967_7_2b(n, symbolic=False):
 
 def stroud_1967_7_4(n, symbolic=False):
     sqrt = sympy.sqrt if symbolic else math.sqrt
+    pi = sympy.pi if symbolic else math.pi
 
     assert n >= 3
 
@@ -80,4 +79,5 @@ def stroud_1967_7_4(n, symbolic=False):
 
     points = numpy.concatenate([r1 * s.points, r2 * s.points])
     weights = numpy.concatenate([A1 * s.weights, A2 * s.weights])
+    weights /= sqrt(pi) ** n
     return Enr2Scheme("Stroud 1967-7 4", n, weights, points, 7, citation)

@@ -29,7 +29,8 @@ class Enr2Scheme:
 
     def integrate(self, f, dot=numpy.dot):
         flt = numpy.vectorize(float)
-        return dot(f(flt(self.points).T), flt(self.weights))
+        ref_vol = sqrt(pi) ** self.dim
+        return ref_vol * dot(f(flt(self.points).T), flt(self.weights))
 
 
 def integrate_monomial_over_enr2(alpha, symbolic=False):

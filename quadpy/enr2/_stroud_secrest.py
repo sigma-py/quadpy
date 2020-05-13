@@ -1,6 +1,6 @@
 import numpy
 from sympy import Rational as frac
-from sympy import pi, sqrt
+from sympy import sqrt
 
 from ..helpers import article, fsd, pm, untangle
 from ._helpers import Enr2Scheme
@@ -23,7 +23,6 @@ def stroud_secrest_1(n):
     # print(get_nsimplex_points(n))
     data = [(frac(1, n + 1), sqrt(frac(1, 2)) * _nsimplex(n))]
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** n
     return Enr2Scheme("Stroud-Secrest I", n, weights, points, 2, citation)
 
 
@@ -31,7 +30,6 @@ def stroud_secrest_2(n):
     nu = sqrt(frac(n, 2))
     data = [(frac(1, 2 * n), fsd(n, (nu, 1)))]
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** n
     return Enr2Scheme("Stroud-Secrest II", n, weights, points, 3, citation)
 
 
@@ -39,7 +37,6 @@ def stroud_secrest_3(n):
     nu = sqrt(frac(1, 2))
     data = [(frac(1, 2 ** n), pm(n, nu))]
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** n
     return Enr2Scheme("Stroud-Secrest III", n, weights, points, 3, citation)
 
 
@@ -52,7 +49,6 @@ def stroud_secrest_4(n):
 
     data = [(A, numpy.full((1, n), 0)), (B, fsd(n, (nu, 1))), (C, fsd(n, (xi, 2)))]
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** n
     return Enr2Scheme("Stroud-Secrest IV", n, weights, points, 5, citation)
 
 

@@ -30,7 +30,6 @@ def _mu(j, symbolic):
 def cools_haegemans_1(n, delta2=1, symbolic=False):
     frac = sympy.Rational if symbolic else lambda a, b: a / b
     sqrt = sympy.sqrt if symbolic else math.sqrt
-    pi = sympy.pi if symbolic else math.pi
     assert frac(1, 2) <= delta2
     m = 1
 
@@ -43,14 +42,12 @@ def cools_haegemans_1(n, delta2=1, symbolic=False):
     ]
 
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** n
     return Enr2Scheme("Cools-Haegemans 1", n, weights, points, 3, _citation)
 
 
 def cools_haegemans_2(n, delta2=1, symbolic=False):
     frac = sympy.Rational if symbolic else lambda a, b: a / b
     sqrt = sympy.sqrt if symbolic else math.sqrt
-    pi = sympy.pi if symbolic else math.pi
     assert n >= 1
     assert frac(1, 2) <= delta2
     if n > 2:
@@ -74,14 +71,12 @@ def cools_haegemans_2(n, delta2=1, symbolic=False):
     ]
 
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** n
     return Enr2Scheme("Cools-Haegemans 2", n, weights, points, 5, _citation)
 
 
 def cools_haegemans_3(n, delta2=(2, 3), symbolic=False):
     frac = sympy.Rational if symbolic else lambda a, b: a / b
     sqrt = sympy.sqrt if symbolic else math.sqrt
-    pi = sympy.pi if symbolic else math.pi
 
     if isinstance(delta2, tuple):
         delta2 = frac(*delta2)
@@ -126,7 +121,6 @@ def cools_haegemans_3(n, delta2=(2, 3), symbolic=False):
     ]
 
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** n
     return Enr2Scheme("Cools-Haegemans 3", n, weights, points, 7, _citation)
 
 
@@ -214,5 +208,4 @@ def cools_haegemans_3(n, delta2=(2, 3), symbolic=False):
 #     print(weights)
 #     print(sum(weights))
 #     exit(1)
-#     weights *= sqrt(pi) ** n
 #     return Enr2Scheme("Cools-Haegemans 4", n, weights, points, 9, _citation)
