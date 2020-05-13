@@ -26,5 +26,4 @@ def phillips():
     B3 = frac(25, 324)
 
     weights, points = concat(symm_r0([B1, r], [B2, s]), pm2([B3, t, t]))
-    weights *= 4
     return C2Scheme("Phillips", weights, points, 7, citation)

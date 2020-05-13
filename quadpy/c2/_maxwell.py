@@ -25,5 +25,4 @@ def maxwell():
         # ERR typo in Stroud: 648 vs 649
         symm_s_t([frac(31, 648), s, t]),
     )
-    weights *= 4
     return C2Scheme("Maxwell", weights, points, 7, citation)

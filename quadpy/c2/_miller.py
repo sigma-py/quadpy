@@ -20,6 +20,5 @@ def miller():
     weights, points = concat(
         zero(frac(250, 225)), symm_r0([-frac(8, 225), 1]), symm_s([frac(7, 900), 1])
     )
-    weights *= 4
     # This scheme is exact for _harmonic_ integrands of degree <= 11.
     return C2Scheme("Miller", weights, points, 1, citation)

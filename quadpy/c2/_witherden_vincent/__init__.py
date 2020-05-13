@@ -38,6 +38,7 @@ def _read(degree):
         d += [symm_s_t(*data["symm_s_t"])]
 
     weights, points = concat(*d)
+    weights /= 4
     return C2Scheme(f"Witherden-Vincent {degree}", weights, points, degree, _citation)
 
 
