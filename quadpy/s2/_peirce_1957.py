@@ -28,5 +28,5 @@ def peirce_1957(m):
     )
     # When integrating between 0 and 1, the weights are exactly the Gauss-Legendre
     # weights, scaled according to the disk area.
-    weights = numpy.tile(0.5 * numpy.pi / (k + 1) * w, k + 1)
+    weights = numpy.tile(0.5 / (k + 1) * w, k + 1)
     return S2Scheme("Peirce 1957", weights, points, k, _citation)

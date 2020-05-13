@@ -1,3 +1,5 @@
+import math
+
 import numpy
 
 from ..helpers import article, untangle
@@ -24,6 +26,7 @@ def wissmann_becker_6_1():
         (0.280075256745352, _m(0.373683864304499, -0.770749853148807)),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     return S2Scheme("Wissmann-Becker 6-1", weights, points, 6, _citation)
 
 
@@ -38,6 +41,7 @@ def wissmann_becker_6_2():
         (0.441690572122440, _m(0.690809264754287, -0.224457536458840)),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     return S2Scheme("Wissmann-Becker 6-2", weights, points, 6, _citation)
 
 
@@ -55,6 +59,7 @@ def wissmann_becker_8_1():
         (0.305874815913735, _m(0.342287447682940, -0.471118254595022)),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     return S2Scheme("Wissmann-Becker 8-1", weights, points, 8, _citation)
 
 

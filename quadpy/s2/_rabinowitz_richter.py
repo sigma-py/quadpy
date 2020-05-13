@@ -1,3 +1,5 @@
+import math
+
 from ..helpers import article, untangle
 from ._helpers import S2Scheme, _s4, _s8, _s40, _z
 from ._mysovskih import mysovskih_2, mysovskih_3
@@ -23,6 +25,7 @@ def rabinowitz_richter_1():
         (0.0387822376116376, _s8(0.4249164962326038, 0.9112013890413142)),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     return S2Scheme("Rabinowitz-Richter 1", weights, points, 9, _citation)
 
 
@@ -35,6 +38,7 @@ def rabinowitz_richter_2():
         (0.1883509796247228, _s8(0.3830079234911947, 0.7409163950514299)),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     return S2Scheme("Rabinowitz-Richter 2", weights, points, 9, _citation)
 
 
@@ -53,6 +57,7 @@ def rabinowitz_richter_4():
         (0.0897665889420765, _s8(0.4135214625627066, 0.8138386408455507)),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     return S2Scheme("Rabinowitz-Richter 4", weights, points, 11, _citation)
 
 
@@ -68,6 +73,7 @@ def rabinowitz_richter_5():
         (0.0963531689601313, _s8(0.7106593341863341, 0.3816598192059473)),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     return S2Scheme("Rabinowitz-Richter 5", weights, points, 13, _citation)
 
 

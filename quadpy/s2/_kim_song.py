@@ -1,3 +1,4 @@
+import math
 import warnings
 
 import numpy
@@ -18,7 +19,7 @@ _citation = article(
 
 def kim_song_1():
     data = [
-        (3.141592653589793, z(2)),
+        (1.0, z(2)),
     ]
     points, weights = untangle(data)
     points = points.astype(numpy.float)
@@ -27,7 +28,7 @@ def kim_song_1():
 
 def kim_song_2():
     data = [
-        (0.785398163397448, fsd(2, (0.707106781186548, 1))),
+        (0.25, fsd(2, (0.707106781186548, 1))),
     ]
     points, weights = untangle(data)
     return S2Scheme("Kim-Song 2", weights, points, 3, _citation)
@@ -35,7 +36,7 @@ def kim_song_2():
 
 def kim_song_3():
     data = [
-        (0.785398163397448, fsd(2, (0.5, 2))),
+        (0.25, fsd(2, (0.5, 2))),
     ]
     points, weights = untangle(data)
     return S2Scheme("Kim-Song 3", weights, points, 3, _citation)
@@ -47,13 +48,14 @@ def kim_song_4():
         (0.052611700904808, fsd(2, (0.888073833977115, 2))),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     return S2Scheme("Kim-Song 4", weights, points, 5, _citation)
 
 
 def kim_song_5():
     data = [
-        (0.785398163397449, z(2)),
-        (0.294524311274043, fsd(2, (0.754344479484572, 1), (0.312459714103782, 1))),
+        (1 / 4, z(2)),
+        (3 / 32, fsd(2, (0.754344479484572, 1), (0.312459714103782, 1))),
     ]
     points, weights = untangle(data)
     return S2Scheme("Kim-Song 5", weights, points, 5, _citation)
@@ -61,11 +63,12 @@ def kim_song_5():
 
 def kim_song_6():
     data = [
-        (0.232710566932577, fsd(2, (0.866025403784439, 1))),
+        (2 / 27 * math.pi, fsd(2, (0.866025403784439, 1))),
         (0.387077796006226, fsd(2, (0.322914992067400, 2))),
         (0.165609800458645, fsd(2, (0.644171310389465, 2))),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     return S2Scheme("Kim-Song 6", weights, points, 7, _citation)
 
 
@@ -77,9 +80,11 @@ def kim_song_7():
         (0.190570560169519, fsd(2, (0.740334457173511, 1), (0.379016937530835, 1))),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     return S2Scheme("Kim-Song 7", weights, points, 9, _citation)
 
 
+# TODO find issue
 def kim_song_8():
     data = [
         (-0.103220620849181, z(2)),
@@ -90,6 +95,7 @@ def kim_song_8():
         (0.129193960146342, fsd(2, (0.862551409331466, 1), (0.191706749096887, 1))),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     # ERR article claims degree 11
     warnings.warn("Kim-Song claim degree 11, but the scheme is only degree 1.")
     return S2Scheme("Kim-Song 8", weights, points, 1, _citation)
@@ -104,6 +110,7 @@ def kim_song_9():
         (0.079067977968328, fsd(2, (0.904823085572323, 1), (0.242446615072141, 1))),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     return S2Scheme("Kim-Song 9", weights, points, 11, _citation)
 
 
@@ -118,6 +125,7 @@ def kim_song_10():
         (0.095780705939433, fsd(2, (0.752042776803954, 1), (0.379717011170077, 1))),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     return S2Scheme("Kim-Song 10", weights, points, 13, _citation)
 
 
@@ -134,9 +142,11 @@ def kim_song_11():
         (0.081539591616413, fsd(2, (0.707438744960070, 1), (0.293030722710664, 1))),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     return S2Scheme("Kim-Song 11", weights, points, 15, _citation)
 
 
+# TODO find issue
 def kim_song_12():
     data = [
         (0.034218732123473, fsd(2, (0.000061843487605, 1))),
@@ -152,6 +162,7 @@ def kim_song_12():
         (0.081635607665003, fsd(2, (0.722293685844502, 1), (0.274942296086914, 1))),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     # ERR article claims degree 17
     warnings.warn("Kim-Song claim degree 17, but the scheme is only degree 3.")
     return S2Scheme("Kim-Song 12", weights, points, 3, _citation)
@@ -171,9 +182,11 @@ def kim_song_13():
         (0.047557517357696, fsd(2, (0.855907714936672, 1), (0.165103693017075, 1))),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     return S2Scheme("Kim-Song 13", weights, points, 17, _citation)
 
 
+# TODO find issue
 def kim_song_14():
     data = [
         (-0.336959088794964, fsd(2, (0.860125674956782, 1))),
@@ -191,11 +204,13 @@ def kim_song_14():
         (+0.074873729916680, fsd(2, (0.711569636216547, 1), (0.300178547400372, 1))),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     # ERR article claims degree 19
     warnings.warn("Kim-Song claim degree 19, but the scheme is only degree 3.")
     return S2Scheme("Kim-Song 14", weights, points, 3, _citation)
 
 
+# TODO find issue
 def kim_song_15():
     data = [
         (0.082558858859169, fsd(2, (0.204668989256100, 1))),
@@ -212,6 +227,7 @@ def kim_song_15():
         (0.024214746797802, fsd(2, (0.909637445684200, 1), (0.092571132370888, 1))),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     # ERR article claims degree 19
     warnings.warn("Kim-Song claim degree 19, but the scheme is only degree 9.")
     return S2Scheme("Kim-Song 15", weights, points, 9, _citation)
