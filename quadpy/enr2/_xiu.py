@@ -1,6 +1,6 @@
 import numpy
 from sympy import Rational as frac
-from sympy import sqrt, cos, sin, pi
+from sympy import cos, pi, sin, sqrt
 
 from ..helpers import article
 from ._helpers import Enr2Scheme

@@ -53,7 +53,7 @@ from quadpy.enr2._helpers import integrate_monomial_over_enr2
     + [quadpy.enr2.stroud_secrest_2(n) for n in range(2, 8)]
     + [quadpy.enr2.stroud_secrest_3(n) for n in range(2, 8)]
     + [quadpy.enr2.stroud_secrest_4(n) for n in range(2, 8)],
-    + [quadpy.enr2.xiu(n) for n in range(2, 8)],
+    +[quadpy.enr2.xiu(n) for n in range(2, 8)],
 )
 def test_scheme(scheme, tol=1.0e-14):
     assert scheme.points.dtype == numpy.float64, scheme.name
