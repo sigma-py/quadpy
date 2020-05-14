@@ -4,7 +4,7 @@ import os
 from ...helpers import article
 from .._helpers import T2Scheme, untangle2
 
-citation = article(
+source = article(
     authors=["Stefanos-Aldo Papanicolopulos"],
     title="New fully symmetric and rotationally symmetric cubature rules on the triangle using minimal orthonormal bases",
     journal="Journal of Computational and Applied Mathematics",
@@ -24,7 +24,7 @@ def _read(filename):
 
     degree = data.pop("degree")
     points, weights = untangle2(data)
-    return weights, points, degree, citation
+    return weights, points, degree, source
 
 
 def papanicolopulos_sym_0():

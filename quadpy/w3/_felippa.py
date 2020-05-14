@@ -6,7 +6,7 @@ from sympy import sqrt
 from ..helpers import article, untangle
 from ._helpers import W3Scheme
 
-citation = article(
+source = article(
     authors=["Carlos Felippa"],
     title="A compendium of FEM integration formulas for symbolic work",
     journal="Engineering Computation",
@@ -23,19 +23,19 @@ citation = article(
 def felippa_1():
     data = [(1, _s3(symbolic=True))]
     points, weights = untangle(data)
-    return W3Scheme("Felippa 1", weights, points, 1, citation)
+    return W3Scheme("Felippa 1", weights, points, 1, source)
 
 
 def felippa_2():
     data = [(frac(1, 6), _s21_z(frac(1, 6), sqrt(frac(1, 3))))]
     points, weights = untangle(data)
-    return W3Scheme("Felippa 2", weights, points, 2, citation)
+    return W3Scheme("Felippa 2", weights, points, 2, source)
 
 
 def felippa_3():
     data = [(frac(1, 6), _s21_z(frac(1, 2), sqrt(frac(1, 3))))]
     points, weights = untangle(data)
-    return W3Scheme("Felippa 3", weights, points, 2, citation)
+    return W3Scheme("Felippa 3", weights, points, 2, source)
 
 
 def felippa_4():
@@ -50,7 +50,7 @@ def felippa_4():
         (0.4886744162458750e-01, _s21(a1)),
     ]
     points, weights = untangle(data)
-    return W3Scheme("Felippa 4", weights, points, 4, citation)
+    return W3Scheme("Felippa 4", weights, points, 4, source)
 
 
 def felippa_5():
@@ -64,7 +64,7 @@ def felippa_5():
         (0.1, _s3(symbolic=False)),
     ]
     points, weights = untangle(data)
-    return W3Scheme("Felippa 5", weights, points, 5, citation)
+    return W3Scheme("Felippa 5", weights, points, 5, source)
 
 
 def felippa_6():
@@ -83,7 +83,7 @@ def felippa_6():
         ),
     ]
     points, weights = untangle(data)
-    return W3Scheme("Felippa 6", weights, points, 6, citation)
+    return W3Scheme("Felippa 6", weights, points, 6, source)
 
 
 def _s3(symbolic):

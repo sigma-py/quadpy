@@ -3,13 +3,16 @@ import math
 import numpy
 import sympy
 
+from ..helpers import QuadratureScheme
 
-class EnrScheme:
-    def __init__(self, name, dim, weights, points, degree, citation):
+
+class EnrScheme(QuadratureScheme):
+    def __init__(self, name, dim, weights, points, degree, source):
+        self.domain = f"Enr (n={dim})"
         self.name = name
         self.dim = dim
         self.degree = degree
-        self.citation = citation
+        self.source = source
 
         if weights.dtype == numpy.float64:
             self.weights = weights
@@ -24,7 +27,6 @@ class EnrScheme:
             assert points.dtype in [numpy.dtype("O"), numpy.int_]
             self.points = points.astype(numpy.float64)
             self.points_symbolic = points
-        return
 
     def integrate(self, f, dot=numpy.dot):
         flt = numpy.vectorize(float)

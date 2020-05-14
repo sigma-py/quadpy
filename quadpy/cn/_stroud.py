@@ -18,7 +18,7 @@ from ._stroud_1968 import stroud_1968 as stroud_cn_5_3
 from ._thacher import thacher as stroud_cn_2_2
 from ._tyler import tyler as stroud_cn_3_3
 
-_citation = book(
+_source = book(
     authors=["Arthur Stroud"],
     title="Approximate Calculation of Multiple Integrals",
     publisher="Prentice Hall",
@@ -30,28 +30,28 @@ def stroud_cn_1_1(n):
     # centroid scheme
     weights = numpy.array([1])
     points = numpy.full((1, n), 0)
-    return CnScheme("Stroud Cn 1-1", n, weights, points, 1, _citation)
+    return CnScheme("Stroud Cn 1-1", n, weights, points, 1, _source)
 
 
 def stroud_cn_1_2(n):
     # product trapezoidal scheme
     weights = numpy.full(2 ** n, frac(1, 2 ** n))
     points = pm(n, 1)
-    return CnScheme("Stroud Cn 1-2", n, weights, points, 1, _citation)
+    return CnScheme("Stroud Cn 1-2", n, weights, points, 1, _source)
 
 
 def stroud_cn_3_2(n):
     weights = numpy.full(2 * n, frac(1, 2 * n))
     r = sqrt(frac(n, 3))
     points = fsd(n, (r, 1))
-    return CnScheme("Stroud Cn 3-2", n, weights, points, 3, _citation)
+    return CnScheme("Stroud Cn 3-2", n, weights, points, 3, _source)
 
 
 def stroud_cn_3_4(n):
     weights = numpy.full(2 ** n, frac(1, 2 ** n))
     r = sqrt(3) / 3
     points = pm(n, r)
-    return CnScheme("Stroud Cn 3-4", n, weights, points, 3, _citation)
+    return CnScheme("Stroud Cn 3-4", n, weights, points, 3, _source)
 
 
 def stroud_cn_3_6(n):
@@ -60,7 +60,7 @@ def stroud_cn_3_6(n):
     weights /= 2 ** n
     lst = n * [[-1, 0, +1]]
     points = numpy.array(numpy.meshgrid(*lst)).T.reshape(-1, n)
-    return CnScheme("Stroud Cn 3-6", n, weights, points, 3, _citation)
+    return CnScheme("Stroud Cn 3-6", n, weights, points, 3, _source)
 
 
 def stroud_cn_5_9(n):
@@ -70,7 +70,7 @@ def stroud_cn_5_9(n):
     sqrt35 = sqrt(frac(3, 5))
     lst = n * [[-sqrt35, 0, sqrt35]]
     points = numpy.array(numpy.meshgrid(*lst)).T.reshape(-1, n)
-    return CnScheme("Stroud Cn 5-9", n, weights, points, 5, _citation)
+    return CnScheme("Stroud Cn 5-9", n, weights, points, 5, _source)
 
 
 __all__ = [

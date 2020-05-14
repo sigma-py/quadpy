@@ -5,7 +5,7 @@ import numpy
 from ..helpers import article, untangle
 from ._helpers import S2Scheme
 
-_citation = article(
+_source = article(
     authors=["R. Cools", "K.J. Kim"],
     title="A survey of known and new cubature formulas for the unit disk",
     journal="Korean J. Comput. & Appl. Math.",
@@ -34,7 +34,7 @@ def cools_kim_1():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    return S2Scheme("Cools-Kim 1", weights, points, 17, _citation)
+    return S2Scheme("Cools-Kim 1", weights, points, 17, _source)
 
 
 def cools_kim_2():
@@ -55,7 +55,7 @@ def cools_kim_2():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    return S2Scheme("Cools-Kim 2", weights, points, 19, _citation)
+    return S2Scheme("Cools-Kim 2", weights, points, 19, _source)
 
 
 def cools_kim_3():
@@ -77,7 +77,7 @@ def cools_kim_3():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    return S2Scheme("Cools-Kim 3", weights, points, 21, _citation)
+    return S2Scheme("Cools-Kim 3", weights, points, 21, _source)
 
 
 def _s4(a):

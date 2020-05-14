@@ -5,7 +5,7 @@ from ..helpers import book
 from ..tn._stroud import stroud_tn_5_1
 from ._helpers import T3Scheme
 
-citation = book(
+source = book(
     authors=["Arthur Stroud"],
     title="Approximate Calculation of Multiple Integrals",
     publisher="Prentice Hall",
@@ -89,4 +89,4 @@ def stroud_t3_7_1():
             for k in range(4)
         ]
     )
-    return T3Scheme("Stroud T3 7-1", weights, points, degree, citation)
+    return T3Scheme("Stroud T3 7-1", weights, points, degree, source)

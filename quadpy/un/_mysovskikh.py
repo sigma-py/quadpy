@@ -5,7 +5,7 @@ from sympy import sqrt
 from ..helpers import article, get_nsimplex_points
 from ._helpers import UnScheme
 
-citation = article(
+source = article(
     authors=["I.P. Mysovskikh"],
     title="The approximation of multiple integrals by using interpolatory cubature formulae",
     journal="Proceedings of a Symposium on Quantitative Approximation Held in Bonn, West Germany, August 20–24, 1979",
@@ -18,7 +18,7 @@ citation = article(
 def mysovskikh_1(n):
     points = get_nsimplex_points(n, sqrt, frac)
     weights = numpy.full(n + 1, frac(1, n + 1))
-    return UnScheme("Mysovskikh 1", n, weights, points, 2, citation)
+    return UnScheme("Mysovskikh 1", n, weights, points, 2, source)
 
 
 def mysovskikh_2(n):
@@ -43,4 +43,4 @@ def mysovskikh_2(n):
             numpy.full(len(b), B),
         ]
     )
-    return UnScheme("Mysovskikh 2", n, weights, points, 5, citation)
+    return UnScheme("Mysovskikh 2", n, weights, points, 5, source)

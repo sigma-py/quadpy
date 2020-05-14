@@ -6,7 +6,7 @@ from ._albrecht_collatz import albrecht_collatz as stroud_t2_3_1
 from ._hammer_marlowe_stroud import hammer_marlowe_stroud_5 as stroud_t2_5_1
 from ._helpers import T2Scheme
 
-citation = book(
+source = book(
     authors=["Arthur Stroud"],
     title="Approximate Calculation of Multiple Integrals",
     publisher="Prentice Hall",
@@ -52,7 +52,7 @@ def stroud_t2_7_1():
             for j in range(4)
         ]
     )
-    return T2Scheme("Stroud 7-1", weights, points, 7, citation)
+    return T2Scheme("Stroud 7-1", weights, points, 7, source)
 
 
 __all__ = ["stroud_t2_3_1", "stroud_t2_5_1", "stroud_t2_7_1"]

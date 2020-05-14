@@ -32,6 +32,8 @@ def test_scheme(scheme, tol=1.0e-13):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
+    print(scheme)
+
     n = scheme.dim
     degree = check_degree(
         lambda poly: scheme.integrate(poly, dot=accupy.fdot),

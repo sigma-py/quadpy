@@ -3,7 +3,7 @@ from mpmath import mp
 from ..helpers import techreport
 from ._helpers import T2Scheme, rot_ab
 
-citation = techreport(
+source = techreport(
     authors=["R. Cools", "A. Haegemans"],
     title="Construction of minimal cubature formulae for the square and the triangle using invariant theory",
     institution="Department of Computer Science, K.U.Leuven",
@@ -46,7 +46,7 @@ def cools_haegemans_1(mpmath=False):
         ],
     )
     weights *= 2
-    return T2Scheme("Cools-Haegemans 1", weights, points, 8, citation)
+    return T2Scheme("Cools-Haegemans 1", weights, points, 8, source)
 
 
 # TODO find error

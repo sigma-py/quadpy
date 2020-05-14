@@ -1,7 +1,7 @@
 from ..helpers import article
 from ._helpers import C2Scheme, concat, s4, zero
 
-citation = article(
+source = article(
     authors=["R. Cools", "Ann Haegemans"],
     title="Another Step Forward in Searching for Cubature Formulae with a Minimal Number of Knots for the Square",
     journal="Computing",
@@ -46,7 +46,7 @@ def cools_haegemans_1988_1():
         ],
     )
     weights /= 4
-    return C2Scheme("Cools-Haegemans 1988-1", weights, points, 11, citation)
+    return C2Scheme("Cools-Haegemans 1988-1", weights, points, 11, source)
 
 
 def cools_haegemans_1988_2():
@@ -96,4 +96,4 @@ def cools_haegemans_1988_2():
         zero(0.30038211543122536139e00),
     )
     weights /= 4
-    return C2Scheme("Cools-Haegemans 1988-2", weights, points, 13, citation)
+    return C2Scheme("Cools-Haegemans 1988-2", weights, points, 13, source)

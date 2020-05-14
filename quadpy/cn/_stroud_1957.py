@@ -5,7 +5,7 @@ from sympy import cos, pi, sin, sqrt
 from ..helpers import article, untangle
 from ._helpers import CnScheme, _s
 
-_citation = article(
+_source = article(
     authors=["A.H. Stroud"],
     title="Remarks on the Disposition of Points in Numerical Integration Formulas",
     journal="Mathematical Tables and Other Aids to Computation",
@@ -27,7 +27,7 @@ def stroud_1957_2(n):
     ]
 
     points, weights = untangle(data)
-    return CnScheme("Stroud 1957-2", n, weights, points, 2, _citation)
+    return CnScheme("Stroud 1957-2", n, weights, points, 2, _source)
 
 
 def stroud_1957_3(n):
@@ -49,4 +49,4 @@ def stroud_1957_3(n):
     data = [(frac(1, 2 * n), pts)]
 
     points, weights = untangle(data)
-    return CnScheme("Stroud 1957-3", n, weights, points, 3, _citation)
+    return CnScheme("Stroud 1957-3", n, weights, points, 3, _source)

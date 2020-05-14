@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from ..helpers import article, book
 from ._helpers import T2Scheme, concat, s1, s2, s3
 
-citation = book(
+source = book(
     authors=["Gilbert Strang", "George Fix"],
     title="An Analysis of the Finite Element Method",
     publisher="Wellesley-Cambridge Press",
@@ -12,7 +12,7 @@ citation = book(
     url="https://bookstore.siam.org/wc08/",
 )
 
-citation = article(
+source = article(
     authors=["G.R. Cowper"],
     title="Gaussian quadrature formulas for triangles",
     journal="Numerical Methods in Engineering",
@@ -28,36 +28,36 @@ citation = article(
 
 def strang_fix_cowper_01():
     weights, points = s2([frac(1, 3), frac(1, 6)])
-    return T2Scheme("Strang-Fix-Cowper 1", weights, points, 2, citation)
+    return T2Scheme("Strang-Fix-Cowper 1", weights, points, 2, source)
 
 
 def strang_fix_cowper_02():
     weights, points = s2([frac(1, 3), frac(1, 2)])
-    return T2Scheme("Strang-Fix-Cowper 2", weights, points, 2, citation)
+    return T2Scheme("Strang-Fix-Cowper 2", weights, points, 2, source)
 
 
 def strang_fix_cowper_03():
     weights, points = concat(s3(-frac(9, 16)), s2([frac(25, 48), frac(1, 5)]))
-    return T2Scheme("Strang-Fix-Cowper 3", weights, points, 3, citation)
+    return T2Scheme("Strang-Fix-Cowper 3", weights, points, 3, source)
 
 
 def strang_fix_cowper_04():
     weights, points = s1([1.0 / 6.0, 0.659027622374092, 0.231933368553031])
-    return T2Scheme("Strang-Fix-Cowper 4", weights, points, 3, citation)
+    return T2Scheme("Strang-Fix-Cowper 4", weights, points, 3, source)
 
 
 def strang_fix_cowper_05():
     weights, points = s2(
         [0.109951743655322, 0.091576213509771], [0.223381589678011, 0.445948490915965]
     )
-    return T2Scheme("Strang-Fix-Cowper 5", weights, points, 4, citation)
+    return T2Scheme("Strang-Fix-Cowper 5", weights, points, 4, source)
 
 
 def strang_fix_cowper_06():
     weights, points = concat(
         s3(3.0 / 8.0), s1([5.0 / 48.0, 0.736712498968435, 0.237932366472434])
     )
-    return T2Scheme("Strang-Fix-Cowper 6", weights, points, 4, citation)
+    return T2Scheme("Strang-Fix-Cowper 6", weights, points, 4, source)
 
 
 def strang_fix_cowper_07():
@@ -68,7 +68,7 @@ def strang_fix_cowper_07():
             [0.13239415278850616, 0.47014206410511505],
         ),
     )
-    return T2Scheme("Strang-Fix-Cowper 7", weights, points, 5, citation)
+    return T2Scheme("Strang-Fix-Cowper 7", weights, points, 5, source)
 
 
 def strang_fix_cowper_08():
@@ -76,7 +76,7 @@ def strang_fix_cowper_08():
         s2([0.205950504760887, 0.437525248383384]),
         s1([0.063691414286223, 0.797112651860071, 0.165409927389841]),
     )
-    return T2Scheme("Strang-Fix-Cowper 8", weights, points, 5, citation)
+    return T2Scheme("Strang-Fix-Cowper 8", weights, points, 5, source)
 
 
 def strang_fix_cowper_09():
@@ -87,7 +87,7 @@ def strang_fix_cowper_09():
         ),
         s1([0.082851075618374, 0.636502499121399, 0.310352451033785]),
     )
-    return T2Scheme("Strang-Fix-Cowper 9", weights, points, 6, citation)
+    return T2Scheme("Strang-Fix-Cowper 9", weights, points, 6, source)
 
 
 def strang_fix_cowper_10():
@@ -99,4 +99,4 @@ def strang_fix_cowper_10():
         ),
         s1([+0.077113760890257, 0.638444188569809, 0.312865496004875]),
     )
-    return T2Scheme("Strang-Fix-Cowper 10", weights, points, 7, citation)
+    return T2Scheme("Strang-Fix-Cowper 10", weights, points, 7, source)

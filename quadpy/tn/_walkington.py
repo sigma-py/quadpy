@@ -7,7 +7,7 @@ from sympy import sqrt
 from ..helpers import techreport, untangle
 from ._helpers import TnScheme
 
-citation = techreport(
+source = techreport(
     authors=["Noel J. Walkington"],
     title="Quadrature on simplices of arbitrary dimension",
     institution="CMU",
@@ -22,7 +22,7 @@ def walkington_1(d):
     points, weights = untangle(data)
     # normalize weights
     weights /= numpy.sum(weights)
-    return TnScheme("Walkington 1", d, weights, points, degree, citation)
+    return TnScheme("Walkington 1", d, weights, points, degree, source)
 
 
 def walkington_2(d):
@@ -37,7 +37,7 @@ def walkington_2(d):
     points, weights = untangle(data)
     # normalize weights
     weights /= numpy.sum(weights)
-    return TnScheme("Walkington 2", d, weights, points, degree, citation)
+    return TnScheme("Walkington 2", d, weights, points, degree, source)
 
 
 def walkington_3(d):
@@ -49,7 +49,7 @@ def walkington_3(d):
     points, weights = untangle(data)
     # normalize weights
     weights /= numpy.sum(weights)
-    return TnScheme("Walkington 3", d, weights, points, degree, citation)
+    return TnScheme("Walkington 3", d, weights, points, degree, source)
 
 
 def walkington_5(d):
@@ -67,7 +67,7 @@ def walkington_5(d):
     points, weights = untangle(data)
     # normalize weights
     weights /= numpy.sum(weights)
-    return TnScheme("Walkington 5", d, weights, points, degree, citation)
+    return TnScheme("Walkington 5", d, weights, points, degree, source)
 
 
 def walkington_7(d):
@@ -89,7 +89,7 @@ def walkington_7(d):
     points, weights = untangle(data)
     # normalize weights
     weights /= numpy.sum(weights)
-    return TnScheme("Walkington 7", d, weights, points, degree, citation)
+    return TnScheme("Walkington 7", d, weights, points, degree, source)
 
 
 def _c(d, frac):

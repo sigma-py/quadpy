@@ -6,7 +6,7 @@ from sympy import Rational as frac
 from ..helpers import article, get_all_exponents, untangle
 from ._helpers import TnScheme
 
-citation = article(
+source = article(
     authors=["A. Grundmann", "H.M. Moeller"],
     title="Invariant integration formulas for the n-simplex by combinatorial methods",
     journal="SIAM J. Numer. Anal.",
@@ -42,4 +42,4 @@ def grundmann_moeller(n, s):
     weights /= sum(weights)
 
     name = f"GrundmannMöller(dim={n}, {s})"
-    return TnScheme(name, n, weights, points, d, citation)
+    return TnScheme(name, n, weights, points, d, source)

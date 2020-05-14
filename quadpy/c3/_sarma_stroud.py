@@ -2,7 +2,7 @@ from ..helpers import article
 from ._hammer_wymore import hammer_wymore
 from ._helpers import C3Scheme
 
-citation = article(
+source = article(
     authors=["V.L.N. Sarma", "A. H. Stroud"],
     title="Eberlein Measure and Mechanical Quadrature Formulae. II. Numerical Results",
     journal="Mathematics of Computation",
@@ -21,4 +21,4 @@ def sarma_stroud():
     # particular value of lambda is not explicitly given in the article, but computed
     # from the specified values. Note that it is only given in single precision.
     hw = hammer_wymore(lmbda=1.0329785305)
-    return C3Scheme("Sarma-Stroud", hw.weights, hw.points, hw.degree, citation)
+    return C3Scheme("Sarma-Stroud", hw.weights, hw.points, hw.degree, source)

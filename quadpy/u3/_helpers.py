@@ -1,12 +1,15 @@
 import numpy
 import sympy
 
+from ..helpers import QuadratureScheme
 
-class U3Scheme:
-    def __init__(self, name, weights, points, azimuthal_polar, degree, citation):
+
+class U3Scheme(QuadratureScheme):
+    def __init__(self, name, weights, points, azimuthal_polar, degree, source):
+        self.domain = "U3"
         self.name = name
         self.degree = degree
-        self.citation = citation
+        self.source = source
 
         if weights.dtype == numpy.float64:
             self.weights = weights
@@ -28,14 +31,6 @@ class U3Scheme:
             assert azimuthal_polar.dtype in [numpy.dtype("O"), numpy.int_]
             self.azimuthal_polar = azimuthal_polar.astype(numpy.float64)
             self.azimuthal_polar_symbolic = azimuthal_polar
-        return
-
-    def show(self, *args, **kwargs):
-        import matplotlib.pyplot as plt
-
-        self.plot(*args, **kwargs)
-        plt.show()
-        return
 
     def plot(self):
         import matplotlib.pyplot as plt
@@ -57,7 +52,6 @@ class U3Scheme:
             _plot_spherical_cap_mpl(ax, p, theta, color)
 
         ax.set_axis_off()
-        return
 
     def integrate(self, f, center, radius, dot=numpy.dot):
         """Quadrature where `f` is defined in Cartesian coordinates.

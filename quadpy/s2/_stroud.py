@@ -24,7 +24,7 @@ from ._rabinowitz_richter import rabinowitz_richter_4 as stroud_s2_11_3
 from ._rabinowitz_richter import rabinowitz_richter_5 as stroud_s2_13_1
 from ._radon import radon
 
-_citation = book(
+_source = book(
     authors=["Arthur Stroud"],
     title="Approximate Calculation of Multiple Integrals",
     publisher="Prentice Hall",
@@ -55,7 +55,7 @@ def stroud_s2_9_3():
 
     data = [(B0, z(2)), (B1, r1 * x), (B2, r2 * x)]
     points, weights = untangle(data)
-    return S2Scheme("Stroud S2 9-3", weights, points, 9, _citation)
+    return S2Scheme("Stroud S2 9-3", weights, points, 9, _source)
 
 
 __all__ = [

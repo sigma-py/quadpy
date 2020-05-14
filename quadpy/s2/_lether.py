@@ -3,7 +3,7 @@ import numpy
 from ..helpers import article
 from ._helpers import S2Scheme
 
-_citation = article(
+_source = article(
     authors=["Frank G. Lether"],
     title="A Generalized Product Rule for the Circle",
     journal="SIAM Journal on Numerical Analysis",
@@ -30,4 +30,4 @@ def lether(n):
     weights = numpy.outer(w, numpy.sin(mu * numpy.pi / (n + 1)) ** 2).flatten() / (
         n + 1
     )
-    return S2Scheme(f"Lether({n})", weights, points, 2 * n - 1, _citation)
+    return S2Scheme(f"Lether({n})", weights, points, 2 * n - 1, _source)

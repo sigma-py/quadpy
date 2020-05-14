@@ -4,7 +4,7 @@ from sympy import sqrt
 from ..helpers import article
 from ._helpers import C2Scheme, concat, pm, pm2, symm_r0, symm_s, zero
 
-citation = article(
+source = article(
     authors=["J. Albrecht", "L. Collatz"],
     title="Zur numerischen Auswertung mehrdimensionaler Integrale",
     journal="ZAMM",
@@ -20,7 +20,7 @@ def albrecht_collatz_1():
     weights, points = concat(
         zero(frac(5, 12)), symm_r0([frac(1, 8), 1]), symm_s([frac(1, 48), 1])
     )
-    return C2Scheme("Albrecht-Collatz 1", weights, points, 3, citation)
+    return C2Scheme("Albrecht-Collatz 1", weights, points, 3, source)
 
 
 def albrecht_collatz_2():
@@ -30,7 +30,7 @@ def albrecht_collatz_2():
     weights, points = concat(
         zero(frac(2, 7)), pm([frac(5, 63), 0, t]), pm2([frac(5, 36), r, s])
     )
-    return C2Scheme("Albrecht-Collatz 2", weights, points, 5, citation)
+    return C2Scheme("Albrecht-Collatz 2", weights, points, 5, source)
 
 
 def albrecht_collatz_3():
@@ -40,7 +40,7 @@ def albrecht_collatz_3():
         zero(frac(2, 7)),
         pm([frac(25, 168), r, r], [frac(5, 48), +s, -t], [frac(5, 48), +t, -s]),
     )
-    return C2Scheme("Albrecht-Collatz 3", weights, points, 5, citation)
+    return C2Scheme("Albrecht-Collatz 3", weights, points, 5, source)
 
 
 def albrecht_collatz_4():
@@ -49,4 +49,4 @@ def albrecht_collatz_4():
         symm_r0([frac(2, 45), 1]),
         symm_s([frac(1, 60), 1], [frac(8, 45), frac(1, 2)]),
     )
-    return C2Scheme("Albrecht-Collatz 4", weights, points, 5, citation)
+    return C2Scheme("Albrecht-Collatz 4", weights, points, 5, source)

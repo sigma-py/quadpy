@@ -5,7 +5,7 @@ from sympy import sqrt
 from ..helpers import article, fsd, untangle, z
 from ._helpers import CnScheme
 
-_citation = article(
+_source = article(
     authors=["G.M. Phillips"],
     title="Numerical integration over an N-dimensional rectangular region",
     journal="Comput J",
@@ -75,4 +75,4 @@ def phillips(n):
         data.append((d, fsd(n, (nu, 3))))
 
     points, weights = untangle(data)
-    return CnScheme("Phillips", n, weights, points, 7, _citation)
+    return CnScheme("Phillips", n, weights, points, 7, _source)

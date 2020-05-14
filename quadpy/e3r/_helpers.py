@@ -2,13 +2,14 @@ from math import pi
 
 import numpy
 
-from ..helpers import backend_to_function
+from ..helpers import QuadratureScheme, backend_to_function
 
 
-class E3rScheme:
-    def __init__(self, name, weights, points, degree, citation):
+class E3rScheme(QuadratureScheme):
+    def __init__(self, name, weights, points, degree, source):
+        self.domain = "E3r"
         self.name = name
-        self.citation = citation
+        self.source = source
         self.degree = degree
 
         if weights.dtype == numpy.float64:
@@ -24,7 +25,6 @@ class E3rScheme:
             assert points.dtype in [numpy.dtype("O"), numpy.int_]
             self.points = points.astype(numpy.float64)
             self.points_symbolic = points
-        return
 
     def integrate(self, f, dot=numpy.dot):
         flt = numpy.vectorize(float)
@@ -37,4 +37,3 @@ class E3rScheme:
         backend_to_function[backend](
             scheme.points, scheme.weights, volume=8 * numpy.pi, edges=[]
         )
-        return

@@ -4,7 +4,7 @@ from sympy import sqrt
 from ..helpers import article, rd, untangle
 from ._helpers import TnScheme
 
-citation = article(
+source = article(
     authors=["Preston C. Hammer", "Arthur H. Stroud"],
     title="Numerical Integration Over Simplexes",
     journal="Mathematical Tables and Other Aids to Computation",
@@ -24,7 +24,7 @@ def hammer_stroud_1a(n):
     data = [(frac(1, n + 1), rd(n + 1, [(r, n), (s, 1)]))]
 
     points, weights = untangle(data)
-    return TnScheme("Hammer-Stround 1a", n, weights, points, degree, citation)
+    return TnScheme("Hammer-Stround 1a", n, weights, points, degree, source)
 
 
 def hammer_stroud_1b(n):
@@ -34,7 +34,7 @@ def hammer_stroud_1b(n):
     data = [(frac(1, n + 1), rd(n + 1, [(r, n), (s, 1)]))]
 
     points, weights = untangle(data)
-    return TnScheme("Hammer-Stround 1b", n, weights, points, degree, citation)
+    return TnScheme("Hammer-Stround 1b", n, weights, points, degree, source)
 
 
 def hammer_stroud_2(n):
@@ -50,4 +50,4 @@ def hammer_stroud_2(n):
     data = [(B, [(n + 1) * [r]]), (C, rd(n + 1, [(t, 1), (s, n)]))]
 
     points, weights = untangle(data)
-    return TnScheme("Hammer-Stround 2", n, weights, points, degree, citation)
+    return TnScheme("Hammer-Stround 2", n, weights, points, degree, source)

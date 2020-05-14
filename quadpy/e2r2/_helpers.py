@@ -2,13 +2,14 @@ import math
 
 import numpy
 
-from ..helpers import plot_disks
+from ..helpers import QuadratureScheme, plot_disks
 
 
-class E2r2Scheme:
-    def __init__(self, name, weights, points, degree, citation):
+class E2r2Scheme(QuadratureScheme):
+    def __init__(self, name, weights, points, degree, source):
+        self.domain = "E2r2"
         self.name = name
-        self.citation = citation
+        self.source = source
         self.degree = degree
 
         if weights.dtype == numpy.float64:
@@ -24,14 +25,6 @@ class E2r2Scheme:
             assert points.dtype in [numpy.dtype("O"), numpy.int_]
             self.points = points.astype(numpy.float64)
             self.points_symbolic = points
-        return
-
-    def show(self, *args, **kwargs):
-        import matplotlib.pyplot as plt
-
-        self.plot(*args, **kwargs)
-        plt.show()
-        return
 
     def plot(self, show_axes=True):
         import matplotlib.pyplot as plt

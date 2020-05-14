@@ -6,10 +6,11 @@ from ..tn import TnScheme, get_vol, transform
 
 
 class T3Scheme(TnScheme):
-    def __init__(self, name, weights, points, degree, citation=None):
+    def __init__(self, name, weights, points, degree, source=None):
+        self.domain = "T3"
         self.name = name
         self.degree = degree
-        self.citation = citation
+        self.source = source
 
         if weights.dtype == numpy.float64:
             self.weights = weights

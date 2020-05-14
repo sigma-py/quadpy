@@ -3,7 +3,7 @@ from math import pi
 from ..helpers import article, untangle
 from ._helpers import E2r2Scheme, _s4, _s8, _s40, _z
 
-_citation = article(
+_source = article(
     authors=["Philip Rabinowitz", "Nira Richter"],
     title="Perfectly Symmetric Two-Dimensional Integration Formulas with Minimal Numbers of Points",
     journal="Mathematics of Computation",
@@ -25,7 +25,7 @@ def rabinowitz_richter_1():
     ]
     points, weights = untangle(data)
     weights /= pi
-    return E2r2Scheme("Rabinowitz-Richter 1", weights, points, 9, _citation)
+    return E2r2Scheme("Rabinowitz-Richter 1", weights, points, 9, _source)
 
 
 def rabinowitz_richter_2():
@@ -38,7 +38,7 @@ def rabinowitz_richter_2():
     ]
     points, weights = untangle(data)
     weights /= pi
-    return E2r2Scheme("Rabinowitz-Richter 2", weights, points, 11, _citation)
+    return E2r2Scheme("Rabinowitz-Richter 2", weights, points, 11, _source)
 
 
 def rabinowitz_richter_3():
@@ -52,7 +52,7 @@ def rabinowitz_richter_3():
     ]
     points, weights = untangle(data)
     weights /= pi
-    return E2r2Scheme("Rabinowitz-Richter 3", weights, points, 11, _citation)
+    return E2r2Scheme("Rabinowitz-Richter 3", weights, points, 11, _source)
 
 
 def rabinowitz_richter_4():
@@ -68,7 +68,7 @@ def rabinowitz_richter_4():
     ]
     points, weights = untangle(data)
     weights /= pi
-    return E2r2Scheme("Rabinowitz-Richter 4", weights, points, 13, _citation)
+    return E2r2Scheme("Rabinowitz-Richter 4", weights, points, 13, _source)
 
 
 def rabinowitz_richter_5():
@@ -85,4 +85,4 @@ def rabinowitz_richter_5():
     ]
     points, weights = untangle(data)
     weights /= pi
-    return E2r2Scheme("Rabinowitz-Richter 5", weights, points, 15, _citation)
+    return E2r2Scheme("Rabinowitz-Richter 5", weights, points, 15, _source)

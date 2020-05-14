@@ -13,6 +13,8 @@ def test_scheme(scheme, tol):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
+    print(scheme)
+
     def eval_orthopolys(x):
         return orthopy.e1r.tree(x, scheme.degree + 1, symbolic=False)
 
@@ -31,13 +33,11 @@ def test_scheme(scheme, tol):
     assert degree == scheme.degree, "{} -- Observed: {}   expected: {}".format(
         scheme.name, degree, scheme.degree
     )
-    return
 
 
 @pytest.mark.parametrize("scheme", [quadpy.e1r.gauss_laguerre(1)])
 def test_show(scheme):
     scheme.show()
-    return
 
 
 def test_laguerre_mpmath():
@@ -53,7 +53,6 @@ def test_laguerre_mpmath():
     w1 = (2 + mp.sqrt(2)) / 4
     w2 = (2 - mp.sqrt(2)) / 4
     assert (abs(scheme.weights - [w1, w2]) < tol).all()
-    return
 
 
 def test_laguerre_generalized_mpmath():
@@ -69,7 +68,6 @@ def test_laguerre_generalized_mpmath():
     w1 = 2 / ((-1 + mp.sqrt(3)) ** 2 * (1 + 2 / (-1 + mp.sqrt(3)) ** 2))
     w2 = 2 / ((-1 - mp.sqrt(3)) ** 2 * (1 + 2 / (-1 - mp.sqrt(3)) ** 2))
     assert (abs(scheme.weights - [w1, w2]) < tol).all()
-    return
 
 
 if __name__ == "__main__":

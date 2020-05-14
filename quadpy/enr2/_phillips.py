@@ -5,7 +5,7 @@ from sympy import sqrt
 from ..helpers import article, fsd, untangle
 from ._helpers import Enr2Scheme
 
-citation = article(
+source = article(
     authors=["G.M. Phillips"],
     title="A survey of one-dimensional and multidimensional numerical integration",
     journal="Computer Physics Communications",
@@ -29,4 +29,4 @@ def phillips(n):
         (w3, fsd(n, (lmbda, 2))),
     ]
     points, weights = untangle(data)
-    return Enr2Scheme("Phillips", n, weights, points, 5, citation)
+    return Enr2Scheme("Phillips", n, weights, points, 5, source)

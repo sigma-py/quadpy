@@ -13,7 +13,7 @@ from sympy import sqrt
 from ..helpers import article
 from ._helpers import T3Scheme, concat, r, s4
 
-citation = article(
+source = article(
     authors=["P.C. Hammer", "O.J. Marlowe", "A.H. Stroud"],
     title="Numerical Integration Over Simplexes and Cones",
     journal="Mathematical Tables and Other Aids to Computation",
@@ -24,7 +24,7 @@ citation = article(
     pages="130-137",
     url="https://doi.org/10.1090/S0025-5718-1956-0086389-6",
 )
-# citation = book(
+# source = book(
 #     authors=["Olgierd Zienkiewicz"],
 #     title="The Finite Element Method, Sixth Edition",
 #     publisher="Butterworth-Heinemann",
@@ -38,17 +38,17 @@ citation = article(
 def hammer_marlowe_stroud_1():
     degree = 2
     weights, points = r([frac(1, 4), 1 / sqrt(5)])
-    return T3Scheme("Hammer-Marlowe-Stroud 1", weights, points, degree, citation)
+    return T3Scheme("Hammer-Marlowe-Stroud 1", weights, points, degree, source)
 
 
 def hammer_marlowe_stroud_2():
     degree = 2
     weights, points = r([frac(1, 4), -1 / sqrt(5)])
-    return T3Scheme("Hammer-Marlowe-Stroud 2", weights, points, degree, citation)
+    return T3Scheme("Hammer-Marlowe-Stroud 2", weights, points, degree, source)
 
 
 # Used in Zienkiewicz 5
 def hammer_marlowe_stroud_3():
     degree = 3
     weights, points = concat(s4(-frac(4, 5)), r([frac(9, 20), frac(1, 3)]))
-    return T3Scheme("Hammer-Marlowe-Stroud 3", weights, points, degree, citation)
+    return T3Scheme("Hammer-Marlowe-Stroud 3", weights, points, degree, source)

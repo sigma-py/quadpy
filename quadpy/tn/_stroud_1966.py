@@ -5,7 +5,7 @@ from sympy import sqrt
 from ..helpers import article, rd, untangle
 from ._helpers import TnScheme
 
-citation = article(
+source = article(
     authors=["A.H. Stroud"],
     title="Some approximate integration formulas of degree 3 for an n-dimensional simplex",
     journal="Numerische Mathematik",
@@ -31,7 +31,7 @@ def stroud_1966_1(n):
     data = [(B, rd(n + 1, [(1, 1)])), (C, rd(n + 1, [(r, n), (s, 1)]))]
 
     points, weights = untangle(data)
-    return TnScheme("Stroud 1966-I", n, weights, points, degree, citation)
+    return TnScheme("Stroud 1966-I", n, weights, points, degree, source)
 
 
 def stroud_1966_2(n):
@@ -51,7 +51,7 @@ def stroud_1966_2(n):
     data = [(B, rd(n + 1, [(r, n), (s, 1)])), (C, rd(n + 1, [(t, 2)]))]
 
     points, weights = untangle(data)
-    return TnScheme("Stroud 1966-II", n, weights, points, degree, citation)
+    return TnScheme("Stroud 1966-II", n, weights, points, degree, source)
 
 
 def stroud_1966_3(n):
@@ -73,7 +73,7 @@ def stroud_1966_3(n):
     ]
 
     points, weights = untangle(data)
-    return TnScheme("Stroud 1966-III", n, weights, points, degree, citation)
+    return TnScheme("Stroud 1966-III", n, weights, points, degree, source)
 
 
 def stroud_1966_4(n):
@@ -93,7 +93,7 @@ def stroud_1966_4(n):
         (C, rd(n + 1, [(s, 3)])),
     ]
     points, weights = untangle(data)
-    return TnScheme("Stroud 1966-IV", n, weights, points, degree, citation)
+    return TnScheme("Stroud 1966-IV", n, weights, points, degree, source)
 
 
 def stroud_1966_5(n):
@@ -112,7 +112,7 @@ def stroud_1966_5(n):
         (C, rd(n + 1, [(s, 3)])),
     ]
     points, weights = untangle(data)
-    return TnScheme("Stroud 1966-I", n, weights, points, degree, citation)
+    return TnScheme("Stroud 1966-I", n, weights, points, degree, source)
 
 
 def stroud_1966_6(n):
@@ -136,7 +136,7 @@ def stroud_1966_6(n):
     ]
 
     points, weights = untangle(data)
-    return TnScheme("Stroud 1966-VI", n, weights, points, degree, citation)
+    return TnScheme("Stroud 1966-VI", n, weights, points, degree, source)
 
 
 def stroud_1966_7(n):
@@ -159,4 +159,4 @@ def stroud_1966_7(n):
     ]
 
     points, weights = untangle(data)
-    return TnScheme("Stroud 1966-VII", n, weights, points, degree, citation)
+    return TnScheme("Stroud 1966-VII", n, weights, points, degree, source)

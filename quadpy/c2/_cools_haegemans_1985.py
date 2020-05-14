@@ -2,7 +2,7 @@
 from ..helpers import techreport
 from ._helpers import C2Scheme, concat, s4a, symm_r0, symm_s_t
 
-citation = techreport(
+source = techreport(
     authors=["R. Cools", "A. Haegemans"],
     title="Construction of fully symmetric cubature formulae of degree 4k-3 for fully symmetric planar regions",
     year="1985",
@@ -18,7 +18,7 @@ def cools_haegemans_1985_1():
         s4a([0.535500902317e-01, 0.690880550486], [0.106828079664e-01, 0.939655258097]),
         symm_r0([0.113540990172e00, 0.488926856974]),
     )
-    return C2Scheme("Cools-Haegemans 1985-1", weights, points, 9, citation)
+    return C2Scheme("Cools-Haegemans 1985-1", weights, points, 9, source)
 
 
 def cools_haegemans_1985_2():
@@ -31,7 +31,7 @@ def cools_haegemans_1985_2():
         ),
         s4a([0.475325029082e-01, 0.551473280570], [0.325703974952e-02, 0.968340720218]),
     )
-    return C2Scheme("Cools-Haegemans 1985-2", weights, points, 13, citation)
+    return C2Scheme("Cools-Haegemans 1985-2", weights, points, 13, source)
 
 
 def cools_haegemans_1985_3():
@@ -44,4 +44,4 @@ def cools_haegemans_1985_3():
         ),
         s4a([0.361061434781e-01, 0.178898689064], [0.116671271121e-01, 0.914197956909]),
     )
-    return C2Scheme("Cools-Haegemans 1985-3", weights, points, 13, citation)
+    return C2Scheme("Cools-Haegemans 1985-3", weights, points, 13, source)

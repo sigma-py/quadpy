@@ -33,6 +33,8 @@ def test_scheme(scheme, tol=1.0e-14):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
+    print(scheme)
+
     degree = check_degree(
         lambda poly: scheme.integrate(poly, [0.0, 0.0, 0.0], 1.0),
         integrate_monomial_over_nball,
@@ -43,14 +45,12 @@ def test_scheme(scheme, tol=1.0e-14):
     assert degree == scheme.degree, "{}  --  Observed: {}   expected: {}".format(
         scheme.name, degree, scheme.degree
     )
-    return
 
 
 @pytest.mark.parametrize("scheme", [quadpy.s3.hammer_stroud_11_3()])
 def test_show(scheme, backend="mpl"):
     scheme.show(backend=backend)
     plt.close()
-    return
 
 
 if __name__ == "__main__":

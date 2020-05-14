@@ -8,7 +8,7 @@ from ._stroud_secrest import stroud_secrest_2 as stroud_enr_3_1
 from ._stroud_secrest import stroud_secrest_3 as stroud_enr_3_2
 from ._stroud_secrest import stroud_secrest_4 as stroud_enr_5_1
 
-citation = book(
+source = book(
     authors=["Arthur Stroud"],
     title="Approximate Calculation of Multiple Integrals",
     publisher="Prentice Hall",
@@ -48,7 +48,7 @@ def stroud_enr_5_3(n):
     data += [(B0, numpy.full((1, n), 0))]
 
     points, weights = untangle(data)
-    return EnrScheme("Stroud Enr 5-3", n, weights, points, 5, citation)
+    return EnrScheme("Stroud Enr 5-3", n, weights, points, 5, source)
 
 
 def stroud_enr_5_4(n):
@@ -59,7 +59,7 @@ def stroud_enr_5_4(n):
     data = [(A, numpy.full((1, n), 0)), (B, fsd(n, (r, 1), (s, n - 1)))]
 
     points, weights = untangle(data)
-    return EnrScheme("Stroud Enr 5-4", n, weights, points, 5, citation)
+    return EnrScheme("Stroud Enr 5-4", n, weights, points, 5, source)
 
 
 # math domain error

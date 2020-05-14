@@ -4,7 +4,7 @@ from mpmath import mp
 from ..helpers import article, rd, untangle
 from ._helpers import TnScheme
 
-citation = article(
+source = article(
     authors=["A.H. Stroud"],
     title="Approximate Integration Formulas of Degree 3 for Simplexes",
     journal="Mathematics of Computation",
@@ -55,7 +55,7 @@ def _stroud_1964(variant_a, n):
     points, weights = untangle(data)
 
     name = "Stroud 1964{}".format("a" if variant_a else "b")
-    return TnScheme(name, n, weights, points, degree, citation)
+    return TnScheme(name, n, weights, points, degree, source)
 
 
 def stroud_1964a(n):

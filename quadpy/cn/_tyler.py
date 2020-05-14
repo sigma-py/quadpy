@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from ..helpers import article, fsd, untangle, z
 from ._helpers import CnScheme
 
-_citation = article(
+_source = article(
     authors=["G.W. Tyler"],
     title="Numerical integration of functions of several variables",
     journal="Canad. J. Math.",
@@ -17,4 +17,4 @@ _citation = article(
 def tyler(n):
     data = [(frac(3 - n, 3), z(n)), (frac(1, 6), fsd(n, (1, 1)))]
     points, weights = untangle(data)
-    return CnScheme("Tyler", n, weights, points, 3, _citation)
+    return CnScheme("Tyler", n, weights, points, 3, _source)

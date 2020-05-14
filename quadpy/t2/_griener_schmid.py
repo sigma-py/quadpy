@@ -3,7 +3,7 @@ import numpy
 from ..helpers import article
 from ._helpers import T2Scheme
 
-citation = article(
+source = article(
     authors=["Bernhard Griener", "Hans Joachim Schmid"],
     title="An interactive tool to visualize common zeros of two-dimensional polynomials",
     journal="Journal of Computational and Applied Mathematics",
@@ -55,7 +55,7 @@ def griener_schmid_1():
         ]
     )
     points = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
-    return T2Scheme("Griener-Schmid 1", weights, points, 6, citation)
+    return T2Scheme("Griener-Schmid 1", weights, points, 6, source)
 
 
 def griener_schmid_2():
@@ -89,4 +89,4 @@ def griener_schmid_2():
     )
 
     points = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
-    return T2Scheme("Griener-Schmid 2", weights, points, 6, citation)
+    return T2Scheme("Griener-Schmid 2", weights, points, 6, source)
