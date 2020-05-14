@@ -2,11 +2,12 @@ import math
 
 import numpy
 
-from ..helpers import plot_disks
+from ..helpers import QuadratureScheme, plot_disks
 
 
-class E2rScheme:
+class E2rScheme(QuadratureScheme):
     def __init__(self, name, weights, points, degree, source):
+        self.domain = "E2r"
         self.name = name
         self.source = source
         self.degree = degree
@@ -24,14 +25,6 @@ class E2rScheme:
             assert points.dtype in [numpy.dtype("O"), numpy.int_]
             self.points = points.astype(numpy.float64)
             self.points_symbolic = points
-        return
-
-    def show(self, *args, **kwargs):
-        import matplotlib.pyplot as plt
-
-        self.plot(*args, **kwargs)
-        plt.show()
-        return
 
     def plot(self, show_axes=True):
         import matplotlib.pyplot as plt
@@ -45,7 +38,6 @@ class E2rScheme:
         I0 = 2 * math.pi
 
         plot_disks(plt, self.points, self.weights, I0)
-        return
 
     def integrate(self, f, dot=numpy.dot):
         flt = numpy.vectorize(float)

@@ -3,9 +3,12 @@ import math
 import numpy
 import sympy
 
+from ..helpers import QuadratureScheme
 
-class TnScheme:
+
+class TnScheme(QuadratureScheme):
     def __init__(self, name, dim, weights, points, degree, source):
+        self.domain = f"Tn (n={dim})"
         self.name = name
         self.dim = dim
         self.degree = degree
@@ -24,7 +27,6 @@ class TnScheme:
             assert points.dtype in [numpy.dtype("O"), numpy.int_]
             self.points = points.astype(numpy.float64)
             self.points_symbolic = points
-        return
 
     def integrate(self, f, simplex, dot=numpy.dot):
         flt = numpy.vectorize(float)

@@ -1,10 +1,11 @@
 import numpy
 
-from ..helpers import plot_disks
+from ..helpers import QuadratureScheme, plot_disks
 
 
-class S2Scheme:
+class S2Scheme(QuadratureScheme):
     def __init__(self, name, weights, points, degree: int, source=None):
+        self.domain = "S2"
         self.name = name
         self.degree = degree
         self.source = source
@@ -24,14 +25,6 @@ class S2Scheme:
             assert points.dtype == numpy.dtype("O")
             self.points = flt(points)
             self.points_symbolic = points
-        return
-
-    def show(self, *args, **kwargs):
-        import matplotlib.pyplot as plt
-
-        self.plot(*args, **kwargs)
-        plt.show()
-        return
 
     def plot(self, show_axes=False):
         import matplotlib.pyplot as plt

@@ -27,13 +27,6 @@ class C2Scheme(CnScheme):
             assert points.dtype in [numpy.dtype("O"), numpy.int_]
             self.points = points.astype(numpy.float64)
             self.points_symbolic = points
-        return
-
-    def show(self, *args, **kwargs):
-        import matplotlib.pyplot as plt
-
-        self.plot(*args, **kwargs)
-        plt.show()
 
     def plot(self, quad=rectangle_points([0.0, 1.0], [0.0, 1.0]), show_axes=False):
         """Shows the quadrature points on a given quad. The area of the disks
@@ -62,7 +55,6 @@ class C2Scheme(CnScheme):
         plt.axis("equal")
         plt.xlim(-0.1, 1.1)
         plt.ylim(-0.1, 1.1)
-        return
 
 
 def zero(weight):

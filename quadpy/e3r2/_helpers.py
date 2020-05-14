@@ -2,11 +2,12 @@ from math import pi, sqrt
 
 import numpy
 
-from ..helpers import backend_to_function
+from ..helpers import QuadratureScheme, backend_to_function
 
 
-class E3r2Scheme:
+class E3r2Scheme(QuadratureScheme):
     def __init__(self, name, weights, points, degree, source):
+        self.domain = "E3r2"
         self.name = name
         self.source = source
         self.degree = degree
@@ -24,7 +25,6 @@ class E3r2Scheme:
             assert points.dtype in [numpy.dtype("O"), numpy.int_]
             self.points = points.astype(numpy.float64)
             self.points_symbolic = points
-        return
 
     def integrate(self, f, dot=numpy.dot):
         flt = numpy.vectorize(float)

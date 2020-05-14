@@ -58,7 +58,6 @@ def test_scheme(scheme):
     ), "{} (dim={})  --  observed: {}, expected: {}".format(
         scheme.name, scheme.dim, degree, scheme.degree
     )
-    return
 
 
 if __name__ == "__main__":

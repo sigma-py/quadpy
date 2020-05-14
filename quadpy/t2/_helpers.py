@@ -7,6 +7,7 @@ from ..tn import TnScheme, get_vol, transform
 
 class T2Scheme(TnScheme):
     def __init__(self, name, weights, points, degree, source=None):
+        self.domain = "T2"
         self.name = name
         self.degree = degree
         self.source = source
@@ -24,14 +25,6 @@ class T2Scheme(TnScheme):
             assert points.dtype in [numpy.dtype("O"), numpy.int_]
             self.points = points.astype(numpy.float64)
             self.points_symbolic = points
-        return
-
-    def show(self, *args, **kwargs):
-        import matplotlib.pyplot as plt
-
-        self.plot(*args, **kwargs)
-        plt.show()
-        return
 
     def plot(
         self,

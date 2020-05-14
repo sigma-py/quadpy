@@ -1,10 +1,11 @@
 import numpy
 
-from .. import helpers
+from ..helpers import QuadratureScheme, plot_disks
 
 
-class U2Scheme:
+class U2Scheme(QuadratureScheme):
     def __init__(self, name, source, degree, weights, points):
+        self.domain = "U2"
         self.name = name
         self.source = source
         self.degree = degree
@@ -49,7 +50,7 @@ class U2Scheme:
         # manifolds, not for the circle. What we do instead is choose the total_area
         # such that the sum of the disk radii equals pi.
         total_area = numpy.pi ** 3 / len(self.weights)
-        helpers.plot_disks(plt, self.points, self.weights, total_area)
+        plot_disks(plt, self.points, self.weights, total_area)
 
     def integrate(self, f, center, radius, dot=numpy.dot):
         center = numpy.array(center)

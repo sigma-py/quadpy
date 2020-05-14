@@ -1,10 +1,11 @@
 import numpy
 
-from ..helpers import backend_to_function
+from ..helpers import QuadratureScheme, backend_to_function
 
 
-class W3Scheme:
+class W3Scheme(QuadratureScheme):
     def __init__(self, name, weights, points, degree, source):
+        self.domain = "W3"
         self.name = name
         self.degree = degree
         self.source = source
@@ -22,7 +23,6 @@ class W3Scheme:
             assert points.dtype in [numpy.dtype("O"), numpy.int_]
             self.points = points.astype(numpy.float64)
             self.points_symbolic = points
-        return
 
     def integrate(self, f, wedge, dot=numpy.dot):
         flt = numpy.vectorize(float)

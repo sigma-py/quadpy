@@ -30,6 +30,8 @@ def test_scheme(scheme, tol=1.0e-14):
     assert scheme.points.dtype in [numpy.int64, numpy.float64], scheme.name
     assert scheme.weights.dtype in [numpy.int64, numpy.float64], scheme.name
 
+    print(scheme)
+
     n = scheme.dim
     center = numpy.zeros(n)
     rad = 1.0
@@ -43,7 +45,6 @@ def test_scheme(scheme, tol=1.0e-14):
     assert degree >= scheme.degree, "{}  --  observed: {}, expected: {}".format(
         scheme.name, degree, scheme.degree
     )
-    return
 
 
 if __name__ == "__main__":

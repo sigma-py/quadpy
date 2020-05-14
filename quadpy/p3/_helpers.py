@@ -1,10 +1,11 @@
 import numpy
 
-from ..helpers import backend_to_function
+from ..helpers import QuadratureScheme, backend_to_function
 
 
-class P3Scheme:
+class P3Scheme(QuadratureScheme):
     def __init__(self, name, weights, points, degree, source):
+        self.domain = "P3"
         self.name = name
         self.degree = degree
         self.source = source
@@ -22,7 +23,6 @@ class P3Scheme:
             assert points.dtype in [numpy.dtype("O"), numpy.int_]
             self.points = points.astype(numpy.float64)
             self.points_symbolic = points
-        return
 
     def integrate(self, f, pyra, dot=numpy.dot):
         flt = numpy.vectorize(float)
@@ -58,7 +58,6 @@ class P3Scheme:
         backend_to_function[backend](
             _transform(self.points.T, pyra).T, self.weights, vol, edges
         )
-        return
 
 
 def _transform(xi, pyra):

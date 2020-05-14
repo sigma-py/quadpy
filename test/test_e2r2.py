@@ -33,6 +33,8 @@ def test_scheme(scheme, tol=1.0e-14):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
+    print(scheme)
+
     # degree = check_degree(
     #     lambda poly: scheme.integrate(poly),
     #     integrate_monomial_over_enr2,
