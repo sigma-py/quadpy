@@ -5,7 +5,7 @@ import sympy
 
 from .. import un
 from ..helpers import article, fsd, pm, untangle, z
-from ._helpers import SnScheme, volume_nball
+from ._helpers import SnScheme
 
 citation = article(
     authors=["A.H. Stroud"],
