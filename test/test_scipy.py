@@ -69,6 +69,15 @@ def test_gh255b():
     )
 
 
+def test_gh295():
+    def f(x):
+        return 1e-20 * numpy.sin(x)
+
+    # import scipy.integrate
+    # out = scipy.integrate.quad(f, 0.0, 1.0, epsabs=0.0, epsrel=1.0e-10)
+    quadpy.quad(f, 0.0, 1.0, epsabs=1.0e-8, epsrel=1.0e-8)
+
+
 if __name__ == "__main__":
     # test_ln()
-    test_gh255b()
+    test_gh295()
