@@ -39,4 +39,5 @@ def stroud_1967():
     data = [(frac(32, 19), z()), (B, rss_pm(lmbd, xi)), (C, rss_pm(gmma, mu))]
 
     points, weights = untangle(data)
+    weights /= 8
     return C3Scheme("Stroud 1967", weights, points, 5, citation)

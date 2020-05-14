@@ -4,7 +4,7 @@ import pytest
 
 import quadpy
 from helpers import check_degree
-from quadpy.sn._helpers import integrate_monomial_over_unit_nball
+from quadpy.sn._helpers import integrate_monomial_over_nball
 
 schemes = [
     quadpy.s3.ditkin_1(),
@@ -35,13 +35,13 @@ def test_scheme(scheme, tol=1.0e-14):
 
     degree = check_degree(
         lambda poly: scheme.integrate(poly, [0.0, 0.0, 0.0], 1.0),
-        integrate_monomial_over_unit_nball,
+        integrate_monomial_over_nball,
         3,
         scheme.degree + 1,
         tol=tol,
     )
-    assert degree == scheme.degree, "Observed: {}   expected: {}".format(
-        degree, scheme.degree
+    assert degree == scheme.degree, "{}  --  Observed: {}   expected: {}".format(
+        scheme.name, degree, scheme.degree
     )
     return
 

@@ -45,4 +45,4 @@ class S3Scheme:
         rr = numpy.multiply.outer(radius, self.points)
         rr = numpy.swapaxes(rr, 0, -2)
         ff = numpy.asarray(f((rr + center).T))
-        return numpy.asarray(radius) ** 3 * dot(ff, self.weights)
+        return 4 / 3 * pi * numpy.asarray(radius) ** 3 * dot(ff, self.weights)

@@ -5,7 +5,7 @@ import sympy
 
 from .. import un
 from ..helpers import article, fsd, gamma_n_2, pm, untangle
-from ._helpers import Enr2Scheme
+from ._helpers import Enr2Scheme, volume_enr2
 
 citation = article(
     authors=["A.H. Stroud"],
@@ -20,7 +20,6 @@ citation = article(
 
 def _stroud_1967_7_2(n, variant_a, symbolic):
     sqrt = sympy.sqrt if symbolic else math.sqrt
-    pi = sympy.pi if symbolic else math.pi
 
     if variant_a:
         # the points/weights are complex-valued for n >= 9; one could permit that
@@ -52,7 +51,6 @@ def _stroud_1967_7_2(n, variant_a, symbolic):
     ]
 
     points, weights = untangle(data)
-    weights *= sqrt(pi) ** n
 
     name = "Stroud 1967-7 2 (variant {})".format("a" if variant_a else "b")
     return Enr2Scheme(name, n, weights, points, 7, citation)
@@ -80,4 +78,6 @@ def stroud_1967_7_4(n, symbolic=False):
 
     points = numpy.concatenate([r1 * s.points, r2 * s.points])
     weights = numpy.concatenate([A1 * s.weights, A2 * s.weights])
+
+    weights *= un.volume_nsphere(n - 1, symbolic) / volume_enr2(n, symbolic)
     return Enr2Scheme("Stroud 1967-7 4", n, weights, points, 7, citation)

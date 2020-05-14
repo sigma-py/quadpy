@@ -69,7 +69,6 @@ def dobrodeev_1978(n):
         data = [(G, fsd(n, (a, i))), (G, fsd(n, (b, j), (c, k)))]
 
     points, weights = untangle(data)
-    weights *= I0
     return UnScheme("Dobrodeev 1978", n, weights, points, degree, citation)
 
 

@@ -24,6 +24,7 @@ def _read(index):
     data = numpy.array(data["data"])
     points = data[:, :2]
     weights = data[:, 2]
+    weights /= 4
     return C2Scheme(f"Sommariva {index}", weights, points, degree, _citation)
 
 

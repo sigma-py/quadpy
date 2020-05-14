@@ -34,7 +34,6 @@ def stroud_c3_3_2():
     # Product Gauss scheme
     data = [(frac(1, 8), pm_rrr(sqrt(frac(1, 3))))]
     points, weights = untangle(data)
-    weights *= 8
     return C3Scheme("Stroud C3 3-2", weights, points, 3, _citation)
 
 

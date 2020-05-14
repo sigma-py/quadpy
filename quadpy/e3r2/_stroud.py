@@ -73,7 +73,6 @@ def stroud_e3r2_14_1(symbolic=False):
     ]
 
     points, weights = untangle(data)
-    weights *= numpy.sqrt(numpy.pi) ** 3
     return E3r2Scheme("Stroud E3r2 14-1", weights, points, 14, citation)
 
 

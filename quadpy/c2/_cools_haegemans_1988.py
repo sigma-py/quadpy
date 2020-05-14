@@ -45,6 +45,7 @@ def cools_haegemans_1988_1():
             0.424847248848669250615430111511957,
         ],
     )
+    weights /= 4
     return C2Scheme("Cools-Haegemans 1988-1", weights, points, 11, citation)
 
 
@@ -94,4 +95,5 @@ def cools_haegemans_1988_2():
         ),
         zero(0.30038211543122536139e00),
     )
+    weights /= 4
     return C2Scheme("Cools-Haegemans 1988-2", weights, points, 13, citation)

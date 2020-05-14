@@ -27,8 +27,6 @@ def stroud_1957_2(n):
     ]
 
     points, weights = untangle(data)
-    reference_volume = 2 ** n
-    weights *= reference_volume
     return CnScheme("Stroud 1957-2", n, weights, points, 2, _citation)
 
 
@@ -51,6 +49,4 @@ def stroud_1957_3(n):
     data = [(frac(1, 2 * n), pts)]
 
     points, weights = untangle(data)
-    reference_volume = 2 ** n
-    weights *= reference_volume
     return CnScheme("Stroud 1957-3", n, weights, points, 3, _citation)

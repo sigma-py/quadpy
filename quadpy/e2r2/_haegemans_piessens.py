@@ -1,3 +1,5 @@
+from math import pi
+
 import numpy
 
 from ..helpers import article
@@ -61,6 +63,7 @@ def haegemans_piessens_a():
             0.34294236161016425803e-1,
         ]
     )
+    weights /= pi
     return E2r2Scheme("Haegemans-Piessens a", weights, points, 9, _citation)
 
 
@@ -111,4 +114,5 @@ def haegemans_piessens_b():
             0.99539392442635720576,
         ]
     )
+    weights /= pi
     return E2r2Scheme("Haegemans-Piessens b", weights, points, 9, _citation)

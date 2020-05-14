@@ -33,4 +33,5 @@ def waldron(r, alpha):
     weights = numpy.array(
         [2 / 3 / r ** 2, 2 / 3 / r ** 2, 2 / 3 / R ** 2, 2 / 3 / R ** 2]
     )
+    weights /= 4
     return C2Scheme("Waldron", weights, points, 3, citation)

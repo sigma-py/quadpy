@@ -1,3 +1,5 @@
+import math
+
 import numpy
 
 from ..helpers import article
@@ -63,4 +65,5 @@ def haegemans_piessens():
             0.3378210604282018145,
         ]
     )
+    weights /= math.pi
     return S2Scheme("Haegemans-Piessens", weights, points, 9, _citation)

@@ -16,8 +16,5 @@ _citation = article(
 
 def tyler(n):
     data = [(frac(3 - n, 3), z(n)), (frac(1, 6), fsd(n, (1, 1)))]
-
     points, weights = untangle(data)
-    reference_volume = 2 ** n
-    weights *= reference_volume
     return CnScheme("Tyler", n, weights, points, 3, _citation)

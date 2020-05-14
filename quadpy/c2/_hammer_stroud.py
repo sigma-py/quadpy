@@ -16,7 +16,7 @@ citation = article(
 
 
 def hammer_stroud_1_2():
-    data = [(1, fsd(2, (sqrt(frac(2, 3)), 1)))]
+    data = [(frac(1, 4), fsd(2, (sqrt(frac(2, 3)), 1)))]
     points, weights = untangle(data)
     return C2Scheme("Hammer-Stroud 1-2", weights, points, 3, citation)
 
@@ -29,6 +29,7 @@ def hammer_stroud_2_2():
         (frac(25, 81), pm(2, alpha)),
     ]
     points, weights = untangle(data)
+    weights /= 4
     return C2Scheme("Hammer-Stroud 2-2", weights, points, 5, citation)
 
 
@@ -40,4 +41,5 @@ def hammer_stroud_3_2():
         (0.2374317746906302, pm(2, xi2)),
     ]
     points, weights = untangle(data)
+    weights /= 4
     return C2Scheme("Hammer-Stroud 3-2", weights, points, 7, citation)

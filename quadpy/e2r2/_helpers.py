@@ -47,7 +47,8 @@ class E2r2Scheme:
 
     def integrate(self, f, dot=numpy.dot):
         flt = numpy.vectorize(float)
-        return dot(f(flt(self.points).T), flt(self.weights))
+        ref_vol = math.pi
+        return ref_vol * dot(f(flt(self.points).T), flt(self.weights))
 
 
 def _z():

@@ -34,6 +34,7 @@ def franke_1(lmbda):
             [frac(40 * (1 - lmbda), 9 * (9 - 4 * lmbda)), 0, c],
         ),
     )
+    weights /= 4
     return C2Scheme(f"Franke(1, {lmbda})", weights, points, 5, citation)
 
 
@@ -49,6 +50,7 @@ def franke_2a():
         ),
         pm([0.579684582100041, 0, b]),
     )
+    weights /= 4
     return C2Scheme("Franke 2a", weights, points, 7, citation)
 
 
@@ -64,6 +66,7 @@ def franke_2b():
         ),
         pm([0.309204306788848, 0, a]),
     )
+    weights /= 4
     return C2Scheme("Franke 2b", weights, points, 7, citation)
 
 
@@ -85,6 +88,7 @@ def franke_3a():
         ),
         zero(0.505679012345679),
     )
+    weights /= 4
     return C2Scheme("Franke 3a", weights, points, 9, citation)
 
 
@@ -106,6 +110,7 @@ def franke_3b():
             [0.414194459963155, 0.0, b],
         ),
     )
+    weights /= 4
     return C2Scheme("Franke 3b", weights, points, 9, citation)
 
 
@@ -127,6 +132,7 @@ def franke_3c():
         ),
         zero(-0.481503595164821e-1),
     )
+    weights /= 4
     return C2Scheme("Franke 3c", weights, points, 9, citation)
 
 
@@ -145,6 +151,7 @@ def franke_6():
         symm_s([frac(16, 2025), a]),
         symm_s_t([frac(1519, 4050), b, c]),
     )
+    weights /= 4
     return C2Scheme("Franke 6", weights, points, 7, citation)
 
 
@@ -163,4 +170,5 @@ def franke_8():
         symm_s([0.214200360926862, b], [0.427312318657758e-1, c]),
         symm_s_t([0.144452223260307, r, s]),
     )
+    weights /= 4
     return C2Scheme("Franke 8", weights, points, 1, citation)

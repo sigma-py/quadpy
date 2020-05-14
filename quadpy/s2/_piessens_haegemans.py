@@ -1,3 +1,5 @@
+import math
+
 from ..helpers import article, untangle
 from ._helpers import S2Scheme, _pm, _pmx, _pmy
 
@@ -28,4 +30,5 @@ def piessens_haegemans():
     ]
 
     points, weights = untangle(data)
+    weights /= math.pi
     return S2Scheme("Piessens-Haegemans", weights, points, 9, _citation)

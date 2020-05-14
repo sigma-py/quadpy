@@ -1,8 +1,7 @@
-import operator
-from functools import reduce
+import math
 
 import numpy
-from sympy import pi, sqrt
+import sympy
 
 
 class Enr2Scheme:
@@ -29,26 +28,39 @@ class Enr2Scheme:
 
     def integrate(self, f, dot=numpy.dot):
         flt = numpy.vectorize(float)
-        return dot(f(flt(self.points).T), flt(self.weights))
+        ref_vol = volume_enr2(self.dim)
+        return ref_vol * dot(f(flt(self.points).T), flt(self.weights))
 
 
-def integrate_monomial_over_enr2(alpha, symbolic=False):
-    if any(k % 2 == 1 for k in alpha):
+# One could simply write
+#
+#     sqrt(pi) ** n
+#
+# but all other n-dimensional volumes are recurrences as well, so keep the tradition
+# alive. :)
+def volume_enr2(n, symbolic=False):
+    sqrt = sympy.sqrt if symbolic else math.sqrt
+    pi = sympy.pi if symbolic else math.pi
+    if n == 0:
+        return 1
+    elif n == 1:
+        return sqrt(pi)
+    return volume_enr2(n - 2, symbolic) * pi
+
+
+#  numpy.prod([math.gamma(0.5 * (k + 1)) for k in alpha])
+def integrate_monomial_over_enr2(k, symbolic=False):
+    frac = sympy.Rational if symbolic else lambda a, b: a / b
+    if any(a % 2 == 1 for a in k):
         return 0
 
-    if symbolic:
+    n = len(k)
+    if all(a == 0 for a in k):
+        return volume_enr2(n, symbolic)
 
-        def prod(factors):
-            return reduce(operator.mul, factors, 1)
-
-        k2 = [kk // 2 for kk in alpha]
-        return prod([sqrt(pi) * prod(range(kk + 1, 2 * kk + 1)) / 4 ** kk for kk in k2])
-
-    # return numpy.prod([math.gamma(0.5 * (k + 1)) for k in alpha])
-    k2 = [kk // 2 for kk in alpha]
-    return numpy.prod(
-        [
-            numpy.sqrt(numpy.pi) * numpy.prod(numpy.arange(kk + 1, 2 * kk + 1) / 4)
-            for kk in k2
-        ]
-    )
+    # find first nonzero
+    idx = next(i for i, j in enumerate(k) if j > 0)
+    alpha = frac(k[idx] - 1, 2)
+    k2 = k.copy()
+    k2[idx] -= 2
+    return integrate_monomial_over_enr2(k2, symbolic) * alpha

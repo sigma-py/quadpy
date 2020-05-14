@@ -16,4 +16,5 @@ def product(scheme1d):
     points = numpy.vstack([x.flatten(), y.flatten(), z.flatten()]).T
 
     degree = min([s.degree for s in schemes])
+    weights /= 8
     return C3Scheme(f"Product scheme ({scheme1d.name})", weights, points, degree)

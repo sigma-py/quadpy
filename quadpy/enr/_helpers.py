@@ -28,7 +28,8 @@ class EnrScheme:
 
     def integrate(self, f, dot=numpy.dot):
         flt = numpy.vectorize(float)
-        return dot(f(flt(self.points).T), flt(self.weights))
+        ref_vol = enr_volume(self.dim)
+        return ref_vol * dot(f(flt(self.points).T), flt(self.weights))
 
 
 # The closed formula is
@@ -49,7 +50,7 @@ def integrate_monomial_over_enr(k, symbolic=False):
         return enr_volume(n, symbolic)
 
     # find first nonzero
-    idx = next((i for i, j in enumerate(k) if j > 0), None)
+    idx = next(i for i, j in enumerate(k) if j > 0)
     alpha = (k[idx] - 1) * (sum(k) + n - 1)
     k2 = k.copy()
     k2[idx] -= 2

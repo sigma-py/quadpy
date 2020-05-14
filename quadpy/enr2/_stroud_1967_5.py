@@ -25,7 +25,7 @@ def stroud_1967_5_a(n):
         xi = -0.366025403784439
         mu = 0.198167882945871e1
         A = 0.328774019778636
-        B = 0.833333333333333e-1
+        B = 1 / 12
         C = 0.455931355469736e-2
     elif n == 3:
         eta = 0.476731294622796
@@ -33,9 +33,9 @@ def stroud_1967_5_a(n):
         xi = -0.731237647787132
         mu = 0.433155309477649
         gamma = 0.266922328697744e1
-        A = 0.242000000000000
-        B = 0.810000000000000e-1
-        C = 0.500000000000000e-2
+        A = 121 / 500
+        B = 81 / 1000
+        C = 1 / 200
     elif n == 4:
         eta = 0.523945658287507
         lmbda = 0.119433782552719e1
@@ -56,13 +56,13 @@ def stroud_1967_5_a(n):
         C = 0.497073504444862e-1
     else:
         assert n == 6
-        eta = 1.0
+        eta = 1
         lmbda = numpy.sqrt(2)
-        xi = 0.0
-        mu = -1.0
-        gamma = 1.0
-        A = 0.78125e-2
-        B = 0.625e-1
+        xi = 0
+        mu = -1
+        gamma = 1
+        A = 1 / 128
+        B = 1 / 16
         C = A
     # else:
     #     assert n == 7
@@ -97,8 +97,6 @@ def stroud_1967_5_a(n):
         data += [(A, numpy.full((1, n), +eta)), (A, numpy.full((1, n), -eta))]
 
     points, weights = untangle(data)
-    weights *= numpy.sqrt(numpy.pi) ** n
-
     return Enr2Scheme("Stroud 1967-5 a", n, weights, points, 5, citation)
 
 
@@ -123,13 +121,13 @@ def stroud_1967_5_b(n):
         B = A
         C = 0.641509853510569e-2
     elif n == 6:
-        eta = 1.0
+        eta = 1
         lmbda = 0.942809041582063
         xi = -0.471404520791032
-        mu = -0.166666666666667e1
+        mu = -5 / 3
         gamma = 1 / 3
-        A = 0.78125e-2
-        B = 0.62500e-1
+        A = 1 / 128
+        B = 1 / 16
         C = A
     else:
         assert n == 7, "n must be in [3, 5, 6, 7]"
@@ -158,6 +156,4 @@ def stroud_1967_5_b(n):
         data += [(A, numpy.full((1, n), +eta)), (A, numpy.full((1, n), -eta))]
 
     points, weights = untangle(data)
-    weights *= numpy.sqrt(numpy.pi) ** n
-
     return Enr2Scheme("Stroud 1967-5 b", n, weights, points, 5, citation)

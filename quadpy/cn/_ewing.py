@@ -18,7 +18,5 @@ _citation = article(
 
 def ewing(n):
     data = [(frac(2, 3), z(n)), (frac(1, 3 * 2 ** n), pm(n, 1))]
-
     points, weights = untangle(data)
-    weights *= 2 ** n
     return CnScheme("Ewing", n, weights, points, 3, _citation)

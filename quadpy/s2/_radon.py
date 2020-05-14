@@ -37,5 +37,4 @@ def radon(alpha):
     ]
 
     points, weights = untangle(data)
-    weights *= pi
     return S2Scheme(f"Radon({alpha})", weights, points, 5, _citation)
