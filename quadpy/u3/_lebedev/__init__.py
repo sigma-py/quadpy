@@ -16,6 +16,7 @@ sources = [
         volume="15",
         year="1975",
         pages="44-51",
+        url="https://doi.org/10.1016/0041-5553(75)90133-0"
     ),
     article(
         authors=["V.I. Lebedev"],
@@ -34,6 +35,7 @@ sources = [
         volume="18",
         year="1977",
         pages="99-107",
+        url="https://doi.org/10.1007/BF00966954"
     ),
     article(
         authors=["V.I. Lebedev", "A.L. Skorokhodov"],
