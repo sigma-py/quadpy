@@ -52,6 +52,7 @@ from ._stroud_secrest import (
     stroud_secrest_3,
     stroud_secrest_4,
 )
+from ._xiu import xiu
 
 __all__ = [
     "cools_haegemans_1",
@@ -103,4 +104,5 @@ __all__ = [
     "stroud_secrest_2",
     "stroud_secrest_3",
     "stroud_secrest_4",
+    "xiu",
 ]
