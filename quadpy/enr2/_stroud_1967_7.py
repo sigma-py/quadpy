@@ -5,7 +5,6 @@ import sympy
 
 from .. import un
 from ..helpers import article, fsd, gamma_n_2, pm, untangle
-from ..un._helpers import sphere_volume
 from ._helpers import Enr2Scheme, volume_enr2
 
 citation = article(
@@ -80,5 +79,5 @@ def stroud_1967_7_4(n, symbolic=False):
     points = numpy.concatenate([r1 * s.points, r2 * s.points])
     weights = numpy.concatenate([A1 * s.weights, A2 * s.weights])
 
-    weights *= sphere_volume(n - 1, symbolic) / volume_enr2(n, symbolic)
+    weights *= un.volume_nsphere(n - 1, symbolic) / volume_enr2(n, symbolic)
     return Enr2Scheme("Stroud 1967-7 4", n, weights, points, 7, citation)

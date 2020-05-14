@@ -31,7 +31,7 @@ class UnScheme:
         rr = numpy.multiply.outer(radius, self.points)
         rr = numpy.swapaxes(rr, 0, -2)
         ff = numpy.array(f((rr + center).T))
-        ref_vol = sphere_volume(self.dim - 1, r=radius)
+        ref_vol = volume_nsphere(self.dim - 1, r=radius)
         return ref_vol * dot(ff, self.weights)
 
 
@@ -60,7 +60,7 @@ def integrate_monomial_over_unit_nsphere(k, symbolic=False):
 
     n = len(k)
     if all(a == 0 for a in k):
-        return sphere_volume(n - 1, symbolic, r=1)
+        return volume_nsphere(n - 1, symbolic, r=1)
 
     # find first nonzero
     idx = next(i for i, j in enumerate(k) if j > 0)
@@ -71,10 +71,10 @@ def integrate_monomial_over_unit_nsphere(k, symbolic=False):
 
 
 # n sqrt(pi) ** 2 / gamma(n/2 + 1)
-def sphere_volume(n, symbolic=False, r=1):
+def volume_nsphere(n, symbolic=False, r=1):
     pi = sympy.pi if symbolic else math.pi
     if n == 0:
         return 2
     elif n == 1:
         return 2 * pi * r
-    return (2 * pi) / (n - 1) * r ** 2 * sphere_volume(n - 2, symbolic, r=r)
+    return (2 * pi) / (n - 1) * r ** 2 * volume_nsphere(n - 2, symbolic, r=r)
