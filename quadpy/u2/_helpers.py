@@ -23,14 +23,12 @@ class U2Scheme:
             assert points.dtype == numpy.dtype("O")
             self.points = flt(points)
             self.points_symbolic = points
-        return
 
     def show(self, *args, **kwargs):
         import matplotlib.pyplot as plt
 
         self.plot(*args, **kwargs)
         plt.show()
-        return
 
     def plot(self, show_axes=False):
         import matplotlib.pyplot as plt
@@ -52,12 +50,11 @@ class U2Scheme:
         # such that the sum of the disk radii equals pi.
         total_area = numpy.pi ** 3 / len(self.weights)
         helpers.plot_disks(plt, self.points, self.weights, total_area)
-        return
 
     def integrate(self, f, center, radius, dot=numpy.dot):
         center = numpy.array(center)
         rr = numpy.multiply.outer(radius, self.points)
         rr = numpy.swapaxes(rr, 0, -2)
         ff = numpy.array(f((rr + center).T))
-        ref_vol = 2 * numpy.pi * radius
+        ref_vol = 2 * numpy.pi * numpy.asarray(radius)
         return ref_vol * dot(ff, self.weights)
