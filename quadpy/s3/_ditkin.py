@@ -8,7 +8,7 @@ _source = article(
     title="On certain approximate formulas for the calculation of triple integrals",
     journal="Doklady Akad. Nauk SSSR (N.S.)",
     number="62",
-    year=1948,
+    year="1948",
     pages="445–447",
     note="Russian",
 )

@@ -7,6 +7,7 @@ from ..tn import TnScheme, get_vol, transform
 
 class T3Scheme(TnScheme):
     def __init__(self, name, weights, points, degree, source=None):
+        self.domain = "T3"
         self.name = name
         self.degree = degree
         self.source = source

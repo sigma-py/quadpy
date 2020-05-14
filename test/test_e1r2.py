@@ -11,11 +11,11 @@ import quadpy
     [quadpy.e1r2.gauss_hermite(n) for n in range(5, 12)]
     + [quadpy.e1r2.genz_keister(n) for n in range(8)],
 )
-def test_scheme(scheme):
-    print(scheme.name)
-    tol = 1.0e-14
+def test_scheme(scheme, tol=1.0e-14):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
+
+    print(scheme)
 
     def eval_orthopolys(x):
         return orthopy.e1r2.tree(

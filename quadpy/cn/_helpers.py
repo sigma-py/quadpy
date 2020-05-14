@@ -2,7 +2,7 @@ import itertools
 
 import numpy
 
-from ..helpers import n_outer, QuadratureScheme
+from ..helpers import QuadratureScheme, n_outer
 
 
 class CnScheme(QuadratureScheme):

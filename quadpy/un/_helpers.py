@@ -3,9 +3,12 @@ import math
 import numpy
 import sympy
 
+from ..helpers import QuadratureScheme
 
-class UnScheme:
+
+class UnScheme(QuadratureScheme):
     def __init__(self, name, dim, weights, points, degree, source):
+        self.domain = f"Un (n={dim})"
         self.name = name
         self.dim = dim
         self.degree = degree

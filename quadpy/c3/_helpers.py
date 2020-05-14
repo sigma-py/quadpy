@@ -27,7 +27,6 @@ class C3Scheme(CnScheme):
             assert points.dtype in [numpy.dtype("O"), numpy.int_]
             self.points = points.astype(numpy.float64)
             self.points_symbolic = points
-        return
 
     def show(self, hexa=cube_points([0.0, 1.0], [0.0, 1.0], [0.0, 1.0]), backend="vtk"):
         """Shows the quadrature points on a given hexahedron. The size of the balls
@@ -58,7 +57,6 @@ class C3Scheme(CnScheme):
             self.integrate(lambda x: 1.0, hexa),
             edges,
         )
-        return
 
 
 def z():

@@ -1,9 +1,12 @@
 import numpy
 import sympy
 
+from ..helpers import QuadratureScheme
 
-class SnScheme:
+
+class SnScheme(QuadratureScheme):
     def __init__(self, name, dim, weights, points, degree, source):
+        self.domain = f"Sn (n={dim})"
         self.name = name
         self.dim = dim
         self.degree = degree
@@ -22,15 +25,20 @@ class SnScheme:
             assert points.dtype in [numpy.dtype("O"), numpy.int_]
             self.points = points.astype(numpy.float64)
             self.points_symbolic = points
-        return
+
+    def points_inside(self):
+        return numpy.einsum("ij,ij->i", self.points, self.points) < 1
+
+    def points_inside_or_boundary(self):
+        return numpy.einsum("ij,ij->i", self.points, self.points) <= 1
 
     def integrate(self, f, center, radius, dot=numpy.dot):
         center = numpy.array(center)
         rr = numpy.multiply.outer(radius, self.points)
         rr = numpy.swapaxes(rr, 0, -2)
         ff = numpy.array(f((rr + center).T))
-        ref_vol = volume_nball(self.dim, symbolic=False)
-        return ref_vol * numpy.array(radius) ** self.dim * dot(ff, self.weights)
+        ref_vol = volume_nball(self.dim, r=numpy.asarray(radius), symbolic=False)
+        return ref_vol * dot(ff, self.weights)
 
 
 def volume_nball(n, symbolic, r=1):
