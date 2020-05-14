@@ -45,6 +45,6 @@ def quad(f, a, b, args=(), epsabs=1.49e-08, epsrel=1.49e-08, limit=50):
         [a, b],
         eps_abs=epsabs,
         eps_rel=epsrel,
-        criteria_connection=numpy.logical_or,
+        criteria_connection=numpy.any,
         max_num_subintervals=limit,
     )
