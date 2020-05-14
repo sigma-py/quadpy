@@ -14,7 +14,7 @@ from ._hammer_stroud import hammer_stroud_15_3b as stroud_7_1b
 from ._helpers import S3Scheme
 from ._mysovskih import mysovskih as stroud_7_2
 
-_citation = book(
+_source = book(
     authors=["Arthur Stroud"],
     title="Approximate Calculation of Multiple Integrals",
     publisher="Prentice Hall",
@@ -74,7 +74,7 @@ def stroud_7_4():
 
     points, weights = untangle(data)
     weights /= 4 / 3 * math.pi
-    return S3Scheme("Stroud S3 7-4", _citation, 7, weights, points)
+    return S3Scheme("Stroud S3 7-4", _source, 7, weights, points)
 
 
 def stroud_14_1():
@@ -141,7 +141,7 @@ def stroud_14_1():
     weights *= 3
     # weights *= 4 * math.pi
     # weights /= 4 / 3 * math.pi
-    return S3Scheme("Stroud S3 14-1", _citation, 14, weights, points)
+    return S3Scheme("Stroud S3 14-1", _source, 14, weights, points)
 
 
 __all__ = [

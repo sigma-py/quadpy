@@ -1,7 +1,7 @@
 from ..helpers import article
 from ._helpers import T3Scheme, concat, s22, s31, s211, s1111
 
-citation = article(
+source = article(
     authors=["Linbo Zhang", "Tao Cui", "Hui Liu"],
     title="A set of symmetric quadrature rules on triangles and tetrahedra",
     journal="Journal of Computational Mathematics",
@@ -51,7 +51,7 @@ def zhang_cui_liu_1():
             ],
         ),
     )
-    return T3Scheme("Zhang-Cui-Liu 1", weights, points, degree, citation)
+    return T3Scheme("Zhang-Cui-Liu 1", weights, points, degree, source)
 
 
 def zhang_cui_liu_2():
@@ -146,4 +146,4 @@ def zhang_cui_liu_2():
             ],
         ),
     )
-    return T3Scheme("Zhang-Cui-Liu 2", weights, points, degree, citation)
+    return T3Scheme("Zhang-Cui-Liu 2", weights, points, degree, source)

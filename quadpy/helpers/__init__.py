@@ -1,3 +1,4 @@
+from ._class import QuadratureScheme
 from .combinatorics import (
     combine,
     fs_array,
@@ -27,6 +28,7 @@ from .misc import (
 from .plot import backend_to_function, plot_disks, plot_disks_1d, show_mpl, show_vtk
 
 __all__ = [
+    "QuadratureScheme",
     "z",
     "rd",
     "fsd",

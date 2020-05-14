@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from ..helpers import article, rd, untangle
 from ._helpers import TnScheme
 
-citation = article(
+source = article(
     authors=["A.H. Stroud"],
     title="Numerical Integration Formulas of Degree 3 for Product Regions and Cones",
     journal="Mathematics of Computation",
@@ -30,4 +30,4 @@ def stroud_1961(n):
     data = [(A, [(n + 1) * [r]]), (B, rd(n + 1, [(1, 1)])), (C, rd(n + 1, [(s, n)]))]
 
     points, weights = untangle(data)
-    return TnScheme("Stroud 1961", n, weights, points, degree, citation)
+    return TnScheme("Stroud 1961", n, weights, points, degree, source)

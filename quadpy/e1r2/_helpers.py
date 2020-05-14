@@ -4,12 +4,12 @@ from ..helpers import plot_disks_1d
 
 
 class E1r2Scheme:
-    def __init__(self, name, weights, points, degree, citation=None):
+    def __init__(self, name, weights, points, degree, source=None):
         self.name = name
         self.weights = weights
         self.points = points
         self.degree = degree
-        self.citation = citation
+        self.source = source
         return
 
     def integrate(self, f, dot=numpy.dot):

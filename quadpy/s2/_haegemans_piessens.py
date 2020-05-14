@@ -5,7 +5,7 @@ import numpy
 from ..helpers import article
 from ._helpers import S2Scheme
 
-_citation = article(
+_source = article(
     authors=["Ann Haegemans", "Robert Piessens"],
     title="Construction of Cubature Formulas of Degree Seven and Nine Symmetric Planar Regions Using Orthogonal Polynomials",
     journal="SIAM Journal on Numerical Analysis",
@@ -66,4 +66,4 @@ def haegemans_piessens():
         ]
     )
     weights /= math.pi
-    return S2Scheme("Haegemans-Piessens", weights, points, 9, _citation)
+    return S2Scheme("Haegemans-Piessens", weights, points, 9, _source)

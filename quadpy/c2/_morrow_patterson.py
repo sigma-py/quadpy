@@ -3,7 +3,7 @@ import warnings
 from ..helpers import article
 from ._helpers import C2Scheme, concat, pm, pm2
 
-citation = article(
+source = article(
     authors=["C.R. Morrow", "T.N.L. Patterson"],
     title="The Construction of Algebraic Cubature Formulae by the Distribution of Nodes Along Selected Lines",
     journal="SIAM J. Numer. Anal.",
@@ -29,7 +29,7 @@ def morrow_patterson_1():
         pm([0.2755861791, 0.6612093865, 0.0]),
     )
     weights /= 4
-    return C2Scheme("Morrow-Patterson 1", weights, points, 11, citation)
+    return C2Scheme("Morrow-Patterson 1", weights, points, 11, source)
 
 
 def morrow_patterson_2():
@@ -94,4 +94,4 @@ def morrow_patterson_2():
     )
     weights /= 4
     # TODO The article claims degree 31. Check for errors.
-    return C2Scheme("Morrow-Patterson 2", weights, points, 25, citation)
+    return C2Scheme("Morrow-Patterson 2", weights, points, 25, source)

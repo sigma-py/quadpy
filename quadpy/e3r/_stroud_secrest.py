@@ -5,7 +5,7 @@ from sympy import sqrt
 from ..helpers import article, fsd, pm, pm_roll, untangle
 from ._helpers import E3rScheme
 
-citation = article(
+source = article(
     authors=["A.H. Stroud", "D. Secrest"],
     title="Approximate integration formulas for certain spherically symmetric regions",
     journal="Math. Comp.",
@@ -24,7 +24,7 @@ def stroud_secrest_07():
     data = [(A, numpy.array([[0, 0, 0]])), (B, pm_roll(3, [xi, nu]))]
 
     points, weights = untangle(data)
-    return E3rScheme("Stroud-Secrest VII", weights, points, 5, citation)
+    return E3rScheme("Stroud-Secrest VII", weights, points, 5, source)
 
 
 def stroud_secrest_08():
@@ -36,7 +36,7 @@ def stroud_secrest_08():
 
     data = [(A, numpy.array([[0, 0, 0]])), (B, fsd(3, (nu, 1))), (C, pm(3, eta))]
     points, weights = untangle(data)
-    return E3rScheme("Stroud-Secrest VIII", weights, points, 5, citation)
+    return E3rScheme("Stroud-Secrest VIII", weights, points, 5, source)
 
 
 def stroud_secrest_09():
@@ -47,7 +47,7 @@ def stroud_secrest_09():
 
     data = [(A, numpy.array([[0, 0, 0]])), (B, pm(3, eta)), (B, pm_roll(3, [xi, nu]))]
     points, weights = untangle(data)
-    return E3rScheme("Stroud-Secrest IX", weights, points, 5, citation)
+    return E3rScheme("Stroud-Secrest IX", weights, points, 5, source)
 
 
 def stroud_secrest_10():
@@ -70,7 +70,7 @@ def stroud_secrest_10():
     ]
 
     points, weights = untangle(data)
-    return E3rScheme("Stroud-Secrest X", weights, points, 7, citation)
+    return E3rScheme("Stroud-Secrest X", weights, points, 7, source)
 
 
 def stroud_secrest_11():
@@ -98,4 +98,4 @@ def stroud_secrest_11():
     ]
 
     points, weights = untangle(data)
-    return E3rScheme("Stroud-Secrest XI", weights, points, 7, citation)
+    return E3rScheme("Stroud-Secrest XI", weights, points, 7, source)

@@ -4,7 +4,7 @@ import os
 from ...helpers import article
 from .._helpers import T2Scheme, untangle2
 
-citation = article(
+source = article(
     authors=["S. Wandzura", "H. Xiao"],
     title="Symmetric quadrature rules on a triangle",
     journal="Computers & Mathematics with Applications",
@@ -29,7 +29,7 @@ def _read(index):
 
     data = data
     points, weights = untangle2(data)
-    return T2Scheme(f"Wandzura-Xiao {index}", weights, points, degree, citation)
+    return T2Scheme(f"Wandzura-Xiao {index}", weights, points, degree, source)
 
 
 def wandzura_xiao_1():

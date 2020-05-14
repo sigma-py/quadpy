@@ -3,7 +3,7 @@ import numpy
 from ..helpers import techreport
 from ._helpers import T3Scheme
 
-citation = techreport(
+source = techreport(
     authors=["Noel J. Walkington"],
     title="Quadrature on simplices of arbitrary dimension",
     institution="CMU",
@@ -28,7 +28,7 @@ def walkington_p5():
             _xi11(0.045503704125649649492),
         ]
     )
-    return T3Scheme("Walkington p5", weights, points, degree, citation)
+    return T3Scheme("Walkington p5", weights, points, degree, source)
 
 
 def _xi1(a):

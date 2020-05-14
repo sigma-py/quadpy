@@ -5,7 +5,7 @@ from sympy import sqrt
 from ..helpers import article, rd, untangle
 from ._helpers import TnScheme, integrate_monomial_over_unit_simplex
 
-citation = article(
+source = article(
     authors=["A.H. Stroud"],
     title="A Fifth Degree Integration Formula for the n-Simplex",
     journal="SIAM J. Numer. Anal.",
@@ -62,4 +62,4 @@ def stroud_1969(n):
     data = [(w[i], pts[i]) for i in range(len(w))]
 
     points, weights = untangle(data)
-    return TnScheme("Stroud 1969", n, weights, points, degree, citation)
+    return TnScheme("Stroud 1969", n, weights, points, degree, source)

@@ -4,9 +4,9 @@ from .. import helpers
 
 
 class U2Scheme:
-    def __init__(self, name, citation, degree, weights, points):
+    def __init__(self, name, source, degree, weights, points):
         self.name = name
-        self.citation = citation
+        self.source = source
         self.degree = degree
 
         flt = numpy.vectorize(float)

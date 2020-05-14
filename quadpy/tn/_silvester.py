@@ -4,7 +4,7 @@ import sympy
 from ..helpers import article, get_all_exponents, prod
 from ._helpers import TnScheme
 
-citation = article(
+source = article(
     authors=["P. Silvester"],
     title="Symmetric quadrature formulae for simplexes",
     journal="Math. Comp.",
@@ -85,6 +85,4 @@ def silvester(dim, variant, n, symbolic=False):
 
     weights, points = _get_data(dim, n, points1d, symbolic)
 
-    return TnScheme(
-        f"Silvester ({variant}, {n})", dim, weights, points, degree, citation
-    )
+    return TnScheme(f"Silvester ({variant}, {n})", dim, weights, points, degree, source)

@@ -17,7 +17,7 @@ from ._mclaren import mclaren_08 as stroud_u3_11_1
 from ._mclaren import mclaren_09 as stroud_u3_11_3
 from ._mclaren import mclaren_10 as stroud_u3_14_1
 
-citation = book(
+source = book(
     authors=["Arthur Stroud"],
     title="Approximate Calculation of Multiple Integrals",
     publisher="Prentice Hall",
@@ -33,7 +33,7 @@ def stroud_u3_11_2():
         scheme.points,
         cartesian_to_spherical(scheme.points),
         scheme.degree,
-        citation,
+        source,
     )
 
 

@@ -1,7 +1,7 @@
 from ..helpers import techreport
 from ._helpers import T3Scheme, concat, s4, s22, s31, s211
 
-citation = techreport(
+source = techreport(
     authors=["M. Beckers", "A. Haegemans"],
     title="The construction of cubature formulae for the tetrahedron",
     institution="Dept. of Computer Science, K.U. Leuven",
@@ -27,7 +27,7 @@ def beckers_haegemans_8():
         ),
     )
     weights *= 6
-    return T3Scheme("Beckers-Haegemans", weights, points, degree, citation)
+    return T3Scheme("Beckers-Haegemans", weights, points, degree, source)
 
 
 def beckers_haegemans_9():
@@ -47,4 +47,4 @@ def beckers_haegemans_9():
         ),
     )
     weights *= 6
-    return T3Scheme("Beckers-Haegemans", weights, points, degree, citation)
+    return T3Scheme("Beckers-Haegemans", weights, points, degree, source)

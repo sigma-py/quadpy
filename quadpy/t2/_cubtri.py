@@ -1,7 +1,7 @@
 from ..helpers import article
 from ._helpers import T2Scheme, concat, s1, s2, s3
 
-citation = article(
+source = article(
     authors=["D.P. Laurie"],
     title="Algorithm 584: CUBTRI: Automatic Cubature over a Triangle",
     journal="ACM Trans. Math. Softw.",
@@ -26,4 +26,4 @@ def cubtri():
         ),
         s1([0.0375097224552317, 0.7384168123405100, 0.2321023267750504]),
     )
-    return T2Scheme("CUBTRI", weights, points, 8, citation)
+    return T2Scheme("CUBTRI", weights, points, 8, source)

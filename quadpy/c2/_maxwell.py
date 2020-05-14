@@ -4,7 +4,7 @@ from sympy import sqrt
 from ..helpers import article
 from ._helpers import C2Scheme, concat, symm_r0, symm_s_t, zero
 
-citation = article(
+source = article(
     authors=["J.C. Maxwell"],
     title="On Approximate Multiple Integration between Limits by Summation",
     journal="Cambridge Library Collection - Physical Sciences",
@@ -25,4 +25,4 @@ def maxwell():
         # ERR typo in Stroud: 648 vs 649
         symm_s_t([frac(31, 648), s, t]),
     )
-    return C2Scheme("Maxwell", weights, points, 7, citation)
+    return C2Scheme("Maxwell", weights, points, 7, source)

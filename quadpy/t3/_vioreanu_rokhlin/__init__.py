@@ -4,7 +4,7 @@ import os
 from ...helpers import article
 from .._helpers import T3Scheme, untangle2
 
-citation = article(
+source = article(
     authors=["B. Vioreanu", "V. Rokhlin"],
     title="Spectra of Multiplication Operators as a Numerical Tool",
     year="2014",
@@ -28,7 +28,7 @@ def _read(index):
     degree = data.pop("degree")
     points, weights = untangle2(data)
     weights *= 3.0 / 4.0
-    return T3Scheme(f"Vioreanu-Rokhlin {index}", weights, points, degree, citation)
+    return T3Scheme(f"Vioreanu-Rokhlin {index}", weights, points, degree, source)
 
 
 def vioreanu_rokhlin_0():

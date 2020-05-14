@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from ..helpers import article
 from ._helpers import T2Scheme, concat, s1, s2, s3
 
-citation = article(
+source = article(
     authors=["D.M. Williams", "L. Shunn", "A. Jameson"],
     title="Symmetric quadrature rules for simplexes based on sphere close packed lattice arrangements",
     journal="Journal of Computational and Applied Mathematics",
@@ -16,19 +16,19 @@ citation = article(
 
 def williams_shunn_jameson_1():
     weights, points = s3(1)
-    return T2Scheme("Williams-Shunn-Jameson 1", weights, points, 1, citation)
+    return T2Scheme("Williams-Shunn-Jameson 1", weights, points, 1, source)
 
 
 def williams_shunn_jameson_2():
     weights, points = s2([frac(1, 3), frac(1, 6)])
-    return T2Scheme("Williams-Shunn-Jameson 2", weights, points, 2, citation)
+    return T2Scheme("Williams-Shunn-Jameson 2", weights, points, 2, source)
 
 
 def williams_shunn_jameson_3():
     weights, points = s2(
         [0.109951743655333, 0.091576213509780], [0.223381589678000, 0.445948490915964]
     )
-    return T2Scheme("Williams-Shunn-Jameson 3", weights, points, 4, citation)
+    return T2Scheme("Williams-Shunn-Jameson 3", weights, points, 4, source)
 
 
 def williams_shunn_jameson_4():
@@ -37,7 +37,7 @@ def williams_shunn_jameson_4():
         s2([0.041955512996649, 0.055564052669793]),
         s1([0.112098412070887, 0.295533711735893, 0.634210747745723]),
     )
-    return T2Scheme("Williams-Shunn-Jameson 4", weights, points, 5, citation)
+    return T2Scheme("Williams-Shunn-Jameson 4", weights, points, 5, source)
 
 
 def williams_shunn_jameson_5():
@@ -49,7 +49,7 @@ def williams_shunn_jameson_5():
         ),
         s1([0.055749810027115, 0.201503881881800, 0.751183631106484]),
     )
-    return T2Scheme("Williams-Shunn-Jameson 5", weights, points, 7, citation)
+    return T2Scheme("Williams-Shunn-Jameson 5", weights, points, 7, source)
 
 
 def williams_shunn_jameson_6():
@@ -64,7 +64,7 @@ def williams_shunn_jameson_6():
             [0.046046366595935, 0.357196298615681, 0.604978911775132],
         ),
     )
-    return T2Scheme("Williams-Shunn-Jameson 6", weights, points, 8, citation)
+    return T2Scheme("Williams-Shunn-Jameson 6", weights, points, 8, source)
 
 
 def williams_shunn_jameson_7():
@@ -81,7 +81,7 @@ def williams_shunn_jameson_7():
             [0.066995957127830, 0.316549598844617, 0.536654684206138],
         ),
     )
-    return T2Scheme("Williams-Shunn-Jameson 7", weights, points, 10, citation)
+    return T2Scheme("Williams-Shunn-Jameson 7", weights, points, 10, source)
 
 
 def williams_shunn_jameson_8():
@@ -99,4 +99,4 @@ def williams_shunn_jameson_8():
             [0.044326238118914, 0.635737183263105, 0.249079227621332],
         ),
     )
-    return T2Scheme("Williams-Shunn-Jameson 8", weights, points, 12, citation)
+    return T2Scheme("Williams-Shunn-Jameson 8", weights, points, 12, source)

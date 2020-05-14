@@ -3,10 +3,10 @@ import sympy
 
 
 class U3Scheme:
-    def __init__(self, name, weights, points, azimuthal_polar, degree, citation):
+    def __init__(self, name, weights, points, azimuthal_polar, degree, source):
         self.name = name
         self.degree = degree
-        self.citation = citation
+        self.source = source
 
         if weights.dtype == numpy.float64:
             self.weights = weights

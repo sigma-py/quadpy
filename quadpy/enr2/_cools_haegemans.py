@@ -6,7 +6,7 @@ from ..cn._cools_haegemans import _gener
 from ..helpers import article, fsd, pm, untangle, z
 from ._helpers import Enr2Scheme
 
-_citation = article(
+_source = article(
     authors=["Ronald Cools", "Ann Haegemans"],
     title="An imbedded family of cubature formulae for n-dimensional product regions",
     journal="Journal of Computational and Applied Mathematics",
@@ -42,7 +42,7 @@ def cools_haegemans_1(n, delta2=1, symbolic=False):
     ]
 
     points, weights = untangle(data)
-    return Enr2Scheme("Cools-Haegemans 1", n, weights, points, 3, _citation)
+    return Enr2Scheme("Cools-Haegemans 1", n, weights, points, 3, _source)
 
 
 def cools_haegemans_2(n, delta2=1, symbolic=False):
@@ -71,7 +71,7 @@ def cools_haegemans_2(n, delta2=1, symbolic=False):
     ]
 
     points, weights = untangle(data)
-    return Enr2Scheme("Cools-Haegemans 2", n, weights, points, 5, _citation)
+    return Enr2Scheme("Cools-Haegemans 2", n, weights, points, 5, _source)
 
 
 def cools_haegemans_3(n, delta2=(2, 3), symbolic=False):
@@ -121,7 +121,7 @@ def cools_haegemans_3(n, delta2=(2, 3), symbolic=False):
     ]
 
     points, weights = untangle(data)
-    return Enr2Scheme("Cools-Haegemans 3", n, weights, points, 7, _citation)
+    return Enr2Scheme("Cools-Haegemans 3", n, weights, points, 7, _source)
 
 
 # ERR There is a mistake here somewhere in the weights, but it's unclear where.
@@ -208,4 +208,4 @@ def cools_haegemans_3(n, delta2=(2, 3), symbolic=False):
 #     print(weights)
 #     print(sum(weights))
 #     exit(1)
-#     return Enr2Scheme("Cools-Haegemans 4", n, weights, points, 9, _citation)
+#     return Enr2Scheme("Cools-Haegemans 4", n, weights, points, 9, _source)

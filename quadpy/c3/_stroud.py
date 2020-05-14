@@ -22,7 +22,7 @@ from ._stroud_1967 import stroud_1967 as stroud_c3_5_1
 from ._tyler import tyler_1 as stroud_c3_3_1
 from ._tyler import tyler_2 as stroud_c3_5_3
 
-_citation = book(
+_source = book(
     authors=["Arthur Stroud"],
     title="Approximate Calculation of Multiple Integrals",
     publisher="Prentice Hall",
@@ -34,7 +34,7 @@ def stroud_c3_3_2():
     # Product Gauss scheme
     data = [(frac(1, 8), pm_rrr(sqrt(frac(1, 3))))]
     points, weights = untangle(data)
-    return C3Scheme("Stroud C3 3-2", weights, points, 3, _citation)
+    return C3Scheme("Stroud C3 3-2", weights, points, 3, _source)
 
 
 def stroud_c3_3_3():

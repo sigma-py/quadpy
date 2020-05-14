@@ -8,10 +8,11 @@ from ..tn import get_vol
 
 
 class C2Scheme(CnScheme):
-    def __init__(self, name, weights, points, degree, citation=None):
+    def __init__(self, name, weights, points, degree, source=None):
+        self.domain = "C2"
         self.name = name
         self.degree = degree
-        self.citation = citation
+        self.source = source
 
         if weights.dtype == numpy.float64:
             self.weights = weights
@@ -33,7 +34,6 @@ class C2Scheme(CnScheme):
 
         self.plot(*args, **kwargs)
         plt.show()
-        return
 
     def plot(self, quad=rectangle_points([0.0, 1.0], [0.0, 1.0]), show_axes=False):
         """Shows the quadrature points on a given quad. The area of the disks

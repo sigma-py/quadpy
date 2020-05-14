@@ -3,7 +3,7 @@ from ._lyness_jespersen import lyness_jespersen_21 as triex_28
 
 __all__ = ["triex_19", "triex_28"]
 
-# citation = article(
+# source = article(
 #     authors=["E. de Doncker", "I. Robinson"],
 #     title="Algorithm 612: TRIEX: Integration Over a TRIangle Using Nonlinear EXtrapolation",
 #     journal="ACM Trans. Math. Softw.",

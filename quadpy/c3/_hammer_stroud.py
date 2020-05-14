@@ -4,7 +4,7 @@ from sympy import sqrt
 from ..helpers import article, fsd, pm, untangle, z
 from ._helpers import C3Scheme
 
-_citation = article(
+_source = article(
     authors=["Preston C. Hammer", "Arthur H. Stroud"],
     title="Numerical Evaluation of Multiple Integrals II",
     journal="Math. Comp.",
@@ -18,7 +18,7 @@ _citation = article(
 def hammer_stroud_1_3():
     data = [(frac(1, 6), fsd(3, (1, 1)))]
     points, weights = untangle(data)
-    return C3Scheme("Hammer-Stroud 1-3", weights, points, 3, _citation)
+    return C3Scheme("Hammer-Stroud 1-3", weights, points, 3, _source)
 
 
 def hammer_stroud_2_3():
@@ -30,7 +30,7 @@ def hammer_stroud_2_3():
     ]
     points, weights = untangle(data)
     weights /= 8
-    return C3Scheme("Hammer-Stroud 2-3", weights, points, 5, _citation)
+    return C3Scheme("Hammer-Stroud 2-3", weights, points, 5, _source)
 
 
 def hammer_stroud_4_3():
@@ -40,7 +40,7 @@ def hammer_stroud_4_3():
     ]
     points, weights = untangle(data)
     weights /= 8
-    return C3Scheme("Hammer-Stroud 4-3", weights, points, 5, _citation)
+    return C3Scheme("Hammer-Stroud 4-3", weights, points, 5, _source)
 
 
 def _hammer_stroud_5_3(variant_a):
@@ -67,7 +67,7 @@ def _hammer_stroud_5_3(variant_a):
         weights,
         points,
         7,
-        _citation,
+        _source,
     )
 
 
@@ -89,4 +89,4 @@ def hammer_stroud_6_3():
     ]
     points, weights = untangle(data)
     weights /= 8
-    return C3Scheme("Hammer-Stroud 6-3", weights, points, 7, _citation)
+    return C3Scheme("Hammer-Stroud 6-3", weights, points, 7, _source)

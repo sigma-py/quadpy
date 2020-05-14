@@ -4,7 +4,7 @@ from sympy import sqrt
 from ..helpers import article
 from ._helpers import C2Scheme, concat, symm_r0, symm_s, symm_s_t, zero
 
-citation = article(
+source = article(
     authors=["D.A. Dunavant"],
     title="Economical symmetrical quadrature rules for complete polynomials over a square domain",
     journal="Numerical Methods in Engineering",
@@ -19,13 +19,13 @@ citation = article(
 
 def dunavant_00():
     weights, points = zero(1)
-    return C2Scheme("Dunavant 0", weights, points, 1, citation)
+    return C2Scheme("Dunavant 0", weights, points, 1, source)
 
 
 def dunavant_01():
     weights, points = symm_s([1, sqrt(frac(1, 3))])
     weights /= 4
-    return C2Scheme("Dunavant 1", weights, points, 3, citation)
+    return C2Scheme("Dunavant 1", weights, points, 3, source)
 
 
 def dunavant_02():
@@ -34,7 +34,7 @@ def dunavant_02():
         symm_s([frac(9, 49), sqrt(frac(7, 9))]),
     )
     weights /= 4
-    return C2Scheme("Dunavant 2", weights, points, 5, citation)
+    return C2Scheme("Dunavant 2", weights, points, 5, source)
 
 
 def dunavant_03():
@@ -46,7 +46,7 @@ def dunavant_03():
         ),
     )
     weights /= 4
-    return C2Scheme("Dunavant 3", weights, points, 7, citation)
+    return C2Scheme("Dunavant 3", weights, points, 7, source)
 
 
 def dunavant_04():
@@ -59,7 +59,7 @@ def dunavant_04():
         symm_s_t([0.254188020152646, 0.824396370749276, 0.411623426336542]),
     )
     weights /= 4
-    return C2Scheme("Dunavant 4", weights, points, 9, citation)
+    return C2Scheme("Dunavant 4", weights, points, 9, source)
 
 
 def dunavant_05():
@@ -76,7 +76,7 @@ def dunavant_05():
         symm_s_t([0.146684377651312, 0.883025508525690, 0.575653595840465]),
     )
     weights /= 4
-    return C2Scheme("Dunavant 5", weights, points, 11, citation)
+    return C2Scheme("Dunavant 5", weights, points, 11, source)
 
 
 def dunavant_06():
@@ -96,7 +96,7 @@ def dunavant_06():
         ),
     )
     weights /= 4
-    return C2Scheme("Dunavant 6", weights, points, 13, citation)
+    return C2Scheme("Dunavant 6", weights, points, 13, source)
 
 
 def dunavant_07():
@@ -118,7 +118,7 @@ def dunavant_07():
         ),
     )
     weights /= 4
-    return C2Scheme("Dunavant 7", weights, points, 15, citation)
+    return C2Scheme("Dunavant 7", weights, points, 15, source)
 
 
 def dunavant_08():
@@ -141,7 +141,7 @@ def dunavant_08():
         ),
     )
     weights /= 4
-    return C2Scheme("Dunavant 8", weights, points, 17, citation)
+    return C2Scheme("Dunavant 8", weights, points, 17, source)
 
 
 def dunavant_09():
@@ -166,7 +166,7 @@ def dunavant_09():
         ),
     )
     weights /= 4
-    return C2Scheme("Dunavant 9", weights, points, 19, citation)
+    return C2Scheme("Dunavant 9", weights, points, 19, source)
 
 
 def dunavant_10():
@@ -193,4 +193,4 @@ def dunavant_10():
         ),
     )
     weights /= 4
-    return C2Scheme("Dunavant 10", weights, points, 21, citation)
+    return C2Scheme("Dunavant 10", weights, points, 21, source)

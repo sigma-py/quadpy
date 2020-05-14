@@ -3,7 +3,7 @@ from mpmath import mp
 from ..helpers import article, techreport
 from ._helpers import T2Scheme, concat, s1, s2, s3
 
-citation = techreport(
+source = techreport(
     authors=["J. Berntsen", "T.O. Espelid"],
     title="Degree 13 symmetric quadrature rules for the triangle",
     # Reports in Informatics,
@@ -18,13 +18,13 @@ c2 = article(
     journal="ACM Trans. Math. Softw.",
     month="sep",
     year="1992",
-    url="https://dl.acm.org/citation.cfm?id=131772",
+    url="https://dl.acm.org/source.cfm?id=131772",
 )
 
 
 def dcutri(mpmath=False):
     out = berntsen_espelid_1(mpmath)
-    out.citation = c2
+    out.source = c2
     return out
 
 
@@ -78,7 +78,7 @@ def berntsen_espelid_1(mpmath=False):
             ],
         ),
     )
-    return T2Scheme("Berntsen-Espelid 1 (DCUTRI)", weights, points, 13, citation)
+    return T2Scheme("Berntsen-Espelid 1 (DCUTRI)", weights, points, 13, source)
 
 
 def berntsen_espelid_2(mpmath=False):
@@ -128,7 +128,7 @@ def berntsen_espelid_2(mpmath=False):
             ],
         ),
     )
-    return T2Scheme("Berntsen-Espelid 2", weights, points, 13, citation)
+    return T2Scheme("Berntsen-Espelid 2", weights, points, 13, source)
 
 
 def berntsen_espelid_3(mpmath=False):
@@ -177,7 +177,7 @@ def berntsen_espelid_3(mpmath=False):
             ],
         ),
     )
-    return T2Scheme("Berntsen-Espelid 3", weights, points, 13, citation)
+    return T2Scheme("Berntsen-Espelid 3", weights, points, 13, source)
 
 
 def berntsen_espelid_4(mpmath=False):
@@ -228,4 +228,4 @@ def berntsen_espelid_4(mpmath=False):
             ],
         ),
     )
-    return T2Scheme("Berntsen-Espelid 4", weights, points, 13, citation)
+    return T2Scheme("Berntsen-Espelid 4", weights, points, 13, source)

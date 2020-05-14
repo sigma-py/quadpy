@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from ..helpers import article
 from ._helpers import C2Scheme, concat, symm_r0, symm_s, symm_s_t, zero
 
-citation = article(
+source = article(
     authors=["Bernd Meister"],
     title="On a Family of Cubature Formulae",
     journal="Comput J",
@@ -25,4 +25,4 @@ def meister():
         symm_r0([frac(576, 6720), r]),
         symm_s_t([frac(117, 6720), 1, s]),
     )
-    return C2Scheme("Meister", weights, points, 7, citation)
+    return C2Scheme("Meister", weights, points, 7, source)

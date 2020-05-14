@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from ..helpers import article, pm, untangle, z
 from ._helpers import CnScheme
 
-_citation = article(
+_source = article(
     authors=["G.M. Ewing"],
     title="On Approximate Cubature",
     journal="The American Mathematical Monthly",
@@ -19,4 +19,4 @@ _citation = article(
 def ewing(n):
     data = [(frac(2, 3), z(n)), (frac(1, 3 * 2 ** n), pm(n, 1))]
     points, weights = untangle(data)
-    return CnScheme("Ewing", n, weights, points, 3, _citation)
+    return CnScheme("Ewing", n, weights, points, 3, _source)

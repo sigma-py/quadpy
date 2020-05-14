@@ -4,7 +4,7 @@ import os
 from ...helpers import article
 from .._helpers import T2Scheme, untangle2
 
-citation = article(
+source = article(
     authors=["Hong Xiao", "Zydrunas Gimbutas"],
     title="A numerical algorithm for the construction of efficient quadrature rules in two and higher dimensions",
     journal="Computers & Mathematics with Applications",
@@ -29,7 +29,7 @@ def _read(degree):
     degree = data.pop("degree")
     name = f"Xiao-Gimbutas {degree}"
     points, weights = untangle2(data)
-    return T2Scheme(name, weights, points, degree, citation)
+    return T2Scheme(name, weights, points, degree, source)
 
 
 def xiao_gimbutas_01():

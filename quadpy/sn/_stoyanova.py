@@ -6,7 +6,7 @@ import sympy
 from ..helpers import article, get_nsimplex_points, untangle, z
 from ._helpers import SnScheme
 
-citation = article(
+source = article(
     authors=["Srebra B. Stoyanova"],
     title="Cubature formulae of the seventh degree of accuracy for the hypersphere",
     journal="Journal of Computational and Applied Mathematics",
@@ -178,4 +178,4 @@ def stoyanova(n, delta=None, variant_v_plus=True, symbolic=False):
         (d, z(n)),
     ]
     points, weights = untangle(data)
-    return SnScheme("Stoyanova", n, weights, points, 7, citation)
+    return SnScheme("Stoyanova", n, weights, points, 7, source)
