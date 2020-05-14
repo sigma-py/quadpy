@@ -75,5 +75,4 @@ def phillips(n):
         data.append((d, fsd(n, (nu, 3))))
 
     points, weights = untangle(data)
-    weights *= 2 ** n
     return CnScheme("Phillips", n, weights, points, 7, _citation)

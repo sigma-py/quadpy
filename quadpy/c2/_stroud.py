@@ -38,14 +38,12 @@ citation = book(
 def stroud_c2_1_1():
     # product trapezoidal
     weights, points = symm_s(frac(1, 4), 1)
-    weights *= 4
     return C2Scheme("Stroud C2 1-1", weights, points, 1, citation)
 
 
 def stroud_c2_3_1():
     # ERR misprint in Stroud: sqrt(1/3) vs 1/3
     weights, points = symm_s([frac(1, 4), sqrt(frac(1, 3))])
-    weights *= 4
     return C2Scheme("Stroud C2 3-1", weights, points, 3, citation)
 
 
@@ -62,7 +60,6 @@ def stroud_c2_5_4():
     weights, points = concat(
         zero(frac(16, 81)), symm_r0([frac(10, 81), r]), symm_s([frac(25, 324), r])
     )
-    weights *= 4
     return C2Scheme("Stroud C2 5-4", weights, points, 5, citation)
 
 
@@ -75,8 +72,6 @@ def stroud_c2_7_4():
 
     r = sqrt(frac(3, 5))
     weights, points = concat(symm_s([B1, r], [B2, s]), symm_s_t([B3, r, s]))
-
-    weights *= 4
 
     # TODO fix
     warnings.warn("Formula only has degree 1!")

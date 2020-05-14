@@ -21,7 +21,6 @@ pi = sympy.pi
 def hammer_stroud_11_3():
     data = [(frac(1, 6), fsd(3, (sqrt(frac(3, 5)), 1)))]
     points, weights = untangle(data)
-    weights *= frac(4, 3) * pi
     return S3Scheme("Hammer-Stroud 11-3", _citation, 3, weights, points)
 
 
@@ -33,7 +32,6 @@ def hammer_stroud_12_3():
         (frac(7, 180), fsd(3, (alpha, 2))),
     ]
     points, weights = untangle(data)
-    weights *= frac(4, 3) * pi
     return S3Scheme("Hammer-Stroud 12-3", _citation, 5, weights, points)
 
 
@@ -52,7 +50,6 @@ def hammer_stroud_14_3(variant_a=True):
     data = [(a1, fsd(3, (nu, 1))), (c1, pm(3, eta1))]
 
     points, weights = untangle(data)
-    weights *= frac(4, 3) * pi
     name = "Hammer-Stroud 14-3" + ("a" if variant_a else "b")
     return S3Scheme(name, _citation, 5, weights, points)
 
@@ -78,7 +75,6 @@ def _hammer_stroud_15_3(variant_a):
         (c1, pm(3, sqrt(eta2))),
     ]
     points, weights = untangle(data)
-    weights *= frac(4, 3) * pi
     name = "Hammer-Stroud 15-3" + ("a" if variant_a else "b")
     return S3Scheme(name, _citation, 7, weights, points)
 

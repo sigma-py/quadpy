@@ -38,5 +38,5 @@ def dobrodeev_1970(n):
     ]
 
     points, weights = untangle(data)
-    weights /= frac(729, 125 * 2 ** n)
+    weights *= frac(125, 729)
     return CnScheme("Dobrodeev 1970", n, weights, points, 7, _citation)

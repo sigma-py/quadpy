@@ -37,5 +37,4 @@ def mysovskih():
     ]
 
     points, weights = untangle(data)
-    weights *= frac(4, 3) * pi
     return S3Scheme("Mysovskih", _citation, 7, weights, points)

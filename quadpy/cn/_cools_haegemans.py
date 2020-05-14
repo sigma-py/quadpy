@@ -38,7 +38,6 @@ def cools_haegemans_1(n, delta2=1, symbolic=False):
     ]
 
     points, weights = untangle(data)
-    weights *= 2 ** n
     return CnScheme("Cools-Haegemans 1", n, weights, points, 3, _citation)
 
 
@@ -65,7 +64,6 @@ def cools_haegemans_2(n, delta2=1, symbolic=False):
     ]
 
     points, weights = untangle(data)
-    weights *= 2 ** n
     return CnScheme("Cools-Haegemans 2", n, weights, points, 5, _citation)
 
 
@@ -137,7 +135,6 @@ def cools_haegemans_2(n, delta2=1, symbolic=False):
 #     print(weights)
 #     print(sum(weights))
 #     exit(1)
-#     weights *= 2 ** n
 #     return CnScheme("Cools-Haegemans 3", n, weights, points, 7, _citation)
 
 

@@ -1,6 +1,6 @@
 import numpy
 from sympy import Rational as frac
-from sympy import pi, sqrt
+from sympy import sqrt
 
 from ..helpers import article
 from ..un._mysovskikh import get_nsimplex_points
@@ -55,8 +55,6 @@ def lu_darmofal_1(n):
             numpy.full(len(b), B),
         ]
     )
-    weights *= sqrt(pi) ** n
-
     return Enr2Scheme("Lu-Darmofal I", n, weights, points, 5, citation)
 
 

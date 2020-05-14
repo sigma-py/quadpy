@@ -30,7 +30,8 @@ class CnScheme:
     def integrate(self, f, ncube, dot=numpy.dot):
         x = transform(self.points.T, ncube).T
         detJ = get_detJ(self.points.T, ncube)
-        return dot(f(x) * abs(detJ), self.weights)
+        ref_vol = 2 ** numpy.prod(len(ncube.shape) - 1)
+        return ref_vol * dot(f(x) * abs(detJ), self.weights)
 
 
 def transform(xi, cube):

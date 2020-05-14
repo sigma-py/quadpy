@@ -56,7 +56,7 @@ class S2Scheme:
         rr = numpy.multiply.outer(radius, self.points)
         rr = numpy.swapaxes(rr, 0, -2)
         ff = numpy.array(f((rr + center).T))
-        return numpy.array(radius) ** 2 * dot(ff, self.weights)
+        return numpy.pi * numpy.array(radius) ** 2 * dot(ff, self.weights)
 
 
 def _z():

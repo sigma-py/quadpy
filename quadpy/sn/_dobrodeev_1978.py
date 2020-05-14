@@ -1,5 +1,5 @@
 from ..helpers import article, compute_dobrodeev, fsd, untangle
-from ._helpers import SnScheme, integrate_monomial_over_unit_nball
+from ._helpers import SnScheme, integrate_monomial_over_nball
 
 citation = article(
     authors=["L.N. Dobrodeev"],
@@ -38,15 +38,14 @@ def dobrodeev_1978(n):
         20: ("I", 20, 1, 3),
     }
 
-    I0 = integrate_monomial_over_unit_nball(n * [0])
-    I2 = integrate_monomial_over_unit_nball([2] + (n - 1) * [0])
-    I22 = integrate_monomial_over_unit_nball([2, 2] + (n - 2) * [0])
-    I4 = integrate_monomial_over_unit_nball([4] + (n - 1) * [0])
+    I0 = integrate_monomial_over_nball(n * [0])
+    I2 = integrate_monomial_over_nball([2] + (n - 1) * [0])
+    I22 = integrate_monomial_over_nball([2, 2] + (n - 2) * [0])
+    I4 = integrate_monomial_over_nball([4] + (n - 1) * [0])
     pm_type, i, j, k = dim_config[n]
     G, a, b, c = compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k)
 
     data = [(G, fsd(n, (a, i))), (G, fsd(n, (b, j), (c, k)))]
 
     points, weights = untangle(data)
-    weights *= I0
     return SnScheme("Dobrodeev 1978", n, weights, points, 5, citation)

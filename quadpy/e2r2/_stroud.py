@@ -2,7 +2,7 @@ import warnings
 
 import numpy
 from sympy import Rational as frac
-from sympy import cos, pi, sin, sqrt
+from sympy import cos, sin, sqrt
 
 from ..helpers import book, fsd, pm, untangle
 from ._helpers import E2r2Scheme
@@ -35,7 +35,6 @@ def stroud_4_1():
     data = [(frac(1, 2), numpy.array([[0, 0]])), (frac(1, 10), pts)]
 
     points, weights = untangle(data)
-    weights *= pi
     return E2r2Scheme("Stroud 4-1", weights, points, 4, _citation)
 
 
@@ -49,7 +48,6 @@ def stroud_5_2():
     ]
 
     points, weights = untangle(data)
-    weights *= pi
     return E2r2Scheme("Stroud 5-2", weights, points, 5, _citation)
 
 
@@ -63,7 +61,6 @@ def stroud_7_2():
     data = [(A, fsd(2, (r, 1))), (B, fsd(2, (s, 1))), (C, fsd(2, (r, 1), (s, 1)))]
 
     points, weights = untangle(data)
-    weights *= pi
 
     # TODO find what's wrong
     warnings.warn("Stroud's Gauss product formula has degree 1, not 7.")

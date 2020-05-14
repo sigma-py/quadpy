@@ -1,3 +1,5 @@
+import math
+
 import numpy
 
 from ..helpers import article, untangle
@@ -31,6 +33,7 @@ def cools_kim_1():
         (0.024268628331345539, _s8(0.84937290409632805, 0.46270056598293749)),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     return S2Scheme("Cools-Kim 1", weights, points, 17, _citation)
 
 
@@ -51,6 +54,7 @@ def cools_kim_2():
         (0.058009352935795362, _s8(0.73773390012389973, 0.32685240870845720)),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     return S2Scheme("Cools-Kim 2", weights, points, 19, _citation)
 
 
@@ -72,6 +76,7 @@ def cools_kim_3():
         (0.063500222219468438, _s8(0.36200059276768541, 0.16676191877222966)),
     ]
     points, weights = untangle(data)
+    weights /= math.pi
     return S2Scheme("Cools-Kim 3", weights, points, 21, _citation)
 
 

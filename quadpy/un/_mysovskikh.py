@@ -1,6 +1,6 @@
 import numpy
 from sympy import Rational as frac
-from sympy import pi, sqrt
+from sympy import sqrt
 
 from ..helpers import article, get_nsimplex_points
 from ._helpers import UnScheme
@@ -15,26 +15,15 @@ citation = article(
 )
 
 
-# Compute the area of a hypersphere, <https://tauday.com/tau-manifesto>.
-# No roots, no gamma functions. Such a nice recursion!
-def surface_hypersphere(n):
-    assert n > 0
-    if n == 1:
-        return 2
-    elif n == 2:
-        return 2 * pi
-    return 2 * pi / (n - 2) * surface_hypersphere(n - 2)
-
-
 def mysovskikh_1(n):
     points = get_nsimplex_points(n, sqrt, frac)
-    weights = numpy.full(n + 1, surface_hypersphere(n) / (n + 1))
+    weights = numpy.full(n + 1, frac(1, n + 1))
     return UnScheme("Mysovskikh 1", n, weights, points, 2, citation)
 
 
 def mysovskikh_2(n):
-    A = frac((7 - n) * n, 2 * (n + 1) ** 2 * (n + 2)) * surface_hypersphere(n)
-    B = frac(2 * (n - 1) ** 2, n * (n + 1) ** 2 * (n + 2)) * surface_hypersphere(n)
+    A = frac((7 - n) * n, 2 * (n + 1) ** 2 * (n + 2))
+    B = frac(2 * (n - 1) ** 2, n * (n + 1) ** 2 * (n + 2))
 
     a = get_nsimplex_points(n, sqrt, frac)
     b = numpy.array(
@@ -54,5 +43,4 @@ def mysovskikh_2(n):
             numpy.full(len(b), B),
         ]
     )
-
     return UnScheme("Mysovskikh 2", n, weights, points, 5, citation)

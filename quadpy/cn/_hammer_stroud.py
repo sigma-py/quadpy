@@ -18,7 +18,6 @@ _citation = article(
 def hammer_stroud_1n(n):
     data = [(frac(1, 2 * n), fsd(n, (sqrt(frac(n, 3)), 1)))]
     points, weights = untangle(data)
-    weights *= 2 ** n
     return CnScheme("Hammer-Stroud 1n", n, weights, points, 3, _citation)
 
 
@@ -30,5 +29,4 @@ def hammer_stroud_2n(n):
         (frac(25, 324), fsd(n, (r, 2))),
     ]
     points, weights = untangle(data)
-    weights *= 2 ** n
     return CnScheme("Hammer-Stroud 2n", n, weights, points, 5, _citation)

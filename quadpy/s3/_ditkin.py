@@ -32,7 +32,6 @@ def ditkin_1(alpha=0):
     ]
 
     points, weights = untangle(data)
-    weights *= frac(4, 3) * pi
     return S3Scheme("Ditkin 1", _citation, 5, weights, points)
 
 
@@ -52,7 +51,6 @@ def ditkin_2():
     ]
 
     points, weights = untangle(data)
-    weights *= frac(4, 3) * pi
     return S3Scheme("Ditkin 2", _citation, 5, weights, points)
 
 
@@ -78,5 +76,4 @@ def ditkin_3():
     ]
 
     points, weights = untangle(data)
-    weights *= frac(4, 3) * pi
     return S3Scheme("Ditkin 3", _citation, 7, weights, points)

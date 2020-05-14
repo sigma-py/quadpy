@@ -22,8 +22,9 @@ def cohen_gismalla_1():
     u = 0.84623312
     v = 0.46607171
     weights, points = concat(zero(8.0 / 7.0), pm([5.0 / 7.0, u, -v], [5.0 / 7.0, v, u]))
+    weights /= 4
     # This scheme is of order 5 for symmetric integrands
-    return C2Scheme("CohenGismalla 1", weights, points, 3, citation)
+    return C2Scheme("Cohen-Gismalla 1", weights, points, 3, citation)
 
 
 def cohen_gismalla_2():
@@ -38,7 +39,8 @@ def cohen_gismalla_2():
     B = 0.5951448
     C = 0.3584324
     weights, points = concat(zero(A), pm([B, u, -v], [B, v, u], [C, r, -s], [C, r, s]))
+    weights /= 4
     # ERR this scheme only has order 1
     # According to the article, it has order 7 for symmetric integrands.
     # Something is fishy...
-    return C2Scheme("CohenGismalla 2", weights, points, 1, citation)
+    return C2Scheme("Cohen-Gismalla 2", weights, points, 1, citation)

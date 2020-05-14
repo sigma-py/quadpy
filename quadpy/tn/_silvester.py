@@ -31,7 +31,7 @@ def integrate_bary(k, symbolic):
         return 1
 
     # find first nonzero
-    idx = next((i for i, j in enumerate(k) if j > 0), None)
+    idx = next(i for i, j in enumerate(k) if j > 0)
     alpha = frac(k[idx], sum(k) + n)
     k2 = k.copy()
     k2[idx] -= 1

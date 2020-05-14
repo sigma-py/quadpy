@@ -32,5 +32,4 @@ def stroud_1968(n):
     ]
 
     points, weights = untangle(data)
-    weights *= 2 ** n
     return CnScheme("Stroud 1968", n, weights, points, 5, _citation)

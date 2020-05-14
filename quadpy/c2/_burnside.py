@@ -18,5 +18,4 @@ def burnside():
     r = sqrt(frac(7, 15))
     s = sqrt(frac(7, 9))
     weights, points = concat(symm_r0([frac(10, 49), r]), symm_s([frac(9, 196), s]))
-    weights *= 4
     return C2Scheme("Burnside", weights, points, 5, citation)
