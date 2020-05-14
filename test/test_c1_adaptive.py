@@ -120,7 +120,7 @@ def test_236():
 
 
 def test_infinite_limits():
-    tol = 1.0e-9
+    tol = 1.0e-7
     val, err = quadpy.quad(lambda x: numpy.exp(-(x ** 2)), -numpy.inf, numpy.inf)
     assert abs(val - numpy.sqrt(numpy.pi)) < tol
     assert err < tol
