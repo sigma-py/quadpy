@@ -1,7 +1,7 @@
 from ..helpers import article
 from ._helpers import T3Scheme, concat, s4, s22, s31, s211
 
-citation = article(
+source = article(
     authors=["J.I. Maeztu", "E. Sainz de la Maza"],
     title="An invariant quadrature rule of degree 11 for the tetrahedron",
     journal="C. R. Acad. Sci. Paris",
@@ -33,4 +33,4 @@ def maeztu_sainz():
             [+0.1272850504266610e-1, 0.43854531792695007e-1, 0.27759599714708815],
         ),
     )
-    return T3Scheme("Maeztu-Sainz", weights, points, degree, citation)
+    return T3Scheme("Maeztu-Sainz", weights, points, degree, source)

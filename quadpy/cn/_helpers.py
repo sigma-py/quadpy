@@ -2,15 +2,16 @@ import itertools
 
 import numpy
 
-from ..helpers import n_outer
+from ..helpers import QuadratureScheme, n_outer
 
 
-class CnScheme:
-    def __init__(self, name, dim, weights, points, degree, citation):
+class CnScheme(QuadratureScheme):
+    def __init__(self, name, dim, weights, points, degree, source):
+        self.domain = f"Cn (n={dim})"
         self.name = name
         self.dim = dim
         self.degree = degree
-        self.citation = citation
+        self.source = source
 
         if weights.dtype == numpy.float64:
             self.weights = weights
@@ -32,6 +33,12 @@ class CnScheme:
         detJ = get_detJ(self.points.T, ncube)
         ref_vol = 2 ** numpy.prod(len(ncube.shape) - 1)
         return ref_vol * dot(f(x) * abs(detJ), self.weights)
+
+    def points_inside(self):
+        return numpy.all((-1 < self.points) & (self.points < 1))
+
+    def points_inside_or_boundary(self):
+        return numpy.all((-1 <= self.points) & (self.points <= 1))
 
 
 def transform(xi, cube):

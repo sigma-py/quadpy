@@ -8,7 +8,7 @@ from ..helpers import article
 from ._helpers import C2Scheme, concat, pm, pm2, symm_r0, symm_s, symm_s_t, zero
 from ._tyler import tyler_2
 
-citation = article(
+source = article(
     authors=["Richard Franke"],
     title="Obtaining cubatures for rectangles and other planar regions by using orthogonal polynomials",
     journal="Math. Comp.",
@@ -35,7 +35,7 @@ def franke_1(lmbda):
         ),
     )
     weights /= 4
-    return C2Scheme(f"Franke(1, {lmbda})", weights, points, 5, citation)
+    return C2Scheme(f"Franke(1, {lmbda})", weights, points, 5, source)
 
 
 def franke_2a():
@@ -51,7 +51,7 @@ def franke_2a():
         pm([0.579684582100041, 0, b]),
     )
     weights /= 4
-    return C2Scheme("Franke 2a", weights, points, 7, citation)
+    return C2Scheme("Franke 2a", weights, points, 7, source)
 
 
 def franke_2b():
@@ -67,7 +67,7 @@ def franke_2b():
         pm([0.309204306788848, 0, a]),
     )
     weights /= 4
-    return C2Scheme("Franke 2b", weights, points, 7, citation)
+    return C2Scheme("Franke 2b", weights, points, 7, source)
 
 
 def franke_3a():
@@ -89,7 +89,7 @@ def franke_3a():
         zero(0.505679012345679),
     )
     weights /= 4
-    return C2Scheme("Franke 3a", weights, points, 9, citation)
+    return C2Scheme("Franke 3a", weights, points, 9, source)
 
 
 def franke_3b():
@@ -111,7 +111,7 @@ def franke_3b():
         ),
     )
     weights /= 4
-    return C2Scheme("Franke 3b", weights, points, 9, citation)
+    return C2Scheme("Franke 3b", weights, points, 9, source)
 
 
 def franke_3c():
@@ -133,7 +133,7 @@ def franke_3c():
         zero(-0.481503595164821e-1),
     )
     weights /= 4
-    return C2Scheme("Franke 3c", weights, points, 9, citation)
+    return C2Scheme("Franke 3c", weights, points, 9, source)
 
 
 def franke_5():
@@ -152,7 +152,7 @@ def franke_6():
         symm_s_t([frac(1519, 4050), b, c]),
     )
     weights /= 4
-    return C2Scheme("Franke 6", weights, points, 7, citation)
+    return C2Scheme("Franke 6", weights, points, 7, source)
 
 
 def franke_8():
@@ -171,4 +171,4 @@ def franke_8():
         symm_s_t([0.144452223260307, r, s]),
     )
     weights /= 4
-    return C2Scheme("Franke 8", weights, points, 1, citation)
+    return C2Scheme("Franke 8", weights, points, 1, source)

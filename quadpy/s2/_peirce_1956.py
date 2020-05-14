@@ -4,7 +4,7 @@ import sympy
 from ..helpers import fs_array, fsd, phdthesis, pm, untangle
 from ._helpers import S2Scheme
 
-_citation = phdthesis(
+_source = phdthesis(
     authors=["William Hollis Peirce"],
     title="Numerical integration over planar regions",
     school="University of Wisconsin--Madison",
@@ -32,7 +32,7 @@ def peirce_1956_1():
     data = [(B1, fsd(2, (r, 1))), (B2, pm(2, s)), (B3, pm(2, t))]
 
     points, weights = untangle(data)
-    return S2Scheme("Peirce 1956-1", weights, points, 7, _citation)
+    return S2Scheme("Peirce 1956-1", weights, points, 7, _source)
 
 
 def peirce_1956_2():
@@ -60,7 +60,7 @@ def peirce_1956_2():
     ]
 
     points, weights = untangle(data)
-    return S2Scheme("Peirce 1956-2", weights, points, 9, _citation)
+    return S2Scheme("Peirce 1956-2", weights, points, 9, _source)
 
 
 def peirce_1956_3():
@@ -90,4 +90,4 @@ def peirce_1956_3():
     ]
 
     points, weights = untangle(data)
-    return S2Scheme("Peirce 1956-3", weights, points, 11, _citation)
+    return S2Scheme("Peirce 1956-3", weights, points, 11, _source)

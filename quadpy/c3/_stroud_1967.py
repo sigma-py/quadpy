@@ -4,7 +4,7 @@ from sympy import sqrt
 from ..helpers import article, untangle
 from ._helpers import C3Scheme, rss_pm, z
 
-citation = article(
+source = article(
     authors=["A.H. Stroud"],
     title="Some fifth degree integration formulas for symmetric regions II",
     journal="Numerische Mathematik",
@@ -40,4 +40,4 @@ def stroud_1967():
 
     points, weights = untangle(data)
     weights /= 8
-    return C3Scheme("Stroud 1967", weights, points, 5, citation)
+    return C3Scheme("Stroud 1967", weights, points, 5, source)

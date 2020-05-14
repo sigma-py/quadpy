@@ -5,7 +5,7 @@ import numpy
 from ..helpers import article
 from ._helpers import E1r2Scheme
 
-citation = article(
+source = article(
     authors=["Alan Genz", "B.D. Keister"],
     title="Fully symmetric interpolatory rules for multiple integrals over infinite regions with Gaussian weight",
     journal="Journal of Computational and Applied Mathematics",
@@ -250,4 +250,4 @@ def genz_keister(n):
     p = numpy.sort(points)
     points = numpy.concatenate([-p[1:][::-1], [p[0]], p[1:]])
 
-    return E1r2Scheme(f"Genz-Keister ({n})", weights, points, degree, citation)
+    return E1r2Scheme(f"Genz-Keister ({n})", weights, points, degree, source)

@@ -10,7 +10,7 @@ from ._stroud import stroud_enr2_5_1a as lu_darmofal_4a
 from ._stroud import stroud_enr2_5_1b as lu_darmofal_4b
 from ._stroud_secrest import stroud_secrest_4 as lu_darmofal_2
 
-citation = article(
+source = article(
     authors=["James Lu", "David L. Darmofal"],
     title="Higher-Dimensional Integration with Gaussian Weight for Applications in Probabilistic Design",
     journal="SIAM J. Sci. Comput.",
@@ -55,7 +55,7 @@ def lu_darmofal_1(n):
             numpy.full(len(b), B),
         ]
     )
-    return Enr2Scheme("Lu-Darmofal I", n, weights, points, 5, citation)
+    return Enr2Scheme("Lu-Darmofal I", n, weights, points, 5, source)
 
 
 __all__ = [

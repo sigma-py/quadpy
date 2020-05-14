@@ -1,7 +1,7 @@
 from ..helpers import article
 from ._helpers import C2Scheme, concat, symm_r0, symm_s, symm_s_t, zero
 
-citation = article(
+source = article(
     authors=["Philip Rabinowitz", "Nira Richter"],
     title="Perfectly Symmetric Two-Dimensional Integration Formulas with Minimal Numbers of Points",
     journal="Mathematics of Computation",
@@ -26,7 +26,7 @@ def rabinowitz_richter_1():
         symm_s_t([0.2157558036359328, 0.8367103250239890, 0.5073767736746132]),
     )
     weights /= 4
-    return C2Scheme(name, weights, points, degree, citation)
+    return C2Scheme(name, weights, points, degree, source)
 
 
 def rabinowitz_richter_2():
@@ -45,7 +45,7 @@ def rabinowitz_richter_2():
         symm_s_t([0.1466843776513117, 0.5756535958404649, 0.8830255085256902]),
     )
     weights /= 4
-    return C2Scheme(name, weights, points, degree, citation)
+    return C2Scheme(name, weights, points, degree, source)
 
 
 def rabinowitz_richter_3():
@@ -64,7 +64,7 @@ def rabinowitz_richter_3():
         symm_s_t([0.0813422207533089, 0.9602661668053869, 0.4347413023856830]),
     )
     weights /= 4
-    return C2Scheme(name, weights, points, degree, citation)
+    return C2Scheme(name, weights, points, degree, source)
 
 
 def rabinowitz_richter_4():
@@ -87,7 +87,7 @@ def rabinowitz_richter_4():
         ),
     )
     weights /= 4
-    return C2Scheme(name, weights, points, degree, citation)
+    return C2Scheme(name, weights, points, degree, source)
 
 
 def rabinowitz_richter_5():
@@ -111,7 +111,7 @@ def rabinowitz_richter_5():
         ),
     )
     weights /= 4
-    return C2Scheme(name, weights, points, degree, citation)
+    return C2Scheme(name, weights, points, degree, source)
 
 
 def rabinowitz_richter_6():
@@ -135,4 +135,4 @@ def rabinowitz_richter_6():
         ),
     )
     weights /= 4
-    return C2Scheme(name, weights, points, degree, citation)
+    return C2Scheme(name, weights, points, degree, source)

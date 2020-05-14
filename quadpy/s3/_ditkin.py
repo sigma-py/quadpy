@@ -3,12 +3,12 @@ import sympy
 from ..helpers import article, pm, pm_array0, untangle, z
 from ._helpers import S3Scheme
 
-_citation = article(
+_source = article(
     authors=["V.A. Ditkin"],
     title="On certain approximate formulas for the calculation of triple integrals",
     journal="Doklady Akad. Nauk SSSR (N.S.)",
     number="62",
-    year=1948,
+    year="1948",
     pages="445–447",
     note="Russian",
 )
@@ -32,7 +32,7 @@ def ditkin_1(alpha=0):
     ]
 
     points, weights = untangle(data)
-    return S3Scheme("Ditkin 1", _citation, 5, weights, points)
+    return S3Scheme("Ditkin 1", _source, 5, weights, points)
 
 
 def ditkin_2():
@@ -51,7 +51,7 @@ def ditkin_2():
     ]
 
     points, weights = untangle(data)
-    return S3Scheme("Ditkin 2", _citation, 5, weights, points)
+    return S3Scheme("Ditkin 2", _source, 5, weights, points)
 
 
 def ditkin_3():
@@ -76,4 +76,4 @@ def ditkin_3():
     ]
 
     points, weights = untangle(data)
-    return S3Scheme("Ditkin 3", _citation, 7, weights, points)
+    return S3Scheme("Ditkin 3", _source, 7, weights, points)

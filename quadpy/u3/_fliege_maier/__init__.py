@@ -8,7 +8,7 @@ import numpy
 from ...helpers import online
 from .._helpers import U3Scheme, cartesian_to_spherical
 
-citation = online(
+source = online(
     authors=["Jörg Fliege", "Ulrike Maier"],
     title="A Two-Stage Approach for Computing Cubature Formulae for the Sphere",
     url="https://www.personal.soton.ac.uk/jf1w07/nodes/nodes.html",
@@ -34,7 +34,7 @@ def _read(index):
     weights = data[:, 3] / 4 / numpy.pi
 
     azimuthal_polar = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, azimuthal_polar, degree, citation)
+    return U3Scheme(name, weights, points, azimuthal_polar, degree, source)
 
 
 def fliege_maier_04():

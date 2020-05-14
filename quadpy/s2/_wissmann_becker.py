@@ -5,7 +5,7 @@ import numpy
 from ..helpers import article, untangle
 from ._helpers import S2Scheme
 
-_citation = article(
+_source = article(
     authors=["Johannes W. Wissmann", "Thomas Becker"],
     title="Partially Symmetric Cubature Formulas for Even Degrees of Exactness",
     journal="SIAM J. Numer. Anal.",
@@ -27,7 +27,7 @@ def wissmann_becker_6_1():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    return S2Scheme("Wissmann-Becker 6-1", weights, points, 6, _citation)
+    return S2Scheme("Wissmann-Becker 6-1", weights, points, 6, _source)
 
 
 def wissmann_becker_6_2():
@@ -42,7 +42,7 @@ def wissmann_becker_6_2():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    return S2Scheme("Wissmann-Becker 6-2", weights, points, 6, _citation)
+    return S2Scheme("Wissmann-Becker 6-2", weights, points, 6, _source)
 
 
 def wissmann_becker_8_1():
@@ -60,7 +60,7 @@ def wissmann_becker_8_1():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    return S2Scheme("Wissmann-Becker 8-1", weights, points, 8, _citation)
+    return S2Scheme("Wissmann-Becker 8-1", weights, points, 8, _source)
 
 
 def _z(a):

@@ -153,6 +153,8 @@ def test_scheme(scheme):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
+    print(scheme)
+
     # Test integration until we get to a polynomial degree `d` that can no
     # longer be integrated exactly. The scheme's degree is `d-1`.
     t3 = numpy.array(

@@ -5,7 +5,7 @@ from sympy import sqrt
 from ..helpers import article
 from ._helpers import C2Scheme
 
-citation = article(
+source = article(
     authors=["H.J. Schmid"],
     title="On cubature formulae with a minimal number of knots",
     journal="Numerische Mathematik",
@@ -27,7 +27,7 @@ def schmid_2():
         ]
     )
     weights = numpy.array([frac(1, 4), frac(1, 4), frac(1, 2)])
-    return C2Scheme("Schmid 2", weights, points, 2, citation)
+    return C2Scheme("Schmid 2", weights, points, 2, source)
 
 
 def schmid_4():
@@ -51,7 +51,7 @@ def schmid_4():
             frac(5, 36) - 5 * sqrt(29) / 18 / 29,
         ]
     )
-    return C2Scheme("Schmid 4", weights, points, 4, citation)
+    return C2Scheme("Schmid 4", weights, points, 4, source)
 
 
 def schmid_6():
@@ -84,4 +84,4 @@ def schmid_6():
             0.022455640481,
         ]
     )
-    return C2Scheme("Schmid 6", weights, points, 6, citation)
+    return C2Scheme("Schmid 6", weights, points, 6, source)

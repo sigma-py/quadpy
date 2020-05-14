@@ -3,7 +3,7 @@
 from ..helpers import article, fsd, untangle, z
 from ._helpers import SnScheme, volume_nball
 
-citation = article(
+source = article(
     authors=["W.G."],
     title="Review: Tabulation of Certain Fully Symmetric Numerical Integration Formulas of Degree 7, 9 and 11 by Frank Stenger",
     journal="Mathematics of Computation",
@@ -80,7 +80,7 @@ def stenger_7a(n):
 
     points, weights = untangle(data)
     weights /= volume_nball(n, symbolic=False)
-    return SnScheme("Stenger 7a", n, weights, points, 7, citation)
+    return SnScheme("Stenger 7a", n, weights, points, 7, source)
 
 
 def stenger_7b(n):
@@ -146,7 +146,7 @@ def stenger_7b(n):
 
     points, weights = untangle(data)
     weights /= volume_nball(n, symbolic=False)
-    return SnScheme("Stenger 7b", n, weights, points, 7, citation)
+    return SnScheme("Stenger 7b", n, weights, points, 7, source)
 
 
 def stenger_9a(n):
@@ -227,7 +227,7 @@ def stenger_9a(n):
 
     points, weights = untangle(data)
     weights /= volume_nball(n, symbolic=False)
-    return SnScheme("Stenger 9a", n, weights, points, 9, citation)
+    return SnScheme("Stenger 9a", n, weights, points, 9, source)
 
 
 def stenger_9b(n):
@@ -294,7 +294,7 @@ def stenger_9b(n):
 
     points, weights = untangle(data)
     weights /= volume_nball(n, symbolic=False)
-    return SnScheme("Stenger 9b", n, weights, points, 9, citation)
+    return SnScheme("Stenger 9b", n, weights, points, 9, source)
 
 
 def stenger_11a(n):
@@ -389,7 +389,7 @@ def stenger_11a(n):
 
     points, weights = untangle(data)
     weights /= volume_nball(n, symbolic=False)
-    return SnScheme("Stenger 11a", n, weights, points, 11, citation)
+    return SnScheme("Stenger 11a", n, weights, points, 11, source)
 
 
 def stenger_11b(n):
@@ -484,4 +484,4 @@ def stenger_11b(n):
 
     points, weights = untangle(data)
     weights /= volume_nball(n, symbolic=False)
-    return SnScheme("Stenger 11b", n, weights, points, 11, citation)
+    return SnScheme("Stenger 11b", n, weights, points, 11, source)

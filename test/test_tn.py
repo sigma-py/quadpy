@@ -48,6 +48,8 @@ def test_scheme(scheme):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
+    print(scheme)
+
     n = scheme.dim
     simplex = numpy.zeros((n + 1, n))
     for k in range(n):
@@ -61,7 +63,6 @@ def test_scheme(scheme):
     assert degree >= scheme.degree, "{}: Observed: {}, expected: {}".format(
         scheme.name, degree, scheme.degree
     )
-    return
 
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 import numpy
 
+from ..cn import CnScheme
 from ..helpers import plot_disks_1d
 
 
@@ -46,13 +47,14 @@ def _find_shapes(fx, intervals, x, domain_shape=None, range_shape=None):
     return domain_shape, range_shape, interval_set_shape
 
 
-class C1Scheme:
-    def __init__(self, name, degree, weights, points, citation=None):
+class C1Scheme(CnScheme):
+    def __init__(self, name, degree, weights, points, source=None):
+        self.domain = "C1"
         self.name = name
         self.degree = degree
         self.weights = weights
         self.points = points
-        self.citation = citation
+        self.source = source
 
     def integrate(
         self, f, intervals, domain_shape=None, range_shape=None, dot=numpy.dot
@@ -74,20 +76,6 @@ class C1Scheme:
         )
         # The factor 0.5 is from the length of the reference line [-1, 1].
         return 0.5 * len_intervals * dot(fx, self.weights)
-
-    def savefig(self, filename, *args, **kwargs):
-        import matplotlib.pyplot as plt
-
-        self.plot(*args, **kwargs)
-        # mpl keeps a hidden background patch that renders bbox_inches ineffective.
-        # keep an eye out for https://stackoverflow.com/q/61712551/353337
-        plt.savefig(filename, transparent=True, bbox_inches="tight")
-
-    def show(self, *args, **kwargs):
-        import matplotlib.pyplot as plt
-
-        self.plot(*args, **kwargs)
-        plt.show()
 
     def plot(self, interval=numpy.array([[-1.0], [1.0]]), show_axes=False):
         import matplotlib.pyplot as plt

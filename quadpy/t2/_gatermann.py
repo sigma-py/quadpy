@@ -1,7 +1,7 @@
 from ..helpers import article
 from ._helpers import T2Scheme, rot_ab
 
-citation = article(
+source = article(
     authors=["Karin Gatermann"],
     title="The construction of symmetric cubature formulas for the square and the triangle",
     journal="Computing",
@@ -22,4 +22,4 @@ def gatermann():
         [0.6749318700980879e-01, 0.5158423343536001, 0.2777161669764050],
     )
     weights *= 2
-    return T2Scheme("Gatermann", weights, points, 7, citation)
+    return T2Scheme("Gatermann", weights, points, 7, source)

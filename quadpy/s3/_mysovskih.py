@@ -4,7 +4,7 @@ import sympy
 from ..helpers import article, fsd, pm, untangle
 from ._helpers import S3Scheme
 
-_citation = article(
+_source = article(
     authors=["I.P. Mysovskih"],
     title="On the construction of cubature formulas for the simplest regions",
     journal="Z. Vychisl. Mat. i. Mat. Fiz.",
@@ -37,4 +37,4 @@ def mysovskih():
     ]
 
     points, weights = untangle(data)
-    return S3Scheme("Mysovskih", _citation, 7, weights, points)
+    return S3Scheme("Mysovskih", _source, 7, weights, points)

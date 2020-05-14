@@ -6,7 +6,7 @@ from sympy import sqrt
 from ..helpers import article, fsd, untangle
 from ._helpers import UnScheme, integrate_monomial_over_unit_nsphere
 
-citation = article(
+source = article(
     authors=["L.N. Dobrodeev"],
     title="Cubature rules with equal coefficients for integrating functions with respect to symmetric domains",
     journal="USSR Computational Mathematics and Mathematical Physics",
@@ -69,7 +69,7 @@ def dobrodeev_1978(n):
         data = [(G, fsd(n, (a, i))), (G, fsd(n, (b, j), (c, k)))]
 
     points, weights = untangle(data)
-    return UnScheme("Dobrodeev 1978", n, weights, points, degree, citation)
+    return UnScheme("Dobrodeev 1978", n, weights, points, degree, source)
 
 
 def _generate_i(n, i):

@@ -4,7 +4,7 @@ from sympy import sqrt
 from ..helpers import article, fsd, untangle, z
 from ._helpers import SnScheme
 
-citation = article(
+source = article(
     authors=["L.N. Dobrodeev"],
     title="Cubature formulas of the seventh order of accuracy for a hypersphere and a hypercube",
     journal="USSR Computational Mathematics and Mathematical Physics",
@@ -37,4 +37,4 @@ def dobrodeev_1970(n):
     points, weights = untangle(data)
 
     weights /= frac(27 * (n + 2) * (n + 4), (n + 6) ** 2)
-    return SnScheme("Dobrodeev 1970", n, weights, points, 7, citation)
+    return SnScheme("Dobrodeev 1970", n, weights, points, 7, source)

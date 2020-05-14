@@ -3,7 +3,7 @@ import numpy
 from ..helpers import article
 from ._helpers import T2Scheme
 
-citation = article(
+source = article(
     authors=["Richard Franke"],
     title="Obtaining cubatures for rectangles and other planar regions by using orthogonal polynomials",
     journal="Math. Comp.",
@@ -68,7 +68,7 @@ def franke_09():
     )
     points = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
 
-    return T2Scheme("Franke 9", weights, points, 7, citation)
+    return T2Scheme("Franke 9", weights, points, 7, source)
 
 
 def franke_10():
@@ -125,4 +125,4 @@ def franke_10():
     )
     points = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
 
-    return T2Scheme("Franke 10", weights, points, 7, citation)
+    return T2Scheme("Franke 10", weights, points, 7, source)

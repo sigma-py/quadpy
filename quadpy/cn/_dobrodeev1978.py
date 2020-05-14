@@ -1,7 +1,7 @@
 from ..helpers import article, compute_dobrodeev, fsd, untangle
 from ._helpers import CnScheme, integrate_monomial_over_ncube
 
-_citation = article(
+_source = article(
     authors=["L.N. Dobrodeev"],
     title="Cubature rules with equal coefficients for integrating functions with respect to symmetric domains",
     journal="USSR Computational Mathematics and Mathematical Physics",
@@ -51,4 +51,4 @@ def dobrodeev_1978(n):
     data = [(G, fsd(n, (a, i))), (G, fsd(n, (b, j), (c, k)))]
 
     points, weights = untangle(data)
-    return CnScheme("Dobrodeev 1978", n, weights, points, 5, _citation)
+    return CnScheme("Dobrodeev 1978", n, weights, points, 5, _source)

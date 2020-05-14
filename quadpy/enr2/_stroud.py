@@ -19,7 +19,7 @@ from ._stroud_secrest import stroud_secrest_1 as stroud_enr2_3_1
 from ._stroud_secrest import stroud_secrest_2 as stroud_enr2_3_2
 from ._stroud_secrest import stroud_secrest_4 as stroud_enr2_5_2
 
-citation = book(
+source = book(
     authors=["Arthur Stroud"],
     title="Approximate Calculation of Multiple Integrals",
     publisher="Prentice Hall",
@@ -39,7 +39,7 @@ def stroud_enr2_5_3(n, symbolic=False):
 
     data = [(A, fsd(n, (r, 1))), (B, pm(n, s))]
     points, weights = untangle(data)
-    return Enr2Scheme("Stroud Enr2 5-3", n, weights, points, 5, citation)
+    return Enr2Scheme("Stroud Enr2 5-3", n, weights, points, 5, source)
 
 
 def stroud_enr2_5_4(n, symbolic=False):
@@ -57,7 +57,7 @@ def stroud_enr2_5_4(n, symbolic=False):
         data += [(alpha, pm_array0(n, arr, idx))]
 
     points, weights = untangle(data)
-    return Enr2Scheme("Stroud Enr2 5-4", n, weights, points, 5, citation)
+    return Enr2Scheme("Stroud Enr2 5-4", n, weights, points, 5, source)
 
 
 def _stroud_5_5(n, variant_a, symbolic=False):
@@ -75,7 +75,7 @@ def _stroud_5_5(n, variant_a, symbolic=False):
 
     points, weights = untangle(data)
     variant = "a" if variant_a else "b"
-    return Enr2Scheme(f"Stroud Enr2 5-5{variant}", n, weights, points, 5, citation)
+    return Enr2Scheme(f"Stroud Enr2 5-5{variant}", n, weights, points, 5, source)
 
 
 def stroud_enr2_5_5a(n):
@@ -101,7 +101,7 @@ def stroud_enr2_5_6(n, symbolic=False):
     data = [(A, fsd(n, (r, 1), (s, n - 1))), (A, pm(n, t))]
 
     points, weights = untangle(data)
-    return Enr2Scheme("Stroud Enr2 5-6", n, weights, points, 5, citation)
+    return Enr2Scheme("Stroud Enr2 5-6", n, weights, points, 5, source)
 
 
 __all__ = [

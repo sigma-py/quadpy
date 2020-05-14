@@ -6,7 +6,7 @@ import os
 from ...helpers import article
 from .._helpers import C2Scheme, concat, symm_r0, symm_s, symm_s_t, zero
 
-_citation = article(
+_source = article(
     authors=["F.D. Witherden", "P.E. Vincent"],
     title="On the identification of symmetric quadrature rules for finite element methods",
     journal="Computers & Mathematics with Applications",
@@ -39,7 +39,7 @@ def _read(degree):
 
     weights, points = concat(*d)
     weights /= 4
-    return C2Scheme(f"Witherden-Vincent {degree}", weights, points, degree, _citation)
+    return C2Scheme(f"Witherden-Vincent {degree}", weights, points, degree, _source)
 
 
 def witherden_vincent_01():

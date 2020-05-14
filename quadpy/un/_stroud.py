@@ -6,7 +6,7 @@ from ._helpers import UnScheme
 from ._stroud_1967 import stroud_1967 as stroud_un_7_1
 from ._stroud_1969 import stroud_1969 as stroud_un_11_1
 
-citation = book(
+source = book(
     authors=["Arthur Stroud"],
     title="Approximate Calculation of Multiple Integrals",
     publisher="Prentice Hall",
@@ -18,14 +18,14 @@ def stroud_un_3_1(n):
     degree = 3
     data = [(frac(1, 2 * n), fsd(n, (1, 1)))]
     points, weights = untangle(data)
-    return UnScheme("Stroud Un 3-1", n, weights, points, degree, citation)
+    return UnScheme("Stroud Un 3-1", n, weights, points, degree, source)
 
 
 def stroud_un_3_2(n):
     degree = 3
     data = [(frac(1, 2 ** n), pm(n, sqrt(frac(1, n))))]
     points, weights = untangle(data)
-    return UnScheme("Stroud Un 3-2", n, weights, points, degree, citation)
+    return UnScheme("Stroud Un 3-2", n, weights, points, degree, source)
 
 
 def stroud_un_5_1(n):
@@ -37,7 +37,7 @@ def stroud_un_5_1(n):
     data = [(B1, fsd(n, (1, 1))), (B2, fsd(n, (sqrt(frac(1, 2)), 2)))]
 
     points, weights = untangle(data)
-    return UnScheme("Stroud Un 5-1", n, weights, points, degree, citation)
+    return UnScheme("Stroud Un 5-1", n, weights, points, degree, source)
 
 
 def stroud_un_5_2(n):
@@ -49,7 +49,7 @@ def stroud_un_5_2(n):
     data = [(B1, fsd(n, (1, 1))), (B2, pm(n, sqrt(frac(1, n))))]
 
     points, weights = untangle(data)
-    return UnScheme("Stroud Un 5-2", n, weights, points, degree, citation)
+    return UnScheme("Stroud Un 5-2", n, weights, points, degree, source)
 
 
 def stroud_un_5_3(n):
@@ -63,7 +63,7 @@ def stroud_un_5_3(n):
     ]
 
     points, weights = untangle(data)
-    return UnScheme("Stroud Un 5-3", n, weights, points, degree, citation)
+    return UnScheme("Stroud Un 5-3", n, weights, points, degree, source)
 
 
 def stroud_un_5_4(n):
@@ -76,7 +76,7 @@ def stroud_un_5_4(n):
     data = [(frac(1, 2 ** n * n), fsd(n, (u, 1), (v, n - 1)))]
 
     points, weights = untangle(data)
-    return UnScheme("Stroud Un 5-4", n, weights, points, degree, citation)
+    return UnScheme("Stroud Un 5-4", n, weights, points, degree, source)
 
 
 def stroud_un_7_2(n):
@@ -92,7 +92,7 @@ def stroud_un_7_2(n):
     data = [(A, pm(n, r)), (B, fsd(n, (s, 1), (t, n - 1)))]
 
     points, weights = untangle(data)
-    return UnScheme("Stroud Un 7-1", n, weights, points, degree, citation)
+    return UnScheme("Stroud Un 7-1", n, weights, points, degree, source)
 
 
 __all__ = [

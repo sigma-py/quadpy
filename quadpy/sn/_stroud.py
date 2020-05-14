@@ -22,7 +22,7 @@ from ._stroud_1967_7 import stroud_1967_7_a as stroud_sn_7_1a
 from ._stroud_1967_7 import stroud_1967_7_b as stroud_sn_7_1b
 from ._stroud_1967_7 import stroud_1967_7_c as stroud_sn_7_2
 
-citation = book(
+source = book(
     authors=["Arthur Stroud"],
     title="Approximate Calculation of Multiple Integrals",
     publisher="Prentice Hall",
@@ -41,7 +41,7 @@ def stroud_sn_3_2(n, symbolic=False):
     r = sqrt(frac(1, n + 2))
     data = [(frac(1, 2 ** n), pm(n, r))]
     points, weights = untangle(data)
-    return SnScheme("Stroud Sn 3-2", n, weights, points, 3, citation)
+    return SnScheme("Stroud Sn 3-2", n, weights, points, 3, source)
 
 
 def stroud_sn_5_2(n):

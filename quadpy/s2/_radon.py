@@ -4,7 +4,7 @@ import sympy
 from ..helpers import article, untangle, z
 from ._helpers import S2Scheme
 
-_citation = article(
+_source = article(
     authors=["J. Radon"],
     title="Zur mechanischen Kubatur",
     journal="Monatshefte für Mathematik",
@@ -37,4 +37,4 @@ def radon(alpha):
     ]
 
     points, weights = untangle(data)
-    return S2Scheme(f"Radon({alpha})", weights, points, 5, _citation)
+    return S2Scheme(f"Radon({alpha})", weights, points, 5, _source)

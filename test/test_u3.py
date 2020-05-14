@@ -256,6 +256,8 @@ def test_scheme_spherical(scheme, tol):
             )
         )
 
+    print(scheme)
+
     vals = scheme.integrate_spherical(sph_tree)
     # Put vals back into the tree structure:
     # len(approximate[k]) == k+1

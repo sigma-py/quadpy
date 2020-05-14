@@ -7,7 +7,7 @@ from .. import un
 from ..helpers import article, fsd, pm, untangle, z
 from ._helpers import SnScheme
 
-citation = article(
+source = article(
     authors=["A.H. Stroud"],
     title="Some Seventh Degree Integration Formulas for Symmetric Regions",
     journal="SIAM J. Numer. Anal.",
@@ -49,7 +49,7 @@ def _stroud_1967_7_ab(n, variant_a, symbolic):
     points, weights = untangle(data)
 
     variant = "a" if variant_a else "b"
-    return SnScheme(f"Stroud 1967-7{variant}", n, weights, points, 7, citation)
+    return SnScheme(f"Stroud 1967-7{variant}", n, weights, points, 7, source)
 
 
 def stroud_1967_7_a(n, symbolic=False):
@@ -82,4 +82,4 @@ def stroud_1967_7_c(n, symbolic=False):
     # weights *= un.volume_nsphere(n - 1, symbolic) / volume_nball(n, symbolic)
     weights *= n
 
-    return SnScheme("Stroud 1967-7 c", n, weights, points, 7, citation)
+    return SnScheme("Stroud 1967-7 c", n, weights, points, 7, source)

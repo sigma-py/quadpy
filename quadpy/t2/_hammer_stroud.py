@@ -1,7 +1,7 @@
 from ._hammer_marlowe_stroud import hammer_marlowe_stroud_1 as hammer_stroud_2
 from ._hammer_marlowe_stroud import hammer_marlowe_stroud_4 as hammer_stroud_3
 
-# citation = article(
+# source = article(
 #     authors=["Preston C. Hammer", "Arthur H. Stroud"],
 #     title="Numerical Evaluation of Multiple Integrals II",
 #     journal="Math. Comp.",

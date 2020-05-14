@@ -1,7 +1,7 @@
 from ..helpers import article
 from ._helpers import T3Scheme, concat, s22, s31, s211, s1111
 
-citation = article(
+source = article(
     authors=["D.M. Williams", "L. Shunn", "A. Jameson"],
     title="Symmetric quadrature rules for simplexes based on sphere close packed lattice arrangements",
     journal="Journal of Computational and Applied Mathematics",
@@ -33,4 +33,4 @@ def williams_shunn_jameson():
             [0.015595140078259, 0.541184412800237, 0.133558160703568, 0.296501020543124]
         ),
     )
-    return T3Scheme("Williams-Shunn-Jameson", weights, points, degree, citation)
+    return T3Scheme("Williams-Shunn-Jameson", weights, points, degree, source)

@@ -46,6 +46,8 @@ def test_scheme(scheme, tol=1.0e-10):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
+    print(scheme)
+
     n = scheme.dim
     cn_limits = [[-1.0, 1.0]] * n
     cn = quadpy.cn.ncube_points(*cn_limits)

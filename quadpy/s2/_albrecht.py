@@ -5,7 +5,7 @@ from mpmath import mp
 from ..helpers import article, fsd, pm, untangle, z
 from ._helpers import S2Scheme
 
-_citation = article(
+_source = article(
     authors=["J. Albrecht"],
     title="Formeln zur numerischen Integration über Kreisbereiche",
     journal="ZAMM",
@@ -34,7 +34,7 @@ def albrecht_1():
     data = [(frac(1, 4), sqrt(frac(1, 2)) * t)]
 
     points, weights = untangle(data)
-    return S2Scheme("Albrecht 1", weights, points, 3, _citation)
+    return S2Scheme("Albrecht 1", weights, points, 3, _source)
 
 
 def albrecht_2():
@@ -44,7 +44,7 @@ def albrecht_2():
     data = [(frac(1, 4), z(2)), (frac(1, 8), sqrt(frac(2, 3)) * t)]
 
     points, weights = untangle(data)
-    return S2Scheme("Albrecht 2", weights, points, 5, _citation)
+    return S2Scheme("Albrecht 2", weights, points, 5, _source)
 
 
 def albrecht_3():
@@ -61,7 +61,7 @@ def albrecht_3():
     data = [(frac(2, 27), sqrt(frac(3, 4)) * t), (a1, rho1 * s), (a2, rho2 * s)]
 
     points, weights = untangle(data)
-    return S2Scheme("Albrecht 3", weights, points, 7, _citation)
+    return S2Scheme("Albrecht 3", weights, points, 7, _source)
 
 
 def albrecht_4():
@@ -81,7 +81,7 @@ def albrecht_4():
     data = [(B0, z(2)), (B1, rho1 * s), (B2, rho2 * s), (C, sqrt(frac(4, 5)) * t)]
 
     points, weights = untangle(data)
-    return S2Scheme("Albrecht 4", weights, points, 9, _citation)
+    return S2Scheme("Albrecht 4", weights, points, 9, _source)
 
 
 def albrecht_5():
@@ -114,7 +114,7 @@ def albrecht_5():
     ]
 
     points, weights = untangle(data)
-    return S2Scheme("Albrecht 5", weights, points, 11, _citation)
+    return S2Scheme("Albrecht 5", weights, points, 11, _source)
 
 
 def albrecht_6():
@@ -143,7 +143,7 @@ def albrecht_6():
     ]
 
     points, weights = untangle(data)
-    return S2Scheme("Albrecht 6", weights, points, 13, _citation)
+    return S2Scheme("Albrecht 6", weights, points, 13, _source)
 
 
 def albrecht_7():
@@ -176,7 +176,7 @@ def albrecht_7():
     ]
 
     points, weights = untangle(data)
-    return S2Scheme("Albrecht 7", weights, points, 15, _citation)
+    return S2Scheme("Albrecht 7", weights, points, 15, _source)
 
 
 def albrecht_8():
@@ -218,4 +218,4 @@ def albrecht_8():
     ]
 
     points, weights = untangle(data)
-    return S2Scheme("Albrecht 8", weights, points, 17, _citation)
+    return S2Scheme("Albrecht 8", weights, points, 17, _source)

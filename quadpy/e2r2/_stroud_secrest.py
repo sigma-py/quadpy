@@ -5,7 +5,7 @@ from sympy import sqrt
 from ..helpers import article, fsd, pm, pm_array, pm_array0, untangle
 from ._helpers import E2r2Scheme
 
-_citation = article(
+_source = article(
     authors=["A.H. Stroud", "D. Secrest"],
     title="Approximate integration formulas for certain spherically symmetric regions",
     journal="Math. Comp.",
@@ -30,7 +30,7 @@ def stroud_secrest_5():
     ]
 
     points, weights = untangle(data)
-    return E2r2Scheme("Stroud-Secrest V", weights, points, 5, _citation)
+    return E2r2Scheme("Stroud-Secrest V", weights, points, 5, _source)
 
 
 def stroud_secrest_6():
@@ -43,4 +43,4 @@ def stroud_secrest_6():
     data = [(A, fsd(2, (nu, 1))), (B, pm(2, xi)), (C, pm(2, eta))]
 
     points, weights = untangle(data)
-    return E2r2Scheme("Stroud-Secrest VI", weights, points, 7, _citation)
+    return E2r2Scheme("Stroud-Secrest VI", weights, points, 7, _source)

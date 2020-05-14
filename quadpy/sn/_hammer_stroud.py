@@ -5,7 +5,7 @@ import sympy
 from ..helpers import article, fsd, untangle, z
 from ._helpers import SnScheme
 
-citation = article(
+source = article(
     authors=["Preston C. Hammer", "Arthur H. Stroud"],
     title="Numerical Evaluation of Multiple Integrals II",
     journal="Math. Comp.",
@@ -24,7 +24,7 @@ def hammer_stroud_11n(n, alpha, symbolic=False):
     data = [(frac(1, 2 * n), fsd(n, (r, 1)))]
 
     points, weights = untangle(data)
-    return SnScheme("Hammer-Stroud 11n", n, weights, points, 3, citation)
+    return SnScheme("Hammer-Stroud 11n", n, weights, points, 3, source)
 
 
 def hammer_stroud_12n(n, alpha, symbolic=False):
@@ -41,4 +41,4 @@ def hammer_stroud_12n(n, alpha, symbolic=False):
     data = [(B0, z(n)), (B1, fsd(n, (r, 1))), (B2, fsd(n, (r, 2)))]
 
     points, weights = untangle(data)
-    return SnScheme("Hammer-Stroud 12n", n, weights, points, 5, citation)
+    return SnScheme("Hammer-Stroud 12n", n, weights, points, 5, source)
