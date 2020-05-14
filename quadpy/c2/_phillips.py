@@ -4,7 +4,7 @@ from sympy import sqrt
 from ..helpers import article
 from ._helpers import C2Scheme, concat, pm2, symm_r0
 
-citation = article(
+source = article(
     authors=["G.M. Phillips"],
     title="Numerical integration in two and three dimensions",
     journal="Comput J",
@@ -26,4 +26,4 @@ def phillips():
     B3 = frac(25, 324)
 
     weights, points = concat(symm_r0([B1, r], [B2, s]), pm2([B3, t, t]))
-    return C2Scheme("Phillips", weights, points, 7, citation)
+    return C2Scheme("Phillips", weights, points, 7, source)

@@ -12,7 +12,7 @@ from ._stroud_secrest import stroud_secrest_10b as stroud_e3r2_7_1b
 from ._stroud_secrest import stroud_secrest_11a as stroud_e3r2_7_2a
 from ._stroud_secrest import stroud_secrest_11b as stroud_e3r2_7_2b
 
-citation = book(
+source = book(
     authors=["Arthur Stroud"],
     title="Approximate Calculation of Multiple Integrals",
     publisher="Prentice Hall",
@@ -73,7 +73,7 @@ def stroud_e3r2_14_1(symbolic=False):
     ]
 
     points, weights = untangle(data)
-    return E3r2Scheme("Stroud E3r2 14-1", weights, points, 14, citation)
+    return E3r2Scheme("Stroud E3r2 14-1", weights, points, 14, source)
 
 
 __all__ = [

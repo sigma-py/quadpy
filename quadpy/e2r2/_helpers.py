@@ -6,9 +6,9 @@ from ..helpers import plot_disks
 
 
 class E2r2Scheme:
-    def __init__(self, name, weights, points, degree, citation):
+    def __init__(self, name, weights, points, degree, source):
         self.name = name
-        self.citation = citation
+        self.source = source
         self.degree = degree
 
         if weights.dtype == numpy.float64:

@@ -3,7 +3,7 @@ import math
 from ..helpers import article, untangle
 from ._helpers import S2Scheme, _pm, _pmx, _pmy
 
-_citation = article(
+_source = article(
     authors=["Robert Piessens", "Ann Haegemans"],
     title="Cubature Formulas of Degree Nine for Symmetric Planar Regions",
     journal="Mathematics of Computation",
@@ -31,4 +31,4 @@ def piessens_haegemans():
 
     points, weights = untangle(data)
     weights /= math.pi
-    return S2Scheme("Piessens-Haegemans", weights, points, 9, _citation)
+    return S2Scheme("Piessens-Haegemans", weights, points, 9, _source)

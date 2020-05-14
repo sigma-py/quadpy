@@ -5,7 +5,7 @@ import sympy
 from ..helpers import article, untangle
 from ._helpers import C3Scheme, fs_r00, fs_rr0, pm_rrr
 
-_citation = article(
+_source = article(
     authors=["Preston C. Hammer", "A. Wayne Wymore"],
     title="Numerical evaluation of multiple integrals. I",
     journal="Math. Comp.",
@@ -57,4 +57,4 @@ def hammer_wymore(lmbda=1):
 
     points, weights = untangle(data)
     weights /= 8
-    return C3Scheme(f"Hammer-Wymore (lambda = {lmbda})", weights, points, 7, _citation)
+    return C3Scheme(f"Hammer-Wymore (lambda = {lmbda})", weights, points, 7, _source)

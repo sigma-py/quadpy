@@ -4,7 +4,7 @@ from sympy import sqrt
 from ..helpers import article, fsd, untangle, z
 from ._helpers import CnScheme
 
-_citation = article(
+_source = article(
     authors=["Preston C. Hammer", "Arthur H. Stroud"],
     title="Numerical Evaluation of Multiple Integrals II",
     journal="Math. Comp.",
@@ -18,7 +18,7 @@ _citation = article(
 def hammer_stroud_1n(n):
     data = [(frac(1, 2 * n), fsd(n, (sqrt(frac(n, 3)), 1)))]
     points, weights = untangle(data)
-    return CnScheme("Hammer-Stroud 1n", n, weights, points, 3, _citation)
+    return CnScheme("Hammer-Stroud 1n", n, weights, points, 3, _source)
 
 
 def hammer_stroud_2n(n):
@@ -29,4 +29,4 @@ def hammer_stroud_2n(n):
         (frac(25, 324), fsd(n, (r, 2))),
     ]
     points, weights = untangle(data)
-    return CnScheme("Hammer-Stroud 2n", n, weights, points, 5, _citation)
+    return CnScheme("Hammer-Stroud 2n", n, weights, points, 5, _source)

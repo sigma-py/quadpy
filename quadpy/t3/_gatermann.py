@@ -1,7 +1,7 @@
 from ..helpers import article
 from ._helpers import T3Scheme, concat, s22, s31
 
-citation = article(
+source = article(
     authors=["Karin Gatermann"],
     title="Linear Representations of Finite Groups and The Ideal Theoretical Construction of G-Invariant Cubature Formulas",
     journal="Numerical Integration",
@@ -31,4 +31,4 @@ def gatermann():
         ),
     )
     weights *= 6
-    return T3Scheme("Gatermann", weights, points, degree, citation)
+    return T3Scheme("Gatermann", weights, points, degree, source)

@@ -80,7 +80,7 @@ All schemes have
 scheme.points
 scheme.weights
 scheme.degree
-scheme.citation
+scheme.source
 
 scheme.show()
 scheme.integrate(

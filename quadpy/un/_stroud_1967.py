@@ -4,7 +4,7 @@ from sympy import sqrt
 from ..helpers import article, fsd, pm, untangle
 from ._helpers import UnScheme
 
-citation = article(
+source = article(
     authors=["A.H. Stroud"],
     title="Some Seventh Degree Integration Formulas for Symmetric Regions",
     journal="SIAM J. Numer. Anal.",
@@ -34,4 +34,4 @@ def stroud_1967(n):
     ]
 
     points, weights = untangle(data)
-    return UnScheme("Stroud 1967", n, weights, points, degree, citation)
+    return UnScheme("Stroud 1967", n, weights, points, degree, source)

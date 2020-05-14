@@ -8,7 +8,7 @@ from ._helpers import S2Scheme
 from ._peirce_1956 import peirce_1956_1, peirce_1956_3
 from ._radon import radon
 
-_citation = article(
+_source = article(
     authors=["Preston C. Hammer", "Arthur H. Stroud"],
     title="Numerical Evaluation of Multiple Integrals II",
     journal="Math. Comp.",
@@ -30,7 +30,7 @@ def hammer_stroud_11_2():
     # ERR Incorrectly stated in Stroud with 0.5 instead of sqrt(0.5)
     data = [(frac(1, 4), fsd(2, (sqrt(frac(1, 2)), 1)))]
     points, weights = untangle(data)
-    return S2Scheme("Hammer-Stroud 11-2", weights, points, 3, _citation)
+    return S2Scheme("Hammer-Stroud 11-2", weights, points, 3, _source)
 
 
 def hammer_stroud_12_2():
@@ -40,7 +40,7 @@ def hammer_stroud_12_2():
         (frac(1, 24), pm(2, sqrt(frac(1, 2)))),
     ]
     points, weights = untangle(data)
-    return S2Scheme("Hammer-Stroud 12-2", weights, points, 5, _citation)
+    return S2Scheme("Hammer-Stroud 12-2", weights, points, 5, _source)
 
 
 def hammer_stroud_13_2():
@@ -67,7 +67,7 @@ def hammer_stroud_18():
 
     data = [(frac(1, 16), r1 * x), (frac(1, 16), r2 * x)]
     points, weights = untangle(data)
-    return S2Scheme("Hammer-Stroud 18", weights, points, 7, _citation)
+    return S2Scheme("Hammer-Stroud 18", weights, points, 7, _source)
 
 
 def hammer_stroud_19():
@@ -83,7 +83,7 @@ def hammer_stroud_19():
         (alpha3, fs([0.7932084745126058, 0.4645097310495256])),
     ]
     points, weights = untangle(data)
-    return S2Scheme("Hammer-Stroud 19", weights, points, 9, _citation)
+    return S2Scheme("Hammer-Stroud 19", weights, points, 9, _source)
 
 
 def hammer_stroud_20():
@@ -108,4 +108,4 @@ def hammer_stroud_21():
     ]
 
     points, weights = untangle(data)
-    return S2Scheme("Hammer-Stroud 21", weights, points, 15, _citation)
+    return S2Scheme("Hammer-Stroud 21", weights, points, 15, _source)

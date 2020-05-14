@@ -5,7 +5,7 @@ import sympy
 from ..helpers import article, comb, fsd, prod, untangle, z
 from ._helpers import CnScheme
 
-_citation = article(
+_source = article(
     authors=["J. McNamee", "F. Stenger"],
     title="Construction of Fully Symmetric Numerical Integration Formulas",
     journal="Numerische Mathematik",
@@ -35,7 +35,7 @@ def _mcnamee_stenger_3(n, integrator, symbolic):
 
     points, weights = untangle(data)
     weights /= I0
-    return "McNamee-Stenger 3", n, weights, points, 3, _citation
+    return "McNamee-Stenger 3", n, weights, points, 3, _source
 
 
 def _mcnamee_stenger_5(n, integrator, symbolic):
@@ -61,7 +61,7 @@ def _mcnamee_stenger_5(n, integrator, symbolic):
 
     points, weights = untangle(data)
     weights /= I0
-    return "McNamee-Stenger 5", n, weights, points, 5, _citation
+    return "McNamee-Stenger 5", n, weights, points, 5, _source
 
 
 def _mcnamee_stenger_7(n, integrator, switch_uv, symbolic):
@@ -138,7 +138,7 @@ def _mcnamee_stenger_7(n, integrator, switch_uv, symbolic):
     points, weights = untangle(data)
 
     weights /= I0
-    return "McNamee-Stenger 7", n, weights, points, 7, _citation
+    return "McNamee-Stenger 7", n, weights, points, 7, _source
 
 
 def _mcnamee_stenger_9(n, integrator, switch_uv, symbolic):
@@ -243,7 +243,7 @@ def _mcnamee_stenger_9(n, integrator, switch_uv, symbolic):
     points, weights = untangle(data)
 
     weights /= I0
-    return "McNamee-Stenger 9", n, weights, points, 9, _citation
+    return "McNamee-Stenger 9", n, weights, points, 9, _source
 
 
 # Here starts the cube-specific section.

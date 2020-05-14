@@ -4,7 +4,7 @@ from numpy import sqrt
 from ..helpers import article, fsd, pm, untangle
 from ._helpers import UnScheme, integrate_monomial_over_unit_nsphere, volume_nsphere
 
-citation = article(
+source = article(
     authors=["A.H. Stroud"],
     title="A Fifth Degree Integration Formula for the n-Simplex",
     journal="SIAM J. Numer. Anal.",
@@ -55,4 +55,4 @@ def stroud_1969(n):
 
     points, weights = untangle(data)
     weights /= volume_nsphere(n - 1)
-    return UnScheme("Stroud 1969", n, weights, points, degree, citation)
+    return UnScheme("Stroud 1969", n, weights, points, degree, source)

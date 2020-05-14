@@ -6,7 +6,7 @@ import sympy
 from ..helpers import article, untangle
 from ._helpers import SnScheme
 
-citation = article(
+source = article(
     authors=["A.H. Stroud"],
     title="Remarks on the Disposition of Points in Numerical Integration Formulas",
     journal="Mathematical Tables and Other Aids to Computation",
@@ -48,4 +48,4 @@ def stroud_1957(n, symbolic=False):
     data = [(frac(1, n + 1), pts)]
 
     points, weights = untangle(data)
-    return SnScheme("Stroud 1957", n, weights, points, 2, citation)
+    return SnScheme("Stroud 1957", n, weights, points, 2, source)

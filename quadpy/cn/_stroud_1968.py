@@ -4,7 +4,7 @@ from sympy import sqrt
 from ..helpers import article, fsd, untangle, z
 from ._helpers import CnScheme, _s2, _s11
 
-_citation = article(
+_source = article(
     authors=["A.H. Stroud"],
     title="Extensions of Symmetric Integration Formulas",
     journal="Mathematics of Computation",
@@ -32,4 +32,4 @@ def stroud_1968(n):
     ]
 
     points, weights = untangle(data)
-    return CnScheme("Stroud 1968", n, weights, points, 5, _citation)
+    return CnScheme("Stroud 1968", n, weights, points, 5, _source)

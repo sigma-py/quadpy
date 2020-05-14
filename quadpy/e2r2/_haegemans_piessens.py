@@ -5,7 +5,7 @@ import numpy
 from ..helpers import article
 from ._helpers import E2r2Scheme
 
-_citation = article(
+_source = article(
     authors=["Ann Haegemans", "Robert Piessens"],
     title="Construction of Cubature Formulas of Degree Seven and Nine Symmetric Planar Regions Using Orthogonal Polynomials",
     journal="SIAM Journal on Numerical Analysis",
@@ -64,7 +64,7 @@ def haegemans_piessens_a():
         ]
     )
     weights /= pi
-    return E2r2Scheme("Haegemans-Piessens a", weights, points, 9, _citation)
+    return E2r2Scheme("Haegemans-Piessens a", weights, points, 9, _source)
 
 
 def haegemans_piessens_b():
@@ -115,4 +115,4 @@ def haegemans_piessens_b():
         ]
     )
     weights /= pi
-    return E2r2Scheme("Haegemans-Piessens b", weights, points, 9, _citation)
+    return E2r2Scheme("Haegemans-Piessens b", weights, points, 9, _source)

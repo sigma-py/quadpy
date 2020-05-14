@@ -4,10 +4,10 @@ from ..helpers import backend_to_function
 
 
 class W3Scheme:
-    def __init__(self, name, weights, points, degree, citation):
+    def __init__(self, name, weights, points, degree, source):
         self.name = name
         self.degree = degree
-        self.citation = citation
+        self.source = source
 
         if weights.dtype == numpy.float64:
             self.weights = weights

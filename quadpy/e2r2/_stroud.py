@@ -14,7 +14,7 @@ from ._rabinowitz_richter import rabinowitz_richter_5 as stroud_15_1
 from ._stroud_secrest import stroud_secrest_5 as stroud_5_1
 from ._stroud_secrest import stroud_secrest_6 as stroud_7_1
 
-_citation = book(
+_source = book(
     authors=["Arthur Stroud"],
     title="Approximate Calculation of Multiple Integrals",
     publisher="Prentice Hall",
@@ -35,7 +35,7 @@ def stroud_4_1():
     data = [(frac(1, 2), numpy.array([[0, 0]])), (frac(1, 10), pts)]
 
     points, weights = untangle(data)
-    return E2r2Scheme("Stroud 4-1", weights, points, 4, _citation)
+    return E2r2Scheme("Stroud 4-1", weights, points, 4, _source)
 
 
 def stroud_5_2():
@@ -48,7 +48,7 @@ def stroud_5_2():
     ]
 
     points, weights = untangle(data)
-    return E2r2Scheme("Stroud 5-2", weights, points, 5, _citation)
+    return E2r2Scheme("Stroud 5-2", weights, points, 5, _source)
 
 
 def stroud_7_2():
@@ -64,7 +64,7 @@ def stroud_7_2():
 
     # TODO find what's wrong
     warnings.warn("Stroud's Gauss product formula has degree 1, not 7.")
-    return E2r2Scheme("Stroud 7-2", weights, points, 1, _citation)
+    return E2r2Scheme("Stroud 7-2", weights, points, 1, _source)
 
 
 __all__ = [

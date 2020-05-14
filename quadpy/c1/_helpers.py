@@ -1,6 +1,7 @@
 import numpy
 
 from ..helpers import plot_disks_1d
+from ..cn import CnScheme
 
 
 def _find_shapes(fx, intervals, x, domain_shape=None, range_shape=None):
@@ -46,13 +47,14 @@ def _find_shapes(fx, intervals, x, domain_shape=None, range_shape=None):
     return domain_shape, range_shape, interval_set_shape
 
 
-class C1Scheme:
-    def __init__(self, name, degree, weights, points, citation=None):
+class C1Scheme(CnScheme):
+    def __init__(self, name, degree, weights, points, source=None):
+        self.domain = "C1"
         self.name = name
         self.degree = degree
         self.weights = weights
         self.points = points
-        self.citation = citation
+        self.source = source
 
     def integrate(
         self, f, intervals, domain_shape=None, range_shape=None, dot=numpy.dot

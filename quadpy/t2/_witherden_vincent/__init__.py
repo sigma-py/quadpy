@@ -4,7 +4,7 @@ import os
 from ...helpers import article
 from .._helpers import T2Scheme, untangle2
 
-citation = article(
+source = article(
     authors=["F.D. Witherden", "P.E. Vincent"],
     title="On the identification of symmetric quadrature rules for finite element methods",
     journal="Computers & Mathematics with Applications",
@@ -24,7 +24,7 @@ def _read(filename):
 
     degree = data.pop("degree")
     points, weights = untangle2(data)
-    return weights, points, degree, citation
+    return weights, points, degree, source
 
 
 def witherden_vincent_01():

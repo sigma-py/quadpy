@@ -23,7 +23,7 @@ from ._stroud_1966 import stroud_1966_6 as stroud_tn_3_10
 from ._stroud_1966 import stroud_1966_7 as stroud_tn_3_11
 from ._stroud_1969 import stroud_1969 as stroud_tn_5_1
 
-citation = book(
+source = book(
     authors=["Arthur Stroud"],
     title="Approximate Calculation of Multiple Integrals",
     publisher="Prentice Hall",
@@ -36,7 +36,7 @@ def stroud_tn_1_1(n):
     degree = 1
     data = [(1, numpy.full((1, n + 1), frac(1, n + 1)))]
     points, weights = untangle(data)
-    return TnScheme("Stroud Tn 1-1", n, weights, points, degree, citation)
+    return TnScheme("Stroud Tn 1-1", n, weights, points, degree, source)
 
 
 __all__ = [

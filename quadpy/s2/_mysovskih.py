@@ -4,7 +4,7 @@ import sympy
 from ..helpers import article, fs_array, fsd, untangle, z
 from ._helpers import S2Scheme
 
-_citation = article(
+_source = article(
     authors=["I.P. Mysovskikh"],
     title="On the construction of cubature formulas for the simplest regions",
     journal="Z. Vychisl. Mat. i. Mat. Fiz.",
@@ -33,7 +33,7 @@ def mysovskih_1(alpha=0):
     data = [(B0, z(2)), (B1, x)]
 
     points, weights = untangle(data)
-    return S2Scheme("Mysovskih 1", weights, points, 4, _citation)
+    return S2Scheme("Mysovskih 1", weights, points, 4, _source)
 
 
 def mysovskih_2():
@@ -59,7 +59,7 @@ def mysovskih_2():
     ]
 
     points, weights = untangle(data)
-    return S2Scheme("Mysovskih 2", weights, points, 11, _citation)
+    return S2Scheme("Mysovskih 2", weights, points, 11, _source)
 
 
 def mysovskih_3():
@@ -110,4 +110,4 @@ def mysovskih_3():
     ]
 
     points, weights = untangle(data)
-    return S2Scheme("Mysovskih 3", weights, points, 15, _citation)
+    return S2Scheme("Mysovskih 3", weights, points, 15, _source)

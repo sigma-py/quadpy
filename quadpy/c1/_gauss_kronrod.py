@@ -10,7 +10,7 @@ from ..tools import scheme_from_rc
 from ._gauss_legendre import gauss_legendre
 from ._helpers import C1Scheme, _find_shapes
 
-citation = article(
+source = article(
     authors=["Dirk P. Laurie"],
     title="Calculation of Gauss-Kronrod quadrature rules",
     journal="Math. Comp.",
@@ -52,7 +52,7 @@ def gauss_kronrod(n, a=0, b=0):
     i = numpy.argsort(x)
     points = x[i]
     weights = w[i]
-    return C1Scheme(f"Gauss-Kronrod ({n})", degree, weights, points, citation)
+    return C1Scheme(f"Gauss-Kronrod ({n})", degree, weights, points, source)
 
 
 def _r_kronrod(n, a0, b0):

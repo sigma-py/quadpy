@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from ..helpers import article, untangle
 from ._helpers import C3Scheme, fs_r00, pm_rrr, z
 
-citation = article(
+source = article(
     authors=["G.W. Tyler"],
     title="Numerical integration of functions of several variables",
     journal="Canad. J. Math.",
@@ -17,7 +17,7 @@ citation = article(
 def tyler_1():
     data = [(frac(1, 6), fs_r00(1))]
     points, weights = untangle(data)
-    return C3Scheme("Tyler 1", weights, points, 3, citation)
+    return C3Scheme("Tyler 1", weights, points, 3, source)
 
 
 def tyler_2():
@@ -28,4 +28,4 @@ def tyler_2():
         (frac(1, 72), pm_rrr(1)),
     ]
     points, weights = untangle(data)
-    return C3Scheme("Tyler 2", weights, points, 5, citation)
+    return C3Scheme("Tyler 2", weights, points, 5, source)

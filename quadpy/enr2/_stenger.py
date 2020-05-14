@@ -4,7 +4,7 @@ import math
 from ..helpers import article, fsd, untangle, z
 from ._helpers import Enr2Scheme
 
-citation = article(
+source = article(
     authors=["W.G."],
     title="Review: Tabulation of Certain Fully Symmetric Numerical Integration Formulas of Degree 7, 9 and 11 by Frank Stenger",
     journal="Mathematics of Computation",
@@ -80,7 +80,7 @@ def stenger_7a(dim):
     ]
     points, weights = untangle(data)
     weights /= math.sqrt(math.pi) ** dim
-    return Enr2Scheme("Stenger 7a", dim, weights, points, 7, citation)
+    return Enr2Scheme("Stenger 7a", dim, weights, points, 7, source)
 
 
 def stenger_7b(dim):
@@ -145,7 +145,7 @@ def stenger_7b(dim):
     ]
     points, weights = untangle(data)
     weights /= math.sqrt(math.pi) ** dim
-    return Enr2Scheme("Stenger 7b", dim, weights, points, 7, citation)
+    return Enr2Scheme("Stenger 7b", dim, weights, points, 7, source)
 
 
 def stenger_9a(dim):
@@ -226,7 +226,7 @@ def stenger_9a(dim):
 
     points, weights = untangle(data)
     weights /= math.sqrt(math.pi) ** dim
-    return Enr2Scheme("Stenger 9a", dim, weights, points, 9, citation)
+    return Enr2Scheme("Stenger 9a", dim, weights, points, 9, source)
 
 
 def stenger_9b(dim):
@@ -293,7 +293,7 @@ def stenger_9b(dim):
 
     points, weights = untangle(data)
     weights /= math.sqrt(math.pi) ** dim
-    return Enr2Scheme("Stenger 9b", dim, weights, points, 9, citation)
+    return Enr2Scheme("Stenger 9b", dim, weights, points, 9, source)
 
 
 def stenger_11a(dim):
@@ -388,7 +388,7 @@ def stenger_11a(dim):
 
     points, weights = untangle(data)
     weights /= math.sqrt(math.pi) ** dim
-    return Enr2Scheme("Stenger 11a", dim, weights, points, 11, citation)
+    return Enr2Scheme("Stenger 11a", dim, weights, points, 11, source)
 
 
 def stenger_11b(dim):
@@ -482,4 +482,4 @@ def stenger_11b(dim):
 
     points, weights = untangle(data)
     weights /= math.sqrt(math.pi) ** dim
-    return Enr2Scheme("Stenger 11b", dim, weights, points, 11, citation)
+    return Enr2Scheme("Stenger 11b", dim, weights, points, 11, source)

@@ -13,7 +13,7 @@ from ._rabinowitz_richter import rabinowitz_richter_5 as stroud_15_1
 from ._stroud_secrest import stroud_secrest_5 as stroud_5_1
 from ._stroud_secrest import stroud_secrest_6 as stroud_7_1
 
-_citation = book(
+_source = book(
     authors=["Arthur Stroud"],
     title="Approximate Calculation of Multiple Integrals",
     publisher="Prentice Hall",
@@ -35,7 +35,7 @@ def stroud_4_1():
     data = [(frac(7, 10), numpy.array([[0, 0]])), (frac(3, 50), pts)]
 
     points, weights = untangle(data)
-    return E2rScheme("Stroud 4-1", weights, points, 4, _citation)
+    return E2rScheme("Stroud 4-1", weights, points, 4, _source)
 
 
 __all__ = [

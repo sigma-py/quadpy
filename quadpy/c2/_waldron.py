@@ -3,7 +3,7 @@ import numpy
 from ..helpers import techreport
 from ._helpers import C2Scheme
 
-citation = techreport(
+source = techreport(
     authors=["Shayne Waldron"],
     title="Symmetries of linear functionals",
     institution="University of Wisconsin-Madison, Center for Mathematical Sciences",
@@ -34,4 +34,4 @@ def waldron(r, alpha):
         [2 / 3 / r ** 2, 2 / 3 / r ** 2, 2 / 3 / R ** 2, 2 / 3 / R ** 2]
     )
     weights /= 4
-    return C2Scheme("Waldron", weights, points, 3, citation)
+    return C2Scheme("Waldron", weights, points, 3, source)

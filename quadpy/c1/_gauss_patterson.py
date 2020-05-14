@@ -4,7 +4,7 @@ from ..helpers import article
 from ._gauss_legendre import gauss_legendre
 from ._helpers import C1Scheme
 
-citation = article(
+source = article(
     authors=["T.N.L. Patterson"],
     title="The optimum addition of points to quadrature formulae",
     journal="Math. Comp.",
@@ -496,7 +496,7 @@ def gauss_patterson(index):
             [s, numpy.array([0.704720354504808967346e-02]), s[::-1]]
         )
 
-    return C1Scheme(f"Gauss-Patterson {index}", degree, weights, points, citation)
+    return C1Scheme(f"Gauss-Patterson {index}", degree, weights, points, source)
 
 
 def _get_points(index):

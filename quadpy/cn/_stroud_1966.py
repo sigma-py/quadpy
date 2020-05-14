@@ -5,7 +5,7 @@ from sympy import S, sqrt
 from ..helpers import article, fsd, pm, untangle, z
 from ._helpers import CnScheme, _fs11
 
-_citation = article(
+_source = article(
     authors=["A.H. Stroud"],
     title="Some Fifth Degree Integration Formulas for Symmetric Regions",
     journal="Mathematics of Computation",
@@ -27,7 +27,7 @@ def stroud_1966_a(n):
     ]
 
     points, weights = untangle(data)
-    return CnScheme("Stroud 1966a", n, weights, points, 5, _citation)
+    return CnScheme("Stroud 1966a", n, weights, points, 5, _source)
 
 
 def stroud_1966_b(n):
@@ -43,7 +43,7 @@ def stroud_1966_b(n):
         data.append((b, arr))
 
     points, weights = untangle(data)
-    return CnScheme("Stroud 1966b", n, weights, points, 5, _citation)
+    return CnScheme("Stroud 1966b", n, weights, points, 5, _source)
 
 
 def stroud_1966_c(n):
@@ -52,7 +52,7 @@ def stroud_1966_c(n):
     data = [(frac(4, 5 * n + 4), z(n)), (frac(5, (5 * n + 4) * 2 ** n), _fs11(n, r, s))]
 
     points, weights = untangle(data)
-    return CnScheme("Stroud 1966c", n, weights, points, 5, _citation)
+    return CnScheme("Stroud 1966c", n, weights, points, 5, _source)
 
 
 def stroud_1966_d(n):
@@ -64,4 +64,4 @@ def stroud_1966_d(n):
     data = [(w, _fs11(n, r, s)), (w, pm(n, t))]
 
     points, weights = untangle(data)
-    return CnScheme("Stroud 1966d", n, weights, points, 5, _citation)
+    return CnScheme("Stroud 1966d", n, weights, points, 5, _source)

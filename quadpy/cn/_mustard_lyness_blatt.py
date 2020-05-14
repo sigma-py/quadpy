@@ -4,7 +4,7 @@ from sympy import sqrt
 from ..helpers import article, fsd, pm, untangle, z
 from ._helpers import CnScheme
 
-_citation = article(
+_source = article(
     authors=["D. Mustard", "J.N. Lyness", "J.M. Blatt"],
     title="Numerical quadrature in n dimensions",
     journal="Comput J",
@@ -25,4 +25,4 @@ def mustard_lyness_blatt(n):
     ]
 
     points, weights = untangle(data)
-    return CnScheme("Mustard-Lyness-Blatt", n, weights, points, 5, _citation)
+    return CnScheme("Mustard-Lyness-Blatt", n, weights, points, 5, _source)

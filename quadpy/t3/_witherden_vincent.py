@@ -4,7 +4,7 @@ from sympy import sqrt
 from ..helpers import article
 from ._helpers import T3Scheme, concat, s4, s22, s31, s211
 
-citation = article(
+source = article(
     authors=["F.D. Witherden", "P.E. Vincent"],
     title="On the identification of symmetric quadrature rules for finite element methods",
     journal="Computers & Mathematics with Applications",
@@ -20,13 +20,13 @@ citation = article(
 def witherden_vincent_01():
     degree = 1
     weights, points = s4(1)
-    return T3Scheme("Witherden-Vincent 1", weights, points, degree, citation)
+    return T3Scheme("Witherden-Vincent 1", weights, points, degree, source)
 
 
 def witherden_vincent_02():
     degree = 2
     weights, points = s31([frac(1, 4), frac(1, 4) - sqrt(5) / 20])
-    return T3Scheme("Witherden-Vincent 2", weights, points, degree, citation)
+    return T3Scheme("Witherden-Vincent 2", weights, points, degree, source)
 
 
 def witherden_vincent_03():
@@ -35,7 +35,7 @@ def witherden_vincent_03():
         [1.362178425370874e-01, 3.281633025163817e-01],
         [1.137821574629126e-01, 1.080472498984286e-01],
     )
-    return T3Scheme("Witherden-Vincent 3", weights, points, degree, citation)
+    return T3Scheme("Witherden-Vincent 3", weights, points, degree, source)
 
 
 def witherden_vincent_05():
@@ -47,7 +47,7 @@ def witherden_vincent_05():
         ),
         s22([4.254602077708147e-02, 4.550370412564964e-02]),
     )
-    return T3Scheme("Witherden-Vincent 5", weights, points, degree, citation)
+    return T3Scheme("Witherden-Vincent 5", weights, points, degree, source)
 
 
 def witherden_vincent_06():
@@ -60,7 +60,7 @@ def witherden_vincent_06():
         ),
         s211([4.821428571428571e-02, 6.366100187501744e-02, 6.030056647916492e-01]),
     )
-    return T3Scheme("Witherden-Vincent 6", weights, points, degree, citation)
+    return T3Scheme("Witherden-Vincent 6", weights, points, degree, source)
 
 
 def witherden_vincent_07():
@@ -74,7 +74,7 @@ def witherden_vincent_07():
             [8.110770829903342e-03, 2.126547254148314e-02, 8.108302410985486e-01],
         ),
     )
-    return T3Scheme("Witherden-Vincent 7", weights, points, degree, citation)
+    return T3Scheme("Witherden-Vincent 7", weights, points, degree, source)
 
 
 def witherden_vincent_08():
@@ -92,7 +92,7 @@ def witherden_vincent_08():
             [1.545348615096034e-02, 2.041393338760291e-01, 5.837973783021444e-01],
         ),
     )
-    return T3Scheme("Witherden-Vincent 8", weights, points, degree, citation)
+    return T3Scheme("Witherden-Vincent 8", weights, points, degree, source)
 
 
 def witherden_vincent_09():
@@ -112,7 +112,7 @@ def witherden_vincent_09():
             [2.052491596798814e-02, 1.836413698099279e-01, 3.441591057817528e-02],
         ),
     )
-    return T3Scheme("Witherden-Vincent 9", weights, points, degree, citation)
+    return T3Scheme("Witherden-Vincent 9", weights, points, degree, source)
 
 
 def witherden_vincent_10():
@@ -132,4 +132,4 @@ def witherden_vincent_10():
             [1.290703579886199e-02, 1.749793421839390e-01, 6.280718454753660e-01],
         ),
     )
-    return T3Scheme("Witherden-Vincent 10", weights, points, degree, citation)
+    return T3Scheme("Witherden-Vincent 10", weights, points, degree, source)

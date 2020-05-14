@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from ..helpers import article, rd, untangle
 from ._helpers import TnScheme
 
-citation = article(
+source = article(
     authors=["R. Lauffer"],
     title="Interpolation mehfacher Integrale",
     journal="Arch. Math.",
@@ -17,7 +17,7 @@ citation = article(
 def lauffer_1(n):
     data = [(frac(1, n + 1), rd(n + 1, [(1, 1)]))]
     points, weights = untangle(data)
-    return TnScheme("Lauffer 1", n, weights, points, 1, citation)
+    return TnScheme("Lauffer 1", n, weights, points, 1, source)
 
 
 def lauffer_2(n):
@@ -25,7 +25,7 @@ def lauffer_2(n):
     C = frac(4, (n + 1) * (n + 2))
     data = [(B, rd(n + 1, [(1, 1)])), (C, rd(n + 1, [(frac(1, 2), 2)]))]
     points, weights = untangle(data)
-    return TnScheme("Lauffer 2", n, weights, points, 2, citation)
+    return TnScheme("Lauffer 2", n, weights, points, 2, source)
 
 
 def lauffer_3(n):
@@ -42,7 +42,7 @@ def lauffer_3(n):
         (D, rd(n + 1, [(r, 3)])),
     ]
     points, weights = untangle(data)
-    return TnScheme("Lauffer 3", n, weights, points, 3, citation)
+    return TnScheme("Lauffer 3", n, weights, points, 3, source)
 
 
 def lauffer_4(n):
@@ -68,7 +68,7 @@ def lauffer_4(n):
     ]
 
     points, weights = untangle(data)
-    return TnScheme("Lauffer 4", n, weights, points, 4, citation)
+    return TnScheme("Lauffer 4", n, weights, points, 4, source)
 
 
 def lauffer_5(n):
@@ -101,4 +101,4 @@ def lauffer_5(n):
     ]
 
     points, weights = untangle(data)
-    return TnScheme("Lauffer 5", n, weights, points, 5, citation)
+    return TnScheme("Lauffer 5", n, weights, points, 5, source)

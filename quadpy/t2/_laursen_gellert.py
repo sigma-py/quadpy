@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from ..helpers import article
 from ._helpers import T2Scheme, concat, s1, s2, s3
 
-citation = article(
+source = article(
     authors=["M.E. Laursen", "M. Gellert"],
     title="Some criteria for numerically integrated matrices and quadrature formulas for triangles",
     journal="International Journal for Numerical Methods in Engineering",
@@ -17,41 +17,41 @@ citation = article(
 
 def laursen_gellert_01():
     weights, points = s3(1)
-    return T2Scheme("Laursen-Gellert 1", weights, points, 1, citation)
+    return T2Scheme("Laursen-Gellert 1", weights, points, 1, source)
 
 
 def laursen_gellert_02a():
     weights, points = s2([frac(1, 3), frac(1, 6)])
-    return T2Scheme("Laursen-Gellert 2a", weights, points, 2, citation)
+    return T2Scheme("Laursen-Gellert 2a", weights, points, 2, source)
 
 
 def laursen_gellert_02b():
     weights, points = s2([frac(1, 3), frac(1, 2)])
-    return T2Scheme("Laursen-Gellert 2b", weights, points, 2, citation)
+    return T2Scheme("Laursen-Gellert 2b", weights, points, 2, source)
 
 
 def laursen_gellert_03():
     weights, points = concat(s3(-frac(9, 16)), s2([frac(25, 48), frac(1, 5)]))
-    return T2Scheme("Laursen-Gellert 3", weights, points, 3, citation)
+    return T2Scheme("Laursen-Gellert 3", weights, points, 3, source)
 
 
 def laursen_gellert_04():
     weights, points = s1([1.0 / 6.0, 0.659027622374092, 0.231933368553031])
-    return T2Scheme("Laursen-Gellert 4", weights, points, 3, citation)
+    return T2Scheme("Laursen-Gellert 4", weights, points, 3, source)
 
 
 def laursen_gellert_05():
     weights, points = s2(
         [0.109951743655322, 0.091576213509771], [0.223381589678011, 0.445948490915965]
     )
-    return T2Scheme("Laursen-Gellert 5", weights, points, 4, citation)
+    return T2Scheme("Laursen-Gellert 5", weights, points, 4, source)
 
 
 def laursen_gellert_06():
     weights, points = concat(
         s3(3.0 / 8.0), s1([5.0 / 48.0, 0.736712498968435, 0.237932366472434])
     )
-    return T2Scheme("Laursen-Gellert 6", weights, points, 4, citation)
+    return T2Scheme("Laursen-Gellert 6", weights, points, 4, source)
 
 
 def laursen_gellert_07():
@@ -62,7 +62,7 @@ def laursen_gellert_07():
             [0.132394152788506, 0.470142064105115],
         ),
     )
-    return T2Scheme("Laursen-Gellert 7", weights, points, 5, citation)
+    return T2Scheme("Laursen-Gellert 7", weights, points, 5, source)
 
 
 def laursen_gellert_08():
@@ -70,7 +70,7 @@ def laursen_gellert_08():
         s2([0.205950504760887, 0.437525248383384]),
         s1([0.063691414286223, 0.797112651860071, 0.165409927389841]),
     )
-    return T2Scheme("Laursen-Gellert 8", weights, points, 5, citation)
+    return T2Scheme("Laursen-Gellert 8", weights, points, 5, source)
 
 
 def laursen_gellert_09():
@@ -81,7 +81,7 @@ def laursen_gellert_09():
         ),
         s1([0.082851075618374, 0.636502499121399, 0.310352451033785]),
     )
-    return T2Scheme("Laursen-Gellert 9", weights, points, 6, citation)
+    return T2Scheme("Laursen-Gellert 9", weights, points, 6, source)
 
 
 def laursen_gellert_10():
@@ -93,7 +93,7 @@ def laursen_gellert_10():
         ),
         s1([+0.077113760890257, 0.638444188569809, 0.312865496004875]),
     )
-    return T2Scheme("Laursen-Gellert 10", weights, points, 7, citation)
+    return T2Scheme("Laursen-Gellert 10", weights, points, 7, source)
 
 
 def laursen_gellert_11():
@@ -104,7 +104,7 @@ def laursen_gellert_11():
             [0.069274682079415, 0.313559184384932, 0.043863471792371],
         ),
     )
-    return T2Scheme("Laursen-Gellert 11", weights, points, 7, citation)
+    return T2Scheme("Laursen-Gellert 11", weights, points, 7, source)
 
 
 def laursen_gellert_12():
@@ -117,7 +117,7 @@ def laursen_gellert_12():
         ),
         s1([0.027230314174435, 0.008394777409958, 0.263112829634638]),
     )
-    return T2Scheme("Laursen-Gellert 12", weights, points, 8, citation)
+    return T2Scheme("Laursen-Gellert 12", weights, points, 8, source)
 
 
 def laursen_gellert_13():
@@ -131,7 +131,7 @@ def laursen_gellert_13():
         ),
         s1([0.043283539377289, 0.036838412054736, 0.221962989160766]),
     )
-    return T2Scheme("Laursen-Gellert 13", weights, points, 9, citation)
+    return T2Scheme("Laursen-Gellert 13", weights, points, 9, source)
 
 
 def laursen_gellert_14():
@@ -146,7 +146,7 @@ def laursen_gellert_14():
             [0.035351705089199, 0.030424361728820, 0.222063165537318],
         ),
     )
-    return T2Scheme("Laursen-Gellert 14", weights, points, 9, citation)
+    return T2Scheme("Laursen-Gellert 14", weights, points, 9, source)
 
 
 def laursen_gellert_15a():
@@ -162,7 +162,7 @@ def laursen_gellert_15a():
             [0.030886656884564, 0.035632559587504, 0.143295370426867],
         ),
     )
-    return T2Scheme("Laursen-Gellert 15a", weights, points, 10, citation)
+    return T2Scheme("Laursen-Gellert 15a", weights, points, 10, source)
 
 
 def laursen_gellert_15b():
@@ -178,4 +178,4 @@ def laursen_gellert_15b():
             [0.025297757707288, 0.028367665339938, 0.163701733737182],
         ),
     )
-    return T2Scheme("Laursen-Gellert 15b", weights, points, 10, citation)
+    return T2Scheme("Laursen-Gellert 15b", weights, points, 10, source)

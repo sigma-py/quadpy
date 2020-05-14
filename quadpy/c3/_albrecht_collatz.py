@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from ..helpers import article, untangle
 from ._helpers import C3Scheme, fs_r00, fs_rr0, z
 
-_citation = article(
+_source = article(
     authors=["J. Albrecht", "L. Collatz"],
     title="Zur numerischen Auswertung mehrdimensionaler Integrale",
     journal="ZAMM",
@@ -18,4 +18,4 @@ _citation = article(
 def albrecht_collatz():
     data = [(frac(1, 4), z()), (frac(1, 12), fs_r00(1)), (frac(1, 48), fs_rr0(1))]
     points, weights = untangle(data)
-    return C3Scheme("Albrecht-Collatz", weights, points, 3, _citation)
+    return C3Scheme("Albrecht-Collatz", weights, points, 3, _source)

@@ -5,7 +5,7 @@ import re
 from ...helpers import article
 from .._helpers import U3Scheme, cartesian_to_spherical, untangle2
 
-citation = article(
+source = article(
     authors=["P. Bažant", "B.H. Oh"],
     title="Efficient Numerical Integration on the Surface of a Sphere",
     journal="ZAMM",
@@ -31,7 +31,7 @@ def _read(index):
 
     points, weights = untangle2(data)
     azimuthal_polar = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, azimuthal_polar, degree, citation)
+    return U3Scheme(name, weights, points, azimuthal_polar, degree, source)
 
 
 def bazant_oh_09():

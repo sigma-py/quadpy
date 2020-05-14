@@ -7,10 +7,11 @@ from ..cn import transform
 
 
 class C3Scheme(CnScheme):
-    def __init__(self, name, weights, points, degree, citation=None):
+    def __init__(self, name, weights, points, degree, source=None):
+        self.domain = "C3"
         self.name = name
         self.weights = weights
-        self.citation = citation
+        self.source = source
         self.degree = degree
 
         if weights.dtype == numpy.float64:

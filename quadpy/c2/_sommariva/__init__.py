@@ -6,7 +6,7 @@ import numpy
 from ...helpers import online
 from .._helpers import C2Scheme
 
-_citation = online(
+_source = online(
     authors=["Alvise Sommariva"],
     year="2012",
     url="http://www.math.unipd.it/~alvise/sets.html",
@@ -25,7 +25,7 @@ def _read(index):
     points = data[:, :2]
     weights = data[:, 2]
     weights /= 4
-    return C2Scheme(f"Sommariva {index}", weights, points, degree, _citation)
+    return C2Scheme(f"Sommariva {index}", weights, points, degree, _source)
 
 
 def sommariva_01():

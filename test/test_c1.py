@@ -28,6 +28,9 @@ def test_scheme(scheme):
     # https://github.com/nschloe/quadpy/issues/227
     assert scheme.weights.ndim == 1
 
+    # test scheme.__str__
+    print(scheme)
+
     degree = 0
     while True:
         # Set bounds such that the values are between 0.5 and 1.5.

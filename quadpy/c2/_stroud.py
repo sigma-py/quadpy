@@ -27,7 +27,7 @@ from ._tyler import tyler_1 as stroud_c2_5_5
 from ._tyler import tyler_2 as stroud_c2_7_1
 from ._tyler import tyler_3 as stroud_c2_7_5
 
-citation = book(
+source = book(
     authors=["Arthur Stroud"],
     title="Approximate Calculation of Multiple Integrals",
     publisher="Prentice Hall",
@@ -38,13 +38,13 @@ citation = book(
 def stroud_c2_1_1():
     # product trapezoidal
     weights, points = symm_s(frac(1, 4), 1)
-    return C2Scheme("Stroud C2 1-1", weights, points, 1, citation)
+    return C2Scheme("Stroud C2 1-1", weights, points, 1, source)
 
 
 def stroud_c2_3_1():
     # ERR misprint in Stroud: sqrt(1/3) vs 1/3
     weights, points = symm_s([frac(1, 4), sqrt(frac(1, 3))])
-    return C2Scheme("Stroud C2 3-1", weights, points, 3, citation)
+    return C2Scheme("Stroud C2 3-1", weights, points, 3, source)
 
 
 def stroud_c2_3_2():
@@ -60,7 +60,7 @@ def stroud_c2_5_4():
     weights, points = concat(
         zero(frac(16, 81)), symm_r0([frac(10, 81), r]), symm_s([frac(25, 324), r])
     )
-    return C2Scheme("Stroud C2 5-4", weights, points, 5, citation)
+    return C2Scheme("Stroud C2 5-4", weights, points, 5, source)
 
 
 def stroud_c2_7_4():
@@ -75,7 +75,7 @@ def stroud_c2_7_4():
 
     # TODO fix
     warnings.warn("Formula only has degree 1!")
-    return C2Scheme("Stroud C2 7-4", weights, points, 1, citation)
+    return C2Scheme("Stroud C2 7-4", weights, points, 1, source)
 
 
 __all__ = [

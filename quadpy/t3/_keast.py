@@ -4,7 +4,7 @@ from sympy import sqrt
 from ..helpers import article
 from ._helpers import T3Scheme, concat, s4, s22, s31, s211
 
-citation = article(
+source = article(
     authors=["P. Keast"],
     title="Moderate degree tetrahedral quadrature formulas",
     journal="Computer Methods in Applied Mechanics and Engineering",
@@ -23,21 +23,21 @@ def keast_0():
     # Does not appear in Keast's article. TODO remove
     degree = 1
     weights, points = s4(1)
-    return T3Scheme("Keast 0", weights, points, degree, citation)
+    return T3Scheme("Keast 0", weights, points, degree, source)
 
 
 def keast_1():
     # Does not appear in Keast's article.
     degree = 2
     weights, points = s31([frac(1, 4), frac(1, 4) - sqrt(5) / 20])
-    return T3Scheme("Keast 1", weights, points, degree, citation)
+    return T3Scheme("Keast 1", weights, points, degree, source)
 
 
 def keast_2():
     # Does not appear in Keast's article.
     degree = 3
     weights, points = concat(s4(-frac(4, 5)), s31(frac(9, 20), frac(1, 6)))
-    return T3Scheme("Keast 2", weights, points, degree, citation)
+    return T3Scheme("Keast 2", weights, points, degree, source)
 
 
 def keast_3():
@@ -46,7 +46,7 @@ def keast_3():
     weights, points = concat(
         s31([0.2177650698804054, 0.1438564719343852]), s22([0.0214899534130631, 0.5])
     )
-    return T3Scheme("Keast 3", weights, points, degree, citation)
+    return T3Scheme("Keast 3", weights, points, degree, source)
 
 
 def keast_4():
@@ -56,7 +56,7 @@ def keast_4():
         s31([+frac(343, 7500), frac(1, 14)]),
         s22([+frac(56, 375), frac(1, 4) + sqrt(frac(5, 14)) / 4]),
     )
-    return T3Scheme("Keast 4", weights, points, degree, citation)
+    return T3Scheme("Keast 4", weights, points, degree, source)
 
 
 def keast_5():
@@ -68,7 +68,7 @@ def keast_5():
             [0.1328387466855907, 0.3143728734931922],
         ),
     )
-    return T3Scheme("Keast 5", weights, points, degree, citation)
+    return T3Scheme("Keast 5", weights, points, degree, source)
 
 
 def keast_6():
@@ -78,7 +78,7 @@ def keast_6():
         s31([frac(81, 2240), frac(1, 3)], [frac(161051, 2304960), frac(1, 11)]),
         s22([frac(338, 5145), frac(1, 4) - sqrt(91) / 52]),
     )
-    return T3Scheme("Keast 6", weights, points, degree, citation)
+    return T3Scheme("Keast 6", weights, points, degree, source)
 
 
 def keast_7():
@@ -91,7 +91,7 @@ def keast_7():
         ),
         s211([27.0 / 560.0, 0.0636610018750175, 0.2696723314583159]),
     )
-    return T3Scheme("Keast 7", weights, points, degree, citation)
+    return T3Scheme("Keast 7", weights, points, degree, source)
 
 
 def keast_8():
@@ -106,7 +106,7 @@ def keast_8():
         s22([+0.0058201058201058, 0.5]),
         s211([+0.1653439153439105, 0.1, 0.2]),
     )
-    return T3Scheme("Keast 8", weights, points, degree, citation)
+    return T3Scheme("Keast 8", weights, points, degree, source)
 
 
 def keast_9():
@@ -126,4 +126,4 @@ def keast_9():
             [+0.0134324384376852, 0.0379700484718286, 0.1937464752488044],
         ),
     )
-    return T3Scheme("Keast 9", weights, points, degree, citation)
+    return T3Scheme("Keast 9", weights, points, degree, source)

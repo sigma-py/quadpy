@@ -4,10 +4,10 @@ from ..helpers import plot_disks
 
 
 class S2Scheme:
-    def __init__(self, name, weights, points, degree: int, citation=None):
+    def __init__(self, name, weights, points, degree: int, source=None):
         self.name = name
         self.degree = degree
-        self.citation = citation
+        self.source = source
 
         flt = numpy.vectorize(float)
 

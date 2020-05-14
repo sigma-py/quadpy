@@ -5,7 +5,7 @@ from sympy import acos, cos, sqrt
 from ..helpers import article
 from ._helpers import T3Scheme, _s4
 
-citation = article(
+source = article(
     authors=["Y. Liu", "M. Vinokur"],
     title="Exact Integrations of Polynomials and Symmetric Quadrature Formulas over Arbitrary Polyhedral Grids",
     journal="Journal of Computational Physics",
@@ -21,28 +21,28 @@ def liu_vinokur_01():
     weights = numpy.concatenate([numpy.full(1, 1)])
     points = numpy.concatenate([_s4(symbolic=True)])
     degree = 1
-    return T3Scheme("Liu-Vinokur 1", weights, points, degree, citation)
+    return T3Scheme("Liu-Vinokur 1", weights, points, degree, source)
 
 
 def liu_vinokur_02():
     weights = numpy.concatenate([numpy.full(4, frac(1, 4))])
     points = numpy.concatenate([_r_alpha(1.0)])
     degree = 1
-    return T3Scheme("Liu-Vinokur 2", weights, points, degree, citation)
+    return T3Scheme("Liu-Vinokur 2", weights, points, degree, source)
 
 
 def liu_vinokur_03():
     weights = numpy.concatenate([numpy.full(4, frac(1, 4))])
     points = numpy.concatenate([_r_alpha(1 / sqrt(5))])
     degree = 2
-    return T3Scheme("Liu-Vinokur 3", weights, points, degree, citation)
+    return T3Scheme("Liu-Vinokur 3", weights, points, degree, source)
 
 
 def liu_vinokur_04():
     weights = numpy.concatenate([numpy.full(1, frac(4, 5)), numpy.full(4, frac(1, 20))])
     points = numpy.concatenate([_s4(symbolic=True), _r_alpha(1)])
     degree = 2
-    return T3Scheme("Liu-Vinokur 4", weights, points, degree, citation)
+    return T3Scheme("Liu-Vinokur 4", weights, points, degree, source)
 
 
 def liu_vinokur_05():
@@ -51,7 +51,7 @@ def liu_vinokur_05():
     )
     points = numpy.concatenate([_s4(symbolic=True), _r_alpha(frac(1, 3))])
     degree = 3
-    return T3Scheme("Liu-Vinokur 5", weights, points, degree, citation)
+    return T3Scheme("Liu-Vinokur 5", weights, points, degree, source)
 
 
 def liu_vinokur_06():
@@ -60,7 +60,7 @@ def liu_vinokur_06():
     )
     points = numpy.concatenate([_r_alpha(1), _r_alpha(-frac(1, 3))])
     degree = 3
-    return T3Scheme("Liu-Vinokur 6", weights, points, degree, citation)
+    return T3Scheme("Liu-Vinokur 6", weights, points, degree, source)
 
 
 def liu_vinokur_07():
@@ -75,7 +75,7 @@ def liu_vinokur_07():
         [_s4(symbolic=True), _r_alpha(frac(5, 7)), _r_beta(sqrt(70) / 28)]
     )
     degree = 4
-    return T3Scheme("Liu-Vinokur 7", weights, points, degree, citation)
+    return T3Scheme("Liu-Vinokur 7", weights, points, degree, source)
 
 
 def liu_vinokur_08():
@@ -92,7 +92,7 @@ def liu_vinokur_08():
         [_r_alpha(alpha1), _r_alpha(alpha2), _r_beta(frac(1, 2))]
     )
     degree = 4
-    return T3Scheme("Liu-Vinokur 8", weights, points, degree, citation)
+    return T3Scheme("Liu-Vinokur 8", weights, points, degree, source)
 
 
 def liu_vinokur_09():
@@ -108,7 +108,7 @@ def liu_vinokur_09():
         [_s4(symbolic=True), _r_alpha(1), _r_alpha(frac(1, 5)), _r_beta(frac(1, 2))]
     )
     degree = 4
-    return T3Scheme("Liu-Vinokur 9", weights, points, degree, citation)
+    return T3Scheme("Liu-Vinokur 9", weights, points, degree, source)
 
 
 def liu_vinokur_10():
@@ -129,7 +129,7 @@ def liu_vinokur_10():
         ]
     )
     degree = 4
-    return T3Scheme("Liu-Vinokur 10", weights, points, degree, citation)
+    return T3Scheme("Liu-Vinokur 10", weights, points, degree, source)
 
 
 def liu_vinokur_11():
@@ -145,7 +145,7 @@ def liu_vinokur_11():
         [_r_alpha(1), _r_alpha(-frac(1, 3)), _r_alpha(sqrt(2) - 1), _r_beta(frac(1, 2))]
     )
     degree = 4
-    return T3Scheme("Liu-Vinokur 11", weights, points, degree, citation)
+    return T3Scheme("Liu-Vinokur 11", weights, points, degree, source)
 
 
 def liu_vinokur_12():
@@ -168,7 +168,7 @@ def liu_vinokur_12():
     )
     degree = 5
 
-    return T3Scheme("Liu-Vinokur 12", weights, points, degree, citation)
+    return T3Scheme("Liu-Vinokur 12", weights, points, degree, source)
 
 
 def liu_vinokur_13():
@@ -190,7 +190,7 @@ def liu_vinokur_13():
     )
     degree = 5
 
-    return T3Scheme("Liu-Vinokur 13", weights, points, degree, citation)
+    return T3Scheme("Liu-Vinokur 13", weights, points, degree, source)
 
 
 def liu_vinokur_14():
@@ -214,7 +214,7 @@ def liu_vinokur_14():
     )
     degree = 5
 
-    return T3Scheme("Liu-Vinokur 14", weights, points, degree, citation)
+    return T3Scheme("Liu-Vinokur 14", weights, points, degree, source)
 
 
 def _r_alpha(alpha):

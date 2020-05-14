@@ -121,6 +121,8 @@ def test_scheme(scheme, tol=1.0e-14, print_degree=False):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
+    print(scheme)
+
     x = [-1.0, +1.0]
     y = [-1.0, +1.0]
     z = [-1.0, +1.0]

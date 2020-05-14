@@ -3,11 +3,11 @@ import sympy
 
 
 class SnScheme:
-    def __init__(self, name, dim, weights, points, degree, citation):
+    def __init__(self, name, dim, weights, points, degree, source):
         self.name = name
         self.dim = dim
         self.degree = degree
-        self.citation = citation
+        self.source = source
 
         if weights.dtype == numpy.float64:
             self.weights = weights

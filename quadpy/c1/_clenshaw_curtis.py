@@ -3,7 +3,7 @@ import numpy
 from ..helpers import article
 from ._helpers import C1Scheme
 
-citation = article(
+source = article(
     authors=["J. Waldvogel"],
     title="Fast Construction of the Fejér and Clenshaw–Curtis Quadrature Rules",
     journal="BIT Numerical Mathematics",
@@ -47,4 +47,4 @@ def clenshaw_curtis(n):
     else:
         weights = numpy.concatenate([w, w[len(w) - 2 :: -1]])
 
-    return C1Scheme("Clenshaw-Curtis", degree, weights, points, citation)
+    return C1Scheme("Clenshaw-Curtis", degree, weights, points, source)

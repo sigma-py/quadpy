@@ -1,7 +1,7 @@
 from ..helpers import article
 from ._helpers import C2Scheme, concat, pmx
 
-citation = article(
+source = article(
     authors=["Johannes W. Wissmann", "Thomas Becker"],
     title="Partially Symmetric Cubature Formulas for Even Degrees of Exactness",
     journal="SIAM J. Numer. Anal.",
@@ -22,7 +22,7 @@ def wissmann_becker_4_1():
         ),
     )
     weights /= 4
-    return C2Scheme("Wissmann-Becker 4-1", weights, points, 4, citation)
+    return C2Scheme("Wissmann-Becker 4-1", weights, points, 4, source)
 
 
 def wissmann_becker_4_2():
@@ -35,7 +35,7 @@ def wissmann_becker_4_2():
         ),
     )
     weights /= 4
-    return C2Scheme("Wissmann-Becker 4-2", weights, points, 4, citation)
+    return C2Scheme("Wissmann-Becker 4-2", weights, points, 4, source)
 
 
 def wissmann_becker_6_1():
@@ -50,7 +50,7 @@ def wissmann_becker_6_1():
         ),
     )
     weights /= 4
-    return C2Scheme("Wissmann-Becker 6-1", weights, points, 6, citation)
+    return C2Scheme("Wissmann-Becker 6-1", weights, points, 6, source)
 
 
 def wissmann_becker_6_2():
@@ -65,7 +65,7 @@ def wissmann_becker_6_2():
         ),
     )
     weights /= 4
-    return C2Scheme("Wissmann-Becker 6-2", weights, points, 6, citation)
+    return C2Scheme("Wissmann-Becker 6-2", weights, points, 6, source)
 
 
 def wissmann_becker_8_1():
@@ -84,7 +84,7 @@ def wissmann_becker_8_1():
         ),
     )
     weights /= 4
-    return C2Scheme("Wissmann-Becker 8-1", weights, points, 8, citation)
+    return C2Scheme("Wissmann-Becker 8-1", weights, points, 8, source)
 
 
 def wissmann_becker_8_2():
@@ -102,4 +102,4 @@ def wissmann_becker_8_2():
         ),
     )
     weights /= 4
-    return C2Scheme("Wissmann-Becker 8-2", weights, points, 8, citation)
+    return C2Scheme("Wissmann-Becker 8-2", weights, points, 8, source)

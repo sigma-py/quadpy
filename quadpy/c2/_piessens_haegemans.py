@@ -1,7 +1,7 @@
 from ..helpers import article
 from ._helpers import C2Scheme, concat, pm, pm2
 
-citation = article(
+source = article(
     authors=["Robert Piessens", "Ann Haegemans"],
     title="Cubature Formulas of Degree Nine for Symmetric Planar Regions",
     journal="Mathematics of Computation",
@@ -28,7 +28,7 @@ def piessens_haegemans_1():
         ),
     )
     weights /= 4
-    return C2Scheme("Piessens-Haegemans 1", weights, points, 9, citation)
+    return C2Scheme("Piessens-Haegemans 1", weights, points, 9, source)
 
 
 def piessens_haegemans_2():
@@ -45,4 +45,4 @@ def piessens_haegemans_2():
         ),
     )
     weights /= 4
-    return C2Scheme("Piessens-Haegemans 2", weights, points, 9, citation)
+    return C2Scheme("Piessens-Haegemans 2", weights, points, 9, source)

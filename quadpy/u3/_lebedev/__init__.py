@@ -8,7 +8,7 @@ from .._helpers import U3Scheme, cartesian_to_spherical, untangle2
 # Sphere integration schemes from a series of publications, in chronological order
 # <https://en.wikipedia.org/wiki/Lebedev_quadrature>
 # <https://people.sc.fsu.edu/~jburkardt/datasets/sphere_lebedev_rule/sphere_lebedev_rule.html>
-citations = [
+sources = [
     article(
         authors="V.I. Lebedev",
         title="Values of the nodes and weights of ninth to seventeenth order Gauss-Markov quadrature formulae invariant under the octahedron group with inversion",
@@ -77,7 +77,7 @@ def _read(index):
 
     points, weights = untangle2(data)
     azimuthal_polar = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, azimuthal_polar, degree, citations)
+    return U3Scheme(name, weights, points, azimuthal_polar, degree, sources)
 
 
 def lebedev_003a():
