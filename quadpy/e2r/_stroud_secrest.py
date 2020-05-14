@@ -1,6 +1,6 @@
 import numpy
 from sympy import Rational as frac
-from sympy import pi, sqrt
+from sympy import sqrt
 
 from ..helpers import article, fsd, pm, pm_array, untangle
 from ._helpers import E2rScheme
