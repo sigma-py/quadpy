@@ -16,7 +16,7 @@ def integrate_adaptive(
     intervals,
     eps_abs=1.0e-10,
     eps_rel=1.0e-10,
-    criteria_connection=numpy.logical_and,
+    criteria_connection=numpy.all,
     # Use 21-point Gauss-Kronrod like QUADPACK
     # <https://en.wikipedia.org/wiki/QUADPACK#General-purpose_routines>
     kronrod_degree=10,
@@ -66,7 +66,7 @@ def integrate_adaptive(
     if eps_rel is not None:
         is_okay = error_estimates < eps_rel * numpy.abs(value_estimates)
         criteria.append(_numpy_all_except_last(is_okay))
-    is_good = criteria_connection(*criteria)
+    is_good = criteria_connection(criteria, axis=0)
 
     good_values_sum = numpy.sum(value_estimates[..., is_good], axis=-1)
     good_errors_sum = numpy.sum(error_estimates[..., is_good], axis=-1)
@@ -127,7 +127,7 @@ def integrate_adaptive(
             allowance_rel_ttv = eps_rel * numpy.abs(ttv) - good_errors_sum
             is_okay = error_estimates < numpy.multiply.outer(allowance_rel_ttv, tau)
             criteria.append(_numpy_all_except_last(is_okay))
-        is_good = criteria_connection(*criteria)
+        is_good = criteria_connection(criteria, axis=0)
 
         good_values_sum += numpy.sum(value_estimates[..., is_good], axis=-1)
         good_errors_sum += numpy.sum(error_estimates[..., is_good], axis=-1)
