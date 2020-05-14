@@ -79,5 +79,5 @@ def stroud_1967_7_c(n, symbolic=False):
     points = numpy.concatenate([r1 * s.points, r2 * s.points])
     weights = numpy.concatenate([A1 * s.weights, A2 * s.weights])
 
-    weights /= volume_nball(n, symbolic)
+    weights *= un.volume_nsphere(n - 1, symbolic) / volume_nball(n, symbolic)
     return SnScheme("Stroud 1967-7 c", n, weights, points, 7, citation)
