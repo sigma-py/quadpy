@@ -698,6 +698,7 @@ val = scheme.integrate(lambda x: x[0]**2)
  * [Phillips](quadpy/enr2/_phillips.py) (1980, degree 5)
  * [Cools-Haegemans](quadpy/enr2/_cools_haegemans.py) (1994, 3 schemes up to degree 7)
  * [Lu-Darmofal](quadpy/enr2/_lu_darmofal.py) (2004, degree 5)
+ * [Xiu](quadpy/enr2/_xiu.py) (2008, degree 2)
 
 Example:
 ```python
