@@ -1,7 +1,5 @@
-import numpy
-
+from .. import un
 from ..helpers import book
-from ..un._stroud_1969 import stroud_1969
 from ._albrecht_collatz import albrecht_collatz_1 as stroud_u3_5_1
 from ._albrecht_collatz import albrecht_collatz_2 as stroud_u3_5_2
 from ._albrecht_collatz import albrecht_collatz_3 as stroud_u3_5_3
@@ -28,14 +26,14 @@ citation = book(
 
 
 def stroud_u3_11_2():
-    scheme = stroud_1969(3)
-    degree = scheme.degree
-    weights = scheme.weights
-    weights /= 4 * numpy.pi
-    points = scheme.points
-    azimuthal_polar = cartesian_to_spherical(points)
+    scheme = un.stroud_1969(3)
     return U3Scheme(
-        "Stroud U3 11-2", weights, points, azimuthal_polar, degree, citation
+        "Stroud U3 11-2",
+        scheme.weights,
+        scheme.points,
+        cartesian_to_spherical(scheme.points),
+        scheme.degree,
+        citation,
     )
 
 
