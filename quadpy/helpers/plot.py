@@ -12,7 +12,6 @@ def plot_disks_1d(plt, pts, weights, total_area):
     radii = 0.5 * abs(weights) / math.fsum(weights) * total_area
     colors = ["tab:blue" if weight >= 0 else "tab:red" for weight in weights]
     _plot_disks_helpers(plt, pts, radii, colors)
-    return
 
 
 def plot_disks(plt, pts, weights, total_area):
@@ -31,12 +30,13 @@ def plot_disks(plt, pts, weights, total_area):
 
 
 def _plot_disks_helpers(plt, pts, radii, colors):
-    for tp, radius, color in zip(pts, radii, colors):
+    for pt, radius, color in zip(pts, radii, colors):
         # highlight circle center
-        plt.plot([tp[0]], [tp[1]], linestyle="None", marker=".", color=color)
-        # Choose radius such that the sum of areas of the circles equals
-        # total_area.
-        circ = plt.Circle((tp[0], tp[1]), radius, color=color, alpha=0.5)
+        plt.plot([pt[0]], [pt[1]], linestyle="None", marker=".", color=color)
+        # Choose radius such that the sum of areas of the circles equals total_area.
+        # Make sure to set the line width to 0,
+        # <https://github.com/matplotlib/matplotlib/issues/17421>.
+        circ = plt.Circle((pt[0], pt[1]), radius, color=color, alpha=0.5, linewidth=0)
         plt.gca().add_artist(circ)
 
 
