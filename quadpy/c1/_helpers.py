@@ -91,6 +91,5 @@ class C1Scheme(CnScheme):
         plt.plot(interval, [0, 0], color="k")
 
         pts = numpy.column_stack([self.points, numpy.zeros(len(self.points))])
-
         total_area = interval[1] - interval[0]
         plot_disks_1d(plt, pts, self.weights, total_area)

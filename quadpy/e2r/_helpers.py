@@ -26,7 +26,7 @@ class E2rScheme(QuadratureScheme):
             self.points = points.astype(numpy.float64)
             self.points_symbolic = points
 
-    def plot(self, show_axes=True):
+    def plot(self, show_axes=False):
         import matplotlib.pyplot as plt
 
         ax = plt.gca()
