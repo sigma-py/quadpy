@@ -203,15 +203,15 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0], 1.0)
 
 Apart from the classical centroid, vertex, and seven-point schemes we have
 
- * [Hammer-Marlowe-Stroud](quadpy/t2/_hammer_marlowe_stroud.py)
-   (1956, 5 schemes up to degree 5, also appearing in [Hammer-Stroud](https://doi.org/10.1090/S0025-5718-1958-0102176-6))
- * via [Stroud](quadpy/t2/_stroud.py) (1971):
-   - [Albrecht-Collatz](quadpy/t2/_albrecht_collatz.py) (1958, degree 3)
-   - conical product scheme (degree 7)
+ * [Hammer-Marlowe-Stroud](quadpy/t2/_hammer_marlowe_stroud.py) (1956, 5 schemes up to
+   degree 5)
+ * [Albrecht-Collatz](quadpy/t2/_albrecht_collatz.py) (1958, degree 3)
+ * [Stroud](quadpy/t2/_stroud.py) (1971, conical product scheme of degree 7)
  * [Franke](quadpy/t2/_franke.py) (1971, 2 schemes of degree 7)
- * [Strang-Fix/Cowper](quadpy/t2/_strang_fix_cowper.py) (1973, 10 schemes up to degree 7),
- * [Lyness-Jespersen](quadpy/t2/_lyness_jespersen.py) (1975, 21
-   schemes up to degree 11, two of which are used in [TRIEX](https://doi.org/10.1145/356068.356070)),
+ * [Strang-Fix/Cowper](quadpy/t2/_strang_fix_cowper.py) (1973, 10 schemes up to degree
+   7),
+ * [Lyness-Jespersen](quadpy/t2/_lyness_jespersen.py) (1975, 21 schemes up to degree 11,
+   two of which are used in [TRIEX](https://doi.org/10.1145/356068.356070)),
  * [Lether](quadpy/t2/_lether.py) (1976, degree 2n-2, arbitrary n, not symmetric),
  * [Hillion](quadpy/t2/_hillion.py) (1977, 10 schemes up to degree 3),
  * [Laursen-Gellert](quadpy/t2/_laursen_gellert.py) (1978, 17 schemes up to degree 10),
@@ -248,15 +248,14 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [[0.0, 0.0], [1.0, 0.0], [0.5,
 ### Disk (_S<sub>2</sub>_)
 <img src="https://nschloe.github.io/quadpy/disk-hammer-stroud-20.svg" width="25%">
 
+ * [Radon](quadpy/s2/_radon.py) (1948, degree 5)
+ * [Peirce](quadpy/s2/_peirce_1956.py) (1956, 3 schemes up to degree 11)
  * [Peirce](quadpy/s2/_peirce_1957.py) (1957, arbitrary degree)
- * via [Stroud](quadpy/s2/_stroud.py):
-   - [Radon](quadpy/s2/_radon.py) (1948, degree 5)
-   - [Peirce](quadpy/s2/_peirce_1956.py) (1956, 3 schemes up to degree 11)
-   - [Albrecht-Collatz](quadpy/s2/_albrecht_collatz.py) (1958, degree 3)
-   - [Hammer-Stroud](quadpy/s2/_hammer_stroud.py) (1958, 8 schemes up to degree 15)
-   - [Albrecht](quadpy/s2/_albrecht.py) (1960, 8 schemes up to degree 17)
-   - [Mysovskih](quadpy/s2/_mysovskih.py) (1964, 3 schemes up to degree 15)
-   - [Rabinowitz-Richter](quadpy/s2/_rabinowitz_richter.py) (1969, 6 schemes up to degree 15)
+ * [Albrecht-Collatz](quadpy/s2/_albrecht_collatz.py) (1958, degree 3)
+ * [Hammer-Stroud](quadpy/s2/_hammer_stroud.py) (1958, 8 schemes up to degree 15)
+ * [Albrecht](quadpy/s2/_albrecht.py) (1960, 8 schemes up to degree 17)
+ * [Mysovskih](quadpy/s2/_mysovskih.py) (1964, 3 schemes up to degree 15)
+ * [Rabinowitz-Richter](quadpy/s2/_rabinowitz_richter.py) (1969, 6 schemes up to degree 15)
  * [Lether](quadpy/s2/_lether.py) (1971, arbitrary degree)
  * [Piessens-Haegemans](quadpy/s2/_piessens_haegemans.py) (1975, 1 scheme of degree 9)
  * [Haegemans-Piessens](quadpy/s2/_haegemans_piessens.py) (1977, degree 9)
@@ -279,17 +278,16 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0], 1.0)
 ### Quadrilateral (_C<sub>2</sub>_)
 <img src="https://nschloe.github.io/quadpy/quad-maxwell.svg" width="25%">
 
+ * [Maxwell](quadpy/c2/_maxwell.py) (1890, degree 7)
+ * [Burnside](quadpy/c2/_burnside.py) (1908, degree 5)
+ * [Irwin](quadpy/c2/_irwin.py) (1923, 3 schemes up to degree 5)
+ * [Tyler](quadpy/c2/_tyler.py) (1953, 3 schemes up to degree 7)
  * [Hammer-Stroud](quadpy/c2/_hammer_stroud.py) (1958, 3 schemes up to degree 7)
- * via [Stroud](quadpy/c2/_stroud.py) (1971, 15 schemes up to degree 15):
-   - [Maxwell](quadpy/c2/_maxwell.py) (1890, degree 7)
-   - [Burnside](quadpy/c2/_burnside.py) (1908, degree 5)
-   - [Irwin](quadpy/c2/_irwin.py) (1923, 3 schemes up to degree 5)
-   - [Tyler](quadpy/c2/_tyler.py) (1953, 3 schemes up to degree 7)
-   - [Albrecht-Collatz](quadpy/c2/_albrecht_collatz.py) (1958, 4 schemes up to degree 5)
-   - [Miller](quadpy/c2/_miller.py) (1960, degree 1)
-   - [Meister](quadpy/c2/_meister.py) (1966, degree 7)
-   - [Phillips](quadpy/c2/_phillips.py) (1967, degree 7)
-   - [Rabinowitz-Richter](quadpy/c2/_rabinowitz_richter.py) (1969, 6 schemes up to degree 15)
+ * [Albrecht-Collatz](quadpy/c2/_albrecht_collatz.py) (1958, 4 schemes up to degree 5)
+ * [Miller](quadpy/c2/_miller.py) (1960, degree 1, degree 11 for harmonic integrands)
+ * [Meister](quadpy/c2/_meister.py) (1966, degree 7)
+ * [Phillips](quadpy/c2/_phillips.py) (1967, degree 7)
+ * [Rabinowitz-Richter](quadpy/c2/_rabinowitz_richter.py) (1969, 6 schemes up to degree 15)
  * [Franke](quadpy/c2/_franke.py) (1971, 10 schemes up to degree 9)
  * [Piessens-Haegemans](quadpy/c2/_piessens_haegemans.py) (1975, 2 schemes of degree 9)
  * [Haegemans-Piessens](quadpy/c2/_haegemans_piessens.py) (1977, degree 7)
@@ -330,12 +328,11 @@ to generate the array.
 ### 2D space with weight function exp(-r) (_E<sub>2</sub><sup>r</sup>_)
 <img src="https://nschloe.github.io/quadpy/e2r-rabinowitz-richter-5.svg" width="25%">
 
- * via [Stroud](quadpy/e2r/_stroud.py) (1971):
-   - [Stroud-Secrest](quadpy/e2r/_stroud_secrest.py) (1963, 2 schemes up to degree 7)
-   - [Rabinowitz-Richter](quadpy/e2r/_rabinowitz_richter.py) (1969, 4 schemes up to degree 15)
-   - [a scheme of degree 4](quadpy/e2r/_stroud.py)
+ * [Stroud-Secrest](quadpy/e2r/_stroud_secrest.py) (1963, 2 schemes up to degree 7)
+ * [Rabinowitz-Richter](quadpy/e2r/_rabinowitz_richter.py) (1969, 4 schemes up to degree 15)
+ * [Stroud](quadpy/e2r/_stroud.py) (1971, degree 4)
  * [Haegemans-Piessens](quadpy/e2r/_haegemans_piessens.py) (1977, 2 schemes up to degree 9)
- * all schemes from the nD space with weight function exp(-r)
+ * [all schemes from the nD space with weight function exp(-r)](#nd-space-with-weight-function-exp-r-enr)
 
 Example:
 ```python
@@ -350,12 +347,11 @@ val = scheme.integrate(lambda x: x[0]**2)
 ### 2D space with weight function exp(-r<sup>2</sup>) (_E<sub>2</sub><sup>r<sup>2</sup></sup>_)
 <img src="https://nschloe.github.io/quadpy/e2r2-rabinowitz-richter-3.svg" width="25%">
 
- * via [Stroud](quadpy/e2r2/_stroud.py) (1971):
-   - [Stroud-Secrest](quadpy/e2r2/_stroud_secrest.py) (1963, 2 schemes up to degree 7)
-   - [Rabinowitz-Richter](quadpy/e2r2/_rabinowitz_richter.py) (1969, 5 schemes up to degree 15)
-   - [3 schemes up to degree 7](quadpy/e2r2/_stroud.py)
+ * [Stroud-Secrest](quadpy/e2r2/_stroud_secrest.py) (1963, 2 schemes up to degree 7)
+ * [Rabinowitz-Richter](quadpy/e2r2/_rabinowitz_richter.py) (1969, 5 schemes up to degree 15)
+ * [Stroud](quadpy/e2r2/_stroud.py) (1971, 3 schemes up to degree 7)
  * [Haegemans-Piessens](quadpy/e2r2/_haegemans_piessens.py) (1977, 2 schemes of degree 9)
- * all schemes from the nD space with weight function exp(-r<sup>2<sup>)
+ * [all schemes from the nD space with weight function exp(-r<sup>2<sup>)]((#nd-space-with-weight-function-exp-r2-enr3))
 
 Example:
 ```python
@@ -370,9 +366,8 @@ val = scheme.integrate(lambda x: x[0]**2)
 ### Sphere (_U<sub>3</sub>_)
 <img src="https://nschloe.github.io/quadpy/sphere.png" width="25%">
 
- * via [Stroud](quadpy/u3/_stroud.py) (1971):
-   - [Albrecht-Collatz](quadpy/u3/_albrecht_collatz.py) (1958, 5 schemes up to degree 7)
-   - [McLaren](quadpy/u3/_mclaren.py) (1963, 10 schemes up to degree 14)
+ * [Albrecht-Collatz](quadpy/u3/_albrecht_collatz.py) (1958, 5 schemes up to degree 7)
+ * [McLaren](quadpy/u3/_mclaren.py) (1963, 10 schemes up to degree 14)
  * [Lebedev](quadpy/u3/_lebedev.py) (1976, 34 schemes up to degree 131)
  * [Bažant-Oh](quadpy/u3/_bazant_oh.py) (1986, 3 schemes up to degree 11)
  * [Heo-Xu](quadpy/u3/_heo_xu.py) (2001, 27 schemes up to degree 39, single-precision)
@@ -404,11 +399,10 @@ val = scheme.integrate_spherical(
 ### Ball (_S<sub>3</sub>_)
 <img src="https://nschloe.github.io/quadpy/ball.png" width="25%">
 
+ * [Ditkin](quadpy/s3/_ditkin.py) (1948, 3 schemes up to degree 7)
  * [Hammer-Stroud](quadpy/s3/_hammer_stroud.py) (1958, 6 schemes up to degree 7)
- * via: [Stroud](quadpy/s3/_stroud.py) (1971):
-   - [Ditkin](quadpy/s3/_ditkin.py) (1948, 3 schemes up to degree 7)
-   - [Mysovskih](quadpy/s3/mysovskih.py) (1964, degree 7)
-   - [2 schemes up to degree 14](quadpy/s3/_stroud.py)
+ * [Mysovskih](quadpy/s3/mysovskih.py) (1964, degree 7)
+ * [Stroud](quadpy/s3/_stroud.py) (1971, 2 schemes up to degree 14)
  * [all schemes from the n-ball](#n-ball-sn)
 
 Example:
@@ -464,17 +458,16 @@ val = scheme.integrate(
 ### Hexahedron (_C<sub>3</sub>_)
 <img src="https://nschloe.github.io/quadpy/hexa.png" width="25%">
 
- * Product schemes derived from line segment schemes
- * via: [Stroud](quadpy/c3/_stroud.py) (1971):
-   - [Sadowsky](quadpy/c3/_sadowsky.py) (1940, degree 5)
-   - [Tyler](quadpy/c3/_tyler.py) (1953, 2 schemes up to degree 5)
-   - [Hammer-Wymore](quadpy/c3/_hammer_wymore.py) (1957, degree 7)
-   - [Albrecht-Collatz](quadpy/c3/_albrecht_collatz.py) (1958, degree 3)
-   - [Hammer-Stroud](quadpy/c3/_hammer_stroud.py) (1958, 6 schemes up to degree 7)
-   - [Mustard-Lyness-Blatt](quadpy/c3/_mustard_lyness_blatt.py) (1963, 6 schemes up to degree 5)
-   - [Stroud](quadpy/c3/_stroud_1967.py) (1967, degree 5)
-   - [Sarma-Stroud](quadpy/c3/_sarma_stroud.py) (1969, degree 7)
+ * [Sadowsky](quadpy/c3/_sadowsky.py) (1940, degree 5)
+ * [Tyler](quadpy/c3/_tyler.py) (1953, 2 schemes up to degree 5)
+ * [Hammer-Wymore](quadpy/c3/_hammer_wymore.py) (1957, degree 7)
+ * [Albrecht-Collatz](quadpy/c3/_albrecht_collatz.py) (1958, degree 3)
+ * [Hammer-Stroud](quadpy/c3/_hammer_stroud.py) (1958, 6 schemes up to degree 7)
+ * [Mustard-Lyness-Blatt](quadpy/c3/_mustard_lyness_blatt.py) (1963, 6 schemes up to degree 5)
+ * [Stroud](quadpy/c3/_stroud_1967.py) (1967, degree 5)
+ * [Sarma-Stroud](quadpy/c3/_sarma_stroud.py) (1969, degree 7)
  * [all schemes from the n-cube](#n-cube-cn)
+ * Product schemes derived from line segment schemes
 
 Example:
 ```python
@@ -536,8 +529,7 @@ val = scheme.integrate(
 ### 3D space with weight function exp(-r) (_E<sub>3</sub><sup>r</sup>_)
 <img src="https://nschloe.github.io/quadpy/e3r.png" width="25%">
 
- * via [Stroud](quadpy/e3r/_stroud.py) (1971):
-   - [Stroud-Secrest](quadpy/e3r/_stroud_secrest.py) (1963, 5 schemes up to degree 7)
+ * [Stroud-Secrest](quadpy/e3r/_stroud_secrest.py) (1963, 5 schemes up to degree 7)
  * [all schemes from the nD space with weight function
    exp(-r)](nd-space-with-weight-function-exp-r)
 
@@ -554,9 +546,8 @@ val = scheme.integrate(lambda x: x[0]**2)
 ### 3D space with weight function exp(-r<sup>2</sup>) (_E<sub>3</sub><sup>r<sup>2</sup></sup>_)
 <img src="https://nschloe.github.io/quadpy/e3r2.png" width="25%">
 
- * via [Stroud](quadpy/e3r/_stroud.py) (1971):
-   - [Stroud-Secrest](quadpy/e3r/_stroud_secrest.py) (1963, 7 schemes up to degree 7)
-   - [scheme of degree 14](quadpy/e3r/_stroud.py)
+ * [Stroud-Secrest](quadpy/e3r/_stroud_secrest.py) (1963, 7 schemes up to degree 7)
+ * [Stroud](quadpy/e3r/_stroud.py) (1971, scheme of degree 14)
  * [all schemes from the nD space with weight function
    exp(-r<sup>2</sup>)](nd-space-with-weight-function-exp-r2)
 
@@ -570,12 +561,11 @@ val = scheme.integrate(lambda x: x[0]**2)
 ```
 
 ### n-Simplex (_T<sub>n</sub>_)
- * via [Stroud](quadpy/tn/_stroud.py):
-   - [Lauffer](quadpy/tn/_lauffer.py) (1955, 5 schemes up to degree 5)
-   - [Hammer-Stroud](quadpy/tn/_hammer_stroud.py) (1956, 3 schemes up to degree 3)
-   - [Stroud](quadpy/tn/_stroud_1964.py) (1964, degree 3)
-   - [Stroud](quadpy/tn/_stroud_1966.py) (1966, 7 schemes of degree 3)
-   - [Stroud](quadpy/tn/_stroud_1969.py) (1969, degree 5)
+ * [Lauffer](quadpy/tn/_lauffer.py) (1955, 5 schemes up to degree 5)
+ * [Hammer-Stroud](quadpy/tn/_hammer_stroud.py) (1956, 3 schemes up to degree 3)
+ * [Stroud](quadpy/tn/_stroud_1964.py) (1964, degree 3)
+ * [Stroud](quadpy/tn/_stroud_1966.py) (1966, 7 schemes of degree 3)
+ * [Stroud](quadpy/tn/_stroud_1969.py) (1969, degree 5)
  * [Silvester](quadpy/tn/_silvester.py) (1970, arbitrary degree),
  * [Grundmann-Möller](quadpy/tn/_grundmann_moeller.py) (1978, arbitrary degree)
  * [Walkington](quadpy/tn/_walkington.py) (2000, 5 schemes up to degree 7)
@@ -600,10 +590,10 @@ val = scheme.integrate(
 ```
 
 ### n-Sphere (_U<sub>n</sub>_)
- * via [Stroud](quadpy/un/_stroud.py) (1971):
-   - [Stroud](quadpy/un/_stroud_1967.py) (1967, degree 7)
-   - [Stroud](quadpy/un/_stroud_1969.py) (1969, 3 <= n <= 16, degree 11)
-   - [6 schemes up to degree 5](quadpy/un/_stroud.py)
+
+ * [Stroud](quadpy/un/_stroud_1967.py) (1967, degree 7)
+ * [Stroud](quadpy/un/_stroud_1969.py) (1969, 3 <= n <= 16, degree 11)
+ * [Stroud](quadpy/un/_stroud.py) (1971, 6 schemes up to degree 5)
  * [Dobrodeev](quadpy/un/_dobrodeev.py) (1978, n >= 2, degree 5)
  * [Mysovskikh](quadpy/un/_mysovskikh.py) (1980, 2 schemes up to degree 5)
 
@@ -621,13 +611,12 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
 ### n-Ball (_S<sub>n</sub>_)
  * [McNamee-Stenger](quadpy/sn/_mcnamee_stenger.py) (1967, 6 schemes up to degree 9)
  * [Dobrodeev](quadpy/sn/_dobrodeev.py) (1970, n >= 3, degree 7)
- * via [Stroud](quadpy/sn/_stroud.py) (1971):
-   - [Stroud](quadpy/sn/_stroud_1957.py) (1957, degree 2)
-   - [Hammer-Stroud](quadpy/sn/_hammer_stroud.py) (1958, 2 schemes up to degree 5)
-   - [Stroud](quadpy/sn/_stroud_1966.py) (1966, 4 schemes of degree 5)
-   - [Stroud](quadpy/sn/_stroud_1967a.py) (1967, 4 <= n <= 7, 2 schemes of degree 5)
-   - [Stroud](quadpy/sn/_stroud_1967b.py) (1967, n >= 3, 3 schemes of degree 7)
-   - [Stenger](quadpy/sn/_stenger.py) (1967, 6 schemes up to degree 11)
+ * [Stroud](quadpy/sn/_stroud_1957.py) (1957, degree 2)
+ * [Hammer-Stroud](quadpy/sn/_hammer_stroud.py) (1958, 2 schemes up to degree 5)
+ * [Stroud](quadpy/sn/_stroud_1966.py) (1966, 4 schemes of degree 5)
+ * [Stroud](quadpy/sn/_stroud_1967a.py) (1967, 4 <= n <= 7, 2 schemes of degree 5)
+ * [Stroud](quadpy/sn/_stroud_1967b.py) (1967, n >= 3, 3 schemes of degree 7)
+ * [Stenger](quadpy/sn/_stenger.py) (1967, 6 schemes up to degree 11)
  * [Dobrodeev](quadpy/sn/_dobrodeev.py) (1978, 2 <= n <= 20, degree 5)
  * [Stoyanova](quadpy/sn/_stoyanova.py) (1997, n >= 5, degree 7)
 
@@ -642,18 +631,17 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
 ```
 
 ### n-Cube (_C<sub>n</sub>_)
+ * [Ewing](quadpy/cn/_ewing.py) (1941, degree 3)
+ * [Tyler](quadpy/cn/_tyler.py) (1953, degree 3)
+ * [Stroud](quadpy/cn/_stroud_1957.py) (1957, 2 schemes up to degree 3)
+ * [Hammer-Stroud](quadpy/cn/_hammer_stroud.py) (1958, degree 5)
+ * [Mustard-Lyness-Blatt](quadpy/cn/_mustard_lyness_blatt.py) (1963, degree 5)
+ * [Thacher](quadpy/cn/_thacher.py) (1964, degree 2)
+ * [Stroud](quadpy/cn/_stroud_1966.py) (1966, 4 schemes of degree 5)
+ * [Phillips](quadpy/cn/_phillips.py) (1967, degree 7)
  * [McNamee-Stenger](quadpy/cn/_mcnamee_stenger.py) (1967, 6 schemes up to degree 9)
+ * [Stroud](quadpy/cn/_stroud_1968.py) (1968, degree 5)
  * [Dobrodeev](quadpy/cn/_dobrodeev.py) (1970, n >= 5, degree 7)
- * via [Stroud](quadpy/cn/_stroud.py) (1971):
-    - [Ewing](quadpy/cn/_ewing.py) (1941, degree 3)
-    - [Tyler](quadpy/cn/_tyler.py) (1953, degree 3)
-    - [Stroud](quadpy/cn/_stroud_1957.py) (1957, 2 schemes up to degree 3)
-    - [Hammer-Stroud](quadpy/cn/_hammer_stroud.py) (1958, degree 5)
-    - [Mustard-Lyness-Blatt](quadpy/cn/_mustard_lyness_blatt.py) (1963, degree 5)
-    - [Thacher](quadpy/cn/_thacher.py) (1964, degree 2)
-    - [Stroud](quadpy/cn/_stroud_1966.py) (1966, 4 schemes of degree 5)
-    - [Phillips](quadpy/cn/_phillips.py) (1967, degree 7)
-    - [Stroud](quadpy/cn/_stroud_1968.py) (1968, degree 5)
  * [Dobrodeev](quadpy/cn/_dobrodeev.py) (1978, n >= 2, degree 5)
  * [Cools-Haegemans](quadpy/cn/_cools_haegemans.py) (1994, 2 schemes up to degree 5)
 
@@ -673,10 +661,9 @@ val = scheme.integrate(
 ```
 
 ### nD space with weight function exp(-r) (_E<sub>n</sub><sup>r</sup>_)
+ * [Stroud-Secrest](quadpy/enr/_stroud_secrest.py) (1963, 4 schemes up to degree 5)
  * [McNamee-Stenger](quadpy/enr/_mcnamee_stenger.py) (1967, 6 schemes up to degree 9)
- * via [Stroud](quadpy/enr/_stroud.py) (1971):
-   - [Stroud-Secrest](quadpy/enr/_stroud_secrest.py) (1963, 4 schemes up to degree 5)
-   - [2 schemes up to degree 5](quadpy/enr/_stroud.py)
+ * [Stroud](quadpy/enr/_stroud.py) (1971, 2 schemes up to degree 5)
 
 Example:
 ```python
@@ -688,13 +675,12 @@ val = scheme.integrate(lambda x: x[0]**2)
 ```
 
 ### nD space with weight function exp(-r<sup>2</sup>) (_E<sub>n</sub><sup>r<sup>2</sup></sup>_)
+ * [Stroud-Secrest](quadpy/enr2/_stroud_secrest.py) (1963, 4 schemes up to degree 5)
  * [McNamee-Stenger](quadpy/enr2/_mcnamee_stenger.py) (1967, 6 schemes up to degree 9)
- * via [Stroud](quadpy/enr2/_stroud.py) (1971):
-   - [Stroud-Secrest](quadpy/enr2/_stroud_secrest.py) (1963, 4 schemes up to degree 5)
-   - [Stroud](quadpy/enr2/_stroud_1967a.py) (1967, 2 schemes of degree 5)
-   - [Stroud](quadpy/enr2/_stroud_1967b.py) (1967, 3 schemes of degree 7)
-   - [Stenger](quadpy/enr2/_stenger.py) (1971, 6 schemes up to degree 11, varying dimensionality restrictions)
-   - [5 schemes up to degree 5](quadpy/enr2/_stroud.py)
+ * [Stroud](quadpy/enr2/_stroud_1967a.py) (1967, 2 schemes of degree 5)
+ * [Stroud](quadpy/enr2/_stroud_1967b.py) (1967, 3 schemes of degree 7)
+ * [Stenger](quadpy/enr2/_stenger.py) (1971, 6 schemes up to degree 11, varying dimensionality restrictions)
+ * [Stroud](quadpy/enr2/_stroud.py) (1971, 5 schemes up to degree 5)
  * [Phillips](quadpy/enr2/_phillips.py) (1980, degree 5)
  * [Cools-Haegemans](quadpy/enr2/_cools_haegemans.py) (1994, 3 schemes up to degree 7)
  * [Lu-Darmofal](quadpy/enr2/_lu_darmofal.py) (2004, degree 5)
