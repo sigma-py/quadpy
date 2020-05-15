@@ -42,8 +42,8 @@ class EnrScheme(QuadratureScheme):
 #   / math.gamma((sum(alpha) + n) / 2).
 #
 # Care must be taken when evaluating this expression as numerator or denominator will
-# quickly overflow. A better representation is via a recurrence. This numerically stable
-# and can easily be used for symbolic computation.
+# quickly overflow. A better representation is via a recurrence. This is numerically
+# stable and can easily be used for symbolic computation.
 def integrate_monomial_over_enr(k, symbolic=False):
     n = len(k)
     if any(a % 2 == 1 for a in k):
