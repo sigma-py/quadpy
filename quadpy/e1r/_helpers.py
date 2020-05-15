@@ -16,8 +16,11 @@ class E1rScheme(QuadratureScheme):
         fx = numpy.asarray(f(x))
         return dot(fx, self.weights)
 
-    def plot(self):
+    def plot(self, show_axes=False):
         import matplotlib.pyplot as plt
+
+        if not show_axes:
+            plt.gca().set_axis_off()
 
         plt.axis("equal")
         m = 1.1 * numpy.max(self.points)
