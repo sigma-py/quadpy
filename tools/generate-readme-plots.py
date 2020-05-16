@@ -1,5 +1,6 @@
-import quadpy
 import matplotlib.pyplot as plt
+
+import quadpy
 
 scheme = quadpy.u2.krylov(30)
 scheme.savefig("circle-krylov-30.svg")
