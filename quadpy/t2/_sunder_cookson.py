@@ -1,5 +1,5 @@
-from math import sqrt
 import warnings
+from math import sqrt
 
 from ..helpers import article
 from ._helpers import T2Scheme, concat, s2, s3
@@ -31,10 +31,7 @@ def sunder_cookson_02():
 
 def sunder_cookson_03():
     warnings.warn("Sunder-Cookson claim degree 3, but the scheme is only degree 1.")
-    weights, points = concat(
-        s3(4 / 9),
-        s2([5 / 27, 0.101286507323456])
-    )
+    weights, points = concat(s3(4 / 9), s2([5 / 27, 0.101286507323456]))
     return T2Scheme("Sunder-Cookson 3", weights, points, 1, source)
 
 
