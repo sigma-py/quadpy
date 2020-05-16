@@ -26,7 +26,6 @@ from . import (
 )
 from .__about__ import __version__
 from ._scipy_compat import quad
-from .tanh_sinh import tanh_sinh, tanh_sinh_lr
 
 __all__ = [
     "__version__",
@@ -54,8 +53,6 @@ __all__ = [
     "tools",
     "t2",
     "w3",
-    "tanh_sinh",
-    "tanh_sinh_lr",
     "tools",
     "quad",
 ]

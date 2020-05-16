@@ -120,7 +120,7 @@ Advanced topics:
 
   * [Adaptive quadrature](https://github.com/nschloe/quadpy/wiki/Adaptive-quadrature)
   * [Creating your own Gauss scheme](https://github.com/nschloe/quadpy/wiki/Creating-your-own-Gauss-quadrature-in-two-simple-steps)
-  * [tanh-sinh quadrature](https://github.com/nschloe/quadpy/wiki/tanh-sinh-quadrature)
+  * [tanh-sinh quadrature](https://github.com/nschloe/tanh_sinh/)
 
 
 ## Schemes
@@ -138,7 +138,6 @@ Advanced topics:
  * [Gauss-Patterson](quadpy/c1/_gauss_patterson.py) (9 nested schemes up to degree 767)
  * [Gauss-Radau](quadpy/c1/_gauss_radau.py) (arbitrary degree)
  * [Newton-Cotes](quadpy/c1/_newton_cotes.py) (open and closed, arbitrary degree)
- * [tanh-sinh quadrature](quadpy/tanh_sinh.py) (see above)
 
 [See
 her](https://github.com/nschloe/quadpy/wiki/Creating-your-own-Gauss-quadrature-in-two-simple-steps)
