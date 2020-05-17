@@ -56,13 +56,12 @@ def check_degree(quadrature, exact, dim, max_degree, tol=1.0e-14):
 def check_degree_ortho(approximate, exact, abs_tol=1.0e-14):
     # check absolute error
     for degree, (approx, ex) in enumerate(zip(approximate, exact)):
-        is_smaller = abs(ex - approx) < abs_tol
-
-        if not numpy.all(is_smaller):
-            return degree - 1
+        err = abs(ex - approx)
+        if not numpy.all(err < abs_tol):
+            return degree - 1, numpy.max(err)
 
     # All values are equal; the degree is at least this.
-    return len(approximate)
+    return len(approximate), 0.0
 
 
 def find_equal(schemes):

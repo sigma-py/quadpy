@@ -24,7 +24,7 @@ def luo_meng_1():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    return S2Scheme("Luo-Meng 1", weights, points, 7, _source)
+    return S2Scheme("Luo-Meng 1", weights, points, 7, _source, 3.820e-14)
 
 
 def luo_meng_2():
@@ -38,7 +38,7 @@ def luo_meng_2():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    return S2Scheme("Luo-Meng 2", weights, points, 9, _source)
+    return S2Scheme("Luo-Meng 2", weights, points, 9, _source, 6.934e-14)
 
 
 def luo_meng_3():
@@ -54,7 +54,7 @@ def luo_meng_3():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    return S2Scheme("Luo-Meng 3", weights, points, 11, _source)
+    return S2Scheme("Luo-Meng 3", weights, points, 11, _source, 3.859e-13)
 
 
 def luo_meng_4():
@@ -73,7 +73,7 @@ def luo_meng_4():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    return S2Scheme("Luo-Meng 4", weights, points, 13, _source)
+    return S2Scheme("Luo-Meng 4", weights, points, 13, _source, 1.572e-13)
 
 
 def luo_meng_5():
@@ -95,7 +95,7 @@ def luo_meng_5():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    return S2Scheme("Luo-Meng 5", weights, points, 15, _source)
+    return S2Scheme("Luo-Meng 5", weights, points, 15, _source, 3.339e-10)
 
 
 # TODO find mistake
