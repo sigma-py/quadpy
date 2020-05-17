@@ -262,6 +262,7 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [[0.0, 0.0], [1.0, 0.0], [0.5,
  * [Wissmann-Becker](quadpy/s2/_wissmann_becker.py) (1986, 3 schemes up to degree 8)
  * [Kim-Song](quadpy/s2/_kim_song.py) (1997, 15 schemes up to degree 17)
  * [Cools-Kim](quadpy/s2/_cools_kim.py) (2000, 3 schemes up to degree 21)
+ * [Luo-Meng](quadpy/s2/_luo_meng.py) (2007, 5 schemes up to degree 15)
  * [all schemes from the n-ball](#n-ball-sn)
 
 Example:
