@@ -28,7 +28,7 @@ def kim_song_1():
 
 def kim_song_2():
     data = [
-        (0.25, fsd(2, (0.707106781186548, 1))),
+        (0.25, fsd(2, (math.sqrt(0.5), 1))),
     ]
     points, weights = untangle(data)
     return S2Scheme("Kim-Song 2", weights, points, 3, _source)
@@ -49,7 +49,7 @@ def kim_song_4():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    return S2Scheme("Kim-Song 4", weights, points, 5, _source)
+    return S2Scheme("Kim-Song 4", weights, points, 5, _source, 1.047e-14)
 
 
 def kim_song_5():
@@ -81,7 +81,7 @@ def kim_song_7():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    return S2Scheme("Kim-Song 7", weights, points, 9, _source)
+    return S2Scheme("Kim-Song 7", weights, points, 9, _source, 7.364e-14)
 
 
 # TODO find issue
@@ -98,7 +98,7 @@ def kim_song_8():
     weights /= math.pi
     # ERR article claims degree 11
     warnings.warn("Kim-Song claim degree 11, but the scheme is only degree 1.")
-    return S2Scheme("Kim-Song 8", weights, points, 1, _source)
+    return S2Scheme("Kim-Song 8", weights, points, 1, _source, 1.999e-13)
 
 
 def kim_song_9():
@@ -111,7 +111,7 @@ def kim_song_9():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    return S2Scheme("Kim-Song 9", weights, points, 11, _source)
+    return S2Scheme("Kim-Song 9", weights, points, 11, _source, 1.742e-14)
 
 
 def kim_song_10():
@@ -126,7 +126,7 @@ def kim_song_10():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    return S2Scheme("Kim-Song 10", weights, points, 13, _source)
+    return S2Scheme("Kim-Song 10", weights, points, 13, _source, 3.073e-13)
 
 
 def kim_song_11():
@@ -143,7 +143,7 @@ def kim_song_11():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    return S2Scheme("Kim-Song 11", weights, points, 15, _source)
+    return S2Scheme("Kim-Song 11", weights, points, 15, _source, 1.910e-12)
 
 
 # TODO find issue
@@ -183,7 +183,7 @@ def kim_song_13():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    return S2Scheme("Kim-Song 13", weights, points, 17, _source)
+    return S2Scheme("Kim-Song 13", weights, points, 17, _source, 5.952e-12)
 
 
 # TODO find issue
@@ -207,7 +207,7 @@ def kim_song_14():
     weights /= math.pi
     # ERR article claims degree 19
     warnings.warn("Kim-Song claim degree 19, but the scheme is only degree 3.")
-    return S2Scheme("Kim-Song 14", weights, points, 3, _source)
+    return S2Scheme("Kim-Song 14", weights, points, 3, _source, 3.829e-14)
 
 
 # TODO find issue
@@ -230,4 +230,4 @@ def kim_song_15():
     weights /= math.pi
     # ERR article claims degree 19
     warnings.warn("Kim-Song claim degree 19, but the scheme is only degree 9.")
-    return S2Scheme("Kim-Song 15", weights, points, 9, _source)
+    return S2Scheme("Kim-Song 15", weights, points, 9, _source, 6.563e-12)

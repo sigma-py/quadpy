@@ -1,6 +1,6 @@
 class QuadratureScheme:
-    def __init__(self):
-        return
+    def __init__(self, tol=1.0e-14):
+        self.test_tolerance = tol
 
     def savefig(self, filename, *args, **kwargs):
         import matplotlib.pyplot as plt

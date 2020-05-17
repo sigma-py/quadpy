@@ -4,7 +4,8 @@ from ..helpers import QuadratureScheme, plot_disks
 
 
 class S2Scheme(QuadratureScheme):
-    def __init__(self, name, weights, points, degree: int, source=None):
+    def __init__(self, name, weights, points, degree: int, source=None, tol=1.0e-14):
+        super().__init__(tol)
         self.domain = "S2"
         self.name = name
         self.degree = degree
