@@ -2,7 +2,7 @@ import math
 
 import sympy
 
-from ..helpers import book, pm0, untangle
+from ..helpers import book, pm, untangle
 from ._hammer_stroud import hammer_stroud_11n, hammer_stroud_12n
 from ._helpers import SnScheme
 from ._stenger import stenger_7a as stroud_sn_7_3a
@@ -39,7 +39,7 @@ def stroud_sn_3_2(n, symbolic=False):
     sqrt = sympy.sqrt if symbolic else math.sqrt
 
     r = sqrt(frac(1, n + 2))
-    data = [(frac(1, 2 ** n), pm0(n * [r]))]
+    data = [(frac(1, 2 ** n), pm(n * [r]))]
     points, weights = untangle(data)
     return SnScheme("Stroud Sn 3-2", n, weights, points, 3, source)
 

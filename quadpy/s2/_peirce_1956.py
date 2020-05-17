@@ -1,7 +1,7 @@
 import numpy
 import sympy
 
-from ..helpers import fs_array, fsd, phdthesis, pm0, untangle
+from ..helpers import fs_array, fsd, phdthesis, pm, untangle
 from ._helpers import S2Scheme
 
 _source = phdthesis(
@@ -29,7 +29,7 @@ def peirce_1956_1():
     # ERR Stroud incorrectly lists 4 instead of 41 here.
     B2, B3 = (551 + pm_ * 41 * sqrt29) / 6264
 
-    data = [(B1, fsd(2, (r, 1))), (B2, pm0([s, s])), (B3, pm0([t, t]))]
+    data = [(B1, fsd(2, (r, 1))), (B2, pm([s, s])), (B3, pm([t, t]))]
 
     points, weights = untangle(data)
     return S2Scheme("Peirce 1956-1", weights, points, 7, _source)
@@ -86,7 +86,7 @@ def peirce_1956_3():
         (B3, fsd(2, (r3, 1))),
         (C1, fs_array([u1, v1])),
         (C2, fs_array([u2, v2])),
-        (D, pm0([t, t])),
+        (D, pm([t, t])),
     ]
 
     points, weights = untangle(data)

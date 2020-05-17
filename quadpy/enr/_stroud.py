@@ -2,7 +2,7 @@ import numpy
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import book, fsd, pm0, untangle
+from ..helpers import book, fsd, pm, untangle
 from ._helpers import EnrScheme
 from ._stroud_secrest import stroud_secrest_2 as stroud_enr_3_1
 from ._stroud_secrest import stroud_secrest_3 as stroud_enr_3_2
@@ -43,7 +43,7 @@ def stroud_enr_5_3(n):
         rk = sqrt((k + 2) * (n + 3))
         Bk = frac(2 ** (k - n) * (n + 1), (k + 1) * (k + 2) * (n + 3))
         arr = (k - 1) * [0] + [rk] + (n - k) * [s]
-        data += [(Bk, pm0(arr))]
+        data += [(Bk, pm(arr))]
     B0 = 1 - sum([item[0] * len(item[1]) for item in data])
     data += [(B0, numpy.full((1, n), 0))]
 

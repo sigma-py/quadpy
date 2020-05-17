@@ -1,7 +1,7 @@
 import numpy
 import sympy
 
-from ..helpers import article, fsd, pm0, untangle
+from ..helpers import article, fsd, pm, untangle
 from ._helpers import S3Scheme
 
 _source = article(
@@ -33,7 +33,7 @@ def mysovskih():
         (B1, fsd(3, (r, 1))),
         (B2, fsd(3, (s, 1))),
         (B3, fsd(3, (t, 2))),
-        (B4, pm0([u, u, u])),
+        (B4, pm([u, u, u])),
     ]
 
     points, weights = untangle(data)

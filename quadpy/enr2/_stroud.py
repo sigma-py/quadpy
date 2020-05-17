@@ -2,7 +2,7 @@ import math
 
 import sympy
 
-from ..helpers import book, fsd, pm0, untangle
+from ..helpers import book, fsd, pm, untangle
 from ._helpers import Enr2Scheme
 from ._stenger import stenger_7a as stroud_enr2_7_3a
 from ._stenger import stenger_7b as stroud_enr2_7_3b
@@ -37,7 +37,7 @@ def stroud_enr2_5_3(n, symbolic=False):
     A = frac(4, (n + 2) ** 2)
     B = frac((n - 2) ** 2, 2 ** n * (n + 2) ** 2)
 
-    data = [(A, fsd(n, (r, 1))), (B, pm0(n * [s]))]
+    data = [(A, fsd(n, (r, 1))), (B, pm(n * [s]))]
     points, weights = untangle(data)
     return Enr2Scheme("Stroud Enr2 5-3", n, weights, points, 5, source)
 
@@ -53,7 +53,7 @@ def stroud_enr2_5_4(n, symbolic=False):
         s = sqrt(frac(1, 2))
         arr = (k - 1) * [0] + [rk] + (n - k) * [s]
         alpha = frac(2 ** (k - n), (k + 1) * (k + 2))
-        data += [(alpha, pm0(arr))]
+        data += [(alpha, pm(arr))]
 
     points, weights = untangle(data)
     return Enr2Scheme("Stroud Enr2 5-4", n, weights, points, 5, source)
@@ -97,7 +97,7 @@ def stroud_enr2_5_6(n, symbolic=False):
     t = sqrt((1 + sqrt2) / 2)
     A = frac(1, 2 ** n * (n + 1))
 
-    data = [(A, fsd(n, (r, 1), (s, n - 1))), (A, pm0(n * [t]))]
+    data = [(A, fsd(n, (r, 1), (s, n - 1))), (A, pm(n * [t]))]
 
     points, weights = untangle(data)
     return Enr2Scheme("Stroud Enr2 5-6", n, weights, points, 5, source)
