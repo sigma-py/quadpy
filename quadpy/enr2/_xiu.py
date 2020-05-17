@@ -32,8 +32,4 @@ def xiu(n):
 
     points = numpy.array(points)
     weights = numpy.full(n + 1, frac(1, n + 1))
-
-    print(points)
-    print(weights)
-    # exit(1)
     return Enr2Scheme("Xiu", n, weights, points, 2, source)
