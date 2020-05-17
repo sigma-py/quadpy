@@ -37,7 +37,7 @@ def hammer_stroud_12_2():
     data = [
         (frac(1, 6), z(2)),
         (frac(1, 6), fsd(2, (sqrt(frac(1, 2)), 1))),
-        (frac(1, 24), pm(2, sqrt(frac(1, 2)))),
+        (frac(1, 24), pm(2 * [sqrt(frac(1, 2))])),
     ]
     points, weights = untangle(data)
     return S2Scheme("Hammer-Stroud 12-2", weights, points, 5, _source)

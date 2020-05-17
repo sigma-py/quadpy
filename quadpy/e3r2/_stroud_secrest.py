@@ -27,7 +27,7 @@ def stroud_secrest_07():
     A = frac(2, 5)
     B = frac(1, 20)
 
-    data = [(A, [[0, 0, 0]]), (B, pm_roll(3, [nu, xi]))]
+    data = [(A, [[0, 0, 0]]), (B, pm_roll([nu, xi, 0]))]
     points, weights = untangle(data)
     return E3r2Scheme("Stroud-Secrest VII", weights, points, 5, source)
 
@@ -35,7 +35,7 @@ def stroud_secrest_07():
 def stroud_secrest_08a():
     r = sqrt(frac(5, 4))
     s = sqrt(frac(5, 2))
-    data = [(frac(4, 25), fsd(3, (r, 1))), (frac(1, 200), pm(3, s))]
+    data = [(frac(4, 25), fsd(3, (r, 1))), (frac(1, 200), pm([s, s, s]))]
     points, weights = untangle(data)
     return E3r2Scheme("Stroud-Secrest VIIIa", weights, points, 5, source)
 
@@ -46,7 +46,7 @@ def stroud_secrest_08b():
     data = [
         (frac(2, 5), [[0, 0, 0]]),
         (frac(1, 25), fsd(3, (r, 1))),
-        (frac(9, 200), pm(3, s)),
+        (frac(9, 200), pm([s, s, s])),
     ]
     points, weights = untangle(data)
     return E3r2Scheme("Stroud-Secrest VIIIb", weights, points, 5, source)
@@ -58,8 +58,8 @@ def stroud_secrest_09():
 
     data = [
         (frac(2, 5), [[0, 0, 0]]),
-        (frac(3, 100), pm_roll(3, [r, s])),
-        (frac(3, 100), pm(3, t)),
+        (frac(3, 100), pm_roll([r, s, 0])),
+        (frac(3, 100), pm([t, t, t])),
     ]
     points, weights = untangle(data)
     return E3r2Scheme("Stroud-Secrest IX", weights, points, 5, source)
@@ -82,7 +82,7 @@ def _stroud_secrest_10(positive):
         (A, [[0, 0, 0]]),
         (B, fsd(3, (r, 1))),
         (C, fsd(3, (s, 2))),
-        (D, pm(3, t)),
+        (D, pm([t, t, t])),
     ]
     points, weights = untangle(data)
     return E3r2Scheme(
@@ -121,9 +121,9 @@ def _stroud_secrest_11(positive):
 
     data = [
         (A, [[0, 0, 0]]),
-        (B, pm_roll(3, [r, s])),
-        (C, pm_roll(3, [u, v])),
-        (C, pm(3, t)),
+        (B, pm_roll([r, s, 0])),
+        (C, pm_roll([u, v, 0])),
+        (C, pm([t, t, t])),
     ]
     points, weights = untangle(data)
     return E3r2Scheme("Stroud-Secrest XI", weights, points, 7, source)

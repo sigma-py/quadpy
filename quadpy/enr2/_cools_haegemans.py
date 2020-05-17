@@ -38,7 +38,7 @@ def cools_haegemans_1(n, delta2=1, symbolic=False):
 
     data = [
         (w0, z(n)),
-        (w, pm(n, sqrt(delta2))),
+        (w, pm(n * [sqrt(delta2)])),
     ]
 
     points, weights = untangle(data)
@@ -67,7 +67,7 @@ def cools_haegemans_2(n, delta2=1, symbolic=False):
     data = [
         (w0, z(n)),
         (w1, fsd(n, (lmbdas[0], 1))),
-        (w, pm(n, sqrt(delta2))),
+        (w, pm(n * [sqrt(delta2)])),
     ]
 
     points, weights = untangle(data)
@@ -117,7 +117,7 @@ def cools_haegemans_3(n, delta2=(2, 3), symbolic=False):
         (w1, fsd(n, (lmbdas[0], 1))),
         (w2, fsd(n, (lmbdas[1], 1))),
         (w11, fsd(n, (lmbdas[0], 2))),
-        (w, pm(n, delta)),
+        (w, pm(n * [delta])),
     ]
 
     points, weights = untangle(data)

@@ -3,7 +3,7 @@ from mpmath import mp
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, fsd, pm, pm_array, pm_array0, untangle
+from ..helpers import article, pm, pm_roll, untangle
 from ._helpers import U3Scheme, cartesian_to_spherical_sympy
 
 source = article(
@@ -21,7 +21,8 @@ source = article(
 
 def mclaren_01():
     degree = 3
-    data = [(frac(1, 12), fsd(3, (sqrt(frac(1, 2)), 2)))]
+    a = sqrt(frac(1, 2))
+    data = [(frac(1, 12), pm_roll([a, a, 0]))]
 
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
@@ -37,16 +38,11 @@ def mclaren_02():
     r = frac(1, 2)
     s, t = [(sqrt(5) + pm_) / 4 for pm_ in [+1, -1]]
 
-    data = [
-        (frac(1, 30), fsd(3, (u, 1))),
-        (frac(1, 30), pm_array([r, s, t])),
-        (frac(1, 30), pm_array([t, r, s])),
-        (frac(1, 30), pm_array([s, t, r])),
-    ]
+    data = [(frac(1, 30), pm_roll([u, 0, 0])), (frac(1, 30), pm_roll([r, s, t]))]
 
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return U3Scheme("McLaren 1", weights, points, azimuthal_polar, degree, source)
+    return U3Scheme("McLaren 2", weights, points, azimuthal_polar, degree, source)
 
 
 def mclaren_03():
@@ -74,7 +70,7 @@ def mclaren_03():
 
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return U3Scheme("McLaren 1", weights, points, azimuthal_polar, degree, source)
+    return U3Scheme("McLaren 3", weights, points, azimuthal_polar, degree, source)
 
 
 def mclaren_04():
@@ -94,7 +90,7 @@ def mclaren_04():
     w = numpy.array([+t, +s, +r, +t, +s, +r])
 
     data = [
-        (frac(16, 600), fsd(3, (1, 1))),
+        (frac(16, 600), pm_roll([1, 0, 0])),
         (frac(21, 600), numpy.column_stack([+u, +v, +w])),
         (frac(21, 600), numpy.column_stack([+u, -v, -w])),
         (frac(21, 600), numpy.column_stack([+u, +w, -v])),
@@ -102,7 +98,7 @@ def mclaren_04():
     ]
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return U3Scheme("McLaren 1", weights, points, azimuthal_polar, degree, source)
+    return U3Scheme("McLaren 4", weights, points, azimuthal_polar, degree, source)
 
 
 def mclaren_05():
@@ -116,19 +112,13 @@ def mclaren_05():
     B2 = frac(27, 840)
 
     data = [
-        (B1, pm_array0(3, [r, s], [0, 1])),
-        (B1, pm_array0(3, [r, s], [1, 2])),
-        (B1, pm_array0(3, [r, s], [2, 0])),
-        #
-        (B2, pm_array0(3, [u, v], [0, 1])),
-        (B2, pm_array0(3, [u, v], [1, 2])),
-        (B2, pm_array0(3, [u, v], [2, 0])),
-        #
-        (B2, pm(3, t)),
+        (B1, pm_roll([r, s, 0])),
+        (B2, pm_roll([u, v, 0])),
+        (B2, pm([t, t, t])),
     ]
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return U3Scheme("McLaren 1", weights, points, azimuthal_polar, degree, source)
+    return U3Scheme("McLaren 5", weights, points, azimuthal_polar, degree, source)
 
 
 def mclaren_06():
@@ -144,19 +134,13 @@ def mclaren_06():
 
     data = [
         # ERR Stroud is missing +- at the first r.
-        (B, pm_array0(3, [r, s], [0, 1])),
-        (B, pm_array0(3, [r, s], [1, 2])),
-        (B, pm_array0(3, [r, s], [2, 0])),
-        #
-        (C, fsd(3, (t, 1))),
-        #
-        (C, pm_array([u, v, w])),
-        (C, pm_array([w, u, v])),
-        (C, pm_array([v, w, u])),
+        (B, pm_roll([r, s, 0])),
+        (C, pm_roll([t, 0, 0])),
+        (C, pm_roll([u, v, w])),
     ]
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return U3Scheme("McLaren 1", weights, points, azimuthal_polar, degree, source)
+    return U3Scheme("McLaren 6", weights, points, azimuthal_polar, degree, source)
 
 
 def mclaren_07():
@@ -172,21 +156,14 @@ def mclaren_07():
     C = frac(16, 210)
 
     data = [
-        (B, pm_array0(3, [r, s], [0, 1])),
-        (B, pm_array0(3, [r, s], [1, 2])),
-        (B, pm_array0(3, [r, s], [2, 0])),
-        #
-        (B, pm(3, t)),
-        #
-        (C, fsd(3, (1, 1))),
-        #
-        (C, pm_array([u, v, w])),
-        (C, pm_array([w, u, v])),
-        (C, pm_array([v, w, u])),
+        (B, pm_roll([r, s, 0])),
+        (B, pm([t, t, t])),
+        (C, pm_roll([1, 0, 0])),
+        (C, pm_roll([u, v, w])),
     ]
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return U3Scheme("McLaren 1", weights, points, azimuthal_polar, degree, source)
+    return U3Scheme("McLaren 7", weights, points, azimuthal_polar, degree, source)
 
 
 def mclaren_08():
@@ -205,14 +182,14 @@ def mclaren_08():
     B4 = frac(14641, 725760)
 
     data = [
-        (B1, fsd(3, (r, 1))),
-        (B2, fsd(3, (s, 2))),
-        (B3, pm(3, t)),
-        (B4, fsd(3, (u, 2), (v, 1))),
+        (B1, pm_roll([r, 0, 0])),
+        (B2, pm_roll([s, s, 0])),
+        (B3, pm([t, t, t])),
+        (B4, pm_roll([u, u, v])),
     ]
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return U3Scheme("McLaren 1", weights, points, azimuthal_polar, degree, source)
+    return U3Scheme("McLaren 8", weights, points, azimuthal_polar, degree, source)
 
 
 def mclaren_09():
@@ -232,25 +209,15 @@ def mclaren_09():
     D = frac(512, 27720)
 
     data = [
-        (B, pm_array0(3, [p, q], [0, 1])),
-        (B, pm_array0(3, [p, q], [1, 2])),
-        (B, pm_array0(3, [p, q], [2, 0])),
-        #
-        (C, pm_array0(3, [r, s], [0, 1])),
-        (C, pm_array0(3, [r, s], [1, 2])),
-        (C, pm_array0(3, [r, s], [2, 0])),
-        #
-        (C, pm(3, t)),
-        #
-        (D, fsd(3, (1, 1))),
-        #
-        (D, pm_array([u, v, w])),
-        (D, pm_array([w, u, v])),
-        (D, pm_array([v, w, u])),
+        (B, pm_roll([p, q, 0])),
+        (C, pm_roll([r, s, 0])),
+        (C, pm([t, t, t])),
+        (D, pm_roll([1, 0, 0])),
+        (D, pm_roll([u, v, w])),
     ]
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return U3Scheme("McLaren 1", weights, points, azimuthal_polar, degree, source)
+    return U3Scheme("McLaren 9", weights, points, azimuthal_polar, degree, source)
 
 
 def mclaren_10():
@@ -293,9 +260,7 @@ def mclaren_10():
     )
 
     data = [
-        (B, pm_array0(3, [r, s], [0, 1])),
-        (B, pm_array0(3, [r, s], [1, 2])),
-        (B, pm_array0(3, [r, s], [2, 0])),
+        (B, pm_roll([r, s, 0])),
         #
         (C, numpy.column_stack([+u, +v, +w])),
         (C, numpy.column_stack([+u, -v, -w])),
@@ -315,4 +280,4 @@ def mclaren_10():
 
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return U3Scheme("McLaren 1", weights, points, azimuthal_polar, degree, source)
+    return U3Scheme("McLaren 10", weights, points, azimuthal_polar, degree, source)

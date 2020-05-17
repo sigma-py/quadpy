@@ -108,8 +108,8 @@ def albrecht_5():
         (B[0], fsd(2, (sqrt(sigma2[0]), 1))),
         (B[1], fsd(2, (sqrt(sigma2[1]), 1))),
         (B[2], fsd(2, (sqrt(sigma2[2]), 1))),
-        (C1, pm(2, s1)),
-        (C2, pm(2, s2)),
+        (C1, pm([s1, s1])),
+        (C2, pm([s2, s2])),
         (D, fsd(2, (u, 1), (v, 1))),
     ]
 

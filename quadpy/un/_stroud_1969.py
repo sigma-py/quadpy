@@ -35,7 +35,7 @@ def stroud_1969(n):
 
     # Solve linear equation system for x^k, k={0, 4, 6, 8, 10}, for the weights (the
     # same is done in Stroud's article).
-    pts = [pm(n, t), fsd(n, (s1, 1), (r1, n - 1)), fsd(n, (s2, 1), (r2, n - 1))]
+    pts = [pm(n * [t]), fsd(n, (s1, 1), (r1, n - 1)), fsd(n, (s2, 1), (r2, n - 1))]
     k_range = [0, 4, 6]
     if n >= 4:
         pts.append(fsd(n, (v1, 2), (u1, n - 2)))

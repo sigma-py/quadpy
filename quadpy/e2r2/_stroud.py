@@ -42,9 +42,9 @@ def stroud_5_2():
     # Cartesian product Gauss formula
     r = sqrt(frac(3, 2))
     data = [
-        (frac(4, 9), numpy.array([[0, 0]])),
+        (frac(4, 9), [[0, 0]]),
         (frac(1, 9), fsd(2, (r, 1))),
-        (frac(1, 36), pm(2, r)),
+        (frac(1, 36), pm([r, r])),
     ]
 
     points, weights = untangle(data)

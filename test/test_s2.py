@@ -51,6 +51,13 @@ schemes = [
     quadpy.s2.lether(4),
     quadpy.s2.lether(5),
     quadpy.s2.lether(6),
+    quadpy.s2.luo_meng_1(),
+    quadpy.s2.luo_meng_2(),
+    quadpy.s2.luo_meng_3(),
+    quadpy.s2.luo_meng_4(),
+    quadpy.s2.luo_meng_5(),
+    # quadpy.s2.luo_meng_6(),
+    # quadpy.s2.luo_meng_7(),
     quadpy.s2.mysovskih_1(),
     quadpy.s2.mysovskih_2(),
     quadpy.s2.mysovskih_3(),
@@ -96,7 +103,7 @@ schemes = [
 
 
 @pytest.mark.parametrize("scheme", schemes)
-def test_scheme(scheme, tol=1.0e-11):
+def test_scheme(scheme, tol=1.0e-9):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
