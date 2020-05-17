@@ -87,7 +87,21 @@ def pm(n, a):
     return numpy.array(list(itertools.product([+a, -a], repeat=n)))
 
 
-def pm_array(v):
+def pm0(v):
+    """Return all combinations of [+-v[0], ..., +-v[n]] with length n (with repetition).
+    The number of combinations depends on the number of zeros.
+    """
+    possible_vals = []
+    for value in v:
+        if value == 0:
+            possible_vals.append([0])
+        else:
+            possible_vals.append([+value, -value])
+
+    return numpy.array(list(itertools.product(*possible_vals)))
+
+
+def _pm_array(v):
     """Given an array `v = [v0, v1, ..., vn]`, this methods returns all
     combinations of [+-v0, +-v1, ..., +-vn].
     """
@@ -100,7 +114,7 @@ def pm_array0(n, v, idx):
     """Like pm_array, but put the plus-minused values in a larger array of
     length n at indices idx with the rest filled up with zeros.
     """
-    pm_v = pm_array(v)
+    pm_v = _pm_array(v)
     out = numpy.zeros((n, len(pm_v)), dtype=pm_v.dtype)
     out[idx] = pm_v.T
     return out.T
@@ -119,7 +133,7 @@ def pm_roll(n, v):
     k = len(v)
     assert k <= n
 
-    pm_v = pm_array(v)
+    pm_v = _pm_array(v)
 
     r0 = numpy.zeros((len(pm_v), n), dtype=pm_v.dtype)
     r0[:, :k] = pm_v
