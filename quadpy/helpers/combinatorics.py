@@ -101,25 +101,6 @@ def pm0(v):
     return numpy.array(list(itertools.product(*possible_vals)))
 
 
-def _pm_array(v):
-    """Given an array `v = [v0, v1, ..., vn]`, this methods returns all
-    combinations of [+-v0, +-v1, ..., +-vn].
-    """
-    n = len(v)
-    pm_one = numpy.array(list(itertools.product(*(n * [[+1, -1]]))))
-    return pm_one * v
-
-
-def pm_array0(n, v, idx):
-    """Like pm_array, but put the plus-minused values in a larger array of
-    length n at indices idx with the rest filled up with zeros.
-    """
-    pm_v = _pm_array(v)
-    out = numpy.zeros((n, len(pm_v)), dtype=pm_v.dtype)
-    out[idx] = pm_v.T
-    return out.T
-
-
 def pm_roll(v):
     """Returns `2**k * n` number of points of dimension `n` such that
 

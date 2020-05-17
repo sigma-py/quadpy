@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import book, fsd, pm, pm_array0, untangle
+from ..helpers import book, fsd, pm, pm0, untangle
 from ._helpers import UnScheme
 from ._stroud_1967 import stroud_1967 as stroud_un_7_1
 from ._stroud_1969 import stroud_1969 as stroud_un_11_1
@@ -59,7 +59,7 @@ def stroud_un_5_3(n):
     B = [frac(2 ** (k - n) * (n + 2), n * (k + 1) * (k + 2)) for k in range(1, n + 1)]
     r = [sqrt(frac(k + 2, n + 2)) for k in range(1, n + 1)]
     data = [
-        (B[k], pm_array0(n, [r[k]] + (n - k - 1) * [s], range(k, n))) for k in range(n)
+        (B[k], pm0(k * [0] + [r[k]] + (n - k - 1) * [s])) for k in range(n)
     ]
 
     points, weights = untangle(data)

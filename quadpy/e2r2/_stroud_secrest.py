@@ -1,8 +1,7 @@
-import numpy
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, fsd, pm, pm0, pm_array0, untangle
+from ..helpers import article, fsd, pm, pm0, untangle
 from ._helpers import E2r2Scheme
 
 _source = article(
@@ -24,8 +23,8 @@ def stroud_secrest_5():
     B = frac(1, 12)
 
     data = [
-        (A, numpy.array([[0, 0]])),
-        (B, pm_array0(2, [nu], [0])),
+        (A, [[0, 0]]),
+        (B, pm0([nu, 0])),
         (B, pm0([xi, eta])),
     ]
 
