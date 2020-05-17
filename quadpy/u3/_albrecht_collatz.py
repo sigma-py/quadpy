@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, fsd, pm, untangle, pm_roll, pm0
+from ..helpers import article, fsd, pm0, pm_roll, untangle
 from ._helpers import U3Scheme, cartesian_to_spherical_sympy
 
 source = article(
@@ -18,9 +18,7 @@ source = article(
 
 def albrecht_collatz_1():
     r, s = [sqrt((5 + t * sqrt(5)) / 10) for t in [+1, -1]]
-    data = [
-        (frac(1, 12), pm_roll([r, s, 0]))
-    ]
+    data = [(frac(1, 12), pm_roll([r, s, 0]))]
 
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
@@ -30,7 +28,7 @@ def albrecht_collatz_1():
 def albrecht_collatz_2():
     r = 1
     s = sqrt(frac(1, 3))
-    data = [(frac(8, 120), fsd(3, (r, 1))), (frac(9, 120), pm(3, s))]
+    data = [(frac(8, 120), fsd(3, (r, 1))), (frac(9, 120), pm0([s, s, s]))]
 
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
@@ -68,7 +66,7 @@ def albrecht_collatz_5():
     data = [
         (frac(40, 840), fsd(3, (r, 1))),
         (frac(32, 840), fsd(3, (s, 2))),
-        (frac(27, 840), pm(3, t)),
+        (frac(27, 840), pm0([t, t, t])),
     ]
 
     points, weights = untangle(data)

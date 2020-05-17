@@ -4,7 +4,7 @@ import numpy
 import sympy
 
 from .. import un
-from ..helpers import article, fsd, gamma_n_2, pm, untangle
+from ..helpers import article, fsd, gamma_n_2, pm0, untangle
 from ._helpers import Enr2Scheme, volume_enr2
 
 source = article(
@@ -44,9 +44,9 @@ def _stroud_1967_7_2(n, variant_a, symbolic):
     t = sqrt(t2)
 
     data = [
-        (A, numpy.full((1, n), 0)),
+        (A, [n * [0]]),
         (B, fsd(n, (r, 1))),
-        (C, pm(n, s)),
+        (C, pm0(n * [s])),
         (D, fsd(n, (t, 2))),
     ]
 

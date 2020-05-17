@@ -4,7 +4,7 @@ import numpy
 import sympy
 
 from .. import un
-from ..helpers import article, fsd, pm, untangle, z
+from ..helpers import article, fsd, pm0, untangle
 from ._helpers import SnScheme
 
 source = article(
@@ -45,7 +45,7 @@ def _stroud_1967_7_ab(n, variant_a, symbolic):
     s = sqrt(s2)
     t = sqrt(t2)
 
-    data = [(A, z(n)), (B, fsd(n, (r, 1))), (C, pm(n, s)), (D, fsd(n, (t, 2)))]
+    data = [(A, [n * [0]]), (B, fsd(n, (r, 1))), (C, pm0(n * [s])), (D, fsd(n, (t, 2)))]
     points, weights = untangle(data)
 
     variant = "a" if variant_a else "b"

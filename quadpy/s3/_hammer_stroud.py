@@ -1,6 +1,6 @@
 import sympy
 
-from ..helpers import article, fsd, pm, untangle, z
+from ..helpers import article, fsd, pm0, untangle, z
 from ._helpers import S3Scheme
 
 _source = article(
@@ -47,7 +47,7 @@ def hammer_stroud_14_3(variant_a=True):
     nu = sqrt((7 - t * sqrt14) / 7)
     eta1 = sqrt(5 / (21 - t * 2 * sqrt14))
 
-    data = [(a1, fsd(3, (nu, 1))), (c1, pm(3, eta1))]
+    data = [(a1, fsd(3, (nu, 1))), (c1, pm0([eta1, eta1, eta1]))]
 
     points, weights = untangle(data)
     name = "Hammer-Stroud 14-3" + ("a" if variant_a else "b")
@@ -69,10 +69,10 @@ def _hammer_stroud_15_3(variant_a):
     a0 = 1 - 6 * a1 - 12 * b1 - 8 * c1
 
     data = [
-        (a0, z(3)),
+        (a0, [[0, 0, 0]]),
         (a1, fsd(3, (sqrt(nu2), 1))),
         (b1, fsd(3, (sqrt(xi2), 2))),
-        (c1, pm(3, sqrt(eta2))),
+        (c1, pm0(3 * [sqrt(eta2)])),
     ]
     points, weights = untangle(data)
     name = "Hammer-Stroud 15-3" + ("a" if variant_a else "b")

@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..enr2._stroud_secrest import _nsimplex
-from ..helpers import article, fsd, pm, untangle
+from ..helpers import article, fsd, pm0, untangle
 from ._helpers import EnrScheme
 
 source = article(
@@ -32,7 +32,7 @@ def stroud_secrest_2(n):
 
 def stroud_secrest_3(n):
     nu = sqrt(n + 1)
-    data = [(frac(1, 2 ** n), pm(n, nu))]
+    data = [(frac(1, 2 ** n), pm0(n * [nu]))]
     points, weights = untangle(data)
     return EnrScheme("Stroud-Secrest III", n, weights, points, 3, source)
 

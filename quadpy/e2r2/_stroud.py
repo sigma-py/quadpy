@@ -4,7 +4,7 @@ import numpy
 from sympy import Rational as frac
 from sympy import cos, sin, sqrt
 
-from ..helpers import book, fsd, pm, untangle
+from ..helpers import book, fsd, pm0, untangle
 from ._helpers import E2r2Scheme
 from ._rabinowitz_richter import rabinowitz_richter_1 as stroud_9_1
 from ._rabinowitz_richter import rabinowitz_richter_2 as stroud_11_1
@@ -42,9 +42,9 @@ def stroud_5_2():
     # Cartesian product Gauss formula
     r = sqrt(frac(3, 2))
     data = [
-        (frac(4, 9), numpy.array([[0, 0]])),
+        (frac(4, 9), [[0, 0]]),
         (frac(1, 9), fsd(2, (r, 1))),
-        (frac(1, 36), pm(2, r)),
+        (frac(1, 36), pm0([r, r])),
     ]
 
     points, weights = untangle(data)
