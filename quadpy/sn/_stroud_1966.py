@@ -3,7 +3,7 @@ import math
 import numpy
 import sympy
 
-from ..helpers import article, combine, fsd, pm, pm_array, untangle, z
+from ..helpers import article, combine, fsd, pm, pm0, untangle, z
 from ._helpers import SnScheme
 
 source = article(
@@ -56,7 +56,7 @@ def stroud_1966_b(n, symbolic=False):
         v = numpy.concatenate(
             [
                 numpy.zeros((2 ** (n - k + 1), k - 1), dtype=int),
-                pm_array(numpy.array([r] + (n - k) * [s])),
+                pm0(numpy.array([r] + (n - k) * [s])),
             ],
             axis=-1,
         )
