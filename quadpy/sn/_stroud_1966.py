@@ -3,7 +3,7 @@ import math
 import numpy
 import sympy
 
-from ..helpers import article, combine, fsd, pm, pm0, untangle, z
+from ..helpers import article, combine, fsd, pm0, untangle, z
 from ._helpers import SnScheme
 
 source = article(
@@ -33,7 +33,7 @@ def stroud_1966_a(n, symbolic=False):
     r = sqrt(r2)
     s = sqrt(s2)
 
-    data = [(B1, fsd(n, (r, 1))), (B2, pm(n, s))]
+    data = [(B1, fsd(n, (r, 1))), (B2, pm0(n * [s]))]
     points, weights = untangle(data)
     return SnScheme("Stroud 1966a", n, weights, points, 5, source)
 
@@ -100,7 +100,7 @@ def stroud_1966_d(n, symbolic=False):
     # The data is given symbolically, and for large n, those are thousands of points and
     # weights. Converting them to float takes a long time. A better approach would be to
     # be convert r, s, t first, and assemble the data afterwards.
-    data = [(B, combine(((+r, -r), 1), ((+s, -s), (n - 1)))), (B, pm(n, t))]
+    data = [(B, combine(((+r, -r), 1), ((+s, -s), (n - 1)))), (B, pm0(n * [t]))]
 
     points, weights = untangle(data)
     return SnScheme("Stroud 1966d", n, weights, points, 5, source)

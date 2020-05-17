@@ -2,7 +2,7 @@ import numpy
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import book, fsd, pm
+from ..helpers import book, fsd, pm0
 from ._ewing import ewing as stroud_cn_3_5
 from ._hammer_stroud import hammer_stroud_2n as stroud_cn_5_2
 from ._helpers import CnScheme
@@ -36,7 +36,7 @@ def stroud_cn_1_1(n):
 def stroud_cn_1_2(n):
     # product trapezoidal scheme
     weights = numpy.full(2 ** n, frac(1, 2 ** n))
-    points = pm(n, 1)
+    points = pm0(n * [1])
     return CnScheme("Stroud Cn 1-2", n, weights, points, 1, _source)
 
 
@@ -50,7 +50,7 @@ def stroud_cn_3_2(n):
 def stroud_cn_3_4(n):
     weights = numpy.full(2 ** n, frac(1, 2 ** n))
     r = sqrt(3) / 3
-    points = pm(n, r)
+    points = pm0(n * [r])
     return CnScheme("Stroud Cn 3-4", n, weights, points, 3, _source)
 
 

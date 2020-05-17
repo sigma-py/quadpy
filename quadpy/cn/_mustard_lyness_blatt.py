@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, fsd, pm, untangle, z
+from ..helpers import article, fsd, pm0, untangle
 from ._helpers import CnScheme
 
 _source = article(
@@ -19,9 +19,9 @@ _source = article(
 def mustard_lyness_blatt(n):
     r = sqrt(frac(2, 5))
     data = [
-        (frac(8 - 5 * n, 9), z(n)),
+        (frac(8 - 5 * n, 9), [n * [0]]),
         (frac(5, 18), fsd(n, (r, 1))),
-        (frac(1, 9 * 2 ** n), pm(n, 1)),
+        (frac(1, 9 * 2 ** n), pm0(n * [1])),
     ]
 
     points, weights = untangle(data)

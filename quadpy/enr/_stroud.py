@@ -2,7 +2,7 @@ import numpy
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import book, fsd, untangle, pm0
+from ..helpers import book, fsd, pm0, untangle
 from ._helpers import EnrScheme
 from ._stroud_secrest import stroud_secrest_2 as stroud_enr_3_1
 from ._stroud_secrest import stroud_secrest_3 as stroud_enr_3_2

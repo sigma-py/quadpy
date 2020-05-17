@@ -1,6 +1,6 @@
 from sympy import Rational as frac
 
-from ..helpers import article, pm, untangle, z
+from ..helpers import article, pm0, untangle
 from ._helpers import CnScheme
 
 _source = article(
@@ -17,6 +17,6 @@ _source = article(
 
 
 def ewing(n):
-    data = [(frac(2, 3), z(n)), (frac(1, 3 * 2 ** n), pm(n, 1))]
+    data = [(frac(2, 3), [n * [0]]), (frac(1, 3 * 2 ** n), pm0(n * [1]))]
     points, weights = untangle(data)
     return CnScheme("Ewing", n, weights, points, 3, _source)
