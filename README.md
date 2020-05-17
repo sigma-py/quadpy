@@ -111,7 +111,7 @@ def f(x):
     return [numpy.sin(x[0]), numpy.sin(x[1])]
 ```
 
-More examples under [test/examples_test.py](https://github.com/nschloe/quadpy/blob/master/test/examples_test.py).
+More examples under [test/examples_test.py](test/examples_test.py).
 
 Read more about the dimensionality of the input/output arrays [in the
 wiki](https://github.com/nschloe/quadpy/wiki#dimensionality-of-input-and-output-arrays).
@@ -350,7 +350,7 @@ val = scheme.integrate(lambda x: x[0]**2)
  * [Rabinowitz-Richter](quadpy/e2r2/_rabinowitz_richter.py) (1969, 5 schemes up to degree 15)
  * [Stroud](quadpy/e2r2/_stroud.py) (1971, 3 schemes up to degree 7)
  * [Haegemans-Piessens](quadpy/e2r2/_haegemans_piessens.py) (1977, 2 schemes of degree 9)
- * [all schemes from the nD space with weight function exp(-r<sup>2<sup>)]((#nd-space-with-weight-function-exp-r2-enr3))
+ * [all schemes from the nD space with weight function exp(-r<sup>2</sup>)]((#nd-space-with-weight-function-exp-r2-enr3))
 
 Example:
 ```python
@@ -367,12 +367,12 @@ val = scheme.integrate(lambda x: x[0]**2)
 
  * [Albrecht-Collatz](quadpy/u3/_albrecht_collatz.py) (1958, 5 schemes up to degree 7)
  * [McLaren](quadpy/u3/_mclaren.py) (1963, 10 schemes up to degree 14)
- * [Lebedev](quadpy/u3/_lebedev.py) (1976, 34 schemes up to degree 131)
- * [Bažant-Oh](quadpy/u3/_bazant_oh.py) (1986, 3 schemes up to degree 11)
+ * [Lebedev](quadpy/u3/_lebedev/) (1976, 34 schemes up to degree 131)
+ * [Bažant-Oh](quadpy/u3/_bazant_oh/) (1986, 3 schemes up to degree 11)
  * [Heo-Xu](quadpy/u3/_heo_xu.py) (2001, 27 schemes up to degree 39, single-precision)
- * [Fliege-Maier](quadpy/u3/_fliege_maier.py) (2007, 4 schemes up to degree 4,
+ * [Fliege-Maier](quadpy/u3/_fliege_maier/) (2007, 4 schemes up to degree 4,
    single-precision)
- * [all schemes from the n-sphere](#n-sphere)
+ * [all schemes from the n-sphere](#n-sphere-un)
 
 Example:
 ```python
@@ -608,14 +608,14 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
 
 
 ### n-Ball (_S<sub>n</sub>_)
- * [McNamee-Stenger](quadpy/sn/_mcnamee_stenger.py) (1967, 6 schemes up to degree 9)
- * [Dobrodeev](quadpy/sn/_dobrodeev.py) (1970, n >= 3, degree 7)
  * [Stroud](quadpy/sn/_stroud_1957.py) (1957, degree 2)
  * [Hammer-Stroud](quadpy/sn/_hammer_stroud.py) (1958, 2 schemes up to degree 5)
  * [Stroud](quadpy/sn/_stroud_1966.py) (1966, 4 schemes of degree 5)
  * [Stroud](quadpy/sn/_stroud_1967a.py) (1967, 4 <= n <= 7, 2 schemes of degree 5)
  * [Stroud](quadpy/sn/_stroud_1967b.py) (1967, n >= 3, 3 schemes of degree 7)
  * [Stenger](quadpy/sn/_stenger.py) (1967, 6 schemes up to degree 11)
+ * [McNamee-Stenger](quadpy/sn/_mcnamee_stenger.py) (1967, 6 schemes up to degree 9)
+ * [Dobrodeev](quadpy/sn/_dobrodeev.py) (1970, n >= 3, degree 7)
  * [Dobrodeev](quadpy/sn/_dobrodeev.py) (1978, 2 <= n <= 20, degree 5)
  * [Stoyanova](quadpy/sn/_stoyanova.py) (1997, n >= 5, degree 7)
 
