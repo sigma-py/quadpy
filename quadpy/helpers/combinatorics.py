@@ -120,7 +120,7 @@ def pm_array0(n, v, idx):
     return out.T
 
 
-def pm_roll(n, v):
+def pm_roll(v):
     """Returns `2**k * n` number of points of dimension `n` such that
 
     p[0] = [+-v[0], ..., +-v[k], 0, ..., 0]
@@ -130,15 +130,9 @@ def pm_roll(n, v):
 
     with all +- configurations.
     """
-    k = len(v)
-    assert k <= n
-
-    pm_v = _pm_array(v)
-
-    r0 = numpy.zeros((len(pm_v), n), dtype=pm_v.dtype)
-    r0[:, :k] = pm_v
-
-    return numpy.concatenate([numpy.roll(r0, i, axis=1) for i in range(n)])
+    n = len(v)
+    pm_v = pm0(v)
+    return numpy.concatenate([numpy.roll(pm_v, i, axis=1) for i in range(n)])
 
 
 def get_all_exponents(dim, max_degree):

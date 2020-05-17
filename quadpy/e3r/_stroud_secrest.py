@@ -2,7 +2,7 @@ import numpy
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, fsd, pm, pm_roll, untangle
+from ..helpers import article, fsd, pm, pm0, pm_roll, untangle
 from ._helpers import E3rScheme
 
 source = article(
@@ -21,7 +21,7 @@ def stroud_secrest_07():
     A = frac(3, 5)
     B = frac(1, 30)
 
-    data = [(A, numpy.array([[0, 0, 0]])), (B, pm_roll(3, [xi, nu]))]
+    data = [(A, numpy.array([[0, 0, 0]])), (B, pm_roll([xi, nu, 0]))]
 
     points, weights = untangle(data)
     return E3rScheme("Stroud-Secrest VII", weights, points, 5, source)
@@ -45,7 +45,7 @@ def stroud_secrest_09():
     A = frac(3, 5)
     B = frac(1, 50)
 
-    data = [(A, numpy.array([[0, 0, 0]])), (B, pm(3, eta)), (B, pm_roll(3, [xi, nu]))]
+    data = [(A, numpy.array([[0, 0, 0]])), (B, pm(3, eta)), (B, pm_roll([xi, nu, 0]))]
     points, weights = untangle(data)
     return E3rScheme("Stroud-Secrest IX", weights, points, 5, source)
 
@@ -92,9 +92,9 @@ def stroud_secrest_11():
 
     data = [
         (A, numpy.array([[0, 0, 0]])),
-        (B, pm_roll(3, [xi, nu])),
-        (C, pm(3, eta)),
-        (C, pm_roll(3, [lmbda, mu])),
+        (B, pm_roll([xi, nu, 0])),
+        (C, pm0([eta, eta, eta])),
+        (C, pm_roll([lmbda, mu, 0])),
     ]
 
     points, weights = untangle(data)
