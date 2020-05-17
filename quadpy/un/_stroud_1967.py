@@ -27,7 +27,7 @@ def stroud_1967(n):
 
     data = [
         (B, fsd(n, (r, 1))),
-        (C, pm(n, s)),
+        (C, pm(n * [s])),
         # ERR Stroud's book incorrectly states (t, t,..., t)_FS instead of
         # (t, t, 0, ..., 0)_FS.
         (D, fsd(n, (t, 2))),

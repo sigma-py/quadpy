@@ -80,33 +80,21 @@ def combine(*elems):
     return out
 
 
-def pm(n, a):
-    """Return all combinations of [+a, -a] with length n (with repetition).
-    len(out) == 2**n.
+def pm(v):
+    """Return all combinations of [+-v[0], ..., +-v[n]] with length n (with repetition).
+    The number of combinations depends on the number of zeros.
     """
-    return numpy.array(list(itertools.product([+a, -a], repeat=n)))
+    possible_vals = []
+    for value in v:
+        if value == 0:
+            possible_vals.append([0])
+        else:
+            possible_vals.append([+value, -value])
+
+    return numpy.array(list(itertools.product(*possible_vals)))
 
 
-def pm_array(v):
-    """Given an array `v = [v0, v1, ..., vn]`, this methods returns all
-    combinations of [+-v0, +-v1, ..., +-vn].
-    """
-    n = len(v)
-    pm_one = numpy.array(list(itertools.product(*(n * [[+1, -1]]))))
-    return pm_one * v
-
-
-def pm_array0(n, v, idx):
-    """Like pm_array, but put the plus-minused values in a larger array of
-    length n at indices idx with the rest filled up with zeros.
-    """
-    pm_v = pm_array(v)
-    out = numpy.zeros((n, len(pm_v)), dtype=pm_v.dtype)
-    out[idx] = pm_v.T
-    return out.T
-
-
-def pm_roll(n, v):
+def pm_roll(v):
     """Returns `2**k * n` number of points of dimension `n` such that
 
     p[0] = [+-v[0], ..., +-v[k], 0, ..., 0]
@@ -116,15 +104,9 @@ def pm_roll(n, v):
 
     with all +- configurations.
     """
-    k = len(v)
-    assert k <= n
-
-    pm_v = pm_array(v)
-
-    r0 = numpy.zeros((len(pm_v), n), dtype=pm_v.dtype)
-    r0[:, :k] = pm_v
-
-    return numpy.concatenate([numpy.roll(r0, i, axis=1) for i in range(n)])
+    n = len(v)
+    pm_v = pm(v)
+    return numpy.concatenate([numpy.roll(pm_v, i, axis=1) for i in range(n)])
 
 
 def get_all_exponents(dim, max_degree):

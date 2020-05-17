@@ -39,7 +39,7 @@ def stroud_sn_3_2(n, symbolic=False):
     sqrt = sympy.sqrt if symbolic else math.sqrt
 
     r = sqrt(frac(1, n + 2))
-    data = [(frac(1, 2 ** n), pm(n, r))]
+    data = [(frac(1, 2 ** n), pm(n * [r]))]
     points, weights = untangle(data)
     return SnScheme("Stroud Sn 3-2", n, weights, points, 3, source)
 

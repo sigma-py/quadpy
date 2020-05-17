@@ -1,16 +1,5 @@
 from ._class import QuadratureScheme
-from .combinatorics import (
-    combine,
-    fs_array,
-    fsd,
-    get_all_exponents,
-    pm,
-    pm_array,
-    pm_array0,
-    pm_roll,
-    rd,
-    z,
-)
+from .combinatorics import combine, fs_array, fsd, get_all_exponents, pm, pm_roll, rd, z
 from .misc import (
     article,
     book,
@@ -35,8 +24,6 @@ __all__ = [
     "fs_array",
     "combine",
     "pm",
-    "pm_array",
-    "pm_array0",
     "pm_roll",
     "gamma_n_2",
     "get_all_exponents",

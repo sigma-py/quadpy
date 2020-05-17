@@ -44,9 +44,9 @@ def _stroud_1967_7_2(n, variant_a, symbolic):
     t = sqrt(t2)
 
     data = [
-        (A, numpy.full((1, n), 0)),
+        (A, [n * [0]]),
         (B, fsd(n, (r, 1))),
-        (C, pm(n, s)),
+        (C, pm(n * [s])),
         (D, fsd(n, (t, 2))),
     ]
 

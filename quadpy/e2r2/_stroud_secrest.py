@@ -1,8 +1,7 @@
-import numpy
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, fsd, pm, pm_array, pm_array0, untangle
+from ..helpers import article, fsd, pm, untangle
 from ._helpers import E2r2Scheme
 
 _source = article(
@@ -24,9 +23,9 @@ def stroud_secrest_5():
     B = frac(1, 12)
 
     data = [
-        (A, numpy.array([[0, 0]])),
-        (B, pm_array0(2, [nu], [0])),
-        (B, pm_array([xi, eta])),
+        (A, [[0, 0]]),
+        (B, pm([nu, 0])),
+        (B, pm([xi, eta])),
     ]
 
     points, weights = untangle(data)
@@ -40,7 +39,7 @@ def stroud_secrest_6():
     A = frac(1, 36)
     B, C = [(5 + p_m * 2 * sqrt5) / 45 for p_m in [+1, -1]]
 
-    data = [(A, fsd(2, (nu, 1))), (B, pm(2, xi)), (C, pm(2, eta))]
+    data = [(A, fsd(2, (nu, 1))), (B, pm([xi, xi])), (C, pm([eta, eta]))]
 
     points, weights = untangle(data)
     return E2r2Scheme("Stroud-Secrest VI", weights, points, 7, _source)

@@ -1,4 +1,3 @@
-import numpy
 from sympy import Rational as frac
 from sympy import sqrt
 
@@ -21,7 +20,7 @@ def stroud_secrest_07():
     A = frac(3, 5)
     B = frac(1, 30)
 
-    data = [(A, numpy.array([[0, 0, 0]])), (B, pm_roll(3, [xi, nu]))]
+    data = [(A, [[0, 0, 0]]), (B, pm_roll([xi, nu, 0]))]
 
     points, weights = untangle(data)
     return E3rScheme("Stroud-Secrest VII", weights, points, 5, source)
@@ -34,7 +33,7 @@ def stroud_secrest_08():
     B = frac(2, 75)
     C = frac(3, 100)
 
-    data = [(A, numpy.array([[0, 0, 0]])), (B, fsd(3, (nu, 1))), (C, pm(3, eta))]
+    data = [(A, [[0, 0, 0]]), (B, pm_roll([nu, 0, 0])), (C, pm([eta, eta, eta]))]
     points, weights = untangle(data)
     return E3rScheme("Stroud-Secrest VIII", weights, points, 5, source)
 
@@ -45,7 +44,7 @@ def stroud_secrest_09():
     A = frac(3, 5)
     B = frac(1, 50)
 
-    data = [(A, numpy.array([[0, 0, 0]])), (B, pm(3, eta)), (B, pm_roll(3, [xi, nu]))]
+    data = [(A, [[0, 0, 0]]), (B, pm([eta, eta, eta])), (B, pm_roll([xi, nu, 0]))]
     points, weights = untangle(data)
     return E3rScheme("Stroud-Secrest IX", weights, points, 5, source)
 
@@ -63,10 +62,10 @@ def stroud_secrest_10():
     D = (4239 + 373 * sqrt130) / 197568
 
     data = [
-        (A, numpy.array([[0, 0, 0]])),
+        (A, [[0, 0, 0]]),
         (B, fsd(3, (nu, 1))),
         (C, fsd(3, (xi, 2))),
-        (D, pm(3, eta)),
+        (D, pm([eta, eta, eta])),
     ]
 
     points, weights = untangle(data)
@@ -91,10 +90,10 @@ def stroud_secrest_11():
     C = (297 - 47 * sqrt39) / 32928
 
     data = [
-        (A, numpy.array([[0, 0, 0]])),
-        (B, pm_roll(3, [xi, nu])),
-        (C, pm(3, eta)),
-        (C, pm_roll(3, [lmbda, mu])),
+        (A, [[0, 0, 0]]),
+        (B, pm_roll([xi, nu, 0])),
+        (C, pm([eta, eta, eta])),
+        (C, pm_roll([lmbda, mu, 0])),
     ]
 
     points, weights = untangle(data)

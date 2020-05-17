@@ -19,6 +19,6 @@ frac = sympy.Rational
 
 def albrecht_collatz():
     # ERR Incorrectly stated in Stroud as sqrt(1/2) instead of 1/2
-    data = [(frac(1, 4), pm(2, frac(1, 2)))]
+    data = [(frac(1, 4), pm(2 * [frac(1, 2)]))]
     points, weights = untangle(data)
     return S2Scheme("Albrecht-Collatz", weights, points, 3, _source)
