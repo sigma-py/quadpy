@@ -80,14 +80,7 @@ def combine(*elems):
     return out
 
 
-def pm(n, a):
-    """Return all combinations of [+a, -a] with length n (with repetition).
-    len(out) == 2**n.
-    """
-    return numpy.array(list(itertools.product([+a, -a], repeat=n)))
-
-
-def pm0(v):
+def pm(v):
     """Return all combinations of [+-v[0], ..., +-v[n]] with length n (with repetition).
     The number of combinations depends on the number of zeros.
     """
@@ -112,7 +105,7 @@ def pm_roll(v):
     with all +- configurations.
     """
     n = len(v)
-    pm_v = pm0(v)
+    pm_v = pm(v)
     return numpy.concatenate([numpy.roll(pm_v, i, axis=1) for i in range(n)])
 
 

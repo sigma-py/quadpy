@@ -3,7 +3,7 @@ import sympy
 
 from ..helpers import article
 from ..helpers import fs_array as fs
-from ..helpers import fsd, pm0, untangle, z
+from ..helpers import fsd, pm, untangle, z
 from ._helpers import S2Scheme
 from ._peirce_1956 import peirce_1956_1, peirce_1956_3
 from ._radon import radon
@@ -37,7 +37,7 @@ def hammer_stroud_12_2():
     data = [
         (frac(1, 6), z(2)),
         (frac(1, 6), fsd(2, (sqrt(frac(1, 2)), 1))),
-        (frac(1, 24), pm0(2 * [sqrt(frac(1, 2))])),
+        (frac(1, 24), pm(2 * [sqrt(frac(1, 2))])),
     ]
     points, weights = untangle(data)
     return S2Scheme("Hammer-Stroud 12-2", weights, points, 5, _source)

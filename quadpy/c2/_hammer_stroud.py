@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, fsd, pm0, untangle
+from ..helpers import article, fsd, pm, untangle
 from ._helpers import C2Scheme
 
 source = article(
@@ -26,7 +26,7 @@ def hammer_stroud_2_2():
     data = [
         (frac(64, 81), [[0, 0]]),
         (frac(40, 81), fsd(2, (alpha, 1))),
-        (frac(25, 81), pm0([alpha, alpha])),
+        (frac(25, 81), pm([alpha, alpha])),
     ]
     points, weights = untangle(data)
     weights /= 4
@@ -37,8 +37,8 @@ def hammer_stroud_3_2():
     xi1, xi2 = [sqrt(frac(3, 287) * (38 - i * sqrt(583))) for i in [+1, -1]]
     data = [
         (frac(98, 405), fsd(2, (sqrt(frac(6, 7)), 1))),
-        (0.5205929166673945, pm0([xi1, xi1])),
-        (0.2374317746906302, pm0([xi2, xi2])),
+        (0.5205929166673945, pm([xi1, xi1])),
+        (0.2374317746906302, pm([xi2, xi2])),
     ]
     points, weights = untangle(data)
     weights /= 4

@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import book, fsd, pm0, untangle
+from ..helpers import book, fsd, pm, untangle
 from ._helpers import UnScheme
 from ._stroud_1967 import stroud_1967 as stroud_un_7_1
 from ._stroud_1969 import stroud_1969 as stroud_un_11_1
@@ -23,7 +23,7 @@ def stroud_un_3_1(n):
 
 def stroud_un_3_2(n):
     degree = 3
-    data = [(frac(1, 2 ** n), pm0(n * [sqrt(frac(1, n))]))]
+    data = [(frac(1, 2 ** n), pm(n * [sqrt(frac(1, n))]))]
     points, weights = untangle(data)
     return UnScheme("Stroud Un 3-2", n, weights, points, degree, source)
 
@@ -46,7 +46,7 @@ def stroud_un_5_2(n):
     B1 = frac(1, n * (n + 2))
     B2 = frac(n, 2 ** n * (n + 2))
 
-    data = [(B1, fsd(n, (1, 1))), (B2, pm0(n * [sqrt(frac(1, n))]))]
+    data = [(B1, fsd(n, (1, 1))), (B2, pm(n * [sqrt(frac(1, n))]))]
 
     points, weights = untangle(data)
     return UnScheme("Stroud Un 5-2", n, weights, points, degree, source)
@@ -58,7 +58,7 @@ def stroud_un_5_3(n):
     s = sqrt(frac(1, n + 2))
     B = [frac(2 ** (k - n) * (n + 2), n * (k + 1) * (k + 2)) for k in range(1, n + 1)]
     r = [sqrt(frac(k + 2, n + 2)) for k in range(1, n + 1)]
-    data = [(B[k], pm0(k * [0] + [r[k]] + (n - k - 1) * [s])) for k in range(n)]
+    data = [(B[k], pm(k * [0] + [r[k]] + (n - k - 1) * [s])) for k in range(n)]
 
     points, weights = untangle(data)
     return UnScheme("Stroud Un 5-3", n, weights, points, degree, source)
@@ -87,7 +87,7 @@ def stroud_un_7_2(n):
     s = sqrt(frac(5, n + 4))
     t = sqrt(frac(1, n + 4))
 
-    data = [(A, pm0(n * [r])), (B, fsd(n, (s, 1), (t, n - 1)))]
+    data = [(A, pm(n * [r])), (B, fsd(n, (s, 1), (t, n - 1)))]
 
     points, weights = untangle(data)
     return UnScheme("Stroud Un 7-1", n, weights, points, degree, source)

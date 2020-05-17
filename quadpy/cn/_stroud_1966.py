@@ -2,7 +2,7 @@ import numpy
 from sympy import Rational as frac
 from sympy import S, sqrt
 
-from ..helpers import article, fsd, pm0, untangle, z
+from ..helpers import article, fsd, pm, untangle, z
 from ._helpers import CnScheme, _fs11
 
 _source = article(
@@ -23,7 +23,7 @@ def stroud_1966_a(n):
     s = sqrt(frac(5 * n + 4, 15 * n - 12))
     data = [
         (frac(40, (5 * n + 4) ** 2), fsd(n, (r, 1))),
-        (frac(5 * n - 4, (5 * n + 4)) ** 2 / 2 ** n, pm0(n * [s])),
+        (frac(5 * n - 4, (5 * n + 4)) ** 2 / 2 ** n, pm(n * [s])),
     ]
 
     points, weights = untangle(data)
@@ -36,7 +36,7 @@ def stroud_1966_b(n):
     for k in range(1, n + 1):
         r = sqrt(frac(5 * k + 4, 15))
         arr = numpy.full((2 ** (n - k + 1), n), S(0))
-        arr[:, k - 1 :] = pm0((n - k + 1) * [1])
+        arr[:, k - 1 :] = pm((n - k + 1) * [1])
         arr[:, k - 1] *= r
         arr[:, k:] *= s
         b = frac(5 * 2 ** (k - n + 1), (5 * k - 1) * (5 * k + 4))
@@ -61,7 +61,7 @@ def stroud_1966_d(n):
     s = sqrt((5 * n - 2 * sqrt(5) - 2 * sqrt(5 * n + 5)) / (15 * n))
     t = sqrt((5 + 2 * sqrt(5)) / 15)
     w = frac(1, 2 ** n * (n + 1))
-    data = [(w, _fs11(n, r, s)), (w, pm0(n * [t]))]
+    data = [(w, _fs11(n, r, s)), (w, pm(n * [t]))]
 
     points, weights = untangle(data)
     return CnScheme("Stroud 1966d", n, weights, points, 5, _source)

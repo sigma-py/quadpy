@@ -3,7 +3,7 @@ import math
 import numpy
 import sympy
 
-from ..helpers import article, fsd, pm0, prod, untangle, z
+from ..helpers import article, fsd, pm, prod, untangle, z
 from ._helpers import CnScheme
 
 _source = article(
@@ -34,7 +34,7 @@ def cools_haegemans_1(n, delta2=1, symbolic=False):
 
     data = [
         (w0, z(n)),
-        (w, pm0(n * [sqrt(delta2)])),
+        (w, pm(n * [sqrt(delta2)])),
     ]
 
     points, weights = untangle(data)
@@ -60,7 +60,7 @@ def cools_haegemans_2(n, delta2=1, symbolic=False):
     data = [
         (w0, z(n)),
         (w1, fsd(n, (lmbdas[0], 1))),
-        (w, pm0(n * [sqrt(delta2)])),
+        (w, pm(n * [sqrt(delta2)])),
     ]
 
     points, weights = untangle(data)

@@ -1,6 +1,6 @@
 import sympy
 
-from ..helpers import article, pm0, pm_roll, untangle
+from ..helpers import article, pm, pm_roll, untangle
 from ._helpers import S3Scheme
 
 _source = article(
@@ -43,7 +43,7 @@ def ditkin_2():
     data = [
         (B0, [[0, 0, 0]]),
         (B1, pm_roll([r, s, 0])),
-        (B1, pm0([t, t, t])),
+        (B1, pm([t, t, t])),
     ]
 
     points, weights = untangle(data)
@@ -64,7 +64,7 @@ def ditkin_3():
         (B0, [[0, 0, 0]]),
         (B1, pm_roll([r, s, 0])),
         (B2, pm_roll([u, v, 0])),
-        (B2, pm0([t, t, t])),
+        (B2, pm([t, t, t])),
     ]
 
     points, weights = untangle(data)

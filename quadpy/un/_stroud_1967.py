@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, fsd, pm0, untangle
+from ..helpers import article, fsd, pm, untangle
 from ._helpers import UnScheme
 
 source = article(
@@ -27,7 +27,7 @@ def stroud_1967(n):
 
     data = [
         (B, fsd(n, (r, 1))),
-        (C, pm0(n * [s])),
+        (C, pm(n * [s])),
         # ERR Stroud's book incorrectly states (t, t,..., t)_FS instead of
         # (t, t, 0, ..., 0)_FS.
         (D, fsd(n, (t, 2))),

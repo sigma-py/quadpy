@@ -3,7 +3,7 @@ from mpmath import mp
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, pm0, pm_roll, untangle
+from ..helpers import article, pm, pm_roll, untangle
 from ._helpers import U3Scheme, cartesian_to_spherical_sympy
 
 source = article(
@@ -114,7 +114,7 @@ def mclaren_05():
     data = [
         (B1, pm_roll([r, s, 0])),
         (B2, pm_roll([u, v, 0])),
-        (B2, pm0([t, t, t])),
+        (B2, pm([t, t, t])),
     ]
     points, weights = untangle(data)
     azimuthal_polar = cartesian_to_spherical_sympy(points)
@@ -157,7 +157,7 @@ def mclaren_07():
 
     data = [
         (B, pm_roll([r, s, 0])),
-        (B, pm0([t, t, t])),
+        (B, pm([t, t, t])),
         (C, pm_roll([1, 0, 0])),
         (C, pm_roll([u, v, w])),
     ]
@@ -184,7 +184,7 @@ def mclaren_08():
     data = [
         (B1, pm_roll([r, 0, 0])),
         (B2, pm_roll([s, s, 0])),
-        (B3, pm0([t, t, t])),
+        (B3, pm([t, t, t])),
         (B4, pm_roll([u, u, v])),
     ]
     points, weights = untangle(data)
@@ -211,7 +211,7 @@ def mclaren_09():
     data = [
         (B, pm_roll([p, q, 0])),
         (C, pm_roll([r, s, 0])),
-        (C, pm0([t, t, t])),
+        (C, pm([t, t, t])),
         (D, pm_roll([1, 0, 0])),
         (D, pm_roll([u, v, w])),
     ]
