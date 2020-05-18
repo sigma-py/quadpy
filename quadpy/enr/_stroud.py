@@ -59,7 +59,7 @@ def stroud_enr_5_4(n):
     data = [(A, numpy.full((1, n), 0)), (B, fsd(n, (r, 1), (s, n - 1)))]
 
     points, weights = untangle(data)
-    return EnrScheme("Stroud Enr 5-4", n, weights, points, 5, source)
+    return EnrScheme("Stroud Enr 5-4", n, weights, points, 5, source, 1.684e-11)
 
 
 # math domain error

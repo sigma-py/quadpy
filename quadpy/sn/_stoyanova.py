@@ -178,4 +178,4 @@ def stoyanova(n, delta=None, variant_v_plus=True, symbolic=False):
         (d, z(n)),
     ]
     points, weights = untangle(data)
-    return SnScheme("Stoyanova", n, weights, points, 7, source)
+    return SnScheme("Stoyanova", n, weights, points, 7, source, 1.423e-14)

@@ -51,4 +51,4 @@ def dobrodeev_1978(n):
     data = [(G, fsd(n, (a, i))), (G, fsd(n, (b, j), (c, k)))]
 
     points, weights = untangle(data)
-    return CnScheme("Dobrodeev 1978", n, weights, points, 5, _source)
+    return CnScheme("Dobrodeev 1978", n, weights, points, 5, _source, 8.350e-14)

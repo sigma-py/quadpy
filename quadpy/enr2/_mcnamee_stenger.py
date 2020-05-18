@@ -23,7 +23,9 @@ def mcnamee_stenger_5(n, symbolic=False):
 
 
 def mcnamee_stenger_7a(n, symbolic=False):
-    return Enr2Scheme(*_mcnamee_stenger_7(n, integrator, False, symbolic=symbolic))
+    return Enr2Scheme(
+        *_mcnamee_stenger_7(n, integrator, False, symbolic=symbolic), tol=1.250e-14
+    )
 
 
 def mcnamee_stenger_7b(n, symbolic=False):

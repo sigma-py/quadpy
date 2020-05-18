@@ -96,7 +96,7 @@ def lyness_jespersen_10():
         ),
         s1([4.971064537103375e-01 / 6, 6.365024991213939e-01, 5.314504984483216e-02]),
     )
-    return T2Scheme("Lyness-Jespersen 10", weights, points, 6, source)
+    return T2Scheme("Lyness-Jespersen 10", weights, points, 6, source, 1.239e-13)
 
 
 def lyness_jespersen_11():
@@ -135,7 +135,7 @@ def lyness_jespersen_13():
         ),
         s1([+4.626825653415500e-01 / 6, 6.384441885698096e-01, 4.869031542531756e-02]),
     )
-    return T2Scheme("Lyness-Jespersen 13", weights, points, 7, source)
+    return T2Scheme("Lyness-Jespersen 13", weights, points, 7, source, 4.119e-14)
 
 
 def lyness_jespersen_14():
@@ -148,7 +148,7 @@ def lyness_jespersen_14():
         ),
         s1([1.421102178595603e-01 / 6, 0, 8.392991722729236e-01]),
     )
-    return T2Scheme("Lyness-Jespersen 14", weights, points, 7, source)
+    return T2Scheme("Lyness-Jespersen 14", weights, points, 7, source, 2.805e-13)
 
 
 def lyness_jespersen_15():
@@ -175,7 +175,7 @@ def lyness_jespersen_16():
         ),
         s1([+1.488095238055238e-01 / 6, 0, 7.236067977499750e-01]),
     )
-    return T2Scheme("Lyness-Jespersen 16", weights, points, 8, source)
+    return T2Scheme("Lyness-Jespersen 16", weights, points, 8, source, 7.282e-12)
 
 
 def lyness_jespersen_17():
@@ -234,7 +234,7 @@ def lyness_jespersen_20():
             [1.242459578348437e-01 / 6, 2.102201653616613e-02, 8.074890031597923e-01],
         ),
     )
-    return T2Scheme("Lyness-Jespersen 20", weights, points, 11, source)
+    return T2Scheme("Lyness-Jespersen 20", weights, points, 11, source, 1.361e-13)
 
 
 def lyness_jespersen_21():
@@ -252,4 +252,4 @@ def lyness_jespersen_21():
             [2.463378925757316e-01 / 6, 4.484167758913055e-02, 6.779376548825902e-01],
         ),
     )
-    return T2Scheme("Lyness-Jespersen 21", weights, points, 11, source)
+    return T2Scheme("Lyness-Jespersen 21", weights, points, 11, source, 3.543e-14)

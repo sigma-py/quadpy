@@ -138,7 +138,8 @@ def _mcnamee_stenger_7(n, integrator, switch_uv, symbolic):
     points, weights = untangle(data)
 
     weights /= I0
-    return "McNamee-Stenger 7", n, weights, points, 7, _source
+    variant = "a" if not switch_uv else "b"
+    return f"McNamee-Stenger 7{variant}", n, weights, points, 7, _source
 
 
 def _mcnamee_stenger_9(n, integrator, switch_uv, symbolic):
@@ -243,7 +244,8 @@ def _mcnamee_stenger_9(n, integrator, switch_uv, symbolic):
     points, weights = untangle(data)
 
     weights /= I0
-    return "McNamee-Stenger 9", n, weights, points, 9, _source
+    variant = "a" if not switch_uv else "b"
+    return f"McNamee-Stenger 9{variant}", n, weights, points, 9, _source
 
 
 # Here starts the cube-specific section.
@@ -261,24 +263,32 @@ def integrator(n, k, symbolic):
 
 
 def mcnamee_stenger_3(n, symbolic=False):
-    return CnScheme(*_mcnamee_stenger_3(n, integrator, symbolic=symbolic))
+    return CnScheme(*_mcnamee_stenger_3(n, integrator, symbolic=symbolic), 6.374e-14)
 
 
 def mcnamee_stenger_5(n, symbolic=False):
-    return CnScheme(*_mcnamee_stenger_5(n, integrator, symbolic=symbolic))
+    return CnScheme(*_mcnamee_stenger_5(n, integrator, symbolic=symbolic), 4.187e-14)
 
 
 def mcnamee_stenger_7a(n, symbolic=False):
-    return CnScheme(*_mcnamee_stenger_7(n, integrator, False, symbolic=symbolic))
+    return CnScheme(
+        *_mcnamee_stenger_7(n, integrator, False, symbolic=symbolic), 4.242e-11
+    )
 
 
 def mcnamee_stenger_7b(n, symbolic=False):
-    return CnScheme(*_mcnamee_stenger_7(n, integrator, True, symbolic=symbolic))
+    return CnScheme(
+        *_mcnamee_stenger_7(n, integrator, True, symbolic=symbolic), 9.686e-13
+    )
 
 
 def mcnamee_stenger_9a(n, symbolic=False):
-    return CnScheme(*_mcnamee_stenger_9(n, integrator, False, symbolic=symbolic))
+    return CnScheme(
+        *_mcnamee_stenger_9(n, integrator, False, symbolic=symbolic), 3.961e-12
+    )
 
 
 def mcnamee_stenger_9b(n, symbolic=False):
-    return CnScheme(*_mcnamee_stenger_9(n, integrator, True, symbolic=symbolic))
+    return CnScheme(
+        *_mcnamee_stenger_9(n, integrator, True, symbolic=symbolic), 1.512e-12
+    )

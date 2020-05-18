@@ -112,21 +112,24 @@ def test_scheme(scheme):
         ]
     )
 
-    degree = check_degree(
+    degree, err = check_degree(
         lambda poly: scheme.integrate(poly, w3),
         # lambda k: _integrate_exact(k, w3),
         _integrate_monomial_over_unit_w3,
         3,
         scheme.degree + 1,
+        tol=scheme.test_tolerance,
     )
-    assert degree == scheme.degree
-    return
+    assert (
+        degree >= scheme.degree
+    ), "{}  --  observed: {}, expected: {} (max err: {:.3e})".format(
+        scheme.name, degree, scheme.degree, err
+    )
 
 
 @pytest.mark.parametrize("scheme", [quadpy.w3.felippa_4()])
 def test_show(scheme):
     scheme.show(backend="mpl")
-    return
 
 
 if __name__ == "__main__":

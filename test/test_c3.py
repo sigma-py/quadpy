@@ -117,7 +117,7 @@ def _integrate_exact2(k, x0, x1, y0, y1, z0, z1):
 
 
 @pytest.mark.parametrize("scheme", schemes)
-def test_scheme(scheme, tol=1.0e-14, print_degree=False):
+def test_scheme(scheme, print_degree=False):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
@@ -155,12 +155,13 @@ def test_scheme(scheme, tol=1.0e-14, print_degree=False):
     exact = [numpy.zeros(len(s)) for s in approximate]
     exact[0][0] = numpy.sqrt(2.0) * 2
 
-    degree = check_degree_ortho(approximate, exact, abs_tol=tol)
+    degree, err = check_degree_ortho(approximate, exact, abs_tol=scheme.test_tolerance)
 
-    assert degree >= scheme.degree, "{} -- Observed: {}, expected: {}".format(
-        scheme.name, degree, scheme.degree
+    assert (
+        degree >= scheme.degree
+    ), "{} -- Observed: {}, expected: {} (max err: {:.3e})".format(
+        scheme.name, degree, scheme.degree, err
     )
-    return
 
 
 @pytest.mark.parametrize(
@@ -169,7 +170,6 @@ def test_scheme(scheme, tol=1.0e-14, print_degree=False):
 def test_show(scheme):
     scheme.show(backend="mpl")
     plt.close()
-    return
 
 
 if __name__ == "__main__":

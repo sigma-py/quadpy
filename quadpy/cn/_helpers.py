@@ -6,27 +6,10 @@ from ..helpers import QuadratureScheme, n_outer
 
 
 class CnScheme(QuadratureScheme):
-    def __init__(self, name, dim, weights, points, degree, source):
+    def __init__(self, name, dim, weights, points, degree, source, tol=1.0e-14):
+        super().__init__(name, weights, points, degree, source, tol)
         self.domain = f"Cn (n={dim})"
-        self.name = name
         self.dim = dim
-        self.degree = degree
-        self.source = source
-
-        if weights.dtype == numpy.float64:
-            self.weights = weights
-        else:
-            assert weights.dtype in [numpy.dtype("O"), numpy.int_]
-            self.weights = weights.astype(numpy.float64)
-            self.weights_symbolic = weights
-
-        if points.dtype == numpy.float64:
-            self.points = points
-        else:
-            assert points.dtype in [numpy.dtype("O"), numpy.int_]
-            self.points = points.astype(numpy.float64)
-            self.points_symbolic = points
-        return
 
     def integrate(self, f, ncube, dot=numpy.dot):
         x = transform(self.points.T, ncube).T

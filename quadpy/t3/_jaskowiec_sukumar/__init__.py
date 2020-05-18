@@ -20,7 +20,7 @@ source = article(
 # https://onlinelibrary.wiley.com/doi/abs/10.1002/nme.6313
 
 
-def _read(string):
+def _read(string, tol=1.0e-14):
     this_dir = os.path.dirname(os.path.realpath(__file__))
     filename = f"js{string}.json"
     with open(os.path.join(this_dir, filename), "r") as f:
@@ -32,7 +32,7 @@ def _read(string):
     points = numpy.column_stack([points, 1.0 - numpy.sum(points, axis=1)])
     weights = numpy.array(data["weights"])
 
-    return T3Scheme(f"Jaśkowiec-Sukumar {string}", weights, points, degree, source)
+    return T3Scheme(f"Jaśkowiec-Sukumar {string}", weights, points, degree, source, tol)
 
 
 def jaskowiec_sukumar_02():
@@ -88,28 +88,28 @@ def jaskowiec_sukumar_14():
 
 
 def jaskowiec_sukumar_15():
-    return _read("15")
+    return _read("15", 3.687e-11)
 
 
 def jaskowiec_sukumar_16():
-    return _read("16")
+    return _read("16", 2.653e-11)
 
 
 def jaskowiec_sukumar_17():
-    return _read("17")
+    return _read("17", 3.831e-11)
 
 
 def jaskowiec_sukumar_18():
-    return _read("18")
+    return _read("18", 3.470e-11)
 
 
 def jaskowiec_sukumar_19a():
-    return _read("19a")
+    return _read("19a", 4.679e-11)
 
 
 def jaskowiec_sukumar_19b():
-    return _read("19b")
+    return _read("19b", 4.580e-11)
 
 
 def jaskowiec_sukumar_20():
-    return _read("20")
+    return _read("20", 2.315e-11)

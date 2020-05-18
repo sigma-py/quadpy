@@ -42,21 +42,18 @@ def test_scheme(scheme):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
-    tol = 1.0e-14
     n = scheme.dim
-    center = numpy.zeros(n)
-    radius = 1
-    degree = check_degree(
-        lambda poly: scheme.integrate(poly, center, radius),
+    degree, err = check_degree(
+        lambda poly: scheme.integrate(poly, center=numpy.zeros(n), radius=1),
         integrate_monomial_over_nball,
         n,
         scheme.degree + 1,
-        tol=tol,
+        tol=scheme.test_tolerance,
     )
     assert (
         degree >= scheme.degree
-    ), "{} (dim={})  --  observed: {}, expected: {}".format(
-        scheme.name, scheme.dim, degree, scheme.degree
+    ), "{} (dim={}) -- Observed: {}, expected: {} (max err: {:.3e})".format(
+        scheme.name, n, degree, scheme.degree, err
     )
 
 

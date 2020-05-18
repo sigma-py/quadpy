@@ -13,7 +13,7 @@ _source = online(
 )
 
 
-def _read(index):
+def _read(index, tol=1.0e-14):
     this_dir = os.path.dirname(os.path.realpath(__file__))
     filename = f"sommariva_{index:02d}.json"
     with open(os.path.join(this_dir, filename), "r") as f:
@@ -25,7 +25,7 @@ def _read(index):
     points = data[:, :2]
     weights = data[:, 2]
     weights /= 4
-    return C2Scheme(f"Sommariva {index}", weights, points, degree, _source)
+    return C2Scheme(f"Sommariva {index}", weights, points, degree, _source, tol)
 
 
 def sommariva_01():
@@ -109,7 +109,7 @@ def sommariva_20():
 
 
 def sommariva_21():
-    return _read(21)
+    return _read(21, 1.922e-14)
 
 
 def sommariva_22():
@@ -161,7 +161,7 @@ def sommariva_33():
 
 
 def sommariva_34():
-    return _read(34)
+    return _read(34, 1.192e-14)
 
 
 def sommariva_35():
@@ -173,7 +173,7 @@ def sommariva_36():
 
 
 def sommariva_37():
-    return _read(37)
+    return _read(37, 1.306e-14)
 
 
 def sommariva_38():

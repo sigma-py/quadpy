@@ -80,7 +80,7 @@ def stenger_7a(n):
 
     points, weights = untangle(data)
     weights /= volume_nball(n, symbolic=False)
-    return SnScheme("Stenger 7a", n, weights, points, 7, source)
+    return SnScheme("Stenger 7a", n, weights, points, 7, source, 5.878e-13)
 
 
 def stenger_7b(n):
@@ -146,7 +146,7 @@ def stenger_7b(n):
 
     points, weights = untangle(data)
     weights /= volume_nball(n, symbolic=False)
-    return SnScheme("Stenger 7b", n, weights, points, 7, source)
+    return SnScheme("Stenger 7b", n, weights, points, 7, source, 7.753e-14)
 
 
 def stenger_9a(n):
@@ -389,7 +389,7 @@ def stenger_11a(n):
 
     points, weights = untangle(data)
     weights /= volume_nball(n, symbolic=False)
-    return SnScheme("Stenger 11a", n, weights, points, 11, source)
+    return SnScheme("Stenger 11a", n, weights, points, 11, source, 1.171e-13)
 
 
 def stenger_11b(n):
@@ -484,4 +484,4 @@ def stenger_11b(n):
 
     points, weights = untangle(data)
     weights /= volume_nball(n, symbolic=False)
-    return SnScheme("Stenger 11b", n, weights, points, 11, source)
+    return SnScheme("Stenger 11b", n, weights, points, 11, source, 2.721e-12)

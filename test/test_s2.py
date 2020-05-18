@@ -103,7 +103,7 @@ schemes = [
 
 
 @pytest.mark.parametrize("scheme", schemes)
-def test_scheme(scheme, tol=1.0e-9):
+def test_scheme(scheme):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
@@ -136,18 +136,18 @@ def test_scheme(scheme, tol=1.0e-9):
     exact = [numpy.zeros(k + 1) for k in range(scheme.degree + 2)]
     exact[0][0] = numpy.sqrt(numpy.pi)
 
-    degree = check_degree_ortho(approximate, exact, abs_tol=tol)
+    degree, err = check_degree_ortho(approximate, exact, abs_tol=scheme.test_tolerance)
 
-    assert degree >= scheme.degree, "{} -- Observed: {}, expected: {}".format(
-        scheme.name, degree, scheme.degree
+    assert (
+        degree >= scheme.degree
+    ), "{} -- Observed: {}, expected: {} (max err: {:.3e})".format(
+        scheme.name, degree, scheme.degree, err
     )
-    return
 
 
 @pytest.mark.parametrize("scheme", [quadpy.s2.lether(3)])
 def test_show(scheme):
     scheme.show()
-    return
 
 
 if __name__ == "__main__":

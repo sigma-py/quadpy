@@ -20,7 +20,7 @@ source = article(
 def stroud_secrest_1(n):
     data = [(frac(1, n + 1), sqrt(n + 1) * _nsimplex(n))]
     points, weights = untangle(data)
-    return EnrScheme("Stroud-Secrest I", n, weights, points, 2, source)
+    return EnrScheme("Stroud-Secrest I", n, weights, points, 2, source, 4.676e-14)
 
 
 def stroud_secrest_2(n):

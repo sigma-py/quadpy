@@ -52,7 +52,7 @@ def stroud_t2_7_1():
             for j in range(4)
         ]
     )
-    return T2Scheme("Stroud 7-1", weights, points, 7, source)
+    return T2Scheme("Stroud 7-1", weights, points, 7, source, 1.403e-13)
 
 
 __all__ = ["stroud_t2_3_1", "stroud_t2_5_1", "stroud_t2_7_1"]

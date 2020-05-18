@@ -103,4 +103,4 @@ def stroud_1966_d(n, symbolic=False):
     data = [(B, combine(((+r, -r), 1), ((+s, -s), (n - 1)))), (B, pm(n * [t]))]
 
     points, weights = untangle(data)
-    return SnScheme("Stroud 1966d", n, weights, points, 5, source)
+    return SnScheme("Stroud 1966d", n, weights, points, 5, source, 1.019e-14)

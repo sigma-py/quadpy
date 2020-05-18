@@ -27,7 +27,7 @@ def wissmann_becker_6_1():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    return S2Scheme("Wissmann-Becker 6-1", weights, points, 6, _source)
+    return S2Scheme("Wissmann-Becker 6-1", weights, points, 6, _source, 1.108e-14)
 
 
 def wissmann_becker_6_2():
