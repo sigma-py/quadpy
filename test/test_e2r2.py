@@ -62,18 +62,16 @@ def test_scheme(scheme, tol=1.0e-14):
     exact = [numpy.zeros(k + 1) for k in range(scheme.degree + 2)]
     exact[0][0] = numpy.sqrt(numpy.pi)
 
-    degree = check_degree_ortho(approximate, exact, abs_tol=tol)
+    degree, _ = check_degree_ortho(approximate, exact, abs_tol=tol)
 
     assert degree >= scheme.degree, "{} -- Observed: {}, expected: {}".format(
         scheme.name, degree, scheme.degree
     )
-    return
 
 
 @pytest.mark.parametrize("scheme", [quadpy.e2r2.rabinowitz_richter_1()])
 def test_show(scheme):
     scheme.show()
-    return
 
 
 if __name__ == "__main__":

@@ -266,19 +266,17 @@ def test_scheme_spherical(scheme, tol):
     exact = [numpy.zeros(len(s)) for s in approximate]
     exact[0][0] = numpy.sqrt(4 * numpy.pi)
 
-    degree = check_degree_ortho(approximate, exact, abs_tol=tol)
+    degree, _ = check_degree_ortho(approximate, exact, abs_tol=tol)
 
-    assert degree == scheme.degree, "Observed: {}, expected: {}".format(
-        degree, scheme.degree
+    assert degree == scheme.degree, "{}  --  observed: {}, expected: {}".format(
+        scheme.name, degree, scheme.degree
     )
-    return
 
 
 @pytest.mark.parametrize("scheme", [quadpy.u3.lebedev_007()])
 def test_show(scheme):
     scheme.show()
     plt.close()
-    return
 
 
 if __name__ == "__main__":

@@ -323,7 +323,7 @@ def test_scheme(scheme, tol):
     exact = [numpy.zeros(k + 1) for k in range(scheme.degree + 2)]
     exact[0][0] = numpy.sqrt(2.0) / 2
 
-    degree = check_degree_ortho(approximate, exact, abs_tol=tol)
+    degree, _ = check_degree_ortho(approximate, exact, abs_tol=tol)
 
     assert degree >= scheme.degree, "{} -- Observed: {}, expected: {}".format(
         scheme.name, degree, scheme.degree
