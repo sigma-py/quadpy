@@ -104,7 +104,7 @@ def laursen_gellert_11():
             [0.069274682079415, 0.313559184384932, 0.043863471792371],
         ),
     )
-    return T2Scheme("Laursen-Gellert 11", weights, points, 7, source)
+    return T2Scheme("Laursen-Gellert 11", weights, points, 7, source, 1.306e-14)
 
 
 def laursen_gellert_12():

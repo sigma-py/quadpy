@@ -256,7 +256,7 @@ def dunavant_17():
             [0.006665632004165, 0.080711313679564, 0.904625504095608],
         ),
     )
-    return T2Scheme("Dunavant 17", weights, points, 17, source)
+    return T2Scheme("Dunavant 17", weights, points, 17, source, 1.117e-14)
 
 
 def dunavant_18():
@@ -283,7 +283,7 @@ def dunavant_18():
             [+0.000046187660794, 0.020874755282586, 1.014347260005363],
         ),
     )
-    return T2Scheme("Dunavant 18", weights, points, 18, source)
+    return T2Scheme("Dunavant 18", weights, points, 18, source, 5.089e-13)
 
 
 def dunavant_19():
@@ -310,7 +310,7 @@ def dunavant_19():
             [0.003799928855302, 0.065494628082938, 0.924344252620784],
         ),
     )
-    return T2Scheme("Dunavant 19", weights, points, 19, source)
+    return T2Scheme("Dunavant 19", weights, points, 19, source, 1.670e-14)
 
 
 def dunavant_20():
@@ -339,4 +339,4 @@ def dunavant_20():
             [+0.003573909385950, 0.059696109149007, 0.929756171556853],
         ),
     )
-    return T2Scheme("Dunavant 20", weights, points, 20, source)
+    return T2Scheme("Dunavant 20", weights, points, 20, source, 4.690e-14)

@@ -78,7 +78,9 @@ def berntsen_espelid_1(mpmath=False):
             ],
         ),
     )
-    return T2Scheme("Berntsen-Espelid 1 (DCUTRI)", weights, points, 13, source, 1.516e-12)
+    return T2Scheme(
+        "Berntsen-Espelid 1 (DCUTRI)", weights, points, 13, source, 1.516e-12
+    )
 
 
 def berntsen_espelid_2(mpmath=False):
