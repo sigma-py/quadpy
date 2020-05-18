@@ -21,9 +21,9 @@ source = article(
 # https://people.sc.fsu.edu/~jburkardt/f_src/triangle_symq_rule/triangle_symq_rule.f90
 
 
-def _read(degree):
+def _read(suffix, tol=1.0e-14):
     this_dir = os.path.dirname(os.path.realpath(__file__))
-    filename = f"xg{degree:02d}.json"
+    filename = f"xg{suffix:02d}.json"
     with open(os.path.join(this_dir, filename), "r") as f:
         data = json.load(f)
 
@@ -31,7 +31,7 @@ def _read(degree):
 
     points = numpy.array(data["bary"])
     weights = numpy.array(data["weights"])
-    return T3Scheme(f"Xiao-Gimbutas {degree}", weights, points, degree, source)
+    return T3Scheme(f"Xiao-Gimbutas {suffix}", weights, points, degree, source, tol)
 
 
 def xiao_gimbutas_01():

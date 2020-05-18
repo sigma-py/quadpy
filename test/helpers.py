@@ -17,7 +17,7 @@ def check_degree_1d(quadrature, exact, max_degree, tol=1.0e-14):
     return numpy.where(is_larger)[0] - 1 if any(is_larger) else max_degree
 
 
-def check_degree(quadrature, exact, dim, max_degree, tol=1.0e-14):
+def check_degree(quadrature, exact, dim, max_degree, tol):
     exponents = get_all_exponents(dim, max_degree)
     # flatten list
     exponents = numpy.array([item for sublist in exponents for item in sublist])
@@ -35,22 +35,16 @@ def check_degree(quadrature, exact, dim, max_degree, tol=1.0e-14):
 
     vals = quadrature(evaluate_all_monomials)
 
-    # print(exact_vals)
-    # print(vals)
-
     # check relative error
-    # The allowance is quite large here, 1e5 over machine precision.
-    # Some tests fail if lowered, though.
-    # TODO increase precision
-    eps = numpy.finfo(float).eps
-    mytol = abs(exact_vals) * tol + (1.0e5 + tol + exact_vals) * eps
+    mytol = (1 + abs(exact_vals)) * tol
+    err = abs(exact_vals - vals)
     is_smaller = abs(exact_vals - vals) < mytol
 
     if numpy.all(is_smaller):
-        return max_degree
+        return max_degree, numpy.max(err)
 
     k = numpy.where(numpy.logical_not(is_smaller))[0]
-    return numpy.sum(exponents[k[0]]) - 1  # = degree
+    return numpy.sum(exponents[k[0]]) - 1, numpy.max(err)
 
 
 def check_degree_ortho(approximate, exact, abs_tol=1.0e-14):

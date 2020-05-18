@@ -161,16 +161,19 @@ def test_scheme(scheme):
         [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
     )
 
-    degree = check_degree(
+    degree, err = check_degree(
         lambda poly: scheme.integrate(poly, t3),
         integrate_monomial_over_unit_simplex,
         3,
         scheme.degree + 1,
+        scheme.test_tolerance
     )
-    assert degree == scheme.degree, "{} -- Observed: {}, expected: {}".format(
-        scheme.name, degree, scheme.degree
+
+    assert (
+        degree >= scheme.degree
+    ), "{} -- observed: {}, expected: {} (max err: {:.3e})".format(
+        scheme.name, degree, scheme.degree, err
     )
-    return
 
 
 @pytest.mark.skip(reason="gh-actions's python cannot use system vtk")
@@ -185,7 +188,6 @@ def test_show(scheme):
         ]
     )
     scheme.show(tet, render=False)
-    return
 
 
 if __name__ == "__main__":
