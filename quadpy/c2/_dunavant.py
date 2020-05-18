@@ -193,4 +193,4 @@ def dunavant_10():
         ),
     )
     weights /= 4
-    return C2Scheme("Dunavant 10", weights, points, 21, source, 2.235e-14)
+    return C2Scheme("Dunavant 10", weights, points, 21, source, 2.244e-14)
