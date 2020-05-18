@@ -80,7 +80,7 @@ def stenger_7a(dim):
     ]
     points, weights = untangle(data)
     weights /= math.sqrt(math.pi) ** dim
-    return Enr2Scheme("Stenger 7a", dim, weights, points, 7, source)
+    return Enr2Scheme("Stenger 7a", dim, weights, points, 7, source, 1.091e-13)
 
 
 def stenger_7b(dim):
@@ -388,7 +388,7 @@ def stenger_11a(dim):
 
     points, weights = untangle(data)
     weights /= math.sqrt(math.pi) ** dim
-    return Enr2Scheme("Stenger 11a", dim, weights, points, 11, source)
+    return Enr2Scheme("Stenger 11a", dim, weights, points, 11, source, 1.581e-13)
 
 
 def stenger_11b(dim):
@@ -482,4 +482,4 @@ def stenger_11b(dim):
 
     points, weights = untangle(data)
     weights /= math.sqrt(math.pi) ** dim
-    return Enr2Scheme("Stenger 11b", dim, weights, points, 11, source)
+    return Enr2Scheme("Stenger 11b", dim, weights, points, 11, source, 3.075e-13)

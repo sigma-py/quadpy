@@ -4,27 +4,9 @@ from ..helpers import QuadratureScheme, plot_disks
 
 
 class S2Scheme(QuadratureScheme):
-    def __init__(self, name, weights, points, degree: int, source=None):
+    def __init__(self, name, weights, points, degree: int, source=None, tol=1.0e-14):
+        super().__init__(name, weights, points, degree, source, tol)
         self.domain = "S2"
-        self.name = name
-        self.degree = degree
-        self.source = source
-
-        flt = numpy.vectorize(float)
-
-        if weights.dtype == numpy.float64:
-            self.weights = weights
-        else:
-            assert weights.dtype == numpy.dtype("O")
-            self.weights = flt(weights)
-            self.weights_symbolic = weights
-
-        if points.dtype == numpy.float64:
-            self.points = points
-        else:
-            assert points.dtype == numpy.dtype("O")
-            self.points = flt(points)
-            self.points_symbolic = points
 
     def plot(self, show_axes=False):
         import matplotlib.pyplot as plt

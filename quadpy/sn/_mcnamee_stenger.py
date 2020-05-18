@@ -23,11 +23,15 @@ def mcnamee_stenger_5(n, symbolic=False):
 
 
 def mcnamee_stenger_7a(n, symbolic=False):
-    return SnScheme(*_mcnamee_stenger_7(n, integrator, False, symbolic=symbolic))
+    return SnScheme(
+        *_mcnamee_stenger_7(n, integrator, False, symbolic=symbolic), 1.453e-13
+    )
 
 
 def mcnamee_stenger_7b(n, symbolic=False):
-    return SnScheme(*_mcnamee_stenger_7(n, integrator, True, symbolic=symbolic))
+    return SnScheme(
+        *_mcnamee_stenger_7(n, integrator, True, symbolic=symbolic), 1.455e-14
+    )
 
 
 def mcnamee_stenger_9a(n, symbolic=False):

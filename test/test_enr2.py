@@ -55,26 +55,26 @@ from quadpy.enr2._helpers import integrate_monomial_over_enr2
     + [quadpy.enr2.stroud_secrest_4(n) for n in range(2, 8)]
     + [quadpy.enr2.xiu(n) for n in range(2, 8)],
 )
-def test_scheme(scheme, tol=1.0e-14):
+def test_scheme(scheme):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
     print(scheme)
 
     n = scheme.dim
-    degree = check_degree(
+    degree, err = check_degree(
         lambda poly: scheme.integrate(poly),
         integrate_monomial_over_enr2,
         n,
         scheme.degree + 1,
-        tol=tol,
+        tol=scheme.test_tolerance,
     )
+    print(scheme.test_tolerance)
     assert (
-        degree == scheme.degree
-    ), "{} (dim: {}) -- Observed: {}   expected: {}".format(
-        scheme.name, scheme.dim, degree, scheme.degree
+        degree >= scheme.degree
+    ), "{} (dim={}) -- Observed: {}, expected: {} (max err: {:.3e})".format(
+        scheme.name, n, degree, scheme.degree, err
     )
-    return
 
 
 if __name__ == "__main__":

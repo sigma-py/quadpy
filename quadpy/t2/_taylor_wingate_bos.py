@@ -27,7 +27,7 @@ def taylor_wingate_bos_2():
         [0.2199034873106, 0.0915762135098], [0.4467631793560, 0.4459484909160]
     )
     weights /= 2
-    return T2Scheme("Taylor-Wingate-Bos 2", weights, points, 4, source)
+    return T2Scheme("Taylor-Wingate-Bos 2", weights, points, 4, source, 6.305e-13)
 
 
 def taylor_wingate_bos_4():
@@ -40,7 +40,7 @@ def taylor_wingate_bos_4():
         s1([0.1116047046647, 0.7839656651012, 0.0421382841642]),
     )
     weights /= 2
-    return T2Scheme("Taylor-Wingate-Bos 4", weights, points, 7, source)
+    return T2Scheme("Taylor-Wingate-Bos 4", weights, points, 7, source, 5.818e-13)
 
 
 def taylor_wingate_bos_5():
@@ -56,7 +56,7 @@ def taylor_wingate_bos_5():
         ),
     )
     weights /= 2
-    return T2Scheme("Taylor-Wingate-Bos 5", weights, points, 9, source)
+    return T2Scheme("Taylor-Wingate-Bos 5", weights, points, 9, source, 4.423e-13)
 
 
 def taylor_wingate_bos_8():
@@ -77,4 +77,4 @@ def taylor_wingate_bos_8():
         ),
     )
     weights /= 2
-    return T2Scheme("Taylor-Wingate-Bos 8", weights, points, 14, source)
+    return T2Scheme("Taylor-Wingate-Bos 8", weights, points, 14, source, 6.336e-13)

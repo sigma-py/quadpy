@@ -27,7 +27,7 @@ def stroud_1957_2(n):
     ]
 
     points, weights = untangle(data)
-    return CnScheme("Stroud 1957-2", n, weights, points, 2, _source)
+    return CnScheme("Stroud 1957-2", n, weights, points, 2, _source, 1.511e-14)
 
 
 def stroud_1957_3(n):

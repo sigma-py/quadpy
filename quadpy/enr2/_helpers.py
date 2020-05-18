@@ -7,26 +7,10 @@ from ..helpers import QuadratureScheme
 
 
 class Enr2Scheme(QuadratureScheme):
-    def __init__(self, name, dim, weights, points, degree, source):
-        self.domain = f"Enr2 (n={dim})"
-        self.name = name
+    def __init__(self, name, dim, weights, points, degree, source, tol=2.7e-14):
+        super().__init__(name, weights, points, degree, source, tol)
+        self.domain = f"Enr2 (n={dim}, {tol})"
         self.dim = dim
-        self.degree = degree
-        self.source = source
-
-        if weights.dtype == numpy.float64:
-            self.weights = weights
-        else:
-            assert weights.dtype in [numpy.dtype("O"), numpy.int_]
-            self.weights = weights.astype(numpy.float64)
-            self.weights_symbolic = weights
-
-        if points.dtype == numpy.float64:
-            self.points = points
-        else:
-            assert points.dtype in [numpy.dtype("O"), numpy.int_]
-            self.points = points.astype(numpy.float64)
-            self.points_symbolic = points
 
     def integrate(self, f, dot=numpy.dot):
         flt = numpy.vectorize(float)

@@ -64,7 +64,7 @@ def cools_haegemans_2(n, delta2=1, symbolic=False):
     ]
 
     points, weights = untangle(data)
-    return CnScheme("Cools-Haegemans 2", n, weights, points, 5, _source)
+    return CnScheme("Cools-Haegemans 2", n, weights, points, 5, _source, 6.312e-14)
 
 
 # ERR There is a mistake here somewhere in the weights, but it's unclear where.

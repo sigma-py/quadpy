@@ -9,10 +9,9 @@ from quadpy.u3._helpers import cartesian_to_spherical
 
 # Note
 # ====
-# Instead of testing exact integration against of all monomials of degree at
-# most l, one can instead test exact integration of all _spherical harmonics_
-# of degree at most l. While there are 2**l monomials, there are only l**2
-# spherical harmonics.
+# Instead of testing exact integration against of all monomials of degree at most l, one
+# can instead test exact integration of all _spherical harmonics_ of degree at most l.
+# While there are 2**l monomials, there are only l**2 spherical harmonics.
 
 
 @pytest.mark.parametrize(
@@ -43,7 +42,6 @@ def test_spherical_harmonic(scheme):
     val = scheme.integrate_spherical(spherical_harmonic_11)
 
     assert abs(val - 1.0) < 1.0e-14
-    return
 
 
 @pytest.mark.parametrize(
@@ -180,7 +178,6 @@ def test_scheme_cartesian(scheme, tol):
     assert degree == scheme.degree, "{}  --  Observed: {}, expected: {}".format(
         scheme.name, degree, scheme.degree
     )
-    return
 
 
 # Test a few schemes with integrate_spherical. -- This is basically the same as above,
@@ -266,19 +263,17 @@ def test_scheme_spherical(scheme, tol):
     exact = [numpy.zeros(len(s)) for s in approximate]
     exact[0][0] = numpy.sqrt(4 * numpy.pi)
 
-    degree = check_degree_ortho(approximate, exact, abs_tol=tol)
+    degree, _ = check_degree_ortho(approximate, exact, abs_tol=tol)
 
-    assert degree == scheme.degree, "Observed: {}, expected: {}".format(
-        degree, scheme.degree
+    assert degree == scheme.degree, "{}  --  observed: {}, expected: {}".format(
+        scheme.name, degree, scheme.degree
     )
-    return
 
 
 @pytest.mark.parametrize("scheme", [quadpy.u3.lebedev_007()])
 def test_show(scheme):
     scheme.show()
     plt.close()
-    return
 
 
 if __name__ == "__main__":

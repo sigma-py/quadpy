@@ -7,26 +7,9 @@ from ..cn import transform
 
 
 class C3Scheme(CnScheme):
-    def __init__(self, name, weights, points, degree, source=None):
+    def __init__(self, name, weights, points, degree, source=None, tol=1.0e-14):
+        super().__init__(name, 3, weights, points, degree, source, tol)
         self.domain = "C3"
-        self.name = name
-        self.weights = weights
-        self.source = source
-        self.degree = degree
-
-        if weights.dtype == numpy.float64:
-            self.weights = weights
-        else:
-            assert weights.dtype in [numpy.dtype("O"), numpy.int_]
-            self.weights = weights.astype(numpy.float64)
-            self.weights_symbolic = weights
-
-        if points.dtype == numpy.float64:
-            self.points = points
-        else:
-            assert points.dtype in [numpy.dtype("O"), numpy.int_]
-            self.points = points.astype(numpy.float64)
-            self.points_symbolic = points
 
     def show(self, hexa=cube_points([0.0, 1.0], [0.0, 1.0], [0.0, 1.0]), backend="vtk"):
         """Shows the quadrature points on a given hexahedron. The size of the balls

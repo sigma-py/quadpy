@@ -28,24 +28,25 @@ from quadpy.enr._helpers import integrate_monomial_over_enr
     + [quadpy.enr.stroud_secrest_3(n) for n in range(2, 6)]
     + [quadpy.enr.stroud_secrest_4(n) for n in range(2, 6)],
 )
-def test_scheme(scheme, tol=1.0e-13):
+def test_scheme(scheme):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
     print(scheme)
 
     n = scheme.dim
-    degree = check_degree(
+    degree, err = check_degree(
         lambda poly: scheme.integrate(poly, dot=accupy.fdot),
         integrate_monomial_over_enr,
         n,
         scheme.degree + 1,
-        tol=tol,
+        tol=scheme.test_tolerance,
     )
-    assert degree == scheme.degree, "{}: Observed: {}   expected: {}".format(
-        scheme.name, degree, scheme.degree
+    assert (
+        degree >= scheme.degree
+    ), "{} (dim={}) -- Observed: {}, expected: {} (max err: {:.3e})".format(
+        scheme.name, n, degree, scheme.degree, err
     )
-    return
 
 
 if __name__ == "__main__":

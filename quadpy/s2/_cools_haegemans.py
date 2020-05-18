@@ -18,7 +18,7 @@ def cools_haegemans_1():
         (0.167468245269e-01, _s40(0.125592606040e01)),
     ]
     points, weights = untangle(data)
-    return S2Scheme("Cools-Haegemans 1", weights, points, 5, _source)
+    return S2Scheme("Cools-Haegemans 1", weights, points, 5, _source, 2.441e-12)
 
 
 def cools_haegemans_2():
@@ -29,7 +29,7 @@ def cools_haegemans_2():
         (0.419194282996e-03, _s40(0.134279080737e01)),
     ]
     points, weights = untangle(data)
-    return S2Scheme("Cools-Haegemans 2", weights, points, 9, _source)
+    return S2Scheme("Cools-Haegemans 2", weights, points, 9, _source, 4.844e-12)
 
 
 def cools_haegemans_3():
@@ -40,4 +40,4 @@ def cools_haegemans_3():
         (0.730888189861e-01, _s40(0.778610819923)),
     ]
     points, weights = untangle(data)
-    return S2Scheme("Cools-Haegemans 3", weights, points, 9, _source)
+    return S2Scheme("Cools-Haegemans 3", weights, points, 9, _source, 4.143e-12)
