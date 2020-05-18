@@ -37,21 +37,21 @@ def stroud_cn_1_2(n):
     # product trapezoidal scheme
     weights = numpy.full(2 ** n, frac(1, 2 ** n))
     points = pm(n * [1])
-    return CnScheme("Stroud Cn 1-2", n, weights, points, 1, _source)
+    return CnScheme("Stroud Cn 1-2", n, weights, points, 1, _source, 1.777e-15)
 
 
 def stroud_cn_3_2(n):
     weights = numpy.full(2 * n, frac(1, 2 * n))
     r = sqrt(frac(n, 3))
     points = fsd(n, (r, 1))
-    return CnScheme("Stroud Cn 3-2", n, weights, points, 3, _source)
+    return CnScheme("Stroud Cn 3-2", n, weights, points, 3, _source, 4.620e-14)
 
 
 def stroud_cn_3_4(n):
     weights = numpy.full(2 ** n, frac(1, 2 ** n))
     r = sqrt(3) / 3
     points = pm(n * [r])
-    return CnScheme("Stroud Cn 3-4", n, weights, points, 3, _source)
+    return CnScheme("Stroud Cn 3-4", n, weights, points, 3, _source, 3.376e-14)
 
 
 def stroud_cn_3_6(n):

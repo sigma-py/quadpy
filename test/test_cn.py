@@ -42,7 +42,7 @@ from helpers import check_degree_ortho
     + [quadpy.cn.stroud_cn_5_9(n) for n in range(2, 7)]
     + [quadpy.cn.stroud_cn_7_1(n) for n in range(2, 7)],
 )
-def test_scheme(scheme, tol=1.0e-10):
+def test_scheme(scheme):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
@@ -84,12 +84,13 @@ def test_scheme(scheme, tol=1.0e-10):
     exact = [numpy.zeros(len(s)) for s in approximate]
     exact[0][0] = numpy.sqrt(2.0) ** n
 
-    degree = check_degree_ortho(approximate, exact, abs_tol=tol)
+    degree, err = check_degree_ortho(approximate, exact, abs_tol=scheme.test_tolerance)
 
-    assert degree >= scheme.degree, "{} (dim: {}) -- Observed: {}, expected: {}".format(
-        scheme.name, scheme.dim, degree, scheme.degree
+    assert (
+        degree >= scheme.degree
+    ), "{} (dim={}) -- Observed: {}, expected: {} (max err: {:.3e})".format(
+        scheme.name, n, degree, scheme.degree, err
     )
-    return
 
 
 if __name__ == "__main__":
