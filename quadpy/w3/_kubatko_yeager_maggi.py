@@ -211,7 +211,7 @@ def kubatko_yeager_maggi_5a():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return W3Scheme("Kubatko-Yeager-Maggi 5a", weights, points, 5, source)
+    return W3Scheme("Kubatko-Yeager-Maggi 5a", weights, points, 5, source, 2.240e-14)
 
 
 def kubatko_yeager_maggi_5b():
@@ -314,7 +314,7 @@ def kubatko_yeager_maggi_6a():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return W3Scheme("Kubatko-Yeager-Maggi 6a", weights, points, 6, source)
+    return W3Scheme("Kubatko-Yeager-Maggi 6a", weights, points, 6, source, 3.432e-13)
 
 
 def kubatko_yeager_maggi_6b():
@@ -444,7 +444,7 @@ def kubatko_yeager_maggi_8a():
     weights = weights / 4
     points[:, :2] += 1
     points[:, :2] /= 2
-    return W3Scheme("Kubatko-Yeager-Maggi 8a", weights, points, 8, source)
+    return W3Scheme("Kubatko-Yeager-Maggi 8a", weights, points, 8, source, 2.738e-12)
 
 
 def kubatko_yeager_maggi_8b():
