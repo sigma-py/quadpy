@@ -25,7 +25,9 @@ def mcnamee_stenger_5(n, symbolic=False):
 
 
 def mcnamee_stenger_7a(n, symbolic=False):
-    return EnrScheme(*_mcnamee_stenger_7(n, integrator, False, symbolic=symbolic))
+    return EnrScheme(
+        *_mcnamee_stenger_7(n, integrator, False, symbolic=symbolic), 7.530e-14
+    )
 
 
 def mcnamee_stenger_7b(n, symbolic=False):

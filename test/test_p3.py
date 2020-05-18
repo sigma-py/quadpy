@@ -84,21 +84,24 @@ def test_scheme(scheme):
     pyra = numpy.array(
         [[-1, -1, -1], [+1, -1, -1], [+1, +1, -1], [-1, +1, -1], [0, 0, 1]]
     )
-    degree = check_degree(
+    degree, err = check_degree(
         lambda poly: scheme.integrate(poly, pyra),
         lambda k: _integrate_exact(k, pyra),
         3,
         scheme.degree + 1,
+        tol=scheme.test_tolerance,
     )
-    assert degree == scheme.degree
-    return
+    assert (
+        degree >= scheme.degree
+    ), "{} -- Observed: {}, expected: {} (max err: {:.3e})".format(
+        scheme.name, degree, scheme.degree, err
+    )
 
 
 @pytest.mark.parametrize("scheme", [quadpy.p3.felippa_5()])
 def test_show(scheme):
     scheme.show()
     plt.close()
-    return
 
 
 if __name__ == "__main__":
