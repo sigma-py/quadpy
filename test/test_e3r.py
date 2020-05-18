@@ -18,30 +18,30 @@ from quadpy.enr._helpers import integrate_monomial_over_enr
         quadpy.e3r.stroud_e3r_7_2(),
     ],
 )
-def test_scheme(scheme, tol=1.0e-14):
+def test_scheme(scheme):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
     print(scheme)
 
-    degree = check_degree(
+    degree, err = check_degree(
         lambda poly: scheme.integrate(poly, dot=accupy.fdot),
         integrate_monomial_over_enr,
         3,
         scheme.degree + 1,
-        tol=tol,
+        tol=scheme.test_tolerance,
     )
-    assert degree == scheme.degree, "Observed: {}   expected: {}".format(
-        degree, scheme.degree
+    assert (
+        degree >= scheme.degree
+    ), "{} -- observed: {}, expected: {} (max err: {:.3e})".format(
+        scheme.name, degree, scheme.degree, err
     )
-    return
 
 
 @pytest.mark.parametrize("scheme", [quadpy.e3r.stroud_secrest_10()])
 def test_show(scheme, backend="mpl"):
     scheme.show(backend=backend)
     plt.close()
-    return
 
 
 if __name__ == "__main__":

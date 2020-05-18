@@ -43,7 +43,10 @@ def check_degree(quadrature, exact, dim, max_degree, tol):
         return max_degree, numpy.max(err / (1 + abs(exact_vals)))
 
     k = numpy.where(~is_smaller)[0]
-    return numpy.sum(exponents[k[0]]) - 1, numpy.max(err / (1 + abs(exact_vals)))
+    # Return the max error for all exponents that are one smaller than the max_degree.
+    # This is because this functions is usually called with target_degree + 1.
+    idx = numpy.sum(exponents, axis=1) < max_degree
+    return numpy.sum(exponents[k[0]]) - 1, numpy.max(err[idx] / (1 + abs(exact_vals[idx])))
 
 
 def check_degree_ortho(approximate, exact, abs_tol=1.0e-14):
