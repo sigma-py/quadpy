@@ -22,4 +22,4 @@ def gatermann():
         [0.6749318700980879e-01, 0.5158423343536001, 0.2777161669764050],
     )
     weights *= 2
-    return T2Scheme("Gatermann", weights, points, 7, source)
+    return T2Scheme("Gatermann", weights, points, 7, source, 2.004e-13)
