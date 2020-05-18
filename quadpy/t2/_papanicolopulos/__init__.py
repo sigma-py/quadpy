@@ -60,7 +60,9 @@ def papanicolopulos_sym_7():
 
 
 def papanicolopulos_sym_8():
-    return T2Scheme("Papanicolopulos 8 (full symmetry)", *_read("full08.json"))
+    return T2Scheme(
+        "Papanicolopulos 8 (full symmetry)", *_read("full08.json"), 1.067e-14
+    )
 
 
 # TODO ERR the first 8 schemes are flawed by round-off error
