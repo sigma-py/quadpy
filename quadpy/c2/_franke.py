@@ -51,7 +51,7 @@ def franke_2a():
         pm([0.579684582100041, 0, b]),
     )
     weights /= 4
-    return C2Scheme("Franke 2a", weights, points, 7, source)
+    return C2Scheme("Franke 2a", weights, points, 7, source, 1.056e-14)
 
 
 def franke_2b():

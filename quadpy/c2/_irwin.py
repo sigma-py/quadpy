@@ -22,4 +22,4 @@ def irwin_2():
         symm_s([frac(889, 2880), 1], [frac(5, 2880), 3]),
         symm_s_t([-frac(98, 2880), 3, 1], [frac(11, 2880), 5, 1]),
     )
-    return C2Scheme("Irwin 2", weights, points, 5, source)
+    return C2Scheme("Irwin 2", weights, points, 5, source, 5.685e-14)

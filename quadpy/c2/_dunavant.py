@@ -59,7 +59,7 @@ def dunavant_04():
         symm_s_t([0.254188020152646, 0.824396370749276, 0.411623426336542]),
     )
     weights /= 4
-    return C2Scheme("Dunavant 4", weights, points, 9, source)
+    return C2Scheme("Dunavant 4", weights, points, 9, source, 1.350e-14)
 
 
 def dunavant_05():
@@ -76,7 +76,7 @@ def dunavant_05():
         symm_s_t([0.146684377651312, 0.883025508525690, 0.575653595840465]),
     )
     weights /= 4
-    return C2Scheme("Dunavant 5", weights, points, 11, source)
+    return C2Scheme("Dunavant 5", weights, points, 11, source, 1.350e-14)
 
 
 def dunavant_06():
@@ -96,7 +96,7 @@ def dunavant_06():
         ),
     )
     weights /= 4
-    return C2Scheme("Dunavant 6", weights, points, 13, source)
+    return C2Scheme("Dunavant 6", weights, points, 13, source, 5.186e-14)
 
 
 def dunavant_07():
@@ -118,7 +118,7 @@ def dunavant_07():
         ),
     )
     weights /= 4
-    return C2Scheme("Dunavant 7", weights, points, 15, source)
+    return C2Scheme("Dunavant 7", weights, points, 15, source, 1.050e-14)
 
 
 def dunavant_08():
@@ -141,7 +141,7 @@ def dunavant_08():
         ),
     )
     weights /= 4
-    return C2Scheme("Dunavant 8", weights, points, 17, source)
+    return C2Scheme("Dunavant 8", weights, points, 17, source, 1.389e-14)
 
 
 def dunavant_09():
@@ -193,4 +193,4 @@ def dunavant_10():
         ),
     )
     weights /= 4
-    return C2Scheme("Dunavant 10", weights, points, 21, source)
+    return C2Scheme("Dunavant 10", weights, points, 21, source, 2.235e-14)
