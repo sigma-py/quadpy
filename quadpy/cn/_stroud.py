@@ -70,7 +70,7 @@ def stroud_cn_5_9(n):
     sqrt35 = sqrt(frac(3, 5))
     lst = n * [[-sqrt35, 0, sqrt35]]
     points = numpy.array(numpy.meshgrid(*lst)).T.reshape(-1, n)
-    return CnScheme("Stroud Cn 5-9", n, weights, points, 5, _source)
+    return CnScheme("Stroud Cn 5-9", n, weights, points, 5, _source, 1.214e-14)
 
 
 __all__ = [
