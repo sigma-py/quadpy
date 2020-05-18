@@ -84,4 +84,4 @@ def schmid_6():
             0.022455640481,
         ]
     )
-    return C2Scheme("Schmid 6", weights, points, 6, source)
+    return C2Scheme("Schmid 6", weights, points, 6, source, 1.617e-11)
