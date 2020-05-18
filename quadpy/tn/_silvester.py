@@ -72,8 +72,7 @@ def silvester(dim, variant, n, symbolic=False):
 
     if variant == "closed":
         degree = n
-        # TODO find out what's wrong here
-        tol = 3.705e-03
+        tol = 1.034e-14
 
         def points1d(k):
             return frac(k, n)
@@ -89,5 +88,5 @@ def silvester(dim, variant, n, symbolic=False):
     weights, points = _get_data(dim, n, points1d, symbolic)
 
     return TnScheme(
-        f"Silvester ({variant}, {n})", dim, weights, points, degree, source, tol
+        f"Silvester ({variant}, dim={n})", dim, weights, points, degree, source, tol
     )

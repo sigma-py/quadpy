@@ -36,15 +36,14 @@ def check_degree(quadrature, exact, dim, max_degree, tol):
     vals = quadrature(evaluate_all_monomials)
 
     # check relative error
-    mytol = (1 + abs(exact_vals)) * tol
     err = abs(exact_vals - vals)
-    is_smaller = abs(exact_vals - vals) < mytol
+    is_smaller = err < (1 + abs(exact_vals)) * tol
 
     if numpy.all(is_smaller):
-        return max_degree, numpy.max(err)
+        return max_degree, numpy.max(err / (1 + abs(exact_vals)))
 
-    k = numpy.where(numpy.logical_not(is_smaller))[0]
-    return numpy.sum(exponents[k[0]]) - 1, numpy.max(err)
+    k = numpy.where(~is_smaller)[0]
+    return numpy.sum(exponents[k[0]]) - 1, numpy.max(err / (1 + abs(exact_vals)))
 
 
 def check_degree_ortho(approximate, exact, abs_tol=1.0e-14):
