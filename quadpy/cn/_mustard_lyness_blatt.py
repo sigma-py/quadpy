@@ -25,4 +25,4 @@ def mustard_lyness_blatt(n):
     ]
 
     points, weights = untangle(data)
-    return CnScheme("Mustard-Lyness-Blatt", n, weights, points, 5, _source)
+    return CnScheme("Mustard-Lyness-Blatt", n, weights, points, 5, _source, 4.067e-14)
