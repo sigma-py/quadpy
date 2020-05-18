@@ -1,6 +1,26 @@
+import numpy
+
+
 class QuadratureScheme:
-    def __init__(self, tol=1.0e-14):
+    def __init__(self, name, weights, points, degree, source, tol=1.0e-14):
         self.test_tolerance = tol
+        self.name = name
+        self.degree = degree
+        self.source = source
+
+        if weights.dtype == numpy.float64:
+            self.weights = weights
+        else:
+            assert weights.dtype in [numpy.dtype("O"), numpy.int_]
+            self.weights = weights.astype(numpy.float64)
+            self.weights_symbolic = weights
+
+        if points.dtype == numpy.float64:
+            self.points = points
+        else:
+            assert points.dtype in [numpy.dtype("O"), numpy.int_]
+            self.points = points.astype(numpy.float64)
+            self.points_symbolic = points
 
     def savefig(self, filename, *args, **kwargs):
         import matplotlib.pyplot as plt

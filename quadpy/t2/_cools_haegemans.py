@@ -46,7 +46,7 @@ def cools_haegemans_1(mpmath=False):
         ],
     )
     weights *= 2
-    return T2Scheme("Cools-Haegemans 1", weights, points, 8, source)
+    return T2Scheme("Cools-Haegemans 1", weights, points, 8, source, 6.009e-14)
 
 
 # TODO find error
