@@ -97,4 +97,4 @@ def stroud_secrest_11():
     ]
 
     points, weights = untangle(data)
-    return E3rScheme("Stroud-Secrest XI", weights, points, 7, source)
+    return E3rScheme("Stroud-Secrest XI", weights, points, 7, source, 1.487e-11)
