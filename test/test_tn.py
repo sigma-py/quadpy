@@ -54,14 +54,17 @@ def test_scheme(scheme):
     simplex = numpy.zeros((n + 1, n))
     for k in range(n):
         simplex[k + 1, k] = 1
-    degree = check_degree(
+    degree, err = check_degree(
         lambda poly: scheme.integrate(poly, simplex),
         integrate_monomial_over_unit_simplex,
         n,
         scheme.degree + 1,
+        tol=scheme.test_tolerance,
     )
-    assert degree >= scheme.degree, "{}: Observed: {}, expected: {}".format(
-        scheme.name, degree, scheme.degree
+    assert (
+        degree >= scheme.degree
+    ), "{} -- observed: {}, expected: {} (max err: {:.3e})".format(
+        scheme.name, degree, scheme.degree, err
     )
 
 
