@@ -19,7 +19,7 @@ schemes = (
         quadpy.c2.cools_haegemans_1985_2(),
         quadpy.c2.cools_haegemans_1985_3(),
     ]
-    + [quadpy.c2.cools_haegemans_1988_1(), quadpy.c2.cools_haegemans_1988_2(),]
+    + [quadpy.c2.cools_haegemans_1988_1(), quadpy.c2.cools_haegemans_1988_2()]
     + [
         quadpy.c2.dunavant_00(),
         quadpy.c2.dunavant_01(),
@@ -49,7 +49,7 @@ schemes = (
         quadpy.c2.hammer_stroud_2_2(),
         quadpy.c2.hammer_stroud_3_2(),
     ]
-    + [quadpy.c2.morrow_patterson_1(), quadpy.c2.morrow_patterson_2(),]
+    + [quadpy.c2.morrow_patterson_1(), quadpy.c2.morrow_patterson_2()]
     + [
         quadpy.c2.stroud_c2_1_1(),
         quadpy.c2.stroud_c2_1_2(),
@@ -79,8 +79,8 @@ schemes = (
         quadpy.c2.stroud_c2_15_2(),
     ]
     + [quadpy.c2.haegemans_piessens()]
-    + [quadpy.c2.piessens_haegemans_1(), quadpy.c2.piessens_haegemans_2(),]
-    + [quadpy.c2.schmid_2(), quadpy.c2.schmid_4(), quadpy.c2.schmid_6(),]
+    + [quadpy.c2.piessens_haegemans_1(), quadpy.c2.piessens_haegemans_2()]
+    + [quadpy.c2.schmid_2(), quadpy.c2.schmid_4(), quadpy.c2.schmid_6()]
     + [
         quadpy.c2.sommariva_01(),
         quadpy.c2.sommariva_02(),
