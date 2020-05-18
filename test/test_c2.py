@@ -8,179 +8,163 @@ from helpers import check_degree_ortho
 
 schemes = (
     [
-        (quadpy.c2.albrecht_collatz_1(), 1.0e-14),
-        (quadpy.c2.albrecht_collatz_2(), 1.0e-14),
-        (quadpy.c2.albrecht_collatz_3(), 1.0e-14),
-        (quadpy.c2.albrecht_collatz_4(), 1.0e-14),
+        quadpy.c2.albrecht_collatz_1(),
+        quadpy.c2.albrecht_collatz_2(),
+        quadpy.c2.albrecht_collatz_3(),
+        quadpy.c2.albrecht_collatz_4(),
     ]
-    + [(quadpy.c2.cohen_gismalla_1(), 1.0e-6), (quadpy.c2.cohen_gismalla_2(), 1.0e-6)]
+    + [quadpy.c2.cohen_gismalla_1(), quadpy.c2.cohen_gismalla_2()]
     + [
-        (quadpy.c2.cools_haegemans_1985_1(), 1.0e-10),
-        (quadpy.c2.cools_haegemans_1985_2(), 1.0e-10),
-        (quadpy.c2.cools_haegemans_1985_3(), 1.0e-10),
+        quadpy.c2.cools_haegemans_1985_1(),
+        quadpy.c2.cools_haegemans_1985_2(),
+        quadpy.c2.cools_haegemans_1985_3(),
     ]
+    + [quadpy.c2.cools_haegemans_1988_1(), quadpy.c2.cools_haegemans_1988_2(),]
     + [
-        (quadpy.c2.cools_haegemans_1988_1(), 1.0e-14),
-        (quadpy.c2.cools_haegemans_1988_2(), 1.0e-14),
+        quadpy.c2.dunavant_00(),
+        quadpy.c2.dunavant_01(),
+        quadpy.c2.dunavant_02(),
+        quadpy.c2.dunavant_03(),
+        quadpy.c2.dunavant_04(),
+        quadpy.c2.dunavant_05(),
+        quadpy.c2.dunavant_06(),
+        quadpy.c2.dunavant_07(),
+        quadpy.c2.dunavant_08(),
+        quadpy.c2.dunavant_09(),
+        quadpy.c2.dunavant_10(),
     ]
+    + [quadpy.c2.franke_1(lmbda) for lmbda in [0.0, 1.0, -0.8]]
     + [
-        (quadpy.c2.dunavant_00(), 1.0e-13),
-        (quadpy.c2.dunavant_01(), 1.0e-13),
-        (quadpy.c2.dunavant_02(), 1.0e-13),
-        (quadpy.c2.dunavant_03(), 1.0e-13),
-        (quadpy.c2.dunavant_04(), 1.0e-13),
-        (quadpy.c2.dunavant_05(), 1.0e-13),
-        (quadpy.c2.dunavant_06(), 1.0e-13),
-        (quadpy.c2.dunavant_07(), 1.0e-13),
-        (quadpy.c2.dunavant_08(), 1.0e-13),
-        (quadpy.c2.dunavant_09(), 1.0e-13),
-        (quadpy.c2.dunavant_10(), 1.0e-13),
-    ]
-    + [(quadpy.c2.franke_1(lmbda), 1.0e-13) for lmbda in [0.0, 1.0, -0.8]]
-    + [
-        (quadpy.c2.franke_2a(), 1.0e-13),
-        (quadpy.c2.franke_2b(), 1.0e-13),
-        (quadpy.c2.franke_3a(), 1.0e-13),
-        (quadpy.c2.franke_3b(), 1.0e-13),
-        (quadpy.c2.franke_3c(), 1.0e-13),
-        (quadpy.c2.franke_5(), 1.0e-13),
-        (quadpy.c2.franke_6(), 1.0e-13),
-        (quadpy.c2.franke_8(), 1.0e-13),
+        quadpy.c2.franke_2a(),
+        quadpy.c2.franke_2b(),
+        quadpy.c2.franke_3a(),
+        quadpy.c2.franke_3b(),
+        quadpy.c2.franke_3c(),
+        quadpy.c2.franke_5(),
+        quadpy.c2.franke_6(),
+        quadpy.c2.franke_8(),
     ]
     + [
-        (quadpy.c2.hammer_stroud_1_2(), 1.0e-13),
-        (quadpy.c2.hammer_stroud_2_2(), 1.0e-13),
-        (quadpy.c2.hammer_stroud_3_2(), 1.0e-13),
+        quadpy.c2.hammer_stroud_1_2(),
+        quadpy.c2.hammer_stroud_2_2(),
+        quadpy.c2.hammer_stroud_3_2(),
+    ]
+    + [quadpy.c2.morrow_patterson_1(), quadpy.c2.morrow_patterson_2(),]
+    + [
+        quadpy.c2.stroud_c2_1_1(),
+        quadpy.c2.stroud_c2_1_2(),
+        quadpy.c2.stroud_c2_3_1(),
+        quadpy.c2.stroud_c2_3_2(),
+        quadpy.c2.stroud_c2_3_3(),
+        quadpy.c2.stroud_c2_3_4(),
+        quadpy.c2.stroud_c2_3_5(),
+        quadpy.c2.stroud_c2_5_1(),
+        quadpy.c2.stroud_c2_5_2(),
+        quadpy.c2.stroud_c2_5_3(),
+        quadpy.c2.stroud_c2_5_4(),
+        quadpy.c2.stroud_c2_5_5(),
+        quadpy.c2.stroud_c2_5_6(),
+        quadpy.c2.stroud_c2_5_7(),
+        quadpy.c2.stroud_c2_7_1(),
+        quadpy.c2.stroud_c2_7_2(),
+        quadpy.c2.stroud_c2_7_3(),
+        quadpy.c2.stroud_c2_7_4(),
+        quadpy.c2.stroud_c2_7_5(),
+        quadpy.c2.stroud_c2_7_6(),
+        quadpy.c2.stroud_c2_9_1(),
+        quadpy.c2.stroud_c2_11_1(),
+        quadpy.c2.stroud_c2_11_2(),
+        quadpy.c2.stroud_c2_13_1(),
+        quadpy.c2.stroud_c2_15_1(),
+        quadpy.c2.stroud_c2_15_2(),
+    ]
+    + [quadpy.c2.haegemans_piessens()]
+    + [quadpy.c2.piessens_haegemans_1(), quadpy.c2.piessens_haegemans_2(),]
+    + [quadpy.c2.schmid_2(), quadpy.c2.schmid_4(), quadpy.c2.schmid_6(),]
+    + [
+        quadpy.c2.sommariva_01(),
+        quadpy.c2.sommariva_02(),
+        quadpy.c2.sommariva_03(),
+        quadpy.c2.sommariva_04(),
+        quadpy.c2.sommariva_05(),
+        quadpy.c2.sommariva_06(),
+        quadpy.c2.sommariva_07(),
+        quadpy.c2.sommariva_08(),
+        quadpy.c2.sommariva_09(),
+        quadpy.c2.sommariva_10(),
+        quadpy.c2.sommariva_11(),
+        quadpy.c2.sommariva_12(),
+        quadpy.c2.sommariva_13(),
+        quadpy.c2.sommariva_14(),
+        quadpy.c2.sommariva_15(),
+        quadpy.c2.sommariva_16(),
+        quadpy.c2.sommariva_17(),
+        quadpy.c2.sommariva_18(),
+        quadpy.c2.sommariva_19(),
+        quadpy.c2.sommariva_20(),
+        quadpy.c2.sommariva_21(),
+        quadpy.c2.sommariva_22(),
+        quadpy.c2.sommariva_23(),
+        quadpy.c2.sommariva_24(),
+        quadpy.c2.sommariva_25(),
+        quadpy.c2.sommariva_26(),
+        quadpy.c2.sommariva_27(),
+        quadpy.c2.sommariva_28(),
+        quadpy.c2.sommariva_29(),
+        quadpy.c2.sommariva_30(),
+        quadpy.c2.sommariva_31(),
+        quadpy.c2.sommariva_32(),
+        quadpy.c2.sommariva_33(),
+        quadpy.c2.sommariva_34(),
+        quadpy.c2.sommariva_35(),
+        quadpy.c2.sommariva_36(),
+        quadpy.c2.sommariva_37(),
+        quadpy.c2.sommariva_38(),
+        quadpy.c2.sommariva_39(),
+        quadpy.c2.sommariva_40(),
+        quadpy.c2.sommariva_41(),
+        quadpy.c2.sommariva_42(),
+        quadpy.c2.sommariva_43(),
+        quadpy.c2.sommariva_44(),
+        quadpy.c2.sommariva_45(),
+        quadpy.c2.sommariva_46(),
+        quadpy.c2.sommariva_47(),
+        quadpy.c2.sommariva_48(),
+        quadpy.c2.sommariva_49(),
+        quadpy.c2.sommariva_50(),
+        quadpy.c2.sommariva_51(),
+        quadpy.c2.sommariva_52(),
+        quadpy.c2.sommariva_53(),
+        quadpy.c2.sommariva_54(),
+        quadpy.c2.sommariva_55(),
+    ]
+    + [quadpy.c2.waldron(0.6, numpy.pi / 7)]
+    + [
+        quadpy.c2.wissmann_becker_4_1(),
+        quadpy.c2.wissmann_becker_4_2(),
+        quadpy.c2.wissmann_becker_6_1(),
+        quadpy.c2.wissmann_becker_6_2(),
+        quadpy.c2.wissmann_becker_8_1(),
+        quadpy.c2.wissmann_becker_8_2(),
     ]
     + [
-        (quadpy.c2.morrow_patterson_1(), 1.0e-5),
-        (quadpy.c2.morrow_patterson_2(), 1.0e-5),
-    ]
-    + [
-        (quadpy.c2.stroud_c2_1_1(), 1.0e-13),
-        (quadpy.c2.stroud_c2_1_2(), 1.0e-13),
-        (quadpy.c2.stroud_c2_3_1(), 1.0e-13),
-        (quadpy.c2.stroud_c2_3_2(), 1.0e-13),
-        (quadpy.c2.stroud_c2_3_3(), 1.0e-13),
-        (quadpy.c2.stroud_c2_3_4(), 1.0e-13),
-        (quadpy.c2.stroud_c2_3_5(), 1.0e-13),
-        (quadpy.c2.stroud_c2_5_1(), 1.0e-13),
-        (quadpy.c2.stroud_c2_5_2(), 1.0e-13),
-        (quadpy.c2.stroud_c2_5_3(), 1.0e-13),
-        (quadpy.c2.stroud_c2_5_4(), 1.0e-13),
-        (quadpy.c2.stroud_c2_5_5(), 1.0e-13),
-        (quadpy.c2.stroud_c2_5_6(), 1.0e-13),
-        (quadpy.c2.stroud_c2_5_7(), 1.0e-13),
-        (quadpy.c2.stroud_c2_7_1(), 1.0e-13),
-        (quadpy.c2.stroud_c2_7_2(), 1.0e-13),
-        (quadpy.c2.stroud_c2_7_3(), 1.0e-13),
-        (quadpy.c2.stroud_c2_7_4(), 1.0e-13),
-        (quadpy.c2.stroud_c2_7_5(), 1.0e-13),
-        (quadpy.c2.stroud_c2_7_6(), 1.0e-13),
-        (quadpy.c2.stroud_c2_9_1(), 1.0e-13),
-        (quadpy.c2.stroud_c2_11_1(), 1.0e-13),
-        (quadpy.c2.stroud_c2_11_2(), 1.0e-13),
-        (quadpy.c2.stroud_c2_13_1(), 1.0e-13),
-        (quadpy.c2.stroud_c2_15_1(), 1.0e-13),
-        (quadpy.c2.stroud_c2_15_2(), 1.0e-13),
-    ]
-    + [(quadpy.c2.haegemans_piessens(), 1.0e-14)]
-    + [
-        (quadpy.c2.piessens_haegemans_1(), 1.0e-14),
-        (quadpy.c2.piessens_haegemans_2(), 1.0e-14),
-    ]
-    + [
-        (quadpy.c2.schmid_2(), 1.0e-14),
-        (quadpy.c2.schmid_4(), 1.0e-14),
-        (quadpy.c2.schmid_6(), 1.0e-10),
-    ]
-    + [
-        (quadpy.c2.sommariva_01(), 1.0e-10),
-        (quadpy.c2.sommariva_02(), 1.0e-10),
-        (quadpy.c2.sommariva_03(), 1.0e-10),
-        (quadpy.c2.sommariva_04(), 1.0e-10),
-        (quadpy.c2.sommariva_05(), 1.0e-10),
-        (quadpy.c2.sommariva_06(), 1.0e-10),
-        (quadpy.c2.sommariva_07(), 1.0e-10),
-        (quadpy.c2.sommariva_08(), 1.0e-10),
-        (quadpy.c2.sommariva_09(), 1.0e-10),
-        (quadpy.c2.sommariva_10(), 1.0e-10),
-        (quadpy.c2.sommariva_11(), 1.0e-10),
-        (quadpy.c2.sommariva_12(), 1.0e-10),
-        (quadpy.c2.sommariva_13(), 1.0e-10),
-        (quadpy.c2.sommariva_14(), 1.0e-10),
-        (quadpy.c2.sommariva_15(), 1.0e-10),
-        (quadpy.c2.sommariva_16(), 1.0e-10),
-        (quadpy.c2.sommariva_17(), 1.0e-10),
-        (quadpy.c2.sommariva_18(), 1.0e-10),
-        (quadpy.c2.sommariva_19(), 1.0e-10),
-        (quadpy.c2.sommariva_20(), 1.0e-10),
-        (quadpy.c2.sommariva_21(), 1.0e-10),
-        (quadpy.c2.sommariva_22(), 1.0e-10),
-        (quadpy.c2.sommariva_23(), 1.0e-10),
-        (quadpy.c2.sommariva_24(), 1.0e-10),
-        (quadpy.c2.sommariva_25(), 1.0e-10),
-        (quadpy.c2.sommariva_26(), 1.0e-10),
-        (quadpy.c2.sommariva_27(), 1.0e-10),
-        (quadpy.c2.sommariva_28(), 1.0e-10),
-        (quadpy.c2.sommariva_29(), 1.0e-10),
-        (quadpy.c2.sommariva_30(), 1.0e-10),
-        (quadpy.c2.sommariva_31(), 1.0e-10),
-        (quadpy.c2.sommariva_32(), 1.0e-10),
-        (quadpy.c2.sommariva_33(), 1.0e-10),
-        (quadpy.c2.sommariva_34(), 1.0e-10),
-        (quadpy.c2.sommariva_35(), 1.0e-10),
-        (quadpy.c2.sommariva_36(), 1.0e-10),
-        (quadpy.c2.sommariva_37(), 1.0e-10),
-        (quadpy.c2.sommariva_38(), 1.0e-10),
-        (quadpy.c2.sommariva_39(), 1.0e-10),
-        (quadpy.c2.sommariva_40(), 1.0e-10),
-        (quadpy.c2.sommariva_41(), 1.0e-10),
-        (quadpy.c2.sommariva_42(), 1.0e-10),
-        (quadpy.c2.sommariva_43(), 1.0e-10),
-        (quadpy.c2.sommariva_44(), 1.0e-10),
-        (quadpy.c2.sommariva_45(), 1.0e-10),
-        (quadpy.c2.sommariva_46(), 1.0e-10),
-        (quadpy.c2.sommariva_47(), 1.0e-10),
-        (quadpy.c2.sommariva_48(), 1.0e-10),
-        (quadpy.c2.sommariva_49(), 1.0e-10),
-        (quadpy.c2.sommariva_50(), 1.0e-10),
-        (quadpy.c2.sommariva_51(), 1.0e-10),
-        (quadpy.c2.sommariva_52(), 1.0e-10),
-        (quadpy.c2.sommariva_53(), 1.0e-10),
-        (quadpy.c2.sommariva_54(), 1.0e-10),
-        (quadpy.c2.sommariva_55(), 1.0e-10),
-    ]
-    + [(quadpy.c2.waldron(0.6, numpy.pi / 7), 1.0e-14)]
-    + [
-        (quadpy.c2.wissmann_becker_4_1(), 1.0e-14),
-        (quadpy.c2.wissmann_becker_4_2(), 1.0e-14),
-        (quadpy.c2.wissmann_becker_6_1(), 1.0e-14),
-        (quadpy.c2.wissmann_becker_6_2(), 1.0e-14),
-        (quadpy.c2.wissmann_becker_8_1(), 1.0e-14),
-        (quadpy.c2.wissmann_becker_8_2(), 1.0e-14),
-    ]
-    + [
-        (quadpy.c2.witherden_vincent_01(), 1.0e-14),
-        (quadpy.c2.witherden_vincent_03(), 1.0e-14),
-        (quadpy.c2.witherden_vincent_05(), 1.0e-14),
+        quadpy.c2.witherden_vincent_01(),
+        quadpy.c2.witherden_vincent_03(),
+        quadpy.c2.witherden_vincent_05(),
         # (quadpy.c2.witherden_vincent_07(), 1.0e-14), TODO
-        (quadpy.c2.witherden_vincent_09(), 1.0e-14),
-        (quadpy.c2.witherden_vincent_11(), 1.0e-14),
-        (quadpy.c2.witherden_vincent_13(), 1.0e-14),
-        (quadpy.c2.witherden_vincent_15(), 1.0e-14),
-        (quadpy.c2.witherden_vincent_17(), 1.0e-14),
-        (quadpy.c2.witherden_vincent_19(), 1.0e-14),
-        (quadpy.c2.witherden_vincent_21(), 1.0e-14),
+        quadpy.c2.witherden_vincent_09(),
+        quadpy.c2.witherden_vincent_11(),
+        quadpy.c2.witherden_vincent_13(),
+        quadpy.c2.witherden_vincent_15(),
+        quadpy.c2.witherden_vincent_17(),
+        quadpy.c2.witherden_vincent_19(),
+        quadpy.c2.witherden_vincent_21(),
     ]
-    + [(quadpy.c2.product(quadpy.c1.midpoint()), 1.0e-14)]
-    + [(quadpy.c2.product(quadpy.c1.trapezoidal()), 1.0e-14)]
-    + [(quadpy.c2.product(quadpy.c1.gauss_legendre(k)), 1.0e-14) for k in range(1, 5)]
-    + [
-        (quadpy.c2.product(quadpy.c1.newton_cotes_closed(k)), 1.0e-14,)
-        for k in range(1, 5)
-    ]
-    + [(quadpy.c2.product(quadpy.c1.newton_cotes_open(k)), 1.0e-14,) for k in range(6)]
+    + [quadpy.c2.product(quadpy.c1.midpoint())]
+    + [quadpy.c2.product(quadpy.c1.trapezoidal())]
+    + [quadpy.c2.product(quadpy.c1.gauss_legendre(k)) for k in range(1, 5)]
+    + [quadpy.c2.product(quadpy.c1.newton_cotes_closed(k)) for k in range(1, 5)]
+    + [quadpy.c2.product(quadpy.c1.newton_cotes_open(k)) for k in range(6)]
 )
 
 
@@ -219,8 +203,8 @@ def _integrate_exact2(k, x0, x1, y0, y1):
     )
 
 
-@pytest.mark.parametrize("scheme,tol", schemes)
-def test_scheme(scheme, tol):
+@pytest.mark.parametrize("scheme", schemes)
+def test_scheme(scheme):
     # Test integration until we get to a polynomial degree `d` that can no longer be
     # integrated exactly. The scheme's degree is `d-1`.
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
@@ -245,18 +229,18 @@ def test_scheme(scheme, tol):
     exact = [numpy.zeros(k + 1) for k in range(scheme.degree + 2)]
     exact[0][0] = 2.0
 
-    degree = check_degree_ortho(approximate, exact, abs_tol=tol)
+    degree, err = check_degree_ortho(approximate, exact, abs_tol=scheme.test_tolerance)
 
-    assert degree >= scheme.degree, "{}  --  Observed: {}, expected: {}".format(
-        scheme.name, degree, scheme.degree
+    assert (
+        degree >= scheme.degree
+    ), "{} -- Observed: {}, expected: {} (max err: {:.3e})".format(
+        scheme.name, degree, scheme.degree, err
     )
-    return
 
 
 @pytest.mark.parametrize("scheme", [quadpy.c2.product(quadpy.c1.gauss_legendre(5))])
 def test_show(scheme):
     scheme.show()
-    return
 
 
 if __name__ == "__main__":

@@ -138,7 +138,9 @@ def test_scheme(scheme):
 
     degree, err = check_degree_ortho(approximate, exact, abs_tol=scheme.test_tolerance)
 
-    assert degree >= scheme.degree, "{} -- Observed: {}, expected: {} (max err: {:.3e})".format(
+    assert (
+        degree >= scheme.degree
+    ), "{} -- Observed: {}, expected: {} (max err: {:.3e})".format(
         scheme.name, degree, scheme.degree, err
     )
 

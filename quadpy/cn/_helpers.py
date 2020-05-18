@@ -6,7 +6,8 @@ from ..helpers import QuadratureScheme, n_outer
 
 
 class CnScheme(QuadratureScheme):
-    def __init__(self, name, dim, weights, points, degree, source):
+    def __init__(self, name, dim, weights, points, degree, source, tol=1.0e-14):
+        super().__init__(tol)
         self.domain = f"Cn (n={dim})"
         self.name = name
         self.dim = dim
@@ -26,7 +27,6 @@ class CnScheme(QuadratureScheme):
             assert points.dtype in [numpy.dtype("O"), numpy.int_]
             self.points = points.astype(numpy.float64)
             self.points_symbolic = points
-        return
 
     def integrate(self, f, ncube, dot=numpy.dot):
         x = transform(self.points.T, ncube).T
