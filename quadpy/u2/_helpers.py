@@ -4,26 +4,9 @@ from ..helpers import QuadratureScheme, plot_disks
 
 
 class U2Scheme(QuadratureScheme):
-    def __init__(self, name, source, degree, weights, points):
+    def __init__(self, name, source, degree, weights, points, tol=1.0e-14):
+        super().__init__(name, weights, points, degree, source, tol)
         self.domain = "U2"
-        self.name = name
-        self.source = source
-        self.degree = degree
-
-        flt = numpy.vectorize(float)
-        if weights.dtype == numpy.float64:
-            self.weights = weights
-        else:
-            assert weights.dtype == numpy.dtype("O")
-            self.weights = flt(weights)
-            self.weights_symbolic = weights
-
-        if points.dtype == numpy.float64:
-            self.points = points
-        else:
-            assert points.dtype == numpy.dtype("O")
-            self.points = flt(points)
-            self.points_symbolic = points
 
     def show(self, *args, **kwargs):
         import matplotlib.pyplot as plt

@@ -14,13 +14,18 @@ def test_scheme(scheme):
 
     print(scheme)
 
-    degree = check_degree(
+    degree, err = check_degree(
         lambda poly: scheme.integrate(poly, [0.0, 0.0], 1.0),
         integrate_monomial_over_unit_nsphere,
         2,
         scheme.degree + 1,
+        tol=scheme.test_tolerance,
     )
-    assert degree == scheme.degree
+    assert (
+        degree >= scheme.degree
+    ), "{}  --  observed: {}, expected: {} (max err: {:.3e})".format(
+        scheme.name, degree, scheme.degree, err
+    )
 
 
 @pytest.mark.parametrize("scheme", [quadpy.u2.krylov(3)])

@@ -26,24 +26,24 @@ from quadpy.un._helpers import integrate_monomial_over_unit_nsphere
     + [quadpy.un.stroud_un_11_1(n) for n in range(3, 6)]
     + [quadpy.un.stroud_1967(n) for n in range(2, 7)],
 )
-def test_scheme(scheme, tol=1.0e-14):
+def test_scheme(scheme):
     assert scheme.points.dtype in [numpy.int64, numpy.float64], scheme.name
     assert scheme.weights.dtype in [numpy.int64, numpy.float64], scheme.name
 
     print(scheme)
 
     n = scheme.dim
-    center = numpy.zeros(n)
-    rad = 1.0
-    degree = check_degree(
-        lambda poly: scheme.integrate(poly, center, rad),
+    degree, err = check_degree(
+        lambda poly: scheme.integrate(poly, center=numpy.zeros(n), radius=1),
         integrate_monomial_over_unit_nsphere,
         n,
         scheme.degree + 1,
-        tol=tol,
+        tol=scheme.test_tolerance,
     )
-    assert degree >= scheme.degree, "{}  --  observed: {}, expected: {}".format(
-        scheme.name, degree, scheme.degree
+    assert (
+        degree >= scheme.degree
+    ), "{} (dim={})  --  observed: {}, expected: {} (max err: {:.3e})".format(
+        scheme.name, n, degree, scheme.degree, err
     )
 
 
