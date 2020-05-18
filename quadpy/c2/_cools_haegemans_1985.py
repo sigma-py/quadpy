@@ -18,7 +18,7 @@ def cools_haegemans_1985_1():
         s4a([0.535500902317e-01, 0.690880550486], [0.106828079664e-01, 0.939655258097]),
         symm_r0([0.113540990172e00, 0.488926856974]),
     )
-    return C2Scheme("Cools-Haegemans 1985-1", weights, points, 9, source)
+    return C2Scheme("Cools-Haegemans 1985-1", weights, points, 9, source, 3.347e-12)
 
 
 def cools_haegemans_1985_2():
