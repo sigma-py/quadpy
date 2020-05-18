@@ -233,7 +233,7 @@ def test_scheme(scheme):
 
     assert (
         degree >= scheme.degree
-    ), "{} -- Observed: {}, expected: {} (max err: {:.3e})".format(
+    ), "{} -- observed: {}, expected: {} (max err: {:.3e})".format(
         scheme.name, degree, scheme.degree, err
     )
 

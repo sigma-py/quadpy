@@ -29,21 +29,23 @@ schemes = [
 
 
 @pytest.mark.parametrize("scheme", schemes)
-def test_scheme(scheme, tol=1.0e-14):
+def test_scheme(scheme):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
     print(scheme)
 
-    degree = check_degree(
+    degree, err = check_degree(
         lambda poly: scheme.integrate(poly, [0.0, 0.0, 0.0], 1.0),
         integrate_monomial_over_nball,
         3,
         scheme.degree + 1,
-        tol=tol,
+        tol=scheme.test_tolerance,
     )
-    assert degree == scheme.degree, "{}  --  Observed: {}   expected: {}".format(
-        scheme.name, degree, scheme.degree
+    assert (
+        degree >= scheme.degree
+    ), "{} -- observed: {}, expected: {} (max err: {:.3e})".format(
+        scheme.name, degree, scheme.degree, err
     )
 
 
