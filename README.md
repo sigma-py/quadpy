@@ -390,7 +390,7 @@ coordinates:
 import numpy
 import quadpy
 
-scheme = quadpy.sphere.lebedev_019()
+scheme = quadpy.u3.lebedev_019()
 val = scheme.integrate_spherical(
     lambda azimuthal, polar: numpy.sin(azimuthal)**2 * numpy.sin(polar),
     )
