@@ -17,25 +17,29 @@ source = article(
 
 
 def hammer_stroud_11n(n, alpha, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda a, b: a / b
+    n = sympy.S(n) if symbolic else n
     sqrt = sympy.sqrt if symbolic else math.sqrt
 
-    r = sqrt(frac(n + alpha, n + alpha + 2))
-    data = [(frac(1, 2 * n), fsd(n, (r, 1)))]
+    r = sqrt((n + alpha) / (n + alpha + 2))
+    data = [(1 / (2 * n), fsd(n, (r, 1)))]
 
     points, weights = untangle(data)
     return SnScheme("Hammer-Stroud 11n", n, weights, points, 3, source)
 
 
 def hammer_stroud_12n(n, alpha, symbolic=False):
-    frac = sympy.Rational if symbolic else lambda a, b: a / b
+    n = sympy.S(n) if symbolic else n
     sqrt = sympy.sqrt if symbolic else math.sqrt
 
-    r = sqrt(frac(3 * (n + alpha + 2), (n + 2) * (n + alpha + 4)))
-    B1 = frac(
-        (4 - n) * (n + 2) * (n + alpha) * (n + alpha + 4), 18 * n * (n + alpha + 2) ** 2
+    r = sqrt((3 * (n + alpha + 2)) / ((n + 2) * (n + alpha + 4)))
+    B1 = (
+        (4 - n)
+        * (n + 2)
+        * (n + alpha)
+        * (n + alpha + 4)
+        / (18 * n * (n + alpha + 2) ** 2)
     )
-    B2 = frac((n + 2) * (n + alpha) * (n + alpha + 4), 36 * n * (n + alpha + 2) ** 2)
+    B2 = (n + 2) * (n + alpha) * (n + alpha + 4) / (36 * n * (n + alpha + 2) ** 2)
     B0 = 1 - 2 * n * B1 - 2 * n * (n - 1) * B2
 
     data = [(B0, z(n)), (B1, fsd(n, (r, 1))), (B2, fsd(n, (r, 2)))]

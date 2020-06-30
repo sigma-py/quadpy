@@ -76,7 +76,7 @@ def stieltjes(w, a, b, n, **kwargs):
     pi[k] = 1
     mu[k] = sympy.integrate(pi[k] ** 2 * w(t), (t, a, b), **kwargs)
     alpha[k] = sympy.integrate(t * pi[k] ** 2 * w(t), (t, a, b), **kwargs) / mu[k]
-    beta[k] = mu[0]  # not used, by convention mu[0]
+    beta[k] = None
 
     k = 1
     pi[k] = (t - alpha[k - 1]) * pi[k - 1]
@@ -89,6 +89,11 @@ def stieltjes(w, a, b, n, **kwargs):
         mu[k] = sympy.integrate(pi[k] ** 2 * w(t), (t, a, b), **kwargs)
         alpha[k] = sympy.integrate(t * pi[k] ** 2 * w(t), (t, a, b), **kwargs) / mu[k]
         beta[k] = mu[k] / mu[k - 1]
+
+    # for k in range(2, n):
+    #     pi[k] = t * pi[k - 1] - beta[k - 1] * pi[k - 2]
+    #     mu[k] = sympy.integrate(pi[k] ** 2 * w(t), (t, a, b), **kwargs)
+    #     beta[k] = mu[k] / mu[k - 1]
 
     return alpha, beta
 
