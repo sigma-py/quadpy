@@ -1,8 +1,8 @@
 import numpy
 import pytest
+from helpers import check_degree
 
 import quadpy
-from helpers import check_degree
 from quadpy.enr2._helpers import integrate_monomial_over_enr2
 
 

@@ -9,13 +9,13 @@ class U2Scheme(QuadratureScheme):
         self.domain = "U2"
 
     def show(self, *args, **kwargs):
-        import matplotlib.pyplot as plt
+        from matplotlib import pyplot as plt
 
         self.plot(*args, **kwargs)
         plt.show()
 
     def plot(self, show_axes=False):
-        import matplotlib.pyplot as plt
+        from matplotlib import pyplot as plt
 
         ax = plt.gca()
         # change default range so that new disks will work

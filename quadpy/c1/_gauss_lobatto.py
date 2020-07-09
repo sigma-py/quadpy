@@ -1,5 +1,4 @@
 import numpy
-
 import orthopy
 
 from ..tools import scheme_from_rc
@@ -28,7 +27,7 @@ def _lobatto(alpha, beta, xl1, xl2):
 
         http://www.scientificpython.net/pyblog/radau-quadrature
     """
-    from scipy.linalg import solve_banded, solve
+    from scipy.linalg import solve, solve_banded
 
     n = len(alpha) - 1
     en = numpy.zeros(n)

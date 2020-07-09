@@ -1,9 +1,9 @@
-import matplotlib.pyplot as plt
 import numpy
 import pytest
+from helpers import check_degree
+from matplotlib import pyplot as plt
 
 import quadpy
-from helpers import check_degree
 from quadpy.un._helpers import integrate_monomial_over_unit_nsphere
 
 

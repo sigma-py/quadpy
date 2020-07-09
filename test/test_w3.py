@@ -1,9 +1,9 @@
 import numpy
 import pytest
 import scipy.special
+from helpers import check_degree
 
 import quadpy
-from helpers import check_degree
 
 # def _integrate_exact(k, w3):
 #     import sympy
