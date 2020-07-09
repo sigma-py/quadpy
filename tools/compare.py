@@ -2,10 +2,9 @@
 Compare the errors of some schemes.
 """
 import numpy
+import quadrature
 from matplotlib import pyplot as plt
 from matplotlib import style
-
-import quadrature
 
 style.use("ggplot")
 

@@ -1,12 +1,12 @@
 import numpy
+import orthopy
 import pytest
 
 # from quadpy.nsimplex.helpers import integrate_monomial_over_unit_simplex
 import sympy
-
-import orthopy
-import quadpy
 from helpers import check_degree_ortho
+
+import quadpy
 
 schemes = [
     quadpy.t2.albrecht_collatz(),

@@ -1,6 +1,6 @@
 import numpy
-
 import orthopy
+
 import quadpy
 from quadpy.enr._helpers import integrate_monomial_over_enr
 

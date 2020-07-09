@@ -1,11 +1,11 @@
-import matplotlib.pyplot as plt
 import numpy
+import orthopy
 import pytest
 import sympy
-
-import orthopy
-import quadpy
 from helpers import check_degree_ortho
+from matplotlib import pyplot as plt
+
+import quadpy
 
 schemes = (
     [quadpy.c3.product(quadpy.c1.midpoint())]

@@ -9,7 +9,7 @@ class S2Scheme(QuadratureScheme):
         self.domain = "S2"
 
     def plot(self, show_axes=False):
-        import matplotlib.pyplot as plt
+        from matplotlib import pyplot as plt
 
         ax = plt.gca()
         # change default range so that new disks will work

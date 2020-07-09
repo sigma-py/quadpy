@@ -2,12 +2,12 @@ import math
 from distutils.version import LooseVersion
 
 import numpy
+import orthopy
 import pytest
 import scipy
 import sympy
 from mpmath import mp
 
-import orthopy
 import quadpy
 
 
@@ -141,7 +141,7 @@ def test_gautschi_how_to_and_how_not_to():
     alpha, beta = quadpy.tools.coefficients_from_gauss(points, weights)
     # alpha, beta = quadpy.tools.chebyshev(moments)
 
-    errors_alpha, errors_beta = quadpy.tools.check_coefficients(moments, alpha, beta)
+    errors_alpha, errors_beta = orthopy.tools.gautschi_test_3(moments, alpha, beta)
 
     assert numpy.max(errors_alpha) > 1.0e-2
     assert numpy.max(errors_beta) > 1.0e-2

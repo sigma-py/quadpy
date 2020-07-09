@@ -1,6 +1,5 @@
-import numpy
-
 import modepy
+import numpy
 
 from . import import_helpers
 

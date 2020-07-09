@@ -1,10 +1,10 @@
-import matplotlib.pyplot as plt
 import numpy
-import pytest
-
 import orthopy
-import quadpy
+import pytest
 from helpers import check_degree_ortho
+from matplotlib import pyplot as plt
+
+import quadpy
 from quadpy.u3._helpers import cartesian_to_spherical
 
 # Note

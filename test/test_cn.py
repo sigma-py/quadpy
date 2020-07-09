@@ -1,11 +1,11 @@
 import math
 
 import numpy
-import pytest
-
 import orthopy
-import quadpy
+import pytest
 from helpers import check_degree_ortho
+
+import quadpy
 
 
 @pytest.mark.parametrize(
