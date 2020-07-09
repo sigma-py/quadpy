@@ -81,9 +81,7 @@ def test_jacobi_reconstruction(tol=1.0e-14):
     assert numpy.all(abs(beta1 - beta2) < tol)
 
 
-@pytest.mark.skipif(
-    LooseVersion(scipy.__version__) < LooseVersion("1.0.0"), reason="Requires SciPy 1.0"
-)
+@pytest.mark.skip(reason="wait for new orthopy")
 def test_gautschi_how_to_and_how_not_to():
     """Test Gautschi's famous example from
 
@@ -171,9 +169,8 @@ def test_gautschi_how_to_and_how_not_to():
 def test_xk(k):
     n = 10
 
-    moments = quadpy.tools.integrate(
-        lambda x: [x ** (i + k) for i in range(2 * n)], -1, +1
-    )
+    x = sympy.Symbol("x")
+    moments = [sympy.integrate(x ** (i + k), (x, -1, 1)) for i in range(2 * n)]
 
     alpha, beta = quadpy.tools.chebyshev(moments)
 
@@ -190,9 +187,7 @@ def test_xk(k):
     def leg_polys(x):
         return orthopy.line_segment.tree_legendre(x, 19, "monic", symbolic=True)
 
-    moments = quadpy.tools.integrate(
-        lambda x: [x ** k * leg_poly for leg_poly in leg_polys(x)], -1, +1
-    )
+    moments = [sympy.integrate(x ** k * poly, (x, -1, 1)) for poly in leg_polys(x)]
 
     _, _, a, b = orthopy.line_segment.recurrence_coefficients.legendre(
         2 * n, "monic", symbolic=True
