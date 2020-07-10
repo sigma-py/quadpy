@@ -156,9 +156,9 @@ def test_scheme_cartesian(scheme, tol):
             degree = k - 1
             break
 
-    assert degree == scheme.degree, (
-        f"{scheme.name}  --  observed: {degree}, expected: {scheme.degree}"
-    )
+    assert (
+        degree == scheme.degree
+    ), f"{scheme.name}  --  observed: {degree}, expected: {scheme.degree}"
 
 
 # Test a few schemes with integrate_spherical. -- This is basically the same as above,

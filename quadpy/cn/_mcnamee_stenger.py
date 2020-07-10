@@ -272,13 +272,13 @@ def mcnamee_stenger_5(n, symbolic=False):
 
 def mcnamee_stenger_7a(n, symbolic=False):
     return CnScheme(
-        *_mcnamee_stenger_7(n, integrator, False, symbolic=symbolic), 4.242e-11
+        *_mcnamee_stenger_7(n, integrator, False, symbolic=symbolic), 4.748e-11
     )
 
 
 def mcnamee_stenger_7b(n, symbolic=False):
     return CnScheme(
-        *_mcnamee_stenger_7(n, integrator, True, symbolic=symbolic), 9.686e-13
+        *_mcnamee_stenger_7(n, integrator, True, symbolic=symbolic), 1.669e-12
     )
 
 

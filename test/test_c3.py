@@ -128,39 +128,21 @@ def test_scheme(scheme, print_degree=False):
     z = [-1.0, +1.0]
     hexa = quadpy.c3.cube_points(x, y, z)
 
-    # degree = check_degree(
-    #     lambda poly: scheme.integrate(poly, hexa),
-    #     lambda k: _integrate_exact2(k, x[0], x[1], y[0], y[1], z[0], z[1]),
-    #     3,
-    #     scheme.degree + 1,
-    #     tol=tol,
-    # )
-    # if print_degree:
-    #     print("Detected degree {}, scheme degree {}.".format(degree, scheme.degree))
-    # assert degree == scheme.degree, scheme.name
+    evaluator = orthopy.cn.Eval(scheme.points.T)
 
-    def eval_orthopolys(x):
-        return numpy.concatenate(
-            orthopy.hexahedron.tree(x, scheme.degree + 1, symbolic=False)
-        )
+    degree = None
+    for k in range(scheme.degree + 2):
+        approximate = scheme.integrate(lambda x: next(evaluator)[0], hexa)
+        exact = numpy.sqrt(2.0) ** 3 if k == 0 else 0.0
+        err = numpy.abs(approximate - exact)
+        if numpy.any(err > scheme.test_tolerance):
+            degree = k - 1
+            break
 
-    vals = scheme.integrate(eval_orthopolys, hexa)
-    # Put vals back into the tree structure:
-    # len(approximate[k]) == k+1
-    approximate = [
-        vals[k * (k + 1) * (k + 2) // 6 : (k + 1) * (k + 2) * (k + 3) // 6]
-        for k in range(scheme.degree + 2)
-    ]
-
-    exact = [numpy.zeros(len(s)) for s in approximate]
-    exact[0][0] = numpy.sqrt(2.0) * 2
-
-    degree, err = check_degree_ortho(approximate, exact, abs_tol=scheme.test_tolerance)
-
-    assert (
-        degree >= scheme.degree
-    ), "{} -- Observed: {}, expected: {} (max err: {:.3e})".format(
-        scheme.name, degree, scheme.degree, err
+    max_err = numpy.max(err)
+    assert degree >= scheme.degree, (
+        f"{scheme.name} -- observed: {degree}, expected: {scheme.degree} "
+        f"(max err: {max_err:.3e})"
     )
 
 
