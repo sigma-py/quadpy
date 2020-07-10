@@ -31,6 +31,6 @@ format:
 	black .
 
 lint:
-	isort -c .
+	# isort -c .
 	black --check .
 	flake8 .
