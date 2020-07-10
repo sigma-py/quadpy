@@ -2,7 +2,6 @@ import numpy
 import orthopy
 import pytest
 import sympy
-from helpers import check_degree_ortho
 from matplotlib import pyplot as plt
 
 import quadpy
