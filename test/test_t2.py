@@ -303,15 +303,12 @@ def test_scheme(scheme):
 
     print(scheme)
 
-    triangle = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]])
-
     def eval_orthopolys(x):
         bary = numpy.array([x[0], x[1], 1.0 - x[0] - x[1]])
-        out = numpy.concatenate(
-            orthopy.triangle.tree(bary, scheme.degree + 1, "normal", symbolic=False)
-        )
-        return out
+        evaluator = orthopy.t2.Eval(bary, "normal")
+        return numpy.concatenate([next(evaluator) for _ in range(scheme.degree + 2)])
 
+    triangle = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]])
     vals = scheme.integrate(eval_orthopolys, triangle)
     # Put vals back into the tree structure:
     # len(approximate[k]) == k+1
