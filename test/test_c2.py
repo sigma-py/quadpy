@@ -212,29 +212,23 @@ def test_scheme(scheme):
 
     print(scheme)
 
-    def eval_orthopolys(x):
-        return numpy.concatenate(
-            orthopy.quadrilateral.tree(x, scheme.degree + 1, symbolic=False)
-        )
-
     quad = quadpy.c2.rectangle_points([-1.0, +1.0], [-1.0, +1.0])
-    vals = scheme.integrate(eval_orthopolys, quad)
-    # Put vals back into the tree structure:
-    # len(approximate[k]) == k+1
-    approximate = [
-        vals[k * (k + 1) // 2 : (k + 1) * (k + 2) // 2]
-        for k in range(scheme.degree + 2)
-    ]
 
-    exact = [numpy.zeros(k + 1) for k in range(scheme.degree + 2)]
-    exact[0][0] = 2.0
+    evaluator = orthopy.cn.Eval(scheme.points.T)
 
-    degree, err = check_degree_ortho(approximate, exact, abs_tol=scheme.test_tolerance)
+    degree = None
+    for k in range(scheme.degree + 2):
+        approximate = scheme.integrate(lambda x: next(evaluator)[0], quad)
+        exact = 2.0 if k == 0 else 0.0
+        err = numpy.abs(approximate - exact)
+        if numpy.any(err > scheme.test_tolerance):
+            degree = k - 1
+            break
 
-    assert (
-        degree >= scheme.degree
-    ), "{} -- observed: {}, expected: {} (max err: {:.3e})".format(
-        scheme.name, degree, scheme.degree, err
+    max_err = numpy.max(err)
+    assert degree >= scheme.degree, (
+        f"{scheme.name} -- observed: {degree}, expected: {scheme.degree} "
+        f"(max err: {max_err:.3e})"
     )
 
 
