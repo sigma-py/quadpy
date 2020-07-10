@@ -144,25 +144,20 @@ def test_scheme_cartesian(scheme, tol):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
-    # We're using the spherical harmonic iterator here; it's much less memory-intensive
-    # than computing the full tree at once. Unfortunately, we cannot use
-    # scheme.integrate with it, but that's okay.
+    # We're using the iterator here; it's much less memory-intensive than computing the
+    # full tree at once.
     evaluator = orthopy.u3.Eval(scheme.points.T, "quantum mechanic")
 
     degree = None
     for k in range(scheme.degree + 2):
-        vals = next(evaluator)
-        approximate = 4 * numpy.pi * numpy.dot(vals, scheme.weights)
-
-        # construct exact value
-        exact = [numpy.sqrt(4 * numpy.pi)] if k == 0 else numpy.zeros_like(approximate)
-
+        approximate = scheme.integrate(lambda x: next(evaluator), [0.0, 0.0, 0.0], 1.0)
+        exact = numpy.sqrt(4 * numpy.pi) if k == 0 else 0.0
         if numpy.any(numpy.abs(approximate - exact) > tol):
             degree = k - 1
             break
 
-    assert degree == scheme.degree, "{}  --  Observed: {}, expected: {}".format(
-        scheme.name, degree, scheme.degree
+    assert degree == scheme.degree, (
+        f"{scheme.name}  --  observed: {degree}, expected: {scheme.degree}"
     )
 
 
