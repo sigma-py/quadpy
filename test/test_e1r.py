@@ -15,23 +15,21 @@ def test_scheme(scheme, tol):
 
     print(scheme)
 
-    def eval_orthopolys(x):
-        return orthopy.e1r.tree(x, scheme.degree + 1, symbolic=False)
+    evaluator = orthopy.e1r.Eval(scheme.points.T, "normal")
 
-    approximate = scheme.integrate(eval_orthopolys)
+    degree = None
+    for k in range(scheme.degree + 2):
+        approximate = scheme.integrate(lambda x: next(evaluator))
+        exact = 1.0 if k == 0 else 0.0
+        err = numpy.abs(approximate - exact)
+        if numpy.any(err > tol):
+            degree = k - 1
+            break
 
-    exact = numpy.zeros(approximate.shape)
-    exact[0] = 1
-
-    diff = numpy.abs(approximate - exact)
-    k = numpy.where(diff > tol)[0]
-    assert len(k) > 0, "{} -- Degree is higher than {}.".format(
-        scheme.name, scheme.degree
-    )
-    degree = k[0] - 1
-
-    assert degree == scheme.degree, "{} -- Observed: {}   expected: {}".format(
-        scheme.name, degree, scheme.degree
+    max_err = numpy.max(err)
+    assert degree >= scheme.degree, (
+        f"{scheme.name} -- observed: {degree}, expected: {scheme.degree} "
+        f"(max err: {max_err:.3e})"
     )
 
 
