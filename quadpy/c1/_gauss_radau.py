@@ -8,12 +8,11 @@ from ._helpers import C1Scheme
 def gauss_radau(n, a=0.0, b=0.0):
     assert n >= 2
     degree = 2 * n - 1
-    _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.jacobi(
-        n, a, b, "monic"
-    )
-    flt = numpy.vectorize(float)
-    alpha = flt(alpha)
-    beta = flt(beta)
+
+    rc = orthopy.c1.jacobi.RecurrenceCoefficients("monic", a, b, symbolic=False)
+    _, alpha, beta = numpy.array([rc[k] for k in range(n)]).T
+    beta[0] = rc.int_1
+
     points, weights = _radau(alpha, beta, -1.0)
     return C1Scheme("Gauss-Radau", degree, weights, points)
 
