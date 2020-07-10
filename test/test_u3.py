@@ -146,7 +146,7 @@ def test_scheme_cartesian(scheme, tol):
 
     # We're using the iterator here; it's much less memory-intensive than computing the
     # full tree at once.
-    evaluator = orthopy.u3.Eval(scheme.points.T, "quantum mechanic")
+    evaluator = orthopy.u3.EvalCartesian(scheme.points.T, "quantum mechanic")
 
     degree = None
     for k in range(scheme.degree + 2):
@@ -228,7 +228,7 @@ def test_scheme_cartesian(scheme, tol):
 )
 def test_scheme_spherical(scheme, tol):
     def sph_tree(azimuthal, polar):
-        evaluator = orthopy.u3.EvalPolar(polar, azimuthal, "quantum mechanic")
+        evaluator = orthopy.u3.EvalSpherical(polar, azimuthal, "quantum mechanic")
         return numpy.concatenate([next(evaluator) for _ in range(scheme.degree + 2)])
 
     print(scheme)
