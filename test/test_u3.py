@@ -5,7 +5,6 @@ from helpers import check_degree_ortho
 from matplotlib import pyplot as plt
 
 import quadpy
-from quadpy.u3._helpers import cartesian_to_spherical
 
 # Note
 # ====
@@ -142,34 +141,21 @@ def test_spherical_harmonic(scheme):
     ],
 )
 def test_scheme_cartesian(scheme, tol):
-    def sph_tree_cartesian(x):
-        azimuthal, polar = cartesian_to_spherical(x.T).T
-        return numpy.concatenate(
-            orthopy.sphere.tree_sph(
-                polar, azimuthal, scheme.degree + 1, standardization="quantum mechanic"
-            )
-        )
-
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
     # We're using the spherical harmonic iterator here; it's much less memory-intensive
     # than computing the full tree at once. Unfortunately, we cannot use
     # scheme.integrate with it, but that's okay.
-    azimuthal, polar = cartesian_to_spherical(scheme.points).T
-    sph_iterator = orthopy.sphere.Iterator(
-        polar, azimuthal, standardization="quantum mechanic"
-    )
+    evaluator = orthopy.u3.Eval(scheme.points.T, "quantum mechanic")
+
     degree = None
     for k in range(scheme.degree + 2):
-        vals = next(sph_iterator)
+        vals = next(evaluator)
         approximate = 4 * numpy.pi * numpy.dot(vals, scheme.weights)
 
         # construct exact value
-        if k == 0:
-            exact = [numpy.sqrt(4 * numpy.pi)]
-        else:
-            exact = numpy.zeros_like(approximate)
+        exact = [numpy.sqrt(4 * numpy.pi)] if k == 0 else numpy.zeros_like(approximate)
 
         if numpy.any(numpy.abs(approximate - exact) > tol):
             degree = k - 1
@@ -247,11 +233,8 @@ def test_scheme_cartesian(scheme, tol):
 )
 def test_scheme_spherical(scheme, tol):
     def sph_tree(azimuthal, polar):
-        return numpy.concatenate(
-            orthopy.sphere.tree_sph(
-                polar, azimuthal, scheme.degree + 1, standardization="quantum mechanic"
-            )
-        )
+        evaluator = orthopy.u3.EvalPolar(polar, azimuthal, "quantum mechanic")
+        return numpy.concatenate([next(evaluator) for _ in range(scheme.degree + 2)])
 
     print(scheme)
 
