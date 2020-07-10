@@ -18,7 +18,7 @@ _source = article(
 def hammer_stroud_1n(n):
     data = [(frac(1, 2 * n), fsd(n, (sqrt(frac(n, 3)), 1)))]
     points, weights = untangle(data)
-    return CnScheme("Hammer-Stroud 1n", n, weights, points, 3, _source, 4.620e-14)
+    return CnScheme("Hammer-Stroud 1n", n, weights, points, 3, _source, 5.863e-14)
 
 
 def hammer_stroud_2n(n):

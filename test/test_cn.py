@@ -52,44 +52,21 @@ def test_scheme(scheme):
     cn_limits = [[-1.0, 1.0]] * n
     cn = quadpy.cn.ncube_points(*cn_limits)
 
-    # degree = check_degree(
-    #     lambda poly: scheme.integrate(poly, cn),
-    #     lambda exp: integrate_monomial_over_cn(cn_limits, exp),
-    #     n,
-    #     scheme.degree + 1,
-    #     tol=tol,
-    # )
-    # assert degree >= scheme.degree, "observed: {}, expected: {}".format(
-    #     degree, scheme.degree
-    # )
+    evaluator = orthopy.cn.Eval(scheme.points.T)
 
-    def eval_orthopolys(x):
-        return numpy.concatenate(
-            orthopy.ncube.tree(x, scheme.degree + 1, symbolic=False)
-        )
+    degree = None
+    for k in range(scheme.degree + 2):
+        approximate = scheme.integrate(lambda x: next(evaluator)[0], cn)
+        exact = numpy.sqrt(2.0) ** n if k == 0 else 0.0
+        err = numpy.abs(approximate - exact)
+        if numpy.any(err > scheme.test_tolerance):
+            degree = k - 1
+            break
 
-    vals = scheme.integrate(eval_orthopolys, cn)
-
-    # Put vals back into the tree structure:
-    # len(approximate[k]) == k+1
-    approximate = [
-        vals[
-            numpy.prod(range(k, k + n))
-            // math.factorial(n) : numpy.prod(range(k + 1, k + 1 + n))
-            // math.factorial(n)
-        ]
-        for k in range(scheme.degree + 2)
-    ]
-
-    exact = [numpy.zeros(len(s)) for s in approximate]
-    exact[0][0] = numpy.sqrt(2.0) ** n
-
-    degree, err = check_degree_ortho(approximate, exact, abs_tol=scheme.test_tolerance)
-
-    assert (
-        degree >= scheme.degree
-    ), "{} (dim={})  --  observed: {}, expected: {} (max err: {:.3e})".format(
-        scheme.name, n, degree, scheme.degree, err
+    max_err = numpy.max(err)
+    assert degree >= scheme.degree, (
+        f"{scheme.name} -- observed: {degree}, expected: {scheme.degree} "
+        f"(max err: {max_err:.3e})"
     )
 
 

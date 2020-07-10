@@ -11,7 +11,7 @@ def gauss_laguerre(n, alpha=0, mode="numpy"):
 
         int_0^{+inf} exp(-x) f(x) dx.
     """
-    symbolic = (mode != "numpy")
+    symbolic = mode != "numpy"
     rc = orthopy.e1r.RecurrenceCoefficients("monic", alpha, symbolic)
     _, a, b = numpy.array([rc[k] for k in range(n)]).T
     b[0] = rc.int_1
