@@ -161,7 +161,7 @@ def sommariva_33():
 
 
 def sommariva_34():
-    return _read(34, 1.192e-14)
+    return _read(34, 1.222e-14)
 
 
 def sommariva_35():
