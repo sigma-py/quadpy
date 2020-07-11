@@ -13,12 +13,11 @@ import quadpy
 
 def test_gauss_sympy():
     n = 3
-    a = 0
-    b = 0
-    _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.jacobi(
-        n, a, b, "monic", symbolic=True
+    rc = orthopy.c1.jacobi.RecurrenceCoefficients(
+        "monic", alpha=0, beta=0, symbolic=True
     )
-    points, weights = quadpy.tools.scheme_from_rc(alpha, beta, "sympy")
+    _, a, b = numpy.array([rc[k] for k in range(n)]).T
+    points, weights = quadpy.tools.scheme_from_rc(a, b, rc.int_1, "sympy")
 
     assert points == [-sympy.sqrt(sympy.S(3) / 5), 0, +sympy.sqrt(sympy.S(3) / 5)]
     assert weights == [sympy.S(5) / 9, sympy.S(8) / 9, sympy.S(5) / 9]
@@ -26,13 +25,13 @@ def test_gauss_sympy():
 
 def test_gauss_mpmath():
     n = 5
-    a = 0
-    b = 0
-    _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.jacobi(
-        n, a, b, "monic", symbolic=True
+
+    rc = orthopy.c1.jacobi.RecurrenceCoefficients(
+        "monic", alpha=0, beta=0, symbolic=True
     )
+    _, alpha, beta = numpy.array([rc[k] for k in range(n)]).T
     mp.dps = 50
-    points, weights = quadpy.tools.scheme_from_rc(alpha, beta, "mpmath")
+    points, weights = quadpy.tools.scheme_from_rc(alpha, beta, rc.int_1, "mpmath")
 
     tol = 1.0e-50
     s = mp.sqrt(5 + 2 * mp.sqrt(mp.mpf(10) / mp.mpf(7))) / 3
@@ -48,13 +47,13 @@ def test_gauss_mpmath():
 def test_gauss_numpy():
     n = 5
     tol = 1.0e-14
-    _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.legendre(
-        n, "monic", symbolic=False
-    )
+    rc = orthopy.c1.legendre.RecurrenceCoefficients("monic", symbolic=False)
+    _, alpha, beta = numpy.array([rc[k] for k in range(n)]).T
+
     flt = numpy.vectorize(float)
     alpha = flt(alpha)
     beta = flt(beta)
-    points, weights = quadpy.tools.scheme_from_rc(alpha, beta, "numpy")
+    points, weights = quadpy.tools.scheme_from_rc(alpha, beta, rc.int_1, "numpy")
 
     s = math.sqrt(5.0 + 2 * math.sqrt(10.0 / 7.0)) / 3.0
     t = math.sqrt(5.0 - 2 * math.sqrt(10.0 / 7.0)) / 3.0
@@ -70,15 +69,19 @@ def test_gauss_numpy():
     LooseVersion(scipy.__version__) < LooseVersion("1.0.0"), reason="Requires SciPy 1.0"
 )
 def test_jacobi_reconstruction(tol=1.0e-14):
-    _, _, alpha1, beta1 = orthopy.line_segment.recurrence_coefficients.jacobi(
-        4, 2, 1, "monic", symbolic=False
+    n = 4
+    rc = orthopy.c1.jacobi.RecurrenceCoefficients(
+        "monic", alpha=2, beta=1, symbolic=False
     )
-    points, weights = quadpy.tools.scheme_from_rc(alpha1, beta1, "numpy")
+    _, alpha1, beta1 = numpy.array([rc[k] for k in range(n)]).T
 
-    alpha2, beta2 = quadpy.tools.coefficients_from_gauss(points, weights)
+    points, weights = quadpy.tools.scheme_from_rc(alpha1, beta1, rc.int_1, "numpy")
+
+    alpha2, beta2, int_1 = quadpy.tools.coefficients_from_gauss(points, weights)
 
     assert numpy.all(abs(alpha1 - alpha2) < tol)
-    assert numpy.all(abs(beta1 - beta2) < tol)
+    assert numpy.all(abs(beta1[1:] - beta2[1:]) < tol)
+    assert abs(rc.int_1 == int_1) < tol
 
 
 @pytest.mark.skip(reason="wait for new orthopy")
@@ -172,36 +175,37 @@ def test_xk(k):
     x = sympy.Symbol("x")
     moments = [sympy.integrate(x ** (i + k), (x, -1, 1)) for i in range(2 * n)]
 
-    alpha, beta = quadpy.tools.chebyshev(moments)
+    alpha, beta, int_1 = orthopy.tools.chebyshev(moments)
 
     assert (alpha == 0).all()
-    assert beta[0] == moments[0]
+    assert math.isnan(beta[0])
+    assert int_1 == moments[0]
     assert beta[1] == sympy.S(k + 1) / (k + 3)
     assert beta[2] == sympy.S(4) / ((k + 5) * (k + 3))
     quadpy.tools.scheme_from_rc(
         numpy.array([sympy.N(a) for a in alpha], dtype=float),
         numpy.array([sympy.N(b) for b in beta], dtype=float),
+        int_1,
         mode="numpy",
     )
 
-    def leg_polys(x):
-        return orthopy.line_segment.tree_legendre(x, 19, "monic", symbolic=True)
+    evaluator = orthopy.c1.legendre.Eval(x, "monic", symbolic=True)
+    moments = [
+        sympy.integrate(x ** k * next(evaluator), (x, -1, 1)) for _ in range(2 * n)
+    ]
+    rc = orthopy.c1.legendre.RecurrenceCoefficients("monic", symbolic=True)
 
-    moments = [sympy.integrate(x ** k * poly, (x, -1, 1)) for poly in leg_polys(x)]
-
-    _, _, a, b = orthopy.line_segment.recurrence_coefficients.legendre(
-        2 * n, "monic", symbolic=True
-    )
-
-    alpha, beta = quadpy.tools.chebyshev_modified(moments, a, b)
+    alpha, beta, int_1 = orthopy.tools.chebyshev_modified(moments, rc)
 
     assert (alpha == 0).all()
-    assert beta[0] == moments[0]
+    assert math.isnan(beta[0])
+    assert int_1 == moments[0]
     assert beta[1] == sympy.S(k + 1) / (k + 3)
     assert beta[2] == sympy.S(4) / ((k + 5) * (k + 3))
     points, weights = quadpy.tools.scheme_from_rc(
         numpy.array([sympy.N(a) for a in alpha], dtype=float),
         numpy.array([sympy.N(b) for b in beta], dtype=float),
+        int_1,
         mode="numpy",
     )
 
