@@ -3,20 +3,6 @@ import numpy
 from quadpy.helpers import get_all_exponents
 
 
-def check_degree_1d(quadrature, exact, max_degree, tol=1.0e-14):
-    val = quadrature(
-        lambda x: [x ** degree for degree in range(max_degree + 1)]
-    ).flatten()
-    exact_val = numpy.array([exact(degree) for degree in range(max_degree + 1)])
-    eps = numpy.finfo(float).eps
-    # check relative error
-    # Allow 1e1 over machine precision.
-    alpha = abs(exact_val) * tol + (1e1 + tol + exact_val) * eps
-    # check where the error is larger than alpha
-    is_larger = (exact_val - val) > alpha
-    return numpy.where(is_larger)[0] - 1 if any(is_larger) else max_degree
-
-
 def check_degree(quadrature, exact, dim, max_degree, tol):
     exponents = get_all_exponents(dim, max_degree)
     # flatten list
