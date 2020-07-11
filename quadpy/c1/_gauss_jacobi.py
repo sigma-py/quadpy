@@ -10,7 +10,5 @@ def gauss_jacobi(n, alpha, beta, mode="numpy"):
 
     rc = orthopy.c1.jacobi.RecurrenceCoefficients("monic", alpha, beta, symbolic=True)
     _, a, b = numpy.array([rc[k] for k in range(n)]).T
-    b[0] = rc.int_1
-
-    points, weights = scheme_from_rc(a, b, mode=mode)
+    points, weights = scheme_from_rc(a, b, rc.int_1, mode=mode)
     return C1Scheme("Gauss-Jacobi", degree, weights, points)

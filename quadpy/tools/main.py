@@ -87,7 +87,7 @@ def _sympy_tridiag(a, b):
     return sympy.Matrix(A)
 
 
-def scheme_from_rc(alpha, beta, mode=None):
+def scheme_from_rc(alpha, beta, int_1, mode=None):
     alpha = numpy.asarray(alpha)
     beta = numpy.asarray(beta)
 
@@ -101,18 +101,20 @@ def scheme_from_rc(alpha, beta, mode=None):
             )
 
     if mode == "sympy":
-        return _scheme_from_rc_sympy(alpha, beta)
+        return _scheme_from_rc_sympy(alpha, beta, int_1)
     elif mode == "numpy":
-        return _scheme_from_rc_numpy(alpha, beta)
+        return _scheme_from_rc_numpy(alpha, beta, int_1)
 
     assert mode == "mpmath"
-    return _scheme_from_rc_mpmath(alpha, beta)
+    return _scheme_from_rc_mpmath(alpha, beta, int_1)
 
 
 # Compute the Gauss nodes and weights from the recurrence coefficients associated with a
 # set of orthogonal polynomials. See [2] and
 # <http://www.scientificpython.net/pyblog/radau-quadrature>.
-def _scheme_from_rc_sympy(alpha, beta):
+def _scheme_from_rc_sympy(alpha, beta, int_1):
+    beta[0] = int_1
+
     # Construct the triadiagonal matrix [sqrt(beta), alpha, sqrt(beta)]
     A = _sympy_tridiag(alpha, [sympy.sqrt(bta) for bta in beta])
 
@@ -136,8 +138,9 @@ def _scheme_from_rc_sympy(alpha, beta):
     return x, w
 
 
-def _scheme_from_rc_mpmath(alpha, beta):
-    # Create vector cut of the first value of beta
+def _scheme_from_rc_mpmath(alpha, beta, int_1):
+    # Create vector
+    # cut off the first value of beta (None)
     n = len(alpha)
     b = mp.zeros(n, 1)
     for i in range(n - 1):
@@ -150,13 +153,13 @@ def _scheme_from_rc_mpmath(alpha, beta):
 
     # nx1 matrix -> list of mpf
     x = numpy.array([mp.mpf(sympy.N(xx, mp.dps)) for xx in d])
-    w = numpy.array([mp.mpf(sympy.N(beta[0], mp.dps)) * mp.power(ww, 2) for ww in z])
+    w = numpy.array([mp.mpf(sympy.N(int_1, mp.dps)) * mp.power(ww, 2) for ww in z])
     return x, w
 
 
-def _scheme_from_rc_numpy(alpha, beta):
+def _scheme_from_rc_numpy(alpha, beta, int_1):
     alpha = alpha.astype(numpy.float64)
     beta = beta.astype(numpy.float64)
     x, V = eigh_tridiagonal(alpha, numpy.sqrt(beta[1:]))
-    w = beta[0] * V[0, :] ** 2
+    w = int_1 * V[0, :] ** 2
     return x, w

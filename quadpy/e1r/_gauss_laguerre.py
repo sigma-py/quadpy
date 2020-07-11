@@ -14,9 +14,7 @@ def gauss_laguerre(n, alpha=0, mode="numpy"):
     symbolic = mode != "numpy"
     rc = orthopy.e1r.RecurrenceCoefficients("monic", alpha, symbolic)
     _, a, b = numpy.array([rc[k] for k in range(n)]).T
-    b[0] = rc.int_1
-
-    points, weights = scheme_from_rc(a, b, mode=mode)
+    points, weights = scheme_from_rc(a, b, rc.int_1, mode=mode)
 
     if alpha == 0:
         name = f"Gauss-Laguerre ({n})"
