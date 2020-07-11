@@ -36,11 +36,11 @@ def mcnamee_stenger_7b(n, symbolic=False):
 
 def mcnamee_stenger_9a(n, symbolic=False):
     scheme = EnrScheme(*_mcnamee_stenger_9(n, integrator, False, symbolic=symbolic))
-    warnings.warn("{} is very badly conditioned.".format(scheme.name))
+    warnings.warn(f"{scheme.name} is very badly conditioned.")
     return scheme
 
 
 def mcnamee_stenger_9b(n, symbolic=False):
     scheme = EnrScheme(*_mcnamee_stenger_9(n, integrator, True, symbolic=symbolic))
-    warnings.warn("{} is very badly conditioned.".format(scheme.name))
+    warnings.warn(f"{scheme.name} is very badly conditioned.")
     return scheme

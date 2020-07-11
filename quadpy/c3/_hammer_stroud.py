@@ -67,13 +67,8 @@ def _hammer_stroud_5_3(variant_a):
     ]
     points, weights = untangle(data)
     weights /= 8
-    return C3Scheme(
-        "Hammer-Stroud 5-3{}".format("a" if variant_a else "b"),
-        weights,
-        points,
-        7,
-        _source,
-    )
+    variant = "a" if variant_a else "b"
+    return C3Scheme(f"Hammer-Stroud 5-3{variant}", weights, points, 7, _source)
 
 
 def hammer_stroud_5_3a():

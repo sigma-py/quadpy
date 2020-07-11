@@ -3,20 +3,6 @@ import numpy
 from quadpy.helpers import get_all_exponents
 
 
-def check_degree_1d(quadrature, exact, max_degree, tol=1.0e-14):
-    val = quadrature(
-        lambda x: [x ** degree for degree in range(max_degree + 1)]
-    ).flatten()
-    exact_val = numpy.array([exact(degree) for degree in range(max_degree + 1)])
-    eps = numpy.finfo(float).eps
-    # check relative error
-    # Allow 1e1 over machine precision.
-    alpha = abs(exact_val) * tol + (1e1 + tol + exact_val) * eps
-    # check where the error is larger than alpha
-    is_larger = (exact_val - val) > alpha
-    return numpy.where(is_larger)[0] - 1 if any(is_larger) else max_degree
-
-
 def check_degree(quadrature, exact, dim, max_degree, tol):
     exponents = get_all_exponents(dim, max_degree)
     # flatten list
@@ -52,26 +38,6 @@ def check_degree(quadrature, exact, dim, max_degree, tol):
     )
 
 
-def check_degree_ortho(approximate, exact, abs_tol=1.0e-14):
-    # get the maximum error in all levels execpt the last
-    max_err = 0.0
-    for k in range(len(approximate) - 1):
-        ex = exact[k]
-        approx = approximate[k]
-        err = numpy.max(numpy.abs(ex - approx))
-        if err > max_err:
-            max_err = err
-
-    # check absolute error
-    for degree, (approx, ex) in enumerate(zip(approximate, exact)):
-        err = abs(ex - approx)
-        if not numpy.all(err < abs_tol):
-            return degree - 1, max_err
-
-    # All values are equal; the degree is at least this.
-    return len(approximate), max_err
-
-
 def find_equal(schemes):
     tol = 1.0e-13
     n = len(schemes)
@@ -94,17 +60,16 @@ def find_equal(schemes):
                     break
             if is_equal:
                 found_equal = True
-                a = "'{}'".format(schemes[i].name)
+                a = f"'{schemes[i].name}'"
                 try:
-                    a += " ({})".format(schemes[i].citation.year)
+                    a += f" ({schemes[i].citation.year})"
                 except AttributeError:
                     pass
-                b = "'{}'".format(schemes[j].name)
+                b = f"'{schemes[j].name}'"
                 try:
-                    b += " ({})".format(schemes[j].citation.year)
+                    b += f" ({schemes[j].citation.year})"
                 except AttributeError:
                     pass
                 print(f"Schemes {a} and {b} are equal.")
         if found_equal:
             print()
-    return

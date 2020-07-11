@@ -52,8 +52,10 @@ def _stroud_1967_7_2(n, variant_a, symbolic):
 
     points, weights = untangle(data)
 
-    name = "Stroud 1967-7 2 (variant {})".format("a" if variant_a else "b")
-    return Enr2Scheme(name, n, weights, points, 7, source)
+    variant = "a" if variant_a else "b"
+    return Enr2Scheme(
+        f"Stroud 1967-7 2 (variant {variant})", n, weights, points, 7, source
+    )
 
 
 def stroud_1967_7_2a(n, symbolic=False):
