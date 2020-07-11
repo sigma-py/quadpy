@@ -51,8 +51,10 @@ and do
 import numpy
 import quadpy
 
+
 def f(x):
-   return numpy.sin(x) - x
+    return numpy.sin(x) - x
+
 
 val, err = quadpy.quad(f, 0.0, 6.0)
 ```
@@ -67,8 +69,10 @@ degree 6, do
 import numpy
 import quadpy
 
+
 def f(x):
     return numpy.sin(x[0]) * numpy.sin(x[1])
+
 
 triangle = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.7, 0.5]])
 
@@ -101,13 +105,16 @@ domains at once, you can provide them all in one `integrate()` call, e.g.,
 <!--exdown-skip-->
 ```python
 # shape (3, 5, 2), i.e., (corners, num_triangles, xy_coords)
-triangles = numpy.stack([
-    [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
-    [[1.2, 0.6], [1.3, 0.7], [1.4, 0.8]],
-    [[26.0, 31.0], [24.0, 27.0], [33.0, 28]],
-    [[0.1, 0.3], [0.4, 0.4], [0.7, 0.1]],
-    [[8.6, 6.0], [9.4, 5.6], [7.5, 7.4]]
-    ], axis=-2)
+triangles = numpy.stack(
+    [
+        [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
+        [[1.2, 0.6], [1.3, 0.7], [1.4, 0.8]],
+        [[26.0, 31.0], [24.0, 27.0], [33.0, 28]],
+        [[0.1, 0.3], [0.4, 0.4], [0.7, 0.1]],
+        [[8.6, 6.0], [9.4, 5.6], [7.5, 7.4]],
+    ],
+    axis=-2,
+)
 ```
 The same goes for functions with vectorized output, e.g.,
 ```python
@@ -168,7 +175,7 @@ import quadpy
 
 scheme = quadpy.e1r.gauss_laguerre(5, alpha=0)
 scheme.show()
-val = scheme.integrate(lambda x: x**2)
+val = scheme.integrate(lambda x: x ** 2)
 ```
 
 
@@ -184,7 +191,7 @@ import quadpy
 
 scheme = quadpy.e1r2.gauss_hermite(5)
 scheme.show()
-val = scheme.integrate(lambda x: x**2)
+val = scheme.integrate(lambda x: x ** 2)
 ```
 
 ### Circle (_U<sub>2</sub>_)
@@ -317,9 +324,8 @@ import quadpy
 
 scheme = quadpy.c2.stroud_c2_7_2()
 val = scheme.integrate(
-    lambda x: numpy.exp(x[0]),
-    [[[0.0, 0.0], [1.0, 0.0]], [[0.0, 1.0], [1.0, 1.0]]],
-    )
+    lambda x: numpy.exp(x[0]), [[[0.0, 0.0], [1.0, 0.0]], [[0.0, 1.0], [1.0, 1.0]]],
+)
 ```
 The points are specified in an array of shape (2, 2, ...) such that `arr[0][0]`
 is the lower left corner, `arr[1][1]` the upper right. If your c2
@@ -347,7 +353,7 @@ import quadpy
 
 scheme = quadpy.e2r.rabinowitz_richter_5()
 scheme.show()
-val = scheme.integrate(lambda x: x[0]**2)
+val = scheme.integrate(lambda x: x[0] ** 2)
 ```
 
 
@@ -366,7 +372,7 @@ import quadpy
 
 scheme = quadpy.e2r2.rabinowitz_richter_3()
 scheme.show()
-val = scheme.integrate(lambda x: x[0]**2)
+val = scheme.integrate(lambda x: x[0] ** 2)
 ```
 
 
@@ -400,7 +406,7 @@ import quadpy
 scheme = quadpy.u3.lebedev_019()
 val = scheme.integrate_spherical(
     lambda theta_phi: numpy.sin(theta_phi[1]) ** 2 * numpy.sin(theta_phi[0]),
-    )
+)
 ```
 
 ### Ball (_S<sub>3</sub>_)
@@ -419,10 +425,7 @@ import quadpy
 
 scheme = quadpy.s3.hammer_stroud_14_3()
 # scheme.show()
-val = scheme.integrate(
-    lambda x: numpy.exp(x[0]),
-    [0.0, 0.0, 0.0], 1.0,
-    )
+val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0, 0.0], 1.0,)
 ```
 
 
@@ -459,7 +462,7 @@ scheme = quadpy.t3.keast_9()
 val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
     [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.5, 0.7, 0.0], [0.3, 0.9, 1.0]],
-    )
+)
 ```
 
 ### Hexahedron (_C<sub>3</sub>_)
@@ -486,7 +489,7 @@ scheme = quadpy.c3.product(quadpy.c1.newton_cotes_closed(3))
 val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
     quadpy.c3.cube_points([0.0, 1.0], [-0.3, 0.4], [1.0, 2.1]),
-    )
+)
 ```
 
 ### Pyramid (_P<sub>3</sub>_)
@@ -504,10 +507,13 @@ scheme = quadpy.p3.felippa_5()
 val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
     [
-      [0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.5, 0.7, 0.0], [0.3, 0.9, 0.0],
-      [0.0, 0.1, 1.0],
-    ]
-    )
+        [0.0, 0.0, 0.0],
+        [1.0, 0.0, 0.0],
+        [0.5, 0.7, 0.0],
+        [0.3, 0.9, 0.0],
+        [0.0, 0.1, 1.0],
+    ],
+)
 ```
 
 ### Wedge (_W<sub>3</sub>_)
@@ -526,10 +532,10 @@ scheme = quadpy.w3.felippa_3()
 val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
     [
-      [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.5, 0.7, 0.0]],
-      [[0.0, 0.0, 1.0], [1.0, 0.0, 1.0], [0.5, 0.7, 1.0]],
-    ]
-    )
+        [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.5, 0.7, 0.0]],
+        [[0.0, 0.0, 1.0], [1.0, 0.0, 1.0], [0.5, 0.7, 1.0]],
+    ],
+)
 ```
 
 
@@ -546,7 +552,7 @@ import quadpy
 
 scheme = quadpy.e3r.stroud_secrest_09()
 # scheme.show()
-val = scheme.integrate(lambda x: x[0]**2)
+val = scheme.integrate(lambda x: x[0] ** 2)
 ```
 
 
@@ -564,7 +570,7 @@ import quadpy
 
 scheme = quadpy.e3r2.stroud_secrest_10a()
 # scheme.show()
-val = scheme.integrate(lambda x: x[0]**2)
+val = scheme.integrate(lambda x: x[0] ** 2)
 ```
 
 ### n-Simplex (_T<sub>n</sub>_)
@@ -586,14 +592,16 @@ dim = 4
 scheme = quadpy.tn.grundmann_moeller(dim, 3)
 val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
-    numpy.array([
-        [0.0, 0.0, 0.0, 0.0],
-        [1.0, 2.0, 0.0, 0.0],
-        [0.0, 1.0, 0.0, 0.0],
-        [0.0, 3.0, 1.0, 0.0],
-        [0.0, 0.0, 4.0, 1.0],
-        ])
-    )
+    numpy.array(
+        [
+            [0.0, 0.0, 0.0, 0.0],
+            [1.0, 2.0, 0.0, 0.0],
+            [0.0, 1.0, 0.0, 0.0],
+            [0.0, 3.0, 1.0, 0.0],
+            [0.0, 0.0, 4.0, 1.0],
+        ]
+    ),
+)
 ```
 
 ### n-Sphere (_U<sub>n</sub>_)
@@ -661,10 +669,8 @@ dim = 4
 scheme = quadpy.cn.stroud_cn_3_3(dim)
 val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
-    quadpy.cn.ncube_points(
-        [0.0, 1.0], [0.1, 0.9], [-1.0, 1.0], [-1.0, -0.5]
-        )
-    )
+    quadpy.cn.ncube_points([0.0, 1.0], [0.1, 0.9], [-1.0, 1.0], [-1.0, -0.5]),
+)
 ```
 
 ### nD space with weight function exp(-r) (_E<sub>n</sub><sup>r</sup>_)
@@ -699,7 +705,7 @@ import quadpy
 
 dim = 4
 scheme = quadpy.enr2.stroud_enr2_5_2(dim)
-val = scheme.integrate(lambda x: x[0]**2)
+val = scheme.integrate(lambda x: x[0] ** 2)
 ```
 
 
