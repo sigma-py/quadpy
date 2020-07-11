@@ -45,7 +45,7 @@ def gauss_kronrod(n, a=0, b=0):
     beta[0] = rc.int_1
 
     a, b = _r_kronrod(n, alpha, beta)
-    x, w = scheme_from_rc(a, b, mode="numpy")
+    x, w = scheme_from_rc(a, b, rc.int_1, mode="numpy")
     # sort by x
     i = numpy.argsort(x)
     points = x[i]

@@ -13,6 +13,5 @@ def gauss_legendre(n, mode="numpy"):
     else:
         rc = orthopy.c1.legendre.RecurrenceCoefficients("monic", symbolic=True)
         _, alpha, beta = numpy.array([rc[k] for k in range(n)]).T
-        beta[0] = rc.int_1
-        points, weights = scheme_from_rc(alpha, beta, mode=mode)
+        points, weights = scheme_from_rc(alpha, beta, rc.int_1, mode=mode)
     return C1Scheme("Gauss-Legendre", degree, weights, points)

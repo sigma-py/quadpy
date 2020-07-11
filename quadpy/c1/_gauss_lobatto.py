@@ -11,11 +11,11 @@ def gauss_lobatto(n, a=0.0, b=0.0):
     rc = orthopy.c1.jacobi.RecurrenceCoefficients("monic", a, b, symbolic=False)
     _, alpha, beta = numpy.array([rc[k] for k in range(n)]).T
     beta[0] = rc.int_1
-    points, weights = _lobatto(alpha, beta, -1.0, 1.0)
+    points, weights = _lobatto(alpha, beta, rc.int_1, -1.0, 1.0)
     return C1Scheme("Gauss-Lobatto", degree, weights, points)
 
 
-def _lobatto(alpha, beta, xl1, xl2):
+def _lobatto(alpha, beta, int_1, xl1, xl2):
     """Compute the Lobatto nodes and weights with the preassigned node xl1, xl2.
     Based on the section 7 of the paper
 
@@ -42,9 +42,9 @@ def _lobatto(alpha, beta, xl1, xl2):
     xl = numpy.array((xl1, xl2))
     ab = solve(C, xl)
 
-    alphal = alpha
+    alphal = alpha.copy()
     alphal[-1] = ab[0]
-    betal = beta
+    betal = beta.copy()
     betal[-1] = ab[1]
-    x, w = scheme_from_rc(alphal, betal, mode="numpy")
+    x, w = scheme_from_rc(alphal, betal, int_1, mode="numpy")
     return x, w
