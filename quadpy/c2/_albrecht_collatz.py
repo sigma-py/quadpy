@@ -49,4 +49,4 @@ def albrecht_collatz_4():
         symm_r0([frac(2, 45), 1]),
         symm_s([frac(1, 60), 1], [frac(8, 45), frac(1, 2)]),
     )
-    return C2Scheme("Albrecht-Collatz 4", weights, points, 5, source, 7.217e-16)
+    return C2Scheme("Albrecht-Collatz 4", weights, points, 5, source, 8.883e-16)

@@ -60,7 +60,7 @@ def stroud_cn_3_6(n):
     weights /= 2 ** n
     lst = n * [[-1, 0, +1]]
     points = numpy.array(numpy.meshgrid(*lst)).T.reshape(-1, n)
-    return CnScheme("Stroud Cn 3-6", n, weights, points, 3, _source)
+    return CnScheme("Stroud Cn 3-6", n, weights, points, 3, _source, 1.221e-14)
 
 
 def stroud_cn_5_9(n):
