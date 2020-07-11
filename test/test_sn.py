@@ -50,10 +50,9 @@ def test_scheme(scheme):
         scheme.degree + 1,
         tol=scheme.test_tolerance,
     )
-    assert (
-        degree >= scheme.degree
-    ), "{} (dim={}) -- Observed: {}, expected: {} (max err: {:.3e})".format(
-        scheme.name, n, degree, scheme.degree, err
+    assert degree >= scheme.degree, (
+        f"{scheme.name} -- observed: {degree}, expected: {scheme.degree} "
+        f"(max err: {err:.3e})"
     )
 
 

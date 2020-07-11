@@ -17,7 +17,7 @@ source = article(
 )
 
 
-def _read(index):
+def _read(index, tol):
     name = f"BazantOh({index})"
 
     this_dir = os.path.dirname(os.path.realpath(__file__))
@@ -30,17 +30,17 @@ def _read(index):
     degree = data.pop("degree")
 
     points, weights = untangle2(data)
-    azimuthal_polar = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, azimuthal_polar, degree, source)
+    theta_phi = cartesian_to_spherical(points)
+    return U3Scheme(name, weights, points, theta_phi, degree, source, tol=tol)
 
 
 def bazant_oh_09():
-    return _read("9")
+    return _read("9", 5.808e-12)
 
 
 def bazant_oh_11():
-    return _read("11")
+    return _read("11", 3.361e-12)
 
 
 def bazant_oh_13():
-    return _read("13")
+    return _read("13", 5.033e-12)

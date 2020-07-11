@@ -85,13 +85,8 @@ def _stroud_secrest_10(positive):
         (D, pm([t, t, t])),
     ]
     points, weights = untangle(data)
-    return E3r2Scheme(
-        "Stroud-Secrest X{}".format("a" if positive else "b"),
-        weights,
-        points,
-        7,
-        source,
-    )
+    variant = "a" if positive else "b"
+    return E3r2Scheme(f"Stroud-Secrest X{variant}", weights, points, 7, source)
 
 
 def stroud_secrest_10a():
