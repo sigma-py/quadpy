@@ -9,7 +9,7 @@ import quadpy
 # ====
 # Instead of testing exact integration against of all monomials of degree at most l, one
 # can instead test exact integration of all _spherical harmonics_ of degree at most l.
-# While there are 2**l monomials, there are only l**2 spherical harmonics.
+# While there are 2 ** l monomials, there are only l ** 2 spherical harmonics.
 
 
 @pytest.mark.parametrize(
@@ -45,7 +45,7 @@ def test_spherical_harmonic(scheme):
 
 @pytest.mark.parametrize(
     "scheme",
-    [quadpy.u3.bazant_oh_09(), quadpy.u3.bazant_oh_11(), quadpy.u3.bazant_oh_13(),]
+    [quadpy.u3.bazant_oh_09(), quadpy.u3.bazant_oh_11(), quadpy.u3.bazant_oh_13()]
     + [
         quadpy.u3.heo_xu_13(),
         quadpy.u3.heo_xu_15(),
@@ -130,7 +130,6 @@ def test_spherical_harmonic(scheme):
         quadpy.u3.stroud_u3_9_2(),
         quadpy.u3.stroud_u3_9_3(),
         quadpy.u3.stroud_u3_11_1(),
-        # TODO fix equation system in 11_2 for higher precision
         quadpy.u3.stroud_u3_11_2(),
         quadpy.u3.stroud_u3_11_3(),
         quadpy.u3.stroud_u3_14_1(),
@@ -174,7 +173,7 @@ def test_scheme_cartesian(scheme):
 # Test a few schemes with integrate_spherical. -- This is basically the same as above,
 # no need to repeat it all in detail.
 @pytest.mark.parametrize(
-    "scheme,tol",
+    "scheme",
     [
         quadpy.u3.heo_xu_13(),
         quadpy.u3.heo_xu_15(),
