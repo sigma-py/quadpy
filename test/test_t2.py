@@ -2,10 +2,6 @@ import numpy
 import orthopy
 import pytest
 
-# from quadpy.nsimplex.helpers import integrate_monomial_over_unit_simplex
-import sympy
-from helpers import check_degree_ortho
-
 import quadpy
 
 schemes = [
@@ -269,33 +265,6 @@ schemes = [
 ]
 
 
-def _integrate_exact(f, triangle):
-    #
-    # Note that
-    #
-    #     \int_T f(x) dx = \int_T0 |J(xi)| f(P(xi)) dxi
-    #
-    # with
-    #
-    #     P(xi) = x0 * (1-xi[0]-xi[1]) + x1 * xi[0] + x2 * xi[1].
-    #
-    # and T0 being the reference triangle [(0.0, 0.0), (1.0, 0.0), (0.0,
-    # 1.0)].
-    # The determinant of the transformation matrix J equals twice the volume of
-    # the triangle. (See, e.g.,
-    # <http://math2.uncc.edu/~shaodeng/TEACHING/math5172/Lectures/Lect_15.PDF>).
-    #
-    xi = sympy.DeferredVector("xi")
-    x_xi = (
-        +triangle[0] * (1 - xi[0] - xi[1]) + triangle[1] * xi[0] + triangle[2] * xi[1]
-    )
-    abs_det_J = 2 * quadpy.t2.volume(triangle)
-    exact = sympy.integrate(
-        sympy.integrate(abs_det_J * f(x_xi), (xi[1], 0, 1 - xi[0])), (xi[0], 0, 1)
-    )
-    return float(exact)
-
-
 @pytest.mark.parametrize("scheme", schemes)
 def test_scheme(scheme):
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
@@ -303,29 +272,23 @@ def test_scheme(scheme):
 
     print(scheme)
 
-    def eval_orthopolys(x):
-        bary = numpy.array([x[0], x[1], 1.0 - x[0] - x[1]])
-        evaluator = orthopy.t2.Eval(bary, "normal")
-        return numpy.concatenate([next(evaluator) for _ in range(scheme.degree + 2)])
-
     triangle = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]])
-    vals = scheme.integrate(eval_orthopolys, triangle)
-    # Put vals back into the tree structure:
-    # len(approximate[k]) == k+1
-    approximate = [
-        vals[k * (k + 1) // 2 : (k + 1) * (k + 2) // 2]
-        for k in range(scheme.degree + 2)
-    ]
 
-    exact = [numpy.zeros(k + 1) for k in range(scheme.degree + 2)]
-    exact[0][0] = numpy.sqrt(2.0) / 2
+    evaluator = orthopy.t2.Eval(scheme.points.T, "normal")
 
-    degree, err = check_degree_ortho(approximate, exact, abs_tol=scheme.test_tolerance)
+    k = 0
+    while True:
+        approximate = scheme.integrate(lambda x: next(evaluator), triangle)
+        exact = numpy.sqrt(2.0) / 2 if k == 0 else 0.0
+        err = numpy.abs(approximate - exact)
+        if numpy.any(err > scheme.test_tolerance):
+            break
+        k += 1
 
-    assert (
-        degree >= scheme.degree
-    ), "{} -- observed: {}, expected: {} (max err: {:.3e})".format(
-        scheme.name, degree, scheme.degree, err
+    max_err = numpy.max(err)
+    assert k - 1 == scheme.degree, (
+        f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
+        f"(max err: {max_err:.3e})"
     )
 
 
