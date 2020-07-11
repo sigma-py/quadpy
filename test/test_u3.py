@@ -144,21 +144,26 @@ def test_scheme_cartesian(scheme, tol):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
+    print(scheme)
+
     # We're using the iterator here; it's much less memory-intensive than computing the
     # full tree at once.
     evaluator = orthopy.u3.EvalCartesian(scheme.points.T, "quantum mechanic")
 
-    degree = None
-    for k in range(scheme.degree + 2):
+    k = 0
+    while True:
         approximate = scheme.integrate(lambda x: next(evaluator), [0.0, 0.0, 0.0], 1.0)
         exact = numpy.sqrt(4 * numpy.pi) if k == 0 else 0.0
-        if numpy.any(numpy.abs(approximate - exact) > tol):
-            degree = k - 1
+        err = numpy.abs(approximate - exact)
+        if numpy.any(err > tol):
             break
+        k += 1
 
-    assert (
-        degree == scheme.degree
-    ), f"{scheme.name}  --  observed: {degree}, expected: {scheme.degree}"
+    max_err = numpy.max(err)
+    assert k - 1 == scheme.degree, (
+        f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
+        f"(max err: {max_err:.3e})"
+    )
 
 
 # Test a few schemes with integrate_spherical. -- This is basically the same as above,
@@ -227,24 +232,26 @@ def test_scheme_cartesian(scheme, tol):
     ],
 )
 def test_scheme_spherical(scheme, tol):
-    def sph_tree(azimuthal, polar):
-        evaluator = orthopy.u3.EvalSpherical(polar, azimuthal, "quantum mechanic")
-        return numpy.concatenate([next(evaluator) for _ in range(scheme.degree + 2)])
-
     print(scheme)
 
-    vals = scheme.integrate_spherical(sph_tree)
-    # Put vals back into the tree structure:
-    # len(approximate[k]) == k+1
-    approximate = [vals[k ** 2 : (k + 1) ** 2] for k in range(scheme.degree + 2)]
+    # We're using the iterator here; it's much less memory-intensive than computing the
+    # full tree at once.
+    azimuthal, polar = scheme.azimuthal_polar.T
+    evaluator = orthopy.u3.EvalSpherical(polar, azimuthal, "quantum mechanic")
 
-    exact = [numpy.zeros(len(s)) for s in approximate]
-    exact[0][0] = numpy.sqrt(4 * numpy.pi)
+    k = 0
+    while True:
+        approximate = scheme.integrate_spherical(lambda pol, azi: next(evaluator))
+        exact = numpy.sqrt(4 * numpy.pi) if k == 0 else 0.0
+        err = numpy.abs(approximate - exact)
+        if numpy.any(err > tol):
+            break
+        k += 1
 
-    degree, _ = check_degree_ortho(approximate, exact, abs_tol=tol)
-
-    assert degree == scheme.degree, "{}  --  observed: {}, expected: {}".format(
-        scheme.name, degree, scheme.degree
+    max_err = numpy.max(err)
+    assert k - 1 == scheme.degree, (
+        f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
+        f"(max err: {max_err:.3e})"
     )
 
 
