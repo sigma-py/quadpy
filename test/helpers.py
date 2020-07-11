@@ -60,17 +60,16 @@ def find_equal(schemes):
                     break
             if is_equal:
                 found_equal = True
-                a = "'{}'".format(schemes[i].name)
+                a = f"'{schemes[i].name}'"
                 try:
-                    a += " ({})".format(schemes[i].citation.year)
+                    a += f" ({schemes[i].citation.year})"
                 except AttributeError:
                     pass
-                b = "'{}'".format(schemes[j].name)
+                b = f"'{schemes[j].name}'"
                 try:
-                    b += " ({})".format(schemes[j].citation.year)
+                    b += f" ({schemes[j].citation.year})"
                 except AttributeError:
                     pass
                 print(f"Schemes {a} and {b} are equal.")
         if found_equal:
             print()
-    return
