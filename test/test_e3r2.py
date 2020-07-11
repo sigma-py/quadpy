@@ -28,19 +28,18 @@ def test_scheme(scheme, tol=1.0e-14):
 
     evaluator = orthopy.enr2.Eval(scheme.points.T, "physicists")
 
-    degree = None
-    for k in range(scheme.degree + 2):
+    k = 0
+    while True:
         approximate = scheme.integrate(lambda x: next(evaluator)[0])
-        print(approximate)
         exact = numpy.pi ** (3 / 4) if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
         if numpy.any(err > tol):
-            degree = k - 1
             break
+        k += 1
 
     max_err = numpy.max(err)
-    assert degree >= scheme.degree, (
-        f"{scheme.name} -- observed: {degree}, expected: {scheme.degree} "
+    assert k - 1 == scheme.degree, (
+        f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
         f"(max err: {max_err:.3e})"
     )
 
