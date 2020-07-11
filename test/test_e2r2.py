@@ -1,7 +1,6 @@
 import numpy
 import orthopy
 import pytest
-from helpers import check_degree_ortho
 
 import quadpy
 
@@ -35,37 +34,21 @@ def test_scheme(scheme, tol=1.0e-14):
 
     print(scheme)
 
-    # degree = check_degree(
-    #     lambda poly: scheme.integrate(poly),
-    #     integrate_monomial_over_enr2,
-    #     2,
-    #     scheme.degree + 1,
-    #     tol=tol,
-    # )
-    # assert degree == scheme.degree, "{}    Observed: {}   expected: {}".format(
-    #     scheme.name, degree, scheme.degree
-    # )
+    evaluator = orthopy.enr2.Eval(scheme.points.T, "physicists")
 
-    def eval_orthopolys(x):
-        return numpy.concatenate(
-            orthopy.e2r2.tree(x, scheme.degree + 1, symbolic=False)
-        )
+    degree = None
+    for k in range(scheme.degree + 2):
+        approximate = scheme.integrate(lambda x: next(evaluator)[0])
+        exact = numpy.sqrt(numpy.pi) if k == 0 else 0.0
+        err = numpy.abs(approximate - exact)
+        if numpy.any(err > tol):
+            degree = k - 1
+            break
 
-    vals = scheme.integrate(eval_orthopolys)
-    # Put vals back into the tree structure:
-    # len(approximate[k]) == k+1
-    approximate = [
-        vals[k * (k + 1) // 2 : (k + 1) * (k + 2) // 2]
-        for k in range(scheme.degree + 2)
-    ]
-
-    exact = [numpy.zeros(k + 1) for k in range(scheme.degree + 2)]
-    exact[0][0] = numpy.sqrt(numpy.pi)
-
-    degree, _ = check_degree_ortho(approximate, exact, abs_tol=tol)
-
-    assert degree >= scheme.degree, "{} -- Observed: {}, expected: {}".format(
-        scheme.name, degree, scheme.degree
+    max_err = numpy.max(err)
+    assert degree >= scheme.degree, (
+        f"{scheme.name} -- observed: {degree}, expected: {scheme.degree} "
+        f"(max err: {max_err:.3e})"
     )
 
 
