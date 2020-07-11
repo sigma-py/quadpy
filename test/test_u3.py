@@ -155,7 +155,7 @@ def test_scheme_cartesian(scheme, tol):
         approximate = scheme.integrate(lambda x: next(evaluator), [0.0, 0.0, 0.0], 1.0)
         exact = numpy.sqrt(4 * numpy.pi) if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
-        if numpy.any(err > tol):
+        if numpy.any(err > scheme.test_tolerance):
             break
         k += 1
 
@@ -243,7 +243,7 @@ def test_scheme_spherical(scheme, tol):
         approximate = scheme.integrate_spherical(lambda theta_phi: next(evaluator))
         exact = numpy.sqrt(4 * numpy.pi) if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
-        if numpy.any(err > tol):
+        if numpy.any(err > scheme.test_tolerance):
             break
         k += 1
 
