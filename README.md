@@ -76,11 +76,13 @@ val = quadpy.t2.strang_fix_cowper_09().integrate(f, triangle)
 ```
 
 All schemes have
+<!--exdown-skip-->
 ```python
 scheme.points
 scheme.weights
 scheme.degree
 scheme.source
+scheme.test_tolerance
 
 scheme.show()
 scheme.integrate(
@@ -88,6 +90,7 @@ scheme.integrate(
 )
 ```
 and many have
+<!--exdown-skip-->
 ```python
 scheme.points_symbolic
 scheme.weights_symbolic
@@ -95,6 +98,7 @@ scheme.weights_symbolic
 
 quadpy is fully vectorized, so if you like to compute the integral of a function on many
 domains at once, you can provide them all in one `integrate()` call, e.g.,
+<!--exdown-skip-->
 ```python
 # shape (3, 5, 2), i.e., (corners, num_triangles, xy_coords)
 triangles = numpy.stack([
@@ -190,6 +194,7 @@ val = scheme.integrate(lambda x: x**2)
 
 Example:
 ```python
+import numpy
 import quadpy
 
 scheme = quadpy.u2.krylov(7)
@@ -237,6 +242,7 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
 
 Example:
 ```python
+import numpy
 import quadpy
 
 scheme = quadpy.t2.xiao_gimbutas_05()
@@ -319,6 +325,7 @@ The points are specified in an array of shape (2, 2, ...) such that `arr[0][0]`
 is the lower left corner, `arr[1][1]` the upper right. If your c2
 has its sides aligned with the coordinate axes, you can use the convenience
 function
+<!--exdown-skip-->
 ```python
 quadpy.c2.rectangle_points([x0, x1], [y0, y1])
 ```
@@ -381,7 +388,7 @@ import numpy
 import quadpy
 
 scheme = quadpy.u3.lebedev_019()
-scheme.show()
+# scheme.show()
 val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0, 0.0], 1.0)
 ```
 Integration on the sphere can also be done for function defined in spherical
@@ -390,7 +397,7 @@ coordinates:
 import numpy
 import quadpy
 
-scheme = quadpy.sphere.lebedev_019()
+scheme = quadpy.u3.lebedev_019()
 val = scheme.integrate_spherical(
     lambda azimuthal, polar: numpy.sin(azimuthal)**2 * numpy.sin(polar),
     )
@@ -411,7 +418,7 @@ import numpy
 import quadpy
 
 scheme = quadpy.s3.hammer_stroud_14_3()
-scheme.show()
+# scheme.show()
 val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
     [0.0, 0.0, 0.0], 1.0,
@@ -447,8 +454,8 @@ Example:
 import numpy
 import quadpy
 
-scheme = quadpy.t3.keast_10()
-scheme.show()
+scheme = quadpy.t3.keast_9()
+# scheme.show()
 val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
     [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.5, 0.7, 0.0], [0.3, 0.9, 1.0]],
@@ -475,7 +482,7 @@ import numpy
 import quadpy
 
 scheme = quadpy.c3.product(quadpy.c1.newton_cotes_closed(3))
-scheme.show()
+# scheme.show()
 val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
     quadpy.c3.cube_points([0.0, 1.0], [-0.3, 0.4], [1.0, 2.1]),
@@ -515,7 +522,7 @@ Example:
 import numpy
 import quadpy
 
-scheme = quadpy.w3.felippa_3
+scheme = quadpy.w3.felippa_3()
 val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
     [
@@ -538,7 +545,7 @@ Example:
 import quadpy
 
 scheme = quadpy.e3r.stroud_secrest_09()
-scheme.show()
+# scheme.show()
 val = scheme.integrate(lambda x: x[0]**2)
 ```
 
@@ -556,7 +563,7 @@ Example:
 import quadpy
 
 scheme = quadpy.e3r2.stroud_secrest_10a()
-scheme.show()
+# scheme.show()
 val = scheme.integrate(lambda x: x[0]**2)
 ```
 
@@ -575,8 +582,8 @@ Example:
 import numpy
 import quadpy
 
-scheme = quadpy.tn.GrundmannMoeller(dim, 3)
 dim = 4
+scheme = quadpy.tn.grundmann_moeller(dim, 3)
 val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
     numpy.array([
@@ -602,8 +609,8 @@ Example:
 import numpy
 import quadpy
 
-scheme = quadpy.un.dobrodeev_1978(dim)
 dim = 4
+scheme = quadpy.un.dobrodeev_1978(dim)
 val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
 ```
 
@@ -625,8 +632,8 @@ Example:
 import numpy
 import quadpy
 
-scheme = quadpy.sn.dobrodeev_1970(dim)
 dim = 4
+scheme = quadpy.sn.dobrodeev_1970(dim)
 val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
 ```
 
@@ -654,7 +661,7 @@ dim = 4
 scheme = quadpy.cn.stroud_cn_3_3(dim)
 val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
-    quadpy.cn.cn_points(
+    quadpy.cn.ncube_points(
         [0.0, 1.0], [0.1, 0.9], [-1.0, 1.0], [-1.0, -0.5]
         )
     )
@@ -670,8 +677,8 @@ Example:
 import quadpy
 
 dim = 4
-scheme = quadpy.enr.stroud_5_4(dim)
-val = scheme.integrate(lambda x: x[0]**2)
+scheme = quadpy.enr.stroud_enr_5_4(dim)
+val = scheme.integrate(lambda x: x[0] ** 2)
 ```
 
 ### nD space with weight function exp(-r<sup>2</sup>) (_E<sub>n</sub><sup>r<sup>2</sup></sup>_)
@@ -691,7 +698,7 @@ Example:
 import quadpy
 
 dim = 4
-scheme = quadpy.enr2.stroud_5_2(dim)
+scheme = quadpy.enr2.stroud_enr2_5_2(dim)
 val = scheme.integrate(lambda x: x[0]**2)
 ```
 
