@@ -1,7 +1,6 @@
 import numpy
 import orthopy
 import pytest
-import sympy
 
 import quadpy
 

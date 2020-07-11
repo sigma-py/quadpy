@@ -1,7 +1,6 @@
 import numpy
 import orthopy
 import pytest
-from helpers import check_degree_ortho
 from matplotlib import pyplot as plt
 
 import quadpy
