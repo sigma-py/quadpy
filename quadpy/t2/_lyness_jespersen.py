@@ -96,7 +96,7 @@ def lyness_jespersen_10():
         ),
         s1([4.971064537103375e-01 / 6, 6.365024991213939e-01, 5.314504984483216e-02]),
     )
-    return T2Scheme("Lyness-Jespersen 10", weights, points, 6, source, 1.239e-13)
+    return T2Scheme("Lyness-Jespersen 10", weights, points, 6, source, 1.240e-13)
 
 
 def lyness_jespersen_11():
