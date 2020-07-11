@@ -27,13 +27,14 @@ def test_spherical_harmonic(scheme):
         dphi dtheta = 1.
     """
 
-    def spherical_harmonic_11(azimuthal, polar):
+    def spherical_harmonic_11(theta_phi):
         # y00 = 1.0 / numpy.sqrt(4*numpy.pi)
+        theta, phi = theta_phi
         y11 = (
             -0.5
             * numpy.sqrt(3.0 / 2.0 / numpy.pi)
-            * numpy.exp(1j * azimuthal)
-            * numpy.sin(polar)
+            * numpy.exp(1j * phi)
+            * numpy.sin(theta)
         )
         return y11 * numpy.conjugate(y11)
 
@@ -235,12 +236,11 @@ def test_scheme_spherical(scheme, tol):
 
     # We're using the iterator here; it's much less memory-intensive than computing the
     # full tree at once.
-    azimuthal, polar = scheme.azimuthal_polar.T
-    evaluator = orthopy.u3.EvalSpherical(polar, azimuthal, "quantum mechanic")
+    evaluator = orthopy.u3.EvalSpherical(scheme.theta_phi.T, "quantum mechanic")
 
     k = 0
     while True:
-        approximate = scheme.integrate_spherical(lambda pol, azi: next(evaluator))
+        approximate = scheme.integrate_spherical(lambda theta_phi: next(evaluator))
         exact = numpy.sqrt(4 * numpy.pi) if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
         if numpy.any(err > tol):

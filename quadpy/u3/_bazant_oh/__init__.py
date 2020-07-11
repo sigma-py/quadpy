@@ -30,8 +30,8 @@ def _read(index):
     degree = data.pop("degree")
 
     points, weights = untangle2(data)
-    azimuthal_polar = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, azimuthal_polar, degree, source)
+    theta_phi = cartesian_to_spherical(points)
+    return U3Scheme(name, weights, points, theta_phi, degree, source)
 
 
 def bazant_oh_09():

@@ -33,8 +33,8 @@ def _read(index):
     points = data[:, :3]
     weights = data[:, 3] / 4 / numpy.pi
 
-    azimuthal_polar = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, azimuthal_polar, degree, source)
+    theta_phi = cartesian_to_spherical(points)
+    return U3Scheme(name, weights, points, theta_phi, degree, source)
 
 
 def fliege_maier_04():

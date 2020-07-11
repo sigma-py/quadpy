@@ -5,12 +5,13 @@ from ..helpers import QuadratureScheme
 
 
 class U3Scheme(QuadratureScheme):
-    def __init__(self, name, weights, points, azimuthal_polar, degree, source):
+    def __init__(self, name, weights, points, theta_phi, degree, source):
         self.domain = "U3"
         self.name = name
         self.degree = degree
         self.source = source
 
+        weights = numpy.asarray(weights)
         if weights.dtype == numpy.float64:
             self.weights = weights
         else:
@@ -18,6 +19,7 @@ class U3Scheme(QuadratureScheme):
             self.weights = weights.astype(numpy.float64)
             self.weights_symbolic = weights
 
+        points = numpy.asarray(points)
         if points.dtype == numpy.float64:
             self.points = points
         else:
@@ -25,12 +27,13 @@ class U3Scheme(QuadratureScheme):
             self.points = points.astype(numpy.float64)
             self.points_symbolic = points
 
-        if azimuthal_polar.dtype == numpy.float64:
-            self.azimuthal_polar = azimuthal_polar
+        theta_phi = numpy.asarray(theta_phi)
+        if theta_phi.dtype == numpy.float64:
+            self.theta_phi = theta_phi
         else:
-            assert azimuthal_polar.dtype in [numpy.dtype("O"), numpy.int_]
-            self.azimuthal_polar = azimuthal_polar.astype(numpy.float64)
-            self.azimuthal_polar_symbolic = azimuthal_polar
+            assert theta_phi.dtype in [numpy.dtype("O"), numpy.int_]
+            self.theta_phi = theta_phi.astype(numpy.float64)
+            self.theta_phi_symbolic = theta_phi
 
     def plot(self):
         from matplotlib import pyplot as plt
@@ -63,13 +66,11 @@ class U3Scheme(QuadratureScheme):
         return area(radius) * dot(ff, self.weights)
 
     def integrate_spherical(self, f, dot=numpy.dot):
-        """Quadrature where `f` is a function of the spherical coordinates
-        `azimuthal` and `polar` (in this order).
+        """Quadrature where `f` is a function of the spherical coordinates theta_phi
+        (polar, azimuthal, in this order).
         """
-        flt = numpy.vectorize(float)
-        rr = numpy.swapaxes(flt(self.azimuthal_polar), 0, -2)
-        ff = numpy.array(f(rr.T[0], rr.T[1]))
-        return area(1.0) * dot(ff, flt(self.weights))
+        ff = numpy.asarray(f(self.theta_phi.T))
+        return area(1.0) * dot(ff, self.weights)
 
 
 def area(radius):
@@ -117,7 +118,7 @@ def _plot_spherical_cap_mpl(ax, b, opening_angle, color, elevation=1.01):
 
 
 def cartesian_to_spherical(X):
-    return numpy.stack([numpy.arctan2(X[:, 1], X[:, 0]), numpy.arccos(X[:, 2])], axis=1)
+    return numpy.stack([numpy.arccos(X[:, 2]), numpy.arctan2(X[:, 1], X[:, 0])], axis=1)
 
 
 def _atan2_0(X):
@@ -133,7 +134,7 @@ def _atan2_0(X):
 
 def cartesian_to_spherical_sympy(X):
     vacos = numpy.vectorize(sympy.acos)
-    return numpy.stack([_atan2_0(X), vacos(X[:, 2])], axis=1)
+    return numpy.stack([vacos(X[:, 2]), _atan2_0(X)], axis=1)
 
 
 def _a1():
