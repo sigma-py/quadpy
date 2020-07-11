@@ -109,27 +109,21 @@ def test_scheme(scheme):
 
     print(scheme)
 
-    def eval_orthopolys(x):
-        evaluator = orthopy.s2.xu.Eval(x, "normal")
-        return numpy.concatenate([next(evaluator) for _ in range(scheme.degree + 2)])
+    evaluator = orthopy.s2.xu.Eval(scheme.points.T, "normal")
 
-    vals = scheme.integrate(eval_orthopolys, [0, 0], 1)
-    # Put vals back into the tree structure:
-    # len(approximate[k]) == k+1
-    approximate = [
-        vals[k * (k + 1) // 2 : (k + 1) * (k + 2) // 2]
-        for k in range(scheme.degree + 2)
-    ]
+    k = 0
+    while True:
+        approximate = scheme.integrate(lambda x: next(evaluator), [0.0, 0.0], 1.0)
+        exact = numpy.sqrt(numpy.pi) if k == 0 else 0.0
+        err = numpy.abs(approximate - exact)
+        if numpy.any(err > scheme.test_tolerance):
+            break
+        k += 1
 
-    exact = [numpy.zeros(k + 1) for k in range(scheme.degree + 2)]
-    exact[0][0] = numpy.sqrt(numpy.pi)
-
-    degree, err = check_degree_ortho(approximate, exact, abs_tol=scheme.test_tolerance)
-
-    assert (
-        degree >= scheme.degree
-    ), "{} -- Observed: {}, expected: {} (max err: {:.3e})".format(
-        scheme.name, degree, scheme.degree, err
+    max_err = numpy.max(err)
+    assert k - 1 == scheme.degree, (
+        f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
+        f"(max err: {max_err:.3e})"
     )
 
 

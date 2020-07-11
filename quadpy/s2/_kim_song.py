@@ -98,7 +98,7 @@ def kim_song_8():
     weights /= math.pi
     # ERR article claims degree 11
     warnings.warn("Kim-Song claim degree 11, but the scheme is only degree 1.")
-    return S2Scheme("Kim-Song 8", weights, points, 1, _source, 1.999e-13)
+    return S2Scheme("Kim-Song 8", weights, points, 1, _source, 2.001e-13)
 
 
 def kim_song_9():
