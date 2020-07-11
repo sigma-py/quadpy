@@ -1,7 +1,9 @@
+import math
+
 import numpy
 import pytest
-from helpers import check_degree_1d
 from mpmath import mp
+import orthopy
 
 import quadpy
 
@@ -60,43 +62,44 @@ def test_scheme(scheme):
     "scheme", [quadpy.c1.chebyshev_gauss_1(k) for k in range(1, 10)]
 )
 def test_cheb1_scheme(scheme):
-    # \int_-1^1 x^k / sqrt(1 - x^2)
-    # <https://github.com/nschloe/note-no-gamma>
-    def integrate_exact(k):
-        if k == 0:
-            return numpy.pi
-        elif k == 1:
-            return 0
-        return integrate_exact(k - 2) * (k - 1) / k
+    evaluator = orthopy.c1.chebyshev1.Eval(scheme.points, "normal")
 
-    degree = check_degree_1d(
-        lambda poly: scheme.integrate(poly, numpy.array([[-1.0], [1.0]])),
-        integrate_exact,
-        scheme.degree + 1,
+    k = 0
+    while True:
+        approximate = scheme.integrate(lambda x: next(evaluator), [-1, 1])
+        exact = math.sqrt(math.pi) if k == 0 else 0.0
+        err = numpy.abs(approximate - exact)
+        if numpy.any(err > 1.0e-14):
+            break
+        k += 1
+
+    max_err = numpy.max(err)
+    assert k - 1 >= scheme.degree, (
+        f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
+        f"(max err: {max_err:.3e})"
     )
-    assert degree >= scheme.degree
 
 
 @pytest.mark.parametrize(
     "scheme", [quadpy.c1.chebyshev_gauss_2(k) for k in range(1, 10)]
 )
 def test_cheb2_scheme(scheme):
-    # \int_-1^1 x^k * sqrt(1 - x^2)
-    # <https://github.com/nschloe/note-no-gamma>
-    def integrate_exact(k):
-        assert k >= 0
-        if k == 0:
-            return 0.5 * numpy.pi
-        elif k == 1:
-            return 0
-        return integrate_exact(k - 2) * (k - 1) / (k + 2)
+    evaluator = orthopy.c1.chebyshev2.Eval(scheme.points, "normal")
 
-    degree = check_degree_1d(
-        lambda poly: scheme.integrate(poly, numpy.array([[-1.0], [1.0]])),
-        integrate_exact,
-        scheme.degree + 1,
+    k = 0
+    while True:
+        approximate = scheme.integrate(lambda x: next(evaluator), [-1, 1])
+        exact = math.sqrt(math.pi / 2) if k == 0 else 0.0
+        err = numpy.abs(approximate - exact)
+        if numpy.any(err > 1.0e-14):
+            break
+        k += 1
+
+    max_err = numpy.max(err)
+    assert k - 1 >= scheme.degree, (
+        f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
+        f"(max err: {max_err:.3e})"
     )
-    assert degree >= scheme.degree
 
 
 @pytest.mark.parametrize("scheme", [quadpy.c1.newton_cotes_closed(5)])
