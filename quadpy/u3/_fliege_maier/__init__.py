@@ -15,7 +15,7 @@ source = online(
 )
 
 
-def _read(index):
+def _read(index, tol):
     warnings.warn("The Fliege-Maier schemes are only single-precision.")
 
     name = f"FliegeMaier({index})"
@@ -34,20 +34,20 @@ def _read(index):
     weights = data[:, 3] / 4 / numpy.pi
 
     theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source)
+    return U3Scheme(name, weights, points, theta_phi, degree, source, tol)
 
 
 def fliege_maier_04():
-    return _read("4")
+    return _read("4", 1.564e-07)
 
 
 def fliege_maier_09():
-    return _read("9")
+    return _read("9", 1.602e-12)
 
 
 def fliege_maier_16():
-    return _read("16")
+    return _read("16", 7.773e-12)
 
 
 def fliege_maier_25():
-    return _read("25")
+    return _read("25", 7.886e-12)
