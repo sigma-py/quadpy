@@ -399,7 +399,7 @@ import quadpy
 
 scheme = quadpy.u3.lebedev_019()
 val = scheme.integrate_spherical(
-    lambda azimuthal, polar: numpy.sin(azimuthal)**2 * numpy.sin(polar),
+    lambda theta_phi: numpy.sin(theta_phi[1]) ** 2 * numpy.sin(theta_phi[0]),
     )
 ```
 

@@ -21,8 +21,8 @@ def albrecht_collatz_1():
     data = [(frac(1, 12), pm_roll([r, s, 0]))]
 
     points, weights = untangle(data)
-    azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return U3Scheme("Albrecht-Collatz 1", weights, points, azimuthal_polar, 5, source)
+    theta_phi = cartesian_to_spherical_sympy(points)
+    return U3Scheme("Albrecht-Collatz 1", weights, points, theta_phi, 5, source)
 
 
 def albrecht_collatz_2():
@@ -31,8 +31,8 @@ def albrecht_collatz_2():
     data = [(frac(8, 120), fsd(3, (r, 1))), (frac(9, 120), pm([s, s, s]))]
 
     points, weights = untangle(data)
-    azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return U3Scheme("Albrecht-Collatz 2", weights, points, azimuthal_polar, 5, source)
+    theta_phi = cartesian_to_spherical_sympy(points)
+    return U3Scheme("Albrecht-Collatz 2", weights, points, theta_phi, 5, source)
 
 
 def albrecht_collatz_3():
@@ -41,8 +41,8 @@ def albrecht_collatz_3():
     data = [(frac(1, 30), fsd(3, (r, 1))), (frac(2, 30), fsd(3, (s, 2)))]
 
     points, weights = untangle(data)
-    azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return U3Scheme("Albrecht-Collatz 3", weights, points, azimuthal_polar, 5, source)
+    theta_phi = cartesian_to_spherical_sympy(points)
+    return U3Scheme("Albrecht-Collatz 3", weights, points, theta_phi, 5, source)
 
 
 def albrecht_collatz_4():
@@ -54,8 +54,8 @@ def albrecht_collatz_4():
     ]
 
     points, weights = untangle(data)
-    azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return U3Scheme("Albrecht-Collatz 4", weights, points, azimuthal_polar, 5, source)
+    theta_phi = cartesian_to_spherical_sympy(points)
+    return U3Scheme("Albrecht-Collatz 4", weights, points, theta_phi, 5, source)
 
 
 def albrecht_collatz_5():
@@ -70,5 +70,5 @@ def albrecht_collatz_5():
     ]
 
     points, weights = untangle(data)
-    azimuthal_polar = cartesian_to_spherical_sympy(points)
-    return U3Scheme("Albrecht-Collatz 5", weights, points, azimuthal_polar, 7, source)
+    theta_phi = cartesian_to_spherical_sympy(points)
+    return U3Scheme("Albrecht-Collatz 5", weights, points, theta_phi, 7, source)

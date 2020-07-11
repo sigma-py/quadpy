@@ -78,8 +78,8 @@ def _read(index, source):
     degree = data.pop("degree")
 
     points, weights = untangle2(data)
-    azimuthal_polar = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, azimuthal_polar, degree, source)
+    theta_phi = cartesian_to_spherical(points)
+    return U3Scheme(name, weights, points, theta_phi, degree, source)
 
 
 def lebedev_003a():
