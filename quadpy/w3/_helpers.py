@@ -9,6 +9,7 @@ class W3Scheme(QuadratureScheme):
         self.domain = "W3"
 
     def integrate(self, f, wedge, dot=numpy.dot):
+        wedge = numpy.asarray(wedge)
         flt = numpy.vectorize(float)
         x = _transform(flt(self.points).T, wedge)
         det = _get_detJ(flt(self.points).T, wedge)
