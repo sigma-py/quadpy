@@ -1,7 +1,6 @@
 import numpy
 import orthopy
 import pytest
-import sympy
 
 import quadpy
 
@@ -167,45 +166,8 @@ schemes = (
 )
 
 
-def _integrate_exact(f, c2):
-    xi = sympy.DeferredVector("xi")
-    pxi = (
-        c2[0] * 0.25 * (1.0 + xi[0]) * (1.0 + xi[1])
-        + c2[1] * 0.25 * (1.0 - xi[0]) * (1.0 + xi[1])
-        + c2[2] * 0.25 * (1.0 - xi[0]) * (1.0 - xi[1])
-        + c2[3] * 0.25 * (1.0 + xi[0]) * (1.0 - xi[1])
-    )
-    pxi = [sympy.expand(pxi[0]), sympy.expand(pxi[1])]
-    # determinant of the transformation matrix
-    det_J = +sympy.diff(pxi[0], xi[0]) * sympy.diff(pxi[1], xi[1]) - sympy.diff(
-        pxi[1], xi[0]
-    ) * sympy.diff(pxi[0], xi[1])
-    # we cannot use abs(), see <https://github.com/sympy/sympy/issues/4212>.
-    abs_det_J = sympy.Piecewise((det_J, det_J >= 0), (-det_J, det_J < 0))
-
-    g_xi = f(pxi)
-
-    exact = sympy.integrate(
-        sympy.integrate(abs_det_J * g_xi, (xi[1], -1, 1)), (xi[0], -1, 1)
-    )
-    return float(exact)
-
-
-def _integrate_exact2(k, x0, x1, y0, y1):
-    return (
-        1.0
-        / (k[0] + 1)
-        * (x1 ** (k[0] + 1) - x0 ** (k[0] + 1))
-        * 1.0
-        / (k[1] + 1)
-        * (y1 ** (k[1] + 1) - y0 ** (k[1] + 1))
-    )
-
-
 @pytest.mark.parametrize("scheme", schemes)
 def test_scheme(scheme):
-    # Test integration until we get to a polynomial degree `d` that can no longer be
-    # integrated exactly. The scheme's degree is `d-1`.
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
@@ -215,18 +177,18 @@ def test_scheme(scheme):
 
     evaluator = orthopy.cn.Eval(scheme.points.T)
 
-    degree = None
-    for k in range(scheme.degree + 2):
+    k = 0
+    while True:
         approximate = scheme.integrate(lambda x: next(evaluator)[0], quad)
         exact = 2.0 if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
         if numpy.any(err > scheme.test_tolerance):
-            degree = k - 1
             break
+        k += 1
 
     max_err = numpy.max(err)
-    assert degree >= scheme.degree, (
-        f"{scheme.name} -- observed: {degree}, expected: {scheme.degree} "
+    assert k - 1 == scheme.degree, (
+        f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
         f"(max err: {max_err:.3e})"
     )
 

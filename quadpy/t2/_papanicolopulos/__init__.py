@@ -61,7 +61,7 @@ def papanicolopulos_sym_7():
 
 def papanicolopulos_sym_8():
     return T2Scheme(
-        "Papanicolopulos 8 (full symmetry)", *_read("full08.json"), 1.067e-14
+        "Papanicolopulos 8 (full symmetry)", *_read("full08.json"), 1.156e-14
     )
 
 

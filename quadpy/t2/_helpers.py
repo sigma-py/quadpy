@@ -34,7 +34,6 @@ class T2Scheme(TnScheme):
         plot_disks(plt, transformed_pts, self.weights, vol)
 
         plt.axis("equal")
-        return
 
 
 def _s3(symbolic):

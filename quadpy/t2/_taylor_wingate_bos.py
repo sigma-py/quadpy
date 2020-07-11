@@ -56,7 +56,7 @@ def taylor_wingate_bos_5():
         ),
     )
     weights /= 2
-    return T2Scheme("Taylor-Wingate-Bos 5", weights, points, 9, source, 4.423e-13)
+    return T2Scheme("Taylor-Wingate-Bos 5", weights, points, 9, source, 4.425e-13)
 
 
 def taylor_wingate_bos_8():
@@ -77,4 +77,4 @@ def taylor_wingate_bos_8():
         ),
     )
     weights /= 2
-    return T2Scheme("Taylor-Wingate-Bos 8", weights, points, 14, source, 6.336e-13)
+    return T2Scheme("Taylor-Wingate-Bos 8", weights, points, 14, source, 6.339e-13)
