@@ -27,6 +27,8 @@
     <https://doi.org/10.1088/0266-5611/3/4/010>.
 """
 
+import math
+
 import numpy
 import sympy
 from mpmath import mp
@@ -70,7 +72,12 @@ def coefficients_from_gauss(points, weights):
     _, d, e, _, info = sytrd(A, lwork=lwork)
     assert info == 0
 
-    return d[:-1][::-1], e[::-1] ** 2
+    alpha = d[:-1][::-1]
+    beta = e[::-1] ** 2
+    int_1 = beta[0]
+    beta[0] = math.nan
+
+    return alpha, beta, int_1
 
 
 def _sympy_tridiag(a, b):
