@@ -28,7 +28,7 @@ def williams_shunn_jameson_3():
     weights, points = s2(
         [0.109951743655333, 0.091576213509780], [0.223381589678000, 0.445948490915964]
     )
-    return T2Scheme("Williams-Shunn-Jameson 3", weights, points, 4, source, 7.811e-14)
+    return T2Scheme("Williams-Shunn-Jameson 3", weights, points, 4, source, 7.814e-14)
 
 
 def williams_shunn_jameson_4():
