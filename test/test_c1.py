@@ -1,9 +1,9 @@
 import numpy
 import pytest
+from helpers import check_degree_1d
 from mpmath import mp
 
 import quadpy
-from helpers import check_degree_1d
 
 
 @pytest.mark.parametrize(

@@ -1,9 +1,9 @@
 import math
 
 import numpy
+import orthopy
 from scipy.optimize import least_squares, lsq_linear, minimize
 
-import orthopy
 import quadpy
 from quadpy.enr._helpers import integrate_monomial_over_enr
 from quadpy.helpers import untangle
@@ -327,7 +327,7 @@ def heo_xu_19_2():
 
 
 def stenger_7a_5():
-    from quadpy.helpers import fsd, untangle, z, get_all_exponents
+    from quadpy.helpers import fsd, get_all_exponents, untangle, z
     from quadpy.nball._helpers import integrate_monomial_over_unit_nball
 
     def f(x):
@@ -387,7 +387,7 @@ def stenger_7a_5():
 
 
 def stenger_11a_5():
-    from quadpy.helpers import fsd, untangle, z, get_all_exponents
+    from quadpy.helpers import fsd, get_all_exponents, untangle, z
     from quadpy.nball._helpers import integrate_monomial_over_unit_nball
 
     def f(x):
@@ -474,7 +474,7 @@ def stenger_11a_5():
 
 
 def stenger_11b_3():
-    from quadpy.helpers import fsd, untangle, z, get_all_exponents
+    from quadpy.helpers import fsd, get_all_exponents, untangle, z
     from quadpy.nball._helpers import integrate_monomial_over_unit_nball
 
     def f(x):

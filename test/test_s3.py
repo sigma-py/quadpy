@@ -1,9 +1,9 @@
-import matplotlib.pyplot as plt
 import numpy
 import pytest
+from helpers import check_degree
+from matplotlib import pyplot as plt
 
 import quadpy
-from helpers import check_degree
 from quadpy.sn._helpers import integrate_monomial_over_nball
 
 schemes = [

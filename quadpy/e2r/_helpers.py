@@ -11,7 +11,7 @@ class E2rScheme(QuadratureScheme):
         self.domain = "E2r"
 
     def plot(self, show_axes=False):
-        import matplotlib.pyplot as plt
+        from matplotlib import pyplot as plt
 
         ax = plt.gca()
         plt.axis("equal")

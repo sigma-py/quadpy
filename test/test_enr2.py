@@ -1,9 +1,8 @@
 import numpy
+import orthopy
 import pytest
 
 import quadpy
-from helpers import check_degree
-from quadpy.enr2._helpers import integrate_monomial_over_enr2
 
 
 @pytest.mark.parametrize(
@@ -60,20 +59,24 @@ def test_scheme(scheme):
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
     print(scheme)
-
     n = scheme.dim
-    degree, err = check_degree(
-        lambda poly: scheme.integrate(poly),
-        integrate_monomial_over_enr2,
-        n,
-        scheme.degree + 1,
-        tol=scheme.test_tolerance,
-    )
-    print(scheme.test_tolerance)
-    assert (
-        degree >= scheme.degree
-    ), "{} (dim={}) -- Observed: {}, expected: {} (max err: {:.3e})".format(
-        scheme.name, n, degree, scheme.degree, err
+
+    evaluator = orthopy.enr2.Eval(scheme.points.T, "physicists")
+
+    degree = None
+    for k in range(scheme.degree + 2):
+        approximate = scheme.integrate(lambda x: next(evaluator)[0])
+        print(approximate)
+        exact = numpy.pi ** (n / 4) if k == 0 else 0.0
+        err = numpy.abs(approximate - exact)
+        if numpy.any(err > 1.0e-11):
+            degree = k - 1
+            break
+
+    max_err = numpy.max(err)
+    assert degree >= scheme.degree, (
+        f"{scheme.name} -- observed: {degree}, expected: {scheme.degree} "
+        f"(max err: {max_err:.3e})"
     )
 
 

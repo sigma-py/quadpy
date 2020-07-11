@@ -17,7 +17,7 @@ class E1rScheme(QuadratureScheme):
         return dot(fx, self.weights)
 
     def plot(self, show_axes=False):
-        import matplotlib.pyplot as plt
+        from matplotlib import pyplot as plt
 
         if not show_axes:
             plt.gca().set_axis_off()

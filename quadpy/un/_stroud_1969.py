@@ -55,4 +55,4 @@ def stroud_1969(n):
 
     points, weights = untangle(data)
     weights /= volume_nsphere(n - 1)
-    return UnScheme("Stroud 1969", n, weights, points, degree, source, 1.414e-14)
+    return UnScheme("Stroud 1969", n, weights, points, degree, source, 1.428e-14)

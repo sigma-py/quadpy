@@ -16,7 +16,7 @@ class C2Scheme(CnScheme):
         """Shows the quadrature points on a given quad. The area of the disks
         around the points coincides with their weights.
         """
-        import matplotlib.pyplot as plt
+        from matplotlib import pyplot as plt
 
         def plot_segment(a, b):
             plt.plot((a[0], b[0]), (a[1], b[1]), "-k")

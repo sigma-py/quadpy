@@ -1,11 +1,10 @@
-import matplotlib.pyplot as plt
 import numpy
-import pytest
-
 import orthopy
-import quadpy
+import pytest
 from helpers import check_degree_ortho
-from quadpy.u3._helpers import cartesian_to_spherical
+from matplotlib import pyplot as plt
+
+import quadpy
 
 # Note
 # ====
@@ -142,42 +141,24 @@ def test_spherical_harmonic(scheme):
     ],
 )
 def test_scheme_cartesian(scheme, tol):
-    def sph_tree_cartesian(x):
-        azimuthal, polar = cartesian_to_spherical(x.T).T
-        return numpy.concatenate(
-            orthopy.sphere.tree_sph(
-                polar, azimuthal, scheme.degree + 1, standardization="quantum mechanic"
-            )
-        )
-
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
-    # We're using the spherical harmonic iterator here; it's much less memory-intensive
-    # than computing the full tree at once. Unfortunately, we cannot use
-    # scheme.integrate with it, but that's okay.
-    azimuthal, polar = cartesian_to_spherical(scheme.points).T
-    sph_iterator = orthopy.sphere.Iterator(
-        polar, azimuthal, standardization="quantum mechanic"
-    )
+    # We're using the iterator here; it's much less memory-intensive than computing the
+    # full tree at once.
+    evaluator = orthopy.u3.EvalCartesian(scheme.points.T, "quantum mechanic")
+
     degree = None
     for k in range(scheme.degree + 2):
-        vals = next(sph_iterator)
-        approximate = 4 * numpy.pi * numpy.dot(vals, scheme.weights)
-
-        # construct exact value
-        if k == 0:
-            exact = [numpy.sqrt(4 * numpy.pi)]
-        else:
-            exact = numpy.zeros_like(approximate)
-
+        approximate = scheme.integrate(lambda x: next(evaluator), [0.0, 0.0, 0.0], 1.0)
+        exact = numpy.sqrt(4 * numpy.pi) if k == 0 else 0.0
         if numpy.any(numpy.abs(approximate - exact) > tol):
             degree = k - 1
             break
 
-    assert degree == scheme.degree, "{}  --  Observed: {}, expected: {}".format(
-        scheme.name, degree, scheme.degree
-    )
+    assert (
+        degree == scheme.degree
+    ), f"{scheme.name}  --  observed: {degree}, expected: {scheme.degree}"
 
 
 # Test a few schemes with integrate_spherical. -- This is basically the same as above,
@@ -247,11 +228,8 @@ def test_scheme_cartesian(scheme, tol):
 )
 def test_scheme_spherical(scheme, tol):
     def sph_tree(azimuthal, polar):
-        return numpy.concatenate(
-            orthopy.sphere.tree_sph(
-                polar, azimuthal, scheme.degree + 1, standardization="quantum mechanic"
-            )
-        )
+        evaluator = orthopy.u3.EvalSpherical(polar, azimuthal, "quantum mechanic")
+        return numpy.concatenate([next(evaluator) for _ in range(scheme.degree + 2)])
 
     print(scheme)
 

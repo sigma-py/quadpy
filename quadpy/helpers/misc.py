@@ -141,8 +141,8 @@ def get_nsimplex_points(n, sqrt, frac):
 
 def prod(lst):
     if sys.version < "3.8":
-        from functools import reduce
         import operator
+        from functools import reduce
 
         return reduce(operator.mul, lst, 1)
     return math.prod(lst)

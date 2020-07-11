@@ -96,7 +96,7 @@ def dunavant_06():
         ),
     )
     weights /= 4
-    return C2Scheme("Dunavant 6", weights, points, 13, source, 5.186e-14)
+    return C2Scheme("Dunavant 6", weights, points, 13, source, 5.219e-14)
 
 
 def dunavant_07():
@@ -141,7 +141,7 @@ def dunavant_08():
         ),
     )
     weights /= 4
-    return C2Scheme("Dunavant 8", weights, points, 17, source, 1.389e-14)
+    return C2Scheme("Dunavant 8", weights, points, 17, source, 1.494e-14)
 
 
 def dunavant_09():
@@ -193,4 +193,4 @@ def dunavant_10():
         ),
     )
     weights /= 4
-    return C2Scheme("Dunavant 10", weights, points, 21, source, 2.244e-14)
+    return C2Scheme("Dunavant 10", weights, points, 21, source, 2.246e-14)

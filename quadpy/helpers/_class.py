@@ -23,7 +23,7 @@ class QuadratureScheme:
             self.points_symbolic = points
 
     def savefig(self, filename, *args, **kwargs):
-        import matplotlib.pyplot as plt
+        from matplotlib import pyplot as plt
 
         self.plot(*args, **kwargs)
         # mpl keeps a hidden background patch that renders bbox_inches ineffective.
@@ -31,7 +31,7 @@ class QuadratureScheme:
         plt.savefig(filename, transparent=True, bbox_inches="tight", pad_inches=0)
 
     def show(self, *args, **kwargs):
-        import matplotlib.pyplot as plt
+        from matplotlib import pyplot as plt
 
         self.plot(*args, **kwargs)
         plt.show()

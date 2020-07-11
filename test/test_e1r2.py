@@ -1,8 +1,8 @@
 import numpy
+import orthopy
 import pytest
 from mpmath import mp
 
-import orthopy
 import quadpy
 
 
@@ -17,33 +17,27 @@ def test_scheme(scheme, tol=1.0e-14):
 
     print(scheme)
 
-    def eval_orthopolys(x):
-        return orthopy.e1r2.tree(
-            x, scheme.degree + 1, standardization="normal", symbolic=False
-        )
+    evaluator = orthopy.e1r2.Eval(scheme.points.T, "physicists", "normal")
 
-    approximate = scheme.integrate(eval_orthopolys)
+    degree = None
+    for k in range(scheme.degree + 2):
+        approximate = scheme.integrate(lambda x: next(evaluator))
+        exact = numpy.sqrt(numpy.sqrt(numpy.pi)) if k == 0 else 0.0
+        err = numpy.abs(approximate - exact)
+        if numpy.any(err > tol):
+            degree = k - 1
+            break
 
-    exact = numpy.zeros(approximate.shape)
-    exact[0] = numpy.sqrt(numpy.sqrt(numpy.pi))
-
-    diff = numpy.abs(approximate - exact)
-    k, _ = numpy.where(diff > tol)
-    assert len(k) > 0, "{} -- Degree is higher than {}.".format(
-        scheme.name, scheme.degree
+    max_err = numpy.max(err)
+    assert degree >= scheme.degree, (
+        f"{scheme.name} -- observed: {degree}, expected: {scheme.degree} "
+        f"(max err: {max_err:.3e})"
     )
-    degree = k[0] - 1
-
-    assert degree == scheme.degree, "{} -- Observed: {}   expected: {}".format(
-        scheme.name, degree, scheme.degree
-    )
-    return
 
 
 @pytest.mark.parametrize("scheme", [quadpy.e1r2.gauss_hermite(2)])
 def test_show(scheme):
     scheme.show()
-    return
 
 
 def test_hermite_mpmath():
@@ -60,7 +54,6 @@ def test_hermite_mpmath():
     w2 = mp.sqrt(mp.pi) / 4 / (3 + mp.sqrt(6))
 
     assert (abs(scheme.weights - [w2, w1, w1, w2]) < tol).all()
-    return
 
 
 if __name__ == "__main__":

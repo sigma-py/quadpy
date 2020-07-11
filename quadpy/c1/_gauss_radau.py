@@ -1,5 +1,4 @@
 import numpy
-
 import orthopy
 
 from ..tools import scheme_from_rc
@@ -9,17 +8,14 @@ from ._helpers import C1Scheme
 def gauss_radau(n, a=0.0, b=0.0):
     assert n >= 2
     degree = 2 * n - 1
-    _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.jacobi(
-        n, a, b, "monic"
-    )
-    flt = numpy.vectorize(float)
-    alpha = flt(alpha)
-    beta = flt(beta)
-    points, weights = _radau(alpha, beta, -1.0)
+
+    rc = orthopy.c1.jacobi.RecurrenceCoefficients("monic", a, b, symbolic=False)
+    _, alpha, beta = numpy.array([rc[k] for k in range(n)]).T
+    points, weights = _radau(alpha, beta, rc.int_1, -1.0)
     return C1Scheme("Gauss-Radau", degree, weights, points)
 
 
-def _radau(alpha, beta, xr):
+def _radau(alpha, beta, int_1, xr):
     """From <http://www.scientificpython.net/pyblog/radau-quadrature>:
     Compute the Radau nodes and weights with the preassigned node xr.
 
@@ -31,6 +27,8 @@ def _radau(alpha, beta, xr):
     """
     from scipy.linalg import solve_banded
 
+    beta[0] = int_1
+
     n = len(alpha) - 1
     f = numpy.zeros(n)
     f[-1] = beta[-1]
@@ -39,5 +37,5 @@ def _radau(alpha, beta, xr):
     delta = solve_banded((1, 1), J, f)
     alphar = alpha.copy()
     alphar[-1] = xr + delta[-1]
-    x, w = scheme_from_rc(alphar, beta, mode="numpy")
+    x, w = scheme_from_rc(alphar, beta, int_1, mode="numpy")
     return x, w
