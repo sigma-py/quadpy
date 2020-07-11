@@ -388,7 +388,7 @@ import numpy
 import quadpy
 
 scheme = quadpy.u3.lebedev_019()
-scheme.show()
+# scheme.show()
 val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0, 0.0], 1.0)
 ```
 Integration on the sphere can also be done for function defined in spherical
@@ -418,7 +418,7 @@ import numpy
 import quadpy
 
 scheme = quadpy.s3.hammer_stroud_14_3()
-scheme.show()
+# scheme.show()
 val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
     [0.0, 0.0, 0.0], 1.0,
@@ -455,7 +455,7 @@ import numpy
 import quadpy
 
 scheme = quadpy.t3.keast_9()
-scheme.show()
+# scheme.show()
 val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
     [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.5, 0.7, 0.0], [0.3, 0.9, 1.0]],
@@ -482,7 +482,7 @@ import numpy
 import quadpy
 
 scheme = quadpy.c3.product(quadpy.c1.newton_cotes_closed(3))
-scheme.show()
+# scheme.show()
 val = scheme.integrate(
     lambda x: numpy.exp(x[0]),
     quadpy.c3.cube_points([0.0, 1.0], [-0.3, 0.4], [1.0, 2.1]),
@@ -545,7 +545,7 @@ Example:
 import quadpy
 
 scheme = quadpy.e3r.stroud_secrest_09()
-scheme.show()
+# scheme.show()
 val = scheme.integrate(lambda x: x[0]**2)
 ```
 
@@ -563,7 +563,7 @@ Example:
 import quadpy
 
 scheme = quadpy.e3r2.stroud_secrest_10a()
-scheme.show()
+# scheme.show()
 val = scheme.integrate(lambda x: x[0]**2)
 ```
 
