@@ -62,7 +62,7 @@ def heo_xu_17():
     ]
     points, weights = untangle(data)
     theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source)
+    return U3Scheme(name, weights, points, theta_phi, degree, source, 3.501e-14)
 
 
 def heo_xu_19_1():
@@ -79,7 +79,7 @@ def heo_xu_19_1():
     ]
     points, weights = untangle(data)
     theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source)
+    return U3Scheme(name, weights, points, theta_phi, degree, source, 7.474e-14)
 
 
 def heo_xu_19_2():
@@ -95,7 +95,7 @@ def heo_xu_19_2():
     ]
     points, weights = untangle(data)
     theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source)
+    return U3Scheme(name, weights, points, theta_phi, degree, source, 1.125e-13)
 
 
 def heo_xu_21_1():
@@ -115,7 +115,7 @@ def heo_xu_21_1():
     ]
     points, weights = untangle(data)
     theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source)
+    return U3Scheme(name, weights, points, theta_phi, degree, source, 1.250e-10)
 
 
 def heo_xu_21_2():
@@ -135,7 +135,7 @@ def heo_xu_21_2():
     ]
     points, weights = untangle(data)
     theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source)
+    return U3Scheme(name, weights, points, theta_phi, degree, source, 1.024e-10)
 
 
 def heo_xu_21_3():
@@ -154,7 +154,7 @@ def heo_xu_21_3():
     ]
     points, weights = untangle(data)
     theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source)
+    return U3Scheme(name, weights, points, theta_phi, degree, source, 1.318e-10)
 
 
 def heo_xu_21_4():
@@ -172,7 +172,7 @@ def heo_xu_21_4():
     ]
     points, weights = untangle(data)
     theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source)
+    return U3Scheme(name, weights, points, theta_phi, degree, source, 9.801e-11)
 
 
 def heo_xu_21_5():
@@ -190,7 +190,7 @@ def heo_xu_21_5():
     ]
     points, weights = untangle(data)
     theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source)
+    return U3Scheme(name, weights, points, theta_phi, degree, source, 1.198e-10)
 
 
 def heo_xu_21_6():

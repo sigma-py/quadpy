@@ -5,11 +5,12 @@ from ..helpers import QuadratureScheme
 
 
 class U3Scheme(QuadratureScheme):
-    def __init__(self, name, weights, points, theta_phi, degree, source):
+    def __init__(self, name, weights, points, theta_phi, degree, source, tol=1.0e-14):
         self.domain = "U3"
         self.name = name
         self.degree = degree
         self.source = source
+        self.test_tolerance = tol
 
         weights = numpy.asarray(weights)
         if weights.dtype == numpy.float64:
