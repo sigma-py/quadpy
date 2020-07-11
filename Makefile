@@ -26,13 +26,11 @@ clean:
 	@find . | grep -E "(__pycache__|\.pyc|\.pyo$\)" | xargs rm -rf
 	@rm -rf *.egg-info/ build/ dist/ MANIFEST
 
-black:
-	black .
-
 format:
-	isort -rc -y
+	isort .
 	black .
 
 lint:
+	# isort -c .
 	black --check .
 	flake8 .

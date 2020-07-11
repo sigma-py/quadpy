@@ -1,9 +1,9 @@
 import numpy
 import pytest
 import sympy
+from helpers import check_degree
 
 import quadpy
-from helpers import check_degree
 from quadpy.tn._helpers import integrate_monomial_over_unit_simplex
 
 schemes = [

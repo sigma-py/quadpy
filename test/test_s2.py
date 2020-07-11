@@ -1,9 +1,9 @@
 import numpy
-import pytest
-
 import orthopy
-import quadpy
+import pytest
 from helpers import check_degree_ortho
+
+import quadpy
 
 schemes = [
     quadpy.s2.albrecht_1(),
@@ -109,21 +109,9 @@ def test_scheme(scheme):
 
     print(scheme)
 
-    # degree = check_degree(
-    #     lambda poly: scheme.integrate(poly, [0.0, 0.0], 1.0),
-    #     integrate_monomial_over_unit_nball,
-    #     2,
-    #     scheme.degree + 1,
-    #     tol=tol,
-    # )
-    # assert degree == scheme.degree, "{}  -- Observed: {}   expected: {}".format(
-    #     scheme.name, degree, scheme.degree
-    # )
-
     def eval_orthopolys(x):
-        return numpy.concatenate(
-            orthopy.disk.tree(x, scheme.degree + 1, symbolic=False)
-        )
+        evaluator = orthopy.s2.xu.Eval(x, "normal")
+        return numpy.concatenate([next(evaluator) for _ in range(scheme.degree + 2)])
 
     vals = scheme.integrate(eval_orthopolys, [0, 0], 1)
     # Put vals back into the tree structure:

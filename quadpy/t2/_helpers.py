@@ -18,7 +18,7 @@ class T2Scheme(TnScheme):
         """Shows the quadrature points on a given triangle. The size of the circles
         around the points coincides with their weights.
         """
-        import matplotlib.pyplot as plt
+        from matplotlib import pyplot as plt
 
         plt.plot(triangle[:, 0], triangle[:, 1], "-k")
         plt.plot(

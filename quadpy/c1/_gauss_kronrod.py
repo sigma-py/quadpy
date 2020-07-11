@@ -2,7 +2,6 @@ import math
 from collections import namedtuple
 
 import numpy
-
 import orthopy
 
 from ..helpers import article
@@ -40,14 +39,13 @@ def gauss_kronrod(n, a=0, b=0):
     # TODO replace math.ceil by -(-k//n)
     length = int(math.ceil(3 * n / 2.0)) + 1
     degree = 2 * length + 1
-    _, _, alpha, beta = orthopy.line_segment.recurrence_coefficients.jacobi(
-        length, a, b, "monic"
-    )
-    flt = numpy.vectorize(float)
-    alpha = flt(alpha)
-    beta = flt(beta)
+
+    rc = orthopy.c1.jacobi.RecurrenceCoefficients("monic", a, b, symbolic=False)
+    _, alpha, beta = numpy.array([rc[k] for k in range(length)]).T
+    beta[0] = rc.int_1
+
     a, b = _r_kronrod(n, alpha, beta)
-    x, w = scheme_from_rc(a, b, mode="numpy")
+    x, w = scheme_from_rc(a, b, rc.int_1, mode="numpy")
     # sort by x
     i = numpy.argsort(x)
     points = x[i]

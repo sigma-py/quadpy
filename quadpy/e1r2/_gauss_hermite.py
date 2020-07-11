@@ -1,5 +1,4 @@
 import numpy
-
 import orthopy
 
 from ..tools import scheme_from_rc
@@ -15,10 +14,7 @@ def gauss_hermite(n, mode="numpy"):
     if mode == "numpy":
         points, weights = numpy.polynomial.hermite.hermgauss(n)
     else:
-        _, _, alpha, beta = orthopy.e1r2.recurrence_coefficients(
-            n, "monic", symbolic=True
-        )
-        # For some reason, the parameters have to be adapted here. TODO find out why
-        beta[1:] /= 2
-        points, weights = scheme_from_rc(alpha, beta, mode=mode)
+        rc = orthopy.e1r2.RecurrenceCoefficients("physicists", "monic", symbolic=True)
+        _, alpha, beta = numpy.array([rc[k] for k in range(n)]).T
+        points, weights = scheme_from_rc(alpha, beta, rc.int_1, mode=mode)
     return E1r2Scheme(f"Gauss-Hermite ({n})", weights, points, 2 * n - 1)

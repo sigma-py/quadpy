@@ -114,7 +114,7 @@ from ._lyness_jespersen import (
     lyness_jespersen_21,
 )
 from ._papanicolopulos import (
-    papanicolopulos_rot_08,  #
+    papanicolopulos_rot_08,
     papanicolopulos_rot_09,
     papanicolopulos_rot_10,
     papanicolopulos_rot_11,

@@ -1,10 +1,9 @@
-import matplotlib.pyplot as plt
 import numpy
+import orthopy
 import pytest
+from matplotlib import pyplot as plt
 
 import quadpy
-from helpers import check_degree
-from quadpy.enr2._helpers import integrate_monomial_over_enr2
 
 
 @pytest.mark.parametrize(
@@ -21,23 +20,28 @@ from quadpy.enr2._helpers import integrate_monomial_over_enr2
         quadpy.e3r2.stroud_e3r2_14_1(),
     ],
 )
-def test_scheme(scheme):
+def test_scheme(scheme, tol=1.0e-14):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
     print(scheme)
 
-    degree, err = check_degree(
-        lambda poly: scheme.integrate(poly),
-        integrate_monomial_over_enr2,
-        3,
-        scheme.degree + 1,
-        tol=scheme.test_tolerance,
-    )
-    assert (
-        degree >= scheme.degree
-    ), "{} -- observed: {}, expected: {} (max err: {:.3e})".format(
-        scheme.name, degree, scheme.degree, err
+    evaluator = orthopy.enr2.Eval(scheme.points.T, "physicists")
+
+    degree = None
+    for k in range(scheme.degree + 2):
+        approximate = scheme.integrate(lambda x: next(evaluator)[0])
+        print(approximate)
+        exact = numpy.pi ** (3 / 4) if k == 0 else 0.0
+        err = numpy.abs(approximate - exact)
+        if numpy.any(err > tol):
+            degree = k - 1
+            break
+
+    max_err = numpy.max(err)
+    assert degree >= scheme.degree, (
+        f"{scheme.name} -- observed: {degree}, expected: {scheme.degree} "
+        f"(max err: {max_err:.3e})"
     )
 
 

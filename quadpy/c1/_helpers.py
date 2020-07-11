@@ -78,7 +78,7 @@ class C1Scheme(CnScheme):
         return 0.5 * len_intervals * dot(fx, self.weights)
 
     def plot(self, interval=numpy.array([[-1.0], [1.0]]), show_axes=False):
-        import matplotlib.pyplot as plt
+        from matplotlib import pyplot as plt
 
         # change default range so that new disks will work
         plt.axis("equal")

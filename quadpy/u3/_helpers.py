@@ -33,7 +33,7 @@ class U3Scheme(QuadratureScheme):
             self.azimuthal_polar_symbolic = azimuthal_polar
 
     def plot(self):
-        import matplotlib.pyplot as plt
+        from matplotlib import pyplot as plt
         from mpl_toolkits.mplot3d import Axes3D
 
         fig = plt.figure()

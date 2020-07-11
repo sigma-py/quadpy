@@ -1,10 +1,10 @@
-import matplotlib.pyplot as plt
 import numpy
 import pytest
 import sympy
+from helpers import check_degree
+from matplotlib import pyplot as plt
 
 import quadpy
-from helpers import check_degree
 
 
 def _integrate_exact(k, pyra):
