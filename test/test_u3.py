@@ -72,7 +72,7 @@ def test_spherical_harmonic(scheme):
         quadpy.u3.heo_xu_35(),
         quadpy.u3.heo_xu_37(),
         quadpy.u3.heo_xu_39_1(),
-        quadpy.u3.heo_xu_39_2(),
+        quadpy.u3.heo_xu_39b(),
     ]
     # + [
     #     quadpy.u3.fliege_maier_04(),
@@ -200,7 +200,7 @@ def test_scheme_cartesian(scheme):
         quadpy.u3.heo_xu_35(),
         quadpy.u3.heo_xu_37(),
         quadpy.u3.heo_xu_39_1(),
-        quadpy.u3.heo_xu_39_2(),
+        quadpy.u3.heo_xu_39b(),
     ]
     + [
         quadpy.u3.lebedev_003a(),

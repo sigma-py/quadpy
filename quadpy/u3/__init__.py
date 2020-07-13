@@ -39,7 +39,7 @@ from ._heo_xu import (
     heo_xu_35,
     heo_xu_37,
     heo_xu_39_1,
-    heo_xu_39_2,
+    heo_xu_39b,
 )
 from ._lebedev import (
     lebedev_003a,
@@ -146,7 +146,7 @@ __all__ = [
     "heo_xu_35",
     "heo_xu_37",
     "heo_xu_39_1",
-    "heo_xu_39_2",
+    "heo_xu_39b",
     "lebedev_003a",
     "lebedev_003b",
     "lebedev_003c",
