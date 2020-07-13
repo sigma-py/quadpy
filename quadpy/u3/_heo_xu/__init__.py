@@ -1,10 +1,13 @@
+import json
 import math
+import pathlib
+import re
 import warnings
 
 import numpy
 
-from ..helpers import article, fsd, untangle
-from ._helpers import U3Scheme, cartesian_to_spherical
+from ...helpers import article, fsd, untangle
+from .._helpers import U3Scheme, cartesian_to_spherical, untangle2
 
 source = article(
     authors=["Sangwoo Heo", "Yuan Xu"],
@@ -19,19 +22,24 @@ source = article(
 )
 
 
-def heo_xu_13():
-    name = "Heo-Xu 13"
-    degree = 13
-    points, weights = untangle(
-        [
-            (1.386659210450214e-02, _f((1.0, 1))),
-            (1.305093186259182e-02, _f2(2.866401467665037e-01)),
-            (1.320642322308065e-02, _f2(6.599050016563905e-01)),
-            (1.194266355486864e-02, _f1(5.394900987058648e-01)),
-        ]
-    )
+def _read(index, tol):
+    name = f"Heo-Xu {index}"
+
+    this_dir = pathlib.Path(__file__).resolve().parent
+
+    filename = f"heo_xu_{index}.json"
+    with open(this_dir / filename, "r") as f:
+        data = json.load(f)
+
+    degree = data.pop("degree")
+
+    points, weights = untangle2(data)
     theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source)
+    return U3Scheme(name, weights, points, theta_phi, degree, source, tol=tol)
+
+
+def heo_xu_13():
+    return _read("13", 4.642e-15)
 
 
 def heo_xu_15():
