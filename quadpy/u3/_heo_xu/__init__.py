@@ -21,16 +21,18 @@ source = article(
 )
 
 
-def _read(index, tol):
-    name = f"Heo-Xu {index}"
-
+def _read(filename):
     this_dir = pathlib.Path(__file__).resolve().parent
 
-    filename = f"heo_xu_{index}.json"
     with open(this_dir / filename, "r") as f:
         data = json.load(f)
 
+    name = data.pop("name")
     degree = data.pop("degree")
+    tol = data.pop("test-tolerance")
+
+    if tol > 1.0e-12:
+        warnings.warn(f"The {name} scheme is low precision ({tol:.3e}).")
 
     points, weights = untangle2(data)
     theta_phi = cartesian_to_spherical(points)
@@ -38,19 +40,19 @@ def _read(index, tol):
 
 
 def heo_xu_13():
-    return _read("13", 4.642e-15)
+    return _read("heo_xu_13.json")
 
 
 def heo_xu_15():
-    return _read("15", 7.336e-15)
+    return _read("heo_xu_15.json")
 
 
 def heo_xu_17():
-    return _read("17", 3.406e-14)
+    return _read("heo_xu_17.json")
 
 
 def heo_xu_19a():
-    return _read("19a", 7.435e-14)
+    return _read("heo_xu_19a.json")
 
 
 def heo_xu_19_2():
@@ -503,8 +505,7 @@ def heo_xu_39_1():
 
 
 def heo_xu_39b():
-    warnings.warn("The Heo-Xu schemes are only single-precision.")
-    return _read("39b", 4.804e-09)
+    return _read("heo_xu_39b.json")
 
 
 def _f(*items):
