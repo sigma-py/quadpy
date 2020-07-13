@@ -15,12 +15,11 @@ source = article(
 )
 
 
-# frac(prod([math.factorial(l) for l in m]), math.factorial(sum(m) + dim))
 def integrate_bary(k, symbolic):
     # This is very similar to integrate_monomial_over_unit_simplex, except that n =
     # len(k) - 1, not len(k). This is because we're integrating over a polynomial in
     # barycentric coordinates here. Also the integration for [0, ..., 0] is set equal to
-    # 1. This ensure that the weights add up to 1, not the volume of the unit simplex.
+    # 1. This ensures that the weights add up to 1, not the volume of the unit simplex.
     frac = sympy.Rational if symbolic else lambda a, b: a / b
 
     n = len(k) - 1

@@ -349,6 +349,12 @@ def _rsw(azimuthal, polar):
     s = sin_polar * sin_azimuthal
     w = cos_polar
 
+    return _rsw2(r, s, w)
+
+
+def _rsw2(r, s, w=None):
+    if w is None:
+        w = numpy.sqrt(1 - r ** 2 - s ** 2)
     return numpy.array(
         [
             [+r, +s, +w],
@@ -464,6 +470,13 @@ def untangle2(data):
         out = _collapse0(numpy.moveaxis(_rsw(*beta), 0, 1)).T
         points.append(out)
         w = numpy.array(data["rsw"])[:, 0]
+        weights.append(numpy.tile(w, 48))
+
+    if "rsw2" in data:
+        beta = numpy.array(data["rsw2"])[:, 1:].T
+        out = _collapse0(numpy.moveaxis(_rsw2(*beta), 0, 1)).T
+        points.append(out)
+        w = numpy.array(data["rsw2"])[:, 0]
         weights.append(numpy.tile(w, 48))
 
     points = numpy.concatenate(points)

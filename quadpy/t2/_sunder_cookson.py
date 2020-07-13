@@ -5,7 +5,7 @@ from ..helpers import article
 from ._helpers import T2Scheme, concat, s2, s3
 
 source = article(
-    authors=["K. Sham Sunder", "R.A.Cookson"],
+    authors=["K. Sham Sunder", "R.A. Cookson"],
     title="Integration points for triangles and tetrahedrons obtained from the Gaussian quadrature points for a line",
     journal="Computers & Structures",
     year="1985",
@@ -22,6 +22,7 @@ def sunder_cookson_01():
 
 
 def sunder_cookson_02():
+    # ERR
     warnings.warn("Sunder-Cookson claim degree 2, but the scheme is only degree 1.")
     alpha = (1 - 1 / sqrt(3)) / 2
     l2 = alpha / (alpha + 1)
@@ -30,12 +31,14 @@ def sunder_cookson_02():
 
 
 def sunder_cookson_03():
+    # ERR
     warnings.warn("Sunder-Cookson claim degree 3, but the scheme is only degree 1.")
     weights, points = concat(s3(4 / 9), s2([5 / 27, 0.101286507323456]))
     return T2Scheme("Sunder-Cookson 3", weights, points, 1, source)
 
 
 def sunder_cookson_04():
+    # ERR
     warnings.warn("Sunder-Cookson claim degree 4, but the scheme is only degree 1.")
     weights, points = concat(
         s2(0.115951615045818, 0.064924047829079),
@@ -45,6 +48,7 @@ def sunder_cookson_04():
 
 
 def sunder_cookson_05():
+    # ERR
     warnings.warn("Sunder-Cookson claim degree 5, but the scheme is only degree 1.")
     weights, points = concat(
         s3(64 / 225),

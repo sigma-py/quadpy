@@ -1,7 +1,6 @@
 import json
 import math
 import pathlib
-import re
 import warnings
 
 import numpy
@@ -43,51 +42,15 @@ def heo_xu_13():
 
 
 def heo_xu_15():
-    name = "Heo-Xu 15"
-    degree = 15
-    data = [
-        (1.319152287365230e-02, _f((1.0, 1))),
-        (1.102407084532457e-02, _f((math.sqrt(0.5), 2))),
-        (1.053897111379197e-02, _f2(3.377858997942549e-01)),
-        (1.165696071537642e-02, _f2(6.585116767821272e-01)),
-        (1.066081869642292e-02, _f1(3.991943817651167e-01)),
-    ]
-    points, weights = untangle(data)
-    theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source)
+    return _read("15", 7.336e-15)
 
 
 def heo_xu_17():
-    name = "Heo-Xu 17"
-    degree = 17
-    data = [
-        (9.103396603396555e-03, _f((math.sqrt(1.0 / 3.0), 3))),
-        (-2.664002664002630e-03, _f((1.0, 1))),
-        (1.077783665543784e-02, _f2(3.574067443365934e-01)),
-        (9.161945784344715e-03, _f2(6.785983445458479e-01)),
-        (9.798544911792295e-03, _f1(5.425211851613003e-01)),
-        (9.559874446627158e-03, _f1(2.228665097413761e-01)),
-    ]
-    points, weights = untangle(data)
-    theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source, 3.501e-14)
+    return _read("17", 3.406e-14)
 
 
-def heo_xu_19_1():
-    name = "Heo-Xu 19-1"
-    degree = 19
-    data = [
-        (8.559575701091244e-03, _f((math.sqrt(1.0 / 3.0), 3))),
-        (6.231186663599245e-03, _f((1.0, 1))),
-        (7.913582690846042e-03, _f((math.sqrt(0.5), 2))),
-        (7.736373931323724e-03, _f2(2.017423066530880e-01)),
-        (4.644831901554310e-03, _f2(6.755869045406033e-01)),
-        (7.625284539988749e-03, _f1(4.436682078062131e-01)),
-        (6.646198191056446e-03, _f11(4.961882891085462e-01, 8.148920331884284e-01)),
-    ]
-    points, weights = untangle(data)
-    theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source, 7.479e-14)
+def heo_xu_19a():
+    return _read("19a", 7.435e-14)
 
 
 def heo_xu_19_2():
