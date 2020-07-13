@@ -50,7 +50,7 @@ def test_spherical_harmonic(scheme):
         quadpy.u3.heo_xu_13(),
         quadpy.u3.heo_xu_15(),
         quadpy.u3.heo_xu_17(),
-        quadpy.u3.heo_xu_19_1(),
+        quadpy.u3.heo_xu_19a(),
         quadpy.u3.heo_xu_19_2(),
         quadpy.u3.heo_xu_21_1(),
         quadpy.u3.heo_xu_21_2(),
@@ -74,66 +74,66 @@ def test_spherical_harmonic(scheme):
         quadpy.u3.heo_xu_39_1(),
         quadpy.u3.heo_xu_39_2(),
     ]
-    + [
-        quadpy.u3.fliege_maier_04(),
-        quadpy.u3.fliege_maier_09(),
-        quadpy.u3.fliege_maier_16(),
-        quadpy.u3.fliege_maier_25(),
-    ]
-    + [
-        quadpy.u3.lebedev_003a(),
-        quadpy.u3.lebedev_003b(),
-        quadpy.u3.lebedev_003c(),
-        quadpy.u3.lebedev_005(),
-        quadpy.u3.lebedev_007(),
-        quadpy.u3.lebedev_009(),
-        quadpy.u3.lebedev_011(),
-        quadpy.u3.lebedev_013(),
-        quadpy.u3.lebedev_015(),
-        quadpy.u3.lebedev_017(),
-        quadpy.u3.lebedev_019(),
-        quadpy.u3.lebedev_021(),
-        quadpy.u3.lebedev_023(),
-        quadpy.u3.lebedev_025(),
-        quadpy.u3.lebedev_027(),
-        quadpy.u3.lebedev_029(),
-        quadpy.u3.lebedev_031(),
-        quadpy.u3.lebedev_035(),
-        quadpy.u3.lebedev_041(),
-        quadpy.u3.lebedev_047(),
-        quadpy.u3.lebedev_053(),
-        quadpy.u3.lebedev_059(),
-        quadpy.u3.lebedev_065(),
-        quadpy.u3.lebedev_071(),
-        quadpy.u3.lebedev_077(),
-        quadpy.u3.lebedev_083(),
-        quadpy.u3.lebedev_089(),
-        quadpy.u3.lebedev_095(),
-        quadpy.u3.lebedev_101(),
-        quadpy.u3.lebedev_107(),
-        quadpy.u3.lebedev_113(),
-        quadpy.u3.lebedev_119(),
-        quadpy.u3.lebedev_125(),
-        quadpy.u3.lebedev_131(),
-    ]
-    + [
-        quadpy.u3.stroud_u3_3_1(),
-        quadpy.u3.stroud_u3_5_1(),
-        quadpy.u3.stroud_u3_5_2(),
-        quadpy.u3.stroud_u3_5_3(),
-        quadpy.u3.stroud_u3_5_4(),
-        quadpy.u3.stroud_u3_5_5(),
-        quadpy.u3.stroud_u3_7_1(),
-        quadpy.u3.stroud_u3_7_2(),
-        quadpy.u3.stroud_u3_8_1(),
-        quadpy.u3.stroud_u3_9_1(),
-        quadpy.u3.stroud_u3_9_2(),
-        quadpy.u3.stroud_u3_9_3(),
-        quadpy.u3.stroud_u3_11_1(),
-        quadpy.u3.stroud_u3_11_2(),
-        quadpy.u3.stroud_u3_11_3(),
-        quadpy.u3.stroud_u3_14_1(),
-    ],
+    # + [
+    #     quadpy.u3.fliege_maier_04(),
+    #     quadpy.u3.fliege_maier_09(),
+    #     quadpy.u3.fliege_maier_16(),
+    #     quadpy.u3.fliege_maier_25(),
+    # ]
+    # + [
+    #     quadpy.u3.lebedev_003a(),
+    #     quadpy.u3.lebedev_003b(),
+    #     quadpy.u3.lebedev_003c(),
+    #     quadpy.u3.lebedev_005(),
+    #     quadpy.u3.lebedev_007(),
+    #     quadpy.u3.lebedev_009(),
+    #     quadpy.u3.lebedev_011(),
+    #     quadpy.u3.lebedev_013(),
+    #     quadpy.u3.lebedev_015(),
+    #     quadpy.u3.lebedev_017(),
+    #     quadpy.u3.lebedev_019(),
+    #     quadpy.u3.lebedev_021(),
+    #     quadpy.u3.lebedev_023(),
+    #     quadpy.u3.lebedev_025(),
+    #     quadpy.u3.lebedev_027(),
+    #     quadpy.u3.lebedev_029(),
+    #     quadpy.u3.lebedev_031(),
+    #     quadpy.u3.lebedev_035(),
+    #     quadpy.u3.lebedev_041(),
+    #     quadpy.u3.lebedev_047(),
+    #     quadpy.u3.lebedev_053(),
+    #     quadpy.u3.lebedev_059(),
+    #     quadpy.u3.lebedev_065(),
+    #     quadpy.u3.lebedev_071(),
+    #     quadpy.u3.lebedev_077(),
+    #     quadpy.u3.lebedev_083(),
+    #     quadpy.u3.lebedev_089(),
+    #     quadpy.u3.lebedev_095(),
+    #     quadpy.u3.lebedev_101(),
+    #     quadpy.u3.lebedev_107(),
+    #     quadpy.u3.lebedev_113(),
+    #     quadpy.u3.lebedev_119(),
+    #     quadpy.u3.lebedev_125(),
+    #     quadpy.u3.lebedev_131(),
+    # ]
+    # + [
+    #     quadpy.u3.stroud_u3_3_1(),
+    #     quadpy.u3.stroud_u3_5_1(),
+    #     quadpy.u3.stroud_u3_5_2(),
+    #     quadpy.u3.stroud_u3_5_3(),
+    #     quadpy.u3.stroud_u3_5_4(),
+    #     quadpy.u3.stroud_u3_5_5(),
+    #     quadpy.u3.stroud_u3_7_1(),
+    #     quadpy.u3.stroud_u3_7_2(),
+    #     quadpy.u3.stroud_u3_8_1(),
+    #     quadpy.u3.stroud_u3_9_1(),
+    #     quadpy.u3.stroud_u3_9_2(),
+    #     quadpy.u3.stroud_u3_9_3(),
+    #     quadpy.u3.stroud_u3_11_1(),
+    #     quadpy.u3.stroud_u3_11_2(),
+    #     quadpy.u3.stroud_u3_11_3(),
+    #     quadpy.u3.stroud_u3_14_1(),
+    # ],
 )
 def test_scheme_cartesian(scheme):
     assert scheme.points.dtype == numpy.float64, scheme.name
@@ -155,14 +155,14 @@ def test_scheme_cartesian(scheme):
         k += 1
     max_err = numpy.max(err)
 
-    # # find the max error across all polynomials
-    # max_err = 0.0
-    # evaluator = orthopy.u3.EvalCartesian(scheme.points.T, "quantum mechanic")
-    # for i in range(scheme.degree + 1):
-    #     approximate = scheme.integrate(lambda x: next(evaluator), [0.0, 0.0, 0.0], 1.0)
-    #     exact = numpy.sqrt(4 * numpy.pi) if i == 0 else 0.0
-    #     err = numpy.abs(approximate - exact)
-    #     max_err = max(max_err, numpy.max(err))
+    # find the max error across all polynomials
+    max_err = 0.0
+    evaluator = orthopy.u3.EvalCartesian(scheme.points.T, "quantum mechanic")
+    for i in range(scheme.degree + 1):
+        approximate = scheme.integrate(lambda x: next(evaluator), [0.0, 0.0, 0.0], 1.0)
+        exact = numpy.sqrt(4 * numpy.pi) if i == 0 else 0.0
+        err = numpy.abs(approximate - exact)
+        max_err = max(max_err, numpy.max(err))
 
     assert k - 1 == scheme.degree, (
         f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
@@ -178,7 +178,7 @@ def test_scheme_cartesian(scheme):
         quadpy.u3.heo_xu_13(),
         quadpy.u3.heo_xu_15(),
         quadpy.u3.heo_xu_17(),
-        quadpy.u3.heo_xu_19_1(),
+        quadpy.u3.heo_xu_19a(),
         quadpy.u3.heo_xu_19_2(),
         quadpy.u3.heo_xu_21_1(),
         quadpy.u3.heo_xu_21_2(),
