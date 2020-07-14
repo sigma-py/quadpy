@@ -1,3 +1,6 @@
+import json
+import warnings
+
 import numpy
 import sympy
 
@@ -349,6 +352,12 @@ def _rsw(azimuthal, polar):
     s = sin_polar * sin_azimuthal
     w = cos_polar
 
+    return _rsw2(r, s, w)
+
+
+def _rsw2(r, s, w=None):
+    if w is None:
+        w = numpy.sqrt(1 - r ** 2 - s ** 2)
     return numpy.array(
         [
             [+r, +s, +w],
@@ -466,6 +475,18 @@ def untangle2(data):
         w = numpy.array(data["rsw"])[:, 0]
         weights.append(numpy.tile(w, 48))
 
+    if "rsw2" in data:
+        beta = numpy.array(data["rsw2"])[:, 1:].T
+        out = _collapse0(numpy.moveaxis(_rsw2(*beta), 0, 1)).T
+        points.append(out)
+        w = numpy.array(data["rsw2"])[:, 0]
+        weights.append(numpy.tile(w, 48))
+
+    if "plain" in data:
+        dat = numpy.asarray(data["plain"])
+        points.append(dat[:, :3])
+        weights.append(dat[:, 3])
+
     points = numpy.concatenate(points)
     weights = numpy.concatenate(weights)
     return points, weights
@@ -475,3 +496,23 @@ def _collapse0(a):
     """Collapse all dimensions of `a` except the first.
     """
     return a.reshape(a.shape[0], -1)
+
+
+def _read(filepath, source, weight_factor=None):
+    with open(filepath, "r") as f:
+        content = json.load(f)
+
+    degree = content.pop("degree")
+    name = content.pop("name")
+    tol = content.pop("test_tolerance")
+
+    if tol > 1.0e-12:
+        warnings.warn(f"The {name} scheme has low precision ({tol:.3e}).")
+
+    points, weights = untangle2(content.pop("data"))
+    theta_phi = cartesian_to_spherical(points)
+
+    if weight_factor is not None:
+        weights *= weight_factor
+
+    return U3Scheme(name, weights, points, theta_phi, degree, source, tol=tol)

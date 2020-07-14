@@ -50,29 +50,29 @@ def test_spherical_harmonic(scheme):
         quadpy.u3.heo_xu_13(),
         quadpy.u3.heo_xu_15(),
         quadpy.u3.heo_xu_17(),
-        quadpy.u3.heo_xu_19_1(),
-        quadpy.u3.heo_xu_19_2(),
-        quadpy.u3.heo_xu_21_1(),
-        quadpy.u3.heo_xu_21_2(),
-        quadpy.u3.heo_xu_21_3(),
-        quadpy.u3.heo_xu_21_4(),
-        quadpy.u3.heo_xu_21_5(),
-        quadpy.u3.heo_xu_21_6(),
-        quadpy.u3.heo_xu_23_1(),
-        quadpy.u3.heo_xu_23_2(),
-        quadpy.u3.heo_xu_23_3(),
-        quadpy.u3.heo_xu_25_1(),
-        quadpy.u3.heo_xu_25_2(),
-        quadpy.u3.heo_xu_27_1(),
-        quadpy.u3.heo_xu_27_2(),
-        quadpy.u3.heo_xu_27_3(),
+        quadpy.u3.heo_xu_19a(),
+        quadpy.u3.heo_xu_19b(),
+        quadpy.u3.heo_xu_21a(),
+        quadpy.u3.heo_xu_21b(),
+        quadpy.u3.heo_xu_21c(),
+        quadpy.u3.heo_xu_21d(),
+        quadpy.u3.heo_xu_21e(),
+        quadpy.u3.heo_xu_21f(),
+        quadpy.u3.heo_xu_23a(),
+        quadpy.u3.heo_xu_23b(),
+        quadpy.u3.heo_xu_23c(),
+        quadpy.u3.heo_xu_25a(),
+        quadpy.u3.heo_xu_25b(),
+        quadpy.u3.heo_xu_27a(),
+        quadpy.u3.heo_xu_27b(),
+        quadpy.u3.heo_xu_27c(),
         quadpy.u3.heo_xu_29(),
         quadpy.u3.heo_xu_31(),
         quadpy.u3.heo_xu_33(),
         quadpy.u3.heo_xu_35(),
         quadpy.u3.heo_xu_37(),
-        quadpy.u3.heo_xu_39_1(),
-        quadpy.u3.heo_xu_39_2(),
+        quadpy.u3.heo_xu_39a(),
+        quadpy.u3.heo_xu_39b(),
     ]
     + [
         quadpy.u3.fliege_maier_04(),
@@ -155,14 +155,14 @@ def test_scheme_cartesian(scheme):
         k += 1
     max_err = numpy.max(err)
 
-    # # find the max error across all polynomials
-    # max_err = 0.0
-    # evaluator = orthopy.u3.EvalCartesian(scheme.points.T, "quantum mechanic")
-    # for i in range(scheme.degree + 1):
-    #     approximate = scheme.integrate(lambda x: next(evaluator), [0.0, 0.0, 0.0], 1.0)
-    #     exact = numpy.sqrt(4 * numpy.pi) if i == 0 else 0.0
-    #     err = numpy.abs(approximate - exact)
-    #     max_err = max(max_err, numpy.max(err))
+    # find the max error across all polynomials
+    max_err = 0.0
+    evaluator = orthopy.u3.EvalCartesian(scheme.points.T, "quantum mechanic")
+    for i in range(scheme.degree + 1):
+        approximate = scheme.integrate(lambda x: next(evaluator), [0.0, 0.0, 0.0], 1.0)
+        exact = numpy.sqrt(4 * numpy.pi) if i == 0 else 0.0
+        err = numpy.abs(approximate - exact)
+        max_err = max(max_err, numpy.max(err))
 
     assert k - 1 == scheme.degree, (
         f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
@@ -178,29 +178,29 @@ def test_scheme_cartesian(scheme):
         quadpy.u3.heo_xu_13(),
         quadpy.u3.heo_xu_15(),
         quadpy.u3.heo_xu_17(),
-        quadpy.u3.heo_xu_19_1(),
-        quadpy.u3.heo_xu_19_2(),
-        quadpy.u3.heo_xu_21_1(),
-        quadpy.u3.heo_xu_21_2(),
-        quadpy.u3.heo_xu_21_3(),
-        quadpy.u3.heo_xu_21_4(),
-        quadpy.u3.heo_xu_21_5(),
-        quadpy.u3.heo_xu_21_6(),
-        quadpy.u3.heo_xu_23_1(),
-        quadpy.u3.heo_xu_23_2(),
-        quadpy.u3.heo_xu_23_3(),
-        quadpy.u3.heo_xu_25_1(),
-        quadpy.u3.heo_xu_25_2(),
-        quadpy.u3.heo_xu_27_1(),
-        quadpy.u3.heo_xu_27_2(),
-        quadpy.u3.heo_xu_27_3(),
+        quadpy.u3.heo_xu_19a(),
+        quadpy.u3.heo_xu_19b(),
+        quadpy.u3.heo_xu_21a(),
+        quadpy.u3.heo_xu_21b(),
+        quadpy.u3.heo_xu_21c(),
+        quadpy.u3.heo_xu_21d(),
+        quadpy.u3.heo_xu_21e(),
+        quadpy.u3.heo_xu_21f(),
+        quadpy.u3.heo_xu_23a(),
+        quadpy.u3.heo_xu_23b(),
+        quadpy.u3.heo_xu_23c(),
+        quadpy.u3.heo_xu_25a(),
+        quadpy.u3.heo_xu_25b(),
+        quadpy.u3.heo_xu_27a(),
+        quadpy.u3.heo_xu_27b(),
+        quadpy.u3.heo_xu_27c(),
         quadpy.u3.heo_xu_29(),
         quadpy.u3.heo_xu_31(),
         quadpy.u3.heo_xu_33(),
         quadpy.u3.heo_xu_35(),
         quadpy.u3.heo_xu_37(),
-        quadpy.u3.heo_xu_39_1(),
-        quadpy.u3.heo_xu_39_2(),
+        quadpy.u3.heo_xu_39a(),
+        quadpy.u3.heo_xu_39b(),
     ]
     + [
         quadpy.u3.lebedev_003a(),

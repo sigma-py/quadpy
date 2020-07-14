@@ -414,7 +414,7 @@ val = scheme.integrate_spherical(
 
  * [Ditkin](quadpy/s3/_ditkin.py) (1948, 3 schemes up to degree 7)
  * [Hammer-Stroud](quadpy/s3/_hammer_stroud.py) (1958, 6 schemes up to degree 7)
- * [Mysovskih](quadpy/s3/mysovskih.py) (1964, degree 7)
+ * [Mysovskih](quadpy/s3/_mysovskih.py) (1964, degree 7)
  * [Stroud](quadpy/s3/_stroud.py) (1971, 2 schemes up to degree 14)
  * [all schemes from the n-ball](#n-ball-sn)
 

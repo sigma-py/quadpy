@@ -1,9 +1,7 @@
-import json
-import os
-import re
+import pathlib
 
 from ...helpers import article
-from .._helpers import U3Scheme, cartesian_to_spherical, untangle2
+from .._helpers import _read
 
 source = article(
     authors=["P. Bažant", "B.H. Oh"],
@@ -16,31 +14,16 @@ source = article(
     url="https://doi.org/10.1002/zamm.19860660108",
 )
 
-
-def _read(index, tol):
-    name = f"BazantOh({index})"
-
-    this_dir = os.path.dirname(os.path.realpath(__file__))
-
-    m = re.match("([0-9]+)([a-z]*)", index)
-    filename = "bazant_oh_{:03d}{}.json".format(int(m.group(1)), m.group(2))
-    with open(os.path.join(this_dir, filename), "r") as f:
-        data = json.load(f)
-
-    degree = data.pop("degree")
-
-    points, weights = untangle2(data)
-    theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source, tol=tol)
+this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def bazant_oh_09():
-    return _read("9", 5.808e-12)
+    return _read(this_dir / "bazant_oh_009.json", source)
 
 
 def bazant_oh_11():
-    return _read("11", 3.361e-12)
+    return _read(this_dir / "bazant_oh_011.json", source)
 
 
 def bazant_oh_13():
-    return _read("13", 5.033e-12)
+    return _read(this_dir / "bazant_oh_013.json", source)
