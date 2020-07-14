@@ -1,6 +1,8 @@
 {
+  "name": "Lebedev(003b)",
   "a2": [
     [0.0833333333333333]
   ],
-  "degree": 3
+  "degree": 3,
+  "test_tolerance": 1.777e-15
 }
