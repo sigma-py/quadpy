@@ -47,11 +47,7 @@ class U3Scheme(QuadratureScheme):
         ax = fig.gca(projection=Axes3D.name)
         # ax.set_aspect("equal")
 
-        flt = numpy.vectorize(float)
-        pts = flt(self.points)
-        wgs = flt(self.weights)
-
-        for p, w in zip(pts, wgs):
+        for p, w in zip(self.points.T, self.weights):
             # <https://en.wikipedia.org/wiki/Spherical_cap>
             w *= 4 * numpy.pi
             theta = numpy.arccos(1.0 - abs(w) / (2 * numpy.pi))
@@ -63,17 +59,15 @@ class U3Scheme(QuadratureScheme):
     def integrate(self, f, center, radius, dot=numpy.dot):
         """Quadrature where `f` is defined in Cartesian coordinates.
         """
-        center = numpy.array(center)
-        rr = numpy.multiply.outer(radius, self.points)
-        rr = numpy.swapaxes(rr, 0, -2)
-        ff = numpy.array(f((rr + center).T))
-        return area(radius) * dot(ff, self.weights)
+        center = numpy.asarray(center)
+        rr = (self.points.T * radius + center).T
+        return area(radius) * dot(f(rr), self.weights)
 
     def integrate_spherical(self, f, dot=numpy.dot):
         """Quadrature where `f` is a function of the spherical coordinates theta_phi
         (polar, azimuthal, in this order).
         """
-        ff = numpy.asarray(f(self.theta_phi.T))
+        ff = f(self.theta_phi)
         return area(1.0) * dot(ff, self.weights)
 
 
@@ -122,7 +116,7 @@ def _plot_spherical_cap_mpl(ax, b, opening_angle, color, elevation=1.01):
 
 
 def cartesian_to_spherical(X):
-    return numpy.stack([numpy.arccos(X[:, 2]), numpy.arctan2(X[:, 1], X[:, 0])], axis=1)
+    return numpy.array([numpy.arccos(X[2]), numpy.arctan2(X[1], X[0])])
 
 
 def _atan2_0(X):
@@ -131,14 +125,14 @@ def _atan2_0(X):
     conversion, its value doesn't matter. NaNs, however, produce NaNs down the
     line.
     """
-    out = numpy.array([sympy.atan2(X[k, 1], X[k, 0]) for k in range(len(X))])
+    out = numpy.array([sympy.atan2(X[1, k], X[0, k]) for k in range(X.shape[1])])
     out[out == sympy.nan] = 0
     return out
 
 
 def cartesian_to_spherical_sympy(X):
-    vacos = numpy.vectorize(sympy.acos)
-    return numpy.stack([vacos(X[:, 2]), _atan2_0(X)], axis=1)
+    arccos = numpy.vectorize(sympy.acos)
+    return numpy.array([arccos(X[2]), _atan2_0(X)])
 
 
 def _a1():
@@ -151,7 +145,7 @@ def _a1():
             [0.0, 0.0, +1.0],
             [0.0, 0.0, -1.0],
         ]
-    )
+    ).T
 
 
 def _a2():
@@ -172,7 +166,7 @@ def _a2():
             [0.0, -1.0, +1.0],
             [0.0, -1.0, -1.0],
         ]
-    ) / numpy.sqrt(2.0)
+    ).T / numpy.sqrt(2.0)
 
 
 def _a3():
@@ -187,14 +181,15 @@ def _a3():
             [-1.0, -1.0, +1.0],
             [-1.0, -1.0, -1.0],
         ]
-    ) / numpy.sqrt(3.0)
+    ).T / numpy.sqrt(3.0)
 
 
 def _pq0(alpha):
+    # TODO merge with pq02
     a = numpy.sin(alpha * numpy.pi)
     b = numpy.cos(alpha * numpy.pi)
     zero = numpy.zeros_like(alpha)
-    return numpy.array(
+    out = numpy.array(
         [
             [+a, +b, zero],
             [-a, +b, zero],
@@ -227,12 +222,15 @@ def _pq0(alpha):
             [zero, +b, -a],
         ]
     )
+    out = numpy.moveaxis(out, 0, 1)
+    out = out.reshape(out.shape[0], -1)
+    return out
 
 
 def _pq02(a):
     b = numpy.sqrt(1 - a ** 2)
     zero = numpy.zeros_like(a)
-    return numpy.array(
+    out = numpy.array(
         [
             [+a, +b, zero],
             [-a, +b, zero],
@@ -265,6 +263,9 @@ def _pq02(a):
             [zero, +b, -a],
         ]
     )
+    out = numpy.moveaxis(out, 0, 1)
+    out = out.reshape(out.shape[0], -1)
+    return out
 
 
 def _llm(beta):
@@ -272,7 +273,13 @@ def _llm(beta):
     beta *= numpy.pi
     L = numpy.sin(beta) / numpy.sqrt(2)
     m = numpy.cos(beta)
-    return numpy.array(
+    return _llm2(L, m)
+
+
+def _llm2(L, m=None):
+    if m is None:
+        m = numpy.sqrt(1 - 2 * L ** 2)
+    out = numpy.array(
         [
             [+L, +L, +m],
             [-L, +L, +m],
@@ -302,40 +309,9 @@ def _llm(beta):
             [-m, -L, -L],
         ]
     )
-
-
-def _llm2(L):
-    m = numpy.sqrt(1 - 2 * L ** 2)
-    return numpy.array(
-        [
-            [+L, +L, +m],
-            [-L, +L, +m],
-            [+L, -L, +m],
-            [-L, -L, +m],
-            [+L, +L, -m],
-            [-L, +L, -m],
-            [+L, -L, -m],
-            [-L, -L, -m],
-            #
-            [+L, +m, +L],
-            [-L, +m, +L],
-            [+L, +m, -L],
-            [-L, +m, -L],
-            [+L, -m, +L],
-            [-L, -m, +L],
-            [+L, -m, -L],
-            [-L, -m, -L],
-            #
-            [+m, +L, +L],
-            [+m, -L, +L],
-            [+m, +L, -L],
-            [+m, -L, -L],
-            [-m, +L, +L],
-            [-m, -L, +L],
-            [-m, +L, -L],
-            [-m, -L, -L],
-        ]
-    )
+    out = numpy.moveaxis(out, 0, 1)
+    out = out.reshape(out.shape[0], -1)
+    return out
 
 
 def _rsw(azimuthal, polar):
@@ -358,7 +334,7 @@ def _rsw(azimuthal, polar):
 def _rsw2(r, s, w=None):
     if w is None:
         w = numpy.sqrt(1 - r ** 2 - s ** 2)
-    return numpy.array(
+    out = numpy.array(
         [
             [+r, +s, +w],
             [+w, +r, +s],
@@ -417,6 +393,9 @@ def _rsw2(r, s, w=None):
             [-r, -w, -s],
         ]
     )
+    out = numpy.moveaxis(out, 0, 1)
+    out = out.reshape(out.shape[0], -1)
+    return out
 
 
 def untangle2(data):
@@ -441,53 +420,43 @@ def untangle2(data):
         weights.append(numpy.full(8, w))
 
     if "llm" in data:
-        beta = numpy.array(data["llm"])[:, 1]
-        out = _collapse0(numpy.moveaxis(_llm(beta), 0, 1)).T
-        points.append(out)
-        w = numpy.array(data["llm"])[:, 0]
-        weights.append(numpy.tile(w, 24))
+        llm = numpy.asarray(data["llm"]).T
+        points.append(_llm(llm[1]))
+        weights.append(numpy.tile(llm[0], 24))
 
     if "llm2" in data:
-        beta = numpy.array(data["llm2"])[:, 1]
-        out = _collapse0(numpy.moveaxis(_llm2(beta), 0, 1)).T
-        points.append(out)
-        w = numpy.array(data["llm2"])[:, 0]
-        weights.append(numpy.tile(w, 24))
+        llm = numpy.asarray(data["llm2"]).T
+        points.append(_llm2(llm[1]))
+        weights.append(numpy.tile(llm[0], 24))
 
     if "pq0" in data:
-        beta = numpy.array(data["pq0"])[:, 1]
-        out = _collapse0(numpy.moveaxis(_pq0(beta), 0, 1)).T
-        points.append(out)
-        w = numpy.array(data["pq0"])[:, 0]
-        weights.append(numpy.tile(w, 24))
+        pq0 = numpy.asarray(data["pq0"]).T
+        points.append(_pq0(pq0[1]))
+        weights.append(numpy.tile(pq0[0], 24))
 
     if "pq02" in data:
-        beta = numpy.array(data["pq02"])[:, 1]
-        out = _collapse0(numpy.moveaxis(_pq02(beta), 0, 1)).T
-        points.append(out)
-        w = numpy.array(data["pq02"])[:, 0]
-        weights.append(numpy.tile(w, 24))
+        pq0 = numpy.asarray(data["pq02"]).T
+        points.append(_pq02(pq0[1]))
+        weights.append(numpy.tile(pq0[0], 24))
 
     if "rsw" in data:
-        beta = numpy.array(data["rsw"])[:, 1:].T
-        out = _collapse0(numpy.moveaxis(_rsw(*beta), 0, 1)).T
-        points.append(out)
-        w = numpy.array(data["rsw"])[:, 0]
-        weights.append(numpy.tile(w, 48))
+        rsw = numpy.asarray(data["rsw"]).T
+        beta = rsw[1:]
+        points.append(_rsw(*beta))
+        weights.append(numpy.tile(rsw[0], 48))
 
     if "rsw2" in data:
-        beta = numpy.array(data["rsw2"])[:, 1:].T
-        out = _collapse0(numpy.moveaxis(_rsw2(*beta), 0, 1)).T
-        points.append(out)
-        w = numpy.array(data["rsw2"])[:, 0]
-        weights.append(numpy.tile(w, 48))
+        rsw = numpy.asarray(data["rsw2"]).T
+        beta = rsw[1:]
+        points.append(_rsw2(*beta))
+        weights.append(numpy.tile(rsw[0], 48))
 
     if "plain" in data:
         dat = numpy.asarray(data["plain"])
-        points.append(dat[:, :3])
+        points.append(dat[:, :3].T)
         weights.append(dat[:, 3])
 
-    points = numpy.concatenate(points)
+    points = numpy.ascontiguousarray(numpy.concatenate(points, axis=1))
     weights = numpy.concatenate(weights)
     return points, weights
 
