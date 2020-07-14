@@ -499,16 +499,16 @@ def _collapse0(a):
 
 def _read(filepath, source, weight_factor=None):
     with open(filepath, "r") as f:
-        data = json.load(f)
+        content = json.load(f)
 
-    degree = data.pop("degree")
-    name = data.pop("name")
-    tol = data.pop("test_tolerance")
+    degree = content.pop("degree")
+    name = content.pop("name")
+    tol = content.pop("test_tolerance")
 
     if tol > 1.0e-12:
         warnings.warn(f"The {name} scheme has low precision ({tol:.3e}).")
 
-    points, weights = untangle2(data)
+    points, weights = untangle2(content.pop("data"))
     theta_phi = cartesian_to_spherical(points)
 
     if weight_factor is not None:
