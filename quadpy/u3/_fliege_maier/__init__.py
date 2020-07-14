@@ -14,9 +14,7 @@ source = online(
 )
 
 
-def _read(filename, tol):
-    warnings.warn("The Fliege-Maier schemes are only single-precision.")
-
+def _read(filename):
     this_dir = pathlib.Path(__file__).resolve().parent
 
     with open(this_dir / filename, "r") as f:
@@ -25,6 +23,9 @@ def _read(filename, tol):
     degree = data.pop("degree")
     name = data.pop("name")
     tol = data.pop("test_tolerance")
+
+    if tol > 1.0e-12:
+        warnings.warn(f"The {name} scheme has low precision ({tol:.3e}).")
 
     data = numpy.array(data["data"])
     points = data[:, :3]
