@@ -1,6 +1,5 @@
 import json
-import os
-import re
+import pathlib
 import warnings
 
 import numpy
@@ -15,19 +14,17 @@ source = online(
 )
 
 
-def _read(index, tol):
+def _read(filename, tol):
     warnings.warn("The Fliege-Maier schemes are only single-precision.")
 
-    name = f"FliegeMaier({index})"
+    this_dir = pathlib.Path(__file__).resolve().parent
 
-    this_dir = os.path.dirname(os.path.realpath(__file__))
-
-    m = re.match("([0-9]+)([a-z]*)", index)
-    filename = "fliege_maier_{:03d}{}.json".format(int(m.group(1)), m.group(2))
-    with open(os.path.join(this_dir, filename), "r") as f:
+    with open(this_dir / filename, "r") as f:
         data = json.load(f)
 
     degree = data.pop("degree")
+    name = data.pop("name")
+    tol = data.pop("test_tolerance")
 
     data = numpy.array(data["data"])
     points = data[:, :3]
@@ -38,16 +35,16 @@ def _read(index, tol):
 
 
 def fliege_maier_04():
-    return _read("4", 1.564e-07)
+    return _read("fliege_maier_004.json")
 
 
 def fliege_maier_09():
-    return _read("9", 1.602e-12)
+    return _read("fliege_maier_009.json")
 
 
 def fliege_maier_16():
-    return _read("16", 7.773e-12)
+    return _read("fliege_maier_016.json")
 
 
 def fliege_maier_25():
-    return _read("25", 7.886e-12)
+    return _read("fliege_maier_025.json")
