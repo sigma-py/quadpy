@@ -1,7 +1,7 @@
 {
   "name": "Lebedev(071)",
   "degree": 71,
-  "test_tolerance": 4.267e-13,
+  "test_tolerance": 4.270e-13,
   "data": {
     "a1": [
       [6.3090494373999997e-05]
