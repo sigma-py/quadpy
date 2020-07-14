@@ -1,6 +1,10 @@
 {
-  "a3": [
-    [0.125]
-  ],
-  "degree": 3
+  "name": "Lebedev(003c)",
+  "degree": 3,
+  "test_tolerance": 1.396e-15,
+  "data": {
+    "a3": [
+      [0.125]
+    ]
+  }
 }
