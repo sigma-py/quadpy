@@ -416,8 +416,8 @@ def untangle2(data):
 
     if "plain" in data:
         vals = numpy.asarray(data["plain"]).T
-        points.append(vals[:3])
-        weights.append(vals[3])
+        points.append(vals[1:])
+        weights.append(vals[0])
 
     points = numpy.ascontiguousarray(numpy.concatenate(points, axis=1))
     weights = numpy.concatenate(weights)

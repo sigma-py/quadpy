@@ -16,16 +16,16 @@ weight_factor = 1 / 4 / numpy.pi
 
 
 def fliege_maier_04():
-    return _read(this_dir / "fliege_maier_004.json", source, weight_factor)
+    return _read(this_dir / "fliege_maier_04.json", source, weight_factor)
 
 
 def fliege_maier_09():
-    return _read(this_dir / "fliege_maier_009.json", source, weight_factor)
+    return _read(this_dir / "fliege_maier_09.json", source, weight_factor)
 
 
 def fliege_maier_16():
-    return _read(this_dir / "fliege_maier_016.json", source, weight_factor)
+    return _read(this_dir / "fliege_maier_16.json", source, weight_factor)
 
 
 def fliege_maier_25():
-    return _read(this_dir / "fliege_maier_025.json", source, weight_factor)
+    return _read(this_dir / "fliege_maier_25.json", source, weight_factor)
