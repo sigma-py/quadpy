@@ -481,6 +481,11 @@ def untangle2(data):
         w = numpy.array(data["rsw2"])[:, 0]
         weights.append(numpy.tile(w, 48))
 
+    if "plain" in data:
+        dat = numpy.asarray(data["plain"])
+        points.append(dat[:, :3])
+        weights.append(dat[:, 3])
+
     points = numpy.concatenate(points)
     weights = numpy.concatenate(weights)
     return points, weights
@@ -492,7 +497,7 @@ def _collapse0(a):
     return a.reshape(a.shape[0], -1)
 
 
-def _read(filepath, source):
+def _read(filepath, source, weight_factor=None):
     with open(filepath, "r") as f:
         data = json.load(f)
 
@@ -505,4 +510,8 @@ def _read(filepath, source):
 
     points, weights = untangle2(data)
     theta_phi = cartesian_to_spherical(points)
+
+    if weight_factor is not None:
+        weights *= weight_factor
+
     return U3Scheme(name, weights, points, theta_phi, degree, source, tol=tol)
