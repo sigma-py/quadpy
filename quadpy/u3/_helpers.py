@@ -112,7 +112,6 @@ def _plot_spherical_cap_mpl(ax, b, opening_angle, color, elevation=1.01):
         alpha=0.5,
         linewidth=0,
     )
-    return
 
 
 def cartesian_to_spherical(X):
@@ -185,50 +184,14 @@ def _a3():
 
 
 def _pq0(alpha):
-    # TODO merge with pq02
     a = numpy.sin(alpha * numpy.pi)
     b = numpy.cos(alpha * numpy.pi)
-    zero = numpy.zeros_like(alpha)
-    out = numpy.array(
-        [
-            [+a, +b, zero],
-            [-a, +b, zero],
-            [-a, -b, zero],
-            [+a, -b, zero],
-            #
-            [+b, +a, zero],
-            [-b, +a, zero],
-            [-b, -a, zero],
-            [+b, -a, zero],
-            #
-            [+a, zero, +b],
-            [-a, zero, +b],
-            [-a, zero, -b],
-            [+a, zero, -b],
-            #
-            [+b, zero, +a],
-            [-b, zero, +a],
-            [-b, zero, -a],
-            [+b, zero, -a],
-            #
-            [zero, +a, +b],
-            [zero, -a, +b],
-            [zero, -a, -b],
-            [zero, +a, -b],
-            #
-            [zero, +b, +a],
-            [zero, -b, +a],
-            [zero, -b, -a],
-            [zero, +b, -a],
-        ]
-    )
-    out = numpy.moveaxis(out, 0, 1)
-    out = out.reshape(out.shape[0], -1)
-    return out
+    return _pq02(a, b)
 
 
-def _pq02(a):
-    b = numpy.sqrt(1 - a ** 2)
+def _pq02(a, b=None):
+    if b is None:
+        b = numpy.sqrt(1 - a ** 2)
     zero = numpy.zeros_like(a)
     out = numpy.array(
         [
@@ -314,26 +277,28 @@ def _llm2(L, m=None):
     return out
 
 
-def _rsw(azimuthal, polar):
+def _rsw(phi_theta):
     # translate the point into cartesian coords; note that phi=pi/4.
-    azimuthal *= numpy.pi
-    polar *= numpy.pi
+    phi_theta *= numpy.pi
 
-    sin_polar = numpy.sin(polar)
-    cos_polar = numpy.cos(polar)
-    sin_azimuthal = numpy.sin(azimuthal)
-    cos_azimuthal = numpy.cos(azimuthal)
+    sin_phi, sin_theta = numpy.sin(phi_theta)
+    cos_phi, cos_theta = numpy.cos(phi_theta)
 
-    r = sin_polar * cos_azimuthal
-    s = sin_polar * sin_azimuthal
-    w = cos_polar
-
-    return _rsw2(r, s, w)
+    rsw = numpy.array([
+        sin_theta * cos_phi,
+        sin_theta * sin_phi,
+        cos_theta
+    ])
+    return _rsw2(rsw)
 
 
-def _rsw2(r, s, w=None):
-    if w is None:
+def _rsw2(rsw):
+    if rsw.shape[0] == 2:
+        r, s = rsw
         w = numpy.sqrt(1 - r ** 2 - s ** 2)
+    else:
+        r, s, w = rsw
+
     out = numpy.array(
         [
             [+r, +s, +w],
@@ -414,47 +379,45 @@ def untangle2(data):
         weights.append(numpy.full(12, w))
 
     if "a3" in data:
-        assert len(data["a3"]) == 1
+        vals = data["a3"]
+        assert len(vals) == 1
         points.append(_a3())
-        w = data["a3"][0]
-        weights.append(numpy.full(8, w))
+        weights.append(numpy.full(8, vals[0]))
 
     if "llm" in data:
-        llm = numpy.asarray(data["llm"]).T
-        points.append(_llm(llm[1]))
-        weights.append(numpy.tile(llm[0], 24))
+        vals = numpy.asarray(data["llm"]).T
+        points.append(_llm(vals[1]))
+        weights.append(numpy.tile(vals[0], 24))
 
     if "llm2" in data:
-        llm = numpy.asarray(data["llm2"]).T
-        points.append(_llm2(llm[1]))
-        weights.append(numpy.tile(llm[0], 24))
+        vals = numpy.asarray(data["llm2"]).T
+        points.append(_llm2(vals[1]))
+        weights.append(numpy.tile(vals[0], 24))
 
     if "pq0" in data:
-        pq0 = numpy.asarray(data["pq0"]).T
-        points.append(_pq0(pq0[1]))
-        weights.append(numpy.tile(pq0[0], 24))
+        vals = numpy.asarray(data["pq0"]).T
+        points.append(_pq0(vals[1]))
+        weights.append(numpy.tile(vals[0], 24))
 
     if "pq02" in data:
-        pq0 = numpy.asarray(data["pq02"]).T
-        points.append(_pq02(pq0[1]))
-        weights.append(numpy.tile(pq0[0], 24))
+        vals = numpy.asarray(data["pq02"]).T
+        points.append(_pq02(vals[1]))
+        weights.append(numpy.tile(vals[0], 24))
 
     if "rsw" in data:
-        rsw = numpy.asarray(data["rsw"]).T
-        beta = rsw[1:]
-        points.append(_rsw(*beta))
-        weights.append(numpy.tile(rsw[0], 48))
+        vals = numpy.asarray(data["rsw"]).T
+        points.append(_rsw(vals[1:]))
+        weights.append(numpy.tile(vals[0], 48))
 
     if "rsw2" in data:
-        rsw = numpy.asarray(data["rsw2"]).T
-        beta = rsw[1:]
-        points.append(_rsw2(*beta))
-        weights.append(numpy.tile(rsw[0], 48))
+        vals = numpy.asarray(data["rsw2"]).T
+        points.append(_rsw2(vals[1:]))
+        weights.append(numpy.tile(vals[0], 48))
 
     if "plain" in data:
-        dat = numpy.asarray(data["plain"])
-        points.append(dat[:, :3].T)
-        weights.append(dat[:, 3])
+        vals = numpy.asarray(data["plain"]).T
+        points.append(vals[:3])
+        weights.append(vals[3])
 
     points = numpy.ascontiguousarray(numpy.concatenate(points, axis=1))
     weights = numpy.concatenate(weights)
