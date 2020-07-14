@@ -1,5 +1,7 @@
 import numpy
+import json
 import sympy
+import warnings
 
 from ..helpers import QuadratureScheme
 
@@ -488,3 +490,19 @@ def _collapse0(a):
     """Collapse all dimensions of `a` except the first.
     """
     return a.reshape(a.shape[0], -1)
+
+
+def _read(filepath, source):
+    with open(filepath, "r") as f:
+        data = json.load(f)
+
+    degree = data.pop("degree")
+    name = data.pop("name")
+    tol = data.pop("test_tolerance")
+
+    if tol > 1.0e-12:
+        warnings.warn(f"The {name} scheme has low precision ({tol:.3e}).")
+
+    points, weights = untangle2(data)
+    theta_phi = cartesian_to_spherical(points)
+    return U3Scheme(name, weights, points, theta_phi, degree, source, tol=tol)

@@ -1,4 +1,3 @@
-import json
 import math
 import pathlib
 import warnings
@@ -6,7 +5,7 @@ import warnings
 import numpy
 
 from ...helpers import article, fsd, untangle
-from .._helpers import U3Scheme, cartesian_to_spherical, untangle2
+from .._helpers import _read, cartesian_to_spherical, U3Scheme
 
 source = article(
     authors=["Sangwoo Heo", "Yuan Xu"],
@@ -20,67 +19,51 @@ source = article(
     url="https://doi.org/10.1090/S0025-5718-00-01198-4",
 )
 
-
-def _read(filename):
-    this_dir = pathlib.Path(__file__).resolve().parent
-
-    with open(this_dir / filename, "r") as f:
-        data = json.load(f)
-
-    name = data.pop("name")
-    degree = data.pop("degree")
-    tol = data.pop("test-tolerance")
-
-    if tol > 1.0e-12:
-        warnings.warn(f"The {name} scheme has low precision ({tol:.3e}).")
-
-    points, weights = untangle2(data)
-    theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source, tol=tol)
+this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def heo_xu_13():
-    return _read("heo_xu_13.json")
+    return _read(this_dir / "heo_xu_13.json", source)
 
 
 def heo_xu_15():
-    return _read("heo_xu_15.json")
+    return _read(this_dir / "heo_xu_15.json", source)
 
 
 def heo_xu_17():
-    return _read("heo_xu_17.json")
+    return _read(this_dir / "heo_xu_17.json", source)
 
 
 def heo_xu_19a():
-    return _read("heo_xu_19a.json")
+    return _read(this_dir / "heo_xu_19a.json", source)
 
 
 def heo_xu_19b():
-    return _read("heo_xu_19b.json")
+    return _read(this_dir / "heo_xu_19b.json", source)
 
 
 def heo_xu_21a():
-    return _read("heo_xu_21a.json")
+    return _read(this_dir / "heo_xu_21a.json", source)
 
 
 def heo_xu_21b():
-    return _read("heo_xu_21b.json")
+    return _read(this_dir / "heo_xu_21b.json", source)
 
 
 def heo_xu_21c():
-    return _read("heo_xu_21c.json")
+    return _read(this_dir / "heo_xu_21c.json", source)
 
 
 def heo_xu_21d():
-    return _read("heo_xu_21d.json")
+    return _read(this_dir / "heo_xu_21d.json", source)
 
 
 def heo_xu_21e():
-    return _read("heo_xu_21e.json")
+    return _read(this_dir / "heo_xu_21e.json", source)
 
 
 def heo_xu_21f():
-    return _read("heo_xu_21f.json")
+    return _read(this_dir / "heo_xu_21f.json", source)
 
 
 def heo_xu_23_1():
@@ -404,7 +387,7 @@ def heo_xu_39_1():
 
 
 def heo_xu_39b():
-    return _read("heo_xu_39b.json")
+    return _read(this_dir / "heo_xu_39b.json", source)
 
 
 def _f(*items):
