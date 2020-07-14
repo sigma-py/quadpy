@@ -1,7 +1,8 @@
-import numpy
 import json
-import sympy
 import warnings
+
+import numpy
+import sympy
 
 from ..helpers import QuadratureScheme
 
