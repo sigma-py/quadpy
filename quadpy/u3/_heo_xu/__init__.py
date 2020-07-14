@@ -32,7 +32,7 @@ def _read(filename):
     tol = data.pop("test-tolerance")
 
     if tol > 1.0e-12:
-        warnings.warn(f"The {name} scheme is low precision ({tol:.3e}).")
+        warnings.warn(f"The {name} scheme has low precision ({tol:.3e}).")
 
     points, weights = untangle2(data)
     theta_phi = cartesian_to_spherical(points)
@@ -55,133 +55,32 @@ def heo_xu_19a():
     return _read("heo_xu_19a.json")
 
 
-def heo_xu_19_2():
-    name = "Heo-Xu 19-2"
-    degree = 19
-    data = [
-        (6.159164864674510e-03, _f((math.sqrt(1.0 / 3.0), 3))),
-        (7.661426125515730e-03, _f2(1.544806891452601e-01)),
-        (6.632044976552785e-03, _f2(4.141672959174029e-01)),
-        (6.075982031497271e-03, _f2(6.672931712797140e-01)),
-        (5.261983871603450e-03, _f2(7.034464773382534e-01)),
-        (6.991087353303635e-03, _f11(4.493328323269541e-01, 8.822700112603235e-01)),
-    ]
-    points, weights = untangle(data)
-    theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source, 1.129e-13)
+def heo_xu_19b():
+    return _read("heo_xu_19b.json")
 
 
-def heo_xu_21_1():
-    warnings.warn("The Heo-Xu schemes are only single-precision.")
-
-    name = "Heo-Xu 21-1"
-    degree = 21
-    data = [
-        (-0.056995598467, _f((math.sqrt(1.0 / 3.0), 3))),
-        (+0.005570590570, _f((1.0, 1))),
-        (+0.004620905358, _f((math.sqrt(0.5), 2))),
-        (+0.006173897540, _f2(0.186798108665)),
-        (+0.006304034638, _f2(0.366886721514)),
-        (+0.025447255860, _f2(0.607095656232)),
-        (+0.006599388582, _f1(0.399651971962)),
-        (+0.006218761274, _f11(0.573253885705, 0.795085657737)),
-    ]
-    points, weights = untangle(data)
-    theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source, 1.250e-10)
+def heo_xu_21a():
+    return _read("heo_xu_21a.json")
 
 
-def heo_xu_21_2():
-    warnings.warn("The Heo-Xu schemes are only single-precision.")
-
-    name = "Heo-Xu 21-2"
-    degree = 21
-    data = [
-        (-0.007545260195, _f((math.sqrt(1.0 / 3.0), 3))),
-        (-0.004709932317, _f((1.0, 1))),
-        (+0.006599231780, _f((math.sqrt(0.5), 2))),
-        (+0.007200919394, _f2(0.295937832153)),
-        (+0.008304183973, _f2(0.519472253003)),
-        (+0.006872624447, _f1(0.446007176001)),
-        (+0.006895630527, _f1(0.165319162227)),
-        (+0.006393131123, _f11(0.566806527713, 0.782784716286)),
-    ]
-    points, weights = untangle(data)
-    theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source, 1.024e-10)
+def heo_xu_21b():
+    return _read("heo_xu_21b.json")
 
 
-def heo_xu_21_3():
-    warnings.warn("The Heo-Xu schemes are only single-precision.")
-
-    name = "Heo-Xu 21-3"
-    degree = 21
-    data = [
-        (-0.059097949898, _f((math.sqrt(1.0 / 3.0), 3))),
-        (+0.005922907575, _f2(0.136045412794)),
-        (+0.006504946198, _f2(0.321321668532)),
-        (+0.025578972384, _f2(0.547239633521)),
-        (+0.003940466271, _f1(0.645751079582)),
-        (+0.006943311404, _f1(0.407685091182)),
-        (+0.006237689734, _f11(0.568997367119, 0.784986512893)),
-    ]
-    points, weights = untangle(data)
-    theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source, 1.318e-10)
+def heo_xu_21c():
+    return _read("heo_xu_21c.json")
 
 
-def heo_xu_21_4():
-    warnings.warn("The Heo-Xu schemes are only single-precision.")
-
-    name = "Heo-Xu 21-4"
-    degree = 21
-    data = [
-        (0.004843132969, _f2(0.121942991996)),
-        (0.005906722557, _f2(0.405172013544)),
-        (0.005570538352, _f2(0.635692088835)),
-        (0.004679374357, _f1(0.601743299291)),
-        (0.004559352813, _f11(0.595006226182, 0.774595852605)),
-        (0.005774096403, _f11(0.368090580737, 0.919422462557)),
-    ]
-    points, weights = untangle(data)
-    theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source, 9.801e-11)
+def heo_xu_21d():
+    return _read("heo_xu_21d.json")
 
 
-def heo_xu_21_5():
-    warnings.warn("The Heo-Xu schemes are only single-precision.")
-
-    name = "Heo-Xu 21-5"
-    degree = 21
-    data = [
-        (0.004256407290, _f2(0.114731000078)),
-        (0.005470376179, _f2(0.505750398065)),
-        (0.006041707753, _f2(0.682741864646)),
-        (0.006478529177, _f1(0.590785303447)),
-        (0.004792379399, _f11(0.467118005205, 0.838405331367)),
-        (0.004917443735, _f11(0.344252417343, 0.930159244514)),
-    ]
-    points, weights = untangle(data)
-    theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source, 1.198e-10)
+def heo_xu_21e():
+    return _read("heo_xu_21e.json")
 
 
-def heo_xu_21_6():
-    warnings.warn("The Heo-Xu schemes are only single-precision.")
-
-    name = "Heo-Xu 21-6"
-    degree = 21
-    data = [
-        (0.005200472756, _f((math.sqrt(1.0 / 3.0), 3))),
-        (0.005028347403, _f2(0.124787616061)),
-        (0.004910500721, _f2(0.382642965364)),
-        (0.004214767940, _f11(0.580333662379, 0.729548523912)),
-        (0.005272844391, _f11(0.600802371831, 0.789769929774)),
-        (0.005509551481, _f11(0.371677251651, 0.918768165963)),
-    ]
-    points, weights = untangle(data)
-    theta_phi = cartesian_to_spherical(points)
-    return U3Scheme(name, weights, points, theta_phi, degree, source, 8.244e-11)
+def heo_xu_21f():
+    return _read("heo_xu_21f.json")
 
 
 def heo_xu_23_1():
