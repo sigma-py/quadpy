@@ -137,12 +137,12 @@ def cartesian_to_spherical_sympy(X):
 def _a1(vals):
     points = numpy.array(
         [
-            [+1.0, 0.0, 0.0],
-            [-1.0, 0.0, 0.0],
-            [0.0, +1.0, 0.0],
-            [0.0, -1.0, 0.0],
-            [0.0, 0.0, +1.0],
-            [0.0, 0.0, -1.0],
+            [+1, 0, 0],
+            [-1, 0, 0],
+            [0, +1, 0],
+            [0, -1, 0],
+            [0, 0, +1],
+            [0, 0, -1],
         ]
     ).T
     weights = numpy.full(6, vals[0])
@@ -150,41 +150,45 @@ def _a1(vals):
 
 
 def _a2(vals):
+    symbolic = numpy.asarray(vals).dtype == sympy.Basic
+    a = 1 / sympy.sqrt(2) if symbolic else 1 / numpy.sqrt(2)
     points = numpy.array(
         [
-            [+1.0, +1.0, 0.0],
-            [+1.0, -1.0, 0.0],
-            [-1.0, +1.0, 0.0],
-            [-1.0, -1.0, 0.0],
+            [+a, +a, 0],
+            [+a, -a, 0],
+            [-a, +a, 0],
+            [-a, -a, 0],
             #
-            [+1.0, 0.0, +1.0],
-            [+1.0, 0.0, -1.0],
-            [-1.0, 0.0, +1.0],
-            [-1.0, 0.0, -1.0],
+            [+a, 0, +a],
+            [+a, 0, -a],
+            [-a, 0, +a],
+            [-a, 0, -a],
             #
-            [0.0, +1.0, +1.0],
-            [0.0, +1.0, -1.0],
-            [0.0, -1.0, +1.0],
-            [0.0, -1.0, -1.0],
+            [0, +a, +a],
+            [0, +a, -a],
+            [0, -a, +a],
+            [0, -a, -a],
         ]
-    ).T / numpy.sqrt(2.0)
+    ).T
     weights = numpy.full(12, vals[0])
     return points, weights
 
 
 def _a3(vals):
+    symbolic = numpy.asarray(vals).dtype == sympy.Basic
+    a = 1 / sympy.sqrt(3) if symbolic else 1 / numpy.sqrt(3)
     points = numpy.array(
         [
-            [+1.0, +1.0, +1.0],
-            [+1.0, +1.0, -1.0],
-            [+1.0, -1.0, +1.0],
-            [+1.0, -1.0, -1.0],
-            [-1.0, +1.0, +1.0],
-            [-1.0, +1.0, -1.0],
-            [-1.0, -1.0, +1.0],
-            [-1.0, -1.0, -1.0],
+            [+a, +a, +a],
+            [+a, +a, -a],
+            [+a, -a, +a],
+            [+a, -a, -a],
+            [-a, +a, +a],
+            [-a, +a, -a],
+            [-a, -a, +a],
+            [-a, -a, -a],
         ]
-    ).T / numpy.sqrt(3.0)
+    ).T
     weights = numpy.full(8, vals[0])
     return points, weights
 
@@ -383,7 +387,7 @@ def _rsw2(vals):
     return points, weights
 
 
-def untangle2(data):
+def expand_symmetries(data):
     points = []
     weights = []
 
@@ -409,12 +413,6 @@ def untangle2(data):
     return points, weights
 
 
-def _collapse0(a):
-    """Collapse all dimensions of `a` except the first.
-    """
-    return a.reshape(a.shape[0], -1)
-
-
 def _read(filepath, source, weight_factor=None):
     with open(filepath, "r") as f:
         content = json.load(f)
@@ -426,7 +424,7 @@ def _read(filepath, source, weight_factor=None):
     if tol > 1.0e-12:
         warnings.warn(f"The {name} scheme has low precision ({tol:.3e}).")
 
-    points, weights = untangle2(content.pop("data"))
+    points, weights = expand_symmetries(content.pop("data"))
     theta_phi = cartesian_to_spherical(points)
 
     if weight_factor is not None:

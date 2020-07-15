@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, fsd, pm, pm_roll, untangle
-from ._helpers import U3Scheme, cartesian_to_spherical_sympy
+from ._helpers import U3Scheme, cartesian_to_spherical_sympy, expand_symmetries
 
 source = article(
     authors=["J. Albrecht", "L. Collatz"],
@@ -64,17 +64,11 @@ def albrecht_collatz_4():
 
 
 def albrecht_collatz_5():
-    r = 1
-    s = sqrt(frac(1, 2))
-    t = sqrt(frac(1, 3))
-
-    data = [
-        (frac(40, 840), fsd(3, (r, 1))),
-        (frac(32, 840), fsd(3, (s, 2))),
-        (frac(27, 840), pm([t, t, t])),
-    ]
-
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    data = {
+        "a1": [frac(40, 840)],
+        "a2": [frac(32, 840)],
+        "a3": [frac(27, 840)],
+    }
+    points, weights = expand_symmetries(data)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("Albrecht-Collatz 5", weights, points, theta_phi, 7, source)
