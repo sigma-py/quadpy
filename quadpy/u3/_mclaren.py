@@ -25,6 +25,7 @@ def mclaren_01():
     data = [(frac(1, 12), pm_roll([a, a, 0]))]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 1", weights, points, theta_phi, degree, source)
 
@@ -41,6 +42,7 @@ def mclaren_02():
     data = [(frac(1, 30), pm_roll([u, 0, 0])), (frac(1, 30), pm_roll([r, s, t]))]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 2", weights, points, theta_phi, degree, source)
 
@@ -69,6 +71,7 @@ def mclaren_03():
     ]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 3", weights, points, theta_phi, degree, source)
 
@@ -97,6 +100,7 @@ def mclaren_04():
         (frac(21, 600), numpy.column_stack([+u, -w, +v])),
     ]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 4", weights, points, theta_phi, degree, source)
 
@@ -117,6 +121,7 @@ def mclaren_05():
         (B2, pm([t, t, t])),
     ]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 5", weights, points, theta_phi, degree, source)
 
@@ -139,6 +144,7 @@ def mclaren_06():
         (C, pm_roll([u, v, w])),
     ]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 6", weights, points, theta_phi, degree, source)
 
@@ -161,7 +167,9 @@ def mclaren_07():
         (C, pm_roll([1, 0, 0])),
         (C, pm_roll([u, v, w])),
     ]
+
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 7", weights, points, theta_phi, degree, source)
 
@@ -187,7 +195,9 @@ def mclaren_08():
         (B3, pm([t, t, t])),
         (B4, pm_roll([u, u, v])),
     ]
+
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 8", weights, points, theta_phi, degree, source)
 
@@ -215,7 +225,9 @@ def mclaren_09():
         (D, pm_roll([1, 0, 0])),
         (D, pm_roll([u, v, w])),
     ]
+
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 9", weights, points, theta_phi, degree, source)
 
@@ -279,5 +291,6 @@ def mclaren_10():
     ]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 10", weights, points, theta_phi, degree, source)

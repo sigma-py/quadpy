@@ -1,3 +1,5 @@
+import numpy
+
 from .. import un
 from ..helpers import book
 from ._albrecht_collatz import albrecht_collatz_1 as stroud_u3_5_1
@@ -27,11 +29,12 @@ source = book(
 
 def stroud_u3_11_2():
     scheme = un.stroud_1969(3)
+    pts = numpy.ascontiguousarray(scheme.points.T)
     return U3Scheme(
         "Stroud U3 11-2",
         scheme.weights,
-        scheme.points,
-        cartesian_to_spherical(scheme.points),
+        pts,
+        cartesian_to_spherical(pts),
         scheme.degree,
         source,
         3.437e-14,

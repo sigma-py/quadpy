@@ -20,7 +20,7 @@ def test_spherical_harmonic(scheme):
 
     Y_1^1(phi, theta) = -1/2 sqrt(3/2/pi) * exp(i*phi) * sin(theta)
 
-    is indeed 1, i.e.,
+    is indeed
 
     int_0^2pi int_0^pi
         Y_1^1(phi, theta) * conj(Y_1^1(phi, theta)) * sin(theta)
@@ -39,7 +39,6 @@ def test_spherical_harmonic(scheme):
         return y11 * numpy.conjugate(y11)
 
     val = scheme.integrate_spherical(spherical_harmonic_11)
-
     assert abs(val - 1.0) < 1.0e-14
 
 
@@ -141,9 +140,17 @@ def test_scheme_cartesian(scheme):
 
     print(scheme)
 
+    # assert contiguous x
+    def f(x):
+        assert x.flags["C_CONTIGUOUS"]
+        assert x.shape[0] == 3
+        return numpy.ones(x.shape[1:])
+
+    approximate = scheme.integrate(f, [0, 0, 0], 1)
+
     # We're using the iterator here; it's much less memory-intensive than computing the
     # full tree at once.
-    evaluator = orthopy.u3.EvalCartesian(scheme.points.T, "quantum mechanic")
+    evaluator = orthopy.u3.EvalCartesian(scheme.points, "quantum mechanic")
 
     k = 0
     while True:
@@ -157,7 +164,7 @@ def test_scheme_cartesian(scheme):
 
     # find the max error across all polynomials
     max_err = 0.0
-    evaluator = orthopy.u3.EvalCartesian(scheme.points.T, "quantum mechanic")
+    evaluator = orthopy.u3.EvalCartesian(scheme.points, "quantum mechanic")
     for i in range(scheme.degree + 1):
         approximate = scheme.integrate(lambda x: next(evaluator), [0.0, 0.0, 0.0], 1.0)
         exact = numpy.sqrt(4 * numpy.pi) if i == 0 else 0.0
@@ -237,7 +244,7 @@ def test_scheme_cartesian(scheme):
 def test_scheme_spherical(scheme):
     print(scheme)
 
-    evaluator = orthopy.u3.EvalSpherical(scheme.theta_phi.T, "quantum mechanic")
+    evaluator = orthopy.u3.EvalSpherical(scheme.theta_phi, "quantum mechanic")
 
     k = 0
     while True:

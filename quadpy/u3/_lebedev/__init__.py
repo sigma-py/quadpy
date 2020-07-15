@@ -8,7 +8,7 @@ from .._helpers import _read
 # <https://people.sc.fsu.edu/~jburkardt/datasets/sphere_lebedev_rule/sphere_lebedev_rule.html>
 sources = [
     article(
-        authors="V.I. Lebedev",
+        authors=["V.I. Lebedev"],
         title="Values of the nodes and weights of ninth to seventeenth order Gauss-Markov quadrature formulae invariant under the octahedron group with inversion",
         journal="Computational Mathematics and Mathematical Physics",
         volume="15",
