@@ -135,15 +135,10 @@ def cartesian_to_spherical_sympy(X):
 
 
 def _a1(vals):
+    symbolic = numpy.asarray(vals).dtype == sympy.Basic
+    a = 1 if symbolic else 1.0
     points = numpy.array(
-        [
-            [+1, 0, 0],
-            [-1, 0, 0],
-            [0, +1, 0],
-            [0, -1, 0],
-            [0, 0, +1],
-            [0, 0, -1],
-        ]
+        [[+a, 0, 0], [-a, 0, 0], [0, +a, 0], [0, -a, 0], [0, 0, +a], [0, 0, -a]]
     ).T
     weights = numpy.full(6, vals[0])
     return points, weights
