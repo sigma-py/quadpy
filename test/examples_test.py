@@ -118,11 +118,11 @@ def test_u3():
         0.7,
     )
 
-    quadpy.u3.lebedev_003a().integrate(
-        lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
-        numpy.array([[1.0, 1.0, 0.0], [0.0, 0.3, 0.0], [2.0, 2.0, 0.0]]),
-        [1.0, 0.7, 0.333],
-    )
+    # quadpy.u3.lebedev_003a().integrate(
+    #     lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
+    #     numpy.array([[1.0, 1.0, 0.0], [0.0, 0.3, 0.0], [2.0, 2.0, 0.0]]),
+    #     [1.0, 0.7, 0.333],
+    # )
 
 
 def test_s3():

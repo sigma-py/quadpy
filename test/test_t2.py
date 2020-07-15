@@ -276,6 +276,14 @@ def test_scheme(scheme):
 
     evaluator = orthopy.t2.Eval(scheme.points.T, "normal")
 
+    # assert contiguous x
+    def f(x):
+        assert x.flags["C_CONTIGUOUS"]
+        assert x.shape[0] == 2
+        return numpy.ones(x.shape[1:])
+
+    approximate = scheme.integrate(f, triangle)
+
     k = 0
     while True:
         approximate = scheme.integrate(lambda x: next(evaluator), triangle)
