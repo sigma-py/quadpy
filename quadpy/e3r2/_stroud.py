@@ -62,7 +62,7 @@ def stroud_e3r2_14_1(symbolic=False):
     )
 
     spherical_scheme = sphere_stroud.stroud_u3_14_1()
-    v = spherical_scheme.points
+    v = spherical_scheme.points.T
     B = spherical_scheme.weights
 
     # Normalize the weights to 1
