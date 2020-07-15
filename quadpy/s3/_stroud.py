@@ -130,7 +130,7 @@ def stroud_14_1():
     )
 
     spherical_scheme = sphere_stroud.stroud_u3_14_1()
-    v = spherical_scheme.points
+    v = spherical_scheme.points.T
     B = spherical_scheme.weights
 
     data = [
