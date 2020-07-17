@@ -3,8 +3,8 @@ from mpmath import mp
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, pm, pm_roll, untangle
-from ._helpers import U3Scheme, cartesian_to_spherical_sympy
+from ..helpers import article, pm_roll, untangle
+from ._helpers import U3Scheme, cartesian_to_spherical_sympy, expand_symmetries
 
 source = article(
     authors=["A.D. McLaren"],
@@ -21,28 +21,18 @@ source = article(
 
 def mclaren_01():
     degree = 3
-    a = sqrt(frac(1, 2))
-    data = [(frac(1, 12), pm_roll([a, a, 0]))]
-
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    data = {"a2": [frac(1, 12)]}
+    points, weights = expand_symmetries(data)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 1", weights, points, theta_phi, degree, source)
 
 
 def mclaren_02():
     degree = 5
-    # Stroud doesn't mention u=1, but it's implied. (After all, this is integration on a
-    # sphere.)
-    u = 1
-
     r = frac(1, 2)
     s, t = [(sqrt(5) + pm_) / 4 for pm_ in [+1, -1]]
-
-    data = [(frac(1, 30), pm_roll([u, 0, 0])), (frac(1, 30), pm_roll([r, s, t]))]
-
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    data = {"a1": [frac(1, 30)], "rst": [frac(1, 30), r, s, t]}
+    points, weights = expand_symmetries(data)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 2", weights, points, theta_phi, degree, source)
 
@@ -59,19 +49,8 @@ def mclaren_03():
     s = sqrt(s2)
     t = sqrt(t2)
 
-    u = numpy.array([+r, -r, +s, -s, +t, -t])
-    v = numpy.array([+s, +t, +t, +r, +r, +s])
-    w = numpy.array([+t, +s, +r, +t, +s, +r])
-
-    data = [
-        (frac(1, 24), numpy.column_stack([+u, +v, +w])),
-        (frac(1, 24), numpy.column_stack([+u, -v, -w])),
-        (frac(1, 24), numpy.column_stack([+u, +w, -v])),
-        (frac(1, 24), numpy.column_stack([+u, -w, +v])),
-    ]
-
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    data = {"rst_weird": [frac(1, 24), r, s, t]}
+    points, weights = expand_symmetries(data)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 3", weights, points, theta_phi, degree, source)
 
@@ -88,19 +67,8 @@ def mclaren_04():
     s = sqrt(s2)
     t = sqrt(t2)
 
-    u = numpy.array([+r, -r, +s, -s, +t, -t])
-    v = numpy.array([+s, +t, +t, +r, +r, +s])
-    w = numpy.array([+t, +s, +r, +t, +s, +r])
-
-    data = [
-        (frac(16, 600), pm_roll([1, 0, 0])),
-        (frac(21, 600), numpy.column_stack([+u, +v, +w])),
-        (frac(21, 600), numpy.column_stack([+u, -v, -w])),
-        (frac(21, 600), numpy.column_stack([+u, +w, -v])),
-        (frac(21, 600), numpy.column_stack([+u, -w, +v])),
-    ]
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    data = {"a1": [frac(16, 600)], "rst_weird": [frac(21, 600), r, s, t]}
+    points, weights = expand_symmetries(data)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 4", weights, points, theta_phi, degree, source)
 
@@ -110,18 +78,12 @@ def mclaren_05():
 
     r, s = [sqrt((5 + pm_ * sqrt(5)) / 10) for pm_ in [+1, -1]]
     u, v = [sqrt((3 - pm_ * sqrt(5)) / 6) for pm_ in [+1, -1]]
-    t = sqrt(frac(1, 3))
 
     B1 = frac(25, 840)
     B2 = frac(27, 840)
 
-    data = [
-        (B1, pm_roll([r, s, 0])),
-        (B2, pm_roll([u, v, 0])),
-        (B2, pm([t, t, t])),
-    ]
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    data = {"rs0": [[B1, r, s], [B2, u, v]], "a3": [B2]}
+    points, weights = expand_symmetries(data)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 5", weights, points, theta_phi, degree, source)
 
@@ -130,21 +92,15 @@ def mclaren_06():
     degree = 9
 
     r, s = [sqrt((5 + pm_ * sqrt(5)) / 10) for pm_ in [+1, -1]]
-    t = 1
     u = frac(1, 2)
     v, w = [(sqrt(5) + pm_) / 4 for pm_ in [+1, -1]]
 
     B = frac(25, 1260)
     C = frac(32, 1260)
 
-    data = [
-        # ERR Stroud is missing +- at the first r.
-        (B, pm_roll([r, s, 0])),
-        (C, pm_roll([t, 0, 0])),
-        (C, pm_roll([u, v, w])),
-    ]
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    # ERR Stroud is missing +- at the first r.
+    data = {"rs0": [B, r, s], "a1": [C], "rst": [C, u, v, w]}
+    points, weights = expand_symmetries(data)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 6", weights, points, theta_phi, degree, source)
 
@@ -153,7 +109,6 @@ def mclaren_07():
     degree = 9
 
     r, s = [sqrt((3 - pm_ * sqrt(5)) / 6) for pm_ in [+1, -1]]
-    t = sqrt(frac(1, 3))
     # ERR Stroud incorrectly gives sqrt(0.5)
     u = frac(1, 2)
     v, w = [(sqrt(5) + pm_) / 4 for pm_ in [+1, -1]]
@@ -161,25 +116,14 @@ def mclaren_07():
     B = -frac(9, 140)
     C = frac(16, 210)
 
-    data = [
-        (B, pm_roll([r, s, 0])),
-        (B, pm([t, t, t])),
-        (C, pm_roll([1, 0, 0])),
-        (C, pm_roll([u, v, w])),
-    ]
-
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    data = {"rs0": [B, r, s], "a3": [B], "a1": [C], "rst": [C, u, v, w]}
+    points, weights = expand_symmetries(data)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 7", weights, points, theta_phi, degree, source)
 
 
 def mclaren_08():
     degree = 11
-
-    r = 1
-    s = sqrt(frac(1, 2))
-    t = sqrt(frac(1, 3))
 
     u = sqrt(frac(1, 11))
     v = sqrt(frac(9, 11))
@@ -189,15 +133,8 @@ def mclaren_08():
     B3 = frac(15309, 725760)
     B4 = frac(14641, 725760)
 
-    data = [
-        (B1, pm_roll([r, 0, 0])),
-        (B2, pm_roll([s, s, 0])),
-        (B3, pm([t, t, t])),
-        (B4, pm_roll([u, u, v])),
-    ]
-
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    data = {"a1": [B1], "a2": [B2], "a3": [B3], "llm2": [B4, u, v]}
+    points, weights = expand_symmetries(data)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 8", weights, points, theta_phi, degree, source)
 
@@ -209,7 +146,6 @@ def mclaren_09():
 
     p, q = [sqrt((5 + pm_ * sqrt5) / 10) for pm_ in [+1, -1]]
     r, s = [sqrt((3 - pm_ * sqrt5) / 6) for pm_ in [+1, -1]]
-    t = sqrt(frac(1, 3))
 
     u = frac(1, 2)
     v, w = [(sqrt(5) + pm_) / 4 for pm_ in [+1, -1]]
@@ -218,16 +154,8 @@ def mclaren_09():
     C = frac(243, 27720)
     D = frac(512, 27720)
 
-    data = [
-        (B, pm_roll([p, q, 0])),
-        (C, pm_roll([r, s, 0])),
-        (C, pm([t, t, t])),
-        (D, pm_roll([1, 0, 0])),
-        (D, pm_roll([u, v, w])),
-    ]
-
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    data = {"rs0": [[B, p, q], [C, r, s]], "a3": [C], "a1": [D], "rst": [D, u, v, w]}
+    points, weights = expand_symmetries(data)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 9", weights, points, theta_phi, degree, source)
 
