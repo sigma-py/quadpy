@@ -82,7 +82,7 @@ def mclaren_05():
     B1 = frac(25, 840)
     B2 = frac(27, 840)
 
-    data = {"rs0": [[B1, r, s], [B2, u, v]], "a3": [B2]}
+    data = {"rs0": [[B1, B2], [r, u], [s, v]], "a3": [B2]}
     points, weights = expand_symmetries(data)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 5", weights, points, theta_phi, degree, source)
@@ -154,7 +154,7 @@ def mclaren_09():
     C = frac(243, 27720)
     D = frac(512, 27720)
 
-    data = {"rs0": [[B, p, q], [C, r, s]], "a3": [C], "a1": [D], "rst": [D, u, v, w]}
+    data = {"rs0": [[B, C], [p, r], [q, s]], "a3": [C], "a1": [D], "rst": [D, u, v, w]}
     points, weights = expand_symmetries(data)
     theta_phi = cartesian_to_spherical_sympy(points)
     return U3Scheme("McLaren 9", weights, points, theta_phi, degree, source)

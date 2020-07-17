@@ -541,7 +541,7 @@ def expand_symmetries(data):
             "rst_weird": _rst_weird,
             "plain": lambda vals: (vals[1:], vals[0]),
         }[key]
-        pts, wgts = fun(numpy.asarray(values).T)
+        pts, wgts = fun(numpy.asarray(values))
         points.append(pts)
         weights.append(wgts)
 
