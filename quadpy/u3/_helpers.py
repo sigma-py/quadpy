@@ -502,14 +502,11 @@ def _rst_weird(vals):
     return points
 
 
-def expand_symmetries(data):
+def expand_symmetries_points_only(data):
     points = []
-    weights = []
+    counts = []
 
-    for key, values in data.items():
-        weights_raw = values[0]
-        points_raw = values[1:]
-
+    for key, points_raw in data.items():
         fun = {
             "a1": _a1,
             "a2": _a2,
@@ -527,14 +524,27 @@ def expand_symmetries(data):
         }[key]
         pts = fun(numpy.asarray(points_raw))
 
-        wgts = numpy.tile(weights_raw, pts.shape[1])
+        counts.append(pts.shape[1])
         pts = pts.reshape(pts.shape[0], -1)
-
         points.append(pts)
-        weights.append(wgts)
 
     points = numpy.ascontiguousarray(numpy.concatenate(points, axis=1))
-    weights = numpy.concatenate(weights)
+    return points, counts
+
+
+def expand_symmetries(data):
+    # separate points and weights
+    points_raw = {}
+    weights_raw = []
+    for key, values in data.items():
+        weights_raw.append(values[0])
+        points_raw[key] = values[1:]
+
+    points, counts = expand_symmetries_points_only(points_raw)
+    weights = numpy.concatenate([
+        numpy.tile(values, count)
+        for count, values in zip(counts, weights_raw)
+    ])
     return points, weights
 
 
