@@ -203,7 +203,11 @@ def _pq02(vals):
         assert len(vals) == 3
         weights, a, b = vals
 
-    zero = numpy.zeros_like(a)
+    if isinstance(a, sympy.Basic):
+        zero = 0
+    else:
+        zero = numpy.zeros_like(a)
+
     points = numpy.array(
         [
             [+a, +b, zero],
@@ -241,6 +245,45 @@ def _pq02(vals):
     points = points.reshape(points.shape[0], -1)
 
     weights = numpy.tile(vals[0], 24)
+    return points, weights
+
+
+def _rs0(vals):
+    if len(vals) == 2:
+        weights = vals[0]
+        a = vals[1]
+        b = numpy.sqrt(1 - a ** 2)
+    else:
+        assert len(vals) == 3
+        weights, a, b = vals
+
+    if isinstance(a, sympy.Basic):
+        zero = 0
+    else:
+        zero = numpy.zeros_like(a)
+
+    points = numpy.array(
+        [
+            [+a, +b, zero],
+            [-a, +b, zero],
+            [-a, -b, zero],
+            [+a, -b, zero],
+            #
+            [+b, zero, +a],
+            [-b, zero, +a],
+            [-b, zero, -a],
+            [+b, zero, -a],
+            #
+            [zero, +a, +b],
+            [zero, -a, +b],
+            [zero, -a, -b],
+            [zero, +a, -b],
+        ]
+    )
+    points = numpy.moveaxis(points, 0, 1)
+    points = points.reshape(points.shape[0], -1)
+
+    weights = numpy.tile(vals[0], 12)
     return points, weights
 
 
@@ -395,6 +438,7 @@ def expand_symmetries(data):
             "llm2": _llm2,
             "pq0": _pq0,
             "pq02": _pq02,
+            "rs0": _rs0,
             "rsw": _rsw,
             "rsw2": _rsw2,
             "plain": lambda vals: (vals[1:], vals[0]),
