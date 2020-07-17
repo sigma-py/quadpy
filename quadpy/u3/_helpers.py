@@ -425,6 +425,102 @@ def _rsw2(vals):
     return points, weights
 
 
+def _rst(vals):
+    if len(vals) == 3:
+        weights, r, s = vals
+        w = numpy.sqrt(1 - r ** 2 - s ** 2)
+    else:
+        assert len(vals) == 4
+        weights, r, s, w = vals
+
+    points = numpy.array(
+        [
+            [+r, +s, +w],
+            [+w, +r, +s],
+            [+s, +w, +r],
+            #
+            [-r, +s, +w],
+            [+w, -r, +s],
+            [+s, +w, -r],
+            #
+            [+r, -s, +w],
+            [+w, +r, -s],
+            [-s, +w, +r],
+            #
+            [+r, +s, -w],
+            [-w, +r, +s],
+            [+s, -w, +r],
+            #
+            [-r, -s, +w],
+            [+w, -r, -s],
+            [-s, +w, -r],
+            #
+            [-r, +s, -w],
+            [-w, -r, +s],
+            [+s, -w, -r],
+            #
+            [+r, -s, -w],
+            [-w, +r, -s],
+            [-s, -w, +r],
+            #
+            [-r, -s, -w],
+            [-w, -r, -s],
+            [-s, -w, -r],
+        ]
+    )
+    points = numpy.moveaxis(points, 0, 1)
+    points = points.reshape(points.shape[0], -1)
+
+    weights = numpy.tile(vals[0], 24)
+    return points, weights
+
+
+def _rst_weird(vals):
+    if len(vals) == 3:
+        weights, r, s = vals
+        t = numpy.sqrt(1 - r ** 2 - s ** 2)
+    else:
+        assert len(vals) == 4
+        weights, r, s, t = vals
+
+    points = numpy.array(
+        [
+            [+r, +s, +t],
+            [-r, +t, +s],
+            [+s, +t, +r],
+            [-s, +r, +t],
+            [+t, +r, +s],
+            [-t, +s, +r],
+            #
+            [+r, -s, -t],
+            [-r, -t, -s],
+            [+s, -t, -r],
+            [-s, -r, -t],
+            [+t, -r, -s],
+            [-t, -s, -r],
+            #
+            [+r, +t, -s],
+            [-r, +s, -t],
+            [+s, +r, -t],
+            [-s, +t, -r],
+            [+t, +s, -r],
+            [-t, +r, -s],
+            #
+            [+r, -t, +s],
+            [-r, -s, +t],
+            [+s, -r, +t],
+            [-s, -t, +r],
+            [+t, -s, +r],
+            [-t, -r, +s],
+        ]
+    )
+    points = numpy.moveaxis(points, 0, 1)
+    points = points.reshape(points.shape[0], -1)
+
+    weights = numpy.tile(vals[0], 24)
+    return points, weights
+
+
 def expand_symmetries(data):
     points = []
     weights = []
@@ -441,6 +537,8 @@ def expand_symmetries(data):
             "rs0": _rs0,
             "rsw": _rsw,
             "rsw2": _rsw2,
+            "rst": _rst,
+            "rst_weird": _rst_weird,
             "plain": lambda vals: (vals[1:], vals[0]),
         }[key]
         pts, wgts = fun(numpy.asarray(values).T)
