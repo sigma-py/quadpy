@@ -25,7 +25,9 @@ def improve_precision_sphere():
         d = dict(zip(keys, vals))
         points, len_symm = expand_symmetries_points_only(d)
 
-        assert not numpy.any(numpy.isnan(points))
+        if numpy.any(numpy.isnan(points)):
+            # return some "large" residual value
+            return 1.0
 
         # evaluate all orthogonal polynomials up to `degree` at all points
         evaluator = orthopy.u3.EvalCartesian(points, scaling="quantum mechanic")
@@ -38,9 +40,6 @@ def improve_precision_sphere():
         sums = []
         for lsym, nsym in zip(len_symm, num_symm):
             for i in range(nsym):
-                # idx = numpy.arange(170)
-                # ii  = idx[k + i : k + lsym * nsym : nsym]
-                # print("xx", ii, len(ii))
                 sums.append(
                     numpy.sum(A2[:, k + i : k + lsym * nsym : nsym], axis=1)
                 )
@@ -53,8 +52,13 @@ def improve_precision_sphere():
 
         w, res, rank, s = numpy.linalg.lstsq(A, b, rcond=None)
         assert numpy.all(numpy.abs(w.imag) < 1.0e-15)
-        # assert res[0] < 1.0e-12
         w = w.real
+        print()
+        print("res", numpy.sqrt(res[0]))
+        for xx in x:
+            print(f"x {xx:.15e}")
+        for ww in w:
+            print(f"w {ww:.15e}")
         return numpy.sqrt(res[0])
 
     keys = list(content["data"].keys())
