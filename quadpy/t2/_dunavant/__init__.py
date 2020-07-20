@@ -1,7 +1,8 @@
+import pathlib
 from sympy import Rational as frac
 
-from ..helpers import article
-from ._helpers import T2Scheme, concat, s1, s2, s3
+from ...helpers import article
+from .._helpers import T2Scheme, concat, s1, s2, s3, _read
 
 source = article(
     authors=["D.A. Dunavant"],
@@ -14,6 +15,8 @@ source = article(
     year="1985",
     url="https://doi.org/10.1002/nme.1620210612",
 )
+
+this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def dunavant_01():
@@ -32,10 +35,7 @@ def dunavant_03():
 
 
 def dunavant_04():
-    weights, points = s2(
-        [0.223381589678011, 0.445948490915965], [0.109951743655322, 0.091576213509771]
-    )
-    return T2Scheme("Dunavant 4", weights, points, 4, source)
+    return _read(this_dir / "dunavant_04.json", source)
 
 
 def dunavant_05():
