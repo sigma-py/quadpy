@@ -40,36 +40,15 @@ def dunavant_04():
 
 
 def dunavant_05():
-    weights, points = concat(
-        s3(0.225),
-        s2(
-            [0.132394152788506, 0.4701420641051], [0.125939180544827, 0.101286507323456]
-        ),
-    )
-    return T2Scheme("Dunavant 5", weights, points, 5, source, 1.795e-13)
+    return _read(this_dir / "dunavant_05.json", source)
 
 
 def dunavant_06():
-    weights, points = concat(
-        s2(
-            [0.116786275726379, 0.249286745170910],
-            [0.050844906370207, 0.063089014491502],
-        ),
-        s1([0.082851075618374, 0.053145049844817, 0.310352451033784]),
-    )
-    return T2Scheme("Dunavant 6", weights, points, 6, source)
+    return _read(this_dir / "dunavant_06.json", source)
 
 
 def dunavant_07():
-    weights, points = concat(
-        s3(-0.149570044467682),
-        s2(
-            [0.175615257433208, 0.260345966079040],
-            [0.053347235608838, 0.065130102902216],
-        ),
-        s1([0.077113760890257, 0.048690315425316, 0.312865496004874]),
-    )
-    return T2Scheme("Dunavant 7", weights, points, 7, source)
+    return _read(this_dir / "dunavant_07.json", source)
 
 
 def dunavant_08():
