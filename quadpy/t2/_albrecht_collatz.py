@@ -18,4 +18,4 @@ source = article(
 def albrecht_collatz():
     weights, points = s2([frac(2, 30), frac(1, 2)], [frac(9, 15), frac(1, 6)])
     weights /= 2
-    return T2Scheme("Albrecht-Collatz", weights, points, 3, source)
+    return T2Scheme("Albrecht-Collatz", weights, points, 3, source, 2.776e-16)
