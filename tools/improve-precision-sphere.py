@@ -40,9 +40,7 @@ def improve_precision_sphere():
         sums = []
         for lsym, nsym in zip(len_symm, num_symm):
             for i in range(nsym):
-                sums.append(
-                    numpy.sum(A2[:, k + i : k + lsym * nsym : nsym], axis=1)
-                )
+                sums.append(numpy.sum(A2[:, k + i : k + lsym * nsym : nsym], axis=1))
             k += lsym * nsym
         A = numpy.column_stack(sums)
 

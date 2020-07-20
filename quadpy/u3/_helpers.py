@@ -191,9 +191,7 @@ def _a3(vals):
 
 
 def _pq0(vals):
-    return _pq02(
-        [numpy.sin(vals[0] * numpy.pi), numpy.cos(vals[0] * numpy.pi)]
-    )
+    return _pq02([numpy.sin(vals[0] * numpy.pi), numpy.cos(vals[0] * numpy.pi)])
 
 
 def _pq02(vals):
@@ -541,10 +539,9 @@ def expand_symmetries(data):
         points_raw[key] = values[1:]
 
     points, counts = expand_symmetries_points_only(points_raw)
-    weights = numpy.concatenate([
-        numpy.tile(values, count)
-        for count, values in zip(counts, weights_raw)
-    ])
+    weights = numpy.concatenate(
+        [numpy.tile(values, count) for count, values in zip(counts, weights_raw)]
+    )
     return points, weights
 
 
