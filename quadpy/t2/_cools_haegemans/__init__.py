@@ -18,38 +18,6 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 def cools_haegemans_1(mpmath=False):
     return _read(this_dir / "cools_haegemans_1.json", source, weight_factor=2)
-    # flt = mp.mpf if mpmath else float
-
-    # mp.dps = 20
-    # weights, points = rot_ab(
-    #     [
-    #         flt("0.16058343856681218798E-09"),
-    #         flt("0.34579201116826902882E+00"),
-    #         flt("0.36231682215692616667E+01"),
-    #     ],
-    #     [
-    #         flt("0.26530624434780379347E-01"),
-    #         flt("0.65101993458939166328E-01"),
-    #         flt("0.87016510156356306078E+00"),
-    #     ],
-    #     [
-    #         flt("0.29285717640155892159E-01"),
-    #         flt("0.65177530364879570754E+00"),
-    #         flt("0.31347788752373300717E+00"),
-    #     ],
-    #     [
-    #         flt("0.43909556791220782402E-01"),
-    #         flt("0.31325121067172530696E+00"),
-    #         flt("0.63062143431895614010E+00"),
-    #     ],
-    #     [
-    #         flt("0.66940767639916174192E-01"),
-    #         flt("0.51334692063945414949E+00"),
-    #         flt("0.28104124731511039057E+00"),
-    #     ],
-    # )
-    # weights *= 2
-    # return T2Scheme("Cools-Haegemans 1", weights, points, 8, source, 6.009e-14)
 
 
 # TODO find error
