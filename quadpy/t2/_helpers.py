@@ -271,12 +271,10 @@ def _read(filepath, source, weight_factor=None):
 
     degree = content["degree"]
     name = content["name"]
-    if "test_tolerance" in content:
-        tol = content["test_tolerance"]
-        if tol > 1.0e-12:
-            warnings.warn(f"The {name} scheme has low precision ({tol:.3e}).")
-    else:
-        tol = 1.0e-14
+    tol = content["test_tolerance"]
+
+    if tol > 1.0e-12:
+        warnings.warn(f"The {name} scheme has low precision ({tol:.3e}).")
 
     points, weights = expand_symmetries(content["data"])
 
