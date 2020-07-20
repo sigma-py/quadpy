@@ -1,16 +1,3 @@
-{
-  "name": "Bažant-Oh 9",
-  "degree": 9,
-  "test_tolerance": 5.808e-12,
-  "data": {
-    "a1": [
-      0.0265214244093
-    ],
-    "a2": [
-      0.0199301476312
-    ],
-    "llm2": [
-      0.0250712367487, 0.387907304067
-    ]
-  }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:dcb4a9545259b3b486802f70eab74932dd555f3d7b8b71d3bd90b97f81a40f15
+size 232

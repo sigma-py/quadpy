@@ -1,17 +1,3 @@
-{
-  "name": "Lebedev(005)",
-  "degree": 5,
-  "test_tolerance": 8.341e-16,
-  "data": {
-    "a1": [
-      [
-        0.06666666666666667
-      ]
-    ],
-    "a3": [
-      [
-        0.075
-      ]
-    ]
-  }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:6feb298d6c07b01bd90852a3c0692698935aa58fd8129af426b21845747427ad
+size 202
