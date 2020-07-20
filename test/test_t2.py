@@ -285,19 +285,28 @@ def test_scheme(scheme):
     approximate = scheme.integrate(f, triangle)
 
     k = 0
+    max_err = 0.0
     while True:
         approximate = scheme.integrate(lambda x: next(evaluator), triangle)
         exact = numpy.sqrt(2.0) / 2 if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
+        max_err = max(max_err, numpy.max(err))
         if numpy.any(err > scheme.test_tolerance):
             break
         k += 1
 
-    max_err = numpy.max(err)
-    assert k - 1 == scheme.degree, (
-        f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
-        f"(max err: {max_err:.3e})"
-    )
+    if k - 1 != scheme.degree:
+        # find the max error across all polynomials
+        for i in range(k + 1, scheme.degree + 1):
+            approximate = scheme.integrate(lambda x: next(evaluator), triangle)
+            exact = numpy.sqrt(2.0) / 2 if i == 0 else 0.0
+            err = numpy.abs(approximate - exact)
+            max_err = max(max_err, numpy.max(err))
+
+        raise AssertionError(
+            f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
+            f"(max err: {max_err:.3e})"
+        )
 
 
 @pytest.mark.parametrize("scheme", [quadpy.t2.xiao_gimbutas_10()])

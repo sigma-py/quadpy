@@ -160,21 +160,23 @@ def test_scheme_cartesian(scheme):
         if numpy.any(err > scheme.test_tolerance):
             break
         k += 1
-    max_err = numpy.max(err)
 
-    # find the max error across all polynomials
-    max_err = 0.0
-    evaluator = orthopy.u3.EvalCartesian(scheme.points, "quantum mechanic")
-    for i in range(scheme.degree + 1):
-        approximate = scheme.integrate(lambda x: next(evaluator), [0.0, 0.0, 0.0], 1.0)
-        exact = numpy.sqrt(4 * numpy.pi) if i == 0 else 0.0
-        err = numpy.abs(approximate - exact)
-        max_err = max(max_err, numpy.max(err))
+    if k - 1 != scheme.degree:
+        # find the max error across all polynomials
+        max_err = 0.0
+        evaluator = orthopy.u3.EvalCartesian(scheme.points, "quantum mechanic")
+        for i in range(scheme.degree + 1):
+            approximate = scheme.integrate(
+                lambda x: next(evaluator), [0.0, 0.0, 0.0], 1.0
+            )
+            exact = numpy.sqrt(4 * numpy.pi) if i == 0 else 0.0
+            err = numpy.abs(approximate - exact)
+            max_err = max(max_err, numpy.max(err))
 
-    assert k - 1 == scheme.degree, (
-        f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
-        f"(max err: {max_err:.3e})"
-    )
+        raise AssertionError(
+            f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
+            f"(max err: {max_err:.3e})"
+        )
 
 
 # Test a few schemes with integrate_spherical. -- This is basically the same as above,
