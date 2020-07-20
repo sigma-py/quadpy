@@ -228,7 +228,7 @@ def expand_symmetries_points_only(data):
     counts = []
 
     for key, points_raw in data.items():
-        fun = {"s1": _s1, "s2": _s2, "s3": _s3_alt,}[key]
+        fun = {"s1": _s1, "s2": _s2, "s3": _s3_alt}[key]
         pts = fun(numpy.asarray(points_raw))
 
         counts.append(pts.shape[1])
@@ -263,11 +263,13 @@ def _read(filepath, source):
 
     degree = content["degree"]
     name = content["name"]
-    tol = content["test_tolerance"]
-
-    if tol > 1.0e-12:
-        warnings.warn(f"The {name} scheme has low precision ({tol:.3e}).")
+    if "test_tolerance" in content:
+        tol = content["test_tolerance"]
+        if tol > 1.0e-12:
+            warnings.warn(f"The {name} scheme has low precision ({tol:.3e}).")
+    else:
+        tol = 1.0e-14
 
     points, weights = expand_symmetries(content["data"])
 
-    return T2Scheme(name, weights, points, degree)
+    return T2Scheme(name, weights, points, degree, source, tol)
