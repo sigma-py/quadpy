@@ -22,17 +22,17 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 def dunavant_01():
     weights, points = s3(1)
-    return T2Scheme("Dunavant 1", weights, points, 1, source)
+    return T2Scheme("Dunavant 1", weights, points, 1, source, 7.850e-17)
 
 
 def dunavant_02():
     weights, points = s2([frac(1, 3), frac(1, 6)])
-    return T2Scheme("Dunavant 2", weights, points, 2, source)
+    return T2Scheme("Dunavant 2", weights, points, 2, source, 2.220e-16)
 
 
 def dunavant_03():
     weights, points = concat(s3(-frac(9, 16)), s2([frac(25, 48), frac(1, 5)]))
-    return T2Scheme("Dunavant 3", weights, points, 3, source)
+    return T2Scheme("Dunavant 3", weights, points, 3, source, 6.661e-16)
 
 
 def dunavant_04():
