@@ -549,14 +549,14 @@ def _read(filepath, source, weight_factor=None):
     with open(filepath, "r") as f:
         content = json.load(f)
 
-    degree = content.pop("degree")
-    name = content.pop("name")
-    tol = content.pop("test_tolerance")
+    degree = content["degree"]
+    name = content["name"]
+    tol = content["test_tolerance"]
 
     if tol > 1.0e-12:
         warnings.warn(f"The {name} scheme has low precision ({tol:.3e}).")
 
-    points, weights = expand_symmetries(content.pop("data"))
+    points, weights = expand_symmetries(content["data"])
     theta_phi = cartesian_to_spherical(points)
 
     if weight_factor is not None:
