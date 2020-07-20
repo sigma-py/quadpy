@@ -198,3 +198,61 @@ def concat(*data):
     weights = numpy.concatenate([t[0] for t in data])
     points = numpy.vstack([t[1] for t in data])
     return weights, points
+
+
+def _s3_alt(data):
+    return numpy.full((3, 1), 1 / 3)
+
+
+def _s2(a):
+    a = numpy.array(a)
+    b = 1 - 2 * a
+    return numpy.array([[a, a, b], [a, b, a], [b, a, a]])
+
+
+def _s1(data):
+    a, b = numpy.asarray(data)
+    c = 1 - a - b
+    points = numpy.array(
+        [[a, b, c], [c, a, b], [b, c, a], [b, a, c], [c, b, a], [a, c, b]]
+    )
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def expand_symmetries_points_only(data):
+    points = []
+    counts = []
+
+    for key, points_raw in data.items():
+        fun = {
+            "s1": _s1,
+            "s2": _s2,
+            "s3": _s3_alt,
+        }[key]
+        pts = fun(numpy.asarray(points_raw))
+
+        counts.append(pts.shape[1])
+        pts = pts.reshape(pts.shape[0], -1)
+        points.append(pts)
+
+    points = numpy.ascontiguousarray(numpy.concatenate(points, axis=1))
+    return points, counts
+
+
+def expand_symmetries(data):
+    # separate points and weights
+    points_raw = {}
+    weights_raw = []
+    for key, values in data.items():
+        weights_raw.append(values[0])
+        points_raw[key] = values[1:]
+
+    points, counts = expand_symmetries_points_only(points_raw)
+    weights = numpy.concatenate(
+        [numpy.tile(values, count) for count, values in zip(counts, weights_raw)]
+    )
+
+    # TODO remove this once points are expected as points.T in all functions
+    points = points.T
+    return points, weights

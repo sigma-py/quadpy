@@ -1,7 +1,10 @@
+import json
 from mpmath import mp
+import pathlib
+import warnings
 
-from ..helpers import article
-from ._helpers import T2Scheme, concat, s1, s2, s3
+from ...helpers import article
+from .._helpers import T2Scheme, concat, s1, s2, s3, expand_symmetries
 
 source = article(
     authors=["Linbo Zhang", "Tao Cui", "Hui Liu"],
@@ -15,36 +18,27 @@ source = article(
     url="https://www.jstor.org/stable/43693493",
 )
 
+this_dir = pathlib.Path(__file__).resolve().parent
 
-def zhang_cui_liu_1(mpmath=False):
-    flt = mp.mpf if mpmath else float
 
-    mp.dps = 35
-    weights, points = concat(
-        s3(flt("0.1443156076777871682510911104890646")),
-        s2(
-            [
-                flt("0.1032173705347182502817915502921290"),
-                flt("0.1705693077517602066222935014914645"),
-            ],
-            [
-                flt("0.0324584976231980803109259283417806"),
-                flt("0.0505472283170309754584235505965989"),
-            ],
-            [
-                flt("0.0950916342672846247938961043885843"),
-                flt("0.4592925882927231560288155144941693"),
-            ],
-        ),
-        s1(
-            [
-                flt("0.0272303141744349942648446900739089"),
-                flt("0.2631128296346381134217857862846436"),
-                flt("0.0083947774099576053372138345392944"),
-            ]
-        ),
-    )
-    return T2Scheme("Zhang-Cui-Liu 1", weights, points, 8, source)
+def _read(filepath):
+    with open(this_dir / filepath, "r") as f:
+        content = json.load(f)
+
+    degree = content["degree"]
+    name = content["name"]
+    tol = content["test_tolerance"]
+
+    if tol > 1.0e-12:
+        warnings.warn(f"The {name} scheme has low precision ({tol:.3e}).")
+
+    points, weights = expand_symmetries(content["data"])
+
+    return T2Scheme(name, weights, points, degree, source)
+
+
+def zhang_cui_liu_1():
+    return _read("zhang_cui_liu_1.json")
 
 
 def zhang_cui_liu_2(mpmath=False):
