@@ -223,12 +223,20 @@ def _s1(data):
     return points
 
 
+def _rot_ab_alt(data):
+    a, b = data
+    c = 1 - a - b
+    points = numpy.array([[a, b, c], [c, a, b], [b, c, a]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
 def expand_symmetries_points_only(data):
     points = []
     counts = []
 
     for key, points_raw in data.items():
-        fun = {"s1": _s1, "s2": _s2, "s3": _s3_alt}[key]
+        fun = {"s1": _s1, "s2": _s2, "s3": _s3_alt, "rot_ab": _rot_ab_alt}[key]
         pts = fun(numpy.asarray(points_raw))
 
         counts.append(pts.shape[1])
@@ -257,7 +265,7 @@ def expand_symmetries(data):
     return points, weights
 
 
-def _read(filepath, source):
+def _read(filepath, source, weight_factor=None):
     with open(filepath, "r") as f:
         content = json.load(f)
 
@@ -271,5 +279,8 @@ def _read(filepath, source):
         tol = 1.0e-14
 
     points, weights = expand_symmetries(content["data"])
+
+    if weight_factor is not None:
+        weights *= weight_factor
 
     return T2Scheme(name, weights, points, degree, source, tol)
