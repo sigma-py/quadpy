@@ -31,6 +31,11 @@ class U3Scheme(QuadratureScheme):
             self.points = points.astype(numpy.float64)
             self.points_symbolic = points
 
+        assert weights.shape[0] == points.shape[1], (
+            f"Shape mismatch for {name}: "
+            f"weights.shape = {weights.shape}, points.shape = {points.shape}"
+        )
+
         theta_phi = numpy.asarray(theta_phi)
         if theta_phi.dtype == numpy.float64:
             self.theta_phi = theta_phi
@@ -140,8 +145,7 @@ def _a1(vals):
     points = numpy.array(
         [[+a, 0, 0], [-a, 0, 0], [0, +a, 0], [0, -a, 0], [0, 0, +a], [0, 0, -a]]
     ).T
-    weights = numpy.full(6, vals[0])
-    return points, weights
+    return points
 
 
 def _a2(vals):
@@ -165,8 +169,7 @@ def _a2(vals):
             [0, -a, -a],
         ]
     ).T
-    weights = numpy.full(12, vals[0])
-    return points, weights
+    return points
 
 
 def _a3(vals):
@@ -184,24 +187,20 @@ def _a3(vals):
             [-a, -a, -a],
         ]
     ).T
-    weights = numpy.full(8, vals[0])
-    return points, weights
+    return points
 
 
 def _pq0(vals):
-    return _pq02(
-        [vals[0], numpy.sin(vals[1] * numpy.pi), numpy.cos(vals[1] * numpy.pi)]
-    )
+    return _pq02([numpy.sin(vals[0] * numpy.pi), numpy.cos(vals[0] * numpy.pi)])
 
 
 def _pq02(vals):
-    if len(vals) == 2:
-        weights = vals[0]
-        a = vals[1]
+    if len(vals) == 1:
+        a = vals[0]
         b = numpy.sqrt(1 - a ** 2)
     else:
-        assert len(vals) == 3
-        weights, a, b = vals
+        assert len(vals) == 2
+        a, b = vals
 
     if isinstance(a, sympy.Basic):
         zero = 0
@@ -242,20 +241,16 @@ def _pq02(vals):
         ]
     )
     points = numpy.moveaxis(points, 0, 1)
-    points = points.reshape(points.shape[0], -1)
-
-    weights = numpy.tile(vals[0], 24)
-    return points, weights
+    return points
 
 
 def _rs0(vals):
-    if len(vals) == 2:
-        weights = vals[0]
-        a = vals[1]
+    if len(vals) == 1:
+        a = vals[0]
         b = numpy.sqrt(1 - a ** 2)
     else:
-        assert len(vals) == 3
-        weights, a, b = vals
+        assert len(vals) == 2
+        a, b = vals
 
     if isinstance(a, sympy.Basic):
         zero = 0
@@ -281,28 +276,24 @@ def _rs0(vals):
         ]
     )
     points = numpy.moveaxis(points, 0, 1)
-    points = points.reshape(points.shape[0], -1)
-
-    weights = numpy.tile(vals[0], 12)
-    return points, weights
+    return points
 
 
 def _llm(vals):
     # translate the point into cartesian coords; note that phi=pi/4.
-    beta = vals[1] * numpy.pi
+    beta = vals[0] * numpy.pi
     L = numpy.sin(beta) / numpy.sqrt(2)
     m = numpy.cos(beta)
-    return _llm2([vals[0], L, m])
+    return _llm2([L, m])
 
 
 def _llm2(vals):
-    if len(vals) == 2:
-        weights = vals[0]
-        L = vals[1]
+    if len(vals) == 1:
+        L = vals[0]
         m = numpy.sqrt(1 - 2 * L ** 2)
     else:
-        assert len(vals) == 3
-        weights, L, m = vals
+        assert len(vals) == 2
+        L, m = vals
 
     points = numpy.array(
         [
@@ -335,29 +326,26 @@ def _llm2(vals):
         ]
     )
     points = numpy.moveaxis(points, 0, 1)
-    points = points.reshape(points.shape[0], -1)
-
-    weights = numpy.tile(vals[0], 24)
-    return points, weights
+    return points
 
 
 def _rsw(vals):
     # translate the point into cartesian coords; note that phi=pi/4.
-    phi_theta = vals[1:] * numpy.pi
+    phi_theta = vals * numpy.pi
 
     sin_phi, sin_theta = numpy.sin(phi_theta)
     cos_phi, cos_theta = numpy.cos(phi_theta)
 
-    return _rsw2([vals[0], sin_theta * cos_phi, sin_theta * sin_phi, cos_theta])
+    return _rsw2([sin_theta * cos_phi, sin_theta * sin_phi, cos_theta])
 
 
 def _rsw2(vals):
-    if len(vals) == 3:
-        weights, r, s = vals
+    if len(vals) == 2:
+        r, s = vals
         w = numpy.sqrt(1 - r ** 2 - s ** 2)
     else:
-        assert len(vals) == 4
-        weights, r, s, w = vals
+        assert len(vals) == 3
+        r, s, w = vals
 
     points = numpy.array(
         [
@@ -419,19 +407,16 @@ def _rsw2(vals):
         ]
     )
     points = numpy.moveaxis(points, 0, 1)
-    points = points.reshape(points.shape[0], -1)
-
-    weights = numpy.tile(vals[0], 48)
-    return points, weights
+    return points
 
 
 def _rst(vals):
-    if len(vals) == 3:
-        weights, r, s = vals
+    if len(vals) == 2:
+        r, s = vals
         w = numpy.sqrt(1 - r ** 2 - s ** 2)
     else:
-        assert len(vals) == 4
-        weights, r, s, w = vals
+        assert len(vals) == 3
+        r, s, w = vals
 
     points = numpy.array(
         [
@@ -469,19 +454,16 @@ def _rst(vals):
         ]
     )
     points = numpy.moveaxis(points, 0, 1)
-    points = points.reshape(points.shape[0], -1)
-
-    weights = numpy.tile(vals[0], 24)
-    return points, weights
+    return points
 
 
 def _rst_weird(vals):
-    if len(vals) == 3:
-        weights, r, s = vals
+    if len(vals) == 2:
+        r, s = vals
         t = numpy.sqrt(1 - r ** 2 - s ** 2)
     else:
-        assert len(vals) == 4
-        weights, r, s, t = vals
+        assert len(vals) == 3
+        r, s, t = vals
 
     points = numpy.array(
         [
@@ -515,17 +497,14 @@ def _rst_weird(vals):
         ]
     )
     points = numpy.moveaxis(points, 0, 1)
-    points = points.reshape(points.shape[0], -1)
-
-    weights = numpy.tile(vals[0], 24)
-    return points, weights
+    return points
 
 
-def expand_symmetries(data):
+def expand_symmetries_points_only(data):
     points = []
-    weights = []
+    counts = []
 
-    for key, values in data.items():
+    for key, points_raw in data.items():
         fun = {
             "a1": _a1,
             "a2": _a2,
@@ -539,14 +518,30 @@ def expand_symmetries(data):
             "rsw2": _rsw2,
             "rst": _rst,
             "rst_weird": _rst_weird,
-            "plain": lambda vals: (vals[1:], vals[0]),
+            "plain": lambda vals: vals.reshape(3, 1, -1),
         }[key]
-        pts, wgts = fun(numpy.asarray(values))
+        pts = fun(numpy.asarray(points_raw))
+
+        counts.append(pts.shape[1])
+        pts = pts.reshape(pts.shape[0], -1)
         points.append(pts)
-        weights.append(wgts)
 
     points = numpy.ascontiguousarray(numpy.concatenate(points, axis=1))
-    weights = numpy.concatenate(weights)
+    return points, counts
+
+
+def expand_symmetries(data):
+    # separate points and weights
+    points_raw = {}
+    weights_raw = []
+    for key, values in data.items():
+        weights_raw.append(values[0])
+        points_raw[key] = values[1:]
+
+    points, counts = expand_symmetries_points_only(points_raw)
+    weights = numpy.concatenate(
+        [numpy.tile(values, count) for count, values in zip(counts, weights_raw)]
+    )
     return points, weights
 
 
