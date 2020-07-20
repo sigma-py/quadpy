@@ -1,3 +1,6 @@
+import json
+import warnings
+
 import numpy
 import sympy
 
@@ -225,11 +228,7 @@ def expand_symmetries_points_only(data):
     counts = []
 
     for key, points_raw in data.items():
-        fun = {
-            "s1": _s1,
-            "s2": _s2,
-            "s3": _s3_alt,
-        }[key]
+        fun = {"s1": _s1, "s2": _s2, "s3": _s3_alt,}[key]
         pts = fun(numpy.asarray(points_raw))
 
         counts.append(pts.shape[1])
@@ -256,3 +255,19 @@ def expand_symmetries(data):
     # TODO remove this once points are expected as points.T in all functions
     points = points.T
     return points, weights
+
+
+def _read(filepath, source):
+    with open(filepath, "r") as f:
+        content = json.load(f)
+
+    degree = content["degree"]
+    name = content["name"]
+    tol = content["test_tolerance"]
+
+    if tol > 1.0e-12:
+        warnings.warn(f"The {name} scheme has low precision ({tol:.3e}).")
+
+    points, weights = expand_symmetries(content["data"])
+
+    return T2Scheme(name, weights, points, degree)
