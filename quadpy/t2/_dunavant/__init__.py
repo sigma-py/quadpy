@@ -22,17 +22,17 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 def dunavant_01():
     weights, points = s3(1)
-    return T2Scheme("Dunavant 1", weights, points, 1, source)
+    return T2Scheme("Dunavant 1", weights, points, 1, source, 7.850e-17)
 
 
 def dunavant_02():
     weights, points = s2([frac(1, 3), frac(1, 6)])
-    return T2Scheme("Dunavant 2", weights, points, 2, source)
+    return T2Scheme("Dunavant 2", weights, points, 2, source, 2.220e-16)
 
 
 def dunavant_03():
     weights, points = concat(s3(-frac(9, 16)), s2([frac(25, 48), frac(1, 5)]))
-    return T2Scheme("Dunavant 3", weights, points, 3, source)
+    return T2Scheme("Dunavant 3", weights, points, 3, source, 6.661e-16)
 
 
 def dunavant_04():
@@ -40,36 +40,15 @@ def dunavant_04():
 
 
 def dunavant_05():
-    weights, points = concat(
-        s3(0.225),
-        s2(
-            [0.132394152788506, 0.4701420641051], [0.125939180544827, 0.101286507323456]
-        ),
-    )
-    return T2Scheme("Dunavant 5", weights, points, 5, source, 1.795e-13)
+    return _read(this_dir / "dunavant_05.json", source)
 
 
 def dunavant_06():
-    weights, points = concat(
-        s2(
-            [0.116786275726379, 0.249286745170910],
-            [0.050844906370207, 0.063089014491502],
-        ),
-        s1([0.082851075618374, 0.053145049844817, 0.310352451033784]),
-    )
-    return T2Scheme("Dunavant 6", weights, points, 6, source)
+    return _read(this_dir / "dunavant_06.json", source)
 
 
 def dunavant_07():
-    weights, points = concat(
-        s3(-0.149570044467682),
-        s2(
-            [0.175615257433208, 0.260345966079040],
-            [0.053347235608838, 0.065130102902216],
-        ),
-        s1([0.077113760890257, 0.048690315425316, 0.312865496004874]),
-    )
-    return T2Scheme("Dunavant 7", weights, points, 7, source)
+    return _read(this_dir / "dunavant_07.json", source)
 
 
 def dunavant_08():
@@ -315,29 +294,4 @@ def dunavant_19():
 
 
 def dunavant_20():
-    weights, points = concat(
-        s3(+0.033057055541624),
-        s2(
-            [+0.000867019185663, 0.500950464352200],
-            [+0.011660052716448, 0.488212957934729],
-            [+0.022876936356421, 0.455136681950283],
-            [+0.030448982673938, 0.401996259318289],
-            [+0.030624891725355, 0.255892909759421],
-            [+0.024368057676800, 0.176488255995106],
-            [+0.015997432032024, 0.104170855336758],
-            [+0.007698301815602, 0.053068963840930],
-            [-0.000632060497488, 0.041618715196029],
-            [+0.001751134301193, 0.011581921406822],
-        ),
-        s1(
-            [+0.016465839189576, 0.344855770229001, 0.606402646106160],
-            [+0.004839033540485, 0.377843269594854, 0.615842614456541],
-            [+0.025804906534650, 0.306635479062357, 0.559048000390295],
-            [+0.008471091054441, 0.249419362774742, 0.736606743262866],
-            [+0.018354914106280, 0.212775724802802, 0.711675142287434],
-            [+0.000704404677908, 0.146965436053239, 0.861402717154987],
-            [+0.010112684927462, 0.137726978828923, 0.835586957912363],
-            [+0.003573909385950, 0.059696109149007, 0.929756171556853],
-        ),
-    )
-    return T2Scheme("Dunavant 20", weights, points, 20, source, 4.729e-14)
+    return _read(this_dir / "dunavant_20.json", source)

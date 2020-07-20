@@ -9,7 +9,7 @@ import quadpy
     "scheme",
     [quadpy.cn.cools_haegemans_1(n) for n in range(1, 7)]
     + [quadpy.cn.cools_haegemans_2(n) for n in range(2, 7)]
-    # [quadpy.cn.dobrodeev_1970(n) for n in range(5, 8)]
+    + [quadpy.cn.dobrodeev_1970(n) for n in range(5, 8)]
     + [quadpy.cn.dobrodeev_1978(n) for n in range(2, 8)]
     + [quadpy.cn.hammer_stroud_1n(n) for n in range(2, 7)]
     + [quadpy.cn.hammer_stroud_2n(n) for n in range(2, 7)]
@@ -56,7 +56,7 @@ def test_scheme(scheme):
         approximate = scheme.integrate(lambda x: next(evaluator)[0], cn)
         exact = numpy.sqrt(2.0) ** n if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
-        if numpy.any(err > scheme.test_tolerance):
+        if numpy.any(err > scheme.test_tolerance * 1.1):
             break
         k += 1
 
