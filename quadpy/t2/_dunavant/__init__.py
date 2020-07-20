@@ -1,8 +1,9 @@
 import pathlib
+
 from sympy import Rational as frac
 
 from ...helpers import article
-from .._helpers import T2Scheme, concat, s1, s2, s3, _read
+from .._helpers import T2Scheme, _read, concat, s1, s2, s3
 
 source = article(
     authors=["D.A. Dunavant"],
