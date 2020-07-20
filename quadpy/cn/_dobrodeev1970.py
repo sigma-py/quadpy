@@ -39,4 +39,4 @@ def dobrodeev_1970(n):
 
     points, weights = untangle(data)
     weights *= frac(125, 729)
-    return CnScheme("Dobrodeev 1970", n, weights, points, 7, _source)
+    return CnScheme("Dobrodeev 1970", n, weights, points, 7, _source, 8.100e-13)
