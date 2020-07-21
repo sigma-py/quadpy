@@ -55,7 +55,7 @@ schemes = [
     quadpy.s2.luo_meng_3(),
     quadpy.s2.luo_meng_4(),
     quadpy.s2.luo_meng_5(),
-    # quadpy.s2.luo_meng_6(),
+    quadpy.s2.luo_meng_6(),
     # quadpy.s2.luo_meng_7(),
     quadpy.s2.mysovskih_1(),
     quadpy.s2.mysovskih_2(),
