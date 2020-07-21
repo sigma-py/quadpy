@@ -269,13 +269,13 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [[0.0, 0.0], [1.0, 0.0], [0.5,
  * [Mysovskih](quadpy/s2/_mysovskih.py) (1964, 3 schemes up to degree 15)
  * [Rabinowitz-Richter](quadpy/s2/_rabinowitz_richter.py) (1969, 6 schemes up to degree 15)
  * [Lether](quadpy/s2/_lether.py) (1971, arbitrary degree)
- * [Piessens-Haegemans](quadpy/s2/_piessens_haegemans.py) (1975, 1 scheme of degree 9)
- * [Haegemans-Piessens](quadpy/s2/_haegemans_piessens.py) (1977, degree 9)
+ * [Piessens-Haegemans](quadpy/s2/_piessens_haegemans/__init__.py) (1975, 1 scheme of degree 9)
+ * [Haegemans-Piessens](quadpy/s2/_haegemans_piessens/__init__.py) (1977, degree 9)
  * [Cools-Haegemans](quadpy/s2/_cools_haegemans.py) (1985, 3 schemes up to degree 9)
  * [Wissmann-Becker](quadpy/s2/_wissmann_becker.py) (1986, 3 schemes up to degree 8)
- * [Kim-Song](quadpy/s2/_kim_song.py) (1997, 15 schemes up to degree 17)
- * [Cools-Kim](quadpy/s2/_cools_kim.py) (2000, 3 schemes up to degree 21)
- * [Luo-Meng](quadpy/s2/_luo_meng.py) (2007, 6 schemes up to degree 17)
+ * [Kim-Song](quadpy/s2/_kim_song/__init__.py) (1997, 15 schemes up to degree 17)
+ * [Cools-Kim](quadpy/s2/_cools_kim/__init__.py) (2000, 3 schemes up to degree 21)
+ * [Luo-Meng](quadpy/s2/_luo_meng/__init__.py) (2007, 6 schemes up to degree 17)
  * [all schemes from the n-ball](#n-ball-sn)
 
 Example:
