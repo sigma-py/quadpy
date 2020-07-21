@@ -111,19 +111,28 @@ def test_scheme(scheme):
     evaluator = orthopy.s2.xu.Eval(scheme.points.T, "normal")
 
     k = 0
+    max_err = 0.0
     while True:
         approximate = scheme.integrate(lambda x: next(evaluator), [0.0, 0.0], 1.0)
         exact = numpy.sqrt(numpy.pi) if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
+        max_err = max(max_err, numpy.max(err))
         if numpy.any(err > scheme.test_tolerance * 1.1):
             break
         k += 1
 
-    max_err = numpy.max(err)
-    assert k - 1 == scheme.degree, (
-        f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
-        f"(max err: {max_err:.3e})"
-    )
+    if k - 1 != scheme.degree:
+        # find the max error across all polynomials
+        for i in range(k + 1, scheme.degree + 1):
+            approximate = scheme.integrate(lambda x: next(evaluator), [0.0, 0.0], 1.0)
+            exact = numpy.sqrt(numpy.pi) if i == 0 else 0.0
+            err = numpy.abs(approximate - exact)
+            max_err = max(max_err, numpy.max(err))
+
+        raise AssertionError(
+            f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
+            f"(max err: {max_err:.3e})"
+        )
 
 
 @pytest.mark.parametrize("scheme", [quadpy.s2.lether(3)])
