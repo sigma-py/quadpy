@@ -67,6 +67,13 @@ def _pmy(y):
     return numpy.array([[0, +y], [0, -y]])
 
 
+def _pma_alt(data):
+    a = numpy.asarray(data)
+    points = numpy.array([[+a, +a], [-a, +a], [+a, -a], [-a, -a]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
 def _pm_alt(data):
     a, b = numpy.asarray(data)
     points = numpy.array([[+a, +b], [-a, +b], [+a, -b], [-a, -b]])
@@ -103,6 +110,14 @@ def _fsd_alt(data):
     return points
 
 
+def _s40_alt(data):
+    a = numpy.asarray(data)
+    zero = numpy.zeros_like(a)
+    points = numpy.array([[+a, zero], [-a, zero], [zero, +a], [zero, -a]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
 def expand_symmetries_points_only(data):
     points = []
     counts = []
@@ -113,7 +128,9 @@ def expand_symmetries_points_only(data):
             "pmx": _pmx_alt,
             "pmy": _pmy_alt,
             "zero": _zero_alt,
-            "fsd": _fsd_alt
+            "fsd": _fsd_alt,
+            "s40": _s40_alt,
+            "pma": _pma_alt,
         }[key]
         pts = fun(numpy.asarray(points_raw))
 
