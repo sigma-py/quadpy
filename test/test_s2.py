@@ -115,7 +115,7 @@ def test_scheme(scheme):
         approximate = scheme.integrate(lambda x: next(evaluator), [0.0, 0.0], 1.0)
         exact = numpy.sqrt(numpy.pi) if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
-        if numpy.any(err > scheme.test_tolerance):
+        if numpy.any(err > scheme.test_tolerance * 1.1):
             break
         k += 1
 
