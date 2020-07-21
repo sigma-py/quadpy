@@ -82,6 +82,19 @@ def _pmx_alt(data):
     return points
 
 
+def _zero_alt(data):
+    return numpy.array([[0.0], [0.0]])
+
+
+def _fsd_alt(data):
+    a, b = numpy.asarray(data)
+    points = numpy.array(
+        [[+a, +b], [-a, +b], [+a, -b], [-a, -b], [+b, +a], [-b, +a], [+b, -a], [-b, -a]]
+    )
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
 def expand_symmetries_points_only(data):
     points = []
     counts = []
@@ -89,7 +102,9 @@ def expand_symmetries_points_only(data):
     for key, points_raw in data.items():
         fun = {
             "pm": _pm_alt,
-            "pmx": _pmx_alt
+            "pmx": _pmx_alt,
+            "zero": _zero_alt,
+            "fsd": _fsd_alt
         }[key]
         pts = fun(numpy.asarray(points_raw))
 

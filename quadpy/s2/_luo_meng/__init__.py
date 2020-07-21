@@ -23,17 +23,7 @@ def luo_meng_1():
 
 
 def luo_meng_2():
-    data = [
-        (0.34906585039887, [[0, 0]]),
-        (0.20125271332781, pm([0.22802635567696, 0.55050432045386])),
-        (0.20125271332781, pm([0.55050432045386, 0.22802635567697])),
-        (0.11661039976673, pm([0.27959387377058, 0.87565760433418])),
-        (0.11891162535334, pm([0.73930517186176, 0.54623880962155])),
-        (0.12020849804409, pm([0.91921106078980, 0])),
-    ]
-    points, weights = untangle(data)
-    weights /= math.pi
-    return S2Scheme("Luo-Meng 2", weights, points, 9, _source, 6.934e-14)
+    return _read(this_dir / "luo_meng_2.json", _source, weight_factor=1 / math.pi)
 
 
 def luo_meng_3():
