@@ -1,3 +1,4 @@
+import numpy
 from sympy import Rational as frac
 
 from ..helpers import article
@@ -36,7 +37,8 @@ def laursen_gellert_03():
 
 
 def laursen_gellert_04():
-    weights, points = s1([1.0 / 6.0, 0.659027622374092, 0.231933368553031])
+    roots = numpy.polynomial.polynomial.polyroots([-1, 15, -60, 60])
+    weights, points = s1([1.0 / 6.0, roots[2], roots[1]])
     return T2Scheme("Laursen-Gellert 4", weights, points, 3, source)
 
 

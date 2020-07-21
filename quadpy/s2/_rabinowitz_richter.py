@@ -78,5 +78,5 @@ def rabinowitz_richter_5():
 
 
 def rabinowitz_richter_6():
-    # ENH Given analytically by Mysovskih.
+    # ENH Given mostly analytically by Mysovskih.
     return mysovskih_3()

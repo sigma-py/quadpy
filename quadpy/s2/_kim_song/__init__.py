@@ -1,10 +1,11 @@
 import math
+import pathlib
 import warnings
 
 import numpy
 
-from ..helpers import article, fsd, untangle, z
-from ._helpers import S2Scheme
+from ...helpers import article, fsd, untangle, z
+from .._helpers import S2Scheme, _read
 
 _source = article(
     authors=["KyoungJoong Kim", "ManSuk Song"],
@@ -15,6 +16,8 @@ _source = article(
     pages="179-192",
     url="https://doi.org/10.1007/BF03011388",
 )
+
+this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def kim_song_1():
@@ -146,88 +149,17 @@ def kim_song_11():
     return S2Scheme("Kim-Song 11", weights, points, 15, _source, 1.910e-12)
 
 
-# TODO find issue
 def kim_song_12():
-    data = [
-        (0.034218732123473, fsd(2, (0.000061843487605, 1))),
-        (0.016529016194279, fsd(2, (0.980790725733799, 1))),
-        (0.128441621643862, fsd(2, (0.536380801743208, 1))),
-        (0.057523498415081, fsd(2, (0.859692027602019, 1))),
-        (0.000019445945395, fsd(2, (0.890507932479849, 2))),
-        (0.029882788585530, fsd(2, (0.597728327225623, 2))),
-        (0.086625257876566, fsd(2, (0.472638508474430, 2))),
-        (0.135289763196368, fsd(2, (0.256583368615187, 2))),
-        (0.030442743336826, fsd(2, (0.915666628257231, 1), (0.290750921163427, 1))),
-        (0.036355668706617, fsd(2, (0.775130682141990, 1), (0.550400039905684, 1))),
-        (0.081635607665003, fsd(2, (0.722293685844502, 1), (0.274942296086914, 1))),
-    ]
-    points, weights = untangle(data)
-    weights /= math.pi
-    # ERR article claims degree 17
-    warnings.warn("Kim-Song claim degree 17, but the scheme is only degree 3.")
-    return S2Scheme("Kim-Song 12", weights, points, 3, _source)
+    return _read(this_dir / "kim_song_12.json", _source, weight_factor=1 / math.pi)
 
 
 def kim_song_13():
-    data = [
-        (0.107540143418461, fsd(2, (0.233779702361770, 1))),
-        (0.021291625083247, fsd(2, (0.974967664200431, 1))),
-        (0.082028519637405, fsd(2, (0.670603246539245, 1))),
-        (0.000480959036869, fsd(2, (0.767149887105600, 2))),
-        (0.055918006547614, fsd(2, (0.529910286773986, 2))),
-        (0.020154425991986, fsd(2, (0.920197160917920, 1), (0.324880277222329, 1))),
-        (0.056453982349758, fsd(2, (0.696315960030871, 1), (0.353373943382497, 1))),
-        (0.038487694687371, fsd(2, (0.763756057536127, 1), (0.554819904211117, 1))),
-        (0.096415834450115, fsd(2, (0.455714401760160, 1), (0.222878364006045, 1))),
-        (0.047557517357696, fsd(2, (0.855907714936672, 1), (0.165103693017075, 1))),
-    ]
-    points, weights = untangle(data)
-    weights /= math.pi
-    return S2Scheme("Kim-Song 13", weights, points, 17, _source, 5.952e-12)
+    return _read(this_dir / "kim_song_13.json", _source, weight_factor=1 / math.pi)
 
 
-# TODO find issue
 def kim_song_14():
-    data = [
-        (-0.336959088794964, fsd(2, (0.860125674956782, 1))),
-        (-0.252102704609804, fsd(2, (0.860125119919931, 1))),
-        (+0.131164048626801, fsd(2, (0.547071550894734, 1))),
-        (-0.010919895825604, fsd(2, (0.927565701076356, 2))),
-        (+0.010744805554708, fsd(2, (0.928162274936277, 2))),
-        (+0.004798012482265, fsd(2, (0.755935467576794, 2))),
-        (+0.072711702889623, fsd(2, (0.618205357502056, 2))),
-        (+0.115883691032049, fsd(2, (0.398705530364909, 2))),
-        (+0.123519504105529, fsd(2, (0.175541035301314, 2))),
-        (+0.022426281825809, fsd(2, (0.959568314399471, 1), (0.155454100986327, 1))),
-        (+0.033906878046312, fsd(2, (0.851375493057155, 1), (0.435023471372536, 1))),
-        (+0.332072154179621, fsd(2, (0.858667011279674, 1), (0.030948726948493, 1))),
-        (+0.074873729916680, fsd(2, (0.711569636216547, 1), (0.300178547400372, 1))),
-    ]
-    points, weights = untangle(data)
-    weights /= math.pi
-    # ERR article claims degree 19
-    warnings.warn("Kim-Song claim degree 19, but the scheme is only degree 3.")
-    return S2Scheme("Kim-Song 14", weights, points, 3, _source, 3.829e-14)
+    return _read(this_dir / "kim_song_14.json", _source, weight_factor=1 / math.pi)
 
 
-# TODO find issue
 def kim_song_15():
-    data = [
-        (0.082558858859169, fsd(2, (0.204668989256100, 1))),
-        (0.009721593541193, fsd(2, (0.992309839464756, 1))),
-        (0.061920685878045, fsd(2, (0.740931035494388, 1))),
-        (0.079123279187043, fsd(2, (0.477987648986077, 1))),
-        (0.087526733002317, fsd(2, (0.306138805262459, 2))),
-        (0.057076811471306, fsd(2, (0.524780156099700, 2))),
-        (0.020981864256888, fsd(2, (0.921806074110042, 1), (0.310920075968188, 1))),
-        (0.015226392255721, fsd(2, (0.790235832571934, 1), (0.579897645710646, 1))),
-        (0.033136884897617, fsd(2, (0.725790566968788, 1), (0.525045580895713, 1))),
-        (0.044853730819348, fsd(2, (0.788230650371813, 1), (0.290244481132460, 1))),
-        (0.065321481701811, fsd(2, (0.584894890453686, 1), (0.264317463415838, 1))),
-        (0.024214746797802, fsd(2, (0.909637445684200, 1), (0.092571132370888, 1))),
-    ]
-    points, weights = untangle(data)
-    weights /= math.pi
-    # ERR article claims degree 19
-    warnings.warn("Kim-Song claim degree 19, but the scheme is only degree 9.")
-    return S2Scheme("Kim-Song 15", weights, points, 9, _source, 6.563e-12)
+    return _read(this_dir / "kim_song_15.json", _source, weight_factor=1 / math.pi)
