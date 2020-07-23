@@ -1,5 +1,5 @@
 import json
-import os
+import pathlib
 
 import numpy
 
@@ -12,11 +12,12 @@ _source = online(
     url="http://www.math.unipd.it/~alvise/sets.html",
 )
 
+this_dir = pathlib.Path(__file__).resolve().parent
+
 
 def _read(index, tol=1.0e-14):
-    this_dir = os.path.dirname(os.path.realpath(__file__))
     filename = f"sommariva_{index:02d}.json"
-    with open(os.path.join(this_dir, filename), "r") as f:
+    with open(this_dir / filename, "r") as f:
         data = json.load(f)
 
     degree = data.pop("degree")

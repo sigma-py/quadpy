@@ -1,5 +1,5 @@
 import json
-import os
+import pathlib
 
 from ...helpers import article
 from .._helpers import T2Scheme, untangle2
@@ -16,10 +16,11 @@ source = article(
 )
 # https://arxiv.org/abs/1411.5631
 
+this_dir = pathlib.Path(__file__).resolve().parent
+
 
 def _read(filename):
-    this_dir = os.path.dirname(os.path.realpath(__file__))
-    with open(os.path.join(this_dir, filename), "r") as f:
+    with open(this_dir / filename, "r") as f:
         data = json.load(f)
 
     degree = data.pop("degree")

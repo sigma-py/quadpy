@@ -1,5 +1,5 @@
 import json
-import os
+import pathlib
 
 from ...helpers import article
 from .._helpers import T2Scheme, untangle2
@@ -18,15 +18,16 @@ source = article(
 # Data extracted from
 # https://people.sc.fsu.edu/~jburkardt/f_src/triangle_symq_rule/triangle_symq_rule.f90
 
+this_dir = pathlib.Path(__file__).resolve().parent
+
 
 # TODO mpmath
 def _read(degree):
-    this_dir = os.path.dirname(os.path.realpath(__file__))
     filename = f"xg{degree:02d}.json"
-    with open(os.path.join(this_dir, filename), "r") as f:
+    with open(this_dir / filename, "r") as f:
         data = json.load(f)
 
-    degree = data.pop("degree")
+    degree = data["degree"]
     name = f"Xiao-Gimbutas {degree}"
     points, weights = untangle2(data)
     return T2Scheme(name, weights, points, degree, source)

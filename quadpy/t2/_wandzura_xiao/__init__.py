@@ -1,5 +1,5 @@
 import json
-import os
+import pathlib
 
 from ...helpers import article
 from .._helpers import T2Scheme, untangle2
@@ -19,13 +19,14 @@ source = article(
 # triangle [[-0.5, -sqrt(3)/2], [-0.5, +sqrt(3)/2], [1, 0]]. These have been transformed
 # to barycentric coordinates here.
 
+this_dir = pathlib.Path(__file__).resolve().parent
+
 
 def _read(index):
-    this_dir = os.path.dirname(os.path.realpath(__file__))
     filename = f"wx{index:02d}.json"
-    with open(os.path.join(this_dir, filename), "r") as f:
+    with open(this_dir / filename, "r") as f:
         data = json.load(f)
-    degree = data.pop("degree")
+    degree = data["degree"]
 
     data = data
     points, weights = untangle2(data)

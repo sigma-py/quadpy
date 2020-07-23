@@ -1,5 +1,5 @@
 import json
-import os
+import pathlib
 
 import numpy
 
@@ -19,11 +19,12 @@ source = article(
 # Data from
 # https://onlinelibrary.wiley.com/doi/abs/10.1002/nme.6313
 
+this_dir = pathlib.Path(__file__).resolve().parent
+
 
 def _read(string, tol=1.0e-14):
-    this_dir = os.path.dirname(os.path.realpath(__file__))
     filename = f"js{string}.json"
-    with open(os.path.join(this_dir, filename), "r") as f:
+    with open(this_dir / filename, "r") as f:
         data = json.load(f)
 
     degree = data.pop("degree")
