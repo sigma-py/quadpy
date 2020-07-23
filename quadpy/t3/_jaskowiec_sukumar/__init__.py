@@ -27,7 +27,7 @@ def _read(string, tol=1.0e-14):
     with open(this_dir / filename, "r") as f:
         data = json.load(f)
 
-    degree = data.pop("degree")
+    degree = data["degree"]
 
     points = numpy.array(data["points"])
     points = numpy.column_stack([points, 1.0 - numpy.sum(points, axis=1)])

@@ -29,7 +29,7 @@ def _read(index, tol=1.0e-14):
     with open(this_dir / filename, "r") as f:
         data = json.load(f)
 
-    degree = data.pop("degree")
+    degree = data["degree"]
     points, weights = untangle2(data)
     weights /= 2
     return T2Scheme(f"Vioreanu-Rokhlin {index}", weights, points, degree, source, tol)

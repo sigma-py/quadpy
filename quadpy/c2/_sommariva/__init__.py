@@ -20,7 +20,7 @@ def _read(index, tol=1.0e-14):
     with open(this_dir / filename, "r") as f:
         data = json.load(f)
 
-    degree = data.pop("degree")
+    degree = data["degree"]
 
     data = numpy.array(data["data"])
     points = data[:, :2]

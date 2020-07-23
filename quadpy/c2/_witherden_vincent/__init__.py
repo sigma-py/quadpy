@@ -24,7 +24,7 @@ def _read(degree):
     with open(this_dir / filename, "r") as f:
         data = json.load(f)
 
-    assert degree == data.pop("degree")
+    assert degree == data["degree"]
 
     d = []
     if "zero" in data:

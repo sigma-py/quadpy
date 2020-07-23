@@ -23,7 +23,7 @@ def _read(filename):
     with open(this_dir / filename, "r") as f:
         data = json.load(f)
 
-    degree = data.pop("degree")
+    degree = data["degree"]
     points, weights = untangle2(data)
     return weights, points, degree, source
 
