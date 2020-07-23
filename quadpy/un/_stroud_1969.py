@@ -1,8 +1,9 @@
+import ndim
 import numpy
 from numpy import sqrt
 
 from ..helpers import article, fsd, pm, untangle
-from ._helpers import UnScheme, integrate_monomial_over_unit_nsphere, volume_nsphere
+from ._helpers import UnScheme
 
 source = article(
     authors=["A.H. Stroud"],
@@ -45,7 +46,7 @@ def stroud_1969(n):
         k_range.append(10)
     # TODO build the equation system from orthogonal polynomials
     b = [
-        integrate_monomial_over_unit_nsphere([k] + (n - 1) * [0], symbolic=False)
+        ndim.nsphere.integrate_monomial([k] + (n - 1) * [0], symbolic=False)
         for k in k_range
     ]
     A = [[sum(p[:, 0] ** k) for p in pts] for k in k_range]
@@ -54,5 +55,5 @@ def stroud_1969(n):
     data = [(w[k], pts[k]) for k in range(len(w))]
 
     points, weights = untangle(data)
-    weights /= volume_nsphere(n - 1)
-    return UnScheme("Stroud 1969", n, weights, points, degree, source, 1.428e-14)
+    weights /= ndim.nsphere.volume(n)
+    return UnScheme("Stroud 1969", n, weights, points, degree, source, 4.270e-14)

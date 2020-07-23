@@ -253,7 +253,7 @@ def test_scheme_spherical(scheme):
         approximate = scheme.integrate_spherical(lambda theta_phi: next(evaluator))
         exact = numpy.sqrt(4 * numpy.pi) if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
-        if numpy.any(err > scheme.test_tolerance):
+        if numpy.any(err > scheme.test_tolerance * 1.1):
             break
         k += 1
     max_err = numpy.max(err)

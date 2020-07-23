@@ -1,10 +1,10 @@
 import accupy
+import ndim
 import numpy
 import pytest
 from helpers import check_degree
 
 import quadpy
-from quadpy.enr._helpers import integrate_monomial_over_enr
 
 schemes = [
     quadpy.e2r.haegemans_piessens_a(),
@@ -35,7 +35,7 @@ def test_scheme(scheme):
 
     degree, err = check_degree(
         lambda poly: scheme.integrate(poly, dot=accupy.fdot),
-        integrate_monomial_over_enr,
+        ndim.enr.integrate_monomial,
         2,
         scheme.degree + 1,
         tol=scheme.test_tolerance,

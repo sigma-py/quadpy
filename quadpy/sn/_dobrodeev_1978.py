@@ -1,5 +1,7 @@
+import ndim
+
 from ..helpers import article, compute_dobrodeev, fsd, untangle
-from ._helpers import SnScheme, integrate_monomial_over_nball
+from ._helpers import SnScheme
 
 source = article(
     authors=["L.N. Dobrodeev"],
@@ -38,10 +40,10 @@ def dobrodeev_1978(n):
         20: ("I", 20, 1, 3),
     }
 
-    I0 = integrate_monomial_over_nball(n * [0])
-    I2 = integrate_monomial_over_nball([2] + (n - 1) * [0])
-    I22 = integrate_monomial_over_nball([2, 2] + (n - 2) * [0])
-    I4 = integrate_monomial_over_nball([4] + (n - 1) * [0])
+    I0 = ndim.nball.integrate_monomial(n * [0])
+    I2 = ndim.nball.integrate_monomial([2] + (n - 1) * [0])
+    I22 = ndim.nball.integrate_monomial([2, 2] + (n - 2) * [0])
+    I4 = ndim.nball.integrate_monomial([4] + (n - 1) * [0])
     pm_type, i, j, k = dim_config[n]
     G, a, b, c = compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k)
 

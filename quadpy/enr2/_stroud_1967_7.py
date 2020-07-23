@@ -1,11 +1,12 @@
 import math
 
+import ndim
 import numpy
 import sympy
 
 from .. import un
 from ..helpers import article, fsd, gamma_n_2, pm, untangle
-from ._helpers import Enr2Scheme, volume_enr2
+from ._helpers import Enr2Scheme
 
 source = article(
     authors=["A.H. Stroud"],
@@ -81,5 +82,7 @@ def stroud_1967_7_4(n, symbolic=False):
     points = numpy.concatenate([r1 * s.points, r2 * s.points])
     weights = numpy.concatenate([A1 * s.weights, A2 * s.weights])
 
-    weights *= un.volume_nsphere(n - 1, symbolic) / volume_enr2(n, symbolic)
+    weights *= ndim.nsphere.volume(n, symbolic=symbolic) / ndim.enr2.volume(
+        n, "physicists", symbolic
+    )
     return Enr2Scheme("Stroud 1967-7 4", n, weights, points, 7, source)

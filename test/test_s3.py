@@ -1,10 +1,10 @@
+import ndim
 import numpy
 import pytest
 from helpers import check_degree
 from matplotlib import pyplot as plt
 
 import quadpy
-from quadpy.sn._helpers import integrate_monomial_over_nball
 
 schemes = [
     quadpy.s3.ditkin_1(),
@@ -37,7 +37,7 @@ def test_scheme(scheme):
 
     degree, err = check_degree(
         lambda poly: scheme.integrate(poly, [0.0, 0.0, 0.0], 1.0),
-        integrate_monomial_over_nball,
+        ndim.nball.integrate_monomial,
         3,
         scheme.degree + 1,
         tol=scheme.test_tolerance,
