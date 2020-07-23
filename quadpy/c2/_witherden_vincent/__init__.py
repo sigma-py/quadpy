@@ -1,7 +1,5 @@
-"""
-"""
 import json
-import os
+import pathlib
 
 from ...helpers import article
 from .._helpers import C2Scheme, concat, symm_r0, symm_s, symm_s_t, zero
@@ -18,14 +16,15 @@ _source = article(
     url="https://doi.org/10.1016/j.camwa.2015.03.017",
 )
 
+this_dir = pathlib.Path(__file__).resolve().parent
+
 
 def _read(degree):
-    this_dir = os.path.dirname(os.path.realpath(__file__))
     filename = f"wv{degree:02d}.json"
-    with open(os.path.join(this_dir, filename), "r") as f:
+    with open(this_dir / filename, "r") as f:
         data = json.load(f)
 
-    assert degree == data.pop("degree")
+    assert degree == data["degree"]
 
     d = []
     if "zero" in data:

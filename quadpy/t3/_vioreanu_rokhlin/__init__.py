@@ -1,5 +1,5 @@
 import json
-import os
+import pathlib
 
 from ...helpers import article
 from .._helpers import T3Scheme, untangle2
@@ -18,14 +18,15 @@ source = article(
 # Data adapted from modepy
 # https://github.com/inducer/modepy/blob/master/modepy/quadrature/vr_quad_data_tri.py
 
+this_dir = pathlib.Path(__file__).resolve().parent
+
 
 def _read(index):
-    this_dir = os.path.dirname(os.path.realpath(__file__))
     filename = f"vr{index:02d}.json"
-    with open(os.path.join(this_dir, filename), "r") as f:
+    with open(this_dir / filename, "r") as f:
         data = json.load(f)
 
-    degree = data.pop("degree")
+    degree = data["degree"]
     points, weights = untangle2(data)
     weights *= 3.0 / 4.0
     return T3Scheme(f"Vioreanu-Rokhlin {index}", weights, points, degree, source)
