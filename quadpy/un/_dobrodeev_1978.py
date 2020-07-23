@@ -1,10 +1,11 @@
 from math import factorial as fact
 
+import ndim
 from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, fsd, untangle
-from ._helpers import UnScheme, integrate_monomial_over_unit_nsphere
+from ._helpers import UnScheme
 
 source = article(
     authors=["L.N. Dobrodeev"],
@@ -48,7 +49,9 @@ def dobrodeev_1978(n):
     }
 
     pm_type, i, j, k = dim_config[n]
-    I0 = integrate_monomial_over_unit_nsphere(n * [0], symbolic=True)
+
+    I0 = ndim.nsphere.integrate_monomial(n * [0], symbolic=True)
+
     if i is None:
         G, b, c = _generate_jk(n, pm_type, j, k)
         data = [(G, fsd(n, (b, j), (c, k)))]
@@ -58,12 +61,9 @@ def dobrodeev_1978(n):
         G, a = _generate_i(n, i)
         data = [(G, fsd(n, (a, i)))]
     else:
-        I2 = integrate_monomial_over_unit_nsphere([2] + (n - 1) * [0], symbolic=True)
-        I22 = integrate_monomial_over_unit_nsphere(
-            [2, 2] + (n - 2) * [0], symbolic=True
-        )
-        I4 = integrate_monomial_over_unit_nsphere([4] + (n - 1) * [0], symbolic=True)
-
+        I2 = ndim.nsphere.integrate_monomial([2] + (n - 1) * [0], symbolic=True)
+        I22 = ndim.nsphere.integrate_monomial([2, 2] + (n - 2) * [0], symbolic=True)
+        I4 = ndim.nsphere.integrate_monomial([4] + (n - 1) * [0], symbolic=True)
         G, a, b, c = _compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k)
 
         data = [(G, fsd(n, (a, i))), (G, fsd(n, (b, j), (c, k)))]

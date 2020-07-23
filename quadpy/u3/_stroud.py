@@ -37,7 +37,7 @@ def stroud_u3_11_2():
         cartesian_to_spherical(pts),
         scheme.degree,
         source,
-        3.437e-14,
+        4.270e-14,
     )
 
 

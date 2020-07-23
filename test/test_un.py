@@ -1,9 +1,9 @@
+import ndim
 import numpy
 import pytest
 from helpers import check_degree
 
 import quadpy
-from quadpy.un._helpers import integrate_monomial_over_unit_nsphere
 
 
 @pytest.mark.parametrize(
@@ -35,10 +35,10 @@ def test_scheme(scheme):
     n = scheme.dim
     degree, err = check_degree(
         lambda poly: scheme.integrate(poly, center=numpy.zeros(n), radius=1),
-        integrate_monomial_over_unit_nsphere,
+        ndim.nsphere.integrate_monomial,
         n,
         scheme.degree + 1,
-        tol=scheme.test_tolerance,
+        tol=scheme.test_tolerance * 1.1,
     )
     assert (
         degree >= scheme.degree
