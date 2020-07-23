@@ -1,9 +1,9 @@
+import ndim
 import numpy
 import pytest
 from helpers import check_degree
 
 import quadpy
-from quadpy.sn._helpers import integrate_monomial_over_nball
 
 
 @pytest.mark.parametrize(
@@ -45,7 +45,7 @@ def test_scheme(scheme):
     n = scheme.dim
     degree, err = check_degree(
         lambda poly: scheme.integrate(poly, center=numpy.zeros(n), radius=1),
-        integrate_monomial_over_nball,
+        ndim.nball.integrate_monomial,
         n,
         scheme.degree + 1,
         tol=scheme.test_tolerance,
