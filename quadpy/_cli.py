@@ -100,9 +100,13 @@ def main():
     if max_err < content["test_tolerance"]:
         content["data"] = new_data
         content["test_tolerance"] = max_err
-        fjson.dump(content, args.outfile, indent=2, float_format=".15e")
+        outfile = args.infile if args.inplace else args.outfile
+        fjson.dump(content, outfile, indent=2, float_format=".15e")
         # for POSIX compliance:
-        args.outfile.write("\n")
+        outfile.write("\n")
+    else:
+        name = content["name"]
+        print(f"Could not improve scheme {name} any further.")
 
 
 def _get_parser():
@@ -130,6 +134,12 @@ def _get_parser():
         type=argparse.FileType("w"),
         default=sys.stdout,
         help="output quadrature data file (default: stdout)",
+    )
+
+    parser.add_argument(
+        '-i', "--inplace",
+        action='store_true',
+        help='store the output in the input file (ignore outfile)'
     )
 
     version_text = "\n".join(
