@@ -1,3 +1,6 @@
+import numpy
+
+
 def optimize(content):
     if "domain" not in content:
         print('Missing key "domain".')
@@ -113,7 +116,7 @@ def main():
     if "weight factor" in content:
         w = content["weight factor"]
         for key, item in new_data.items():
-            new_data[key][0] /= w
+            new_data[key][0] = (numpy.array(item)[0] / w).tolist()
 
     name = content["name"]
     prev_tol = content["test_tolerance"]
