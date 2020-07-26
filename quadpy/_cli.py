@@ -109,6 +109,11 @@ def main():
         content = json.load(f)
 
     new_data, max_err = optimize(content)
+    if "weight factor" in content:
+        w = content["weight factor"]
+        for key, item in new_data.items():
+            new_data[key][0] /= w
+
     name = content["name"]
     prev_tol = content["test_tolerance"]
     if max_err < content["test_tolerance"]:
