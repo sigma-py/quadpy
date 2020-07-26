@@ -112,6 +112,8 @@ from ._lyness_jespersen import (
     lyness_jespersen_19,
     lyness_jespersen_20,
     lyness_jespersen_21,
+    triex_19,
+    triex_28,
 )
 from ._papanicolopulos import (
     papanicolopulos_rot_08,
@@ -156,7 +158,6 @@ from ._taylor_wingate_bos import (
     taylor_wingate_bos_8,
 )
 from ._tools import integrate_adaptive
-from ._triex import triex_19, triex_28
 from ._vertex import vertex
 from ._vioreanu_rokhlin import (
     vioreanu_rokhlin_00,
