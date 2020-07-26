@@ -90,7 +90,7 @@ def _optimize_t2(content):
     for key, value in d.items():
         if len(value.shape) == 1:
             n = 1
-            d[key] = [w[k]]
+            d[key] = [[w[k]]]
         else:
             n = value.shape[1]
             d[key] = numpy.column_stack([w[k : k + n], value.T]).T
