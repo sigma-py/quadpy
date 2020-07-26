@@ -17,7 +17,7 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def cools_haegemans_1(mpmath=False):
-    return _read(this_dir / "cools_haegemans_1.json", source, weight_factor=2)
+    return _read(this_dir / "cools_haegemans_1.json", source)
 
 
 # TODO find error
