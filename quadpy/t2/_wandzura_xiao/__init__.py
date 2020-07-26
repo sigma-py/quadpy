@@ -1,8 +1,7 @@
-import json
 import pathlib
 
 from ...helpers import article
-from .._helpers import T2Scheme, untangle2
+from .._helpers import _read
 
 source = article(
     authors=["S. Wandzura", "H. Xiao"],
@@ -22,36 +21,25 @@ source = article(
 this_dir = pathlib.Path(__file__).resolve().parent
 
 
-def _read(index):
-    filename = f"wx{index:02d}.json"
-    with open(this_dir / filename, "r") as f:
-        data = json.load(f)
-    degree = data["degree"]
-
-    data = data
-    points, weights = untangle2(data)
-    return T2Scheme(f"Wandzura-Xiao {index}", weights, points, degree, source)
-
-
 def wandzura_xiao_1():
-    return _read(1)
+    return _read(this_dir / "wx01.json", source)
 
 
 def wandzura_xiao_2():
-    return _read(2)
+    return _read(this_dir / "wx02.json", source)
 
 
 def wandzura_xiao_3():
-    return _read(3)
+    return _read(this_dir / "wx03.json", source)
 
 
 def wandzura_xiao_4():
-    return _read(4)
+    return _read(this_dir / "wx04.json", source)
 
 
 def wandzura_xiao_5():
-    return _read(5)
+    return _read(this_dir / "wx05.json", source)
 
 
 def wandzura_xiao_6():
-    return _read(6)
+    return _read(this_dir / "wx06.json", source)
