@@ -253,3 +253,7 @@ def lyness_jespersen_21():
         ),
     )
     return T2Scheme("Lyness-Jespersen 21", weights, points, 11, source, 3.543e-14)
+
+
+triex_19 = lyness_jespersen_18
+triex_28 = lyness_jespersen_21
