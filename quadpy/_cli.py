@@ -109,6 +109,7 @@ def main():
         content = json.load(f)
 
     new_data, max_err = optimize(content)
+    name = content["name"]
     prev_tol = content["test_tolerance"]
     if max_err < content["test_tolerance"]:
         content["data"] = new_data
@@ -117,10 +118,9 @@ def main():
             fjson.dump(content, f, indent=2, float_format=".15e")
             # for POSIX compliance:
             f.write("\n")
-        print(f"Improved max error from {prev_tol} to {max_err}.")
+        print(f"{name}: Improved max error from {prev_tol} to {max_err}.")
     else:
-        name = content["name"]
-        print(f"Could not improve scheme {name} any further.")
+        print(f"{name}: Could not improve scheme any further.")
 
 
 def _get_parser():
