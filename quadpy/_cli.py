@@ -52,7 +52,6 @@ def _optimize_t2(content):
             k += lsym * nsym
 
         A = numpy.column_stack(sums)
-        # print(numpy.linalg.cond(A))
 
         # The exact values are 0 except for the first entry
         b = numpy.zeros(A.shape[0])
@@ -83,6 +82,7 @@ def _optimize_t2(content):
 
     # compute max(err)
     A, b, w, _ = get_w_from_x(out.x)
+    print("cond in solution:", numpy.linalg.cond(A))
     max_err = numpy.max(numpy.abs(A @ w - b))
 
     d = x_to_dict(out.x)
