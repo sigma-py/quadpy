@@ -1,13 +1,20 @@
 def optimize(content):
-    if content["domain"].lower() == "t2":
+    if "domain" not in content:
+        print('Missing key "domain".')
+        exit(1)
+
+    domain = content["domain"]
+    if domain.lower() == "t2":
         return _optimize_t2(content)
-    return None
+    else:
+        print(f'Don\'t know how to optimize domain "{domain}".')
+    return
 
 
 def _optimize_t2(content):
     import numpy
-    from scipy.optimize import minimize
     import orthopy
+    from scipy.optimize import minimize
 
     from .t2._helpers import expand_symmetries_points_only
 
@@ -81,29 +88,36 @@ def _optimize_t2(content):
     # prepend weights
     k = 0
     for key, value in d.items():
-        n = value.shape[1]
-        d[key] = numpy.column_stack([w[k : k + n], value.T]).T
+        if len(value.shape) == 1:
+            n = 1
+            d[key] = [w[k]]
+        else:
+            n = value.shape[1]
+            d[key] = numpy.column_stack([w[k : k + n], value.T]).T
         k += n
     return d, max_err
 
 
 def main():
-    import fjson
     import json
+
+    import fjson
 
     args = _get_parser().parse_args()
 
-    content = json.load(args.infile)
+    with open(args.infile, "r") as f:
+        content = json.load(f)
 
     new_data, max_err = optimize(content)
-
+    prev_tol = content["test_tolerance"]
     if max_err < content["test_tolerance"]:
         content["data"] = new_data
         content["test_tolerance"] = max_err
-        outfile = args.infile if args.inplace else args.outfile
-        fjson.dump(content, outfile, indent=2, float_format=".15e")
-        # for POSIX compliance:
-        outfile.write("\n")
+        with open(args.infile, "w") as f:
+            fjson.dump(content, f, indent=2, float_format=".15e")
+            # for POSIX compliance:
+            f.write("\n")
+        print(f"Improved max error from {prev_tol} to {max_err}.")
     else:
         name = content["name"]
         print(f"Could not improve scheme {name} any further.")
@@ -120,27 +134,7 @@ def _get_parser():
         formatter_class=argparse.RawTextHelpFormatter,
     )
 
-    parser.add_argument(
-        "infile",
-        nargs="?",
-        type=argparse.FileType("r"),
-        default=sys.stdin,
-        help="quadrature data file to optimize"
-    )
-
-    parser.add_argument(
-        "outfile",
-        nargs="?",
-        type=argparse.FileType("w"),
-        default=sys.stdout,
-        help="output quadrature data file (default: stdout)",
-    )
-
-    parser.add_argument(
-        '-i', "--inplace",
-        action='store_true',
-        help='store the output in the input file (ignore outfile)'
-    )
+    parser.add_argument("infile", type=str, help="quadrature data file to optimize")
 
     version_text = "\n".join(
         [
