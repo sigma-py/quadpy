@@ -13,9 +13,24 @@ def optimize(content):
         return _optimize_t2(content)
     elif domain.lower() == "s2":
         return _optimize_s2(content)
+    elif domain.lower() == "u3":
+        return _optimize_u3(content)
 
     print(f'Don\'t know how to optimize domain "{domain}".', file=sys.stderr)
     exit(1)
+
+
+def _optimize_u3(content):
+    import orthopy
+
+    from .u3._helpers import expand_symmetries_points_only
+
+    return _optimize(
+        content,
+        expand_symmetries_points_only,
+        get_evaluator=lambda points: orthopy.u3.EvalCartesian(points, scaling="quantum mechanic"),
+        int_p0=1 / numpy.sqrt(4 * numpy.pi)
+    )
 
 
 def _optimize_s2(content):
