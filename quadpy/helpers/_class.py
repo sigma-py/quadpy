@@ -1,12 +1,22 @@
+import warnings
+
 import numpy
 
 
 class QuadratureScheme:
     def __init__(self, name, weights, points, degree, source, tol=1.0e-14):
+        if tol > 1.0e-12:
+            warnings.warn(f"The {name} scheme has low precision ({tol:.3e}).")
+
         self.test_tolerance = tol
         self.name = name
         self.degree = degree
         self.source = source
+
+        # assert weights.shape[0] == points.shape[1], (
+        #     f"Shape mismatch for {name}: "
+        #     f"weights.shape = {weights.shape}, points.shape = {points.shape}"
+        # )
 
         if weights.dtype == numpy.float64:
             self.weights = weights
