@@ -76,13 +76,13 @@ def _optimize(content, expand_symmetries_points_only, get_evaluator, int_p0):
         d = dict(zip(keys, vals))
         return d
 
-    def get_Ab(x):
+    def get_w_from_x(x):
         d = x_to_dict(x)
         points, len_symm = expand_symmetries_points_only(d)
 
         if numpy.any(numpy.isnan(points)):
             # return some "large" residual value
-            return 1.0
+            return None, None, None, 1.0
 
         # evaluate all orthogonal polynomials up to `degree` at all points
         evaluator = get_evaluator(points)
@@ -103,10 +103,7 @@ def _optimize(content, expand_symmetries_points_only, get_evaluator, int_p0):
         # The exact values are 0 except for the first entry
         b = numpy.zeros(A.shape[0])
         b[0] = int_p0
-        return A, b
 
-    def get_w_from_x(x):
-        A, b = get_Ab(x)
         w, res, rank, s = numpy.linalg.lstsq(A, b, rcond=None)
 
         # spherical harmonics (for u3) are complex-valued
