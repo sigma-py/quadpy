@@ -162,4 +162,6 @@ def kim_song_14():
 
 
 def kim_song_15():
+    # ENH only the first few digits are correct in the article; quadpy-optimize improved
+    #     things
     return _read(this_dir / "kim_song_15.json", _source)
