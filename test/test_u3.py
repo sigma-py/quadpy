@@ -157,7 +157,7 @@ def test_scheme_cartesian(scheme):
         approximate = scheme.integrate(lambda x: next(evaluator), [0.0, 0.0, 0.0], 1.0)
         exact = numpy.sqrt(4 * numpy.pi) if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
-        if numpy.any(err > scheme.test_tolerance):
+        if numpy.any(err > scheme.test_tolerance * 1.1):
             break
         k += 1
 

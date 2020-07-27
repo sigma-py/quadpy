@@ -28,8 +28,10 @@ def _optimize_u3(content):
     return _optimize(
         content,
         expand_symmetries_points_only,
-        get_evaluator=lambda points: orthopy.u3.EvalCartesian(points, scaling="quantum mechanic"),
-        int_p0=1 / numpy.sqrt(4 * numpy.pi)
+        get_evaluator=lambda points: orthopy.u3.EvalCartesian(
+            points, scaling="quantum mechanic"
+        ),
+        int_p0=1 / numpy.sqrt(4 * numpy.pi),
     )
 
 
@@ -106,9 +108,14 @@ def _optimize(content, expand_symmetries_points_only, get_evaluator, int_p0):
     def get_w_from_x(x):
         A, b = get_Ab(x)
         w, res, rank, s = numpy.linalg.lstsq(A, b, rcond=None)
-        if rank < max(A.shape):
-            print("System matrix rank-deficient. Optimization failed.")
-            exit(1)
+
+        # spherical harmonics (for u3) are complex-valued
+        assert numpy.all(numpy.abs(w.imag) < 1.0e-15)
+        w = w.real
+
+        # if rank < max(A.shape):
+        #     print("System matrix rank-deficient. Optimization failed.")
+        #     exit(1)
         return A, b, w, numpy.sqrt(res[0])
 
     def f(x):
