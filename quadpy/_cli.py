@@ -13,9 +13,26 @@ def optimize(content):
         return _optimize_t2(content)
     elif domain.lower() == "s2":
         return _optimize_s2(content)
+    elif domain.lower() == "u3":
+        return _optimize_u3(content)
 
     print(f'Don\'t know how to optimize domain "{domain}".', file=sys.stderr)
     exit(1)
+
+
+def _optimize_u3(content):
+    import orthopy
+
+    from .u3._helpers import expand_symmetries_points_only
+
+    return _optimize(
+        content,
+        expand_symmetries_points_only,
+        get_evaluator=lambda points: orthopy.u3.EvalCartesian(
+            points, scaling="quantum mechanic"
+        ),
+        int_p0=1 / numpy.sqrt(4 * numpy.pi),
+    )
 
 
 def _optimize_s2(content):
@@ -59,13 +76,13 @@ def _optimize(content, expand_symmetries_points_only, get_evaluator, int_p0):
         d = dict(zip(keys, vals))
         return d
 
-    def get_Ab(x):
+    def get_w_from_x(x):
         d = x_to_dict(x)
         points, len_symm = expand_symmetries_points_only(d)
 
         if numpy.any(numpy.isnan(points)):
             # return some "large" residual value
-            return 1.0
+            return None, None, None, 1.0
 
         # evaluate all orthogonal polynomials up to `degree` at all points
         evaluator = get_evaluator(points)
@@ -86,14 +103,16 @@ def _optimize(content, expand_symmetries_points_only, get_evaluator, int_p0):
         # The exact values are 0 except for the first entry
         b = numpy.zeros(A.shape[0])
         b[0] = int_p0
-        return A, b
 
-    def get_w_from_x(x):
-        A, b = get_Ab(x)
         w, res, rank, s = numpy.linalg.lstsq(A, b, rcond=None)
-        if rank < max(A.shape):
-            print("System matrix rank-deficient. Optimization failed.")
-            exit(1)
+
+        # spherical harmonics (for u3) are complex-valued
+        assert numpy.all(numpy.abs(w.imag) < 1.0e-15)
+        w = w.real
+
+        # if rank < max(A.shape):
+        #     print("System matrix rank-deficient. Optimization failed.")
+        #     exit(1)
         return A, b, w, numpy.sqrt(res[0])
 
     def f(x):

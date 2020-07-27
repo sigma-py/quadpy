@@ -168,9 +168,6 @@ def _read(filepath, source):
     name = content["name"]
     tol = content["test_tolerance"]
 
-    if tol > 1.0e-12:
-        warnings.warn(f"The {name} scheme has low precision ({tol:.3e}).")
-
     if "_ERR" in content:
         warnings.warn(content["_ERR"])
 

@@ -1,5 +1,3 @@
-import warnings
-
 from ..helpers import article
 from ._helpers import C2Scheme, concat, pm, zero
 
@@ -17,8 +15,6 @@ source = article(
 
 def cohen_gismalla_1():
     # TODO improve precision
-    warnings.warn("The Cohen-Gismalla schemes are only given in single-precision.")
-
     u = 0.84623312
     v = 0.46607171
     weights, points = concat(zero(8.0 / 7.0), pm([5.0 / 7.0, u, -v], [5.0 / 7.0, v, u]))
@@ -29,8 +25,6 @@ def cohen_gismalla_1():
 
 def cohen_gismalla_2():
     # TODO improve precision
-    warnings.warn("The Cohen-Gismalla schemes are only given in single-precision.")
-
     r = 0.5878606
     s = 0.9353943
     u = 0.6105540

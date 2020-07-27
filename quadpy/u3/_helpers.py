@@ -1,5 +1,4 @@
 import json
-import warnings
 
 import numpy
 import sympy
@@ -9,32 +8,8 @@ from ..helpers import QuadratureScheme
 
 class U3Scheme(QuadratureScheme):
     def __init__(self, name, weights, points, theta_phi, degree, source, tol=1.0e-14):
+        super().__init__(name, weights, points, degree, source, tol)
         self.domain = "U3"
-        self.name = name
-        self.degree = degree
-        self.source = source
-        self.test_tolerance = tol
-
-        weights = numpy.asarray(weights)
-        if weights.dtype == numpy.float64:
-            self.weights = weights
-        else:
-            assert weights.dtype in [numpy.dtype("O"), numpy.int_]
-            self.weights = weights.astype(numpy.float64)
-            self.weights_symbolic = weights
-
-        points = numpy.asarray(points)
-        if points.dtype == numpy.float64:
-            self.points = points
-        else:
-            assert points.dtype in [numpy.dtype("O"), numpy.int_]
-            self.points = points.astype(numpy.float64)
-            self.points_symbolic = points
-
-        assert weights.shape[0] == points.shape[1], (
-            f"Shape mismatch for {name}: "
-            f"weights.shape = {weights.shape}, points.shape = {points.shape}"
-        )
 
         theta_phi = numpy.asarray(theta_phi)
         if theta_phi.dtype == numpy.float64:
@@ -552,9 +527,6 @@ def _read(filepath, source, weight_factor=None):
     degree = content["degree"]
     name = content["name"]
     tol = content["test_tolerance"]
-
-    if tol > 1.0e-12:
-        warnings.warn(f"The {name} scheme has low precision ({tol:.3e}).")
 
     points, weights = expand_symmetries(content["data"])
     theta_phi = cartesian_to_spherical(points)

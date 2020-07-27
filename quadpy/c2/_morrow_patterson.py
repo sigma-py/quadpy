@@ -1,5 +1,3 @@
-import warnings
-
 from ..helpers import article
 from ._helpers import C2Scheme, concat, pm, pm2
 
@@ -15,7 +13,6 @@ source = article(
 
 
 def morrow_patterson_1():
-    warnings.warn("The Morrow-Patterson schemes are only single-precision.")
     weights, points = concat(
         pm2(
             [0.1627661292, 0.2386191861, 0.8611363116],
@@ -33,7 +30,6 @@ def morrow_patterson_1():
 
 
 def morrow_patterson_2():
-    warnings.warn("The Morrow-Patterson schemes are only single-precision.")
     weights, points = concat(
         pm2(
             [+0.153974824894e-01, 0.950125098376e-1, 0.968160239507],
