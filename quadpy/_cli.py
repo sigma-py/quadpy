@@ -1,17 +1,20 @@
 import numpy
+import sys
 
 
 def optimize(content):
     if "domain" not in content:
-        print('Missing key "domain".')
+        print('Missing key "domain".', file=sys.stderr)
         exit(1)
 
     domain = content["domain"]
     if domain.lower() == "t2":
         return _optimize_t2(content)
-    else:
-        print(f'Don\'t know how to optimize domain "{domain}".')
-    return
+    # elif domain.lower() == "s2":
+    #     return _optimize_t2(content)
+
+    print(f'Don\'t know how to optimize domain "{domain}".', file=sys.stderr)
+    exit(1)
 
 
 def _optimize_t2(content):

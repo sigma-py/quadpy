@@ -1,4 +1,3 @@
-import math
 import pathlib
 
 from ...helpers import article
@@ -20,6 +19,4 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def haegemans_piessens():
-    return _read(
-        this_dir / "haegemans_piessens.json", _source, weight_factor=1 / math.pi
-    )
+    return _read(this_dir / "haegemans_piessens.json", _source)

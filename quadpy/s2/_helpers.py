@@ -160,7 +160,7 @@ def expand_symmetries(data):
     return points, weights
 
 
-def _read(filepath, source, weight_factor=None):
+def _read(filepath, source):
     with open(filepath, "r") as f:
         content = json.load(f)
 
@@ -173,7 +173,7 @@ def _read(filepath, source, weight_factor=None):
 
     points, weights = expand_symmetries(content["data"])
 
-    if weight_factor is not None:
-        weights *= weight_factor
+    if "weight factor" in content:
+        weights *= content["weight factor"]
 
     return S2Scheme(name, weights, points, degree, source, tol)

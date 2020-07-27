@@ -19,29 +19,29 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def luo_meng_1():
-    return _read(this_dir / "luo_meng_1.json", _source, weight_factor=1 / math.pi)
+    return _read(this_dir / "luo_meng_1.json", _source)
 
 
 def luo_meng_2():
-    return _read(this_dir / "luo_meng_2.json", _source, weight_factor=1 / math.pi)
+    return _read(this_dir / "luo_meng_2.json", _source)
 
 
 def luo_meng_3():
-    return _read(this_dir / "luo_meng_3.json", _source, weight_factor=1 / math.pi)
+    return _read(this_dir / "luo_meng_3.json", _source)
 
 
 def luo_meng_4():
-    return _read(this_dir / "luo_meng_4.json", _source, weight_factor=1 / math.pi)
+    return _read(this_dir / "luo_meng_4.json", _source)
 
 
 def luo_meng_5():
-    return _read(this_dir / "luo_meng_5.json", _source, weight_factor=1 / math.pi)
+    return _read(this_dir / "luo_meng_5.json", _source)
 
 
 def luo_meng_6():
-    return _read(this_dir / "luo_meng_6.json", _source, weight_factor=1 / math.pi)
+    return _read(this_dir / "luo_meng_6.json", _source)
 
 
 # TODO find error
 # def luo_meng_7():
-#     return _read(this_dir / "luo_meng_7.json", _source, weight_factor=1 / math.pi)
+#     return _read(this_dir / "luo_meng_7.json", _source)

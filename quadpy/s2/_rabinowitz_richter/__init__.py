@@ -1,8 +1,9 @@
 import math
+import pathlib
 
-from ..helpers import article, untangle
-from ._helpers import S2Scheme, _s4, _s8, _s40, _z
-from ._mysovskih import mysovskih_2, mysovskih_3
+from ...helpers import article, untangle
+from .._helpers import S2Scheme, _s4, _s8, _s40, _z, _read
+from .._mysovskih import mysovskih_2, mysovskih_3
 
 _source = article(
     authors=["Philip Rabinowitz", "Nira Richter"],
@@ -16,8 +17,11 @@ _source = article(
     url="https://doi.org/10.2307/2004962",
 )
 
+this_dir = pathlib.Path(__file__).resolve().parent
+
 
 def rabinowitz_richter_1():
+    return _read(this_dir / "rabinowitz_richter_1.json", _source)
     data = [
         (0.1851958765246450, _s40(0.8377170225998396)),
         (0.2930225148631698, _s40(0.3924393142315810)),

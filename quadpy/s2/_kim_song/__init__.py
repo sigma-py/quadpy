@@ -150,16 +150,16 @@ def kim_song_11():
 
 
 def kim_song_12():
-    return _read(this_dir / "kim_song_12.json", _source, weight_factor=1 / math.pi)
+    return _read(this_dir / "kim_song_12.json", _source)
 
 
 def kim_song_13():
-    return _read(this_dir / "kim_song_13.json", _source, weight_factor=1 / math.pi)
+    return _read(this_dir / "kim_song_13.json", _source)
 
 
 def kim_song_14():
-    return _read(this_dir / "kim_song_14.json", _source, weight_factor=1 / math.pi)
+    return _read(this_dir / "kim_song_14.json", _source)
 
 
 def kim_song_15():
-    return _read(this_dir / "kim_song_15.json", _source, weight_factor=1 / math.pi)
+    return _read(this_dir / "kim_song_15.json", _source)
