@@ -86,6 +86,9 @@ def _optimize(content, expand_symmetries_points_only, get_evaluator, int_p0):
     def get_w_from_x(x):
         A, b = get_Ab(x)
         w, res, rank, s = numpy.linalg.lstsq(A, b, rcond=None)
+        if rank < max(A.shape):
+            print("System matrix rank-deficient. Optimization failed.")
+            exit(1)
         return A, b, w, numpy.sqrt(res[0])
 
     def f(x):
