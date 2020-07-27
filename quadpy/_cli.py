@@ -1,5 +1,6 @@
-import numpy
 import sys
+
+import numpy
 
 
 def optimize(content):
@@ -19,23 +20,27 @@ def optimize(content):
 
 def _optimize_s2(content):
     import orthopy
+
     from .s2._helpers import expand_symmetries_points_only
+
     return _optimize(
         content,
         expand_symmetries_points_only,
         get_evaluator=lambda points: orthopy.s2.zernike.Eval(points, scaling="normal"),
-        int_p0=1 / numpy.sqrt(numpy.pi)
+        int_p0=1 / numpy.sqrt(numpy.pi),
     )
 
 
 def _optimize_t2(content):
     import orthopy
+
     from .t2._helpers import expand_symmetries_points_only
+
     return _optimize(
         content,
         expand_symmetries_points_only,
         get_evaluator=lambda points: orthopy.t2.Eval(points, scaling="normal"),
-        int_p0=numpy.sqrt(2)
+        int_p0=numpy.sqrt(2),
     )
 
 
