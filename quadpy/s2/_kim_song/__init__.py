@@ -1,6 +1,5 @@
 import math
 import pathlib
-import warnings
 
 import numpy
 
@@ -89,19 +88,7 @@ def kim_song_7():
 
 # TODO find issue
 def kim_song_8():
-    data = [
-        (-0.103220620849181, z(2)),
-        (0.000561120485457, fsd(2, (1.081713912649978, 2))),
-        (0.234185472691706, fsd(2, (0.329855087221954, 2))),
-        (0.123731369524117, fsd(2, (0.163309595229403, 2))),
-        (0.194337435615691, fsd(2, (0.582963679648472, 2))),
-        (0.129193960146342, fsd(2, (0.862551409331466, 1), (0.191706749096887, 1))),
-    ]
-    points, weights = untangle(data)
-    weights /= math.pi
-    # ERR article claims degree 11
-    warnings.warn("Kim-Song claim degree 11, but the scheme is only degree 1.")
-    return S2Scheme("Kim-Song 8", weights, points, 1, _source, 2.001e-13)
+    return _read(this_dir / "kim_song_08.json", _source)
 
 
 def kim_song_9():
