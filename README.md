@@ -383,7 +383,7 @@ val = scheme.integrate(lambda x: x[0] ** 2)
  * [McLaren](quadpy/u3/_mclaren.py) (1963, 10 schemes up to degree 14)
  * [Lebedev](quadpy/u3/_lebedev/) (1976, 34 schemes up to degree 131)
  * [Bažant-Oh](quadpy/u3/_bazant_oh/) (1986, 3 schemes up to degree 13)
- * [Heo-Xu](quadpy/u3/_heo_xu.py) (2001, 27 schemes up to degree 39, single-precision)
+ * [Heo-Xu](quadpy/u3/_heo_xu.py) (2001, 27 schemes up to degree 39)
  * [Fliege-Maier](quadpy/u3/_fliege_maier/) (2007, 4 schemes up to degree 4,
    single-precision)
  * [all schemes from the n-sphere](#n-sphere-un)
