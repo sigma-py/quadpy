@@ -1,4 +1,3 @@
-import math
 import pathlib
 
 from ...helpers import article
@@ -20,12 +19,12 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def cools_kim_1():
-    return _read(this_dir / "cools_kim_1.json", _source, weight_factor=1 / math.pi)
+    return _read(this_dir / "cools_kim_1.json", _source)
 
 
 def cools_kim_2():
-    return _read(this_dir / "cools_kim_2.json", _source, weight_factor=1 / math.pi)
+    return _read(this_dir / "cools_kim_2.json", _source)
 
 
 def cools_kim_3():
-    return _read(this_dir / "cools_kim_3.json", _source, weight_factor=1 / math.pi)
+    return _read(this_dir / "cools_kim_3.json", _source)

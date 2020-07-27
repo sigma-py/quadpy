@@ -1,25 +1,52 @@
+import sys
+
 import numpy
 
 
 def optimize(content):
     if "domain" not in content:
-        print('Missing key "domain".')
+        print('Missing key "domain".', file=sys.stderr)
         exit(1)
 
     domain = content["domain"]
     if domain.lower() == "t2":
         return _optimize_t2(content)
-    else:
-        print(f'Don\'t know how to optimize domain "{domain}".')
-    return
+    elif domain.lower() == "s2":
+        return _optimize_s2(content)
+
+    print(f'Don\'t know how to optimize domain "{domain}".', file=sys.stderr)
+    exit(1)
+
+
+def _optimize_s2(content):
+    import orthopy
+
+    from .s2._helpers import expand_symmetries_points_only
+
+    return _optimize(
+        content,
+        expand_symmetries_points_only,
+        get_evaluator=lambda points: orthopy.s2.zernike.Eval(points, scaling="normal"),
+        int_p0=1 / numpy.sqrt(numpy.pi),
+    )
 
 
 def _optimize_t2(content):
-    import numpy
     import orthopy
-    from scipy.optimize import minimize
 
     from .t2._helpers import expand_symmetries_points_only
+
+    return _optimize(
+        content,
+        expand_symmetries_points_only,
+        get_evaluator=lambda points: orthopy.t2.Eval(points, scaling="normal"),
+        int_p0=numpy.sqrt(2),
+    )
+
+
+def _optimize(content, expand_symmetries_points_only, get_evaluator, int_p0):
+    import numpy
+    from scipy.optimize import minimize
 
     degree = content["degree"]
     keys = list(content["data"].keys())
@@ -41,7 +68,7 @@ def _optimize_t2(content):
             return 1.0
 
         # evaluate all orthogonal polynomials up to `degree` at all points
-        evaluator = orthopy.t2.Eval(points, scaling="normal")
+        evaluator = get_evaluator(points)
         A2 = numpy.concatenate([next(evaluator) for _ in range(degree + 1)])
 
         assert sum(a * b for a, b in zip(len_symm, num_symm)) == A2.shape[1]
@@ -58,12 +85,15 @@ def _optimize_t2(content):
 
         # The exact values are 0 except for the first entry
         b = numpy.zeros(A.shape[0])
-        b[0] = numpy.sqrt(2)
+        b[0] = int_p0
         return A, b
 
     def get_w_from_x(x):
         A, b = get_Ab(x)
         w, res, rank, s = numpy.linalg.lstsq(A, b, rcond=None)
+        if rank < max(A.shape):
+            print("System matrix rank-deficient. Optimization failed.")
+            exit(1)
         return A, b, w, numpy.sqrt(res[0])
 
     def f(x):
@@ -85,7 +115,6 @@ def _optimize_t2(content):
 
     # compute max(err)
     A, b, w, _ = get_w_from_x(out.x)
-    print("cond in solution:", numpy.linalg.cond(A))
     max_err = numpy.max(numpy.abs(A @ w - b))
 
     d = x_to_dict(out.x)
@@ -99,7 +128,7 @@ def _optimize_t2(content):
             n = value.shape[1]
             d[key] = numpy.column_stack([w[k : k + n], value.T]).T
         k += n
-    return d, max_err
+    return d, max_err, numpy.linalg.cond(A)
 
 
 def main():
@@ -112,7 +141,7 @@ def main():
     with open(args.infile, "r") as f:
         content = json.load(f)
 
-    new_data, max_err = optimize(content)
+    new_data, max_err, cond_in_solution = optimize(content)
     if "weight factor" in content:
         w = content["weight factor"]
         for key, item in new_data.items():
@@ -120,14 +149,16 @@ def main():
 
     name = content["name"]
     prev_tol = content["test_tolerance"]
-    if max_err < content["test_tolerance"]:
+    if max_err < prev_tol:
         content["data"] = new_data
         content["test_tolerance"] = max_err
         with open(args.infile, "w") as f:
             fjson.dump(content, f, indent=2, float_format=".15e")
             # for POSIX compliance:
             f.write("\n")
-        print(f"{name}: Improved max error from {prev_tol} to {max_err}.")
+        print(f"{name}:")
+        print(f"Improved max error from   {prev_tol}   to   {max_err}.")
+        print(f"condition: {cond_in_solution}")
     else:
         print(f"{name}: Could not improve scheme any further.")
 

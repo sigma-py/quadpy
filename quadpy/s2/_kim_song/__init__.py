@@ -1,6 +1,5 @@
 import math
 import pathlib
-import warnings
 
 import numpy
 
@@ -89,19 +88,7 @@ def kim_song_7():
 
 # TODO find issue
 def kim_song_8():
-    data = [
-        (-0.103220620849181, z(2)),
-        (0.000561120485457, fsd(2, (1.081713912649978, 2))),
-        (0.234185472691706, fsd(2, (0.329855087221954, 2))),
-        (0.123731369524117, fsd(2, (0.163309595229403, 2))),
-        (0.194337435615691, fsd(2, (0.582963679648472, 2))),
-        (0.129193960146342, fsd(2, (0.862551409331466, 1), (0.191706749096887, 1))),
-    ]
-    points, weights = untangle(data)
-    weights /= math.pi
-    # ERR article claims degree 11
-    warnings.warn("Kim-Song claim degree 11, but the scheme is only degree 1.")
-    return S2Scheme("Kim-Song 8", weights, points, 1, _source, 2.001e-13)
+    return _read(this_dir / "kim_song_08.json", _source)
 
 
 def kim_song_9():
@@ -133,33 +120,22 @@ def kim_song_10():
 
 
 def kim_song_11():
-    data = [
-        (0.125290208564338, fsd(2, (0.252863797091293, 1))),
-        (0.016712625496982, fsd(2, (0.989746802511614, 1))),
-        (0.109500391126365, fsd(2, (0.577728928444958, 1))),
-        (0.066237455796397, fsd(2, (0.873836956645035, 1))),
-        (0.026102860184358, fsd(2, (0.689299380791136, 2))),
-        (0.066000934661100, fsd(2, (0.597614304667208, 2))),
-        (0.127428372681720, fsd(2, (0.375416824626170, 2))),
-        (0.042523065826681, fsd(2, (0.883097111318591, 1), (0.365790800400663, 1))),
-        (0.081539591616413, fsd(2, (0.707438744960070, 1), (0.293030722710664, 1))),
-    ]
-    points, weights = untangle(data)
-    weights /= math.pi
-    return S2Scheme("Kim-Song 11", weights, points, 15, _source, 1.910e-12)
+    return _read(this_dir / "kim_song_11.json", _source)
 
 
 def kim_song_12():
-    return _read(this_dir / "kim_song_12.json", _source, weight_factor=1 / math.pi)
+    return _read(this_dir / "kim_song_12.json", _source)
 
 
 def kim_song_13():
-    return _read(this_dir / "kim_song_13.json", _source, weight_factor=1 / math.pi)
+    return _read(this_dir / "kim_song_13.json", _source)
 
 
 def kim_song_14():
-    return _read(this_dir / "kim_song_14.json", _source, weight_factor=1 / math.pi)
+    return _read(this_dir / "kim_song_14.json", _source)
 
 
 def kim_song_15():
-    return _read(this_dir / "kim_song_15.json", _source, weight_factor=1 / math.pi)
+    # ENH only the first few digits are correct in the article; quadpy-optimize improved
+    #     things
+    return _read(this_dir / "kim_song_15.json", _source)
