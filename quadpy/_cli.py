@@ -166,6 +166,15 @@ def main():
         for key, item in new_data.items():
             new_data[key][0] = (numpy.array(item)[0] / w).tolist()
 
+    if "comments" in content:
+        comments = content["comments"]
+    else:
+        comments = []
+
+    content["comments"] = comments + [
+        "precision improved with quadpy-optimize"
+    ]
+
     name = content["name"]
     prev_tol = content["test_tolerance"]
     if max_err < prev_tol:
