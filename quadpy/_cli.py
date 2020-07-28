@@ -149,10 +149,10 @@ def _optimize(
 
     # compute max(err)
     A, b, w, _ = get_w_from_x(out.x)
-    max_err = numpy.max(numpy.abs(A @ w - b))
-    print(max_err)
+    # max_err = numpy.max(numpy.abs(A @ w - b))
+    # print(max_err)
 
-    # TODO do exactly as in the tests, not with A
+    # Compute max_res exactly like in the tests
     d = x_to_dict(out.x)
     # prepend weights
     k = 0
@@ -164,21 +164,11 @@ def _optimize(
             n = value.shape[1]
             d[key] = numpy.column_stack([w[k : k + n], value.T]).T
         k += n
+    content["data"] = d
+    scheme = scheme_from_dict(content)
+    max_res = max(scheme.compute_residuals(degree))
 
-    scheme = scheme_from_dict(d)
-
-    evaluator = get_evaluator(points)
-    max_err = 0.0
-    for k in range(degree + 1):
-        fx = next(evaluator)
-        approximate = scheme.integrate(numpy.dot(fx, weights)
-        exact = int_p0 if k == 0 else 0.0
-        err = numpy.abs(approximate - exact)
-        max_err = max(max_err, numpy.max(err))
-    print(max_err)
-    exit(1)
-
-    return d, max_err, numpy.linalg.cond(A)
+    return d, max_res, numpy.linalg.cond(A)
 
 
 def main():
