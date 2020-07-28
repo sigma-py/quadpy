@@ -151,7 +151,7 @@ def test_scheme_cartesian(scheme):
     res = scheme.compute_residuals(scheme.degree + 1)
     deg = numpy.where(res > scheme.test_tolerance * 1.1)[0][0] - 1
     if deg != scheme.degree:
-        max_res = max(res)
+        max_res = max(res[:-1])
         raise AssertionError(
             f"{scheme.name} -- observed: {deg}, expected: {scheme.degree} "
             f"(max residual: {max_res})"
