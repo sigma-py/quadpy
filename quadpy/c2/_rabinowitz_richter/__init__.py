@@ -1,5 +1,7 @@
-from ..helpers import article
-from ._helpers import C2Scheme, concat, symm_r0, symm_s, symm_s_t, zero
+import pathlib
+
+from ...helpers import article
+from .._helpers import C2Scheme, concat, symm_r0, symm_s, symm_s_t, zero, _read
 
 source = article(
     authors=["Philip Rabinowitz", "Nira Richter"],
@@ -13,8 +15,11 @@ source = article(
     url="https://doi.org/10.2307/2004962",
 )
 
+this_dir = pathlib.Path(__file__).resolve().parent
+
 
 def rabinowitz_richter_1():
+    return _read(this_dir / "rabinowitz_richter_1.json", source)
     name = "Rabinowitz-Richter 1"
     degree = 9
     weights, points = concat(
