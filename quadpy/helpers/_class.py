@@ -55,46 +55,46 @@ class QuadratureScheme:
         try:
             source = self.source
         except AttributeError:
-            source = None
+            pass
+        else:
+            if source is not None:
+                message += f"\n  source:               {source.title}"
+                if source.authors:
+                    authors = ", ".join(source.authors)
+                    message += f"\n                        {authors}"
 
-        if source:
-            message += f"\n  source:               {source.title}"
-            if source.authors:
-                authors = ", ".join(source.authors)
-                message += f"\n                        {authors}"
+                string = []
+                try:
+                    if source.journal:
+                        string.append(source.journal)
+                except AttributeError:
+                    pass
+                try:
+                    if source.volume:
+                        string.append(f"vol. {source.volume}")
+                except AttributeError:
+                    pass
+                try:
+                    if source.number:
+                        string.append(f"no. {source.number}")
+                except AttributeError:
+                    pass
+                try:
+                    if source.pages:
+                        string.append(f"pp. {source.pages}")
+                except AttributeError:
+                    pass
+                try:
+                    if source.year:
+                        string.append(source.year)
+                except AttributeError:
+                    pass
 
-            string = []
-            try:
-                if source.journal:
-                    string.append(source.journal)
-            except AttributeError:
-                pass
-            try:
-                if source.volume:
-                    string.append(f"vol. {source.volume}")
-            except AttributeError:
-                pass
-            try:
-                if source.number:
-                    string.append(f"no. {source.number}")
-            except AttributeError:
-                pass
-            try:
-                if source.pages:
-                    string.append(f"pp. {source.pages}")
-            except AttributeError:
-                pass
-            try:
-                if source.year:
-                    string.append(source.year)
-            except AttributeError:
-                pass
-
-            if string:
-                s = ", ".join(string)
-                message += f"\n                        {s}"
-            if source.url:
-                message += f"\n                        {source.url}"
+                if string:
+                    s = ", ".join(string)
+                    message += f"\n                        {s}"
+                if source.url:
+                    message += f"\n                        {source.url}"
 
         message += f"\n  degree:               {self.degree}"
         try:
@@ -106,8 +106,8 @@ class QuadratureScheme:
         try:
             pi = self.points_inside()
         except AttributeError:
-            pi = None
-        if pi:
+            pass
+        else:
             if pi.all():
                 point_position = "strictly inside"
             elif self.points_inside_or_boundary().all():
@@ -119,9 +119,15 @@ class QuadratureScheme:
         weights_positive = all(self.weights > 0)
         message += f"\n  all weights positive: {weights_positive}"
 
-        if len(self.comments) > 0:
-            message += "\n  comments:"
-            for comment in self.comments:
-                message += f"\n    {comment}"
+        try:
+            comments = self.comments
+            source = self.source
+        except AttributeError:
+            pass
+        else:
+            if len(comments) > 0:
+                message += "\n  comments:"
+                for comment in comments:
+                    message += f"\n    {comment}"
 
         return message
