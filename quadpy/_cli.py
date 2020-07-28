@@ -23,11 +23,17 @@ def optimize(content):
 def _optimize_u3(content):
     import orthopy
 
-    from .u3._helpers import expand_symmetries_points_only
+    from .u3._helpers import (
+        expand_symmetries_points_only,
+        expand_symmetries,
+        _scheme_from_dict,
+    )
 
     return _optimize(
         content,
+        expand_symmetries,
         expand_symmetries_points_only,
+        _scheme_from_dict,
         get_evaluator=lambda points: orthopy.u3.EvalCartesian(
             points, scaling="quantum mechanic"
         ),
@@ -38,10 +44,11 @@ def _optimize_u3(content):
 def _optimize_s2(content):
     import orthopy
 
-    from .s2._helpers import expand_symmetries_points_only
+    from .s2._helpers import expand_symmetries_points_only, expand_symmetries
 
     return _optimize(
         content,
+        expand_symmetries,
         expand_symmetries_points_only,
         get_evaluator=lambda points: orthopy.s2.zernike.Eval(points, scaling="normal"),
         int_p0=1 / numpy.sqrt(numpy.pi),
@@ -51,17 +58,25 @@ def _optimize_s2(content):
 def _optimize_t2(content):
     import orthopy
 
-    from .t2._helpers import expand_symmetries_points_only
+    from .t2._helpers import expand_symmetries_points_only, expand_symmetries
 
     return _optimize(
         content,
+        expand_symmetries,
         expand_symmetries_points_only,
         get_evaluator=lambda points: orthopy.t2.Eval(points, scaling="normal"),
         int_p0=numpy.sqrt(2),
     )
 
 
-def _optimize(content, expand_symmetries_points_only, get_evaluator, int_p0):
+def _optimize(
+    content,
+    expand_symmetries,
+    expand_symmetries_points_only,
+    scheme_from_dict,
+    get_evaluator,
+    int_p0,
+):
     import numpy
     from scipy.optimize import minimize
 
@@ -134,8 +149,10 @@ def _optimize(content, expand_symmetries_points_only, get_evaluator, int_p0):
 
     # compute max(err)
     A, b, w, _ = get_w_from_x(out.x)
-    max_err = numpy.max(numpy.abs(A @ w - b))
+    # max_err = numpy.max(numpy.abs(A @ w - b))
+    # print(max_err)
 
+    # Compute max_res exactly like in the tests
     d = x_to_dict(out.x)
     # prepend weights
     k = 0
@@ -147,7 +164,11 @@ def _optimize(content, expand_symmetries_points_only, get_evaluator, int_p0):
             n = value.shape[1]
             d[key] = numpy.column_stack([w[k : k + n], value.T]).T
         k += n
-    return d, max_err, numpy.linalg.cond(A)
+    content["data"] = d
+    scheme = scheme_from_dict(content)
+    max_res = max(scheme.compute_residuals(degree))
+
+    return d, max_res, numpy.linalg.cond(A)
 
 
 def main():
@@ -166,11 +187,28 @@ def main():
         for key, item in new_data.items():
             new_data[key][0] = (numpy.array(item)[0] / w).tolist()
 
+    if "comments" in content:
+        comments = content["comments"]
+    else:
+        comments = []
+
+    text = "precision improved with quadpy-optimize"
+    if text not in comments:
+        content["comments"] = comments + [text]
+
     name = content["name"]
     prev_tol = content["test_tolerance"]
     if max_err < prev_tol:
         content["data"] = new_data
         content["test_tolerance"] = max_err
+
+        # make sure that "data" is written last
+        keys = list(content.keys())
+        if keys[-1] != "data":
+            keys.remove("data")
+            keys.append("data")
+            content = {key: content[key] for key in keys}
+
         with open(args.infile, "w") as f:
             fjson.dump(content, f, indent=2, float_format=".15e")
             # for POSIX compliance:
