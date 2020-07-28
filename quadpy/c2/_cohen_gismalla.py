@@ -1,3 +1,8 @@
+import math
+
+from sympy import Rational as frac
+from sympy import sqrt
+
 from ..helpers import article
 from ._helpers import C2Scheme, concat, pm, zero
 
@@ -14,27 +19,38 @@ source = article(
 
 
 def cohen_gismalla_1():
-    # TODO improve precision
-    u = 0.84623312
-    v = 0.46607171
-    weights, points = concat(zero(8.0 / 7.0), pm([5.0 / 7.0, u, -v], [5.0 / 7.0, v, u]))
+    B = frac(5, 7)
+    u, v = [sqrt((frac(1, 3) + i * sqrt(frac(2, 63))) / B) for i in [+1, -1]]
+    weights, points = concat(zero(frac(8, 7)), pm([B, u, -v], [B, v, u]))
     weights /= 4
     # This scheme is of order 5 for symmetric integrands
-    return C2Scheme("Cohen-Gismalla 1", weights, points, 3, source, 2.603e-09)
+    return C2Scheme("Cohen-Gismalla 1", weights, points, 3, source, 4.996e-16)
 
 
 def cohen_gismalla_2():
     # TODO improve precision
-    r = 0.5878606
-    s = 0.9353943
-    u = 0.6105540
-    v = 0.1109710
-    A = 0.1856914
-    B = 0.5951448
-    C = 0.3584324
+    X = 0.3850907
+    Y = (24 / 35 - 28 / 45 * X) / (28 / 45 - 2 / 3 * X)
+    alpha = (2 / 3 * Y - 28 / 45) / (Y - X)
+    beta = (28 / 45 - 2 / 3 * X) / (Y - X)
+
+    B = alpha / X
+    C = beta / Y
+    A = 4 * (1 - B - C)
+
+    g1 = alpha / B / 2
+    g2 = X * (Y / 9 - 2 / 15) / (Y - X) / alpha
+    u = math.sqrt(g1 + math.sqrt(g1 ** 2 - g2))
+    v = math.sqrt(g1 - math.sqrt(g1 ** 2 - g2))
+
+    h1 = beta / C / 2
+    h2 = Y * (2 / 15 - X / 9) / (Y - X) / beta
+    r = math.sqrt(h1 - math.sqrt(h1 ** 2 - h2))
+    s = math.sqrt(h1 + math.sqrt(h1 ** 2 - h2))
+
     weights, points = concat(zero(A), pm([B, u, -v], [B, v, u], [C, r, -s], [C, r, s]))
     weights /= 4
     # ERR this scheme only has order 1
     # According to the article, it has order 7 for symmetric integrands.
     # Something is fishy...
-    return C2Scheme("Cohen-Gismalla 2", weights, points, 1, source, 1.001e-07)
+    return C2Scheme("Cohen-Gismalla 2", weights, points, 1, source, 4.441e-16)
