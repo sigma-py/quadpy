@@ -1,6 +1,8 @@
 # TODO There are three more schemes in the technical report
-from ..helpers import techreport
-from ._helpers import C2Scheme, concat, s4a, symm_r0, symm_s_t
+import pathlib
+
+from ...helpers import techreport
+from .._helpers import C2Scheme, concat, s4a, symm_r0, symm_s_t, _read
 
 source = techreport(
     authors=["R. Cools", "A. Haegemans"],
@@ -11,14 +13,17 @@ source = techreport(
     url="https://lirias.kuleuven.be/bitstream/123456789/131870/1/TW71.pdf",
 )
 
+this_dir = pathlib.Path(__file__).resolve().parent
+
 
 def cools_haegemans_1985_1():
-    weights, points = concat(
-        symm_s_t([0.361130558151e-01, 0.344872025364, 0.918620441057]),
-        s4a([0.535500902317e-01, 0.690880550486], [0.106828079664e-01, 0.939655258097]),
-        symm_r0([0.113540990172e00, 0.488926856974]),
-    )
-    return C2Scheme("Cools-Haegemans 1985-1", weights, points, 9, source, 4.067e-12)
+    return _read(this_dir / "cools_haegemans_1985_1.json", source)
+    # weights, points = concat(
+    #     symm_s_t([0.361130558151e-01, 0.344872025364, 0.918620441057]),
+    #     s4a([0.535500902317e-01, 0.690880550486], [0.106828079664e-01, 0.939655258097]),
+    #     symm_r0([0.113540990172e00, 0.488926856974]),
+    # )
+    # return C2Scheme("Cools-Haegemans 1985-1", weights, points, 9, source, 4.067e-12)
 
 
 def cools_haegemans_1985_2():

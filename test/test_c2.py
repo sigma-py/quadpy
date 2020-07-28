@@ -178,19 +178,28 @@ def test_scheme(scheme):
     evaluator = orthopy.cn.Eval(scheme.points.T)
 
     k = 0
+    max_err = 0.0
     while True:
         approximate = scheme.integrate(lambda x: next(evaluator)[0], quad)
         exact = 2.0 if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
+        max_err = max(max_err, numpy.max(err))
         if numpy.any(err > scheme.test_tolerance * 1.1):
             break
         k += 1
 
-    max_err = numpy.max(err)
-    assert k - 1 == scheme.degree, (
-        f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
-        f"(max err: {max_err:.3e})"
-    )
+    if k - 1 != scheme.degree:
+        # find the max error across all polynomials
+        for i in range(k + 1, scheme.degree + 1):
+            approximate = scheme.integrate(lambda x: next(evaluator)[0], quad)
+            exact = 2.0 if k == 0 else 0.0
+            err = numpy.abs(approximate - exact)
+            max_err = max(max_err, numpy.max(err))
+
+        raise AssertionError(
+            f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
+            f"(max err: {max_err:.3e})"
+        )
 
 
 @pytest.mark.parametrize("scheme", [quadpy.c2.product(quadpy.c1.gauss_legendre(5))])

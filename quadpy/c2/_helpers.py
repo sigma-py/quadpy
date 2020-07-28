@@ -1,3 +1,5 @@
+import json
+
 import numpy
 
 from .. import helpers
@@ -117,3 +119,75 @@ def concat(*data):
     weights = numpy.concatenate([t[0] for t in data])
     points = numpy.vstack([t[1] for t in data])
     return weights, points
+
+
+def _symm_s_t(data):
+    s, t = numpy.array(data)
+    points = numpy.array(
+        [[+s, +t], [-s, +t], [+s, -t], [-s, -t], [+t, +s], [-t, +s], [+t, -s], [-t, -s]]
+    )
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _s4a(a):
+    points = numpy.array([[+a, +a], [+a, -a], [-a, +a], [-a, -a]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _symm_r0(r):
+    zero = numpy.zeros(r.shape[0], dtype=r.dtype)
+    points = _stack_first_last([[+r, zero], [-r, zero], [zero, +r], [zero, -r]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def expand_symmetries_points_only(data):
+    points = []
+    counts = []
+
+    for key, points_raw in data.items():
+        fun = {"symm_s_t": _symm_s_t, "s4a": _s4a, "symm_r0": _symm_r0}[key]
+        pts = fun(numpy.asarray(points_raw))
+
+        counts.append(pts.shape[1])
+        pts = pts.reshape(pts.shape[0], -1)
+        points.append(pts)
+
+    points = numpy.ascontiguousarray(numpy.concatenate(points, axis=1))
+    return points, counts
+
+
+def expand_symmetries(data):
+    # separate points and weights
+    points_raw = {}
+    weights_raw = []
+    for key, values in data.items():
+        weights_raw.append(values[0])
+        points_raw[key] = values[1:]
+
+    points, counts = expand_symmetries_points_only(points_raw)
+    weights = numpy.concatenate(
+        [numpy.tile(values, count) for count, values in zip(counts, weights_raw)]
+    )
+
+    # TODO remove this once points are expected as points.T in all functions
+    points = points.T
+    return points, weights
+
+
+def _read(filepath, source):
+    with open(filepath, "r") as f:
+        content = json.load(f)
+
+    degree = content["degree"]
+    name = content["name"]
+    tol = content["test_tolerance"]
+
+    points, weights = expand_symmetries(content["data"])
+
+    if "weight factor" in content:
+        weights *= content["weight factor"]
+
+    return C2Scheme(name, weights, points, degree, source, tol)
