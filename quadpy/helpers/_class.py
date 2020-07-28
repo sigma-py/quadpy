@@ -4,7 +4,9 @@ import numpy
 
 
 class QuadratureScheme:
-    def __init__(self, name, weights, points, degree, source, tol=1.0e-14):
+    def __init__(
+        self, name, weights, points, degree, source, tol=1.0e-14, comments=None
+    ):
         if tol > 1.0e-12:
             warnings.warn(f"{name} ({self.domain}) has low precision ({tol:.3e}).")
 
@@ -12,6 +14,7 @@ class QuadratureScheme:
         self.name = name
         self.degree = degree
         self.source = source
+        self.comments = [] if comments is None else comments
 
         # assert weights.shape[0] == points.shape[1], (
         #     f"Shape mismatch for {name}: "
@@ -94,6 +97,7 @@ class QuadratureScheme:
                 message += f"\n                        {source.url}"
 
         message += f"\n  degree:               {self.degree}"
+        message += f"\n  test tolerance:       {self.test_tolerance}"
         message += f"\n  num points/weights:   {len(self.weights)}"
 
         try:
@@ -111,4 +115,10 @@ class QuadratureScheme:
 
         weights_positive = all(self.weights > 0)
         message += f"\n  all weights positive: {weights_positive}"
+
+        if len(self.comments) > 0:
+            message += "\n  comments:"
+            for comment in self.comments:
+                message += f"\n    {comment}"
+
         return message

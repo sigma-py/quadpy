@@ -7,9 +7,19 @@ from ..helpers import QuadratureScheme
 
 
 class U3Scheme(QuadratureScheme):
-    def __init__(self, name, weights, points, theta_phi, degree, source, tol=1.0e-14):
+    def __init__(
+        self,
+        name,
+        weights,
+        points,
+        theta_phi,
+        degree,
+        source,
+        tol=1.0e-14,
+        comments=None,
+    ):
         self.domain = "U3"
-        super().__init__(name, weights, points, degree, source, tol)
+        super().__init__(name, weights, points, degree, source, tol, comments)
 
         theta_phi = numpy.asarray(theta_phi)
         if theta_phi.dtype == numpy.float64:
@@ -527,11 +537,14 @@ def _read(filepath, source, weight_factor=None):
     degree = content["degree"]
     name = content["name"]
     tol = content["test_tolerance"]
-
     points, weights = expand_symmetries(content["data"])
     theta_phi = cartesian_to_spherical(points)
 
     if weight_factor is not None:
         weights *= weight_factor
 
-    return U3Scheme(name, weights, points, theta_phi, degree, source, tol=tol)
+    comments = content["comments"] if "comments" in content else None
+
+    return U3Scheme(
+        name, weights, points, theta_phi, degree, source, tol=tol, comments=comments
+    )
