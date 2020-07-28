@@ -530,21 +530,26 @@ def expand_symmetries(data):
     return points, weights
 
 
-def _read(filepath, source):
-    with open(filepath, "r") as f:
-        content = json.load(f)
-
-    degree = content["degree"]
-    name = content["name"]
-    tol = content["test_tolerance"]
+def _scheme_from_dict(content, source=None):
     points, weights = expand_symmetries(content["data"])
     theta_phi = cartesian_to_spherical(points)
 
     if "weight factor" in content:
         weights *= content["weight factor"]
 
-    comments = content["comments"] if "comments" in content else None
-
     return U3Scheme(
-        name, weights, points, theta_phi, degree, source, tol=tol, comments=comments
+        content["name"],
+        weights,
+        points,
+        theta_phi,
+        degree=content["degree"],
+        source=source,
+        tol=content["test_tolerance"],
+        comments=content["comments"] if "comments" in content else None
     )
+
+
+def _read(filepath, source):
+    with open(filepath, "r") as f:
+        content = json.load(f)
+    return _scheme_from_dict(content, source)
