@@ -1,7 +1,5 @@
 import pathlib
 
-import numpy
-
 from ...helpers import online
 from .._helpers import _read
 
@@ -12,20 +10,19 @@ source = online(
 )
 
 this_dir = pathlib.Path(__file__).resolve().parent
-weight_factor = 1 / 4 / numpy.pi
 
 
 def fliege_maier_04():
-    return _read(this_dir / "fliege_maier_04.json", source, weight_factor)
+    return _read(this_dir / "fliege_maier_04.json", source)
 
 
 def fliege_maier_09():
-    return _read(this_dir / "fliege_maier_09.json", source, weight_factor)
+    return _read(this_dir / "fliege_maier_09.json", source)
 
 
 def fliege_maier_16():
-    return _read(this_dir / "fliege_maier_16.json", source, weight_factor)
+    return _read(this_dir / "fliege_maier_16.json", source)
 
 
 def fliege_maier_25():
-    return _read(this_dir / "fliege_maier_25.json", source, weight_factor)
+    return _read(this_dir / "fliege_maier_25.json", source)
