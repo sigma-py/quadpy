@@ -138,9 +138,20 @@ def _s4a(a):
 
 def _symm_r0(r):
     zero = numpy.zeros(r.shape[0], dtype=r.dtype)
-    points = _stack_first_last([[+r, zero], [-r, zero], [zero, +r], [zero, -r]])
+    points = numpy.array([[+r, zero], [-r, zero], [zero, +r], [zero, -r]])
     points = numpy.moveaxis(points, 0, 1)
     return points
+
+
+def _s4(data):
+    a, b = data
+    points = numpy.array([[+a, +b], [-a, -b], [-b, +a], [+b, -a]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _zero(data):
+    return numpy.array([[0.0], [0.0]])
 
 
 def expand_symmetries_points_only(data):
@@ -148,7 +159,13 @@ def expand_symmetries_points_only(data):
     counts = []
 
     for key, points_raw in data.items():
-        fun = {"symm_s_t": _symm_s_t, "s4a": _s4a, "symm_r0": _symm_r0}[key]
+        fun = {
+            "symm_s_t": _symm_s_t,
+            "s4a": _s4a,
+            "symm_r0": _symm_r0,
+            "s4": _s4,
+            "zero": _zero,
+        }[key]
         pts = fun(numpy.asarray(points_raw))
 
         counts.append(pts.shape[1])

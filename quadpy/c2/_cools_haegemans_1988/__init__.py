@@ -1,5 +1,7 @@
-from ..helpers import article
-from ._helpers import C2Scheme, concat, s4, zero
+import pathlib
+
+from ...helpers import article
+from .._helpers import C2Scheme, _read, concat, s4, zero
 
 source = article(
     authors=["R. Cools", "Ann Haegemans"],
@@ -11,45 +13,15 @@ source = article(
     url="https://doi.org/10.1007/BF02247942",
 )
 
+this_dir = pathlib.Path(__file__).resolve().parent
+
 
 def cools_haegemans_1988_1():
-    weights, points = s4(
-        [
-            0.0480207633507238145627631759775806,
-            0.982639223540855472952491497004009,
-            0.698076104549567564776469806174958,
-        ],
-        [
-            0.0660713291645505956736350808495464,
-            0.825775835902963937302274585289940,
-            0.939486382816736907206432362169896,
-        ],
-        [
-            0.0973867773586681641961204397995472,
-            0.188586138718641954600324568182745,
-            0.953539528201532015845004266823976,
-        ],
-        [
-            0.211736349998948600503931661356261,
-            0.812520548304813100489382581912299,
-            0.315623432915254195985609716402104,
-        ],
-        [
-            0.225626061728863387403158016208490,
-            0.525320250364547762341631887140024,
-            0.712001913075336306549065895123759,
-        ],
-        [
-            0.351158718398245437660391625808574,
-            0.0416580719120223682735468045377018,
-            0.424847248848669250615430111511957,
-        ],
-    )
-    weights /= 4
-    return C2Scheme("Cools-Haegemans 1988-1", weights, points, 11, source)
+    return _read(this_dir / "cools_haegemans_1988_1.json", source)
 
 
 def cools_haegemans_1988_2():
+    return _read(this_dir / "cools_haegemans_1988_2.json", source)
     weights, points = concat(
         s4(
             [
