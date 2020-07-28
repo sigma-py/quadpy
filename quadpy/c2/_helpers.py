@@ -100,13 +100,6 @@ def s4(*data):
     return weights, points
 
 
-def s4a(*data):
-    w, a = numpy.array(data).T
-    points = _stack_first_last([[+a, +a], [+a, -a], [-a, +a], [-a, -a]])
-    weights = numpy.tile(w, 4)
-    return weights, points
-
-
 def _stack_first_last(arr):
     """Stacks an input array of shape (i, j, k) such that the output array is of shape
     (i*k, j).
@@ -130,7 +123,7 @@ def _symm_s_t(data):
     return points
 
 
-def _s4a(a):
+def _symm_s(a):
     points = numpy.array([[+a, +a], [+a, -a], [-a, +a], [-a, -a]])
     points = numpy.moveaxis(points, 0, 1)
     return points
@@ -182,7 +175,7 @@ def expand_symmetries_points_only(data):
     for key, points_raw in data.items():
         fun = {
             "symm_s_t": _symm_s_t,
-            "s4a": _s4a,
+            "symm_s": _symm_s,
             "symm_r0": _symm_r0,
             "s4": _s4,
             "zero": _zero,
