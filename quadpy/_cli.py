@@ -23,10 +23,11 @@ def optimize(content):
 def _optimize_u3(content):
     import orthopy
 
-    from .u3._helpers import expand_symmetries_points_only
+    from .u3._helpers import expand_symmetries_points_only, expand_symmetries
 
     return _optimize(
         content,
+        expand_symmetries,
         expand_symmetries_points_only,
         get_evaluator=lambda points: orthopy.u3.EvalCartesian(
             points, scaling="quantum mechanic"
@@ -38,10 +39,11 @@ def _optimize_u3(content):
 def _optimize_s2(content):
     import orthopy
 
-    from .s2._helpers import expand_symmetries_points_only
+    from .s2._helpers import expand_symmetries_points_only, expand_symmetries
 
     return _optimize(
         content,
+        expand_symmetries,
         expand_symmetries_points_only,
         get_evaluator=lambda points: orthopy.s2.zernike.Eval(points, scaling="normal"),
         int_p0=1 / numpy.sqrt(numpy.pi),
@@ -51,17 +53,18 @@ def _optimize_s2(content):
 def _optimize_t2(content):
     import orthopy
 
-    from .t2._helpers import expand_symmetries_points_only
+    from .t2._helpers import expand_symmetries_points_only, expand_symmetries
 
     return _optimize(
         content,
+        expand_symmetries,
         expand_symmetries_points_only,
         get_evaluator=lambda points: orthopy.t2.Eval(points, scaling="normal"),
         int_p0=numpy.sqrt(2),
     )
 
 
-def _optimize(content, expand_symmetries_points_only, get_evaluator, int_p0):
+def _optimize(content, expand_symmetries, expand_symmetries_points_only, get_evaluator, int_p0):
     import numpy
     from scipy.optimize import minimize
 
@@ -135,7 +138,9 @@ def _optimize(content, expand_symmetries_points_only, get_evaluator, int_p0):
     # compute max(err)
     A, b, w, _ = get_w_from_x(out.x)
     max_err = numpy.max(numpy.abs(A @ w - b))
+    print(max_err)
 
+    # TODO do exactly as in the tests, not with A
     d = x_to_dict(out.x)
     # prepend weights
     k = 0
@@ -147,6 +152,19 @@ def _optimize(content, expand_symmetries_points_only, get_evaluator, int_p0):
             n = value.shape[1]
             d[key] = numpy.column_stack([w[k : k + n], value.T]).T
         k += n
+
+    points, weights = expand_symmetries(d)
+    evaluator = get_evaluator(points)
+    max_err = 0.0
+    for k in range(degree + 1):
+        fx = next(evaluator)
+        approximate = numpy.dot(fx, weights)
+        exact = int_p0 if k == 0 else 0.0
+        err = numpy.abs(approximate - exact)
+        max_err = max(max_err, numpy.max(err))
+    print(max_err)
+    exit(1)
+
     return d, max_err, numpy.linalg.cond(A)
 
 
