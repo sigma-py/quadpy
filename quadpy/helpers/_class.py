@@ -6,7 +6,7 @@ import numpy
 class QuadratureScheme:
     def __init__(self, name, weights, points, degree, source, tol=1.0e-14):
         if tol > 1.0e-12:
-            warnings.warn(f"The {name} scheme has low precision ({tol:.3e}).")
+            warnings.warn(f"{name} ({self.domain}) has low precision ({tol:.3e}).")
 
         self.test_tolerance = tol
         self.name = name

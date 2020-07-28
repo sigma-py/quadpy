@@ -11,8 +11,8 @@ from ..tn import get_vol
 
 class C2Scheme(CnScheme):
     def __init__(self, name, weights, points, degree, source=None, tol=1.0e-14):
-        super().__init__(name, 2, weights, points, degree, source, tol)
         self.domain = "C2"
+        super().__init__(name, 2, weights, points, degree, source, tol)
 
     def plot(self, quad=rectangle_points([0.0, 1.0], [0.0, 1.0]), show_axes=False):
         """Shows the quadrature points on a given quad. The area of the disks
@@ -137,7 +137,7 @@ def _s4a(a):
 
 
 def _symm_r0(r):
-    zero = numpy.zeros(r.shape[0], dtype=r.dtype)
+    zero = numpy.zeros_like(r)
     points = numpy.array([[+r, zero], [-r, zero], [zero, +r], [zero, -r]])
     points = numpy.moveaxis(points, 0, 1)
     return points
@@ -154,6 +154,27 @@ def _zero(data):
     return numpy.array([[0.0], [0.0]])
 
 
+def _pm2(data):
+    x, y = data
+    points = numpy.array([[+x, +y], [+x, -y], [-x, +y], [-x, -y]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _pmx(r):
+    zero = numpy.zeros_like(r)
+    points = numpy.array([[+r, zero], [-r, zero]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _pmy(r):
+    zero = numpy.zeros_like(r)
+    points = numpy.array([[zero, +r], [zero, -r]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
 def expand_symmetries_points_only(data):
     points = []
     counts = []
@@ -165,6 +186,9 @@ def expand_symmetries_points_only(data):
             "symm_r0": _symm_r0,
             "s4": _s4,
             "zero": _zero,
+            "pm2": _pm2,
+            "pmx": _pmx,
+            "pmy": _pmy,
             "plain": lambda vals: vals.reshape(2, 1, -1),
         }[key]
         pts = fun(numpy.asarray(points_raw))
