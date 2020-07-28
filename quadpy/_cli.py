@@ -192,7 +192,9 @@ def main():
     else:
         comments = []
 
-    content["comments"] = comments + ["precision improved with quadpy-optimize"]
+    text = "precision improved with quadpy-optimize"
+    if text not in comments:
+        content["comments"] = comments + [text]
 
     name = content["name"]
     prev_tol = content["test_tolerance"]
