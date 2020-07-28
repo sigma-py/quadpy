@@ -97,7 +97,10 @@ class QuadratureScheme:
                 message += f"\n                        {source.url}"
 
         message += f"\n  degree:               {self.degree}"
-        message += f"\n  test tolerance:       {self.test_tolerance}"
+        try:
+            message += f"\n  test tolerance:       {self.test_tolerance}"
+        except AttributeError:
+            pass
         message += f"\n  num points/weights:   {len(self.weights)}"
 
         try:
