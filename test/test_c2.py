@@ -192,7 +192,7 @@ def test_scheme(scheme):
         # find the max error across all polynomials
         for i in range(k + 1, scheme.degree + 1):
             approximate = scheme.integrate(lambda x: next(evaluator)[0], quad)
-            exact = 2.0 if k == 0 else 0.0
+            exact = 2.0 if i == 0 else 0.0
             err = numpy.abs(approximate - exact)
             max_err = max(max_err, numpy.max(err))
 
