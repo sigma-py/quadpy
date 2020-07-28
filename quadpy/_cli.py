@@ -23,12 +23,17 @@ def optimize(content):
 def _optimize_u3(content):
     import orthopy
 
-    from .u3._helpers import expand_symmetries_points_only, expand_symmetries
+    from .u3._helpers import (
+        expand_symmetries_points_only,
+        expand_symmetries,
+        _scheme_from_dict,
+    )
 
     return _optimize(
         content,
         expand_symmetries,
         expand_symmetries_points_only,
+        _scheme_from_dict,
         get_evaluator=lambda points: orthopy.u3.EvalCartesian(
             points, scaling="quantum mechanic"
         ),
@@ -64,7 +69,14 @@ def _optimize_t2(content):
     )
 
 
-def _optimize(content, expand_symmetries, expand_symmetries_points_only, get_evaluator, int_p0):
+def _optimize(
+    content,
+    expand_symmetries,
+    expand_symmetries_points_only,
+    scheme_from_dict,
+    get_evaluator,
+    int_p0,
+):
     import numpy
     from scipy.optimize import minimize
 
@@ -153,12 +165,13 @@ def _optimize(content, expand_symmetries, expand_symmetries_points_only, get_eva
             d[key] = numpy.column_stack([w[k : k + n], value.T]).T
         k += n
 
-    points, weights = expand_symmetries(d)
+    scheme = scheme_from_dict(d)
+
     evaluator = get_evaluator(points)
     max_err = 0.0
     for k in range(degree + 1):
         fx = next(evaluator)
-        approximate = numpy.dot(fx, weights)
+        approximate = scheme.integrate(numpy.dot(fx, weights)
         exact = int_p0 if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
         max_err = max(max_err, numpy.max(err))
@@ -189,9 +202,7 @@ def main():
     else:
         comments = []
 
-    content["comments"] = comments + [
-        "precision improved with quadpy-optimize"
-    ]
+    content["comments"] = comments + ["precision improved with quadpy-optimize"]
 
     name = content["name"]
     prev_tol = content["test_tolerance"]

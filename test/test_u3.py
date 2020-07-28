@@ -146,36 +146,15 @@ def test_scheme_cartesian(scheme):
         assert x.shape[0] == 3
         return numpy.ones(x.shape[1:])
 
-    approximate = scheme.integrate(f, [0, 0, 0], 1)
+    scheme.integrate(f, [0, 0, 0], 1)
 
-    # We're using the iterator here; it's much less memory-intensive than computing the
-    # full tree at once.
-    evaluator = orthopy.u3.EvalCartesian(scheme.points, "quantum mechanic")
-
-    k = 0
-    while True:
-        approximate = scheme.integrate(lambda x: next(evaluator), [0.0, 0.0, 0.0], 1.0)
-        exact = numpy.sqrt(4 * numpy.pi) if k == 0 else 0.0
-        err = numpy.abs(approximate - exact)
-        if numpy.any(err > scheme.test_tolerance * 1.1):
-            break
-        k += 1
-
-    if k - 1 != scheme.degree:
-        # find the max error across all polynomials
-        max_err = 0.0
-        evaluator = orthopy.u3.EvalCartesian(scheme.points, "quantum mechanic")
-        for i in range(scheme.degree + 1):
-            approximate = scheme.integrate(
-                lambda x: next(evaluator), [0.0, 0.0, 0.0], 1.0
-            )
-            exact = numpy.sqrt(4 * numpy.pi) if i == 0 else 0.0
-            err = numpy.abs(approximate - exact)
-            max_err = max(max_err, numpy.max(err))
-
+    res = scheme.compute_residuals(scheme.degree + 1)
+    deg = numpy.where(res > scheme.test_tolerance * 1.1)[0][0] - 1
+    if deg != scheme.degree:
+        max_res = max(res)
         raise AssertionError(
-            f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
-            f"(max err: {max_err:.3e})"
+            f"{scheme.name} -- observed: {deg}, expected: {scheme.degree} "
+            f"(max residual: {max_res})"
         )
 
 

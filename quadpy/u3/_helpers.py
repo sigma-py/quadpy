@@ -1,6 +1,7 @@
 import json
 
 import numpy
+import orthopy
 import sympy
 
 from ..helpers import QuadratureScheme
@@ -59,6 +60,20 @@ class U3Scheme(QuadratureScheme):
         """
         ff = f(self.theta_phi)
         return area(1.0) * dot(ff, self.weights)
+
+    def compute_residuals(self, level):
+        evaluator = orthopy.u3.EvalCartesian(self.points, "quantum mechanic")
+
+        max_res = []
+        for k in range(level + 1):
+            approximate = self.integrate(
+                lambda x: next(evaluator), [0.0, 0.0, 0.0], 1.0
+            )
+            exact = numpy.sqrt(4 * numpy.pi) if k == 0 else 0.0
+            res = numpy.abs(approximate - exact)
+            max_res += [numpy.max(res)]
+
+        return numpy.array(max_res)
 
 
 def area(radius):
@@ -545,7 +560,7 @@ def _scheme_from_dict(content, source=None):
         degree=content["degree"],
         source=source,
         tol=content["test_tolerance"],
-        comments=content["comments"] if "comments" in content else None
+        comments=content["comments"] if "comments" in content else None,
     )
 
 
