@@ -9,8 +9,8 @@ from ..tn import TnScheme, get_vol, transform
 
 class T2Scheme(TnScheme):
     def __init__(self, name, weights, points, degree, source=None, tol=1.0e-14):
-        super().__init__(name, 2, weights, points, degree, source, tol)
         self.domain = "T2"
+        super().__init__(name, 2, weights, points, degree, source, tol)
 
     def plot(
         self,

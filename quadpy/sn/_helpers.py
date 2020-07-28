@@ -6,9 +6,9 @@ from ..helpers import QuadratureScheme
 
 class SnScheme(QuadratureScheme):
     def __init__(self, name, dim, weights, points, degree, source, tol=1.0e-14):
-        super().__init__(name, weights, points, degree, source, tol)
         self.domain = f"Sn (n={dim})"
         self.dim = dim
+        super().__init__(name, weights, points, degree, source, tol)
 
     def points_inside(self):
         return numpy.einsum("ij,ij->i", self.points, self.points) < 1

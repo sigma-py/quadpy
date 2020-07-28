@@ -7,8 +7,8 @@ from ..helpers import QuadratureScheme, backend_to_function
 
 class E3rScheme(QuadratureScheme):
     def __init__(self, name, weights, points, degree, source, tol=1.0e-14):
-        super().__init__(name, weights, points, degree, source, tol)
         self.domain = "E3r"
+        super().__init__(name, weights, points, degree, source, tol)
 
     def integrate(self, f, dot=numpy.dot):
         flt = numpy.vectorize(float)
