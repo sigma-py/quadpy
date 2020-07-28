@@ -180,6 +180,14 @@ def main():
     if max_err < prev_tol:
         content["data"] = new_data
         content["test_tolerance"] = max_err
+
+        # make sure that "data" is written last
+        keys = list(content.keys())
+        if keys[-1] != "data":
+            keys.remove("data")
+            keys.append("data")
+            content = {key: content[key] for key in keys}
+
         with open(args.infile, "w") as f:
             fjson.dump(content, f, indent=2, float_format=".15e")
             # for POSIX compliance:
