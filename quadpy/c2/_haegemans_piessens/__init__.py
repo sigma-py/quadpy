@@ -1,5 +1,7 @@
-from ..helpers import article
-from ._helpers import C2Scheme, concat, pm, pm2
+import pathlib
+
+from ...helpers import article
+from .._helpers import C2Scheme, concat, pm, pm2, _read
 
 source = article(
     authors=["Ann Haegemans", "Robert Piessens"],
@@ -13,8 +15,11 @@ source = article(
     url="https://www.jstor.org/stable/2156699",
 )
 
+this_dir = pathlib.Path(__file__).resolve().parent
+
 
 def haegemans_piessens():
+    return _read(this_dir / "haegemans_piessens.json", source)
     weights, points = concat(
         pm2(
             [0.213057211620949126, 0.9171178223127705862, 0.547931206828092323],

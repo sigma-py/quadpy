@@ -8,8 +8,8 @@ from ..helpers import QuadratureScheme
 
 class U3Scheme(QuadratureScheme):
     def __init__(self, name, weights, points, theta_phi, degree, source, tol=1.0e-14):
-        super().__init__(name, weights, points, degree, source, tol)
         self.domain = "U3"
+        super().__init__(name, weights, points, degree, source, tol)
 
         theta_phi = numpy.asarray(theta_phi)
         if theta_phi.dtype == numpy.float64:

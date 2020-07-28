@@ -1,9 +1,11 @@
+import pathlib
+
 import numpy
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article
-from ._helpers import C2Scheme
+from ...helpers import article
+from .._helpers import C2Scheme, _read
 
 source = article(
     authors=["H.J. Schmid"],
@@ -17,6 +19,8 @@ source = article(
     url="https://eudml.org/doc/132580",
 )
 
+this_dir = pathlib.Path(__file__).resolve().parent
+
 
 def schmid_2():
     points = numpy.array(
@@ -27,7 +31,7 @@ def schmid_2():
         ]
     )
     weights = numpy.array([frac(1, 4), frac(1, 4), frac(1, 2)])
-    return C2Scheme("Schmid 2", weights, points, 2, source)
+    return C2Scheme("Schmid 2", weights, points, 2, source, 4.441e-16)
 
 
 def schmid_4():
@@ -51,37 +55,9 @@ def schmid_4():
             frac(5, 36) - 5 * sqrt(29) / 18 / 29,
         ]
     )
-    return C2Scheme("Schmid 4", weights, points, 4, source)
+    return C2Scheme("Schmid 4", weights, points, 4, source, 4.441e-16)
 
 
 def schmid_6():
     # TODO better-quality points/weights for Schmidt
-    points = numpy.array(
-        [
-            [+0.000000000000, +0.774596669241],
-            [+0.563604836881, -0.795508520349],
-            [+0.838331011044, +0.845091361153],
-            [+0.651030930900, +0.166755021097],
-            [-0.484792881050, -0.927694708202],
-            [-0.914603935097, -0.520771886130],
-            [-0.135220856964, -0.279191827433],
-            [-0.731697727745, +0.417391901524],
-            [-0.887824220291, +1.075479856096],
-            [+1.101172842321, -0.485302501018],
-        ]
-    )
-    weights = numpy.array(
-        [
-            0.140845070423,
-            0.113931725656,
-            0.049023075184,
-            0.168918151204,
-            0.063463914536,
-            0.066611011696,
-            0.214897708035,
-            0.145149421990,
-            0.014704280797,
-            0.022455640481,
-        ]
-    )
-    return C2Scheme("Schmid 6", weights, points, 6, source, 1.617e-11)
+    return _read(this_dir / "schmid_6.json", source)

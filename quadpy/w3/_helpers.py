@@ -5,8 +5,8 @@ from ..helpers import QuadratureScheme, backend_to_function
 
 class W3Scheme(QuadratureScheme):
     def __init__(self, name, weights, points, degree, source, tol=1.0e-14):
-        super().__init__(name, weights, points, degree, source, tol)
         self.domain = "W3"
+        super().__init__(name, weights, points, degree, source, tol)
 
     def integrate(self, f, wedge, dot=numpy.dot):
         wedge = numpy.asarray(wedge)

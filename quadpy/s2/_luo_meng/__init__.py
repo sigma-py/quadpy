@@ -1,4 +1,3 @@
-# TODO give all weights in terms in scientific notation to avoid round-off error
 import pathlib
 
 from ...helpers import article

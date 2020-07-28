@@ -7,9 +7,9 @@ from ..helpers import QuadratureScheme, n_outer
 
 class CnScheme(QuadratureScheme):
     def __init__(self, name, dim, weights, points, degree, source, tol=1.0e-14):
-        super().__init__(name, weights, points, degree, source, tol)
         self.domain = f"Cn (n={dim})"
         self.dim = dim
+        super().__init__(name, weights, points, degree, source, tol)
 
     def integrate(self, f, ncube, dot=numpy.dot):
         ncube = numpy.asarray(ncube)
