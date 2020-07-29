@@ -1,8 +1,7 @@
-import json
 import pathlib
 
 from ...helpers import article
-from .._helpers import T3Scheme, untangle2
+from .._helpers import _read
 
 source = article(
     authors=["B. Vioreanu", "V. Rokhlin"],
@@ -21,52 +20,41 @@ source = article(
 this_dir = pathlib.Path(__file__).resolve().parent
 
 
-def _read(index):
-    filename = f"vr{index:02d}.json"
-    with open(this_dir / filename, "r") as f:
-        data = json.load(f)
-
-    degree = data["degree"]
-    points, weights = untangle2(data)
-    weights *= 3.0 / 4.0
-    return T3Scheme(f"Vioreanu-Rokhlin {index}", weights, points, degree, source)
-
-
 def vioreanu_rokhlin_0():
-    return _read(0)
+    return _read(this_dir / "vr00.json", source)
 
 
 def vioreanu_rokhlin_1():
-    return _read(1)
+    return _read(this_dir / "vr01.json", source)
 
 
 def vioreanu_rokhlin_2():
-    return _read(2)
+    return _read(this_dir / "vr02.json", source)
 
 
 def vioreanu_rokhlin_3():
-    return _read(3)
+    return _read(this_dir / "vr03.json", source)
 
 
 def vioreanu_rokhlin_4():
-    return _read(4)
+    return _read(this_dir / "vr04.json", source)
 
 
 def vioreanu_rokhlin_5():
-    return _read(5)
+    return _read(this_dir / "vr05.json", source)
 
 
 def vioreanu_rokhlin_6():
-    return _read(6)
+    return _read(this_dir / "vr06.json", source)
 
 
 def vioreanu_rokhlin_7():
-    return _read(7)
+    return _read(this_dir / "vr07.json", source)
 
 
 def vioreanu_rokhlin_8():
-    return _read(8)
+    return _read(this_dir / "vr08.json", source)
 
 
 def vioreanu_rokhlin_9():
-    return _read(9)
+    return _read(this_dir / "vr09.json", source)
