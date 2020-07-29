@@ -1,3 +1,4 @@
+# TODO all points are "plain" -- identiy symmetries and list them as such
 import pathlib
 
 from ...helpers import article
