@@ -28,7 +28,7 @@ schemes = [
 
 
 @pytest.mark.parametrize("scheme", schemes)
-def test_scheme(scheme, tol=1.0e-14):
+def test_scheme(scheme):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
@@ -41,7 +41,7 @@ def test_scheme(scheme, tol=1.0e-14):
         approximate = scheme.integrate(lambda x: next(evaluator)[0])
         exact = numpy.sqrt(numpy.pi) if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
-        if numpy.any(err > tol):
+        if numpy.any(err > scheme.test_tolerance * 1.1):
             break
         k += 1
 
