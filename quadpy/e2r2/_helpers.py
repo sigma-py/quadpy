@@ -89,12 +89,41 @@ def _pmy(r):
     return points
 
 
+def _s8_alt(data):
+    a, b = data
+    points = numpy.array(
+        [[+a, +b], [-a, +b], [+a, -b], [-a, -b], [+b, +a], [-b, +a], [+b, -a], [-b, -a]]
+    )
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _s4_alt(a):
+    points = numpy.array([[+a, +a], [-a, +a], [+a, -a], [-a, -a]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _s40_alt(a):
+    points = numpy.array([[+a, 0.0], [-a, 0.0], [0.0, +a], [0.0, -a]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
 def expand_symmetries_points_only(data):
     points = []
     counts = []
 
     for key, points_raw in data.items():
-        fun = {"zero": _zero, "pm2": _pm2, "pmx": _pmx, "pmy": _pmy}[key]
+        fun = {
+            "zero": _zero,
+            "pm2": _pm2,
+            "pmx": _pmx,
+            "pmy": _pmy,
+            "s40": _s40_alt,
+            "s4": _s4_alt,
+            "s8": _s8_alt,
+        }[key]
         pts = fun(numpy.asarray(points_raw))
 
         counts.append(pts.shape[1])

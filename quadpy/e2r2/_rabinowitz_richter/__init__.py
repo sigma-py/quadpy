@@ -1,7 +1,8 @@
+import pathlib
 from math import pi
 
-from ..helpers import article, untangle
-from ._helpers import E2r2Scheme, _s4, _s8, _s40, _z
+from ...helpers import article, untangle
+from .._helpers import E2r2Scheme, _s4, _s8, _s40, _z, _read
 
 _source = article(
     authors=["Philip Rabinowitz", "Nira Richter"],
@@ -15,17 +16,11 @@ _source = article(
     url="https://doi.org/10.2307/2004962",
 )
 
+this_dir = pathlib.Path(__file__).resolve().parent
+
 
 def rabinowitz_richter_1():
-    data = [
-        (0.1237222328857347e00, _s40(1.538189001320852)),
-        (0.6544984694978697e-01, _s4(1.224744871391589)),
-        (0.5935280476180875e00, _s4(0.4817165220011443)),
-        (0.1349017971918148e-02, _s8(2.607349811958554, 0.9663217712794149)),
-    ]
-    points, weights = untangle(data)
-    weights /= pi
-    return E2r2Scheme("Rabinowitz-Richter 1", weights, points, 9, _source)
+    return _read(this_dir / "rabinowitz_richter_1.json", _source)
 
 
 def rabinowitz_richter_2():
