@@ -358,6 +358,7 @@ def expand_symmetries_points_only(data):
             "s211": _s211_alt,
             "s22": _s22_alt,
             "s1111": _s1111_alt,
+            "plain": lambda vals: vals.reshape(4, 1, -1),
         }[key]
         pts = fun(numpy.asarray(points_raw))
 
