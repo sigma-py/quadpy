@@ -1,8 +1,10 @@
+import pathlib
+
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article
-from ._helpers import T3Scheme, concat, s4, s22, s31, s211
+from ...helpers import article
+from .._helpers import T3Scheme, concat, s4, s22, s31, s211, _read
 
 source = article(
     authors=["F.D. Witherden", "P.E. Vincent"],
@@ -15,6 +17,8 @@ source = article(
     pages="1232–1241",
     url="https://doi.org/10.1016/j.camwa.2015.03.017",
 )
+
+this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def witherden_vincent_01():
@@ -30,12 +34,7 @@ def witherden_vincent_02():
 
 
 def witherden_vincent_03():
-    degree = 3
-    weights, points = s31(
-        [1.362178425370874e-01, 3.281633025163817e-01],
-        [1.137821574629126e-01, 1.080472498984286e-01],
-    )
-    return T3Scheme("Witherden-Vincent 3", weights, points, degree, source)
+    return _read(this_dir / "witherden_vincent_03.json", source)
 
 
 def witherden_vincent_05():
