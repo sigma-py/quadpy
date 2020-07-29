@@ -323,7 +323,7 @@ def _s211_alt(data):
 
 
 def _s1111_alt(data):
-    a, b, c = numpy.array(data).T
+    a, b, c = data
     d = 1 - a - b - c
     points = numpy.array(
         [
@@ -362,7 +362,13 @@ def expand_symmetries_points_only(data):
     counts = []
 
     for key, points_raw in data.items():
-        fun = {"s4": _s4_alt, "s31": _s31_alt, "s211": _s211_alt, "s22": _s22_alt}[key]
+        fun = {
+            "s4": _s4_alt,
+            "s31": _s31_alt,
+            "s211": _s211_alt,
+            "s22": _s22_alt,
+            "s1111": _s1111_alt,
+        }[key]
         pts = fun(numpy.asarray(points_raw))
 
         counts.append(pts.shape[1])
