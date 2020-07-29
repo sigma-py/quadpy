@@ -1,3 +1,5 @@
+import json
+
 import numpy
 import sympy
 
@@ -268,3 +270,138 @@ def concat(*data):
     weights = numpy.concatenate([t[0] for t in data])
     points = numpy.vstack([t[1] for t in data])
     return weights, points
+
+
+def _s4_alt(dummy):
+    return numpy.full((4, 1), 0.25)
+
+
+def _s31_alt(a):
+    b = 1 - 3 * a
+    points = numpy.array([[a, a, a, b], [a, a, b, a], [a, b, a, a], [b, a, a, a]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _s22_alt(a):
+    b = (1 - 2 * a) / 2
+    points = numpy.array(
+        [
+            [a, a, b, b],
+            [a, b, a, b],
+            [b, a, a, b],
+            [a, b, b, a],
+            [b, a, b, a],
+            [b, b, a, a],
+        ]
+    )
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _s211_alt(data):
+    a, b = data
+    c = 1 - 2 * a - b
+    points = numpy.array(
+        [
+            [a, a, b, c],
+            [a, b, a, c],
+            [b, a, a, c],
+            [a, b, c, a],
+            [b, a, c, a],
+            [b, c, a, a],
+            [a, a, c, b],
+            [a, c, a, b],
+            [c, a, a, b],
+            [a, c, b, a],
+            [c, a, b, a],
+            [c, b, a, a],
+        ]
+    )
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _s1111_alt(data):
+    a, b, c = numpy.array(data).T
+    d = 1 - a - b - c
+    points = numpy.array(
+        [
+            [a, b, c, d],
+            [a, b, d, c],
+            [a, c, b, d],
+            [a, c, d, b],
+            [a, d, b, c],
+            [a, d, c, b],
+            [b, a, c, d],
+            [b, a, d, c],
+            [b, c, a, d],
+            [b, c, d, a],
+            [b, d, a, c],
+            [b, d, c, a],
+            [c, a, b, d],
+            [c, a, d, b],
+            [c, b, a, d],
+            [c, b, d, a],
+            [c, d, a, b],
+            [c, d, b, a],
+            [d, a, b, c],
+            [d, a, c, b],
+            [d, b, a, c],
+            [d, b, c, a],
+            [d, c, a, b],
+            [d, c, b, a],
+        ]
+    )
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def expand_symmetries_points_only(data):
+    points = []
+    counts = []
+
+    for key, points_raw in data.items():
+        fun = {"s4": _s4_alt, "s31": _s31_alt, "s211": _s211_alt, "s22": _s22_alt}[key]
+        pts = fun(numpy.asarray(points_raw))
+
+        counts.append(pts.shape[1])
+        pts = pts.reshape(pts.shape[0], -1)
+        points.append(pts)
+
+    points = numpy.ascontiguousarray(numpy.concatenate(points, axis=1))
+    return points, counts
+
+
+def expand_symmetries(data):
+    # separate points and weights
+    points_raw = {}
+    weights_raw = []
+    for key, values in data.items():
+        weights_raw.append(values[0])
+        points_raw[key] = values[1:]
+
+    points, counts = expand_symmetries_points_only(points_raw)
+    weights = numpy.concatenate(
+        [numpy.tile(values, count) for count, values in zip(counts, weights_raw)]
+    )
+
+    # TODO remove this once points are expected as points.T in all functions
+    points = points.T
+    return points, weights
+
+
+def _read(filepath, source):
+    with open(filepath, "r") as f:
+        content = json.load(f)
+
+    degree = content["degree"]
+    name = content["name"]
+    tol = content["test_tolerance"]
+
+    points, weights = expand_symmetries(content["data"])
+
+    if "weight factor" in content:
+        weights *= content["weight factor"]
+
+    return T3Scheme(name, weights, points, degree, source, tol)

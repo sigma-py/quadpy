@@ -24,9 +24,9 @@ def _optimize_u3(content):
     import orthopy
 
     from .u3._helpers import (
-        expand_symmetries_points_only,
-        expand_symmetries,
         _scheme_from_dict,
+        expand_symmetries,
+        expand_symmetries_points_only,
     )
 
     return _optimize(
@@ -44,7 +44,7 @@ def _optimize_u3(content):
 def _optimize_s2(content):
     import orthopy
 
-    from .s2._helpers import expand_symmetries_points_only, expand_symmetries
+    from .s2._helpers import expand_symmetries, expand_symmetries_points_only
 
     return _optimize(
         content,
@@ -58,7 +58,7 @@ def _optimize_s2(content):
 def _optimize_t2(content):
     import orthopy
 
-    from .t2._helpers import expand_symmetries_points_only, expand_symmetries
+    from .t2._helpers import expand_symmetries, expand_symmetries_points_only
 
     return _optimize(
         content,
