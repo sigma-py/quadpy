@@ -2,7 +2,7 @@ import math
 import pathlib
 
 from ...helpers import article
-from .._helpers import T3Scheme, _read, concat, s4, s22, s31, s211
+from .._helpers import T3Scheme, _read, concat, s4, s31, s211
 
 source = article(
     authors=["Lee Shunn", "Frank Ham"],
