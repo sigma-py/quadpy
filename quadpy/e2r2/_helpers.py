@@ -105,7 +105,8 @@ def _s4_alt(a):
 
 
 def _s40_alt(a):
-    points = numpy.array([[+a, 0.0], [-a, 0.0], [0.0, +a], [0.0, -a]])
+    zero = numpy.zeros_like(a)
+    points = numpy.array([[+a, zero], [-a, zero], [zero, +a], [zero, -a]])
     points = numpy.moveaxis(points, 0, 1)
     return points
 
