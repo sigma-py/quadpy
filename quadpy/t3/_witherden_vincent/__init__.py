@@ -4,7 +4,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ...helpers import article
-from .._helpers import T3Scheme, s4, s31, _read
+from .._helpers import T3Scheme, _read, s4, s31
 
 source = article(
     authors=["F.D. Witherden", "P.E. Vincent"],
