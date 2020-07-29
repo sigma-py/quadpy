@@ -166,7 +166,7 @@ def test_scheme(scheme):
         integrate_monomial_over_unit_simplex,
         3,
         scheme.degree + 1,
-        scheme.test_tolerance,
+        scheme.test_tolerance * 1.1,
     )
 
     assert (
