@@ -1,10 +1,8 @@
-import json
+# TODO all points are "plain" -- identiy symmetries and list them as such
 import pathlib
 
-import numpy
-
 from ...helpers import article
-from .._helpers import T3Scheme
+from .._helpers import _read
 
 source = article(
     authors=["Hong Xiao", "Zydrunas Gimbutas"],
@@ -23,73 +21,61 @@ source = article(
 this_dir = pathlib.Path(__file__).resolve().parent
 
 
-def _read(suffix, tol=1.0e-14):
-    filename = f"xg{suffix:02d}.json"
-    with open(this_dir / filename, "r") as f:
-        data = json.load(f)
-
-    degree = data["degree"]
-
-    points = numpy.array(data["bary"])
-    weights = numpy.array(data["weights"])
-    return T3Scheme(f"Xiao-Gimbutas {suffix}", weights, points, degree, source, tol)
-
-
 def xiao_gimbutas_01():
-    return _read(1)
+    return _read(this_dir / "xg01.json", source)
 
 
 def xiao_gimbutas_02():
-    return _read(2)
+    return _read(this_dir / "xg02.json", source)
 
 
 def xiao_gimbutas_03():
-    return _read(3)
+    return _read(this_dir / "xg03.json", source)
 
 
 def xiao_gimbutas_04():
-    return _read(4)
+    return _read(this_dir / "xg04.json", source)
 
 
 def xiao_gimbutas_05():
-    return _read(5)
+    return _read(this_dir / "xg05.json", source)
 
 
 def xiao_gimbutas_06():
-    return _read(6)
+    return _read(this_dir / "xg06.json", source)
 
 
 def xiao_gimbutas_07():
-    return _read(7)
+    return _read(this_dir / "xg07.json", source)
 
 
 def xiao_gimbutas_08():
-    return _read(8)
+    return _read(this_dir / "xg08.json", source)
 
 
 def xiao_gimbutas_09():
-    return _read(9)
+    return _read(this_dir / "xg09.json", source)
 
 
 def xiao_gimbutas_10():
-    return _read(10)
+    return _read(this_dir / "xg10.json", source)
 
 
 def xiao_gimbutas_11():
-    return _read(11)
+    return _read(this_dir / "xg11.json", source)
 
 
 def xiao_gimbutas_12():
-    return _read(12)
+    return _read(this_dir / "xg12.json", source)
 
 
 def xiao_gimbutas_13():
-    return _read(13)
+    return _read(this_dir / "xg13.json", source)
 
 
 def xiao_gimbutas_14():
-    return _read(14)
+    return _read(this_dir / "xg14.json", source)
 
 
 def xiao_gimbutas_15():
-    return _read(15)
+    return _read(this_dir / "xg15.json", source)

@@ -11,7 +11,6 @@ source = article(
     note="Part of the NATO ASI Series book series (ASIC, volume 357)",
 )
 
-
 this_dir = pathlib.Path(__file__).resolve().parent
 
 

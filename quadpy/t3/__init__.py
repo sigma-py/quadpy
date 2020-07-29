@@ -108,7 +108,7 @@ from ._xiao_gimbutas import (
     xiao_gimbutas_14,
     xiao_gimbutas_15,
 )
-from ._yu import yu_1, yu_2, yu_3, yu_4, yu_5
+from ._yu import yu_2, yu_3, yu_4, yu_5, yu_6
 from ._zhang_cui_liu import zhang_cui_liu_1, zhang_cui_liu_2
 
 __all__ = [
@@ -200,11 +200,11 @@ __all__ = [
     "xiao_gimbutas_13",
     "xiao_gimbutas_14",
     "xiao_gimbutas_15",
-    "yu_1",
     "yu_2",
     "yu_3",
     "yu_4",
     "yu_5",
+    "yu_6",
     "zhang_cui_liu_1",
     "zhang_cui_liu_2",
     "walkington_p5",

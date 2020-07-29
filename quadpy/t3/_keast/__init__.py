@@ -1,8 +1,10 @@
+import pathlib
+
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article
-from ._helpers import T3Scheme, concat, s4, s22, s31, s211
+from ...helpers import article
+from .._helpers import T3Scheme, _read, concat, s4, s22, s31
 
 source = article(
     authors=["P. Keast"],
@@ -17,6 +19,7 @@ source = article(
 )
 
 # https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tet/quadrature_rules_tet.html
+this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def keast_0():
@@ -82,48 +85,12 @@ def keast_6():
 
 
 def keast_7():
-    degree = 6
-    weights, points = concat(
-        s31(
-            [0.0399227502581679, 0.2146028712591517],
-            [0.0100772110553207, 0.0406739585346113],
-            [0.0553571815436544, 0.3223378901422757],
-        ),
-        s211([27.0 / 560.0, 0.0636610018750175, 0.2696723314583159]),
-    )
-    return T3Scheme("Keast 7", weights, points, degree, source)
+    return _read(this_dir / "keast_7.json", source)
 
 
 def keast_8():
-    degree = 7
-    weights, points = concat(
-        s4(+0.1095853407966528),
-        s31(
-            [+0.0635996491464850, 0.0782131923303186],
-            [-0.3751064406859797, 0.1218432166639044],
-            [+0.0293485515784412, 0.3325391644464206],
-        ),
-        s22([+0.0058201058201058, 0.5]),
-        s211([+0.1653439153439105, 0.1, 0.2]),
-    )
-    return T3Scheme("Keast 8", weights, points, degree, source)
+    return _read(this_dir / "keast_8.json", source)
 
 
 def keast_9():
-    degree = 8
-    weights, points = concat(
-        s4(-0.2359620398477557),
-        s31(
-            [+0.0244878963560562, 0.1274709365666390],
-            [+0.0039485206398261, 0.0320788303926323],
-        ),
-        s22(
-            [+0.0263055529507371, 0.0497770956432810],
-            [+0.0829803830550589, 0.1837304473985499],
-        ),
-        s211(
-            [+0.0254426245481023, 0.2319010893971509, 0.5132800333608811],
-            [+0.0134324384376852, 0.0379700484718286, 0.1937464752488044],
-        ),
-    )
-    return T3Scheme("Keast 9", weights, points, degree, source)
+    return _read(this_dir / "keast_9.json", source)
