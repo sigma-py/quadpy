@@ -4,7 +4,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ...helpers import article
-from .._helpers import T3Scheme, _read, concat, s4, s22, s31
+from .._helpers import T3Scheme, _read, concat, s4, s22, s31, expand_symmetries
 
 source = article(
     authors=["P. Keast"],
@@ -25,7 +25,10 @@ this_dir = pathlib.Path(__file__).resolve().parent
 def keast_0():
     # Does not appear in Keast's article. TODO remove
     degree = 1
-    weights, points = s4(1)
+    d = {
+        "s4": [[1]],
+    }
+    points, weights = expand_symmetries(d)
     return T3Scheme("Keast 0", weights, points, degree, source)
 
 
@@ -54,11 +57,12 @@ def keast_3():
 
 def keast_4():
     degree = 4
-    weights, points = concat(
-        s4(-frac(148, 1875)),
-        s31([+frac(343, 7500), frac(1, 14)]),
-        s22([+frac(56, 375), frac(1, 4) + sqrt(frac(5, 14)) / 4]),
-    )
+    d = {
+        "s4": [[-frac(148, 1875)]],
+        "s31": [[frac(343, 7500)], [frac(1, 14)]],
+        "s22": [[frac(56, 375)], [frac(1, 4) + sqrt(frac(5, 14)) / 4]],
+    }
+    points, weights = expand_symmetries(d)
     return T3Scheme("Keast 4", weights, points, degree, source)
 
 
@@ -76,11 +80,12 @@ def keast_5():
 
 def keast_6():
     degree = 5
-    weights, points = concat(
-        s4(frac(6544, 36015)),
-        s31([frac(81, 2240), frac(1, 3)], [frac(161051, 2304960), frac(1, 11)]),
-        s22([frac(338, 5145), frac(1, 4) - sqrt(91) / 52]),
-    )
+    d = {
+        "s4": [[frac(6544, 36015)]],
+        "s31": [[frac(81, 2240), frac(161051, 2304960)], [frac(1, 3), frac(1, 11)]],
+        "s22": [[frac(338, 5145)], [frac(1, 4) - sqrt(91) / 52]],
+    }
+    points, weights = expand_symmetries(d)
     return T3Scheme("Keast 6", weights, points, degree, source)
 
 
