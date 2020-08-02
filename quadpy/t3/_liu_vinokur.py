@@ -32,7 +32,6 @@ def liu_vinokur_02():
     d = {
         "s31": [[frac(1, 4)], [b]]
     }
-
     points, weights = expand_symmetries(d)
     degree = 1
     return T3Scheme("Liu-Vinokur 2", weights, points, degree, source)
@@ -60,34 +59,35 @@ def liu_vinokur_04():
 
 
 def liu_vinokur_05():
-    weights = numpy.concatenate(
-        [numpy.full(1, -frac(4, 5)), numpy.full(4, frac(9, 20))]
-    )
-    points = numpy.concatenate([_s4(symbolic=True), _r_alpha(frac(1, 3))])
+    # alpha = 1/3
+    # # a = (1 + 3 * alpha) / 4
+    # b = (1 - alpha) / 4
+    d = {
+        "s4": [[-frac(4, 5)]],
+        "s31": [[frac(9, 20)], [frac(1, 6)]]
+    }
+    points, weights = expand_symmetries(d)
     degree = 3
     return T3Scheme("Liu-Vinokur 5", weights, points, degree, source)
 
 
 def liu_vinokur_06():
-    weights = numpy.concatenate(
-        [numpy.full(4, frac(1, 40)), numpy.full(4, frac(9, 40))]
-    )
-    points = numpy.concatenate([_r_alpha(1), _r_alpha(-frac(1, 3))])
+    d = {
+        "s31": [[frac(1, 40), frac(9, 40)], [0, frac(1, 3)]]
+    }
+    points, weights = expand_symmetries(d)
     degree = 3
     return T3Scheme("Liu-Vinokur 6", weights, points, degree, source)
 
 
 def liu_vinokur_07():
-    weights = numpy.concatenate(
-        [
-            numpy.full(1, -frac(148, 1875)),
-            numpy.full(4, frac(343, 7500)),
-            numpy.full(6, frac(56, 375)),
-        ]
-    )
-    points = numpy.concatenate(
-        [_s4(symbolic=True), _r_alpha(frac(5, 7)), _r_beta(sqrt(70) / 28)]
-    )
+    b = (1 + 2 * sqrt(70) / 28) / 4
+    d = {
+        "s4": [[-frac(148, 1875)]],
+        "s31": [[frac(343, 7500)], [frac(1, 14)]],
+        "s22": [[frac(56, 375)], [b]]
+    }
+    points, weights = expand_symmetries(d)
     degree = 4
     return T3Scheme("Liu-Vinokur 7", weights, points, degree, source)
 
