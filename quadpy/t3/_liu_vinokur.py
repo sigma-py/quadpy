@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from sympy import acos, cos, sqrt
 
 from ..helpers import article
-from ._helpers import T3Scheme, _s4
+from ._helpers import T3Scheme, _s4, expand_symmetries
 
 source = article(
     authors=["Y. Liu", "M. Vinokur"],
@@ -25,8 +25,15 @@ def liu_vinokur_01():
 
 
 def liu_vinokur_02():
-    weights = numpy.concatenate([numpy.full(4, frac(1, 4))])
-    points = numpy.concatenate([_r_alpha(1.0)])
+    # alpha = 1
+    # a = (1 + 3 * alpha) / 4
+    # b = (1 - alpha) / 4
+    b = 0
+    d = {
+        "s31": [[frac(1, 4)], [b]]
+    }
+
+    points, weights = expand_symmetries(d)
     degree = 1
     return T3Scheme("Liu-Vinokur 2", weights, points, degree, source)
 
@@ -39,8 +46,15 @@ def liu_vinokur_03():
 
 
 def liu_vinokur_04():
-    weights = numpy.concatenate([numpy.full(1, frac(4, 5)), numpy.full(4, frac(1, 20))])
-    points = numpy.concatenate([_s4(symbolic=True), _r_alpha(1)])
+    # alpha = 1
+    # # a = (1 + 3 * alpha) / 4
+    # b = (1 - alpha) / 4
+    b = 0
+    d = {
+        "s4": [[frac(4, 5)]],
+        "s31": [[frac(1, 20)], [b]]
+    }
+    points, weights = expand_symmetries(d)
     degree = 2
     return T3Scheme("Liu-Vinokur 4", weights, points, degree, source)
 

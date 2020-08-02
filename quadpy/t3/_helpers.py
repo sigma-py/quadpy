@@ -73,64 +73,6 @@ def s22(*data):
     return weights, points
 
 
-def s211(*data):
-    w, a, b = numpy.array(data).T
-    c = 1 - 2 * a - b
-    points = _stack_first_last(
-        [
-            [a, a, b, c],
-            [a, b, a, c],
-            [b, a, a, c],
-            [a, b, c, a],
-            [b, a, c, a],
-            [b, c, a, a],
-            [a, a, c, b],
-            [a, c, a, b],
-            [c, a, a, b],
-            [a, c, b, a],
-            [c, a, b, a],
-            [c, b, a, a],
-        ]
-    )
-    weights = numpy.tile(w, 12)
-    return weights, points
-
-
-def s1111(*data):
-    w, a, b, c = numpy.array(data).T
-    d = 1 - a - b - c
-    points = _stack_first_last(
-        [
-            [a, b, c, d],
-            [a, b, d, c],
-            [a, c, b, d],
-            [a, c, d, b],
-            [a, d, b, c],
-            [a, d, c, b],
-            [b, a, c, d],
-            [b, a, d, c],
-            [b, c, a, d],
-            [b, c, d, a],
-            [b, d, a, c],
-            [b, d, c, a],
-            [c, a, b, d],
-            [c, a, d, b],
-            [c, b, a, d],
-            [c, b, d, a],
-            [c, d, a, b],
-            [c, d, b, a],
-            [d, a, b, c],
-            [d, a, c, b],
-            [d, b, a, c],
-            [d, b, c, a],
-            [d, c, a, b],
-            [d, c, b, a],
-        ]
-    )
-    weights = numpy.tile(w, 24)
-    return weights, points
-
-
 def _stack_first_last(arr):
     """Stacks an input array of shape (i, j, k) such that the output array is of shape
     (i*k, j).
@@ -146,6 +88,8 @@ def concat(*data):
 
 
 def _s4_alt(dummy):
+    if dummy.dtype == sympy.Basic:
+        return numpy.full((4, 1), sympy.Rational(1, 4))
     return numpy.full((4, 1), 0.25)
 
 
@@ -258,6 +202,7 @@ def expand_symmetries(data):
     points_raw = {}
     weights_raw = []
     for key, values in data.items():
+        values = numpy.asarray(values)
         weights_raw.append(values[0])
         points_raw[key] = values[1:]
 
