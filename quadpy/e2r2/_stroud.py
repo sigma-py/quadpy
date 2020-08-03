@@ -2,7 +2,7 @@ import warnings
 
 import numpy
 from sympy import Rational as frac
-from sympy import cos, sin, sqrt
+from sympy import cos, sin, sqrt, pi
 
 from ..helpers import book, fsd, pm, untangle
 from ._helpers import E2r2Scheme
@@ -27,8 +27,8 @@ def stroud_4_1():
         sqrt(2)
         * numpy.array(
             [
-                [cos(2 * i * numpy.pi / 5) for i in range(5)],
-                [sin(2 * i * numpy.pi / 5) for i in range(5)],
+                [cos(2 * i * pi / 5) for i in range(5)],
+                [sin(2 * i * pi / 5) for i in range(5)],
             ]
         ).T
     )
