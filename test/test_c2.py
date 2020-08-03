@@ -40,6 +40,7 @@ schemes = (
         quadpy.c2.franke_3c(),
         quadpy.c2.franke_5(),
         quadpy.c2.franke_6(),
+        quadpy.c2.franke_7(),
         quadpy.c2.franke_8(),
     ]
     + [

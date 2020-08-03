@@ -1,3 +1,4 @@
+# ENH closed forms of all schemes
 from sympy import Rational as frac
 from sympy import sqrt
 
@@ -42,4 +43,4 @@ def hammer_stroud_3_2():
     ]
     points, weights = untangle(data)
     weights /= 4
-    return C2Scheme("Hammer-Stroud 3-2", weights, points, 7, source)
+    return C2Scheme("Hammer-Stroud 3-2", weights, points, 7, source, 4.441e-16)

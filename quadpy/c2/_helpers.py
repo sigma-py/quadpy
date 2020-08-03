@@ -147,6 +147,20 @@ def _pm2(data):
     return points
 
 
+def _pm(data):
+    x, y = data
+    points = numpy.array([[+x, +y], [-x, -y]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _pmx2(data):
+    x, y = data
+    points = numpy.array([[+x, y], [-x, y]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
 def _pmx(r):
     zero = numpy.zeros_like(r)
     points = numpy.array([[+r, zero], [-r, zero]])
@@ -173,7 +187,9 @@ def expand_symmetries_points_only(data):
             "s4": _s4,
             "zero": _zero,
             "pm2": _pm2,
+            "pm": _pm,
             "pmx": _pmx,
+            "pmx2": _pmx2,
             "pmy": _pmy,
             "plain": lambda vals: vals.reshape(2, 1, -1),
         }[key]
