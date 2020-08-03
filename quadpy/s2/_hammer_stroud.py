@@ -3,8 +3,8 @@ import sympy
 
 from ..helpers import article
 from ..helpers import fs_array as fs
-from ..helpers import fsd, pm, untangle, z
-from ._helpers import S2Scheme
+from ..helpers import fsd, untangle, z
+from ._helpers import S2Scheme, expand_symmetries
 from ._peirce_1956 import peirce_1956_1, peirce_1956_3
 from ._radon import radon
 
@@ -28,18 +28,18 @@ sin = numpy.vectorize(sympy.sin)
 
 def hammer_stroud_11_2():
     # ERR Incorrectly stated in Stroud with 0.5 instead of sqrt(0.5)
-    data = [(frac(1, 4), fsd(2, (sqrt(frac(1, 2)), 1)))]
-    points, weights = untangle(data)
+    d = {"s40": [[frac(1, 4)], [sqrt(frac(1, 2))]]}
+    points, weights = expand_symmetries(d)
     return S2Scheme("Hammer-Stroud 11-2", weights, points, 3, _source)
 
 
 def hammer_stroud_12_2():
-    data = [
-        (frac(1, 6), z(2)),
-        (frac(1, 6), fsd(2, (sqrt(frac(1, 2)), 1))),
-        (frac(1, 24), pm(2 * [sqrt(frac(1, 2))])),
-    ]
-    points, weights = untangle(data)
+    d = {
+        "zero": [[frac(1, 6)]],
+        "s40": [[frac(1, 6)], [sqrt(frac(1, 2))]],
+        "pm": [[frac(1, 24)], [sqrt(frac(1, 2))], [sqrt(frac(1, 2))]],
+    }
+    points, weights = expand_symmetries(d)
     return S2Scheme("Hammer-Stroud 12-2", weights, points, 5, _source)
 
 
