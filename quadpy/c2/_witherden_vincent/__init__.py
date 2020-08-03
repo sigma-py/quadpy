@@ -31,7 +31,6 @@ def witherden_vincent_05():
 
 
 def witherden_vincent_07():
-    # TODO find error
     return _read(this_dir / "witherden_vincent_07.json", _source)
 
 
