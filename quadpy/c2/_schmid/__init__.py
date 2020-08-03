@@ -59,5 +59,4 @@ def schmid_4():
 
 
 def schmid_6():
-    # TODO better-quality points/weights for Schmidt
     return _read(this_dir / "schmid_6.json", source)
