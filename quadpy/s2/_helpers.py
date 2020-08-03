@@ -2,6 +2,7 @@ import json
 import warnings
 
 import numpy
+import sympy
 
 from ..helpers import QuadratureScheme, plot_disks
 
@@ -37,36 +38,6 @@ class S2Scheme(QuadratureScheme):
         return numpy.pi * numpy.array(radius) ** 2 * dot(ff, self.weights)
 
 
-def _z():
-    return numpy.array([[0.0, 0.0]])
-
-
-def _s8(a, b):
-    return numpy.array(
-        [[+a, +b], [-a, +b], [+a, -b], [-a, -b], [+b, +a], [-b, +a], [+b, -a], [-b, -a]]
-    )
-
-
-def _s4(a):
-    return numpy.array([[+a, +a], [-a, +a], [+a, -a], [-a, -a]])
-
-
-def _s40(a):
-    return numpy.array([[+a, 0.0], [-a, 0.0], [0.0, +a], [0.0, -a]])
-
-
-def _pm(a, b):
-    return numpy.array([[+a, +b], [-a, +b], [+a, -b], [-a, -b]])
-
-
-def _pmx(x):
-    return numpy.array([[+x, 0], [-x, 0]])
-
-
-def _pmy(y):
-    return numpy.array([[0, +y], [0, -y]])
-
-
 def _pma_alt(data):
     a = numpy.asarray(data)
     points = numpy.array([[+a, +a], [-a, +a], [+a, -a], [-a, -a]])
@@ -98,6 +69,8 @@ def _pmy_alt(data):
 
 
 def _zero_alt(data):
+    if data.dtype == sympy.Basic:
+        return numpy.array([[0], [0]])
     return numpy.array([[0.0], [0.0]])
 
 
@@ -147,6 +120,7 @@ def expand_symmetries(data):
     points_raw = {}
     weights_raw = []
     for key, values in data.items():
+        values = numpy.asarray(values)
         weights_raw.append(values[0])
         points_raw[key] = values[1:]
 
