@@ -38,8 +38,7 @@ def _optimize_u3(content):
         _scheme_from_dict,
         get_evaluator=lambda points: orthopy.u3.EvalCartesian(
             points, scaling="quantum mechanic"
-        ),
-        int_p0=1 / numpy.sqrt(4 * numpy.pi),
+        )
     )
 
 
@@ -57,8 +56,7 @@ def _optimize_c2(content):
         expand_symmetries,
         expand_symmetries_points_only,
         _scheme_from_dict,
-        get_evaluator=lambda points: orthopy.cn.Eval(points),
-        int_p0=2,
+        get_evaluator=lambda points: orthopy.cn.Eval(points)
     )
 
 
@@ -71,8 +69,7 @@ def _optimize_s2(content):
         content,
         expand_symmetries,
         expand_symmetries_points_only,
-        get_evaluator=lambda points: orthopy.s2.zernike.Eval(points, scaling="normal"),
-        int_p0=1 / numpy.sqrt(numpy.pi),
+        get_evaluator=lambda points: orthopy.s2.zernike.Eval(points, scaling="normal")
     )
 
 
@@ -85,8 +82,7 @@ def _optimize_t2(content):
         content,
         expand_symmetries,
         expand_symmetries_points_only,
-        get_evaluator=lambda points: orthopy.t2.Eval(points, scaling="normal"),
-        int_p0=numpy.sqrt(2),
+        get_evaluator=lambda points: orthopy.t2.Eval(points, scaling="normal")
     )
 
 
@@ -95,8 +91,7 @@ def _optimize(
     expand_symmetries,
     expand_symmetries_points_only,
     scheme_from_dict,
-    get_evaluator,
-    int_p0,
+    get_evaluator
 ):
     import numpy
     from scipy.optimize import minimize
@@ -122,8 +117,7 @@ def _optimize(
 
         # evaluate all orthogonal polynomials up to `degree` at all points
         evaluator = get_evaluator(points)
-        # TODO adapt orthopy.Eval and remove the [0]
-        A2 = numpy.concatenate([next(evaluator)[0] for _ in range(degree + 1)])
+        A2 = numpy.concatenate([next(evaluator) for _ in range(degree + 1)])
 
         assert sum(a * b for a, b in zip(len_symm, num_symm)) == A2.shape[1]
 
@@ -139,7 +133,7 @@ def _optimize(
 
         # The exact values are 0 except for the first entry
         b = numpy.zeros(A.shape[0])
-        b[0] = int_p0
+        b[0] = evaluator.int_p0
 
         w, res, rank, s = numpy.linalg.lstsq(A, b, rcond=None)
 

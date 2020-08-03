@@ -46,13 +46,14 @@ class C2Scheme(CnScheme):
         plt.ylim(-0.1, 1.1)
 
     def compute_residuals(self, level):
-        evaluator = orthopy.cn.Eval(self.points)
+        evaluator = orthopy.cn.Eval(self.points.T)
 
         quad = rectangle_points([-1.0, +1.0], [-1.0, +1.0])
 
         max_res = []
         for k in range(level + 1):
-            approximate = self.integrate(lambda x: next(evaluator), quad)
+            vals = next(evaluator)
+            approximate = self.integrate(lambda x: vals, quad)
             exact = 2.0 if k == 0 else 0.0
             res = numpy.abs(approximate - exact)
             max_res += [numpy.max(res)]
