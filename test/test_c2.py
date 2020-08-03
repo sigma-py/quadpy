@@ -150,7 +150,7 @@ schemes = (
         quadpy.c2.witherden_vincent_01(),
         quadpy.c2.witherden_vincent_03(),
         quadpy.c2.witherden_vincent_05(),
-        # (quadpy.c2.witherden_vincent_07(), 1.0e-14), TODO
+        quadpy.c2.witherden_vincent_07(),
         quadpy.c2.witherden_vincent_09(),
         quadpy.c2.witherden_vincent_11(),
         quadpy.c2.witherden_vincent_13(),
@@ -181,8 +181,8 @@ def test_scheme(scheme):
     k = 0
     max_err = 0.0
     while True:
-        approximate = scheme.integrate(lambda x: next(evaluator)[0], quad)
-        exact = 2.0 if k == 0 else 0.0
+        approximate = scheme.integrate(lambda x: next(evaluator), quad)
+        exact = evaluator.int_p0 * 4 if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
         max_err = max(max_err, numpy.max(err))
         if numpy.any(err > scheme.test_tolerance * 1.1):

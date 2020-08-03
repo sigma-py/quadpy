@@ -13,6 +13,8 @@ def optimize(content):
         return _optimize_t2(content)
     elif domain.lower() == "s2":
         return _optimize_s2(content)
+    elif domain.lower() == "c2":
+        return _optimize_c2(content)
     elif domain.lower() == "u3":
         return _optimize_u3(content)
 
@@ -37,7 +39,24 @@ def _optimize_u3(content):
         get_evaluator=lambda points: orthopy.u3.EvalCartesian(
             points, scaling="quantum mechanic"
         ),
-        int_p0=1 / numpy.sqrt(4 * numpy.pi),
+    )
+
+
+def _optimize_c2(content):
+    import orthopy
+
+    from .c2._helpers import (
+        _scheme_from_dict,
+        expand_symmetries,
+        expand_symmetries_points_only,
+    )
+
+    return _optimize(
+        content,
+        expand_symmetries,
+        expand_symmetries_points_only,
+        _scheme_from_dict,
+        get_evaluator=lambda points: orthopy.cn.Eval(points),
     )
 
 
@@ -51,7 +70,6 @@ def _optimize_s2(content):
         expand_symmetries,
         expand_symmetries_points_only,
         get_evaluator=lambda points: orthopy.s2.zernike.Eval(points, scaling="normal"),
-        int_p0=1 / numpy.sqrt(numpy.pi),
     )
 
 
@@ -65,7 +83,6 @@ def _optimize_t2(content):
         expand_symmetries,
         expand_symmetries_points_only,
         get_evaluator=lambda points: orthopy.t2.Eval(points, scaling="normal"),
-        int_p0=numpy.sqrt(2),
     )
 
 
@@ -75,7 +92,6 @@ def _optimize(
     expand_symmetries_points_only,
     scheme_from_dict,
     get_evaluator,
-    int_p0,
 ):
     import numpy
     from scipy.optimize import minimize
@@ -117,7 +133,7 @@ def _optimize(
 
         # The exact values are 0 except for the first entry
         b = numpy.zeros(A.shape[0])
-        b[0] = int_p0
+        b[0] = evaluator.int_p0
 
         w, res, rank, s = numpy.linalg.lstsq(A, b, rcond=None)
 
@@ -125,9 +141,10 @@ def _optimize(
         assert numpy.all(numpy.abs(w.imag) < 1.0e-15)
         w = w.real
 
-        # if rank < max(A.shape):
-        #     print("System matrix rank-deficient. Optimization failed.")
-        #     exit(1)
+        if rank < max(A.shape):
+            # return some "large" residual value
+            return None, None, None, 1.0
+            # print("System matrix rank-deficient. Optimization failed.")
         return A, b, w, numpy.sqrt(res[0])
 
     def f(x):
@@ -146,6 +163,10 @@ def _optimize(
     x0 = numpy.concatenate([numpy.array(val).flat for val in values_without_weights])
 
     out = minimize(f, x0, method="Nelder-Mead", tol=1.0e-17)
+
+    if not out.success:
+        print("Optimization failed.")
+        exit(1)
 
     # compute max(err)
     A, b, w, _ = get_w_from_x(out.x)

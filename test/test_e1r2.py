@@ -22,7 +22,7 @@ def test_scheme(scheme, tol=1.0e-14):
     degree = None
     for k in range(scheme.degree + 2):
         approximate = scheme.integrate(lambda x: next(evaluator))
-        exact = numpy.sqrt(numpy.sqrt(numpy.pi)) if k == 0 else 0.0
+        exact = evaluator.int_p0 if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
         if numpy.any(err > tol):
             degree = k - 1

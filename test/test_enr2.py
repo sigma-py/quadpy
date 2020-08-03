@@ -59,14 +59,13 @@ def test_scheme(scheme):
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
     print(scheme)
-    n = scheme.dim
 
     evaluator = orthopy.enr2.Eval(scheme.points.T, "physicists")
 
     k = 0
     while True:
-        approximate = scheme.integrate(lambda x: next(evaluator)[0])
-        exact = numpy.pi ** (n / 4) if k == 0 else 0.0
+        approximate = scheme.integrate(lambda x: next(evaluator))
+        exact = evaluator.int_p0 if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
         if numpy.any(err > 1.0e-11):
             break

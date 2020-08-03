@@ -69,7 +69,7 @@ class U3Scheme(QuadratureScheme):
             approximate = self.integrate(
                 lambda x: next(evaluator), [0.0, 0.0, 0.0], 1.0
             )
-            exact = numpy.sqrt(4 * numpy.pi) if k == 0 else 0.0
+            exact = evaluator.int_p0 if k == 0 else 0.0
             res = numpy.abs(approximate - exact)
             max_res += [numpy.max(res)]
 
