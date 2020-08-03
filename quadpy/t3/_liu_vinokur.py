@@ -1,5 +1,5 @@
 from sympy import Rational as frac
-from sympy import acos, cos, sqrt, pi
+from sympy import acos, cos, pi, sqrt
 
 from ..helpers import article
 from ._helpers import T3Scheme, expand_symmetries

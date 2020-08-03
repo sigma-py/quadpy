@@ -1,5 +1,7 @@
-from sympy import sqrt, Rational as frac
 import pathlib
+
+from sympy import Rational as frac
+from sympy import sqrt
 
 from ...helpers import article
 from .._helpers import T3Scheme, _read, expand_symmetries
