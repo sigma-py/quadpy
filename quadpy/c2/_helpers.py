@@ -1,7 +1,7 @@
 import json
 
-import orthopy
 import numpy
+import orthopy
 
 from .. import helpers
 from ..cn import CnScheme
@@ -268,5 +268,5 @@ def _scheme_from_dict(content, source=None):
         degree=content["degree"],
         source=source,
         tol=content["test_tolerance"],
-        comments=content["comments"] if "comments" in content else None
+        comments=content["comments"] if "comments" in content else None,
     )

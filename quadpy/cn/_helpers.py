@@ -6,8 +6,9 @@ from ..helpers import QuadratureScheme, n_outer
 
 
 class CnScheme(QuadratureScheme):
-    def __init__(self, name, dim, weights, points, degree, source, tol=1.0e-14,
-            comments=None):
+    def __init__(
+        self, name, dim, weights, points, degree, source, tol=1.0e-14, comments=None
+    ):
         self.domain = f"Cn (n={dim})"
         self.dim = dim
         super().__init__(name, weights, points, degree, source, tol, comments)
