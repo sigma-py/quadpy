@@ -1,8 +1,8 @@
-import math
+from sympy import sqrt, Rational as frac
 import pathlib
 
 from ...helpers import article
-from .._helpers import T3Scheme, _read, s4, s31
+from .._helpers import T3Scheme, _read, expand_symmetries
 
 source = article(
     authors=["Lee Shunn", "Frank Ham"],
@@ -16,12 +16,14 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def shunn_ham_1():
-    weights, points = s4(1)
+    d = {"s4": [[1]]}
+    points, weights = expand_symmetries(d)
     return T3Scheme("Shunn-Ham 2", weights, points, 1, source)
 
 
 def shunn_ham_2():
-    weights, points = s31([1 / 4, 1 / (5 + math.sqrt(5))])
+    d = {"s31": [[frac(1, 4)], [frac(1, 4) - sqrt(5) / 20]]}
+    points, weights = expand_symmetries(d)
     return T3Scheme("Shunn-Ham 2", weights, points, 2, source)
 
 
