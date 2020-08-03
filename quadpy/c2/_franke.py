@@ -42,16 +42,20 @@ def franke_2a():
     a = math.sqrt((15 + 2 * sqrt(30)) / 35)
     b = math.sqrt((15 - 2 * sqrt(30)) / 35)
 
+    # closed forms not appearing in the article:
+    c = 5 * (18 + math.sqrt(30)) / 324
+    d = 2 * (18 + math.sqrt(30)) / 81
+
     weights, points = concat(
         pm2(
             [0.437841520872291e-1, 0.105784012371275e1, a],
-            [0.362302863812526, 0.774596669241483, b],
+            [c, math.sqrt(3 / 5), b],
             [0.304070693050225, 0.469253522127911, a],
         ),
-        pm([0.579684582100041, 0, b]),
+        pm([d, 0, b]),
     )
     weights /= 4
-    return C2Scheme("Franke 2a", weights, points, 7, source, 1.056e-14)
+    return C2Scheme("Franke 2a", weights, points, 7, source, 1.232e-14)
 
 
 def franke_2b():
@@ -159,16 +163,10 @@ def franke_8():
     # TODO find error in franke_8
     warnings.warn("Franke(8) only has degree 1.")
 
-    a = 0.488926856974369
-    b = 0.690880550486344
-    c = 0.939565258096838
-    r = 0.918620441056722
-    s = 0.344872025364404
-
     weights, points = concat(
-        symm_r0([0.454163960686749, a]),
-        symm_s([0.214200360926862, b], [0.427312318657758e-1, c]),
-        symm_s_t([0.144452223260307, r, s]),
+        symm_r0([0.454163960686749, 0.488926856974369]),
+        symm_s([0.214200360926862, 0.690880550486344], [0.427312318657758e-1, 0.939565258096838]),
+        symm_s_t([0.144452223260307, 0.918620441056722, 0.344872025364404]),
     )
     weights /= 4
     return C2Scheme("Franke 8", weights, points, 1, source)
