@@ -11,7 +11,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import T3Scheme, concat, s4, s31
+from ._helpers import T3Scheme, expand_symmetries
 
 source = article(
     authors=["P.C. Hammer", "O.J. Marlowe", "A.H. Stroud"],
@@ -39,7 +39,8 @@ def hammer_marlowe_stroud_1():
     degree = 2
     r = 1 / sqrt(5)
     a = (1 - r) / 4
-    weights, points = s31([frac(1, 4), a])
+    d = {"s31": [[frac(1, 4)], [a]]}
+    points, weights = expand_symmetries(d)
     return T3Scheme("Hammer-Marlowe-Stroud 1", weights, points, degree, source)
 
 
@@ -47,7 +48,8 @@ def hammer_marlowe_stroud_2():
     degree = 2
     r = -1 / sqrt(5)
     a = (1 - r) / 4
-    weights, points = s31([frac(1, 4), a])
+    d = {"s31": [[frac(1, 4)], [a]]}
+    points, weights = expand_symmetries(d)
     return T3Scheme("Hammer-Marlowe-Stroud 2", weights, points, degree, source)
 
 
@@ -56,5 +58,6 @@ def hammer_marlowe_stroud_3():
     degree = 3
     r = frac(1, 3)
     a = (1 - r) / 4
-    weights, points = concat(s4(-frac(4, 5)), s31([frac(9, 20), a]))
+    d = {"s4": [[-frac(4, 5)]], "s31": [[frac(9, 20)], [a]]}
+    points, weights = expand_symmetries(d)
     return T3Scheme("Hammer-Marlowe-Stroud 3", weights, points, degree, source)

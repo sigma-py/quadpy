@@ -37,127 +37,24 @@ class T3Scheme(TnScheme):
         return
 
 
-def _s4(symbolic):
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    return numpy.full((1, 4), frac(1, 4))
-
-
-def s4(weight):
-    symbolic = not isinstance(weight, float)
-    frac = sympy.Rational if symbolic else lambda x, y: x / y
-    return numpy.array([weight]), numpy.full((1, 4), frac(1, 4))
-
-
-def s31(*data):
-    w, a = numpy.array(data).T
-    b = 1 - 3 * a
-    points = _stack_first_last([[a, a, a, b], [a, a, b, a], [a, b, a, a], [b, a, a, a]])
-    weights = numpy.tile(w, 4)
-    return weights, points
-
-
-def s22(*data):
-    w, a = numpy.array(data).T
-    b = (1 - 2 * a) / 2
-    points = _stack_first_last(
-        [
-            [a, a, b, b],
-            [a, b, a, b],
-            [b, a, a, b],
-            [a, b, b, a],
-            [b, a, b, a],
-            [b, b, a, a],
-        ]
-    )
-    weights = numpy.tile(w, 6)
-    return weights, points
-
-
-def s211(*data):
-    w, a, b = numpy.array(data).T
-    c = 1 - 2 * a - b
-    points = _stack_first_last(
-        [
-            [a, a, b, c],
-            [a, b, a, c],
-            [b, a, a, c],
-            [a, b, c, a],
-            [b, a, c, a],
-            [b, c, a, a],
-            [a, a, c, b],
-            [a, c, a, b],
-            [c, a, a, b],
-            [a, c, b, a],
-            [c, a, b, a],
-            [c, b, a, a],
-        ]
-    )
-    weights = numpy.tile(w, 12)
-    return weights, points
-
-
-def s1111(*data):
-    w, a, b, c = numpy.array(data).T
-    d = 1 - a - b - c
-    points = _stack_first_last(
-        [
-            [a, b, c, d],
-            [a, b, d, c],
-            [a, c, b, d],
-            [a, c, d, b],
-            [a, d, b, c],
-            [a, d, c, b],
-            [b, a, c, d],
-            [b, a, d, c],
-            [b, c, a, d],
-            [b, c, d, a],
-            [b, d, a, c],
-            [b, d, c, a],
-            [c, a, b, d],
-            [c, a, d, b],
-            [c, b, a, d],
-            [c, b, d, a],
-            [c, d, a, b],
-            [c, d, b, a],
-            [d, a, b, c],
-            [d, a, c, b],
-            [d, b, a, c],
-            [d, b, c, a],
-            [d, c, a, b],
-            [d, c, b, a],
-        ]
-    )
-    weights = numpy.tile(w, 24)
-    return weights, points
-
-
-def _stack_first_last(arr):
-    """Stacks an input array of shape (i, j, k) such that the output array is of shape
-    (i*k, j).
-    """
-    arr = numpy.swapaxes(arr, 0, 1)
-    return arr.reshape(arr.shape[0], -1).T
-
-
-def concat(*data):
-    weights = numpy.concatenate([t[0] for t in data])
-    points = numpy.vstack([t[1] for t in data])
-    return weights, points
-
-
-def _s4_alt(dummy):
+def _s4(dummy):
+    if dummy.dtype == sympy.Basic:
+        return numpy.full((4, 1), sympy.Rational(1, 4))
     return numpy.full((4, 1), 0.25)
 
 
-def _s31_alt(a):
+def _s31(a):
     b = 1 - 3 * a
     points = numpy.array([[a, a, a, b], [a, a, b, a], [a, b, a, a], [b, a, a, a]])
     points = numpy.moveaxis(points, 0, 1)
     return points
 
 
-def _s22_alt(a):
-    b = (1 - 2 * a) / 2
+def _s22(a):
+    if a.dtype in [sympy.Basic, int]:
+        b = (1 - 2 * a) / sympy.S(2)
+    else:
+        b = (1 - 2 * a) / 2
     points = numpy.array(
         [
             [a, a, b, b],
@@ -172,7 +69,7 @@ def _s22_alt(a):
     return points
 
 
-def _s211_alt(data):
+def _s211(data):
     a, b = data
     c = 1 - 2 * a - b
     points = numpy.array(
@@ -195,7 +92,7 @@ def _s211_alt(data):
     return points
 
 
-def _s1111_alt(data):
+def _s1111(data):
     a, b, c = data
     d = 1 - a - b - c
     points = numpy.array(
@@ -236,11 +133,11 @@ def expand_symmetries_points_only(data):
 
     for key, points_raw in data.items():
         fun = {
-            "s4": _s4_alt,
-            "s31": _s31_alt,
-            "s211": _s211_alt,
-            "s22": _s22_alt,
-            "s1111": _s1111_alt,
+            "s4": _s4,
+            "s31": _s31,
+            "s211": _s211,
+            "s22": _s22,
+            "s1111": _s1111,
             "plain": lambda vals: vals.reshape(4, 1, -1),
         }[key]
         pts = fun(numpy.asarray(points_raw))
@@ -258,6 +155,7 @@ def expand_symmetries(data):
     points_raw = {}
     weights_raw = []
     for key, values in data.items():
+        values = numpy.asarray(values)
         weights_raw.append(values[0])
         points_raw[key] = values[1:]
 
