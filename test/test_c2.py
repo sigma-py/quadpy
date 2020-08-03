@@ -150,7 +150,7 @@ schemes = (
         quadpy.c2.witherden_vincent_01(),
         quadpy.c2.witherden_vincent_03(),
         quadpy.c2.witherden_vincent_05(),
-        # (quadpy.c2.witherden_vincent_07(), 1.0e-14), TODO
+        quadpy.c2.witherden_vincent_07(),
         quadpy.c2.witherden_vincent_09(),
         quadpy.c2.witherden_vincent_11(),
         quadpy.c2.witherden_vincent_13(),
