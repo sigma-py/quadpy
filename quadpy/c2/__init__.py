@@ -36,6 +36,7 @@ from ._franke import (
     franke_3c,
     franke_5,
     franke_6,
+    franke_7,
     franke_8,
 )
 from ._haegemans_piessens import haegemans_piessens
@@ -198,6 +199,7 @@ __all__ = [
     "franke_3c",
     "franke_5",
     "franke_6",
+    "franke_7",
     "franke_8",
     "hammer_stroud_1_2",
     "hammer_stroud_2_2",

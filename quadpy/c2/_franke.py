@@ -6,6 +6,7 @@ from sympy import sqrt
 
 from ..helpers import article
 from ._helpers import C2Scheme, concat, pm, pm2, symm_r0, symm_s, symm_s_t, zero
+from ._rabinowitz_richter import rabinowitz_richter_1
 from ._tyler import tyler_2
 
 source = article(
@@ -141,7 +142,7 @@ def franke_3c():
 
 
 def franke_5():
-    # DUP
+    # DUP Noted as a duplicate in the original article
     return tyler_2()
 
 
@@ -157,6 +158,11 @@ def franke_6():
     )
     weights /= 4
     return C2Scheme("Franke 6", weights, points, 7, source)
+
+
+def franke_7():
+    # DUP Noted as a duplicate in the original article
+    return rabinowitz_richter_1()
 
 
 def franke_8():
