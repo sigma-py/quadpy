@@ -101,7 +101,10 @@ def _s31_alt(a):
 
 
 def _s22_alt(a):
-    b = (1 - 2 * a) / 2
+    if a.dtype in [sympy.Basic, int]:
+        b = (1 - 2 * a) / sympy.S(2)
+    else:
+        b = (1 - 2 * a) / 2
     points = numpy.array(
         [
             [a, a, b, b],
