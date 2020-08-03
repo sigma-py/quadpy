@@ -30,8 +30,8 @@ def test_scheme(scheme, tol=1.0e-14):
 
     k = 0
     while True:
-        approximate = scheme.integrate(lambda x: next(evaluator)[0])
-        exact = numpy.pi ** (3 / 4) if k == 0 else 0.0
+        approximate = scheme.integrate(lambda x: next(evaluator))
+        exact = evaluator.int_p0 if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
         if numpy.any(err > tol):
             break

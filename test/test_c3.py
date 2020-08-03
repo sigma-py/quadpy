@@ -70,7 +70,7 @@ def test_scheme(scheme, print_degree=False):
     k = 0
     while True:
         approximate = scheme.integrate(lambda x: next(evaluator)[0], hexa)
-        exact = numpy.sqrt(2.0) ** 3 if k == 0 else 0.0
+        exact = evaluator.int_p0 * 2 ** 3 if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
         if numpy.any(err > scheme.test_tolerance):
             break

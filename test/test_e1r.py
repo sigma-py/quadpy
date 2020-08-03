@@ -20,7 +20,7 @@ def test_scheme(scheme, tol):
     degree = None
     for k in range(scheme.degree + 2):
         approximate = scheme.integrate(lambda x: next(evaluator))
-        exact = 1.0 if k == 0 else 0.0
+        exact = evaluator.int_p0 if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
         if numpy.any(err > tol):
             degree = k - 1

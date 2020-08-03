@@ -13,6 +13,8 @@ def optimize(content):
         return _optimize_t2(content)
     elif domain.lower() == "s2":
         return _optimize_s2(content)
+    elif domain.lower() == "c2":
+        return _optimize_c2(content)
     elif domain.lower() == "u3":
         return _optimize_u3(content)
 
@@ -38,6 +40,25 @@ def _optimize_u3(content):
             points, scaling="quantum mechanic"
         ),
         int_p0=1 / numpy.sqrt(4 * numpy.pi),
+    )
+
+
+def _optimize_c2(content):
+    import orthopy
+
+    from .c2._helpers import (
+        expand_symmetries,
+        expand_symmetries_points_only,
+        _scheme_from_dict,
+    )
+
+    return _optimize(
+        content,
+        expand_symmetries,
+        expand_symmetries_points_only,
+        _scheme_from_dict,
+        get_evaluator=lambda points: orthopy.cn.Eval(points),
+        int_p0=2,
     )
 
 
@@ -101,7 +122,8 @@ def _optimize(
 
         # evaluate all orthogonal polynomials up to `degree` at all points
         evaluator = get_evaluator(points)
-        A2 = numpy.concatenate([next(evaluator) for _ in range(degree + 1)])
+        # TODO adapt orthopy.Eval and remove the [0]
+        A2 = numpy.concatenate([next(evaluator)[0] for _ in range(degree + 1)])
 
         assert sum(a * b for a, b in zip(len_symm, num_symm)) == A2.shape[1]
 

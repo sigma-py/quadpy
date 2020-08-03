@@ -1,5 +1,6 @@
 import json
 
+import orthopy
 import numpy
 
 from .. import helpers
@@ -10,9 +11,11 @@ from ..tn import get_vol
 
 
 class C2Scheme(CnScheme):
-    def __init__(self, name, weights, points, degree, source=None, tol=1.0e-14):
+    def __init__(
+        self, name, weights, points, degree, source=None, tol=1.0e-14, comments=None
+    ):
         self.domain = "C2"
-        super().__init__(name, 2, weights, points, degree, source, tol)
+        super().__init__(name, 2, weights, points, degree, source, tol, comments)
 
     def plot(self, quad=rectangle_points([0.0, 1.0], [0.0, 1.0]), show_axes=False):
         """Shows the quadrature points on a given quad. The area of the disks
@@ -41,6 +44,20 @@ class C2Scheme(CnScheme):
         plt.axis("equal")
         plt.xlim(-0.1, 1.1)
         plt.ylim(-0.1, 1.1)
+
+    def compute_residuals(self, level):
+        evaluator = orthopy.cn.Eval(self.points)
+
+        quad = rectangle_points([-1.0, +1.0], [-1.0, +1.0])
+
+        max_res = []
+        for k in range(level + 1):
+            approximate = self.integrate(lambda x: next(evaluator), quad)
+            exact = 2.0 if k == 0 else 0.0
+            res = numpy.abs(approximate - exact)
+            max_res += [numpy.max(res)]
+
+        return numpy.array(max_res)
 
 
 def zero(weight):
@@ -235,3 +252,20 @@ def _read(filepath, source):
         weights *= content["weight factor"]
 
     return C2Scheme(name, weights, points, degree, source, tol)
+
+
+def _scheme_from_dict(content, source=None):
+    points, weights = expand_symmetries(content["data"])
+
+    if "weight factor" in content:
+        weights *= content["weight factor"]
+
+    return C2Scheme(
+        content["name"],
+        weights,
+        points,
+        degree=content["degree"],
+        source=source,
+        tol=content["test_tolerance"],
+        comments=content["comments"] if "comments" in content else None
+    )
