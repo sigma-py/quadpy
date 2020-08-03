@@ -1,5 +1,7 @@
-from ..helpers import article
-from ._helpers import C2Scheme, concat, pm, pm2
+import pathlib
+
+from ...helpers import article
+from .._helpers import C2Scheme, concat, pm, pm2
 
 source = article(
     authors=["C.R. Morrow", "T.N.L. Patterson"],
@@ -10,6 +12,8 @@ source = article(
     pages="1178–1190",
     url="https://doi.org/10.1137/0722071",
 )
+
+this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def morrow_patterson_1():
