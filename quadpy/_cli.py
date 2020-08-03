@@ -141,9 +141,10 @@ def _optimize(
         assert numpy.all(numpy.abs(w.imag) < 1.0e-15)
         w = w.real
 
-        # if rank < max(A.shape):
-        #     print("System matrix rank-deficient. Optimization failed.")
-        #     exit(1)
+        if rank < max(A.shape):
+            # return some "large" residual value
+            return None, None, None, 1.0
+            # print("System matrix rank-deficient. Optimization failed.")
         return A, b, w, numpy.sqrt(res[0])
 
     def f(x):
@@ -162,6 +163,10 @@ def _optimize(
     x0 = numpy.concatenate([numpy.array(val).flat for val in values_without_weights])
 
     out = minimize(f, x0, method="Nelder-Mead", tol=1.0e-17)
+
+    if not out.success:
+        print("Optimization failed.")
+        exit(1)
 
     # compute max(err)
     A, b, w, _ = get_w_from_x(out.x)
