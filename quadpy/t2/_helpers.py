@@ -230,12 +230,35 @@ def _rot_ab_alt(data):
     return points
 
 
+def _swap_ab(data):
+    a, b = data
+    c = 1 - a - b
+    points = numpy.array([[a, b, c], [b, a, c]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _s2_static(a):
+    a = numpy.asarray(a)
+    b = 1 - 2 * a
+    points = numpy.array([[a, a, b]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
 def expand_symmetries_points_only(data):
     points = []
     counts = []
 
     for key, points_raw in data.items():
-        fun = {"s1": _s1, "s2": _s2, "s3": _s3_alt, "rot_ab": _rot_ab_alt}[key]
+        fun = {
+            "s1": _s1,
+            "s2": _s2,
+            "s3": _s3_alt,
+            "rot_ab": _rot_ab_alt,
+            "swap_ab": _swap_ab,
+            "s2_static": _s2_static,
+        }[key]
         pts = fun(numpy.asarray(points_raw))
 
         counts.append(pts.shape[1])
