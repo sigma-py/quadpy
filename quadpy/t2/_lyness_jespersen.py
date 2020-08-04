@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import T2Scheme, concat, s1, s2, s3
+from ._helpers import T2Scheme, concat, s1, s2, s3, expand_symmetries
 
 source = article(
     authors=["J.N. Lyness", "D. Jespersen"],
@@ -18,52 +18,69 @@ source = article(
 
 
 def lyness_jespersen_01():
-    weights, points = s2([frac(1, 3), frac(1, 2)])
+    d = {"s2": [[frac(1, 3)], [frac(1, 2)]]}
+    points, weights = expand_symmetries(d)
     return T2Scheme("Lyness-Jespersen 1", weights, points, 2, source)
 
 
 def lyness_jespersen_02():
-    weights, points = concat(s3(frac(3, 4)), s2([frac(1, 12), 0]))
+    d = {
+        "s3": [[frac(3, 4)]],
+        "s2": [[frac(1, 12)], [0]],
+    }
+    points, weights = expand_symmetries(d)
     return T2Scheme("Lyness-Jespersen 2", weights, points, 2, source)
 
 
 def lyness_jespersen_03():
-    weights, points = concat(s3(-frac(9, 16)), s2([frac(25, 48), frac(1, 5)]))
+    d = {
+        "s3": [[-frac(9, 16)]],
+        "s2": [[frac(25, 48)], [frac(1, 5)]],
+    }
+    points, weights = expand_symmetries(d)
     return T2Scheme("Lyness-Jespersen 3", weights, points, 3, source)
 
 
 def lyness_jespersen_04():
-    weights, points = concat(
-        s3(frac(9, 20)), s2([frac(1, 20), 0], [frac(2, 15), frac(1, 2)])
-    )
+    d = {
+        "s3": [[frac(9, 20)]],
+        "s2": [[frac(1, 20), frac(2, 15)], [0, frac(1, 2)]],
+    }
+    points, weights = expand_symmetries(d)
     return T2Scheme("Lyness-Jespersen 4", weights, points, 3, source)
 
 
 def lyness_jespersen_05():
-    weights, points = s2(
-        [3.298552309659655e-01 / 3, 9.157621350977073e-02],
-        [6.701447690340345e-01 / 3, 4.459484909159649e-01],
-    )
+    d = {
+        "s2": [
+            [3.298552309659655e-01 / 3, 6.701447690340345e-01 / 3],
+            [9.157621350977073e-02, 4.459484909159649e-01],
+        ]
+    }
+    points, weights = expand_symmetries(d)
     return T2Scheme("Lyness-Jespersen 5", weights, points, 4, source)
 
 
 def lyness_jespersen_06():
     a0, a1 = [(3 + i * sqrt(3)) / 6 for i in [+1, -1]]
-
-    weights, points = concat(
-        s3(+frac(9, 20)), s2([-frac(1, 60), 0]), s1([+frac(1, 10), a0, a1])
-    )
+    d = {
+        "s3": [frac(9, 20)],
+        "s2": [[-frac(1, 60)], [0]],
+        "s1": [[frac(1, 10)], [a0], [a1]],
+    }
+    points, weights = expand_symmetries(d)
     return T2Scheme("Lyness-Jespersen 6", weights, points, 4, source)
 
 
 def lyness_jespersen_07():
     sqrt13 = sqrt(13)
-
-    weights, points = s2(
-        [(11 - sqrt13) / 360, 0],
-        [(10 - 2 * sqrt13) / 45, frac(1, 2)],
-        [(29 + 17 * sqrt13) / 360, (7 - sqrt13) / 18],
-    )
+    d = {
+        "s2": [
+            [(11 - sqrt13) / 360, (10 - 2 * sqrt13) / 45, (29 + 17 * sqrt13) / 360],
+            [0, frac(1, 2), (7 - sqrt13) / 18],
+        ],
+    }
+    points, weights = expand_symmetries(d)
     return T2Scheme("Lyness-Jespersen 7", weights, points, 4, source)
 
 
@@ -72,82 +89,97 @@ def lyness_jespersen_08():
     b1, b2 = [(155 - i * sqrt15) / 1200 for i in [+1, -1]]
     r1, r2 = [(6 - i * sqrt15) / 21 for i in [+1, -1]]
 
-    weights, points = concat(s3(frac(9, 40)), s2([b1, r1], [b2, r2]))
+    d = {"s3": [[frac(9, 40)]], "s2": [[b1, b2], [r1, r2]]}
+    points, weights = expand_symmetries(d)
     return T2Scheme("Lyness-Jespersen 8", weights, points, 5, source)
 
 
 def lyness_jespersen_09():
-    weights, points = concat(
-        s3(frac(81, 320)),
-        s2(
-            [frac(1, 90), 0],
-            [frac(16, 225), frac(1, 2)],
-            [frac(2401, 14400), frac(1, 7)],
-        ),
-    )
+    d = {
+        "s3": [frac(81, 320)],
+        "s2": [
+            [frac(1, 90), frac(16, 225), frac(2401, 14400)],
+            [0, frac(1, 2), frac(1, 7)],
+        ],
+    }
+    points, weights = expand_symmetries(d)
     return T2Scheme("Lyness-Jespersen 9", weights, points, 5, source)
 
 
 def lyness_jespersen_10():
-    weights, points = concat(
-        s2(
-            [3.503588271790222e-01 / 3, 2.492867451709329e-01],
-            [1.525347191106164e-01 / 3, 6.308901449150177e-02],
-        ),
-        s1([4.971064537103375e-01 / 6, 6.365024991213939e-01, 5.314504984483216e-02]),
-    )
+    d = {
+        "s2": [
+            [3.503588271790222e-01 / 3, 1.525347191106164e-01 / 3],
+            [2.492867451709329e-01, 6.308901449150177e-02],
+        ],
+        "s1": [
+            [4.971064537103375e-01 / 6],
+            [6.365024991213939e-01],
+            [5.314504984483216e-02],
+        ],
+    }
+    points, weights = expand_symmetries(d)
     return T2Scheme("Lyness-Jespersen 10", weights, points, 6, source, 1.240e-13)
 
 
 def lyness_jespersen_11():
     c, d = [(3 + i * sqrt(6)) / 6 for i in [+1, -1]]
-
-    weights, points = concat(
-        s3(-frac(81, 140)),
-        s2(
-            [-frac(5, 252), 0],
-            [frac(17, 315), frac(1, 2)],
-            [frac(128, 315), frac(1, 4)],
-        ),
-        s1([frac(9, 210), c, d]),
-    )
+    d = {
+        "s3": [[-frac(81, 140)]],
+        "s2": [
+            [-frac(5, 252), frac(17, 315), frac(128, 315)],
+            [0, frac(1, 2), frac(1, 4)],
+        ],
+        "s1": [[frac(9, 210)], [c], [d]],
+    }
+    points, weights = expand_symmetries(d)
     return T2Scheme("Lyness-Jespersen 11", weights, points, 6, source)
 
 
 def lyness_jespersen_12():
-    weights, points = concat(
-        s3(1.527089667883523e-01),
-        s2(
-            [2.944076042366762e-01 / 3, 4.738308139536513e-01],
-            [3.887052878418766e-01 / 3, 1.721176696308175e-01],
-        ),
-        s1([1.641781411330949e-01 / 6, 0, 8.653073540834571e-01]),
-    )
-    return T2Scheme("Lyness-Jespersen 12", weights, points, 6, source)
+    d = {
+        "s3": [[1.527089667883523e-01]],
+        "s2": [
+            [2.944076042366762e-01 / 3, 3.887052878418766e-01 / 3],
+            [4.738308139536513e-01, 1.721176696308175e-01],
+        ],
+        "s1": [[1.641781411330949e-01 / 6], [0], [8.653073540834571e-01]],
+    }
+    points, weights = expand_symmetries(d)
+    return T2Scheme("Lyness-Jespersen 12", weights, points, 6, source, 2.628e-15)
 
 
 def lyness_jespersen_13():
-    weights, points = concat(
-        s3(-1.495700444677495e-01),
-        s2(
-            [+5.268457722996328e-01 / 3, 2.603459660790466e-01],
-            [+1.600417068265167e-01 / 3, 6.513010290221623e-02],
-        ),
-        s1([+4.626825653415500e-01 / 6, 6.384441885698096e-01, 4.869031542531756e-02]),
-    )
+    d = {
+        "s3": [[-1.495700444677495e-01]],
+        "s2": [
+            [5.268457722996328e-01 / 3, 1.600417068265167e-01 / 3],
+            [2.603459660790466e-01, 6.513010290221623e-02],
+        ],
+        "s1": [
+            [4.626825653415500e-01 / 6],
+            [6.384441885698096e-01],
+            [4.869031542531756e-02],
+        ],
+    }
+    points, weights = expand_symmetries(d)
     return T2Scheme("Lyness-Jespersen 13", weights, points, 7, source, 4.119e-14)
 
 
 def lyness_jespersen_14():
-    weights, points = concat(
-        s3(1.763126156005252e-01),
-        s2(
-            [1.210901532763310e-02 / 3, 0],
-            [3.499561757697094e-01 / 3, 1.549360602237604e-01],
-            [3.195119754425220e-01 / 3, 4.691507461438120e-01],
-        ),
-        s1([1.421102178595603e-01 / 6, 0, 8.392991722729236e-01]),
-    )
+    d = {
+        "s3": [[1.763126156005252e-01]],
+        "s2": [
+            [
+                1.210901532763310e-02 / 3,
+                3.499561757697094e-01 / 3,
+                3.195119754425220e-01 / 3,
+            ],
+            [0, 1.549360602237604e-01, 4.691507461438120e-01],
+        ],
+        "s1": [[1.421102178595603e-01 / 6], [0], [8.392991722729236e-01]],
+    }
+    points, weights = expand_symmetries(d)
     return T2Scheme("Lyness-Jespersen 14", weights, points, 7, source, 2.805e-13)
 
 
