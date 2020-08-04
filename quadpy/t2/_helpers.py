@@ -152,42 +152,6 @@ def mirror(*data):
     return weights, points
 
 
-def alpha(*data):
-    """From the article Liu-Vinokur:
-
-    mu_i = (1 + (n-1) alpha) / n,
-    mu_j = (1 - alpha) / n    for j!=i,
-
-    where n is the number of vertices
-    """
-    w, alpha = numpy.array(data).T
-    a = (1 + 2 * alpha) / 3
-    b = (1 - alpha) / 3
-    points = _stack_first_last([[a, b, b], [b, a, b], [b, b, a]])
-    weights = numpy.tile(w, 3)
-    return weights, points
-
-
-def gamma_delta(*data):
-    """From the article Liu-Vinokur:
-
-    mu_i = (1 + (n-1) gamma - delta) / n,
-    mu_j = (1 + (n-1) delta - gamma) / n,
-    mu_k = (1 - gamma - delta) / n    for k!=i, k!=j,
-
-    where n is the number of vertices
-    """
-    w, gamma, delta = numpy.array(data).T
-    a = (1 + 2 * gamma - delta) / 3
-    b = (1 + 2 * delta - gamma) / 3
-    c = (1 - gamma - delta) / 3
-    points = _stack_first_last(
-        [[a, b, c], [c, a, b], [b, c, a], [a, c, b], [b, a, c], [c, b, a]]
-    )
-    weights = numpy.tile(w, 6)
-    return weights, points
-
-
 def _stack_first_last(arr):
     """Stacks an input array of shape (i, j, k) such that the output array is of shape
     (i*k, j).
