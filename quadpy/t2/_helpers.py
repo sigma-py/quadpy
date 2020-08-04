@@ -127,15 +127,6 @@ def s1(*data):
     return weights, points
 
 
-def r(*data):
-    w, r = numpy.array(data).T
-    a = r + (1 - r) / 3
-    b = (1 - a) / 2
-    points = _stack_first_last([[a, b, b], [b, a, b], [b, b, a]])
-    weights = numpy.tile(w, 3)
-    return weights, points
-
-
 def rot_ab(*data):
     w, a, b = numpy.array(data).T
     c = 1 - a - b
