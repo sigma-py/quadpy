@@ -13,7 +13,7 @@ source = article(
     url="https://doi.org/10.1016/S0377-0427(99)00215-0",
 )
 
-# c2 = article(
+# source2 = article(
 #     authors="G.G. Rasputin",
 #     title="Construction of cubature formulas containing prespecied knots",
 #     journal="Metody Vychisl.",
@@ -25,7 +25,7 @@ source = article(
 
 
 def griener_schmid_1():
-    # According to the article, this scheme appeared earlier in `c2`.
+    # According to the article, this scheme appeared earlier in `source2`.
     points = numpy.array(
         [
             [1.28867990757340236072, -0.00879199714420631034],
