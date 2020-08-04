@@ -45,7 +45,7 @@ def hammer_marlowe_stroud_3():
     b = (1 - r) / 3
     d = {"s2": [[frac(1, 3)], [b]]}
     points, weights = expand_symmetries(d)
-    return T2Scheme("Hammer-Marlowe-Stroud 3", weights, points, 2, source, 2.776e-16)
+    return T2Scheme("Hammer-Marlowe-Stroud 3", weights, points, 2, source, 3.074e-16)
 
 
 def hammer_marlowe_stroud_4():
