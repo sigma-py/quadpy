@@ -146,10 +146,10 @@ def _optimize(
         assert numpy.all(numpy.abs(w.imag) < 1.0e-15)
         w = w.real
 
-        if rank < max(A.shape):
+        if rank < min(A.shape):
             # return some "large" residual value
             return None, None, None, 1.0
-            # print("System matrix rank-deficient. Optimization failed.")
+
         return A, b, w, numpy.sqrt(res[0])
 
     def f(x):
@@ -169,14 +169,18 @@ def _optimize(
 
     out = minimize(f, x0, method="Nelder-Mead", tol=1.0e-17)
 
-    if not out.success:
-        print("Optimization failed.")
-        exit(1)
+    # Don't fail on `not out.success`. It could be because of
+    # ```
+    # Maximum number of function evaluations has been exceeded
+    # ```
+    # but the scheme could still have improved.
+    print(out.fun)
 
     # compute max(err)
     A, b, w, _ = get_w_from_x(out.x)
     # max_err = numpy.max(numpy.abs(A @ w - b))
     # print(max_err)
+    assert A is not None
 
     # Compute max_res exactly like in the tests
     d = x_to_dict(out.x)
