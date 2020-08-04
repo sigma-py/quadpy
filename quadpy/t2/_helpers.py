@@ -204,7 +204,7 @@ def expand_symmetries_points_only(data):
             "s3": _s3_alt,
             "rot_ab": _rot_ab_alt,
             "swap_ab": _swap_ab,
-            "s2_static": _s2_static
+            "s2_static": _s2_static,
         }[key]
         pts = fun(numpy.asarray(points_raw))
 

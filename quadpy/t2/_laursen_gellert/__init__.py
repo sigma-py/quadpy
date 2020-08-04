@@ -1,9 +1,10 @@
 import pathlib
+
 import numpy
 from sympy import Rational as frac
 
 from ...helpers import article
-from .._helpers import T2Scheme, expand_symmetries, _read
+from .._helpers import T2Scheme, _read, expand_symmetries
 
 source = article(
     authors=["M.E. Laursen", "M. Gellert"],
