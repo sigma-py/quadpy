@@ -154,6 +154,7 @@ def _optimize(
 
     def f(x):
         _, _, _, res = get_w_from_x(x)
+        # print(f"f(x) = {res:.6e}")
         return res
 
     keys = list(content["data"].keys())
@@ -167,6 +168,8 @@ def _optimize(
     # collect and concatenate all point coords
     x0 = numpy.concatenate([numpy.array(val).flat for val in values_without_weights])
 
+    r0 = f(x0)
+
     out = minimize(f, x0, method="Nelder-Mead", tol=1.0e-17)
 
     # Don't fail on `not out.success`. It could be because of
@@ -174,13 +177,15 @@ def _optimize(
     # Maximum number of function evaluations has been exceeded
     # ```
     # but the scheme could still have improved.
-    print(out.fun)
+
+    # out.fun == f(out.x) exactly
+    if r0 <= out.fun:
+        raise RuntimeError("Optimization couldn't improve scheme.")
 
     # compute max(err)
     A, b, w, _ = get_w_from_x(out.x)
-    # max_err = numpy.max(numpy.abs(A @ w - b))
-    # print(max_err)
-    assert A is not None
+    # assert A is not None
+    # max_res = numpy.max(numpy.abs(A @ w - b))
 
     # Compute max_res exactly like in the tests
     d = x_to_dict(out.x)
@@ -194,11 +199,13 @@ def _optimize(
             n = value.shape[1]
             d[key] = numpy.column_stack([w[k : k + n], value.T]).T
         k += n
-    content["data"] = d
-    scheme = scheme_from_dict(content)
-    max_res = max(scheme.compute_residuals(degree))
+    # content["data"] = d
+    # scheme = scheme_from_dict(content)
+    # max_res = max(scheme.compute_residuals(degree))
 
-    return d, max_res, numpy.linalg.cond(A)
+    # print(max_res)
+
+    return d, out.fun, numpy.linalg.cond(A)
 
 
 def main():
@@ -211,24 +218,27 @@ def main():
     with open(args.infile, "r") as f:
         content = json.load(f)
 
-    new_data, max_err, cond_in_solution = optimize(content)
-    if "weight factor" in content:
-        w = content["weight factor"]
-        for key, item in new_data.items():
-            new_data[key][0] = (numpy.array(item)[0] / w).tolist()
-
-    if "comments" in content:
-        comments = content["comments"]
-    else:
-        comments = []
-
-    text = "precision improved with quadpy-optimize"
-    if text not in comments:
-        content["comments"] = comments + [text]
-
     name = content["name"]
-    prev_tol = content["test_tolerance"]
-    if max_err < prev_tol:
+    try:
+        new_data, max_err, cond_in_solution = optimize(content)
+    except RuntimeError:
+        print(f"{name}: Could not improve scheme any further.")
+    else:
+        if "weight factor" in content:
+            w = content["weight factor"]
+            for key, item in new_data.items():
+                new_data[key][0] = (numpy.array(item)[0] / w).tolist()
+
+        if "comments" in content:
+            comments = content["comments"]
+        else:
+            comments = []
+
+        text = "precision improved with quadpy-optimize"
+        if text not in comments:
+            content["comments"] = comments + [text]
+
+        prev_tol = content["test_tolerance"]
         content["data"] = new_data
         content["test_tolerance"] = max_err
 
@@ -240,14 +250,15 @@ def main():
             content = {key: content[key] for key in keys}
 
         with open(args.infile, "w") as f:
-            fjson.dump(content, f, indent=2, float_format=".15e")
+            # Write out 16 digits such that the numbers are preserved exactly when
+            # reading the file back it. This makes sure the computed residuals don't
+            # change, not even when they are in the range of machine precision.
+            fjson.dump(content, f, indent=2, float_format=".16e")
             # for POSIX compliance:
             f.write("\n")
         print(f"{name}:")
         print(f"Improved max error from   {prev_tol}   to   {max_err}.")
         print(f"condition: {cond_in_solution}")
-    else:
-        print(f"{name}: Could not improve scheme any further.")
 
 
 def _get_parser():

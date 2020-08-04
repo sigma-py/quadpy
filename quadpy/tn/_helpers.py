@@ -7,10 +7,12 @@ from ..helpers import QuadratureScheme
 
 
 class TnScheme(QuadratureScheme):
-    def __init__(self, name, dim, weights, points, degree, source, tol=1.0e-14):
-        super().__init__(name, weights, points, degree, source, tol)
+    def __init__(
+        self, name, dim, weights, points, degree, source, tol=1.0e-14, comments=None
+    ):
         self.domain = f"Tn (n={dim})"
         self.dim = dim
+        super().__init__(name, weights, points, degree, source, tol, comments)
 
     def integrate(self, f, simplex, dot=numpy.dot):
         flt = numpy.vectorize(float)
