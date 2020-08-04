@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 
 from ..helpers import article
-from ._helpers import T2Scheme, s2
+from ._helpers import T2Scheme, expand_symmetries
 
 source = article(
     authors=["J. Albrecht", "L. Collatz"],
@@ -16,6 +16,9 @@ source = article(
 
 
 def albrecht_collatz():
-    weights, points = s2([frac(2, 30), frac(1, 2)], [frac(9, 15), frac(1, 6)])
+    d = {
+        "s2": [[frac(2, 30), frac(9, 15)], [frac(1, 2), frac(1, 6)]]
+    }
+    points, weights = expand_symmetries(d)
     weights /= 2
     return T2Scheme("Albrecht-Collatz", weights, points, 3, source, 2.776e-16)
