@@ -66,7 +66,7 @@ def strang_fix_cowper_05():
 def strang_fix_cowper_06():
     d = {"s3": [[3 / 8]], "s1": [[5 / 48], [0.736712498968435], [0.237932366472434]]}
     points, weights = expand_symmetries(d)
-    return T2Scheme("Strang-Fix-Cowper 6", weights, points, 4, source)
+    return T2Scheme("Strang-Fix-Cowper 6", weights, points, 4, source, 5.440e-15)
 
 
 def strang_fix_cowper_07():
@@ -78,7 +78,7 @@ def strang_fix_cowper_07():
         ],
     }
     points, weights = expand_symmetries(d)
-    return T2Scheme("Strang-Fix-Cowper 7", weights, points, 5, source)
+    return T2Scheme("Strang-Fix-Cowper 7", weights, points, 5, source, 5.551e-16)
 
 
 def strang_fix_cowper_08():
@@ -87,7 +87,7 @@ def strang_fix_cowper_08():
         "s1": [[0.063691414286223], [0.797112651860071], [0.165409927389841]],
     }
     points, weights = expand_symmetries(d)
-    return T2Scheme("Strang-Fix-Cowper 8", weights, points, 5, source)
+    return T2Scheme("Strang-Fix-Cowper 8", weights, points, 5, source, 5.093e-15)
 
 
 def strang_fix_cowper_09():
@@ -99,7 +99,7 @@ def strang_fix_cowper_09():
         "s1": [[0.082851075618374], [0.636502499121399], [0.310352451033785]],
     }
     points, weights = expand_symmetries(d)
-    return T2Scheme("Strang-Fix-Cowper 9", weights, points, 6, source)
+    return T2Scheme("Strang-Fix-Cowper 9", weights, points, 6, source, 8.341e-15)
 
 
 def strang_fix_cowper_10():
@@ -112,4 +112,4 @@ def strang_fix_cowper_10():
         "s1": [[0.077113760890257], [0.638444188569809], [0.312865496004875]],
     }
     points, weights = expand_symmetries(d)
-    return T2Scheme("Strang-Fix-Cowper 10", weights, points, 7, source)
+    return T2Scheme("Strang-Fix-Cowper 10", weights, points, 7, source, 8.563e-15)
