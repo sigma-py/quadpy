@@ -1,9 +1,8 @@
-import numpy
 from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import techreport
-from ._helpers import T2Scheme
+from ._helpers import T2Scheme, expand_symmetries
 
 source = techreport(
     authors=["Noel J. Walkington"],
@@ -15,22 +14,8 @@ source = techreport(
 
 
 def walkington_p5():
-    degree = 5
-
     a1, a2 = [(155 + i * sqrt(15)) / 1200 for i in [+1, -1]]
-    weights = numpy.concatenate(
-        [numpy.full(1, frac(9, 40)), numpy.full(3, a1), numpy.full(3, a2)]
-    )
-
     x1, x2 = [(6 + i * sqrt(15)) / 21 for i in [+1, -1]]
-    points = numpy.concatenate([_c(frac), _xi1(x1), _xi1(x2)])
-    return T2Scheme("Walkington p5", weights, points, degree, source)
-
-
-def _c(frac):
-    return numpy.full((1, 3), frac(1, 3))
-
-
-def _xi1(a):
-    b = 1 - 2 * a
-    return numpy.array([[b, a, a], [a, b, a], [a, a, b]])
+    d = {"s3": [[frac(9, 40)]], "s2": [[a1, a2], [x1, x2]]}
+    points, weights = expand_symmetries(d)
+    return T2Scheme("Walkington p5", weights, points, 5, source)

@@ -11,7 +11,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import T2Scheme, concat, r, s3
+from ._helpers import T2Scheme, expand_symmetries
 
 source = article(
     authors=["P.C. Hammer", "O.J. Marlowe", "A.H. Stroud"],
@@ -27,27 +27,40 @@ source = article(
 
 
 def hammer_marlowe_stroud_1():
-    weights, points = s3(1)
+    d = {"s3": [[1]]}
+    points, weights = expand_symmetries(d)
     return T2Scheme("Hammer-Marlowe-Stroud 1", weights, points, 1, source, 7.850e-17)
 
 
 def hammer_marlowe_stroud_2():
-    weights, points = r([frac(1, 3), frac(1, 2)])
+    r = frac(1, 2)
+    b = (1 - r) / 3
+    d = {"s2": [[frac(1, 3)], [b]]}
+    points, weights = expand_symmetries(d)
     return T2Scheme("Hammer-Marlowe-Stroud 2", weights, points, 2, source, 2.220e-16)
 
 
 def hammer_marlowe_stroud_3():
-    weights, points = r([frac(1, 3), -frac(1, 2)])
-    return T2Scheme("Hammer-Marlowe-Stroud 3", weights, points, 2, source, 2.776e-16)
+    r = -frac(1, 2)
+    b = (1 - r) / 3
+    d = {"s2": [[frac(1, 3)], [b]]}
+    points, weights = expand_symmetries(d)
+    return T2Scheme("Hammer-Marlowe-Stroud 3", weights, points, 2, source, 3.074e-16)
 
 
 def hammer_marlowe_stroud_4():
-    weights, points = concat(s3(-frac(9, 16)), r([frac(25, 48), frac(2, 5)]))
+    r = frac(2, 5)
+    b = (1 - r) / 3
+    d = {"s3": [[-frac(9, 16)]], "s2": [[frac(25, 48)], [b]]}
+    points, weights = expand_symmetries(d)
     return T2Scheme("Hammer-Marlowe-Stroud 4", weights, points, 3, source, 6.661e-16)
 
 
 def hammer_marlowe_stroud_5():
     w1, w2 = [(155 - i * sqrt(15)) / 1200 for i in [+1, -1]]
     x1, x2 = [(1 + i * sqrt(15)) / 7 for i in [+1, -1]]
-    weights, points = concat(s3(frac(9, 40)), r([w1, x1], [w2, x2]))
+    b1 = (1 - x1) / 3
+    b2 = (1 - x2) / 3
+    d = {"s3": [[frac(9, 40)]], "s2": [[w1, w2], [b1, b2]]}
+    points, weights = expand_symmetries(d)
     return T2Scheme("Hammer-Marlowe-Stroud 5", weights, points, 5, source, 2.776e-16)

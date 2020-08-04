@@ -76,12 +76,17 @@ def _optimize_s2(content):
 def _optimize_t2(content):
     import orthopy
 
-    from .t2._helpers import expand_symmetries, expand_symmetries_points_only
+    from .t2._helpers import (
+        _scheme_from_dict,
+        expand_symmetries,
+        expand_symmetries_points_only,
+    )
 
     return _optimize(
         content,
         expand_symmetries,
         expand_symmetries_points_only,
+        _scheme_from_dict,
         get_evaluator=lambda points: orthopy.t2.Eval(points, scaling="normal"),
     )
 
