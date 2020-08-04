@@ -168,6 +168,7 @@ def _optimize(
     # collect and concatenate all point coords
     x0 = numpy.concatenate([numpy.array(val).flat for val in values_without_weights])
 
+    # TODO check initial residual with original weights
     r0 = f(x0)
 
     out = minimize(f, x0, method="Nelder-Mead", tol=1.0e-17)
