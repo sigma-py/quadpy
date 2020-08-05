@@ -26,6 +26,7 @@ from . import (
 )
 from .__about__ import __version__
 from ._scipy_compat import quad
+from ._optimize import optimize
 
 __all__ = [
     "__version__",
@@ -55,4 +56,5 @@ __all__ = [
     "w3",
     "tools",
     "quad",
+    "optimize",
 ]
