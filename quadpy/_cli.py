@@ -82,7 +82,7 @@ def _optimize_t2(content):
         expand_symmetries_points_only,
     )
 
-    return _optimize(
+    return _optimize_weights_as_variables(
         content,
         expand_symmetries,
         expand_symmetries_points_only,
@@ -98,6 +98,9 @@ def _optimize(
     scheme_from_dict,
     get_evaluator,
 ):
+    """Compute the weights from the points via a least-squares problem. Only the point
+    coordinates are variables.
+    """
     import numpy
     from scipy.optimize import minimize
 
@@ -205,6 +208,87 @@ def _optimize(
     # max_res = max(scheme.compute_residuals(degree))
 
     # print(max_res)
+
+    return d, out.fun, numpy.linalg.cond(A)
+
+
+def _optimize_weights_as_variables(
+    content,
+    expand_symmetries,
+    expand_symmetries_points_only,
+    scheme_from_dict,
+    get_evaluator,
+):
+    """Treat the weights as variables.
+
+    It turns out from numerical experiments that this is inferior to the above approach.
+    TODO Information about the derivative + using Newton could improve it a lot.
+    """
+    import numpy
+    from scipy.optimize import minimize
+
+    degree = content["degree"]
+    keys = list(content["data"].keys())
+    A = None
+
+    def x_to_dict(x):
+        # convert x to dictionary (without weights)
+        x_split = numpy.split(x, splits)
+        vals = [item.reshape(shape) for item, shape in zip(x_split, shapes)]
+        d = dict(zip(keys, vals))
+        return d
+
+    def get_system(x):
+        d = x_to_dict(x)
+        points, weights = expand_symmetries(d)
+
+        if numpy.any(numpy.isnan(points)):
+            # return some "large" residual value
+            return 1.0
+
+        # evaluate all orthogonal polynomials up to `degree` at all points
+        evaluator = get_evaluator(points.T)
+        A = numpy.concatenate([next(evaluator) for _ in range(degree + 1)])
+
+        # The exact values are 0 except for the first entry
+        b = numpy.zeros(A.shape[0])
+        b[0] = evaluator.int_p0
+        return A, weights, b
+
+    def f(x):
+        A, weights, b = get_system(x)
+        res = A @ weights - b
+        res_norm = numpy.sqrt(numpy.dot(res, res))
+        return res_norm
+
+    keys = list(content["data"].keys())
+    values = list(content["data"].values())
+
+    shapes = [numpy.array(val).shape for val in values]
+    sizes = [numpy.array(val).size for val in values]
+    splits = numpy.cumsum(sizes)[:-1]
+
+    # collect and concatenate all point coords
+    x0 = numpy.concatenate([numpy.array(val).flat for val in values])
+
+    # TODO check initial residual with original weights
+    r0 = f(x0)
+
+    out = minimize(f, x0, method="Nelder-Mead", tol=1.0e-17)
+
+    # Don't fail on `not out.success`. It could be because of
+    # ```
+    # Maximum number of function evaluations has been exceeded
+    # ```
+    # but the scheme could still have improved.
+
+    # out.fun == f(out.x) exactly
+    if r0 <= out.fun:
+        raise RuntimeError("Optimization couldn't improve scheme.")
+
+    d = x_to_dict(out.x)
+
+    A, _, _ = get_system(out.x)
 
     return d, out.fun, numpy.linalg.cond(A)
 
