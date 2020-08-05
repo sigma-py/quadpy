@@ -6,7 +6,7 @@ def test_optimize_t2():
         "name": "test",
         "domain": "T2",
         "degree": 2,
-        "data": {"s2": [[0.33336839947], [0.1669753349]]}
+        "data": {"s2": [[0.33336839947], [0.1669753349]]},
     }
     out, _, _ = quadpy.optimize(d)
 
