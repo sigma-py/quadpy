@@ -8,9 +8,11 @@ from ..tn import TnScheme, get_vol, transform
 
 
 class T2Scheme(TnScheme):
-    def __init__(self, name, weights, points, degree, source=None, tol=1.0e-14):
+    def __init__(
+        self, name, weights, points, degree, source=None, tol=1.0e-14, comments=None
+    ):
         self.domain = "T2"
-        super().__init__(name, 2, weights, points, degree, source, tol)
+        super().__init__(name, 2, weights, points, degree, source, tol, comments)
 
     def plot(
         self,
@@ -153,6 +155,10 @@ def _s3_alt(data):
     return numpy.full((3, 1), 1 / 3)
 
 
+def _vertex(data):
+    return numpy.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+
+
 def _s2(a):
     a = numpy.array(a)
     b = 1 - 2 * a
@@ -205,6 +211,7 @@ def expand_symmetries_points_only(data):
             "rot_ab": _rot_ab_alt,
             "swap_ab": _swap_ab,
             "s2_static": _s2_static,
+            "vertex": _vertex,
         }[key]
         pts = fun(numpy.asarray(points_raw))
 
