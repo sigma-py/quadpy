@@ -2,8 +2,6 @@ import numpy
 import sympy
 
 from ..helpers import article
-from ..helpers import fs_array as fs
-from ..helpers import fsd, untangle, z
 from ._helpers import S2Scheme, expand_symmetries
 from ._peirce_1956 import peirce_1956_1, peirce_1956_3
 from ._radon import radon
@@ -65,8 +63,8 @@ def hammer_stroud_18():
     a = (2 * numpy.arange(8) + 1) * pi / 8
     x = numpy.array([cos(a), sin(a)]).T
 
-    data = [(frac(1, 16), r1 * x), (frac(1, 16), r2 * x)]
-    points, weights = untangle(data)
+    points = numpy.vstack([r1 * x, r2 * x])
+    weights = numpy.full(points.shape[0], frac(1, 16))
     return S2Scheme("Hammer-Stroud 18", weights, points, 7, _source)
 
 
@@ -78,13 +76,16 @@ def hammer_stroud_19():
 
     a = sqrt((6 + sqrt6) / 10)
 
-    data = [
-        (frac(1, 9), z(2)),
-        (alpha1, fs([0.5505043204538557, 0.2280263556769715])),
-        (alpha2, fsd(2, (a, 1))),
-        (alpha3, fs([0.7932084745126058, 0.4645097310495256])),
-    ]
-    points, weights = untangle(data)
+    d = {
+        "zero": [[frac(1, 9)]],
+        "fsd": [
+            [alpha1, alpha3],
+            [0.5505043204538557, 0.7932084745126058],
+            [0.2280263556769715, 0.4645097310495256],
+        ],
+        "s40": [[alpha2], [a]],
+    }
+    points, weights = expand_symmetries(d)
     return S2Scheme("Hammer-Stroud 19", weights, points, 9, _source)
 
 
@@ -98,16 +99,30 @@ def hammer_stroud_21():
     alpha1 = 0.0640242008621985 / numpy.pi
     alpha2 = 0.0341505695624825 / numpy.pi
 
-    data = [
-        (alpha0, fs([0.2584361661674054, 0.0514061496288813])),
-        (alpha1, fs([0.5634263397544869, 0.1120724670846205])),
-        (alpha1, fs([0.4776497869993547, 0.3191553840796721])),
-        (alpha1, fs([0.8028016728473508, 0.1596871812824163])),
-        (alpha1, fs([0.6805823955716280, 0.4547506180649039])),
-        (alpha2, fs([0.2190916025980981, 0.1463923286035535])),
-        (alpha2, fs([0.9461239423417719, 0.1881957532057769])),
-        (alpha2, fs([0.8020851487551318, 0.5359361621905023])),
-    ]
-
-    points, weights = untangle(data)
+    d = {
+        "fsd": [
+            [alpha0, alpha1, alpha1, alpha1, alpha1, alpha2, alpha2, alpha2],
+            [
+                0.2584361661674054,
+                0.5634263397544869,
+                0.4776497869993547,
+                0.8028016728473508,
+                0.6805823955716280,
+                0.2190916025980981,
+                0.9461239423417719,
+                0.8020851487551318,
+            ],
+            [
+                0.0514061496288813,
+                0.1120724670846205,
+                0.3191553840796721,
+                0.1596871812824163,
+                0.4547506180649039,
+                0.1463923286035535,
+                0.1881957532057769,
+                0.5359361621905023,
+            ],
+        ],
+    }
+    points, weights = expand_symmetries(d)
     return S2Scheme("Hammer-Stroud 21", weights, points, 15, _source)
