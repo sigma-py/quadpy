@@ -1,4 +1,3 @@
-# TODO There are three more schemes in the technical report
 import pathlib
 
 from ...helpers import techreport
