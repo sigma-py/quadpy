@@ -30,3 +30,7 @@ def cools_haegemans_1985_13_2():
 
 def cools_haegemans_1985_13_3():
     return _read(this_dir / "cools_haegemans_1985_13_3.json", source)
+
+
+def cools_haegemans_1985_17_1():
+    return _read(this_dir / "cools_haegemans_1985_17_1.json", source)

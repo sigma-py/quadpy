@@ -13,6 +13,7 @@ from ._cools_haegemans_1985 import (
     cools_haegemans_1985_13_1,
     cools_haegemans_1985_13_2,
     cools_haegemans_1985_13_3,
+    cools_haegemans_1985_17_1,
 )
 from ._cools_haegemans_1988 import cools_haegemans_1988_1, cools_haegemans_1988_2
 from ._dunavant import (
@@ -180,6 +181,7 @@ __all__ = [
     "cools_haegemans_1985_13_1",
     "cools_haegemans_1985_13_2",
     "cools_haegemans_1985_13_3",
+    "cools_haegemans_1985_17_1",
     "cools_haegemans_1988_1",
     "cools_haegemans_1988_2",
     "dunavant_00",
