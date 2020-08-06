@@ -1,7 +1,7 @@
 from ._cools_haegemans import (
     cools_haegemans_9_1,
     cools_haegemans_9_2,
-    cools_haegemans_13_1
+    cools_haegemans_13_1,
 )
 from ._haegemans_piessens import haegemans_piessens_a, haegemans_piessens_b
 from ._rabinowitz_richter import (
