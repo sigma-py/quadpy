@@ -9,24 +9,7 @@ from ..helpers import QuadratureScheme, plot_disks
 class E2r2Scheme(QuadratureScheme):
     def __init__(self, name, weights, points, degree, source, tol=1.0e-14):
         self.domain = "E2r2"
-        self.name = name
-        self.source = source
-        self.degree = degree
-        self.test_tolerance = tol
-
-        if weights.dtype == numpy.float64:
-            self.weights = weights
-        else:
-            assert weights.dtype in [numpy.dtype("O"), numpy.int_]
-            self.weights = weights.astype(numpy.float64)
-            self.weights_symbolic = weights
-
-        if points.dtype == numpy.float64:
-            self.points = points
-        else:
-            assert points.dtype in [numpy.dtype("O"), numpy.int_]
-            self.points = points.astype(numpy.float64)
-            self.points_symbolic = points
+        super().__init__(name, weights, points, degree, source, tol)
 
     def plot(self, show_axes=False):
         from matplotlib import pyplot as plt
