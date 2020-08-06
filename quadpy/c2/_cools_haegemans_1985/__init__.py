@@ -16,13 +16,17 @@ source = techreport(
 this_dir = pathlib.Path(__file__).resolve().parent
 
 
-def cools_haegemans_1985_1():
-    return _read(this_dir / "cools_haegemans_1985_1.json", source)
+def cools_haegemans_1985_9_1():
+    return _read(this_dir / "cools_haegemans_1985_09_1.json", source)
 
 
-def cools_haegemans_1985_2():
-    return _read(this_dir / "cools_haegemans_1985_2.json", source)
+def cools_haegemans_1985_13_1():
+    return _read(this_dir / "cools_haegemans_1985_13_1.json", source)
 
 
-def cools_haegemans_1985_3():
-    return _read(this_dir / "cools_haegemans_1985_3.json", source)
+def cools_haegemans_1985_13_2():
+    return _read(this_dir / "cools_haegemans_1985_13_2.json", source)
+
+
+def cools_haegemans_1985_13_3():
+    return _read(this_dir / "cools_haegemans_1985_13_3.json", source)

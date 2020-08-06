@@ -13,9 +13,10 @@ schemes = (
     ]
     + [quadpy.c2.cohen_gismalla_1(), quadpy.c2.cohen_gismalla_2()]
     + [
-        quadpy.c2.cools_haegemans_1985_1(),
-        quadpy.c2.cools_haegemans_1985_2(),
-        quadpy.c2.cools_haegemans_1985_3(),
+        quadpy.c2.cools_haegemans_1985_9_1(),
+        quadpy.c2.cools_haegemans_1985_13_1(),
+        quadpy.c2.cools_haegemans_1985_13_2(),
+        quadpy.c2.cools_haegemans_1985_13_3(),
     ]
     + [quadpy.c2.cools_haegemans_1988_1(), quadpy.c2.cools_haegemans_1988_2()]
     + [

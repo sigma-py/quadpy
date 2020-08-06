@@ -9,9 +9,10 @@ from ._albrecht_collatz import (
 from ._burnside import burnside
 from ._cohen_gismalla import cohen_gismalla_1, cohen_gismalla_2
 from ._cools_haegemans_1985 import (
-    cools_haegemans_1985_1,
-    cools_haegemans_1985_2,
-    cools_haegemans_1985_3,
+    cools_haegemans_1985_9_1,
+    cools_haegemans_1985_13_1,
+    cools_haegemans_1985_13_2,
+    cools_haegemans_1985_13_3,
 )
 from ._cools_haegemans_1988 import cools_haegemans_1988_1, cools_haegemans_1988_2
 from ._dunavant import (
@@ -175,9 +176,10 @@ __all__ = [
     "burnside",
     "cohen_gismalla_1",
     "cohen_gismalla_2",
-    "cools_haegemans_1985_1",
-    "cools_haegemans_1985_2",
-    "cools_haegemans_1985_3",
+    "cools_haegemans_1985_9_1",
+    "cools_haegemans_1985_13_1",
+    "cools_haegemans_1985_13_2",
+    "cools_haegemans_1985_13_3",
     "cools_haegemans_1988_1",
     "cools_haegemans_1988_2",
     "dunavant_00",
