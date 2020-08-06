@@ -13,6 +13,7 @@ from ._cools_haegemans import (
     cools_haegemans_5_1,
     cools_haegemans_9_1,
     cools_haegemans_9_2,
+    cools_haegemans_13_1,
 )
 from ._cools_kim import cools_kim_1, cools_kim_2, cools_kim_3
 from ._haegemans_piessens import haegemans_piessens
@@ -101,6 +102,7 @@ __all__ = [
     "cools_haegemans_5_1",
     "cools_haegemans_9_1",
     "cools_haegemans_9_2",
+    "cools_haegemans_13_1",
     "cools_kim_1",
     "cools_kim_2",
     "cools_kim_3",

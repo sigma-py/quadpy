@@ -17,12 +17,16 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def cools_haegemans_5_1():
-    return _read(this_dir / "cools_haegemans_5_1.json", _source)
+    return _read(this_dir / "cools_haegemans_05_1.json", _source)
 
 
 def cools_haegemans_9_1():
-    return _read(this_dir / "cools_haegemans_9_1.json", _source)
+    return _read(this_dir / "cools_haegemans_09_1.json", _source)
 
 
 def cools_haegemans_9_2():
-    return _read(this_dir / "cools_haegemans_9_2.json", _source)
+    return _read(this_dir / "cools_haegemans_09_2.json", _source)
+
+
+def cools_haegemans_13_1():
+    return _read(this_dir / "cools_haegemans_13_1.json", _source)

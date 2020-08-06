@@ -271,7 +271,7 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [[0.0, 0.0], [1.0, 0.0], [0.5,
  * [Lether](quadpy/s2/_lether.py) (1971, arbitrary degree)
  * [Piessens-Haegemans](quadpy/s2/_piessens_haegemans/__init__.py) (1975, 1 scheme of degree 9)
  * [Haegemans-Piessens](quadpy/s2/_haegemans_piessens/__init__.py) (1977, degree 9)
- * [Cools-Haegemans](quadpy/s2/_cools_haegemans.py) (1985, 3 schemes up to degree 9)
+ * [Cools-Haegemans](quadpy/s2/_cools_haegemans/) (1985, 4 schemes up to degree 13)
  * [Wissmann-Becker](quadpy/s2/_wissmann_becker.py) (1986, 3 schemes up to degree 8)
  * [Kim-Song](quadpy/s2/_kim_song/__init__.py) (1997, 15 schemes up to degree 17)
  * [Cools-Kim](quadpy/s2/_cools_kim/__init__.py) (2000, 3 schemes up to degree 21)
