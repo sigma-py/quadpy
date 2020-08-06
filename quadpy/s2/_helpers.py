@@ -151,3 +151,20 @@ def _read(filepath, source):
         weights *= content["weight factor"]
 
     return S2Scheme(name, weights, points, degree, source, tol)
+
+
+def _scheme_from_dict(content, source=None):
+    points, weights = expand_symmetries(content["data"])
+
+    if "weight factor" in content:
+        weights *= content["weight factor"]
+
+    return S2Scheme(
+        content["name"],
+        weights,
+        points,
+        degree=content["degree"],
+        source=source,
+        tol=content["test_tolerance"],
+        comments=content["comments"] if "comments" in content else None,
+    )
