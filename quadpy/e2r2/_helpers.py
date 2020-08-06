@@ -71,7 +71,7 @@ def _pmy(r):
     return points
 
 
-def _s8_alt(data):
+def _s8(data):
     a, b = data
     points = numpy.array(
         [[+a, +b], [-a, +b], [+a, -b], [-a, -b], [+b, +a], [-b, +a], [+b, -a], [-b, -a]]
@@ -80,13 +80,13 @@ def _s8_alt(data):
     return points
 
 
-def _s4_alt(a):
+def _s4(a):
     points = numpy.array([[+a, +a], [-a, +a], [+a, -a], [-a, -a]])
     points = numpy.moveaxis(points, 0, 1)
     return points
 
 
-def _s40_alt(a):
+def _s40(a):
     zero = numpy.zeros_like(a)
     points = numpy.array([[+a, zero], [-a, zero], [zero, +a], [zero, -a]])
     points = numpy.moveaxis(points, 0, 1)
@@ -103,9 +103,9 @@ def expand_symmetries_points_only(data):
             "pm2": _pm2,
             "pmx": _pmx,
             "pmy": _pmy,
-            "s40": _s40_alt,
-            "s4": _s4_alt,
-            "s8": _s8_alt,
+            "s40": _s40,
+            "s4": _s4,
+            "s8": _s8,
         }[key]
         pts = fun(numpy.asarray(points_raw))
 

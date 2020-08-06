@@ -361,9 +361,10 @@ val = scheme.integrate(lambda x: x[0] ** 2)
 <img src="https://nschloe.github.io/quadpy/e2r2-rabinowitz-richter-3.svg" width="25%">
 
  * [Stroud-Secrest](quadpy/e2r2/_stroud_secrest.py) (1963, 2 schemes up to degree 7)
- * [Rabinowitz-Richter](quadpy/e2r2/_rabinowitz_richter.py) (1969, 5 schemes up to degree 15)
+ * [Rabinowitz-Richter](quadpy/e2r2/_rabinowitz_richter/) (1969, 5 schemes up to degree 15)
  * [Stroud](quadpy/e2r2/_stroud.py) (1971, 3 schemes up to degree 7)
- * [Haegemans-Piessens](quadpy/e2r2/_haegemans_piessens.py) (1977, 2 schemes of degree 9)
+ * [Haegemans-Piessens](quadpy/e2r2/_haegemans_piessens/) (1977, 2 schemes of degree 9)
+ * [Cools-Haegemans](quadpy/e2r2/_cools_haegemans/) (1985, 3 schemes up to degree 13)
  * [all schemes from the nD space with weight function exp(-r<sup>2</sup>)]((#nd-space-with-weight-function-exp-r2-enr3))
 
 Example:

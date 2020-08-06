@@ -5,6 +5,9 @@ import pytest
 import quadpy
 
 schemes = [
+    quadpy.e2r2.cools_haegemans_9_1(),
+    quadpy.e2r2.cools_haegemans_9_2(),
+    quadpy.e2r2.cools_haegemans_13_1(),
     quadpy.e2r2.haegemans_piessens_a(),
     quadpy.e2r2.haegemans_piessens_b(),
     quadpy.e2r2.rabinowitz_richter_1(),

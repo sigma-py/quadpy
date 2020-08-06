@@ -146,6 +146,7 @@ def _optimize(
         # The exact values are 0 except for the first entry
         b = numpy.zeros(A.shape[0])
         b[0] = evaluator.int_p0
+        # b[0] /= numpy.pi  # necessary for S2
 
         w, res, rank, s = numpy.linalg.lstsq(A, b, rcond=None)
 
