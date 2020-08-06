@@ -9,7 +9,11 @@ from ._albrecht import (
     albrecht_8,
 )
 from ._albrecht_collatz import albrecht_collatz
-from ._cools_haegemans import cools_haegemans_1, cools_haegemans_2, cools_haegemans_3
+from ._cools_haegemans import (
+    cools_haegemans_5_1,
+    cools_haegemans_9_1,
+    cools_haegemans_9_2,
+)
 from ._cools_kim import cools_kim_1, cools_kim_2, cools_kim_3
 from ._haegemans_piessens import haegemans_piessens
 from ._hammer_stroud import (
@@ -94,9 +98,9 @@ __all__ = [
     "albrecht_7",
     "albrecht_8",
     "albrecht_collatz",
-    "cools_haegemans_1",
-    "cools_haegemans_2",
-    "cools_haegemans_3",
+    "cools_haegemans_5_1",
+    "cools_haegemans_9_1",
+    "cools_haegemans_9_2",
     "cools_kim_1",
     "cools_kim_2",
     "cools_kim_3",
