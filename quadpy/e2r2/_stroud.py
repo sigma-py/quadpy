@@ -4,8 +4,8 @@ import numpy
 from sympy import Rational as frac
 from sympy import cos, pi, sin, sqrt
 
-from ..helpers import book, fsd, pm, untangle
-from ._helpers import E2r2Scheme
+from ..helpers import book
+from ._helpers import E2r2Scheme, expand_symmetries
 from ._rabinowitz_richter import rabinowitz_richter_1 as stroud_9_1
 from ._rabinowitz_richter import rabinowitz_richter_2 as stroud_11_1
 from ._rabinowitz_richter import rabinowitz_richter_3 as stroud_11_2
@@ -32,22 +32,16 @@ def stroud_4_1():
             ]
         ).T
     )
-    data = [(frac(1, 2), numpy.array([[0, 0]])), (frac(1, 10), pts)]
-
-    points, weights = untangle(data)
+    points = numpy.vstack([[[0, 0]], pts])
+    weights = numpy.concatenate([[frac(1, 2)], numpy.full(len(pts), frac(1, 10))])
     return E2r2Scheme("Stroud 4-1", weights, points, 4, _source)
 
 
 def stroud_5_2():
     # Cartesian product Gauss formula
     r = sqrt(frac(3, 2))
-    data = [
-        (frac(4, 9), [[0, 0]]),
-        (frac(1, 9), fsd(2, (r, 1))),
-        (frac(1, 36), pm([r, r])),
-    ]
-
-    points, weights = untangle(data)
+    d = {"zero": [[frac(4, 9)]], "s40": [[frac(1, 9)], [r]], "s4": [[frac(1, 36)], [r]]}
+    points, weights = expand_symmetries(d)
     return E2r2Scheme("Stroud 5-2", weights, points, 5, _source)
 
 
@@ -58,9 +52,8 @@ def stroud_7_2():
     A, B = [(5 - p_m * 2 * sqrt6) / 48 for p_m in [+1, -1]]
     C = frac(1, 48)
 
-    data = [(A, fsd(2, (r, 1))), (B, fsd(2, (s, 1))), (C, fsd(2, (r, 1), (s, 1)))]
-
-    points, weights = untangle(data)
+    d = {"s40": [[A, B], [r, s]], "s8": [[C], [r], [s]]}
+    points, weights = expand_symmetries(d)
 
     # TODO find what's wrong
     warnings.warn("Stroud's Gauss product formula has degree 1, not 7.")
