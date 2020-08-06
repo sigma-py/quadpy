@@ -76,10 +76,12 @@ def hammer_stroud_19():
     alpha2 = (137 - 32 * sqrt6) / 1818
     alpha3 = (520 + 155 * sqrt6) / 3636 / 8
 
+    a = sqrt((6 + sqrt6) / 10)
+
     data = [
         (frac(1, 9), z(2)),
         (alpha1, fs([0.5505043204538557, 0.2280263556769715])),
-        (alpha2, fsd(2, (0.9192110607898046, 1))),
+        (alpha2, fsd(2, (a, 1))),
         (alpha3, fs([0.7932084745126058, 0.4645097310495256])),
     ]
     points, weights = untangle(data)
