@@ -8,6 +8,8 @@ import quadpy
 
 schemes = [
     quadpy.e2r.cools_haegemans_9_1(),
+    quadpy.e2r.cools_haegemans_9_2(),
+    quadpy.e2r.cools_haegemans_13_1(),
     quadpy.e2r.haegemans_piessens_a(),
     quadpy.e2r.haegemans_piessens_b(),
     quadpy.e2r.rabinowitz_richter_1(),
