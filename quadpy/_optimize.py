@@ -61,12 +61,17 @@ def _optimize_c2(content):
 def _optimize_s2(content):
     import orthopy
 
-    from .s2._helpers import expand_symmetries, expand_symmetries_points_only
+    from .s2._helpers import (
+        _scheme_from_dict,
+        expand_symmetries,
+        expand_symmetries_points_only,
+    )
 
     return _optimize(
         content,
         expand_symmetries,
         expand_symmetries_points_only,
+        _scheme_from_dict,
         get_evaluator=lambda points: orthopy.s2.zernike.Eval(points, scaling="normal"),
     )
 
@@ -141,6 +146,7 @@ def _optimize(
         # The exact values are 0 except for the first entry
         b = numpy.zeros(A.shape[0])
         b[0] = evaluator.int_p0
+        # b[0] /= numpy.pi  # necessary for S2
 
         w, res, rank, s = numpy.linalg.lstsq(A, b, rcond=None)
 

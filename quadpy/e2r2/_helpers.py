@@ -9,24 +9,7 @@ from ..helpers import QuadratureScheme, plot_disks
 class E2r2Scheme(QuadratureScheme):
     def __init__(self, name, weights, points, degree, source, tol=1.0e-14):
         self.domain = "E2r2"
-        self.name = name
-        self.source = source
-        self.degree = degree
-        self.test_tolerance = tol
-
-        if weights.dtype == numpy.float64:
-            self.weights = weights
-        else:
-            assert weights.dtype in [numpy.dtype("O"), numpy.int_]
-            self.weights = weights.astype(numpy.float64)
-            self.weights_symbolic = weights
-
-        if points.dtype == numpy.float64:
-            self.points = points
-        else:
-            assert points.dtype in [numpy.dtype("O"), numpy.int_]
-            self.points = points.astype(numpy.float64)
-            self.points_symbolic = points
+        super().__init__(name, weights, points, degree, source, tol)
 
     def plot(self, show_axes=False):
         from matplotlib import pyplot as plt
@@ -71,7 +54,7 @@ def _pmy(r):
     return points
 
 
-def _s8_alt(data):
+def _s8(data):
     a, b = data
     points = numpy.array(
         [[+a, +b], [-a, +b], [+a, -b], [-a, -b], [+b, +a], [-b, +a], [+b, -a], [-b, -a]]
@@ -80,13 +63,13 @@ def _s8_alt(data):
     return points
 
 
-def _s4_alt(a):
+def _s4(a):
     points = numpy.array([[+a, +a], [-a, +a], [+a, -a], [-a, -a]])
     points = numpy.moveaxis(points, 0, 1)
     return points
 
 
-def _s40_alt(a):
+def _s40(a):
     zero = numpy.zeros_like(a)
     points = numpy.array([[+a, zero], [-a, zero], [zero, +a], [zero, -a]])
     points = numpy.moveaxis(points, 0, 1)
@@ -103,9 +86,9 @@ def expand_symmetries_points_only(data):
             "pm2": _pm2,
             "pmx": _pmx,
             "pmy": _pmy,
-            "s40": _s40_alt,
-            "s4": _s4_alt,
-            "s8": _s8_alt,
+            "s40": _s40,
+            "s4": _s4,
+            "s8": _s8,
         }[key]
         pts = fun(numpy.asarray(points_raw))
 

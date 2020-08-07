@@ -271,7 +271,7 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [[0.0, 0.0], [1.0, 0.0], [0.5,
  * [Lether](quadpy/s2/_lether.py) (1971, arbitrary degree)
  * [Piessens-Haegemans](quadpy/s2/_piessens_haegemans/__init__.py) (1975, 1 scheme of degree 9)
  * [Haegemans-Piessens](quadpy/s2/_haegemans_piessens/__init__.py) (1977, degree 9)
- * [Cools-Haegemans](quadpy/s2/_cools_haegemans.py) (1985, 3 schemes up to degree 9)
+ * [Cools-Haegemans](quadpy/s2/_cools_haegemans/) (1985, 4 schemes up to degree 13)
  * [Wissmann-Becker](quadpy/s2/_wissmann_becker.py) (1986, 3 schemes up to degree 8)
  * [Kim-Song](quadpy/s2/_kim_song/__init__.py) (1997, 15 schemes up to degree 17)
  * [Cools-Kim](quadpy/s2/_cools_kim/__init__.py) (2000, 3 schemes up to degree 21)
@@ -305,7 +305,7 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0], 1.0)
  * [Piessens-Haegemans](quadpy/c2/_piessens_haegemans.py) (1975, 2 schemes of degree 9)
  * [Haegemans-Piessens](quadpy/c2/_haegemans_piessens.py) (1977, degree 7)
  * [Schmid](quadpy/c2/_schmid.py) (1978, 3 schemes up to degree 6)
- * [Cools-Haegemans](quadpy/c2/_cools_haegemans_1985.py) (1985, 3 schemes up to degree 13)
+ * [Cools-Haegemans](quadpy/c2/_cools_haegemans_1985/) (1985, 6 schemes up to degree 17)
  * [Dunavant](quadpy/c2/_dunavant.py) (1985, 11 schemes up to degree 19)
  * [Morrow-Patterson](quadpy/c2/_morrow_patterson.py) (1985, 2 schemes up to degree 20, single precision)
  * [Cohen-Gismalla](quadpy/c2/_cohen_gismalla.py), (1986, 2 schemes up to degree 3)
@@ -344,7 +344,8 @@ to generate the array.
  * [Stroud-Secrest](quadpy/e2r/_stroud_secrest.py) (1963, 2 schemes up to degree 7)
  * [Rabinowitz-Richter](quadpy/e2r/_rabinowitz_richter.py) (1969, 4 schemes up to degree 15)
  * [Stroud](quadpy/e2r/_stroud.py) (1971, degree 4)
- * [Haegemans-Piessens](quadpy/e2r/_haegemans_piessens.py) (1977, 2 schemes up to degree 9)
+ * [Haegemans-Piessens](quadpy/e2r/_haegemans_piessens/) (1977, 2 schemes up to degree 9)
+ * [Cools-Haegemans](quadpy/e2r/_cools_haegemans/) (1985, 3 schemes up to degree 13)
  * [all schemes from the nD space with weight function exp(-r)](#nd-space-with-weight-function-exp-r-enr)
 
 Example:
@@ -361,9 +362,10 @@ val = scheme.integrate(lambda x: x[0] ** 2)
 <img src="https://nschloe.github.io/quadpy/e2r2-rabinowitz-richter-3.svg" width="25%">
 
  * [Stroud-Secrest](quadpy/e2r2/_stroud_secrest.py) (1963, 2 schemes up to degree 7)
- * [Rabinowitz-Richter](quadpy/e2r2/_rabinowitz_richter.py) (1969, 5 schemes up to degree 15)
+ * [Rabinowitz-Richter](quadpy/e2r2/_rabinowitz_richter/) (1969, 5 schemes up to degree 15)
  * [Stroud](quadpy/e2r2/_stroud.py) (1971, 3 schemes up to degree 7)
- * [Haegemans-Piessens](quadpy/e2r2/_haegemans_piessens.py) (1977, 2 schemes of degree 9)
+ * [Haegemans-Piessens](quadpy/e2r2/_haegemans_piessens/) (1977, 2 schemes of degree 9)
+ * [Cools-Haegemans](quadpy/e2r2/_cools_haegemans/) (1985, 3 schemes up to degree 13)
  * [all schemes from the nD space with weight function exp(-r<sup>2</sup>)]((#nd-space-with-weight-function-exp-r2-enr3))
 
 Example:

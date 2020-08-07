@@ -15,10 +15,6 @@ _source = techreport(
 this_dir = pathlib.Path(__file__).resolve().parent
 
 
-def cools_haegemans_5_1():
-    return _read(this_dir / "cools_haegemans_05_1.json", _source)
-
-
 def cools_haegemans_9_1():
     return _read(this_dir / "cools_haegemans_09_1.json", _source)
 

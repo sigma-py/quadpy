@@ -53,7 +53,7 @@ def main():
             f.write("\n")
         print(f"{name}:")
         print(f"Improved max error from   {prev_tol}   to   {max_err}.")
-        print(f"condition: {cond_in_solution}")
+        print(f"condition: {cond_in_solution:.3e}")
 
 
 def _get_parser():
