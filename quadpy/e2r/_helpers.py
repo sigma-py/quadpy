@@ -75,12 +75,7 @@ def expand_symmetries_points_only(data):
     counts = []
 
     for key, points_raw in data.items():
-        fun = {
-            "zero": _zero,
-            "s40": _s40_alt,
-            "s4": _s4_alt,
-            "s8": _s8_alt,
-        }[key]
+        fun = {"zero": _zero, "s40": _s40_alt, "s4": _s4_alt, "s8": _s8_alt}[key]
         pts = fun(numpy.asarray(points_raw))
 
         counts.append(pts.shape[1])
