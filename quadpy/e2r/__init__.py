@@ -1,3 +1,8 @@
+from ._cools_haegemans import (
+    cools_haegemans_9_1,
+    cools_haegemans_9_2,
+    cools_haegemans_13_1,
+)
 from ._haegemans_piessens import haegemans_piessens_a, haegemans_piessens_b
 from ._rabinowitz_richter import (  # rabinowitz_richter_4,
     rabinowitz_richter_1,
@@ -17,6 +22,9 @@ from ._stroud import (
 from ._stroud_secrest import stroud_secrest_5, stroud_secrest_6
 
 __all__ = [
+    "cools_haegemans_9_1",
+    "cools_haegemans_9_2",
+    "cools_haegemans_13_1",
     "haegemans_piessens_a",
     "haegemans_piessens_b",
     "rabinowitz_richter_1",
