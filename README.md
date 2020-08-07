@@ -344,7 +344,8 @@ to generate the array.
  * [Stroud-Secrest](quadpy/e2r/_stroud_secrest.py) (1963, 2 schemes up to degree 7)
  * [Rabinowitz-Richter](quadpy/e2r/_rabinowitz_richter.py) (1969, 4 schemes up to degree 15)
  * [Stroud](quadpy/e2r/_stroud.py) (1971, degree 4)
- * [Haegemans-Piessens](quadpy/e2r/_haegemans_piessens.py) (1977, 2 schemes up to degree 9)
+ * [Haegemans-Piessens](quadpy/e2r/_haegemans_piessens/) (1977, 2 schemes up to degree 9)
+ * [Cools-Haegemans](quadpy/e2r/_cools_haegemans/) (1985, 3 schemes up to degree 13)
  * [all schemes from the nD space with weight function exp(-r)](#nd-space-with-weight-function-exp-r-enr)
 
 Example:
