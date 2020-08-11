@@ -29,7 +29,8 @@ def tyler_2():
     s, t = [sqrt((114 - i * 3 * sqrt(583)) / 287) for i in [+1, -1]]
     B1 = frac(49, 810)
     B2, B3 = [(178981 + i * 2769 * sqrt(583)) / 1888920 for i in [+1, -1]]
-    weights, points = concat(symm_r0([B1, r]), symm_s([B2, s], [B3, t]))
+    d = {"symm_r0": [[B1], [r]], "symm_s": [[B2, B3], [s, t]]}
+    points, weights = expand_symmetries(d)
     return C2Scheme("Tyler 2", weights, points, 7, source)
 
 
