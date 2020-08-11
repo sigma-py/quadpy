@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import C2Scheme, concat, symm_r0, symm_s, zero
+from ._helpers import C2Scheme, concat, symm_r0, symm_s, zero, expand_symmetries
 
 source = article(
     authors=["G.W. Tyler"],
@@ -34,11 +34,13 @@ def tyler_2():
 
 
 def tyler_3():
-    weights, points = concat(
-        zero(frac(449, 315)),
-        symm_r0(
-            [frac(37, 1260), 1], [frac(3, 28), frac(2, 3)], [-frac(69, 140), frac(1, 3)]
-        ),
-        symm_s([frac(7, 540), 1], [frac(32, 135), frac(1, 2)]),
-    )
+    d = {
+        "zero": [[frac(449, 315)]],
+        "symm_r0": [
+            [frac(37, 1260), frac(3, 28), -frac(69, 140)],
+            [1, frac(2, 3), frac(1, 3)],
+        ],
+        "symm_s": [[frac(7, 540), frac(32, 135)], [1, frac(1, 2)]],
+    }
+    points, weights = expand_symmetries(d)
     return C2Scheme("Tyler 3", weights, points, 7, source)
