@@ -12,6 +12,7 @@ class T2Scheme(TnScheme):
         self, name, weights, points, degree, source=None, tol=1.0e-14, comments=None
     ):
         self.domain = "T2"
+        assert points.shape[0] == 3, f"{name}, {points.shape}"
         super().__init__(name, 2, weights, points, degree, source, tol, comments)
 
     def plot(
@@ -235,9 +236,6 @@ def expand_symmetries(data):
     weights = numpy.concatenate(
         [numpy.tile(values, count) for count, values in zip(counts, weights_raw)]
     )
-
-    # TODO remove this once points are expected as points.T in all functions
-    points = points.T
     return points, weights
 
 
