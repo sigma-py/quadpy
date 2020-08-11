@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import C2Scheme, concat, pm2, symm_r0
+from ._helpers import C2Scheme, concat, pm2, symm_r0, expand_symmetries
 
 source = article(
     authors=["G.M. Phillips"],
@@ -25,5 +25,9 @@ def phillips():
     B1, B2 = [(77 - i * c) / 891 for i in [+1, -1]]
     B3 = frac(25, 324)
 
-    weights, points = concat(symm_r0([B1, r], [B2, s]), pm2([B3, t, t]))
+    d = {
+        "symm_r0": [[B1, B2], [r, s]],
+        "symm_s": [[B3], [t]],
+    }
+    points, weights = expand_symmetries(d)
     return C2Scheme("Phillips", weights, points, 7, source)

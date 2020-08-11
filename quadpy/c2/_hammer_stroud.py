@@ -2,8 +2,8 @@
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, fsd, pm, untangle
-from ._helpers import C2Scheme
+from ..helpers import article
+from ._helpers import C2Scheme, expand_symmetries
 
 source = article(
     authors=["Preston C. Hammer", "Arthur H. Stroud"],
@@ -17,30 +17,31 @@ source = article(
 
 
 def hammer_stroud_1_2():
-    data = [(frac(1, 4), fsd(2, (sqrt(frac(2, 3)), 1)))]
-    points, weights = untangle(data)
+    d = {
+        "symm_r0": [[frac(1, 4)], [sqrt(frac(2, 3))]]
+    }
+    points, weights = expand_symmetries(d)
     return C2Scheme("Hammer-Stroud 1-2", weights, points, 3, source)
 
 
 def hammer_stroud_2_2():
     alpha = sqrt(frac(3, 5))
-    data = [
-        (frac(64, 81), [[0, 0]]),
-        (frac(40, 81), fsd(2, (alpha, 1))),
-        (frac(25, 81), pm([alpha, alpha])),
-    ]
-    points, weights = untangle(data)
+    d = {
+        "zero": [[frac(64, 81)]],
+        "symm_r0": [[frac(40, 81)], [alpha]],
+        "symm_s": [[frac(25, 81)], [alpha]]
+    }
+    points, weights = expand_symmetries(d)
     weights /= 4
     return C2Scheme("Hammer-Stroud 2-2", weights, points, 5, source)
 
 
 def hammer_stroud_3_2():
     xi1, xi2 = [sqrt(frac(3, 287) * (38 - i * sqrt(583))) for i in [+1, -1]]
-    data = [
-        (frac(98, 405), fsd(2, (sqrt(frac(6, 7)), 1))),
-        (0.5205929166673945, pm([xi1, xi1])),
-        (0.2374317746906302, pm([xi2, xi2])),
-    ]
-    points, weights = untangle(data)
+    d = {
+        "symm_r0": [[frac(98, 405)], [sqrt(frac(6, 7))]],
+        "symm_s": [[0.5205929166673945, 0.2374317746906302], [xi1, xi2]]
+    }
+    points, weights = expand_symmetries(d)
     weights /= 4
     return C2Scheme("Hammer-Stroud 3-2", weights, points, 7, source, 4.441e-16)

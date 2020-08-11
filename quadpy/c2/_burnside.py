@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import C2Scheme, concat, symm_r0, symm_s
+from ._helpers import C2Scheme, expand_symmetries
 
 source = article(
     authors=["W. Burnside"],
@@ -15,7 +15,9 @@ source = article(
 
 
 def burnside():
-    r = sqrt(frac(7, 15))
-    s = sqrt(frac(7, 9))
-    weights, points = concat(symm_r0([frac(10, 49), r]), symm_s([frac(9, 196), s]))
+    d = {
+        "symm_r0": [[frac(10, 49)], [sqrt(frac(7, 15))]],
+        "symm_s": [[frac(9, 196)], [sqrt(frac(7, 9))]],
+    }
+    points, weights = expand_symmetries(d)
     return C2Scheme("Burnside", weights, points, 5, source)
