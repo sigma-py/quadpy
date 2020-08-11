@@ -17,9 +17,7 @@ source = article(
 
 
 def hammer_stroud_1_2():
-    d = {
-        "symm_r0": [[frac(1, 4)], [sqrt(frac(2, 3))]]
-    }
+    d = {"symm_r0": [[frac(1, 4)], [sqrt(frac(2, 3))]]}
     points, weights = expand_symmetries(d)
     return C2Scheme("Hammer-Stroud 1-2", weights, points, 3, source)
 
@@ -29,7 +27,7 @@ def hammer_stroud_2_2():
     d = {
         "zero": [[frac(64, 81)]],
         "symm_r0": [[frac(40, 81)], [alpha]],
-        "symm_s": [[frac(25, 81)], [alpha]]
+        "symm_s": [[frac(25, 81)], [alpha]],
     }
     points, weights = expand_symmetries(d)
     weights /= 4
@@ -40,7 +38,7 @@ def hammer_stroud_3_2():
     xi1, xi2 = [sqrt(frac(3, 287) * (38 - i * sqrt(583))) for i in [+1, -1]]
     d = {
         "symm_r0": [[frac(98, 405)], [sqrt(frac(6, 7))]],
-        "symm_s": [[0.5205929166673945, 0.2374317746906302], [xi1, xi2]]
+        "symm_s": [[0.5205929166673945, 0.2374317746906302], [xi1, xi2]],
     }
     points, weights = expand_symmetries(d)
     weights /= 4

@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import C2Scheme, concat, pm2, symm_r0, expand_symmetries
+from ._helpers import C2Scheme, expand_symmetries
 
 source = article(
     authors=["G.M. Phillips"],
