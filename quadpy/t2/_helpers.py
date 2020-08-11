@@ -33,7 +33,7 @@ class T2Scheme(TnScheme):
         if not show_axes:
             plt.gca().set_axis_off()
 
-        transformed_pts = transform(self.points.T, triangle.T).T
+        transformed_pts = transform(self.points, triangle.T).T
 
         vol = get_vol(triangle)
         plot_disks(plt, transformed_pts, self.weights, vol)
