@@ -209,6 +209,7 @@ def expand_symmetries_points_only(data):
             "s1": _s1,
             "s2": _s2,
             "s3": _s3_alt,
+            "rot": _rot_ab_alt,
             "rot_ab": _rot_ab_alt,
             "swap_ab": _swap_ab,
             "s2_static": _s2_static,
