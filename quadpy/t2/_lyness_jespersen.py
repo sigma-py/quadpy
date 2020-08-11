@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import T2Scheme, concat, expand_symmetries, s1, s2, s3
+from ._helpers import T2Scheme, expand_symmetries
 
 source = article(
     authors=["J.N. Lyness", "D. Jespersen"],
@@ -324,8 +324,8 @@ def lyness_jespersen_20():
             ],
         ],
         "s1": [
-            [3.140226717732234e-01 / 6, 1.242459578348437e-01 / 6,],
-            [5.017813831049474e-02, 2.102201653616613e-02,],
+            [3.140226717732234e-01 / 6, 1.242459578348437e-01 / 6],
+            [5.017813831049474e-02, 2.102201653616613e-02],
             [5.932012134282132e-01, 8.074890031597923e-01],
         ],
     }
@@ -353,8 +353,8 @@ def lyness_jespersen_21():
             ],
         ],
         "s1": [
-            [4.417430269980344e-02 / 6, 2.463378925757316e-01 / 6,],
-            [0, 4.484167758913055e-02,],
+            [4.417430269980344e-02 / 6, 2.463378925757316e-01 / 6],
+            [0, 4.484167758913055e-02],
             [8.588702812826364e-01, 6.779376548825902e-01],
         ],
     }
