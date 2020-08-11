@@ -14,8 +14,8 @@ class C2Scheme(CnScheme):
     def __init__(
         self, name, weights, points, degree, source=None, tol=1.0e-14, comments=None
     ):
-        self.domain = "C2"
         super().__init__(name, 2, weights, points, degree, source, tol, comments)
+        self.domain = "C2"
 
     def plot(self, quad=rectangle_points([0.0, 1.0], [0.0, 1.0]), show_axes=False):
         """Shows the quadrature points on a given quad. The area of the disks

@@ -179,7 +179,7 @@ def test_scheme(scheme):
 
     quad = quadpy.c2.rectangle_points([-1.0, +1.0], [-1.0, +1.0])
 
-    evaluator = orthopy.cn.Eval(scheme.points.T)
+    evaluator = orthopy.cn.Eval(scheme.points)
 
     k = 0
     max_err = 0.0

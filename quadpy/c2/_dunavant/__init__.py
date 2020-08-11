@@ -4,7 +4,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ...helpers import article
-from .._helpers import C2Scheme, _read, concat, symm_r0, symm_s, zero
+from .._helpers import C2Scheme, _read, expand_symmetries
 
 source = article(
     authors=["D.A. Dunavant"],
@@ -22,33 +22,36 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def dunavant_00():
-    weights, points = zero(1)
+    d = {"zero": [[1]]}
+    points, weights = expand_symmetries(d)
     return C2Scheme("Dunavant 0", weights, points, 1, source)
 
 
 def dunavant_01():
-    weights, points = symm_s([1, sqrt(frac(1, 3))])
-    weights /= 4
+    d = {"symm_s": [[frac(1, 4)], [sqrt(frac(1, 3))]]}
+    points, weights = expand_symmetries(d)
     return C2Scheme("Dunavant 1", weights, points, 3, source)
 
 
 def dunavant_02():
-    weights, points = concat(
-        symm_r0([frac(40, 49), sqrt(frac(7, 15))]),
-        symm_s([frac(9, 49), sqrt(frac(7, 9))]),
-    )
+    d = {
+        "symm_r0": [[frac(40, 49)], [sqrt(frac(7, 15))]],
+        "symm_s": [[frac(9, 49)], [sqrt(frac(7, 9))]],
+    }
+    points, weights = expand_symmetries(d)
     weights /= 4
     return C2Scheme("Dunavant 2", weights, points, 5, source)
 
 
 def dunavant_03():
-    weights, points = concat(
-        symm_r0([frac(98, 405), sqrt(frac(6, 7))]),
-        symm_s(
-            [0.237431774690630, 0.805979782918599],
-            [0.520592916667394, 0.380554433208316],
-        ),
-    )
+    d = {
+        "symm_r0": [[frac(98, 405)], [sqrt(frac(6, 7))]],
+        "symm_s": [
+            [0.237431774690630, 0.520592916667394],
+            [0.805979782918599, 0.380554433208316],
+        ],
+    }
+    points, weights = expand_symmetries(d)
     weights /= 4
     return C2Scheme("Dunavant 3", weights, points, 7, source)
 

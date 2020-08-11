@@ -15,8 +15,8 @@ class CnScheme(QuadratureScheme):
 
     def integrate(self, f, ncube, dot=numpy.dot):
         ncube = numpy.asarray(ncube)
-        x = transform(self.points.T, ncube).T
-        detJ = get_detJ(self.points.T, ncube)
+        x = transform(self.points, ncube).T
+        detJ = get_detJ(self.points, ncube)
         ref_vol = 2 ** numpy.prod(len(ncube.shape) - 1)
 
         return ref_vol * dot(f(x) * abs(detJ), self.weights)

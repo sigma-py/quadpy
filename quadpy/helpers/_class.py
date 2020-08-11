@@ -16,8 +16,9 @@ class QuadratureScheme:
         self.source = source
         self.comments = [] if comments is None else comments
 
-        assert points.flags["C_CONTIGUOUS"]
-        assert weights.flags["C_CONTIGUOUS"]
+        # TODO enable contiguity check
+        assert points.flags["C_CONTIGUOUS"], name
+        assert weights.flags["C_CONTIGUOUS"], name
 
         # assert weights.shape[0] == points.shape[1], (
         #     f"Shape mismatch for {name}: "
