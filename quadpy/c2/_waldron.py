@@ -21,12 +21,17 @@ def waldron(r, alpha):
 
     beta = alpha + numpy.pi / 2
 
+    sin_alpha = numpy.sin(alpha)
+    cos_alpha = numpy.cos(alpha)
+    sin_beta = numpy.sin(beta)
+    cos_beta = numpy.cos(beta)
+
     points = numpy.array(
         [
-            [+r * numpy.cos(alpha), +r * numpy.sin(alpha)],
-            [-r * numpy.cos(alpha), -r * numpy.sin(alpha)],
-            [+R * numpy.cos(beta), +R * numpy.sin(beta)],
-            [-R * numpy.cos(beta), -R * numpy.sin(beta)],
+            [+r * cos_alpha, +r * sin_alpha],
+            [-r * cos_alpha, -r * sin_alpha],
+            [+R * cos_beta, +R * sin_beta],
+            [-R * cos_beta, -R * sin_beta],
         ]
     )
 

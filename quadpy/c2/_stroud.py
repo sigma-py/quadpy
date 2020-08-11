@@ -10,7 +10,7 @@ from ._albrecht_collatz import albrecht_collatz_2 as stroud_c2_5_1
 from ._albrecht_collatz import albrecht_collatz_3 as stroud_c2_5_2
 from ._albrecht_collatz import albrecht_collatz_4 as stroud_c2_5_6
 from ._burnside import burnside as stroud_c2_5_3
-from ._helpers import C2Scheme, concat, symm_r0, symm_s, symm_s_t, zero, expand_symmetries
+from ._helpers import C2Scheme, expand_symmetries
 from ._irwin import irwin_1 as stroud_c2_3_5
 from ._irwin import irwin_2 as stroud_c2_5_7
 from ._maxwell import maxwell as stroud_c2_7_3
