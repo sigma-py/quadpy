@@ -7,7 +7,7 @@ from ..helpers import article, get_all_exponents, untangle
 from ._helpers import TnScheme
 
 source = article(
-    authors=["A. Grundmann", "H.M. Moeller"],
+    authors=["A. Grundmann", "H.M. Möller"],
     title="Invariant integration formulas for the n-simplex by combinatorial methods",
     journal="SIAM J. Numer. Anal.",
     volume="15",
@@ -39,7 +39,8 @@ def grundmann_moeller(n, s):
     ]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     weights /= sum(weights)
 
-    name = f"GrundmannMöller(dim={n}, {s})"
+    name = f"Grundmann-Möller(dim={n}, {s})"
     return TnScheme(name, n, weights, points, d, source)

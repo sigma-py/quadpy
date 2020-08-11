@@ -36,6 +36,7 @@ def stroud_tn_1_1(n):
     degree = 1
     data = [(1, numpy.full((1, n + 1), frac(1, n + 1)))]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return TnScheme("Stroud Tn 1-1", n, weights, points, degree, source)
 
 

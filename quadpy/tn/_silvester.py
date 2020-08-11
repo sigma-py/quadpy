@@ -85,6 +85,7 @@ def silvester(dim, variant, n, symbolic=False):
             return frac(k + 1, n + 1 + dim)
 
     weights, points = _get_data(dim, n, points1d, symbolic)
+    points = numpy.ascontiguousarray(points.T)
 
     return TnScheme(
         f"Silvester ({variant}, dim={n})", dim, weights, points, degree, source, tol

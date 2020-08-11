@@ -53,6 +53,7 @@ def _stroud_1964(variant_a, n):
         data = [(1 / (n * (n + 1)), rd(n + 1, [(r, n - 1), (s, 1), (t, 1)]))]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
 
     variant = "a" if variant_a else "b"
     name = f"Stroud 1964{variant}"
