@@ -181,6 +181,52 @@ def _symm_rrr(a):
     return points
 
 
+def _symm_rrs(data):
+    a, b = data
+    points = numpy.array([
+        [+a, +a, +b],
+        [+a, +b, +a],
+        [+b, +a, +a],
+        [+a, -a, +b],
+        [+a, +b, -a],
+        [+b, +a, -a],
+        [-a, +a, +b],
+        [-a, +b, +a],
+        [+b, -a, +a],
+        [-a, -a, +b],
+        [-a, +b, -a],
+        [+b, -a, -a],
+        [+a, +a, -b],
+        [+a, -b, +a],
+        [-b, +a, +a],
+        [+a, -a, -b],
+        [+a, -b, -a],
+        [-b, +a, -a],
+        [-a, +a, -b],
+        [-a, -b, +a],
+        [-b, -a, +a],
+        [-a, -a, -b],
+        [-a, -b, -a],
+        [-b, -a, -a],
+    ])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _symm_rss_pm(data):
+    r, s = data
+    points = numpy.array([
+        [+r, +s, +s],
+        [+s, +r, +s],
+        [+s, +s, +r],
+        [-r, -s, -s],
+        [-s, -r, -s],
+        [-s, -s, -r],
+    ])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
 def expand_symmetries_points_only(data):
     points = []
     counts = []
@@ -191,6 +237,8 @@ def expand_symmetries_points_only(data):
             "symm_r00": _symm_r00,
             "symm_rr0": _symm_rr0,
             "symm_rrr": _symm_rrr,
+            "symm_rrs": _symm_rrs,
+            "symm_rss_pm": _symm_rss_pm,
             "plain": lambda vals: vals.reshape(3, 1, -1),
         }[key]
         pts = fun(numpy.asarray(points_raw))

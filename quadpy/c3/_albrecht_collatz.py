@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 
-from ..helpers import article, untangle
-from ._helpers import C3Scheme, fs_r00, fs_rr0, z
+from ..helpers import article
+from ._helpers import C3Scheme, expand_symmetries
 
 _source = article(
     authors=["J. Albrecht", "L. Collatz"],
@@ -16,6 +16,10 @@ _source = article(
 
 
 def albrecht_collatz():
-    data = [(frac(1, 4), z()), (frac(1, 12), fs_r00(1)), (frac(1, 48), fs_rr0(1))]
-    points, weights = untangle(data)
+    d = {
+        "zero": [[frac(1, 4)]],
+        "symm_r00": [[frac(1, 12)], [1]],
+        "symm_rr0": [[frac(1, 48)], [1]]
+    }
+    points, weights = expand_symmetries(d)
     return C3Scheme("Albrecht-Collatz", weights, points, 3, _source)

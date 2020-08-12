@@ -1,8 +1,8 @@
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, untangle
-from ._helpers import C3Scheme, fs_r00, fs_rr0, fs_rrs
+from ..helpers import article
+from ._helpers import C3Scheme, expand_symmetries
 
 source = article(
     authors=["Michael Sadowsky"],
@@ -18,10 +18,10 @@ source = article(
 
 
 def sadowsky():
-    data = [
-        (frac(91, 450), fs_r00(1)),
-        (frac(-20, 225), fs_rr0(1)),
-        (frac(8, 225), fs_rrs(sqrt(frac(5, 8)), 1)),
-    ]
-    points, weights = untangle(data)
+    d = {
+        "symm_r00": [[frac(91, 450)], [1]],
+        "symm_rr0": [[frac(-20, 225)], [1]],
+        "symm_rrs": [[frac(8, 225)], [sqrt(frac(5, 8))], [1]]
+    }
+    points, weights = expand_symmetries(d)
     return C3Scheme("Sadowsky", weights, points, 5, source)

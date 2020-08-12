@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, untangle
-from ._helpers import C3Scheme, rss_pm, z
+from ._helpers import C3Scheme, rss_pm, z, expand_symmetries
 
 source = article(
     authors=["A.H. Stroud"],
@@ -18,7 +18,7 @@ source = article(
 
 
 def stroud_1967():
-    # Analytic expression for all quantities are given in
+    # ENH Analytic expression for all quantities are given in
     #
     # J.W. Peterson,
     # Analytical Formulae for Two of A. H. Stroud's Quadrature Rules,
@@ -36,8 +36,10 @@ def stroud_1967():
         for i in [+1, -1]
     ]
 
-    data = [(frac(32, 19), z()), (B, rss_pm(lmbd, xi)), (C, rss_pm(gmma, mu))]
-
-    points, weights = untangle(data)
+    d = {
+        "zero": [[frac(32, 19)]],
+        "symm_rss_pm": [[B, C], [lmbd, gmma], [xi, mu]]
+    }
+    points, weights = expand_symmetries(d)
     weights /= 8
     return C3Scheme("Stroud 1967", weights, points, 5, source)
