@@ -7,7 +7,9 @@ def product(scheme1d):
     schemes = scheme1d if isinstance(scheme1d, list) else 2 * [scheme1d]
 
     weights = numpy.outer(schemes[0].weights, schemes[1].weights).flatten()
-    points = numpy.array(numpy.meshgrid(schemes[0].points, schemes[1].points)).reshape(2, -1)
+    points = numpy.array(numpy.meshgrid(schemes[0].points, schemes[1].points)).reshape(
+        2, -1
+    )
     weights /= 4
     degree = min([s.degree for s in schemes])
     return C2Scheme(f"Product scheme ({scheme1d.name})", weights, points, degree)

@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 
-from ..helpers import article, untangle
-from ._helpers import C3Scheme, fs_r00, fs_rr0, pm_rrr, z, expand_symmetries
+from ..helpers import article
+from ._helpers import C3Scheme, expand_symmetries
 
 _source = article(
     authors=["D. Mustard", "J.N. Lyness", "J.M. Blatt"],
@@ -16,10 +16,7 @@ _source = article(
 
 
 def mustard_lyness_blatt_1():
-    d = {
-        "zero": [[frac(1, 2)]],
-        "symm_rr0": [[frac(1, 24)], [1]]
-    }
+    d = {"zero": [[frac(1, 2)]], "symm_rr0": [[frac(1, 24)], [1]]}
     points, weights = expand_symmetries(d)
     return C3Scheme("Mustard-Lyness-Blatt 1", weights, points, 3, _source)
 
@@ -47,7 +44,7 @@ def mustard_lyness_blatt_4():
     d = {
         "zero": [[-frac(2, 45)]],
         "symm_r00": [[+frac(2, 45)], [1]],
-        "symm_rrr": [[frac(4, 45), frac(1, 120)], [frac(1, 2), 1]]
+        "symm_rrr": [[frac(4, 45), frac(1, 120)], [frac(1, 2), 1]],
     }
     points, weights = expand_symmetries(d)
     return C3Scheme("Mustard-Lyness-Blatt 4", weights, points, 5, _source)
@@ -57,7 +54,7 @@ def mustard_lyness_blatt_5():
     d = {
         "zero": [[-frac(19, 15)]],
         "symm_r00": [[frac(16, 45), -frac(1, 30)], [frac(1, 2), 1]],
-        "symm_rr0": [[frac(1, 36)], [1]]
+        "symm_rr0": [[frac(1, 36)], [1]],
     }
     points, weights = expand_symmetries(d)
     return C3Scheme("Mustard-Lyness-Blatt 5", weights, points, 5, _source)
@@ -78,7 +75,7 @@ def mustard_lyness_blatt_7():
     d = {
         "zero": [[frac(2, 45)]],
         "symm_rr0": [[frac(1, 45)], [1]],
-        "symm_rrr": [[frac(4, 45), frac(-1, 360)], [frac(1, 2), 1]]
+        "symm_rrr": [[frac(4, 45), frac(-1, 360)], [frac(1, 2), 1]],
     }
     points, weights = expand_symmetries(d)
     return C3Scheme("Mustard-Lyness-Blatt 7", weights, points, 5, _source)

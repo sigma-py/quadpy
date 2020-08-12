@@ -137,92 +137,105 @@ def _zero(data):
 
 def _symm_r00(r):
     zero = numpy.zeros_like(r)
-    points = numpy.array([
-        [+r, zero, zero], [-r, zero, zero],
-        [zero, +r, zero], [zero, -r, zero],
-        [zero, zero, +r], [zero, zero, -r]
-    ])
+    points = numpy.array(
+        [
+            [+r, zero, zero],
+            [-r, zero, zero],
+            [zero, +r, zero],
+            [zero, -r, zero],
+            [zero, zero, +r],
+            [zero, zero, -r],
+        ]
+    )
     points = numpy.moveaxis(points, 0, 1)
     return points
 
 
 def _symm_rr0(a):
     z = numpy.zeros_like(a)
-    points = numpy.array([
-        [+a, +a, z],
-        [+a, z, +a],
-        [z, +a, +a],
-        [+a, -a, z],
-        [+a, z, -a],
-        [z, +a, -a],
-        [-a, +a, z],
-        [-a, z, +a],
-        [z, -a, +a],
-        [-a, -a, z],
-        [-a, z, -a],
-        [z, -a, -a],
-    ])
+    points = numpy.array(
+        [
+            [+a, +a, z],
+            [+a, z, +a],
+            [z, +a, +a],
+            [+a, -a, z],
+            [+a, z, -a],
+            [z, +a, -a],
+            [-a, +a, z],
+            [-a, z, +a],
+            [z, -a, +a],
+            [-a, -a, z],
+            [-a, z, -a],
+            [z, -a, -a],
+        ]
+    )
     points = numpy.moveaxis(points, 0, 1)
     return points
 
 
 def _symm_rrr(a):
-    points = numpy.array([
-        [+a, +a, +a],
-        [-a, +a, +a],
-        [+a, -a, +a],
-        [-a, -a, +a],
-        [+a, +a, -a],
-        [-a, +a, -a],
-        [+a, -a, -a],
-        [-a, -a, -a],
-    ])
+    points = numpy.array(
+        [
+            [+a, +a, +a],
+            [-a, +a, +a],
+            [+a, -a, +a],
+            [-a, -a, +a],
+            [+a, +a, -a],
+            [-a, +a, -a],
+            [+a, -a, -a],
+            [-a, -a, -a],
+        ]
+    )
     points = numpy.moveaxis(points, 0, 1)
     return points
 
 
 def _symm_rrs(data):
     a, b = data
-    points = numpy.array([
-        [+a, +a, +b],
-        [+a, +b, +a],
-        [+b, +a, +a],
-        [+a, -a, +b],
-        [+a, +b, -a],
-        [+b, +a, -a],
-        [-a, +a, +b],
-        [-a, +b, +a],
-        [+b, -a, +a],
-        [-a, -a, +b],
-        [-a, +b, -a],
-        [+b, -a, -a],
-        [+a, +a, -b],
-        [+a, -b, +a],
-        [-b, +a, +a],
-        [+a, -a, -b],
-        [+a, -b, -a],
-        [-b, +a, -a],
-        [-a, +a, -b],
-        [-a, -b, +a],
-        [-b, -a, +a],
-        [-a, -a, -b],
-        [-a, -b, -a],
-        [-b, -a, -a],
-    ])
+    points = numpy.array(
+        [
+            [+a, +a, +b],
+            [+a, +b, +a],
+            [+b, +a, +a],
+            [+a, -a, +b],
+            [+a, +b, -a],
+            [+b, +a, -a],
+            [-a, +a, +b],
+            [-a, +b, +a],
+            [+b, -a, +a],
+            [-a, -a, +b],
+            [-a, +b, -a],
+            [+b, -a, -a],
+            [+a, +a, -b],
+            [+a, -b, +a],
+            [-b, +a, +a],
+            [+a, -a, -b],
+            [+a, -b, -a],
+            [-b, +a, -a],
+            [-a, +a, -b],
+            [-a, -b, +a],
+            [-b, -a, +a],
+            [-a, -a, -b],
+            [-a, -b, -a],
+            [-b, -a, -a],
+        ]
+    )
     points = numpy.moveaxis(points, 0, 1)
     return points
 
 
 def _symm_rss_pm(data):
     r, s = data
-    points = numpy.array([
-        [+r, +s, +s],
-        [+s, +r, +s],
-        [+s, +s, +r],
-        [-r, -s, -s],
-        [-s, -r, -s],
-        [-s, -s, -r],
-    ])
+    points = numpy.array(
+        [
+            [+r, +s, +s],
+            [+s, +r, +s],
+            [+s, +s, +r],
+            [-r, -s, -s],
+            [-s, -r, -s],
+            [-s, -s, -r],
+        ]
+    )
     points = numpy.moveaxis(points, 0, 1)
     return points
 

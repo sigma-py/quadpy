@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, fsd, pm, untangle, z
+from ..helpers import article
 from ._helpers import C3Scheme, expand_symmetries
 
 _source = article(

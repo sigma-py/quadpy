@@ -44,22 +44,15 @@ def schmid_4():
                 frac(5, 36) - 5 * sqrt(29) / 18 / 29,
                 frac(5, 36) - 5 * sqrt(29) / 18 / 29,
             ],
-            [
-                0,
-                0,
-                +sqrt(15) / 5,
-                -sqrt(15) / 5,
-                +sqrt(15) / 5,
-                -sqrt(15) / 5,
-            ],
+            [0, 0, +sqrt(15) / 5, -sqrt(15) / 5, +sqrt(15) / 5, -sqrt(15) / 5],
             [
                 (sqrt(3) + sqrt(15)) / 6,
                 (sqrt(3) - sqrt(15)) / 6,
                 (+sqrt(87) - 2 * sqrt(3)) / 15,
                 (+sqrt(87) - 2 * sqrt(3)) / 15,
                 (-sqrt(87) - 2 * sqrt(3)) / 15,
-                (-sqrt(87) - 2 * sqrt(3)) / 15
-            ]
+                (-sqrt(87) - 2 * sqrt(3)) / 15,
+            ],
         ]
     }
     points, weights = expand_symmetries(d)

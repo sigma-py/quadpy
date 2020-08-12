@@ -21,7 +21,7 @@ def sadowsky():
     d = {
         "symm_r00": [[frac(91, 450)], [1]],
         "symm_rr0": [[frac(-20, 225)], [1]],
-        "symm_rrs": [[frac(8, 225)], [sqrt(frac(5, 8))], [1]]
+        "symm_rrs": [[frac(8, 225)], [sqrt(frac(5, 8))], [1]],
     }
     points, weights = expand_symmetries(d)
     return C3Scheme("Sadowsky", weights, points, 5, source)

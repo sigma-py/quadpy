@@ -19,7 +19,7 @@ def albrecht_collatz():
     d = {
         "zero": [[frac(1, 4)]],
         "symm_r00": [[frac(1, 12)], [1]],
-        "symm_rr0": [[frac(1, 48)], [1]]
+        "symm_rr0": [[frac(1, 48)], [1]],
     }
     points, weights = expand_symmetries(d)
     return C3Scheme("Albrecht-Collatz", weights, points, 3, _source)
