@@ -11,6 +11,7 @@ class CnScheme(QuadratureScheme):
     ):
         self.domain = f"Cn (n={dim})"
         self.dim = dim
+        assert points.shape[0] == dim, f"points.shape == {points.shape}, dim = {dim}"
         super().__init__(name, weights, points, degree, source, tol, comments)
 
     def integrate(self, f, ncube, dot=numpy.dot):

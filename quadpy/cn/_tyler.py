@@ -1,3 +1,4 @@
+import numpy
 from sympy import Rational as frac
 
 from ..helpers import article, fsd, untangle, z
@@ -17,4 +18,5 @@ _source = article(
 def tyler(n):
     data = [(frac(3 - n, 3), z(n)), (frac(1, 6), fsd(n, (1, 1)))]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return CnScheme("Tyler", n, weights, points, 3, _source)

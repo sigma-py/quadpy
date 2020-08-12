@@ -1,3 +1,4 @@
+import numpy
 import scipy.special
 from sympy import Rational as frac
 from sympy import sqrt
@@ -75,4 +76,5 @@ def phillips(n):
         data.append((d, fsd(n, (nu, 3))))
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return CnScheme("Phillips", n, weights, points, 7, _source, 1.521e-13)
