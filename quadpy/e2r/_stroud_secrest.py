@@ -1,9 +1,8 @@
-import numpy
 from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, fsd, pm, untangle
-from ._helpers import E2rScheme
+from ._helpers import E2rScheme, expand_symmetries
 
 _source = article(
     authors=["A.H. Stroud", "D. Secrest"],
@@ -21,12 +20,12 @@ def stroud_secrest_5():
     xi = sqrt(5)
     eta = sqrt(15)
 
-    data = [
-        (frac(7, 10), numpy.array([[0, 0]])),
-        (frac(1, 20), numpy.array([[+nu, 0], [-nu, 0]])),
-        (frac(1, 20), pm([xi, eta])),
-    ]
-    points, weights = untangle(data)
+    d = {
+        "zero": [[frac(7, 10)]],
+        "pmx": [[frac(1, 20)], [nu]],
+        "ab_pm": [[frac(1, 20)], [xi], [eta]]
+    }
+    points, weights = expand_symmetries(d)
     return E2rScheme("Stroud-Secrest V", weights, points, 5, _source)
 
 
@@ -38,7 +37,9 @@ def stroud_secrest_6():
     A = frac(5, 588)
     B, C = [(5272105 + p_m * 18733 * sqrt74255) / 43661940 for p_m in [+1, -1]]
 
-    data = [(A, fsd(2, (nu, 1))), (B, pm([xi, xi])), (C, pm([eta, eta]))]
-
-    points, weights = untangle(data)
+    d = {
+        "s40": [[A], [nu]],
+        "s4": [[B, C], [xi, eta]],
+    }
+    points, weights = expand_symmetries(d)
     return E2rScheme("Stroud-Secrest VI", weights, points, 7, _source)
