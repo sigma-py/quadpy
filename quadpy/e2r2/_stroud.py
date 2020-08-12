@@ -32,8 +32,9 @@ def stroud_4_1():
             ]
         ).T
     )
-    points = numpy.vstack([[[0, 0]], pts])
     weights = numpy.concatenate([[frac(1, 2)], numpy.full(len(pts), frac(1, 10))])
+    points = numpy.vstack([[[0, 0]], pts])
+    points = numpy.ascontiguousarray(points.T)
     return E2r2Scheme("Stroud 4-1", weights, points, 4, _source)
 
 

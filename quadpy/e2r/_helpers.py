@@ -9,6 +9,7 @@ from ..helpers import QuadratureScheme, plot_disks
 class E2rScheme(QuadratureScheme):
     def __init__(self, name, weights, points, degree, source, tol=1.0e-14):
         self.domain = "E2r"
+        assert points.shape[0] == 2
         super().__init__(name, weights, points, degree, source, tol)
 
     def plot(self, show_axes=False):
@@ -22,12 +23,12 @@ class E2rScheme(QuadratureScheme):
 
         I0 = 2 * math.pi
 
-        plot_disks(plt, self.points, self.weights, I0)
+        plot_disks(plt, self.points.T, self.weights, I0)
 
     def integrate(self, f, dot=numpy.dot):
         flt = numpy.vectorize(float)
         ref_vol = 2 * math.pi
-        return ref_vol * dot(f(flt(self.points).T), flt(self.weights))
+        return ref_vol * dot(f(flt(self.points)), flt(self.weights))
 
 
 def _s8(a, b):
@@ -70,12 +71,41 @@ def _s40_alt(a):
     return points
 
 
+def _ab_pm_alt(data):
+    a, b = data
+    points = numpy.array([[+a, +b], [-a, +b], [+a, -b], [-a, -b]],)
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _pmx(a):
+    zero = numpy.zeros_like(a)
+    points = numpy.array([[+a, zero], [-a, zero]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _pmy(a):
+    zero = numpy.zeros_like(a)
+    points = numpy.array([[zero, +a], [zero, -a]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
 def expand_symmetries_points_only(data):
     points = []
     counts = []
 
     for key, points_raw in data.items():
-        fun = {"zero": _zero, "s40": _s40_alt, "s4": _s4_alt, "s8": _s8_alt}[key]
+        fun = {
+            "zero": _zero,
+            "s40": _s40_alt,
+            "s4": _s4_alt,
+            "s8": _s8_alt,
+            "pmx": _pmx,
+            "pmy": _pmy,
+            "ab_pm": _ab_pm_alt,
+        }[key]
         pts = fun(numpy.asarray(points_raw))
 
         counts.append(pts.shape[1])
@@ -98,9 +128,6 @@ def expand_symmetries(data):
     weights = numpy.concatenate(
         [numpy.tile(values, count) for count, values in zip(counts, weights_raw)]
     )
-
-    # TODO remove this once points are expected as points.T in all functions
-    points = points.T
     return points, weights
 
 

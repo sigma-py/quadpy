@@ -6,7 +6,7 @@ from ._helpers import C3Scheme, expand_symmetries
 _source = article(
     authors=["D. Mustard", "J.N. Lyness", "J.M. Blatt"],
     title="Numerical quadrature in n dimensions",
-    journal="Comput J",
+    journal="The Computer Journal",
     year="1963",
     volume="6",
     number="1",

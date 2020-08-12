@@ -21,12 +21,12 @@ class E2r2Scheme(QuadratureScheme):
             ax.set_axis_off()
 
         I0 = 2 * math.pi
-        plot_disks(plt, self.points, self.weights, I0)
+        plot_disks(plt, self.points.T, self.weights, I0)
 
     def integrate(self, f, dot=numpy.dot):
         flt = numpy.vectorize(float)
         ref_vol = math.pi
-        return ref_vol * dot(f(flt(self.points).T), flt(self.weights))
+        return ref_vol * dot(f(flt(self.points)), flt(self.weights))
 
 
 def _zero(data):
@@ -112,9 +112,6 @@ def expand_symmetries(data):
     weights = numpy.concatenate(
         [numpy.tile(values, count) for count, values in zip(counts, weights_raw)]
     )
-
-    # TODO remove this once points are expected as points.T in all functions
-    points = points.T
     return points, weights
 
 

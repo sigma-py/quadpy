@@ -8,7 +8,6 @@ from ..cn import transform
 
 class C3Scheme(CnScheme):
     def __init__(self, name, weights, points, degree, source=None, tol=1.0e-14):
-        assert points.shape[0] == 3
         super().__init__(name, 3, weights, points, degree, source, tol)
         self.domain = "C3"
 

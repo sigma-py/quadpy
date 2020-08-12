@@ -49,4 +49,5 @@ def stroud_1957_3(n):
     data = [(frac(1, 2 * n), pts)]
 
     points, weights = untangle(data)
+    points = points.T
     return CnScheme("Stroud 1957-3", n, weights, points, 3, _source)
