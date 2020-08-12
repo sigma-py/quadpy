@@ -1,11 +1,10 @@
 import pathlib
 
-import numpy
 from sympy import Rational as frac
 from sympy import sqrt
 
 from ...helpers import article
-from .._helpers import C2Scheme, _read
+from .._helpers import C2Scheme, _read, expand_symmetries
 
 source = article(
     authors=["H.J. Schmid"],
@@ -23,38 +22,47 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def schmid_2():
-    points = numpy.array(
-        [
-            [-sqrt(frac(1, 3)), +sqrt(frac(2, 3))],
-            [-sqrt(frac(1, 3)), -sqrt(frac(2, 3))],
-            [+sqrt(frac(1, 3)), 0],
+    d = {
+        "plain": [
+            [frac(1, 4), frac(1, 4), frac(1, 2)],
+            [-sqrt(frac(1, 3)), -sqrt(frac(1, 3)), +sqrt(frac(1, 3))],
+            [+sqrt(frac(2, 3)), -sqrt(frac(2, 3)), 0],
         ]
-    )
-    weights = numpy.array([frac(1, 4), frac(1, 4), frac(1, 2)])
+    }
+    points, weights = expand_symmetries(d)
     return C2Scheme("Schmid 2", weights, points, 2, source, 4.441e-16)
 
 
 def schmid_4():
-    points = numpy.array(
-        [
-            [0, (sqrt(3) + sqrt(15)) / 6],
-            [0, (sqrt(3) - sqrt(15)) / 6],
-            [+sqrt(15) / 5, (+sqrt(87) - 2 * sqrt(3)) / 15],
-            [-sqrt(15) / 5, (+sqrt(87) - 2 * sqrt(3)) / 15],
-            [+sqrt(15) / 5, (-sqrt(87) - 2 * sqrt(3)) / 15],
-            [-sqrt(15) / 5, (-sqrt(87) - 2 * sqrt(3)) / 15],
+    d = {
+        "plain": [
+            [
+                frac(2, 9) - 2 * sqrt(5) / 45,
+                frac(2, 9) + 2 * sqrt(5) / 45,
+                frac(5, 36) + 5 * sqrt(29) / 18 / 29,
+                frac(5, 36) + 5 * sqrt(29) / 18 / 29,
+                frac(5, 36) - 5 * sqrt(29) / 18 / 29,
+                frac(5, 36) - 5 * sqrt(29) / 18 / 29,
+            ],
+            [
+                0,
+                0,
+                +sqrt(15) / 5,
+                -sqrt(15) / 5,
+                +sqrt(15) / 5,
+                -sqrt(15) / 5,
+            ],
+            [
+                (sqrt(3) + sqrt(15)) / 6,
+                (sqrt(3) - sqrt(15)) / 6,
+                (+sqrt(87) - 2 * sqrt(3)) / 15,
+                (+sqrt(87) - 2 * sqrt(3)) / 15,
+                (-sqrt(87) - 2 * sqrt(3)) / 15,
+                (-sqrt(87) - 2 * sqrt(3)) / 15
+            ]
         ]
-    )
-    weights = numpy.array(
-        [
-            frac(2, 9) - 2 * sqrt(5) / 45,
-            frac(2, 9) + 2 * sqrt(5) / 45,
-            frac(5, 36) + 5 * sqrt(29) / 18 / 29,
-            frac(5, 36) + 5 * sqrt(29) / 18 / 29,
-            frac(5, 36) - 5 * sqrt(29) / 18 / 29,
-            frac(5, 36) - 5 * sqrt(29) / 18 / 29,
-        ]
-    )
+    }
+    points, weights = expand_symmetries(d)
     return C2Scheme("Schmid 4", weights, points, 4, source, 4.441e-16)
 
 
