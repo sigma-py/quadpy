@@ -39,7 +39,7 @@ def cools_haegemans_1(n, delta2=1, symbolic=False):
 
     points, weights = untangle(data)
     points = numpy.ascontiguousarray(points.T)
-    return CnScheme("Cools-Haegemans 1", n, weights, points, 3, _source)
+    return CnScheme(f"Cools-Haegemans 1 (dim={n})", n, weights, points, 3, _source)
 
 
 def cools_haegemans_2(n, delta2=1, symbolic=False):

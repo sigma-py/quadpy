@@ -49,11 +49,11 @@ def test_scheme(scheme):
     cn_limits = [[-1.0, 1.0]] * n
     cn = quadpy.cn.ncube_points(*cn_limits)
 
-    evaluator = orthopy.cn.Eval(scheme.points.T)
+    evaluator = orthopy.cn.Eval(scheme.points)
 
     k = 0
     while True:
-        approximate = scheme.integrate(lambda x: next(evaluator)[0], cn)
+        approximate = scheme.integrate(lambda x: next(evaluator), cn)
         exact = evaluator.int_p0 * 2 ** n if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
         if numpy.any(err > scheme.test_tolerance * 1.1):
