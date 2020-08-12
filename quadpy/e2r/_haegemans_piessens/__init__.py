@@ -1,9 +1,7 @@
 import pathlib
 
-import numpy
-
 from ...helpers import article
-from .._helpers import E2rScheme, _read
+from .._helpers import _read
 
 _source = article(
     authors=["Ann Haegemans", "Robert Piessens"],

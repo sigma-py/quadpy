@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, fsd, pm, untangle
+from ..helpers import article
 from ._helpers import E2rScheme, expand_symmetries
 
 _source = article(
@@ -23,7 +23,7 @@ def stroud_secrest_5():
     d = {
         "zero": [[frac(7, 10)]],
         "pmx": [[frac(1, 20)], [nu]],
-        "ab_pm": [[frac(1, 20)], [xi], [eta]]
+        "ab_pm": [[frac(1, 20)], [xi], [eta]],
     }
     points, weights = expand_symmetries(d)
     return E2rScheme("Stroud-Secrest V", weights, points, 5, _source)
