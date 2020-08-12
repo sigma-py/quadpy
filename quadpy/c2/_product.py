@@ -10,6 +10,7 @@ def product(scheme1d):
     points = numpy.dstack(numpy.meshgrid(schemes[0].points, schemes[1].points)).reshape(
         -1, 2
     )
+    points = numpy.ascontiguousarray(points.T)
     weights /= 4
     degree = min([s.degree for s in schemes])
     return C2Scheme(f"Product scheme ({scheme1d.name})", weights, points, degree)

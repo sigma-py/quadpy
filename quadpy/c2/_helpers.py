@@ -34,7 +34,7 @@ class C2Scheme(CnScheme):
         if not show_axes:
             plt.gca().set_axis_off()
 
-        transformed_pts = transform(self.points.T, quad)
+        transformed_pts = transform(self.points, quad)
 
         # compute volume by splitting it in two triangles
         vol = get_vol(numpy.array([quad[0][0], quad[1][0], quad[0][1]])) + get_vol(
@@ -46,7 +46,7 @@ class C2Scheme(CnScheme):
         plt.ylim(-0.1, 1.1)
 
     def compute_residuals(self, level):
-        evaluator = orthopy.cn.Eval(self.points.T)
+        evaluator = orthopy.cn.Eval(self.points)
 
         quad = rectangle_points([-1.0, +1.0], [-1.0, +1.0])
 
