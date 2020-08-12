@@ -18,7 +18,6 @@ class CnScheme(QuadratureScheme):
         x = transform(self.points, ncube).T
         detJ = get_detJ(self.points, ncube)
         ref_vol = 2 ** numpy.prod(len(ncube.shape) - 1)
-
         return ref_vol * dot(f(x) * abs(detJ), self.weights)
 
     def points_inside(self):
