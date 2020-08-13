@@ -26,8 +26,8 @@ def phillips():
     B3 = frac(25, 324)
 
     d = {
-        "symm_r0": [[B1, B2], [r, s]],
-        "symm_s": [[B3], [t]],
+        "c4_a0": [[B1, B2], [r, s]],
+        "c4_aa": [[B3], [t]],
     }
     points, weights = expand_symmetries(d)
     return C2Scheme("Phillips", weights, points, 7, source)

@@ -43,8 +43,8 @@ def stroud_5_2():
     r = sqrt(frac(3, 2))
     d = {
         "zero": [[frac(4, 9)]],
-        "s40": [[frac(1, 9)], [r]],
-        "pma": [[frac(1, 36)], [r]],
+        "c4_a0": [[frac(1, 9)], [r]],
+        "c4_aa": [[frac(1, 36)], [r]],
     }
     points, weights = expand_symmetries(d)
     return E2r2Scheme("Stroud 5-2", weights, points, 5, _source)
@@ -57,7 +57,7 @@ def stroud_7_2():
     A, B = [(5 - p_m * 2 * sqrt6) / 48 for p_m in [+1, -1]]
     C = frac(1, 48)
 
-    d = {"s40": [[A, B], [r, s]], "d4": [[C], [r], [s]]}
+    d = {"c4_a0": [[A, B], [r, s]], "d4": [[C], [r], [s]]}
     points, weights = expand_symmetries(d)
 
     # TODO find what's wrong

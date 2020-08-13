@@ -28,15 +28,15 @@ def dunavant_00():
 
 
 def dunavant_01():
-    d = {"symm_s": [[frac(1, 4)], [sqrt(frac(1, 3))]]}
+    d = {"c4_aa": [[frac(1, 4)], [sqrt(frac(1, 3))]]}
     points, weights = expand_symmetries(d)
     return C2Scheme("Dunavant 1", weights, points, 3, source)
 
 
 def dunavant_02():
     d = {
-        "symm_r0": [[frac(40, 49)], [sqrt(frac(7, 15))]],
-        "symm_s": [[frac(9, 49)], [sqrt(frac(7, 9))]],
+        "c4_a0": [[frac(40, 49)], [sqrt(frac(7, 15))]],
+        "c4_aa": [[frac(9, 49)], [sqrt(frac(7, 9))]],
     }
     points, weights = expand_symmetries(d)
     weights /= 4
@@ -45,8 +45,8 @@ def dunavant_02():
 
 def dunavant_03():
     d = {
-        "symm_r0": [[frac(98, 405)], [sqrt(frac(6, 7))]],
-        "symm_s": [
+        "c4_a0": [[frac(98, 405)], [sqrt(frac(6, 7))]],
+        "c4_aa": [
             [0.237431774690630, 0.520592916667394],
             [0.805979782918599, 0.380554433208316],
         ],

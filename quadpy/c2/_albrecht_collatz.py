@@ -19,8 +19,8 @@ source = article(
 def albrecht_collatz_1():
     d = {
         "zero": [[frac(5, 12)]],
-        "symm_r0": [[frac(1, 8)], [1]],
-        "symm_s": [[frac(1, 48)], [1]],
+        "c4_a0": [[frac(1, 8)], [1]],
+        "c4_aa": [[frac(1, 48)], [1]],
     }
     points, weights = expand_symmetries(d)
     return C2Scheme("Albrecht-Collatz 1", weights, points, 3, source, 4.442e-16)
@@ -53,8 +53,8 @@ def albrecht_collatz_3():
 def albrecht_collatz_4():
     d = {
         "zero": [[frac(2, 45)]],
-        "symm_r0": [[frac(2, 45)], [1]],
-        "symm_s": [[frac(1, 60), frac(8, 45)], [1, frac(1, 2)]],
+        "c4_a0": [[frac(2, 45)], [1]],
+        "c4_aa": [[frac(1, 60), frac(8, 45)], [1, frac(1, 2)]],
     }
     points, weights = expand_symmetries(d)
     return C2Scheme("Albrecht-Collatz 4", weights, points, 5, source, 8.883e-16)

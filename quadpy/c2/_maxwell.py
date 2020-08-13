@@ -21,7 +21,7 @@ def maxwell():
 
     d = {
         "zero": [[frac(1, 81)]],
-        "symm_r0": [[frac(49, 324)], [r]],
+        "c4_a0": [[frac(49, 324)], [r]],
         # ERR typo in Stroud: 648 vs 649
         "d4": [[frac(31, 648)], [s], [t]],
     }

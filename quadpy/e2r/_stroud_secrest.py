@@ -38,8 +38,8 @@ def stroud_secrest_6():
     B, C = [(5272105 + p_m * 18733 * sqrt74255) / 43661940 for p_m in [+1, -1]]
 
     d = {
-        "s40": [[A], [nu]],
-        "pma": [[B, C], [xi, eta]],
+        "c4_a0": [[A], [nu]],
+        "c4_aa": [[B, C], [xi, eta]],
     }
     points, weights = expand_symmetries(d)
     return E2rScheme("Stroud-Secrest VI", weights, points, 7, _source)

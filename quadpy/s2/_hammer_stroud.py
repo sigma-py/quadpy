@@ -26,7 +26,7 @@ sin = numpy.vectorize(sympy.sin)
 
 def hammer_stroud_11_2():
     # ERR Incorrectly stated in Stroud with 0.5 instead of sqrt(0.5)
-    d = {"s40": [[frac(1, 4)], [sqrt(frac(1, 2))]]}
+    d = {"c4_a0": [[frac(1, 4)], [sqrt(frac(1, 2))]]}
     points, weights = expand_symmetries(d)
     return S2Scheme("Hammer-Stroud 11-2", weights, points, 3, _source)
 
@@ -34,7 +34,7 @@ def hammer_stroud_11_2():
 def hammer_stroud_12_2():
     d = {
         "zero": [[frac(1, 6)]],
-        "s40": [[frac(1, 6)], [sqrt(frac(1, 2))]],
+        "c4_a0": [[frac(1, 6)], [sqrt(frac(1, 2))]],
         "pm2": [[frac(1, 24)], [sqrt(frac(1, 2))], [sqrt(frac(1, 2))]],
     }
     points, weights = expand_symmetries(d)
@@ -84,7 +84,7 @@ def hammer_stroud_19():
             [0.5505043204538557, 0.7932084745126058],
             [0.2280263556769715, 0.4645097310495256],
         ],
-        "s40": [[alpha2], [a]],
+        "c4_a0": [[alpha2], [a]],
     }
     points, weights = expand_symmetries(d)
     return S2Scheme("Hammer-Stroud 19", weights, points, 9, _source)

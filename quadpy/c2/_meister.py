@@ -21,8 +21,8 @@ def meister():
 
     d = {
         "zero": [[frac(1024, 6720)]],
-        "symm_s": [[frac(576, 6720), -frac(9, 6720), frac(47, 6720)], [r, s, 1]],
-        "symm_r0": [[frac(576, 6720)], [r]],
+        "c4_aa": [[frac(576, 6720), -frac(9, 6720), frac(47, 6720)], [r, s, 1]],
+        "c4_a0": [[frac(576, 6720)], [r]],
         "d4": [[frac(117, 6720)], [1], [s]],
     }
     points, weights = expand_symmetries(d)

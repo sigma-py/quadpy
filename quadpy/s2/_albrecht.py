@@ -109,8 +109,8 @@ def albrecht_5():
     v = sqrt(frac(5, 6)) * sin(pi / 8)
 
     d = {
-        "s40": [B, [sqrt(sigma2[0]), sqrt(sigma2[1]), sqrt(sigma2[2])]],
-        "pma": [[C1, C2], [s1, s2]],
+        "c4_a0": [B, [sqrt(sigma2[0]), sqrt(sigma2[1]), sqrt(sigma2[2])]],
+        "c4_aa": [[C1, C2], [s1, s2]],
         "d4": [[D], [u], [v]],
     }
     points, weights = expand_symmetries(d)

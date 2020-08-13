@@ -29,7 +29,7 @@ def peirce_1956_1():
     # ERR Stroud incorrectly lists 4 instead of 41 here.
     B2, B3 = (551 + pm_ * 41 * sqrt29) / 6264
 
-    d = {"s40": [[B1], [r]], "pma": [[B2, B3], [s, t]]}
+    d = {"c4_a0": [[B1], [r]], "c4_aa": [[B2, B3], [s, t]]}
     points, weights = expand_symmetries(d)
     return S2Scheme("Peirce 1956-1", weights, points, 7, _source)
 
@@ -52,7 +52,7 @@ def peirce_1956_2():
     B4 = (5585 + 1440 * sqrt15) / 508176
 
     d = {
-        "s40": [[B1], [r]],
+        "c4_a0": [[B1], [r]],
         "d4": [[B2, B3, B4], [u1, u2, u3], [v1, v2, v3]],
     }
     points, weights = expand_symmetries(d)
@@ -77,9 +77,9 @@ def peirce_1956_3():
     t = sqrt((5 - sqrt15) / 20)
 
     d = {
-        "s40": [[B1, B2, B3], [r1, r2, r3]],
+        "c4_a0": [[B1, B2, B3], [r1, r2, r3]],
         "d4": [[C1, C2], [u1, u2], [v1, v2]],
-        "pma": [[D], [t]],
+        "c4_aa": [[D], [t]],
     }
     points, weights = expand_symmetries(d)
     return S2Scheme("Peirce 1956-3", weights, points, 11, _source)

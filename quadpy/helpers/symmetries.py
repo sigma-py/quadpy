@@ -16,27 +16,14 @@ def _d4(data):
     return points
 
 
-def _symm_s(a):
-    points = numpy.array([[+a, +a], [+a, -a], [-a, +a], [-a, -a]])
-    points = numpy.moveaxis(points, 0, 1)
-    return points
-
-
-def _pma(data):
+def _c4_aa(data):
     a = numpy.asarray(data)
     points = numpy.array([[+a, +a], [-a, +a], [+a, -a], [-a, -a]])
     points = numpy.moveaxis(points, 0, 1)
     return points
 
 
-def _symm_r0(r):
-    zero = numpy.zeros_like(r)
-    points = numpy.array([[+r, zero], [-r, zero], [zero, +r], [zero, -r]])
-    points = numpy.moveaxis(points, 0, 1)
-    return points
-
-
-def _s40(data):
+def _c4_a0(data):
     a = numpy.asarray(data)
     zero = numpy.zeros_like(a)
     points = numpy.array([[+a, zero], [-a, zero], [zero, +a], [zero, -a]])
@@ -94,8 +81,8 @@ def expand_symmetries_points_only(data):
     for key, points_raw in data.items():
         fun = {
             "d4": _d4,
-            "symm_s": _symm_s,
-            "symm_r0": _symm_r0,
+            "c4_aa": _c4_aa,
+            "c4_a0": _c4_a0,
             "s4": _s4,
             "zero": _zero,
             "pm2": _pm2,
@@ -103,8 +90,6 @@ def expand_symmetries_points_only(data):
             "pmx": _pmx,
             "pmx2": _pmx2,
             "pmy": _pmy,
-            "pma": _pma,
-            "s40": _s40,
             "plain": lambda vals: vals.reshape(2, 1, -1),
         }[key]
         pts = fun(numpy.asarray(points_raw))

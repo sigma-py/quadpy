@@ -51,7 +51,7 @@ def mysovskih_2():
 
     s4, s5 = sqrt((10 - pm_ * sqrt10) / 60)
 
-    d = {"s40": [[B1, B2, B3], [r1, r2, r3]], "d4": [[B4, B5], [r4, r5], [s4, s5]]}
+    d = {"c4_a0": [[B1, B2, B3], [r1, r2, r3]], "d4": [[B4, B5], [r4, r5], [s4, s5]]}
     points, weights = expand_symmetries(d)
     return S2Scheme("Mysovskih 2", weights, points, 11, _source)
 
