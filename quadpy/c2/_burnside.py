@@ -16,8 +16,8 @@ source = article(
 
 def burnside():
     d = {
-        "symm_r0": [[frac(10, 49)], [sqrt(frac(7, 15))]],
-        "symm_s": [[frac(9, 196)], [sqrt(frac(7, 9))]],
+        "c4_a0": [[frac(10, 49)], [sqrt(frac(7, 15))]],
+        "c4_aa": [[frac(9, 196)], [sqrt(frac(7, 9))]],
     }
     points, weights = expand_symmetries(d)
     return C2Scheme("Burnside", weights, points, 5, source)

@@ -1,8 +1,8 @@
 import numpy
 import sympy
 
-from ..helpers import fs_array, fsd, phdthesis, pm, untangle
-from ._helpers import S2Scheme
+from ..helpers import phdthesis
+from ._helpers import S2Scheme, expand_symmetries
 
 _source = phdthesis(
     authors=["William Hollis Peirce"],
@@ -29,9 +29,8 @@ def peirce_1956_1():
     # ERR Stroud incorrectly lists 4 instead of 41 here.
     B2, B3 = (551 + pm_ * 41 * sqrt29) / 6264
 
-    data = [(B1, fsd(2, (r, 1))), (B2, pm([s, s])), (B3, pm([t, t]))]
-
-    points, weights = untangle(data)
+    d = {"c4_a0": [[B1], [r]], "c4_aa": [[B2, B3], [s, t]]}
+    points, weights = expand_symmetries(d)
     return S2Scheme("Peirce 1956-1", weights, points, 7, _source)
 
 
@@ -52,14 +51,11 @@ def peirce_1956_2():
     B3 = frac(1, 18)
     B4 = (5585 + 1440 * sqrt15) / 508176
 
-    data = [
-        (B1, fsd(2, (r, 1))),
-        (B2, fs_array([u1, v1])),
-        (B3, fs_array([u2, v2])),
-        (B4, fs_array([u3, v3])),
-    ]
-
-    points, weights = untangle(data)
+    d = {
+        "c4_a0": [[B1], [r]],
+        "d4": [[B2, B3, B4], [u1, u2, u3], [v1, v2, v3]],
+    }
+    points, weights = expand_symmetries(d)
     return S2Scheme("Peirce 1956-2", weights, points, 9, _source)
 
 
@@ -80,14 +76,10 @@ def peirce_1956_3():
     u2, v2 = sqrt((5 + sqrt15 + pm_ * 2 * sqrt(40 * sqrt15 - 150)) / 20)
     t = sqrt((5 - sqrt15) / 20)
 
-    data = [
-        (B1, fsd(2, (r1, 1))),
-        (B2, fsd(2, (r2, 1))),
-        (B3, fsd(2, (r3, 1))),
-        (C1, fs_array([u1, v1])),
-        (C2, fs_array([u2, v2])),
-        (D, pm([t, t])),
-    ]
-
-    points, weights = untangle(data)
+    d = {
+        "c4_a0": [[B1, B2, B3], [r1, r2, r3]],
+        "d4": [[C1, C2], [u1, u2], [v1, v2]],
+        "c4_aa": [[D], [t]],
+    }
+    points, weights = expand_symmetries(d)
     return S2Scheme("Peirce 1956-3", weights, points, 11, _source)

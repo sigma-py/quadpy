@@ -55,6 +55,7 @@ def stroud_s2_9_3():
 
     data = [(B0, z(2)), (B1, r1 * x), (B2, r2 * x)]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return S2Scheme("Stroud S2 9-3", weights, points, 9, _source)
 
 

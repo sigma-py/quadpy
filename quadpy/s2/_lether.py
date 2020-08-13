@@ -21,7 +21,7 @@ def lether(n):
     p, w = numpy.polynomial.legendre.leggauss(n)
 
     mu = numpy.arange(1, n + 1)
-    points = numpy.column_stack(
+    points = numpy.array(
         [
             numpy.tile(numpy.cos(mu * numpy.pi / (n + 1)), n),
             numpy.outer(p, numpy.sin(mu * numpy.pi / (n + 1))).flatten(),

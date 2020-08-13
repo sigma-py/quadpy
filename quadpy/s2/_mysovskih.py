@@ -1,7 +1,7 @@
 import numpy
 import sympy
 
-from ..helpers import article, fs_array, fsd, untangle, z
+from ..helpers import article, expand_symmetries, untangle, z
 from ._helpers import S2Scheme
 
 _source = article(
@@ -33,6 +33,7 @@ def mysovskih_1(alpha=0):
     data = [(B0, z(2)), (B1, x)]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return S2Scheme("Mysovskih 1", weights, points, 4, _source)
 
 
@@ -48,17 +49,10 @@ def mysovskih_2():
     r2 = sqrt(frac(3, 5))
     r4, r5 = sqrt((10 - pm_ * sqrt10) / 20)
 
-    s4, s5 = sqrt((10 - pm_ * sqrt10) / 60)
+    c4, s5 = sqrt((10 - pm_ * sqrt10) / 60)
 
-    data = [
-        (B1, fsd(2, (r1, 1))),
-        (B2, fsd(2, (r2, 1))),
-        (B3, fsd(2, (r3, 1))),
-        (B4, fs_array([r4, s4])),
-        (B5, fs_array([r5, s5])),
-    ]
-
-    points, weights = untangle(data)
+    d = {"c4_a0": [[B1, B2, B3], [r1, r2, r3]], "d4": [[B4, B5], [r4, r5], [c4, s5]]}
+    points, weights = expand_symmetries(d)
     return S2Scheme("Mysovskih 2", weights, points, 11, _source)
 
 
@@ -110,4 +104,5 @@ def mysovskih_3():
     ]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return S2Scheme("Mysovskih 3", weights, points, 15, _source)

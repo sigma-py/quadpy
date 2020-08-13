@@ -109,7 +109,7 @@ def test_scheme(scheme):
 
     print(scheme)
 
-    evaluator = orthopy.s2.xu.Eval(scheme.points.T, "normal")
+    evaluator = orthopy.s2.xu.Eval(scheme.points, "normal")
 
     k = 0
     max_err = 0.0

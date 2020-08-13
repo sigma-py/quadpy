@@ -2,7 +2,7 @@ import numpy
 import sympy
 from mpmath import mp
 
-from ..helpers import article, fsd, pm, untangle, z
+from ..helpers import article, expand_symmetries, untangle, z
 from ._helpers import S2Scheme
 
 _source = article(
@@ -34,6 +34,7 @@ def albrecht_1():
     data = [(frac(1, 4), sqrt(frac(1, 2)) * t)]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return S2Scheme("Albrecht 1", weights, points, 3, _source)
 
 
@@ -44,6 +45,7 @@ def albrecht_2():
     data = [(frac(1, 4), z(2)), (frac(1, 8), sqrt(frac(2, 3)) * t)]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return S2Scheme("Albrecht 2", weights, points, 5, _source)
 
 
@@ -61,6 +63,7 @@ def albrecht_3():
     data = [(frac(2, 27), sqrt(frac(3, 4)) * t), (a1, rho1 * s), (a2, rho2 * s)]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return S2Scheme("Albrecht 3", weights, points, 7, _source)
 
 
@@ -81,6 +84,7 @@ def albrecht_4():
     data = [(B0, z(2)), (B1, rho1 * s), (B2, rho2 * s), (C, sqrt(frac(4, 5)) * t)]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return S2Scheme("Albrecht 4", weights, points, 9, _source)
 
 
@@ -104,16 +108,12 @@ def albrecht_5():
     u = sqrt(frac(5, 6)) * cos(pi / 8)
     v = sqrt(frac(5, 6)) * sin(pi / 8)
 
-    data = [
-        (B[0], fsd(2, (sqrt(sigma2[0]), 1))),
-        (B[1], fsd(2, (sqrt(sigma2[1]), 1))),
-        (B[2], fsd(2, (sqrt(sigma2[2]), 1))),
-        (C1, pm([s1, s1])),
-        (C2, pm([s2, s2])),
-        (D, fsd(2, (u, 1), (v, 1))),
-    ]
-
-    points, weights = untangle(data)
+    d = {
+        "c4_a0": [B, [sqrt(sigma2[0]), sqrt(sigma2[1]), sqrt(sigma2[2])]],
+        "c4_aa": [[C1, C2], [s1, s2]],
+        "d4": [[D], [u], [v]],
+    }
+    points, weights = expand_symmetries(d)
     return S2Scheme("Albrecht 5", weights, points, 11, _source)
 
 
@@ -143,6 +143,7 @@ def albrecht_6():
     ]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return S2Scheme("Albrecht 6", weights, points, 13, _source)
 
 
@@ -176,6 +177,7 @@ def albrecht_7():
     ]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return S2Scheme("Albrecht 7", weights, points, 15, _source)
 
 
@@ -218,4 +220,5 @@ def albrecht_8():
     ]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return S2Scheme("Albrecht 8", weights, points, 17, _source)

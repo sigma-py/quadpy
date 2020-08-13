@@ -26,7 +26,7 @@ sin = numpy.vectorize(sympy.sin)
 
 def hammer_stroud_11_2():
     # ERR Incorrectly stated in Stroud with 0.5 instead of sqrt(0.5)
-    d = {"s40": [[frac(1, 4)], [sqrt(frac(1, 2))]]}
+    d = {"c4_a0": [[frac(1, 4)], [sqrt(frac(1, 2))]]}
     points, weights = expand_symmetries(d)
     return S2Scheme("Hammer-Stroud 11-2", weights, points, 3, _source)
 
@@ -34,8 +34,8 @@ def hammer_stroud_11_2():
 def hammer_stroud_12_2():
     d = {
         "zero": [[frac(1, 6)]],
-        "s40": [[frac(1, 6)], [sqrt(frac(1, 2))]],
-        "pm": [[frac(1, 24)], [sqrt(frac(1, 2))], [sqrt(frac(1, 2))]],
+        "c4_a0": [[frac(1, 6)], [sqrt(frac(1, 2))]],
+        "sxy": [[frac(1, 24)], [sqrt(frac(1, 2))], [sqrt(frac(1, 2))]],
     }
     points, weights = expand_symmetries(d)
     return S2Scheme("Hammer-Stroud 12-2", weights, points, 5, _source)
@@ -61,10 +61,11 @@ def hammer_stroud_18():
     r1, r2 = sqrt((3 - pm_ * sqrt(3)) / 6)
 
     a = (2 * numpy.arange(8) + 1) * pi / 8
-    x = numpy.array([cos(a), sin(a)]).T
 
-    points = numpy.vstack([r1 * x, r2 * x])
-    weights = numpy.full(points.shape[0], frac(1, 16))
+    x = numpy.array([cos(a), sin(a)])
+    points = numpy.hstack([r1 * x, r2 * x])
+
+    weights = numpy.full(points.shape[1], frac(1, 16))
     return S2Scheme("Hammer-Stroud 18", weights, points, 7, _source)
 
 
@@ -78,12 +79,12 @@ def hammer_stroud_19():
 
     d = {
         "zero": [[frac(1, 9)]],
-        "fsd": [
+        "d4": [
             [alpha1, alpha3],
             [0.5505043204538557, 0.7932084745126058],
             [0.2280263556769715, 0.4645097310495256],
         ],
-        "s40": [[alpha2], [a]],
+        "c4_a0": [[alpha2], [a]],
     }
     points, weights = expand_symmetries(d)
     return S2Scheme("Hammer-Stroud 19", weights, points, 9, _source)
@@ -100,7 +101,7 @@ def hammer_stroud_21():
     alpha2 = 0.0341505695624825 / numpy.pi
 
     d = {
-        "fsd": [
+        "d4": [
             [alpha0, alpha1, alpha1, alpha1, alpha1, alpha2, alpha2, alpha2],
             [
                 0.2584361661674054,
