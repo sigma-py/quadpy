@@ -9,6 +9,7 @@ from ..helpers import QuadratureScheme, plot_disks
 class E2r2Scheme(QuadratureScheme):
     def __init__(self, name, weights, points, degree, source, tol=1.0e-14):
         self.domain = "E2r2"
+        assert points.shape[0] == 2
         super().__init__(name, weights, points, degree, source, tol)
 
     def plot(self, show_axes=False):

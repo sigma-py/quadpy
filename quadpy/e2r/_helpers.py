@@ -73,7 +73,7 @@ def _s40_alt(a):
 
 def _ab_pm_alt(data):
     a, b = data
-    points = numpy.array([[+a, +b], [-a, +b], [+a, -b], [-a, -b]],)
+    points = numpy.array([[+a, +b], [-a, +b], [+a, -b], [-a, -b]])
     points = numpy.moveaxis(points, 0, 1)
     return points
 

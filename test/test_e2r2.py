@@ -37,11 +37,11 @@ def test_scheme(scheme):
 
     print(scheme)
 
-    evaluator = orthopy.enr2.Eval(scheme.points.T, "physicists")
+    evaluator = orthopy.enr2.Eval(scheme.points, "physicists")
 
     k = 0
     while True:
-        approximate = scheme.integrate(lambda x: next(evaluator)[0])
+        approximate = scheme.integrate(lambda x: next(evaluator))
         exact = evaluator.int_p0 if k == 0 else 0.0
         err = numpy.abs(approximate - exact)
         if numpy.any(err > scheme.test_tolerance * 1.1):
