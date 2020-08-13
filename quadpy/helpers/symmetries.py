@@ -38,16 +38,9 @@ def _c4(data):
     return points
 
 
-def _pm2(data):
+def _sxy(data):
     x, y = data
     points = numpy.array([[+x, +y], [+x, -y], [-x, +y], [-x, -y]])
-    points = numpy.moveaxis(points, 0, 1)
-    return points
-
-
-def _pm(data):
-    x, y = data
-    points = numpy.array([[+x, +y], [-x, -y]])
     points = numpy.moveaxis(points, 0, 1)
     return points
 
@@ -55,6 +48,13 @@ def _pm(data):
 def _sx(data):
     x, y = data
     points = numpy.array([[+x, y], [-x, y]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _c2(data):
+    x, y = data
+    points = numpy.array([[+x, +y], [-x, -y]])
     points = numpy.moveaxis(points, 0, 1)
     return points
 
@@ -87,8 +87,8 @@ def expand_symmetries_points_only(data):
             "d4": _d4,
             "c2_a0": _c2_a0,
             "c2_0a": _c2_0a,
-            "pm2": _pm2,
-            "pm": _pm,
+            "sxy": _sxy,
+            "c2": _c2,
             "sx": _sx,
             "plain": lambda vals: vals.reshape(2, 1, -1),
         }[key]

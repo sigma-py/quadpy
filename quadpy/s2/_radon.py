@@ -33,7 +33,7 @@ def radon(alpha):
         "zero": [[A]],
         "c2_a0": [[B], [r]],
         # ERR Stroud is missing +- in front of t.
-        "pm2": [[B], [s], [t]],
+        "sxy": [[B], [s], [t]],
     }
     points, weights = expand_symmetries(d)
     return S2Scheme(f"Radon({alpha})", weights, points, 5, _source)

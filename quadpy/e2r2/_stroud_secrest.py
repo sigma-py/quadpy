@@ -22,7 +22,7 @@ def stroud_secrest_5():
     A = frac(1, 2)
     B = frac(1, 12)
 
-    d = {"zero": [[A]], "c2_a0": [[B], [nu]], "pm2": [[B], [xi], [eta]]}
+    d = {"zero": [[A]], "c2_a0": [[B], [nu]], "sxy": [[B], [xi], [eta]]}
     points, weights = expand_symmetries(d)
     return E2r2Scheme("Stroud-Secrest V", weights, points, 5, _source)
 

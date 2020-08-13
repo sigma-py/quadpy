@@ -32,8 +32,8 @@ def albrecht_collatz_2():
     t = sqrt(frac(14, 15))
     d = {
         "zero": [[frac(2, 7)]],
-        "pm": [[frac(5, 63)], [0], [t]],
-        "pm2": [[frac(5, 36)], [r], [s]],
+        "c2": [[frac(5, 63)], [0], [t]],
+        "sxy": [[frac(5, 36)], [r], [s]],
     }
     points, weights = expand_symmetries(d)
     return C2Scheme("Albrecht-Collatz 2", weights, points, 5, source, 4.627e-16)
@@ -44,7 +44,7 @@ def albrecht_collatz_3():
     s, t = [sqrt((7 + i * sqrt(24)) / 15) for i in [+1, -1]]
     d = {
         "zero": [[frac(2, 7)]],
-        "pm": [[frac(25, 168), frac(5, 48), frac(5, 48)], [r, s, t], [r, -t, -s]],
+        "c2": [[frac(25, 168), frac(5, 48), frac(5, 48)], [r, s, t], [r, -t, -s]],
     }
     points, weights = expand_symmetries(d)
     return C2Scheme("Albrecht-Collatz 3", weights, points, 5, source, 4.442e-16)

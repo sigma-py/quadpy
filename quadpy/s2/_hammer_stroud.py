@@ -35,7 +35,7 @@ def hammer_stroud_12_2():
     d = {
         "zero": [[frac(1, 6)]],
         "c4_a0": [[frac(1, 6)], [sqrt(frac(1, 2))]],
-        "pm2": [[frac(1, 24)], [sqrt(frac(1, 2))], [sqrt(frac(1, 2))]],
+        "sxy": [[frac(1, 24)], [sqrt(frac(1, 2))], [sqrt(frac(1, 2))]],
     }
     points, weights = expand_symmetries(d)
     return S2Scheme("Hammer-Stroud 12-2", weights, points, 5, _source)
