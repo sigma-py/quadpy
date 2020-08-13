@@ -41,7 +41,7 @@ def stroud_4_1():
 def stroud_5_2():
     # Cartesian product Gauss formula
     r = sqrt(frac(3, 2))
-    d = {"zero": [[frac(4, 9)]], "s40": [[frac(1, 9)], [r]], "s4": [[frac(1, 36)], [r]]}
+    d = {"zero": [[frac(4, 9)]], "s40": [[frac(1, 9)], [r]], "pma": [[frac(1, 36)], [r]]}
     points, weights = expand_symmetries(d)
     return E2r2Scheme("Stroud 5-2", weights, points, 5, _source)
 
