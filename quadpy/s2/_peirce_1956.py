@@ -1,7 +1,7 @@
 import numpy
 import sympy
 
-from ..helpers import fs_array, fsd, phdthesis, untangle
+from ..helpers import phdthesis
 from ._helpers import S2Scheme, expand_symmetries
 
 _source = phdthesis(
@@ -54,14 +54,11 @@ def peirce_1956_2():
     B3 = frac(1, 18)
     B4 = (5585 + 1440 * sqrt15) / 508176
 
-    data = [
-        (B1, fsd(2, (r, 1))),
-        (B2, fs_array([u1, v1])),
-        (B3, fs_array([u2, v2])),
-        (B4, fs_array([u3, v3])),
-    ]
-
-    points, weights = untangle(data)
+    d = {
+        "s40": [[B1], [r]],
+        "fsd": [[B2, B3, B4], [u1, u2, u3], [v1, v2, v3]],
+    }
+    points, weights = expand_symmetries(d)
     return S2Scheme("Peirce 1956-2", weights, points, 9, _source)
 
 

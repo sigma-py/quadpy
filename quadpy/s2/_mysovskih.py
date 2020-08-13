@@ -33,6 +33,7 @@ def mysovskih_1(alpha=0):
     data = [(B0, z(2)), (B1, x)]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return S2Scheme("Mysovskih 1", weights, points, 4, _source)
 
 
@@ -59,6 +60,7 @@ def mysovskih_2():
     ]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return S2Scheme("Mysovskih 2", weights, points, 11, _source)
 
 
@@ -110,4 +112,5 @@ def mysovskih_3():
     ]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return S2Scheme("Mysovskih 3", weights, points, 15, _source)

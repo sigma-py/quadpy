@@ -23,7 +23,7 @@ def peirce_1957(m):
     # scale points to [r0, r1] (where r0 = 0, r1 = 1 for now)
     p = numpy.sqrt(0.5 * (p + 1.0))
     p_theta = numpy.dstack(numpy.meshgrid(p, theta)).reshape(-1, 2).T
-    points = numpy.column_stack(
+    points = numpy.array(
         [p_theta[0] * numpy.cos(p_theta[1]), p_theta[0] * numpy.sin(p_theta[1])]
     )
     # When integrating between 0 and 1, the weights are exactly the Gauss-Legendre
