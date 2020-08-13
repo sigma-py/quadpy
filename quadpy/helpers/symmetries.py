@@ -31,7 +31,7 @@ def _c4_a0(data):
     return points
 
 
-def _s4(data):
+def _c4(data):
     a, b = data
     points = numpy.array([[+a, +b], [-a, -b], [-b, +a], [+b, -a]])
     points = numpy.moveaxis(points, 0, 1)
@@ -80,11 +80,12 @@ def expand_symmetries_points_only(data):
 
     for key, points_raw in data.items():
         fun = {
-            "d4": _d4,
+            "zero": _zero,
             "c4_aa": _c4_aa,
             "c4_a0": _c4_a0,
-            "s4": _s4,
-            "zero": _zero,
+            "c4": _c4,
+            "d4": _d4,
+            #
             "pm2": _pm2,
             "pm": _pm,
             "pmx": _pmx,
