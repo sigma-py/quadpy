@@ -22,11 +22,7 @@ def stroud_secrest_5():
     A = frac(1, 2)
     B = frac(1, 12)
 
-    d = {
-        "zero": [[A]],
-        "pmx": [[B], [nu]],
-        "pm2": [[B], [xi], [eta]]
-    }
+    d = {"zero": [[A]], "pmx": [[B], [nu]], "pm2": [[B], [xi], [eta]]}
     points, weights = expand_symmetries(d)
     return E2r2Scheme("Stroud-Secrest V", weights, points, 5, _source)
 
@@ -38,9 +34,6 @@ def stroud_secrest_6():
     A = frac(1, 36)
     B, C = [(5 + p_m * 2 * sqrt5) / 45 for p_m in [+1, -1]]
 
-    d = {
-        "s40": [[A], [nu]],
-        "s4": [[B, C], [xi, eta]]
-    }
+    d = {"s40": [[A], [nu]], "s4": [[B, C], [xi, eta]]}
     points, weights = expand_symmetries(d)
     return E2r2Scheme("Stroud-Secrest VI", weights, points, 7, _source)
