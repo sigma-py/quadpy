@@ -31,7 +31,7 @@ def radon(alpha):
 
     d = {
         "zero": [[A]],
-        "pmx": [[B], [r]],
+        "c2_a0": [[B], [r]],
         # ERR Stroud is missing +- in front of t.
         "pm2": [[B], [s], [t]],
     }

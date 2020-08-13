@@ -52,21 +52,21 @@ def _pm(data):
     return points
 
 
-def _pmx2(data):
+def _sx(data):
     x, y = data
     points = numpy.array([[+x, y], [-x, y]])
     points = numpy.moveaxis(points, 0, 1)
     return points
 
 
-def _pmx(r):
+def _c2_a0(r):
     zero = numpy.zeros_like(r)
     points = numpy.array([[+r, zero], [-r, zero]])
     points = numpy.moveaxis(points, 0, 1)
     return points
 
 
-def _pmy(data):
+def _c2_0a(data):
     a = numpy.asarray(data)
     zero = numpy.zeros_like(a)
     points = numpy.array([[zero, +a], [zero, -a]])
@@ -85,12 +85,11 @@ def expand_symmetries_points_only(data):
             "c4_a0": _c4_a0,
             "c4": _c4,
             "d4": _d4,
-            #
+            "c2_a0": _c2_a0,
+            "c2_0a": _c2_0a,
             "pm2": _pm2,
             "pm": _pm,
-            "pmx": _pmx,
-            "pmx2": _pmx2,
-            "pmy": _pmy,
+            "sx": _sx,
             "plain": lambda vals: vals.reshape(2, 1, -1),
         }[key]
         pts = fun(numpy.asarray(points_raw))
