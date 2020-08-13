@@ -62,9 +62,34 @@ def _pmx(r):
     return points
 
 
-def _pmy(r):
-    zero = numpy.zeros_like(r)
-    points = numpy.array([[zero, +r], [zero, -r]])
+def _pma(data):
+    a = numpy.asarray(data)
+    points = numpy.array([[+a, +a], [-a, +a], [+a, -a], [-a, -a]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _pmy(data):
+    a = numpy.asarray(data)
+    zero = numpy.zeros_like(a)
+    points = numpy.array([[zero, +a], [zero, -a]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _fsd(data):
+    a, b = numpy.asarray(data)
+    points = numpy.array(
+        [[+a, +b], [-a, +b], [+a, -b], [-a, -b], [+b, +a], [-b, +a], [+b, -a], [-b, -a]]
+    )
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _s40(data):
+    a = numpy.asarray(data)
+    zero = numpy.zeros_like(a)
+    points = numpy.array([[+a, zero], [-a, zero], [zero, +a], [zero, -a]])
     points = numpy.moveaxis(points, 0, 1)
     return points
 
@@ -85,6 +110,9 @@ def expand_symmetries_points_only(data):
             "pmx": _pmx,
             "pmx2": _pmx2,
             "pmy": _pmy,
+            "pma": _pma,
+            "s40": _s40,
+            "fsd": _fsd,
             "plain": lambda vals: vals.reshape(2, 1, -1),
         }[key]
         pts = fun(numpy.asarray(points_raw))
