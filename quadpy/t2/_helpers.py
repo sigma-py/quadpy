@@ -8,9 +8,21 @@ from ..tn import TnScheme, get_vol, transform
 
 class T2Scheme(TnScheme):
     def __init__(
-        self, name, weights, points, degree, source=None, tol=1.0e-14, comments=None
+        self,
+        name,
+        symmetry_data,
+        degree,
+        source=None,
+        tol=1.0e-14,
+        comments=None,
+        weight_factor=None,
     ):
         self.domain = "T2"
+
+        points, weights = expand_symmetries(symmetry_data)
+        if weight_factor is not None:
+            weights *= weight_factor
+
         assert points.shape[0] == 3, f"{name}, {points.shape}"
         super().__init__(name, 2, weights, points, degree, source, tol, comments)
 
@@ -102,6 +114,7 @@ def expand_symmetries_points_only(data):
             "swap_ab": _swap_ab,
             "s2_static": _s2_static,
             "vertex": _vertex,
+            "plain": lambda data: data.reshape(3, 1, -1),
         }[key]
         pts = fun(numpy.asarray(points_raw))
 
@@ -135,13 +148,9 @@ def _read(filepath, source):
     degree = content["degree"]
     name = content["name"]
     tol = content["test_tolerance"]
-
-    points, weights = expand_symmetries(content["data"])
-
-    if "weight factor" in content:
-        weights *= content["weight factor"]
-
-    return T2Scheme(name, weights, points, degree, source, tol)
+    d = content["data"]
+    weight_factor = content["weight factor"] if "weight factor" in content else None
+    return T2Scheme(name, d, degree, source, tol, weight_factor=weight_factor)
 
 
 def _scheme_from_dict(content, source=None):

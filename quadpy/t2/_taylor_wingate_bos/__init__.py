@@ -3,7 +3,7 @@ import pathlib
 from sympy import Rational as frac
 
 from ...helpers import article
-from .._helpers import T2Scheme, _read, expand_symmetries
+from .._helpers import T2Scheme, _read
 
 source = article(
     authors=["Mark A. Taylor", "Beth A. Wingate", "Len P. Bos"],
@@ -21,10 +21,8 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def taylor_wingate_bos_1():
-    d = {"s2": [[frac(2, 3)], [frac(1, 6)]]}
-    points, weights = expand_symmetries(d)
-    weights /= 2
-    return T2Scheme("Taylor-Wingate-Bos 1", weights, points, 2, source)
+    d = {"s2": [[frac(1, 3)], [frac(1, 6)]]}
+    return T2Scheme("Taylor-Wingate-Bos 1", d, 2, source)
 
 
 def taylor_wingate_bos_2():

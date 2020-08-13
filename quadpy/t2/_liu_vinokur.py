@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import T2Scheme, expand_symmetries
+from ._helpers import T2Scheme
 
 source = article(
     authors=["Y. Liu", "M. Vinokur"],
@@ -17,30 +17,26 @@ source = article(
 
 def liu_vinokur_01():
     d = {"s3": [[1]]}
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Liu-Vinokur 1", weights, points, 1, source)
+    return T2Scheme("Liu-Vinokur 1", d, 1, source)
 
 
 def liu_vinokur_02():
     alpha = 1
     b = (1 - alpha) / 3
     d = {"s2": [[frac(1, 3)], [b]]}
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Liu-Vinokur 2", weights, points, 1, source)
+    return T2Scheme("Liu-Vinokur 2", d, 1, source)
 
 
 def liu_vinokur_03():
     alpha = -frac(1, 2)
     b = (1 - alpha) / 3
     d = {"s2": [[frac(1, 3)], [b]]}
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Liu-Vinokur 3", weights, points, 2, source)
+    return T2Scheme("Liu-Vinokur 3", d, 2, source)
 
 
 def liu_vinokur_04():
     d = {"s3": [[frac(3, 4)]], "s2": [[frac(1, 12)], [0]]}
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Liu-Vinokur 4", weights, points, 2, source)
+    return T2Scheme("Liu-Vinokur 4", d, 2, source)
 
 
 def liu_vinokur_05():
@@ -48,8 +44,7 @@ def liu_vinokur_05():
     alpha = frac(2, 5)
     b = (1 - alpha) / 3
     d = {"s3": [[-frac(9, 16)]], "s2": [[frac(25, 48)], [b]]}
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Liu-Vinokur 5", weights, points, 3, source)
+    return T2Scheme("Liu-Vinokur 5", d, 3, source)
 
 
 def liu_vinokur_06():
@@ -59,8 +54,7 @@ def liu_vinokur_06():
     b0 = (1 - alpha0) / 3
     b1 = (1 - alpha1) / 3
     d = {"s2": [[(1 + sqrt21) / 120, (39 - sqrt21) / 120], [b0, b1]]}
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Liu-Vinokur 6", weights, points, 3, source)
+    return T2Scheme("Liu-Vinokur 6", d, 3, source)
 
 
 def liu_vinokur_07():
@@ -69,8 +63,7 @@ def liu_vinokur_07():
     b0 = (1 - alpha0) / 3
     b1 = (1 - alpha1) / 3
     d = {"s3": [[frac(9, 20)]], "s2": [[frac(1, 20), frac(2, 15)], [b0, b1]]}
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Liu-Vinokur 7", weights, points, 3, source)
+    return T2Scheme("Liu-Vinokur 7", d, 3, source)
 
 
 def liu_vinokur_08():
@@ -89,8 +82,7 @@ def liu_vinokur_08():
             [b1, b2],
         ]
     }
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Liu-Vinokur 8", weights, points, 4, source)
+    return T2Scheme("Liu-Vinokur 8", d, 4, source)
 
 
 def liu_vinokur_09():
@@ -99,8 +91,7 @@ def liu_vinokur_09():
     b0 = (1 - alpha0) / 3
     b1 = (1 - alpha1) / 3
     d = {"s3": [[frac(27, 80)]], "s2": [[frac(8, 105), frac(81, 560)], [b0, b1]]}
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Liu-Vinokur 9", weights, points, 4, source)
+    return T2Scheme("Liu-Vinokur 9", d, 4, source)
 
 
 def liu_vinokur_10():
@@ -122,8 +113,7 @@ def liu_vinokur_10():
             [b0, b1, b2],
         ]
     }
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Liu-Vinokur 10", weights, points, 4, source)
+    return T2Scheme("Liu-Vinokur 10", d, 4, source)
 
 
 def liu_vinokur_11():
@@ -140,8 +130,7 @@ def liu_vinokur_11():
         "s2": [[-frac(1, 60)], [0]],
         "s1": [[frac(1, 10)], [a], [b]],
     }
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Liu-Vinokur 11", weights, points, 4, source)
+    return T2Scheme("Liu-Vinokur 11", d, 4, source)
 
 
 def liu_vinokur_12():
@@ -155,8 +144,7 @@ def liu_vinokur_12():
         "s3": [[frac(9, 40)]],
         "s2": [[(155 - sqrt15) / 1200, (155 + sqrt15) / 1200], [b0, b1]],
     }
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Liu-Vinokur 12", weights, points, 5, source)
+    return T2Scheme("Liu-Vinokur 12", d, 5, source)
 
 
 def liu_vinokur_13():
@@ -167,5 +155,4 @@ def liu_vinokur_13():
             [0, frac(1, 2), frac(1, 7)],
         ],
     }
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Liu-Vinokur 13", weights, points, 5, source)
+    return T2Scheme("Liu-Vinokur 13", d, 5, source)

@@ -376,8 +376,32 @@ def test_multidim():
     # assert val.shape == (3,)
 
 
+def test_get_good_scheme():
+    degree = 3
+    best = schemes[0]
+    bratio = max(numpy.abs(best.weights)) / min(numpy.abs(best.weights))
+    for scheme in schemes:
+        ratio = max(numpy.abs(scheme.weights)) / min(numpy.abs(scheme.weights))
+        if (
+            scheme.degree >= degree
+            and all(scheme.weights >= 0)
+            and (
+                (len(scheme.weights) < len(best.weights))
+                or
+                (len(scheme.weights) == len(best.weights) and ratio < bratio)
+            )
+        ):
+            best = scheme
+            bratio = ratio
+
+    print(best)
+    exit(1)
+    return
+
+
 if __name__ == "__main__":
-    test_multidim()
+    test_get_good_scheme()
+    # test_multidim()
     # scheme_ = quadpy.t2.WandzuraXiao(3)
     # test_scheme(scheme_, 1.0e-14)
     # test_show(scheme_)

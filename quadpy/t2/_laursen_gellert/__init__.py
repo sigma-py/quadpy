@@ -4,7 +4,7 @@ import numpy
 from sympy import Rational as frac
 
 from ...helpers import article
-from .._helpers import T2Scheme, _read, expand_symmetries
+from .._helpers import T2Scheme, _read
 
 source = article(
     authors=["M.E. Laursen", "M. Gellert"],
@@ -22,33 +22,28 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 def laursen_gellert_01():
     d = {"s3": [[1]]}
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Laursen-Gellert 1", weights, points, 1, source)
+    return T2Scheme("Laursen-Gellert 1", d, 1, source)
 
 
 def laursen_gellert_02a():
     d = {"s2": [[frac(1, 3)], [frac(1, 6)]]}
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Laursen-Gellert 2a", weights, points, 2, source)
+    return T2Scheme("Laursen-Gellert 2a", d, 2, source)
 
 
 def laursen_gellert_02b():
     d = {"s2": [[frac(1, 3)], [frac(1, 2)]]}
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Laursen-Gellert 2b", weights, points, 2, source)
+    return T2Scheme("Laursen-Gellert 2b", d, 2, source)
 
 
 def laursen_gellert_03():
     d = {"s3": [[-frac(9, 16)]], "s2": [[frac(25, 48)], [frac(1, 5)]]}
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Laursen-Gellert 3", weights, points, 3, source)
+    return T2Scheme("Laursen-Gellert 3", d, 3, source)
 
 
 def laursen_gellert_04():
     roots = numpy.polynomial.polynomial.polyroots([-1, 15, -60, 60])
     d = {"s1": [[1 / 6], [roots[2]], [roots[1]]]}
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Laursen-Gellert 4", weights, points, 3, source)
+    return T2Scheme("Laursen-Gellert 4", d, 3, source)
 
 
 def laursen_gellert_05():
@@ -57,8 +52,7 @@ def laursen_gellert_05():
 
 def laursen_gellert_06():
     d = {"s3": [[3 / 8]], "s1": [[5 / 48], [0.736712498968435], [0.237932366472434]]}
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Laursen-Gellert 6", weights, points, 4, source)
+    return T2Scheme("Laursen-Gellert 6", d, 4, source)
 
 
 def laursen_gellert_07():
@@ -69,8 +63,7 @@ def laursen_gellert_07():
             [0.101286507323456, 0.470142064105115],
         ],
     }
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Laursen-Gellert 7", weights, points, 5, source)
+    return T2Scheme("Laursen-Gellert 7", d, 5, source)
 
 
 def laursen_gellert_08():
