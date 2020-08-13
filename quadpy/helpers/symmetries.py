@@ -94,6 +94,22 @@ def _s40(data):
     return points
 
 
+def _s8_alt(data):
+    a, b = data
+    points = numpy.array(
+        [[+a, +b], [-a, +b], [+a, -b], [-a, -b], [+b, +a], [-b, +a], [+b, -a], [-b, -a]]
+    )
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _ab_pm_alt(data):
+    a, b = data
+    points = numpy.array([[+a, +b], [-a, +b], [+a, -b], [-a, -b]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
 def expand_symmetries_points_only(data):
     points = []
     counts = []
@@ -104,6 +120,7 @@ def expand_symmetries_points_only(data):
             "symm_s": _symm_s,
             "symm_r0": _symm_r0,
             "s4": _s4,
+            "s8": _s8_alt,
             "zero": _zero,
             "pm2": _pm2,
             "pm": _pm,
@@ -113,6 +130,7 @@ def expand_symmetries_points_only(data):
             "pma": _pma,
             "s40": _s40,
             "fsd": _fsd,
+            "ab_pm": _ab_pm_alt,
             "plain": lambda vals: vals.reshape(2, 1, -1),
         }[key]
         pts = fun(numpy.asarray(points_raw))

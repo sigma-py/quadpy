@@ -39,7 +39,7 @@ def stroud_secrest_6():
 
     d = {
         "s40": [[A], [nu]],
-        "s4": [[B, C], [xi, eta]],
+        "pma": [[B, C], [xi, eta]],
     }
     points, weights = expand_symmetries(d)
     return E2rScheme("Stroud-Secrest VI", weights, points, 7, _source)
