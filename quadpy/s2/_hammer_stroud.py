@@ -61,10 +61,11 @@ def hammer_stroud_18():
     r1, r2 = sqrt((3 - pm_ * sqrt(3)) / 6)
 
     a = (2 * numpy.arange(8) + 1) * pi / 8
-    x = numpy.array([cos(a), sin(a)]).T
 
-    points = numpy.vstack([r1 * x, r2 * x])
-    weights = numpy.full(points.shape[0], frac(1, 16))
+    x = numpy.array([cos(a), sin(a)])
+    points = numpy.hstack([r1 * x, r2 * x])
+
+    weights = numpy.full(points.shape[1], frac(1, 16))
     return S2Scheme("Hammer-Stroud 18", weights, points, 7, _source)
 
 
