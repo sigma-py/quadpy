@@ -20,6 +20,7 @@ source = article(
 def stroud_secrest_1(n):
     data = [(frac(1, n + 1), sqrt(n + 1) * _nsimplex(n))]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return EnrScheme("Stroud-Secrest I", n, weights, points, 2, source, 4.676e-14)
 
 
@@ -27,6 +28,7 @@ def stroud_secrest_2(n):
     nu = sqrt(n * (n + 1))
     data = [(frac(1, 2 * n), fsd(n, (nu, 1)))]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return EnrScheme("Stroud-Secrest II", n, weights, points, 3, source)
 
 
@@ -34,6 +36,7 @@ def stroud_secrest_3(n):
     nu = sqrt(n + 1)
     data = [(frac(1, 2 ** n), pm(n * [nu]))]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return EnrScheme("Stroud-Secrest III", n, weights, points, 3, source)
 
 
@@ -46,4 +49,5 @@ def stroud_secrest_4(n):
 
     data = [(A, numpy.full((1, n), 0)), (B, fsd(n, (nu, 1))), (C, fsd(n, (xi, 2)))]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return EnrScheme("Stroud-Secrest IV", n, weights, points, 5, source)

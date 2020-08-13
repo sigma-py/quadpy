@@ -97,6 +97,7 @@ def stroud_1967_5_a(n):
         data += [(A, numpy.full((1, n), +eta)), (A, numpy.full((1, n), -eta))]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return Enr2Scheme("Stroud 1967-5 a", n, weights, points, 5, source)
 
 
@@ -156,4 +157,5 @@ def stroud_1967_5_b(n):
         data += [(A, numpy.full((1, n), +eta)), (A, numpy.full((1, n), -eta))]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return Enr2Scheme("Stroud 1967-5 b", n, weights, points, 5, source)
