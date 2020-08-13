@@ -1,3 +1,4 @@
+import numpy
 from sympy import Rational as frac
 
 from ..helpers import article, rd, untangle
@@ -30,4 +31,5 @@ def stroud_1961(n):
     data = [(A, [(n + 1) * [r]]), (B, rd(n + 1, [(1, 1)])), (C, rd(n + 1, [(s, n)]))]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return TnScheme("Stroud 1961", n, weights, points, degree, source)

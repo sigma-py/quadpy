@@ -274,7 +274,7 @@ def test_scheme(scheme):
 
     triangle = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]])
 
-    evaluator = orthopy.t2.Eval(scheme.points.T, "normal")
+    evaluator = orthopy.t2.Eval(scheme.points, "normal")
 
     # assert contiguous x
     def f(x):

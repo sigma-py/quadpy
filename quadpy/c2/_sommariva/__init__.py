@@ -1,10 +1,7 @@
-import json
 import pathlib
 
-import numpy
-
 from ...helpers import online
-from .._helpers import C2Scheme
+from .._helpers import _read
 
 _source = online(
     authors=["Alvise Sommariva"],
@@ -15,235 +12,221 @@ _source = online(
 this_dir = pathlib.Path(__file__).resolve().parent
 
 
-def _read(index, tol=1.0e-14):
-    filename = f"sommariva_{index:02d}.json"
-    with open(this_dir / filename, "r") as f:
-        data = json.load(f)
-
-    degree = data["degree"]
-
-    data = numpy.array(data["data"])
-    points = data[:, :2]
-    weights = data[:, 2]
-    weights /= 4
-    return C2Scheme(f"Sommariva {index}", weights, points, degree, _source, tol)
-
-
 def sommariva_01():
-    return _read(1)
+    return _read(this_dir / "sommariva_01.json", _source)
 
 
 def sommariva_02():
-    return _read(2)
+    return _read(this_dir / "sommariva_02.json", _source)
 
 
 def sommariva_03():
-    return _read(3)
+    return _read(this_dir / "sommariva_03.json", _source)
 
 
 def sommariva_04():
-    return _read(4)
+    return _read(this_dir / "sommariva_04.json", _source)
 
 
 def sommariva_05():
-    return _read(5)
+    return _read(this_dir / "sommariva_05.json", _source)
 
 
 def sommariva_06():
-    return _read(6)
+    return _read(this_dir / "sommariva_06.json", _source)
 
 
 def sommariva_07():
-    return _read(7)
+    return _read(this_dir / "sommariva_07.json", _source)
 
 
 def sommariva_08():
-    return _read(8)
+    return _read(this_dir / "sommariva_08.json", _source)
 
 
 def sommariva_09():
-    return _read(9)
+    return _read(this_dir / "sommariva_09.json", _source)
 
 
 def sommariva_10():
-    return _read(10)
+    return _read(this_dir / "sommariva_10.json", _source)
 
 
 def sommariva_11():
-    return _read(11)
+    return _read(this_dir / "sommariva_11.json", _source)
 
 
 def sommariva_12():
-    return _read(12)
+    return _read(this_dir / "sommariva_12.json", _source)
 
 
 def sommariva_13():
-    return _read(13)
+    return _read(this_dir / "sommariva_13.json", _source)
 
 
 def sommariva_14():
-    return _read(14)
+    return _read(this_dir / "sommariva_14.json", _source)
 
 
 def sommariva_15():
-    return _read(15)
+    return _read(this_dir / "sommariva_15.json", _source)
 
 
 def sommariva_16():
-    return _read(16)
+    return _read(this_dir / "sommariva_16.json", _source)
 
 
 def sommariva_17():
-    return _read(17)
+    return _read(this_dir / "sommariva_17.json", _source)
 
 
 def sommariva_18():
-    return _read(18)
+    return _read(this_dir / "sommariva_18.json", _source)
 
 
 def sommariva_19():
-    return _read(19)
+    return _read(this_dir / "sommariva_19.json", _source)
 
 
 def sommariva_20():
-    return _read(20)
+    return _read(this_dir / "sommariva_20.json", _source)
 
 
 def sommariva_21():
-    return _read(21, 1.922e-14)
+    return _read(this_dir / "sommariva_21.json", _source)
 
 
 def sommariva_22():
-    return _read(22)
+    return _read(this_dir / "sommariva_22.json", _source)
 
 
 def sommariva_23():
-    return _read(23)
+    return _read(this_dir / "sommariva_23.json", _source)
 
 
 def sommariva_24():
-    return _read(24)
+    return _read(this_dir / "sommariva_24.json", _source)
 
 
 def sommariva_25():
-    return _read(25)
+    return _read(this_dir / "sommariva_25.json", _source)
 
 
 def sommariva_26():
-    return _read(26)
+    return _read(this_dir / "sommariva_26.json", _source)
 
 
 def sommariva_27():
-    return _read(27)
+    return _read(this_dir / "sommariva_27.json", _source)
 
 
 def sommariva_28():
-    return _read(28)
+    return _read(this_dir / "sommariva_28.json", _source)
 
 
 def sommariva_29():
-    return _read(29)
+    return _read(this_dir / "sommariva_29.json", _source)
 
 
 def sommariva_30():
-    return _read(30)
+    return _read(this_dir / "sommariva_30.json", _source)
 
 
 def sommariva_31():
-    return _read(31)
+    return _read(this_dir / "sommariva_31.json", _source)
 
 
 def sommariva_32():
-    return _read(32)
+    return _read(this_dir / "sommariva_32.json", _source)
 
 
 def sommariva_33():
-    return _read(33)
+    return _read(this_dir / "sommariva_33.json", _source)
 
 
 def sommariva_34():
-    return _read(34, 1.222e-14)
+    return _read(this_dir / "sommariva_34.json", _source)
 
 
 def sommariva_35():
-    return _read(35)
+    return _read(this_dir / "sommariva_35.json", _source)
 
 
 def sommariva_36():
-    return _read(36)
+    return _read(this_dir / "sommariva_36.json", _source)
 
 
 def sommariva_37():
-    return _read(37, 1.306e-14)
+    return _read(this_dir / "sommariva_37.json", _source)
 
 
 def sommariva_38():
-    return _read(38)
+    return _read(this_dir / "sommariva_38.json", _source)
 
 
 def sommariva_39():
-    return _read(39)
+    return _read(this_dir / "sommariva_39.json", _source)
 
 
 def sommariva_40():
-    return _read(40)
+    return _read(this_dir / "sommariva_40.json", _source)
 
 
 def sommariva_41():
-    return _read(41)
+    return _read(this_dir / "sommariva_41.json", _source)
 
 
 def sommariva_42():
-    return _read(42)
+    return _read(this_dir / "sommariva_42.json", _source)
 
 
 def sommariva_43():
-    return _read(43)
+    return _read(this_dir / "sommariva_43.json", _source)
 
 
 def sommariva_44():
-    return _read(44)
+    return _read(this_dir / "sommariva_44.json", _source)
 
 
 def sommariva_45():
-    return _read(45)
+    return _read(this_dir / "sommariva_45.json", _source)
 
 
 def sommariva_46():
-    return _read(46)
+    return _read(this_dir / "sommariva_46.json", _source)
 
 
 def sommariva_47():
-    return _read(47)
+    return _read(this_dir / "sommariva_47.json", _source)
 
 
 def sommariva_48():
-    return _read(48)
+    return _read(this_dir / "sommariva_48.json", _source)
 
 
 def sommariva_49():
-    return _read(49)
+    return _read(this_dir / "sommariva_49.json", _source)
 
 
 def sommariva_50():
-    return _read(50)
+    return _read(this_dir / "sommariva_50.json", _source)
 
 
 def sommariva_51():
-    return _read(51)
+    return _read(this_dir / "sommariva_51.json", _source)
 
 
 def sommariva_52():
-    return _read(52)
+    return _read(this_dir / "sommariva_52.json", _source)
 
 
 def sommariva_53():
-    return _read(53)
+    return _read(this_dir / "sommariva_53.json", _source)
 
 
 def sommariva_54():
-    return _read(54)
+    return _read(this_dir / "sommariva_54.json", _source)
 
 
 def sommariva_55():
-    return _read(55)
+    return _read(this_dir / "sommariva_55.json", _source)

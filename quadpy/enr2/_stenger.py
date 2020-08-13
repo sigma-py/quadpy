@@ -1,6 +1,8 @@
 # TODO According to Stroud, Stenger's original article has data up to n == 20.
 import math
 
+import numpy
+
 from ..helpers import article, fsd, untangle, z
 from ._helpers import Enr2Scheme
 
@@ -79,6 +81,7 @@ def stenger_7a(dim):
         (B[5], fsd(dim, (u, 3))),
     ]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     weights /= math.sqrt(math.pi) ** dim
     return Enr2Scheme("Stenger 7a", dim, weights, points, 7, source, 1.091e-13)
 
@@ -144,6 +147,7 @@ def stenger_7b(dim):
         (B[5], fsd(dim, (u, 3))),
     ]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     weights /= math.sqrt(math.pi) ** dim
     return Enr2Scheme("Stenger 7b", dim, weights, points, 7, source)
 
@@ -225,6 +229,7 @@ def stenger_9a(dim):
         data += [(B[8], fsd(dim, (u, 4)))]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     weights /= math.sqrt(math.pi) ** dim
     return Enr2Scheme("Stenger 9a", dim, weights, points, 9, source)
 
@@ -292,6 +297,7 @@ def stenger_9b(dim):
         data += [(B[8], fsd(dim, (u, 4)))]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     weights /= math.sqrt(math.pi) ** dim
     return Enr2Scheme("Stenger 9b", dim, weights, points, 9, source)
 
@@ -387,6 +393,7 @@ def stenger_11a(dim):
         data += [(B[15], fsd(dim, (u, 5)))]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     weights /= math.sqrt(math.pi) ** dim
     return Enr2Scheme("Stenger 11a", dim, weights, points, 11, source, 1.581e-13)
 
@@ -481,5 +488,6 @@ def stenger_11b(dim):
         data += [(B[15], fsd(dim, (u, 5)))]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     weights /= math.sqrt(math.pi) ** dim
     return Enr2Scheme("Stenger 11b", dim, weights, points, 11, source, 3.075e-13)

@@ -48,6 +48,7 @@ def stroud_enr_5_3(n):
     data += [(B0, numpy.full((1, n), 0))]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return EnrScheme("Stroud Enr 5-3", n, weights, points, 5, source)
 
 
@@ -59,6 +60,7 @@ def stroud_enr_5_4(n):
     data = [(A, numpy.full((1, n), 0)), (B, fsd(n, (r, 1), (s, n - 1)))]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return EnrScheme("Stroud Enr 5-4", n, weights, points, 5, source, 1.684e-11)
 
 

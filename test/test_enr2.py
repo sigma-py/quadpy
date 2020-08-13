@@ -60,7 +60,7 @@ def test_scheme(scheme):
 
     print(scheme)
 
-    evaluator = orthopy.enr2.Eval(scheme.points.T, "physicists")
+    evaluator = orthopy.enr2.Eval(scheme.points, "physicists")
 
     k = 0
     while True:

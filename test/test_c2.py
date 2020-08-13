@@ -179,7 +179,7 @@ def test_scheme(scheme):
 
     quad = quadpy.c2.rectangle_points([-1.0, +1.0], [-1.0, +1.0])
 
-    evaluator = orthopy.cn.Eval(scheme.points.T)
+    evaluator = orthopy.cn.Eval(scheme.points)
 
     k = 0
     max_err = 0.0
@@ -195,7 +195,7 @@ def test_scheme(scheme):
     if k - 1 != scheme.degree:
         # find the max error across all polynomials
         for i in range(k + 1, scheme.degree + 1):
-            approximate = scheme.integrate(lambda x: next(evaluator)[0], quad)
+            approximate = scheme.integrate(lambda x: next(evaluator), quad)
             exact = 2.0 if i == 0 else 0.0
             err = numpy.abs(approximate - exact)
             max_err = max(max_err, numpy.max(err))

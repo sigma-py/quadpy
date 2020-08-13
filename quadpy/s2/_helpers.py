@@ -38,21 +38,21 @@ class S2Scheme(QuadratureScheme):
         return numpy.pi * numpy.array(radius) ** 2 * dot(ff, self.weights)
 
 
-def _pma_alt(data):
+def _pma(data):
     a = numpy.asarray(data)
     points = numpy.array([[+a, +a], [-a, +a], [+a, -a], [-a, -a]])
     points = numpy.moveaxis(points, 0, 1)
     return points
 
 
-def _pm_alt(data):
+def _pm(data):
     a, b = numpy.asarray(data)
     points = numpy.array([[+a, +b], [-a, +b], [+a, -b], [-a, -b]])
     points = numpy.moveaxis(points, 0, 1)
     return points
 
 
-def _pmx_alt(data):
+def _pmx(data):
     a = numpy.asarray(data)
     zero = numpy.zeros_like(a)
     points = numpy.array([[+a, zero], [-a, zero]])
@@ -60,7 +60,7 @@ def _pmx_alt(data):
     return points
 
 
-def _pmy_alt(data):
+def _pmy(data):
     a = numpy.asarray(data)
     zero = numpy.zeros_like(a)
     points = numpy.array([[zero, +a], [zero, -a]])
@@ -68,13 +68,13 @@ def _pmy_alt(data):
     return points
 
 
-def _zero_alt(data):
+def _zero(data):
     if data.dtype == sympy.Basic:
         return numpy.array([[0], [0]])
     return numpy.array([[0.0], [0.0]])
 
 
-def _fsd_alt(data):
+def _fsd(data):
     a, b = numpy.asarray(data)
     points = numpy.array(
         [[+a, +b], [-a, +b], [+a, -b], [-a, -b], [+b, +a], [-b, +a], [+b, -a], [-b, -a]]
@@ -83,7 +83,7 @@ def _fsd_alt(data):
     return points
 
 
-def _s40_alt(data):
+def _s40(data):
     a = numpy.asarray(data)
     zero = numpy.zeros_like(a)
     points = numpy.array([[+a, zero], [-a, zero], [zero, +a], [zero, -a]])
@@ -97,13 +97,13 @@ def expand_symmetries_points_only(data):
 
     for key, points_raw in data.items():
         fun = {
-            "pm": _pm_alt,
-            "pmx": _pmx_alt,
-            "pmy": _pmy_alt,
-            "zero": _zero_alt,
-            "fsd": _fsd_alt,
-            "s40": _s40_alt,
-            "pma": _pma_alt,
+            "pm": _pm,
+            "pmx": _pmx,
+            "pmy": _pmy,
+            "zero": _zero,
+            "fsd": _fsd,
+            "s40": _s40,
+            "pma": _pma,
         }[key]
         pts = fun(numpy.asarray(points_raw))
 

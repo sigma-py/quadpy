@@ -42,6 +42,7 @@ def lu_darmofal_1(n):
             -sqrt(frac(n, 2) + 1) * b,
         ]
     )
+    points = numpy.ascontiguousarray(points.T)
 
     p = frac(2, n + 2)
     A = frac(n ** 2 * (7 - n), 2 * (n + 1) ** 2 * (n + 2) ** 2)

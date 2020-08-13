@@ -13,7 +13,7 @@ def product(scheme1d):
     weights = numpy.prod(weights, axis=1)
     # the order, yeah...
     y, z, x = numpy.meshgrid(schemes[0].points, schemes[1].points, schemes[2].points)
-    points = numpy.vstack([x.flatten(), y.flatten(), z.flatten()]).T
+    points = numpy.array([x.flatten(), y.flatten(), z.flatten()])
 
     degree = min([s.degree for s in schemes])
     weights /= 8

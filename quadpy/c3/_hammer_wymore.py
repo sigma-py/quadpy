@@ -2,8 +2,8 @@ import math
 
 import sympy
 
-from ..helpers import article, untangle
-from ._helpers import C3Scheme, fs_r00, fs_rr0, pm_rrr
+from ..helpers import article
+from ._helpers import C3Scheme, expand_symmetries
 
 _source = article(
     authors=["Preston C. Hammer", "A. Wayne Wymore"],
@@ -53,8 +53,11 @@ def hammer_wymore(lmbda=1):
     x3 = sqrt(u3)
     x4 = sqrt(u4)
 
-    data = [(a1, fs_r00(x1)), (a2, fs_rr0(x2)), (a3, pm_rrr(x3)), (a4, pm_rrr(x4))]
-
-    points, weights = untangle(data)
+    d = {
+        "symm_r00": [[a1], [x1]],
+        "symm_rr0": [[a2], [x2]],
+        "symm_rrr": [[a3, a4], [x3, x4]],
+    }
+    points, weights = expand_symmetries(d)
     weights /= 8
     return C3Scheme(f"Hammer-Wymore (lambda = {lmbda})", weights, points, 7, _source)

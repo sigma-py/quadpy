@@ -35,6 +35,7 @@ def stroud_4_1():
     data = [(frac(7, 10), numpy.array([[0, 0]])), (frac(3, 50), pts)]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return E2rScheme("Stroud 4-1", weights, points, 4, _source)
 
 

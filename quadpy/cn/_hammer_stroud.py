@@ -1,3 +1,4 @@
+import numpy
 from sympy import Rational as frac
 from sympy import sqrt
 
@@ -18,6 +19,7 @@ _source = article(
 def hammer_stroud_1n(n):
     data = [(frac(1, 2 * n), fsd(n, (sqrt(frac(n, 3)), 1)))]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return CnScheme("Hammer-Stroud 1n", n, weights, points, 3, _source, 5.863e-14)
 
 
@@ -29,4 +31,5 @@ def hammer_stroud_2n(n):
         (frac(25, 324), fsd(n, (r, 2))),
     ]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return CnScheme("Hammer-Stroud 2n", n, weights, points, 5, _source, 3.820e-14)

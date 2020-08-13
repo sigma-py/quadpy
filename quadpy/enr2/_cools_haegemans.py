@@ -1,5 +1,6 @@
 import math
 
+import numpy
 import sympy
 
 from ..cn._cools_haegemans import _gener
@@ -42,6 +43,7 @@ def cools_haegemans_1(n, delta2=1, symbolic=False):
     ]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return Enr2Scheme("Cools-Haegemans 1", n, weights, points, 3, _source)
 
 
@@ -71,6 +73,7 @@ def cools_haegemans_2(n, delta2=1, symbolic=False):
     ]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return Enr2Scheme("Cools-Haegemans 2", n, weights, points, 5, _source)
 
 
@@ -121,6 +124,7 @@ def cools_haegemans_3(n, delta2=(2, 3), symbolic=False):
     ]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return Enr2Scheme("Cools-Haegemans 3", n, weights, points, 7, _source)
 
 

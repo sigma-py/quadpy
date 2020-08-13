@@ -4,7 +4,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import C2Scheme, concat, pm, zero
+from ._helpers import C2Scheme, expand_symmetries
 
 source = article(
     authors=["A.M. Cohen", "D.A. Gismalla"],
@@ -21,7 +21,8 @@ source = article(
 def cohen_gismalla_1():
     B = frac(5, 7)
     u, v = [sqrt((frac(1, 3) + i * sqrt(frac(2, 63))) / B) for i in [+1, -1]]
-    weights, points = concat(zero(frac(8, 7)), pm([B, u, -v], [B, v, u]))
+    d = {"zero": [[frac(8, 7)]], "pm": [[B, B], [u, v], [-v, u]]}
+    points, weights = expand_symmetries(d)
     weights /= 4
     # This scheme is of order 5 for symmetric integrands
     return C2Scheme("Cohen-Gismalla 1", weights, points, 3, source, 4.996e-16)
@@ -48,7 +49,8 @@ def cohen_gismalla_2():
     r = math.sqrt(h1 - math.sqrt(h1 ** 2 - h2))
     s = math.sqrt(h1 + math.sqrt(h1 ** 2 - h2))
 
-    weights, points = concat(zero(A), pm([B, u, -v], [B, v, u], [C, r, -s], [C, r, s]))
+    d = {"zero": [[A]], "pm": [[B, B, C, C], [u, v, r, r], [-v, u, -s, s]]}
+    points, weights = expand_symmetries(d)
     weights /= 4
     # ERR this scheme only has order 1
     # According to the article, it has order 7 for symmetric integrands.

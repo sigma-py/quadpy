@@ -1,7 +1,7 @@
 import numpy
 
 from ..helpers import techreport
-from ._helpers import C2Scheme
+from ._helpers import C2Scheme, expand_symmetries
 
 source = techreport(
     authors=["Shayne Waldron"],
@@ -21,17 +21,18 @@ def waldron(r, alpha):
 
     beta = alpha + numpy.pi / 2
 
-    points = numpy.array(
-        [
-            [+r * numpy.cos(alpha), +r * numpy.sin(alpha)],
-            [-r * numpy.cos(alpha), -r * numpy.sin(alpha)],
-            [+R * numpy.cos(beta), +R * numpy.sin(beta)],
-            [-R * numpy.cos(beta), -R * numpy.sin(beta)],
-        ]
-    )
+    sin_alpha = numpy.sin(alpha)
+    cos_alpha = numpy.cos(alpha)
+    sin_beta = numpy.sin(beta)
+    cos_beta = numpy.cos(beta)
 
-    weights = numpy.array(
-        [2 / 3 / r ** 2, 2 / 3 / r ** 2, 2 / 3 / R ** 2, 2 / 3 / R ** 2]
-    )
+    d = {
+        "plain": [
+            [2 / 3 / r ** 2, 2 / 3 / r ** 2, 2 / 3 / R ** 2, 2 / 3 / R ** 2],
+            [+r * cos_alpha, -r * cos_alpha, +R * cos_beta, -R * cos_beta],
+            [+r * sin_alpha, -r * sin_alpha, +R * sin_beta, -R * sin_beta],
+        ]
+    }
+    points, weights = expand_symmetries(d)
     weights /= 4
     return C2Scheme("Waldron", weights, points, 3, source)

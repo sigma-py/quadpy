@@ -1,3 +1,4 @@
+import numpy
 from sympy import Rational as frac
 
 from ..helpers import article, pm, untangle
@@ -19,4 +20,5 @@ _source = article(
 def ewing(n):
     data = [(frac(2, 3), [n * [0]]), (frac(1, 3 * 2 ** n), pm(n * [1]))]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return CnScheme("Ewing", n, weights, points, 3, _source)

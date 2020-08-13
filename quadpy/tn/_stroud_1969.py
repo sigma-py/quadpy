@@ -62,4 +62,5 @@ def stroud_1969(n):
     data = [(w[i], pts[i]) for i in range(len(w))]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return TnScheme("Stroud 1969", n, weights, points, degree, source)

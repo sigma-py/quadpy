@@ -35,10 +35,10 @@ def lether(n):
     x = numpy.outer(1 - gl.points, numpy.ones(n)) / 2
     y = numpy.outer(1 + gl.points, 1 - gl.points) / 4
 
-    points = numpy.array([x.flatten(), y.flatten()]).T
+    points = numpy.array([x.flatten(), y.flatten()])
     weights = w.flatten()
 
-    points = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
+    points = numpy.array([points[0], points[1], 1 - points[0] - points[1]])
 
     degree = 2 * (n - 1)
     return T2Scheme(f"Lether({n})", weights, points, degree, source)

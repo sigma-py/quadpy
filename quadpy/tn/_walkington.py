@@ -20,14 +20,15 @@ def walkington_1(d):
     degree = 1
     data = [(frac(1, factorial(d)), _c(d, frac))]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     # normalize weights
     weights /= numpy.sum(weights)
     return TnScheme("Walkington 1", d, weights, points, degree, source)
 
 
 def walkington_2(d):
-    # The article claims order 2, but tests really only show order 1. Also, the article
-    # says:
+    # ERR The article claims order 2, but tests really only show order 1.
+    # Also, the article says:
     #
     # > The points are inside the simplex when the positive square root is selected.
     #
@@ -35,6 +36,7 @@ def walkington_2(d):
     degree = 1
     data = [(frac(1, factorial(d + 1)), _xi1(d, 1 / sqrt(d + 1)))]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     # normalize weights
     weights /= numpy.sum(weights)
     return TnScheme("Walkington 2", d, weights, points, degree, source)
@@ -47,6 +49,7 @@ def walkington_3(d):
         (frac(+((d + 3) ** 3), 4 * factorial(d + 3)), _xi1(d, frac(1, (d + 3)))),
     ]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     # normalize weights
     weights /= numpy.sum(weights)
     return TnScheme("Walkington 3", d, weights, points, degree, source)
@@ -65,6 +68,7 @@ def walkington_5(d):
     ]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     # normalize weights
     weights /= numpy.sum(weights)
     return TnScheme("Walkington 5", d, weights, points, degree, source)
@@ -87,6 +91,7 @@ def walkington_7(d):
     ]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     # normalize weights
     weights /= numpy.sum(weights)
     return TnScheme("Walkington 7", d, weights, points, degree, source)

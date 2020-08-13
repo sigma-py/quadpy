@@ -12,6 +12,7 @@ class T2Scheme(TnScheme):
         self, name, weights, points, degree, source=None, tol=1.0e-14, comments=None
     ):
         self.domain = "T2"
+        assert points.shape[0] == 3, f"{name}, {points.shape}"
         super().__init__(name, 2, weights, points, degree, source, tol, comments)
 
     def plot(
@@ -32,7 +33,7 @@ class T2Scheme(TnScheme):
         if not show_axes:
             plt.gca().set_axis_off()
 
-        transformed_pts = transform(self.points.T, triangle.T).T
+        transformed_pts = transform(self.points, triangle.T).T
 
         vol = get_vol(triangle)
         plot_disks(plt, transformed_pts, self.weights, vol)
@@ -208,6 +209,7 @@ def expand_symmetries_points_only(data):
             "s1": _s1,
             "s2": _s2,
             "s3": _s3_alt,
+            "rot": _rot_ab_alt,
             "rot_ab": _rot_ab_alt,
             "swap_ab": _swap_ab,
             "s2_static": _s2_static,
@@ -235,9 +237,6 @@ def expand_symmetries(data):
     weights = numpy.concatenate(
         [numpy.tile(values, count) for count, values in zip(counts, weights_raw)]
     )
-
-    # TODO remove this once points are expected as points.T in all functions
-    points = points.T
     return points, weights
 
 

@@ -10,7 +10,7 @@ from ._albrecht_collatz import albrecht_collatz_2 as stroud_c2_5_1
 from ._albrecht_collatz import albrecht_collatz_3 as stroud_c2_5_2
 from ._albrecht_collatz import albrecht_collatz_4 as stroud_c2_5_6
 from ._burnside import burnside as stroud_c2_5_3
-from ._helpers import C2Scheme, concat, symm_r0, symm_s, symm_s_t, zero
+from ._helpers import C2Scheme, expand_symmetries
 from ._irwin import irwin_1 as stroud_c2_3_5
 from ._irwin import irwin_2 as stroud_c2_5_7
 from ._maxwell import maxwell as stroud_c2_7_3
@@ -37,13 +37,15 @@ source = book(
 
 def stroud_c2_1_1():
     # product trapezoidal
-    weights, points = symm_s(frac(1, 4), 1)
+    d = {"symm_s": [[frac(1, 4)], [1]]}
+    points, weights = expand_symmetries(d)
     return C2Scheme("Stroud C2 1-1", weights, points, 1, source)
 
 
 def stroud_c2_3_1():
     # ERR misprint in Stroud: sqrt(1/3) vs 1/3
-    weights, points = symm_s([frac(1, 4), sqrt(frac(1, 3))])
+    d = {"symm_s": [[frac(1, 4)], [sqrt(frac(1, 3))]]}
+    points, weights = expand_symmetries(d)
     return C2Scheme("Stroud C2 3-1", weights, points, 3, source)
 
 
@@ -57,9 +59,12 @@ def stroud_c2_3_3():
 
 def stroud_c2_5_4():
     r = sqrt(frac(3, 5))
-    weights, points = concat(
-        zero(frac(16, 81)), symm_r0([frac(10, 81), r]), symm_s([frac(25, 324), r])
-    )
+    d = {
+        "zero": [[frac(16, 81)]],
+        "symm_r0": [[frac(10, 81)], [r]],
+        "symm_s": [[frac(25, 324)], [r]],
+    }
+    points, weights = expand_symmetries(d)
     return C2Scheme("Stroud C2 5-4", weights, points, 5, source)
 
 
@@ -71,7 +76,9 @@ def stroud_c2_7_4():
     B3 = frac(49, 864)
 
     r = sqrt(frac(3, 5))
-    weights, points = concat(symm_s([B1, r], [B2, s]), symm_s_t([B3, r, s]))
+
+    d = {"symm_s": [[B1, B2], [r, s]], "symm_s_t": [[B3], [r], [s]]}
+    points, weights = expand_symmetries(d)
 
     # TODO fix
     warnings.warn("Formula only has degree 1!")

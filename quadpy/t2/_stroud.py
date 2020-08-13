@@ -52,6 +52,7 @@ def stroud_t2_7_1():
             for j in range(4)
         ]
     )
+    points = numpy.ascontiguousarray(points.T)
     return T2Scheme("Stroud 7-1", weights, points, 7, source, 1.403e-13)
 
 

@@ -29,4 +29,5 @@ def phillips(n):
         (w3, fsd(n, (lmbda, 2))),
     ]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return Enr2Scheme("Phillips", n, weights, points, 5, source)

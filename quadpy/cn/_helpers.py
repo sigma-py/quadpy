@@ -11,14 +11,14 @@ class CnScheme(QuadratureScheme):
     ):
         self.domain = f"Cn (n={dim})"
         self.dim = dim
+        assert points.shape[0] == dim, f"points.shape == {points.shape}, dim = {dim}"
         super().__init__(name, weights, points, degree, source, tol, comments)
 
     def integrate(self, f, ncube, dot=numpy.dot):
         ncube = numpy.asarray(ncube)
-        x = transform(self.points.T, ncube).T
-        detJ = get_detJ(self.points.T, ncube)
+        x = transform(self.points, ncube).T
+        detJ = get_detJ(self.points, ncube)
         ref_vol = 2 ** numpy.prod(len(ncube.shape) - 1)
-
         return ref_vol * dot(f(x) * abs(detJ), self.weights)
 
     def points_inside(self):

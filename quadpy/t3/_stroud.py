@@ -89,4 +89,5 @@ def stroud_t3_7_1():
             for k in range(4)
         ]
     )
+    points = numpy.ascontiguousarray(points.T)
     return T3Scheme("Stroud T3 7-1", weights, points, degree, source)

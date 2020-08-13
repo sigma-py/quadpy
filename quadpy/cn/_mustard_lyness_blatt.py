@@ -1,3 +1,4 @@
+import numpy
 from sympy import Rational as frac
 from sympy import sqrt
 
@@ -25,4 +26,5 @@ def mustard_lyness_blatt(n):
     ]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return CnScheme("Mustard-Lyness-Blatt", n, weights, points, 5, _source, 6.312e-14)

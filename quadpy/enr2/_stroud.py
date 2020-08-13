@@ -1,5 +1,6 @@
 import math
 
+import numpy
 import sympy
 
 from ..helpers import book, fsd, pm, untangle
@@ -39,6 +40,7 @@ def stroud_enr2_5_3(n, symbolic=False):
 
     data = [(A, fsd(n, (r, 1))), (B, pm(n * [s]))]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return Enr2Scheme("Stroud Enr2 5-3", n, weights, points, 5, source)
 
 
@@ -56,6 +58,7 @@ def stroud_enr2_5_4(n, symbolic=False):
         data += [(alpha, pm(arr))]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return Enr2Scheme("Stroud Enr2 5-4", n, weights, points, 5, source)
 
 
@@ -73,6 +76,7 @@ def _stroud_5_5(n, variant_a, symbolic=False):
     data = [(A, [n * [0]]), (B, fsd(n, (r, 1), (s, n - 1)))]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     variant = "a" if variant_a else "b"
     return Enr2Scheme(f"Stroud Enr2 5-5{variant}", n, weights, points, 5, source)
 
@@ -100,6 +104,7 @@ def stroud_enr2_5_6(n, symbolic=False):
     data = [(A, fsd(n, (r, 1), (s, n - 1))), (A, pm(n * [t]))]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return Enr2Scheme("Stroud Enr2 5-6", n, weights, points, 5, source)
 
 

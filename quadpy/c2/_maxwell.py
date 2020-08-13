@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import C2Scheme, concat, symm_r0, symm_s_t, zero
+from ._helpers import C2Scheme, expand_symmetries
 
 source = article(
     authors=["J.C. Maxwell"],
@@ -19,10 +19,11 @@ def maxwell():
     r = sqrt(frac(12, 35))
     s, t = [sqrt((93 + i * 3 * sqrt(186)) / 155) for i in [+1, -1]]
 
-    weights, points = concat(
-        zero(frac(1, 81)),
-        symm_r0([frac(49, 324), r]),
+    d = {
+        "zero": [[frac(1, 81)]],
+        "symm_r0": [[frac(49, 324)], [r]],
         # ERR typo in Stroud: 648 vs 649
-        symm_s_t([frac(31, 648), s, t]),
-    )
+        "symm_s_t": [[frac(31, 648)], [s], [t]],
+    }
+    points, weights = expand_symmetries(d)
     return C2Scheme("Maxwell", weights, points, 7, source)

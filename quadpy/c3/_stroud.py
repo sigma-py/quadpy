@@ -2,13 +2,13 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..cn import ewing
-from ..helpers import book, untangle
+from ..helpers import book
 from ._albrecht_collatz import albrecht_collatz as stroud_c3_3_6
 from ._hammer_stroud import hammer_stroud_2_3 as stroud_c3_5_2
 from ._hammer_stroud import hammer_stroud_5_3a as stroud_c3_7_1a
 from ._hammer_stroud import hammer_stroud_5_3b as stroud_c3_7_1b
 from ._hammer_wymore import hammer_wymore as stroud_c3_7_2
-from ._helpers import C3Scheme, pm_rrr
+from ._helpers import C3Scheme, expand_symmetries
 from ._mustard_lyness_blatt import mustard_lyness_blatt_1 as stroud_c3_3_4
 from ._mustard_lyness_blatt import mustard_lyness_blatt_2 as stroud_c3_3_5
 from ._mustard_lyness_blatt import mustard_lyness_blatt_3 as stroud_c3_3_7
@@ -32,8 +32,10 @@ _source = book(
 
 def stroud_c3_3_2():
     # Product Gauss scheme
-    data = [(frac(1, 8), pm_rrr(sqrt(frac(1, 3))))]
-    points, weights = untangle(data)
+    d = {
+        "symm_rrr": [[frac(1, 8)], [sqrt(frac(1, 3))]],
+    }
+    points, weights = expand_symmetries(d)
     return C3Scheme("Stroud C3 3-2", weights, points, 3, _source)
 
 

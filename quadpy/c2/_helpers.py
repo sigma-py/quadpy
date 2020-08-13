@@ -1,7 +1,6 @@
 import json
 
 import numpy
-import orthopy
 
 from .. import helpers
 from ..cn import CnScheme
@@ -14,8 +13,8 @@ class C2Scheme(CnScheme):
     def __init__(
         self, name, weights, points, degree, source=None, tol=1.0e-14, comments=None
     ):
-        self.domain = "C2"
         super().__init__(name, 2, weights, points, degree, source, tol, comments)
+        self.domain = "C2"
 
     def plot(self, quad=rectangle_points([0.0, 1.0], [0.0, 1.0]), show_axes=False):
         """Shows the quadrature points on a given quad. The area of the disks
@@ -34,7 +33,7 @@ class C2Scheme(CnScheme):
         if not show_axes:
             plt.gca().set_axis_off()
 
-        transformed_pts = transform(self.points.T, quad)
+        transformed_pts = transform(self.points, quad)
 
         # compute volume by splitting it in two triangles
         vol = get_vol(numpy.array([quad[0][0], quad[1][0], quad[0][1]])) + get_vol(
@@ -44,85 +43,6 @@ class C2Scheme(CnScheme):
         plt.axis("equal")
         plt.xlim(-0.1, 1.1)
         plt.ylim(-0.1, 1.1)
-
-    def compute_residuals(self, level):
-        evaluator = orthopy.cn.Eval(self.points.T)
-
-        quad = rectangle_points([-1.0, +1.0], [-1.0, +1.0])
-
-        max_res = []
-        for k in range(level + 1):
-            vals = next(evaluator)
-            approximate = self.integrate(lambda x: vals, quad)
-            exact = 2.0 if k == 0 else 0.0
-            res = numpy.abs(approximate - exact)
-            max_res += [numpy.max(res)]
-
-        return numpy.array(max_res)
-
-
-def zero(weight):
-    return numpy.array([weight]), numpy.array([[0, 0]])
-
-
-def pmx(*data):
-    w, x, y = numpy.array(data).T
-    points = _stack_first_last([[+x, y], [-x, y]])
-    weights = numpy.tile(w, 2)
-    return weights, points
-
-
-def pm(*data):
-    w, s, t = numpy.array(data).T
-    points = _stack_first_last([[+s, +t], [-s, -t]])
-    weights = numpy.tile(w, 2)
-    return weights, points
-
-
-def pm2(*data):
-    w, x, y = numpy.array(data).T
-    points = _stack_first_last([[+x, +y], [+x, -y], [-x, +y], [-x, -y]])
-    weights = numpy.tile(w, 4)
-    return weights, points
-
-
-def symm_r0(*data):
-    data = numpy.array(data)
-    w, r = data.T
-    zero = numpy.zeros(w.shape[0], dtype=r.dtype)
-    points = _stack_first_last([[+r, zero], [-r, zero], [zero, +r], [zero, -r]])
-    weights = numpy.tile(w, 4)
-    return weights, points
-
-
-def symm_s(*data):
-    w, s = numpy.array(data).T
-    points = _stack_first_last([[+s, +s], [+s, -s], [-s, +s], [-s, -s]])
-    weights = numpy.tile(w, 4)
-    return weights, points
-
-
-def symm_s_t(*data):
-    w, s, t = numpy.array(data).T
-    points = _stack_first_last(
-        [[+s, +t], [-s, +t], [+s, -t], [-s, -t], [+t, +s], [-t, +s], [+t, -s], [-t, -s]]
-    )
-    weights = numpy.tile(w, 8)
-    return weights, points
-
-
-def _stack_first_last(arr):
-    """Stacks an input array of shape (i, j, k) such that the output array is of shape
-    (i*k, j).
-    """
-    arr = numpy.swapaxes(arr, 0, 1)
-    return arr.reshape(arr.shape[0], -1).T
-
-
-def concat(*data):
-    weights = numpy.concatenate([t[0] for t in data])
-    points = numpy.vstack([t[1] for t in data])
-    return weights, points
 
 
 def _symm_s_t(data):
@@ -233,9 +153,6 @@ def expand_symmetries(data):
     weights = numpy.concatenate(
         [numpy.tile(values, count) for count, values in zip(counts, weights_raw)]
     )
-
-    # TODO remove this once points are expected as points.T in all functions
-    points = points.T
     return points, weights
 
 

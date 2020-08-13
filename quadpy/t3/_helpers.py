@@ -163,9 +163,6 @@ def expand_symmetries(data):
     weights = numpy.concatenate(
         [numpy.tile(values, count) for count, values in zip(counts, weights_raw)]
     )
-
-    # TODO remove this once points are expected as points.T in all functions
-    points = points.T
     return points, weights
 
 

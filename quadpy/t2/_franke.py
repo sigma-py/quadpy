@@ -32,20 +32,8 @@ def franke_09():
 
     points = numpy.array(
         [
-            [a1, a1],
-            [a2, a2],
-            [a3, a3],
-            [a4, a4],
-            [b1, c1],
-            [c1, b1],
-            [b2, c2],
-            [c2, b2],
-            [b3, c3],
-            [c3, b3],
-            [b4, c4],
-            [c4, b4],
-            [b5, c5],
-            [c5, b5],
+            [a1, a2, a3, a4, b1, c1, b2, c2, b3, c3, b4, c4, b5, c5],
+            [a1, a2, a3, a4, c1, b1, c2, b2, c3, b3, c4, b4, c5, b5],
         ]
     )
     weights = 2 * numpy.array(
@@ -66,7 +54,7 @@ def franke_09():
             0.515921753448585e-1,
         ]
     )
-    points = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
+    points = numpy.array([points[0], points[1], 1 - points[0] - points[1]])
 
     return T2Scheme("Franke 9", weights, points, 7, source)
 
@@ -89,20 +77,8 @@ def franke_10():
 
     points = numpy.array(
         [
-            [a1, a1],
-            [a2, a2],
-            [a3, a3],
-            [a4, a4],
-            [b1, c1],
-            [c1, b1],
-            [b2, c2],
-            [c2, b2],
-            [b3, c3],
-            [c3, b3],
-            [b4, c4],
-            [c4, b4],
-            [b5, c5],
-            [c5, b5],
+            [a1, a2, a3, a4, b1, c1, b2, c2, b3, c3, b4, c4, b5, c5],
+            [a1, a2, a3, a4, c1, b1, c2, b2, c3, b3, c4, b4, c5, b5],
         ]
     )
     weights = 2 * numpy.array(
@@ -123,6 +99,6 @@ def franke_10():
             0.526193854900464e-1,
         ]
     )
-    points = numpy.array([points[:, 0], points[:, 1], 1 - numpy.sum(points, axis=1)]).T
+    points = numpy.array([points[0], points[1], 1 - points[0] - points[1]])
 
     return T2Scheme("Franke 10", weights, points, 7, source)

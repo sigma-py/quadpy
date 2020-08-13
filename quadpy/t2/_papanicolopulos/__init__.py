@@ -1,8 +1,7 @@
-import json
 import pathlib
 
 from ...helpers import article
-from .._helpers import T2Scheme, untangle2
+from .._helpers import _read
 
 source = article(
     authors=["Stefanos-Aldo Papanicolopulos"],
@@ -19,51 +18,40 @@ source = article(
 this_dir = pathlib.Path(__file__).resolve().parent
 
 
-def _read(filename):
-    with open(this_dir / filename, "r") as f:
-        data = json.load(f)
-
-    degree = data["degree"]
-    points, weights = untangle2(data)
-    return weights, points, degree, source
-
-
 def papanicolopulos_sym_0():
-    return T2Scheme("Papanicolopulos 0 (full symmetry)", *_read("full00.json"))
+    return _read(this_dir / "full00.json", source)
 
 
 def papanicolopulos_sym_1():
-    return T2Scheme("Papanicolopulos 1 (full symmetry)", *_read("full01.json"))
+    return _read(this_dir / "full01.json", source)
 
 
 def papanicolopulos_sym_2():
-    return T2Scheme("Papanicolopulos 2 (full symmetry)", *_read("full02.json"))
+    return _read(this_dir / "full01.json", source)
 
 
 def papanicolopulos_sym_3():
-    return T2Scheme("Papanicolopulos 3 (full symmetry)", *_read("full03.json"))
+    return _read(this_dir / "full01.json", source)
 
 
 def papanicolopulos_sym_4():
-    return T2Scheme("Papanicolopulos 4 (full symmetry)", *_read("full04.json"))
+    return _read(this_dir / "full01.json", source)
 
 
 def papanicolopulos_sym_5():
-    return T2Scheme("Papanicolopulos 5 (full symmetry)", *_read("full05.json"))
+    return _read(this_dir / "full01.json", source)
 
 
 def papanicolopulos_sym_6():
-    return T2Scheme("Papanicolopulos 6 (full symmetry)", *_read("full06.json"))
+    return _read(this_dir / "full01.json", source)
 
 
 def papanicolopulos_sym_7():
-    return T2Scheme("Papanicolopulos 7 (full symmetry)", *_read("full07.json"))
+    return _read(this_dir / "full01.json", source)
 
 
 def papanicolopulos_sym_8():
-    return T2Scheme(
-        "Papanicolopulos 8 (full symmetry)", *_read("full08.json"), 1.156e-14
-    )
+    return _read(this_dir / "full08.json", source)
 
 
 # TODO ERR the first 8 schemes are flawed by round-off error
@@ -100,40 +88,40 @@ def papanicolopulos_sym_8():
 
 
 def papanicolopulos_rot_08():
-    return T2Scheme("Papanicolopulos 8 (rotational symmetry)", *_read("rot08.json"))
+    return _read(this_dir / "rot08.json", source)
 
 
 def papanicolopulos_rot_09():
-    return T2Scheme("Papanicolopulos 9 (rotational symmetry)", *_read("rot09.json"))
+    return _read(this_dir / "rot09.json", source)
 
 
 def papanicolopulos_rot_10():
-    return T2Scheme("Papanicolopulos 10 (rotational symmetry)", *_read("rot10.json"))
+    return _read(this_dir / "rot10.json", source)
 
 
 def papanicolopulos_rot_11():
-    return T2Scheme("Papanicolopulos 11 (rotational symmetry)", *_read("rot11.json"))
+    return _read(this_dir / "rot11.json", source)
 
 
 def papanicolopulos_rot_12():
-    return T2Scheme("Papanicolopulos 12 (rotational symmetry)", *_read("rot12.json"))
+    return _read(this_dir / "rot12.json", source)
 
 
 def papanicolopulos_rot_13():
-    return T2Scheme("Papanicolopulos 13 (rotational symmetry)", *_read("rot13.json"))
+    return _read(this_dir / "rot13.json", source)
 
 
 def papanicolopulos_rot_14():
-    return T2Scheme("Papanicolopulos 14 (rotational symmetry)", *_read("rot14.json"))
+    return _read(this_dir / "rot14.json", source)
 
 
 def papanicolopulos_rot_15():
-    return T2Scheme("Papanicolopulos 15 (rotational symmetry)", *_read("rot15.json"))
+    return _read(this_dir / "rot15.json", source)
 
 
 def papanicolopulos_rot_16():
-    return T2Scheme("Papanicolopulos 16 (rotational symmetry)", *_read("rot16.json"))
+    return _read(this_dir / "rot16.json", source)
 
 
 def papanicolopulos_rot_17():
-    return T2Scheme("Papanicolopulos 17 (rotational symmetry)", *_read("rot17.json"))
+    return _read(this_dir / "rot17.json", source)

@@ -35,6 +35,7 @@ def stroud_1966_a(n, symbolic=False):
 
     data = [(B1, fsd(n, (r, 1))), (B2, pm(n * [s]))]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return SnScheme("Stroud 1966a", n, weights, points, 5, source)
 
 
@@ -64,6 +65,7 @@ def stroud_1966_b(n, symbolic=False):
     data.append((B0, z(n)))
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return SnScheme("Stroud 1966b", n, weights, points, 5, source)
 
 
@@ -81,6 +83,7 @@ def stroud_1966_c(n, symbolic=False):
     data = [(B0, z(n)), (B1, combine(((+r, -r), 1), ((+s, -s), (n - 1))))]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return SnScheme("Stroud 1966c", n, weights, points, 5, source)
 
 
@@ -103,4 +106,5 @@ def stroud_1966_d(n, symbolic=False):
     data = [(B, combine(((+r, -r), 1), ((+s, -s), (n - 1)))), (B, pm(n * [t]))]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return SnScheme("Stroud 1966d", n, weights, points, 5, source, 1.019e-14)

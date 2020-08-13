@@ -48,4 +48,5 @@ def stroud_1957(n, symbolic=False):
     data = [(frac(1, n + 1), pts)]
 
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return SnScheme("Stroud 1957", n, weights, points, 2, source)
