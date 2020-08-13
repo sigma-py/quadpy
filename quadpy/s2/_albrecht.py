@@ -2,7 +2,7 @@ import numpy
 import sympy
 from mpmath import mp
 
-from ..helpers import article, fsd, pm, untangle, z
+from ..helpers import article, expand_symmetries, untangle, z
 from ._helpers import S2Scheme
 
 _source = article(
@@ -108,17 +108,12 @@ def albrecht_5():
     u = sqrt(frac(5, 6)) * cos(pi / 8)
     v = sqrt(frac(5, 6)) * sin(pi / 8)
 
-    data = [
-        (B[0], fsd(2, (sqrt(sigma2[0]), 1))),
-        (B[1], fsd(2, (sqrt(sigma2[1]), 1))),
-        (B[2], fsd(2, (sqrt(sigma2[2]), 1))),
-        (C1, pm([s1, s1])),
-        (C2, pm([s2, s2])),
-        (D, fsd(2, (u, 1), (v, 1))),
-    ]
-
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    d = {
+        "s40": [B, [sqrt(sigma2[0]), sqrt(sigma2[1]), sqrt(sigma2[2])]],
+        "pma": [[C1, C2], [s1, s2]],
+        "d4": [[D], [u], [v]],
+    }
+    points, weights = expand_symmetries(d)
     return S2Scheme("Albrecht 5", weights, points, 11, _source)
 
 

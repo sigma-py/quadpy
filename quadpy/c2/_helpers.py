@@ -2,10 +2,10 @@ import json
 
 import numpy
 
-from ..helpers import plot_disks, expand_symmetries
 from ..cn import CnScheme
 from ..cn import ncube_points as rectangle_points
 from ..cn import transform
+from ..helpers import expand_symmetries, plot_disks
 from ..tn import get_vol
 
 

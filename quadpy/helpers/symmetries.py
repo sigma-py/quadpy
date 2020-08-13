@@ -1,7 +1,13 @@
 import numpy
 
 
-def _symm_s_t(data):
+def _zero(data):
+    return numpy.array([[0.0], [0.0]])
+
+
+def _d4(data):
+    """dihedral symmetry d4.
+    """
     s, t = numpy.array(data)
     points = numpy.array(
         [[+s, +t], [-s, +t], [+s, -t], [-s, -t], [+t, +s], [-t, +s], [+t, -s], [-t, -s]]
@@ -16,9 +22,24 @@ def _symm_s(a):
     return points
 
 
+def _pma(data):
+    a = numpy.asarray(data)
+    points = numpy.array([[+a, +a], [-a, +a], [+a, -a], [-a, -a]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
 def _symm_r0(r):
     zero = numpy.zeros_like(r)
     points = numpy.array([[+r, zero], [-r, zero], [zero, +r], [zero, -r]])
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _s40(data):
+    a = numpy.asarray(data)
+    zero = numpy.zeros_like(a)
+    points = numpy.array([[+a, zero], [-a, zero], [zero, +a], [zero, -a]])
     points = numpy.moveaxis(points, 0, 1)
     return points
 
@@ -28,10 +49,6 @@ def _s4(data):
     points = numpy.array([[+a, +b], [-a, -b], [-b, +a], [+b, -a]])
     points = numpy.moveaxis(points, 0, 1)
     return points
-
-
-def _zero(data):
-    return numpy.array([[0.0], [0.0]])
 
 
 def _pm2(data):
@@ -62,50 +79,10 @@ def _pmx(r):
     return points
 
 
-def _pma(data):
-    a = numpy.asarray(data)
-    points = numpy.array([[+a, +a], [-a, +a], [+a, -a], [-a, -a]])
-    points = numpy.moveaxis(points, 0, 1)
-    return points
-
-
 def _pmy(data):
     a = numpy.asarray(data)
     zero = numpy.zeros_like(a)
     points = numpy.array([[zero, +a], [zero, -a]])
-    points = numpy.moveaxis(points, 0, 1)
-    return points
-
-
-def _fsd(data):
-    a, b = numpy.asarray(data)
-    points = numpy.array(
-        [[+a, +b], [-a, +b], [+a, -b], [-a, -b], [+b, +a], [-b, +a], [+b, -a], [-b, -a]]
-    )
-    points = numpy.moveaxis(points, 0, 1)
-    return points
-
-
-def _s40(data):
-    a = numpy.asarray(data)
-    zero = numpy.zeros_like(a)
-    points = numpy.array([[+a, zero], [-a, zero], [zero, +a], [zero, -a]])
-    points = numpy.moveaxis(points, 0, 1)
-    return points
-
-
-def _s8_alt(data):
-    a, b = data
-    points = numpy.array(
-        [[+a, +b], [-a, +b], [+a, -b], [-a, -b], [+b, +a], [-b, +a], [+b, -a], [-b, -a]]
-    )
-    points = numpy.moveaxis(points, 0, 1)
-    return points
-
-
-def _ab_pm_alt(data):
-    a, b = data
-    points = numpy.array([[+a, +b], [-a, +b], [+a, -b], [-a, -b]])
     points = numpy.moveaxis(points, 0, 1)
     return points
 
@@ -116,11 +93,10 @@ def expand_symmetries_points_only(data):
 
     for key, points_raw in data.items():
         fun = {
-            "symm_s_t": _symm_s_t,
+            "d4": _d4,
             "symm_s": _symm_s,
             "symm_r0": _symm_r0,
             "s4": _s4,
-            "s8": _s8_alt,
             "zero": _zero,
             "pm2": _pm2,
             "pm": _pm,
@@ -129,8 +105,6 @@ def expand_symmetries_points_only(data):
             "pmy": _pmy,
             "pma": _pma,
             "s40": _s40,
-            "fsd": _fsd,
-            "ab_pm": _ab_pm_alt,
             "plain": lambda vals: vals.reshape(2, 1, -1),
         }[key]
         pts = fun(numpy.asarray(points_raw))

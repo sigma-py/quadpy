@@ -77,7 +77,7 @@ def stroud_c2_7_4():
 
     r = sqrt(frac(3, 5))
 
-    d = {"symm_s": [[B1, B2], [r, s]], "symm_s_t": [[B3], [r], [s]]}
+    d = {"symm_s": [[B1, B2], [r, s]], "d4": [[B3], [r], [s]]}
     points, weights = expand_symmetries(d)
 
     # TODO fix

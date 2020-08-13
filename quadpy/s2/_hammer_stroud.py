@@ -79,7 +79,7 @@ def hammer_stroud_19():
 
     d = {
         "zero": [[frac(1, 9)]],
-        "fsd": [
+        "d4": [
             [alpha1, alpha3],
             [0.5505043204538557, 0.7932084745126058],
             [0.2280263556769715, 0.4645097310495256],
@@ -101,7 +101,7 @@ def hammer_stroud_21():
     alpha2 = 0.0341505695624825 / numpy.pi
 
     d = {
-        "fsd": [
+        "d4": [
             [alpha0, alpha1, alpha1, alpha1, alpha1, alpha2, alpha2, alpha2],
             [
                 0.2584361661674054,

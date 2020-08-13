@@ -23,7 +23,7 @@ def maxwell():
         "zero": [[frac(1, 81)]],
         "symm_r0": [[frac(49, 324)], [r]],
         # ERR typo in Stroud: 648 vs 649
-        "symm_s_t": [[frac(31, 648)], [s], [t]],
+        "d4": [[frac(31, 648)], [s], [t]],
     }
     points, weights = expand_symmetries(d)
     return C2Scheme("Maxwell", weights, points, 7, source)

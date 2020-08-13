@@ -3,7 +3,7 @@ import math
 
 import numpy
 
-from ..helpers import QuadratureScheme, plot_disks, expand_symmetries
+from ..helpers import QuadratureScheme, expand_symmetries, plot_disks
 
 
 class E2r2Scheme(QuadratureScheme):
