@@ -47,6 +47,7 @@ def _stroud_1967_7_ab(n, variant_a, symbolic):
 
     data = [(A, [n * [0]]), (B, fsd(n, (r, 1))), (C, pm(n * [s])), (D, fsd(n, (t, 2)))]
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
 
     variant = "a" if variant_a else "b"
     return SnScheme(f"Stroud 1967-7{variant}", n, weights, points, 7, source)
@@ -77,6 +78,7 @@ def stroud_1967_7_c(n, symbolic=False):
     s = un.stroud_1967(n)
 
     points = numpy.concatenate([r1 * s.points, r2 * s.points])
+    points = numpy.ascontiguousarray(points.T)
     weights = numpy.concatenate([A1 * s.weights, A2 * s.weights])
 
     # weights *= un.volume_nsphere(n - 1, symbolic) / volume_nball(n, symbolic)

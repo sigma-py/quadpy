@@ -8,6 +8,7 @@ class SnScheme(QuadratureScheme):
     def __init__(self, name, dim, weights, points, degree, source, tol=1.0e-14):
         self.domain = f"Sn (n={dim})"
         self.dim = dim
+        assert points.shape[0] == dim
         super().__init__(name, weights, points, degree, source, tol)
 
     def points_inside(self):
@@ -18,7 +19,7 @@ class SnScheme(QuadratureScheme):
 
     def integrate(self, f, center, radius, dot=numpy.dot):
         center = numpy.array(center)
-        rr = numpy.multiply.outer(radius, self.points)
+        rr = numpy.multiply.outer(radius, self.points.T)
         rr = numpy.swapaxes(rr, 0, -2)
         ff = numpy.array(f((rr + center).T))
         ref_vol = ndim.nball.volume(self.dim, r=numpy.asarray(radius), symbolic=False)
