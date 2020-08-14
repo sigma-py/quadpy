@@ -81,11 +81,11 @@ def test_p3():
 
 
 def test_c2():
-    quadpy.c2.stroud_c2_5_4().integrate(
+    quadpy.c2.all_schemes["stroud_c2_5_4"]().integrate(
         lambda x: numpy.exp(x[0]), quadpy.c2.rectangle_points([0.0, 1.0], [0.0, 1.0]),
     )
 
-    val = quadpy.c2.stroud_c2_3_1().integrate(
+    val = quadpy.c2.all_schemes["stroud_c2_3_1"]().integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         numpy.stack(
             [
@@ -112,7 +112,7 @@ def test_e2r():
 
 
 def test_u3():
-    quadpy.u3.lebedev_003a().integrate(
+    quadpy.u3.all_schemes["lebedev_003a"]().integrate(
         lambda x: numpy.exp(1j * x[0]) + 1j * x[0] ** 2,
         numpy.array([0.0, 0.3, 0.0]),
         0.7,
@@ -158,11 +158,11 @@ def test_t3():
 
 
 def test_t2():
-    quadpy.t2.cubtri().integrate(
+    quadpy.t2.all_schemes["cubtri"]().integrate(
         lambda x: numpy.exp(x[0]), numpy.array([[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]])
     )
 
-    val = quadpy.t2.cubtri().integrate(
+    val = quadpy.t2.all_schemes["cubtri"]().integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         numpy.stack(
             [
