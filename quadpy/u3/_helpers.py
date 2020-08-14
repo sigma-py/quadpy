@@ -6,12 +6,12 @@ import sympy
 
 from ..helpers import QuadratureScheme
 
-all_schemes = {}
+schemes = {}
 
 
-def register(schemes):
-    for scheme in schemes:
-        all_schemes[scheme.__name__] = scheme
+def register(in_schemes):
+    for scheme in in_schemes:
+        schemes[scheme.__name__] = scheme
 
 
 class U3Scheme(QuadratureScheme):

@@ -32,14 +32,14 @@ from . import (
     _zhang_cui_liu,
 )
 from ._get_good_scheme import get_good_scheme
-from ._helpers import all_schemes
+from ._helpers import schemes
 from ._tools import integrate_adaptive
 
 __all__ = [
     "integrate_adaptive",
     "transform",
     "get_vol",
-    "all_schemes",
+    "schemes",
     "get_good_scheme",
     #
     "_albrecht_collatz",

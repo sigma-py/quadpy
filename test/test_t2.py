@@ -5,7 +5,7 @@ import pytest
 import quadpy
 
 
-@pytest.mark.parametrize("scheme", quadpy.t2.all_schemes.values())
+@pytest.mark.parametrize("scheme", quadpy.t2.schemes.values())
 def test_scheme(scheme):
     try:
         scheme = scheme()  # initialize
@@ -78,7 +78,7 @@ def test_volume():
 
 
 def test_multidim():
-    scheme = quadpy.t2.all_schemes["dunavant_05"]()
+    scheme = quadpy.t2.schemes["dunavant_05"]()
 
     numpy.random.seed(0)
     # simple scalar integration
@@ -124,7 +124,7 @@ def test_multidim():
 def test_get_good_scheme():
     for degree in range(51):
         best = None
-        for scheme in quadpy.t2.all_schemes.values():
+        for scheme in quadpy.t2.schemes.values():
             try:
                 scheme = scheme()  # initialize
             except TypeError:

@@ -14,7 +14,7 @@ import quadpy
 
 @pytest.mark.parametrize(
     "scheme",
-    [quadpy.u3.all_schemes["lebedev_003a"](), quadpy.u3.all_schemes["mclaren_10"]()],
+    [quadpy.u3.schemes["lebedev_003a"](), quadpy.u3.schemes["mclaren_10"]()],
 )
 def test_spherical_harmonic(scheme):
     """Assert the norm of the spherical harmonic
@@ -43,7 +43,7 @@ def test_spherical_harmonic(scheme):
     assert abs(val - 1.0) < 1.0e-14
 
 
-@pytest.mark.parametrize("scheme", quadpy.u3.all_schemes.values())
+@pytest.mark.parametrize("scheme", quadpy.u3.schemes.values())
 def test_scheme_cartesian(scheme):
     # initialize
     scheme = scheme()
@@ -71,7 +71,7 @@ def test_scheme_cartesian(scheme):
         )
 
 
-@pytest.mark.parametrize("scheme", quadpy.u3.all_schemes.values())
+@pytest.mark.parametrize("scheme", quadpy.u3.schemes.values())
 def test_scheme_spherical(scheme):
     # initialize
     scheme = scheme()
@@ -96,7 +96,7 @@ def test_scheme_spherical(scheme):
     )
 
 
-@pytest.mark.parametrize("scheme", [quadpy.u3.all_schemes["lebedev_007"]()])
+@pytest.mark.parametrize("scheme", [quadpy.u3.schemes["lebedev_007"]()])
 def test_show(scheme):
     scheme.show()
     plt.close()

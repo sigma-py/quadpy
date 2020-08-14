@@ -5,7 +5,7 @@ import pytest
 import quadpy
 
 schemes = (
-    list(quadpy.c2.all_schemes.values())
+    list(quadpy.c2.schemes.values())
     + [quadpy.c2.product(quadpy.c1.midpoint())]
     + [quadpy.c2.product(quadpy.c1.trapezoidal())]
     + [quadpy.c2.product(quadpy.c1.gauss_legendre(k)) for k in range(1, 5)]
@@ -64,7 +64,7 @@ def test_show(scheme):
 def test_get_good_scheme():
     for degree in range(51):
         best = None
-        for scheme in quadpy.c2.all_schemes.values():
+        for scheme in quadpy.c2.schemes.values():
             try:
                 scheme = scheme()  # initialize
             except TypeError:

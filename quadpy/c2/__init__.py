@@ -26,7 +26,7 @@ from . import (
     _wissmann_becker,
     _witherden_vincent,
 )
-from ._helpers import all_schemes
+from ._helpers import schemes
 from ._product import product
 
 __all__ = [
@@ -58,5 +58,5 @@ __all__ = [
     #
     "transform",
     "rectangle_points",
-    "all_schemes",
+    "schemes",
 ]
