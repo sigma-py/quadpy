@@ -3,8 +3,8 @@ def get_good_scheme(degree):
 
     if degree <= 22:
         return {
-            0: schemes["dunavant_0"],
-            1: schemes["dunavant_0"],
+            0: schemes["dunavant_00"],
+            1: schemes["dunavant_00"],
             2: schemes["stroud_c2_3_1"],
             3: schemes["stroud_c2_3_1"],
             4: schemes["burnside"],

@@ -28,6 +28,7 @@ from . import (
 )
 from ._helpers import schemes
 from ._product import product
+from ._get_good_scheme import get_good_scheme
 
 __all__ = [
     "_albrecht_collatz",
@@ -59,4 +60,5 @@ __all__ = [
     "transform",
     "rectangle_points",
     "schemes",
+    "get_good_scheme",
 ]
