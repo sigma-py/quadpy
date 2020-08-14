@@ -7,7 +7,7 @@ from . import (
     _mclaren,
     _stroud,
 )
-from ._helpers import schemes, area
+from ._helpers import area, schemes
 
 __all__ = [
     "_albrecht_collatz",

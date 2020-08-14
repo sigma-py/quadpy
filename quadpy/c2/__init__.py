@@ -26,9 +26,9 @@ from . import (
     _wissmann_becker,
     _witherden_vincent,
 )
+from ._get_good_scheme import get_good_scheme
 from ._helpers import schemes
 from ._product import product
-from ._get_good_scheme import get_good_scheme
 
 __all__ = [
     "_albrecht_collatz",
