@@ -1,6 +1,19 @@
+from witherden_vincent import (
+    witherden_vincent_10,
+    witherden_vincent_15,
+    witherden_vincent_18,
+)
+
 from ._centroid import centroid
 from ._dunavant import dunavant_19
+from ._laursen_gellert import laursen_gellert_04, laursen_gellert_05, laursen_gellert_11
+from ._lyness_jespersen import (
+    lyness_jespersen_10,
+    lyness_jespersen_15,
+    lyness_jespersen_18,
+)
 from ._taylor_wingate_bos import taylor_wingate_bos_1
+from ._walkington import walkington_p5
 from ._xiao_gimbutas import (
     xiao_gimbutas_11,
     xiao_gimbutas_12,
@@ -40,14 +53,6 @@ from ._xiao_gimbutas import (
     xiao_gimbutas_49,
     xiao_gimbutas_50,
 )
-from ._lyness_jespersen import (
-    lyness_jespersen_10,
-    lyness_jespersen_15,
-    lyness_jespersen_18,
-)
-from ._laursen_gellert import laursen_gellert_04, laursen_gellert_05, laursen_gellert_11
-from ._walkington import walkington_p5
-from witherden_vincent import witherden_vincent_10, witherden_vincent_15, witherden_vincent_18
 
 
 def get_good_scheme(degree):

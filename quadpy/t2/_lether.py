@@ -41,4 +41,6 @@ def lether(n):
     points = numpy.array([points[0], points[1], 1 - points[0] - points[1]])
 
     degree = 2 * (n - 1)
-    return T2Scheme(f"Lether({n})", {"plain": numpy.vstack([weights, points])}, degree, source)
+    return T2Scheme(
+        f"Lether({n})", {"plain": numpy.vstack([weights, points])}, degree, source
+    )

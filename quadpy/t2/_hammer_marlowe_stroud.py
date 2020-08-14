@@ -11,7 +11,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import T2Scheme, expand_symmetries
+from ._helpers import T2Scheme
 
 source = article(
     authors=["P.C. Hammer", "O.J. Marlowe", "A.H. Stroud"],

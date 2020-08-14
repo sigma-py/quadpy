@@ -400,7 +400,9 @@ def test_get_good_scheme():
                 if len(scheme.weights) > len(best.weights):
                     continue
                 if len(scheme.weights) == len(best.weights):
-                    ratio = max(numpy.abs(scheme.weights)) / min(numpy.abs(scheme.weights))
+                    ratio = max(numpy.abs(scheme.weights)) / min(
+                        numpy.abs(scheme.weights)
+                    )
                     bratio = max(numpy.abs(best.weights)) / min(numpy.abs(best.weights))
                     if ratio > bratio:
                         continue
