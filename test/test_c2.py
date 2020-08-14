@@ -116,13 +116,5 @@ def test_show(scheme):
 #     return
 
 
-if __name__ == "__main__":
-    test_get_good_scheme()
-    # scheme_ = Product(quadpy.c1.gauss_legendre(6))
-    # scheme_ = quadpy.c2.HammerStroud("3-2")
-    # scheme_ = quadpy.c2.Stroud["C2 3-2"]()
-    # test_show(scheme_)
-    # test_scheme(scheme_, 1.0e-14)
-    # from helpers import find_equal
-    # schemes_ = [scheme[0] for scheme in schemes]
-    # find_equal(schemes_)
+# if __name__ == "__main__":
+#     test_get_good_scheme()
