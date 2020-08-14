@@ -11,7 +11,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import T2Scheme
+from ._helpers import T2Scheme, register
 
 source = article(
     authors=["P.C. Hammer", "O.J. Marlowe", "A.H. Stroud"],
@@ -59,3 +59,14 @@ def hammer_marlowe_stroud_5():
     b2 = (1 - x2) / 3
     d = {"s3": [[frac(9, 40)]], "s2": [[w1, w2], [b1, b2]]}
     return T2Scheme("Hammer-Marlowe-Stroud 5", d, 5, source, 2.776e-16)
+
+
+register(
+    [
+        hammer_marlowe_stroud_1,
+        hammer_marlowe_stroud_2,
+        hammer_marlowe_stroud_3,
+        hammer_marlowe_stroud_4,
+        hammer_marlowe_stroud_5,
+    ]
+)

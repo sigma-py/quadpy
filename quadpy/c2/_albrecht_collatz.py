@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import C2Scheme, expand_symmetries
+from ._helpers import C2Scheme, register
 
 source = article(
     authors=["J. Albrecht", "L. Collatz"],
@@ -22,8 +22,7 @@ def albrecht_collatz_1():
         "c4_a0": [[frac(1, 8)], [1]],
         "c4_aa": [[frac(1, 48)], [1]],
     }
-    points, weights = expand_symmetries(d)
-    return C2Scheme("Albrecht-Collatz 1", weights, points, 3, source, 4.442e-16)
+    return C2Scheme("Albrecht-Collatz 1", d, 3, source, 4.442e-16)
 
 
 def albrecht_collatz_2():
@@ -35,8 +34,7 @@ def albrecht_collatz_2():
         "c2": [[frac(5, 63)], [0], [t]],
         "sxy": [[frac(5, 36)], [r], [s]],
     }
-    points, weights = expand_symmetries(d)
-    return C2Scheme("Albrecht-Collatz 2", weights, points, 5, source, 4.627e-16)
+    return C2Scheme("Albrecht-Collatz 2", d, 5, source, 4.627e-16)
 
 
 def albrecht_collatz_3():
@@ -46,8 +44,7 @@ def albrecht_collatz_3():
         "zero": [[frac(2, 7)]],
         "c2": [[frac(25, 168), frac(5, 48), frac(5, 48)], [r, s, t], [r, -t, -s]],
     }
-    points, weights = expand_symmetries(d)
-    return C2Scheme("Albrecht-Collatz 3", weights, points, 5, source, 4.442e-16)
+    return C2Scheme("Albrecht-Collatz 3", d, 5, source, 4.442e-16)
 
 
 def albrecht_collatz_4():
@@ -56,5 +53,9 @@ def albrecht_collatz_4():
         "c4_a0": [[frac(2, 45)], [1]],
         "c4_aa": [[frac(1, 60), frac(8, 45)], [1, frac(1, 2)]],
     }
-    points, weights = expand_symmetries(d)
-    return C2Scheme("Albrecht-Collatz 4", weights, points, 5, source, 8.883e-16)
+    return C2Scheme("Albrecht-Collatz 4", d, 5, source, 8.883e-16)
+
+
+register(
+    [albrecht_collatz_1, albrecht_collatz_2, albrecht_collatz_3, albrecht_collatz_4]
+)

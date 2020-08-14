@@ -4,7 +4,7 @@ import numpy
 from sympy import Rational as frac
 
 from ...helpers import article
-from .._helpers import T2Scheme, _read
+from .._helpers import T2Scheme, _read, register
 
 source = article(
     authors=["M.E. Laursen", "M. Gellert"],
@@ -100,3 +100,19 @@ def laursen_gellert_15a():
 
 def laursen_gellert_15b():
     return _read(this_dir / "laursen_gellert_15b.json", source)
+
+
+register(
+    [
+        laursen_gellert_01,
+        laursen_gellert_03,
+        laursen_gellert_04,
+        laursen_gellert_05,
+        laursen_gellert_06,
+        laursen_gellert_07,
+        laursen_gellert_08,
+        laursen_gellert_09,
+        laursen_gellert_10,
+        laursen_gellert_11,
+    ]
+)

@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import article
-from .._helpers import _read
+from .._helpers import _read, register
 
 source = article(
     authors=["Philip Rabinowitz", "Nira Richter"],
@@ -40,3 +40,15 @@ def rabinowitz_richter_5():
 
 def rabinowitz_richter_6():
     return _read(this_dir / "rabinowitz_richter_6.json", source)
+
+
+register(
+    [
+        rabinowitz_richter_1,
+        rabinowitz_richter_2,
+        rabinowitz_richter_3,
+        rabinowitz_richter_4,
+        rabinowitz_richter_5,
+        rabinowitz_richter_6,
+    ]
+)

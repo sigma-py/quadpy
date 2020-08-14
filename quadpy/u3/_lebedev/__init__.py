@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import article
-from .._helpers import _read
+from .._helpers import _read, register
 
 # Sphere integration schemes from a series of publications, in chronological order
 # <https://en.wikipedia.org/wiki/Lebedev_quadrature>
@@ -199,3 +199,43 @@ def lebedev_125():
 
 def lebedev_131():
     return _read(this_dir / "lebedev_131.json", sources[5])
+
+
+register(
+    [
+        lebedev_003a,
+        lebedev_003b,
+        lebedev_003c,
+        lebedev_005,
+        lebedev_007,
+        lebedev_009,
+        lebedev_011,
+        lebedev_013,
+        lebedev_015,
+        lebedev_017,
+        lebedev_019,
+        lebedev_021,
+        lebedev_023,
+        lebedev_025,
+        lebedev_027,
+        lebedev_029,
+        lebedev_031,
+        lebedev_035,
+        lebedev_041,
+        lebedev_047,
+        lebedev_053,
+        lebedev_059,
+        lebedev_065,
+        lebedev_071,
+        lebedev_077,
+        lebedev_083,
+        lebedev_089,
+        lebedev_095,
+        lebedev_101,
+        lebedev_107,
+        lebedev_113,
+        lebedev_119,
+        lebedev_125,
+        lebedev_131,
+    ]
+)

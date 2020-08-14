@@ -2,7 +2,7 @@ import numpy
 from sympy import Rational as frac
 
 from ...helpers import article, book
-from .._helpers import T2Scheme
+from .._helpers import T2Scheme, register
 
 source = book(
     authors=["Gilbert Strang", "George Fix"],
@@ -103,3 +103,19 @@ def strang_fix_cowper_10():
         "s1": [[0.077113760890257], [0.638444188569809], [0.312865496004875]],
     }
     return T2Scheme("Strang-Fix-Cowper 10", d, 7, source, 8.563e-15)
+
+
+register(
+    [
+        strang_fix_cowper_01,
+        strang_fix_cowper_02,
+        strang_fix_cowper_03,
+        strang_fix_cowper_04,
+        strang_fix_cowper_05,
+        strang_fix_cowper_06,
+        strang_fix_cowper_07,
+        strang_fix_cowper_08,
+        strang_fix_cowper_09,
+        strang_fix_cowper_10,
+    ]
+)

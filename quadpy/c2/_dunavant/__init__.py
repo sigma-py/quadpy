@@ -4,7 +4,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ...helpers import article
-from .._helpers import C2Scheme, _read, expand_symmetries
+from .._helpers import C2Scheme, _read, expand_symmetries, register
 
 source = article(
     authors=["D.A. Dunavant"],
@@ -23,37 +23,32 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 def dunavant_00():
     d = {"zero": [[1]]}
-    points, weights = expand_symmetries(d)
-    return C2Scheme("Dunavant 0", weights, points, 1, source)
+    return C2Scheme("Dunavant 0", d, 1, source)
 
 
 def dunavant_01():
     d = {"c4_aa": [[frac(1, 4)], [sqrt(frac(1, 3))]]}
     points, weights = expand_symmetries(d)
-    return C2Scheme("Dunavant 1", weights, points, 3, source)
+    return C2Scheme("Dunavant 1", d, 3, source)
 
 
 def dunavant_02():
     d = {
-        "c4_a0": [[frac(40, 49)], [sqrt(frac(7, 15))]],
-        "c4_aa": [[frac(9, 49)], [sqrt(frac(7, 9))]],
+        "c4_a0": [[frac(10, 49)], [sqrt(frac(7, 15))]],
+        "c4_aa": [[frac(9, 196)], [sqrt(frac(7, 9))]],
     }
-    points, weights = expand_symmetries(d)
-    weights /= 4
-    return C2Scheme("Dunavant 2", weights, points, 5, source)
+    return C2Scheme("Dunavant 2", d, 5, source)
 
 
 def dunavant_03():
     d = {
-        "c4_a0": [[frac(98, 405)], [sqrt(frac(6, 7))]],
+        "c4_a0": [[frac(49, 810)], [sqrt(frac(6, 7))]],
         "c4_aa": [
-            [0.237431774690630, 0.520592916667394],
+            [0.0593579436726575, 0.1301482291668485],
             [0.805979782918599, 0.380554433208316],
         ],
     }
-    points, weights = expand_symmetries(d)
-    weights /= 4
-    return C2Scheme("Dunavant 3", weights, points, 7, source)
+    return C2Scheme("Dunavant 3", d, 7, source)
 
 
 def dunavant_04():
@@ -82,3 +77,20 @@ def dunavant_09():
 
 def dunavant_10():
     return _read(this_dir / "dunavant_10.json", source)
+
+
+register(
+    [
+        dunavant_00,
+        dunavant_01,
+        dunavant_02,
+        dunavant_03,
+        dunavant_04,
+        dunavant_05,
+        dunavant_06,
+        dunavant_07,
+        dunavant_08,
+        dunavant_09,
+        dunavant_10,
+    ]
+)

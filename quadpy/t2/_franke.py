@@ -1,7 +1,7 @@
 import numpy
 
 from ..helpers import article
-from ._helpers import T2Scheme
+from ._helpers import T2Scheme, register
 
 source = article(
     authors=["Richard Franke"],
@@ -102,3 +102,6 @@ def franke_10():
     points = numpy.array([points[0], points[1], 1 - points[0] - points[1]])
 
     return T2Scheme("Franke 10", {"plain": numpy.vstack([weights, points])}, 7, source)
+
+
+register([franke_09, franke_10])

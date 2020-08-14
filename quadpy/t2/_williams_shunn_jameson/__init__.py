@@ -3,7 +3,7 @@ import pathlib
 from sympy import Rational as frac
 
 from ...helpers import article
-from .._helpers import T2Scheme, _read
+from .._helpers import T2Scheme, _read, register
 
 source = article(
     authors=["D.M. Williams", "L. Shunn", "A. Jameson"],
@@ -50,3 +50,17 @@ def williams_shunn_jameson_7():
 
 def williams_shunn_jameson_8():
     return _read(this_dir / "williams_shunn_jameson_8.json", source)
+
+
+register(
+    [
+        williams_shunn_jameson_1,
+        williams_shunn_jameson_2,
+        williams_shunn_jameson_3,
+        williams_shunn_jameson_4,
+        williams_shunn_jameson_5,
+        williams_shunn_jameson_6,
+        williams_shunn_jameson_7,
+        williams_shunn_jameson_8,
+    ]
+)

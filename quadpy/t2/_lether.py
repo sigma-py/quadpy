@@ -13,7 +13,7 @@ import numpy
 
 from ..c1 import gauss_legendre
 from ..helpers import article
-from ._helpers import T2Scheme
+from ._helpers import T2Scheme, register
 
 source = article(
     authors=["Frank G. Lether"],
@@ -44,3 +44,6 @@ def lether(n):
     return T2Scheme(
         f"Lether({n})", {"plain": numpy.vstack([weights, points])}, degree, source
     )
+
+
+register([lether])

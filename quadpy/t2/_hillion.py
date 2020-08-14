@@ -6,7 +6,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import T2Scheme
+from ._helpers import T2Scheme, register
 
 source = article(
     authors=["P. Hillion"],
@@ -97,3 +97,19 @@ def hillion_10():
         "s2_static": [[frac(25, 48)], [frac(2, 5)]],
     }
     return T2Scheme("Hillion 10", d, 3, source)
+
+
+register(
+    [
+        hillion_01,
+        hillion_02,
+        hillion_03,
+        hillion_04,
+        hillion_05,
+        hillion_06,
+        hillion_07,
+        hillion_08,
+        hillion_09,
+        hillion_10,
+    ]
+)

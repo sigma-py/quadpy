@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import online
-from .._helpers import _read
+from .._helpers import _read, register
 
 source = online(
     authors=["Jörg Fliege", "Ulrike Maier"],
@@ -26,3 +26,6 @@ def fliege_maier_16():
 
 def fliege_maier_25():
     return _read(this_dir / "fliege_maier_25.json", source)
+
+
+register([fliege_maier_04, fliege_maier_09, fliege_maier_16, fliege_maier_25])

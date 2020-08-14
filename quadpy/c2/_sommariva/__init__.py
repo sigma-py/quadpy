@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import online
-from .._helpers import _read
+from .._helpers import _read, register
 
 _source = online(
     authors=["Alvise Sommariva"],
@@ -230,3 +230,64 @@ def sommariva_54():
 
 def sommariva_55():
     return _read(this_dir / "sommariva_55.json", _source)
+
+
+register(
+    [
+        sommariva_01,
+        sommariva_02,
+        sommariva_03,
+        sommariva_04,
+        sommariva_05,
+        sommariva_06,
+        sommariva_07,
+        sommariva_08,
+        sommariva_09,
+        sommariva_10,
+        sommariva_11,
+        sommariva_12,
+        sommariva_13,
+        sommariva_14,
+        sommariva_15,
+        sommariva_16,
+        sommariva_17,
+        sommariva_18,
+        sommariva_19,
+        sommariva_20,
+        sommariva_21,
+        sommariva_22,
+        sommariva_23,
+        sommariva_24,
+        sommariva_25,
+        sommariva_26,
+        sommariva_27,
+        sommariva_28,
+        sommariva_29,
+        sommariva_30,
+        sommariva_31,
+        sommariva_32,
+        sommariva_33,
+        sommariva_34,
+        sommariva_35,
+        sommariva_36,
+        sommariva_37,
+        sommariva_38,
+        sommariva_39,
+        sommariva_40,
+        sommariva_41,
+        sommariva_42,
+        sommariva_43,
+        sommariva_44,
+        sommariva_45,
+        sommariva_46,
+        sommariva_47,
+        sommariva_48,
+        sommariva_49,
+        sommariva_50,
+        sommariva_51,
+        sommariva_52,
+        sommariva_53,
+        sommariva_54,
+        sommariva_55,
+    ]
+)

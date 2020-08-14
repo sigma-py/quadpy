@@ -6,19 +6,25 @@ import sympy
 
 from ..helpers import QuadratureScheme
 
+schemes = {}
+
+
+def register(in_schemes):
+    for scheme in in_schemes:
+        schemes[scheme.__name__] = scheme
+
 
 class U3Scheme(QuadratureScheme):
     def __init__(
-        self,
-        name,
-        weights,
-        points,
-        theta_phi,
-        degree,
-        source,
-        tol=1.0e-14,
-        comments=None,
+        self, name, symmetry_data, degree, source, tol=1.0e-14, comments=None,
     ):
+        points, weights = expand_symmetries(symmetry_data)
+
+        if numpy.asarray(points).dtype == sympy.Basic:
+            theta_phi = cartesian_to_spherical_sympy(points)
+        else:
+            theta_phi = cartesian_to_spherical(points)
+
         self.domain = "U3"
         super().__init__(name, weights, points, degree, source, tol, comments)
 
@@ -546,17 +552,15 @@ def expand_symmetries(data):
 
 
 def _scheme_from_dict(content, source=None):
-    points, weights = expand_symmetries(content["data"])
-    theta_phi = cartesian_to_spherical(points)
-
+    data = content["data"]
     if "weight factor" in content:
-        weights *= content["weight factor"]
+        w = content["weight factor"]
+        for val in data.values():
+            val[0] = [v * w for v in val[0]]
 
     return U3Scheme(
         content["name"],
-        weights,
-        points,
-        theta_phi,
+        data,
         degree=content["degree"],
         source=source,
         tol=content["test_tolerance"],

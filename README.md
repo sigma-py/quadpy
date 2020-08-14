@@ -76,7 +76,8 @@ def f(x):
 
 triangle = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.7, 0.5]])
 
-val = quadpy.t2.strang_fix_cowper_09().integrate(f, triangle)
+scheme = quadpy.t2.get_good_scheme(10)
+val = scheme.integrate(f, triangle)
 ```
 
 All schemes have
@@ -252,7 +253,7 @@ Example:
 import numpy
 import quadpy
 
-scheme = quadpy.t2.xiao_gimbutas_05()
+scheme = quadpy.t2.get_good_scheme(12)
 scheme.show()
 val = scheme.integrate(lambda x: numpy.exp(x[0]), [[0.0, 0.0], [1.0, 0.0], [0.5, 0.7]])
 ```
@@ -322,7 +323,7 @@ Example:
 import numpy
 import quadpy
 
-scheme = quadpy.c2.stroud_c2_7_2()
+scheme = quadpy.c2.get_good_scheme(7)
 val = scheme.integrate(
     lambda x: numpy.exp(x[0]), [[[0.0, 0.0], [1.0, 0.0]], [[0.0, 1.0], [1.0, 1.0]]],
 )
@@ -395,7 +396,7 @@ Example:
 import numpy
 import quadpy
 
-scheme = quadpy.u3.lebedev_019()
+scheme = quadpy.u3.schemes["lebedev_019"]()
 # scheme.show()
 val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0, 0.0], 1.0)
 ```
@@ -405,7 +406,7 @@ coordinates:
 import numpy
 import quadpy
 
-scheme = quadpy.u3.lebedev_019()
+scheme = quadpy.u3.schemes["lebedev_019"]()
 val = scheme.integrate_spherical(
     lambda theta_phi: numpy.sin(theta_phi[1]) ** 2 * numpy.sin(theta_phi[0]),
 )

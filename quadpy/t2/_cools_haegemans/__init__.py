@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import techreport
-from .._helpers import _read
+from .._helpers import _read, register
 
 source = techreport(
     authors=["R. Cools", "A. Haegemans"],
@@ -60,3 +60,6 @@ def cools_haegemans_1(mpmath=False):
 #     points, weights = untangle2(data)
 #     weights *= 2
 #     return T2Scheme("Cools-Haegemans 1", 10, weights, points)
+
+
+register([cools_haegemans_1])

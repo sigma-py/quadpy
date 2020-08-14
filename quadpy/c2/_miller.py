@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 
 from ..helpers import article
-from ._helpers import C2Scheme, expand_symmetries
+from ._helpers import C2Scheme, register
 
 source = article(
     authors=["J.C.P. Miller"],
@@ -22,6 +22,8 @@ def miller():
         "c4_a0": [[-frac(8, 225)], [1]],
         "c4_aa": [[frac(7, 900)], [1]],
     }
-    points, weights = expand_symmetries(d)
     # This scheme is exact for _harmonic_ integrands of degree <= 11.
-    return C2Scheme("Miller", weights, points, 1, source)
+    return C2Scheme("Miller", d, 1, source)
+
+
+register([miller])

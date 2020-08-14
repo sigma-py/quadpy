@@ -1,7 +1,7 @@
 import numpy
 
 from ..helpers import techreport
-from ._helpers import C2Scheme, expand_symmetries
+from ._helpers import C2Scheme, register
 
 source = techreport(
     authors=["Shayne Waldron"],
@@ -14,7 +14,7 @@ source = techreport(
 )
 
 
-def waldron(r, alpha):
+def waldron(r=1, alpha=0):
     assert r ** 2 >= 1 / 3
 
     R = r / numpy.sqrt(3 * r ** 2 - 1)
@@ -28,11 +28,12 @@ def waldron(r, alpha):
 
     d = {
         "plain": [
-            [2 / 3 / r ** 2, 2 / 3 / r ** 2, 2 / 3 / R ** 2, 2 / 3 / R ** 2],
+            [1 / 6 / r ** 2, 1 / 6 / r ** 2, 1 / 6 / R ** 2, 1 / 6 / R ** 2],
             [+r * cos_alpha, -r * cos_alpha, +R * cos_beta, -R * cos_beta],
             [+r * sin_alpha, -r * sin_alpha, +R * sin_beta, -R * sin_beta],
         ]
     }
-    points, weights = expand_symmetries(d)
-    weights /= 4
-    return C2Scheme("Waldron", weights, points, 3, source)
+    return C2Scheme("Waldron", d, 3, source)
+
+
+register([waldron])

@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import article
-from .._helpers import _read
+from .._helpers import _read, register
 
 source = article(
     authors=["D.P. Laurie"],
@@ -21,3 +21,6 @@ def cubtri():
     https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
     """
     return _read(this_dir / "cubtri.json", source)
+
+
+register([cubtri])
