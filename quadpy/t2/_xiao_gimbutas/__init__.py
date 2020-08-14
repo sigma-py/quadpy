@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import article
-from .._helpers import _read
+from .._helpers import _read, register
 
 source = article(
     authors=["Hong Xiao", "Zydrunas Gimbutas"],
@@ -218,3 +218,59 @@ def xiao_gimbutas_49():
 
 def xiao_gimbutas_50():
     return _read(this_dir / "xg50.json", source)
+
+
+register(
+    [
+        xiao_gimbutas_01,
+        xiao_gimbutas_02,
+        xiao_gimbutas_03,
+        xiao_gimbutas_04,
+        xiao_gimbutas_05,
+        xiao_gimbutas_06,
+        xiao_gimbutas_07,
+        xiao_gimbutas_08,
+        xiao_gimbutas_09,
+        xiao_gimbutas_10,
+        xiao_gimbutas_11,
+        xiao_gimbutas_12,
+        xiao_gimbutas_13,
+        xiao_gimbutas_14,
+        xiao_gimbutas_15,
+        xiao_gimbutas_16,
+        xiao_gimbutas_17,
+        xiao_gimbutas_18,
+        xiao_gimbutas_19,
+        xiao_gimbutas_20,
+        xiao_gimbutas_21,
+        xiao_gimbutas_22,
+        xiao_gimbutas_23,
+        xiao_gimbutas_24,
+        xiao_gimbutas_25,
+        xiao_gimbutas_26,
+        xiao_gimbutas_27,
+        xiao_gimbutas_28,
+        xiao_gimbutas_29,
+        xiao_gimbutas_30,
+        xiao_gimbutas_31,
+        xiao_gimbutas_32,
+        xiao_gimbutas_33,
+        xiao_gimbutas_34,
+        xiao_gimbutas_35,
+        xiao_gimbutas_36,
+        xiao_gimbutas_37,
+        xiao_gimbutas_38,
+        xiao_gimbutas_39,
+        xiao_gimbutas_40,
+        xiao_gimbutas_41,
+        xiao_gimbutas_42,
+        xiao_gimbutas_43,
+        xiao_gimbutas_44,
+        xiao_gimbutas_45,
+        xiao_gimbutas_46,
+        xiao_gimbutas_47,
+        xiao_gimbutas_48,
+        xiao_gimbutas_49,
+        xiao_gimbutas_50,
+    ]
+)

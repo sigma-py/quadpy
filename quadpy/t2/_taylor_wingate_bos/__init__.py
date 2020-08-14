@@ -3,7 +3,7 @@ import pathlib
 from sympy import Rational as frac
 
 from ...helpers import article
-from .._helpers import T2Scheme, _read
+from .._helpers import T2Scheme, _read, register
 
 source = article(
     authors=["Mark A. Taylor", "Beth A. Wingate", "Len P. Bos"],
@@ -39,3 +39,14 @@ def taylor_wingate_bos_5():
 
 def taylor_wingate_bos_8():
     return _read(this_dir / "taylor_wingate_bos_8.json", source)
+
+
+register(
+    [
+        taylor_wingate_bos_1,
+        taylor_wingate_bos_2,
+        taylor_wingate_bos_4,
+        taylor_wingate_bos_5,
+        taylor_wingate_bos_8,
+    ]
+)

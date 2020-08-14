@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import article
-from .._helpers import _read
+from .._helpers import _read, register
 
 source = article(
     authors=["S. Wandzura", "H. Xiao"],
@@ -43,3 +43,15 @@ def wandzura_xiao_5():
 
 def wandzura_xiao_6():
     return _read(this_dir / "wx06.json", source)
+
+
+register(
+    [
+        wandzura_xiao_1,
+        wandzura_xiao_2,
+        wandzura_xiao_3,
+        wandzura_xiao_4,
+        wandzura_xiao_5,
+        wandzura_xiao_6,
+    ]
+)

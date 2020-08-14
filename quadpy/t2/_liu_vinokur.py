@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import T2Scheme
+from ._helpers import T2Scheme, register
 
 source = article(
     authors=["Y. Liu", "M. Vinokur"],
@@ -156,3 +156,19 @@ def liu_vinokur_13():
         ],
     }
     return T2Scheme("Liu-Vinokur 13", d, 5, source)
+
+
+register(
+    [
+        liu_vinokur_01,
+        liu_vinokur_02,
+        liu_vinokur_03,
+        liu_vinokur_04,
+        liu_vinokur_05,
+        liu_vinokur_06,
+        liu_vinokur_07,
+        liu_vinokur_08,
+        liu_vinokur_09,
+        liu_vinokur_10,
+    ]
+)

@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import article
-from .._helpers import _read
+from .._helpers import _read, register
 
 source = article(
     authors=["Linbo Zhang", "Tao Cui", "Hui Liu"],
@@ -28,3 +28,6 @@ def zhang_cui_liu_2():
 
 def zhang_cui_liu_3():
     return _read(this_dir / "zhang_cui_liu_3.json", source)
+
+
+register([zhang_cui_liu_1, zhang_cui_liu_2, zhang_cui_liu_3])

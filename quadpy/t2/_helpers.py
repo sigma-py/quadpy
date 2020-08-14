@@ -5,6 +5,13 @@ import numpy
 from ..helpers import plot_disks
 from ..tn import TnScheme, get_vol, transform
 
+all_schemes = {}
+
+
+def register(schemes):
+    for scheme in schemes:
+        all_schemes[scheme.__name__] = scheme
+
 
 class T2Scheme(TnScheme):
     def __init__(

@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import article
-from .._helpers import _read
+from .._helpers import _read, register
 
 source = article(
     authors=["Stefanos-Aldo Papanicolopulos"],
@@ -125,3 +125,29 @@ def papanicolopulos_rot_16():
 
 def papanicolopulos_rot_17():
     return _read(this_dir / "rot17.json", source)
+
+
+register(
+    [
+        papanicolopulos_sym_0,
+        papanicolopulos_sym_1,
+        papanicolopulos_sym_2,
+        papanicolopulos_sym_3,
+        papanicolopulos_sym_4,
+        papanicolopulos_sym_5,
+        papanicolopulos_sym_6,
+        papanicolopulos_sym_7,
+        papanicolopulos_sym_8,
+        #
+        papanicolopulos_rot_08,
+        papanicolopulos_rot_09,
+        papanicolopulos_rot_10,
+        papanicolopulos_rot_11,
+        papanicolopulos_rot_12,
+        papanicolopulos_rot_13,
+        papanicolopulos_rot_14,
+        papanicolopulos_rot_15,
+        papanicolopulos_rot_16,
+        papanicolopulos_rot_17,
+    ]
+)

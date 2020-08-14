@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import T2Scheme
+from ._helpers import T2Scheme, register
 
 source = article(
     authors=["J.N. Lyness", "D. Jespersen"],
@@ -343,3 +343,30 @@ def lyness_jespersen_21():
 
 triex_19 = lyness_jespersen_18
 triex_28 = lyness_jespersen_21
+
+
+register(
+    [
+        lyness_jespersen_01,
+        lyness_jespersen_02,
+        lyness_jespersen_03,
+        lyness_jespersen_04,
+        lyness_jespersen_05,
+        lyness_jespersen_06,
+        lyness_jespersen_07,
+        lyness_jespersen_08,
+        lyness_jespersen_09,
+        lyness_jespersen_10,
+        lyness_jespersen_11,
+        lyness_jespersen_12,
+        lyness_jespersen_13,
+        lyness_jespersen_14,
+        lyness_jespersen_15,
+        lyness_jespersen_16,
+        lyness_jespersen_17,
+        lyness_jespersen_18,
+        lyness_jespersen_19,
+        lyness_jespersen_20,
+        lyness_jespersen_21,
+    ]
+)

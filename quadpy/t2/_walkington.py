@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import techreport
-from ._helpers import T2Scheme
+from ._helpers import T2Scheme, register
 
 source = techreport(
     authors=["Noel J. Walkington"],
@@ -18,3 +18,6 @@ def walkington_p5():
     x1, x2 = [(6 + i * sqrt(15)) / 21 for i in [+1, -1]]
     d = {"s3": [[frac(9, 40)]], "s2": [[a1, a2], [x1, x2]]}
     return T2Scheme("Walkington p5", d, 5, source, 2.637e-16)
+
+
+register([walkington_p5])

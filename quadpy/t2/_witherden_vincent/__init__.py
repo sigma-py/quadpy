@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import article
-from .._helpers import _read
+from .._helpers import _read, register
 
 source = article(
     authors=["F.D. Witherden", "P.E. Vincent"],
@@ -92,3 +92,28 @@ def witherden_vincent_19():
 
 def witherden_vincent_20():
     return _read(this_dir / "wv20.json", source)
+
+
+register(
+    [
+        witherden_vincent_01,
+        witherden_vincent_02,
+        witherden_vincent_04,
+        witherden_vincent_05,
+        witherden_vincent_06,
+        witherden_vincent_07,
+        witherden_vincent_08,
+        witherden_vincent_09,
+        witherden_vincent_10,
+        witherden_vincent_11,
+        witherden_vincent_12,
+        witherden_vincent_13,
+        witherden_vincent_14,
+        witherden_vincent_15,
+        witherden_vincent_16,
+        witherden_vincent_17,
+        witherden_vincent_18,
+        witherden_vincent_19,
+        witherden_vincent_20,
+    ]
+)
