@@ -11,6 +11,7 @@ def product(scheme1d):
     )
     weights = numpy.vstack([wx.flatten(), wy.flatten(), wz.flatten()]).T
     weights = numpy.prod(weights, axis=1)
+    assert len(weights) > 0
     # the order, yeah...
     y, z, x = numpy.meshgrid(schemes[0].points, schemes[1].points, schemes[2].points)
     points = numpy.array([x.flatten(), y.flatten(), z.flatten()])

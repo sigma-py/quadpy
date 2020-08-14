@@ -376,8 +376,51 @@ def test_multidim():
     # assert val.shape == (3,)
 
 
+def test_get_good_scheme():
+    for degree in range(51):
+        best = None
+        for scheme in schemes:
+            if scheme.degree < degree:
+                continue
+
+            # allow only positive weights
+            if any(scheme.weights < 0):
+                continue
+
+            # disallow points outside of the domain
+            if numpy.any(scheme.points < 0):
+                continue
+
+            keys = set(scheme.symmetry_data.keys())
+
+            if len(keys - set(["s1", "s2", "s3", "vertex"])) > 0:
+                continue
+
+            if best is not None:
+                if len(scheme.weights) > len(best.weights):
+                    continue
+                if len(scheme.weights) == len(best.weights):
+                    ratio = max(numpy.abs(scheme.weights)) / min(
+                        numpy.abs(scheme.weights)
+                    )
+                    bratio = max(numpy.abs(best.weights)) / min(numpy.abs(best.weights))
+                    if ratio > bratio:
+                        continue
+                    # check if it's actually the same scheme
+                    if numpy.all(numpy.abs(scheme.points - best.points) < 1.0e-12):
+                        continue
+
+            # okay, looks like we found a better one!
+            best = scheme
+
+        print(degree, best.name)
+        # print(best)
+    return
+
+
 if __name__ == "__main__":
-    test_multidim()
+    test_get_good_scheme()
+    # test_multidim()
     # scheme_ = quadpy.t2.WandzuraXiao(3)
     # test_scheme(scheme_, 1.0e-14)
     # test_show(scheme_)

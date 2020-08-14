@@ -56,7 +56,7 @@ def franke_09():
     )
     points = numpy.array([points[0], points[1], 1 - points[0] - points[1]])
 
-    return T2Scheme("Franke 9", weights, points, 7, source)
+    return T2Scheme("Franke 9", {"plain": numpy.vstack([weights, points])}, 7, source)
 
 
 def franke_10():
@@ -101,4 +101,4 @@ def franke_10():
     )
     points = numpy.array([points[0], points[1], 1 - points[0] - points[1]])
 
-    return T2Scheme("Franke 10", weights, points, 7, source)
+    return T2Scheme("Franke 10", {"plain": numpy.vstack([weights, points])}, 7, source)

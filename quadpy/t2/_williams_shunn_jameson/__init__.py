@@ -3,7 +3,7 @@ import pathlib
 from sympy import Rational as frac
 
 from ...helpers import article
-from .._helpers import T2Scheme, _read, expand_symmetries
+from .._helpers import T2Scheme, _read
 
 source = article(
     authors=["D.M. Williams", "L. Shunn", "A. Jameson"],
@@ -20,14 +20,12 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 def williams_shunn_jameson_1():
     d = {"s3": [[1]]}
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Williams-Shunn-Jameson 1", weights, points, 1, source)
+    return T2Scheme("Williams-Shunn-Jameson 1", d, 1, source)
 
 
 def williams_shunn_jameson_2():
     d = {"s2": [[frac(1, 3)], [frac(1, 6)]]}
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Williams-Shunn-Jameson 2", weights, points, 2, source)
+    return T2Scheme("Williams-Shunn-Jameson 2", d, 2, source)
 
 
 def williams_shunn_jameson_3():

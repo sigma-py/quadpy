@@ -14,6 +14,12 @@ class TnScheme(QuadratureScheme):
         self.dim = dim
         super().__init__(name, weights, points, degree, source, tol, comments)
 
+    def points_inside(self):
+        return numpy.all((0 < self.points) & (self.points < 1))
+
+    def points_inside_or_boundary(self):
+        return numpy.all((0 <= self.points) & (self.points <= 1))
+
     def integrate(self, f, simplex, dot=numpy.dot):
         flt = numpy.vectorize(float)
         simplex = numpy.asarray(simplex)

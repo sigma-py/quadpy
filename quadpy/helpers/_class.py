@@ -101,11 +101,17 @@ class QuadratureScheme:
                     message += f"\n                        {source.url}"
 
         message += f"\n  degree:               {self.degree}"
+        message += f"\n  num points/weights:   {len(self.weights)}"
+
+        max_weight = numpy.max(numpy.abs(self.weights))
+        min_weight = numpy.min(numpy.abs(self.weights))
+        weights_ratio = max_weight / min_weight
+        message += f"\n  max/min weight ratio: {weights_ratio:.3e}"
+
         try:
             message += f"\n  test tolerance:       {self.test_tolerance}"
         except AttributeError:
             pass
-        message += f"\n  num points/weights:   {len(self.weights)}"
 
         try:
             pi = self.points_inside()

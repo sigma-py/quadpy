@@ -3,7 +3,7 @@ import pathlib
 from sympy import Rational as frac
 
 from ...helpers import article
-from .._helpers import T2Scheme, _read, expand_symmetries
+from .._helpers import T2Scheme, _read
 
 source = article(
     authors=["D.A. Dunavant"],
@@ -22,20 +22,17 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 def dunavant_01():
     d = {"s3": [[1]]}
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Dunavant 1", weights, points, 1, source, 7.850e-17)
+    return T2Scheme("Dunavant 1", d, 1, source, 7.850e-17)
 
 
 def dunavant_02():
     d = {"s2": [[frac(1, 3)], [frac(1, 6)]]}
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Dunavant 2", weights, points, 2, source, 2.220e-16)
+    return T2Scheme("Dunavant 2", d, 2, source, 2.220e-16)
 
 
 def dunavant_03():
     d = {"s3": [[-frac(9, 16)]], "s2": [[frac(25, 48)], [frac(1, 5)]]}
-    points, weights = expand_symmetries(d)
-    return T2Scheme("Dunavant 3", weights, points, 3, source, 6.661e-16)
+    return T2Scheme("Dunavant 3", d, 3, source, 6.661e-16)
 
 
 def dunavant_04():
