@@ -4,7 +4,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import C2Scheme, expand_symmetries
+from ._helpers import C2Scheme, expand_symmetries, register
 
 source = article(
     authors=["A.M. Cohen", "D.A. Gismalla"],
@@ -56,3 +56,6 @@ def cohen_gismalla_2():
     # According to the article, it has order 7 for symmetric integrands.
     # Something is fishy...
     return C2Scheme("Cohen-Gismalla 2", weights, points, 1, source, 4.441e-16)
+
+
+register([cohen_gismalla_1, cohen_gismalla_2])

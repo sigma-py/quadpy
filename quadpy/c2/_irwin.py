@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 
 from ..helpers import book
-from ._helpers import C2Scheme, expand_symmetries
+from ._helpers import C2Scheme, expand_symmetries, register
 
 source = book(
     authors=["Joseph Oscar Irwin"],
@@ -25,3 +25,6 @@ def irwin_2():
     }
     points, weights = expand_symmetries(d)
     return C2Scheme("Irwin 2", weights, points, 5, source, 5.685e-14)
+
+
+register([irwin_1, irwin_2])

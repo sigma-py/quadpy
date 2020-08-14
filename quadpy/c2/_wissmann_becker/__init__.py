@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import article
-from .._helpers import _read
+from .._helpers import _read, register
 
 source = article(
     authors=["Johannes W. Wissmann", "Thomas Becker"],
@@ -38,3 +38,15 @@ def wissmann_becker_8_1():
 
 def wissmann_becker_8_2():
     return _read(this_dir / "wissmann_becker_8_2.json", source)
+
+
+register(
+    [
+        wissmann_becker_4_1,
+        wissmann_becker_4_2,
+        wissmann_becker_6_1,
+        wissmann_becker_6_2,
+        wissmann_becker_8_1,
+        wissmann_becker_8_2,
+    ]
+)

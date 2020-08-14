@@ -4,7 +4,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ...helpers import article
-from .._helpers import C2Scheme, _read, expand_symmetries
+from .._helpers import C2Scheme, _read, expand_symmetries, register
 
 source = article(
     authors=["D.A. Dunavant"],
@@ -82,3 +82,20 @@ def dunavant_09():
 
 def dunavant_10():
     return _read(this_dir / "dunavant_10.json", source)
+
+
+register(
+    [
+        dunavant_00,
+        dunavant_01,
+        dunavant_02,
+        dunavant_03,
+        dunavant_04,
+        dunavant_05,
+        dunavant_06,
+        dunavant_07,
+        dunavant_08,
+        dunavant_09,
+        dunavant_10,
+    ]
+)

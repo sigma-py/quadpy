@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 
 from ..helpers import article
-from ._helpers import C2Scheme, expand_symmetries
+from ._helpers import C2Scheme, expand_symmetries, register
 
 source = article(
     authors=["Bernd Meister"],
@@ -27,3 +27,6 @@ def meister():
     }
     points, weights = expand_symmetries(d)
     return C2Scheme("Meister", weights, points, 7, source)
+
+
+register([meister])

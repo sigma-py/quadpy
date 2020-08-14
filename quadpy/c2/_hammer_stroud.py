@@ -3,7 +3,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import C2Scheme, expand_symmetries
+from ._helpers import C2Scheme, expand_symmetries, register
 
 source = article(
     authors=["Preston C. Hammer", "Arthur H. Stroud"],
@@ -43,3 +43,6 @@ def hammer_stroud_3_2():
     points, weights = expand_symmetries(d)
     weights /= 4
     return C2Scheme("Hammer-Stroud 3-2", weights, points, 7, source, 4.441e-16)
+
+
+register([hammer_stroud_1_2, hammer_stroud_2_2, hammer_stroud_3_2])

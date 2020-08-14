@@ -5,7 +5,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import C2Scheme, expand_symmetries
+from ._helpers import C2Scheme, expand_symmetries, register
 from ._rabinowitz_richter import rabinowitz_richter_1
 from ._tyler import tyler_2
 
@@ -20,7 +20,7 @@ source = article(
 )
 
 
-def franke_1(lmbda):
+def franke_1(lmbda=2):
     assert -frac(9, 5) <= lmbda <= frac(9, 4)
 
     a = sqrt(frac(9 + 5 * lmbda, 15))
@@ -198,3 +198,18 @@ def franke_8():
     points, weights = expand_symmetries(d)
     weights /= 4
     return C2Scheme("Franke 8", weights, points, 1, source)
+
+
+register(
+    [
+        franke_1,
+        franke_5,
+        franke_6,
+        franke_7,
+        franke_8,
+        franke_2a,
+        franke_2b,
+        franke_3a,
+        franke_3b,
+    ]
+)

@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import article
-from .._helpers import _read
+from .._helpers import _read, register
 
 source = article(
     authors=["C.R. Morrow", "T.N.L. Patterson"],
@@ -23,3 +23,6 @@ def morrow_patterson_1():
 
 def morrow_patterson_2():
     return _read(this_dir / "morrow_patterson_2.json", source)
+
+
+register([morrow_patterson_1, morrow_patterson_2])

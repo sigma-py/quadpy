@@ -10,7 +10,7 @@ from ._albrecht_collatz import albrecht_collatz_2 as stroud_c2_5_1
 from ._albrecht_collatz import albrecht_collatz_3 as stroud_c2_5_2
 from ._albrecht_collatz import albrecht_collatz_4 as stroud_c2_5_6
 from ._burnside import burnside as stroud_c2_5_3
-from ._helpers import C2Scheme, expand_symmetries
+from ._helpers import C2Scheme, expand_symmetries, register
 from ._irwin import irwin_1 as stroud_c2_3_5
 from ._irwin import irwin_2 as stroud_c2_5_7
 from ._maxwell import maxwell as stroud_c2_7_3
@@ -85,31 +85,33 @@ def stroud_c2_7_4():
     return C2Scheme("Stroud C2 7-4", weights, points, 1, source)
 
 
-__all__ = [
-    "stroud_c2_1_1",
-    "stroud_c2_1_2",
-    "stroud_c2_3_1",
-    "stroud_c2_3_2",
-    "stroud_c2_3_3",
-    "stroud_c2_3_4",
-    "stroud_c2_3_5",
-    "stroud_c2_5_1",
-    "stroud_c2_5_2",
-    "stroud_c2_5_3",
-    "stroud_c2_5_4",
-    "stroud_c2_5_5",
-    "stroud_c2_5_6",
-    "stroud_c2_5_7",
-    "stroud_c2_7_1",
-    "stroud_c2_7_2",
-    "stroud_c2_7_3",
-    "stroud_c2_7_4",
-    "stroud_c2_7_5",
-    "stroud_c2_7_6",
-    "stroud_c2_9_1",
-    "stroud_c2_11_1",
-    "stroud_c2_11_2",
-    "stroud_c2_13_1",
-    "stroud_c2_15_1",
-    "stroud_c2_15_2",
-]
+register(
+    [
+        stroud_c2_1_1,
+        stroud_c2_1_2,
+        stroud_c2_3_1,
+        stroud_c2_3_2,
+        stroud_c2_3_3,
+        stroud_c2_3_4,
+        stroud_c2_3_5,
+        stroud_c2_5_1,
+        stroud_c2_5_2,
+        stroud_c2_5_3,
+        stroud_c2_5_4,
+        stroud_c2_5_5,
+        stroud_c2_5_6,
+        stroud_c2_5_7,
+        stroud_c2_7_1,
+        stroud_c2_7_2,
+        stroud_c2_7_3,
+        stroud_c2_7_4,
+        stroud_c2_7_5,
+        stroud_c2_7_6,
+        stroud_c2_9_1,
+        stroud_c2_11_1,
+        stroud_c2_11_2,
+        stroud_c2_13_1,
+        stroud_c2_15_1,
+        stroud_c2_15_2,
+    ]
+)

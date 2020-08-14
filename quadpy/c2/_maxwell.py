@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import C2Scheme, expand_symmetries
+from ._helpers import C2Scheme, expand_symmetries, register
 
 source = article(
     authors=["J.C. Maxwell"],
@@ -27,3 +27,6 @@ def maxwell():
     }
     points, weights = expand_symmetries(d)
     return C2Scheme("Maxwell", weights, points, 7, source)
+
+
+register([maxwell])

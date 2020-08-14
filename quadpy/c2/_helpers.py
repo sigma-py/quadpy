@@ -8,6 +8,13 @@ from ..cn import transform
 from ..helpers import expand_symmetries, plot_disks
 from ..tn import get_vol
 
+all_schemes = {}
+
+
+def register(schemes):
+    for scheme in schemes:
+        all_schemes[scheme.__name__] = scheme
+
 
 class C2Scheme(CnScheme):
     def __init__(
