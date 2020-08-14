@@ -17,7 +17,7 @@ class T2Scheme(TnScheme):
         comments=None,
         weight_factor=None,
     ):
-        self.domain = "T2"
+        self.symmetry_data = symmetry_data
 
         points, weights = expand_symmetries(symmetry_data)
         if weight_factor is not None:
@@ -25,6 +25,7 @@ class T2Scheme(TnScheme):
 
         assert points.shape[0] == 3, f"{name}, {points.shape}"
         super().__init__(name, 2, weights, points, degree, source, tol, comments)
+        self.domain = "T2"
 
     def plot(
         self,

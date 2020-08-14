@@ -377,25 +377,42 @@ def test_multidim():
 
 
 def test_get_good_scheme():
-    degree = 3
-    best = schemes[0]
-    bratio = max(numpy.abs(best.weights)) / min(numpy.abs(best.weights))
-    for scheme in schemes:
-        ratio = max(numpy.abs(scheme.weights)) / min(numpy.abs(scheme.weights))
-        if (
-            scheme.degree >= degree
-            and all(scheme.weights >= 0)
-            and (
-                (len(scheme.weights) < len(best.weights))
-                or
-                (len(scheme.weights) == len(best.weights) and ratio < bratio)
-            )
-        ):
-            best = scheme
-            bratio = ratio
+    for degree in range(51):
+        best = None
+        for scheme in schemes:
+            if scheme.degree < degree:
+                continue
 
-    print(best)
-    exit(1)
+            # allow only positive weights
+            if any(scheme.weights < 0):
+                continue
+
+            # disallow points outside of the domain
+            if numpy.any(scheme.points < 0):
+                continue
+
+            keys = set(scheme.symmetry_data.keys())
+
+            if len(keys - set(["s1", "s2", "s3", "vertex"])) > 0:
+                continue
+
+            if best is not None:
+                if len(scheme.weights) > len(best.weights):
+                    continue
+                if len(scheme.weights) == len(best.weights):
+                    ratio = max(numpy.abs(scheme.weights)) / min(numpy.abs(scheme.weights))
+                    bratio = max(numpy.abs(best.weights)) / min(numpy.abs(best.weights))
+                    if ratio > bratio:
+                        continue
+                    # check if it's actually the same scheme
+                    if numpy.all(numpy.abs(scheme.points - best.points) < 1.0e-12):
+                        continue
+
+            # okay, looks like we found a better one!
+            best = scheme
+
+        print(degree, best.name)
+        # print(best)
     return
 
 

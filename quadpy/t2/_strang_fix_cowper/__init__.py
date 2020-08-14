@@ -45,7 +45,7 @@ def strang_fix_cowper_03():
 def strang_fix_cowper_04():
     roots = numpy.polynomial.polynomial.polyroots([-1, 15, -60, 60])
     d = {"s1": [[1 / 6], [roots[2]], [roots[1]]]}
-    return T2Scheme("Strang-Fix-Cowper 4", d, 3, source)
+    return T2Scheme("Strang-Fix-Cowper 4", d, 3, source, 2.463e-15)
 
 
 def strang_fix_cowper_05():
