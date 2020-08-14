@@ -4,7 +4,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, pm_roll, untangle
-from ._helpers import U3Scheme, cartesian_to_spherical_sympy, expand_symmetries
+from ._helpers import U3Scheme
 
 source = article(
     authors=["A.D. McLaren"],
@@ -22,9 +22,7 @@ source = article(
 def mclaren_01():
     degree = 3
     data = {"a2": [frac(1, 12)]}
-    points, weights = expand_symmetries(data)
-    theta_phi = cartesian_to_spherical_sympy(points)
-    return U3Scheme("McLaren 1", weights, points, theta_phi, degree, source)
+    return U3Scheme("McLaren 1", data, degree, source)
 
 
 def mclaren_02():
@@ -32,9 +30,7 @@ def mclaren_02():
     r = frac(1, 2)
     s, t = [(sqrt(5) + pm_) / 4 for pm_ in [+1, -1]]
     data = {"a1": [frac(1, 30)], "rst": [frac(1, 30), r, s, t]}
-    points, weights = expand_symmetries(data)
-    theta_phi = cartesian_to_spherical_sympy(points)
-    return U3Scheme("McLaren 2", weights, points, theta_phi, degree, source)
+    return U3Scheme("McLaren 2", data, degree, source)
 
 
 def mclaren_03():
@@ -50,9 +46,7 @@ def mclaren_03():
     t = sqrt(t2)
 
     data = {"rst_weird": [frac(1, 24), r, s, t]}
-    points, weights = expand_symmetries(data)
-    theta_phi = cartesian_to_spherical_sympy(points)
-    return U3Scheme("McLaren 3", weights, points, theta_phi, degree, source)
+    return U3Scheme("McLaren 3", data, degree, source)
 
 
 def mclaren_04():
@@ -68,9 +62,7 @@ def mclaren_04():
     t = sqrt(t2)
 
     data = {"a1": [frac(16, 600)], "rst_weird": [frac(21, 600), r, s, t]}
-    points, weights = expand_symmetries(data)
-    theta_phi = cartesian_to_spherical_sympy(points)
-    return U3Scheme("McLaren 4", weights, points, theta_phi, degree, source)
+    return U3Scheme("McLaren 4", data, degree, source)
 
 
 def mclaren_05():
@@ -83,9 +75,7 @@ def mclaren_05():
     B2 = frac(27, 840)
 
     data = {"rs0": [[B1, B2], [r, u], [s, v]], "a3": [B2]}
-    points, weights = expand_symmetries(data)
-    theta_phi = cartesian_to_spherical_sympy(points)
-    return U3Scheme("McLaren 5", weights, points, theta_phi, degree, source)
+    return U3Scheme("McLaren 5", data, degree, source)
 
 
 def mclaren_06():
@@ -100,9 +90,7 @@ def mclaren_06():
 
     # ERR Stroud is missing +- at the first r.
     data = {"rs0": [B, r, s], "a1": [C], "rst": [C, u, v, w]}
-    points, weights = expand_symmetries(data)
-    theta_phi = cartesian_to_spherical_sympy(points)
-    return U3Scheme("McLaren 6", weights, points, theta_phi, degree, source)
+    return U3Scheme("McLaren 6", data, degree, source)
 
 
 def mclaren_07():
@@ -117,9 +105,7 @@ def mclaren_07():
     C = frac(16, 210)
 
     data = {"rs0": [B, r, s], "a3": [B], "a1": [C], "rst": [C, u, v, w]}
-    points, weights = expand_symmetries(data)
-    theta_phi = cartesian_to_spherical_sympy(points)
-    return U3Scheme("McLaren 7", weights, points, theta_phi, degree, source)
+    return U3Scheme("McLaren 7", data, degree, source)
 
 
 def mclaren_08():
@@ -134,9 +120,7 @@ def mclaren_08():
     B4 = frac(14641, 725760)
 
     data = {"a1": [B1], "a2": [B2], "a3": [B3], "llm2": [B4, u, v]}
-    points, weights = expand_symmetries(data)
-    theta_phi = cartesian_to_spherical_sympy(points)
-    return U3Scheme("McLaren 8", weights, points, theta_phi, degree, source)
+    return U3Scheme("McLaren 8", data, degree, source)
 
 
 def mclaren_09():
@@ -155,9 +139,7 @@ def mclaren_09():
     D = frac(512, 27720)
 
     data = {"rs0": [[B, C], [p, r], [q, s]], "a3": [C], "a1": [D], "rst": [D, u, v, w]}
-    points, weights = expand_symmetries(data)
-    theta_phi = cartesian_to_spherical_sympy(points)
-    return U3Scheme("McLaren 9", weights, points, theta_phi, degree, source)
+    return U3Scheme("McLaren 9", data, degree, source)
 
 
 def mclaren_10():
@@ -220,5 +202,4 @@ def mclaren_10():
 
     points, weights = untangle(data)
     points = numpy.ascontiguousarray(points.T)
-    theta_phi = cartesian_to_spherical_sympy(points)
-    return U3Scheme("McLaren 10", weights, points, theta_phi, degree, source)
+    return U3Scheme("McLaren 10", {"plain": numpy.vstack([weights, points])}, degree, source)
