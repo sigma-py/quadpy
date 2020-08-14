@@ -61,13 +61,68 @@ def test_show(scheme):
     scheme.show()
 
 
+def test_get_good_scheme():
+    for degree in range(51):
+        best = None
+        for scheme in quadpy.c2.all_schemes.values():
+            try:
+                scheme = scheme()  # initialize
+            except TypeError:
+                scheme = scheme(5)
+
+            if scheme.degree < degree:
+                continue
+
+            # allow only positive weights
+            if any(scheme.weights < 0):
+                continue
+
+            # disallow points outside of the domain
+            if numpy.any((scheme.points < -1) | (scheme.points > 1)):
+                continue
+
+            if scheme.test_tolerance > 1.0e-13:
+                continue
+
+            # TODO force symmetry data for all schemes
+            try:
+                keys = set(scheme.symmetry_data.keys())
+            except AttributeError:
+                continue
+
+            # filter out disallowed (unsymmetrical) keys
+            if len(keys - set(["c4_a0", "c4_aa", "d4", "zero"])) > 0:
+                continue
+
+            if best is not None:
+                if len(scheme.weights) > len(best.weights):
+                    continue
+                if len(scheme.weights) == len(best.weights):
+                    ratio = max(numpy.abs(scheme.weights)) / min(
+                        numpy.abs(scheme.weights)
+                    )
+                    bratio = max(numpy.abs(best.weights)) / min(numpy.abs(best.weights))
+                    if ratio > bratio:
+                        continue
+                    # check if it's actually the same scheme
+                    if numpy.all(numpy.abs(scheme.points - best.points) < 1.0e-12):
+                        continue
+
+            # okay, looks like we found a better one!
+            best = scheme
+
+        print(degree, best.name)
+        # print(best)
+    return
+
+
 if __name__ == "__main__":
+    test_get_good_scheme()
     # scheme_ = Product(quadpy.c1.gauss_legendre(6))
     # scheme_ = quadpy.c2.HammerStroud("3-2")
     # scheme_ = quadpy.c2.Stroud["C2 3-2"]()
     # test_show(scheme_)
     # test_scheme(scheme_, 1.0e-14)
-    from helpers import find_equal
-
-    schemes_ = [scheme[0] for scheme in schemes]
-    find_equal(schemes_)
+    # from helpers import find_equal
+    # schemes_ = [scheme[0] for scheme in schemes]
+    # find_equal(schemes_)
