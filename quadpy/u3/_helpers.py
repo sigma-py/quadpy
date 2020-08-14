@@ -6,16 +6,17 @@ import sympy
 
 from ..helpers import QuadratureScheme
 
+all_schemes = {}
+
+
+def register(schemes):
+    for scheme in schemes:
+        all_schemes[scheme.__name__] = scheme
+
 
 class U3Scheme(QuadratureScheme):
     def __init__(
-        self,
-        name,
-        symmetry_data,
-        degree,
-        source,
-        tol=1.0e-14,
-        comments=None,
+        self, name, symmetry_data, degree, source, tol=1.0e-14, comments=None,
     ):
         points, weights = expand_symmetries(symmetry_data)
 

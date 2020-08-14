@@ -4,7 +4,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, pm_roll, untangle
-from ._helpers import U3Scheme
+from ._helpers import U3Scheme, register
 
 source = article(
     authors=["A.D. McLaren"],
@@ -202,4 +202,22 @@ def mclaren_10():
 
     points, weights = untangle(data)
     points = numpy.ascontiguousarray(points.T)
-    return U3Scheme("McLaren 10", {"plain": numpy.vstack([weights, points])}, degree, source)
+    return U3Scheme(
+        "McLaren 10", {"plain": numpy.vstack([weights, points])}, degree, source
+    )
+
+
+register(
+    [
+        mclaren_01,
+        mclaren_02,
+        mclaren_03,
+        mclaren_04,
+        mclaren_05,
+        mclaren_06,
+        mclaren_07,
+        mclaren_08,
+        mclaren_09,
+        mclaren_10,
+    ]
+)

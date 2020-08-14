@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import U3Scheme
+from ._helpers import U3Scheme, register
 
 source = article(
     authors=["J. Albrecht", "L. Collatz"],
@@ -45,3 +45,14 @@ def albrecht_collatz_5():
         "a3": [frac(27, 840)],
     }
     return U3Scheme("Albrecht-Collatz 5", data, 7, source)
+
+
+register(
+    [
+        albrecht_collatz_1,
+        albrecht_collatz_2,
+        albrecht_collatz_3,
+        albrecht_collatz_4,
+        albrecht_collatz_5,
+    ]
+)

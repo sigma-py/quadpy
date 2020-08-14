@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import article
-from .._helpers import _read
+from .._helpers import _read, register
 
 source = article(
     authors=["Sangwoo Heo", "Yuan Xu"],
@@ -120,3 +120,35 @@ def heo_xu_39a():
 
 def heo_xu_39b():
     return _read(this_dir / "heo_xu_39b.json", source)
+
+
+register(
+    [
+        heo_xu_13,
+        heo_xu_15,
+        heo_xu_17,
+        heo_xu_19a,
+        heo_xu_19b,
+        heo_xu_21a,
+        heo_xu_21b,
+        heo_xu_21c,
+        heo_xu_21d,
+        heo_xu_21e,
+        heo_xu_21f,
+        heo_xu_23a,
+        heo_xu_23b,
+        heo_xu_23c,
+        heo_xu_25a,
+        heo_xu_25b,
+        heo_xu_27a,
+        heo_xu_27b,
+        heo_xu_27c,
+        heo_xu_29,
+        heo_xu_31,
+        heo_xu_33,
+        heo_xu_35,
+        heo_xu_37,
+        heo_xu_39a,
+        heo_xu_39b,
+    ]
+)
