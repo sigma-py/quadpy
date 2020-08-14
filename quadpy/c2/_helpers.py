@@ -18,8 +18,10 @@ def register(schemes):
 
 class C2Scheme(CnScheme):
     def __init__(
-        self, name, weights, points, degree, source=None, tol=1.0e-14, comments=None
+        self, name, symmetry_data, degree, source=None, tol=1.0e-14, comments=None
     ):
+        self.symmetry_data = symmetry_data
+        points, weights = expand_symmetries(symmetry_data)
         super().__init__(name, 2, weights, points, degree, source, tol, comments)
         self.domain = "C2"
 
@@ -60,12 +62,13 @@ def _read(filepath, source):
     name = content["name"]
     tol = content["test_tolerance"]
 
-    points, weights = expand_symmetries(content["data"])
-
+    data = content["data"]
     if "weight factor" in content:
-        weights *= content["weight factor"]
+        w = content["weight factor"]
+        for value in data.values():
+            value[0] = [val * w for val in value[0]]
 
-    return C2Scheme(name, weights, points, degree, source, tol)
+    return C2Scheme(name, data, degree, source, tol)
 
 
 def _scheme_from_dict(content, source=None):

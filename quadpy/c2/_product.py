@@ -13,4 +13,8 @@ def product(scheme1d):
     )
     weights /= 4
     degree = min([s.degree for s in schemes])
-    return C2Scheme(f"Product scheme ({scheme1d.name})", weights, points, degree)
+    return C2Scheme(
+        f"Product scheme ({scheme1d.name})",
+        {"plain": numpy.vstack([weights, points])},
+        degree,
+    )

@@ -4,7 +4,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ...helpers import article
-from .._helpers import C2Scheme, _read, expand_symmetries, register
+from .._helpers import C2Scheme, _read, register
 
 source = article(
     authors=["H.J. Schmid"],
@@ -29,8 +29,7 @@ def schmid_2():
             [+sqrt(frac(2, 3)), -sqrt(frac(2, 3)), 0],
         ]
     }
-    points, weights = expand_symmetries(d)
-    return C2Scheme("Schmid 2", weights, points, 2, source, 4.441e-16)
+    return C2Scheme("Schmid 2", d, 2, source, 4.441e-16)
 
 
 def schmid_4():
@@ -55,8 +54,7 @@ def schmid_4():
             ],
         ]
     }
-    points, weights = expand_symmetries(d)
-    return C2Scheme("Schmid 4", weights, points, 4, source, 4.441e-16)
+    return C2Scheme("Schmid 4", d, 4, source, 4.441e-16)
 
 
 def schmid_6():
