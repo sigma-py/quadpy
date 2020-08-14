@@ -166,7 +166,7 @@ schemes = (
     + [quadpy.c2.product(quadpy.c1.trapezoidal())]
     + [quadpy.c2.product(quadpy.c1.gauss_legendre(k)) for k in range(1, 5)]
     + [quadpy.c2.product(quadpy.c1.newton_cotes_closed(k)) for k in range(1, 5)]
-    + [quadpy.c2.product(quadpy.c1.newton_cotes_open(k)) for k in range(6)]
+    + [quadpy.c2.product(quadpy.c1.newton_cotes_open(k)) for k in range(1, 6)]
 )
 
 

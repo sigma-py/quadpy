@@ -10,7 +10,7 @@ schemes = (
     + [quadpy.c3.product(quadpy.c1.trapezoidal())]
     + [quadpy.c3.product(quadpy.c1.gauss_legendre(k)) for k in range(1, 6)]
     + [quadpy.c3.product(quadpy.c1.newton_cotes_closed(k)) for k in range(1, 5)]
-    + [quadpy.c3.product(quadpy.c1.newton_cotes_open(k)) for k in range(5)]
+    + [quadpy.c3.product(quadpy.c1.newton_cotes_open(k)) for k in range(1, 5)]
     + [
         quadpy.c3.hammer_stroud_1_3(),
         quadpy.c3.hammer_stroud_2_3(),
