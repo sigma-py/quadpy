@@ -159,7 +159,11 @@ def test_get_good_scheme():
                         continue
                     # check if it's actually the same scheme
                     if numpy.all(numpy.abs(scheme.points - best.points) < 1.0e-12):
-                        continue
+                        # pick the older one
+                        scheme_year = "0" if scheme.source is None else scheme.source.year
+                        best_year = "0" if best.source is None else best.source.year
+                        if scheme_year >= best_year:
+                            continue
 
             # okay, looks like we found a better one!
             best = scheme

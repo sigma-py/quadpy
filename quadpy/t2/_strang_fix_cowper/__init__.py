@@ -1,8 +1,10 @@
+import pathlib
+
 import numpy
 from sympy import Rational as frac
 
 from ...helpers import article, book
-from .._helpers import T2Scheme, register
+from .._helpers import T2Scheme, register, _read
 
 source = book(
     authors=["Gilbert Strang", "George Fix"],
@@ -25,6 +27,8 @@ source = article(
 )
 # See also
 # https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tri/quadrature_rules_tri.html
+
+this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def strang_fix_cowper_01():
@@ -49,13 +53,7 @@ def strang_fix_cowper_04():
 
 
 def strang_fix_cowper_05():
-    d = {
-        "d3_aa": [
-            [0.109951743655322, 0.223381589678011],
-            [0.091576213509771, 0.445948490915965],
-        ]
-    }
-    return T2Scheme("Strang-Fix-Cowper 5", d, 4, source, 2.037e-15)
+    return _read(this_dir / "strang_fix_cowper_05.json", source)
 
 
 def strang_fix_cowper_06():

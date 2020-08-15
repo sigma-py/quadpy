@@ -1,10 +1,15 @@
 import pathlib
 
-import numpy
 from sympy import Rational as frac
 
 from ...helpers import article
 from .._helpers import T2Scheme, _read, register
+from .._centroid import centroid as laursen_gellert_01
+from .._strang_fix_cowper import (
+    strang_fix_cowper_03 as laursen_gellert_03,
+    strang_fix_cowper_04 as laursen_gellert_04,
+    strang_fix_cowper_05 as laursen_gellert_05,
+)
 
 source = article(
     authors=["M.E. Laursen", "M. Gellert"],
@@ -20,11 +25,6 @@ source = article(
 this_dir = pathlib.Path(__file__).resolve().parent
 
 
-def laursen_gellert_01():
-    d = {"centroid": [[1]]}
-    return T2Scheme("Laursen-Gellert 1", d, 1, source)
-
-
 def laursen_gellert_02a():
     d = {"d3_aa": [[frac(1, 3)], [frac(1, 6)]]}
     return T2Scheme("Laursen-Gellert 2a", d, 2, source)
@@ -33,21 +33,6 @@ def laursen_gellert_02a():
 def laursen_gellert_02b():
     d = {"d3_aa": [[frac(1, 3)], [frac(1, 2)]]}
     return T2Scheme("Laursen-Gellert 2b", d, 2, source)
-
-
-def laursen_gellert_03():
-    d = {"centroid": [[-frac(9, 16)]], "d3_aa": [[frac(25, 48)], [frac(1, 5)]]}
-    return T2Scheme("Laursen-Gellert 3", d, 3, source)
-
-
-def laursen_gellert_04():
-    roots = numpy.polynomial.polynomial.polyroots([-1, 15, -60, 60])
-    d = {"d3_ab": [[1 / 6], [roots[2]], [roots[1]]]}
-    return T2Scheme("Laursen-Gellert 4", d, 3, source, 2.463e-15)
-
-
-def laursen_gellert_05():
-    return _read(this_dir / "laursen_gellert_05.json", source)
 
 
 def laursen_gellert_06():
