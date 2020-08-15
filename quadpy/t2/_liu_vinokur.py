@@ -3,6 +3,11 @@ from sympy import sqrt
 
 from ..helpers import article
 from ._helpers import T2Scheme, register
+from ._classical import (
+    centroid as liu_vinokur_01,
+    vertex as liu_vinokur_02,
+    seven_point as liu_vinokur_07,
+)
 
 source = article(
     authors=["Y. Liu", "M. Vinokur"],
@@ -15,22 +20,8 @@ source = article(
 )
 
 
-def liu_vinokur_01():
-    d = {"centroid": [[1]]}
-    return T2Scheme("Liu-Vinokur 1", d, 1, source)
-
-
-def liu_vinokur_02():
-    alpha = 1
-    b = (1 - alpha) / 3
-    d = {"d3_aa": [[frac(1, 3)], [b]]}
-    return T2Scheme("Liu-Vinokur 2", d, 1, source)
-
-
 def liu_vinokur_03():
-    alpha = -frac(1, 2)
-    b = (1 - alpha) / 3
-    d = {"d3_aa": [[frac(1, 3)], [b]]}
+    d = {"d3_aa": [[frac(1, 3)], [frac(1, 2)]]}
     return T2Scheme("Liu-Vinokur 3", d, 2, source)
 
 
@@ -41,29 +32,21 @@ def liu_vinokur_04():
 
 def liu_vinokur_05():
     # ERR Incorrectly specified in the article as 25 (instead of 2/5).
-    alpha = frac(2, 5)
-    b = (1 - alpha) / 3
-    d = {"centroid": [[-frac(9, 16)]], "d3_aa": [[frac(25, 48)], [b]]}
+    # alpha = frac(2, 5)
+    # b = (1 - alpha) / 3
+    d = {"centroid": [[-frac(9, 16)]], "d3_aa": [[frac(25, 48)], [frac(1, 5)]]}
     return T2Scheme("Liu-Vinokur 5", d, 3, source)
 
 
 def liu_vinokur_06():
     sqrt21 = sqrt(21)
-    alpha0 = 1
     alpha1 = (1 - sqrt21) / 10
-    b0 = (1 - alpha0) / 3
     b1 = (1 - alpha1) / 3
-    d = {"d3_aa": [[(1 + sqrt21) / 120, (39 - sqrt21) / 120], [b0, b1]]}
+    d = {
+        "vertex": [[(1 + sqrt21) / 120]],
+        "d3_aa": [[(39 - sqrt21) / 120], [b1]]
+    }
     return T2Scheme("Liu-Vinokur 6", d, 3, source)
-
-
-def liu_vinokur_07():
-    alpha0 = 1
-    alpha1 = -frac(1, 2)
-    b0 = (1 - alpha0) / 3
-    b1 = (1 - alpha1) / 3
-    d = {"centroid": [[frac(9, 20)]], "d3_aa": [[frac(1, 20), frac(2, 15)], [b0, b1]]}
-    return T2Scheme("Liu-Vinokur 7", d, 3, source)
 
 
 def liu_vinokur_08():

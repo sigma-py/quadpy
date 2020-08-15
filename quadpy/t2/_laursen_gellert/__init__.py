@@ -4,8 +4,9 @@ from sympy import Rational as frac
 
 from ...helpers import article
 from .._helpers import T2Scheme, _read, register
-from .._centroid import centroid as laursen_gellert_01
+from .._classical import centroid as laursen_gellert_01
 from .._strang_fix_cowper import (
+    # DUP
     strang_fix_cowper_03 as laursen_gellert_03,
     strang_fix_cowper_04 as laursen_gellert_04,
     strang_fix_cowper_05 as laursen_gellert_05,
