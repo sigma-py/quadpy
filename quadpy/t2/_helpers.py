@@ -2,7 +2,7 @@ import json
 
 import numpy
 
-from ..helpers import plot_disks, expand_symmetries
+from ..helpers import expand_symmetries, plot_disks
 from ..tn import TnScheme, get_vol, transform
 
 schemes = {}

@@ -59,7 +59,10 @@ def strang_fix_cowper_05():
 
 
 def strang_fix_cowper_06():
-    d = {"centroid": [[3 / 8]], "d3_ab": [[5 / 48], [0.736712498968435], [0.237932366472434]]}
+    d = {
+        "centroid": [[3 / 8]],
+        "d3_ab": [[5 / 48], [0.736712498968435], [0.237932366472434]],
+    }
     return T2Scheme("Strang-Fix-Cowper 6", d, 4, source, 5.440e-15)
 
 

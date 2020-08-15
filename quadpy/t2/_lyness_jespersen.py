@@ -25,7 +25,7 @@ def lyness_jespersen_01():
 def lyness_jespersen_02():
     d = {
         "centroid": [[frac(3, 4)]],
-        "d3_aa": [[frac(1, 12)], [0]],
+        "vertex": [[frac(1, 12)]],
     }
     return T2Scheme("Lyness-Jespersen 2", d, 2, source)
 
@@ -41,7 +41,8 @@ def lyness_jespersen_03():
 def lyness_jespersen_04():
     d = {
         "centroid": [[frac(9, 20)]],
-        "d3_aa": [[frac(1, 20), frac(2, 15)], [0, frac(1, 2)]],
+        "vertex": [[frac(1, 20)]],
+        "d3_aa": [[frac(2, 15)], [frac(1, 2)]],
     }
     return T2Scheme("Lyness-Jespersen 4", d, 3, source)
 
@@ -60,7 +61,7 @@ def lyness_jespersen_06():
     a0, a1 = [(3 + i * sqrt(3)) / 6 for i in [+1, -1]]
     d = {
         "centroid": [frac(9, 20)],
-        "d3_aa": [[-frac(1, 60)], [0]],
+        "vertex": [[-frac(1, 60)]],
         "d3_ab": [[frac(1, 10)], [a0], [a1]],
     }
     return T2Scheme("Lyness-Jespersen 6", d, 4, source)
@@ -69,9 +70,10 @@ def lyness_jespersen_06():
 def lyness_jespersen_07():
     sqrt13 = sqrt(13)
     d = {
+        "vertex": [[(11 - sqrt13) / 360]],
         "d3_aa": [
-            [(11 - sqrt13) / 360, (10 - 2 * sqrt13) / 45, (29 + 17 * sqrt13) / 360],
-            [0, frac(1, 2), (7 - sqrt13) / 18],
+            [(10 - 2 * sqrt13) / 45, (29 + 17 * sqrt13) / 360],
+            [frac(1, 2), (7 - sqrt13) / 18],
         ],
     }
     return T2Scheme("Lyness-Jespersen 7", d, 4, source)
@@ -89,10 +91,8 @@ def lyness_jespersen_08():
 def lyness_jespersen_09():
     d = {
         "centroid": [frac(81, 320)],
-        "d3_aa": [
-            [frac(1, 90), frac(16, 225), frac(2401, 14400)],
-            [0, frac(1, 2), frac(1, 7)],
-        ],
+        "vertex": [[frac(1, 90)]],
+        "d3_aa": [[frac(16, 225), frac(2401, 14400)], [frac(1, 2), frac(1, 7)],],
     }
     return T2Scheme("Lyness-Jespersen 9", d, 5, source)
 
@@ -116,10 +116,8 @@ def lyness_jespersen_11():
     c, d = [(3 + i * sqrt(6)) / 6 for i in [+1, -1]]
     d = {
         "centroid": [[-frac(81, 140)]],
-        "d3_aa": [
-            [-frac(5, 252), frac(17, 315), frac(128, 315)],
-            [0, frac(1, 2), frac(1, 4)],
-        ],
+        "vertex": [[-frac(5, 252)]],
+        "d3_aa": [[frac(17, 315), frac(128, 315)], [frac(1, 2), frac(1, 4)],],
         "d3_ab": [[frac(9, 210)], [c], [d]],
     }
     return T2Scheme("Lyness-Jespersen 11", d, 6, source)
@@ -156,13 +154,10 @@ def lyness_jespersen_13():
 def lyness_jespersen_14():
     d = {
         "centroid": [[1.763126156005252e-01]],
+        "vertex": [[1.210901532763310e-02 / 3]],
         "d3_aa": [
-            [
-                1.210901532763310e-02 / 3,
-                3.499561757697094e-01 / 3,
-                3.195119754425220e-01 / 3,
-            ],
-            [0, 1.549360602237604e-01, 4.691507461438120e-01],
+            [3.499561757697094e-01 / 3, 3.195119754425220e-01 / 3,],
+            [1.549360602237604e-01, 4.691507461438120e-01],
         ],
         "d3_ab": [[1.421102178595603e-01 / 6], [0], [8.392991722729236e-01]],
     }
@@ -186,26 +181,20 @@ def lyness_jespersen_15():
             [7.284923929554041e-01],
         ],
     }
-    return T2Scheme("Lyness-Jespersen 15", d, 8, source)
+    return T2Scheme("Lyness-Jespersen 15", d, 8, source, 8.854e-15)
 
 
 def lyness_jespersen_16():
     d = {
+        "vertex": [[+1.207273935292775e-02 / 3]],
         "d3_aa": [
             [
-                +1.207273935292775e-02 / 3,
                 -8.491579879151455e-01 / 3,
                 +1.042367468891334e00 / 3,
                 +1.947229791412260e-01 / 3,
                 +4.511852767201322e-01 / 3,
             ],
-            [
-                0,
-                0.5,
-                4.956813941755582e-01,
-                9.032775751426533e-02,
-                2.341547497073052e-01,
-            ],
+            [0.5, 4.956813941755582e-01, 9.032775751426533e-02, 2.341547497073052e-01,],
         ],
         "d3_ab": [[+1.488095238055238e-01 / 6], [0], [7.236067977499750e-01]],
     }
@@ -255,27 +244,21 @@ def lyness_jespersen_18():
             [7.411985987844980e-01],
         ],
     }
-    return T2Scheme("Lyness-Jespersen 18", d, 9, source)
+    return T2Scheme("Lyness-Jespersen 18", d, 9, source, 8.604e-15)
 
 
 def lyness_jespersen_19():
     d = {
         "centroid": [[1.133624844599192e-01]],
+        "vertex": [[1.062573789846330e-03 / 3]],
         "d3_aa": [
             [
-                1.062573789846330e-03 / 3,
                 4.803411513859279e-02 / 3,
                 2.524243006337300e-01 / 3,
                 7.819254371487040e-02 / 3,
                 2.472227459993048e-01 / 3,
             ],
-            [
-                0,
-                0.5,
-                4.497793381870162e-01,
-                4.694744319909033e-02,
-                1.918719127374489e-01,
-            ],
+            [0.5, 4.497793381870162e-01, 4.694744319909033e-02, 1.918719127374489e-01,],
         ],
         "d3_ab": [
             [2.597012362637364e-01 / 6],
@@ -283,7 +266,7 @@ def lyness_jespersen_19():
             [7.411985987844980e-01],
         ],
     }
-    return T2Scheme("Lyness-Jespersen 19", d, 9, source)
+    return T2Scheme("Lyness-Jespersen 19", d, 9, source, 3.733e-15)
 
 
 def lyness_jespersen_20():

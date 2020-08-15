@@ -90,7 +90,10 @@ def liu_vinokur_09():
     alpha1 = frac(2, 3)
     b0 = (1 - alpha0) / 3
     b1 = (1 - alpha1) / 3
-    d = {"centroid": [[frac(27, 80)]], "d3_aa": [[frac(8, 105), frac(81, 560)], [b0, b1]]}
+    d = {
+        "centroid": [[frac(27, 80)]],
+        "d3_aa": [[frac(8, 105), frac(81, 560)], [b0, b1]],
+    }
     return T2Scheme("Liu-Vinokur 9", d, 4, source)
 
 
