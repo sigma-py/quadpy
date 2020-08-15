@@ -35,7 +35,7 @@ def liu_vinokur_03():
 
 
 def liu_vinokur_04():
-    d = {"centroid": [[frac(3, 4)]], "d3_aa": [[frac(1, 12)], [0]]}
+    d = {"centroid": [[frac(3, 4)]], "vertex": [[frac(1, 12)]]}
     return T2Scheme("Liu-Vinokur 4", d, 2, source)
 
 
@@ -130,7 +130,7 @@ def liu_vinokur_11():
 
     d = {
         "centroid": [[frac(9, 20)]],
-        "d3_aa": [[-frac(1, 60)], [0]],
+        "vertex": [[-frac(1, 60)]],
         "d3_ab": [[frac(1, 10)], [a], [b]],
     }
     return T2Scheme("Liu-Vinokur 11", d, 4, source)
@@ -153,9 +153,10 @@ def liu_vinokur_12():
 def liu_vinokur_13():
     d = {
         "centroid": [[frac(81, 320)]],
+        "vertex": [[frac(1, 90)]],
         "d3_aa": [
-            [frac(1, 90), frac(16, 225), frac(2401, 14400)],
-            [0, frac(1, 2), frac(1, 7)],
+            [frac(16, 225), frac(2401, 14400)],
+            [frac(1, 2), frac(1, 7)],
         ],
     }
     return T2Scheme("Liu-Vinokur 13", d, 5, source)
