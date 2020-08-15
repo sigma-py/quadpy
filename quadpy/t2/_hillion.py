@@ -20,17 +20,17 @@ source = article(
 
 
 def hillion_01():
-    d = {"s3": [[1]]}
+    d = {"centroid": [[1]]}
     return T2Scheme("Hillion 1", d, 1, source)
 
 
 def hillion_02():
-    d = {"s2": [[frac(1, 3)], [frac(1, 2)]]}
+    d = {"d3_aa": [[frac(1, 3)], [frac(1, 2)]]}
     return T2Scheme("Hillion 2", d, 2, source)
 
 
 def hillion_03():
-    d = {"s2": [[frac(1, 3)], [frac(1, 6)]]}
+    d = {"d3_aa": [[frac(1, 3)], [frac(1, 6)]]}
     return T2Scheme("Hillion 3", d, 2, source)
 
 
@@ -85,7 +85,7 @@ def hillion_08():
 
 def hillion_09():
     # ERR the article is missing the minus sign
-    d = {"s3": [[-frac(9, 16)]], "s2": [[frac(25, 48)], [frac(1, 5)]]}
+    d = {"centroid": [[-frac(9, 16)]], "d3_aa": [[frac(25, 48)], [frac(1, 5)]]}
     return T2Scheme("Hillion 9", d, 3, source)
 
 

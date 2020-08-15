@@ -4,7 +4,7 @@ from ._helpers import T2Scheme, register
 
 
 def vertex():
-    d = {"s2": [[frac(1, 3)], [0]]}
+    d = {"d3_aa": [[frac(1, 3)], [0]]}
     return T2Scheme("Vertex scheme", d, 1)
 
 

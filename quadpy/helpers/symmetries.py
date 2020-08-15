@@ -74,7 +74,7 @@ def _c2_0a(data):
     return points
 
 
-def _s3(data):
+def _centroid(data):
     return numpy.full((3, 1), 1 / 3)
 
 
@@ -82,13 +82,13 @@ def _vertex(data):
     return numpy.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
 
 
-def _s2(a):
+def _d3_aa(a):
     a = numpy.array(a)
     b = 1 - 2 * a
     return numpy.array([[a, a, b], [a, b, a], [b, a, a]])
 
 
-def _s1(data):
+def _d3_ab(data):
     a, b = numpy.asarray(data)
     c = 1 - a - b
     points = numpy.array(
@@ -98,7 +98,7 @@ def _s1(data):
     return points
 
 
-def _rot_ab(data):
+def _c3_ab(data):
     a, b = data
     c = 1 - a - b
     points = numpy.array([[a, b, c], [c, a, b], [b, c, a]])
@@ -139,14 +139,13 @@ def expand_symmetries_points_only(data):
             "c2": _c2,
             "sx": _sx,
             #
-            "s1": _s1,
-            "s2": _s2,
-            "s3": _s3,
-            "rot": _rot_ab,
-            "rot_ab": _rot_ab,
+            "centroid": _centroid,
+            "vertex": _vertex,
+            "d3_ab": _d3_ab,
+            "d3_aa": _d3_aa,
+            "c3_ab": _c3_ab,
             "swap_ab": _swap_ab,
             "s2_static": _s2_static,
-            "vertex": _vertex,
             #
             "plain": lambda vals: vals.reshape(vals.shape[0], 1, -1),
         }[key]

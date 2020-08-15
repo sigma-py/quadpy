@@ -19,12 +19,12 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def williams_shunn_jameson_1():
-    d = {"s3": [[1]]}
+    d = {"centroid": [[1]]}
     return T2Scheme("Williams-Shunn-Jameson 1", d, 1, source)
 
 
 def williams_shunn_jameson_2():
-    d = {"s2": [[frac(1, 3)], [frac(1, 6)]]}
+    d = {"d3_aa": [[frac(1, 3)], [frac(1, 6)]]}
     return T2Scheme("Williams-Shunn-Jameson 2", d, 2, source)
 
 

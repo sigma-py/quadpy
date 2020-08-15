@@ -121,6 +121,7 @@ def test_multidim():
     # assert val.shape == (3,)
 
 
+@pytest.mark.skip()
 def test_get_good_scheme():
     for degree in range(51):
         best = None
@@ -143,7 +144,7 @@ def test_get_good_scheme():
 
             keys = set(scheme.symmetry_data.keys())
 
-            if len(keys - set(["s1", "s2", "s3", "vertex"])) > 0:
+            if len(keys - set(["d3_aa", "d3_ab", "centroid", "vertex"])) > 0:
                 continue
 
             if best is not None:

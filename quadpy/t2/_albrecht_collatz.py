@@ -16,7 +16,7 @@ source = article(
 
 
 def albrecht_collatz():
-    d = {"s2": [[frac(1, 30), frac(9, 30)], [frac(1, 2), frac(1, 6)]]}
+    d = {"d3_aa": [[frac(1, 30), frac(9, 30)], [frac(1, 2), frac(1, 6)]]}
     return T2Scheme("Albrecht-Collatz", d, 3, source, tol=2.776e-16)
 
 

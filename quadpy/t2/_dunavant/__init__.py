@@ -21,17 +21,17 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def dunavant_01():
-    d = {"s3": [[1]]}
+    d = {"centroid": [[1]]}
     return T2Scheme("Dunavant 1", d, 1, source, 7.850e-17)
 
 
 def dunavant_02():
-    d = {"s2": [[frac(1, 3)], [frac(1, 6)]]}
+    d = {"d3_aa": [[frac(1, 3)], [frac(1, 6)]]}
     return T2Scheme("Dunavant 2", d, 2, source, 2.220e-16)
 
 
 def dunavant_03():
-    d = {"s3": [[-frac(9, 16)]], "s2": [[frac(25, 48)], [frac(1, 5)]]}
+    d = {"centroid": [[-frac(9, 16)]], "d3_aa": [[frac(25, 48)], [frac(1, 5)]]}
     return T2Scheme("Dunavant 3", d, 3, source, 6.661e-16)
 
 
