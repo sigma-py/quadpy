@@ -15,7 +15,7 @@ from .misc import (
     untangle,
 )
 from .plot import backend_to_function, plot_disks, plot_disks_1d, show_mpl, show_vtk
-from .symmetries import expand_symmetries
+from .symmetries import expand_symmetries, expand_symmetries_points_only
 
 __all__ = [
     "QuadratureScheme",
@@ -45,4 +45,5 @@ __all__ = [
     "show_vtk",
     "backend_to_function",
     "expand_symmetries",
+    "expand_symmetries_points_only",
 ]

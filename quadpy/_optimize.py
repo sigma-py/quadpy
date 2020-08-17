@@ -79,8 +79,8 @@ def _optimize_s2(content):
 def _optimize_t2(content):
     import orthopy
 
-    from .t2._helpers import (
-        _scheme_from_dict,
+    from .t2._helpers import _scheme_from_dict
+    from .helpers import (
         expand_symmetries,
         expand_symmetries_points_only,
     )
