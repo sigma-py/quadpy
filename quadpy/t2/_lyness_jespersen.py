@@ -4,6 +4,11 @@ from sympy import sqrt
 from ..helpers import article
 from ._helpers import T2Scheme, register
 
+from ._classical import (
+    seven_point as lyness_jespersen_04
+)
+from strang_fix_cowper import strang_fix_cowper_09 as lyness_jespersen_10
+
 source = article(
     authors=["J.N. Lyness", "D. Jespersen"],
     title="Moderate Degree Symmetric Quadrature Rules for the Triangle",
@@ -36,15 +41,6 @@ def lyness_jespersen_03():
         "d3_aa": [[frac(25, 48)], [frac(1, 5)]],
     }
     return T2Scheme("Lyness-Jespersen 3", d, 3, source)
-
-
-def lyness_jespersen_04():
-    d = {
-        "centroid": [[frac(9, 20)]],
-        "vertex": [[frac(1, 20)]],
-        "d3_aa": [[frac(2, 15)], [frac(1, 2)]],
-    }
-    return T2Scheme("Lyness-Jespersen 4", d, 3, source)
 
 
 def lyness_jespersen_05():
@@ -95,21 +91,6 @@ def lyness_jespersen_09():
         "d3_aa": [[frac(16, 225), frac(2401, 14400)], [frac(1, 2), frac(1, 7)]],
     }
     return T2Scheme("Lyness-Jespersen 9", d, 5, source)
-
-
-def lyness_jespersen_10():
-    d = {
-        "d3_aa": [
-            [3.503588271790222e-01 / 3, 1.525347191106164e-01 / 3],
-            [2.492867451709329e-01, 6.308901449150177e-02],
-        ],
-        "d3_ab": [
-            [4.971064537103375e-01 / 6],
-            [6.365024991213939e-01],
-            [5.314504984483216e-02],
-        ],
-    }
-    return T2Scheme("Lyness-Jespersen 10", d, 6, source, 1.240e-13)
 
 
 def lyness_jespersen_11():

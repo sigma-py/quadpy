@@ -32,23 +32,17 @@ def hammer_marlowe_stroud_1():
 
 
 def hammer_marlowe_stroud_2():
-    r = frac(1, 2)
-    b = (1 - r) / 3
-    d = {"d3_aa": [[frac(1, 3)], [b]]}
+    d = {"d3_aa": [[frac(1, 3)], [frac(2, 3)]]}
     return T2Scheme("Hammer-Marlowe-Stroud 2", d, 2, source, 2.220e-16)
 
 
 def hammer_marlowe_stroud_3():
-    r = -frac(1, 2)
-    b = (1 - r) / 3
-    d = {"d3_aa": [[frac(1, 3)], [b]]}
+    d = {"d3_aa": [[frac(1, 3)], [frac(1, 2)]]}
     return T2Scheme("Hammer-Marlowe-Stroud 3", d, 2, source, 3.074e-16)
 
 
 def hammer_marlowe_stroud_4():
-    r = frac(2, 5)
-    b = (1 - r) / 3
-    d = {"centroid": [[-frac(9, 16)]], "d3_aa": [[frac(25, 48)], [b]]}
+    d = {"centroid": [[-frac(9, 16)]], "d3_aa": [[frac(25, 48)], [frac(1, 5)]]}
     return T2Scheme("Hammer-Marlowe-Stroud 4", d, 3, source, 6.661e-16)
 
 

@@ -5,6 +5,9 @@ from sympy import Rational as frac
 
 from ...helpers import article, book
 from .._helpers import T2Scheme, register, _read
+from .._hammer_marlowe_stroud import (
+    hammer_marlowe_stroud_3 as strang_fix_cowper_02
+)
 
 source = book(
     authors=["Gilbert Strang", "George Fix"],
@@ -34,11 +37,6 @@ this_dir = pathlib.Path(__file__).resolve().parent
 def strang_fix_cowper_01():
     d = {"d3_aa": [[frac(1, 3)], [frac(1, 6)]]}
     return T2Scheme("Strang-Fix-Cowper 1", d, 2, source)
-
-
-def strang_fix_cowper_02():
-    d = {"d3_aa": [[frac(1, 3)], [frac(1, 2)]]}
-    return T2Scheme("Strang-Fix-Cowper 2", d, 2, source)
 
 
 def strang_fix_cowper_03():

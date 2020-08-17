@@ -131,6 +131,7 @@ def test_get_good_scheme():
             except TypeError:
                 scheme = scheme(5)
 
+            # filter schemes for eligibility
             if scheme.degree < degree:
                 continue
 
@@ -143,32 +144,48 @@ def test_get_good_scheme():
                 continue
 
             keys = set(scheme.symmetry_data.keys())
-
             if len(keys - set(["d3_aa", "d3_ab", "centroid", "vertex"])) > 0:
                 continue
 
-            if best is not None:
-                if len(scheme.weights) > len(best.weights):
-                    continue
-                if len(scheme.weights) == len(best.weights):
-                    ratio = max(numpy.abs(scheme.weights)) / min(
-                        numpy.abs(scheme.weights)
-                    )
-                    bratio = max(numpy.abs(best.weights)) / min(numpy.abs(best.weights))
-                    if ratio > bratio:
-                        continue
-                    # check if it's actually the same scheme
-                    if numpy.all(numpy.abs(scheme.points - best.points) < 1.0e-12):
-                        # pick the older one
-                        scheme_year = "0" if scheme.source is None else scheme.source.year
-                        best_year = "0" if best.source is None else best.source.year
-                        if scheme_year >= best_year:
-                            continue
+            # okay, now compare the scheme with `best`
+            if best is None:
+                best = scheme
+                continue
 
-            # okay, looks like we found a better one!
-            best = scheme
+            if len(scheme.weights) > len(best.weights):
+                continue
+            elif len(scheme.weights) < len(best.weights):
+                best = scheme
+                continue
+            else:  # len(scheme.weights) == len(best.weights):
+                abs_weights = numpy.abs(scheme.weights)
+                ratio = max(abs_weights) / min(abs_weights)
+                bratio = max(numpy.abs(best.weights)) / min(numpy.abs(best.weights))
+                if ratio < bratio:
+                    best = scheme
+                    continue
+                elif ratio > bratio:
+                    continue
+                else:  # ratio == bratio
+                    # # check if it's actually the same scheme
+                    # if numpy.all(numpy.abs(scheme.points - best.points) < 1.0e-12):
+                    #     print("DUP", best.name, scheme.name)
+                    #     # pick the older one
+
+                    # for all intents and purposes, the schemes are equal; take the
+                    # older one
+                    scheme_year = "0" if scheme.source is None else scheme.source.year
+                    best_year = "0" if best.source is None else best.source.year
+                    if scheme_year < best_year:
+                        best = scheme
+                        continue
+                    elif scheme_year > best_year:
+                        continue
+                    else:   # years are equal
+                        pass
 
         print(degree, best.name)
+
         # print(best)
     return
 
