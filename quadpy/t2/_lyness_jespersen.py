@@ -7,7 +7,7 @@ from ._helpers import T2Scheme, register
 from ._classical import (
     seven_point as lyness_jespersen_04
 )
-from strang_fix_cowper import strang_fix_cowper_09 as lyness_jespersen_10
+from ._strang_fix_cowper import strang_fix_cowper_09 as lyness_jespersen_10
 
 source = article(
     authors=["J.N. Lyness", "D. Jespersen"],

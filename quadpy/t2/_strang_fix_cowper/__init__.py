@@ -74,25 +74,15 @@ def strang_fix_cowper_07():
 
 
 def strang_fix_cowper_08():
-    d = {
-        "d3_aa": [[0.205950504760887], [0.437525248383384]],
-        "d3_ab": [[0.063691414286223], [0.797112651860071], [0.165409927389841]],
-    }
-    return T2Scheme("Strang-Fix-Cowper 8", d, 5, source, 5.093e-15)
+    return _read(this_dir / "strang_fix_cowper_08.json", source)
 
 
 def strang_fix_cowper_09():
-    d = {
-        "d3_aa": [
-            [0.050844906370207, 0.116786275726379],
-            [0.063089014491502, 0.249286745170910],
-        ],
-        "d3_ab": [[0.082851075618374], [0.636502499121399], [0.310352451033785]],
-    }
-    return T2Scheme("Strang-Fix-Cowper 9", d, 6, source, 8.341e-15)
+    return _read(this_dir / "strang_fix_cowper_09.json", source)
 
 
 def strang_fix_cowper_10():
+    return _read(this_dir / "strang_fix_cowper_10.json", source)
     d = {
         "centroid": [[-0.149570044467670]],
         "d3_aa": [
