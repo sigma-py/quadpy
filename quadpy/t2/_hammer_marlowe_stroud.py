@@ -32,7 +32,7 @@ def hammer_marlowe_stroud_1():
 
 
 def hammer_marlowe_stroud_2():
-    d = {"d3_aa": [[frac(1, 3)], [frac(2, 3)]]}
+    d = {"d3_aa": [[frac(1, 3)], [frac(1, 6)]]}
     return T2Scheme("Hammer-Marlowe-Stroud 2", d, 2, source, 2.220e-16)
 
 
