@@ -143,6 +143,9 @@ def test_get_good_scheme():
             if numpy.any(scheme.points < 0):
                 continue
 
+            if scheme.test_tolerance > 1.0e-13:
+                continue
+
             keys = set(scheme.symmetry_data.keys())
             if len(keys - set(["d3_aa", "d3_ab", "centroid", "vertex"])) > 0:
                 continue
