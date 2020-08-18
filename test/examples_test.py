@@ -138,12 +138,13 @@ def test_s3():
 
 
 def test_t3():
-    quadpy.t3.shunn_ham_3().integrate(
+    scheme = quadpy.t3.get_good_scheme(4)
+    scheme.integrate(
         lambda x: numpy.exp(x[0]),
         numpy.array([[0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, 1]], dtype=float),
     )
 
-    quadpy.t3.shunn_ham_3().integrate(
+    scheme.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         numpy.stack(
             [

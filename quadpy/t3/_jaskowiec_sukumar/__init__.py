@@ -35,7 +35,9 @@ def _read(string, tol=1.0e-14):
     )
     weights = numpy.array(data["weights"])
 
-    return T3Scheme(f"Jaśkowiec-Sukumar {string}", weights, points, degree, source, tol)
+    d = {"plain": [weights, points[0], points[1], points[2], points[3]]}
+
+    return T3Scheme(f"Jaśkowiec-Sukumar {string}", d, degree, source, tol)
 
 
 def jaskowiec_sukumar_02():

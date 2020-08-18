@@ -4,7 +4,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ...helpers import article
-from .._helpers import T3Scheme, _read, expand_symmetries, register
+from .._helpers import T3Scheme, _read, register
 
 source = article(
     authors=["P. Keast"],
@@ -26,24 +26,21 @@ def keast_0():
     # Does not appear in Keast's article. TODO remove
     degree = 1
     d = {"s4": [[1]]}
-    points, weights = expand_symmetries(d)
-    return T3Scheme("Keast 0", weights, points, degree, source)
+    return T3Scheme("Keast 0", d, degree, source)
 
 
 def keast_1():
     # Does not appear in Keast's article.
     degree = 2
     d = {"s31": [[frac(1, 4)], [frac(1, 4) - sqrt(5) / 20]]}
-    points, weights = expand_symmetries(d)
-    return T3Scheme("Keast 1", weights, points, degree, source)
+    return T3Scheme("Keast 1", d, degree, source)
 
 
 def keast_2():
     # Does not appear in Keast's article.
     degree = 3
     d = {"s4": [[-frac(4, 5)]], "s31": [[frac(9, 20)], [frac(1, 6)]]}
-    points, weights = expand_symmetries(d)
-    return T3Scheme("Keast 2", weights, points, degree, source)
+    return T3Scheme("Keast 2", d, degree, source)
 
 
 def keast_3():
@@ -53,8 +50,7 @@ def keast_3():
         "s31": [[0.2177650698804054], [0.1438564719343852]],
         "s22": [[0.0214899534130631], [0.5]],
     }
-    points, weights = expand_symmetries(d)
-    return T3Scheme("Keast 3", weights, points, degree, source)
+    return T3Scheme("Keast 3", d, degree, source)
 
 
 def keast_4():
@@ -64,8 +60,7 @@ def keast_4():
         "s31": [[frac(343, 7500)], [frac(1, 14)]],
         "s22": [[frac(56, 375)], [frac(1, 4) + sqrt(frac(5, 14)) / 4]],
     }
-    points, weights = expand_symmetries(d)
-    return T3Scheme("Keast 4", weights, points, degree, source)
+    return T3Scheme("Keast 4", d, degree, source)
 
 
 def keast_5():
@@ -77,8 +72,7 @@ def keast_5():
             [0.1005267652252045, 0.3143728734931922],
         ],
     }
-    points, weights = expand_symmetries(d)
-    return T3Scheme("Keast 5", weights, points, degree, source)
+    return T3Scheme("Keast 5", d, degree, source)
 
 
 def keast_6():
@@ -88,8 +82,7 @@ def keast_6():
         "s31": [[frac(81, 2240), frac(161051, 2304960)], [frac(1, 3), frac(1, 11)]],
         "s22": [[frac(338, 5145)], [frac(1, 4) - sqrt(91) / 52]],
     }
-    points, weights = expand_symmetries(d)
-    return T3Scheme("Keast 6", weights, points, degree, source)
+    return T3Scheme("Keast 6", d, degree, source)
 
 
 def keast_7():

@@ -4,7 +4,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ...helpers import article
-from .._helpers import T3Scheme, _read, expand_symmetries, register
+from .._helpers import T3Scheme, _read, register
 
 source = article(
     authors=["Yu Jinyun"],
@@ -22,15 +22,13 @@ this_dir = pathlib.Path(__file__).resolve().parent
 def yu_2():
     degree = 2
     d = {"s31": [[frac(1, 4)], [frac(1, 4) - sqrt(5) * frac(1, 20)]]}
-    points, weights = expand_symmetries(d)
-    return T3Scheme("Yu 1", weights, points, degree, source)
+    return T3Scheme("Yu 1", d, degree, source)
 
 
 def yu_3():
     degree = 3
     d = {"s4": [[-frac(4, 5)]], "s31": [[frac(9, 20)], [frac(1, 6)]]}
-    points, weights = expand_symmetries(d)
-    return T3Scheme("Yu 2", weights, points, degree, source)
+    return T3Scheme("Yu 2", d, degree, source)
 
 
 def yu_4():

@@ -11,7 +11,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import T3Scheme, expand_symmetries, register
+from ._helpers import T3Scheme, register
 
 source = article(
     authors=["P.C. Hammer", "O.J. Marlowe", "A.H. Stroud"],
@@ -40,8 +40,7 @@ def hammer_marlowe_stroud_1():
     r = 1 / sqrt(5)
     a = (1 - r) / 4
     d = {"s31": [[frac(1, 4)], [a]]}
-    points, weights = expand_symmetries(d)
-    return T3Scheme("Hammer-Marlowe-Stroud 1", weights, points, degree, source)
+    return T3Scheme("Hammer-Marlowe-Stroud 1", d, degree, source)
 
 
 def hammer_marlowe_stroud_2():
@@ -49,8 +48,7 @@ def hammer_marlowe_stroud_2():
     r = -1 / sqrt(5)
     a = (1 - r) / 4
     d = {"s31": [[frac(1, 4)], [a]]}
-    points, weights = expand_symmetries(d)
-    return T3Scheme("Hammer-Marlowe-Stroud 2", weights, points, degree, source)
+    return T3Scheme("Hammer-Marlowe-Stroud 2", d, degree, source)
 
 
 # Used in Zienkiewicz 5
@@ -59,8 +57,7 @@ def hammer_marlowe_stroud_3():
     r = frac(1, 3)
     a = (1 - r) / 4
     d = {"s4": [[-frac(4, 5)]], "s31": [[frac(9, 20)], [a]]}
-    points, weights = expand_symmetries(d)
-    return T3Scheme("Hammer-Marlowe-Stroud 3", weights, points, degree, source)
+    return T3Scheme("Hammer-Marlowe-Stroud 3", d, degree, source)
 
 
 register([hammer_marlowe_stroud_1, hammer_marlowe_stroud_2, hammer_marlowe_stroud_3])
