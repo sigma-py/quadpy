@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import techreport
-from .._helpers import _read
+from .._helpers import _read, register
 
 source = techreport(
     authors=["Noel J. Walkington"],
@@ -16,3 +16,6 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 def walkington_p5():
     return _read(this_dir / "walkington_p5.json", source)
+
+
+register([walkington_p5])

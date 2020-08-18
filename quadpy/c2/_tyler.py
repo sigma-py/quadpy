@@ -30,7 +30,7 @@ def tyler_2():
     B1 = frac(49, 810)
     B2, B3 = [(178981 + i * 2769 * sqrt(583)) / 1888920 for i in [+1, -1]]
     d = {"c4_a0": [[B1], [r]], "c4_aa": [[B2, B3], [s, t]]}
-    return C2Scheme("Tyler 2", d, 7, source)
+    return C2Scheme("Tyler 2", d, 7, source, 3.331e-16)
 
 
 def tyler_3():

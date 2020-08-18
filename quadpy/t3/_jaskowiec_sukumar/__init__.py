@@ -4,7 +4,7 @@ import pathlib
 import numpy
 
 from ...helpers import article
-from .._helpers import T3Scheme
+from .._helpers import T3Scheme, register
 
 source = article(
     authors=["Jan Jaśkowiec", "N. Sukumar"],
@@ -35,7 +35,9 @@ def _read(string, tol=1.0e-14):
     )
     weights = numpy.array(data["weights"])
 
-    return T3Scheme(f"Jaśkowiec-Sukumar {string}", weights, points, degree, source, tol)
+    d = {"plain": [weights, points[0], points[1], points[2], points[3]]}
+
+    return T3Scheme(f"Jaśkowiec-Sukumar {string}", d, degree, source, tol)
 
 
 def jaskowiec_sukumar_02():
@@ -116,3 +118,29 @@ def jaskowiec_sukumar_19b():
 
 def jaskowiec_sukumar_20():
     return _read("20", 2.315e-11)
+
+
+register(
+    [
+        jaskowiec_sukumar_02,
+        jaskowiec_sukumar_03,
+        jaskowiec_sukumar_04,
+        jaskowiec_sukumar_05,
+        jaskowiec_sukumar_06,
+        jaskowiec_sukumar_07,
+        jaskowiec_sukumar_08,
+        jaskowiec_sukumar_09,
+        jaskowiec_sukumar_10,
+        jaskowiec_sukumar_11,
+        jaskowiec_sukumar_12,
+        jaskowiec_sukumar_13,
+        jaskowiec_sukumar_14,
+        jaskowiec_sukumar_15,
+        jaskowiec_sukumar_16,
+        jaskowiec_sukumar_17,
+        jaskowiec_sukumar_18,
+        jaskowiec_sukumar_19a,
+        jaskowiec_sukumar_19b,
+        jaskowiec_sukumar_20,
+    ]
+)

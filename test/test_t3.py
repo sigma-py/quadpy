@@ -6,113 +6,6 @@ from helpers import check_degree
 import quadpy
 from quadpy.tn._helpers import integrate_monomial_over_unit_simplex
 
-schemes = [
-    quadpy.t3.beckers_haegemans_8(),
-    quadpy.t3.beckers_haegemans_9(),
-    quadpy.t3.gatermann(),
-    quadpy.t3.hammer_marlowe_stroud_1(),
-    quadpy.t3.hammer_marlowe_stroud_2(),
-    quadpy.t3.hammer_marlowe_stroud_3(),
-    quadpy.t3.hammer_stroud_2(),
-    quadpy.t3.hammer_stroud_3(),
-    quadpy.t3.jaskowiec_sukumar_02(),
-    quadpy.t3.jaskowiec_sukumar_03(),
-    quadpy.t3.jaskowiec_sukumar_04(),
-    quadpy.t3.jaskowiec_sukumar_05(),
-    quadpy.t3.jaskowiec_sukumar_06(),
-    quadpy.t3.jaskowiec_sukumar_07(),
-    quadpy.t3.jaskowiec_sukumar_08(),
-    quadpy.t3.jaskowiec_sukumar_09(),
-    quadpy.t3.jaskowiec_sukumar_10(),
-    quadpy.t3.jaskowiec_sukumar_11(),
-    quadpy.t3.jaskowiec_sukumar_12(),
-    quadpy.t3.jaskowiec_sukumar_13(),
-    quadpy.t3.jaskowiec_sukumar_14(),
-    quadpy.t3.jaskowiec_sukumar_15(),
-    quadpy.t3.jaskowiec_sukumar_16(),
-    quadpy.t3.jaskowiec_sukumar_17(),
-    quadpy.t3.jaskowiec_sukumar_18(),
-    quadpy.t3.jaskowiec_sukumar_19a(),
-    quadpy.t3.jaskowiec_sukumar_19b(),
-    quadpy.t3.jaskowiec_sukumar_20(),
-    quadpy.t3.keast_0(),
-    quadpy.t3.keast_1(),
-    quadpy.t3.keast_2(),
-    quadpy.t3.keast_3(),
-    quadpy.t3.keast_4(),
-    quadpy.t3.keast_5(),
-    quadpy.t3.keast_6(),
-    quadpy.t3.keast_7(),
-    quadpy.t3.keast_8(),
-    quadpy.t3.keast_9(),
-    quadpy.t3.liu_vinokur_01(),
-    quadpy.t3.liu_vinokur_02(),
-    quadpy.t3.liu_vinokur_03(),
-    quadpy.t3.liu_vinokur_04(),
-    quadpy.t3.liu_vinokur_05(),
-    quadpy.t3.liu_vinokur_06(),
-    quadpy.t3.liu_vinokur_07(),
-    quadpy.t3.liu_vinokur_08(),
-    quadpy.t3.liu_vinokur_09(),
-    quadpy.t3.liu_vinokur_10(),
-    quadpy.t3.liu_vinokur_11(),
-    quadpy.t3.liu_vinokur_12(),
-    quadpy.t3.liu_vinokur_13(),
-    quadpy.t3.liu_vinokur_14(),
-    quadpy.t3.maeztu_sainz(),
-    quadpy.t3.stroud_t3_5_1(),
-    quadpy.t3.stroud_t3_7_1(),
-    quadpy.t3.shunn_ham_1(),
-    quadpy.t3.shunn_ham_2(),
-    quadpy.t3.shunn_ham_3(),
-    quadpy.t3.shunn_ham_4(),
-    quadpy.t3.shunn_ham_5(),
-    quadpy.t3.shunn_ham_6(),
-    quadpy.t3.vioreanu_rokhlin_0(),
-    quadpy.t3.vioreanu_rokhlin_1(),
-    quadpy.t3.vioreanu_rokhlin_2(),
-    quadpy.t3.vioreanu_rokhlin_3(),
-    quadpy.t3.vioreanu_rokhlin_4(),
-    quadpy.t3.vioreanu_rokhlin_5(),
-    quadpy.t3.vioreanu_rokhlin_6(),
-    quadpy.t3.vioreanu_rokhlin_7(),
-    quadpy.t3.vioreanu_rokhlin_8(),
-    quadpy.t3.vioreanu_rokhlin_9(),
-    quadpy.t3.xiao_gimbutas_01(),
-    quadpy.t3.xiao_gimbutas_02(),
-    quadpy.t3.xiao_gimbutas_03(),
-    quadpy.t3.xiao_gimbutas_04(),
-    quadpy.t3.xiao_gimbutas_05(),
-    quadpy.t3.xiao_gimbutas_06(),
-    quadpy.t3.xiao_gimbutas_07(),
-    quadpy.t3.xiao_gimbutas_08(),
-    quadpy.t3.xiao_gimbutas_09(),
-    quadpy.t3.xiao_gimbutas_10(),
-    quadpy.t3.xiao_gimbutas_11(),
-    quadpy.t3.xiao_gimbutas_12(),
-    quadpy.t3.xiao_gimbutas_13(),
-    quadpy.t3.xiao_gimbutas_14(),
-    quadpy.t3.xiao_gimbutas_15(),
-    quadpy.t3.yu_2(),
-    quadpy.t3.yu_3(),
-    quadpy.t3.yu_4(),
-    quadpy.t3.yu_5(),
-    quadpy.t3.yu_6(),
-    quadpy.t3.zhang_cui_liu_1(),
-    quadpy.t3.zhang_cui_liu_2(),
-    quadpy.t3.walkington_p5(),
-    quadpy.t3.williams_shunn_jameson(),
-    quadpy.t3.witherden_vincent_01(),
-    quadpy.t3.witherden_vincent_02(),
-    quadpy.t3.witherden_vincent_03(),
-    quadpy.t3.witherden_vincent_05(),
-    quadpy.t3.witherden_vincent_06(),
-    quadpy.t3.witherden_vincent_07(),
-    quadpy.t3.witherden_vincent_08(),
-    quadpy.t3.witherden_vincent_09(),
-    quadpy.t3.witherden_vincent_10(),
-]
-
 
 def _integrate_exact(f, t3):
     #
@@ -148,8 +41,11 @@ def _integrate_exact(f, t3):
     return float(exact)
 
 
-@pytest.mark.parametrize("scheme", schemes)
+@pytest.mark.parametrize("scheme", quadpy.t3.schemes.values())
 def test_scheme(scheme):
+    print(scheme)
+    scheme = scheme()
+
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
@@ -177,7 +73,7 @@ def test_scheme(scheme):
 
 
 @pytest.mark.skip(reason="gh-actions's python cannot use system vtk")
-@pytest.mark.parametrize("scheme", [quadpy.t3.hammer_marlowe_stroud_3()])
+@pytest.mark.parametrize("scheme", [quadpy.t3.schemes["hammer_marlowe_stroud_3"]()])
 def test_show(scheme):
     tet = numpy.array(
         [
@@ -190,11 +86,78 @@ def test_show(scheme):
     scheme.show(tet, render=False)
 
 
-if __name__ == "__main__":
-    # scheme_ = quadpy.t3.Stroud("T3 7-1")
-    # test_scheme(scheme_)
-    # # test_show(scheme_)
-    # quadpy.t3.show(scheme_, backend="vtk")
-    from helpers import find_equal
+@pytest.mark.skip()
+def test_get_good_scheme():
+    for degree in range(51):
+        best = None
+        for scheme in quadpy.t3.schemes.values():
+            scheme = scheme()  # initialize
 
-    find_equal(schemes)
+            # filter schemes for eligibility
+            if scheme.degree < degree:
+                continue
+
+            # allow only positive weights
+            if any(scheme.weights < 0):
+                continue
+
+            # disallow points outside of the domain
+            if numpy.any(scheme.points < 0):
+                continue
+
+            if scheme.test_tolerance > 1.0e-13:
+                continue
+
+            try:
+                keys = set(scheme.symmetry_data.keys())
+            except AttributeError:
+                continue
+
+            if len(keys - set(["s4", "s31", "s22", "s211", "s1111"])) > 0:
+                continue
+
+            # okay, now compare the scheme with `best`
+            if best is None:
+                best = scheme
+                continue
+
+            if len(scheme.weights) > len(best.weights):
+                continue
+            elif len(scheme.weights) < len(best.weights):
+                best = scheme
+                continue
+            else:  # len(scheme.weights) == len(best.weights):
+                abs_weights = numpy.abs(scheme.weights)
+                ratio = max(abs_weights) / min(abs_weights)
+                bratio = max(numpy.abs(best.weights)) / min(numpy.abs(best.weights))
+                if ratio < bratio:
+                    best = scheme
+                    continue
+                elif ratio > bratio:
+                    continue
+                else:  # ratio == bratio
+                    # # check if it's actually the same scheme
+                    # if numpy.all(numpy.abs(scheme.points - best.points) < 1.0e-12):
+                    #     print("DUP", best.name, scheme.name)
+                    #     # pick the older one
+
+                    # for all intents and purposes, the schemes are equal; take the
+                    # older one
+                    scheme_year = "0" if scheme.source is None else scheme.source.year
+                    best_year = "0" if best.source is None else best.source.year
+                    if scheme_year < best_year:
+                        best = scheme
+                        continue
+                    elif scheme_year > best_year:
+                        continue
+                    else:  # years are equal
+                        pass
+
+        print(degree, best.name)
+
+        # print(best)
+    return
+
+
+if __name__ == "__main__":
+    test_get_good_scheme()

@@ -79,11 +79,8 @@ def _optimize_s2(content):
 def _optimize_t2(content):
     import orthopy
 
-    from .t2._helpers import (
-        _scheme_from_dict,
-        expand_symmetries,
-        expand_symmetries_points_only,
-    )
+    from .helpers import expand_symmetries, expand_symmetries_points_only
+    from .t2._helpers import _scheme_from_dict
 
     # return _optimize_weights_as_variables(
     return _optimize(

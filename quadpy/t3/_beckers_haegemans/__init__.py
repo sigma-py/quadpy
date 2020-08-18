@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import techreport
-from .._helpers import _read
+from .._helpers import _read, register
 
 source = techreport(
     authors=["M. Beckers", "A. Haegemans"],
@@ -21,3 +21,6 @@ def beckers_haegemans_8():
 
 def beckers_haegemans_9():
     return _read(this_dir / "beckers_haegemans_9.json", source)
+
+
+register([beckers_haegemans_8, beckers_haegemans_9])

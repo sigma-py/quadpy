@@ -1,10 +1,12 @@
+# ENH some closed forms
 import pathlib
 
 from sympy import Rational as frac
 from sympy import sqrt
 
 from ...helpers import article
-from .._helpers import C2Scheme, _read, expand_symmetries, register
+from .._helpers import C2Scheme, _read, register
+from .._tyler import tyler_2
 
 source = article(
     authors=["D.A. Dunavant"],
@@ -23,13 +25,12 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 def dunavant_00():
     d = {"zero": [[1]]}
-    return C2Scheme("Dunavant 0", d, 1, source)
+    return C2Scheme("Dunavant 0", d, 1, source, 1.0e-100)
 
 
 def dunavant_01():
     d = {"c4_aa": [[frac(1, 4)], [sqrt(frac(1, 3))]]}
-    points, weights = expand_symmetries(d)
-    return C2Scheme("Dunavant 1", d, 3, source)
+    return C2Scheme("Dunavant 1", d, 3, source, 4.441e-16)
 
 
 def dunavant_02():
@@ -37,18 +38,12 @@ def dunavant_02():
         "c4_a0": [[frac(10, 49)], [sqrt(frac(7, 15))]],
         "c4_aa": [[frac(9, 196)], [sqrt(frac(7, 9))]],
     }
-    return C2Scheme("Dunavant 2", d, 5, source)
+    return C2Scheme("Dunavant 2", d, 5, source, 1.305e-15)
 
 
 def dunavant_03():
-    d = {
-        "c4_a0": [[frac(49, 810)], [sqrt(frac(6, 7))]],
-        "c4_aa": [
-            [0.0593579436726575, 0.1301482291668485],
-            [0.805979782918599, 0.380554433208316],
-        ],
-    }
-    return C2Scheme("Dunavant 3", d, 7, source)
+    # DUP c2: dunavant 3 == tyler 2
+    return tyler_2()
 
 
 def dunavant_04():

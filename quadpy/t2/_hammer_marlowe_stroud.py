@@ -27,28 +27,22 @@ source = article(
 
 
 def hammer_marlowe_stroud_1():
-    d = {"s3": [[1]]}
+    d = {"centroid": [[1]]}
     return T2Scheme("Hammer-Marlowe-Stroud 1", d, 1, source, 7.850e-17)
 
 
 def hammer_marlowe_stroud_2():
-    r = frac(1, 2)
-    b = (1 - r) / 3
-    d = {"s2": [[frac(1, 3)], [b]]}
+    d = {"d3_aa": [[frac(1, 3)], [frac(1, 6)]]}
     return T2Scheme("Hammer-Marlowe-Stroud 2", d, 2, source, 2.220e-16)
 
 
 def hammer_marlowe_stroud_3():
-    r = -frac(1, 2)
-    b = (1 - r) / 3
-    d = {"s2": [[frac(1, 3)], [b]]}
+    d = {"d3_aa": [[frac(1, 3)], [frac(1, 2)]]}
     return T2Scheme("Hammer-Marlowe-Stroud 3", d, 2, source, 3.074e-16)
 
 
 def hammer_marlowe_stroud_4():
-    r = frac(2, 5)
-    b = (1 - r) / 3
-    d = {"s3": [[-frac(9, 16)]], "s2": [[frac(25, 48)], [b]]}
+    d = {"centroid": [[-frac(9, 16)]], "d3_aa": [[frac(25, 48)], [frac(1, 5)]]}
     return T2Scheme("Hammer-Marlowe-Stroud 4", d, 3, source, 6.661e-16)
 
 
@@ -57,7 +51,7 @@ def hammer_marlowe_stroud_5():
     x1, x2 = [(1 + i * sqrt(15)) / 7 for i in [+1, -1]]
     b1 = (1 - x1) / 3
     b2 = (1 - x2) / 3
-    d = {"s3": [[frac(9, 40)]], "s2": [[w1, w2], [b1, b2]]}
+    d = {"centroid": [[frac(9, 40)]], "d3_aa": [[w1, w2], [b1, b2]]}
     return T2Scheme("Hammer-Marlowe-Stroud 5", d, 5, source, 2.776e-16)
 
 

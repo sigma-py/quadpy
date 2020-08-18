@@ -1,10 +1,13 @@
 import pathlib
 
-import numpy
 from sympy import Rational as frac
 
 from ...helpers import article
+from .._classical import centroid as laursen_gellert_01
 from .._helpers import T2Scheme, _read, register
+from .._strang_fix_cowper import strang_fix_cowper_03 as laursen_gellert_03  # DUP
+from .._strang_fix_cowper import strang_fix_cowper_04 as laursen_gellert_04
+from .._strang_fix_cowper import strang_fix_cowper_05 as laursen_gellert_05
 
 source = article(
     authors=["M.E. Laursen", "M. Gellert"],
@@ -20,45 +23,28 @@ source = article(
 this_dir = pathlib.Path(__file__).resolve().parent
 
 
-def laursen_gellert_01():
-    d = {"s3": [[1]]}
-    return T2Scheme("Laursen-Gellert 1", d, 1, source)
-
-
 def laursen_gellert_02a():
-    d = {"s2": [[frac(1, 3)], [frac(1, 6)]]}
+    d = {"d3_aa": [[frac(1, 3)], [frac(1, 6)]]}
     return T2Scheme("Laursen-Gellert 2a", d, 2, source)
 
 
 def laursen_gellert_02b():
-    d = {"s2": [[frac(1, 3)], [frac(1, 2)]]}
+    d = {"d3_aa": [[frac(1, 3)], [frac(1, 2)]]}
     return T2Scheme("Laursen-Gellert 2b", d, 2, source)
 
 
-def laursen_gellert_03():
-    d = {"s3": [[-frac(9, 16)]], "s2": [[frac(25, 48)], [frac(1, 5)]]}
-    return T2Scheme("Laursen-Gellert 3", d, 3, source)
-
-
-def laursen_gellert_04():
-    roots = numpy.polynomial.polynomial.polyroots([-1, 15, -60, 60])
-    d = {"s1": [[1 / 6], [roots[2]], [roots[1]]]}
-    return T2Scheme("Laursen-Gellert 4", d, 3, source, 2.463e-15)
-
-
-def laursen_gellert_05():
-    return _read(this_dir / "laursen_gellert_05.json", source)
-
-
 def laursen_gellert_06():
-    d = {"s3": [[3 / 8]], "s1": [[5 / 48], [0.736712498968435], [0.237932366472434]]}
+    d = {
+        "centroid": [[3 / 8]],
+        "d3_ab": [[5 / 48], [0.736712498968435], [0.237932366472434]],
+    }
     return T2Scheme("Laursen-Gellert 6", d, 4, source)
 
 
 def laursen_gellert_07():
     d = {
-        "s3": [[9 / 40]],
-        "s2": [
+        "centroid": [[9 / 40]],
+        "d3_aa": [
             [0.125939180544827, 0.132394152788506],
             [0.101286507323456, 0.470142064105115],
         ],
@@ -105,6 +91,8 @@ def laursen_gellert_15b():
 register(
     [
         laursen_gellert_01,
+        laursen_gellert_02a,
+        laursen_gellert_02b,
         laursen_gellert_03,
         laursen_gellert_04,
         laursen_gellert_05,
@@ -114,5 +102,10 @@ register(
         laursen_gellert_09,
         laursen_gellert_10,
         laursen_gellert_11,
+        laursen_gellert_12,
+        laursen_gellert_13,
+        laursen_gellert_14,
+        laursen_gellert_15a,
+        laursen_gellert_15b,
     ]
 )

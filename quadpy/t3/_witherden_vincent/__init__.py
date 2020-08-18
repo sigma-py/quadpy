@@ -4,7 +4,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ...helpers import article
-from .._helpers import T3Scheme, _read, expand_symmetries
+from .._helpers import T3Scheme, _read, register
 
 source = article(
     authors=["F.D. Witherden", "P.E. Vincent"],
@@ -24,15 +24,13 @@ this_dir = pathlib.Path(__file__).resolve().parent
 def witherden_vincent_01():
     degree = 1
     d = {"s4": [[1]]}
-    points, weights = expand_symmetries(d)
-    return T3Scheme("Witherden-Vincent 1", weights, points, degree, source)
+    return T3Scheme("Witherden-Vincent 1", d, degree, source)
 
 
 def witherden_vincent_02():
     degree = 2
     d = {"s31": [[frac(1, 4)], [frac(1, 4) - sqrt(5) / 20]]}
-    points, weights = expand_symmetries(d)
-    return T3Scheme("Witherden-Vincent 2", weights, points, degree, source)
+    return T3Scheme("Witherden-Vincent 2", d, degree, source)
 
 
 def witherden_vincent_03():
@@ -61,3 +59,18 @@ def witherden_vincent_09():
 
 def witherden_vincent_10():
     return _read(this_dir / "witherden_vincent_10.json", source)
+
+
+register(
+    [
+        witherden_vincent_01,
+        witherden_vincent_02,
+        witherden_vincent_03,
+        witherden_vincent_05,
+        witherden_vincent_06,
+        witherden_vincent_07,
+        witherden_vincent_08,
+        witherden_vincent_09,
+        witherden_vincent_10,
+    ]
+)

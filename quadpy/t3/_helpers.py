@@ -6,11 +6,25 @@ import sympy
 from ..helpers import backend_to_function
 from ..tn import TnScheme, get_vol, transform
 
+schemes = {}
+
+
+def register(in_schemes):
+    for scheme in in_schemes:
+        schemes[scheme.__name__] = scheme
+
 
 class T3Scheme(TnScheme):
-    def __init__(self, name, weights, points, degree, source=None, tol=1.0e-14):
-        self.domain = "T3"
+    def __init__(
+        self, name, symmetry_data, degree, source=None, tol=1.0e-14, weight_factor=None
+    ):
+        self.symmetry_data = symmetry_data
+        points, weights = expand_symmetries(symmetry_data)
+        if weight_factor is not None:
+            weights *= weight_factor
+
         super().__init__(name, 2, weights, points, degree, source, tol)
+        self.domain = "T3"
 
     def show(
         self,
@@ -173,10 +187,6 @@ def _read(filepath, source):
     degree = content["degree"]
     name = content["name"]
     tol = content["test_tolerance"]
-
-    points, weights = expand_symmetries(content["data"])
-
-    if "weight factor" in content:
-        weights *= content["weight factor"]
-
-    return T3Scheme(name, weights, points, degree, source, tol)
+    data = content["data"]
+    weight_factor = content["weight factor"] if "weight factor" in content else None
+    return T3Scheme(name, data, degree, source, tol, weight_factor=weight_factor)

@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import article
-from .._helpers import _read
+from .._helpers import _read, register
 
 source = article(
     authors=["J.I. Maeztu", "E. Sainz de la Maza"],
@@ -19,3 +19,6 @@ def maeztu_sainz():
     # The article claims degree 11, but tests show only degree 1. :/
     # TODO find out what's going on
     return _read(this_dir / "maeztu_sainz.json", source)
+
+
+register([maeztu_sainz])

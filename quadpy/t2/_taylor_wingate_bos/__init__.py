@@ -21,7 +21,7 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def taylor_wingate_bos_1():
-    d = {"s2": [[frac(1, 3)], [frac(1, 6)]]}
+    d = {"d3_aa": [[frac(1, 3)], [frac(1, 6)]]}
     return T2Scheme("Taylor-Wingate-Bos 1", d, 2, source)
 
 

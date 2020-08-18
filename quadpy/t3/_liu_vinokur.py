@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import acos, cos, pi, sqrt
 
 from ..helpers import article
-from ._helpers import T3Scheme, expand_symmetries
+from ._helpers import T3Scheme, register
 
 source = article(
     authors=["Y. Liu", "M. Vinokur"],
@@ -17,44 +17,38 @@ source = article(
 
 def liu_vinokur_01():
     d = {"s4": [[1]]}
-    points, weights = expand_symmetries(d)
     degree = 1
-    return T3Scheme("Liu-Vinokur 1", weights, points, degree, source)
+    return T3Scheme("Liu-Vinokur 1", d, degree, source)
 
 
 def liu_vinokur_02():
     d = {"s31": [[frac(1, 4)], [0]]}
-    points, weights = expand_symmetries(d)
     degree = 1
-    return T3Scheme("Liu-Vinokur 2", weights, points, degree, source)
+    return T3Scheme("Liu-Vinokur 2", d, degree, source)
 
 
 def liu_vinokur_03():
     d = {"s31": [[frac(1, 4)], [frac(1, 4) - sqrt(5) / 20]]}
-    points, weights = expand_symmetries(d)
     degree = 2
-    return T3Scheme("Liu-Vinokur 3", weights, points, degree, source)
+    return T3Scheme("Liu-Vinokur 3", d, degree, source)
 
 
 def liu_vinokur_04():
     d = {"s4": [[frac(4, 5)]], "s31": [[frac(1, 20)], [0]]}
-    points, weights = expand_symmetries(d)
     degree = 2
-    return T3Scheme("Liu-Vinokur 4", weights, points, degree, source)
+    return T3Scheme("Liu-Vinokur 4", d, degree, source)
 
 
 def liu_vinokur_05():
     d = {"s4": [[-frac(4, 5)]], "s31": [[frac(9, 20)], [frac(1, 6)]]}
-    points, weights = expand_symmetries(d)
     degree = 3
-    return T3Scheme("Liu-Vinokur 5", weights, points, degree, source)
+    return T3Scheme("Liu-Vinokur 5", d, degree, source)
 
 
 def liu_vinokur_06():
     d = {"s31": [[frac(1, 40), frac(9, 40)], [0, frac(1, 3)]]}
-    points, weights = expand_symmetries(d)
     degree = 3
-    return T3Scheme("Liu-Vinokur 6", weights, points, degree, source)
+    return T3Scheme("Liu-Vinokur 6", d, degree, source)
 
 
 def liu_vinokur_07():
@@ -64,9 +58,8 @@ def liu_vinokur_07():
         "s31": [[frac(343, 7500)], [frac(1, 14)]],
         "s22": [[frac(56, 375)], [b]],
     }
-    points, weights = expand_symmetries(d)
     degree = 4
-    return T3Scheme("Liu-Vinokur 7", weights, points, degree, source)
+    return T3Scheme("Liu-Vinokur 7", d, degree, source)
 
 
 def liu_vinokur_08():
@@ -82,9 +75,8 @@ def liu_vinokur_08():
         ],
         "s22": [[frac(2, 105)], [0]],
     }
-    points, weights = expand_symmetries(d)
     degree = 4
-    return T3Scheme("Liu-Vinokur 8", weights, points, degree, source)
+    return T3Scheme("Liu-Vinokur 8", d, degree, source)
 
 
 def liu_vinokur_09():
@@ -93,9 +85,8 @@ def liu_vinokur_09():
         "s31": [[frac(3, 280), frac(125, 168)], [0, frac(1, 5)]],
         "s22": [[frac(2, 105)], [0]],
     }
-    points, weights = expand_symmetries(d)
     degree = 4
-    return T3Scheme("Liu-Vinokur 9", weights, points, degree, source)
+    return T3Scheme("Liu-Vinokur 9", d, degree, source)
 
 
 def liu_vinokur_10():
@@ -109,9 +100,8 @@ def liu_vinokur_10():
         "s31": [[-frac(31, 840), frac(27, 280)], [0, frac(1, 3)]],
         "s211": [[frac(4, 105)], [a], [b]],
     }
-    points, weights = expand_symmetries(d)
     degree = 4
-    return T3Scheme("Liu-Vinokur 10", weights, points, degree, source)
+    return T3Scheme("Liu-Vinokur 10", d, degree, source)
 
 
 def liu_vinokur_11():
@@ -126,9 +116,8 @@ def liu_vinokur_11():
         ],
         "s22": [[frac(2, 105)], [0]],
     }
-    points, weights = expand_symmetries(d)
     degree = 4
-    return T3Scheme("Liu-Vinokur 11", weights, points, degree, source)
+    return T3Scheme("Liu-Vinokur 11", d, degree, source)
 
 
 def liu_vinokur_12():
@@ -147,9 +136,8 @@ def liu_vinokur_12():
         "s31": [[w1, w2], [(1 - alpha1) / 4, (1 - alpha2) / 4]],
         "s22": [[lmbda ** 2 / 840], [(1 - 2 / sqrt(lmbda)) / 4]],
     }
-    points, weights = expand_symmetries(d)
     degree = 5
-    return T3Scheme("Liu-Vinokur 12", weights, points, degree, source)
+    return T3Scheme("Liu-Vinokur 12", d, degree, source)
 
 
 def liu_vinokur_13():
@@ -161,9 +149,8 @@ def liu_vinokur_13():
         ],
         "s22": [[frac(2, 105)], [0]],
     }
-    points, weights = expand_symmetries(d)
     degree = 5
-    return T3Scheme("Liu-Vinokur 13", weights, points, degree, source)
+    return T3Scheme("Liu-Vinokur 13", d, degree, source)
 
 
 def liu_vinokur_14():
@@ -175,6 +162,25 @@ def liu_vinokur_14():
         ],
         "s22": [[frac(2, 105)], [0]],
     }
-    points, weights = expand_symmetries(d)
     degree = 5
-    return T3Scheme("Liu-Vinokur 14", weights, points, degree, source)
+    return T3Scheme("Liu-Vinokur 14", d, degree, source)
+
+
+register(
+    [
+        liu_vinokur_01,
+        liu_vinokur_02,
+        liu_vinokur_03,
+        liu_vinokur_04,
+        liu_vinokur_05,
+        liu_vinokur_06,
+        liu_vinokur_07,
+        liu_vinokur_08,
+        liu_vinokur_09,
+        liu_vinokur_10,
+        liu_vinokur_11,
+        liu_vinokur_12,
+        liu_vinokur_13,
+        liu_vinokur_14,
+    ]
+)

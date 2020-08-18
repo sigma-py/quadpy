@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import article
-from .._helpers import _read
+from .._helpers import _read, register
 
 source = article(
     authors=["B. Vioreanu", "V. Rokhlin"],
@@ -58,3 +58,19 @@ def vioreanu_rokhlin_8():
 
 def vioreanu_rokhlin_9():
     return _read(this_dir / "vr09.json", source)
+
+
+register(
+    [
+        vioreanu_rokhlin_0,
+        vioreanu_rokhlin_1,
+        vioreanu_rokhlin_2,
+        vioreanu_rokhlin_3,
+        vioreanu_rokhlin_4,
+        vioreanu_rokhlin_5,
+        vioreanu_rokhlin_6,
+        vioreanu_rokhlin_7,
+        vioreanu_rokhlin_8,
+        vioreanu_rokhlin_9,
+    ]
+)

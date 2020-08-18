@@ -460,7 +460,7 @@ Example:
 import numpy
 import quadpy
 
-scheme = quadpy.t3.keast_9()
+scheme = quadpy.t3.get_good_scheme(5)
 # scheme.show()
 val = scheme.integrate(
     lambda x: numpy.exp(x[0]),

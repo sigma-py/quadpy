@@ -2,6 +2,9 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
+from ._classical import centroid as liu_vinokur_01
+from ._classical import seven_point as liu_vinokur_07
+from ._classical import vertex as liu_vinokur_02
 from ._helpers import T2Scheme, register
 
 source = article(
@@ -15,55 +18,30 @@ source = article(
 )
 
 
-def liu_vinokur_01():
-    d = {"s3": [[1]]}
-    return T2Scheme("Liu-Vinokur 1", d, 1, source)
-
-
-def liu_vinokur_02():
-    alpha = 1
-    b = (1 - alpha) / 3
-    d = {"s2": [[frac(1, 3)], [b]]}
-    return T2Scheme("Liu-Vinokur 2", d, 1, source)
-
-
 def liu_vinokur_03():
-    alpha = -frac(1, 2)
-    b = (1 - alpha) / 3
-    d = {"s2": [[frac(1, 3)], [b]]}
+    d = {"d3_aa": [[frac(1, 3)], [frac(1, 2)]]}
     return T2Scheme("Liu-Vinokur 3", d, 2, source)
 
 
 def liu_vinokur_04():
-    d = {"s3": [[frac(3, 4)]], "s2": [[frac(1, 12)], [0]]}
+    d = {"centroid": [[frac(3, 4)]], "vertex": [[frac(1, 12)]]}
     return T2Scheme("Liu-Vinokur 4", d, 2, source)
 
 
 def liu_vinokur_05():
     # ERR Incorrectly specified in the article as 25 (instead of 2/5).
-    alpha = frac(2, 5)
-    b = (1 - alpha) / 3
-    d = {"s3": [[-frac(9, 16)]], "s2": [[frac(25, 48)], [b]]}
+    # alpha = frac(2, 5)
+    # b = (1 - alpha) / 3
+    d = {"centroid": [[-frac(9, 16)]], "d3_aa": [[frac(25, 48)], [frac(1, 5)]]}
     return T2Scheme("Liu-Vinokur 5", d, 3, source)
 
 
 def liu_vinokur_06():
     sqrt21 = sqrt(21)
-    alpha0 = 1
     alpha1 = (1 - sqrt21) / 10
-    b0 = (1 - alpha0) / 3
     b1 = (1 - alpha1) / 3
-    d = {"s2": [[(1 + sqrt21) / 120, (39 - sqrt21) / 120], [b0, b1]]}
+    d = {"vertex": [[(1 + sqrt21) / 120]], "d3_aa": [[(39 - sqrt21) / 120], [b1]]}
     return T2Scheme("Liu-Vinokur 6", d, 3, source)
-
-
-def liu_vinokur_07():
-    alpha0 = 1
-    alpha1 = -frac(1, 2)
-    b0 = (1 - alpha0) / 3
-    b1 = (1 - alpha1) / 3
-    d = {"s3": [[frac(9, 20)]], "s2": [[frac(1, 20), frac(2, 15)], [b0, b1]]}
-    return T2Scheme("Liu-Vinokur 7", d, 3, source)
 
 
 def liu_vinokur_08():
@@ -74,7 +52,7 @@ def liu_vinokur_08():
     b1 = (1 - a1) / 3
     b2 = (1 - a2) / 3
     d = {
-        "s2": [
+        "d3_aa": [
             [
                 (5 * a2 - 2) / (60 * a1 ** 2 * (a2 - a1)),
                 (5 * a1 - 2) / (60 * a2 ** 2 * (a1 - a2)),
@@ -90,7 +68,10 @@ def liu_vinokur_09():
     alpha1 = frac(2, 3)
     b0 = (1 - alpha0) / 3
     b1 = (1 - alpha1) / 3
-    d = {"s3": [[frac(27, 80)]], "s2": [[frac(8, 105), frac(81, 560)], [b0, b1]]}
+    d = {
+        "centroid": [[frac(27, 80)]],
+        "d3_aa": [[frac(8, 105), frac(81, 560)], [b0, b1]],
+    }
     return T2Scheme("Liu-Vinokur 9", d, 4, source)
 
 
@@ -104,7 +85,7 @@ def liu_vinokur_10():
     b1 = (1 - alpha1) / 3
     b2 = (1 - alpha2) / 3
     d = {
-        "s2": [
+        "d3_aa": [
             [
                 (11 - 1 * sqrt13) / 360,
                 (80 - 16 * sqrt13) / 360,
@@ -126,9 +107,9 @@ def liu_vinokur_11():
     # c = (1 - gamma - delta) / 3
 
     d = {
-        "s3": [[frac(9, 20)]],
-        "s2": [[-frac(1, 60)], [0]],
-        "s1": [[frac(1, 10)], [a], [b]],
+        "centroid": [[frac(9, 20)]],
+        "vertex": [[-frac(1, 60)]],
+        "d3_ab": [[frac(1, 10)], [a], [b]],
     }
     return T2Scheme("Liu-Vinokur 11", d, 4, source)
 
@@ -141,19 +122,17 @@ def liu_vinokur_12():
     b0 = (1 - a0) / 3
     b1 = (1 - a1) / 3
     d = {
-        "s3": [[frac(9, 40)]],
-        "s2": [[(155 - sqrt15) / 1200, (155 + sqrt15) / 1200], [b0, b1]],
+        "centroid": [[frac(9, 40)]],
+        "d3_aa": [[(155 - sqrt15) / 1200, (155 + sqrt15) / 1200], [b0, b1]],
     }
     return T2Scheme("Liu-Vinokur 12", d, 5, source)
 
 
 def liu_vinokur_13():
     d = {
-        "s3": [[frac(81, 320)]],
-        "s2": [
-            [frac(1, 90), frac(16, 225), frac(2401, 14400)],
-            [0, frac(1, 2), frac(1, 7)],
-        ],
+        "centroid": [[frac(81, 320)]],
+        "vertex": [[frac(1, 90)]],
+        "d3_aa": [[frac(16, 225), frac(2401, 14400)], [frac(1, 2), frac(1, 7)]],
     }
     return T2Scheme("Liu-Vinokur 13", d, 5, source)
 
@@ -170,5 +149,8 @@ register(
         liu_vinokur_08,
         liu_vinokur_09,
         liu_vinokur_10,
+        liu_vinokur_11,
+        liu_vinokur_12,
+        liu_vinokur_13,
     ]
 )
