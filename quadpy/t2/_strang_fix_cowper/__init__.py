@@ -4,10 +4,8 @@ import numpy
 from sympy import Rational as frac
 
 from ...helpers import article, book
-from .._helpers import T2Scheme, register, _read
-from .._hammer_marlowe_stroud import (
-    hammer_marlowe_stroud_3 as strang_fix_cowper_02
-)
+from .._hammer_marlowe_stroud import hammer_marlowe_stroud_3 as strang_fix_cowper_02
+from .._helpers import T2Scheme, _read, register
 
 source = book(
     authors=["Gilbert Strang", "George Fix"],

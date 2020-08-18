@@ -118,25 +118,27 @@ def jaskowiec_sukumar_20():
     return _read("20", 2.315e-11)
 
 
-register([
-    jaskowiec_sukumar_02,
-    jaskowiec_sukumar_03,
-    jaskowiec_sukumar_04,
-    jaskowiec_sukumar_05,
-    jaskowiec_sukumar_06,
-    jaskowiec_sukumar_07,
-    jaskowiec_sukumar_08,
-    jaskowiec_sukumar_09,
-    jaskowiec_sukumar_10,
-    jaskowiec_sukumar_11,
-    jaskowiec_sukumar_12,
-    jaskowiec_sukumar_13,
-    jaskowiec_sukumar_14,
-    jaskowiec_sukumar_15,
-    jaskowiec_sukumar_16,
-    jaskowiec_sukumar_17,
-    jaskowiec_sukumar_18,
-    jaskowiec_sukumar_19a,
-    jaskowiec_sukumar_19b,
-    jaskowiec_sukumar_20,
-])
+register(
+    [
+        jaskowiec_sukumar_02,
+        jaskowiec_sukumar_03,
+        jaskowiec_sukumar_04,
+        jaskowiec_sukumar_05,
+        jaskowiec_sukumar_06,
+        jaskowiec_sukumar_07,
+        jaskowiec_sukumar_08,
+        jaskowiec_sukumar_09,
+        jaskowiec_sukumar_10,
+        jaskowiec_sukumar_11,
+        jaskowiec_sukumar_12,
+        jaskowiec_sukumar_13,
+        jaskowiec_sukumar_14,
+        jaskowiec_sukumar_15,
+        jaskowiec_sukumar_16,
+        jaskowiec_sukumar_17,
+        jaskowiec_sukumar_18,
+        jaskowiec_sukumar_19a,
+        jaskowiec_sukumar_19b,
+        jaskowiec_sukumar_20,
+    ]
+)

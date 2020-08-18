@@ -2,11 +2,8 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
+from ._classical import seven_point as lyness_jespersen_04
 from ._helpers import T2Scheme, register
-
-from ._classical import (
-    seven_point as lyness_jespersen_04
-)
 from ._strang_fix_cowper import strang_fix_cowper_09 as lyness_jespersen_10
 
 source = article(

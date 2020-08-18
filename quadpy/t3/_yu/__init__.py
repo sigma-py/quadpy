@@ -44,6 +44,5 @@ def yu_5():
 def yu_6():
     return _read(this_dir / "yu_6.json", source)
 
-register([
-    yu_2, yu_3, yu_4, yu_5, yu_6
-])
+
+register([yu_2, yu_3, yu_4, yu_5, yu_6])

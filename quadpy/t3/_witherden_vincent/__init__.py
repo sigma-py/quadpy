@@ -63,14 +63,16 @@ def witherden_vincent_10():
     return _read(this_dir / "witherden_vincent_10.json", source)
 
 
-register([
-    witherden_vincent_01,
-    witherden_vincent_02,
-    witherden_vincent_03,
-    witherden_vincent_05,
-    witherden_vincent_06,
-    witherden_vincent_07,
-    witherden_vincent_08,
-    witherden_vincent_09,
-    witherden_vincent_10,
-])
+register(
+    [
+        witherden_vincent_01,
+        witherden_vincent_02,
+        witherden_vincent_03,
+        witherden_vincent_05,
+        witherden_vincent_06,
+        witherden_vincent_07,
+        witherden_vincent_08,
+        witherden_vincent_09,
+        witherden_vincent_10,
+    ]
+)

@@ -180,19 +180,21 @@ def liu_vinokur_14():
     return T3Scheme("Liu-Vinokur 14", weights, points, degree, source)
 
 
-register([
-    liu_vinokur_01,
-    liu_vinokur_02,
-    liu_vinokur_03,
-    liu_vinokur_04,
-    liu_vinokur_05,
-    liu_vinokur_06,
-    liu_vinokur_07,
-    liu_vinokur_08,
-    liu_vinokur_09,
-    liu_vinokur_10,
-    liu_vinokur_11,
-    liu_vinokur_12,
-    liu_vinokur_13,
-    liu_vinokur_14,
-])
+register(
+    [
+        liu_vinokur_01,
+        liu_vinokur_02,
+        liu_vinokur_03,
+        liu_vinokur_04,
+        liu_vinokur_05,
+        liu_vinokur_06,
+        liu_vinokur_07,
+        liu_vinokur_08,
+        liu_vinokur_09,
+        liu_vinokur_10,
+        liu_vinokur_11,
+        liu_vinokur_12,
+        liu_vinokur_13,
+        liu_vinokur_14,
+    ]
+)

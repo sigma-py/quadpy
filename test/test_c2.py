@@ -129,7 +129,7 @@ def test_get_good_scheme():
                         continue
                     elif scheme_year > best_year:
                         continue
-                    else:   # years are equal
+                    else:  # years are equal
                         pass
 
             # okay, looks like we found a better one!

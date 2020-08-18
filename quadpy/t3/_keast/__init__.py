@@ -104,15 +104,17 @@ def keast_9():
     return _read(this_dir / "keast_9.json", source)
 
 
-register([
-    keast_0,
-    keast_1,
-    keast_2,
-    keast_3,
-    keast_4,
-    keast_5,
-    keast_6,
-    keast_7,
-    keast_8,
-    keast_9,
-])
+register(
+    [
+        keast_0,
+        keast_1,
+        keast_2,
+        keast_3,
+        keast_4,
+        keast_5,
+        keast_6,
+        keast_7,
+        keast_8,
+        keast_9,
+    ]
+)

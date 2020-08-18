@@ -2,12 +2,10 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
+from ._classical import centroid as liu_vinokur_01
+from ._classical import seven_point as liu_vinokur_07
+from ._classical import vertex as liu_vinokur_02
 from ._helpers import T2Scheme, register
-from ._classical import (
-    centroid as liu_vinokur_01,
-    vertex as liu_vinokur_02,
-    seven_point as liu_vinokur_07,
-)
 
 source = article(
     authors=["Y. Liu", "M. Vinokur"],
@@ -42,10 +40,7 @@ def liu_vinokur_06():
     sqrt21 = sqrt(21)
     alpha1 = (1 - sqrt21) / 10
     b1 = (1 - alpha1) / 3
-    d = {
-        "vertex": [[(1 + sqrt21) / 120]],
-        "d3_aa": [[(39 - sqrt21) / 120], [b1]]
-    }
+    d = {"vertex": [[(1 + sqrt21) / 120]], "d3_aa": [[(39 - sqrt21) / 120], [b1]]}
     return T2Scheme("Liu-Vinokur 6", d, 3, source)
 
 
@@ -137,10 +132,7 @@ def liu_vinokur_13():
     d = {
         "centroid": [[frac(81, 320)]],
         "vertex": [[frac(1, 90)]],
-        "d3_aa": [
-            [frac(16, 225), frac(2401, 14400)],
-            [frac(1, 2), frac(1, 7)],
-        ],
+        "d3_aa": [[frac(16, 225), frac(2401, 14400)], [frac(1, 2), frac(1, 7)],],
     }
     return T2Scheme("Liu-Vinokur 13", d, 5, source)
 
