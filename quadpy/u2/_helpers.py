@@ -2,9 +2,16 @@ import numpy
 
 from ..helpers import QuadratureScheme, plot_disks
 
+schemes = {}
+
+
+def register(in_schemes):
+    for scheme in in_schemes:
+        schemes[scheme.__name__] = scheme
+
 
 class U2Scheme(QuadratureScheme):
-    def __init__(self, name, source, degree, weights, points, tol=1.0e-14):
+    def __init__(self, name, source, degree, weights, points, tol):
         super().__init__(name, weights, points, degree, source, tol)
         self.domain = "U2"
 
@@ -42,3 +49,7 @@ class U2Scheme(QuadratureScheme):
         ff = numpy.array(f((rr + center).T))
         ref_vol = 2 * numpy.pi * numpy.asarray(radius)
         return ref_vol * dot(ff, self.weights)
+
+
+def get_good_scheme(n):
+    return schemes["krylov"](n)

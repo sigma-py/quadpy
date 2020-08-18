@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 import quadpy
 
 
-@pytest.mark.parametrize("scheme", [quadpy.u2.krylov(k) for k in range(1, 6)])
+@pytest.mark.parametrize("scheme", [quadpy.u2.schemes["krylov"](k) for k in range(1, 6)])
 def test_scheme(scheme):
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
@@ -28,7 +28,7 @@ def test_scheme(scheme):
     )
 
 
-@pytest.mark.parametrize("scheme", [quadpy.u2.krylov(3)])
+@pytest.mark.parametrize("scheme", [quadpy.u2.schemes["krylov"](3)])
 def test_show(scheme):
     scheme.show(scheme)
     plt.close()

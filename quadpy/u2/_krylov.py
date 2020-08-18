@@ -2,7 +2,7 @@ import numpy
 import sympy
 
 from ..helpers import book
-from ._helpers import U2Scheme
+from ._helpers import U2Scheme, register
 
 # Pages 73-74 in
 _source = book(
@@ -24,4 +24,7 @@ def krylov(n):
     weights = numpy.full(n, frac(1, n))
     alpha = 2 * numpy.arange(n) * pi / n
     points = numpy.column_stack([cos(alpha), sin(alpha)])
-    return U2Scheme(f"Krylov {n}", _source, n - 1, weights, points)
+    return U2Scheme(f"Krylov {n}", _source, n - 1, weights, points, 2.145e-16)
+
+
+register([krylov])

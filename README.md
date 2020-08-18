@@ -205,7 +205,7 @@ Example:
 import numpy
 import quadpy
 
-scheme = quadpy.u2.krylov(7)
+scheme = quadpy.u2.get_good_scheme(7)
 scheme.show()
 val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0], 1.0)
 ```
