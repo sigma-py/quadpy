@@ -18,6 +18,7 @@ from . import (
     _zhang_cui_liu,
 )
 from ._helpers import schemes
+from ._get_good_scheme import get_good_scheme
 
 __all__ = [
     "_beckers_haegemans",
@@ -39,4 +40,5 @@ __all__ = [
     "_zhang_cui_liu",
     #
     "schemes",
+    "get_good_scheme"
 ]
