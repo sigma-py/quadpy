@@ -160,6 +160,7 @@ def expand_symmetries_points_only(data):
             #
             "d4.0": lambda r: _d(4, 0, r),
             "d4.1": lambda r: _d(4, 1, r),
+            "d5.0": lambda r: _d(5, 0, r),
             "d6.0": lambda r: _d(6, 0, r),
             "d6.1": lambda r: _d(6, 1, r),
             "d8.0": lambda r: _d(8, 0, r),
