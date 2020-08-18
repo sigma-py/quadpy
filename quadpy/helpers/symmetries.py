@@ -122,6 +122,17 @@ def _s2_static(a):
     return points
 
 
+def _d(n, offset, r):
+    import sympy
+    cos = numpy.vectorize(sympy.cos)
+    sin = numpy.vectorize(sympy.sin)
+
+    alpha = (2 * numpy.arange(n) + offset) * sympy.pi / n
+    cs = numpy.array([cos(alpha), sin(alpha)])
+    points = numpy.multiply.outer(cs, r)
+    return points
+
+
 def expand_symmetries_points_only(data):
     points = []
     counts = []
@@ -146,6 +157,15 @@ def expand_symmetries_points_only(data):
             "c3_ab": _c3_ab,
             "swap_ab": _swap_ab,
             "s2_static": _s2_static,
+            #
+            "d4.0": lambda r: _d(4, 0, r),
+            "d4.1": lambda r: _d(4, 1, r),
+            "d6.0": lambda r: _d(6, 0, r),
+            "d6.1": lambda r: _d(6, 1, r),
+            "d8.0": lambda r: _d(8, 0, r),
+            "d8.1": lambda r: _d(8, 1, r),
+            "d10.0": lambda r: _d(10, 0, r),
+            "d10.1": lambda r: _d(10, 1, r),
             #
             "plain": lambda vals: vals.reshape(vals.shape[0], 1, -1),
         }[key]

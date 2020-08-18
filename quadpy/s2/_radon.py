@@ -17,7 +17,6 @@ _source = article(
 )
 
 frac = sympy.Rational
-pi = sympy.pi
 sqrt = numpy.vectorize(sympy.sqrt)
 
 
