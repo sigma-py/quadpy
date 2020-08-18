@@ -3,7 +3,7 @@ import numpy
 from ..c1 import gauss_legendre
 from ..helpers import book
 from ..tn._stroud import stroud_tn_5_1
-from ._helpers import T3Scheme
+from ._helpers import T3Scheme, register
 
 source = book(
     authors=["Arthur Stroud"],
@@ -91,3 +91,6 @@ def stroud_t3_7_1():
     )
     points = numpy.ascontiguousarray(points.T)
     return T3Scheme("Stroud T3 7-1", weights, points, degree, source)
+
+
+register([stroud_t3_5_1, stroud_t3_7_1])

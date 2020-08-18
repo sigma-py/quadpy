@@ -4,7 +4,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ...helpers import article
-from .._helpers import T3Scheme, _read, expand_symmetries
+from .._helpers import T3Scheme, _read, expand_symmetries, register
 
 source = article(
     authors=["Yu Jinyun"],
@@ -43,3 +43,7 @@ def yu_5():
 
 def yu_6():
     return _read(this_dir / "yu_6.json", source)
+
+register([
+    yu_2, yu_3, yu_4, yu_5, yu_6
+])

@@ -1,8 +1,8 @@
-# TODO all points are "plain" -- identiy symmetries and list them as such
+# TODO all points are "plain" -- identify symmetries and list them as such
 import pathlib
 
 from ...helpers import article
-from .._helpers import _read
+from .._helpers import _read, register
 
 source = article(
     authors=["Hong Xiao", "Zydrunas Gimbutas"],
@@ -79,3 +79,22 @@ def xiao_gimbutas_14():
 
 def xiao_gimbutas_15():
     return _read(this_dir / "xg15.json", source)
+
+
+register([
+    xiao_gimbutas_01,
+    xiao_gimbutas_02,
+    xiao_gimbutas_03,
+    xiao_gimbutas_04,
+    xiao_gimbutas_05,
+    xiao_gimbutas_06,
+    xiao_gimbutas_07,
+    xiao_gimbutas_08,
+    xiao_gimbutas_09,
+    xiao_gimbutas_10,
+    xiao_gimbutas_11,
+    xiao_gimbutas_12,
+    xiao_gimbutas_13,
+    xiao_gimbutas_14,
+    xiao_gimbutas_15,
+])

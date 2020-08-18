@@ -46,11 +46,11 @@ def find_equal(schemes):
         for j in range(n):
             if schemes[i].name == schemes[j].name:
                 continue
-            if len(schemes[i].points) != len(schemes[j].points):
+            if len(schemes[i].weights) != len(schemes[j].weights):
                 continue
             # Check if the point sets are equal
-            x = numpy.column_stack([schemes[i].weights, schemes[i].points])
-            y = numpy.column_stack([schemes[j].weights, schemes[j].points])
+            x = numpy.vstack([schemes[i].weights, schemes[i].points])
+            y = numpy.vstack([schemes[j].weights, schemes[j].points])
             is_equal = True
             for x_i in x:
                 diff = y - x_i

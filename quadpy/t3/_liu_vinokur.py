@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import acos, cos, pi, sqrt
 
 from ..helpers import article
-from ._helpers import T3Scheme, expand_symmetries
+from ._helpers import T3Scheme, expand_symmetries, register
 
 source = article(
     authors=["Y. Liu", "M. Vinokur"],
@@ -178,3 +178,21 @@ def liu_vinokur_14():
     points, weights = expand_symmetries(d)
     degree = 5
     return T3Scheme("Liu-Vinokur 14", weights, points, degree, source)
+
+
+register([
+    liu_vinokur_01,
+    liu_vinokur_02,
+    liu_vinokur_03,
+    liu_vinokur_04,
+    liu_vinokur_05,
+    liu_vinokur_06,
+    liu_vinokur_07,
+    liu_vinokur_08,
+    liu_vinokur_09,
+    liu_vinokur_10,
+    liu_vinokur_11,
+    liu_vinokur_12,
+    liu_vinokur_13,
+    liu_vinokur_14,
+])

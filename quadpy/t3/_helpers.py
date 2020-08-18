@@ -7,6 +7,14 @@ from ..helpers import backend_to_function
 from ..tn import TnScheme, get_vol, transform
 
 
+schemes = {}
+
+
+def register(in_schemes):
+    for scheme in in_schemes:
+        schemes[scheme.__name__] = scheme
+
+
 class T3Scheme(TnScheme):
     def __init__(self, name, weights, points, degree, source=None, tol=1.0e-14):
         self.domain = "T3"
