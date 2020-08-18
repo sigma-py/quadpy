@@ -91,6 +91,8 @@ def laursen_gellert_15b():
 register(
     [
         laursen_gellert_01,
+        laursen_gellert_02a,
+        laursen_gellert_02b,
         laursen_gellert_03,
         laursen_gellert_04,
         laursen_gellert_05,
@@ -100,5 +102,10 @@ register(
         laursen_gellert_09,
         laursen_gellert_10,
         laursen_gellert_11,
+        laursen_gellert_12,
+        laursen_gellert_13,
+        laursen_gellert_14,
+        laursen_gellert_15a,
+        laursen_gellert_15b,
     ]
 )

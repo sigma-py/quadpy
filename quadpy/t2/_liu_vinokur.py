@@ -149,5 +149,8 @@ register(
         liu_vinokur_08,
         liu_vinokur_09,
         liu_vinokur_10,
+        liu_vinokur_11,
+        liu_vinokur_12,
+        liu_vinokur_13,
     ]
 )
