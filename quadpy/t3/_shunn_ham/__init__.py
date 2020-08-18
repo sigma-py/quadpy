@@ -45,6 +45,4 @@ def shunn_ham_6():
     return _read(this_dir / "shunn_ham_6.json", source)
 
 
-register(
-    [shunn_ham_1, shunn_ham_2, shunn_ham_3, shunn_ham_4, shunn_ham_5, shunn_ham_6,]
-)
+register([shunn_ham_1, shunn_ham_2, shunn_ham_3, shunn_ham_4, shunn_ham_5, shunn_ham_6])

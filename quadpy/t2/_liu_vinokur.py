@@ -132,7 +132,7 @@ def liu_vinokur_13():
     d = {
         "centroid": [[frac(81, 320)]],
         "vertex": [[frac(1, 90)]],
-        "d3_aa": [[frac(16, 225), frac(2401, 14400)], [frac(1, 2), frac(1, 7)],],
+        "d3_aa": [[frac(16, 225), frac(2401, 14400)], [frac(1, 2), frac(1, 7)]],
     }
     return T2Scheme("Liu-Vinokur 13", d, 5, source)
 
