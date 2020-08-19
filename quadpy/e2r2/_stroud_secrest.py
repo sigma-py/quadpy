@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import E2r2Scheme, expand_symmetries
+from ._helpers import E2r2Scheme
 
 _source = article(
     authors=["A.H. Stroud", "D. Secrest"],
@@ -23,8 +23,7 @@ def stroud_secrest_5():
     B = frac(1, 12)
 
     d = {"zero": [[A]], "c2_a0": [[B], [nu]], "sxy": [[B], [xi], [eta]]}
-    points, weights = expand_symmetries(d)
-    return E2r2Scheme("Stroud-Secrest V", weights, points, 5, _source)
+    return E2r2Scheme("Stroud-Secrest V", d, 5, _source)
 
 
 def stroud_secrest_6():
@@ -35,5 +34,4 @@ def stroud_secrest_6():
     B, C = [(5 + p_m * 2 * sqrt5) / 45 for p_m in [+1, -1]]
 
     d = {"d4_a0": [[A], [nu]], "d4_aa": [[B, C], [xi, eta]]}
-    points, weights = expand_symmetries(d)
-    return E2r2Scheme("Stroud-Secrest VI", weights, points, 7, _source)
+    return E2r2Scheme("Stroud-Secrest VI", d, 7, _source)
