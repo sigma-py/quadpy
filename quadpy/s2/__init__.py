@@ -18,8 +18,7 @@ from . import (
     _stroud,
     _wissmann_becker,
 )
-from ._get_good_scheme import get_good_scheme
-from ._helpers import schemes
+from ._helpers import get_good_scheme, schemes
 
 __all__ = [
     "_albrecht",

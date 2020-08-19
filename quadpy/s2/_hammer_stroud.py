@@ -2,6 +2,7 @@ import numpy
 import sympy
 
 from ..helpers import article
+from ._albrecht_collatz import albrecht_collatz as hammer_stroud_11_2
 from ._helpers import S2Scheme, register
 from ._peirce_1956 import peirce_1956_1, peirce_1956_3
 from ._radon import radon
@@ -11,7 +12,9 @@ _source = article(
     title="Numerical Evaluation of Multiple Integrals II",
     journal="Math. Comp.",
     volume="12",
+    number="64",
     year="1958",
+    month="oct",
     pages="272-280",
     url="https://doi.org/10.1090/S0025-5718-1958-0102176-6",
 )
@@ -24,16 +27,10 @@ cos = numpy.vectorize(sympy.cos)
 sin = numpy.vectorize(sympy.sin)
 
 
-def hammer_stroud_11_2():
-    # ERR Incorrectly stated in Stroud with 0.5 instead of sqrt(0.5)
-    d = {"c4_a0": [[frac(1, 4)], [sqrt(frac(1, 2))]]}
-    return S2Scheme("Hammer-Stroud 11-2", d, 3, _source)
-
-
 def hammer_stroud_12_2():
     d = {
         "zero": [[frac(1, 6)]],
-        "c4_a0": [[frac(1, 6)], [sqrt(frac(1, 2))]],
+        "d4_a0": [[frac(1, 6)], [sqrt(frac(1, 2))]],
         "sxy": [[frac(1, 24)], [sqrt(frac(1, 2))], [sqrt(frac(1, 2))]],
     }
     return S2Scheme("Hammer-Stroud 12-2", d, 5, _source)
@@ -72,12 +69,12 @@ def hammer_stroud_19():
 
     d = {
         "zero": [[frac(1, 9)]],
-        "d4": [
+        "d4_ab": [
             [alpha1, alpha3],
             [0.5505043204538557, 0.7932084745126058],
             [0.2280263556769715, 0.4645097310495256],
         ],
-        "c4_a0": [[alpha2], [a]],
+        "d4_a0": [[alpha2], [a]],
     }
     return S2Scheme("Hammer-Stroud 19", d, 9, _source)
 
@@ -93,7 +90,7 @@ def hammer_stroud_21():
     alpha2 = 0.0341505695624825 / numpy.pi
 
     d = {
-        "d4": [
+        "d4_ab": [
             [alpha0, alpha1, alpha1, alpha1, alpha1, alpha2, alpha2, alpha2],
             [
                 0.2584361661674054,

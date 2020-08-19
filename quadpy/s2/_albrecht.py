@@ -28,7 +28,7 @@ linear_solve = mp.lu_solve
 
 def albrecht_1():
     # Equals Albrecht-Collatz, Lether(2)
-    d = {"c4_aa": [[frac(1, 4)], [frac(1, 2)]]}
+    d = {"d4_aa": [[frac(1, 4)], [frac(1, 2)]]}
     return S2Scheme("Albrecht 1", d, 3, _source)
 
 
@@ -83,9 +83,9 @@ def albrecht_5():
     v = sqrt(frac(5, 6)) * sin(pi / 8)
 
     d = {
-        "c4_a0": [B, [sqrt(sigma2[0]), sqrt(sigma2[1]), sqrt(sigma2[2])]],
-        "c4_aa": [[C1, C2], [s1, s2]],
-        "d4": [[D], [u], [v]],
+        "d4_a0": [B, [sqrt(sigma2[0]), sqrt(sigma2[1]), sqrt(sigma2[2])]],
+        "d4_aa": [[C1, C2], [s1, s2]],
+        "d4_ab": [[D], [u], [v]],
     }
     return S2Scheme("Albrecht 5", d, 11, _source)
 

@@ -29,7 +29,7 @@ def peirce_1956_1():
     # ERR Stroud incorrectly lists 4 instead of 41 here.
     B2, B3 = (551 + pm_ * 41 * sqrt29) / 6264
 
-    d = {"c4_a0": [[B1], [r]], "c4_aa": [[B2, B3], [s, t]]}
+    d = {"d4_a0": [[B1], [r]], "d4_aa": [[B2, B3], [s, t]]}
     return S2Scheme("Peirce 1956-1", d, 7, _source)
 
 
@@ -51,8 +51,8 @@ def peirce_1956_2():
     B4 = (5585 + 1440 * sqrt15) / 508176
 
     d = {
-        "c4_a0": [[B1], [r]],
-        "d4": [[B2, B3, B4], [u1, u2, u3], [v1, v2, v3]],
+        "d4_a0": [[B1], [r]],
+        "d4_ab": [[B2, B3, B4], [u1, u2, u3], [v1, v2, v3]],
     }
     return S2Scheme("Peirce 1956-2", d, 9, _source)
 
@@ -75,9 +75,9 @@ def peirce_1956_3():
     t = sqrt((5 - sqrt15) / 20)
 
     d = {
-        "c4_a0": [[B1, B2, B3], [r1, r2, r3]],
-        "d4": [[C1, C2], [u1, u2], [v1, v2]],
-        "c4_aa": [[D], [t]],
+        "d4_a0": [[B1, B2, B3], [r1, r2, r3]],
+        "d4_ab": [[C1, C2], [u1, u2], [v1, v2]],
+        "d4_aa": [[D], [t]],
     }
     return S2Scheme("Peirce 1956-3", d, 11, _source)
 

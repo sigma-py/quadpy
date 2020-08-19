@@ -26,8 +26,8 @@ def phillips():
     B3 = frac(25, 324)
 
     d = {
-        "c4_a0": [[B1, B2], [r, s]],
-        "c4_aa": [[B3], [t]],
+        "d4_a0": [[B1, B2], [r, s]],
+        "d4_aa": [[B3], [t]],
     }
     return C2Scheme("Phillips", d, 7, source)
 

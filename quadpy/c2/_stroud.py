@@ -37,13 +37,13 @@ source = book(
 
 def stroud_c2_1_1():
     # product trapezoidal
-    d = {"c4_aa": [[frac(1, 4)], [1]]}
+    d = {"d4_aa": [[frac(1, 4)], [1]]}
     return C2Scheme("Stroud C2 1-1", d, 1, source)
 
 
 def stroud_c2_3_1():
     # ERR misprint in Stroud: sqrt(1/3) vs 1/3
-    d = {"c4_aa": [[frac(1, 4)], [sqrt(frac(1, 3))]]}
+    d = {"d4_aa": [[frac(1, 4)], [sqrt(frac(1, 3))]]}
     return C2Scheme("Stroud C2 3-1", d, 3, source)
 
 
@@ -59,8 +59,8 @@ def stroud_c2_5_4():
     r = sqrt(frac(3, 5))
     d = {
         "zero": [[frac(16, 81)]],
-        "c4_a0": [[frac(10, 81)], [r]],
-        "c4_aa": [[frac(25, 324)], [r]],
+        "d4_a0": [[frac(10, 81)], [r]],
+        "d4_aa": [[frac(25, 324)], [r]],
     }
     return C2Scheme("Stroud C2 5-4", d, 5, source)
 
@@ -74,7 +74,7 @@ def stroud_c2_7_4():
 
     r = sqrt(frac(3, 5))
 
-    d = {"c4_aa": [[B1, B2], [r, s]], "d4": [[B3], [r], [s]]}
+    d = {"d4_aa": [[B1, B2], [r, s]], "d4_ab": [[B3], [r], [s]]}
 
     # TODO fix
     warnings.warn("Formula only has degree 1!")

@@ -34,6 +34,6 @@ def stroud_secrest_6():
     A = frac(1, 36)
     B, C = [(5 + p_m * 2 * sqrt5) / 45 for p_m in [+1, -1]]
 
-    d = {"c4_a0": [[A], [nu]], "c4_aa": [[B, C], [xi, eta]]}
+    d = {"d4_a0": [[A], [nu]], "d4_aa": [[B, C], [xi, eta]]}
     points, weights = expand_symmetries(d)
     return E2r2Scheme("Stroud-Secrest VI", weights, points, 7, _source)

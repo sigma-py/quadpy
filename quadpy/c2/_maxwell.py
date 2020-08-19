@@ -21,9 +21,9 @@ def maxwell():
 
     d = {
         "zero": [[frac(1, 81)]],
-        "c4_a0": [[frac(49, 324)], [r]],
+        "d4_a0": [[frac(49, 324)], [r]],
         # ERR typo in Stroud: 648 vs 649
-        "d4": [[frac(31, 648)], [s], [t]],
+        "d4_ab": [[frac(31, 648)], [s], [t]],
     }
     return C2Scheme("Maxwell", d, 7, source)
 
