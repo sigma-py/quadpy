@@ -6,7 +6,7 @@ from sympy import sqrt
 
 from ...helpers import article
 from .._helpers import C2Scheme, _read, register
-from .._tyler import tyler_2
+from .._tyler import tyler_2 as dunavant_03
 
 source = article(
     authors=["D.A. Dunavant"],
@@ -29,21 +29,16 @@ def dunavant_00():
 
 
 def dunavant_01():
-    d = {"c4_aa": [[frac(1, 4)], [sqrt(frac(1, 3))]]}
+    d = {"d4_aa": [[frac(1, 4)], [sqrt(frac(1, 3))]]}
     return C2Scheme("Dunavant 1", d, 3, source, 4.441e-16)
 
 
 def dunavant_02():
     d = {
-        "c4_a0": [[frac(10, 49)], [sqrt(frac(7, 15))]],
-        "c4_aa": [[frac(9, 196)], [sqrt(frac(7, 9))]],
+        "d4_a0": [[frac(10, 49)], [sqrt(frac(7, 15))]],
+        "d4_aa": [[frac(9, 196)], [sqrt(frac(7, 9))]],
     }
     return C2Scheme("Dunavant 2", d, 5, source, 1.305e-15)
-
-
-def dunavant_03():
-    # DUP c2: dunavant 3 == tyler 2
-    return tyler_2()
 
 
 def dunavant_04():

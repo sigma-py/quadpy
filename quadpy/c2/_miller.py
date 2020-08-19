@@ -19,8 +19,8 @@ source = article(
 def miller():
     d = {
         "zero": [[frac(250, 225)]],
-        "c4_a0": [[-frac(8, 225)], [1]],
-        "c4_aa": [[frac(7, 900)], [1]],
+        "d4_a0": [[-frac(8, 225)], [1]],
+        "d4_aa": [[frac(7, 900)], [1]],
     }
     # This scheme is exact for _harmonic_ integrands of degree <= 11.
     return C2Scheme("Miller", d, 1, source)

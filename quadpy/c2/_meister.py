@@ -21,9 +21,9 @@ def meister():
 
     d = {
         "zero": [[frac(1024, 6720)]],
-        "c4_aa": [[frac(576, 6720), -frac(9, 6720), frac(47, 6720)], [r, s, 1]],
-        "c4_a0": [[frac(576, 6720)], [r]],
-        "d4": [[frac(117, 6720)], [1], [s]],
+        "d4_aa": [[frac(576, 6720), -frac(9, 6720), frac(47, 6720)], [r, s, 1]],
+        "d4_a0": [[frac(576, 6720)], [r]],
+        "d4_ab": [[frac(117, 6720)], [1], [s]],
     }
     return C2Scheme("Meister", d, 7, source)
 

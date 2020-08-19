@@ -48,7 +48,7 @@ def mysovskih_2():
 
     c4, s5 = sqrt((10 - pm_ * sqrt10) / 60)
 
-    d = {"c4_a0": [[B1, B2, B3], [r1, r2, r3]], "d4": [[B4, B5], [r4, r5], [c4, s5]]}
+    d = {"d4_a0": [[B1, B2, B3], [r1, r2, r3]], "d4_ab": [[B4, B5], [r4, r5], [c4, s5]]}
     return S2Scheme("Mysovskih 2", d, 11, _source)
 
 

@@ -19,7 +19,7 @@ frac = sympy.Rational
 
 def albrecht_collatz():
     # ERR Incorrectly stated in Stroud as sqrt(1/2) instead of 1/2
-    d = {"c4_aa": [[frac(1, 4)], [frac(1, 2)]]}
+    d = {"d4_aa": [[frac(1, 4)], [frac(1, 2)]]}
     return S2Scheme("Albrecht-Collatz", d, 3, _source)
 
 

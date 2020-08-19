@@ -5,7 +5,7 @@ def _zero(data):
     return numpy.array([[0.0], [0.0]])
 
 
-def _d4(data):
+def _d4_ab(data):
     """dihedral symmetry d4.
     """
     s, t = numpy.array(data)
@@ -16,14 +16,14 @@ def _d4(data):
     return points
 
 
-def _c4_aa(data):
+def _d4_aa(data):
     a = numpy.asarray(data)
     points = numpy.array([[+a, +a], [-a, +a], [+a, -a], [-a, -a]])
     points = numpy.moveaxis(points, 0, 1)
     return points
 
 
-def _c4_a0(data):
+def _d4_a0(data):
     a = numpy.asarray(data)
     zero = numpy.zeros_like(a)
     points = numpy.array([[+a, zero], [-a, zero], [zero, +a], [zero, -a]])
@@ -141,10 +141,10 @@ def expand_symmetries_points_only(data):
     for key, points_raw in data.items():
         fun = {
             "zero": _zero,
-            "c4_aa": _c4_aa,
-            "c4_a0": _c4_a0,
+            "d4_aa": _d4_aa,
+            "d4_a0": _d4_a0,
             "c4": _c4,
-            "d4": _d4,
+            "d4_ab": _d4_ab,
             "c2_a0": _c2_a0,
             "c2_0a": _c2_0a,
             "sxy": _sxy,

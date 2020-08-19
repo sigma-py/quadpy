@@ -92,7 +92,7 @@ def test_get_good_scheme():
                 continue
 
             # filter out disallowed (unsymmetrical) keys
-            if len(keys - set(["c4_a0", "c4_aa", "d4", "zero"])) > 0:
+            if len(keys - set(["d4_a0", "d4_aa", "d4_ab", "zero"])) > 0:
                 continue
 
             # okay, now compare the scheme with `best`

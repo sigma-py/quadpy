@@ -13,14 +13,14 @@ source = book(
 
 
 def irwin_1():
-    d = {"c4_aa": [[frac(14, 48)], [1]], "d4": [[-frac(1, 48)], [3], [1]]}
+    d = {"d4_aa": [[frac(14, 48)], [1]], "d4_ab": [[-frac(1, 48)], [3], [1]]}
     return C2Scheme("Irwin 1", d, 3, source)
 
 
 def irwin_2():
     d = {
-        "c4_aa": [[frac(889, 2880), frac(5, 2880)], [1, 3]],
-        "d4": [[-frac(98, 2880), frac(11, 2880)], [3, 5], [1, 1]],
+        "d4_aa": [[frac(889, 2880), frac(5, 2880)], [1, 3]],
+        "d4_ab": [[-frac(98, 2880), frac(11, 2880)], [3, 5], [1, 1]],
     }
     return C2Scheme("Irwin 2", d, 5, source, 5.685e-14)
 
