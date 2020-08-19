@@ -4,9 +4,9 @@ import quadpy
 
 
 def test_u2():
-    scheme = quadpy.u2.krylov(3)
+    scheme = quadpy.u2.schemes["krylov"](3)
     scheme.integrate(lambda x: numpy.exp(x[0]), numpy.array([0.0, 0.3]), 0.7)
-    scheme = quadpy.u2.krylov(5)
+    scheme = quadpy.u2.schemes["krylov"](5)
     scheme.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[0])],
         numpy.array([[1.0, 1.0], [0.0, 0.3], [2.0, 2.0]]),
@@ -15,9 +15,9 @@ def test_u2():
 
 
 def test_s2():
-    scheme = quadpy.s2.peirce_1957(5)
+    scheme = quadpy.s2.get_good_scheme(5)
     scheme.integrate(lambda x: numpy.exp(x[0]), numpy.array([0.0, 0.3]), 0.7)
-    scheme = quadpy.s2.peirce_1957(5)
+    scheme = quadpy.s2.get_good_scheme(6)
     scheme.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         numpy.array([[1.0, 1.0], [0.0, 0.3], [2.0, 2.0]]),
