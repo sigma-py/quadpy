@@ -373,7 +373,7 @@ Example:
 ```python
 import quadpy
 
-scheme = quadpy.e2r2.rabinowitz_richter_3()
+scheme = quadpy.e2r2.get_good_scheme(3)
 scheme.show()
 val = scheme.integrate(lambda x: x[0] ** 2)
 ```

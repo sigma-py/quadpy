@@ -26,7 +26,7 @@ def stroud_4_1():
         "zero": [[frac(1, 2)]],
         "d5.0": [[frac(1, 10)], [[sqrt(2)]]],
     }
-    return E2r2Scheme("Stroud 4-1", d, 4, _source)
+    return E2r2Scheme("Stroud 4-1", d, 4, _source, 2.220e-16)
 
 
 def stroud_5_2():
@@ -37,7 +37,7 @@ def stroud_5_2():
         "d4_a0": [[frac(1, 9)], [r]],
         "d4_aa": [[frac(1, 36)], [r]],
     }
-    return E2r2Scheme("Stroud 5-2", d, 5, _source)
+    return E2r2Scheme("Stroud 5-2", d, 5, _source, 4.441e-16)
 
 
 def stroud_7_2():
@@ -51,7 +51,7 @@ def stroud_7_2():
 
     # TODO find what's wrong
     warnings.warn("Stroud's Gauss product formula has degree 1, not 7.")
-    return E2r2Scheme("Stroud 7-2", d, 1, _source)
+    return E2r2Scheme("Stroud 7-2", d, 1, _source, 2.220e-16)
 
 
 register([
