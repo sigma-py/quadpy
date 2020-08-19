@@ -1,6 +1,7 @@
 import numpy
 import orthopy
 import pytest
+from helpers import find_best_scheme
 from matplotlib import pyplot as plt
 
 import quadpy
@@ -101,8 +102,32 @@ def test_show(scheme):
     plt.close()
 
 
+def test_get_good_scheme():
+    degree = 0
+    while True:
+        best = find_best_scheme(
+            quadpy.u3.schemes.values(),
+            degree,
+            # lambda pts: True,
+            lambda pts: numpy.all(
+                numpy.abs(pts[0] ** 2 + pts[1] ** 2 + pts[2] ** 2 - 1.0) < 1.0e-13
+            ),
+            lambda keys: len(
+                keys
+                - set(["a1", "a2", "a3", "rs0", "llm2", "rsw2", "pq0", "llm", "rsw"])
+            )
+            == 0,
+        )
+        if best is None:
+            break
+
+        b = quadpy.u3.get_good_scheme(degree)
+
+        assert best.name == b.name, f"{best.name} != {b.name}"
+        degree += 1
+
+    assert degree == 48
+
+
 if __name__ == "__main__":
-    scheme_ = quadpy.u3.Stroud("U3 5-2")
-    # test_scheme(scheme_)
-    test_scheme_spherical(scheme_, tol=1.0e-7)
-    # test_show(scheme_)
+    test_get_good_scheme()
