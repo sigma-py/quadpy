@@ -28,7 +28,7 @@ from . import (
     _xiao_gimbutas,
     _zhang_cui_liu,
 )
-from ._helpers import schemes, get_good_scheme
+from ._helpers import get_good_scheme, schemes
 from ._tools import integrate_adaptive
 
 __all__ = [

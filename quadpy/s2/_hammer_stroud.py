@@ -2,8 +2,8 @@ import numpy
 import sympy
 
 from ..helpers import article
-from ._helpers import S2Scheme, register
 from ._albrecht_collatz import albrecht_collatz as hammer_stroud_11_2
+from ._helpers import S2Scheme, register
 from ._peirce_1956 import peirce_1956_1, peirce_1956_3
 from ._radon import radon
 

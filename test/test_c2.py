@@ -1,10 +1,9 @@
 import numpy
 import orthopy
 import pytest
+from helpers import find_best_scheme
 
 import quadpy
-
-from helpers import find_best_scheme
 
 schemes = (
     list(quadpy.c2.schemes.values())
@@ -70,7 +69,7 @@ def test_get_good_scheme():
             quadpy.c2.schemes.values(),
             degree,
             lambda pts: numpy.all((pts >= -1) & (pts <= 1)),
-            lambda keys: len(keys - set(["d4_a0", "d4_aa", "d4_ab", "zero"])) == 0
+            lambda keys: len(keys - set(["d4_a0", "d4_aa", "d4_ab", "zero"])) == 0,
         )
         if best is None:
             break
