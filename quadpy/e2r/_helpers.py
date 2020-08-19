@@ -5,7 +5,6 @@ import numpy
 
 from ..helpers import QuadratureScheme, expand_symmetries, plot_disks
 
-
 schemes = {}
 
 

@@ -5,7 +5,6 @@ import numpy
 
 from ..helpers import QuadratureScheme, expand_symmetries, plot_disks
 
-
 schemes = {}
 
 
@@ -55,9 +54,7 @@ def _read(filepath, source):
 
     weight_factor = content["weight factor"] if "weight factor" in content else None
 
-    return E2r2Scheme(
-        name, data, degree, source, tol, weight_factor=weight_factor
-    )
+    return E2r2Scheme(name, data, degree, source, tol, weight_factor=weight_factor)
 
 
 def get_good_scheme(degree):

@@ -43,6 +43,4 @@ def stroud_secrest_6():
     return E2rScheme("Stroud-Secrest VI", d, 7, _source)
 
 
-register([
-    stroud_secrest_5, stroud_secrest_6
-])
+register([stroud_secrest_5, stroud_secrest_6])

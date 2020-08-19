@@ -28,12 +28,14 @@ def stroud_4_1():
     return E2rScheme("Stroud 4-1", d, 4, _source)
 
 
-register([
-    stroud_4_1,
-    stroud_5_1,
-    stroud_7_1,
-    stroud_9_1,
-    stroud_11_1,
-    stroud_11_2,
-    stroud_15_1,
-])
+register(
+    [
+        stroud_4_1,
+        stroud_5_1,
+        stroud_7_1,
+        stroud_9_1,
+        stroud_11_1,
+        stroud_11_2,
+        stroud_15_1,
+    ]
+)

@@ -1,10 +1,9 @@
 import numpy
 import orthopy
 import pytest
+from helpers import find_best_scheme
 
 import quadpy
-
-from helpers import find_best_scheme
 
 
 @pytest.mark.parametrize("scheme", quadpy.e2r2.schemes.values())

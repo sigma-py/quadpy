@@ -38,5 +38,12 @@ def rabinowitz_richter_5():
     return _read(this_dir / "rabinowitz_richter_5.json", _source)
 
 
-register([rabinowitz_richter_1, rabinowitz_richter_2, rabinowitz_richter_3,
-    rabinowitz_richter_4, rabinowitz_richter_5])
+register(
+    [
+        rabinowitz_richter_1,
+        rabinowitz_richter_2,
+        rabinowitz_richter_3,
+        rabinowitz_richter_4,
+        rabinowitz_richter_5,
+    ]
+)

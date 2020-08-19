@@ -54,15 +54,17 @@ def stroud_7_2():
     return E2r2Scheme("Stroud 7-2", d, 1, _source, 2.220e-16)
 
 
-register([
-    stroud_4_1,
-    stroud_5_1,
-    stroud_5_2,
-    stroud_7_1,
-    stroud_7_2,
-    stroud_9_1,
-    stroud_11_1,
-    stroud_11_2,
-    stroud_13_1,
-    stroud_15_1,
-])
+register(
+    [
+        stroud_4_1,
+        stroud_5_1,
+        stroud_5_2,
+        stroud_7_1,
+        stroud_7_2,
+        stroud_9_1,
+        stroud_11_1,
+        stroud_11_2,
+        stroud_13_1,
+        stroud_15_1,
+    ]
+)
