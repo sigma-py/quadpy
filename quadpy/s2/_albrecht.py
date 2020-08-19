@@ -3,7 +3,7 @@ import sympy
 from mpmath import mp
 
 from ..helpers import article
-from ._helpers import S2Scheme
+from ._helpers import S2Scheme, register
 
 _source = article(
     authors=["J. Albrecht"],
@@ -33,10 +33,7 @@ def albrecht_1():
 
 
 def albrecht_2():
-    d = {
-        "zero": [[frac(1, 4)]],
-        "d6.1": [[frac(1, 8)], [sqrt(frac(2, 3))]]
-    }
+    d = {"zero": [[frac(1, 4)]], "d6.1": [[frac(1, 8)], [sqrt(frac(2, 3))]]}
     return S2Scheme("Albrecht 2", d, 5, _source)
 
 
@@ -45,10 +42,7 @@ def albrecht_3():
     a1, a2 = (551 + pm_ * 41 * sqrt29) / 6264
     rho1, rho2 = sqrt((27 - pm_ * 3 * sqrt29) / 52)
 
-    d = {
-        "d4.1": [[frac(2, 27)], [sqrt(frac(3, 4))]],
-        "d4.0": [[a1, a2], [rho1, rho2]]
-    }
+    d = {"d4.1": [[frac(2, 27)], [sqrt(frac(3, 4))]], "d4.0": [[a1, a2], [rho1, rho2]]}
     return S2Scheme("Albrecht 3", d, 7, _source)
 
 
@@ -164,3 +158,17 @@ def albrecht_8():
         "d10.1": [[wt1, wt2], [tau1, tau2]],
     }
     return S2Scheme("Albrecht 8", d, 17, _source)
+
+
+register(
+    [
+        albrecht_1,
+        albrecht_2,
+        albrecht_3,
+        albrecht_4,
+        albrecht_5,
+        albrecht_6,
+        albrecht_7,
+        albrecht_8,
+    ]
+)

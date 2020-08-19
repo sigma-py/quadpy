@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import article
-from .._helpers import _read
+from .._helpers import _read, register
 from .._mysovskih import mysovskih_2, mysovskih_3
 
 _source = article(
@@ -43,3 +43,15 @@ def rabinowitz_richter_5():
 def rabinowitz_richter_6():
     # ENH Given mostly analytically by Mysovskih.
     return mysovskih_3()
+
+
+register(
+    [
+        rabinowitz_richter_1,
+        rabinowitz_richter_2,
+        rabinowitz_richter_3,
+        rabinowitz_richter_4,
+        rabinowitz_richter_5,
+        rabinowitz_richter_6,
+    ]
+)

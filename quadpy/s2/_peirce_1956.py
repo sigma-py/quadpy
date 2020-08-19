@@ -2,7 +2,7 @@ import numpy
 import sympy
 
 from ..helpers import phdthesis
-from ._helpers import S2Scheme
+from ._helpers import S2Scheme, register
 
 _source = phdthesis(
     authors=["William Hollis Peirce"],
@@ -80,3 +80,6 @@ def peirce_1956_3():
         "c4_aa": [[D], [t]],
     }
     return S2Scheme("Peirce 1956-3", d, 11, _source)
+
+
+register([peirce_1956_1, peirce_1956_2, peirce_1956_3])

@@ -2,7 +2,7 @@ import numpy
 import sympy
 
 from ..helpers import article
-from ._helpers import S2Scheme
+from ._helpers import S2Scheme, register
 
 _source = article(
     authors=["I.P. Mysovskikh"],
@@ -84,3 +84,6 @@ def mysovskih_3():
         "d4.0": [[C1, C2, C3, C4], [tau1, tau2, tau3, tau4]]
     }
     return S2Scheme("Mysovskih 3", d, 15, _source)
+
+
+register([mysovskih_1, mysovskih_2, mysovskih_3])

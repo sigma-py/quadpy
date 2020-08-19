@@ -1,7 +1,7 @@
 import numpy
 
 from ..helpers import article
-from ._helpers import S2Scheme
+from ._helpers import S2Scheme, register
 
 _source = article(
     authors=["Frank G. Lether"],
@@ -32,3 +32,6 @@ def lether(n):
     )
     d = {"plain": [weights, points[0], points[1]]}
     return S2Scheme(f"Lether({n})", d, 2 * n - 1, _source)
+
+
+register([lether])

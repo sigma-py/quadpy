@@ -3,7 +3,7 @@ import math
 import numpy
 
 from ..helpers import article, untangle
-from ._helpers import S2Scheme
+from ._helpers import S2Scheme, register
 
 _source = article(
     authors=["Johannes W. Wissmann", "Thomas Becker"],
@@ -76,3 +76,6 @@ def _z(a):
 
 def _m(a, b):
     return numpy.array([[+a, +b], [-a, +b]])
+
+
+register([wissmann_becker_6_1, wissmann_becker_6_2, wissmann_becker_8_1])

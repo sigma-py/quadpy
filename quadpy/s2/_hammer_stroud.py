@@ -2,7 +2,7 @@ import numpy
 import sympy
 
 from ..helpers import article
-from ._helpers import S2Scheme
+from ._helpers import S2Scheme, register
 from ._peirce_1956 import peirce_1956_1, peirce_1956_3
 from ._radon import radon
 
@@ -58,9 +58,7 @@ def hammer_stroud_18():
     # ]
     r1, r2 = sqrt((3 - pm_ * sqrt(3)) / 6)
 
-    d = {
-        "d8.0": [[frac(1, 16), frac(1, 16)], [r1, r2]]
-    }
+    d = {"d8.0": [[frac(1, 16), frac(1, 16)], [r1, r2]]}
     return S2Scheme("Hammer-Stroud 18", d, 7, _source)
 
 
@@ -120,3 +118,17 @@ def hammer_stroud_21():
         ],
     }
     return S2Scheme("Hammer-Stroud 21", d, 15, _source)
+
+
+register(
+    [
+        hammer_stroud_11_2,
+        hammer_stroud_12_2,
+        hammer_stroud_13_2,
+        hammer_stroud_17,
+        hammer_stroud_18,
+        hammer_stroud_19,
+        hammer_stroud_20,
+        hammer_stroud_21,
+    ]
+)

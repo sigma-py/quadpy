@@ -11,7 +11,7 @@ from ._albrecht_collatz import albrecht_collatz as stroud_s2_3_2
 from ._hammer_stroud import hammer_stroud_11_2 as stroud_s2_3_1
 from ._hammer_stroud import hammer_stroud_12_2 as stroud_s2_5_2
 from ._hammer_stroud import hammer_stroud_18 as stroud_s2_7_2
-from ._helpers import S2Scheme
+from ._helpers import S2Scheme, register
 from ._mysovskih import mysovskih_1 as stroud_s2_4_1
 from ._mysovskih import mysovskih_2 as stroud_s2_11_1
 from ._mysovskih import mysovskih_3 as stroud_s2_15_1
@@ -60,26 +60,26 @@ def stroud_s2_9_3():
     return S2Scheme("Stroud S2 9-3", d, 9, _source)
 
 
-__all__ = [
-    "stroud_s2_3_1",
-    "stroud_s2_3_2",
-    "stroud_s2_4_1",
-    "stroud_s2_5_1",
-    "stroud_s2_5_2",
-    "stroud_s2_7_1",
-    "stroud_s2_7_2",
-    "stroud_s2_9_1",
-    "stroud_s2_9_2",
-    "stroud_s2_9_3",
-    "stroud_s2_9_4",
-    "stroud_s2_9_5",
-    "stroud_s2_11_1",
-    "stroud_s2_11_2",
-    "stroud_s2_11_3",
-    "stroud_s2_11_4",
-    "stroud_s2_13_1",
-    "stroud_s2_13_2",
-    "stroud_s2_15_1",
-    "stroud_s2_15_2",
-    "stroud_s2_17_1",
-]
+register([
+    stroud_s2_3_1,
+    stroud_s2_3_2,
+    stroud_s2_4_1,
+    stroud_s2_5_1,
+    stroud_s2_5_2,
+    stroud_s2_7_1,
+    stroud_s2_7_2,
+    stroud_s2_9_1,
+    stroud_s2_9_2,
+    stroud_s2_9_3,
+    stroud_s2_9_4,
+    stroud_s2_9_5,
+    stroud_s2_11_1,
+    stroud_s2_11_2,
+    stroud_s2_11_3,
+    stroud_s2_11_4,
+    stroud_s2_13_1,
+    stroud_s2_13_2,
+    stroud_s2_15_1,
+    stroud_s2_15_2,
+    stroud_s2_17_1,
+])

@@ -5,6 +5,13 @@ import numpy
 
 from ..helpers import QuadratureScheme, expand_symmetries, plot_disks
 
+schemes = {}
+
+
+def register(in_schemes):
+    for scheme in in_schemes:
+        schemes[scheme.__name__] = scheme
+
 
 class S2Scheme(QuadratureScheme):
     def __init__(
@@ -12,7 +19,7 @@ class S2Scheme(QuadratureScheme):
     ):
         self.domain = "S2"
         self.symmetry_data = symmetry_data
-        points, weights = expand_symmetries(d)
+        points, weights = expand_symmetries(symmetry_data)
         assert points.shape[0] == 2
         assert points.shape[1] == weights.shape[0], f"{points.shape}, {weights.shape}"
         if weight_factor is not None:
