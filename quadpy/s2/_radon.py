@@ -2,7 +2,7 @@ import numpy
 import sympy
 
 from ..helpers import article
-from ._helpers import S2Scheme, expand_symmetries
+from ._helpers import S2Scheme
 
 _source = article(
     authors=["J. Radon"],
@@ -34,5 +34,4 @@ def radon(alpha):
         # ERR Stroud is missing +- in front of t.
         "sxy": [[B], [s], [t]],
     }
-    points, weights = expand_symmetries(d)
-    return S2Scheme(f"Radon({alpha})", weights, points, 5, _source)
+    return S2Scheme(f"Radon({alpha})", d, 5, _source)

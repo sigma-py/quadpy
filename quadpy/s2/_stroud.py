@@ -47,7 +47,7 @@ def stroud_s2_9_3():
 
     r1, r2 = sqrt((6 - pm_ * sqrt(6)) / 10)
 
-    a = (numpy.arange(10) + 1) * pi / 5
+    a = 2 * (numpy.arange(10) + 1) * pi / 10
     x = numpy.array([cos(a), sin(a)]).T
 
     B0 = frac(1, 9)
@@ -56,7 +56,8 @@ def stroud_s2_9_3():
     data = [(B0, z(2)), (B1, r1 * x), (B2, r2 * x)]
     points, weights = untangle(data)
     points = numpy.ascontiguousarray(points.T)
-    return S2Scheme("Stroud S2 9-3", weights, points, 9, _source)
+    d = {"plain": [weights, points[0], points[1]]}
+    return S2Scheme("Stroud S2 9-3", d, 9, _source)
 
 
 __all__ = [

@@ -2,7 +2,7 @@ import numpy
 import sympy
 from mpmath import mp
 
-from ..helpers import article, expand_symmetries
+from ..helpers import article
 from ._helpers import S2Scheme
 
 _source = article(
@@ -29,8 +29,7 @@ linear_solve = mp.lu_solve
 def albrecht_1():
     # Equals Albrecht-Collatz, Lether(2)
     d = {"c4_aa": [[frac(1, 4)], [frac(1, 2)]]}
-    points, weights = expand_symmetries(d)
-    return S2Scheme("Albrecht 1", weights, points, 3, _source)
+    return S2Scheme("Albrecht 1", d, 3, _source)
 
 
 def albrecht_2():
@@ -38,8 +37,7 @@ def albrecht_2():
         "zero": [[frac(1, 4)]],
         "d6.1": [[frac(1, 8)], [sqrt(frac(2, 3))]]
     }
-    points, weights = expand_symmetries(d)
-    return S2Scheme("Albrecht 2", weights, points, 5, _source)
+    return S2Scheme("Albrecht 2", d, 5, _source)
 
 
 def albrecht_3():
@@ -51,8 +49,7 @@ def albrecht_3():
         "d4.1": [[frac(2, 27)], [sqrt(frac(3, 4))]],
         "d4.0": [[a1, a2], [rho1, rho2]]
     }
-    points, weights = expand_symmetries(d)
-    return S2Scheme("Albrecht 3", weights, points, 7, _source)
+    return S2Scheme("Albrecht 3", d, 7, _source)
 
 
 def albrecht_4():
@@ -68,8 +65,7 @@ def albrecht_4():
         "d6.0": [[B1, B2], [rho1, rho2]],
         "d6.1": [[C], [sqrt(frac(4, 5))]],
     }
-    points, weights = expand_symmetries(d)
-    return S2Scheme("Albrecht 4", weights, points, 9, _source)
+    return S2Scheme("Albrecht 4", d, 9, _source)
 
 
 def albrecht_5():
@@ -97,8 +93,7 @@ def albrecht_5():
         "c4_aa": [[C1, C2], [s1, s2]],
         "d4": [[D], [u], [v]],
     }
-    points, weights = expand_symmetries(d)
-    return S2Scheme("Albrecht 5", weights, points, 11, _source)
+    return S2Scheme("Albrecht 5", d, 11, _source)
 
 
 def albrecht_6():
@@ -117,8 +112,7 @@ def albrecht_6():
         "d10.0": [B, sqrt(sigma2)],
         "d10.1": [[C], [sqrt(frac(6, 7))]],
     }
-    points, weights = expand_symmetries(d)
-    return S2Scheme("Albrecht 6", weights, points, 13, _source)
+    return S2Scheme("Albrecht 6", d, 13, _source)
 
 
 def albrecht_7():
@@ -139,8 +133,7 @@ def albrecht_7():
         "d8.0": [ws, sqrt(sigma2)],
         "d8.1": [[wt1, wt2], [tau1, tau2]],
     }
-    points, weights = expand_symmetries(d)
-    return S2Scheme("Albrecht 7", weights, points, 15, _source)
+    return S2Scheme("Albrecht 7", d, 15, _source)
 
 
 def albrecht_8():
@@ -170,5 +163,4 @@ def albrecht_8():
         "d10.0": [ws, sqrt(sigma2)],
         "d10.1": [[wt1, wt2], [tau1, tau2]],
     }
-    points, weights = expand_symmetries(d)
-    return S2Scheme("Albrecht 8", weights, points, 17, _source)
+    return S2Scheme("Albrecht 8", d, 17, _source)

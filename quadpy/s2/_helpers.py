@@ -7,9 +7,16 @@ from ..helpers import QuadratureScheme, expand_symmetries, plot_disks
 
 
 class S2Scheme(QuadratureScheme):
-    def __init__(self, name, weights, points, degree: int, source=None, tol=1.0e-14):
+    def __init__(
+        self, name, symmetry_data, degree: int, source=None, tol=1.0e-14, weight_factor=None
+    ):
         self.domain = "S2"
+        self.symmetry_data = symmetry_data
+        points, weights = expand_symmetries(d)
         assert points.shape[0] == 2
+        assert points.shape[1] == weights.shape[0], f"{points.shape}, {weights.shape}"
+        if weight_factor is not None:
+            weights *= weight_factor
         super().__init__(name, weights, points, degree, source, tol)
 
     def plot(self, show_axes=False):
@@ -27,7 +34,7 @@ class S2Scheme(QuadratureScheme):
         disk1 = plt.Circle((0, 0), 1, color="k", fill=False)
         ax.add_artist(disk1)
 
-        plot_disks(plt, self.points, self.weights, numpy.pi)
+        plot_disks(plt, self.points.T, self.weights, numpy.pi)
         return
 
     def integrate(self, f, center, radius, dot=numpy.dot):
@@ -49,12 +56,11 @@ def _read(filepath, source):
     if "_ERR" in content:
         warnings.warn(content["_ERR"])
 
-    points, weights = expand_symmetries(content["data"])
+    weight_factor = content["weight factor"] if "weight factor" in content else None
 
-    if "weight factor" in content:
-        weights *= content["weight factor"]
-
-    return S2Scheme(name, weights, points, degree, source, tol)
+    return S2Scheme(
+        name, content["data"], degree, source, tol, weight_factor=weight_factor
+    )
 
 
 def _scheme_from_dict(content, source=None):

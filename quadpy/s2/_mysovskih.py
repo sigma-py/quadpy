@@ -1,7 +1,7 @@
 import numpy
 import sympy
 
-from ..helpers import article, expand_symmetries
+from ..helpers import article
 from ._helpers import S2Scheme
 
 _source = article(
@@ -31,8 +31,7 @@ def mysovskih_1(alpha=0):
         "zero": [[B0]],
         "d5.0": [[B1], [b]],
     }
-    points, weights = expand_symmetries(d)
-    return S2Scheme("Mysovskih 1", weights, points, 4, _source)
+    return S2Scheme("Mysovskih 1", d, 4, _source)
 
 
 def mysovskih_2():
@@ -50,8 +49,7 @@ def mysovskih_2():
     c4, s5 = sqrt((10 - pm_ * sqrt10) / 60)
 
     d = {"c4_a0": [[B1, B2, B3], [r1, r2, r3]], "d4": [[B4, B5], [r4, r5], [c4, s5]]}
-    points, weights = expand_symmetries(d)
-    return S2Scheme("Mysovskih 2", weights, points, 11, _source)
+    return S2Scheme("Mysovskih 2", d, 11, _source)
 
 
 def mysovskih_3():
@@ -85,5 +83,4 @@ def mysovskih_3():
         "d4.1": [[B1, B2, B3], [sigma1, sigma2, sigma3]],
         "d4.0": [[C1, C2, C3, C4], [tau1, tau2, tau3, tau4]]
     }
-    points, weights = expand_symmetries(d)
-    return S2Scheme("Mysovskih 3", weights, points, 15, _source)
+    return S2Scheme("Mysovskih 3", d, 15, _source)

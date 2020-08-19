@@ -29,7 +29,8 @@ def wissmann_becker_6_1():
     points, weights = untangle(data)
     weights /= math.pi
     points = numpy.ascontiguousarray(points.T)
-    return S2Scheme("Wissmann-Becker 6-1", weights, points, 6, _source, 1.108e-14)
+    d = {"plain": [weights, points[0], points[1]]}
+    return S2Scheme("Wissmann-Becker 6-1", d, 6, _source, 1.108e-14)
 
 
 def wissmann_becker_6_2():
@@ -45,7 +46,8 @@ def wissmann_becker_6_2():
     points, weights = untangle(data)
     weights /= math.pi
     points = numpy.ascontiguousarray(points.T)
-    return S2Scheme("Wissmann-Becker 6-2", weights, points, 6, _source)
+    d = {"plain": [weights, points[0], points[1]]}
+    return S2Scheme("Wissmann-Becker 6-2", d, 6, _source)
 
 
 def wissmann_becker_8_1():
@@ -64,7 +66,8 @@ def wissmann_becker_8_1():
     points, weights = untangle(data)
     weights /= math.pi
     points = numpy.ascontiguousarray(points.T)
-    return S2Scheme("Wissmann-Becker 8-1", weights, points, 8, _source)
+    d = {"plain": [weights, points[0], points[1]]}
+    return S2Scheme("Wissmann-Becker 8-1", d, 8, _source)
 
 
 def _z(a):
