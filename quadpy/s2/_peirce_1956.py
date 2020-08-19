@@ -2,7 +2,7 @@ import numpy
 import sympy
 
 from ..helpers import phdthesis
-from ._helpers import S2Scheme, expand_symmetries
+from ._helpers import S2Scheme, register
 
 _source = phdthesis(
     authors=["William Hollis Peirce"],
@@ -30,8 +30,7 @@ def peirce_1956_1():
     B2, B3 = (551 + pm_ * 41 * sqrt29) / 6264
 
     d = {"c4_a0": [[B1], [r]], "c4_aa": [[B2, B3], [s, t]]}
-    points, weights = expand_symmetries(d)
-    return S2Scheme("Peirce 1956-1", weights, points, 7, _source)
+    return S2Scheme("Peirce 1956-1", d, 7, _source)
 
 
 def peirce_1956_2():
@@ -55,8 +54,7 @@ def peirce_1956_2():
         "c4_a0": [[B1], [r]],
         "d4": [[B2, B3, B4], [u1, u2, u3], [v1, v2, v3]],
     }
-    points, weights = expand_symmetries(d)
-    return S2Scheme("Peirce 1956-2", weights, points, 9, _source)
+    return S2Scheme("Peirce 1956-2", d, 9, _source)
 
 
 def peirce_1956_3():
@@ -81,5 +79,7 @@ def peirce_1956_3():
         "d4": [[C1, C2], [u1, u2], [v1, v2]],
         "c4_aa": [[D], [t]],
     }
-    points, weights = expand_symmetries(d)
-    return S2Scheme("Peirce 1956-3", weights, points, 11, _source)
+    return S2Scheme("Peirce 1956-3", d, 11, _source)
+
+
+register([peirce_1956_1, peirce_1956_2, peirce_1956_3])

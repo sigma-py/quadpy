@@ -2,8 +2,8 @@ import numpy
 import sympy
 from mpmath import mp
 
-from ..helpers import article, expand_symmetries, untangle, z
-from ._helpers import S2Scheme
+from ..helpers import article
+from ._helpers import S2Scheme, register
 
 _source = article(
     authors=["J. Albrecht"],
@@ -28,64 +28,38 @@ linear_solve = mp.lu_solve
 
 def albrecht_1():
     # Equals Albrecht-Collatz, Lether(2)
-    alpha = (2 * numpy.arange(4) + 1) * pi / 4
-    t = numpy.array([cos(alpha), sin(alpha)]).T
-
-    data = [(frac(1, 4), sqrt(frac(1, 2)) * t)]
-
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
-    return S2Scheme("Albrecht 1", weights, points, 3, _source)
+    d = {"c4_aa": [[frac(1, 4)], [frac(1, 2)]]}
+    return S2Scheme("Albrecht 1", d, 3, _source)
 
 
 def albrecht_2():
-    alpha = (2 * numpy.arange(6) + 1) * pi / 6
-    t = numpy.array([cos(alpha), sin(alpha)]).T
-
-    data = [(frac(1, 4), z(2)), (frac(1, 8), sqrt(frac(2, 3)) * t)]
-
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
-    return S2Scheme("Albrecht 2", weights, points, 5, _source)
+    d = {"zero": [[frac(1, 4)]], "d6.1": [[frac(1, 8)], [sqrt(frac(2, 3))]]}
+    return S2Scheme("Albrecht 2", d, 5, _source)
 
 
 def albrecht_3():
-    alpha = 2 * numpy.arange(4) * pi / 4
-    s = numpy.array([cos(alpha), sin(alpha)]).T
-
-    alpha = (2 * numpy.arange(4) + 1) * pi / 4
-    t = numpy.array([cos(alpha), sin(alpha)]).T
-
     sqrt29 = sqrt(29)
     a1, a2 = (551 + pm_ * 41 * sqrt29) / 6264
     rho1, rho2 = sqrt((27 - pm_ * 3 * sqrt29) / 52)
 
-    data = [(frac(2, 27), sqrt(frac(3, 4)) * t), (a1, rho1 * s), (a2, rho2 * s)]
-
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
-    return S2Scheme("Albrecht 3", weights, points, 7, _source)
+    d = {"d4.1": [[frac(2, 27)], [sqrt(frac(3, 4))]], "d4.0": [[a1, a2], [rho1, rho2]]}
+    return S2Scheme("Albrecht 3", d, 7, _source)
 
 
 def albrecht_4():
     sqrt111 = sqrt(111)
     rho1, rho2 = sqrt((96 - pm_ * 4 * sqrt(111)) / 155)
 
-    alpha = 2 * numpy.arange(6) * pi / 6
-    s = numpy.array([cos(alpha), sin(alpha)]).T
-
-    alpha = (2 * numpy.arange(6) + 1) * pi / 6
-    t = numpy.array([cos(alpha), sin(alpha)]).T
-
     B0 = frac(251, 2304)
     B1, B2 = (110297 + pm_ * 5713 * sqrt111) / 2045952
     C = frac(125, 3072)
 
-    data = [(B0, z(2)), (B1, rho1 * s), (B2, rho2 * s), (C, sqrt(frac(4, 5)) * t)]
-
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
-    return S2Scheme("Albrecht 4", weights, points, 9, _source)
+    d = {
+        "zero": [[B0]],
+        "d6.0": [[B1, B2], [rho1, rho2]],
+        "d6.1": [[C], [sqrt(frac(4, 5))]],
+    }
+    return S2Scheme("Albrecht 4", d, 9, _source)
 
 
 def albrecht_5():
@@ -113,8 +87,7 @@ def albrecht_5():
         "c4_aa": [[C1, C2], [s1, s2]],
         "d4": [[D], [u], [v]],
     }
-    points, weights = expand_symmetries(d)
-    return S2Scheme("Albrecht 5", weights, points, 11, _source)
+    return S2Scheme("Albrecht 5", d, 11, _source)
 
 
 def albrecht_6():
@@ -128,32 +101,15 @@ def albrecht_6():
     B0 = frac(2615, 43632)
     C = frac(16807, 933120)
 
-    alpha = 2 * numpy.arange(10) * pi / 10
-    rs = numpy.array([cos(alpha), sin(alpha)]).T
-
-    alpha = (2 * numpy.arange(10) + 1) * pi / 10
-    uv = numpy.array([cos(alpha), sin(alpha)]).T
-
-    data = [
-        (B0, z(2)),
-        (B[0], sqrt(sigma2[0]) * rs),
-        (B[1], sqrt(sigma2[1]) * rs),
-        (B[2], sqrt(sigma2[2]) * rs),
-        (C, sqrt(frac(6, 7)) * uv),
-    ]
-
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
-    return S2Scheme("Albrecht 6", weights, points, 13, _source)
+    d = {
+        "zero": [[B0]],
+        "d10.0": [B, sqrt(sigma2)],
+        "d10.1": [[C], [sqrt(frac(6, 7))]],
+    }
+    return S2Scheme("Albrecht 6", d, 13, _source)
 
 
 def albrecht_7():
-    alpha = 2 * numpy.arange(8) * pi / 8
-    s = numpy.array([cos(alpha), sin(alpha)]).T
-
-    alpha = (2 * numpy.arange(8) + 1) * pi / 8
-    t = numpy.array([cos(alpha), sin(alpha)]).T
-
     sqrt21 = sqrt(21)
     wt1, wt2 = (4998 + pm_ * 343 * sqrt21) / 253125
     tau1, tau2 = sqrt((21 - pm_ * sqrt21) / 28)
@@ -167,27 +123,14 @@ def albrecht_7():
     )
     ws = linear_solve(A, b)
 
-    data = [
-        (ws[0], sqrt(sigma2[0]) * s),
-        (ws[1], sqrt(sigma2[1]) * s),
-        (ws[2], sqrt(sigma2[2]) * s),
-        (ws[3], sqrt(sigma2[3]) * s),
-        (wt1, tau1 * t),
-        (wt2, tau2 * t),
-    ]
-
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
-    return S2Scheme("Albrecht 7", weights, points, 15, _source)
+    d = {
+        "d8.0": [ws, sqrt(sigma2)],
+        "d8.1": [[wt1, wt2], [tau1, tau2]],
+    }
+    return S2Scheme("Albrecht 7", d, 15, _source)
 
 
 def albrecht_8():
-    alpha = 2 * numpy.arange(10) * pi / 10
-    s = numpy.array([cos(alpha), sin(alpha)]).T
-
-    alpha = (2 * numpy.arange(10) + 1) * pi / 10
-    t = numpy.array([cos(alpha), sin(alpha)]).T
-
     m0 = frac(496439663, 13349499975)
 
     sqrt7 = sqrt(7)
@@ -209,16 +152,23 @@ def albrecht_8():
     )
     ws = linear_solve(A, b)
 
-    data = [
-        (m0, z(2)),
-        (ws[0], sqrt(sigma2[0]) * s),
-        (ws[1], sqrt(sigma2[1]) * s),
-        (ws[2], sqrt(sigma2[2]) * s),
-        (ws[3], sqrt(sigma2[3]) * s),
-        (wt1, tau1 * t),
-        (wt2, tau2 * t),
-    ]
+    d = {
+        "zero": [[m0]],
+        "d10.0": [ws, sqrt(sigma2)],
+        "d10.1": [[wt1, wt2], [tau1, tau2]],
+    }
+    return S2Scheme("Albrecht 8", d, 17, _source)
 
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
-    return S2Scheme("Albrecht 8", weights, points, 17, _source)
+
+register(
+    [
+        albrecht_1,
+        albrecht_2,
+        albrecht_3,
+        albrecht_4,
+        albrecht_5,
+        albrecht_6,
+        albrecht_7,
+        albrecht_8,
+    ]
+)

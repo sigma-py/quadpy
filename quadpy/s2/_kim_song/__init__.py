@@ -2,7 +2,7 @@
 import pathlib
 
 from ...helpers import article
-from .._helpers import _read
+from .._helpers import _read, register
 
 _source = article(
     authors=["KyoungJoong Kim", "ManSuk Song"],
@@ -76,3 +76,24 @@ def kim_song_14():
 
 def kim_song_15():
     return _read(this_dir / "kim_song_15.json", _source)
+
+
+register(
+    [
+        kim_song_1,
+        kim_song_2,
+        kim_song_3,
+        kim_song_4,
+        kim_song_5,
+        kim_song_6,
+        kim_song_7,
+        kim_song_8,
+        kim_song_9,
+        kim_song_10,
+        kim_song_11,
+        kim_song_12,
+        kim_song_13,
+        kim_song_14,
+        kim_song_15,
+    ]
+)

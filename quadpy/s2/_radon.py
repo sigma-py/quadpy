@@ -2,7 +2,7 @@ import numpy
 import sympy
 
 from ..helpers import article
-from ._helpers import S2Scheme, expand_symmetries
+from ._helpers import S2Scheme, register
 
 _source = article(
     authors=["J. Radon"],
@@ -17,11 +17,10 @@ _source = article(
 )
 
 frac = sympy.Rational
-pi = sympy.pi
 sqrt = numpy.vectorize(sympy.sqrt)
 
 
-def radon(alpha):
+def radon(alpha=0):
     r = sqrt(frac(alpha + 4, alpha + 6))
     s = sqrt(frac(alpha + 4, 4 * (alpha + 6)))
     t = sqrt(frac(3 * (alpha + 4), 4 * (alpha + 6)))
@@ -35,5 +34,7 @@ def radon(alpha):
         # ERR Stroud is missing +- in front of t.
         "sxy": [[B], [s], [t]],
     }
-    points, weights = expand_symmetries(d)
-    return S2Scheme(f"Radon({alpha})", weights, points, 5, _source)
+    return S2Scheme(f"Radon({alpha})", d, 5, _source)
+
+
+register([radon])

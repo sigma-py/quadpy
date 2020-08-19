@@ -1,7 +1,7 @@
 import numpy
 
 from ..helpers import article
-from ._helpers import S2Scheme
+from ._helpers import S2Scheme, register
 
 _source = article(
     authors=["Frank G. Lether"],
@@ -30,4 +30,8 @@ def lether(n):
     weights = numpy.outer(w, numpy.sin(mu * numpy.pi / (n + 1)) ** 2).flatten() / (
         n + 1
     )
-    return S2Scheme(f"Lether({n})", weights, points, 2 * n - 1, _source)
+    d = {"plain": [weights, points[0], points[1]]}
+    return S2Scheme(f"Lether({n})", d, 2 * n - 1, _source)
+
+
+register([lether])

@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import article
-from .._helpers import _read
+from .._helpers import _read, register
 
 _source = article(
     authors=["Zhongxuan Luo", "Zhaoliang Meng"],
@@ -43,3 +43,6 @@ def luo_meng_6():
 # TODO find error
 # def luo_meng_7():
 #     return _read(this_dir / "luo_meng_7.json", _source)
+
+
+register([luo_meng_1, luo_meng_2, luo_meng_3, luo_meng_4, luo_meng_5, luo_meng_6])

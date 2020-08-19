@@ -1,8 +1,8 @@
 import numpy
 import sympy
 
-from ..helpers import article, expand_symmetries, untangle, z
-from ._helpers import S2Scheme
+from ..helpers import article
+from ._helpers import S2Scheme, register
 
 _source = article(
     authors=["I.P. Mysovskikh"],
@@ -24,17 +24,14 @@ pm_ = numpy.array([+1, -1])
 def mysovskih_1(alpha=0):
     b = sqrt(frac(alpha + 4, alpha + 6))
 
-    a = 2 * numpy.arange(5) * pi / 5
-    x = b * numpy.array([cos(a), sin(a)]).T
-
     B0 = frac(4, (alpha + 4) ** 2)
     B1 = frac((alpha + 2) * (alpha + 6), 5 * (alpha + 4) ** 2)
 
-    data = [(B0, z(2)), (B1, x)]
-
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
-    return S2Scheme("Mysovskih 1", weights, points, 4, _source)
+    d = {
+        "zero": [[B0]],
+        "d5.0": [[B1], [b]],
+    }
+    return S2Scheme("Mysovskih 1", d, 4, _source)
 
 
 def mysovskih_2():
@@ -52,8 +49,7 @@ def mysovskih_2():
     c4, s5 = sqrt((10 - pm_ * sqrt10) / 60)
 
     d = {"c4_a0": [[B1, B2, B3], [r1, r2, r3]], "d4": [[B4, B5], [r4, r5], [c4, s5]]}
-    points, weights = expand_symmetries(d)
-    return S2Scheme("Mysovskih 2", weights, points, 11, _source)
+    return S2Scheme("Mysovskih 2", d, 11, _source)
 
 
 def mysovskih_3():
@@ -82,27 +78,12 @@ def mysovskih_3():
     C3 = 0.210840370156484e-1
     C4 = 0.531979391979623e-2
 
-    a = (2 * numpy.arange(8) + 1) * pi / 8
-    xa = numpy.array([cos(a), sin(a)]).T
+    d = {
+        "d8.1": [[A1, A2], [rho1, rho2]],
+        "d4.1": [[B1, B2, B3], [sigma1, sigma2, sigma3]],
+        "d4.0": [[C1, C2, C3, C4], [tau1, tau2, tau3, tau4]],
+    }
+    return S2Scheme("Mysovskih 3", d, 15, _source)
 
-    a = (2 * numpy.arange(4) + 1) * pi / 4
-    xb = numpy.array([cos(a), sin(a)]).T
 
-    a = numpy.arange(1, 5) * pi / 2
-    xc = numpy.array([cos(a), sin(a)]).T
-
-    data = [
-        (A1, rho1 * xa),
-        (A2, rho2 * xa),
-        (B1, sigma1 * xb),
-        (B2, sigma2 * xb),
-        (B3, sigma3 * xb),
-        (C1, tau1 * xc),
-        (C2, tau2 * xc),
-        (C3, tau3 * xc),
-        (C4, tau4 * xc),
-    ]
-
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
-    return S2Scheme("Mysovskih 3", weights, points, 15, _source)
+register([mysovskih_1, mysovskih_2, mysovskih_3])

@@ -1,7 +1,7 @@
 import sympy
 
 from ..helpers import article
-from ._helpers import S2Scheme, expand_symmetries
+from ._helpers import S2Scheme, register
 
 _source = article(
     authors=["J. Albrecht", "L. Collatz"],
@@ -19,6 +19,8 @@ frac = sympy.Rational
 
 def albrecht_collatz():
     # ERR Incorrectly stated in Stroud as sqrt(1/2) instead of 1/2
-    d = {"sxy": [[frac(1, 4)], [frac(1, 2)], [frac(1, 2)]]}
-    points, weights = expand_symmetries(d)
-    return S2Scheme("Albrecht-Collatz", weights, points, 3, _source)
+    d = {"c4_aa": [[frac(1, 4)], [frac(1, 2)]]}
+    return S2Scheme("Albrecht-Collatz", d, 3, _source)
+
+
+register([albrecht_collatz])

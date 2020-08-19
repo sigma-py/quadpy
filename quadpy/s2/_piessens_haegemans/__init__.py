@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import article
-from .._helpers import _read
+from .._helpers import _read, register
 
 _source = article(
     authors=["Robert Piessens", "Ann Haegemans"],
@@ -20,3 +20,6 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 def piessens_haegemans():
     return _read(this_dir / "piessens_haegemans.json", _source)
+
+
+register([piessens_haegemans])
