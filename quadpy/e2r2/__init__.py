@@ -4,7 +4,7 @@ from . import _rabinowitz_richter
 from . import _stroud
 from . import _stroud_secrest
 
-from ._helpers import schemes
+from ._helpers import schemes, get_good_scheme
 
 __all__ = [
     "_cools_haegemans",
@@ -14,4 +14,5 @@ __all__ = [
     "_stroud_secrest",
     #
     "schemes",
+    "get_good_scheme",
 ]

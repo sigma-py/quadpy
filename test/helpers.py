@@ -85,27 +85,33 @@ def find_best_scheme(schemes, degree, is_points_okay, is_symmetries_okay):
 
         # filter schemes for eligibility
         if scheme.degree < degree:
+            # print("too low degree")
             continue
 
         # allow only positive weights
         if any(scheme.weights < 0):
+            # print("negative weights")
             continue
 
         # disallow points outside of the domain
         if not is_points_okay(scheme.points):
+            # print("point not okay")
             continue
 
         if scheme.test_tolerance > 1.0e-13:
+            # print("tolerance bad")
             continue
 
         # TODO force symmetry data for all schemes
         try:
             keys = set(scheme.symmetry_data.keys())
         except AttributeError:
+            # print("no symmetry data")
             continue
 
         # filter out disallowed (unsymmetrical) keys
         if not is_symmetries_okay(keys):
+            # print("symmetry bad")
             continue
 
         # okay, now compare the scheme with `best`

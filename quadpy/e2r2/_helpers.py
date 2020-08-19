@@ -19,6 +19,7 @@ class E2r2Scheme(QuadratureScheme):
         self, name, symmetry_data, degree, source, tol=1.0e-14, weight_factor=None
     ):
         self.domain = "E2r2"
+        self.symmetry_data = symmetry_data
         points, weights = expand_symmetries(symmetry_data)
         assert points.shape[0] == 2
         if weight_factor is not None:
@@ -57,3 +58,27 @@ def _read(filepath, source):
     return E2r2Scheme(
         name, data, degree, source, tol, weight_factor=weight_factor
     )
+
+
+def get_good_scheme(degree):
+    if degree <= 15:
+        return {
+            0: schemes["stroud_4_1"],
+            1: schemes["stroud_4_1"],
+            2: schemes["stroud_4_1"],
+            3: schemes["stroud_4_1"],
+            4: schemes["stroud_4_1"],
+            5: schemes["stroud_secrest_5"],
+            6: schemes["stroud_secrest_6"],
+            7: schemes["stroud_secrest_6"],
+            8: schemes["haegemans_piessens_a"],
+            9: schemes["haegemans_piessens_a"],
+            10: schemes["rabinowitz_richter_2"],
+            11: schemes["rabinowitz_richter_2"],
+            12: schemes["rabinowitz_richter_5"],
+            13: schemes["rabinowitz_richter_5"],
+            14: schemes["rabinowitz_richter_5"],
+            15: schemes["rabinowitz_richter_5"],
+        }[degree]()
+
+    return None

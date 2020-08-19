@@ -4,6 +4,8 @@ import pytest
 
 import quadpy
 
+from helpers import find_best_scheme
+
 
 @pytest.mark.parametrize("scheme", quadpy.e2r2.schemes.values())
 def test_scheme(scheme):
@@ -36,5 +38,24 @@ def test_show(scheme):
     scheme.show()
 
 
+def test_get_good_scheme():
+    degree = 0
+    while True:
+        best = find_best_scheme(
+            quadpy.e2r2.schemes.values(),
+            degree,
+            lambda pts: True,
+            lambda keys: "plain" not in keys,
+        )
+        if best is None:
+            break
+
+        b = quadpy.e2r2.get_good_scheme(degree)
+        assert best.name == b.name, f"{best.name} != {b.name}"
+        degree += 1
+
+    assert degree == 16
+
+
 if __name__ == "__main__":
-    pass
+    test_get_good_scheme()
