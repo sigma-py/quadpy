@@ -8,7 +8,6 @@ from . import (
     _dunavant,
     _franke,
     _gatermann,
-    _get_good_scheme,
     _griener_schmid,
     _hammer_marlowe_stroud,
     _hammer_stroud,
@@ -29,8 +28,7 @@ from . import (
     _xiao_gimbutas,
     _zhang_cui_liu,
 )
-from ._get_good_scheme import get_good_scheme
-from ._helpers import schemes
+from ._helpers import schemes, get_good_scheme
 from ._tools import integrate_adaptive
 
 __all__ = [
@@ -48,7 +46,6 @@ __all__ = [
     "_dunavant",
     "_franke",
     "_gatermann",
-    "_get_good_scheme",
     "_griener_schmid",
     "_hammer_marlowe_stroud",
     "_hammer_stroud",

@@ -10,6 +10,7 @@ _source = article(
     volume="38",
     number="1-2",
     year="1958",
+    month="jan",
     pages="1–15",
     url="https://doi.org/10.1002/zamm.19580380102",
 )
