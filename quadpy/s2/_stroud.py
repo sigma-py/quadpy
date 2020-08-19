@@ -60,26 +60,28 @@ def stroud_s2_9_3():
     return S2Scheme("Stroud S2 9-3", d, 9, _source)
 
 
-register([
-    stroud_s2_3_1,
-    stroud_s2_3_2,
-    stroud_s2_4_1,
-    stroud_s2_5_1,
-    stroud_s2_5_2,
-    stroud_s2_7_1,
-    stroud_s2_7_2,
-    stroud_s2_9_1,
-    stroud_s2_9_2,
-    stroud_s2_9_3,
-    stroud_s2_9_4,
-    stroud_s2_9_5,
-    stroud_s2_11_1,
-    stroud_s2_11_2,
-    stroud_s2_11_3,
-    stroud_s2_11_4,
-    stroud_s2_13_1,
-    stroud_s2_13_2,
-    stroud_s2_15_1,
-    stroud_s2_15_2,
-    stroud_s2_17_1,
-])
+register(
+    [
+        stroud_s2_3_1,
+        stroud_s2_3_2,
+        stroud_s2_4_1,
+        stroud_s2_5_1,
+        stroud_s2_5_2,
+        stroud_s2_7_1,
+        stroud_s2_7_2,
+        stroud_s2_9_1,
+        stroud_s2_9_2,
+        stroud_s2_9_3,
+        stroud_s2_9_4,
+        stroud_s2_9_5,
+        stroud_s2_11_1,
+        stroud_s2_11_2,
+        stroud_s2_11_3,
+        stroud_s2_11_4,
+        stroud_s2_13_1,
+        stroud_s2_13_2,
+        stroud_s2_15_1,
+        stroud_s2_15_2,
+        stroud_s2_17_1,
+    ]
+)

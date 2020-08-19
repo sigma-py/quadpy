@@ -81,7 +81,7 @@ def mysovskih_3():
     d = {
         "d8.1": [[A1, A2], [rho1, rho2]],
         "d4.1": [[B1, B2, B3], [sigma1, sigma2, sigma3]],
-        "d4.0": [[C1, C2, C3, C4], [tau1, tau2, tau3, tau4]]
+        "d4.0": [[C1, C2, C3, C4], [tau1, tau2, tau3, tau4]],
     }
     return S2Scheme("Mysovskih 3", d, 15, _source)
 

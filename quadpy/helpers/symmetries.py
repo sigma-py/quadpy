@@ -124,6 +124,7 @@ def _s2_static(a):
 
 def _d(n, offset, r):
     import sympy
+
     cos = numpy.vectorize(sympy.cos)
     sin = numpy.vectorize(sympy.sin)
 
