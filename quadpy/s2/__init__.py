@@ -1,5 +1,6 @@
 from . import _albrecht
 from . import _albrecht_collatz
+from . import _classical
 from . import _cools_haegemans
 from . import _cools_kim
 from . import _haegemans_piessens
@@ -22,6 +23,7 @@ from ._get_good_scheme import get_good_scheme
 __all__ = [
     "_albrecht",
     "_albrecht_collatz",
+    "_classical",
     "_cools_haegemans",
     "_cools_kim",
     "_haegemans_piessens",

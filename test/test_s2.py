@@ -68,7 +68,7 @@ def test_get_good_scheme():
                 continue
 
             # disallow points outside of the domain
-            if numpy.any(scheme.points < 0):
+            if numpy.any(scheme.points[0] ** 2 + scheme.points[1] ** 2 > 1):
                 continue
 
             if scheme.test_tolerance > 1.0e-13:
@@ -115,7 +115,7 @@ def test_get_good_scheme():
                     else:  # years are equal
                         pass
 
-        print(degree, best.name)
+        print(degree, best.name if best is not None else None)
 
         # print(best)
     return
