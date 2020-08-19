@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import E2r2Scheme
+from ._helpers import E2r2Scheme, register
 
 _source = article(
     authors=["A.H. Stroud", "D. Secrest"],
@@ -35,3 +35,6 @@ def stroud_secrest_6():
 
     d = {"d4_a0": [[A], [nu]], "d4_aa": [[B, C], [xi, eta]]}
     return E2r2Scheme("Stroud-Secrest VI", d, 7, _source)
+
+
+register([stroud_secrest_5, stroud_secrest_6])

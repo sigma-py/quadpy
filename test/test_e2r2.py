@@ -4,34 +4,10 @@ import pytest
 
 import quadpy
 
-schemes = [
-    quadpy.e2r2.cools_haegemans_9_1(),
-    quadpy.e2r2.cools_haegemans_9_2(),
-    quadpy.e2r2.cools_haegemans_13_1(),
-    quadpy.e2r2.haegemans_piessens_a(),
-    quadpy.e2r2.haegemans_piessens_b(),
-    quadpy.e2r2.rabinowitz_richter_1(),
-    quadpy.e2r2.rabinowitz_richter_2(),
-    quadpy.e2r2.rabinowitz_richter_3(),
-    quadpy.e2r2.rabinowitz_richter_4(),
-    quadpy.e2r2.rabinowitz_richter_5(),
-    quadpy.e2r2.stroud_4_1(),
-    quadpy.e2r2.stroud_5_1(),
-    quadpy.e2r2.stroud_5_2(),
-    quadpy.e2r2.stroud_7_1(),
-    quadpy.e2r2.stroud_7_2(),
-    quadpy.e2r2.stroud_9_1(),
-    quadpy.e2r2.stroud_11_1(),
-    quadpy.e2r2.stroud_11_2(),
-    quadpy.e2r2.stroud_13_1(),
-    quadpy.e2r2.stroud_15_1(),
-    quadpy.e2r2.stroud_secrest_5(),
-    quadpy.e2r2.stroud_secrest_6(),
-]
 
-
-@pytest.mark.parametrize("scheme", schemes)
+@pytest.mark.parametrize("scheme", quadpy.e2r2.schemes.values())
 def test_scheme(scheme):
+    scheme = scheme()
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
@@ -55,15 +31,10 @@ def test_scheme(scheme):
     )
 
 
-@pytest.mark.parametrize("scheme", [quadpy.e2r2.rabinowitz_richter_1()])
+@pytest.mark.parametrize("scheme", [quadpy.e2r2.schemes["rabinowitz_richter_1"]()])
 def test_show(scheme):
     scheme.show()
 
 
 if __name__ == "__main__":
-    # scheme_ = quadpy.e2r2.Stroud["7-2"]()
-    # test_scheme(scheme_, 1.0e-14)
-    # test_show(scheme_)
-    from helpers import find_equal
-
-    find_equal(schemes)
+    pass

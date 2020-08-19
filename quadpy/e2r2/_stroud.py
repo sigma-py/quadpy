@@ -4,7 +4,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import book
-from ._helpers import E2r2Scheme
+from ._helpers import E2r2Scheme, register
 from ._rabinowitz_richter import rabinowitz_richter_1 as stroud_9_1
 from ._rabinowitz_richter import rabinowitz_richter_2 as stroud_11_1
 from ._rabinowitz_richter import rabinowitz_richter_3 as stroud_11_2
@@ -54,15 +54,15 @@ def stroud_7_2():
     return E2r2Scheme("Stroud 7-2", d, 1, _source)
 
 
-__all__ = [
-    "stroud_4_1",
-    "stroud_5_1",
-    "stroud_5_2",
-    "stroud_7_1",
-    "stroud_7_2",
-    "stroud_9_1",
-    "stroud_11_1",
-    "stroud_11_2",
-    "stroud_13_1",
-    "stroud_15_1",
-]
+register([
+    stroud_4_1,
+    stroud_5_1,
+    stroud_5_2,
+    stroud_7_1,
+    stroud_7_2,
+    stroud_9_1,
+    stroud_11_1,
+    stroud_11_2,
+    stroud_13_1,
+    stroud_15_1,
+])

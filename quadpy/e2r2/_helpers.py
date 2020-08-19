@@ -6,6 +6,14 @@ import numpy
 from ..helpers import QuadratureScheme, expand_symmetries, plot_disks
 
 
+schemes = {}
+
+
+def register(in_schemes):
+    for scheme in in_schemes:
+        schemes[scheme.__name__] = scheme
+
+
 class E2r2Scheme(QuadratureScheme):
     def __init__(
         self, name, symmetry_data, degree, source, tol=1.0e-14, weight_factor=None
