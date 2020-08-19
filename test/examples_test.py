@@ -102,12 +102,12 @@ def test_c2():
 
 
 def test_e2r2():
-    scheme = quadpy.e2r2.rabinowitz_richter_3()
+    scheme = quadpy.e2r2.get_good_scheme(3)
     scheme.integrate(lambda x: numpy.exp(x[0]))
 
 
 def test_e2r():
-    scheme = quadpy.e2r.rabinowitz_richter_5()
+    scheme = quadpy.e2r.get_good_scheme(5)
     scheme.integrate(lambda x: numpy.exp(x[0]))
 
 

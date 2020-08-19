@@ -353,7 +353,7 @@ Example:
 ```python
 import quadpy
 
-scheme = quadpy.e2r.rabinowitz_richter_5()
+scheme = quadpy.e2r.get_good_scheme(5)
 scheme.show()
 val = scheme.integrate(lambda x: x[0] ** 2)
 ```
@@ -373,7 +373,7 @@ Example:
 ```python
 import quadpy
 
-scheme = quadpy.e2r2.rabinowitz_richter_3()
+scheme = quadpy.e2r2.get_good_scheme(3)
 scheme.show()
 val = scheme.integrate(lambda x: x[0] ** 2)
 ```
@@ -396,20 +396,24 @@ Example:
 import numpy
 import quadpy
 
-scheme = quadpy.u3.schemes["lebedev_019"]()
+scheme = quadpy.u3.get_good_scheme(19)
 # scheme.show()
 val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0, 0.0], 1.0)
 ```
-Integration on the sphere can also be done for function defined in spherical
+Integration on the sphere can also be done for functions defined in spherical
 coordinates:
 ```python
 import numpy
 import quadpy
 
-scheme = quadpy.u3.schemes["lebedev_019"]()
-val = scheme.integrate_spherical(
-    lambda theta_phi: numpy.sin(theta_phi[1]) ** 2 * numpy.sin(theta_phi[0]),
-)
+
+def f(theta_phi):
+    theta, phi = theta_phi
+    return numpy.sin(phi) ** 2 * numpy.sin(theta)
+
+
+scheme = quadpy.u3.get_good_scheme(19)
+val = scheme.integrate_spherical(f)
 ```
 
 ### Ball (_S<sub>3</sub>_)

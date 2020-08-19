@@ -1,11 +1,10 @@
 import warnings
 
-import numpy
 from sympy import Rational as frac
-from sympy import cos, pi, sin, sqrt
+from sympy import sqrt
 
 from ..helpers import book
-from ._helpers import E2r2Scheme, expand_symmetries
+from ._helpers import E2r2Scheme, register
 from ._rabinowitz_richter import rabinowitz_richter_1 as stroud_9_1
 from ._rabinowitz_richter import rabinowitz_richter_2 as stroud_11_1
 from ._rabinowitz_richter import rabinowitz_richter_3 as stroud_11_2
@@ -23,19 +22,11 @@ _source = book(
 
 
 def stroud_4_1():
-    pts = (
-        sqrt(2)
-        * numpy.array(
-            [
-                [cos(2 * i * pi / 5) for i in range(5)],
-                [sin(2 * i * pi / 5) for i in range(5)],
-            ]
-        ).T
-    )
-    weights = numpy.concatenate([[frac(1, 2)], numpy.full(len(pts), frac(1, 10))])
-    points = numpy.vstack([[[0, 0]], pts])
-    points = numpy.ascontiguousarray(points.T)
-    return E2r2Scheme("Stroud 4-1", weights, points, 4, _source)
+    d = {
+        "zero": [[frac(1, 2)]],
+        "d5.0": [[frac(1, 10)], [[sqrt(2)]]],
+    }
+    return E2r2Scheme("Stroud 4-1", d, 4, _source, 2.220e-16)
 
 
 def stroud_5_2():
@@ -46,8 +37,7 @@ def stroud_5_2():
         "d4_a0": [[frac(1, 9)], [r]],
         "d4_aa": [[frac(1, 36)], [r]],
     }
-    points, weights = expand_symmetries(d)
-    return E2r2Scheme("Stroud 5-2", weights, points, 5, _source)
+    return E2r2Scheme("Stroud 5-2", d, 5, _source, 4.441e-16)
 
 
 def stroud_7_2():
@@ -58,22 +48,23 @@ def stroud_7_2():
     C = frac(1, 48)
 
     d = {"d4_a0": [[A, B], [r, s]], "d4_ab": [[C], [r], [s]]}
-    points, weights = expand_symmetries(d)
 
     # TODO find what's wrong
     warnings.warn("Stroud's Gauss product formula has degree 1, not 7.")
-    return E2r2Scheme("Stroud 7-2", weights, points, 1, _source)
+    return E2r2Scheme("Stroud 7-2", d, 1, _source, 2.220e-16)
 
 
-__all__ = [
-    "stroud_4_1",
-    "stroud_5_1",
-    "stroud_5_2",
-    "stroud_7_1",
-    "stroud_7_2",
-    "stroud_9_1",
-    "stroud_11_1",
-    "stroud_11_2",
-    "stroud_13_1",
-    "stroud_15_1",
-]
+register(
+    [
+        stroud_4_1,
+        stroud_5_1,
+        stroud_5_2,
+        stroud_7_1,
+        stroud_7_2,
+        stroud_9_1,
+        stroud_11_1,
+        stroud_11_2,
+        stroud_13_1,
+        stroud_15_1,
+    ]
+)

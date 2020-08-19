@@ -1,51 +1,19 @@
-from ._cools_haegemans import (
-    cools_haegemans_9_1,
-    cools_haegemans_9_2,
-    cools_haegemans_13_1,
+from . import (
+    _cools_haegemans,
+    _haegemans_piessens,
+    _rabinowitz_richter,
+    _stroud,
+    _stroud_secrest,
 )
-from ._haegemans_piessens import haegemans_piessens_a, haegemans_piessens_b
-from ._rabinowitz_richter import (
-    rabinowitz_richter_1,
-    rabinowitz_richter_2,
-    rabinowitz_richter_3,
-    rabinowitz_richter_4,
-    rabinowitz_richter_5,
-)
-from ._stroud import (
-    stroud_4_1,
-    stroud_5_1,
-    stroud_5_2,
-    stroud_7_1,
-    stroud_7_2,
-    stroud_9_1,
-    stroud_11_1,
-    stroud_11_2,
-    stroud_13_1,
-    stroud_15_1,
-)
-from ._stroud_secrest import stroud_secrest_5, stroud_secrest_6
+from ._helpers import get_good_scheme, schemes
 
 __all__ = [
-    "cools_haegemans_9_1",
-    "cools_haegemans_9_2",
-    "cools_haegemans_13_1",
-    "haegemans_piessens_a",
-    "haegemans_piessens_b",
-    "rabinowitz_richter_1",
-    "rabinowitz_richter_2",
-    "rabinowitz_richter_3",
-    "rabinowitz_richter_4",
-    "rabinowitz_richter_5",
-    "stroud_4_1",
-    "stroud_5_1",
-    "stroud_5_2",
-    "stroud_7_1",
-    "stroud_7_2",
-    "stroud_9_1",
-    "stroud_11_1",
-    "stroud_11_2",
-    "stroud_13_1",
-    "stroud_15_1",
-    "stroud_secrest_5",
-    "stroud_secrest_6",
+    "_cools_haegemans",
+    "_haegemans_piessens",
+    "_rabinowitz_richter",
+    "_stroud",
+    "_stroud_secrest",
+    #
+    "schemes",
+    "get_good_scheme",
 ]

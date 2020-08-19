@@ -18,6 +18,7 @@ class U3Scheme(QuadratureScheme):
     def __init__(
         self, name, symmetry_data, degree, source, tol=1.0e-14, comments=None,
     ):
+        self.symmetry_data = symmetry_data
         points, weights = expand_symmetries(symmetry_data)
 
         if numpy.asarray(points).dtype == sympy.Basic:
@@ -572,3 +573,59 @@ def _read(filepath, source):
     with open(filepath, "r") as f:
         content = json.load(f)
     return _scheme_from_dict(content, source)
+
+
+def get_good_scheme(degree):
+    if degree <= 47:
+        return {
+            0: schemes["lebedev_003a"],
+            1: schemes["lebedev_003a"],
+            2: schemes["lebedev_003a"],
+            3: schemes["lebedev_003a"],
+            4: schemes["albrecht_collatz_1"],
+            5: schemes["albrecht_collatz_1"],
+            6: schemes["albrecht_collatz_5"],
+            7: schemes["albrecht_collatz_5"],
+            8: schemes["mclaren_05"],
+            9: schemes["mclaren_05"],
+            10: schemes["mclaren_08"],
+            11: schemes["mclaren_08"],
+            12: schemes["lebedev_015"],
+            13: schemes["lebedev_015"],
+            14: schemes["lebedev_015"],
+            15: schemes["lebedev_015"],
+            16: schemes["lebedev_017"],
+            17: schemes["lebedev_017"],
+            18: schemes["lebedev_019"],
+            19: schemes["lebedev_019"],
+            20: schemes["lebedev_021"],
+            21: schemes["lebedev_021"],
+            22: schemes["lebedev_023"],
+            23: schemes["lebedev_023"],
+            24: schemes["heo_xu_25b"],
+            25: schemes["heo_xu_25b"],
+            26: schemes["lebedev_029"],
+            27: schemes["lebedev_029"],
+            28: schemes["lebedev_029"],
+            29: schemes["lebedev_029"],
+            30: schemes["lebedev_031"],
+            31: schemes["lebedev_031"],
+            32: schemes["lebedev_035"],
+            33: schemes["lebedev_035"],
+            34: schemes["lebedev_035"],
+            35: schemes["lebedev_035"],
+            36: schemes["lebedev_041"],
+            37: schemes["lebedev_041"],
+            38: schemes["lebedev_041"],
+            39: schemes["lebedev_041"],
+            40: schemes["lebedev_041"],
+            41: schemes["lebedev_041"],
+            42: schemes["lebedev_047"],
+            43: schemes["lebedev_047"],
+            44: schemes["lebedev_047"],
+            45: schemes["lebedev_047"],
+            46: schemes["lebedev_047"],
+            47: schemes["lebedev_047"],
+        }[degree]()
+
+    return None

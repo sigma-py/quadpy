@@ -1,7 +1,7 @@
 import pathlib
 
 from ...helpers import article
-from .._helpers import _read
+from .._helpers import _read, register
 
 _source = article(
     authors=["Ann Haegemans", "Robert Piessens"],
@@ -24,3 +24,6 @@ def haegemans_piessens_a():
 
 def haegemans_piessens_b():
     return _read(this_dir / "haegemans_piessens_b.json", _source)
+
+
+register([haegemans_piessens_a, haegemans_piessens_b])
