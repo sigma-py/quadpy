@@ -5,6 +5,8 @@ from matplotlib import pyplot as plt
 
 import quadpy
 
+from helpers import find_best_scheme
+
 
 @pytest.mark.parametrize("scheme", quadpy.c3.schemes.values())
 def test_scheme(scheme, print_degree=False):
@@ -46,12 +48,24 @@ def test_show(scheme):
     plt.close()
 
 
-if __name__ == "__main__":
-    # scheme_ = Product(quadpy.c1.NewtonCotesOpen(5))
-    # scheme_ = quadpy.c3.HammerStroud("6-3")
-    # test_scheme(scheme_, 1.0e-14, print_degree=True)
-    # test_show(scheme_)
-    # scheme_.show(backend="vtk")
-    from helpers import find_equal
+def test_get_good_scheme():
+    degree = 0
+    while True:
+        best = find_best_scheme(
+            quadpy.c3.schemes.values(),
+            degree,
+            lambda pts: numpy.all((pts >= -1) & (pts <= 1)),
+            lambda keys: len(keys - set(["zero", "symm_r00", "symm_rr0", "symm_rrr"])) == 0,
+        )
+        if best is None:
+            break
 
-    find_equal(schemes)
+        b = quadpy.c3.get_good_scheme(degree)
+        assert best.name == b.name, f"{best.name} != {b.name}"
+        degree += 1
+
+    assert degree == 8
+
+
+if __name__ == "__main__":
+    test_get_good_scheme()

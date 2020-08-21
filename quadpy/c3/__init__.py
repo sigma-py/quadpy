@@ -1,6 +1,7 @@
 from ..cn import ncube_points as cube_points
 from ..cn import transform
 from . import (
+    _classical,
     _hammer_stroud,
     _hammer_wymore,
     _mustard_lyness_blatt,

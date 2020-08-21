@@ -197,3 +197,19 @@ def expand_symmetries(data):
         [numpy.tile(values, count) for count, values in zip(counts, weights_raw)]
     )
     return points, weights
+
+
+def get_good_scheme(degree):
+    if degree <= 7:
+        return {
+            0: "Midpoint",
+            1: "Midpoint",
+            2: "Face-Midpoint",
+            3: "Face-Midpoint",
+            4: "Hammer-Stroud 4-3",
+            5: "Hammer-Stroud 4-3",
+            6: "Sarma-Stroud",
+            7: "Sarma-Stroud",
+        }[degree]()
+
+    return None
