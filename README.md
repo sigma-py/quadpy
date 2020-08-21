@@ -58,7 +58,7 @@ def f(x):
 
 val, err = quadpy.quad(f, 0.0, 6.0)
 ```
-This is just like
+This is like
 [scipy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html)
 with the addition that quadpy handles complex-, vector-, matrix-valued integrands,
 and "intervals" in spaces of arbitrary dimension.
@@ -152,7 +152,7 @@ Advanced topics:
  * [Newton-Cotes](quadpy/c1/_newton_cotes.py) (open and closed, arbitrary degree)
 
 [See
-her](https://github.com/nschloe/quadpy/wiki/Creating-your-own-Gauss-quadrature-in-two-simple-steps)
+here](https://github.com/nschloe/quadpy/wiki/Creating-your-own-Gauss-quadrature-in-two-simple-steps)
 for how to generate Gauss formulas for your own weight functions.
 
 Example:
@@ -726,7 +726,7 @@ you can install.
 
 ### Testing
 
-To run the tests, just check out this repository and type
+To run the tests, check out this repository and type
 ```
 MPLBACKEND=Agg pytest
 ```
