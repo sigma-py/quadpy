@@ -60,6 +60,7 @@ def test_get_good_scheme():
         if best is None:
             break
 
+        # print(best.name)
         b = quadpy.c3.get_good_scheme(degree)
         assert best.name == b.name, f"{best.name} != {b.name}"
         degree += 1

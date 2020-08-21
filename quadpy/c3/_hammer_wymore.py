@@ -16,7 +16,9 @@ _source = article(
 )
 
 
-def hammer_wymore(lmbda=1):
+# hw(27 / 20) has all the desirable properties (positive weights, points inside the
+# domain) while minimizing the ration max(weights)/min(weights)
+def hammer_wymore(lmbda=sympy.Rational(27, 20)):
     symbolic = not isinstance(lmbda, float)
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else math.sqrt
@@ -42,8 +44,9 @@ def hammer_wymore(lmbda=1):
     c0 = (p3 * p1 - p2 ** 2) / (p0 * p2 - p1 ** 2)
     c1 = (p3 * p0 - p1 * p2) / (p1 ** 2 - p2 * p0)
 
-    u3 = (-c1 - sqrt(c1 ** 2 - 4 * c0)) / 2
-    u4 = (-c1 + sqrt(c1 ** 2 - 4 * c0)) / 2
+    b = sqrt(c1 ** 2 - 4 * c0)
+    u3 = (-c1 - b) / 2
+    u4 = (-c1 + b) / 2
 
     a3 = (p0 * u4 - p1) / 8 / (u4 - u3)
     a4 = (p0 * u3 - p1) / 8 / (u3 - u4)
