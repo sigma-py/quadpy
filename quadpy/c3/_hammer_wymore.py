@@ -17,7 +17,7 @@ _source = article(
 
 
 # hw(27 / 20) has all the desirable properties (positive weights, points inside the
-# domain) while minimizing the ration max(weights)/min(weights)
+# domain) while minimizing the ratio max(weights) / min(weights)
 def hammer_wymore(lmbda=sympy.Rational(27, 20)):
     symbolic = not isinstance(lmbda, float)
     frac = sympy.Rational if symbolic else lambda x, y: x / y

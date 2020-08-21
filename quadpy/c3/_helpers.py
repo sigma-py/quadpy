@@ -1,4 +1,5 @@
 import numpy
+import sympy
 
 from .. import helpers
 from ..cn import CnScheme
@@ -202,14 +203,14 @@ def expand_symmetries(data):
 def get_good_scheme(degree):
     if degree <= 7:
         return {
-            0: "Midpoint",
-            1: "Midpoint",
-            2: "Face-Midpoint",
-            3: "Face-Midpoint",
-            4: "Hammer-Stroud 4-3",
-            5: "Hammer-Stroud 4-3",
-            6: "Sarma-Stroud",
-            7: "Sarma-Stroud",
-        }[degree]()
+            0: schemes["midpoint"](),
+            1: schemes["midpoint"](),
+            2: schemes["face_midpoint"](),
+            3: schemes["face_midpoint"](),
+            4: schemes["hammer_stroud_4_3"](),
+            5: schemes["hammer_stroud_4_3"](),
+            6: schemes["hammer_wymore"](sympy.Rational(27, 20)),
+            7: schemes["hammer_wymore"](sympy.Rational(27, 20)),
+        }[degree]
 
     return None

@@ -10,10 +10,11 @@ from . import (
     _stroud_1967,
     _tyler,
 )
-from ._helpers import schemes
+from ._helpers import schemes, get_good_scheme
 from ._product import product
 
 __all__ = [
+    "_classical",
     "_hammer_stroud",
     "_hammer_wymore",
     "_mustard_lyness_blatt",
@@ -27,4 +28,5 @@ __all__ = [
     "transform",
     "cube_points",
     "schemes",
+    "get_good_scheme",
 ]
