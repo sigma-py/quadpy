@@ -5,6 +5,13 @@ from ..cn import CnScheme
 from ..cn import ncube_points as cube_points
 from ..cn import transform
 
+schemes = {}
+
+
+def register(in_schemes):
+    for scheme in in_schemes:
+        schemes[scheme.__name__] = scheme
+
 
 class C3Scheme(CnScheme):
     def __init__(self, name, symmetry_data, degree, source=None, tol=1.0e-14):

@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import C3Scheme
+from ._helpers import C3Scheme, register
 
 source = article(
     authors=["A.H. Stroud"],
@@ -41,3 +41,6 @@ def stroud_1967():
         "symm_rss_pm": [[B / 8, C / 8], [lmbd, gmma], [xi, mu]],
     }
     return C3Scheme("Stroud 1967", d, 5, source)
+
+
+register([stroud_1967])

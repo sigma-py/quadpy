@@ -5,56 +5,11 @@ from matplotlib import pyplot as plt
 
 import quadpy
 
-schemes = (
-    [quadpy.c3.product(quadpy.c1.midpoint())]
-    + [quadpy.c3.product(quadpy.c1.trapezoidal())]
-    + [quadpy.c3.product(quadpy.c1.gauss_legendre(k)) for k in range(1, 6)]
-    + [quadpy.c3.product(quadpy.c1.newton_cotes_closed(k)) for k in range(1, 5)]
-    + [quadpy.c3.product(quadpy.c1.newton_cotes_open(k)) for k in range(1, 5)]
-    + [
-        quadpy.c3.hammer_stroud_1_3(),
-        quadpy.c3.hammer_stroud_2_3(),
-        quadpy.c3.hammer_stroud_4_3(),
-        quadpy.c3.hammer_stroud_5_3a(),
-        quadpy.c3.hammer_stroud_5_3b(),
-        quadpy.c3.hammer_stroud_6_3(),
-        quadpy.c3.hammer_wymore(),
-        quadpy.c3.mustard_lyness_blatt_1(),
-        quadpy.c3.mustard_lyness_blatt_2(),
-        quadpy.c3.mustard_lyness_blatt_3(),
-        quadpy.c3.mustard_lyness_blatt_4(),
-        quadpy.c3.mustard_lyness_blatt_5(),
-        quadpy.c3.mustard_lyness_blatt_6(),
-        quadpy.c3.mustard_lyness_blatt_7(),
-        quadpy.c3.sadowsky(),
-        quadpy.c3.stroud_c3_3_1(),
-        quadpy.c3.stroud_c3_3_2(),
-        quadpy.c3.stroud_c3_3_3(),
-        quadpy.c3.stroud_c3_3_4(),
-        quadpy.c3.stroud_c3_3_5(),
-        quadpy.c3.stroud_c3_3_6(),
-        quadpy.c3.stroud_c3_3_7(),
-        quadpy.c3.stroud_c3_5_1(),
-        quadpy.c3.stroud_c3_5_2(),
-        quadpy.c3.stroud_c3_5_3(),
-        quadpy.c3.stroud_c3_5_4(),
-        quadpy.c3.stroud_c3_5_5(),
-        quadpy.c3.stroud_c3_5_6(),
-        quadpy.c3.stroud_c3_5_7(),
-        quadpy.c3.stroud_c3_5_8(),
-        quadpy.c3.stroud_c3_7_1a(),
-        quadpy.c3.stroud_c3_7_1b(),
-        quadpy.c3.stroud_c3_7_2(),
-        quadpy.c3.stroud_c3_7_3(),
-        quadpy.c3.stroud_1967(),
-        quadpy.c3.tyler_1(),
-        quadpy.c3.tyler_2(),
-    ]
-)
 
-
-@pytest.mark.parametrize("scheme", schemes)
+@pytest.mark.parametrize("scheme", quadpy.c3.schemes.values())
 def test_scheme(scheme, print_degree=False):
+    scheme = scheme()
+
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 

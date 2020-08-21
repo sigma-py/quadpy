@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 
 from ..helpers import article
-from ._helpers import C3Scheme
+from ._helpers import C3Scheme, register
 
 _source = article(
     authors=["J. Albrecht", "L. Collatz"],
@@ -22,3 +22,6 @@ def albrecht_collatz():
         "symm_rr0": [[frac(1, 48)], [1]],
     }
     return C3Scheme("Albrecht-Collatz", d, 3, _source)
+
+
+register([albrecht_collatz])

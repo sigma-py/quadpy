@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import C3Scheme
+from ._helpers import C3Scheme, register
 
 source = article(
     authors=["Michael Sadowsky"],
@@ -24,3 +24,6 @@ def sadowsky():
         "symm_rrs": [[frac(8, 225)], [sqrt(frac(5, 8))], [1]],
     }
     return C3Scheme("Sadowsky", d, 5, source)
+
+
+register([sadowsky])

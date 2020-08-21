@@ -3,7 +3,7 @@ import math
 import sympy
 
 from ..helpers import article
-from ._helpers import C3Scheme
+from ._helpers import C3Scheme, register
 
 _source = article(
     authors=["Preston C. Hammer", "A. Wayne Wymore"],
@@ -59,3 +59,6 @@ def hammer_wymore(lmbda=1):
         "symm_rrr": [[a3 / 8, a4 / 8], [x3, x4]],
     }
     return C3Scheme(f"Hammer-Wymore (lambda = {lmbda})", d, 7, _source)
+
+
+register([hammer_wymore])
