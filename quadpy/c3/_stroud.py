@@ -8,7 +8,7 @@ from ._hammer_stroud import hammer_stroud_2_3 as stroud_c3_5_2
 from ._hammer_stroud import hammer_stroud_5_3a as stroud_c3_7_1a
 from ._hammer_stroud import hammer_stroud_5_3b as stroud_c3_7_1b
 from ._hammer_wymore import hammer_wymore as stroud_c3_7_2
-from ._helpers import C3Scheme, expand_symmetries
+from ._helpers import C3Scheme
 from ._mustard_lyness_blatt import mustard_lyness_blatt_1 as stroud_c3_3_4
 from ._mustard_lyness_blatt import mustard_lyness_blatt_2 as stroud_c3_3_5
 from ._mustard_lyness_blatt import mustard_lyness_blatt_3 as stroud_c3_3_7
@@ -35,8 +35,7 @@ def stroud_c3_3_2():
     d = {
         "symm_rrr": [[frac(1, 8)], [sqrt(frac(1, 3))]],
     }
-    points, weights = expand_symmetries(d)
-    return C3Scheme("Stroud C3 3-2", weights, points, 3, _source)
+    return C3Scheme("Stroud C3 3-2", d, 3, _source)
 
 
 def stroud_c3_3_3():

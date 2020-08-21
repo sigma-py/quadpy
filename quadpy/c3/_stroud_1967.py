@@ -2,7 +2,7 @@ from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article
-from ._helpers import C3Scheme, expand_symmetries
+from ._helpers import C3Scheme
 
 source = article(
     authors=["A.H. Stroud"],
@@ -36,7 +36,8 @@ def stroud_1967():
         for i in [+1, -1]
     ]
 
-    d = {"zero": [[frac(32, 19)]], "symm_rss_pm": [[B, C], [lmbd, gmma], [xi, mu]]}
-    points, weights = expand_symmetries(d)
-    weights /= 8
-    return C3Scheme("Stroud 1967", weights, points, 5, source)
+    d = {
+        "zero": [[frac(32, 19) / 8]],
+        "symm_rss_pm": [[B / 8, C / 8], [lmbd, gmma], [xi, mu]],
+    }
+    return C3Scheme("Stroud 1967", d, 5, source)

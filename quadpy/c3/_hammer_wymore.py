@@ -3,7 +3,7 @@ import math
 import sympy
 
 from ..helpers import article
-from ._helpers import C3Scheme, expand_symmetries
+from ._helpers import C3Scheme
 
 _source = article(
     authors=["Preston C. Hammer", "A. Wayne Wymore"],
@@ -54,10 +54,8 @@ def hammer_wymore(lmbda=1):
     x4 = sqrt(u4)
 
     d = {
-        "symm_r00": [[a1], [x1]],
-        "symm_rr0": [[a2], [x2]],
-        "symm_rrr": [[a3, a4], [x3, x4]],
+        "symm_r00": [[a1 / 8], [x1]],
+        "symm_rr0": [[a2 / 8], [x2]],
+        "symm_rrr": [[a3 / 8, a4 / 8], [x3, x4]],
     }
-    points, weights = expand_symmetries(d)
-    weights /= 8
-    return C3Scheme(f"Hammer-Wymore (lambda = {lmbda})", weights, points, 7, _source)
+    return C3Scheme(f"Hammer-Wymore (lambda = {lmbda})", d, 7, _source)
