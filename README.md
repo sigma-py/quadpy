@@ -483,6 +483,7 @@ val = scheme.integrate(
  * [Mustard-Lyness-Blatt](quadpy/c3/_mustard_lyness_blatt.py) (1963, 6 schemes up to degree 5)
  * [Stroud](quadpy/c3/_stroud_1967.py) (1967, degree 5)
  * [Sarma-Stroud](quadpy/c3/_sarma_stroud.py) (1969, degree 7)
+ * [Witherden-Vincent](quadpy/c3/_witherden_vincent/) (2015, 7 schemes up to degree degree 11)
  * [all schemes from the n-cube](#n-cube-cn)
  * Product schemes derived from line segment schemes
 

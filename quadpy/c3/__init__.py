@@ -9,6 +9,7 @@ from . import (
     _stroud,
     _stroud_1967,
     _tyler,
+    _witherden_vincent,
 )
 from ._helpers import schemes, get_good_scheme
 from ._product import product
@@ -22,6 +23,7 @@ __all__ = [
     "_stroud",
     "_stroud_1967",
     "_tyler",
+    "_witherden_vincent",
     #
     "product",
     #
