@@ -1,11 +1,10 @@
 import numpy
 import orthopy
 import pytest
+from helpers import find_best_scheme
 from matplotlib import pyplot as plt
 
 import quadpy
-
-from helpers import find_best_scheme
 
 
 @pytest.mark.parametrize("scheme", quadpy.c3.schemes.values())

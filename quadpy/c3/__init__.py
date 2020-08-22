@@ -11,7 +11,7 @@ from . import (
     _tyler,
     _witherden_vincent,
 )
-from ._helpers import schemes, get_good_scheme
+from ._helpers import get_good_scheme, schemes
 from ._product import product
 
 __all__ = [
