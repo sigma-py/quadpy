@@ -55,17 +55,20 @@ def test_get_good_scheme():
             quadpy.c3.schemes.values(),
             degree,
             lambda pts: numpy.all((pts >= -1) & (pts <= 1)),
-            lambda keys: len(keys - set(["zero", "symm_r00", "symm_rr0", "symm_rrr"])) == 0,
+            lambda keys: len(
+                keys - set(["zero", "symm_r00", "symm_rr0", "symm_rrr", "symm_rrs"])
+            )
+            == 0,
         )
         if best is None:
             break
 
-        # print(best.name)
+        # print(degree, best.name)
         b = quadpy.c3.get_good_scheme(degree)
         assert best.name == b.name, f"{best.name} != {b.name}"
         degree += 1
 
-    assert degree == 8
+    assert degree == 12
 
 
 if __name__ == "__main__":

@@ -201,7 +201,7 @@ def expand_symmetries(data):
 
 
 def get_good_scheme(degree):
-    if degree <= 7:
+    if degree <= 11:
         return {
             0: schemes["midpoint"](),
             1: schemes["midpoint"](),
@@ -211,6 +211,10 @@ def get_good_scheme(degree):
             5: schemes["hammer_stroud_4_3"](),
             6: schemes["hammer_wymore"](sympy.Rational(27, 20)),
             7: schemes["hammer_wymore"](sympy.Rational(27, 20)),
+            8: schemes["witherden_vincent_09"](),
+            9: schemes["witherden_vincent_09"](),
+            10: schemes["witherden_vincent_11"](),
+            11: schemes["witherden_vincent_11"](),
         }[degree]
 
     return None
