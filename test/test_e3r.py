@@ -7,6 +7,8 @@ from matplotlib import pyplot as plt
 
 import quadpy
 
+from helpers import find_best_scheme
+
 
 @pytest.mark.parametrize("scheme", quadpy.e3r.schemes.values())
 def test_scheme(scheme):
@@ -35,6 +37,29 @@ def test_scheme(scheme):
 def test_show(scheme, backend="mpl"):
     scheme.show(backend=backend)
     plt.close()
+
+
+def test_get_good_scheme():
+    degree = 0
+    while True:
+        best = find_best_scheme(
+            quadpy.e3r.schemes.values(),
+            degree,
+            lambda pts: True,
+            lambda keys: len(
+                keys - set(["zero3", "symm_r00", "symm_rr0", "symm_rrr", "symm_rrs"])
+            )
+            == 0,
+        )
+        if best is None:
+            break
+
+        # print(degree, best.name)
+        b = quadpy.e3r.get_good_scheme(degree)
+        assert best.name == b.name, f"{best.name} != {b.name}"
+        degree += 1
+
+    assert degree == 8
 
 
 if __name__ == "__main__":
