@@ -250,7 +250,7 @@ def test_e1r():
 
 
 def test_e3r():
-    quadpy.e3r.stroud_secrest_09().integrate(lambda x: numpy.exp(x[0]))
+    quadpy.e3r.get_good_scheme(5).integrate(lambda x: numpy.exp(x[0]))
 
 
 def test_e1r2():

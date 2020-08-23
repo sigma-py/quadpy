@@ -2,12 +2,10 @@ import accupy
 import ndim
 import numpy
 import pytest
-from helpers import check_degree
+from helpers import check_degree, find_best_scheme
 from matplotlib import pyplot as plt
 
 import quadpy
-
-from helpers import find_best_scheme
 
 
 @pytest.mark.parametrize("scheme", quadpy.e3r.schemes.values())

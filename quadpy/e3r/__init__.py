@@ -1,7 +1,5 @@
-from . import _stroud
-from . import _stroud_secrest
-
-from ._helpers import schemes, get_good_scheme
+from . import _stroud, _stroud_secrest
+from ._helpers import get_good_scheme, schemes
 
 __all__ = [
     "_stroud",
