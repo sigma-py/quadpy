@@ -1,7 +1,7 @@
 import numpy
 
 
-def _zero(data):
+def _zero2(data):
     return numpy.array([[0.0], [0.0]])
 
 
@@ -249,7 +249,7 @@ def expand_symmetries_points_only(data):
 
     for key, points_raw in data.items():
         fun = {
-            "zero": _zero,
+            "zero": _zero2,
             "d4_aa": _d4_aa,
             "d4_a0": _d4_a0,
             "c4": _c4,
