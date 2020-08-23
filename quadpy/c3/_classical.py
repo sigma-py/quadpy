@@ -4,7 +4,7 @@ from ._helpers import C3Scheme, register
 
 
 def midpoint():
-    d = {"zero": [[1]]}
+    d = {"zero3": [[1]]}
     return C3Scheme("Midpoint", d, 1)
 
 

@@ -21,7 +21,7 @@ def tyler_1():
 
 def tyler_2():
     d = {
-        "zero": [[-frac(62, 45)]],
+        "zero3": [[-frac(62, 45)]],
         "symm_r00": [[frac(16, 45), frac(1, 45)], [frac(1, 2), 1]],
         "symm_rrr": [[frac(1, 72)], [1]],
     }

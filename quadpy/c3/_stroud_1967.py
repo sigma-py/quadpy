@@ -37,7 +37,7 @@ def stroud_1967():
     ]
 
     d = {
-        "zero": [[frac(32, 19) / 8]],
+        "zero3": [[frac(32, 19) / 8]],
         "symm_rss_pm": [[B / 8, C / 8], [lmbd, gmma], [xi, mu]],
     }
     return C3Scheme("Stroud 1967", d, 5, source)

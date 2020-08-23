@@ -23,7 +23,7 @@ def hammer_stroud_1_3():
 def hammer_stroud_2_3():
     alpha = sqrt(frac(3, 5))
     d = {
-        "zero": [[frac(56, 27) / 8]],
+        "zero3": [[frac(56, 27) / 8]],
         "symm_r00": [[-frac(20, 81) / 8], [alpha]],
         "symm_rr0": [[+frac(50, 81) / 8], [alpha]],
     }
@@ -55,7 +55,7 @@ def _hammer_stroud_5_3(variant_a):
     B0 = 8 - 6 * B1 - 12 * B2 - 8 * B3
 
     d = {
-        "zero": [[B0 / 8]],
+        "zero3": [[B0 / 8]],
         "symm_r00": [[B1 / 8], [r]],
         "symm_rr0": [[B2 / 8], [s]],
         "symm_rrr": [[B3 / 8], [t]],

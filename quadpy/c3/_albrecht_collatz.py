@@ -17,7 +17,7 @@ _source = article(
 
 def albrecht_collatz():
     d = {
-        "zero": [[frac(1, 4)]],
+        "zero3": [[frac(1, 4)]],
         "symm_r00": [[frac(1, 12)], [1]],
         "symm_rr0": [[frac(1, 48)], [1]],
     }

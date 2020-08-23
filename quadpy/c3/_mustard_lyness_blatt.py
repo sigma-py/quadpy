@@ -16,13 +16,13 @@ _source = article(
 
 
 def mustard_lyness_blatt_1():
-    d = {"zero": [[frac(1, 2)]], "symm_rr0": [[frac(1, 24)], [1]]}
+    d = {"zero3": [[frac(1, 2)]], "symm_rr0": [[frac(1, 24)], [1]]}
     return C3Scheme("Mustard-Lyness-Blatt 1", d, 3, _source)
 
 
 def mustard_lyness_blatt_2():
     d = {
-        "zero": [[frac(2, 9)]],
+        "zero3": [[frac(2, 9)]],
         "symm_r00": [[frac(1, 9)], [1]],
         "symm_rrr": [[frac(1, 72)], [1]],
     }
@@ -39,7 +39,7 @@ def mustard_lyness_blatt_3():
 
 def mustard_lyness_blatt_4():
     d = {
-        "zero": [[-frac(2, 45)]],
+        "zero3": [[-frac(2, 45)]],
         "symm_r00": [[+frac(2, 45)], [1]],
         "symm_rrr": [[frac(4, 45), frac(1, 120)], [frac(1, 2), 1]],
     }
@@ -48,7 +48,7 @@ def mustard_lyness_blatt_4():
 
 def mustard_lyness_blatt_5():
     d = {
-        "zero": [[-frac(19, 15)]],
+        "zero3": [[-frac(19, 15)]],
         "symm_r00": [[frac(16, 45), -frac(1, 30)], [frac(1, 2), 1]],
         "symm_rr0": [[frac(1, 36)], [1]],
     }
@@ -57,7 +57,7 @@ def mustard_lyness_blatt_5():
 
 def mustard_lyness_blatt_6():
     d = {
-        "zero": [[-frac(4, 3)]],
+        "zero3": [[-frac(4, 3)]],
         "symm_r00": [[frac(16, 45)], [frac(1, 2)]],
         "symm_rr0": [[frac(1, 90)], [1]],
         "symm_rrr": [[frac(1, 120)], [1]],
@@ -67,7 +67,7 @@ def mustard_lyness_blatt_6():
 
 def mustard_lyness_blatt_7():
     d = {
-        "zero": [[frac(2, 45)]],
+        "zero3": [[frac(2, 45)]],
         "symm_rr0": [[frac(1, 45)], [1]],
         "symm_rrr": [[frac(4, 45), frac(-1, 360)], [frac(1, 2), 1]],
     }
