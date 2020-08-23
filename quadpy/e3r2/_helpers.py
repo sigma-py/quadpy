@@ -31,3 +31,18 @@ class E3r2Scheme(QuadratureScheme):
         backend_to_function[backend](
             scheme.points, scheme.weights, volume=8 * numpy.pi, edges=[]
         )
+
+
+def get_good_scheme(degree):
+    if degree <= 7:
+        return {
+            0: schemes["stroud_secrest_08a"](),
+            1: schemes["stroud_secrest_08a"](),
+            2: schemes["stroud_secrest_08a"](),
+            3: schemes["stroud_secrest_08a"](),
+            4: schemes["stroud_secrest_08a"](),
+            5: schemes["stroud_secrest_08a"](),
+            6: schemes["stroud_secrest_10b"](),
+            7: schemes["stroud_secrest_10b"](),
+        }[degree]
+    return None

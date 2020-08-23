@@ -576,7 +576,7 @@ Example:
 ```python
 import quadpy
 
-scheme = quadpy.e3r2.stroud_secrest_10a()
+scheme = quadpy.e3r2.get_good_scheme(6)
 # scheme.show()
 val = scheme.integrate(lambda x: x[0] ** 2)
 ```
