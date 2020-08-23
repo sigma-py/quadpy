@@ -2,11 +2,20 @@ from math import pi
 
 import numpy
 
-from ..helpers import QuadratureScheme, backend_to_function
+from ..helpers import QuadratureScheme, backend_to_function, expand_symmetries
+
+schemes = {}
+
+
+def register(in_schemes):
+    for scheme in in_schemes:
+        schemes[scheme.__name__] = scheme
 
 
 class E3rScheme(QuadratureScheme):
-    def __init__(self, name, weights, points, degree, source, tol=1.0e-14):
+    def __init__(self, name, symmetry_data, degree, source, tol=1.0e-14):
+        self.symmetry_data = symmetry_data
+        points, weights = expand_symmetries(symmetry_data)
         self.domain = "E3r"
         super().__init__(name, weights, points, degree, source, tol)
 

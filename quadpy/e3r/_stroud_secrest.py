@@ -1,8 +1,8 @@
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, expand_symmetries
-from ._helpers import E3rScheme
+from ..helpers import article
+from ._helpers import E3rScheme, register
 
 source = article(
     authors=["A.H. Stroud", "D. Secrest"],
@@ -24,8 +24,7 @@ def stroud_secrest_07():
         "zero3": [[A]],
         "symm_rs0_roll": [[B], [xi], [nu]],
     }
-    points, weights = expand_symmetries(d)
-    return E3rScheme("Stroud-Secrest VII", weights, points, 5, source)
+    return E3rScheme("Stroud-Secrest VII", d, 5, source)
 
 
 def stroud_secrest_08():
@@ -40,8 +39,7 @@ def stroud_secrest_08():
         "symm_r00": [[B], [nu]],
         "symm_rrr": [[C], [eta]],
     }
-    points, weights = expand_symmetries(d)
-    return E3rScheme("Stroud-Secrest VIII", weights, points, 5, source)
+    return E3rScheme("Stroud-Secrest VIII", d, 5, source)
 
 
 def stroud_secrest_09():
@@ -55,8 +53,7 @@ def stroud_secrest_09():
         "symm_rrr": [[B], [eta]],
         "symm_rs0_roll": [[B], [xi], [nu]],
     }
-    points, weights = expand_symmetries(d)
-    return E3rScheme("Stroud-Secrest IX", weights, points, 5, source)
+    return E3rScheme("Stroud-Secrest IX", d, 5, source)
 
 
 def stroud_secrest_10():
@@ -77,8 +74,7 @@ def stroud_secrest_10():
         "symm_rr0": [[C], [xi]],
         "symm_rrr": [[D], [eta]],
     }
-    points, weights = expand_symmetries(d)
-    return E3rScheme("Stroud-Secrest X", weights, points, 7, source)
+    return E3rScheme("Stroud-Secrest X", d, 7, source)
 
 
 def stroud_secrest_11():
@@ -103,5 +99,15 @@ def stroud_secrest_11():
         "symm_rrr": [[C], [eta]],
         "symm_rs0_roll": [[B, C], [xi, lmbda], [nu, mu]],
     }
-    points, weights = expand_symmetries(d)
-    return E3rScheme("Stroud-Secrest XI", weights, points, 7, source, 1.487e-11)
+    return E3rScheme("Stroud-Secrest XI", d, 7, source, 1.487e-11)
+
+
+register(
+    [
+        stroud_secrest_07,
+        stroud_secrest_08,
+        stroud_secrest_09,
+        stroud_secrest_10,
+        stroud_secrest_11,
+    ]
+)
