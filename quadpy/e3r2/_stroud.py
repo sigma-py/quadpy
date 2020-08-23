@@ -71,8 +71,8 @@ def stroud_e3r2_14_1(symbolic=False):
     data = [
         (A[i] * B[j], r[i] * numpy.array([v[j]])) for i in range(4) for j in range(72)
     ]
-
     points, weights = untangle(data)
+    points = numpy.ascontiguousarray(points.T)
     return E3r2Scheme("Stroud E3r2 14-1", weights, points, 14, source, 8.903e-14)
 
 

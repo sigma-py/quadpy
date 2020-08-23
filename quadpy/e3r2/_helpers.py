@@ -13,7 +13,7 @@ class E3r2Scheme(QuadratureScheme):
     def integrate(self, f, dot=numpy.dot):
         flt = numpy.vectorize(float)
         ref_vol = sqrt(pi) ** 3
-        return ref_vol * dot(f(flt(self.points).T), flt(self.weights))
+        return ref_vol * dot(f(flt(self.points)), flt(self.weights))
 
     def show(scheme, backend="vtk"):
         """Displays scheme for E_3^{r^2} quadrature.
