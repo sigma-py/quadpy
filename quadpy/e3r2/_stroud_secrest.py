@@ -1,8 +1,8 @@
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, expand_symmetries
-from ._helpers import E3r2Scheme
+from ..helpers import article
+from ._helpers import E3r2Scheme, register
 
 source = article(
     authors=["A.H. Stroud", "D. Secrest"],
@@ -27,12 +27,8 @@ def stroud_secrest_07():
     A = frac(2, 5)
     B = frac(1, 20)
 
-    d = {
-        "zero3": [[A]],
-        "symm_rs0_roll": [[B], [nu], [xi]]
-    }
-    points, weights = expand_symmetries(d)
-    return E3r2Scheme("Stroud-Secrest VII", weights, points, 5, source)
+    d = {"zero3": [[A]], "symm_rs0_roll": [[B], [nu], [xi]]}
+    return E3r2Scheme("Stroud-Secrest VII", d, 5, source)
 
 
 def stroud_secrest_08a():
@@ -42,8 +38,7 @@ def stroud_secrest_08a():
         "symm_r00": [[frac(4, 25)], [r]],
         "symm_rrr": [[frac(1, 200)], [s]],
     }
-    points, weights = expand_symmetries(d)
-    return E3r2Scheme("Stroud-Secrest VIIIa", weights, points, 5, source)
+    return E3r2Scheme("Stroud-Secrest VIIIa", d, 5, source)
 
 
 def stroud_secrest_08b():
@@ -54,8 +49,7 @@ def stroud_secrest_08b():
         "symm_r00": [[frac(1, 25)], [r]],
         "symm_rrr": [[frac(9, 200)], [s]],
     }
-    points, weights = expand_symmetries(d)
-    return E3r2Scheme("Stroud-Secrest VIIIb", weights, points, 5, source)
+    return E3r2Scheme("Stroud-Secrest VIIIb", d, 5, source)
 
 
 def stroud_secrest_09():
@@ -64,10 +58,9 @@ def stroud_secrest_09():
     d = {
         "zero3": [[frac(2, 5)]],
         "symm_rs0_roll": [[frac(3, 100)], [r], [s]],
-        "symm_rrr": [[frac(3, 100)], [t]]
+        "symm_rrr": [[frac(3, 100)], [t]],
     }
-    points, weights = expand_symmetries(d)
-    return E3r2Scheme("Stroud-Secrest IX", weights, points, 5, source)
+    return E3r2Scheme("Stroud-Secrest IX", d, 5, source)
 
 
 def _stroud_secrest_10(positive):
@@ -89,9 +82,8 @@ def _stroud_secrest_10(positive):
         "symm_rr0": [[C], [s]],
         "symm_rrr": [[D], [t]],
     }
-    points, weights = expand_symmetries(d)
     variant = "a" if positive else "b"
-    return E3r2Scheme(f"Stroud-Secrest X{variant}", weights, points, 7, source)
+    return E3r2Scheme(f"Stroud-Secrest X{variant}", d, 7, source)
 
 
 def stroud_secrest_10a():
@@ -124,8 +116,7 @@ def _stroud_secrest_11(positive):
         "symm_rs0_roll": [[B, C], [r, u], [s, v]],
         "symm_rrr": [[C], [t]],
     }
-    points, weights = expand_symmetries(d)
-    return E3r2Scheme("Stroud-Secrest XI", weights, points, 7, source)
+    return E3r2Scheme("Stroud-Secrest XI", d, 7, source)
 
 
 def stroud_secrest_11a():
@@ -134,3 +125,17 @@ def stroud_secrest_11a():
 
 def stroud_secrest_11b():
     return _stroud_secrest_11(False)
+
+
+register(
+    [
+        stroud_secrest_07,
+        stroud_secrest_09,
+        stroud_secrest_08a,
+        stroud_secrest_08b,
+        stroud_secrest_10a,
+        stroud_secrest_10b,
+        stroud_secrest_11a,
+        stroud_secrest_11b,
+    ]
+)

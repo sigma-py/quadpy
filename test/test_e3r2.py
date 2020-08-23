@@ -6,21 +6,10 @@ from matplotlib import pyplot as plt
 import quadpy
 
 
-@pytest.mark.parametrize(
-    "scheme",
-    [
-        quadpy.e3r2.stroud_e3r2_5_1(),
-        quadpy.e3r2.stroud_e3r2_5_2a(),
-        quadpy.e3r2.stroud_e3r2_5_2b(),
-        quadpy.e3r2.stroud_e3r2_5_3(),
-        quadpy.e3r2.stroud_e3r2_7_1a(),
-        quadpy.e3r2.stroud_e3r2_7_1b(),
-        quadpy.e3r2.stroud_e3r2_7_2a(),
-        quadpy.e3r2.stroud_e3r2_7_2b(),
-        quadpy.e3r2.stroud_e3r2_14_1(),
-    ],
-)
+@pytest.mark.parametrize("scheme", quadpy.e3r2.schemes.values())
 def test_scheme(scheme, tol=1.0e-14):
+    scheme = scheme()
+
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
@@ -44,7 +33,7 @@ def test_scheme(scheme, tol=1.0e-14):
     )
 
 
-@pytest.mark.parametrize("scheme", [quadpy.e3r2.stroud_e3r2_5_1()])
+@pytest.mark.parametrize("scheme", [quadpy.e3r2.schemes["stroud_secrest_07"]()])
 def test_show(scheme, backend="mpl"):
     scheme.show(backend=backend)
     plt.close()
