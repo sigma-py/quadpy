@@ -176,6 +176,29 @@ def _symm_rr0(a):
     return points
 
 
+def _symm_rs0_roll(data):
+    r, s = data
+    z = numpy.zeros_like(r)
+    points = numpy.array(
+        [
+            [+r, +s, z],
+            [+r, -s, z],
+            [-r, +s, z],
+            [-r, -s, z],
+            [z, +r, +s],
+            [z, +r, -s],
+            [z, -r, +s],
+            [z, -r, -s],
+            [+s, z, +r],
+            [+s, z, -r],
+            [-s, z, +r],
+            [-s, z, -r],
+        ]
+    )
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
 def _symm_rrr(a):
     points = numpy.array(
         [
@@ -281,6 +304,7 @@ def expand_symmetries_points_only(data):
             "zero3": _zero3,
             "symm_r00": _symm_r00,
             "symm_rr0": _symm_rr0,
+            "symm_rs0_roll": _symm_rs0_roll,
             "symm_rrr": _symm_rrr,
             "symm_rrs": _symm_rrs,
             "symm_rss_pm": _symm_rss_pm,
