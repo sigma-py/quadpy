@@ -2,11 +2,13 @@ from math import pi
 
 import numpy
 
-from ..helpers import QuadratureScheme, backend_to_function
+from ..helpers import QuadratureScheme, backend_to_function, expand_symmetries
 
 
 class S3Scheme(QuadratureScheme):
-    def __init__(self, name, source, degree, weights, points, tol=1.0e-14):
+    def __init__(self, name, source, degree, symmetry_data, tol=1.0e-14):
+        self.symmetry_data = symmetry_data
+        points, weights = expand_symmetries(symmetry_data)
         super().__init__(name, weights, points, degree, source, tol)
         self.domain = "S3"
 
@@ -24,7 +26,7 @@ class S3Scheme(QuadratureScheme):
 
     def integrate(self, f, center, radius, dot=numpy.dot):
         center = numpy.asarray(center)
-        rr = numpy.multiply.outer(radius, self.points)
+        rr = numpy.multiply.outer(radius, self.points.T)
         rr = numpy.swapaxes(rr, 0, -2)
         ff = numpy.asarray(f((rr + center).T))
         return 4 / 3 * pi * numpy.asarray(radius) ** 3 * dot(ff, self.weights)

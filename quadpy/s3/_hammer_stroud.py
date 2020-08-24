@@ -1,6 +1,6 @@
 import sympy
 
-from ..helpers import article, fsd, pm, untangle, z
+from ..helpers import article
 from ._helpers import S3Scheme
 
 _source = article(
@@ -19,20 +19,20 @@ pi = sympy.pi
 
 
 def hammer_stroud_11_3():
-    data = [(frac(1, 6), fsd(3, (sqrt(frac(3, 5)), 1)))]
-    points, weights = untangle(data)
-    return S3Scheme("Hammer-Stroud 11-3", _source, 3, weights, points)
+    d = {
+        "symm_r00": [[frac(1, 6)], [sqrt(frac(3, 5))]]
+    }
+    return S3Scheme("Hammer-Stroud 11-3", _source, 3, d)
 
 
 def hammer_stroud_12_3():
     alpha = sqrt(frac(3, 7))
-    data = [
-        (frac(1, 15), z(3)),
-        (frac(7, 90), fsd(3, (alpha, 1))),
-        (frac(7, 180), fsd(3, (alpha, 2))),
-    ]
-    points, weights = untangle(data)
-    return S3Scheme("Hammer-Stroud 12-3", _source, 5, weights, points)
+    d = {
+        "zero3": [[frac(1, 15)]],
+        "symm_r00": [[frac(7, 90)], [alpha]],
+        "symm_rr0": [[frac(7, 180)], [alpha]]
+    }
+    return S3Scheme("Hammer-Stroud 12-3", _source, 5, d)
 
 
 def hammer_stroud_14_3(variant_a=True):
@@ -47,11 +47,12 @@ def hammer_stroud_14_3(variant_a=True):
     nu = sqrt((7 - t * sqrt14) / 7)
     eta1 = sqrt(5 / (21 - t * 2 * sqrt14))
 
-    data = [(a1, fsd(3, (nu, 1))), (c1, pm([eta1, eta1, eta1]))]
-
-    points, weights = untangle(data)
+    d = {
+        "symm_r00": [[a1], [nu]],
+        "symm_rrr": [[c1], [eta1]]
+    }
     name = "Hammer-Stroud 14-3" + ("a" if variant_a else "b")
-    return S3Scheme(name, _source, 5, weights, points)
+    return S3Scheme(name, _source, 5, d)
 
 
 def _hammer_stroud_15_3(variant_a):
@@ -68,15 +69,14 @@ def _hammer_stroud_15_3(variant_a):
     c1 = 1 / eta2 ** 3 / 2520
     a0 = 1 - 6 * a1 - 12 * b1 - 8 * c1
 
-    data = [
-        (a0, [[0, 0, 0]]),
-        (a1, fsd(3, (sqrt(nu2), 1))),
-        (b1, fsd(3, (sqrt(xi2), 2))),
-        (c1, pm(3 * [sqrt(eta2)])),
-    ]
-    points, weights = untangle(data)
+    d = {
+        "zero3": [[a0]],
+        "symm_r00": [[a1], [sqrt(nu2)]],
+        "symm_rr0": [[b1], [sqrt(xi2)]],
+        "symm_rrr": [[c1], [sqrt(eta2)]],
+    }
     name = "Hammer-Stroud 15-3" + ("a" if variant_a else "b")
-    return S3Scheme(name, _source, 7, weights, points)
+    return S3Scheme(name, _source, 7, d)
 
 
 def hammer_stroud_15_3a():

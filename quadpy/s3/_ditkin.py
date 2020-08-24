@@ -1,6 +1,6 @@
 import sympy
 
-from ..helpers import article, pm, pm_roll, untangle
+from ..helpers import article
 from ._helpers import S3Scheme
 
 _source = article(
@@ -24,13 +24,11 @@ def ditkin_1(alpha=0):
 
     r, s = [sqrt((alpha + 5) * (5 + i * sqrt(5)) / 10 / (alpha + 7)) for i in [+1, -1]]
 
-    data = [
-        (B0, [[0, 0, 0]]),
-        (B1, pm_roll([r, s, 0])),
-    ]
-
-    points, weights = untangle(data)
-    return S3Scheme("Ditkin 1", _source, 5, weights, points)
+    d = {
+        "zero3": [[B0]],
+        "symm_rs0_roll": [[B1], [r], [s]]
+    }
+    return S3Scheme("Ditkin 1", _source, 5, d)
 
 
 def ditkin_2():
@@ -40,14 +38,12 @@ def ditkin_2():
     r, s = [sqrt((15 + i * 5 * sqrt(5)) / 42) for i in [+1, -1]]
     t = sqrt(frac(5, 21))
 
-    data = [
-        (B0, [[0, 0, 0]]),
-        (B1, pm_roll([r, s, 0])),
-        (B1, pm([t, t, t])),
-    ]
-
-    points, weights = untangle(data)
-    return S3Scheme("Ditkin 2", _source, 5, weights, points)
+    d = {
+        "zero3": [[B0]],
+        "symm_rs0_roll": [[B1], [r], [s]],
+        "symm_rrr": [[B1], [t]],
+    }
+    return S3Scheme("Ditkin 2", _source, 5, d)
 
 
 def ditkin_3():
@@ -60,12 +56,9 @@ def ditkin_3():
     t = sqrt(frac(1, 3))
     u, v = [sqrt((3 - i * sqrt5) / 6) for i in [+1, -1]]
 
-    data = [
-        (B0, [[0, 0, 0]]),
-        (B1, pm_roll([r, s, 0])),
-        (B2, pm_roll([u, v, 0])),
-        (B2, pm([t, t, t])),
-    ]
-
-    points, weights = untangle(data)
-    return S3Scheme("Ditkin 3", _source, 7, weights, points)
+    d = {
+        "zero3": [[B0]],
+        "symm_rs0_roll": [[B1, B2], [r, u], [s, v]],
+        "symm_rrr": [[B2], [t]],
+    }
+    return S3Scheme("Ditkin 3", _source, 7, d)

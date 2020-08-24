@@ -71,10 +71,10 @@ def stroud_7_4():
         for j in range(4)
         for k in range(4)
     ]
-
     points, weights = untangle(data)
+    d = {"plain": [weights, points[:, 0], points[:, 1], points[:, 2]]}
     weights /= 4 / 3 * math.pi
-    return S3Scheme("Stroud S3 7-4", _source, 7, weights, points)
+    return S3Scheme("Stroud S3 7-4", _source, 7, d)
 
 
 def stroud_14_1():
@@ -138,10 +138,11 @@ def stroud_14_1():
     ]
 
     points, weights = untangle(data)
+    d = {"plain": [weights, points[:, 0], points[:, 1], points[:, 2]]}
     weights *= 3
     # weights *= 4 * math.pi
     # weights /= 4 / 3 * math.pi
-    return S3Scheme("Stroud S3 14-1", _source, 14, weights, points)
+    return S3Scheme("Stroud S3 14-1", _source, 14, d)
 
 
 __all__ = [
