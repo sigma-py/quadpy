@@ -1,7 +1,7 @@
 import ndim
 import numpy
 import pytest
-from helpers import check_degree
+from helpers import check_degree, find_best_scheme
 from matplotlib import pyplot as plt
 
 import quadpy
@@ -36,10 +36,28 @@ def test_show(scheme, backend="mpl"):
     plt.close()
 
 
-if __name__ == "__main__":
-    # scheme_ = quadpy.s3.Stroud("S3 14-1")
-    # test_scheme(scheme_, 1.0e-14)
-    # test_show(scheme_, backend='vtk')
-    from helpers import find_equal
+def test_get_good_scheme():
+    degree = 0
+    while True:
+        best = find_best_scheme(
+            quadpy.s3.schemes.values(),
+            degree,
+            lambda pts: numpy.all((pts[0] ** 2 + pts[1] ** 2 + pts[2] ** 2 <= 1)),
+            lambda keys: len(
+                keys - set(["zero3", "symm_r00", "symm_rr0", "symm_rrr", "symm_rrs"])
+            )
+            == 0,
+        )
+        if best is None:
+            break
 
-    find_equal(schemes)
+        # print(degree, best.name)
+        b = quadpy.s3.get_good_scheme(degree)
+        assert best.name == b.name, f"{best.name} != {b.name}"
+        degree += 1
+
+    # assert degree == 12
+
+
+if __name__ == "__main__":
+    test_get_good_scheme()

@@ -34,7 +34,7 @@ def mysovskih():
         "symm_rr0": [[B3], [t]],
         "symm_rrr": [[B4], [u]],
     }
-    return S3Scheme("Mysovskih", _source, 7, d)
+    return S3Scheme("Mysovskih", d, 7, _source)
 
 
 register([mysovskih])

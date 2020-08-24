@@ -28,7 +28,7 @@ def ditkin_1(alpha=0):
         "zero3": [[B0]],
         "symm_rs0_roll": [[B1], [r], [s]]
     }
-    return S3Scheme("Ditkin 1", _source, 5, d)
+    return S3Scheme("Ditkin 1", d, 5, _source)
 
 
 def ditkin_2():
@@ -43,7 +43,7 @@ def ditkin_2():
         "symm_rs0_roll": [[B1], [r], [s]],
         "symm_rrr": [[B1], [t]],
     }
-    return S3Scheme("Ditkin 2", _source, 5, d)
+    return S3Scheme("Ditkin 2", d, 5, _source)
 
 
 def ditkin_3():
@@ -61,7 +61,7 @@ def ditkin_3():
         "symm_rs0_roll": [[B1, B2], [r, u], [s, v]],
         "symm_rrr": [[B2], [t]],
     }
-    return S3Scheme("Ditkin 3", _source, 7, d)
+    return S3Scheme("Ditkin 3", d, 7, _source)
 
 
 register([ditkin_1, ditkin_2, ditkin_3])

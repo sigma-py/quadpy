@@ -19,10 +19,8 @@ pi = sympy.pi
 
 
 def hammer_stroud_11_3():
-    d = {
-        "symm_r00": [[frac(1, 6)], [sqrt(frac(3, 5))]]
-    }
-    return S3Scheme("Hammer-Stroud 11-3", _source, 3, d)
+    d = {"symm_r00": [[frac(1, 6)], [sqrt(frac(3, 5))]]}
+    return S3Scheme("Hammer-Stroud 11-3", d, 3, _source)
 
 
 def hammer_stroud_12_3():
@@ -30,9 +28,9 @@ def hammer_stroud_12_3():
     d = {
         "zero3": [[frac(1, 15)]],
         "symm_r00": [[frac(7, 90)], [alpha]],
-        "symm_rr0": [[frac(7, 180)], [alpha]]
+        "symm_rr0": [[frac(7, 180)], [alpha]],
     }
-    return S3Scheme("Hammer-Stroud 12-3", _source, 5, d)
+    return S3Scheme("Hammer-Stroud 12-3", d, 5, _source)
 
 
 def hammer_stroud_14_3(variant_a=True):
@@ -47,12 +45,9 @@ def hammer_stroud_14_3(variant_a=True):
     nu = sqrt((7 - t * sqrt14) / 7)
     eta1 = sqrt(5 / (21 - t * 2 * sqrt14))
 
-    d = {
-        "symm_r00": [[a1], [nu]],
-        "symm_rrr": [[c1], [eta1]]
-    }
+    d = {"symm_r00": [[a1], [nu]], "symm_rrr": [[c1], [eta1]]}
     name = "Hammer-Stroud 14-3" + ("a" if variant_a else "b")
-    return S3Scheme(name, _source, 5, d)
+    return S3Scheme(name, d, 5, _source)
 
 
 def _hammer_stroud_15_3(variant_a):
@@ -76,7 +71,7 @@ def _hammer_stroud_15_3(variant_a):
         "symm_rrr": [[c1], [sqrt(eta2)]],
     }
     name = "Hammer-Stroud 15-3" + ("a" if variant_a else "b")
-    return S3Scheme(name, _source, 7, d)
+    return S3Scheme(name, d, 7, _source)
 
 
 def hammer_stroud_15_3a():
@@ -87,5 +82,12 @@ def hammer_stroud_15_3b():
     return _hammer_stroud_15_3(False)
 
 
-register([hammer_stroud_11_3, hammer_stroud_12_3, hammer_stroud_14_3,
-    hammer_stroud_15_3a, hammer_stroud_15_3b])
+register(
+    [
+        hammer_stroud_11_3,
+        hammer_stroud_12_3,
+        hammer_stroud_14_3,
+        hammer_stroud_15_3a,
+        hammer_stroud_15_3b,
+    ]
+)
