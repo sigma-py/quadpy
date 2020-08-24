@@ -2,7 +2,7 @@ import numpy
 import sympy
 
 from ..helpers import article
-from ._helpers import S3Scheme
+from ._helpers import S3Scheme, register
 
 _source = article(
     authors=["I.P. Mysovskih"],
@@ -35,3 +35,6 @@ def mysovskih():
         "symm_rrr": [[B4], [u]],
     }
     return S3Scheme("Mysovskih", _source, 7, d)
+
+
+register([mysovskih])

@@ -5,6 +5,14 @@ import numpy
 from ..helpers import QuadratureScheme, backend_to_function, expand_symmetries
 
 
+schemes = {}
+
+
+def register(in_schemes):
+    for scheme in in_schemes:
+        schemes[scheme.__name__] = scheme
+
+
 class S3Scheme(QuadratureScheme):
     def __init__(self, name, source, degree, symmetry_data, tol=1.0e-14):
         self.symmetry_data = symmetry_data

@@ -6,30 +6,11 @@ from matplotlib import pyplot as plt
 
 import quadpy
 
-schemes = [
-    quadpy.s3.ditkin_1(),
-    quadpy.s3.ditkin_2(),
-    quadpy.s3.ditkin_3(),
-    quadpy.s3.hammer_stroud_11_3(),
-    quadpy.s3.hammer_stroud_12_3(),
-    quadpy.s3.hammer_stroud_14_3(),
-    quadpy.s3.hammer_stroud_15_3a(),
-    quadpy.s3.hammer_stroud_15_3b(),
-    quadpy.s3.mysovskih(),
-    quadpy.s3.stroud_3_1(),
-    quadpy.s3.stroud_5_1(),
-    quadpy.s3.stroud_5_2(),
-    quadpy.s3.stroud_7_1a(),
-    quadpy.s3.stroud_7_1b(),
-    quadpy.s3.stroud_7_2(),
-    quadpy.s3.stroud_7_3(),
-    quadpy.s3.stroud_7_4(),
-    quadpy.s3.stroud_14_1(),
-]
 
-
-@pytest.mark.parametrize("scheme", schemes)
+@pytest.mark.parametrize("scheme", quadpy.s3.schemes.values())
 def test_scheme(scheme):
+    scheme = scheme()
+
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
@@ -49,7 +30,7 @@ def test_scheme(scheme):
     )
 
 
-@pytest.mark.parametrize("scheme", [quadpy.s3.hammer_stroud_11_3()])
+@pytest.mark.parametrize("scheme", [quadpy.s3.schemes["hammer_stroud_11_3"]()])
 def test_show(scheme, backend="mpl"):
     scheme.show(backend=backend)
     plt.close()

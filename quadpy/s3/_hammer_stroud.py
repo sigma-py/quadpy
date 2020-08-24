@@ -1,7 +1,7 @@
 import sympy
 
 from ..helpers import article
-from ._helpers import S3Scheme
+from ._helpers import S3Scheme, register
 
 _source = article(
     authors=["Preston C. Hammer", "Arthur H. Stroud"],
@@ -85,3 +85,7 @@ def hammer_stroud_15_3a():
 
 def hammer_stroud_15_3b():
     return _hammer_stroud_15_3(False)
+
+
+register([hammer_stroud_11_3, hammer_stroud_12_3, hammer_stroud_14_3,
+    hammer_stroud_15_3a, hammer_stroud_15_3b])

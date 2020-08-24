@@ -1,7 +1,7 @@
 import sympy
 
 from ..helpers import article
-from ._helpers import S3Scheme
+from ._helpers import S3Scheme, register
 
 _source = article(
     authors=["V.A. Ditkin"],
@@ -62,3 +62,6 @@ def ditkin_3():
         "symm_rrr": [[B2], [t]],
     }
     return S3Scheme("Ditkin 3", _source, 7, d)
+
+
+register([ditkin_1, ditkin_2, ditkin_3])
