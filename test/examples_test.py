@@ -126,10 +126,10 @@ def test_u3():
 
 
 def test_s3():
-    scheme = quadpy.s3.hammer_stroud_15_3a()
+    scheme = quadpy.s3.get_good_scheme(3)
     scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0, 0.0], 1.0)
 
-    scheme = quadpy.s3.hammer_stroud_15_3b()
+    scheme = quadpy.s3.get_good_scheme(5)
     scheme.integrate(
         lambda x: [numpy.exp(x[0]), numpy.exp(x[1])],
         [[1.0, 1.0, 0.0], [0.0, 0.3, 0.0], [2.0, 2.0, 0.0]],

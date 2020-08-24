@@ -4,7 +4,6 @@ import numpy
 
 from ..helpers import QuadratureScheme, backend_to_function, expand_symmetries
 
-
 schemes = {}
 
 

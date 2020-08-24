@@ -76,14 +76,16 @@ def stroud_e3r2_14_1(symbolic=False):
     return E3r2Scheme("Stroud E3r2 14-1", d, 14, source, 8.903e-14)
 
 
-register([
-    stroud_e3r2_5_1,
-    stroud_e3r2_5_2a,
-    stroud_e3r2_5_2b,
-    stroud_e3r2_5_3,
-    stroud_e3r2_7_1a,
-    stroud_e3r2_7_1b,
-    stroud_e3r2_7_2a,
-    stroud_e3r2_7_2b,
-    stroud_e3r2_14_1,
-])
+register(
+    [
+        stroud_e3r2_5_1,
+        stroud_e3r2_5_2a,
+        stroud_e3r2_5_2b,
+        stroud_e3r2_5_3,
+        stroud_e3r2_7_1a,
+        stroud_e3r2_7_1b,
+        stroud_e3r2_7_2a,
+        stroud_e3r2_7_2b,
+        stroud_e3r2_14_1,
+    ]
+)

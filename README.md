@@ -430,9 +430,9 @@ Example:
 import numpy
 import quadpy
 
-scheme = quadpy.s3.hammer_stroud_14_3()
+scheme = quadpy.s3.get_good_scheme(4)
 # scheme.show()
-val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0, 0.0], 1.0,)
+val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0, 0.0], 1.0)
 ```
 
 

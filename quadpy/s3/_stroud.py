@@ -145,14 +145,16 @@ def stroud_14_1():
     return S3Scheme("Stroud S3 14-1", d, 14, _source)
 
 
-register([
-    stroud_3_1,
-    stroud_5_1,
-    stroud_5_2,
-    stroud_7_1a,
-    stroud_7_1b,
-    stroud_7_2,
-    stroud_7_3,
-    stroud_7_4,
-    stroud_14_1,
-])
+register(
+    [
+        stroud_3_1,
+        stroud_5_1,
+        stroud_5_2,
+        stroud_7_1a,
+        stroud_7_1b,
+        stroud_7_2,
+        stroud_7_3,
+        stroud_7_4,
+        stroud_14_1,
+    ]
+)

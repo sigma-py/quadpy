@@ -24,10 +24,7 @@ def ditkin_1(alpha=0):
 
     r, s = [sqrt((alpha + 5) * (5 + i * sqrt(5)) / 10 / (alpha + 7)) for i in [+1, -1]]
 
-    d = {
-        "zero3": [[B0]],
-        "symm_rs0_roll": [[B1], [r], [s]]
-    }
+    d = {"zero3": [[B0]], "symm_rs0_roll": [[B1], [r], [s]]}
     return S3Scheme("Ditkin 1", d, 5, _source)
 
 
