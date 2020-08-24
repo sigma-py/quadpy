@@ -2,23 +2,16 @@ import accupy
 import ndim
 import numpy
 import pytest
-from helpers import check_degree
+from helpers import check_degree, find_best_scheme
 from matplotlib import pyplot as plt
 
 import quadpy
 
 
-@pytest.mark.parametrize(
-    "scheme",
-    [
-        quadpy.e3r.stroud_e3r_5_1(),
-        quadpy.e3r.stroud_e3r_5_2(),
-        quadpy.e3r.stroud_e3r_5_3(),
-        quadpy.e3r.stroud_e3r_7_1(),
-        quadpy.e3r.stroud_e3r_7_2(),
-    ],
-)
+@pytest.mark.parametrize("scheme", quadpy.e3r.schemes.values())
 def test_scheme(scheme):
+    scheme = scheme()
+
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
@@ -38,10 +31,33 @@ def test_scheme(scheme):
     )
 
 
-@pytest.mark.parametrize("scheme", [quadpy.e3r.stroud_secrest_10()])
+@pytest.mark.parametrize("scheme", [quadpy.e3r.schemes["stroud_secrest_10"]()])
 def test_show(scheme, backend="mpl"):
     scheme.show(backend=backend)
     plt.close()
+
+
+def test_get_good_scheme():
+    degree = 0
+    while True:
+        best = find_best_scheme(
+            quadpy.e3r.schemes.values(),
+            degree,
+            lambda pts: True,
+            lambda keys: len(
+                keys - set(["zero3", "symm_r00", "symm_rr0", "symm_rrr", "symm_rrs"])
+            )
+            == 0,
+        )
+        if best is None:
+            break
+
+        # print(degree, best.name)
+        b = quadpy.e3r.get_good_scheme(degree)
+        assert best.name == b.name, f"{best.name} != {b.name}"
+        degree += 1
+
+    assert degree == 8
 
 
 if __name__ == "__main__":

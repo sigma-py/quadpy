@@ -1,8 +1,8 @@
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, fsd, pm, pm_roll, untangle
-from ._helpers import E3r2Scheme
+from ..helpers import article
+from ._helpers import E3r2Scheme, register
 
 source = article(
     authors=["A.H. Stroud", "D. Secrest"],
@@ -27,42 +27,40 @@ def stroud_secrest_07():
     A = frac(2, 5)
     B = frac(1, 20)
 
-    data = [(A, [[0, 0, 0]]), (B, pm_roll([nu, xi, 0]))]
-    points, weights = untangle(data)
-    return E3r2Scheme("Stroud-Secrest VII", weights, points, 5, source)
+    d = {"zero3": [[A]], "symm_rs0_roll": [[B], [nu], [xi]]}
+    return E3r2Scheme("Stroud-Secrest VII", d, 5, source)
 
 
 def stroud_secrest_08a():
     r = sqrt(frac(5, 4))
     s = sqrt(frac(5, 2))
-    data = [(frac(4, 25), fsd(3, (r, 1))), (frac(1, 200), pm([s, s, s]))]
-    points, weights = untangle(data)
-    return E3r2Scheme("Stroud-Secrest VIIIa", weights, points, 5, source)
+    d = {
+        "symm_r00": [[frac(4, 25)], [r]],
+        "symm_rrr": [[frac(1, 200)], [s]],
+    }
+    return E3r2Scheme("Stroud-Secrest VIIIa", d, 5, source)
 
 
 def stroud_secrest_08b():
     r = sqrt(frac(5, 2))
     s = sqrt(frac(5, 6))
-    data = [
-        (frac(2, 5), [[0, 0, 0]]),
-        (frac(1, 25), fsd(3, (r, 1))),
-        (frac(9, 200), pm([s, s, s])),
-    ]
-    points, weights = untangle(data)
-    return E3r2Scheme("Stroud-Secrest VIIIb", weights, points, 5, source)
+    d = {
+        "zero3": [[frac(2, 5)]],
+        "symm_r00": [[frac(1, 25)], [r]],
+        "symm_rrr": [[frac(9, 200)], [s]],
+    }
+    return E3r2Scheme("Stroud-Secrest VIIIb", d, 5, source)
 
 
 def stroud_secrest_09():
     r, s = [sqrt((15 - p_m * 5 * sqrt(5)) / 12) for p_m in [+1, -1]]
     t = sqrt(frac(5, 6))
-
-    data = [
-        (frac(2, 5), [[0, 0, 0]]),
-        (frac(3, 100), pm_roll([r, s, 0])),
-        (frac(3, 100), pm([t, t, t])),
-    ]
-    points, weights = untangle(data)
-    return E3r2Scheme("Stroud-Secrest IX", weights, points, 5, source)
+    d = {
+        "zero3": [[frac(2, 5)]],
+        "symm_rs0_roll": [[frac(3, 100)], [r], [s]],
+        "symm_rrr": [[frac(3, 100)], [t]],
+    }
+    return E3r2Scheme("Stroud-Secrest IX", d, 5, source)
 
 
 def _stroud_secrest_10(positive):
@@ -78,15 +76,14 @@ def _stroud_secrest_10(positive):
     C = (162 + plus_minus * 41 * sqrt15) / 6174
     D = (783 - plus_minus * 202 * sqrt15) / 24696
 
-    data = [
-        (A, [[0, 0, 0]]),
-        (B, fsd(3, (r, 1))),
-        (C, fsd(3, (s, 2))),
-        (D, pm([t, t, t])),
-    ]
-    points, weights = untangle(data)
+    d = {
+        "zero3": [[A]],
+        "symm_r00": [[B], [r]],
+        "symm_rr0": [[C], [s]],
+        "symm_rrr": [[D], [t]],
+    }
     variant = "a" if positive else "b"
-    return E3r2Scheme(f"Stroud-Secrest X{variant}", weights, points, 7, source)
+    return E3r2Scheme(f"Stroud-Secrest X{variant}", d, 7, source)
 
 
 def stroud_secrest_10a():
@@ -114,14 +111,12 @@ def _stroud_secrest_11(positive):
     B = (395 - p_m * 279 * sqrt2) / 13720
     C = (45 + p_m * 29 * sqrt2) / 2744
 
-    data = [
-        (A, [[0, 0, 0]]),
-        (B, pm_roll([r, s, 0])),
-        (C, pm_roll([u, v, 0])),
-        (C, pm([t, t, t])),
-    ]
-    points, weights = untangle(data)
-    return E3r2Scheme("Stroud-Secrest XI", weights, points, 7, source)
+    d = {
+        "zero3": [[A]],
+        "symm_rs0_roll": [[B, C], [r, u], [s, v]],
+        "symm_rrr": [[C], [t]],
+    }
+    return E3r2Scheme("Stroud-Secrest XI", d, 7, source)
 
 
 def stroud_secrest_11a():
@@ -130,3 +125,17 @@ def stroud_secrest_11a():
 
 def stroud_secrest_11b():
     return _stroud_secrest_11(False)
+
+
+register(
+    [
+        stroud_secrest_07,
+        stroud_secrest_09,
+        stroud_secrest_08a,
+        stroud_secrest_08b,
+        stroud_secrest_10a,
+        stroud_secrest_10b,
+        stroud_secrest_11a,
+        stroud_secrest_11b,
+    ]
+)

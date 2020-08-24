@@ -17,7 +17,7 @@ source = article(
 
 def tyler_1():
     d = {
-        "zero": [[-frac(28, 45)]],
+        "zero2": [[-frac(28, 45)]],
         "d4_aa": [[frac(1, 36)], [1]],
         "d4_a0": [[frac(1, 45), frac(16, 45)], [1, frac(1, 2)]],
     }
@@ -35,7 +35,7 @@ def tyler_2():
 
 def tyler_3():
     d = {
-        "zero": [[frac(449, 315)]],
+        "zero2": [[frac(449, 315)]],
         "d4_a0": [
             [frac(37, 1260), frac(3, 28), -frac(69, 140)],
             [1, frac(2, 3), frac(1, 3)],

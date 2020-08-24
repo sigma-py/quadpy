@@ -11,7 +11,7 @@ from ._ditkin import ditkin_3 as stroud_7_3
 from ._hammer_stroud import hammer_stroud_11_3 as stroud_3_1
 from ._hammer_stroud import hammer_stroud_15_3a as stroud_7_1a
 from ._hammer_stroud import hammer_stroud_15_3b as stroud_7_1b
-from ._helpers import S3Scheme
+from ._helpers import S3Scheme, register
 from ._mysovskih import mysovskih as stroud_7_2
 
 _source = book(
@@ -71,10 +71,10 @@ def stroud_7_4():
         for j in range(4)
         for k in range(4)
     ]
-
     points, weights = untangle(data)
+    d = {"plain": [weights, points[:, 0], points[:, 1], points[:, 2]]}
     weights /= 4 / 3 * math.pi
-    return S3Scheme("Stroud S3 7-4", _source, 7, weights, points)
+    return S3Scheme("Stroud S3 7-4", d, 7, _source)
 
 
 def stroud_14_1():
@@ -138,20 +138,23 @@ def stroud_14_1():
     ]
 
     points, weights = untangle(data)
+    d = {"plain": [weights, points[:, 0], points[:, 1], points[:, 2]]}
     weights *= 3
     # weights *= 4 * math.pi
     # weights /= 4 / 3 * math.pi
-    return S3Scheme("Stroud S3 14-1", _source, 14, weights, points)
+    return S3Scheme("Stroud S3 14-1", d, 14, _source)
 
 
-__all__ = [
-    "stroud_3_1",
-    "stroud_5_1",
-    "stroud_5_2",
-    "stroud_7_1a",
-    "stroud_7_1b",
-    "stroud_7_2",
-    "stroud_7_3",
-    "stroud_7_4",
-    "stroud_14_1",
-]
+register(
+    [
+        stroud_3_1,
+        stroud_5_1,
+        stroud_5_2,
+        stroud_7_1a,
+        stroud_7_1b,
+        stroud_7_2,
+        stroud_7_3,
+        stroud_7_4,
+        stroud_14_1,
+    ]
+)

@@ -1,7 +1,7 @@
 import numpy
 
 
-def _zero(data):
+def _zero2(data):
     return numpy.array([[0.0], [0.0]])
 
 
@@ -134,13 +134,145 @@ def _d(n, offset, r):
     return points
 
 
+def _zero3(data):
+    return numpy.array([[0.0], [0.0], [0.0]])
+
+
+def _symm_r00(r):
+    zero = numpy.zeros_like(r)
+    points = numpy.array(
+        [
+            [+r, zero, zero],
+            [-r, zero, zero],
+            [zero, +r, zero],
+            [zero, -r, zero],
+            [zero, zero, +r],
+            [zero, zero, -r],
+        ]
+    )
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _symm_rr0(a):
+    z = numpy.zeros_like(a)
+    points = numpy.array(
+        [
+            [+a, +a, z],
+            [+a, z, +a],
+            [z, +a, +a],
+            [+a, -a, z],
+            [+a, z, -a],
+            [z, +a, -a],
+            [-a, +a, z],
+            [-a, z, +a],
+            [z, -a, +a],
+            [-a, -a, z],
+            [-a, z, -a],
+            [z, -a, -a],
+        ]
+    )
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _symm_rs0_roll(data):
+    r, s = data
+    z = numpy.zeros_like(r)
+    points = numpy.array(
+        [
+            [+r, +s, z],
+            [+r, -s, z],
+            [-r, +s, z],
+            [-r, -s, z],
+            [z, +r, +s],
+            [z, +r, -s],
+            [z, -r, +s],
+            [z, -r, -s],
+            [+s, z, +r],
+            [+s, z, -r],
+            [-s, z, +r],
+            [-s, z, -r],
+        ]
+    )
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _symm_rrr(a):
+    points = numpy.array(
+        [
+            [+a, +a, +a],
+            [-a, +a, +a],
+            [+a, -a, +a],
+            [-a, -a, +a],
+            [+a, +a, -a],
+            [-a, +a, -a],
+            [+a, -a, -a],
+            [-a, -a, -a],
+        ]
+    )
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _symm_rrs(data):
+    a, b = data
+    points = numpy.array(
+        [
+            [+a, +a, +b],
+            [+a, +b, +a],
+            [+b, +a, +a],
+            [+a, -a, +b],
+            [+a, +b, -a],
+            [+b, +a, -a],
+            [-a, +a, +b],
+            [-a, +b, +a],
+            [+b, -a, +a],
+            [-a, -a, +b],
+            [-a, +b, -a],
+            [+b, -a, -a],
+            [+a, +a, -b],
+            [+a, -b, +a],
+            [-b, +a, +a],
+            [+a, -a, -b],
+            [+a, -b, -a],
+            [-b, +a, -a],
+            [-a, +a, -b],
+            [-a, -b, +a],
+            [-b, -a, +a],
+            [-a, -a, -b],
+            [-a, -b, -a],
+            [-b, -a, -a],
+        ]
+    )
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
+def _symm_rss_pm(data):
+    r, s = data
+    points = numpy.array(
+        [
+            [+r, +s, +s],
+            [+s, +r, +s],
+            [+s, +s, +r],
+            [-r, -s, -s],
+            [-s, -r, -s],
+            [-s, -s, -r],
+        ]
+    )
+    points = numpy.moveaxis(points, 0, 1)
+    return points
+
+
 def expand_symmetries_points_only(data):
     points = []
     counts = []
 
     for key, points_raw in data.items():
         fun = {
-            "zero": _zero,
+            "zero2": _zero2,
             "d4_aa": _d4_aa,
             "d4_a0": _d4_a0,
             "c4": _c4,
@@ -168,6 +300,14 @@ def expand_symmetries_points_only(data):
             "d8.1": lambda r: _d(8, 1, r),
             "d10.0": lambda r: _d(10, 0, r),
             "d10.1": lambda r: _d(10, 1, r),
+            #
+            "zero3": _zero3,
+            "symm_r00": _symm_r00,
+            "symm_rr0": _symm_rr0,
+            "symm_rs0_roll": _symm_rs0_roll,
+            "symm_rrr": _symm_rrr,
+            "symm_rrs": _symm_rrs,
+            "symm_rss_pm": _symm_rss_pm,
             #
             "plain": lambda vals: vals.reshape(vals.shape[0], 1, -1),
         }[key]

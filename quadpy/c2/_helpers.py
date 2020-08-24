@@ -89,8 +89,6 @@ def _scheme_from_dict(content, source=None):
 
 
 def get_good_scheme(degree):
-    from ._helpers import schemes
-
     if degree <= 22:
         return {
             0: schemes["dunavant_00"],

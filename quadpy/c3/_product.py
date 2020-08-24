@@ -18,4 +18,6 @@ def product(scheme1d):
 
     degree = min([s.degree for s in schemes])
     weights /= 8
-    return C3Scheme(f"Product scheme ({scheme1d.name})", weights, points, degree)
+
+    d = {"plain": [weights, points[0], points[1], points[2]]}
+    return C3Scheme(f"Product scheme ({scheme1d.name})", d, degree)

@@ -1,7 +1,7 @@
 from sympy import Rational as frac
 
 from ..helpers import article
-from ._helpers import C3Scheme, expand_symmetries
+from ._helpers import C3Scheme, register
 
 source = article(
     authors=["G.W. Tyler"],
@@ -16,15 +16,16 @@ source = article(
 
 def tyler_1():
     d = {"symm_r00": [[frac(1, 6)], [1]]}
-    points, weights = expand_symmetries(d)
-    return C3Scheme("Tyler 1", weights, points, 3, source)
+    return C3Scheme("Tyler 1", d, 3, source)
 
 
 def tyler_2():
     d = {
-        "zero": [[-frac(62, 45)]],
+        "zero3": [[-frac(62, 45)]],
         "symm_r00": [[frac(16, 45), frac(1, 45)], [frac(1, 2), 1]],
         "symm_rrr": [[frac(1, 72)], [1]],
     }
-    points, weights = expand_symmetries(d)
-    return C3Scheme("Tyler 2", weights, points, 5, source)
+    return C3Scheme("Tyler 2", d, 5, source)
+
+
+register([tyler_1, tyler_2])

@@ -18,7 +18,7 @@ source = article(
 
 def albrecht_collatz_1():
     d = {
-        "zero": [[frac(5, 12)]],
+        "zero2": [[frac(5, 12)]],
         "d4_a0": [[frac(1, 8)], [1]],
         "d4_aa": [[frac(1, 48)], [1]],
     }
@@ -30,7 +30,7 @@ def albrecht_collatz_2():
     s = sqrt(frac(1, 3))
     t = sqrt(frac(14, 15))
     d = {
-        "zero": [[frac(2, 7)]],
+        "zero2": [[frac(2, 7)]],
         "c2": [[frac(5, 63)], [0], [t]],
         "sxy": [[frac(5, 36)], [r], [s]],
     }
@@ -41,7 +41,7 @@ def albrecht_collatz_3():
     r = sqrt(frac(7, 15))
     s, t = [sqrt((7 + i * sqrt(24)) / 15) for i in [+1, -1]]
     d = {
-        "zero": [[frac(2, 7)]],
+        "zero2": [[frac(2, 7)]],
         "c2": [[frac(25, 168), frac(5, 48), frac(5, 48)], [r, s, t], [r, -t, -s]],
     }
     return C2Scheme("Albrecht-Collatz 3", d, 5, source, 4.442e-16)
@@ -49,7 +49,7 @@ def albrecht_collatz_3():
 
 def albrecht_collatz_4():
     d = {
-        "zero": [[frac(2, 45)]],
+        "zero2": [[frac(2, 45)]],
         "d4_a0": [[frac(2, 45)], [1]],
         "d4_aa": [[frac(1, 60), frac(8, 45)], [1, frac(1, 2)]],
     }

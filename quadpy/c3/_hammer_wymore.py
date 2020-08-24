@@ -3,7 +3,7 @@ import math
 import sympy
 
 from ..helpers import article
-from ._helpers import C3Scheme, expand_symmetries
+from ._helpers import C3Scheme, register
 
 _source = article(
     authors=["Preston C. Hammer", "A. Wayne Wymore"],
@@ -16,7 +16,9 @@ _source = article(
 )
 
 
-def hammer_wymore(lmbda=1):
+# hw(27 / 20) has all the desirable properties (positive weights, points inside the
+# domain) while minimizing the ratio max(weights) / min(weights)
+def hammer_wymore(lmbda=sympy.Rational(27, 20)):
     symbolic = not isinstance(lmbda, float)
     frac = sympy.Rational if symbolic else lambda x, y: x / y
     sqrt = sympy.sqrt if symbolic else math.sqrt
@@ -42,8 +44,9 @@ def hammer_wymore(lmbda=1):
     c0 = (p3 * p1 - p2 ** 2) / (p0 * p2 - p1 ** 2)
     c1 = (p3 * p0 - p1 * p2) / (p1 ** 2 - p2 * p0)
 
-    u3 = (-c1 - sqrt(c1 ** 2 - 4 * c0)) / 2
-    u4 = (-c1 + sqrt(c1 ** 2 - 4 * c0)) / 2
+    b = sqrt(c1 ** 2 - 4 * c0)
+    u3 = (-c1 - b) / 2
+    u4 = (-c1 + b) / 2
 
     a3 = (p0 * u4 - p1) / 8 / (u4 - u3)
     a4 = (p0 * u3 - p1) / 8 / (u3 - u4)
@@ -54,10 +57,11 @@ def hammer_wymore(lmbda=1):
     x4 = sqrt(u4)
 
     d = {
-        "symm_r00": [[a1], [x1]],
-        "symm_rr0": [[a2], [x2]],
-        "symm_rrr": [[a3, a4], [x3, x4]],
+        "symm_r00": [[a1 / 8], [x1]],
+        "symm_rr0": [[a2 / 8], [x2]],
+        "symm_rrr": [[a3 / 8, a4 / 8], [x3, x4]],
     }
-    points, weights = expand_symmetries(d)
-    weights /= 8
-    return C3Scheme(f"Hammer-Wymore (lambda = {lmbda})", weights, points, 7, _source)
+    return C3Scheme(f"Hammer-Wymore (lambda = {lmbda})", d, 7, _source)
+
+
+register([hammer_wymore])

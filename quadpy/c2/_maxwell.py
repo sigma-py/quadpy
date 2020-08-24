@@ -20,7 +20,7 @@ def maxwell():
     s, t = [sqrt((93 + i * 3 * sqrt(186)) / 155) for i in [+1, -1]]
 
     d = {
-        "zero": [[frac(1, 81)]],
+        "zero2": [[frac(1, 81)]],
         "d4_a0": [[frac(49, 324)], [r]],
         # ERR typo in Stroud: 648 vs 649
         "d4_ab": [[frac(31, 648)], [s], [t]],

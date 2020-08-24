@@ -18,7 +18,7 @@ source = article(
 
 def miller():
     d = {
-        "zero": [[frac(250, 225)]],
+        "zero2": [[frac(250, 225)]],
         "d4_a0": [[-frac(8, 225)], [1]],
         "d4_aa": [[frac(7, 900)], [1]],
     }

@@ -58,7 +58,7 @@ def f(x):
 
 val, err = quadpy.quad(f, 0.0, 6.0)
 ```
-This is just like
+This is like
 [scipy](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html)
 with the addition that quadpy handles complex-, vector-, matrix-valued integrands,
 and "intervals" in spaces of arbitrary dimension.
@@ -152,7 +152,7 @@ Advanced topics:
  * [Newton-Cotes](quadpy/c1/_newton_cotes.py) (open and closed, arbitrary degree)
 
 [See
-her](https://github.com/nschloe/quadpy/wiki/Creating-your-own-Gauss-quadrature-in-two-simple-steps)
+here](https://github.com/nschloe/quadpy/wiki/Creating-your-own-Gauss-quadrature-in-two-simple-steps)
 for how to generate Gauss formulas for your own weight functions.
 
 Example:
@@ -430,9 +430,9 @@ Example:
 import numpy
 import quadpy
 
-scheme = quadpy.s3.hammer_stroud_14_3()
+scheme = quadpy.s3.get_good_scheme(4)
 # scheme.show()
-val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0, 0.0], 1.0,)
+val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0, 0.0], 1.0)
 ```
 
 
@@ -483,6 +483,7 @@ val = scheme.integrate(
  * [Mustard-Lyness-Blatt](quadpy/c3/_mustard_lyness_blatt.py) (1963, 6 schemes up to degree 5)
  * [Stroud](quadpy/c3/_stroud_1967.py) (1967, degree 5)
  * [Sarma-Stroud](quadpy/c3/_sarma_stroud.py) (1969, degree 7)
+ * [Witherden-Vincent](quadpy/c3/_witherden_vincent/) (2015, 7 schemes up to degree degree 11)
  * [all schemes from the n-cube](#n-cube-cn)
  * Product schemes derived from line segment schemes
 
@@ -557,7 +558,7 @@ Example:
 ```python
 import quadpy
 
-scheme = quadpy.e3r.stroud_secrest_09()
+scheme = quadpy.e3r.get_good_scheme(5)
 # scheme.show()
 val = scheme.integrate(lambda x: x[0] ** 2)
 ```
@@ -575,7 +576,7 @@ Example:
 ```python
 import quadpy
 
-scheme = quadpy.e3r2.stroud_secrest_10a()
+scheme = quadpy.e3r2.get_good_scheme(6)
 # scheme.show()
 val = scheme.integrate(lambda x: x[0] ** 2)
 ```
@@ -726,7 +727,7 @@ you can install.
 
 ### Testing
 
-To run the tests, just check out this repository and type
+To run the tests, check out this repository and type
 ```
 MPLBACKEND=Agg pytest
 ```

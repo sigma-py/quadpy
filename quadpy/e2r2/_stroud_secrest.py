@@ -22,7 +22,7 @@ def stroud_secrest_5():
     A = frac(1, 2)
     B = frac(1, 12)
 
-    d = {"zero": [[A]], "c2_a0": [[B], [nu]], "sxy": [[B], [xi], [eta]]}
+    d = {"zero2": [[A]], "c2_a0": [[B], [nu]], "sxy": [[B], [xi], [eta]]}
     return E2r2Scheme("Stroud-Secrest V", d, 5, _source, 4.360e-16)
 
 

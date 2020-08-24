@@ -24,7 +24,7 @@ def hammer_stroud_1_2():
 def hammer_stroud_2_2():
     alpha = sqrt(frac(3, 5))
     d = {
-        "zero": [[frac(16, 81)]],
+        "zero2": [[frac(16, 81)]],
         "d4_a0": [[frac(10, 81)], [alpha]],
         "d4_aa": [[frac(25, 4 * 81)], [alpha]],
     }

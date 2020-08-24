@@ -2,7 +2,7 @@ import numpy
 
 from ..helpers import book, untangle
 from ..u3 import _stroud as sphere_stroud
-from ._helpers import E3r2Scheme
+from ._helpers import E3r2Scheme, register
 from ._stroud_secrest import stroud_secrest_07 as stroud_e3r2_5_1
 from ._stroud_secrest import stroud_secrest_08a as stroud_e3r2_5_2a
 from ._stroud_secrest import stroud_secrest_08b as stroud_e3r2_5_2b
@@ -71,19 +71,21 @@ def stroud_e3r2_14_1(symbolic=False):
     data = [
         (A[i] * B[j], r[i] * numpy.array([v[j]])) for i in range(4) for j in range(72)
     ]
-
     points, weights = untangle(data)
-    return E3r2Scheme("Stroud E3r2 14-1", weights, points, 14, source, 8.903e-14)
+    d = {"plain": [weights, points[:, 0], points[:, 1], points[:, 2]]}
+    return E3r2Scheme("Stroud E3r2 14-1", d, 14, source, 8.903e-14)
 
 
-__all__ = [
-    "stroud_e3r2_5_1",
-    "stroud_e3r2_5_2a",
-    "stroud_e3r2_5_2b",
-    "stroud_e3r2_5_3",
-    "stroud_e3r2_7_1a",
-    "stroud_e3r2_7_1b",
-    "stroud_e3r2_7_2a",
-    "stroud_e3r2_7_2b",
-    "stroud_e3r2_14_1",
-]
+register(
+    [
+        stroud_e3r2_5_1,
+        stroud_e3r2_5_2a,
+        stroud_e3r2_5_2b,
+        stroud_e3r2_5_3,
+        stroud_e3r2_7_1a,
+        stroud_e3r2_7_1b,
+        stroud_e3r2_7_2a,
+        stroud_e3r2_7_2b,
+        stroud_e3r2_14_1,
+    ]
+)

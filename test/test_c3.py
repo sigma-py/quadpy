@@ -1,60 +1,16 @@
 import numpy
 import orthopy
 import pytest
+from helpers import find_best_scheme
 from matplotlib import pyplot as plt
 
 import quadpy
 
-schemes = (
-    [quadpy.c3.product(quadpy.c1.midpoint())]
-    + [quadpy.c3.product(quadpy.c1.trapezoidal())]
-    + [quadpy.c3.product(quadpy.c1.gauss_legendre(k)) for k in range(1, 6)]
-    + [quadpy.c3.product(quadpy.c1.newton_cotes_closed(k)) for k in range(1, 5)]
-    + [quadpy.c3.product(quadpy.c1.newton_cotes_open(k)) for k in range(1, 5)]
-    + [
-        quadpy.c3.hammer_stroud_1_3(),
-        quadpy.c3.hammer_stroud_2_3(),
-        quadpy.c3.hammer_stroud_4_3(),
-        quadpy.c3.hammer_stroud_5_3a(),
-        quadpy.c3.hammer_stroud_5_3b(),
-        quadpy.c3.hammer_stroud_6_3(),
-        quadpy.c3.hammer_wymore(),
-        quadpy.c3.mustard_lyness_blatt_1(),
-        quadpy.c3.mustard_lyness_blatt_2(),
-        quadpy.c3.mustard_lyness_blatt_3(),
-        quadpy.c3.mustard_lyness_blatt_4(),
-        quadpy.c3.mustard_lyness_blatt_5(),
-        quadpy.c3.mustard_lyness_blatt_6(),
-        quadpy.c3.mustard_lyness_blatt_7(),
-        quadpy.c3.sadowsky(),
-        quadpy.c3.stroud_c3_3_1(),
-        quadpy.c3.stroud_c3_3_2(),
-        quadpy.c3.stroud_c3_3_3(),
-        quadpy.c3.stroud_c3_3_4(),
-        quadpy.c3.stroud_c3_3_5(),
-        quadpy.c3.stroud_c3_3_6(),
-        quadpy.c3.stroud_c3_3_7(),
-        quadpy.c3.stroud_c3_5_1(),
-        quadpy.c3.stroud_c3_5_2(),
-        quadpy.c3.stroud_c3_5_3(),
-        quadpy.c3.stroud_c3_5_4(),
-        quadpy.c3.stroud_c3_5_5(),
-        quadpy.c3.stroud_c3_5_6(),
-        quadpy.c3.stroud_c3_5_7(),
-        quadpy.c3.stroud_c3_5_8(),
-        quadpy.c3.stroud_c3_7_1a(),
-        quadpy.c3.stroud_c3_7_1b(),
-        quadpy.c3.stroud_c3_7_2(),
-        quadpy.c3.stroud_c3_7_3(),
-        quadpy.c3.stroud_1967(),
-        quadpy.c3.tyler_1(),
-        quadpy.c3.tyler_2(),
-    ]
-)
 
-
-@pytest.mark.parametrize("scheme", schemes)
+@pytest.mark.parametrize("scheme", quadpy.c3.schemes.values())
 def test_scheme(scheme, print_degree=False):
+    scheme = scheme()
+
     assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
     assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
 
@@ -91,12 +47,28 @@ def test_show(scheme):
     plt.close()
 
 
-if __name__ == "__main__":
-    # scheme_ = Product(quadpy.c1.NewtonCotesOpen(5))
-    # scheme_ = quadpy.c3.HammerStroud("6-3")
-    # test_scheme(scheme_, 1.0e-14, print_degree=True)
-    # test_show(scheme_)
-    # scheme_.show(backend="vtk")
-    from helpers import find_equal
+def test_get_good_scheme():
+    degree = 0
+    while True:
+        best = find_best_scheme(
+            quadpy.c3.schemes.values(),
+            degree,
+            lambda pts: numpy.all((pts >= -1) & (pts <= 1)),
+            lambda keys: len(
+                keys - set(["zero3", "symm_r00", "symm_rr0", "symm_rrr", "symm_rrs"])
+            )
+            == 0,
+        )
+        if best is None:
+            break
 
-    find_equal(schemes)
+        # print(degree, best.name)
+        b = quadpy.c3.get_good_scheme(degree)
+        assert best.name == b.name, f"{best.name} != {b.name}"
+        degree += 1
+
+    assert degree == 12
+
+
+if __name__ == "__main__":
+    test_get_good_scheme()

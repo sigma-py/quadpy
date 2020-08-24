@@ -24,7 +24,7 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 
 def dunavant_00():
-    d = {"zero": [[1]]}
+    d = {"zero2": [[1]]}
     return C2Scheme("Dunavant 0", d, 1, source, 1.0e-100)
 
 

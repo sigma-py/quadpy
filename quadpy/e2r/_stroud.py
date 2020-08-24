@@ -22,7 +22,7 @@ _source = book(
 
 def stroud_4_1():
     d = {
-        "zero": [[frac(7, 10)]],
+        "zero2": [[frac(7, 10)]],
         "d5.0": [[frac(3, 50)], [[2 * sqrt(5)]]],
     }
     return E2rScheme("Stroud 4-1", d, 4, _source)

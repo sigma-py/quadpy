@@ -1,35 +1,16 @@
 import ndim
 import numpy
 import pytest
-from helpers import check_degree
+from helpers import check_degree, find_best_scheme
 from matplotlib import pyplot as plt
 
 import quadpy
 
-schemes = [
-    quadpy.s3.ditkin_1(),
-    quadpy.s3.ditkin_2(),
-    quadpy.s3.ditkin_3(),
-    quadpy.s3.hammer_stroud_11_3(),
-    quadpy.s3.hammer_stroud_12_3(),
-    quadpy.s3.hammer_stroud_14_3(),
-    quadpy.s3.hammer_stroud_15_3a(),
-    quadpy.s3.hammer_stroud_15_3b(),
-    quadpy.s3.mysovskih(),
-    quadpy.s3.stroud_3_1(),
-    quadpy.s3.stroud_5_1(),
-    quadpy.s3.stroud_5_2(),
-    quadpy.s3.stroud_7_1a(),
-    quadpy.s3.stroud_7_1b(),
-    quadpy.s3.stroud_7_2(),
-    quadpy.s3.stroud_7_3(),
-    quadpy.s3.stroud_7_4(),
-    quadpy.s3.stroud_14_1(),
-]
 
-
-@pytest.mark.parametrize("scheme", schemes)
+@pytest.mark.parametrize("scheme", quadpy.s3.schemes.values())
 def test_scheme(scheme):
+    scheme = scheme()
+
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
@@ -49,16 +30,34 @@ def test_scheme(scheme):
     )
 
 
-@pytest.mark.parametrize("scheme", [quadpy.s3.hammer_stroud_11_3()])
+@pytest.mark.parametrize("scheme", [quadpy.s3.schemes["hammer_stroud_11_3"]()])
 def test_show(scheme, backend="mpl"):
     scheme.show(backend=backend)
     plt.close()
 
 
-if __name__ == "__main__":
-    # scheme_ = quadpy.s3.Stroud("S3 14-1")
-    # test_scheme(scheme_, 1.0e-14)
-    # test_show(scheme_, backend='vtk')
-    from helpers import find_equal
+def test_get_good_scheme():
+    degree = 0
+    while True:
+        best = find_best_scheme(
+            quadpy.s3.schemes.values(),
+            degree,
+            lambda pts: numpy.all((pts[0] ** 2 + pts[1] ** 2 + pts[2] ** 2 <= 1)),
+            lambda keys: len(
+                keys - set(["zero3", "symm_r00", "symm_rr0", "symm_rrr", "symm_rrs"])
+            )
+            == 0,
+        )
+        if best is None:
+            break
 
-    find_equal(schemes)
+        # print(degree, best.name)
+        b = quadpy.s3.get_good_scheme(degree)
+        assert best.name == b.name, f"{best.name} != {b.name}"
+        degree += 1
+
+    # assert degree == 12
+
+
+if __name__ == "__main__":
+    test_get_good_scheme()

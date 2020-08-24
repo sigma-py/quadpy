@@ -69,7 +69,7 @@ def test_get_good_scheme():
             quadpy.c2.schemes.values(),
             degree,
             lambda pts: numpy.all((pts >= -1) & (pts <= 1)),
-            lambda keys: len(keys - set(["d4_a0", "d4_aa", "d4_ab", "zero"])) == 0,
+            lambda keys: len(keys - set(["d4_a0", "d4_aa", "d4_ab", "zero2"])) == 0,
         )
         if best is None:
             break

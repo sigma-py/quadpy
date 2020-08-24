@@ -33,7 +33,7 @@ def albrecht_1():
 
 
 def albrecht_2():
-    d = {"zero": [[frac(1, 4)]], "d6.1": [[frac(1, 8)], [sqrt(frac(2, 3))]]}
+    d = {"zero2": [[frac(1, 4)]], "d6.1": [[frac(1, 8)], [sqrt(frac(2, 3))]]}
     return S2Scheme("Albrecht 2", d, 5, _source)
 
 
@@ -55,7 +55,7 @@ def albrecht_4():
     C = frac(125, 3072)
 
     d = {
-        "zero": [[B0]],
+        "zero2": [[B0]],
         "d6.0": [[B1, B2], [rho1, rho2]],
         "d6.1": [[C], [sqrt(frac(4, 5))]],
     }
@@ -102,7 +102,7 @@ def albrecht_6():
     C = frac(16807, 933120)
 
     d = {
-        "zero": [[B0]],
+        "zero2": [[B0]],
         "d10.0": [B, sqrt(sigma2)],
         "d10.1": [[C], [sqrt(frac(6, 7))]],
     }
@@ -153,7 +153,7 @@ def albrecht_8():
     ws = linear_solve(A, b)
 
     d = {
-        "zero": [[m0]],
+        "zero2": [[m0]],
         "d10.0": [ws, sqrt(sigma2)],
         "d10.1": [[wt1, wt2], [tau1, tau2]],
     }

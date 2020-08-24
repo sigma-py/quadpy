@@ -1,8 +1,8 @@
 import numpy
 import sympy
 
-from ..helpers import article, fsd, pm, untangle
-from ._helpers import S3Scheme
+from ..helpers import article
+from ._helpers import S3Scheme, register
 
 _source = article(
     authors=["I.P. Mysovskih"],
@@ -29,12 +29,12 @@ def mysovskih():
     B3 = frac(324, 12005)
     B4 = frac(2187, 96040)
 
-    data = [
-        (B1, fsd(3, (r, 1))),
-        (B2, fsd(3, (s, 1))),
-        (B3, fsd(3, (t, 2))),
-        (B4, pm([u, u, u])),
-    ]
+    d = {
+        "symm_r00": [[B1, B2], [r, s]],
+        "symm_rr0": [[B3], [t]],
+        "symm_rrr": [[B4], [u]],
+    }
+    return S3Scheme("Mysovskih", d, 7, _source)
 
-    points, weights = untangle(data)
-    return S3Scheme("Mysovskih", _source, 7, weights, points)
+
+register([mysovskih])

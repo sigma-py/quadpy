@@ -1,32 +1,22 @@
 import numpy
 import orthopy
 import pytest
+from helpers import find_best_scheme
 from matplotlib import pyplot as plt
 
 import quadpy
 
 
-@pytest.mark.parametrize(
-    "scheme",
-    [
-        quadpy.e3r2.stroud_e3r2_5_1(),
-        quadpy.e3r2.stroud_e3r2_5_2a(),
-        quadpy.e3r2.stroud_e3r2_5_2b(),
-        quadpy.e3r2.stroud_e3r2_5_3(),
-        quadpy.e3r2.stroud_e3r2_7_1a(),
-        quadpy.e3r2.stroud_e3r2_7_1b(),
-        quadpy.e3r2.stroud_e3r2_7_2a(),
-        quadpy.e3r2.stroud_e3r2_7_2b(),
-        quadpy.e3r2.stroud_e3r2_14_1(),
-    ],
-)
+@pytest.mark.parametrize("scheme", quadpy.e3r2.schemes.values())
 def test_scheme(scheme, tol=1.0e-14):
+    scheme = scheme()
+
     assert scheme.points.dtype == numpy.float64, scheme.name
     assert scheme.weights.dtype == numpy.float64, scheme.name
 
     print(scheme)
 
-    evaluator = orthopy.enr2.Eval(scheme.points.T, "physicists")
+    evaluator = orthopy.enr2.Eval(scheme.points, "physicists")
 
     k = 0
     while True:
@@ -44,13 +34,34 @@ def test_scheme(scheme, tol=1.0e-14):
     )
 
 
-@pytest.mark.parametrize("scheme", [quadpy.e3r2.stroud_e3r2_5_1()])
+@pytest.mark.parametrize("scheme", [quadpy.e3r2.schemes["stroud_secrest_07"]()])
 def test_show(scheme, backend="mpl"):
     scheme.show(backend=backend)
     plt.close()
 
 
+def test_get_good_scheme():
+    degree = 0
+    while True:
+        best = find_best_scheme(
+            quadpy.e3r2.schemes.values(),
+            degree,
+            lambda pts: True,
+            lambda keys: len(
+                keys - set(["zero3", "symm_r00", "symm_rr0", "symm_rrr", "symm_rrs"])
+            )
+            == 0,
+        )
+        if best is None:
+            break
+
+        # print(degree, best.name)
+        b = quadpy.e3r2.get_good_scheme(degree)
+        assert best.name == b.name, f"{best.name} != {b.name}"
+        degree += 1
+
+    assert degree == 8
+
+
 if __name__ == "__main__":
-    scheme_ = quadpy.e3r2.Stroud("7-2b")
-    test_scheme(scheme_, 1.0e-14)
-    test_show(scheme_, backend="vtk")
+    test_get_good_scheme()
