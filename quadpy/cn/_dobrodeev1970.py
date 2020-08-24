@@ -43,10 +43,10 @@ def dobrodeev_1970(n):
     weights *= frac(125, 729)
 
     # d = {
-    #     "0_n": [[w0]],
-    #     "a1_0": [[w1], [lmbdas[0]]],
-    #     "a2_0": [[w1], [lmbdas[0]]],
-    #     "a3_0": [[w1], [lmbdas[0]]],
-    #     "an": [[w], [sqrt(delta2)]]
+    #     "0": [[w0]],
+    #     "a0": [[w1], [lmbdas[0]]],
+    #     "aa0": [[w1], [lmbdas[0]]],
+    #     "aaa0": [[w1], [lmbdas[0]]],
+    #     "a": [[w], [sqrt(delta2)]]
     # }
     return CnScheme("Dobrodeev 1970", n, weights, points, 7, _source, 8.100e-13)

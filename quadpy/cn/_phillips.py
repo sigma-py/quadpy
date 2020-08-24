@@ -1,9 +1,8 @@
 import numpy
-import scipy.special
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, fsd, untangle, z
+from ..helpers import article, fsd, untangle, z, comb
 from ._helpers import CnScheme
 
 _source = article(
@@ -58,12 +57,12 @@ def phillips(n):
 
     c = gamma / (2 * (n - 1) * mu ** 6)
 
-    a = 1 - 2 * n * (b1 + b2) - 4 * int(scipy.special.binom(n, 2)) * c
+    a = 1 - 2 * n * (b1 + b2) - 4 * comb(n, 2) * c
 
     if n > 2:
         nu = 1 / sqrt(r)
-        d = delta / (4 * int(scipy.special.binom(n - 1, 2)) * nu ** 6)
-        a -= 8 * int(scipy.special.binom(n, 3)) * d
+        d = delta / (4 * comb(n - 1, 2) * nu ** 6)
+        a -= 8 * comb(n, 3) * d
 
     data = [
         (a, z(n)),
