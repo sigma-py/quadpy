@@ -23,7 +23,7 @@ _source = book(
 
 def stroud_4_1():
     d = {
-        "zero": [[frac(1, 2)]],
+        "zero2": [[frac(1, 2)]],
         "d5.0": [[frac(1, 10)], [[sqrt(2)]]],
     }
     return E2r2Scheme("Stroud 4-1", d, 4, _source, 2.220e-16)
@@ -33,7 +33,7 @@ def stroud_5_2():
     # Cartesian product Gauss formula
     r = sqrt(frac(3, 2))
     d = {
-        "zero": [[frac(4, 9)]],
+        "zero2": [[frac(4, 9)]],
         "d4_a0": [[frac(1, 9)], [r]],
         "d4_aa": [[frac(1, 36)], [r]],
     }

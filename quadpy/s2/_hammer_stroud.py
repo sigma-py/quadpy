@@ -29,7 +29,7 @@ sin = numpy.vectorize(sympy.sin)
 
 def hammer_stroud_12_2():
     d = {
-        "zero": [[frac(1, 6)]],
+        "zero2": [[frac(1, 6)]],
         "d4_a0": [[frac(1, 6)], [sqrt(frac(1, 2))]],
         "sxy": [[frac(1, 24)], [sqrt(frac(1, 2))], [sqrt(frac(1, 2))]],
     }
@@ -68,7 +68,7 @@ def hammer_stroud_19():
     a = sqrt((6 + sqrt6) / 10)
 
     d = {
-        "zero": [[frac(1, 9)]],
+        "zero2": [[frac(1, 9)]],
         "d4_ab": [
             [alpha1, alpha3],
             [0.5505043204538557, 0.7932084745126058],

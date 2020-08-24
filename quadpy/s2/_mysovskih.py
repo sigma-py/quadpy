@@ -28,7 +28,7 @@ def mysovskih_1(alpha=0):
     B1 = frac((alpha + 2) * (alpha + 6), 5 * (alpha + 4) ** 2)
 
     d = {
-        "zero": [[B0]],
+        "zero2": [[B0]],
         "d5.0": [[B1], [b]],
     }
     return S2Scheme("Mysovskih 1", d, 4, _source)

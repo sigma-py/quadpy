@@ -29,7 +29,7 @@ def radon(alpha=0):
     B = frac((alpha + 2) * (alpha + 6), 6 * (alpha + 4) ** 2)
 
     d = {
-        "zero": [[A]],
+        "zero2": [[A]],
         "c2_a0": [[B], [r]],
         # ERR Stroud is missing +- in front of t.
         "sxy": [[B], [s], [t]],

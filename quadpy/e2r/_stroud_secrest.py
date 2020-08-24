@@ -21,7 +21,7 @@ def stroud_secrest_5():
     eta = sqrt(15)
 
     d = {
-        "zero": [[frac(7, 10)]],
+        "zero2": [[frac(7, 10)]],
         "c2_a0": [[frac(1, 20)], [nu]],
         "sxy": [[frac(1, 20)], [xi], [eta]],
     }
