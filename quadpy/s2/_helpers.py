@@ -25,7 +25,7 @@ class S2Scheme(QuadratureScheme):
     ):
         self.domain = "S2"
         self.symmetry_data = symmetry_data
-        points, weights = expand_symmetries(symmetry_data)
+        points, weights = expand_symmetries(symmetry_data, dim=2)
         assert points.shape[0] == 2
         assert points.shape[1] == weights.shape[0], f"{points.shape}, {weights.shape}"
         if weight_factor is not None:

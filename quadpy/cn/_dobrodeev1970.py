@@ -41,4 +41,12 @@ def dobrodeev_1970(n):
     points, weights = untangle(data)
     points = numpy.ascontiguousarray(points.T)
     weights *= frac(125, 729)
+
+    # d = {
+    #     "0_n": [[w0]],
+    #     "a1_0": [[w1], [lmbdas[0]]],
+    #     "a2_0": [[w1], [lmbdas[0]]],
+    #     "a3_0": [[w1], [lmbdas[0]]],
+    #     "an": [[w], [sqrt(delta2)]]
+    # }
     return CnScheme("Dobrodeev 1970", n, weights, points, 7, _source, 8.100e-13)

@@ -15,7 +15,7 @@ def register(in_schemes):
 class E3r2Scheme(QuadratureScheme):
     def __init__(self, name, symmetry_data, degree, source, tol=1.0e-14):
         self.symmetry_data = symmetry_data
-        points, weights = expand_symmetries(symmetry_data)
+        points, weights = expand_symmetries(symmetry_data, dim=3)
         super().__init__(name, weights, points, degree, source, tol)
         self.domain = "E3r2"
 

@@ -22,4 +22,4 @@ def thacher(n):
     data = [(1, [n * [2 * r]]), (+r, _s(n, -1, r)), (-r, _s(n, +1, r))]
     points, weights = untangle(data)
     points = numpy.ascontiguousarray(points.T)
-    return CnScheme("Thacher", n, weights, points, 2, _source, 1.511e-14)
+    return CnScheme(f"Thacher ({n}D)", n, weights, points, 2, _source, 1.399e-14)

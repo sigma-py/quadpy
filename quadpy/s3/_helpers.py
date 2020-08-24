@@ -15,7 +15,7 @@ def register(in_schemes):
 class S3Scheme(QuadratureScheme):
     def __init__(self, name, symmetry_data, degree, source=None, tol=1.0e-14):
         self.symmetry_data = symmetry_data
-        points, weights = expand_symmetries(symmetry_data)
+        points, weights = expand_symmetries(symmetry_data, dim=3)
         super().__init__(name, weights, points, degree, source, tol)
         self.domain = "S3"
 

@@ -1,7 +1,6 @@
-import numpy
 from sympy import Rational as frac
 
-from ..helpers import article, fsd, untangle, z
+from ..helpers import article, expand_symmetries
 from ._helpers import CnScheme
 
 _source = article(
@@ -16,7 +15,9 @@ _source = article(
 
 
 def tyler(n):
-    data = [(frac(3 - n, 3), z(n)), (frac(1, 6), fsd(n, (1, 1)))]
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    d = {
+        "0": [[frac(3 - n, 3)]],
+        "a0": [[frac(1, 6)], [1]]
+    }
+    points, weights = expand_symmetries(d, n)
     return CnScheme("Tyler", n, weights, points, 3, _source)

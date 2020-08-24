@@ -118,7 +118,7 @@ def _optimize(
 
     def get_w_from_x(x):
         d = x_to_dict(x)
-        points, len_symm = expand_symmetries_points_only(d)
+        points, len_symm = expand_symmetries_points_only(d, dim=2)
 
         if numpy.any(numpy.isnan(points)):
             # return some "large" residual value

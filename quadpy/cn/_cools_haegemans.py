@@ -3,7 +3,7 @@ import math
 import numpy
 import sympy
 
-from ..helpers import article, fsd, pm, prod, untangle, z
+from ..helpers import article, fsd, pm, prod, untangle, z, expand_symmetries
 from ._helpers import CnScheme
 
 _source = article(
@@ -30,15 +30,13 @@ def cools_haegemans_1(n, delta2=1, symbolic=False):
     m = 1
 
     w0 = frac(3 * delta2 - 1, 3 * delta2)
-    w = frac(_mu(2, symbolic) ** m * _mu(0, symbolic) ** (n - m), 2 ** n * delta2 ** m)
+    w = frac(1, 3) ** m / (2 ** n * delta2 ** m)
 
-    data = [
-        (w0, z(n)),
-        (w, pm(n * [sqrt(delta2)])),
-    ]
-
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    d = {
+        "0": [[w0]],
+        "a": [[w], [sqrt(delta2)]]
+    }
+    points, weights = expand_symmetries(d, n)
     return CnScheme(f"Cools-Haegemans 1 (dim={n})", n, weights, points, 3, _source)
 
 
@@ -54,7 +52,7 @@ def cools_haegemans_2(n, delta2=1, symbolic=False):
         36 * delta2 ** 2,
     )
     w1 = frac(5 * (3 * delta2 - 1) ** 2, 72 * delta2)
-    w = frac(_mu(2, symbolic) ** m * _mu(0, symbolic) ** (n - m), 2 ** n * delta2 ** m)
+    w = frac(1, 3) ** m / (2 ** n * delta2 ** m)
 
     lmbdas = [sqrt(lmbda2) for lmbda2 in lmbdas2]
 
@@ -63,9 +61,15 @@ def cools_haegemans_2(n, delta2=1, symbolic=False):
         (w1, fsd(n, (lmbdas[0], 1))),
         (w, pm(n * [sqrt(delta2)])),
     ]
-
     points, weights = untangle(data)
     points = numpy.ascontiguousarray(points.T)
+
+    d = {
+        "0": [[w0]],
+        "a0": [[w1], [lmbdas[0]]],
+        "a": [[w], [sqrt(delta2)]]
+    }
+    points, weights = expand_symmetries(d, n)
     return CnScheme("Cools-Haegemans 2", n, weights, points, 5, _source, 6.312e-14)
 
 

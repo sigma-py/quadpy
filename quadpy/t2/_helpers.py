@@ -26,7 +26,7 @@ class T2Scheme(TnScheme):
     ):
         self.symmetry_data = symmetry_data
 
-        points, weights = expand_symmetries(symmetry_data)
+        points, weights = expand_symmetries(symmetry_data, dim=2)
         if weight_factor is not None:
             weights *= weight_factor
 

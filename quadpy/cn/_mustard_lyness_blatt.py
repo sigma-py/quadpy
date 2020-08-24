@@ -1,8 +1,7 @@
-import numpy
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, fsd, pm, untangle
+from ..helpers import article, expand_symmetries
 from ._helpers import CnScheme
 
 _source = article(
@@ -19,12 +18,10 @@ _source = article(
 
 def mustard_lyness_blatt(n):
     r = sqrt(frac(2, 5))
-    data = [
-        (frac(8 - 5 * n, 9), [n * [0]]),
-        (frac(5, 18), fsd(n, (r, 1))),
-        (frac(1, 9 * 2 ** n), pm(n * [1])),
-    ]
-
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    d = {
+        "0": [[frac(8 - 5 * n, 9)]],
+        "a0": [[frac(5, 18)], [r]],
+        "a": [[frac(1, 9 * 2 ** n)], [1]]
+    }
+    points, weights = expand_symmetries(d, n)
     return CnScheme("Mustard-Lyness-Blatt", n, weights, points, 5, _source, 6.312e-14)

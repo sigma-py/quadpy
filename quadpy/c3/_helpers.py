@@ -17,7 +17,7 @@ def register(in_schemes):
 class C3Scheme(CnScheme):
     def __init__(self, name, symmetry_data, degree, source=None, tol=1.0e-14):
         self.symmetry_data = symmetry_data
-        points, weights = helpers.expand_symmetries(symmetry_data)
+        points, weights = helpers.expand_symmetries(symmetry_data, dim=3)
         super().__init__(name, 3, weights, points, degree, source, tol)
         self.domain = "C3"
 
