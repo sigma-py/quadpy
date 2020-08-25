@@ -5,7 +5,20 @@ from numpy import cos, pi, sin
 import quadpy
 
 
-def test_simple():
+def test_x():
+    val, _ = quadpy.c1.integrate_adaptive(lambda x: x, [-1, 1])
+    exact = 0.0
+    assert abs(exact - val) < 1.0e-10
+
+
+def test_372():
+    # https://github.com/nschloe/quadpy/issues/372
+    val, _ = quadpy.c1.integrate_adaptive(lambda x: [0 * x, 2 * x], [0, 1])
+    exact = [0.0, 1.0]
+    assert numpy.all(numpy.abs(exact - val) < 1.0e-10)
+
+
+def test_sin():
     val, _ = quadpy.c1.integrate_adaptive(sin, [0.0, pi], 1.0e-10)
     exact = 2.0
     assert abs(exact - val) < 1.0e-10
@@ -144,6 +157,6 @@ def test_245():
 
 
 if __name__ == "__main__":
-    test_245()
+    test_372()
     # test_vector_valued(1)
     # test_simple()
