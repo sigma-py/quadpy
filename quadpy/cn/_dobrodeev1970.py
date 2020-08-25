@@ -30,11 +30,12 @@ def dobrodeev_1970(n):
     a = sqrt(frac(3, 5))
     b = a
     c = sqrt(frac(3, 5) * frac(alpha + 1790, alpha + 2114))
+    d = 1
     data = [
         (A, fsd(n, (a, 3))),
         (B, fsd(n, (b, 2))),
         (C, fsd(n, (c, 1))),
-        (D, fsd(n, (1.0, 1))),
+        (D, fsd(n, (d, 1))),
         (E, z(n)),
     ]
 

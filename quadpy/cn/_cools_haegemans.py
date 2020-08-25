@@ -3,7 +3,7 @@ import math
 import numpy
 import sympy
 
-from ..helpers import article, fsd, pm, prod, untangle, z, expand_symmetries
+from ..helpers import article, prod, expand_symmetries
 from ._helpers import CnScheme
 
 _source = article(
@@ -55,14 +55,6 @@ def cools_haegemans_2(n, delta2=1, symbolic=False):
     w = frac(1, 3) ** m / (2 ** n * delta2 ** m)
 
     lmbdas = [sqrt(lmbda2) for lmbda2 in lmbdas2]
-
-    data = [
-        (w0, z(n)),
-        (w1, fsd(n, (lmbdas[0], 1))),
-        (w, pm(n * [sqrt(delta2)])),
-    ]
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
 
     d = {
         "0": [[w0]],
