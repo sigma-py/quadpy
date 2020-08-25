@@ -15,7 +15,7 @@ def register(in_schemes):
 class E3rScheme(QuadratureScheme):
     def __init__(self, name, symmetry_data, degree, source, tol=1.0e-14):
         self.symmetry_data = symmetry_data
-        points, weights = expand_symmetries(symmetry_data)
+        points, weights = expand_symmetries(symmetry_data, dim=3)
         self.domain = "E3r"
         super().__init__(name, weights, points, degree, source, tol)
 
@@ -35,13 +35,13 @@ class E3rScheme(QuadratureScheme):
 def get_good_scheme(degree):
     if degree <= 7:
         return {
-            0: schemes["stroud_secrest_08"](),
-            1: schemes["stroud_secrest_08"](),
-            2: schemes["stroud_secrest_08"](),
-            3: schemes["stroud_secrest_08"](),
-            4: schemes["stroud_secrest_08"](),
-            5: schemes["stroud_secrest_08"](),
-            6: schemes["stroud_secrest_10"](),
-            7: schemes["stroud_secrest_10"](),
-        }[degree]
+            0: schemes["stroud_secrest_08"],
+            1: schemes["stroud_secrest_08"],
+            2: schemes["stroud_secrest_08"],
+            3: schemes["stroud_secrest_08"],
+            4: schemes["stroud_secrest_08"],
+            5: schemes["stroud_secrest_08"],
+            6: schemes["stroud_secrest_10"],
+            7: schemes["stroud_secrest_10"],
+        }[degree]()
     return None

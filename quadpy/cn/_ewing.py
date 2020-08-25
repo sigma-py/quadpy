@@ -1,7 +1,6 @@
-import numpy
 from sympy import Rational as frac
 
-from ..helpers import article, pm, untangle
+from ..helpers import article, expand_symmetries
 from ._helpers import CnScheme
 
 _source = article(
@@ -18,7 +17,6 @@ _source = article(
 
 
 def ewing(n):
-    data = [(frac(2, 3), [n * [0]]), (frac(1, 3 * 2 ** n), pm(n * [1]))]
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    d = {"0": [[frac(2, 3)]], "a": [[frac(1, 3 * 2 ** n)], [1]]}
+    points, weights = expand_symmetries(d, n)
     return CnScheme("Ewing", n, weights, points, 3, _source)

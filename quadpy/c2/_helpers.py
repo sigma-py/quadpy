@@ -21,7 +21,7 @@ class C2Scheme(CnScheme):
         self, name, symmetry_data, degree, source=None, tol=1.0e-14, comments=None
     ):
         self.symmetry_data = symmetry_data
-        points, weights = expand_symmetries(symmetry_data)
+        points, weights = expand_symmetries(symmetry_data, dim=2)
         super().__init__(name, 2, weights, points, degree, source, tol, comments)
         self.domain = "C2"
 

@@ -2,7 +2,7 @@ import numpy
 from sympy import Rational as frac
 from sympy import S, sqrt
 
-from ..helpers import article, fsd, pm, untangle, z
+from ..helpers import article, expand_symmetries, pm, untangle, z
 from ._helpers import CnScheme, _fs11
 
 _source = article(
@@ -21,13 +21,11 @@ _source = article(
 def stroud_1966_a(n):
     r = sqrt(frac(5 * n + 4, 30))
     s = sqrt(frac(5 * n + 4, 15 * n - 12))
-    data = [
-        (frac(40, (5 * n + 4) ** 2), fsd(n, (r, 1))),
-        (frac(5 * n - 4, (5 * n + 4)) ** 2 / 2 ** n, pm(n * [s])),
-    ]
-
-    points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    d = {
+        "a0": [[frac(40, (5 * n + 4) ** 2)], [r]],
+        "a": [[frac(5 * n - 4, (5 * n + 4)) ** 2 / 2 ** n], [s]],
+    }
+    points, weights = expand_symmetries(d, n)
     return CnScheme("Stroud 1966a", n, weights, points, 5, _source, 2.432e-14)
 
 
@@ -52,7 +50,6 @@ def stroud_1966_c(n):
     r = sqrt((5 * n + 4 + 2 * (n - 1) * sqrt(5 * n + 4)) / (15 * n))
     s = sqrt((5 * n + 4 - 2 * sqrt(5 * n + 4)) / (15 * n))
     data = [(frac(4, 5 * n + 4), z(n)), (frac(5, (5 * n + 4) * 2 ** n), _fs11(n, r, s))]
-
     points, weights = untangle(data)
     points = numpy.ascontiguousarray(points.T)
     return CnScheme("Stroud 1966c", n, weights, points, 5, _source, 2.097e-13)

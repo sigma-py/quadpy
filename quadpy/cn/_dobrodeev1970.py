@@ -30,15 +30,24 @@ def dobrodeev_1970(n):
     a = sqrt(frac(3, 5))
     b = a
     c = sqrt(frac(3, 5) * frac(alpha + 1790, alpha + 2114))
+    d = 1
     data = [
         (A, fsd(n, (a, 3))),
         (B, fsd(n, (b, 2))),
         (C, fsd(n, (c, 1))),
-        (D, fsd(n, (1.0, 1))),
+        (D, fsd(n, (d, 1))),
         (E, z(n)),
     ]
 
     points, weights = untangle(data)
     points = numpy.ascontiguousarray(points.T)
     weights *= frac(125, 729)
+
+    # d = {
+    #     "0": [[w0]],
+    #     "a0": [[w1], [lmbdas[0]]],
+    #     "aa0": [[w1], [lmbdas[0]]],
+    #     "aaa0": [[w1], [lmbdas[0]]],
+    #     "a": [[w], [sqrt(delta2)]]
+    # }
     return CnScheme("Dobrodeev 1970", n, weights, points, 7, _source, 8.100e-13)

@@ -30,13 +30,12 @@ def _mcnamee_stenger_3(n, integrator, symbolic):
     u = sqrt(u2)
 
     data = [
-        (A0, z(n)),
-        (A1, fsd(n, (u, 1))),
+        (A0 / I0, z(n)),
+        (A1 / I0, fsd(n, (u, 1))),
     ]
 
     points, weights = untangle(data)
     points = numpy.ascontiguousarray(points.T)
-    weights /= I0
     return "McNamee-Stenger 3", n, weights, points, 3, _source
 
 
