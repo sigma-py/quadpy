@@ -16,7 +16,7 @@ def integrate_adaptive(
     intervals,
     eps_abs=1.0e-10,
     eps_rel=1.0e-10,
-    criteria_connection=numpy.all,
+    criteria_connection=numpy.any,
     # Use 21-point Gauss-Kronrod like QUADPACK
     # <https://en.wikipedia.org/wiki/QUADPACK#General-purpose_routines>
     kronrod_degree=10,

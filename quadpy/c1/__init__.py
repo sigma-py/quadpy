@@ -1,3 +1,4 @@
+from ._adaptive import integrate_adaptive
 from ._chebyshev_gauss import chebyshev_gauss_1, chebyshev_gauss_2
 from ._clenshaw_curtis import clenshaw_curtis
 from ._fejer import fejer_1, fejer_2
@@ -9,7 +10,6 @@ from ._gauss_patterson import gauss_patterson
 from ._gauss_radau import gauss_radau
 from ._midpoint import midpoint
 from ._newton_cotes import newton_cotes_closed, newton_cotes_open
-from ._tools import integrate_adaptive
 from ._trapezoidal import trapezoidal
 
 __all__ = [

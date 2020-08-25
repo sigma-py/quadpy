@@ -3,7 +3,13 @@ import numpy
 import quadpy
 
 
-def test_simple():
+def test_x():
+    val, _ = quadpy.quad(lambda x: x, -1.0, 1.0)
+    exact = 0.0
+    assert abs(exact - val) < 1.0e-10
+
+
+def test_sin_x():
     val, err = quadpy.quad(lambda x: numpy.sin(x) - x, 0.0, 6.0)
 
     ref = -17 - numpy.cos(6)
@@ -79,5 +85,4 @@ def test_gh295():
 
 
 if __name__ == "__main__":
-    # test_ln()
-    test_gh295()
+    test_x()
