@@ -2,7 +2,7 @@ import numpy
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, fsd, untangle, z, comb
+from ..helpers import article, comb, fsd, untangle, z
 from ._helpers import CnScheme
 
 _source = article(

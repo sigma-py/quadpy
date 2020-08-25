@@ -2,7 +2,7 @@ import numpy
 from sympy import Rational as frac
 from sympy import S, sqrt
 
-from ..helpers import article, fsd, pm, untangle, z, expand_symmetries
+from ..helpers import article, expand_symmetries, pm, untangle, z
 from ._helpers import CnScheme, _fs11
 
 _source = article(
@@ -23,7 +23,7 @@ def stroud_1966_a(n):
     s = sqrt(frac(5 * n + 4, 15 * n - 12))
     d = {
         "a0": [[frac(40, (5 * n + 4) ** 2)], [r]],
-        "a": [[frac(5 * n - 4, (5 * n + 4)) ** 2 / 2 ** n], [s]]
+        "a": [[frac(5 * n - 4, (5 * n + 4)) ** 2 / 2 ** n], [s]],
     }
     points, weights = expand_symmetries(d, n)
     return CnScheme("Stroud 1966a", n, weights, points, 5, _source, 2.432e-14)

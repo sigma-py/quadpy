@@ -17,9 +17,6 @@ _source = article(
 
 
 def ewing(n):
-    d = {
-        "0": [[frac(2, 3)]],
-        "a": [[frac(1, 3 * 2 ** n)], [1]]
-    }
+    d = {"0": [[frac(2, 3)]], "a": [[frac(1, 3 * 2 ** n)], [1]]}
     points, weights = expand_symmetries(d, n)
     return CnScheme("Ewing", n, weights, points, 3, _source)

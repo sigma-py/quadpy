@@ -15,9 +15,6 @@ _source = article(
 
 
 def tyler(n):
-    d = {
-        "0": [[frac(3 - n, 3)]],
-        "a0": [[frac(1, 6)], [1]]
-    }
+    d = {"0": [[frac(3 - n, 3)]], "a0": [[frac(1, 6)], [1]]}
     points, weights = expand_symmetries(d, n)
     return CnScheme("Tyler", n, weights, points, 3, _source)

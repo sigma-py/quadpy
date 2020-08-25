@@ -2,7 +2,7 @@ import numpy
 from sympy import Rational as frac
 from sympy import sqrt
 
-from ..helpers import article, fsd, untangle, z, expand_symmetries
+from ..helpers import article, expand_symmetries, fsd, untangle, z
 from ._helpers import CnScheme
 
 _source = article(
@@ -17,9 +17,7 @@ _source = article(
 
 
 def hammer_stroud_1n(n):
-    d = {
-        "a0": [[frac(1, 2 * n)], [sqrt(frac(n, 3))]]
-    }
+    d = {"a0": [[frac(1, 2 * n)], [sqrt(frac(n, 3))]]}
     points, weights = expand_symmetries(d, n)
     return CnScheme("Hammer-Stroud 1n", n, weights, points, 3, _source, 5.863e-14)
 
