@@ -148,5 +148,4 @@ def get_good_scheme(degree):
         }[degree]()
 
     # degree > 50
-    assert False
-    return
+    return None
