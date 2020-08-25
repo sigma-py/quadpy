@@ -146,7 +146,7 @@ Advanced topics:
  * [Clenshaw-Curtis](quadpy/c1/_clenshaw_curtis.py) (arbitrary degree)
  * [Fejér](quadpy/c1/_fejer.py) (type 1 and 2, arbitrary degree)
  * [Gauss-Jacobi](quadpy/c1/_gauss_jacobi.py) (arbitrary degree)
- * [Gauss-Legendre](c1/_gauss_legendre.py) (arbitrary degree)
+ * [Gauss-Legendre](quadpy/c1/_gauss_legendre.py) (arbitrary degree)
  * [Gauss-Lobatto](quadpy/c1/_gauss_lobatto.py) (arbitrary degree)
  * [Gauss-Kronrod](quadpy/c1/_gauss_kronrod.py) (arbitrary degree)
  * [Gauss-Patterson](quadpy/c1/_gauss_patterson.py) (9 nested schemes up to degree 767)
@@ -368,7 +368,7 @@ val = scheme.integrate(lambda x: x[0] ** 2)
  * [Stroud](quadpy/e2r2/_stroud.py) (1971, 3 schemes up to degree 7)
  * [Haegemans-Piessens](quadpy/e2r2/_haegemans_piessens/) (1977, 2 schemes of degree 9)
  * [Cools-Haegemans](quadpy/e2r2/_cools_haegemans/) (1985, 3 schemes up to degree 13)
- * [all schemes from the nD space with weight function exp(-r<sup>2</sup>)]((#nd-space-with-weight-function-exp-r2-enr3))
+ * [all schemes from the nD space with weight function exp(-r<sup>2</sup>)](#nd-space-with-weight-function-exp-r2-enr2)
 
 Example:
 ```python
@@ -387,7 +387,7 @@ val = scheme.integrate(lambda x: x[0] ** 2)
  * [McLaren](quadpy/u3/_mclaren.py) (1963, 10 schemes up to degree 14)
  * [Lebedev](quadpy/u3/_lebedev/) (1976, 34 schemes up to degree 131)
  * [Bažant-Oh](quadpy/u3/_bazant_oh/) (1986, 3 schemes up to degree 13)
- * [Heo-Xu](quadpy/u3/_heo_xu.py) (2001, 27 schemes up to degree 39)
+ * [Heo-Xu](quadpy/u3/_heo_xu/) (2001, 27 schemes up to degree 39)
  * [Fliege-Maier](quadpy/u3/_fliege_maier/) (2007, 4 schemes up to degree 4,
    single-precision)
  * [all schemes from the n-sphere](#n-sphere-un)
@@ -448,7 +448,7 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0, 0.0], 1.0)
  * [Beckers-Haegemans](quadpy/t3/_beckers_haegemans) (1990, degrees 8 and 9)
  * [Gatermann](quadpy/t3/_gatermann) (1992, degree 5)
  * [Liu-Vinokur](quadpy/t3/_liu_vinokur.py) (1998, 14 schemes up to degree 5)
- * [Walkington](quadpy/t3/_walkington.py) (2000, 6 schemes up to degree 7)
+ * [Walkington](quadpy/t3/_walkington/) (2000, 6 schemes up to degree 7)
  * [Zhang-Cui-Liu](quadpy/t3/_zhang_cui_liu/) (2009, 2 schemes up to degree 14)
  * [Xiao-Gimbutas](quadpy/t3/_xiao_gimbutas/) (2010, 15 schemes up to degree 15)
  * [Shunn-Ham](quadpy/t3/_shunn_ham/) (2012, 6 schemes up to degree 7)
@@ -618,7 +618,7 @@ val = scheme.integrate(
  * [Stroud](quadpy/un/_stroud_1967.py) (1967, degree 7)
  * [Stroud](quadpy/un/_stroud_1969.py) (1969, 3 <= n <= 16, degree 11)
  * [Stroud](quadpy/un/_stroud.py) (1971, 6 schemes up to degree 5)
- * [Dobrodeev](quadpy/un/_dobrodeev.py) (1978, n >= 2, degree 5)
+ * [Dobrodeev](quadpy/un/_dobrodeev_1978.py) (1978, n >= 2, degree 5)
  * [Mysovskikh](quadpy/un/_mysovskikh.py) (1980, 2 schemes up to degree 5)
 
 Example:
@@ -636,12 +636,12 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
  * [Stroud](quadpy/sn/_stroud_1957.py) (1957, degree 2)
  * [Hammer-Stroud](quadpy/sn/_hammer_stroud.py) (1958, 2 schemes up to degree 5)
  * [Stroud](quadpy/sn/_stroud_1966.py) (1966, 4 schemes of degree 5)
- * [Stroud](quadpy/sn/_stroud_1967a.py) (1967, 4 <= n <= 7, 2 schemes of degree 5)
- * [Stroud](quadpy/sn/_stroud_1967b.py) (1967, n >= 3, 3 schemes of degree 7)
+ * [Stroud](quadpy/sn/_stroud_1967_5.py) (1967, 4 <= n <= 7, 2 schemes of degree 5)
+ * [Stroud](quadpy/sn/_stroud_1967_7.py) (1967, n >= 3, 3 schemes of degree 7)
  * [Stenger](quadpy/sn/_stenger.py) (1967, 6 schemes up to degree 11)
  * [McNamee-Stenger](quadpy/sn/_mcnamee_stenger.py) (1967, 6 schemes up to degree 9)
- * [Dobrodeev](quadpy/sn/_dobrodeev.py) (1970, n >= 3, degree 7)
- * [Dobrodeev](quadpy/sn/_dobrodeev.py) (1978, 2 <= n <= 20, degree 5)
+ * [Dobrodeev](quadpy/sn/_dobrodeev_1970.py) (1970, n >= 3, degree 7)
+ * [Dobrodeev](quadpy/sn/_dobrodeev_1978.py) (1978, 2 <= n <= 20, degree 5)
  * [Stoyanova](quadpy/sn/_stoyanova.py) (1997, n >= 5, degree 7)
 
 Example:
@@ -665,8 +665,8 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
  * [Phillips](quadpy/cn/_phillips.py) (1967, degree 7)
  * [McNamee-Stenger](quadpy/cn/_mcnamee_stenger.py) (1967, 6 schemes up to degree 9)
  * [Stroud](quadpy/cn/_stroud_1968.py) (1968, degree 5)
- * [Dobrodeev](quadpy/cn/_dobrodeev.py) (1970, n >= 5, degree 7)
- * [Dobrodeev](quadpy/cn/_dobrodeev.py) (1978, n >= 2, degree 5)
+ * [Dobrodeev](quadpy/cn/_dobrodeev_1970.py) (1970, n >= 5, degree 7)
+ * [Dobrodeev](quadpy/cn/_dobrodeev_1978.py) (1978, n >= 2, degree 5)
  * [Cools-Haegemans](quadpy/cn/_cools_haegemans.py) (1994, 2 schemes up to degree 5)
 
 Example:
@@ -699,8 +699,8 @@ val = scheme.integrate(lambda x: x[0] ** 2)
 ### nD space with weight function exp(-r<sup>2</sup>) (_E<sub>n</sub><sup>r<sup>2</sup></sup>_)
  * [Stroud-Secrest](quadpy/enr2/_stroud_secrest.py) (1963, 4 schemes up to degree 5)
  * [McNamee-Stenger](quadpy/enr2/_mcnamee_stenger.py) (1967, 6 schemes up to degree 9)
- * [Stroud](quadpy/enr2/_stroud_1967a.py) (1967, 2 schemes of degree 5)
- * [Stroud](quadpy/enr2/_stroud_1967b.py) (1967, 3 schemes of degree 7)
+ * [Stroud](quadpy/enr2/_stroud_1967_5.py) (1967, 2 schemes of degree 5)
+ * [Stroud](quadpy/enr2/_stroud_1967_7.py) (1967, 3 schemes of degree 7)
  * [Stenger](quadpy/enr2/_stenger.py) (1971, 6 schemes up to degree 11, varying dimensionality restrictions)
  * [Stroud](quadpy/enr2/_stroud.py) (1971, 5 schemes up to degree 5)
  * [Phillips](quadpy/enr2/_phillips.py) (1980, degree 5)
@@ -716,7 +716,6 @@ dim = 4
 scheme = quadpy.enr2.stroud_enr2_5_2(dim)
 val = scheme.integrate(lambda x: x[0] ** 2)
 ```
-
 
 ### Installation
 
