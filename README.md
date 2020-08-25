@@ -553,7 +553,7 @@ val = scheme.integrate(
 
  * [Stroud-Secrest](quadpy/e3r/_stroud_secrest.py) (1963, 5 schemes up to degree 7)
  * [all schemes from the nD space with weight function
-   exp(-r)](nd-space-with-weight-function-exp-r)
+   exp(-r)](#nd-space-with-weight-function-exp-r-enr)
 
 Example:
 ```python
@@ -571,7 +571,7 @@ val = scheme.integrate(lambda x: x[0] ** 2)
  * [Stroud-Secrest](quadpy/e3r/_stroud_secrest.py) (1963, 7 schemes up to degree 7)
  * [Stroud](quadpy/e3r/_stroud.py) (1971, scheme of degree 14)
  * [all schemes from the nD space with weight function
-   exp(-r<sup>2</sup>)](nd-space-with-weight-function-exp-r2)
+   exp(-r<sup>2</sup>)](#nd-space-with-weight-function-exp-r2-enr2)
 
 Example:
 ```python
