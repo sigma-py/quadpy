@@ -329,7 +329,8 @@ import quadpy
 
 scheme = quadpy.c2.get_good_scheme(7)
 val = scheme.integrate(
-    lambda x: numpy.exp(x[0]), [[[0.0, 0.0], [1.0, 0.0]], [[0.0, 1.0], [1.0, 1.0]]],
+    lambda x: numpy.exp(x[0]),
+    [[[0.0, 0.0], [1.0, 0.0]], [[0.0, 1.0], [1.0, 1.0]]],
 )
 ```
 The points are specified in an array of shape (2, 2, ...) such that `arr[0][0]`

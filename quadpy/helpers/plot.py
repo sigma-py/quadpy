@@ -15,8 +15,7 @@ def plot_disks_1d(plt, pts, weights, total_area):
 
 
 def plot_disks(plt, pts, weights, total_area):
-    """Plot a circles at quadrature points according to weights.
-    """
+    """Plot a circles at quadrature points according to weights."""
     flt = numpy.vectorize(float)
     pts = flt(pts)
     weights = flt(weights)

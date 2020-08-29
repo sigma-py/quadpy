@@ -37,8 +37,7 @@ class TnScheme(QuadratureScheme):
 
 
 def transform(points, simplex):
-    """Transform the points `xi` from the reference simplex onto `simplex`.
-    """
+    """Transform the points `xi` from the reference simplex onto `simplex`."""
     # For n == 2:
     # x = (
     #     + outer(triangle[0].T, 1.0 - xi[0] - xi[1])

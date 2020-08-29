@@ -10,8 +10,7 @@ from ._helpers import SnScheme
 
 
 def integrator(n, k, symbolic):
-    """Returns the integral of the polynomial given by the coefficients k over NBall.
-    """
+    """Returns the integral of the polynomial given by the coefficients k over NBall."""
     alpha = k + [0] * (n - len(k))
     return ndim.nball.integrate_monomial(alpha, symbolic=symbolic)
 

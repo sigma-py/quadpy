@@ -8,8 +8,7 @@ from quadpy.helpers import untangle
 
 
 def partition(boxes, balls):
-    """Create all nonnegative tuples of length d which sum up to n.
-    """
+    """Create all nonnegative tuples of length d which sum up to n."""
     # <https://stackoverflow.com/a/36748940/353337>
     # See <https://stackoverflow.com/a/45348441/353337> for an alterative
     # solution.

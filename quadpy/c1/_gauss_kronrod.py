@@ -102,7 +102,12 @@ def _r_kronrod(n, a0, b0):
 
 
 def _gauss_kronrod_integrate(
-    k, f, intervals, dot=numpy.dot, domain_shape=None, range_shape=None,
+    k,
+    f,
+    intervals,
+    dot=numpy.dot,
+    domain_shape=None,
+    range_shape=None,
 ):
     # Compute the integral estimations according to Gauss and Gauss-Kronrod, sharing the
     # function evaluations

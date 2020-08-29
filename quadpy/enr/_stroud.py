@@ -35,8 +35,7 @@ source = book(
 
 
 def stroud_enr_5_3(n):
-    """Spherical product Lobatto formula.
-    """
+    """Spherical product Lobatto formula."""
     data = []
     s = sqrt(n + 3)
     for k in range(1, n + 1):

@@ -82,7 +82,8 @@ def test_p3():
 
 def test_c2():
     quadpy.c2.schemes["stroud_c2_5_4"]().integrate(
-        lambda x: numpy.exp(x[0]), quadpy.c2.rectangle_points([0.0, 1.0], [0.0, 1.0]),
+        lambda x: numpy.exp(x[0]),
+        quadpy.c2.rectangle_points([0.0, 1.0], [0.0, 1.0]),
     )
 
     val = quadpy.c2.schemes["stroud_c2_3_1"]().integrate(

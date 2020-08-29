@@ -12,8 +12,7 @@ from ._helpers import EnrScheme
 
 
 def integrator(n, k, symbolic):
-    """Returns the integral of the polynomial given by the coefficients k over Enr.
-    """
+    """Returns the integral of the polynomial given by the coefficients k over Enr."""
     alpha = k + [0] * (n - len(k))
     return ndim.enr.integrate_monomial(alpha, symbolic)
 

@@ -20,8 +20,7 @@ class S3Scheme(QuadratureScheme):
         self.domain = "S3"
 
     def show(self, backend="vtk"):
-        """Displays scheme for 3D ball quadrature.
-        """
+        """Displays scheme for 3D ball quadrature."""
         backend_to_function[backend](
             self.points,
             self.weights,
