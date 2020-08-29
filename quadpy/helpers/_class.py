@@ -131,7 +131,6 @@ class QuadratureScheme:
 
         try:
             comments = self.comments
-            source = self.source
         except AttributeError:
             pass
         else:
