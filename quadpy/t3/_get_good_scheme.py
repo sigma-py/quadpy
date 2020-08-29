@@ -20,6 +20,4 @@ def get_good_scheme(degree):
             14: schemes["zhang_cui_liu_2"],
         }[degree]()
 
-    # degree > 50
-    assert False
-    return
+    return None

@@ -81,15 +81,6 @@ def strang_fix_cowper_09():
 
 def strang_fix_cowper_10():
     return _read(this_dir / "strang_fix_cowper_10.json", source)
-    d = {
-        "centroid": [[-0.149570044467670]],
-        "d3_aa": [
-            [0.175615257433204, 0.053347235608839],
-            [0.260345966079038, 0.065130102902216],
-        ],
-        "d3_ab": [[0.077113760890257], [0.638444188569809], [0.312865496004875]],
-    }
-    return T2Scheme("Strang-Fix-Cowper 10", d, 7, source, 8.563e-15)
 
 
 register(
