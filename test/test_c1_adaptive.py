@@ -64,7 +64,8 @@ def test_multidim():
     # scalar integration in 3D
     alpha = 10.31
     val, err = quadpy.c1.integrate_adaptive(
-        lambda x: sin(alpha * x[0]), [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0]],
+        lambda x: sin(alpha * x[0]),
+        [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0]],
     )
     assert err < 1.0e-10
     assert val.shape == ()

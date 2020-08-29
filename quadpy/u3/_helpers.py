@@ -16,7 +16,13 @@ def register(in_schemes):
 
 class U3Scheme(QuadratureScheme):
     def __init__(
-        self, name, symmetry_data, degree, source, tol=1.0e-14, comments=None,
+        self,
+        name,
+        symmetry_data,
+        degree,
+        source,
+        tol=1.0e-14,
+        comments=None,
     ):
         self.symmetry_data = symmetry_data
         points, weights = expand_symmetries(symmetry_data)
@@ -55,8 +61,7 @@ class U3Scheme(QuadratureScheme):
         ax.set_axis_off()
 
     def integrate(self, f, center, radius, dot=numpy.dot):
-        """Quadrature where `f` is defined in Cartesian coordinates.
-        """
+        """Quadrature where `f` is defined in Cartesian coordinates."""
         center = numpy.asarray(center)
         rr = (self.points.T * radius + center).T
         return area(radius) * dot(f(rr), self.weights)

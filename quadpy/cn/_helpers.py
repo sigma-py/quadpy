@@ -29,8 +29,7 @@ class CnScheme(QuadratureScheme):
 
 
 def transform(xi, cube):
-    """Transform the points `xi` from the reference cube to `cube`.
-    """
+    """Transform the points `xi` from the reference cube to `cube`."""
     # For d==2, the result used to be computed with
     #
     # out = (
@@ -52,8 +51,7 @@ def transform(xi, cube):
 
 
 def get_detJ(xi, cube):
-    """Get the determinant of the transformation matrix.
-    """
+    """Get the determinant of the transformation matrix."""
     # For d==2, the result can be computed with
     # ```
     # J0 = (
@@ -134,8 +132,7 @@ def _fs11(n, r, s):
 
 
 def _s(n, a, b):
-    """Get all permutations of [a, b, ..., b] of length n. len(out) == n.
-    """
+    """Get all permutations of [a, b, ..., b] of length n. len(out) == n."""
     out = numpy.full((n, n), b)
     numpy.fill_diagonal(out, a)
     return out

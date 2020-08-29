@@ -9,8 +9,7 @@ from quadpy.enr._helpers import integrate_monomial_over_enr
 
 
 def partition(boxes, balls):
-    """Create all nonnegative tuples of length d which sum up to n.
-    """
+    """Create all nonnegative tuples of length d which sum up to n."""
     # <https://stackoverflow.com/a/36748940/353337>
     # See <https://stackoverflow.com/a/45348441/353337> for an alterative
     # solution.
@@ -47,8 +46,7 @@ def partition(boxes, balls):
 
 
 def e2r_compute_weights(points, degree):
-    """Using monomials.
-    """
+    """Using monomials."""
     exponents = numpy.concatenate([partition(2, d) for d in range(degree + 1)])
 
     exact_vals = numpy.array([integrate_monomial_over_enr(k) for k in exponents])

@@ -6,8 +6,7 @@ from ._helpers import C1Scheme
 
 
 def chebyshev_gauss_1(n, mode="numpy"):
-    """Chebyshev-Gauss quadrature for \\int_{-1}^1 f(x) / sqrt(1+x^2) dx.
-    """
+    """Chebyshev-Gauss quadrature for \\int_{-1}^1 f(x) / sqrt(1+x^2) dx."""
     degree = n if n % 2 == 1 else n + 1
 
     if mode == "numpy":
@@ -31,8 +30,7 @@ def chebyshev_gauss_1(n, mode="numpy"):
 
 
 def chebyshev_gauss_2(n, mode="numpy", decimal_places=None):
-    """Chebyshev-Gauss quadrature for \\int_{-1}^1 f(x) * sqrt(1+x^2) dx.
-    """
+    """Chebyshev-Gauss quadrature for \\int_{-1}^1 f(x) * sqrt(1+x^2) dx."""
     degree = n if n % 2 == 1 else n + 1
 
     # TODO make explicit for all modes

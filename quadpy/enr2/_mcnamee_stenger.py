@@ -10,8 +10,7 @@ from ._helpers import Enr2Scheme
 
 
 def integrator(n, k, symbolic):
-    """Returns the integral of the polynomial given by the coefficients k over Enr2.
-    """
+    """Returns the integral of the polynomial given by the coefficients k over Enr2."""
     alpha = k + [0] * (n - len(k))
     return ndim.enr2.integrate_monomial(alpha, "physicists", symbolic=symbolic)
 

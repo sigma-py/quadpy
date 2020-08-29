@@ -8,8 +8,7 @@ def _zero(data, dim):
 
 
 def _d4_ab(data, dim):
-    """dihedral symmetry d4.
-    """
+    """dihedral symmetry d4."""
     s, t = numpy.array(data)
     points = numpy.array(
         [[+s, +t], [-s, +t], [+s, -t], [-s, -t], [+t, +s], [-t, +s], [+t, -s], [-t, -s]]

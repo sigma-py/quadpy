@@ -14,7 +14,8 @@ import quadpy
 
 
 @pytest.mark.parametrize(
-    "scheme", [quadpy.u3.schemes["lebedev_003a"](), quadpy.u3.schemes["mclaren_10"]()],
+    "scheme",
+    [quadpy.u3.schemes["lebedev_003a"](), quadpy.u3.schemes["mclaren_10"]()],
 )
 def test_spherical_harmonic(scheme):
     """Assert the norm of the spherical harmonic

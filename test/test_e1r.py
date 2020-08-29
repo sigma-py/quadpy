@@ -46,11 +46,11 @@ def test_laguerre_mpmath():
 
     x1 = 2 - mp.sqrt(2)
     x2 = 2 + mp.sqrt(2)
-    assert (abs(scheme.points - [x1, x2]) < tol).all()
+    assert (abs(scheme.points_symbolic - [x1, x2]) < tol).all()
 
     w1 = (2 + mp.sqrt(2)) / 4
     w2 = (2 - mp.sqrt(2)) / 4
-    assert (abs(scheme.weights - [w1, w2]) < tol).all()
+    assert (abs(scheme.weights_symbolic - [w1, w2]) < tol).all()
 
 
 def test_laguerre_generalized_mpmath():
@@ -61,11 +61,11 @@ def test_laguerre_generalized_mpmath():
 
     x1 = 3 - mp.sqrt(3)
     x2 = 3 + mp.sqrt(3)
-    assert (abs(scheme.points - [x1, x2]) < tol).all()
+    assert (abs(scheme.points_symbolic - [x1, x2]) < tol).all()
 
     w1 = 2 / ((-1 + mp.sqrt(3)) ** 2 * (1 + 2 / (-1 + mp.sqrt(3)) ** 2))
     w2 = 2 / ((-1 - mp.sqrt(3)) ** 2 * (1 + 2 / (-1 - mp.sqrt(3)) ** 2))
-    assert (abs(scheme.weights - [w1, w2]) < tol).all()
+    assert (abs(scheme.weights_symbolic - [w1, w2]) < tol).all()
 
 
 if __name__ == "__main__":

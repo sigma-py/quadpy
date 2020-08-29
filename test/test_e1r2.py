@@ -48,12 +48,12 @@ def test_hermite_mpmath():
 
     x1 = mp.sqrt((3 - mp.sqrt(6)) / 2)
     x2 = mp.sqrt((3 + mp.sqrt(6)) / 2)
-    assert (abs(scheme.points - [-x2, -x1, +x1, +x2]) < tol).all()
+    assert (abs(scheme.points_symbolic - [-x2, -x1, +x1, +x2]) < tol).all()
 
     w1 = mp.sqrt(mp.pi) / 4 / (3 - mp.sqrt(6))
     w2 = mp.sqrt(mp.pi) / 4 / (3 + mp.sqrt(6))
 
-    assert (abs(scheme.weights - [w2, w1, w1, w2]) < tol).all()
+    assert (abs(scheme.weights_symbolic - [w2, w1, w1, w2]) < tol).all()
 
 
 if __name__ == "__main__":

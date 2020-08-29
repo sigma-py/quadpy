@@ -24,11 +24,10 @@ class E3r2Scheme(QuadratureScheme):
         ref_vol = sqrt(pi) ** 3
         return ref_vol * dot(f(flt(self.points)), flt(self.weights))
 
-    def show(scheme, backend="vtk"):
-        """Displays scheme for E_3^{r^2} quadrature.
-        """
+    def show(self, backend="vtk"):
+        """Displays scheme for E_3^{r^2} quadrature."""
         backend_to_function[backend](
-            scheme.points, scheme.weights, volume=8 * numpy.pi, edges=[]
+            self.points, self.weights, volume=8 * numpy.pi, edges=[]
         )
 
 

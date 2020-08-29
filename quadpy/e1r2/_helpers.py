@@ -6,11 +6,7 @@ from ..helpers import QuadratureScheme, plot_disks_1d
 class E1r2Scheme(QuadratureScheme):
     def __init__(self, name, weights, points, degree, source=None):
         self.domain = "E1r2"
-        self.name = name
-        self.weights = weights
-        self.points = points
-        self.degree = degree
-        self.source = source
+        super().__init__(name, weights, points, degree, source)
 
     def integrate(self, f, dot=numpy.dot):
         x = numpy.array([self.points.T])

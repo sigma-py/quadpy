@@ -81,8 +81,7 @@ def coefficients_from_gauss(points, weights):
 
 
 def _sympy_tridiag(a, b):
-    """Creates the tridiagonal sympy matrix tridiag(b, a, b).
-    """
+    """Creates the tridiagonal sympy matrix tridiag(b, a, b)."""
     n = len(a)
     assert n == len(b)
     A = [[0 for _ in range(n)] for _ in range(n)]
