@@ -28,6 +28,8 @@ def integrate_adaptive(
 ):
     intervals = numpy.asarray(intervals)
     assert intervals.shape[0] == 2
+    assert numpy.all(intervals) > -numpy.inf
+    assert numpy.all(intervals) < numpy.inf
 
     assert (
         eps_abs is not None or eps_rel is not None

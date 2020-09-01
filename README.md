@@ -14,8 +14,8 @@
 
 [![gh-actions](https://img.shields.io/github/workflow/status/nschloe/quadpy/ci?style=flat-square)](https://github.com/nschloe/quadpy/actions?query=workflow%3Aci)
 [![codecov](https://img.shields.io/codecov/c/github/nschloe/quadpy.svg?style=flat-square)](https://codecov.io/gh/nschloe/quadpy)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
 [![LGTM](https://img.shields.io/lgtm/grade/python/github/nschloe/quadpy.svg?style=flat-square)](https://lgtm.com/projects/g/nschloe/quadpy)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
 
 More than 1500 numerical integration schemes for
 [line segments](#line-segment-c1),
