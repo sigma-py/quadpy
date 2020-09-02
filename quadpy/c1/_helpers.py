@@ -41,8 +41,16 @@ def _find_shapes(fx, intervals, x, domain_shape=None, range_shape=None):
             domain_shape = intervals.shape[1 : -len(interval_set_shape)]
         range_shape = fx.shape[: -len(interval_set_shape) - 1]
 
-    assert intervals.shape == (2,) + domain_shape + interval_set_shape
-    assert fx.shape == range_shape + interval_set_shape + x.shape
+    expected_shape_ivals = (2,) + domain_shape + interval_set_shape
+    assert intervals.shape == expected_shape_ivals, (
+        f"Expected intervals to be of shape {expected_shape_ivals}, "
+        f"but got shape {intervals.shape} instead."
+    )
+    expected_shape_fx = range_shape + interval_set_shape + x.shape
+    assert fx.shape == expected_shape_fx, (
+        f"Expected the function return value to be of shape {expected_shape_fx}, "
+        f"but got shape {fx.shape} instead."
+    )
     return domain_shape, range_shape, interval_set_shape
 
 
