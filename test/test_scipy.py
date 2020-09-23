@@ -16,6 +16,14 @@ def test_sin_x():
     assert abs(val - ref) < 1.0e-8 * abs(ref)
 
 
+def test_sin_x_other_way():
+    val, err = quadpy.quad(lambda x: numpy.sin(x) - x, 1.0, 0.0)
+    # import scipy.integrate
+    # val, err = scipy.integrate.quad(lambda x: numpy.sin(x) - x, 1.0, 0.0)
+    ref = -0.5 + numpy.cos(1)
+    assert abs(val - ref) < 1.0e-8 * abs(ref)
+
+
 def test_ln():
     val, err = quadpy.quad(lambda x: numpy.log(x), 0.5, 5.0)
 
@@ -82,6 +90,17 @@ def test_gh295():
     # import scipy.integrate
     # out = scipy.integrate.quad(f, 0.0, 1.0, epsabs=0.0, epsrel=1.0e-10)
     quadpy.quad(f, 0.0, 1.0, epsabs=1.0e-8, epsrel=1.0e-8)
+
+
+def test_complex_valued():
+    def f(x):
+        return numpy.exp(1j * x)
+
+    # import scipy.integrate
+    # out = scipy.integrate.quad(f, 0.0, 1.0, epsabs=0.0, epsrel=1.0e-10)
+    val, _ = quadpy.quad(f, 0.0, 1.0, epsabs=1.0e-8, epsrel=1.0e-8)
+    exact = numpy.sin(1.0) - 1j * (numpy.cos(1.0) - 1.0)
+    assert numpy.abs(val - exact) < 1.0e-10
 
 
 if __name__ == "__main__":

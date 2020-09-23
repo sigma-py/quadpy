@@ -137,7 +137,6 @@ def _gauss_kronrod_integrate(
     interval_lengths = numpy.sqrt(
         numpy.sum(diff ** 2, axis=tuple(range(len(domain_shape))))
     )
-
     assert interval_lengths.shape == interval_set_shape
 
     # integrate
@@ -180,7 +179,7 @@ def _gauss_kronrod_integrate(
     error_estimate = numpy.empty(I_tilde.shape)
     idx = numpy.abs(I_tilde) > 1.0e-15
     vals = (
-        200 * abs(val_gauss_kronrod[idx] - val_gauss_legendr[idx]) / I_tilde[idx]
+        200 * numpy.abs(val_gauss_kronrod[idx] - val_gauss_legendr[idx]) / I_tilde[idx]
     ) ** 1.5
     error_estimate[idx] = numpy.minimum(numpy.ones(numpy.sum(idx)), vals)
     error_estimate[~idx] = 1.0

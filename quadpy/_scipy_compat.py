@@ -6,8 +6,6 @@ from .c1 import integrate_adaptive
 # compatibility for scipy.quad
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html
 def quad(f, a, b, args=(), epsabs=1.49e-08, epsrel=1.49e-08, limit=50):
-    assert a <= b
-
     # See <https://www.gnu.org/software/gsl/doc/html/integration.html> for the
     # variable transformations
     if a == -numpy.inf and b == numpy.inf:
@@ -40,7 +38,11 @@ def quad(f, a, b, args=(), epsabs=1.49e-08, epsrel=1.49e-08, limit=50):
         def g(x):
             return f(x, *args)
 
-    return integrate_adaptive(
+    swap = a > b
+    if swap:
+        a, b = b, a
+
+    val, err = integrate_adaptive(
         g,
         [a, b],
         eps_abs=epsabs,
@@ -48,3 +50,7 @@ def quad(f, a, b, args=(), epsabs=1.49e-08, epsrel=1.49e-08, limit=50):
         criteria_connection=numpy.any,
         max_num_subintervals=limit,
     )
+    if swap:
+        val *= -1
+
+    return val, err
