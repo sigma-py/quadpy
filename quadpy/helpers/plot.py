@@ -222,7 +222,7 @@ def show_vtk(points, weights, volume, edges, balls=None, render=True):
     )
     sphere_actors = [
         get_sphere_actor(pt, radius, color=blue if weight > 0.0 else red)
-        for pt, weight, radius in zip(points, weights, radii)
+        for pt, weight, radius in zip(points.T, weights, radii)
     ]
 
     sphere_actors.extend(
