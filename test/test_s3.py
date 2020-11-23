@@ -30,9 +30,15 @@ def test_scheme(scheme):
     )
 
 
-@pytest.mark.parametrize("scheme", [quadpy.s3.schemes["hammer_stroud_11_3"]()])
-def test_show(scheme, backend="mpl"):
+def test_show(backend="mpl"):
+    scheme = quadpy.s3.schemes["hammer_stroud_11_3"]()
     scheme.show(backend=backend)
+    plt.close()
+
+
+def test_show_vtk():
+    scheme = quadpy.s3.schemes["hammer_stroud_11_3"]()
+    scheme.show(backend="vtk", render=False)
     plt.close()
 
 
