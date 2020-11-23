@@ -30,9 +30,15 @@ def test_scheme(scheme):
     )
 
 
-@pytest.mark.parametrize("scheme", [quadpy.s3.schemes["hammer_stroud_11_3"]()])
-def test_show(scheme, backend="mpl"):
+def test_show(backend="mpl"):
+    scheme = quadpy.s3.schemes["hammer_stroud_11_3"]()
     scheme.show(backend=backend)
+    plt.close()
+
+
+def test_show_vtk():
+    scheme = quadpy.s3.schemes["hammer_stroud_11_3"]()
+    scheme.show(backend="vtk", render=False)
     plt.close()
 
 
@@ -42,9 +48,9 @@ def test_get_good_scheme():
         best = find_best_scheme(
             quadpy.s3.schemes.values(),
             degree,
-            lambda pts: numpy.all((pts[0] ** 2 + pts[1] ** 2 + pts[2] ** 2 <= 1)),
+            lambda pts: numpy.all(pts[0] ** 2 + pts[1] ** 2 + pts[2] ** 2 <= 1),
             lambda keys: len(
-                keys - set(["zero3", "symm_r00", "symm_rr0", "symm_rrr", "symm_rrs"])
+                keys - {"zero3", "symm_r00", "symm_rr0", "symm_rrr", "symm_rrs"}
             )
             == 0,
         )
@@ -60,4 +66,5 @@ def test_get_good_scheme():
 
 
 if __name__ == "__main__":
-    test_get_good_scheme()
+    # test_get_good_scheme()
+    quadpy.s3.get_good_scheme(4).show()

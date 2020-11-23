@@ -19,7 +19,7 @@ class S3Scheme(QuadratureScheme):
         super().__init__(name, weights, points, degree, source, tol)
         self.domain = "S3"
 
-    def show(self, backend="vtk"):
+    def show(self, backend="vtk", **kwargs):
         """Displays scheme for 3D ball quadrature."""
         backend_to_function[backend](
             self.points,
@@ -27,8 +27,8 @@ class S3Scheme(QuadratureScheme):
             volume=4.0 / 3.0 * pi,
             edges=[],
             balls=[((0.0, 0.0, 0.0), 1.0)],
+            **kwargs
         )
-        return
 
     def integrate(self, f, center, radius, dot=numpy.dot):
         center = numpy.asarray(center)

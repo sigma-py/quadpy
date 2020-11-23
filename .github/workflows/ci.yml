@@ -32,12 +32,11 @@ jobs:
       with:
         lfs: true
     # eigen for accupy, blas for numpy
-    - name: Install dependencies
-      run: sudo apt-get install -y libeigen3-dev libblas-dev # python3-vtk7
+    - name: Install system dependencies
+      run: sudo apt-get install -y libeigen3-dev libblas-dev
     - name: Test with tox
       run: |
         pip install tox
         tox
-    - name: Submit to codecov
+    - uses: codecov/codecov-action@v1
       if: ${{ matrix.python-version == '3.8' }}
-      run: bash <(curl -s https://codecov.io/bash)

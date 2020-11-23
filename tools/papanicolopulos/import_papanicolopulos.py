@@ -9,7 +9,7 @@ import numpy
 
 def read_data(filename, num_orbit_types):
     data = []
-    with open(filename, "r") as f:
+    with open(filename) as f:
         while True:
             line = f.readline()
             if not line:

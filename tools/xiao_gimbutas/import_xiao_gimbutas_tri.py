@@ -31,7 +31,7 @@ def _parse():
 
     data = []
 
-    with open("symq.txt", "r") as f:
+    with open("symq.txt") as f:
         while True:
             line = f.readline()
             if not line:

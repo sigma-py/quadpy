@@ -114,8 +114,7 @@ def test_get_good_scheme():
                 numpy.abs(pts[0] ** 2 + pts[1] ** 2 + pts[2] ** 2 - 1.0) < 1.0e-13
             ),
             lambda keys: len(
-                keys
-                - set(["a1", "a2", "a3", "rs0", "llm2", "rsw2", "pq0", "llm", "rsw"])
+                keys - {"a1", "a2", "a3", "rs0", "llm2", "rsw2", "pq0", "llm", "rsw"}
             )
             == 0,
         )

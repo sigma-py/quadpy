@@ -10,7 +10,7 @@ def main():
 
     args = _get_parser().parse_args()
 
-    with open(args.infile, "r") as f:
+    with open(args.infile) as f:
         content = json.load(f)
 
     name = content["name"]

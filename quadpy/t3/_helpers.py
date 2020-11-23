@@ -181,7 +181,7 @@ def expand_symmetries(data):
 
 
 def _read(filepath, source):
-    with open(filepath, "r") as f:
+    with open(filepath) as f:
         content = json.load(f)
 
     degree = content["degree"]
