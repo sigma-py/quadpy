@@ -129,7 +129,7 @@ def test_get_good_scheme():
             quadpy.t2.schemes.values(),
             degree,
             lambda pts: numpy.all(pts >= 0),
-            lambda keys: len(keys - set(["d3_aa", "d3_ab", "centroid", "vertex"])) == 0,
+            lambda keys: len(keys - {"d3_aa", "d3_ab", "centroid", "vertex"}) == 0,
         )
         if best is None:
             break

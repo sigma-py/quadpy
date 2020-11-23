@@ -113,7 +113,7 @@ def test_get_good_scheme():
             except AttributeError:
                 continue
 
-            if len(keys - set(["s4", "s31", "s22", "s211", "s1111"])) > 0:
+            if len(keys - {"s4", "s31", "s22", "s211", "s1111"}) > 0:
                 continue
 
             # okay, now compare the scheme with `best`

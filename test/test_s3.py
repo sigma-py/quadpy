@@ -48,9 +48,9 @@ def test_get_good_scheme():
         best = find_best_scheme(
             quadpy.s3.schemes.values(),
             degree,
-            lambda pts: numpy.all((pts[0] ** 2 + pts[1] ** 2 + pts[2] ** 2 <= 1)),
+            lambda pts: numpy.all(pts[0] ** 2 + pts[1] ** 2 + pts[2] ** 2 <= 1),
             lambda keys: len(
-                keys - set(["zero3", "symm_r00", "symm_rr0", "symm_rrr", "symm_rrs"])
+                keys - {"zero3", "symm_r00", "symm_rr0", "symm_rrr", "symm_rrs"}
             )
             == 0,
         )

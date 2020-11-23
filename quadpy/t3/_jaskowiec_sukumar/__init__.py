@@ -24,7 +24,7 @@ this_dir = pathlib.Path(__file__).resolve().parent
 
 def _read(string, tol=1.0e-14):
     filename = f"js{string}.json"
-    with open(this_dir / filename, "r") as f:
+    with open(this_dir / filename) as f:
         data = json.load(f)
 
     degree = data["degree"]

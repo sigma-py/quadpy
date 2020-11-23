@@ -32,7 +32,7 @@ def _parse():
     # Find those and extract the data.
     data = []
 
-    with open("tet.txt", "r") as f:
+    with open("tet.txt") as f:
         while True:
             line = f.readline()
             if not line:

@@ -48,7 +48,7 @@ def test_get_good_scheme():
             degree,
             lambda pts: True,
             lambda keys: len(
-                keys - set(["zero3", "symm_r00", "symm_rr0", "symm_rrr", "symm_rrs"])
+                keys - {"zero3", "symm_r00", "symm_rr0", "symm_rrr", "symm_rrs"}
             )
             == 0,
         )
