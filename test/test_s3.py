@@ -60,4 +60,5 @@ def test_get_good_scheme():
 
 
 if __name__ == "__main__":
-    test_get_good_scheme()
+    # test_get_good_scheme()
+    quadpy.s3.get_good_scheme(4).show()
