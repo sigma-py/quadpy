@@ -3,6 +3,7 @@ from math import pi
 import numpy
 
 from ..helpers import QuadratureScheme, backend_to_function, expand_symmetries
+from .._exception import QuadpyException
 
 schemes = {}
 
@@ -34,7 +35,14 @@ class S3Scheme(QuadratureScheme):
         center = numpy.asarray(center)
         rr = numpy.multiply.outer(radius, self.points.T)
         rr = numpy.swapaxes(rr, 0, -2)
-        ff = numpy.asarray(f((rr + center).T))
+        x = (rr + center).T
+        ff = numpy.asarray(f(x))
+        if ff.shape[-len(x.shape) + 1:] != x.shape[1:]:
+            string = ", ".join(str(val) for val in x.shape[1:])
+            raise QuadpyException(
+                f"Wrong return value shape {ff.shape}. "
+                f"Expected (..., {string})."
+            )
         return 4 / 3 * pi * numpy.asarray(radius) ** 3 * dot(ff, self.weights)
 
 
