@@ -2,6 +2,7 @@ import itertools
 
 import numpy
 
+from .._exception import QuadpyError
 from ..helpers import QuadratureScheme, n_outer
 
 
@@ -18,8 +19,16 @@ class CnScheme(QuadratureScheme):
         ncube = numpy.asarray(ncube)
         x = transform(self.points, ncube).T
         detJ = get_detJ(self.points, ncube)
+
+        fx = numpy.asarray(f(x))
+        if fx.shape[-len(x.shape[1:]) :] != x.shape[1:]:
+            string = ", ".join(str(val) for val in x.shape[1:])
+            raise QuadpyError(
+                f"Wrong return value shape {fx.shape}. " f"Expected (..., {string})."
+            )
+
         ref_vol = 2 ** numpy.prod(len(ncube.shape) - 1)
-        return ref_vol * dot(f(x) * abs(detJ), self.weights)
+        return ref_vol * dot(fx * abs(detJ), self.weights)
 
     def points_inside(self):
         return numpy.all((-1 < self.points) & (self.points < 1))

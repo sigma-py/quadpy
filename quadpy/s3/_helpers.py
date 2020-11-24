@@ -2,6 +2,7 @@ from math import pi
 
 import numpy
 
+from .._exception import QuadpyError
 from ..helpers import QuadratureScheme, backend_to_function, expand_symmetries
 
 schemes = {}
@@ -27,14 +28,20 @@ class S3Scheme(QuadratureScheme):
             volume=4.0 / 3.0 * pi,
             edges=[],
             balls=[((0.0, 0.0, 0.0), 1.0)],
-            **kwargs
+            **kwargs,
         )
 
     def integrate(self, f, center, radius, dot=numpy.dot):
         center = numpy.asarray(center)
         rr = numpy.multiply.outer(radius, self.points.T)
         rr = numpy.swapaxes(rr, 0, -2)
-        ff = numpy.asarray(f((rr + center).T))
+        x = (rr + center).T
+        ff = numpy.asarray(f(x))
+        if ff.shape[-len(x.shape[1:]) :] != x.shape[1:]:
+            string = ", ".join(str(val) for val in x.shape[1:])
+            raise QuadpyError(
+                f"Wrong return value shape {ff.shape}. " f"Expected (..., {string})."
+            )
         return 4 / 3 * pi * numpy.asarray(radius) ** 3 * dot(ff, self.weights)
 
 
@@ -49,5 +56,12 @@ def get_good_scheme(degree):
             5: schemes["hammer_stroud_12_3"],
             6: schemes["mysovskih"],
             7: schemes["mysovskih"],
+            8: schemes["stroud_14_1"],
+            9: schemes["stroud_14_1"],
+            10: schemes["stroud_14_1"],
+            11: schemes["stroud_14_1"],
+            12: schemes["stroud_14_1"],
+            13: schemes["stroud_14_1"],
+            14: schemes["stroud_14_1"],
         }[degree]()
     return None

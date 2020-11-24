@@ -47,7 +47,7 @@ class C3Scheme(CnScheme):
         helpers.backend_to_function[backend](
             transform(self.points, hexa),
             self.weights,
-            self.integrate(lambda x: 1.0, hexa),
+            self.integrate(lambda x: numpy.ones(x.shape[1:]), hexa),
             edges,
         )
 

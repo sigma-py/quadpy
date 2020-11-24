@@ -1,0 +1,2 @@
+class QuadpyError(Exception):
+    pass
