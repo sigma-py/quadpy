@@ -49,5 +49,12 @@ def get_good_scheme(degree):
             5: schemes["hammer_stroud_12_3"],
             6: schemes["mysovskih"],
             7: schemes["mysovskih"],
+            8: schemes["stroud_14_1"],
+            9: schemes["stroud_14_1"],
+            10: schemes["stroud_14_1"],
+            11: schemes["stroud_14_1"],
+            12: schemes["stroud_14_1"],
+            13: schemes["stroud_14_1"],
+            14: schemes["stroud_14_1"],
         }[degree]()
     return None
