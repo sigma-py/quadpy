@@ -1,6 +1,7 @@
 import ndim
 import numpy
 
+from .._exception import QuadpyError
 from ..helpers import QuadratureScheme
 
 
@@ -21,6 +22,12 @@ class SnScheme(QuadratureScheme):
         center = numpy.array(center)
         rr = numpy.multiply.outer(radius, self.points.T)
         rr = numpy.swapaxes(rr, 0, -2)
-        ff = numpy.array(f((rr + center).T))
+        x = (rr + center).T
+        fx = numpy.array(f(x))
+        if fx.shape[-len(x.shape[1:]) :] != x.shape[1:]:
+            string = ", ".join(str(val) for val in x.shape[1:])
+            raise QuadpyError(
+                f"Wrong return value shape {fx.shape}. " f"Expected (..., {string})."
+            )
         ref_vol = ndim.nball.volume(self.dim, r=numpy.asarray(radius), symbolic=False)
-        return ref_vol * dot(ff, self.weights)
+        return ref_vol * dot(fx, self.weights)

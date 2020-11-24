@@ -3,6 +3,7 @@ import warnings
 
 import numpy
 
+from .._exception import QuadpyError
 from ..helpers import QuadratureScheme, expand_symmetries, plot_disks
 
 schemes = {}
@@ -54,8 +55,14 @@ class S2Scheme(QuadratureScheme):
         center = numpy.array(center)
         rr = numpy.multiply.outer(radius, self.points.T)
         rr = numpy.swapaxes(rr, 0, -2)
-        ff = numpy.array(f((rr + center).T))
-        return numpy.pi * numpy.array(radius) ** 2 * dot(ff, self.weights)
+        x = (rr + center).T
+        fx = numpy.array(f(x))
+        if fx.shape[-len(x.shape[1:]) :] != x.shape[1:]:
+            string = ", ".join(str(val) for val in x.shape[1:])
+            raise QuadpyError(
+                f"Wrong return value shape {fx.shape}. " f"Expected (..., {string})."
+            )
+        return numpy.pi * numpy.array(radius) ** 2 * dot(fx, self.weights)
 
 
 def _read(filepath, source):

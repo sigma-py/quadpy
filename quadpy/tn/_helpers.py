@@ -3,6 +3,7 @@ import math
 import numpy
 import sympy
 
+from .._exception import QuadpyError
 from ..helpers import QuadratureScheme
 
 
@@ -27,12 +28,12 @@ class TnScheme(QuadratureScheme):
         vol = get_vol(simplex)
 
         fx = numpy.asarray(f(x))
+        if fx.shape[-len(x.shape[1:]) :] != x.shape[1:]:
+            string = ", ".join(str(val) for val in x.shape[1:])
+            raise QuadpyError(
+                f"Wrong return value shape {fx.shape}. " f"Expected (..., {string})."
+            )
 
-        assert (
-            x.shape[1:] == fx.shape[-len(x.shape[1:]) :]
-        ), "Illegal shape of f(x) (expected (..., {}), got {})".format(
-            ", ".join([str(k) for k in x.shape[1:]]), fx.shape
-        )
         return vol * dot(fx, flt(self.weights))
 
 
