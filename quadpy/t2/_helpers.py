@@ -1,4 +1,5 @@
 import json
+from typing import Optional
 
 import numpy
 
@@ -89,7 +90,7 @@ def _scheme_from_dict(content, source=None):
     )
 
 
-def get_good_scheme(degree):
+def get_good_scheme(degree: int) -> Optional[T2Scheme]:
     if degree <= 50:
         return {
             0: schemes["centroid"],

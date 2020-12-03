@@ -1,4 +1,5 @@
 from math import pi
+from typing import Callable, Optional
 
 import numpy
 
@@ -31,7 +32,7 @@ class S3Scheme(QuadratureScheme):
             **kwargs,
         )
 
-    def integrate(self, f, center, radius, dot=numpy.dot):
+    def integrate(self, f: Callable, center, radius, dot=numpy.dot):
         center = numpy.asarray(center)
         rr = numpy.multiply.outer(radius, self.points.T)
         rr = numpy.swapaxes(rr, 0, -2)
@@ -45,7 +46,7 @@ class S3Scheme(QuadratureScheme):
         return 4 / 3 * pi * numpy.asarray(radius) ** 3 * dot(ff, self.weights)
 
 
-def get_good_scheme(degree):
+def get_good_scheme(degree: int) -> Optional[S3Scheme]:
     if degree <= 7:
         return {
             0: schemes["midpoint"],
