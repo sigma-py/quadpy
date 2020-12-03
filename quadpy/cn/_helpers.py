@@ -1,4 +1,5 @@
 import itertools
+from typing import Callable
 
 import numpy
 
@@ -8,14 +9,22 @@ from ..helpers import QuadratureScheme, n_outer
 
 class CnScheme(QuadratureScheme):
     def __init__(
-        self, name, dim, weights, points, degree, source, tol=1.0e-14, comments=None
+        self,
+        name: str,
+        dim: int,
+        weights,
+        points,
+        degree: int,
+        source,
+        tol=1.0e-14,
+        comments=None,
     ):
         self.domain = f"Cn (n={dim})"
         self.dim = dim
         assert points.shape[0] == dim, f"points.shape == {points.shape}, dim = {dim}"
         super().__init__(name, weights, points, degree, source, tol, comments)
 
-    def integrate(self, f, ncube, dot=numpy.dot):
+    def integrate(self, f: Callable, ncube, dot=numpy.dot):
         ncube = numpy.asarray(ncube)
         x = transform(self.points, ncube).T
         detJ = get_detJ(self.points, ncube)
@@ -30,10 +39,12 @@ class CnScheme(QuadratureScheme):
         ref_vol = 2 ** numpy.prod(len(ncube.shape) - 1)
         return ref_vol * dot(fx * abs(detJ), self.weights)
 
-    def points_inside(self):
+    def points_inside(self) -> bool:
+        """Are all points strictly inside the domain?"""
         return numpy.all((-1 < self.points) & (self.points < 1))
 
-    def points_inside_or_boundary(self):
+    def points_inside_or_boundary(self) -> bool:
+        """Are all points inside the domain or on its boundary?"""
         return numpy.all((-1 <= self.points) & (self.points <= 1))
 
 

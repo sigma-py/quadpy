@@ -1,4 +1,5 @@
 import json
+from typing import Optional
 
 import numpy
 
@@ -26,8 +27,8 @@ class C2Scheme(CnScheme):
         self.domain = "C2"
 
     def plot(self, quad=rectangle_points([0.0, 1.0], [0.0, 1.0]), show_axes=False):
-        """Shows the quadrature points on a given quad. The area of the disks
-        around the points coincides with their weights.
+        """Shows the quadrature points on a given quad. The area of the disks around the
+        points coincides with their weights.
         """
         from matplotlib import pyplot as plt
 
@@ -88,7 +89,7 @@ def _scheme_from_dict(content, source=None):
     )
 
 
-def get_good_scheme(degree):
+def get_good_scheme(degree: int) -> Optional[C2Scheme]:
     if degree <= 22:
         return {
             0: schemes["dunavant_00"],

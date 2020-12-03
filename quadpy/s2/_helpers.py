@@ -1,5 +1,6 @@
 import json
 import warnings
+from typing import Optional
 
 import numpy
 
@@ -49,7 +50,6 @@ class S2Scheme(QuadratureScheme):
         ax.add_artist(disk1)
 
         plot_disks(plt, self.points.T, self.weights, numpy.pi)
-        return
 
     def integrate(self, f, center, radius, dot=numpy.dot):
         center = numpy.array(center)
@@ -65,7 +65,7 @@ class S2Scheme(QuadratureScheme):
         return numpy.pi * numpy.array(radius) ** 2 * dot(fx, self.weights)
 
 
-def _read(filepath, source):
+def _read(filepath, source) -> S2Scheme:
     with open(filepath) as f:
         content = json.load(f)
 
@@ -100,7 +100,7 @@ def _scheme_from_dict(content, source=None):
     )
 
 
-def get_good_scheme(degree):
+def get_good_scheme(degree: int) -> Optional[S2Scheme]:
     if degree <= 19:
         return {
             0: schemes["midpoint"],
