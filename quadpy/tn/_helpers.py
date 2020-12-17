@@ -27,7 +27,7 @@ class TnScheme(QuadratureScheme):
         if simplex.shape[0] != self.dim + 1:
             string = ", ".join(str(val) for val in simplex.shape)
             raise QuadpyError(
-                f"Wrong domain shape. Expected ({self.dim + 1}, ...), got {string}."
+                f"Wrong domain shape. Expected ({self.dim + 1}, ...), got ({string})."
             )
         x = transform(flt(self.points), simplex.T)
         vol = get_vol(simplex)
