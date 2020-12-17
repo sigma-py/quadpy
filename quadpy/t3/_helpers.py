@@ -48,7 +48,6 @@ class T3Scheme(TnScheme):
             edges,
             render=render,
         )
-        return
 
 
 def _s4(dummy):
