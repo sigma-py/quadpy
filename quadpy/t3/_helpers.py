@@ -23,7 +23,7 @@ class T3Scheme(TnScheme):
         if weight_factor is not None:
             weights *= weight_factor
 
-        super().__init__(name, 2, weights, points, degree, source, tol)
+        super().__init__(name, 3, weights, points, degree, source, tol)
         self.domain = "T3"
 
     def show(
@@ -48,7 +48,6 @@ class T3Scheme(TnScheme):
             edges,
             render=render,
         )
-        return
 
 
 def _s4(dummy):
