@@ -47,7 +47,7 @@ class S2Scheme(QuadratureScheme):
             ax.set_axis_off()
 
         disk1 = plt.Circle((0, 0), 1, color="k", fill=False)
-        ax.add_artist(disk1)
+        ax.add_patch(disk1)
 
         plot_disks(plt, self.points.T, self.weights, numpy.pi)
 

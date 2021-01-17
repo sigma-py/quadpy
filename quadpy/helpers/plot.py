@@ -36,7 +36,7 @@ def _plot_disks_helpers(plt, pts, radii, colors):
         # Make sure to set the line width to 0,
         # <https://github.com/matplotlib/matplotlib/issues/17421>.
         circ = plt.Circle((pt[0], pt[1]), radius, color=color, alpha=0.5, linewidth=0)
-        plt.gca().add_artist(circ)
+        plt.gca().add_patch(circ)
 
 
 def show_mpl(points, weights, volume, edges, balls=None):
