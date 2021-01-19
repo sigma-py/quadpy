@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from matplotlib import pyplot as plt
 
 import quadpy
@@ -54,9 +54,9 @@ schemes = [
 
 for scheme in schemes:
     # filter out schemes with negative weights
-    p_scheme = [s for s in scheme if numpy.all(s.weights > 0.0)]
+    p_scheme = [s for s in scheme if np.all(s.weights > 0.0)]
     # filter out schemes with points outside the triangle weights
-    pi_scheme = [s for s in p_scheme if numpy.all(s.bary > 0.0)]
+    pi_scheme = [s for s in p_scheme if np.all(s.bary > 0.0)]
     print(scheme[0].name, len(scheme), len(pi_scheme))
     if pi_scheme:
         # get degrees and number of points

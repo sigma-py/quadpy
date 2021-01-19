@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 from ..helpers import techreport
 from ._helpers import C2Scheme, register
@@ -17,14 +17,14 @@ source = techreport(
 def waldron(r=1, alpha=0):
     assert r ** 2 >= 1 / 3
 
-    R = r / numpy.sqrt(3 * r ** 2 - 1)
+    R = r / np.sqrt(3 * r ** 2 - 1)
 
-    beta = alpha + numpy.pi / 2
+    beta = alpha + np.pi / 2
 
-    sin_alpha = numpy.sin(alpha)
-    cos_alpha = numpy.cos(alpha)
-    sin_beta = numpy.sin(beta)
-    cos_beta = numpy.cos(beta)
+    sin_alpha = np.sin(alpha)
+    cos_alpha = np.cos(alpha)
+    sin_beta = np.sin(beta)
+    cos_beta = np.cos(beta)
 
     d = {
         "plain": [

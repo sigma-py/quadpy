@@ -1,7 +1,7 @@
 import math
 
 import ndim
-import numpy
+import numpy as np
 import sympy
 
 from .. import un
@@ -52,7 +52,7 @@ def _stroud_1967_7_2(n, variant_a, symbolic):
     ]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
 
     variant = "a" if variant_a else "b"
     return Enr2Scheme(
@@ -80,9 +80,9 @@ def stroud_1967_7_4(n, symbolic=False):
 
     s = un.stroud_1967(n)
 
-    points = numpy.concatenate([r1 * s.points, r2 * s.points])
-    points = numpy.ascontiguousarray(points.T)
-    weights = numpy.concatenate([A1 * s.weights, A2 * s.weights])
+    points = np.concatenate([r1 * s.points, r2 * s.points])
+    points = np.ascontiguousarray(points.T)
+    weights = np.concatenate([A1 * s.weights, A2 * s.weights])
 
     weights *= ndim.nsphere.volume(n, symbolic=symbolic) / ndim.enr2.volume(
         n, "physicists", symbolic

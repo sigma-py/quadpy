@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 from ..helpers import book, untangle
 from ..u3 import _stroud as sphere_stroud
@@ -34,17 +34,17 @@ def stroud_e3r2_14_1(symbolic=False):
     # numerically, but they are given analytically.
     # ```
     # n = 8
-    # alpha = numpy.zeros(n)
-    # beta = numpy.empty(n)
-    # beta[0] = numpy.sqrt(numpy.pi)/2
-    # beta[1::2] = numpy.arange(n//2) + 1.5
-    # beta[2::2] = numpy.arange(n//2-1) + 1.0
+    # alpha = np.zeros(n)
+    # beta = np.empty(n)
+    # beta[0] = np.sqrt(np.pi)/2
+    # beta[1::2] = np.arange(n//2) + 1.5
+    # beta[2::2] = np.arange(n//2-1) + 1.0
     # points, weights = \
     #     orthopy.line.schemes.custom(alpha, beta, mode='numpy')
     # r = points[-4:]
     # A = weights[-4:]
     # ```
-    r = numpy.array(
+    r = np.array(
         [
             7.235510187528402e-01,
             1.468553289216669e00,
@@ -52,7 +52,7 @@ def stroud_e3r2_14_1(symbolic=False):
             3.190993201781527e00,
         ]
     )
-    A = numpy.array(
+    A = np.array(
         [
             2.265043732793035e-01,
             1.908084800858996e-01,
@@ -66,11 +66,9 @@ def stroud_e3r2_14_1(symbolic=False):
     B = spherical_scheme.weights
 
     # Normalize the weights to 1
-    B /= numpy.sqrt(numpy.pi) / 4
+    B /= np.sqrt(np.pi) / 4
 
-    data = [
-        (A[i] * B[j], r[i] * numpy.array([v[j]])) for i in range(4) for j in range(72)
-    ]
+    data = [(A[i] * B[j], r[i] * np.array([v[j]])) for i in range(4) for j in range(72)]
     points, weights = untangle(data)
     d = {"plain": [weights, points[:, 0], points[:, 1], points[:, 2]]}
     return E3r2Scheme("Stroud E3r2 14-1", d, 14, source, 8.903e-14)

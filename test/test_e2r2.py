@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import orthopy
 import pytest
 from helpers import find_best_scheme
@@ -9,8 +9,8 @@ import quadpy
 @pytest.mark.parametrize("scheme", quadpy.e2r2.schemes.values())
 def test_scheme(scheme):
     scheme = scheme()
-    assert scheme.points.dtype == numpy.float64, scheme.name
-    assert scheme.weights.dtype == numpy.float64, scheme.name
+    assert scheme.points.dtype == np.float64, scheme.name
+    assert scheme.weights.dtype == np.float64, scheme.name
 
     print(scheme)
 
@@ -20,12 +20,12 @@ def test_scheme(scheme):
     while True:
         approximate = scheme.integrate(lambda x: next(evaluator))
         exact = evaluator.int_p0 if k == 0 else 0.0
-        err = numpy.abs(approximate - exact)
-        if numpy.any(err > scheme.test_tolerance * 1.1):
+        err = np.abs(approximate - exact)
+        if np.any(err > scheme.test_tolerance * 1.1):
             break
         k += 1
 
-    max_err = numpy.max(err)
+    max_err = np.max(err)
     assert k - 1 == scheme.degree, (
         f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
         f"(max err: {max_err:.3e})"

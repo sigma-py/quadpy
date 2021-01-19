@@ -1,11 +1,11 @@
 """
 Parse Fortran code to extract points and weight of the Xiao-Gimbutas schemes.
 """
-import numpy
+import numpy as np
 
 
 def _parsed_strings_to_array(strings):
-    return numpy.array(
+    return np.array(
         [
             val.replace(",", "").replace("&", "").replace("/", "").replace("D", "e")
             for val in strings
@@ -64,7 +64,7 @@ def _parse():
                 line = f.readline().strip()
                 wstr.append(line)
 
-            points = numpy.column_stack(
+            points = np.column_stack(
                 [_parsed_strings_to_array(xstr), _parsed_strings_to_array(ystr)]
             )
             weights = _parsed_strings_to_array(wstr)
@@ -76,11 +76,11 @@ def _parse():
 def _extract_bary_data(data):
     # The points are given in terms of coordinates of a reference triangle. Convert to
     # barycentric coordinates, and check their symmetry there.
-    t0 = [-1, -1 / numpy.sqrt(3)]
-    t1 = [+1, -1 / numpy.sqrt(3)]
-    t2 = [0, 2 / numpy.sqrt(3)]
+    t0 = [-1, -1 / np.sqrt(3)]
+    t1 = [+1, -1 / np.sqrt(3)]
+    t2 = [0, 2 / np.sqrt(3)]
 
-    T = numpy.array([[t1[0] - t0[0], t2[0] - t0[0]], [t1[1] - t0[1], t2[1] - t0[1]]])
+    T = np.array([[t1[0] - t0[0], t2[0] - t0[0]], [t1[1] - t0[1], t2[1] - t0[1]]])
 
     tol = 1.0e-10
 
@@ -92,12 +92,12 @@ def _extract_bary_data(data):
         points, weights = item
 
         b = (points - t0).T
-        sol = numpy.linalg.solve(T, b)
-        bary = numpy.column_stack([sol[0], sol[1], 1.0 - sol[0] - sol[1]])
+        sol = np.linalg.solve(T, b)
+        bary = np.column_stack([sol[0], sol[1], 1.0 - sol[0] - sol[1]])
 
         d = {"s1": [], "s2": [], "s3": [], "degree": k + 1}
         for w, b in zip(weights, bary):
-            if numpy.all(numpy.abs(b - 1.0 / 3.0) < tol):
+            if np.all(np.abs(b - 1.0 / 3.0) < tol):
                 weight = w / ref_weight
                 d["s3"].append([weight])
             elif abs(b[0] - b[1]) < tol:
@@ -110,7 +110,7 @@ def _extract_bary_data(data):
                 weight = w / ref_weight / 3
                 d["s2"].append([weight, b[0]])
             else:
-                srt = numpy.sort(b)
+                srt = np.sort(b)
                 weight = w / ref_weight / 6
                 d["s1"].append([weight, srt[0], srt[1]])
 

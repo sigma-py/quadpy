@@ -1,10 +1,10 @@
 import itertools
 
-import numpy
+import numpy as np
 
 
 def z(n):
-    return numpy.zeros((1, n), dtype=int)
+    return np.zeros((1, n), dtype=int)
 
 
 def rd(n, items):
@@ -76,7 +76,7 @@ def combine(*elems):
     values, sizes = zip(*elems)
     templates = partitions(*sizes)
     prod = [itertools.product(*(values[ti] for ti in t)) for t in templates]
-    out = numpy.array(list(itertools.chain.from_iterable(prod)))
+    out = np.array(list(itertools.chain.from_iterable(prod)))
     return out
 
 
@@ -91,7 +91,7 @@ def pm(v):
         else:
             possible_vals.append([+value, -value])
 
-    return numpy.array(list(itertools.product(*possible_vals)))
+    return np.array(list(itertools.product(*possible_vals)))
 
 
 def pm_roll(v):
@@ -106,7 +106,7 @@ def pm_roll(v):
     """
     n = len(v)
     pm_v = pm(v)
-    return numpy.concatenate([numpy.roll(pm_v, i, axis=1) for i in range(n)])
+    return np.concatenate([np.roll(pm_v, i, axis=1) for i in range(n)])
 
 
 def get_all_exponents(dim, max_degree):
@@ -151,14 +151,14 @@ def get_all_exponents(dim, max_degree):
         # vals0 = vals * x[0]
 
         out += [[0] + e for e in out1]
-        # out_vals = numpy.concatenate([vals0, vals1])
+        # out_vals = np.concatenate([vals0, vals1])
         return out
 
     # dim = x.shape[0]
 
     # Initialization, level 0
     exponents = [dim * [0]]
-    # vals = numpy.array(numpy.ones(x.shape[1:]))
+    # vals = np.array(np.ones(x.shape[1:]))
 
     # all_vals = []
     all_exponents = []

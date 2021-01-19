@@ -1,5 +1,5 @@
 import ndim
-import numpy
+import numpy as np
 
 from ..helpers import QuadratureScheme
 
@@ -11,7 +11,7 @@ class EnrScheme(QuadratureScheme):
         assert points.shape[0] == dim
         super().__init__(name, weights, points, degree, source, tol)
 
-    def integrate(self, f, dot=numpy.dot):
-        flt = numpy.vectorize(float)
+    def integrate(self, f, dot=np.dot):
+        flt = np.vectorize(float)
         ref_vol = ndim.enr.volume(self.dim)
         return ref_vol * dot(f(flt(self.points)), flt(self.weights))

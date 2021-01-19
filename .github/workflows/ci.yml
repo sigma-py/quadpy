@@ -29,6 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        # no vtk on python 3.9
         python-version: [3.6, 3.7, 3.8]
     steps:
     - uses: actions/setup-python@v2

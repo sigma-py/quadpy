@@ -1,6 +1,6 @@
 import math
 
-import numpy
+import numpy as np
 
 __all__ = ["plot_disks_1d", "plot_disks"]
 
@@ -16,10 +16,10 @@ def plot_disks_1d(plt, pts, weights, total_area):
 
 def plot_disks(plt, pts, weights, total_area):
     """Plot a circles at quadrature points according to weights."""
-    flt = numpy.vectorize(float)
+    flt = np.vectorize(float)
     pts = flt(pts)
     weights = flt(weights)
-    radii = numpy.sqrt(abs(weights) / math.fsum(weights) * total_area / math.pi)
+    radii = np.sqrt(abs(weights) / math.fsum(weights) * total_area / math.pi)
     colors = [
         # use matplotlib 2.0's color scheme
         "tab:blue" if weight >= 0 else "tab:red"
@@ -43,7 +43,7 @@ def show_mpl(points, weights, volume, edges, balls=None):
     from matplotlib import pyplot as plt
     from mpl_toolkits.mplot3d import Axes3D
 
-    flt = numpy.vectorize(float)
+    flt = np.vectorize(float)
     points = flt(points)
     weights = flt(weights)
 
@@ -58,11 +58,11 @@ def show_mpl(points, weights, volume, edges, balls=None):
             # would be to precompute x, y, z before the loop, but this can be
             # heavy on the graphics output. See
             # <https://stackoverflow.com/q/45324258/353337>.
-            u = numpy.linspace(0, 2 * numpy.pi, int(2 * numpy.pi / h * r) + 1)
-            v = numpy.linspace(0, numpy.pi, int(numpy.pi / h * r) + 1)
-            _x = numpy.outer(numpy.cos(u), numpy.sin(v))
-            _y = numpy.outer(numpy.sin(u), numpy.sin(v))
-            _z = numpy.outer(numpy.ones(numpy.size(u)), numpy.cos(v))
+            u = np.linspace(0, 2 * np.pi, int(2 * np.pi / h * r) + 1)
+            v = np.linspace(0, np.pi, int(np.pi / h * r) + 1)
+            _x = np.outer(np.cos(u), np.sin(v))
+            _y = np.outer(np.sin(u), np.sin(v))
+            _z = np.outer(np.ones(np.size(u)), np.cos(v))
 
             # highlight ball center
             plt.plot(
@@ -97,9 +97,7 @@ def show_mpl(points, weights, volume, edges, balls=None):
         points,
         # Choose radius such that the sum of volumes of the balls equals
         # total_volume.
-        radii=numpy.cbrt(
-            abs(weights) / math.fsum(weights) * volume / (4.0 / 3.0 * numpy.pi)
-        ),
+        radii=np.cbrt(abs(weights) / math.fsum(weights) * volume / (4.0 / 3.0 * np.pi)),
         colors=["tab:blue" if weight >= 0 else "tab:red" for weight in weights],
     )
 
@@ -126,16 +124,16 @@ def show_mpl(points, weights, volume, edges, balls=None):
 #     for tp, weight in zip(points, weights):
 #         # Choose radius such that the sum of volumes of the balls equals
 #         # total_volume.
-#         r = (abs(weight) / sum_weights * volume / (4.0 / 3.0 * numpy.pi)) ** (1.0 / 3.0)
+#         r = (abs(weight) / sum_weights * volume / (4.0 / 3.0 * np.pi)) ** (1.0 / 3.0)
 #
 #         # Create a sphere
-#         u = numpy.linspace(0, 2 * numpy.pi, int(2 * numpy.pi / h * r) + 1)
-#         v = numpy.linspace(0, numpy.pi, int(numpy.pi / h * r) + 1)
-#         sin_u, cos_u = numpy.sin(u), numpy.cos(u)
-#         sin_v, cos_v = numpy.sin(v), numpy.cos(v)
-#         _x = numpy.outer(cos_u, sin_v)
-#         _y = numpy.outer(sin_u, sin_v)
-#         _z = numpy.outer(numpy.ones(numpy.size(u)), cos_v)
+#         u = np.linspace(0, 2 * np.pi, int(2 * np.pi / h * r) + 1)
+#         v = np.linspace(0, np.pi, int(np.pi / h * r) + 1)
+#         sin_u, cos_u = np.sin(u), np.cos(u)
+#         sin_v, cos_v = np.sin(v), np.cos(v)
+#         _x = np.outer(cos_u, sin_v)
+#         _y = np.outer(sin_u, sin_v)
+#         _z = np.outer(np.ones(np.size(u)), cos_v)
 #
 #         mlab.mesh(
 #             r * _x + tp[0],
@@ -151,13 +149,13 @@ def show_mpl(points, weights, volume, edges, balls=None):
 #         r = ball[1]
 #
 #         # Create a sphere
-#         u = numpy.linspace(0, 2 * numpy.pi, int(2 * numpy.pi / h * r) + 1)
-#         v = numpy.linspace(0, numpy.pi, int(numpy.pi / h * r) + 1)
-#         sin_u, cos_u = numpy.sin(u), numpy.cos(u)
-#         sin_v, cos_v = numpy.sin(v), numpy.cos(v)
-#         _x = numpy.outer(cos_u, sin_v)
-#         _y = numpy.outer(sin_u, sin_v)
-#         _z = numpy.outer(numpy.ones(numpy.size(u)), cos_v)
+#         u = np.linspace(0, 2 * np.pi, int(2 * np.pi / h * r) + 1)
+#         v = np.linspace(0, np.pi, int(np.pi / h * r) + 1)
+#         sin_u, cos_u = np.sin(u), np.cos(u)
+#         sin_v, cos_v = np.sin(v), np.cos(v)
+#         _x = np.outer(cos_u, sin_v)
+#         _y = np.outer(sin_u, sin_v)
+#         _z = np.outer(np.ones(np.size(u)), cos_v)
 #
 #         mlab.mesh(
 #             r * _x + tp[0], r * _y + tp[1], r * _z + tp[2], color=[0, 0, 0], opacity=1.0
@@ -206,7 +204,7 @@ def show_vtk(points, weights, volume, edges, balls=None, render=True):
         sphere_actor.GetProperty().SetOpacity(opacity)
         return sphere_actor
 
-    flt = numpy.vectorize(float)
+    flt = np.vectorize(float)
     points = flt(points)
     weights = flt(weights)
 
@@ -214,12 +212,10 @@ def show_vtk(points, weights, volume, edges, balls=None, render=True):
 
     line_actors = [get_line_actor(edge[:, 0], edge[:, 1]) for edge in edges]
 
-    blue = numpy.array([31.0, 119.0, 180.0]) / 255.0
-    red = numpy.array([84.0, 15.0, 16.0]) / 255.0
+    blue = np.array([31.0, 119.0, 180.0]) / 255.0
+    red = np.array([84.0, 15.0, 16.0]) / 255.0
 
-    radii = numpy.cbrt(
-        abs(weights) / math.fsum(weights) * volume / (4.0 / 3.0 * numpy.pi)
-    )
+    radii = np.cbrt(abs(weights) / math.fsum(weights) * volume / (4.0 / 3.0 * np.pi))
     sphere_actors = [
         get_sphere_actor(pt, radius, color=blue if weight > 0.0 else red)
         for pt, weight, radius in zip(points.T, weights, radii)
@@ -228,9 +224,9 @@ def show_vtk(points, weights, volume, edges, balls=None, render=True):
     sphere_actors.extend(
         [
             get_sphere_actor(
-                numpy.array(ball[0]),
+                np.array(ball[0]),
                 ball[1],
-                color=numpy.array([0.0, 0.0, 0.0]) / 255.0,
+                color=np.array([0.0, 0.0, 0.0]) / 255.0,
                 opacity=0.5,
             )
             for ball in balls

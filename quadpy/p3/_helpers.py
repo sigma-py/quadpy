@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 from ..helpers import QuadratureScheme, backend_to_function
 
@@ -8,8 +8,8 @@ class P3Scheme(QuadratureScheme):
         super().__init__(name, weights, points, degree, source, tol)
         self.domain = "P3"
 
-    def integrate(self, f, pyra, dot=numpy.dot):
-        flt = numpy.vectorize(float)
+    def integrate(self, f, pyra, dot=np.dot):
+        flt = np.vectorize(float)
 
         xi = flt(self.points).T
         x = _transform(xi, pyra)
@@ -19,10 +19,10 @@ class P3Scheme(QuadratureScheme):
 
     def show(
         self,
-        pyra=numpy.array([[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0.5, 0.5, 1.0]]),
+        pyra=np.array([[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0.5, 0.5, 1.0]]),
         backend="mpl",
     ):
-        edges = numpy.array(
+        edges = np.array(
             [
                 [pyra[0], pyra[1]],
                 [pyra[1], pyra[2]],
@@ -35,7 +35,7 @@ class P3Scheme(QuadratureScheme):
                 [pyra[3], pyra[4]],
             ]
         )
-        edges = numpy.moveaxis(edges, 1, 2)
+        edges = np.moveaxis(edges, 1, 2)
 
         # vol = integrate(lambda x: 1.0, pyra, Felippa(1))
         vol = 1.0
@@ -45,7 +45,7 @@ class P3Scheme(QuadratureScheme):
 
 
 def _transform(xi, pyra):
-    mo = numpy.multiply.outer
+    mo = np.multiply.outer
     return (
         +mo(0.125 * (1.0 - xi[0]) * (1.0 - xi[1]) * (1 - xi[2]), pyra[0])
         + mo(0.125 * (1.0 + xi[0]) * (1.0 - xi[1]) * (1 - xi[2]), pyra[1])
@@ -57,23 +57,23 @@ def _transform(xi, pyra):
 
 def _get_det_J(pyra, xi):
     J0 = (
-        -numpy.multiply.outer(0.125 * (1.0 - xi[1]) * (1 - xi[2]), pyra[0])
-        + numpy.multiply.outer(0.125 * (1.0 - xi[1]) * (1 - xi[2]), pyra[1])
-        + numpy.multiply.outer(0.125 * (1.0 + xi[1]) * (1 - xi[2]), pyra[2])
-        - numpy.multiply.outer(0.125 * (1.0 + xi[1]) * (1 - xi[2]), pyra[3])
+        -np.multiply.outer(0.125 * (1.0 - xi[1]) * (1 - xi[2]), pyra[0])
+        + np.multiply.outer(0.125 * (1.0 - xi[1]) * (1 - xi[2]), pyra[1])
+        + np.multiply.outer(0.125 * (1.0 + xi[1]) * (1 - xi[2]), pyra[2])
+        - np.multiply.outer(0.125 * (1.0 + xi[1]) * (1 - xi[2]), pyra[3])
     ).T
     J1 = (
-        -numpy.multiply.outer(0.125 * (1.0 - xi[0]) * (1 - xi[2]), pyra[0])
-        - numpy.multiply.outer(0.125 * (1.0 + xi[0]) * (1 - xi[2]), pyra[1])
-        + numpy.multiply.outer(0.125 * (1.0 + xi[0]) * (1 - xi[2]), pyra[2])
-        + numpy.multiply.outer(0.125 * (1.0 - xi[0]) * (1 - xi[2]), pyra[3])
+        -np.multiply.outer(0.125 * (1.0 - xi[0]) * (1 - xi[2]), pyra[0])
+        - np.multiply.outer(0.125 * (1.0 + xi[0]) * (1 - xi[2]), pyra[1])
+        + np.multiply.outer(0.125 * (1.0 + xi[0]) * (1 - xi[2]), pyra[2])
+        + np.multiply.outer(0.125 * (1.0 - xi[0]) * (1 - xi[2]), pyra[3])
     ).T
     J2 = (
-        -numpy.multiply.outer(0.125 * (1.0 - xi[0]) * (1.0 - xi[1]), pyra[0])
-        - numpy.multiply.outer(0.125 * (1.0 + xi[0]) * (1.0 - xi[1]), pyra[1])
-        - numpy.multiply.outer(0.125 * (1.0 + xi[0]) * (1.0 + xi[1]), pyra[2])
-        - numpy.multiply.outer(0.125 * (1.0 - xi[0]) * (1.0 + xi[1]), pyra[3])
-        + numpy.multiply.outer(0.500 * numpy.ones(1), pyra[4])
+        -np.multiply.outer(0.125 * (1.0 - xi[0]) * (1.0 - xi[1]), pyra[0])
+        - np.multiply.outer(0.125 * (1.0 + xi[0]) * (1.0 - xi[1]), pyra[1])
+        - np.multiply.outer(0.125 * (1.0 + xi[0]) * (1.0 + xi[1]), pyra[2])
+        - np.multiply.outer(0.125 * (1.0 - xi[0]) * (1.0 + xi[1]), pyra[3])
+        + np.multiply.outer(0.500 * np.ones(1), pyra[4])
     ).T
     det = (
         +J0[0] * J1[1] * J2[2]

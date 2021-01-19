@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 from ..helpers import article
 from ._helpers import T2Scheme, register
@@ -30,13 +30,13 @@ def franke_09():
     b5 = 0.151969575382297
     c5 = 0.569101341800312
 
-    points = numpy.array(
+    points = np.array(
         [
             [a1, a2, a3, a4, b1, c1, b2, c2, b3, c3, b4, c4, b5, c5],
             [a1, a2, a3, a4, c1, b1, c2, b2, c3, b3, c4, b4, c5, b5],
         ]
     )
-    weights = 2 * numpy.array(
+    weights = 2 * np.array(
         [
             0.263321501360460e-1,
             0.666750609902085e-1,
@@ -54,9 +54,9 @@ def franke_09():
             0.515921753448585e-1,
         ]
     )
-    points = numpy.array([points[0], points[1], 1 - points[0] - points[1]])
+    points = np.array([points[0], points[1], 1 - points[0] - points[1]])
 
-    return T2Scheme("Franke 9", {"plain": numpy.vstack([weights, points])}, 7, source)
+    return T2Scheme("Franke 9", {"plain": np.vstack([weights, points])}, 7, source)
 
 
 def franke_10():
@@ -75,13 +75,13 @@ def franke_10():
     b5 = 0.160040255710345
     c5 = 0.564851216876248
 
-    points = numpy.array(
+    points = np.array(
         [
             [a1, a2, a3, a4, b1, c1, b2, c2, b3, c3, b4, c4, b5, c5],
             [a1, a2, a3, a4, c1, b1, c2, b2, c3, b3, c4, b4, c5, b5],
         ]
     )
-    weights = 2 * numpy.array(
+    weights = 2 * np.array(
         [
             0.260816160868233e-1,
             0.663602357926664e-1,
@@ -99,9 +99,9 @@ def franke_10():
             0.526193854900464e-1,
         ]
     )
-    points = numpy.array([points[0], points[1], 1 - points[0] - points[1]])
+    points = np.array([points[0], points[1], 1 - points[0] - points[1]])
 
-    return T2Scheme("Franke 10", {"plain": numpy.vstack([weights, points])}, 7, source)
+    return T2Scheme("Franke 10", {"plain": np.vstack([weights, points])}, 7, source)
 
 
 register([franke_09, franke_10])

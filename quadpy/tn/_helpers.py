@@ -1,6 +1,6 @@
 import math
 
-import numpy
+import numpy as np
 import sympy
 
 from .._exception import QuadpyError
@@ -16,14 +16,14 @@ class TnScheme(QuadratureScheme):
         super().__init__(name, weights, points, degree, source, tol, comments)
 
     def points_inside(self):
-        return numpy.all((0 < self.points) & (self.points < 1))
+        return np.all((0 < self.points) & (self.points < 1))
 
     def points_inside_or_boundary(self):
-        return numpy.all((0 <= self.points) & (self.points <= 1))
+        return np.all((0 <= self.points) & (self.points <= 1))
 
-    def integrate(self, f, simplex, dot=numpy.dot):
-        flt = numpy.vectorize(float)
-        simplex = numpy.asarray(simplex)
+    def integrate(self, f, simplex, dot=np.dot):
+        flt = np.vectorize(float)
+        simplex = np.asarray(simplex)
         if simplex.shape[0] != self.dim + 1:
             string = ", ".join(str(val) for val in simplex.shape)
             raise QuadpyError(
@@ -32,7 +32,7 @@ class TnScheme(QuadratureScheme):
         x = transform(flt(self.points), simplex.T)
         vol = get_vol(simplex)
 
-        fx = numpy.asarray(f(x))
+        fx = np.asarray(f(x))
         if fx.shape[-len(x.shape[1:]) :] != x.shape[1:]:
             string = ", ".join(str(val) for val in x.shape[1:])
             raise QuadpyError(
@@ -50,7 +50,7 @@ def transform(points, simplex):
     #     + outer(triangle[1].T, xi[0])
     #     + outer(triangle[2].T, xi[1])
     #     )
-    return numpy.dot(simplex, points)
+    return np.dot(simplex, points)
 
 
 def get_vol(simplex):
@@ -60,20 +60,20 @@ def get_vol(simplex):
     # space in which it is embedded.
 
     # compute all edge lengths
-    edges = numpy.subtract(simplex[:, None], simplex[None, :])
-    ei_dot_ej = numpy.einsum("...k,...k->...", edges, edges)
+    edges = np.subtract(simplex[:, None], simplex[None, :])
+    ei_dot_ej = np.einsum("...k,...k->...", edges, edges)
 
     j = simplex.shape[0] - 1
-    a = numpy.empty((j + 2, j + 2) + ei_dot_ej.shape[2:])
+    a = np.empty((j + 2, j + 2) + ei_dot_ej.shape[2:])
     a[1:, 1:] = ei_dot_ej
     a[0, 1:] = 1.0
     a[1:, 0] = 1.0
     a[0, 0] = 0.0
 
-    a = numpy.moveaxis(a, (0, 1), (-2, -1))
-    det = numpy.linalg.det(a)
+    a = np.moveaxis(a, (0, 1), (-2, -1))
+    det = np.linalg.det(a)
 
-    vol = numpy.sqrt((-1.0) ** (j + 1) / 2 ** j / math.factorial(j) ** 2 * det)
+    vol = np.sqrt((-1.0) ** (j + 1) / 2 ** j / math.factorial(j) ** 2 * det)
     return vol
 
 

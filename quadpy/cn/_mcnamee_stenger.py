@@ -1,6 +1,6 @@
 import math
 
-import numpy
+import numpy as np
 import sympy
 
 from ..helpers import article, comb, fsd, prod, untangle, z
@@ -35,7 +35,7 @@ def _mcnamee_stenger_3(n, integrator, symbolic):
     ]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return "McNamee-Stenger 3", n, weights, points, 3, _source
 
 
@@ -61,7 +61,7 @@ def _mcnamee_stenger_5(n, integrator, symbolic):
     ]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     weights /= I0
     return "McNamee-Stenger 5", n, weights, points, 5, _source
 
@@ -138,7 +138,7 @@ def _mcnamee_stenger_7(n, integrator, switch_uv, symbolic):
     ]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
 
     weights /= I0
     variant = "a" if not switch_uv else "b"
@@ -245,7 +245,7 @@ def _mcnamee_stenger_9(n, integrator, switch_uv, symbolic):
     ]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
 
     weights /= I0
     variant = "a" if not switch_uv else "b"

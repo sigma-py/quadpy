@@ -1,5 +1,5 @@
 import ndim
-import numpy
+import numpy as np
 import pytest
 from helpers import check_degree
 
@@ -39,12 +39,12 @@ import quadpy
     + [quadpy.sn.stroud_sn_11_1b(dim) for dim in [4, 5]],
 )
 def test_scheme(scheme):
-    assert scheme.points.dtype == numpy.float64, scheme.name
-    assert scheme.weights.dtype == numpy.float64, scheme.name
+    assert scheme.points.dtype == np.float64, scheme.name
+    assert scheme.weights.dtype == np.float64, scheme.name
 
     n = scheme.dim
     degree, err = check_degree(
-        lambda poly: scheme.integrate(poly, center=numpy.zeros(n), radius=1),
+        lambda poly: scheme.integrate(poly, center=np.zeros(n), radius=1),
         ndim.nball.integrate_monomial,
         n,
         scheme.degree + 1,

@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import pytest
 from numpy import cos, pi, sin
 
@@ -15,7 +15,7 @@ def test_372():
     # https://github.com/nschloe/quadpy/issues/372
     val, _ = quadpy.c1.integrate_adaptive(lambda x: [0 * x, 2 * x], [0, 1])
     exact = [0.0, 1.0]
-    assert numpy.all(numpy.abs(exact - val) < 1.0e-10)
+    assert np.all(np.abs(exact - val) < 1.0e-10)
 
 
 def test_sin():
@@ -39,8 +39,8 @@ def test_vector_valued(k):
         (sin(pi * k) - pi * k * cos(pi * k)) / k ** 2,
         (cos(pi * k) + pi * k * sin(pi * k) - 1.0) / k ** 2,
     ]
-    assert numpy.all(err < 1.0e-10)
-    assert numpy.all(numpy.abs(exact - val) < 1.0e-9)
+    assert np.all(err < 1.0e-10)
+    assert np.all(np.abs(exact - val) < 1.0e-9)
 
 
 def test_multidim():
@@ -85,13 +85,13 @@ def test_multidim():
     #     lambda x: [sin(x), cos(x)], [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]]
     # )
     # assert err.shape == (2, 3)
-    # assert numpy.all(err < 1.0e-10)
+    # assert np.all(err < 1.0e-10)
     # assert val.shape == (2, 3)
     # exact = [
     #     [cos(0.0) - cos(1.0), cos(1.0) - cos(2.0), cos(2.0) - cos(3.0)],
     #     [sin(1.0) - sin(0.0), sin(2.0) - sin(1.0), sin(3.0) - sin(2.0)],
     # ]
-    # assert numpy.all(numpy.abs(val - exact) < 1.0e-10)
+    # assert np.all(np.abs(val - exact) < 1.0e-10)
 
     # vector-valued integration in 3D
     val, err = quadpy.c1.integrate_adaptive(
@@ -99,7 +99,7 @@ def test_multidim():
         [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]],
     )
     assert err.shape == (2,)
-    assert numpy.all(err < 1.0e-10)
+    assert np.all(err < 1.0e-10)
     assert val.shape == (2,)
 
     # another vector-valued integration in 3D
@@ -127,7 +127,7 @@ def test_sink(k):
 def test_236():
     # https://github.com/nschloe/quadpy/issues/236
     def f(x):
-        return numpy.exp(-1.0 / (1 - x ** 2))
+        return np.exp(-1.0 / (1 - x ** 2))
 
     val, err = quadpy.quad(f, -1, 1)
     assert err < 1.0e-9
@@ -135,15 +135,15 @@ def test_236():
 
 def test_infinite_limits():
     tol = 1.0e-7
-    val, err = quadpy.quad(lambda x: numpy.exp(-(x ** 2)), -numpy.inf, numpy.inf)
-    assert abs(val - numpy.sqrt(numpy.pi)) < tol
+    val, err = quadpy.quad(lambda x: np.exp(-(x ** 2)), -np.inf, np.inf)
+    assert abs(val - np.sqrt(np.pi)) < tol
     assert err < tol
 
-    val, err = quadpy.quad(lambda x: numpy.exp(-x), 0.0, numpy.inf)
+    val, err = quadpy.quad(lambda x: np.exp(-x), 0.0, np.inf)
     assert abs(val - 1.0) < tol
     assert err < tol
 
-    val, err = quadpy.quad(lambda x: numpy.exp(+x), -numpy.inf, 0)
+    val, err = quadpy.quad(lambda x: np.exp(+x), -np.inf, 0)
     assert abs(val - 1.0) < tol
     assert err < tol
 

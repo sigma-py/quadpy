@@ -29,7 +29,7 @@
 
 import math
 
-import numpy
+import numpy as np
 import sympy
 from mpmath import mp
 from mpmath.matrices.eigen_symmetric import tridiag_eigen
@@ -47,19 +47,19 @@ def coefficients_from_gauss(points, weights):
     n = len(points)
     assert n == len(weights)
 
-    flt = numpy.vectorize(float)
+    flt = np.vectorize(float)
     points = flt(points)
     weights = flt(weights)
 
-    A = numpy.zeros((n + 1, n + 1))
+    A = np.zeros((n + 1, n + 1))
 
     # In sytrd, the _last_ row/column of Q are e, so put the values there.
     a00 = 1.0
     A[n, n] = a00
-    k = numpy.arange(n)
+    k = np.arange(n)
     A[k, k] = points
-    A[n, :-1] = numpy.sqrt(weights)
-    A[:-1, n] = numpy.sqrt(weights)
+    A[n, :-1] = np.sqrt(weights)
+    A[:-1, n] = np.sqrt(weights)
 
     # Implemented in
     # <https://github.com/scipy/scipy/issues/7775>
@@ -94,12 +94,12 @@ def _sympy_tridiag(a, b):
 
 
 def scheme_from_rc(alpha, beta, int_1, mode=None):
-    alpha = numpy.asarray(alpha)
-    beta = numpy.asarray(beta)
+    alpha = np.asarray(alpha)
+    beta = np.asarray(beta)
 
     if mode is None:
         # try and guess the mode
-        if alpha.dtype in [numpy.float32, numpy.float64]:
+        if alpha.dtype in [np.float32, np.float64]:
             mode = "numpy"
         else:
             raise ValueError(
@@ -158,14 +158,14 @@ def _scheme_from_rc_mpmath(alpha, beta, int_1):
     tridiag_eigen(mp, d, b, z)
 
     # nx1 matrix -> list of mpf
-    x = numpy.array([mp.mpf(sympy.N(xx, mp.dps)) for xx in d])
-    w = numpy.array([mp.mpf(sympy.N(int_1, mp.dps)) * mp.power(ww, 2) for ww in z])
+    x = np.array([mp.mpf(sympy.N(xx, mp.dps)) for xx in d])
+    w = np.array([mp.mpf(sympy.N(int_1, mp.dps)) * mp.power(ww, 2) for ww in z])
     return x, w
 
 
 def _scheme_from_rc_numpy(alpha, beta, int_1):
-    alpha = alpha.astype(numpy.float64)
-    beta = beta.astype(numpy.float64)
-    x, V = eigh_tridiagonal(alpha, numpy.sqrt(beta[1:]))
+    alpha = alpha.astype(np.float64)
+    beta = beta.astype(np.float64)
+    x, V = eigh_tridiagonal(alpha, np.sqrt(beta[1:]))
     w = int_1 * V[0, :] ** 2
     return x, w

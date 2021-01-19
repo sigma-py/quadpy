@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from sympy import sqrt
 
 from ..helpers import article, untangle
@@ -21,5 +21,5 @@ def thacher(n):
     r = sqrt(3) / 6
     data = [(1, [n * [2 * r]]), (+r, _s(n, -1, r)), (-r, _s(n, +1, r))]
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return CnScheme(f"Thacher ({n}D)", n, weights, points, 2, _source, 1.399e-14)

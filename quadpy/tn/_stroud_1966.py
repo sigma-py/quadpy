@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from sympy import Rational as frac
 from sympy import sqrt
 
@@ -31,17 +31,17 @@ def stroud_1966_1(n):
     data = [(B, rd(n + 1, [(1, 1)])), (C, rd(n + 1, [(r, n), (s, 1)]))]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return TnScheme("Stroud 1966-I", n, weights, points, degree, source)
 
 
 def stroud_1966_2(n):
     degree = 3
     # r is a smallest real-valued root of a polynomial of degree 3
-    rts = numpy.roots(
+    rts = np.roots(
         [2 * (n - 2) * (n + 1) * (n + 3), -(5 * n ** 2 + 5 * n - 18), 4 * n, -1]
     )
-    r = numpy.min([r.real for r in rts if abs(r.imag) < 1.0e-15])
+    r = np.min([r.real for r in rts if abs(r.imag) < 1.0e-15])
 
     s = 1 - n * r
     t = 0.5
@@ -52,7 +52,7 @@ def stroud_1966_2(n):
     data = [(B, rd(n + 1, [(r, n), (s, 1)])), (C, rd(n + 1, [(t, 2)]))]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return TnScheme("Stroud 1966-II", n, weights, points, degree, source)
 
 
@@ -75,7 +75,7 @@ def stroud_1966_3(n):
     ]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return TnScheme("Stroud 1966-III", n, weights, points, degree, source)
 
 
@@ -91,12 +91,12 @@ def stroud_1966_4(n):
     C = frac(27, (n - 2) * (n + 1) * (n + 2) * (n + 3))
 
     data = [
-        (A, numpy.full((1, n + 1), r)),
+        (A, np.full((1, n + 1), r)),
         (B, rd(n + 1, [(1, 1)])),
         (C, rd(n + 1, [(s, 3)])),
     ]
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return TnScheme("Stroud 1966-IV", n, weights, points, degree, source)
 
 
@@ -116,7 +116,7 @@ def stroud_1966_5(n):
         (C, rd(n + 1, [(s, 3)])),
     ]
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return TnScheme("Stroud 1966-I", n, weights, points, degree, source)
 
 
@@ -135,13 +135,13 @@ def stroud_1966_6(n):
     C = frac(2 * (n - 2) ** 2 * (n - 9), (n - 5) * (n - 1) * prod)
 
     data = [
-        (A, numpy.full((1, n + 1), r)),
+        (A, np.full((1, n + 1), r)),
         (B, rd(n + 1, [(s, 3)])),
         (C, rd(n + 1, [(t, n - 2)])),
     ]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return TnScheme("Stroud 1966-VI", n, weights, points, degree, source)
 
 
@@ -165,5 +165,5 @@ def stroud_1966_7(n):
     ]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return TnScheme("Stroud 1966-VII", n, weights, points, degree, source)

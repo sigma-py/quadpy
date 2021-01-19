@@ -1,7 +1,7 @@
 from math import pi
 from typing import Callable, Optional
 
-import numpy
+import numpy as np
 
 from .._exception import QuadpyError
 from ..helpers import QuadratureScheme, backend_to_function, expand_symmetries
@@ -32,18 +32,18 @@ class S3Scheme(QuadratureScheme):
             **kwargs,
         )
 
-    def integrate(self, f: Callable, center, radius, dot=numpy.dot):
-        center = numpy.asarray(center)
-        rr = numpy.multiply.outer(radius, self.points.T)
-        rr = numpy.swapaxes(rr, 0, -2)
+    def integrate(self, f: Callable, center, radius, dot=np.dot):
+        center = np.asarray(center)
+        rr = np.multiply.outer(radius, self.points.T)
+        rr = np.swapaxes(rr, 0, -2)
         x = (rr + center).T
-        ff = numpy.asarray(f(x))
+        ff = np.asarray(f(x))
         if ff.shape[-len(x.shape[1:]) :] != x.shape[1:]:
             string = ", ".join(str(val) for val in x.shape[1:])
             raise QuadpyError(
                 f"Wrong return value shape {ff.shape}. " f"Expected (..., {string})."
             )
-        return 4 / 3 * pi * numpy.asarray(radius) ** 3 * dot(ff, self.weights)
+        return 4 / 3 * pi * np.asarray(radius) ** 3 * dot(ff, self.weights)
 
 
 def get_good_scheme(degree: int) -> Optional[S3Scheme]:

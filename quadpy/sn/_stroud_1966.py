@@ -1,6 +1,6 @@
 import math
 
-import numpy
+import numpy as np
 import sympy
 
 from ..helpers import article, combine, fsd, pm, untangle, z
@@ -35,7 +35,7 @@ def stroud_1966_a(n, symbolic=False):
 
     data = [(B1, fsd(n, (r, 1))), (B2, pm(n * [s]))]
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return SnScheme("Stroud 1966a", n, weights, points, 5, source)
 
 
@@ -54,10 +54,10 @@ def stroud_1966_b(n, symbolic=False):
         )
         B0 -= 2 ** (n - k + 1) * B
         r = sqrt(frac((k + 2) * (n + alpha + 2), (n + 2) * (n + alpha + 4)))
-        v = numpy.concatenate(
+        v = np.concatenate(
             [
-                numpy.zeros((2 ** (n - k + 1), k - 1), dtype=int),
-                pm(numpy.array([r] + (n - k) * [s])),
+                np.zeros((2 ** (n - k + 1), k - 1), dtype=int),
+                pm(np.array([r] + (n - k) * [s])),
             ],
             axis=-1,
         )
@@ -65,7 +65,7 @@ def stroud_1966_b(n, symbolic=False):
     data.append((B0, z(n)))
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return SnScheme("Stroud 1966b", n, weights, points, 5, source)
 
 
@@ -83,7 +83,7 @@ def stroud_1966_c(n, symbolic=False):
     data = [(B0, z(n)), (B1, combine(((+r, -r), 1), ((+s, -s), (n - 1))))]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return SnScheme("Stroud 1966c", n, weights, points, 5, source)
 
 
@@ -106,5 +106,5 @@ def stroud_1966_d(n, symbolic=False):
     data = [(B, combine(((+r, -r), 1), ((+s, -s), (n - 1)))), (B, pm(n * [t]))]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return SnScheme("Stroud 1966d", n, weights, points, 5, source, 1.019e-14)

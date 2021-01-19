@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import pytest
 import sympy
 from helpers import check_degree
@@ -74,16 +74,14 @@ def _integrate_exact(k, pyra):
     ],
 )
 def test_scheme(scheme):
-    assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
-    assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
+    assert scheme.points.dtype in [np.float64, np.int64], scheme.name
+    assert scheme.weights.dtype in [np.float64, np.int64], scheme.name
 
     print(scheme)
 
     # Test integration until we get to a polynomial degree `d` that can no longer be
     # integrated exactly. The scheme's degree is `d-1`.
-    pyra = numpy.array(
-        [[-1, -1, -1], [+1, -1, -1], [+1, +1, -1], [-1, +1, -1], [0, 0, 1]]
-    )
+    pyra = np.array([[-1, -1, -1], [+1, -1, -1], [+1, +1, -1], [-1, +1, -1], [0, 0, 1]])
     degree, err = check_degree(
         lambda poly: scheme.integrate(poly, pyra),
         lambda k: _integrate_exact(k, pyra),

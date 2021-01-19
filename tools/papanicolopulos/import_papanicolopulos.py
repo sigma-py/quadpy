@@ -4,7 +4,7 @@ https://arxiv.org/src/1411.5631v2/anc/fullsymmetry.txt
 """
 import re
 
-import numpy
+import numpy as np
 
 
 def read_data(filename, num_orbit_types):
@@ -34,7 +34,7 @@ def read_data(filename, num_orbit_types):
                 degree = int(out.group(1))
                 orbits = [int(out.group(k)) for k in range(3, 3 + num_orbit_types)]
                 num_items = sum(orbits)
-                dat = numpy.fromfile(f, count=num_items * 4, sep=" ").reshape(
+                dat = np.fromfile(f, count=num_items * 4, sep=" ").reshape(
                     (num_items, 4)
                 )
                 d0 = dat[: orbits[0]]

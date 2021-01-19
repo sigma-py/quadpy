@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 from quadpy.helpers import get_all_exponents
 
@@ -6,9 +6,9 @@ from quadpy.helpers import get_all_exponents
 def check_degree(quadrature, exact, dim, max_degree, tol):
     exponents = get_all_exponents(dim, max_degree)
     # flatten list
-    exponents = numpy.array([item for sublist in exponents for item in sublist])
+    exponents = np.array([item for sublist in exponents for item in sublist])
 
-    flt = numpy.vectorize(float)
+    flt = np.vectorize(float)
     exact_vals = flt([exact(k) for k in exponents])
 
     def evaluate_all_monomials(x):
@@ -17,7 +17,7 @@ def check_degree(quadrature, exact, dim, max_degree, tol):
         # However, this only works for strictly positive `x`, and requires some
         # tinkering. See below and
         # <https://stackoverflow.com/a/45421128/353337>.
-        return numpy.prod(x[..., None] ** exponents.T[:, None], axis=0).T
+        return np.prod(x[..., None] ** exponents.T[:, None], axis=0).T
 
     vals = quadrature(evaluate_all_monomials)
 
@@ -25,16 +25,16 @@ def check_degree(quadrature, exact, dim, max_degree, tol):
     err = abs(exact_vals - vals)
     is_smaller = err < (1 + abs(exact_vals)) * tol
 
-    if numpy.all(is_smaller):
-        return max_degree, numpy.max(err / (1 + abs(exact_vals)))
+    if np.all(is_smaller):
+        return max_degree, np.max(err / (1 + abs(exact_vals)))
 
-    k = numpy.where(~is_smaller)[0]
+    k = np.where(~is_smaller)[0]
     # Return the max error for all exponents that are one smaller than the max_degree.
     # This is because this functions is usually called with target_degree + 1.
-    idx = numpy.sum(exponents, axis=1) < max_degree
+    idx = np.sum(exponents, axis=1) < max_degree
     return (
-        numpy.sum(exponents[k[0]]) - 1,
-        numpy.max(err[idx] / (1 + abs(exact_vals[idx]))),
+        np.sum(exponents[k[0]]) - 1,
+        np.max(err[idx] / (1 + abs(exact_vals[idx]))),
     )
 
 
@@ -49,12 +49,12 @@ def find_equal(schemes):
             if len(schemes[i].weights) != len(schemes[j].weights):
                 continue
             # Check if the point sets are equal
-            x = numpy.vstack([schemes[i].weights, schemes[i].points])
-            y = numpy.vstack([schemes[j].weights, schemes[j].points])
+            x = np.vstack([schemes[i].weights, schemes[i].points])
+            y = np.vstack([schemes[j].weights, schemes[j].points])
             is_equal = True
             for x_i in x:
                 diff = y - x_i
-                diff = numpy.min(numpy.sum(diff ** 2, axis=-1))
+                diff = np.min(np.sum(diff ** 2, axis=-1))
                 if diff > tol:
                     is_equal = False
                     break
@@ -125,9 +125,9 @@ def find_best_scheme(schemes, degree, is_points_okay, is_symmetries_okay):
             best = scheme
             continue
         else:  # len(scheme.weights) == len(best.weights):
-            abs_weights = numpy.abs(scheme.weights)
+            abs_weights = np.abs(scheme.weights)
             ratio = max(abs_weights) / min(abs_weights)
-            bratio = max(numpy.abs(best.weights)) / min(numpy.abs(best.weights))
+            bratio = max(np.abs(best.weights)) / min(np.abs(best.weights))
             if ratio < bratio:
                 best = scheme
                 continue
@@ -135,7 +135,7 @@ def find_best_scheme(schemes, degree, is_points_okay, is_symmetries_okay):
                 continue
             else:  # ratio == bratio
                 # # check if it's actually the same scheme
-                # if numpy.all(numpy.abs(scheme.points - best.points) < 1.0e-12):
+                # if np.all(np.abs(scheme.points - best.points) < 1.0e-12):
                 #     print("DUP", best.name, scheme.name)
                 #     # pick the older one
 

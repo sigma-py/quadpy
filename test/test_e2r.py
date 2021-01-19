@@ -1,6 +1,6 @@
 import accupy
 import ndim
-import numpy
+import numpy as np
 import pytest
 from helpers import check_degree, find_best_scheme
 
@@ -10,8 +10,8 @@ import quadpy
 @pytest.mark.parametrize("scheme", quadpy.e2r.schemes.values())
 def test_scheme(scheme):
     scheme = scheme()
-    assert scheme.points.dtype == numpy.float64, scheme.name
-    assert scheme.weights.dtype == numpy.float64, scheme.name
+    assert scheme.points.dtype == np.float64, scheme.name
+    assert scheme.weights.dtype == np.float64, scheme.name
 
     print(scheme)
 

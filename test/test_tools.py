@@ -1,7 +1,7 @@
 import math
 from distutils.version import LooseVersion
 
-import numpy
+import numpy as np
 import orthopy
 import pytest
 import scipy
@@ -16,7 +16,7 @@ def test_gauss_sympy():
     rc = orthopy.c1.jacobi.RecurrenceCoefficients(
         "monic", alpha=0, beta=0, symbolic=True
     )
-    _, a, b = numpy.array([rc[k] for k in range(n)]).T
+    _, a, b = np.array([rc[k] for k in range(n)]).T
     points, weights = quadpy.tools.scheme_from_rc(a, b, rc.int_1, "sympy")
 
     assert points == [-sympy.sqrt(sympy.S(3) / 5), 0, +sympy.sqrt(sympy.S(3) / 5)]
@@ -29,7 +29,7 @@ def test_gauss_mpmath():
     rc = orthopy.c1.jacobi.RecurrenceCoefficients(
         "monic", alpha=0, beta=0, symbolic=True
     )
-    _, alpha, beta = numpy.array([rc[k] for k in range(n)]).T
+    _, alpha, beta = np.array([rc[k] for k in range(n)]).T
     mp.dps = 50
     points, weights = quadpy.tools.scheme_from_rc(alpha, beta, rc.int_1, "mpmath")
 
@@ -48,9 +48,9 @@ def test_gauss_numpy():
     n = 5
     tol = 1.0e-14
     rc = orthopy.c1.legendre.RecurrenceCoefficients("monic", symbolic=False)
-    _, alpha, beta = numpy.array([rc[k] for k in range(n)]).T
+    _, alpha, beta = np.array([rc[k] for k in range(n)]).T
 
-    flt = numpy.vectorize(float)
+    flt = np.vectorize(float)
     alpha = flt(alpha)
     beta = flt(beta)
     points, weights = quadpy.tools.scheme_from_rc(alpha, beta, rc.int_1, "numpy")
@@ -73,14 +73,14 @@ def test_jacobi_reconstruction(tol=1.0e-14):
     rc = orthopy.c1.jacobi.RecurrenceCoefficients(
         "monic", alpha=2, beta=1, symbolic=False
     )
-    _, alpha1, beta1 = numpy.array([rc[k] for k in range(n)]).T
+    _, alpha1, beta1 = np.array([rc[k] for k in range(n)]).T
 
     points, weights = quadpy.tools.scheme_from_rc(alpha1, beta1, rc.int_1, "numpy")
 
     alpha2, beta2, int_1 = quadpy.tools.coefficients_from_gauss(points, weights)
 
-    assert numpy.all(abs(alpha1 - alpha2) < tol)
-    assert numpy.all(abs(beta1[1:] - beta2[1:]) < tol)
+    assert np.all(abs(alpha1 - alpha2) < tol)
+    assert np.all(abs(beta1[1:] - beta2[1:]) < tol)
     assert abs(rc.int_1 == int_1) < tol
 
 
@@ -94,7 +94,7 @@ def test_gautschi_how_to_and_how_not_to():
     June 1983, Volume 23, Issue 2, pp 209–216,
     <https://doi.org/10.1007/BF02218441>.
     """
-    points = numpy.array(
+    points = np.array(
         [
             1.457697817613696e-02,
             8.102669876765460e-02,
@@ -113,7 +113,7 @@ def test_gautschi_how_to_and_how_not_to():
             4.102376773975577,
         ]
     )
-    weights = numpy.array(
+    weights = np.array(
         [
             3.805398607861561e-2,
             9.622028412880550e-2,
@@ -135,7 +135,7 @@ def test_gautschi_how_to_and_how_not_to():
 
     # weight function exp(-t**3/3)
     n = len(points)
-    moments = numpy.array(
+    moments = np.array(
         [3.0 ** ((k - 2) / 3.0) * math.gamma((k + 1) / 3.0) for k in range(2 * n)]
     )
 
@@ -144,8 +144,8 @@ def test_gautschi_how_to_and_how_not_to():
 
     errors_alpha, errors_beta = orthopy.tools.gautschi_test_3(moments, alpha, beta)
 
-    assert numpy.max(errors_alpha) > 1.0e-2
-    assert numpy.max(errors_beta) > 1.0e-2
+    assert np.max(errors_alpha) > 1.0e-2
+    assert np.max(errors_beta) > 1.0e-2
 
 
 # def test_expt3():
@@ -183,8 +183,8 @@ def test_xk(k):
     assert beta[1] == sympy.S(k + 1) / (k + 3)
     assert beta[2] == sympy.S(4) / ((k + 5) * (k + 3))
     quadpy.tools.scheme_from_rc(
-        numpy.array([sympy.N(a) for a in alpha], dtype=float),
-        numpy.array([sympy.N(b) for b in beta], dtype=float),
+        np.array([sympy.N(a) for a in alpha], dtype=float),
+        np.array([sympy.N(b) for b in beta], dtype=float),
         int_1,
         mode="numpy",
     )
@@ -203,8 +203,8 @@ def test_xk(k):
     assert beta[1] == sympy.S(k + 1) / (k + 3)
     assert beta[2] == sympy.S(4) / ((k + 5) * (k + 3))
     points, weights = quadpy.tools.scheme_from_rc(
-        numpy.array([sympy.N(a) for a in alpha], dtype=float),
-        numpy.array([sympy.N(b) for b in beta], dtype=float),
+        np.array([sympy.N(a) for a in alpha], dtype=float),
+        np.array([sympy.N(b) for b in beta], dtype=float),
         int_1,
         mode="numpy",
     )

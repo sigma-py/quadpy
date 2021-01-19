@@ -1,7 +1,7 @@
 import json
 from typing import Optional
 
-import numpy
+import numpy as np
 
 from ..helpers import expand_symmetries, plot_disks
 from ..tn import TnScheme, get_vol, transform
@@ -37,7 +37,7 @@ class T2Scheme(TnScheme):
 
     def plot(
         self,
-        triangle=numpy.array([[-0.5, 0.0], [+0.5, 0.0], [0, 0.5 * (numpy.sqrt(3))]]),
+        triangle=np.array([[-0.5, 0.0], [+0.5, 0.0], [0, 0.5 * (np.sqrt(3))]]),
         show_axes=False,
     ):
         """Shows the quadrature points on a given triangle. The size of the circles

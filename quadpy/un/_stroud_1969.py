@@ -1,5 +1,5 @@
 import ndim
-import numpy
+import numpy as np
 from numpy import sqrt
 
 from ..helpers import article, fsd, pm, untangle
@@ -50,7 +50,7 @@ def stroud_1969(n):
         for k in k_range
     ]
     A = [[sum(p[:, 0] ** k) for p in pts] for k in k_range]
-    w = numpy.linalg.solve(A, b)
+    w = np.linalg.solve(A, b)
 
     data = [(w[k], pts[k]) for k in range(len(w))]
 

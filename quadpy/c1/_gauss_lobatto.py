@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import orthopy
 
 from ..tools import scheme_from_rc
@@ -9,7 +9,7 @@ def gauss_lobatto(n, a=0.0, b=0.0):
     assert n >= 2
     degree = 2 * n - 3
     rc = orthopy.c1.jacobi.RecurrenceCoefficients("monic", a, b, symbolic=False)
-    _, alpha, beta = numpy.array([rc[k] for k in range(n)]).T
+    _, alpha, beta = np.array([rc[k] for k in range(n)]).T
     beta[0] = rc.int_1
     points, weights = _lobatto(alpha, beta, rc.int_1, -1.0, 1.0)
     return C1Scheme("Gauss-Lobatto", degree, weights, points)
@@ -30,16 +30,16 @@ def _lobatto(alpha, beta, int_1, xl1, xl2):
     from scipy.linalg import solve, solve_banded
 
     n = len(alpha) - 1
-    en = numpy.zeros(n)
+    en = np.zeros(n)
     en[-1] = 1
-    A1 = numpy.vstack((numpy.sqrt(beta), alpha - xl1))
-    J1 = numpy.vstack((A1[:, 0:-1], A1[0, 1:]))
-    A2 = numpy.vstack((numpy.sqrt(beta), alpha - xl2))
-    J2 = numpy.vstack((A2[:, 0:-1], A2[0, 1:]))
+    A1 = np.vstack((np.sqrt(beta), alpha - xl1))
+    J1 = np.vstack((A1[:, 0:-1], A1[0, 1:]))
+    A2 = np.vstack((np.sqrt(beta), alpha - xl2))
+    J2 = np.vstack((A2[:, 0:-1], A2[0, 1:]))
     g1 = solve_banded((1, 1), J1, en)
     g2 = solve_banded((1, 1), J2, en)
-    C = numpy.array(((1, -g1[-1]), (1, -g2[-1])))
-    xl = numpy.array((xl1, xl2))
+    C = np.array(((1, -g1[-1]), (1, -g2[-1])))
+    xl = np.array((xl1, xl2))
     ab = solve(C, xl)
 
     alphal = alpha.copy()

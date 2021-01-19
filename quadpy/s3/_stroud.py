@@ -1,6 +1,6 @@
 import math
 
-import numpy
+import numpy as np
 import sympy
 
 from ..helpers import book, untangle
@@ -22,36 +22,36 @@ _source = book(
 )
 
 pi = sympy.pi
-sqrt = numpy.vectorize(sympy.sqrt)
+sqrt = np.vectorize(sympy.sqrt)
 
 
 def stroud_7_4():
     # spherical product gauss
     # ENH Stroud only gives decimals, sophisticated guesswork gives the analytical
     # expressions.
-    pm = numpy.array([+1, -1])
+    pm = np.array([+1, -1])
 
     # 0.9061798459, 0.5384691101
     alpha, beta = sqrt((35 + pm * 2 * sqrt(70)) / 63)
-    rho = numpy.array([-alpha, -beta, beta, alpha])
+    rho = np.array([-alpha, -beta, beta, alpha])
 
     # 0.8611363116, 0.3399810436
     alpha, beta = sqrt((15 + pm * 2 * sqrt(30)) / 35)
-    u = numpy.array([-alpha, -beta, beta, alpha])
+    u = np.array([-alpha, -beta, beta, alpha])
 
     # 0.9238795325, 0.3826834324
     alpha, beta = sqrt((2 + pm * sqrt(2)) / 4)
-    v = numpy.array([-alpha, -beta, beta, alpha])
+    v = np.array([-alpha, -beta, beta, alpha])
 
     # 0.1945553342, 0.1387779991
     alpha, beta = (50 + pm * sqrt(70)) / 300
-    A = numpy.array([alpha, beta, beta, alpha])
+    A = np.array([alpha, beta, beta, alpha])
 
     # 0.3478548451, 0.6521451549
     alpha, beta = (18 - pm * sqrt(30)) / 36
-    B = numpy.array([alpha, beta, beta, alpha])
+    B = np.array([alpha, beta, beta, alpha])
 
-    C = numpy.full(4, pi / 4)
+    C = np.full(4, pi / 4)
 
     def outer3(a, b, c):
         """Given 3 1-dimensional vectors a, b, c, the output is of
@@ -59,14 +59,14 @@ def stroud_7_4():
 
            out[i, j, k] = a[i] * b[j] * c[k]
         """
-        return numpy.multiply.outer(numpy.multiply.outer(a, b), c)
+        return np.multiply.outer(np.multiply.outer(a, b), c)
 
     r = outer3(rho, sqrt(1 - u ** 2), sqrt(1 - v ** 2))
     s = outer3(rho, sqrt(1 - u ** 2), v)
     t = outer3(rho, u, 4 * [1])
 
     data = [
-        ((A[i] * B[j] * C[k]), numpy.array([[r[i][j][k], s[i][j][k], t[i][j][k]]]))
+        ((A[i] * B[j] * C[k]), np.array([[r[i][j][k], s[i][j][k], t[i][j][k]]]))
         for i in range(4)
         for j in range(4)
         for k in range(4)
@@ -88,9 +88,9 @@ def stroud_14_1():
     # In this case, the recurrence coefficients can be determined analytically.
     # ```
     # n = 8
-    # alpha = numpy.full(n, fr(0))
-    # k = numpy.arange(n)
-    # beta = numpy.full(n, fr(0))
+    # alpha = np.full(n, fr(0))
+    # k = np.arange(n)
+    # beta = np.full(n, fr(0))
     # beta[0] = fr(2, 3)
     # # beta[1::2] = fr((k[1::2]+2)**2, ((2*k[1::2]+2)**2 - 1))
     # for k in range(1, n, 2):
@@ -102,7 +102,7 @@ def stroud_14_1():
     # # symbolic computation of the points and weights takes 4orever. Keep an eye on
     # # <https://math.stackexchange.com/q/2450401/36678> for a better algorithm to be
     # # implemented in orthopy.
-    # flt = numpy.vectorize(float)
+    # flt = np.vectorize(float)
     # alpha = flt(alpha)
     # beta = flt(beta)
     # points, weights = \
@@ -112,7 +112,7 @@ def stroud_14_1():
     # A = weights[-4:]
     # ```
     # TODO get symbolic expressions here
-    r = numpy.array(
+    r = np.array(
         [
             3.242534234038097e-01,
             6.133714327005908e-01,
@@ -120,7 +120,7 @@ def stroud_14_1():
             9.681602395076261e-01,
         ]
     )
-    A = numpy.array(
+    A = np.array(
         [
             3.284025994586210e-02,
             9.804813271549834e-02,
@@ -133,9 +133,7 @@ def stroud_14_1():
     v = spherical_scheme.points.T
     B = spherical_scheme.weights
 
-    data = [
-        (A[i] * B[j], r[i] * numpy.array([v[j]])) for i in range(4) for j in range(72)
-    ]
+    data = [(A[i] * B[j], r[i] * np.array([v[j]])) for i in range(4) for j in range(72)]
 
     points, weights = untangle(data)
     d = {"plain": [weights, points[:, 0], points[:, 1], points[:, 2]]}

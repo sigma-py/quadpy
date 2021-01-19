@@ -1,12 +1,12 @@
 """
 Parse Fortran code to extract points and weight of the Xiao-Gimbutas schemes.
 """
-import numpy
+import numpy as np
 
 
 # TODO the first two functions could go into a helper and be shared with tri
 def _parsed_strings_to_array(strings):
-    return numpy.array(
+    return np.array(
         "".join(strings).replace("&", "").replace("/", "").replace("D", "e").split(","),
         dtype=float,
     )
@@ -72,7 +72,7 @@ def _parse():
                 line = f.readline().strip()
                 wstr.append(line)
 
-            points = numpy.column_stack(
+            points = np.column_stack(
                 [
                     _parsed_strings_to_array(xstr),
                     _parsed_strings_to_array(ystr),
@@ -88,12 +88,12 @@ def _parse():
 def _extract_bary_data(data):
     # The points are given in terms of coordinates of a reference tetrahedron. Convert
     # to barycentric coordinates, and check their symmetry there.
-    t0 = [-1, -1 / numpy.sqrt(3), -1 / numpy.sqrt(6)]
-    t1 = [+0, +2 / numpy.sqrt(3), -1 / numpy.sqrt(6)]
-    t2 = [+1, -1 / numpy.sqrt(3), -1 / numpy.sqrt(6)]
-    t3 = [+0, +0, 3 / numpy.sqrt(6)]
+    t0 = [-1, -1 / np.sqrt(3), -1 / np.sqrt(6)]
+    t1 = [+0, +2 / np.sqrt(3), -1 / np.sqrt(6)]
+    t2 = [+1, -1 / np.sqrt(3), -1 / np.sqrt(6)]
+    t3 = [+0, +0, 3 / np.sqrt(6)]
 
-    T = numpy.array([[t1[k] - t0[k], t2[k] - t0[k], t3[k] - t0[k]] for k in range(3)])
+    T = np.array([[t1[k] - t0[k], t2[k] - t0[k], t3[k] - t0[k]] for k in range(3)])
 
     all_dicts = []
 
@@ -104,12 +104,10 @@ def _extract_bary_data(data):
         points, weights = item
 
         b = (points - t0).T
-        sol = numpy.linalg.solve(T, b)
-        bary = numpy.column_stack(
-            [sol[0], sol[1], sol[2], 1.0 - sol[0] - sol[1] - sol[2]]
-        )
+        sol = np.linalg.solve(T, b)
+        bary = np.column_stack([sol[0], sol[1], sol[2], 1.0 - sol[0] - sol[1] - sol[2]])
 
-        idx = numpy.argsort(weights)
+        idx = np.argsort(weights)
         d["weights"] = (weights[idx] / ref_weight).tolist()
         d["bary"] = bary[idx].tolist()
         all_dicts.append(d)
@@ -134,7 +132,7 @@ def _main():
             return PrettyFloat(obj)
         elif isinstance(obj, dict):
             return {k: pretty_floats(v) for k, v in obj.items()}
-        elif isinstance(obj, (list, tuple, numpy.ndarray)):
+        elif isinstance(obj, (list, tuple, np.ndarray)):
             return list(map(pretty_floats, obj))
         return obj
 

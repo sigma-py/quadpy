@@ -2,7 +2,7 @@ import json
 import warnings
 from typing import Optional
 
-import numpy
+import numpy as np
 
 from .._exception import QuadpyError
 from ..helpers import QuadratureScheme, expand_symmetries, plot_disks
@@ -49,20 +49,20 @@ class S2Scheme(QuadratureScheme):
         disk1 = plt.Circle((0, 0), 1, color="k", fill=False)
         ax.add_patch(disk1)
 
-        plot_disks(plt, self.points.T, self.weights, numpy.pi)
+        plot_disks(plt, self.points.T, self.weights, np.pi)
 
-    def integrate(self, f, center, radius, dot=numpy.dot):
-        center = numpy.array(center)
-        rr = numpy.multiply.outer(radius, self.points.T)
-        rr = numpy.swapaxes(rr, 0, -2)
+    def integrate(self, f, center, radius, dot=np.dot):
+        center = np.array(center)
+        rr = np.multiply.outer(radius, self.points.T)
+        rr = np.swapaxes(rr, 0, -2)
         x = (rr + center).T
-        fx = numpy.array(f(x))
+        fx = np.array(f(x))
         if fx.shape[-len(x.shape[1:]) :] != x.shape[1:]:
             string = ", ".join(str(val) for val in x.shape[1:])
             raise QuadpyError(
                 f"Wrong return value shape {fx.shape}. " f"Expected (..., {string})."
             )
-        return numpy.pi * numpy.array(radius) ** 2 * dot(fx, self.weights)
+        return np.pi * np.array(radius) ** 2 * dot(fx, self.weights)
 
 
 def _read(filepath, source) -> S2Scheme:

@@ -1,6 +1,6 @@
 import json
 
-import numpy
+import numpy as np
 import orthopy
 import sympy
 
@@ -28,7 +28,7 @@ class U3Scheme(QuadratureScheme):
         self.symmetry_data = symmetry_data
         points, weights = expand_symmetries(symmetry_data)
 
-        if numpy.asarray(points).dtype == sympy.Basic:
+        if np.asarray(points).dtype == sympy.Basic:
             theta_phi = cartesian_to_spherical_sympy(points)
         else:
             theta_phi = cartesian_to_spherical(points)
@@ -36,12 +36,12 @@ class U3Scheme(QuadratureScheme):
         self.domain = "U3"
         super().__init__(name, weights, points, degree, source, tol, comments)
 
-        theta_phi = numpy.asarray(theta_phi)
-        if theta_phi.dtype == numpy.float64:
+        theta_phi = np.asarray(theta_phi)
+        if theta_phi.dtype == np.float64:
             self.theta_phi = theta_phi
         else:
-            assert theta_phi.dtype in [numpy.dtype("O"), numpy.int_]
-            self.theta_phi = theta_phi.astype(numpy.float64)
+            assert theta_phi.dtype in [np.dtype("O"), np.int_]
+            self.theta_phi = theta_phi.astype(np.float64)
             self.theta_phi_symbolic = theta_phi
 
     def plot(self):
@@ -54,16 +54,16 @@ class U3Scheme(QuadratureScheme):
 
         for p, w in zip(self.points.T, self.weights):
             # <https://en.wikipedia.org/wiki/Spherical_cap>
-            w *= 4 * numpy.pi
-            theta = numpy.arccos(1.0 - abs(w) / (2 * numpy.pi))
+            w *= 4 * np.pi
+            theta = np.arccos(1.0 - abs(w) / (2 * np.pi))
             color = "tab:blue" if w >= 0 else "tab:red"
             _plot_spherical_cap_mpl(ax, p, theta, color)
 
         ax.set_axis_off()
 
-    def integrate(self, f, center, radius, dot=numpy.dot):
+    def integrate(self, f, center, radius, dot=np.dot):
         """Quadrature where `f` is defined in Cartesian coordinates."""
-        center = numpy.asarray(center)
+        center = np.asarray(center)
         rr = (self.points.T * radius + center).T
         frr = f(rr)
         if frr.shape[-len(rr.shape[1:]) :] != rr.shape[1:]:
@@ -73,7 +73,7 @@ class U3Scheme(QuadratureScheme):
             )
         return area(radius) * dot(frr, self.weights)
 
-    def integrate_spherical(self, f, dot=numpy.dot):
+    def integrate_spherical(self, f, dot=np.dot):
         """Quadrature where `f` is a function of the spherical coordinates theta_phi
         (polar, azimuthal, in this order).
         """
@@ -89,41 +89,41 @@ class U3Scheme(QuadratureScheme):
                 lambda x: next(evaluator), [0.0, 0.0, 0.0], 1.0
             )
             exact = evaluator.int_p0 if k == 0 else 0.0
-            res = numpy.abs(approximate - exact)
-            max_res += [numpy.max(res)]
+            res = np.abs(approximate - exact)
+            max_res += [np.max(res)]
 
-        return numpy.array(max_res)
+        return np.array(max_res)
 
 
 def area(radius):
-    return 4 * numpy.pi * numpy.array(radius) ** 2
+    return 4 * np.pi * np.array(radius) ** 2
 
 
 def _plot_spherical_cap_mpl(ax, b, opening_angle, color, elevation=1.01):
     r = elevation
-    azimuthal = numpy.linspace(0, 2 * numpy.pi, 30)
-    polar = numpy.linspace(0, opening_angle, 20)
-    X = r * numpy.stack(
+    azimuthal = np.linspace(0, 2 * np.pi, 30)
+    polar = np.linspace(0, opening_angle, 20)
+    X = r * np.stack(
         [
-            numpy.outer(numpy.cos(azimuthal), numpy.sin(polar)),
-            numpy.outer(numpy.sin(azimuthal), numpy.sin(polar)),
-            numpy.outer(numpy.ones(numpy.size(azimuthal)), numpy.cos(polar)),
+            np.outer(np.cos(azimuthal), np.sin(polar)),
+            np.outer(np.sin(azimuthal), np.sin(polar)),
+            np.outer(np.ones(np.size(azimuthal)), np.cos(polar)),
         ],
         axis=-1,
     )
 
     # rotate X such that [0, 0, 1] gets rotated to `c`;
     # <https://math.stackexchange.com/a/476311/36678>.
-    a = numpy.array([0.0, 0.0, 1.0])
-    a_x_b = numpy.cross(a, b)
-    a_dot_b = numpy.dot(a, b)
+    a = np.array([0.0, 0.0, 1.0])
+    a_x_b = np.cross(a, b)
+    a_dot_b = np.dot(a, b)
     if a_dot_b == -1.0:
         X_rot = -X
     else:
         X_rot = (
             X
-            + numpy.cross(a_x_b, X)
-            + numpy.cross(a_x_b, numpy.cross(a_x_b, X)) / (1.0 + a_dot_b)
+            + np.cross(a_x_b, X)
+            + np.cross(a_x_b, np.cross(a_x_b, X)) / (1.0 + a_dot_b)
         )
 
     ax.plot_surface(
@@ -139,7 +139,7 @@ def _plot_spherical_cap_mpl(ax, b, opening_angle, color, elevation=1.01):
 
 
 def cartesian_to_spherical(X):
-    return numpy.array([numpy.arccos(X[2]), numpy.arctan2(X[1], X[0])])
+    return np.array([np.arccos(X[2]), np.arctan2(X[1], X[0])])
 
 
 def _atan2_0(X):
@@ -148,29 +148,29 @@ def _atan2_0(X):
     conversion, its value doesn't matter. NaNs, however, produce NaNs down the
     line.
     """
-    out = numpy.array([sympy.atan2(X[1, k], X[0, k]) for k in range(X.shape[1])])
+    out = np.array([sympy.atan2(X[1, k], X[0, k]) for k in range(X.shape[1])])
     out[out == sympy.nan] = 0
     return out
 
 
 def cartesian_to_spherical_sympy(X):
-    arccos = numpy.vectorize(sympy.acos)
-    return numpy.array([arccos(X[2]), _atan2_0(X)])
+    arccos = np.vectorize(sympy.acos)
+    return np.array([arccos(X[2]), _atan2_0(X)])
 
 
 def _a1(vals):
-    symbolic = numpy.asarray(vals).dtype == sympy.Basic
+    symbolic = np.asarray(vals).dtype == sympy.Basic
     a = 1 if symbolic else 1.0
-    points = numpy.array(
+    points = np.array(
         [[+a, 0, 0], [-a, 0, 0], [0, +a, 0], [0, -a, 0], [0, 0, +a], [0, 0, -a]]
     ).T
     return points
 
 
 def _a2(vals):
-    symbolic = numpy.asarray(vals).dtype == sympy.Basic
-    a = 1 / sympy.sqrt(2) if symbolic else 1 / numpy.sqrt(2)
-    points = numpy.array(
+    symbolic = np.asarray(vals).dtype == sympy.Basic
+    a = 1 / sympy.sqrt(2) if symbolic else 1 / np.sqrt(2)
+    points = np.array(
         [
             [+a, +a, 0],
             [+a, -a, 0],
@@ -192,9 +192,9 @@ def _a2(vals):
 
 
 def _a3(vals):
-    symbolic = numpy.asarray(vals).dtype == sympy.Basic
-    a = 1 / sympy.sqrt(3) if symbolic else 1 / numpy.sqrt(3)
-    points = numpy.array(
+    symbolic = np.asarray(vals).dtype == sympy.Basic
+    a = 1 / sympy.sqrt(3) if symbolic else 1 / np.sqrt(3)
+    points = np.array(
         [
             [+a, +a, +a],
             [+a, +a, -a],
@@ -210,13 +210,13 @@ def _a3(vals):
 
 
 def _pq0(vals):
-    return _pq02([numpy.sin(vals[0] * numpy.pi), numpy.cos(vals[0] * numpy.pi)])
+    return _pq02([np.sin(vals[0] * np.pi), np.cos(vals[0] * np.pi)])
 
 
 def _pq02(vals):
     if len(vals) == 1:
         a = vals[0]
-        b = numpy.sqrt(1 - a ** 2)
+        b = np.sqrt(1 - a ** 2)
     else:
         assert len(vals) == 2
         a, b = vals
@@ -224,9 +224,9 @@ def _pq02(vals):
     if isinstance(a, sympy.Basic):
         zero = 0
     else:
-        zero = numpy.zeros_like(a)
+        zero = np.zeros_like(a)
 
-    points = numpy.array(
+    points = np.array(
         [
             [+a, +b, zero],
             [-a, +b, zero],
@@ -259,14 +259,14 @@ def _pq02(vals):
             [zero, +b, -a],
         ]
     )
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _rs0(vals):
     if len(vals) == 1:
         a = vals[0]
-        b = numpy.sqrt(1 - a ** 2)
+        b = np.sqrt(1 - a ** 2)
     else:
         assert len(vals) == 2
         a, b = vals
@@ -274,9 +274,9 @@ def _rs0(vals):
     if isinstance(a, sympy.Basic):
         zero = 0
     else:
-        zero = numpy.zeros_like(a)
+        zero = np.zeros_like(a)
 
-    points = numpy.array(
+    points = np.array(
         [
             [+a, +b, zero],
             [-a, +b, zero],
@@ -294,27 +294,27 @@ def _rs0(vals):
             [zero, +a, -b],
         ]
     )
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _llm(vals):
     # translate the point into cartesian coords; note that phi=pi/4.
-    beta = vals[0] * numpy.pi
-    L = numpy.sin(beta) / numpy.sqrt(2)
-    m = numpy.cos(beta)
+    beta = vals[0] * np.pi
+    L = np.sin(beta) / np.sqrt(2)
+    m = np.cos(beta)
     return _llm2([L, m])
 
 
 def _llm2(vals):
     if len(vals) == 1:
         L = vals[0]
-        m = numpy.sqrt(1 - 2 * L ** 2)
+        m = np.sqrt(1 - 2 * L ** 2)
     else:
         assert len(vals) == 2
         L, m = vals
 
-    points = numpy.array(
+    points = np.array(
         [
             [+L, +L, +m],
             [-L, +L, +m],
@@ -344,16 +344,16 @@ def _llm2(vals):
             [-m, -L, -L],
         ]
     )
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _rsw(vals):
     # translate the point into cartesian coords; note that phi=pi/4.
-    phi_theta = vals * numpy.pi
+    phi_theta = vals * np.pi
 
-    sin_phi, sin_theta = numpy.sin(phi_theta)
-    cos_phi, cos_theta = numpy.cos(phi_theta)
+    sin_phi, sin_theta = np.sin(phi_theta)
+    cos_phi, cos_theta = np.cos(phi_theta)
 
     return _rsw2([sin_theta * cos_phi, sin_theta * sin_phi, cos_theta])
 
@@ -361,12 +361,12 @@ def _rsw(vals):
 def _rsw2(vals):
     if len(vals) == 2:
         r, s = vals
-        w = numpy.sqrt(1 - r ** 2 - s ** 2)
+        w = np.sqrt(1 - r ** 2 - s ** 2)
     else:
         assert len(vals) == 3
         r, s, w = vals
 
-    points = numpy.array(
+    points = np.array(
         [
             [+r, +s, +w],
             [+w, +r, +s],
@@ -425,19 +425,19 @@ def _rsw2(vals):
             [-r, -w, -s],
         ]
     )
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _rst(vals):
     if len(vals) == 2:
         r, s = vals
-        w = numpy.sqrt(1 - r ** 2 - s ** 2)
+        w = np.sqrt(1 - r ** 2 - s ** 2)
     else:
         assert len(vals) == 3
         r, s, w = vals
 
-    points = numpy.array(
+    points = np.array(
         [
             [+r, +s, +w],
             [+w, +r, +s],
@@ -472,19 +472,19 @@ def _rst(vals):
             [-s, -w, -r],
         ]
     )
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _rst_weird(vals):
     if len(vals) == 2:
         r, s = vals
-        t = numpy.sqrt(1 - r ** 2 - s ** 2)
+        t = np.sqrt(1 - r ** 2 - s ** 2)
     else:
         assert len(vals) == 3
         r, s, t = vals
 
-    points = numpy.array(
+    points = np.array(
         [
             [+r, +s, +t],
             [-r, +t, +s],
@@ -515,7 +515,7 @@ def _rst_weird(vals):
             [-t, -r, +s],
         ]
     )
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
@@ -539,13 +539,13 @@ def expand_symmetries_points_only(data):
             "rst_weird": _rst_weird,
             "plain": lambda vals: vals.reshape(3, 1, -1),
         }[key]
-        pts = fun(numpy.asarray(points_raw))
+        pts = fun(np.asarray(points_raw))
 
         counts.append(pts.shape[1])
         pts = pts.reshape(pts.shape[0], -1)
         points.append(pts)
 
-    points = numpy.ascontiguousarray(numpy.concatenate(points, axis=1))
+    points = np.ascontiguousarray(np.concatenate(points, axis=1))
     return points, counts
 
 
@@ -558,8 +558,8 @@ def expand_symmetries(data):
         points_raw[key] = values[1:]
 
     points, counts = expand_symmetries_points_only(points_raw)
-    weights = numpy.concatenate(
-        [numpy.tile(values, count) for count, values in zip(counts, weights_raw)]
+    weights = np.concatenate(
+        [np.tile(values, count) for count, values in zip(counts, weights_raw)]
     )
     return points, weights
 

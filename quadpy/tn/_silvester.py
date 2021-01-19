@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import sympy
 
 from ..helpers import article, get_all_exponents, prod
@@ -39,11 +39,11 @@ def integrate_bary(k, symbolic):
 
 def _get_data(dim, n, point_fun, symbolic):
     # points
-    idxs = numpy.array(get_all_exponents(dim + 1, n)[-1])
+    idxs = np.array(get_all_exponents(dim + 1, n)[-1])
     points = point_fun(idxs)
 
     # weights
-    weights = numpy.empty(len(points))
+    weights = np.empty(len(points))
     kk = 0
     for idx in idxs:
         # Define the polynomial which to integrate over the simplex.
@@ -67,7 +67,7 @@ def _get_data(dim, n, point_fun, symbolic):
 
 
 def silvester(dim, variant, n, symbolic=False):
-    frac = numpy.vectorize(sympy.Rational) if symbolic else lambda a, b: a / b
+    frac = np.vectorize(sympy.Rational) if symbolic else lambda a, b: a / b
 
     if variant == "closed":
         degree = n
@@ -85,7 +85,7 @@ def silvester(dim, variant, n, symbolic=False):
             return frac(k + 1, n + 1 + dim)
 
     weights, points = _get_data(dim, n, points1d, symbolic)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
 
     return TnScheme(
         f"Silvester ({variant}, dim={n})", dim, weights, points, degree, source, tol

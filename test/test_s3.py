@@ -1,5 +1,5 @@
 import ndim
-import numpy
+import numpy as np
 import pytest
 from helpers import check_degree, find_best_scheme
 from matplotlib import pyplot as plt
@@ -11,8 +11,8 @@ import quadpy
 def test_scheme(scheme):
     scheme = scheme()
 
-    assert scheme.points.dtype == numpy.float64, scheme.name
-    assert scheme.weights.dtype == numpy.float64, scheme.name
+    assert scheme.points.dtype == np.float64, scheme.name
+    assert scheme.weights.dtype == np.float64, scheme.name
 
     print(scheme)
 
@@ -48,7 +48,7 @@ def test_get_good_scheme():
         best = find_best_scheme(
             quadpy.s3.schemes.values(),
             degree,
-            lambda pts: numpy.all(pts[0] ** 2 + pts[1] ** 2 + pts[2] ** 2 <= 1),
+            lambda pts: np.all(pts[0] ** 2 + pts[1] ** 2 + pts[2] ** 2 <= 1),
             lambda keys: len(
                 keys - {"zero3", "symm_r00", "symm_rr0", "symm_rrr", "symm_rrs"}
             )

@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from sympy import Rational as frac
 from sympy import sqrt
 
@@ -33,5 +33,5 @@ def stroud_1968(n):
     ]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return CnScheme("Stroud 1968", n, weights, points, 5, _source, 2.204e-13)

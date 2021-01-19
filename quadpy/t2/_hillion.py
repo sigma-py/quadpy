@@ -1,7 +1,7 @@
 # ENH in the article, most schemes are given only in single precision. quadpy adds
 # symbolic expressions
 
-import numpy
+import numpy as np
 from sympy import Rational as frac
 from sympy import sqrt
 
@@ -62,7 +62,7 @@ def hillion_06():
 
 
 def hillion_07():
-    pm = numpy.array([+1, -1])
+    pm = np.array([+1, -1])
 
     a, b = (6 + sqrt(2) + pm * sqrt(6 * (3 + 2 * sqrt(2)))) / 20
     c, d = (6 - sqrt(2) + pm * sqrt(6 * (3 - 2 * sqrt(2)))) / 20

@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from sympy import Rational as frac
 from sympy import sqrt
 
@@ -26,14 +26,14 @@ def lu_darmofal_1(n):
     # ENH The article says n>=4, but the scheme also works for 2, 3
     assert n >= 2
     a = get_nsimplex_points(n, sqrt, frac)
-    b = numpy.array(
+    b = np.array(
         [
             sqrt(frac(n, 2 * (n - 1))) * (a[k] + a[l])
             for k in range(len(a))
             for l in range(k)
         ]
     )
-    points = numpy.concatenate(
+    points = np.concatenate(
         [
             [[0] * n],
             +sqrt(frac(n, 2) + 1) * a,
@@ -42,18 +42,18 @@ def lu_darmofal_1(n):
             -sqrt(frac(n, 2) + 1) * b,
         ]
     )
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
 
     p = frac(2, n + 2)
     A = frac(n ** 2 * (7 - n), 2 * (n + 1) ** 2 * (n + 2) ** 2)
     B = frac(2 * (n - 1) ** 2, (n + 1) ** 2 * (n + 2) ** 2)
-    weights = numpy.concatenate(
+    weights = np.concatenate(
         [
             [p],
-            numpy.full(len(a), A),
-            numpy.full(len(a), A),
-            numpy.full(len(b), B),
-            numpy.full(len(b), B),
+            np.full(len(a), A),
+            np.full(len(a), A),
+            np.full(len(b), B),
+            np.full(len(b), B),
         ]
     )
     return Enr2Scheme("Lu-Darmofal I", n, weights, points, 5, source)

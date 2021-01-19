@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import pytest
 from helpers import check_degree
 
@@ -45,13 +45,13 @@ from quadpy.tn._helpers import integrate_monomial_over_unit_simplex
     + [quadpy.tn.walkington_7(dim) for dim in [3]],
 )
 def test_scheme(scheme):
-    assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
-    assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
+    assert scheme.points.dtype in [np.float64, np.int64], scheme.name
+    assert scheme.weights.dtype in [np.float64, np.int64], scheme.name
 
     print(scheme)
 
     n = scheme.dim
-    simplex = numpy.zeros((n + 1, n))
+    simplex = np.zeros((n + 1, n))
     for k in range(n):
         simplex[k + 1, k] = 1
     degree, err = check_degree(

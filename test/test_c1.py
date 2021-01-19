@@ -1,6 +1,6 @@
 import math
 
-import numpy
+import numpy as np
 import orthopy
 import pytest
 from mpmath import mp
@@ -24,8 +24,8 @@ import quadpy
     + [quadpy.c1.newton_cotes_open(k) for k in range(1, 5)],
 )
 def test_scheme(scheme):
-    assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
-    assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
+    assert scheme.points.dtype in [np.float64, np.int64], scheme.name
+    assert scheme.weights.dtype in [np.float64, np.int64], scheme.name
 
     # https://github.com/nschloe/quadpy/issues/227
     assert scheme.weights.ndim == 1
@@ -37,16 +37,16 @@ def test_scheme(scheme):
     while True:
         # Set bounds such that the values are between 0.5 and 1.5.
         exact_val = 1.0 / (degree + 1)
-        interval = numpy.array(
+        interval = np.array(
             [
                 [0.5 ** (1.0 / (degree + 1)), 0.0, 0.0],
                 [1.5 ** (1.0 / (degree + 1)), 0.0, 0.0],
             ]
         )
-        interval = numpy.array([[0.3], [0.5]])
+        interval = np.array([[0.3], [0.5]])
         val = scheme.integrate(lambda x: x[0] ** degree, interval)
         # same test with line embedded in R^2
-        interval = numpy.array(
+        interval = np.array(
             [[0.5 ** (1.0 / (degree + 1)), 0.0], [1.5 ** (1.0 / (degree + 1)), 0.0]]
         )
         val = scheme.integrate(lambda x: x[0] ** degree, interval)
@@ -68,12 +68,12 @@ def test_cheb1_scheme(scheme):
     while True:
         approximate = scheme.integrate(lambda x: next(evaluator), [-1, 1])
         exact = math.sqrt(math.pi) if k == 0 else 0.0
-        err = numpy.abs(approximate - exact)
-        if numpy.any(err > 1.0e-14):
+        err = np.abs(approximate - exact)
+        if np.any(err > 1.0e-14):
             break
         k += 1
 
-    max_err = numpy.max(err)
+    max_err = np.max(err)
     assert k - 1 >= scheme.degree, (
         f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
         f"(max err: {max_err:.3e})"
@@ -90,12 +90,12 @@ def test_cheb2_scheme(scheme):
     while True:
         approximate = scheme.integrate(lambda x: next(evaluator), [-1, 1])
         exact = math.sqrt(math.pi / 2) if k == 0 else 0.0
-        err = numpy.abs(approximate - exact)
-        if numpy.any(err > 1.0e-14):
+        err = np.abs(approximate - exact)
+        if np.any(err > 1.0e-14):
             break
         k += 1
 
-    max_err = numpy.max(err)
+    max_err = np.max(err)
     assert k - 1 >= scheme.degree, (
         f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
         f"(max err: {max_err:.3e})"
@@ -108,16 +108,16 @@ def test_show(scheme):
 
 
 def test_integrate_split():
-    x = numpy.linspace(0.15, 0.702, 101)
-    intervals = numpy.array([x[:-1], x[1:]])
+    x = np.linspace(0.15, 0.702, 101)
+    intervals = np.array([x[:-1], x[1:]])
     scheme = quadpy.c1.trapezoidal()
     val = scheme.integrate(
         lambda r: 0.5108
         / r ** 2
-        / numpy.sqrt(2 * 1.158 + 2 / r - 0.5108 ** 2 / (2 * r ** 2)),
+        / np.sqrt(2 * 1.158 + 2 / r - 0.5108 ** 2 / (2 * r ** 2)),
         intervals,
     )
-    val = numpy.sum(val)
+    val = np.sum(val)
     reference = 0.961715
     assert abs(val - reference) < 1.0e-3 * reference
 
@@ -141,7 +141,7 @@ def test_chebyshev1_sympy():
     scheme = quadpy.c1.chebyshev_gauss_1(4, mode="sympy")
     scheme_numpy = quadpy.c1.chebyshev_gauss_1(4, mode="numpy")
 
-    flt = numpy.vectorize(float)
+    flt = np.vectorize(float)
     tol = 1.0e-15
 
     assert (abs(flt(scheme.points) - scheme_numpy.points) < tol).all()
@@ -152,7 +152,7 @@ def test_chebyshev2_sympy():
     scheme = quadpy.c1.chebyshev_gauss_2(4, mode="sympy")
     scheme_numpy = quadpy.c1.chebyshev_gauss_2(4, mode="numpy")
 
-    flt = numpy.vectorize(float)
+    flt = np.vectorize(float)
     tol = 1.0e-15
 
     assert (abs(flt(scheme.points) - scheme_numpy.points) < tol).all()
@@ -207,29 +207,29 @@ def test_multidim():
     scheme = quadpy.c1.gauss_legendre(5)
 
     # simple scalar integration
-    val = scheme.integrate(numpy.sin, [0.0, 1.0])
+    val = scheme.integrate(np.sin, [0.0, 1.0])
     assert val.shape == ()
 
     # scalar integration on 3 subdomains
-    val = scheme.integrate(numpy.sin, [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]])
+    val = scheme.integrate(np.sin, [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]])
     assert val.shape == (3,)
 
     # scalar integration in 3D
     val = scheme.integrate(
-        lambda x: x[0] + numpy.sin(x[1]) + numpy.cos(x[2]),
+        lambda x: x[0] + np.sin(x[1]) + np.cos(x[2]),
         [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]],
     )
     assert val.shape == ()
 
     # vector-valued integration on 3 subdomains
     val = scheme.integrate(
-        lambda x: [numpy.sin(x), numpy.cos(x)], [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]]
+        lambda x: [np.sin(x), np.cos(x)], [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]]
     )
     assert val.shape == (2, 3)
 
     # vector-valued integration in 3D
     val = scheme.integrate(
-        lambda x: [x[0] + numpy.sin(x[1]), numpy.cos(x[0]) * x[2]],
+        lambda x: [x[0] + np.sin(x[1]), np.cos(x[0]) * x[2]],
         [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]],
     )
     assert val.shape == (2,)
@@ -239,9 +239,9 @@ def test_multidim():
     # dimensionality of the domain. Use the `dim` parameter.
     val = scheme.integrate(
         lambda x: [
-            x[0] + numpy.sin(x[1]),
-            numpy.cos(x[0]) * x[2],
-            numpy.sin(x[0]) + x[1] + x[2],
+            x[0] + np.sin(x[1]),
+            np.cos(x[0]) * x[2],
+            np.sin(x[0]) + x[1] + x[2],
         ],
         [[0.0, 1.0, 2.0], [1.0, 2.0, 3.0]],
         domain_shape=(3,),

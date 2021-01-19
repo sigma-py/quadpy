@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 from ..helpers import article, combine, untangle
 from ._helpers import SnScheme
@@ -62,12 +62,12 @@ def stroud_1967_5_a(n):
         (C, combine(((-mu,), 2), ((-gamma,), n - 2))),
     ]
     if n == 7:
-        data += [(A, numpy.full((1, n), 0.0))]
+        data += [(A, np.full((1, n), 0.0))]
     else:
-        data += [(A, numpy.full((1, n), +eta)), (A, numpy.full((1, n), -eta))]
+        data += [(A, np.full((1, n), +eta)), (A, np.full((1, n), -eta))]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return SnScheme("Stroud 1967-5 a", n, weights, points, 5, source)
 
 
@@ -117,10 +117,10 @@ def stroud_1967_5_b(n):
         (C, combine(((-mu,), 2), ((-gamma,), n - 2))),
     ]
     if n == 7:
-        data += [(A, numpy.full((1, n), 0.0))]
+        data += [(A, np.full((1, n), 0.0))]
     else:
-        data += [(A, numpy.full((1, n), +eta)), (A, numpy.full((1, n), -eta))]
+        data += [(A, np.full((1, n), +eta)), (A, np.full((1, n), -eta))]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return SnScheme("Stroud 1967-5 b", n, weights, points, 5, source)

@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from sympy import Rational as frac
 from sympy import sqrt
 
@@ -20,7 +20,7 @@ source = article(
 def stroud_secrest_1(n):
     data = [(frac(1, n + 1), sqrt(n + 1) * _nsimplex(n))]
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return EnrScheme("Stroud-Secrest I", n, weights, points, 2, source, 4.676e-14)
 
 
@@ -28,7 +28,7 @@ def stroud_secrest_2(n):
     nu = sqrt(n * (n + 1))
     data = [(frac(1, 2 * n), fsd(n, (nu, 1)))]
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return EnrScheme("Stroud-Secrest II", n, weights, points, 3, source)
 
 
@@ -36,7 +36,7 @@ def stroud_secrest_3(n):
     nu = sqrt(n + 1)
     data = [(frac(1, 2 ** n), pm(n * [nu]))]
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return EnrScheme("Stroud-Secrest III", n, weights, points, 3, source)
 
 
@@ -47,7 +47,7 @@ def stroud_secrest_4(n):
     B = frac((4 - n) * (n + 1), 2 * (n + 2) ** 2 * (n + 3))
     C = frac(n + 1, (n + 2) ** 2 * (n + 3))
 
-    data = [(A, numpy.full((1, n), 0)), (B, fsd(n, (nu, 1))), (C, fsd(n, (xi, 2)))]
+    data = [(A, np.full((1, n), 0)), (B, fsd(n, (nu, 1))), (C, fsd(n, (xi, 2)))]
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return EnrScheme("Stroud-Secrest IV", n, weights, points, 5, source)

@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import orthopy
 import pytest
 from helpers import find_best_scheme
@@ -11,8 +11,8 @@ import quadpy
 def test_scheme(scheme, print_degree=False):
     scheme = scheme()
 
-    assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
-    assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
+    assert scheme.points.dtype in [np.float64, np.int64], scheme.name
+    assert scheme.weights.dtype in [np.float64, np.int64], scheme.name
 
     print(scheme)
 
@@ -27,12 +27,12 @@ def test_scheme(scheme, print_degree=False):
     while True:
         approximate = scheme.integrate(lambda x: next(evaluator), hexa)
         exact = evaluator.int_p0 * 2 ** 3 if k == 0 else 0.0
-        err = numpy.abs(approximate - exact)
-        if numpy.any(err > scheme.test_tolerance):
+        err = np.abs(approximate - exact)
+        if np.any(err > scheme.test_tolerance):
             break
         k += 1
 
-    max_err = numpy.max(err)
+    max_err = np.max(err)
     assert k - 1 == scheme.degree, (
         f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
         f"(max err: {max_err:.3e})"
@@ -53,7 +53,7 @@ def test_get_good_scheme():
         best = find_best_scheme(
             quadpy.c3.schemes.values(),
             degree,
-            lambda pts: numpy.all((pts >= -1) & (pts <= 1)),
+            lambda pts: np.all((pts >= -1) & (pts <= 1)),
             lambda keys: len(
                 keys - {"zero3", "symm_r00", "symm_rr0", "symm_rrr", "symm_rrs"}
             )

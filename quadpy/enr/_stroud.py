@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from sympy import Rational as frac
 from sympy import sqrt
 
@@ -44,10 +44,10 @@ def stroud_enr_5_3(n):
         arr = (k - 1) * [0] + [rk] + (n - k) * [s]
         data += [(Bk, pm(arr))]
     B0 = 1 - sum([item[0] * len(item[1]) for item in data])
-    data += [(B0, numpy.full((1, n), 0))]
+    data += [(B0, np.full((1, n), 0))]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return EnrScheme("Stroud Enr 5-3", n, weights, points, 5, source)
 
 
@@ -56,10 +56,10 @@ def stroud_enr_5_4(n):
     s = sqrt(((n + 2) * (n + 3) - (n + 3) * sqrt(2 * (n + 2))) / n)
     A = frac(4 * n + 6, (n + 2) * (n + 3))
     B = frac(n + 1, (n + 2) * (n + 3) * 2 ** n)
-    data = [(A, numpy.full((1, n), 0)), (B, fsd(n, (r, 1), (s, n - 1)))]
+    data = [(A, np.full((1, n), 0)), (B, fsd(n, (r, 1), (s, n - 1)))]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return EnrScheme("Stroud Enr 5-4", n, weights, points, 5, source, 1.684e-11)
 
 
@@ -98,7 +98,7 @@ def stroud_enr_5_4(n):
 #     t = sqrt(t2)
 #
 #     data = [
-#         (A, numpy.full((1, n), 0.0)),
+#         (A, np.full((1, n), 0.0)),
 #         (B, fsd(n, (r, 1))),
 #         (C, pm(n, s)),
 #         (D, fsd(n, (t, 2))),

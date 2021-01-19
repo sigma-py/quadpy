@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 from ..helpers import QuadratureScheme, backend_to_function
 
@@ -8,22 +8,22 @@ class W3Scheme(QuadratureScheme):
         self.domain = "W3"
         super().__init__(name, weights, points, degree, source, tol)
 
-    def integrate(self, f, wedge, dot=numpy.dot):
-        wedge = numpy.asarray(wedge)
-        flt = numpy.vectorize(float)
+    def integrate(self, f, wedge, dot=np.dot):
+        wedge = np.asarray(wedge)
+        flt = np.vectorize(float)
         x = _transform(flt(self.points).T, wedge)
         det = _get_detJ(flt(self.points).T, wedge)
         return dot(f(x) * abs(det), flt(self.weights))
 
     def show(
         self,
-        wedge=numpy.array(
+        wedge=np.array(
             [[[0, 0, 0], [1, 0, 0], [0, 1, 0]], [[0, 0, 1], [1, 0, 1], [0, 1, 1]]],
             dtype=float,
         ),
         backend="vtk",
     ):
-        edges = numpy.array(
+        edges = np.array(
             [
                 [wedge[0, 0], wedge[0, 1]],
                 [wedge[0, 1], wedge[0, 2]],
@@ -38,19 +38,19 @@ class W3Scheme(QuadratureScheme):
                 [wedge[0, 2], wedge[1, 2]],
             ]
         )
-        edges = numpy.moveaxis(edges, 1, 2)
+        edges = np.moveaxis(edges, 1, 2)
 
         backend_to_function[backend](
             _transform(self.points.T, wedge).T,
             self.weights,
-            self.integrate(lambda x: numpy.ones(1), wedge),
+            self.integrate(lambda x: np.ones(1), wedge),
             edges,
         )
         return
 
 
 def _transform(xi, wedge):
-    mo = numpy.multiply.outer
+    mo = np.multiply.outer
     return (
         +mo(0.5 * (1.0 - xi[0] - xi[1]) * (1.0 - xi[2]), wedge[0, 0])
         + mo(0.5 * xi[0] * (1.0 - xi[2]), wedge[0, 1])
@@ -62,7 +62,7 @@ def _transform(xi, wedge):
 
 
 def _get_detJ(xi, wedge):
-    mo = numpy.multiply.outer
+    mo = np.multiply.outer
     J0 = (
         -mo(0.5 * (1.0 - xi[2]), wedge[0, 0])
         + mo(0.5 * (1.0 - xi[2]), wedge[0, 1])

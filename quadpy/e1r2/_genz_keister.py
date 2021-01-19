@@ -1,6 +1,6 @@
 from math import pi, sqrt
 
-import numpy
+import numpy as np
 
 from ..helpers import article
 from ._helpers import E1r2Scheme
@@ -104,7 +104,7 @@ def genz_keister(n):
     if n == 0:
         degree = 1
         points = _points_0
-        weights = [numpy.sqrt(numpy.pi)]
+        weights = [np.sqrt(np.pi)]
     elif n == 1:
         degree = 5
         points = _points_1
@@ -137,7 +137,7 @@ def genz_keister(n):
     elif n == 4:
         degree = 51
         points = _points_4
-        weights = numpy.array(
+        weights = np.array(
             [
                 9.1262675363737921e-04,
                 3.3988595585585218e-01,
@@ -162,7 +162,7 @@ def genz_keister(n):
     elif n == 5:
         degree = 55
         points = _points_5
-        weights = numpy.array(
+        weights = np.array(
             [
                 0.171719680968980257e00,
                 0.261712932511430884e00,
@@ -188,7 +188,7 @@ def genz_keister(n):
     elif n == 6:
         degree = 63
         points = _points_6
-        weights = numpy.array(
+        weights = np.array(
             [
                 0.997525375254611951e-01,
                 0.293588795735908566e00,
@@ -217,7 +217,7 @@ def genz_keister(n):
         assert n == 7
         degree = 67
         points = _points_7
-        weights = numpy.array(
+        weights = np.array(
             [
                 0.102730713753441829e00,
                 0.292243810406117141e00,
@@ -244,10 +244,10 @@ def genz_keister(n):
             ]
         )
 
-    w = numpy.array(weights)
-    weights = numpy.concatenate([w[1:][::-1], [w[0]], w[1:]])
+    w = np.array(weights)
+    weights = np.concatenate([w[1:][::-1], [w[0]], w[1:]])
 
-    p = numpy.sort(points)
-    points = numpy.concatenate([-p[1:][::-1], [p[0]], p[1:]])
+    p = np.sort(points)
+    points = np.concatenate([-p[1:][::-1], [p[0]], p[1:]])
 
     return E1r2Scheme(f"Genz-Keister ({n})", weights, points, degree, source)

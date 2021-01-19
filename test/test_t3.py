@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import pytest
 import sympy
 from helpers import check_degree
@@ -46,16 +46,14 @@ def test_scheme(scheme):
     print(scheme)
     scheme = scheme()
 
-    assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
-    assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
+    assert scheme.points.dtype in [np.float64, np.int64], scheme.name
+    assert scheme.weights.dtype in [np.float64, np.int64], scheme.name
 
     print(scheme)
 
     # Test integration until we get to a polynomial degree `d` that can no
     # longer be integrated exactly. The scheme's degree is `d-1`.
-    t3 = numpy.array(
-        [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
-    )
+    t3 = np.array([[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]])
 
     degree, err = check_degree(
         lambda poly: scheme.integrate(poly, t3),
@@ -75,11 +73,11 @@ def test_scheme(scheme):
 @pytest.mark.skip(reason="gh-actions's python cannot use system vtk")
 @pytest.mark.parametrize("scheme", [quadpy.t3.schemes["hammer_marlowe_stroud_3"]()])
 def test_show(scheme):
-    tet = numpy.array(
+    tet = np.array(
         [
-            [numpy.cos(0.5 * numpy.pi), numpy.sin(0.5 * numpy.pi), -0.5],
-            [numpy.cos(7.0 / 6.0 * numpy.pi), numpy.sin(7.0 / 6.0 * numpy.pi), -0.5],
-            [numpy.cos(11.0 / 6.0 * numpy.pi), numpy.sin(11.0 / 6.0 * numpy.pi), -0.5],
+            [np.cos(0.5 * np.pi), np.sin(0.5 * np.pi), -0.5],
+            [np.cos(7.0 / 6.0 * np.pi), np.sin(7.0 / 6.0 * np.pi), -0.5],
+            [np.cos(11.0 / 6.0 * np.pi), np.sin(11.0 / 6.0 * np.pi), -0.5],
             [0.0, 0.0, 1.0],
         ]
     )
@@ -102,7 +100,7 @@ def test_get_good_scheme():
                 continue
 
             # disallow points outside of the domain
-            if numpy.any(scheme.points < 0):
+            if np.any(scheme.points < 0):
                 continue
 
             if scheme.test_tolerance > 1.0e-13:
@@ -127,9 +125,9 @@ def test_get_good_scheme():
                 best = scheme
                 continue
             else:  # len(scheme.weights) == len(best.weights):
-                abs_weights = numpy.abs(scheme.weights)
+                abs_weights = np.abs(scheme.weights)
                 ratio = max(abs_weights) / min(abs_weights)
-                bratio = max(numpy.abs(best.weights)) / min(numpy.abs(best.weights))
+                bratio = max(np.abs(best.weights)) / min(np.abs(best.weights))
                 if ratio < bratio:
                     best = scheme
                     continue
@@ -137,7 +135,7 @@ def test_get_good_scheme():
                     continue
                 else:  # ratio == bratio
                     # # check if it's actually the same scheme
-                    # if numpy.all(numpy.abs(scheme.points - best.points) < 1.0e-12):
+                    # if np.all(np.abs(scheme.points - best.points) < 1.0e-12):
                     #     print("DUP", best.name, scheme.name)
                     #     # pick the older one
 

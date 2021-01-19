@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import orthopy
 import pytest
 
@@ -55,8 +55,8 @@ import quadpy
     + [quadpy.enr2.xiu(n) for n in range(2, 8)],
 )
 def test_scheme(scheme):
-    assert scheme.points.dtype == numpy.float64, scheme.name
-    assert scheme.weights.dtype == numpy.float64, scheme.name
+    assert scheme.points.dtype == np.float64, scheme.name
+    assert scheme.weights.dtype == np.float64, scheme.name
 
     print(scheme)
 
@@ -66,12 +66,12 @@ def test_scheme(scheme):
     while True:
         approximate = scheme.integrate(lambda x: next(evaluator))
         exact = evaluator.int_p0 if k == 0 else 0.0
-        err = numpy.abs(approximate - exact)
-        if numpy.any(err > 1.0e-11):
+        err = np.abs(approximate - exact)
+        if np.any(err > 1.0e-11):
             break
         k += 1
 
-    max_err = numpy.max(err)
+    max_err = np.max(err)
     assert k - 1 == scheme.degree, (
         f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
         f"(max err: {max_err:.3e})"

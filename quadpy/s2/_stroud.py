@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import sympy
 
 from ..helpers import book, untangle, z
@@ -38,24 +38,24 @@ def stroud_s2_5_1():
 
 def stroud_s2_9_3():
     # spherical product gauss 9
-    sqrt = numpy.vectorize(sympy.sqrt)
-    pm_ = numpy.array([+1, -1])
-    cos = numpy.vectorize(sympy.cos)
-    sin = numpy.vectorize(sympy.sin)
+    sqrt = np.vectorize(sympy.sqrt)
+    pm_ = np.array([+1, -1])
+    cos = np.vectorize(sympy.cos)
+    sin = np.vectorize(sympy.sin)
     frac = sympy.Rational
     pi = sympy.pi
 
     r1, r2 = sqrt((6 - pm_ * sqrt(6)) / 10)
 
-    a = 2 * (numpy.arange(10) + 1) * pi / 10
-    x = numpy.array([cos(a), sin(a)]).T
+    a = 2 * (np.arange(10) + 1) * pi / 10
+    x = np.array([cos(a), sin(a)]).T
 
     B0 = frac(1, 9)
     B1, B2 = (16 + pm_ * sqrt(6)) / 360
 
     data = [(B0, z(2)), (B1, r1 * x), (B2, r2 * x)]
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     d = {"plain": [weights, points[0], points[1]]}
     return S2Scheme("Stroud S2 9-3", d, 9, _source)
 

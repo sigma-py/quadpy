@@ -1,5 +1,5 @@
 import ndim
-import numpy
+import numpy as np
 import pytest
 from helpers import check_degree
 from matplotlib import pyplot as plt
@@ -11,8 +11,8 @@ import quadpy
     "scheme", [quadpy.u2.schemes["krylov"](k) for k in range(1, 6)]
 )
 def test_scheme(scheme):
-    assert scheme.points.dtype == numpy.float64, scheme.name
-    assert scheme.weights.dtype == numpy.float64, scheme.name
+    assert scheme.points.dtype == np.float64, scheme.name
+    assert scheme.weights.dtype == np.float64, scheme.name
 
     print(scheme)
 

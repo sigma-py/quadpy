@@ -1,13 +1,13 @@
-import numpy
+import numpy as np
 
 from ..tn import get_vol
 from ._dunavant import dunavant_05, dunavant_10
 
 
 def _numpy_all_except(a, axis=-1):
-    axes = numpy.arange(a.ndim)
-    axes = numpy.delete(axes, axis)
-    return numpy.all(a, axis=tuple(axes))
+    axes = np.arange(a.ndim)
+    axes = np.delete(axes, axis)
+    return np.all(a, axis=tuple(axes))
 
 
 def integrate_adaptive(
@@ -17,14 +17,14 @@ def integrate_adaptive(
     minimum_triangle_area=None,
     scheme1=dunavant_05(),
     scheme2=dunavant_10(),
-    dot=numpy.dot,
+    dot=np.dot,
 ):
-    sumfun = numpy.sum
+    sumfun = np.sum
 
-    triangles = numpy.array(triangles)
+    triangles = np.array(triangles)
     if len(triangles.shape) == 2:
         # add dimension in the second-to-last place
-        triangles = numpy.expand_dims(triangles, -2)
+        triangles = np.expand_dims(triangles, -2)
 
     areas = get_vol(triangles)
     total_area = sumfun(areas)
@@ -44,7 +44,7 @@ def integrate_adaptive(
     quad_sum = sumfun(val1[..., is_good], axis=-1)
     global_error_estimate = sumfun(error_estimate[..., is_good], axis=-1)
 
-    is_bad = numpy.logical_not(is_good)
+    is_bad = np.logical_not(is_good)
     while any(is_bad):
         # split the bad triangles into four #triforce
         #
@@ -59,15 +59,15 @@ def integrate_adaptive(
             0.5 * (triangles[2] + triangles[0]),
             0.5 * (triangles[0] + triangles[1]),
         ]
-        triangles = numpy.array(
+        triangles = np.array(
             [
-                numpy.concatenate(
+                np.concatenate(
                     [triangles[0], triangles[1], triangles[2], midpoints[0]]
                 ),
-                numpy.concatenate(
+                np.concatenate(
                     [midpoints[1], midpoints[2], midpoints[0], midpoints[1]]
                 ),
-                numpy.concatenate(
+                np.concatenate(
                     [midpoints[2], midpoints[0], midpoints[1], midpoints[2]]
                 ),
             ]
@@ -85,6 +85,6 @@ def integrate_adaptive(
         # add values from good intervals to sum
         quad_sum += sumfun(val1[..., is_good], axis=-1)
         global_error_estimate += sumfun(error_estimate[..., is_good], axis=-1)
-        is_bad = numpy.logical_not(is_good)
+        is_bad = np.logical_not(is_good)
 
     return quad_sum, global_error_estimate

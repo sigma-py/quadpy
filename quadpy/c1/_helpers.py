@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 from ..helpers import QuadratureScheme, plot_disks_1d
 
@@ -59,28 +59,24 @@ class C1Scheme(QuadratureScheme):
         self.domain = "C1"
         super().__init__(name, weights, points, degree, source)
 
-    def integrate(
-        self, f, intervals, domain_shape=None, range_shape=None, dot=numpy.dot
-    ):
-        iv = numpy.asarray(intervals)
+    def integrate(self, f, intervals, domain_shape=None, range_shape=None, dot=np.dot):
+        iv = np.asarray(intervals)
         x0 = 0.5 * (1.0 - self.points)
         x1 = 0.5 * (1.0 + self.points)
-        x = numpy.multiply.outer(iv[0], x0) + numpy.multiply.outer(iv[1], x1)
-        fx = numpy.asarray(f(x))
+        x = np.multiply.outer(iv[0], x0) + np.multiply.outer(iv[1], x1)
+        fx = np.asarray(f(x))
 
         domain_shape, range_shape, interval_set_shape = _find_shapes(
             fx, iv, self.points, domain_shape=domain_shape, range_shape=range_shape
         )
 
-        # numpy.sum is slower than dot() and friends, but allows for scalar input.
+        # np.sum is slower than dot() and friends, but allows for scalar input.
         diff = iv[1] - iv[0]
-        len_intervals = numpy.sqrt(
-            numpy.sum(diff ** 2, axis=tuple(range(len(domain_shape))))
-        )
+        len_intervals = np.sqrt(np.sum(diff ** 2, axis=tuple(range(len(domain_shape)))))
         # The factor 0.5 is from the length of the reference line [-1, 1].
         return 0.5 * len_intervals * dot(fx, self.weights)
 
-    def plot(self, interval=numpy.array([[-1.0], [1.0]]), show_axes=False):
+    def plot(self, interval=np.array([[-1.0], [1.0]]), show_axes=False):
         from matplotlib import pyplot as plt
 
         # change default range so that new disks will work
@@ -93,6 +89,6 @@ class C1Scheme(QuadratureScheme):
 
         plt.plot(interval, [0, 0], color="k")
 
-        pts = numpy.column_stack([self.points, numpy.zeros(len(self.points))])
+        pts = np.column_stack([self.points, np.zeros(len(self.points))])
         total_area = interval[1] - interval[0]
         plot_disks_1d(plt, pts, self.weights, total_area)

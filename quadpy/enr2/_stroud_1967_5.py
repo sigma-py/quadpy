@@ -1,6 +1,6 @@
 # TODO sympyfy
 
-import numpy
+import numpy as np
 
 from ..helpers import article, rd, untangle
 from ._helpers import Enr2Scheme
@@ -57,7 +57,7 @@ def stroud_1967_5_a(n):
     else:
         assert n == 6
         eta = 1
-        lmbda = numpy.sqrt(2)
+        lmbda = np.sqrt(2)
         xi = 0
         mu = -1
         gamma = 1
@@ -84,7 +84,7 @@ def stroud_1967_5_a(n):
     ]
 
     if n == 2:
-        data += [(C, numpy.array([[+mu, +mu]])), (C, numpy.array([[-mu, -mu]]))]
+        data += [(C, np.array([[+mu, +mu]])), (C, np.array([[-mu, -mu]]))]
     else:
         data += [
             (C, rd(n, [(+mu, 2), (+gamma, n - 2)])),
@@ -92,12 +92,12 @@ def stroud_1967_5_a(n):
         ]
 
     if n == 7:
-        data += [(2 * A, numpy.full((1, n), eta))]
+        data += [(2 * A, np.full((1, n), eta))]
     else:
-        data += [(A, numpy.full((1, n), +eta)), (A, numpy.full((1, n), -eta))]
+        data += [(A, np.full((1, n), +eta)), (A, np.full((1, n), -eta))]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return Enr2Scheme("Stroud 1967-5 a", n, weights, points, 5, source)
 
 
@@ -152,10 +152,10 @@ def stroud_1967_5_b(n):
     ]
 
     if n == 7:
-        data += [(2 * A, numpy.full((1, n), 0.0))]
+        data += [(2 * A, np.full((1, n), 0.0))]
     else:
-        data += [(A, numpy.full((1, n), +eta)), (A, numpy.full((1, n), -eta))]
+        data += [(A, np.full((1, n), +eta)), (A, np.full((1, n), -eta))]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return Enr2Scheme("Stroud 1967-5 b", n, weights, points, 5, source)

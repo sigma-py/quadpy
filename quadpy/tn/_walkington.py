@@ -1,6 +1,6 @@
 from math import factorial
 
-import numpy
+import numpy as np
 from sympy import Rational as frac
 from sympy import sqrt
 
@@ -20,9 +20,9 @@ def walkington_1(d):
     degree = 1
     data = [(frac(1, factorial(d)), _c(d, frac))]
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     # normalize weights
-    weights /= numpy.sum(weights)
+    weights /= np.sum(weights)
     return TnScheme("Walkington 1", d, weights, points, degree, source)
 
 
@@ -36,9 +36,9 @@ def walkington_2(d):
     degree = 1
     data = [(frac(1, factorial(d + 1)), _xi1(d, 1 / sqrt(d + 1)))]
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     # normalize weights
-    weights /= numpy.sum(weights)
+    weights /= np.sum(weights)
     return TnScheme("Walkington 2", d, weights, points, degree, source)
 
 
@@ -49,9 +49,9 @@ def walkington_3(d):
         (frac(+((d + 3) ** 3), 4 * factorial(d + 3)), _xi1(d, frac(1, (d + 3)))),
     ]
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     # normalize weights
-    weights /= numpy.sum(weights)
+    weights /= np.sum(weights)
     return TnScheme("Walkington 3", d, weights, points, degree, source)
 
 
@@ -68,9 +68,9 @@ def walkington_5(d):
     ]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     # normalize weights
-    weights /= numpy.sum(weights)
+    weights /= np.sum(weights)
     return TnScheme("Walkington 5", d, weights, points, degree, source)
 
 
@@ -91,20 +91,20 @@ def walkington_7(d):
     ]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     # normalize weights
-    weights /= numpy.sum(weights)
+    weights /= np.sum(weights)
     return TnScheme("Walkington 7", d, weights, points, degree, source)
 
 
 def _c(d, frac):
-    return numpy.array([numpy.full(d + 1, frac(1, d + 1))])
+    return np.array([np.full(d + 1, frac(1, d + 1))])
 
 
 def _xi1(d, a):
-    out = numpy.full((d + 1, d + 1), a)
+    out = np.full((d + 1, d + 1), a)
     b = 1 - d * a
-    numpy.fill_diagonal(out, b)
+    np.fill_diagonal(out, b)
     return out
 
 
@@ -112,10 +112,10 @@ def _xi11(d, a, frac):
     assert d > 1
     b = frac(1 - (d - 1) * a, 2)
     if d == 2:
-        out = numpy.array([[b, b, a], [b, a, b], [a, b, b]])
+        out = np.array([[b, b, a], [b, a, b], [a, b, b]])
     else:
         assert d == 3
-        out = numpy.array(
+        out = np.array(
             [
                 [b, b, a, a],
                 [b, a, b, a],
@@ -134,12 +134,12 @@ def _xi21(d, a, frac):
     # ERR Note that the article incorrectly states (d-2) the the expression for c.
     c = 1 - (d - 1) * a - b
     if d == 2:
-        out = numpy.array(
+        out = np.array(
             [[b, c, a], [c, b, a], [c, a, b], [b, a, c], [a, b, c], [a, c, b]]
         )
     else:
         assert d == 3
-        out = numpy.array(
+        out = np.array(
             [
                 [b, c, a, a],
                 [b, a, c, a],
@@ -162,5 +162,5 @@ def _xi21(d, a, frac):
 def _xi111(d, a, frac):
     assert d == 3
     b = frac(1 - (d - 2) * a, 3)
-    out = numpy.array([[b, b, b, a], [b, b, a, b], [b, a, b, b], [a, b, b, b]])
+    out = np.array([[b, b, b, a], [b, b, a, b], [b, a, b, b], [a, b, b, b]])
     return out

@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import orthopy
 
 from ..tools import scheme_from_rc
@@ -13,7 +13,7 @@ def gauss_laguerre(n, alpha=0, mode="numpy"):
     """
     symbolic = mode != "numpy"
     rc = orthopy.e1r.RecurrenceCoefficients("monic", alpha, symbolic)
-    _, a, b = numpy.array([rc[k] for k in range(n)]).T
+    _, a, b = np.array([rc[k] for k in range(n)]).T
     points, weights = scheme_from_rc(a, b, rc.int_1, mode=mode)
 
     if alpha == 0:

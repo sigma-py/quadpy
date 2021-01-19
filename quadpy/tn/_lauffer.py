@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from sympy import Rational as frac
 
 from ..helpers import article, rd, untangle
@@ -26,7 +26,7 @@ def lauffer_2(n):
     C = frac(4, (n + 1) * (n + 2))
     data = [(B, rd(n + 1, [(1, 1)])), (C, rd(n + 1, [(frac(1, 2), 2)]))]
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return TnScheme("Lauffer 2", n, weights, points, 2, source)
 
 
@@ -44,7 +44,7 @@ def lauffer_3(n):
         (D, rd(n + 1, [(r, 3)])),
     ]
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return TnScheme("Lauffer 3", n, weights, points, 3, source)
 
 
@@ -71,7 +71,7 @@ def lauffer_4(n):
     ]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return TnScheme("Lauffer 4", n, weights, points, 4, source)
 
 
@@ -105,5 +105,5 @@ def lauffer_5(n):
     ]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return TnScheme("Lauffer 5", n, weights, points, 5, source)
