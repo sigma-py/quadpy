@@ -144,8 +144,8 @@ def test_chebyshev1_sympy():
     flt = np.vectorize(float)
     tol = 1.0e-15
 
-    assert (abs(flt(scheme.points) - scheme_np.points) < tol).all()
-    assert (abs(flt(scheme.weights) - scheme_np.weights) < tol).all()
+    assert (abs(flt(scheme.points) - scheme_numpy.points) < tol).all()
+    assert (abs(flt(scheme.weights) - scheme_numpy.weights) < tol).all()
 
 
 def test_chebyshev2_sympy():
@@ -155,8 +155,8 @@ def test_chebyshev2_sympy():
     flt = np.vectorize(float)
     tol = 1.0e-15
 
-    assert (abs(flt(scheme.points) - scheme_np.points) < tol).all()
-    assert (abs(flt(scheme.weights) - scheme_np.weights) < tol).all()
+    assert (abs(flt(scheme.points) - scheme_numpy.points) < tol).all()
+    assert (abs(flt(scheme.weights) - scheme_numpy.weights) < tol).all()
 
 
 def test_chebyshev1_mpmath():
