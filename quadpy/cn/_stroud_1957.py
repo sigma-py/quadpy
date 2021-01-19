@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from sympy import Rational as frac
 from sympy import cos, pi, sin, sqrt
 
@@ -21,13 +21,13 @@ _source = article(
 def stroud_1957_2(n):
     r = sqrt(3) / 6
     data = [
-        (1.0, numpy.array([numpy.full(n, 2 * r)])),
+        (1.0, np.array([np.full(n, 2 * r)])),
         (+r, _s(n, -1, r)),
         (-r, _s(n, +1, r)),
     ]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return CnScheme("Stroud 1957-2", n, weights, points, 2, _source, 1.511e-14)
 
 
@@ -42,13 +42,13 @@ def stroud_1957_3(n):
         for k in range(1, n2 + 1)
     ]
     if n % 2 == 1:
-        sqrt3pm = numpy.full(2 * n, 1 / sqrt(3))
+        sqrt3pm = np.full(2 * n, 1 / sqrt(3))
         sqrt3pm[1::2] *= -1
         pts.append(sqrt3pm)
-    pts = numpy.vstack(pts).T
+    pts = np.vstack(pts).T
 
     data = [(frac(1, 2 * n), pts)]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return CnScheme("Stroud 1957-3", n, weights, points, 3, _source)

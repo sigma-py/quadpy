@@ -1,5 +1,5 @@
 import ndim
-import numpy
+import numpy as np
 
 from ..helpers import article, compute_dobrodeev, fsd, untangle
 from ._helpers import SnScheme
@@ -51,5 +51,5 @@ def dobrodeev_1978(n):
     data = [(G, fsd(n, (a, i))), (G, fsd(n, (b, j), (c, k)))]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return SnScheme("Dobrodeev 1978", n, weights, points, 5, source)

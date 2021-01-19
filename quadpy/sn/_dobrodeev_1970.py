@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from sympy import Rational as frac
 from sympy import sqrt
 
@@ -36,7 +36,7 @@ def dobrodeev_1970(n):
     ]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
 
     weights /= frac(27 * (n + 2) * (n + 4), (n + 6) ** 2)
     return SnScheme("Dobrodeev 1970", n, weights, points, 7, source)

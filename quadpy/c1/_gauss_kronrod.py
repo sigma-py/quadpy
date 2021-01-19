@@ -1,7 +1,7 @@
 import math
 from collections import namedtuple
 
-import numpy
+import numpy as np
 import orthopy
 
 from ..helpers import article
@@ -41,13 +41,13 @@ def gauss_kronrod(n, a=0, b=0):
     degree = 2 * length + 1
 
     rc = orthopy.c1.jacobi.RecurrenceCoefficients("monic", a, b, symbolic=False)
-    _, alpha, beta = numpy.array([rc[k] for k in range(length)]).T
+    _, alpha, beta = np.array([rc[k] for k in range(length)]).T
     beta[0] = rc.int_1
 
     a, b = _r_kronrod(n, alpha, beta)
     x, w = scheme_from_rc(a, b, rc.int_1, mode="numpy")
     # sort by x
-    i = numpy.argsort(x)
+    i = np.argsort(x)
     points = x[i]
     weights = w[i]
     return C1Scheme(f"Gauss-Kronrod ({n})", degree, weights, points, source)
@@ -57,21 +57,21 @@ def _r_kronrod(n, a0, b0):
     assert len(a0) == int(math.ceil(3 * n / 2.0)) + 1
     assert len(b0) == int(math.ceil(3 * n / 2.0)) + 1
 
-    a = numpy.zeros(2 * n + 1)
-    b = numpy.zeros(2 * n + 1)
+    a = np.zeros(2 * n + 1)
+    b = np.zeros(2 * n + 1)
 
     k = int(math.floor(3 * n / 2.0)) + 1
     a[:k] = a0[:k]
     k = int(math.ceil(3 * n / 2.0)) + 1
     b[:k] = b0[:k]
-    s = numpy.zeros(int(math.floor(n / 2.0)) + 2)
-    t = numpy.zeros(int(math.floor(n / 2.0)) + 2)
+    s = np.zeros(int(math.floor(n / 2.0)) + 2)
+    t = np.zeros(int(math.floor(n / 2.0)) + 2)
     t[1] = b[n + 1]
     for m in range(n - 1):
         k0 = int(math.floor((m + 1) / 2.0))
-        k = numpy.arange(k0, -1, -1)
+        k = np.arange(k0, -1, -1)
         L = m - k
-        s[k + 1] = numpy.cumsum(
+        s[k + 1] = np.cumsum(
             (a[k + n + 1] - a[L]) * t[k + 1] + b[k + n + 1] * s[k] - b[L] * s[k + 1]
         )
         s, t = t, s
@@ -81,10 +81,10 @@ def _r_kronrod(n, a0, b0):
     for m in range(n - 1, 2 * n - 2):
         k0 = m + 1 - n
         k1 = int(math.floor((m - 1) / 2.0))
-        k = numpy.arange(k0, k1 + 1)
+        k = np.arange(k0, k1 + 1)
         L = m - k
         j = n - 1 - L
-        s[j + 1] = numpy.cumsum(
+        s[j + 1] = np.cumsum(
             -(a[k + n + 1] - a[L]) * t[j + 1]
             - b[k + n + 1] * s[j + 1]
             + b[L] * s[j + 2]
@@ -105,7 +105,7 @@ def _gauss_kronrod_integrate(
     k,
     f,
     intervals,
-    dot=numpy.dot,
+    dot=np.dot,
     domain_shape=None,
     range_shape=None,
 ):
@@ -117,15 +117,15 @@ def _gauss_kronrod_integrate(
     x0 = 0.5 * (1.0 - gk.points)
     x1 = 0.5 * (1.0 + gk.points)
 
-    sp = numpy.multiply.outer(intervals[0], x0) + numpy.multiply.outer(intervals[1], x1)
+    sp = np.multiply.outer(intervals[0], x0) + np.multiply.outer(intervals[1], x1)
     if domain_shape is not None and range_shape is not None:
         # Make it easy on the f by flattening out interval_set
         interval_set_shape = intervals.shape[1 + len(domain_shape) :]
         sp = sp.reshape(*domain_shape, -1)
-        fx_gk = numpy.asarray(f(sp))
+        fx_gk = np.asarray(f(sp))
         fx_gk = fx_gk.reshape(*range_shape, *interval_set_shape, *x0.shape)
     else:
-        fx_gk = numpy.asarray(f(sp))
+        fx_gk = np.asarray(f(sp))
         # try and guess shapes of domain, range, intervals
         domain_shape, range_shape, interval_set_shape = _find_shapes(
             fx_gk, intervals, gk.points, domain_shape, range_shape
@@ -134,9 +134,7 @@ def _gauss_kronrod_integrate(
     fx_gl = fx_gk[..., 1::2]
 
     diff = intervals[1] - intervals[0]
-    interval_lengths = numpy.sqrt(
-        numpy.sum(diff ** 2, axis=tuple(range(len(domain_shape))))
-    )
+    interval_lengths = np.sqrt(np.sum(diff ** 2, axis=tuple(range(len(domain_shape)))))
     assert interval_lengths.shape == interval_set_shape
 
     # integrate
@@ -158,30 +156,30 @@ def _gauss_kronrod_integrate(
     #   <https://arxiv.org/pdf/1003.4629.pdf>
     #
     # the classical QUADPACK still compares favorably with other approaches.
-    fx_avg_abs = numpy.abs(fx_gk - average_gk[..., None])
+    fx_avg_abs = np.abs(fx_gk - average_gk[..., None])
     I_tilde = 0.5 * interval_lengths * dot(fx_avg_abs, gk.weights)
 
     # The exponent 1.5 is chosen such that (200*x)**1.5 is approximately x at 1.0e-6,
     # the machine precision on IEEE 754 32-bit floating point arithmentic. This could be
     # adapted to
     #
-    #   eps = numpy.finfo(float).eps
-    #   exponent = numpy.log(eps) / numpy.log(200*eps)
+    #   eps = np.finfo(float).eps
+    #   exponent = np.log(eps) / np.log(200*eps)
     #
     # The following expression is
     #
-    # error_estimate = I_tilde * numpy.minimum(
-    #     numpy.ones(I_tilde.shape),
+    # error_estimate = I_tilde * np.minimum(
+    #     np.ones(I_tilde.shape),
     #     (200 * abs(val_gauss_kronrod - val_gauss_legendr) / I_tilde) ** 1.5,
     # )
     #
     # with handling NaNs (if I_tilde is 0).
-    error_estimate = numpy.empty(I_tilde.shape)
-    idx = numpy.abs(I_tilde) > 1.0e-15
+    error_estimate = np.empty(I_tilde.shape)
+    idx = np.abs(I_tilde) > 1.0e-15
     vals = (
-        200 * numpy.abs(val_gauss_kronrod[idx] - val_gauss_legendr[idx]) / I_tilde[idx]
+        200 * np.abs(val_gauss_kronrod[idx] - val_gauss_legendr[idx]) / I_tilde[idx]
     ) ** 1.5
-    error_estimate[idx] = numpy.minimum(numpy.ones(numpy.sum(idx)), vals)
+    error_estimate[idx] = np.minimum(np.ones(np.sum(idx)), vals)
     error_estimate[~idx] = 1.0
     error_estimate *= I_tilde
 

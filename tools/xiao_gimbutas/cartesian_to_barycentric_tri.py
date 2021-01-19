@@ -60,7 +60,7 @@ for i, scheme_data in enumerate(data):
     W = scheme_data["w"]
 
     print("elif index == %d:" % (i + 1))
-    print("    bary = numpy.concatenate([")
+    print("    bary = np.concatenate([")
 
     # generate barycentric coordinate code
     XY = [[xx, yy] for xx, yy in zip(X, Y)]
@@ -97,11 +97,11 @@ for i, scheme_data in enumerate(data):
             )
             multiplicities.append(6)
     print("        ])")
-    print("    self.weights = numpy.concatenate([")
+    print("    self.weights = np.concatenate([")
     # generate weight code
     print
     alpha = mpmath.mp.mpf("0.21934566882541541013653648363283")
     for weight, m in zip(W, multiplicities):
         # print('%.15e' % (w / 0.21934566882541541013653648363283 / m))
-        print("        %s * numpy.ones(%d)," % (weight / alpha / m, m))
+        print("        %s * np.ones(%d)," % (weight / alpha / m, m))
     print("        ])")

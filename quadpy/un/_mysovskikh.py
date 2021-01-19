@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from sympy import Rational as frac
 from sympy import sqrt
 
@@ -17,7 +17,7 @@ source = article(
 
 def mysovskikh_1(n):
     points = get_nsimplex_points(n, sqrt, frac)
-    weights = numpy.full(n + 1, frac(1, n + 1))
+    weights = np.full(n + 1, frac(1, n + 1))
     return UnScheme("Mysovskikh 1", n, weights, points, 2, source)
 
 
@@ -26,7 +26,7 @@ def mysovskikh_2(n):
     B = frac(2 * (n - 1) ** 2, n * (n + 1) ** 2 * (n + 2))
 
     a = get_nsimplex_points(n, sqrt, frac)
-    b = numpy.array(
+    b = np.array(
         [
             sqrt(frac(n, 2 * (n - 1))) * (a[k] + a[l])
             for k in range(n + 1)
@@ -34,13 +34,13 @@ def mysovskikh_2(n):
         ]
     )
 
-    points = numpy.concatenate([a, -a, b, -b])
-    weights = numpy.concatenate(
+    points = np.concatenate([a, -a, b, -b])
+    weights = np.concatenate(
         [
-            numpy.full(len(a), A),
-            numpy.full(len(a), A),
-            numpy.full(len(b), B),
-            numpy.full(len(b), B),
+            np.full(len(a), A),
+            np.full(len(a), A),
+            np.full(len(b), B),
+            np.full(len(b), B),
         ]
     )
     return UnScheme("Mysovskikh 2", n, weights, points, 5, source)

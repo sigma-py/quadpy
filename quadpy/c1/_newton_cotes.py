@@ -1,6 +1,6 @@
 import math
 
-import numpy
+import numpy as np
 import sympy
 
 from ._helpers import C1Scheme
@@ -12,7 +12,7 @@ def newton_cotes_closed(index, **kwargs):
     <https://en.wikipedia.org/wiki/Newton%E2%80%93Cotes_formulas#Closed_Newton.E2.80.93Cotes_formulae>,
     <http://mathworld.wolfram.com/Newton-CotesFormulas.html>.
     """
-    points = numpy.linspace(-1.0, 1.0, index + 1)
+    points = np.linspace(-1.0, 1.0, index + 1)
     degree = index + 1 if index % 2 == 0 else index
 
     # Formula (26) from
@@ -20,7 +20,7 @@ def newton_cotes_closed(index, **kwargs):
     # Note that Sympy carries out all operations in rationals, i.e.,
     # _exactly_. Only at the end, the rational is converted into a float.
     n = index
-    weights = numpy.empty(n + 1)
+    weights = np.empty(n + 1)
     t = sympy.Symbol("t")
     for r in range(n + 1):
         # Compare with get_weights().
@@ -41,11 +41,11 @@ def newton_cotes_open(index, **kwargs):
     Open Newton-Cotes formulae.
     <https://math.stackexchange.com/a/1959071/36678>
     """
-    points = numpy.linspace(-1.0, 1.0, index + 2)[1:-1]
+    points = np.linspace(-1.0, 1.0, index + 2)[1:-1]
     degree = index if (index + 1) % 2 == 0 else index - 1
     #
     n = index + 1
-    weights = numpy.empty(n - 1)
+    weights = np.empty(n - 1)
     t = sympy.Symbol("t")
     for r in range(1, n):
         # Compare with get_weights().

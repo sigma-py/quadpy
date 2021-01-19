@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import sympy
 
 from ..helpers import book
@@ -15,15 +15,15 @@ _source = book(
 )
 
 frac = sympy.Rational
-cos = numpy.vectorize(sympy.cos)
-sin = numpy.vectorize(sympy.sin)
+cos = np.vectorize(sympy.cos)
+sin = np.vectorize(sympy.sin)
 pi = sympy.pi
 
 
 def krylov(n):
-    weights = numpy.full(n, frac(1, n))
-    alpha = 2 * numpy.arange(n) * pi / n
-    points = numpy.column_stack([cos(alpha), sin(alpha)])
+    weights = np.full(n, frac(1, n))
+    alpha = 2 * np.arange(n) * pi / n
+    points = np.column_stack([cos(alpha), sin(alpha)])
     return U2Scheme(f"Krylov {n}", _source, n - 1, weights, points, 2.145e-16)
 
 

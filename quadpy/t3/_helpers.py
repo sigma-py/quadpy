@@ -1,6 +1,6 @@
 import json
 
-import numpy
+import numpy as np
 import sympy
 
 from ..helpers import backend_to_function
@@ -28,19 +28,19 @@ class T3Scheme(TnScheme):
 
     def show(
         self,
-        tet=numpy.array(
+        tet=np.array(
             [
-                [+1, 0, -1.0 / numpy.sqrt(2.0)],
-                [-1, 0, -1.0 / numpy.sqrt(2.0)],
-                [0, +1, +1.0 / numpy.sqrt(2.0)],
-                [0, -1, +1.0 / numpy.sqrt(2.0)],
+                [+1, 0, -1.0 / np.sqrt(2.0)],
+                [-1, 0, -1.0 / np.sqrt(2.0)],
+                [0, +1, +1.0 / np.sqrt(2.0)],
+                [0, -1, +1.0 / np.sqrt(2.0)],
             ]
         ),
         backend="vtk",
         render=True,
     ):
-        edges = numpy.array([[tet[i], tet[j]] for i in range(4) for j in range(i)])
-        edges = numpy.moveaxis(edges, 1, 2)
+        edges = np.array([[tet[i], tet[j]] for i in range(4) for j in range(i)])
+        edges = np.moveaxis(edges, 1, 2)
         backend_to_function[backend](
             transform(self.points.T, tet.T).T,
             self.weights,
@@ -52,14 +52,14 @@ class T3Scheme(TnScheme):
 
 def _s4(dummy):
     if dummy.dtype == sympy.Basic:
-        return numpy.full((4, 1), sympy.Rational(1, 4))
-    return numpy.full((4, 1), 0.25)
+        return np.full((4, 1), sympy.Rational(1, 4))
+    return np.full((4, 1), 0.25)
 
 
 def _s31(a):
     b = 1 - 3 * a
-    points = numpy.array([[a, a, a, b], [a, a, b, a], [a, b, a, a], [b, a, a, a]])
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.array([[a, a, a, b], [a, a, b, a], [a, b, a, a], [b, a, a, a]])
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
@@ -68,7 +68,7 @@ def _s22(a):
         b = (1 - 2 * a) / sympy.S(2)
     else:
         b = (1 - 2 * a) / 2
-    points = numpy.array(
+    points = np.array(
         [
             [a, a, b, b],
             [a, b, a, b],
@@ -78,14 +78,14 @@ def _s22(a):
             [b, b, a, a],
         ]
     )
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _s211(data):
     a, b = data
     c = 1 - 2 * a - b
-    points = numpy.array(
+    points = np.array(
         [
             [a, a, b, c],
             [a, b, a, c],
@@ -101,14 +101,14 @@ def _s211(data):
             [c, b, a, a],
         ]
     )
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _s1111(data):
     a, b, c = data
     d = 1 - a - b - c
-    points = numpy.array(
+    points = np.array(
         [
             [a, b, c, d],
             [a, b, d, c],
@@ -136,7 +136,7 @@ def _s1111(data):
             [d, c, b, a],
         ]
     )
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
@@ -153,13 +153,13 @@ def expand_symmetries_points_only(data):
             "s1111": _s1111,
             "plain": lambda vals: vals.reshape(4, 1, -1),
         }[key]
-        pts = fun(numpy.asarray(points_raw))
+        pts = fun(np.asarray(points_raw))
 
         counts.append(pts.shape[1])
         pts = pts.reshape(pts.shape[0], -1)
         points.append(pts)
 
-    points = numpy.ascontiguousarray(numpy.concatenate(points, axis=1))
+    points = np.ascontiguousarray(np.concatenate(points, axis=1))
     return points, counts
 
 
@@ -168,13 +168,13 @@ def expand_symmetries(data):
     points_raw = {}
     weights_raw = []
     for key, values in data.items():
-        values = numpy.asarray(values)
+        values = np.asarray(values)
         weights_raw.append(values[0])
         points_raw[key] = values[1:]
 
     points, counts = expand_symmetries_points_only(points_raw)
-    weights = numpy.concatenate(
-        [numpy.tile(values, count) for count, values in zip(counts, weights_raw)]
+    weights = np.concatenate(
+        [np.tile(values, count) for count, values in zip(counts, weights_raw)]
     )
     return points, weights
 

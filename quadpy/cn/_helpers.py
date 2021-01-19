@@ -1,7 +1,7 @@
 import itertools
 from typing import Callable
 
-import numpy
+import numpy as np
 
 from .._exception import QuadpyError
 from ..helpers import QuadratureScheme, n_outer
@@ -24,28 +24,28 @@ class CnScheme(QuadratureScheme):
         assert points.shape[0] == dim, f"points.shape == {points.shape}, dim = {dim}"
         super().__init__(name, weights, points, degree, source, tol, comments)
 
-    def integrate(self, f: Callable, ncube, dot=numpy.dot):
-        ncube = numpy.asarray(ncube)
+    def integrate(self, f: Callable, ncube, dot=np.dot):
+        ncube = np.asarray(ncube)
         x = transform(self.points, ncube).T
         detJ = get_detJ(self.points, ncube)
 
-        fx = numpy.asarray(f(x))
+        fx = np.asarray(f(x))
         if fx.shape[-len(x.shape[1:]) :] != x.shape[1:]:
             string = ", ".join(str(val) for val in x.shape[1:])
             raise QuadpyError(
                 f"Wrong return value shape {fx.shape}. " f"Expected (..., {string})."
             )
 
-        ref_vol = 2 ** numpy.prod(len(ncube.shape) - 1)
+        ref_vol = 2 ** np.prod(len(ncube.shape) - 1)
         return ref_vol * dot(fx * abs(detJ), self.weights)
 
     def points_inside(self) -> bool:
         """Are all points strictly inside the domain?"""
-        return numpy.all((-1 < self.points) & (self.points < 1))
+        return np.all((-1 < self.points) & (self.points < 1))
 
     def points_inside_or_boundary(self) -> bool:
         """Are all points inside the domain or on its boundary?"""
-        return numpy.all((-1 <= self.points) & (self.points <= 1))
+        return np.all((-1 <= self.points) & (self.points <= 1))
 
 
 def transform(xi, cube):
@@ -62,12 +62,12 @@ def transform(xi, cube):
     # This array of multiplications and additions is reminiscent of dot(), and
     # indeed tensordot() can handle the situation. We just need to compute the
     # `1+-xi` products and align them with `cube`.
-    one_mp_xi = numpy.stack([0.5 * (1.0 - xi), 0.5 * (1.0 + xi)], axis=1)
+    one_mp_xi = np.stack([0.5 * (1.0 - xi), 0.5 * (1.0 + xi)], axis=1)
     a = n_outer(one_mp_xi)
 
     # <https://stackoverflow.com/q/45372098/353337>
     d = xi.shape[0]
-    return numpy.tensordot(a, cube, axes=(range(d), range(d)))
+    return np.tensordot(a, cube, axes=(range(d), range(d)))
 
 
 def get_detJ(xi, cube):
@@ -75,23 +75,23 @@ def get_detJ(xi, cube):
     # For d==2, the result can be computed with
     # ```
     # J0 = (
-    #     - numpy.multiply.outer(0.25*(1-xi[1]), quad[0, 0])
-    #     + numpy.multiply.outer(0.25*(1-xi[1]), quad[1, 0])
-    #     - numpy.multiply.outer(0.25*(1+xi[1]), quad[0, 1])
-    #     + numpy.multiply.outer(0.25*(1+xi[1]), quad[1, 1])
+    #     - np.multiply.outer(0.25*(1-xi[1]), quad[0, 0])
+    #     + np.multiply.outer(0.25*(1-xi[1]), quad[1, 0])
+    #     - np.multiply.outer(0.25*(1+xi[1]), quad[0, 1])
+    #     + np.multiply.outer(0.25*(1+xi[1]), quad[1, 1])
     #     ).T
     # J1 = (
-    #     - numpy.multiply.outer(0.25*(1-xi[0]), quad[0, 0])
-    #     - numpy.multiply.outer(0.25*(1+xi[0]), quad[1, 0])
-    #     + numpy.multiply.outer(0.25*(1-xi[0]), quad[0, 1])
-    #     + numpy.multiply.outer(0.25*(1+xi[0]), quad[1, 1])
+    #     - np.multiply.outer(0.25*(1-xi[0]), quad[0, 0])
+    #     - np.multiply.outer(0.25*(1+xi[0]), quad[1, 0])
+    #     + np.multiply.outer(0.25*(1-xi[0]), quad[0, 1])
+    #     + np.multiply.outer(0.25*(1+xi[0]), quad[1, 1])
     #     ).T
     # out = J0[0]*J1[1] - J1[0]*J0[1]
     # ```
     # Like transform(), simplify here and form the determinant explicitly.
     d = xi.shape[0]
 
-    one_mp_xi = numpy.stack([0.5 * (1.0 - xi), 0.5 * (1.0 + xi)], axis=1)
+    one_mp_xi = np.stack([0.5 * (1.0 - xi), 0.5 * (1.0 + xi)], axis=1)
 
     # Build the Jacobi matrix row by row.
     J = []
@@ -100,7 +100,7 @@ def get_detJ(xi, cube):
         a[k, 0, :] = -0.5
         a[k, 1, :] = +0.5
         a0 = n_outer(a)
-        J.append(numpy.tensordot(a0, cube, axes=(range(d), range(d))).T)
+        J.append(np.tensordot(a0, cube, axes=(range(d), range(d))).T)
 
     # `det` needs the square at the end. Fortran...
     # For d==2 or d==3, we could avoid this copy and compute the determinant
@@ -111,14 +111,14 @@ def get_detJ(xi, cube):
     #     + J0[0]*J1[1]*J2[2] + J1[0]*J2[1]*J0[2] + J2[0]*J0[1]*J1[2]
     #     - J0[2]*J1[1]*J2[0] - J1[2]*J2[1]*J0[0] - J2[2]*J0[1]*J1[0].
     #
-    J = numpy.array(J)
-    J = numpy.moveaxis(J, (0, 1), (-2, -1))
-    out = numpy.linalg.det(J)
+    J = np.array(J)
+    J = np.moveaxis(J, (0, 1), (-2, -1))
+    out = np.linalg.det(J)
     return out
 
 
 def integrate_monomial_over_ncube(ncube_limits, exp):
-    return numpy.prod(
+    return np.prod(
         [
             (a[1] ** (k + 1) - a[0] ** (k + 1)) / (k + 1)
             for a, k in zip(ncube_limits, exp)
@@ -130,7 +130,7 @@ def ncube_points(*xyz):
     """Given the end points of an n-cube aligned with the coordinate axes, this returns
     the corner points of the cube in the correct data structure.
     """
-    return numpy.moveaxis(numpy.array(numpy.meshgrid(*xyz, indexing="ij")), 0, -1)
+    return np.moveaxis(np.array(np.meshgrid(*xyz, indexing="ij")), 0, -1)
 
 
 def _fs11(n, r, s):
@@ -142,7 +142,7 @@ def _fs11(n, r, s):
     k2 = n - 1
     idx = itertools.combinations(range(k1 + k2), k1)
     vs = ((s if j not in i else r for j in range(k1 + k2)) for i in idx)
-    return numpy.array(
+    return np.array(
         list(
             itertools.chain.from_iterable(
                 itertools.product(*((+vij, -vij) for vij in vi)) for vi in vs
@@ -153,8 +153,8 @@ def _fs11(n, r, s):
 
 def _s(n, a, b):
     """Get all permutations of [a, b, ..., b] of length n. len(out) == n."""
-    out = numpy.full((n, n), b)
-    numpy.fill_diagonal(out, a)
+    out = np.full((n, n), b)
+    np.fill_diagonal(out, a)
     return out
 
 
@@ -173,4 +173,4 @@ def _s11(n, a, b):
     # First permutations, then set can be really inefficient if items are
     # repeated. Check out <https://stackoverflow.com/q/6284396/353337> for
     # improvements.
-    return numpy.array(list(set(itertools.permutations(s, n))))
+    return np.array(list(set(itertools.permutations(s, n))))

@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import sympy
 
 from ..helpers import article
@@ -15,10 +15,10 @@ _source = article(
 
 frac = sympy.Rational
 pi = sympy.pi
-sqrt = numpy.vectorize(sympy.sqrt)
-cos = numpy.vectorize(sympy.cos)
-sin = numpy.vectorize(sympy.sin)
-pm_ = numpy.array([+1, -1])
+sqrt = np.vectorize(sympy.sqrt)
+cos = np.vectorize(sympy.cos)
+sin = np.vectorize(sympy.sin)
+pm_ = np.array([+1, -1])
 
 
 def mysovskih_1(alpha=0):

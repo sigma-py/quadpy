@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from sympy import Rational as frac
 from sympy import sqrt
 
@@ -51,5 +51,5 @@ def hammer_stroud_2(n):
     data = [(B, [(n + 1) * [r]]), (C, rd(n + 1, [(t, 1), (s, n)]))]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return TnScheme("Hammer-Stround 2", n, weights, points, degree, source)

@@ -1,7 +1,7 @@
 import json
 import math
 
-import numpy
+import numpy as np
 
 from ..helpers import QuadratureScheme, expand_symmetries, plot_disks
 
@@ -37,8 +37,8 @@ class E2r2Scheme(QuadratureScheme):
         I0 = 2 * math.pi
         plot_disks(plt, self.points.T, self.weights, I0)
 
-    def integrate(self, f, dot=numpy.dot):
-        flt = numpy.vectorize(float)
+    def integrate(self, f, dot=np.dot):
+        flt = np.vectorize(float)
         ref_vol = math.pi
         return ref_vol * dot(f(flt(self.points)), flt(self.weights))
 

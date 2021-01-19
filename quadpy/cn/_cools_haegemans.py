@@ -1,6 +1,6 @@
 import math
 
-import numpy
+import numpy as np
 import sympy
 
 from ..helpers import article, expand_symmetries, prod
@@ -137,7 +137,7 @@ def _gener(delta2, m, mu, symbolic):
             # https://github.com/numpy/numpy/issues/16152
             coeffs = [1]
         else:
-            coeffs = numpy.poly(lmbdas2)
+            coeffs = np.poly(lmbdas2)
 
         a0 = [c * mu(2 * (q - k) + 2, symbolic) for k, c in enumerate(coeffs)]
         a1 = [c * mu(2 * (q - k), symbolic) for k, c in enumerate(coeffs)]

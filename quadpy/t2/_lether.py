@@ -9,7 +9,7 @@
 # Reported to Elsevier on June 24, 2019.
 #
 
-import numpy
+import numpy as np
 
 from ..c1 import gauss_legendre
 from ..helpers import article
@@ -31,18 +31,18 @@ source = article(
 def lether(n):
     gl = gauss_legendre(n)
 
-    w = numpy.outer((1 + gl.points) * gl.weights, gl.weights) / 4
-    x = numpy.outer(1 - gl.points, numpy.ones(n)) / 2
-    y = numpy.outer(1 + gl.points, 1 - gl.points) / 4
+    w = np.outer((1 + gl.points) * gl.weights, gl.weights) / 4
+    x = np.outer(1 - gl.points, np.ones(n)) / 2
+    y = np.outer(1 + gl.points, 1 - gl.points) / 4
 
-    points = numpy.array([x.flatten(), y.flatten()])
+    points = np.array([x.flatten(), y.flatten()])
     weights = w.flatten()
 
-    points = numpy.array([points[0], points[1], 1 - points[0] - points[1]])
+    points = np.array([points[0], points[1], 1 - points[0] - points[1]])
 
     degree = 2 * (n - 1)
     return T2Scheme(
-        f"Lether({n})", {"plain": numpy.vstack([weights, points])}, degree, source
+        f"Lether({n})", {"plain": np.vstack([weights, points])}, degree, source
     )
 
 

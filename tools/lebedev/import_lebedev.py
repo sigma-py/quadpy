@@ -7,11 +7,11 @@ https://people.sc.fsu.edu/~jburkardt/datasets/sphere_lebedev_rule/sphere_lebedev
 import os
 import re
 
-import numpy
+import numpy as np
 
 
 def read(filename):
-    data = numpy.loadtxt(filename)
+    data = np.loadtxt(filename)
     azimuthal_polar = data[:, :2] / 180.0
     weights = data[:, 2]
     return azimuthal_polar, weights
@@ -47,20 +47,20 @@ def sort_into_symmetry_classes(weights, azimuthal_polar):
                 # polar == pi/2   =>   X == [p, q, 0].
                 # Find the smallest positive phi that's paired with `polar ==
                 # pi/2`; the symmetry is fully characterized by that phi.
-                k = numpy.where(abs(azimuthal_polar[c, 1] - 0.5) < 1.0e-12)[0]
+                k = np.where(abs(azimuthal_polar[c, 1] - 0.5) < 1.0e-12)[0]
                 assert len(k) == 8
-                k2 = numpy.where(azimuthal_polar[c, 0][k] > 0.0)[0]
-                azimuthal_min = numpy.min(azimuthal_polar[c, 0][k][k2])
+                k2 = np.where(azimuthal_polar[c, 0][k] > 0.0)[0]
+                azimuthal_min = np.min(azimuthal_polar[c, 0][k][k2])
                 data["pq0"].append([weights[c[0]], azimuthal_min])
             else:
                 # X = [l, l, m].
                 # In this case, there must by exactly two phi with the value
                 # pi/4. Take the value of the smaller corresponding `polar`;
                 # all points are characterized by it.
-                k = numpy.where(abs(azimuthal_polar[c, 0] - 0.25) < 1.0e-12)[0]
+                k = np.where(abs(azimuthal_polar[c, 0] - 0.25) < 1.0e-12)[0]
                 assert len(k) == 2
-                k2 = numpy.where(azimuthal_polar[c, 1][k] > 0.0)[0]
-                polar_min = numpy.min(azimuthal_polar[c, 1][k][k2])
+                k2 = np.where(azimuthal_polar[c, 1][k] > 0.0)[0]
+                polar_min = np.min(azimuthal_polar[c, 1][k][k2])
                 data["llm"].append([weights[c[0]], polar_min])
         else:
             assert len(c) == 48
@@ -68,10 +68,10 @@ def sort_into_symmetry_classes(weights, azimuthal_polar):
             # could take any two here.
             # To make things easier later on, out of the 6 smallest polar
             # angle, take the one with the smallest positive phi.
-            min_polar = numpy.min(azimuthal_polar[c, 1])
-            k = numpy.where(abs(azimuthal_polar[c, 1] - min_polar) < 1.0e-12)[0]
-            k2 = numpy.where(azimuthal_polar[c, 0][k] > 0.0)[0]
-            min_azimuthal = numpy.min(azimuthal_polar[c, 0][k][k2])
+            min_polar = np.min(azimuthal_polar[c, 1])
+            k = np.where(abs(azimuthal_polar[c, 1] - min_polar) < 1.0e-12)[0]
+            k2 = np.where(azimuthal_polar[c, 0][k] > 0.0)[0]
+            min_azimuthal = np.min(azimuthal_polar[c, 0][k][k2])
             data["rsw"].append([weights[c[0]], min_azimuthal, min_polar])
 
     return data

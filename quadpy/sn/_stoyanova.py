@@ -1,6 +1,6 @@
 import math
 
-import numpy
+import numpy as np
 import sympy
 
 from ..helpers import article, get_nsimplex_points, untangle, z
@@ -37,7 +37,7 @@ def stoyanova(n, delta=None, variant_v_plus=True, symbolic=False):
     pts_a = get_nsimplex_points(n, sqrt, frac)
 
     # simplex edge midpoints projected onto the sphere
-    pts_b = numpy.array(
+    pts_b = np.array(
         [
             sqrt(frac(n, 2 * (n - 1))) * (pts_a[i1] + pts_a[i2])
             for i1 in range(n + 1)
@@ -45,7 +45,7 @@ def stoyanova(n, delta=None, variant_v_plus=True, symbolic=False):
         ]
     )
     # face midpoints projected onto the sphere
-    pts_c = numpy.array(
+    pts_c = np.array(
         [
             sqrt(frac(n, 3 * (n - 2))) * (pts_a[i1] + pts_a[i2] + pts_a[i3])
             for i1 in range(n + 1)
@@ -54,7 +54,7 @@ def stoyanova(n, delta=None, variant_v_plus=True, symbolic=False):
         ]
     )
     # (1/4)-points on the edges connecting the simplex points
-    pts_b14 = numpy.array(
+    pts_b14 = np.array(
         [
             sqrt(frac(n, 10 * n - 6)) * (pts_a[k] + 3 * pts_a[l])
             for k in range(n + 1)
@@ -67,12 +67,12 @@ def stoyanova(n, delta=None, variant_v_plus=True, symbolic=False):
         ]
     )
 
-    pts_a = numpy.concatenate([pts_a, -pts_a])
-    pts_b = numpy.concatenate([pts_b, -pts_b])
+    pts_a = np.concatenate([pts_a, -pts_a])
+    pts_b = np.concatenate([pts_b, -pts_b])
     if n > 5:
         # for n==5, the points are already symmetric
-        pts_c = numpy.concatenate([pts_c, -pts_c])
-    pts_b14 = numpy.concatenate([pts_b14, -pts_b14])
+        pts_c = np.concatenate([pts_c, -pts_c])
+    pts_b14 = np.concatenate([pts_b14, -pts_b14])
 
     n1 = 2 * (n + 1)
     n2 = n * (n + 1)
@@ -178,5 +178,5 @@ def stoyanova(n, delta=None, variant_v_plus=True, symbolic=False):
         (d, z(n)),
     ]
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return SnScheme("Stoyanova", n, weights, points, 7, source, 1.423e-14)

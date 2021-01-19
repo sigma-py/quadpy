@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 from ._optimize import optimize
 
@@ -22,7 +22,7 @@ def main():
         if "weight factor" in content:
             w = content["weight factor"]
             for key, item in new_data.items():
-                new_data[key][0] = (numpy.array(item)[0] / w).tolist()
+                new_data[key][0] = (np.array(item)[0] / w).tolist()
 
         if "comments" in content:
             comments = content["comments"]

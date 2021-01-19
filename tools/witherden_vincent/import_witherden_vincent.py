@@ -5,7 +5,7 @@ zip file: https://www.sciencedirect.com/science/article/pii/S0898122115001224
 import os
 import re
 
-import numpy
+import numpy as np
 
 
 def data_to_code(data, f):
@@ -39,9 +39,9 @@ def data_to_code(data, f):
 
 
 def read_data_tri(filename):
-    data = numpy.loadtxt(filename, dtype=float)
+    data = np.loadtxt(filename, dtype=float)
     if len(data.shape) == 1:
-        data = numpy.array([data])
+        data = np.array([data])
 
     points = data[:, :2]
     weights = data[:, 2]
@@ -49,24 +49,20 @@ def read_data_tri(filename):
     # points to barycentric coordinates.
     points += 1.0
     points *= 0.5
-    points = numpy.array(
-        [points[:, 0], points[:, 1], 1.0 - numpy.sum(points, axis=1)]
-    ).T
+    points = np.array([points[:, 0], points[:, 1], 1.0 - np.sum(points, axis=1)]).T
     return points, weights * 0.5
 
 
 def read_data_tet(filename):
-    data = numpy.loadtxt(filename)
+    data = np.loadtxt(filename)
     if len(data.shape) == 1:
-        data = numpy.array([data])
+        data = np.array([data])
     points = data[:, :3]
     weights = data[:, 3]
     # Transform to barycentric coordinates.
     points += 1.0
     points *= 0.5
-    points = numpy.array(
-        [points[:, 0], points[:, 1], 1.0 - numpy.sum(points, axis=1)]
-    ).T
+    points = np.array([points[:, 0], points[:, 1], 1.0 - np.sum(points, axis=1)]).T
     return points, weights * 0.75
 
 
@@ -76,15 +72,15 @@ def _grp_start_len(a, tol):
     how long the blocks are.
     """
     # https://stackoverflow.com/a/50394587/353337
-    m = numpy.concatenate([[True], numpy.abs(a[:-1] - a[1:]) > tol, [True]])
-    idx = numpy.flatnonzero(m)
-    return idx[:-1], numpy.diff(idx)
+    m = np.concatenate([[True], np.abs(a[:-1] - a[1:]) > tol, [True]])
+    idx = np.flatnonzero(m)
+    return idx[:-1], np.diff(idx)
 
 
 def data_to_json(degree, points, weights):
     d = {"s1": [], "s2": [], "s3": []}
 
-    idx = numpy.argsort(weights)
+    idx = np.argsort(weights)
     weights = weights[idx]
     points = points[idx]
 
@@ -99,7 +95,7 @@ def data_to_json(degree, points, weights):
             # Find the equal value `a`.
             tol = 1.0e-12
             beta = pts[0] - pts[0][0]
-            ct = numpy.count_nonzero(abs(beta) < tol)
+            ct = np.count_nonzero(abs(beta) < tol)
             assert ct in [1, 2], beta
             val = pts[0][0] if ct == 2 else pts[0][1]
             d["s2"].append([weight, val])
@@ -107,7 +103,7 @@ def data_to_json(degree, points, weights):
             # Symmetry group perm([[a, b, c]]). Deliberately take the two smallest of a,
             # b, c as representatives.
             assert length == 6
-            srt = numpy.sort(pts[0])
+            srt = np.sort(pts[0])
             d["s1"].append([weight, srt[0], srt[1]])
 
     d["degree"] = degree

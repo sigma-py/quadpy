@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from sympy import Rational as frac
 
 from ..helpers import book, untangle
@@ -34,9 +34,9 @@ source = book(
 def stroud_tn_1_1(n):
     # midpoint rule
     degree = 1
-    data = [(1, numpy.full((1, n + 1), frac(1, n + 1)))]
+    data = [(1, np.full((1, n + 1), frac(1, n + 1)))]
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return TnScheme("Stroud Tn 1-1", n, weights, points, degree, source)
 
 

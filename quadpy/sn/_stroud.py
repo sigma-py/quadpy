@@ -1,6 +1,6 @@
 import math
 
-import numpy
+import numpy as np
 import sympy
 
 from ..helpers import book, pm, untangle
@@ -42,7 +42,7 @@ def stroud_sn_3_2(n, symbolic=False):
     r = sqrt(frac(1, n + 2))
     data = [(frac(1, 2 ** n), pm(n * [r]))]
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return SnScheme("Stroud Sn 3-2", n, weights, points, 3, source)
 
 

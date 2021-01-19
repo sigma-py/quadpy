@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import orthopy
 import pytest
 from mpmath import mp
@@ -10,8 +10,8 @@ import quadpy
     "scheme,tol", [(quadpy.e1r.gauss_laguerre(n), 1.0e-14) for n in range(1, 10)]
 )
 def test_scheme(scheme, tol):
-    assert scheme.points.dtype == numpy.float64, scheme.name
-    assert scheme.weights.dtype == numpy.float64, scheme.name
+    assert scheme.points.dtype == np.float64, scheme.name
+    assert scheme.weights.dtype == np.float64, scheme.name
 
     print(scheme)
 
@@ -21,12 +21,12 @@ def test_scheme(scheme, tol):
     for k in range(scheme.degree + 2):
         approximate = scheme.integrate(lambda x: next(evaluator))
         exact = evaluator.int_p0 if k == 0 else 0.0
-        err = numpy.abs(approximate - exact)
-        if numpy.any(err > tol):
+        err = np.abs(approximate - exact)
+        if np.any(err > tol):
             degree = k - 1
             break
 
-    max_err = numpy.max(err)
+    max_err = np.max(err)
     assert degree >= scheme.degree, (
         f"{scheme.name} -- observed: {degree}, expected: {scheme.degree} "
         f"(max err: {max_err:.3e})"

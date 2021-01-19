@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from mpmath import mp
 from sympy import Rational as frac
 from sympy import sqrt
@@ -163,20 +163,20 @@ def mclaren_10():
         0.04473134613410273910111648293922113227845,
         0.002768150983039381173906148718103889666260,
     ]
-    z = numpy.sqrt(y)
+    z = np.sqrt(y)
 
     u = (
-        numpy.array([z[3] - z[2], z[1] - z[4], z[5] - z[1], z[2] - z[5], z[4] - z[3]])
+        np.array([z[3] - z[2], z[1] - z[4], z[5] - z[1], z[2] - z[5], z[4] - z[3]])
         / 2
         / s
     )
     v = (
-        numpy.array([z[4] + z[5], z[5] + z[3], z[2] + z[4], z[3] + z[1], z[1] + z[2]])
+        np.array([z[4] + z[5], z[5] + z[3], z[2] + z[4], z[3] + z[1], z[1] + z[2]])
         / 2
         / s
     )
     w = (
-        numpy.array([z[0] + z[1], z[0] + z[2], z[0] + z[3], z[0] + z[4], z[0] + z[5]])
+        np.array([z[0] + z[1], z[0] + z[2], z[0] + z[3], z[0] + z[4], z[0] + z[5]])
         / 2
         / s
     )
@@ -184,26 +184,26 @@ def mclaren_10():
     data = [
         (B, pm_roll([r, s, 0])),
         #
-        (C, numpy.column_stack([+u, +v, +w])),
-        (C, numpy.column_stack([+u, -v, -w])),
-        (C, numpy.column_stack([-u, -v, +w])),
-        (C, numpy.column_stack([-u, +v, -w])),
+        (C, np.column_stack([+u, +v, +w])),
+        (C, np.column_stack([+u, -v, -w])),
+        (C, np.column_stack([-u, -v, +w])),
+        (C, np.column_stack([-u, +v, -w])),
         #
-        (C, numpy.column_stack([+v, +w, +u])),
-        (C, numpy.column_stack([+v, -w, -u])),
-        (C, numpy.column_stack([-v, -w, +u])),
-        (C, numpy.column_stack([-v, +w, -u])),
+        (C, np.column_stack([+v, +w, +u])),
+        (C, np.column_stack([+v, -w, -u])),
+        (C, np.column_stack([-v, -w, +u])),
+        (C, np.column_stack([-v, +w, -u])),
         #
-        (C, numpy.column_stack([+w, +u, +v])),
-        (C, numpy.column_stack([+w, -u, -v])),
-        (C, numpy.column_stack([-w, -u, +v])),
-        (C, numpy.column_stack([-w, +u, -v])),
+        (C, np.column_stack([+w, +u, +v])),
+        (C, np.column_stack([+w, -u, -v])),
+        (C, np.column_stack([-w, -u, +v])),
+        (C, np.column_stack([-w, +u, -v])),
     ]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return U3Scheme(
-        "McLaren 10", {"plain": numpy.vstack([weights, points])}, degree, source
+        "McLaren 10", {"plain": np.vstack([weights, points])}, degree, source
     )
 
 

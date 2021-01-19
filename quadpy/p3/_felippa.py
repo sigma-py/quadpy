@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from sympy import Rational as frac
 from sympy import sqrt
 
@@ -19,7 +19,7 @@ source = article(
 
 def felippa_1():
     degree = 1
-    data = [(frac(128, 27), numpy.array([[0, 0, -frac(1, 2)]]))]
+    data = [(frac(128, 27), np.array([[0, 0, -frac(1, 2)]]))]
     points, weights = untangle(data)
     return P3Scheme("Felippa 1", weights, points, degree, source)
 
@@ -28,7 +28,7 @@ def felippa_2():
     degree = 2
     data = [
         (frac(81, 100), _s4(8 * sqrt(frac(2, 15)) / 5, -frac(2, 3))),
-        (frac(125, 27), numpy.array([[0, 0, frac(2, 5)]])),
+        (frac(125, 27), np.array([[0, 0, frac(2, 5)]])),
     ]
     points, weights = untangle(data)
     return P3Scheme("Felippa 2", weights, points, degree, source)
@@ -38,8 +38,8 @@ def felippa_3():
     degree = 2
     data = [
         (frac(504, 625), _s4(sqrt(frac(12, 35)), -frac(2, 3))),
-        (frac(576, 625), numpy.array([[0, 0, frac(1, 6)]])),
-        (frac(64, 15), numpy.array([[0, 0, frac(1, 2)]])),
+        (frac(576, 625), np.array([[0, 0, frac(1, 6)]])),
+        (frac(64, 15), np.array([[0, 0, frac(1, 2)]])),
     ]
     points, weights = untangle(data)
     return P3Scheme("Felippa 3", weights, points, degree, source)
@@ -79,7 +79,7 @@ def felippa_6():
     data = [
         (w1, _s4(g1, g3)),
         (w2, _s4(g2, g4)),
-        (frac(18, 5), numpy.array([[0, 0, frac(2, 3)]])),
+        (frac(18, 5), np.array([[0, 0, frac(2, 3)]])),
     ]
     points, weights = untangle(data)
     return P3Scheme("Felippa 6", weights, points, degree, source)
@@ -100,14 +100,14 @@ def felippa_7():
         (w1, _s4(g1, -frac(1, 7))),
         (w2, _s4_0(g2, -frac(9, 28))),
         (w3, _s4(g3, g4)),
-        (w4, numpy.array([[0, 0, g5]])),
+        (w4, np.array([[0, 0, g5]])),
     ]
     points, weights = untangle(data)
     return P3Scheme("Felippa 7", weights, points, degree, source)
 
 
 def felippa_8():
-    wg9 = numpy.array([frac(64, 81), frac(40, 81), frac(25, 81)])
+    wg9 = np.array([frac(64, 81), frac(40, 81), frac(25, 81)])
 
     degree = 3
     w1 = 5 * (68 + 5 * sqrt(10)) / 432
@@ -118,17 +118,17 @@ def felippa_8():
     data = [
         (w1 * wg9[2], _s4(g1, g2)),
         (w1 * wg9[1], _s4_0(g1, g2)),
-        (w1 * wg9[0], numpy.array([[0, 0, g2]])),
+        (w1 * wg9[0], np.array([[0, 0, g2]])),
         (w2 * wg9[2], _s4(g1, g3)),
         (w2 * wg9[1], _s4_0(g1, g3)),
-        (w2 * wg9[0], numpy.array([[0, 0, g3]])),
+        (w2 * wg9[0], np.array([[0, 0, g3]])),
     ]
     points, weights = untangle(data)
     return P3Scheme("Felippa 8", weights, points, degree, source)
 
 
 def felippa_9():
-    wg9 = numpy.array([frac(64, 81), frac(40, 81), frac(25, 81)])
+    wg9 = np.array([frac(64, 81), frac(40, 81), frac(25, 81)])
 
     degree = 5
     g1 = sqrt(frac(3, 5))
@@ -153,13 +153,13 @@ def felippa_9():
     data = [
         (w1 * wg9[2], _s4(g1, g3)),
         (w1 * wg9[1], _s4_0(g1, g3)),
-        (w1 * wg9[0], numpy.array([[0, 0, g3]])),
+        (w1 * wg9[0], np.array([[0, 0, g3]])),
         (w2 * wg9[2], _s4(g1, g4)),
         (w2 * wg9[1], _s4_0(g1, g4)),
-        (w2 * wg9[0], numpy.array([[0, 0, g4]])),
+        (w2 * wg9[0], np.array([[0, 0, g4]])),
         (w3 * wg9[2], _s4(g1, g5)),
         (w3 * wg9[1], _s4_0(g1, g5)),
-        (w3 * wg9[0], numpy.array([[0, 0, g5]])),
+        (w3 * wg9[0], np.array([[0, 0, g5]])),
     ]
     points, weights = untangle(data)
     return P3Scheme("Felippa 9", weights, points, degree, source)

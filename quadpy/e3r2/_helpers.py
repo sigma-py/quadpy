@@ -1,6 +1,6 @@
 from math import pi, sqrt
 
-import numpy
+import numpy as np
 
 from ..helpers import QuadratureScheme, backend_to_function, expand_symmetries
 
@@ -19,15 +19,15 @@ class E3r2Scheme(QuadratureScheme):
         super().__init__(name, weights, points, degree, source, tol)
         self.domain = "E3r2"
 
-    def integrate(self, f, dot=numpy.dot):
-        flt = numpy.vectorize(float)
+    def integrate(self, f, dot=np.dot):
+        flt = np.vectorize(float)
         ref_vol = sqrt(pi) ** 3
         return ref_vol * dot(f(flt(self.points)), flt(self.weights))
 
     def show(self, backend="vtk"):
         """Displays scheme for E_3^{r^2} quadrature."""
         backend_to_function[backend](
-            self.points, self.weights, volume=8 * numpy.pi, edges=[]
+            self.points, self.weights, volume=8 * np.pi, edges=[]
         )
 
 

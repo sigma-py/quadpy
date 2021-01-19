@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from sympy import Rational as frac
 from sympy import sqrt
 
@@ -24,10 +24,10 @@ def phillips(n):
     w3 = frac(1, 36)
 
     data = [
-        (w1, numpy.full((1, n), 0)),
+        (w1, np.full((1, n), 0)),
         (w2, fsd(n, (lmbda, 1))),
         (w3, fsd(n, (lmbda, 2))),
     ]
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return Enr2Scheme("Phillips", n, weights, points, 5, source)

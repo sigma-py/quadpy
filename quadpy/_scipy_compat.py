@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 from .c1 import integrate_adaptive
 
@@ -8,7 +8,7 @@ from .c1 import integrate_adaptive
 def quad(f, a, b, args=(), epsabs=1.49e-08, epsrel=1.49e-08, limit=50):
     # See <https://www.gnu.org/software/gsl/doc/html/integration.html> for the
     # variable transformations
-    if a == -numpy.inf and b == numpy.inf:
+    if a == -np.inf and b == np.inf:
         # x = (1 - t) / t
         # dx / dt = -1 / t**2
         a = 0.0
@@ -17,7 +17,7 @@ def quad(f, a, b, args=(), epsabs=1.49e-08, epsrel=1.49e-08, limit=50):
         def g(t):
             return (f((1 - t) / t, *args) + f(-(1 - t) / t)) / t ** 2
 
-    elif b == numpy.inf:
+    elif b == np.inf:
         a_orig = a
         a = 0.0
         b = 1.0
@@ -25,7 +25,7 @@ def quad(f, a, b, args=(), epsabs=1.49e-08, epsrel=1.49e-08, limit=50):
         def g(t):
             return f(a_orig + (1 - t) / t, *args) / t ** 2
 
-    elif a == -numpy.inf:
+    elif a == -np.inf:
         b_orig = b
         a = 0.0
         b = 1.0
@@ -47,7 +47,7 @@ def quad(f, a, b, args=(), epsabs=1.49e-08, epsrel=1.49e-08, limit=50):
         [a, b],
         eps_abs=epsabs,
         eps_rel=epsrel,
-        criteria_connection=numpy.any,
+        criteria_connection=np.any,
         max_num_subintervals=limit,
     )
     if swap:

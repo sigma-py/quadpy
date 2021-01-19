@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import sympy
 
 from ..helpers import article
@@ -21,10 +21,10 @@ _source = article(
 
 frac = sympy.Rational
 pi = sympy.pi
-sqrt = numpy.vectorize(sympy.sqrt)
-pm_ = numpy.array([+1, -1])
-cos = numpy.vectorize(sympy.cos)
-sin = numpy.vectorize(sympy.sin)
+sqrt = np.vectorize(sympy.sqrt)
+pm_ = np.array([+1, -1])
+cos = np.vectorize(sympy.cos)
+sin = np.vectorize(sympy.sin)
 
 
 def hammer_stroud_12_2():
@@ -85,9 +85,9 @@ def hammer_stroud_20():
 
 
 def hammer_stroud_21():
-    alpha0 = 0.0341505695624825 / numpy.pi
-    alpha1 = 0.0640242008621985 / numpy.pi
-    alpha2 = 0.0341505695624825 / numpy.pi
+    alpha0 = 0.0341505695624825 / np.pi
+    alpha1 = 0.0640242008621985 / np.pi
+    alpha2 = 0.0341505695624825 / np.pi
 
     d = {
         "d4_ab": [

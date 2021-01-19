@@ -1,6 +1,6 @@
 import warnings
 
-import numpy
+import numpy as np
 
 
 class QuadratureScheme:
@@ -25,18 +25,18 @@ class QuadratureScheme:
         #     f"weights.shape = {weights.shape}, points.shape = {points.shape}"
         # )
 
-        if weights.dtype == numpy.float64:
+        if weights.dtype == np.float64:
             self.weights = weights
         else:
-            assert weights.dtype in [numpy.dtype("O"), numpy.int_]
-            self.weights = weights.astype(numpy.float64)
+            assert weights.dtype in [np.dtype("O"), np.int_]
+            self.weights = weights.astype(np.float64)
             self.weights_symbolic = weights
 
-        if points.dtype == numpy.float64:
+        if points.dtype == np.float64:
             self.points = points
         else:
-            assert points.dtype in [numpy.dtype("O"), numpy.int_]
-            self.points = points.astype(numpy.float64)
+            assert points.dtype in [np.dtype("O"), np.int_]
+            self.points = points.astype(np.float64)
             self.points_symbolic = points
 
     def savefig(self, filename, *args, **kwargs):
@@ -103,8 +103,8 @@ class QuadratureScheme:
         message += f"\n  degree:               {self.degree}"
         message += f"\n  num points/weights:   {len(self.weights)}"
 
-        max_weight = numpy.max(numpy.abs(self.weights))
-        min_weight = numpy.min(numpy.abs(self.weights))
+        max_weight = np.max(np.abs(self.weights))
+        min_weight = np.min(np.abs(self.weights))
         weights_ratio = max_weight / min_weight
         message += f"\n  max/min weight ratio: {weights_ratio:.3e}"
 

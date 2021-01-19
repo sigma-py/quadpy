@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from sympy import Rational as frac
 from sympy import S, sqrt
 
@@ -34,7 +34,7 @@ def stroud_1966_b(n):
     data = [(frac(4, 5 * n + 4), z(n))]
     for k in range(1, n + 1):
         r = sqrt(frac(5 * k + 4, 15))
-        arr = numpy.full((2 ** (n - k + 1), n), S(0))
+        arr = np.full((2 ** (n - k + 1), n), S(0))
         arr[:, k - 1 :] = pm((n - k + 1) * [1])
         arr[:, k - 1] *= r
         arr[:, k:] *= s
@@ -42,7 +42,7 @@ def stroud_1966_b(n):
         data.append((b, arr))
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return CnScheme("Stroud 1966b", n, weights, points, 5, _source, 3.393e-14)
 
 
@@ -51,7 +51,7 @@ def stroud_1966_c(n):
     s = sqrt((5 * n + 4 - 2 * sqrt(5 * n + 4)) / (15 * n))
     data = [(frac(4, 5 * n + 4), z(n)), (frac(5, (5 * n + 4) * 2 ** n), _fs11(n, r, s))]
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return CnScheme("Stroud 1966c", n, weights, points, 5, _source, 2.097e-13)
 
 
@@ -64,5 +64,5 @@ def stroud_1966_d(n):
     data = [(w, _fs11(n, r, s)), (w, pm(n * [t]))]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return CnScheme("Stroud 1966d", n, weights, points, 5, _source, 1.955e-14)

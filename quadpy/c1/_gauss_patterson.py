@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 from ..helpers import article
 from ._gauss_legendre import gauss_legendre
@@ -20,7 +20,7 @@ def gauss_patterson(index):
     # <https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_patterson/quadrature_rules_patterson.html>
     degree = 3 * 2 ** index - 1 if index > 0 else 1
 
-    points = numpy.sort(_get_points(index))
+    points = np.sort(_get_points(index))
 
     # weights
     if index < 6:
@@ -28,7 +28,7 @@ def gauss_patterson(index):
     elif index == 6:
         # _get_weights is flawed with round-off for index > 5. Use explicit values from
         # <https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_patterson/gp_o127_w.txt>.
-        s = numpy.array(
+        s = np.array(
             [
                 5.053609520786252e-05,
                 1.807395644453884e-04,
@@ -95,9 +95,9 @@ def gauss_patterson(index):
                 2.817631903301660e-02,
             ]
         )
-        weights = numpy.concatenate([s, numpy.array([0.2818881418019236e-01]), s[::-1]])
+        weights = np.concatenate([s, np.array([0.2818881418019236e-01]), s[::-1]])
     elif index == 7:
-        s = numpy.array(
+        s = np.array(
             [
                 0.69379364324108267170e-05,
                 0.25157870384280661489e-04,
@@ -228,12 +228,10 @@ def gauss_patterson(index):
                 0.14092845069160408355e-01,
             ]
         )
-        weights = numpy.concatenate(
-            [s, numpy.array([0.14094407090096179347e-01]), s[::-1]]
-        )
+        weights = np.concatenate([s, np.array([0.14094407090096179347e-01]), s[::-1]])
     else:
         assert index == 8
-        s = numpy.array(
+        s = np.array(
             [
                 0.945715933950007048827e-06,
                 0.345456507169149134898e-05,
@@ -492,20 +490,18 @@ def gauss_patterson(index):
                 0.704700828844548013730e-02,
             ]
         )
-        weights = numpy.concatenate(
-            [s, numpy.array([0.704720354504808967346e-02]), s[::-1]]
-        )
+        weights = np.concatenate([s, np.array([0.704720354504808967346e-02]), s[::-1]])
 
     return C1Scheme(f"Gauss-Patterson {index}", degree, weights, points, source)
 
 
 def _get_points(index):
     def _pm(a):
-        a = numpy.asarray(a)
-        return numpy.concatenate([-a[::-1], +a])
+        a = np.asarray(a)
+        return np.concatenate([-a[::-1], +a])
 
     if index == 0:
-        return numpy.array([0.0])
+        return np.array([0.0])
     if index == 1:
         new_points = [0.7745966692414834]
     elif index == 2:
@@ -782,7 +778,7 @@ def _get_points(index):
             0.999999672956734384381,
         ]
 
-    return numpy.concatenate([_get_points(index - 1), _pm(new_points)])
+    return np.concatenate([_get_points(index - 1), _pm(new_points)])
 
 
 def _get_weights(pts):
@@ -808,15 +804,15 @@ def _get_weights(pts):
     # Gauss-Legendre of order k integrates polynomials of degree 2*k-1 exactly. L has
     # degree n-1, so k needs to be n/2 if n is even, and (n+1)/2 if n is odd.
     k = (n // 2) - 1 if n % 2 == 0 else (n + 1) // 2
-    return numpy.array(
+    return np.array(
         [
             gauss_legendre(k).integrate(
                 # Normalized Lagrange polynomial: Degree n-1, 0 at all x_j, 1 at x_i.
-                lambda x: numpy.prod(
+                lambda x: np.prod(
                     [(x - pts[j]) / (pts[i] - pts[j]) for j in range(n) if j != i],
                     axis=0,
-                ).reshape(numpy.asarray(x).shape),
-                numpy.array([-1, 1]),
+                ).reshape(np.asarray(x).shape),
+                np.array([-1, 1]),
             )
             for i in range(n)
         ]

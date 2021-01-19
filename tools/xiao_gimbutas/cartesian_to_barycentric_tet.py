@@ -2,7 +2,7 @@
 Generate code from cartesian coordinates.
 """
 import mpmath
-import numpy
+import numpy as np
 
 # set precision
 mpmath.mp.dps = 15
@@ -53,14 +53,14 @@ def read_data(filename, blocks="xyzw"):
 
 
 def find_duplicate_groups(lst, tol=1.0e-10):
-    arr = numpy.array(lst)
+    arr = np.array(lst)
     groups = []
     n = len(lst)
-    is_handled = numpy.zeros(n, dtype=bool)
+    is_handled = np.zeros(n, dtype=bool)
     for idx in range(n):
         if is_handled[idx]:
             continue
-        dups = numpy.where(abs(arr[idx] - arr[idx:]) < tol)[0] + idx
+        dups = np.where(abs(arr[idx] - arr[idx:]) < tol)[0] + idx
         groups.append(dups)
         is_handled[dups] = True
     return groups
@@ -140,7 +140,7 @@ for i, scheme_data in enumerate(data):
         print("if index == %d:" % (i + 1))
     else:
         print("elif index == %d:" % (i + 1))
-    print("    bary = numpy.array([")
+    print("    bary = np.array([")
 
     # generate barycentric coordinate code
     XYZ = [[xx, yy, zz] for xx, yy, zz in zip(X, Y, Z)]
@@ -170,7 +170,7 @@ for i, scheme_data in enumerate(data):
         # multiplicities.append(mult)
 
     print("        ])")
-    print("    self.weights = numpy.array([")
+    print("    self.weights = np.array([")
     # generate weight code
     alpha = mpmath.mp.mpf("0.9709835434146467")
     for weight in W:
@@ -178,12 +178,12 @@ for i, scheme_data in enumerate(data):
     print("        ])")
 
     # print('        ])')
-    # print('    self.weights = numpy.concatenate([')
+    # print('    self.weights = np.concatenate([')
     # # generate weight code
     # alpha = mpmath.mp.mpf('0.9709835434146467')
     # for weight, m in zip(W, multiplicities):
     #     print(
-    #         '        %s * numpy.ones(%d),'
+    #         '        %s * np.ones(%d),'
     #         % (weight / alpha / m, m)
     #         )
     # print('        ])')

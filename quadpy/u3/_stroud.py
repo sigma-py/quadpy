@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 from .. import un
 from ..helpers import book
@@ -29,10 +29,10 @@ source = book(
 
 def stroud_u3_11_2():
     scheme = un.stroud_1969(3)
-    pts = numpy.ascontiguousarray(scheme.points.T)
+    pts = np.ascontiguousarray(scheme.points.T)
     return U3Scheme(
         "Stroud U3 11-2",
-        {"plain": numpy.vstack([scheme.weights, pts])},
+        {"plain": np.vstack([scheme.weights, pts])},
         scheme.degree,
         source,
         4.270e-14,

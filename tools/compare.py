@@ -1,7 +1,7 @@
 """
 Compare the errors of some schemes.
 """
-import numpy
+import numpy as np
 import quadrature
 from matplotlib import pyplot as plt
 from matplotlib import style
@@ -10,7 +10,7 @@ style.use("ggplot")
 
 
 def f(x):
-    return numpy.exp(x[0]) * numpy.exp(x[1])
+    return np.exp(x[0]) * np.exp(x[1])
 
 
 schemes = (
@@ -20,12 +20,12 @@ schemes = (
 )
 
 sample_sizes = [0.5 ** k for k in range(10)]
-errors = numpy.empty((len(schemes), len(sample_sizes)))
+errors = np.empty((len(schemes), len(sample_sizes)))
 
 for i, scheme in enumerate(schemes):
     for j, a in enumerate(sample_sizes):
-        triangle = numpy.array([[0.0, 0.0], [a, 0.0], [0.0, a]])
-        exact_value = 1.0 + numpy.exp(a) * (a - 1.0)
+        triangle = np.array([[0.0, 0.0], [a, 0.0], [0.0, a]])
+        exact_value = 1.0 + np.exp(a) * (a - 1.0)
         val = quadrature.triangle.integrate(f, triangle, scheme)
         errors[i][j] = abs(exact_value - val)
 

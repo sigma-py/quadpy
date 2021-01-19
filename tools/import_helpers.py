@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 
 def get_symmetry_code_tri(pts):
@@ -9,7 +9,7 @@ def get_symmetry_code_tri(pts):
         # Find the equal value `a`.
         tol = 1.0e-12
         beta = pts[0] - pts[0][0]
-        ct = numpy.count_nonzero(abs(beta) < tol)
+        ct = np.count_nonzero(abs(beta) < tol)
         assert ct in [1, 2], beta
         val = pts[0][0] if ct == 2 else pts[0][1]
         return f"_s21({val:.15e})"
@@ -17,7 +17,7 @@ def get_symmetry_code_tri(pts):
     # Symmetry group [[a, b, c], [c, a, b], ...].
     assert len(pts) == 6
     # Take the two largest value from a, b, c.
-    pt0 = numpy.sort(pts[0])
+    pt0 = np.sort(pts[0])
     return "_s111({:.15e}, {:.15e})".format(pt0[2], pt0[1])
 
 
@@ -29,7 +29,7 @@ def get_symmetry_code_tet(pts):
         # Find the equal value `a`.
         tol = 1.0e-12
         beta = pts[0] - pts[0][0]
-        ct = numpy.count_nonzero(abs(beta) < tol)
+        ct = np.count_nonzero(abs(beta) < tol)
         if ct == 1:
             return "_s31({:.15e})".format(pts[0][1])
         else:
@@ -41,15 +41,15 @@ def get_symmetry_code_tet(pts):
     elif len(pts) == 12:
         # Symmetry group [[a, a, b, c], [a, c, a, b], ...].
         # Find the double.
-        pt0 = numpy.sort(pts[0])
+        pt0 = np.sort(pts[0])
         tol = 1.0e-12
         for k in range(4):
             beta = pt0 - pt0[k]
-            ct = numpy.count_nonzero(abs(beta) < tol)
+            ct = np.count_nonzero(abs(beta) < tol)
             if ct == 2:
                 return "_s211({:.15e}, {:.15e})".format(pt0[k], pt0[k - 1])
 
     print(len(pts))
     assert len(pts) == 24
-    pt0 = numpy.sort(pts[0])
+    pt0 = np.sort(pts[0])
     return "_s1111({:.15e}, {:.15e}, {:.15e})".format(pt0[-1], pt0[-2], pt0[-3])

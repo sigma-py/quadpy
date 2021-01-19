@@ -1,7 +1,7 @@
 import json
 from typing import Optional
 
-import numpy
+import numpy as np
 
 from ..cn import CnScheme
 from ..cn import ncube_points as rectangle_points
@@ -46,8 +46,8 @@ class C2Scheme(CnScheme):
         transformed_pts = transform(self.points, quad)
 
         # compute volume by splitting it in two triangles
-        vol = get_vol(numpy.array([quad[0][0], quad[1][0], quad[0][1]])) + get_vol(
-            numpy.array([quad[0][0], quad[0][1], quad[1][1]])
+        vol = get_vol(np.array([quad[0][0], quad[1][0], quad[0][1]])) + get_vol(
+            np.array([quad[0][0], quad[0][1], quad[1][1]])
         )
         plot_disks(plt, transformed_pts, self.weights, vol)
         plt.axis("equal")

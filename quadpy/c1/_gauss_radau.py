@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import orthopy
 
 from ..tools import scheme_from_rc
@@ -10,7 +10,7 @@ def gauss_radau(n, a=0.0, b=0.0):
     degree = 2 * n - 1
 
     rc = orthopy.c1.jacobi.RecurrenceCoefficients("monic", a, b, symbolic=False)
-    _, alpha, beta = numpy.array([rc[k] for k in range(n)]).T
+    _, alpha, beta = np.array([rc[k] for k in range(n)]).T
     points, weights = _radau(alpha, beta, rc.int_1, -1.0)
     return C1Scheme("Gauss-Radau", degree, weights, points)
 
@@ -30,10 +30,10 @@ def _radau(alpha, beta, int_1, xr):
     beta[0] = int_1
 
     n = len(alpha) - 1
-    f = numpy.zeros(n)
+    f = np.zeros(n)
     f[-1] = beta[-1]
-    A = numpy.vstack((numpy.sqrt(beta), alpha - xr))
-    J = numpy.vstack((A[:, 0:-1], A[0, 1:]))
+    A = np.vstack((np.sqrt(beta), alpha - xr))
+    J = np.vstack((A[:, 0:-1], A[0, 1:]))
     delta = solve_banded((1, 1), J, f)
     alphar = alpha.copy()
     alphar[-1] = xr + delta[-1]

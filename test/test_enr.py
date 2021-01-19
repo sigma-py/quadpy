@@ -1,6 +1,6 @@
 import accupy
 import ndim
-import numpy
+import numpy as np
 import pytest
 from helpers import check_degree
 
@@ -29,8 +29,8 @@ import quadpy
     + [quadpy.enr.stroud_secrest_4(n) for n in range(2, 6)],
 )
 def test_scheme(scheme):
-    assert scheme.points.dtype == numpy.float64, scheme.name
-    assert scheme.weights.dtype == numpy.float64, scheme.name
+    assert scheme.points.dtype == np.float64, scheme.name
+    assert scheme.weights.dtype == np.float64, scheme.name
 
     print(scheme)
 

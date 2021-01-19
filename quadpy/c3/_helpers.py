@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import sympy
 
 from .. import helpers
@@ -24,7 +24,7 @@ class C3Scheme(CnScheme):
     def show(self, hexa=cube_points([0.0, 1.0], [0.0, 1.0], [0.0, 1.0]), backend="vtk"):
         """Shows the quadrature points on a given hexahedron. The size of the balls
         around the points coincides with their weights."""
-        edges = numpy.array(
+        edges = np.array(
             [
                 [hexa[0, 0, 0], hexa[1, 0, 0]],
                 [hexa[1, 0, 0], hexa[1, 1, 0]],
@@ -42,12 +42,12 @@ class C3Scheme(CnScheme):
                 [hexa[0, 1, 0], hexa[0, 1, 1]],
             ]
         )
-        edges = numpy.moveaxis(edges, 1, 2)
+        edges = np.moveaxis(edges, 1, 2)
 
         helpers.backend_to_function[backend](
             transform(self.points, hexa),
             self.weights,
-            self.integrate(lambda x: numpy.ones(x.shape[1:]), hexa),
+            self.integrate(lambda x: np.ones(x.shape[1:]), hexa),
             edges,
         )
 

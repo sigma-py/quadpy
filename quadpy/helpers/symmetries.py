@@ -1,143 +1,143 @@
 import itertools
 
-import numpy
+import numpy as np
 
 
 def _zero(data, dim):
-    return numpy.zeros((dim, 1))
+    return np.zeros((dim, 1))
 
 
 def _d4_ab(data, dim):
     """dihedral symmetry d4."""
-    s, t = numpy.array(data)
-    points = numpy.array(
+    s, t = np.array(data)
+    points = np.array(
         [[+s, +t], [-s, +t], [+s, -t], [-s, -t], [+t, +s], [-t, +s], [+t, -s], [-t, -s]]
     )
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _d4_aa(data, dim):
-    a = numpy.asarray(data)
-    points = numpy.array([[+a, +a], [-a, +a], [+a, -a], [-a, -a]])
-    points = numpy.moveaxis(points, 0, 1)
+    a = np.asarray(data)
+    points = np.array([[+a, +a], [-a, +a], [+a, -a], [-a, -a]])
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _d4_a0(data, dim):
-    a = numpy.asarray(data)
-    zero = numpy.zeros_like(a)
-    points = numpy.array([[+a, zero], [-a, zero], [zero, +a], [zero, -a]])
-    points = numpy.moveaxis(points, 0, 1)
+    a = np.asarray(data)
+    zero = np.zeros_like(a)
+    points = np.array([[+a, zero], [-a, zero], [zero, +a], [zero, -a]])
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _c4(data, dim):
     a, b = data
-    points = numpy.array([[+a, +b], [-a, -b], [-b, +a], [+b, -a]])
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.array([[+a, +b], [-a, -b], [-b, +a], [+b, -a]])
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _sxy(data, dim):
     x, y = data
-    points = numpy.array([[+x, +y], [+x, -y], [-x, +y], [-x, -y]])
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.array([[+x, +y], [+x, -y], [-x, +y], [-x, -y]])
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _sx(data, dim):
     x, y = data
-    points = numpy.array([[+x, y], [-x, y]])
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.array([[+x, y], [-x, y]])
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _c2(data, dim):
     x, y = data
-    points = numpy.array([[+x, +y], [-x, -y]])
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.array([[+x, +y], [-x, -y]])
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _c2_a0(r, dim):
-    zero = numpy.zeros_like(r)
-    points = numpy.array([[+r, zero], [-r, zero]])
-    points = numpy.moveaxis(points, 0, 1)
+    zero = np.zeros_like(r)
+    points = np.array([[+r, zero], [-r, zero]])
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _c2_0a(data, dim):
-    a = numpy.asarray(data)
-    zero = numpy.zeros_like(a)
-    points = numpy.array([[zero, +a], [zero, -a]])
-    points = numpy.moveaxis(points, 0, 1)
+    a = np.asarray(data)
+    zero = np.zeros_like(a)
+    points = np.array([[zero, +a], [zero, -a]])
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _centroid(data, dim):
-    return numpy.full((3, 1), 1 / 3)
+    return np.full((3, 1), 1 / 3)
 
 
 def _vertex(data, dim):
-    return numpy.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+    return np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
 
 
 def _d3_aa(a, dim):
-    a = numpy.array(a)
+    a = np.array(a)
     b = 1 - 2 * a
-    return numpy.array([[a, a, b], [a, b, a], [b, a, a]])
+    return np.array([[a, a, b], [a, b, a], [b, a, a]])
 
 
 def _d3_ab(data, dim):
-    a, b = numpy.asarray(data)
+    a, b = np.asarray(data)
     c = 1 - a - b
-    points = numpy.array(
+    points = np.array(
         [[a, b, c], [c, a, b], [b, c, a], [b, a, c], [c, b, a], [a, c, b]]
     )
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _c3_ab(data, dim):
     a, b = data
     c = 1 - a - b
-    points = numpy.array([[a, b, c], [c, a, b], [b, c, a]])
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.array([[a, b, c], [c, a, b], [b, c, a]])
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _swap_ab(data, dim):
     a, b = data
     c = 1 - a - b
-    points = numpy.array([[a, b, c], [b, a, c]])
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.array([[a, b, c], [b, a, c]])
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _s2_static(a, dim):
-    a = numpy.asarray(a)
+    a = np.asarray(a)
     b = 1 - 2 * a
-    points = numpy.array([[a, a, b]])
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.array([[a, a, b]])
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _d(n, offset, r):
     import sympy
 
-    cos = numpy.vectorize(sympy.cos)
-    sin = numpy.vectorize(sympy.sin)
+    cos = np.vectorize(sympy.cos)
+    sin = np.vectorize(sympy.sin)
 
-    alpha = (2 * numpy.arange(n) + offset) * sympy.pi / n
-    cs = numpy.array([cos(alpha), sin(alpha)])
-    points = numpy.multiply.outer(cs, r)
+    alpha = (2 * np.arange(n) + offset) * sympy.pi / n
+    cs = np.array([cos(alpha), sin(alpha)])
+    points = np.multiply.outer(cs, r)
     return points
 
 
 def _symm_r00(r, dim):
-    zero = numpy.zeros_like(r)
-    points = numpy.array(
+    zero = np.zeros_like(r)
+    points = np.array(
         [
             [+r, zero, zero],
             [-r, zero, zero],
@@ -147,13 +147,13 @@ def _symm_r00(r, dim):
             [zero, zero, -r],
         ]
     )
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _symm_rr0(a, dim):
-    z = numpy.zeros_like(a)
-    points = numpy.array(
+    z = np.zeros_like(a)
+    points = np.array(
         [
             [+a, +a, z],
             [+a, z, +a],
@@ -169,14 +169,14 @@ def _symm_rr0(a, dim):
             [z, -a, -a],
         ]
     )
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _symm_rs0_roll(data, dim):
     r, s = data
-    z = numpy.zeros_like(r)
-    points = numpy.array(
+    z = np.zeros_like(r)
+    points = np.array(
         [
             [+r, +s, z],
             [+r, -s, z],
@@ -192,12 +192,12 @@ def _symm_rs0_roll(data, dim):
             [-s, z, -r],
         ]
     )
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _symm_rrr(a, dim):
-    points = numpy.array(
+    points = np.array(
         [
             [+a, +a, +a],
             [-a, +a, +a],
@@ -209,13 +209,13 @@ def _symm_rrr(a, dim):
             [-a, -a, -a],
         ]
     )
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _symm_rrs(data, dim):
     a, b = data
-    points = numpy.array(
+    points = np.array(
         [
             [+a, +a, +b],
             [+a, +b, +a],
@@ -243,13 +243,13 @@ def _symm_rrs(data, dim):
             [-b, -a, -a],
         ]
     )
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
 def _symm_rss_pm(data, dim):
     r, s = data
-    points = numpy.array(
+    points = np.array(
         [
             [+r, +s, +s],
             [+s, +r, +s],
@@ -259,7 +259,7 @@ def _symm_rss_pm(data, dim):
             [-s, -s, -r],
         ]
     )
-    points = numpy.moveaxis(points, 0, 1)
+    points = np.moveaxis(points, 0, 1)
     return points
 
 
@@ -267,7 +267,7 @@ def _a(a, dim):
     assert a.shape == (1, 1)
     a = a[0][0]
     possible_vals = dim * [[+a, -a]]
-    out = numpy.array(list(itertools.product(*possible_vals))).T
+    out = np.array(list(itertools.product(*possible_vals))).T
     return out
 
 
@@ -280,7 +280,7 @@ def _a0(a, dim):
             i * [0] + [+a] + (dim - i - 1) * [0],
             i * [0] + [-a] + (dim - i - 1) * [0],
         ]
-    return numpy.array(entries).T
+    return np.array(entries).T
 
 
 def expand_symmetries_points_only(data, dim):
@@ -333,13 +333,13 @@ def expand_symmetries_points_only(data, dim):
             #
             "plain": lambda vals, dim: vals.reshape(vals.shape[0], 1, -1),
         }[key]
-        pts = fun(numpy.asarray(points_raw), dim)
+        pts = fun(np.asarray(points_raw), dim)
 
         counts.append(pts.shape[1])
         pts = pts.reshape(pts.shape[0], -1)
         points.append(pts)
 
-    points = numpy.ascontiguousarray(numpy.concatenate(points, axis=1))
+    points = np.ascontiguousarray(np.concatenate(points, axis=1))
     return points, counts
 
 
@@ -352,7 +352,7 @@ def expand_symmetries(data, dim):
         points_raw[key] = values[1:]
 
     points, counts = expand_symmetries_points_only(points_raw, dim)
-    weights = numpy.concatenate(
-        [numpy.tile(values, count) for count, values in zip(counts, weights_raw)]
+    weights = np.concatenate(
+        [np.tile(values, count) for count, values in zip(counts, weights_raw)]
     )
     return points, weights

@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import orthopy
 import pytest
 from helpers import find_best_scheme
@@ -23,8 +23,8 @@ def test_scheme(scheme):
     except TypeError:
         pass
 
-    assert scheme.points.dtype in [numpy.float64, numpy.int64], scheme.name
-    assert scheme.weights.dtype in [numpy.float64, numpy.int64], scheme.name
+    assert scheme.points.dtype in [np.float64, np.int64], scheme.name
+    assert scheme.weights.dtype in [np.float64, np.int64], scheme.name
 
     print(scheme)
 
@@ -37,9 +37,9 @@ def test_scheme(scheme):
     while True:
         approximate = scheme.integrate(lambda x: next(evaluator), quad)
         exact = evaluator.int_p0 * 4 if k == 0 else 0.0
-        err = numpy.abs(approximate - exact)
-        max_err = max(max_err, numpy.max(err))
-        if numpy.any(err > scheme.test_tolerance * 1.1):
+        err = np.abs(approximate - exact)
+        max_err = max(max_err, np.max(err))
+        if np.any(err > scheme.test_tolerance * 1.1):
             break
         k += 1
 
@@ -48,8 +48,8 @@ def test_scheme(scheme):
         for i in range(k + 1, scheme.degree + 1):
             approximate = scheme.integrate(lambda x: next(evaluator), quad)
             exact = 2.0 if i == 0 else 0.0
-            err = numpy.abs(approximate - exact)
-            max_err = max(max_err, numpy.max(err))
+            err = np.abs(approximate - exact)
+            max_err = max(max_err, np.max(err))
 
         raise AssertionError(
             f"{scheme.name} -- observed: {k - 1}, expected: {scheme.degree} "
@@ -68,7 +68,7 @@ def test_get_good_scheme():
         best = find_best_scheme(
             quadpy.c2.schemes.values(),
             degree,
-            lambda pts: numpy.all((pts >= -1) & (pts <= 1)),
+            lambda pts: np.all((pts >= -1) & (pts <= 1)),
             lambda keys: len(keys - {"d4_a0", "d4_aa", "d4_ab", "zero2"}) == 0,
         )
         if best is None:

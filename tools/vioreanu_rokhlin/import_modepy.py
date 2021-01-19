@@ -1,5 +1,5 @@
 import modepy
-import numpy
+import numpy as np
 
 from . import import_helpers
 
@@ -15,16 +15,16 @@ def _import_tri():
         #     [-1.0, -1.0],
         #
         # Sort the indices to make it easier to identify symmetry groups.
-        idx = numpy.argsort(q.weights)
+        idx = np.argsort(q.weights)
         sorted_weights = q.weights[idx]
 
         bary = (q.nodes + 1.0) / 2.0
-        bary = numpy.vstack([bary, 1.0 - numpy.sum(bary, axis=0)]).T
+        bary = np.vstack([bary, 1.0 - np.sum(bary, axis=0)]).T
         sorted_points = bary[idx]
 
         print(f"elif index == {k}:")
         print("    data = [")
-        # identify groups of equal weights and put them out as numpy.full(x, y)
+        # identify groups of equal weights and put them out as np.full(x, y)
         tol = 1.0e-12
         count = 0
 
@@ -62,11 +62,11 @@ def _import_tet():
     for k in range(10):
         q = vr.VioreanuRokhlinSimplexQuadrature(k, 3)
         # Sort the indices to make it easier to identify symmetry groups.
-        idx = numpy.argsort(q.weights)
+        idx = np.argsort(q.weights)
         sorted_weights = q.weights[idx]
 
         bary = (q.nodes + 1.0) / 2.0
-        bary = numpy.vstack([bary, 1.0 - numpy.sum(bary, axis=0)]).T
+        bary = np.vstack([bary, 1.0 - np.sum(bary, axis=0)]).T
         sorted_points = bary[idx]
 
         print(f"elif index == {k}:")

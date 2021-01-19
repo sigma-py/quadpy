@@ -1,5 +1,5 @@
 import ndim
-import numpy
+import numpy as np
 
 from ..helpers import QuadratureScheme
 
@@ -10,10 +10,10 @@ class UnScheme(QuadratureScheme):
         self.domain = f"Un (n={dim})"
         self.dim = dim
 
-    def integrate(self, f, center, radius, dot=numpy.dot):
-        center = numpy.array(center)
-        rr = numpy.multiply.outer(radius, self.points)
-        rr = numpy.swapaxes(rr, 0, -2)
-        ff = numpy.array(f((rr + center).T))
+    def integrate(self, f, center, radius, dot=np.dot):
+        center = np.array(center)
+        rr = np.multiply.outer(radius, self.points)
+        rr = np.swapaxes(rr, 0, -2)
+        ff = np.array(f((rr + center).T))
         ref_vol = ndim.nsphere.volume(self.dim, r=radius)
         return ref_vol * dot(ff, self.weights)

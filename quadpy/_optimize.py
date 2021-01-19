@@ -102,7 +102,7 @@ def _optimize(
     """Compute the weights from the points via a least-squares problem. Only the point
     coordinates are variables.
     """
-    import numpy
+    import numpy as np
     from scipy.optimize import minimize
 
     degree = content["degree"]
@@ -111,7 +111,7 @@ def _optimize(
 
     def x_to_dict(x):
         # convert x to dictionary (without weights)
-        x_split = numpy.split(x, splits)
+        x_split = np.split(x, splits)
         vals = [item.reshape(shape) for item, shape in zip(x_split, shapes)]
         d = dict(zip(keys, vals))
         return d
@@ -120,13 +120,13 @@ def _optimize(
         d = x_to_dict(x)
         points, len_symm = expand_symmetries_points_only(d, dim=2)
 
-        if numpy.any(numpy.isnan(points)):
+        if np.any(np.isnan(points)):
             # return some "large" residual value
             return None, None, None, 1.0
 
         # evaluate all orthogonal polynomials up to `degree` at all points
         evaluator = get_evaluator(points)
-        A2 = numpy.concatenate([next(evaluator) for _ in range(degree + 1)])
+        A2 = np.concatenate([next(evaluator) for _ in range(degree + 1)])
 
         assert sum(a * b for a, b in zip(len_symm, num_symm)) == A2.shape[1]
 
@@ -135,27 +135,27 @@ def _optimize(
         sums = []
         for lsym, nsym in zip(len_symm, num_symm):
             for i in range(nsym):
-                sums.append(numpy.sum(A2[:, k + i : k + lsym * nsym : nsym], axis=1))
+                sums.append(np.sum(A2[:, k + i : k + lsym * nsym : nsym], axis=1))
             k += lsym * nsym
 
-        A = numpy.column_stack(sums)
+        A = np.column_stack(sums)
 
         # The exact values are 0 except for the first entry
-        b = numpy.zeros(A.shape[0])
+        b = np.zeros(A.shape[0])
         b[0] = evaluator.int_p0
-        # b[0] /= numpy.pi  # necessary for S2
+        # b[0] /= np.pi  # necessary for S2
 
-        w, res, rank, s = numpy.linalg.lstsq(A, b, rcond=None)
+        w, res, rank, s = np.linalg.lstsq(A, b, rcond=None)
 
         # spherical harmonics (for u3) are complex-valued
-        assert numpy.all(numpy.abs(w.imag) < 1.0e-15)
+        assert np.all(np.abs(w.imag) < 1.0e-15)
         w = w.real
 
         if rank < min(A.shape):
             # return some "large" residual value
             return None, None, None, 1.0
 
-        return A, b, w, numpy.sqrt(res[0])
+        return A, b, w, np.sqrt(res[0])
 
     def f(x):
         _, _, _, res = get_w_from_x(x)
@@ -166,12 +166,12 @@ def _optimize(
     values = list(content["data"].values())
 
     values_without_weights = [val[1:] for val in values]
-    shapes = [numpy.array(val).shape for val in values_without_weights]
-    sizes = [numpy.array(val).size for val in values_without_weights]
-    splits = numpy.cumsum(sizes)[:-1]
+    shapes = [np.array(val).shape for val in values_without_weights]
+    sizes = [np.array(val).size for val in values_without_weights]
+    splits = np.cumsum(sizes)[:-1]
 
     # collect and concatenate all point coords
-    x0 = numpy.concatenate([numpy.array(val).flat for val in values_without_weights])
+    x0 = np.concatenate([np.array(val).flat for val in values_without_weights])
 
     # TODO check initial residual with original weights
     r0 = f(x0)
@@ -191,7 +191,7 @@ def _optimize(
     # compute max(err)
     A, b, w, _ = get_w_from_x(out.x)
     # assert A is not None
-    # max_res = numpy.max(numpy.abs(A @ w - b))
+    # max_res = np.max(np.abs(A @ w - b))
 
     # Compute max_res exactly like in the tests
     d = x_to_dict(out.x)
@@ -203,7 +203,7 @@ def _optimize(
             d[key] = [[w[k]]]
         else:
             n = value.shape[1]
-            d[key] = numpy.column_stack([w[k : k + n], value.T]).T
+            d[key] = np.column_stack([w[k : k + n], value.T]).T
         k += n
     # content["data"] = d
     # scheme = scheme_from_dict(content)
@@ -211,7 +211,7 @@ def _optimize(
 
     # print(max_res)
 
-    return d, out.fun, numpy.linalg.cond(A)
+    return d, out.fun, np.linalg.cond(A)
 
 
 def _optimize_weights_as_variables(
@@ -226,7 +226,7 @@ def _optimize_weights_as_variables(
     It turns out from numerical experiments that this is inferior to the above approach.
     TODO Information about the derivative + using Newton could improve it a lot.
     """
-    import numpy
+    import numpy as np
     from scipy.optimize import minimize
 
     degree = content["degree"]
@@ -235,7 +235,7 @@ def _optimize_weights_as_variables(
 
     def x_to_dict(x):
         # convert x to dictionary (without weights)
-        x_split = numpy.split(x, splits)
+        x_split = np.split(x, splits)
         vals = [item.reshape(shape) for item, shape in zip(x_split, shapes)]
         d = dict(zip(keys, vals))
         return d
@@ -244,34 +244,34 @@ def _optimize_weights_as_variables(
         d = x_to_dict(x)
         points, weights = expand_symmetries(d)
 
-        if numpy.any(numpy.isnan(points)):
+        if np.any(np.isnan(points)):
             # return some "large" residual value
             return 1.0
 
         # evaluate all orthogonal polynomials up to `degree` at all points
         evaluator = get_evaluator(points.T)
-        A = numpy.concatenate([next(evaluator) for _ in range(degree + 1)])
+        A = np.concatenate([next(evaluator) for _ in range(degree + 1)])
 
         # The exact values are 0 except for the first entry
-        b = numpy.zeros(A.shape[0])
+        b = np.zeros(A.shape[0])
         b[0] = evaluator.int_p0
         return A, weights, b
 
     def f(x):
         A, weights, b = get_system(x)
         res = A @ weights - b
-        res_norm = numpy.sqrt(numpy.dot(res, res))
+        res_norm = np.sqrt(np.dot(res, res))
         return res_norm
 
     keys = list(content["data"].keys())
     values = list(content["data"].values())
 
-    shapes = [numpy.array(val).shape for val in values]
-    sizes = [numpy.array(val).size for val in values]
-    splits = numpy.cumsum(sizes)[:-1]
+    shapes = [np.array(val).shape for val in values]
+    sizes = [np.array(val).size for val in values]
+    splits = np.cumsum(sizes)[:-1]
 
     # collect and concatenate all point coords
-    x0 = numpy.concatenate([numpy.array(val).flat for val in values])
+    x0 = np.concatenate([np.array(val).flat for val in values])
 
     # TODO check initial residual with original weights
     r0 = f(x0)
@@ -292,4 +292,4 @@ def _optimize_weights_as_variables(
 
     A, _, _ = get_system(out.x)
 
-    return d, out.fun, numpy.linalg.cond(A)
+    return d, out.fun, np.linalg.cond(A)

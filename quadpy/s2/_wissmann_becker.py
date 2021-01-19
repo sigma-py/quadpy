@@ -1,6 +1,6 @@
 import math
 
-import numpy
+import numpy as np
 
 from ..helpers import article, untangle
 from ._helpers import S2Scheme, register
@@ -28,7 +28,7 @@ def wissmann_becker_6_1():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     d = {"plain": [weights, points[0], points[1]]}
     return S2Scheme("Wissmann-Becker 6-1", d, 6, _source, 1.108e-14)
 
@@ -45,7 +45,7 @@ def wissmann_becker_6_2():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     d = {"plain": [weights, points[0], points[1]]}
     return S2Scheme("Wissmann-Becker 6-2", d, 6, _source)
 
@@ -65,17 +65,17 @@ def wissmann_becker_8_1():
     ]
     points, weights = untangle(data)
     weights /= math.pi
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     d = {"plain": [weights, points[0], points[1]]}
     return S2Scheme("Wissmann-Becker 8-1", d, 8, _source)
 
 
 def _z(a):
-    return numpy.array([[0.0, a]])
+    return np.array([[0.0, a]])
 
 
 def _m(a, b):
-    return numpy.array([[+a, +b], [-a, +b]])
+    return np.array([[+a, +b], [-a, +b]])
 
 
 register([wissmann_becker_6_1, wissmann_becker_6_2, wissmann_becker_8_1])

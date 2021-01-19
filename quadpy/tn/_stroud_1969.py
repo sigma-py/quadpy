@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 from sympy import Rational as frac
 from sympy import sqrt
 
@@ -34,7 +34,7 @@ def stroud_1969(n):
     # Solve linear equation system for x^k, k={0, 2, 3, 4, 5}, for the
     # weights (the same is done in Stroud's article).
     pts = [
-        numpy.full((1, n + 1), t),
+        np.full((1, n + 1), t),
         rd(n + 1, [(r1, n), (s1, 1)]),
         rd(n + 1, [(r2, n), (s2, 1)]),
         rd(n + 1, [(u1, n - 1), (v1, 2)]),
@@ -48,7 +48,7 @@ def stroud_1969(n):
     b0 = integrate_monomial_over_unit_simplex(n * [0], symbolic=True)
     b = [
         integrate_monomial_over_unit_simplex(
-            numpy.array([k] + (n - 1) * [0]), symbolic=True
+            np.array([k] + (n - 1) * [0]), symbolic=True
         )
         / b0
         for k in k_range
@@ -56,11 +56,11 @@ def stroud_1969(n):
 
     A = [[sum(p[:, 0] ** k) for p in pts] for k in k_range]
 
-    flt = numpy.vectorize(float)
-    w = numpy.linalg.solve(flt(A), flt(b))
+    flt = np.vectorize(float)
+    w = np.linalg.solve(flt(A), flt(b))
 
     data = [(w[i], pts[i]) for i in range(len(w))]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return TnScheme("Stroud 1969", n, weights, points, degree, source)

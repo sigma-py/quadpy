@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 from ..c1 import gauss_legendre
 from ..helpers import book
@@ -22,12 +22,12 @@ def stroud_t2_7_1():
 
     # Generate Gauss formula for int_0^1 (1-s) * f(s) ds.
     # ```
-    # k = numpy.arange(8)
+    # k = np.arange(8)
     # moments = 1 / (k**2 + 3*k + 2)
     # alpha, beta = orthopy.line.chebyshev(moments)
     # s, B = orthopy.line.schemes.custom(alpha, beta, mode='numpy')
     # ```
-    s = numpy.array(
+    s = np.array(
         [
             5.710419611452533e-02,
             2.768430136381415e-01,
@@ -35,7 +35,7 @@ def stroud_t2_7_1():
             8.602401356562251e-01,
         ]
     )
-    B = numpy.array(
+    B = np.array(
         [
             1.355069134315012e-01,
             2.034645680102685e-01,
@@ -44,17 +44,17 @@ def stroud_t2_7_1():
         ]
     )
 
-    weights = numpy.array([2 * A[i] * B[j] for i in range(4) for j in range(4)])
-    points = numpy.array(
+    weights = np.array([2 * A[i] * B[j] for i in range(4) for j in range(4)])
+    points = np.array(
         [
             [s[j], r[i] * (1 - s[j]), (1 - r[i]) * (1 - s[j])]
             for i in range(4)
             for j in range(4)
         ]
     )
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     return T2Scheme(
-        "Stroud 7-1", {"plain": numpy.vstack([weights, points])}, 7, source, 1.403e-13
+        "Stroud 7-1", {"plain": np.vstack([weights, points])}, 7, source, 1.403e-13
     )
 
 

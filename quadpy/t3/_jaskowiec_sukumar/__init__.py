@@ -1,7 +1,7 @@
 import json
 import pathlib
 
-import numpy
+import numpy as np
 
 from ...helpers import article
 from .._helpers import T3Scheme, register
@@ -29,11 +29,9 @@ def _read(string, tol=1.0e-14):
 
     degree = data["degree"]
 
-    points = numpy.array(data["points"]).T
-    points = numpy.array(
-        [points[0], points[1], points[2], 1.0 - numpy.sum(points, axis=0)]
-    )
-    weights = numpy.array(data["weights"])
+    points = np.array(data["points"]).T
+    points = np.array([points[0], points[1], points[2], 1.0 - np.sum(points, axis=0)])
+    weights = np.array(data["weights"])
 
     d = {"plain": [weights, points[0], points[1], points[2], points[3]]}
 

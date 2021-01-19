@@ -1,6 +1,6 @@
 from math import factorial as fact
 
-import numpy
+import numpy as np
 from sympy import Rational as frac
 
 from ..helpers import article, get_all_exponents, untangle
@@ -28,7 +28,7 @@ def grundmann_moeller(n, s):
                 (-1) ** i * 2 ** (-2 * s) * (d + n - 2 * i) ** d,
                 fact(i) * fact(d + n - i),
             ),
-            numpy.array(
+            np.array(
                 [
                     [frac(2 * p + 1, d + n - 2 * i) for p in part]
                     for part in exponents[s - i]
@@ -39,7 +39,7 @@ def grundmann_moeller(n, s):
     ]
 
     points, weights = untangle(data)
-    points = numpy.ascontiguousarray(points.T)
+    points = np.ascontiguousarray(points.T)
     weights /= sum(weights)
 
     name = f"Grundmann-Möller(dim={n}, {s})"
