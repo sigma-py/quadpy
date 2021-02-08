@@ -26,6 +26,16 @@ class CnScheme(QuadratureScheme):
 
     def integrate(self, f: Callable, ncube, dot=np.dot):
         ncube = np.asarray(ncube)
+        if (
+            ncube.shape[: self.dim] != tuple(self.dim * [2])
+            or ncube.shape[-1] < self.dim
+        ):
+            expected = ", ".join(str(i) for i in self.dim * [2])
+            string = ", ".join(str(val) for val in ncube.shape)
+            raise QuadpyError(
+                f"Wrong domain shape. Expected ({expected}, ..., n >= {self.dim}), "
+                f"got ({string})."
+            )
         x = transform(self.points, ncube).T
         detJ = get_detJ(self.points, ncube)
 
