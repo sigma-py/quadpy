@@ -1,6 +1,7 @@
+from typing import Callable
+
 import ndim
 import numpy as np
-from typing import Callable
 
 from .._exception import QuadpyError
 from ..helpers import QuadratureScheme
@@ -23,7 +24,7 @@ class EnrScheme(QuadratureScheme):
         assert len(x.shape) == 2
         if len(x.shape) == 2 and fx.shape[-1] != x.shape[1]:
             raise QuadpyError(
-               f"Wrong return value shape {fx.shape}. Expected (:, {x.shape[1]})."
+                f"Wrong return value shape {fx.shape}. Expected (:, {x.shape[1]})."
             )
 
         return ref_vol * dot(fx, flt(self.weights))

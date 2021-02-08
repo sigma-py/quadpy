@@ -46,14 +46,14 @@ class CnScheme(QuadratureScheme):
                 f"Wrong return value shape {fx.shape}. " f"Expected (..., {string})."
             )
 
-        ref_vol = 2 ** np.prod(len(ncube.shape) - 1)
+        ref_vol = 2 ** np.prod(self.dim)
         return ref_vol * dot(fx * abs(detJ), self.weights)
 
-    def points_inside(self) -> bool:
+    def points_inside(self):
         """Are all points strictly inside the domain?"""
         return np.all((-1 < self.points) & (self.points < 1))
 
-    def points_inside_or_boundary(self) -> bool:
+    def points_inside_or_boundary(self):
         """Are all points inside the domain or on its boundary?"""
         return np.all((-1 <= self.points) & (self.points <= 1))
 
