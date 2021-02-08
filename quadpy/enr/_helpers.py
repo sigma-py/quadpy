@@ -1,6 +1,8 @@
 import ndim
 import numpy as np
+from typing import Callable
 
+from .._exception import QuadpyError
 from ..helpers import QuadratureScheme
 
 
@@ -11,7 +13,17 @@ class EnrScheme(QuadratureScheme):
         assert points.shape[0] == dim
         super().__init__(name, weights, points, degree, source, tol)
 
-    def integrate(self, f, dot=np.dot):
+    def integrate(self, f: Callable, dot=np.dot):
         flt = np.vectorize(float)
         ref_vol = ndim.enr.volume(self.dim)
-        return ref_vol * dot(f(flt(self.points)), flt(self.weights))
+
+        x = flt(self.points)
+        fx = np.asarray(f(x))
+
+        assert len(x.shape) == 2
+        if len(x.shape) == 2 and fx.shape[-1] != x.shape[1]:
+            raise QuadpyError(
+               f"Wrong return value shape {fx.shape}. Expected (:, {x.shape[1]})."
+            )
+
+        return ref_vol * dot(fx, flt(self.weights))
