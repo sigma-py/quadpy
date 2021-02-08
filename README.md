@@ -51,12 +51,12 @@ pip install quadpy
 ```
 and do
 ```python
-import numpy
+import numpy as np
 import quadpy
 
 
 def f(x):
-    return numpy.sin(x) - x
+    return np.sin(x) - x
 
 
 val, err = quadpy.quad(f, 0.0, 6.0)
@@ -68,15 +68,15 @@ and "intervals" in spaces of arbitrary dimension.
 
 To integrate over a _triangle_, do
 ```python
-import numpy
+import numpy as np
 import quadpy
 
 
 def f(x):
-    return numpy.sin(x[0]) * numpy.sin(x[1])
+    return np.sin(x[0]) * np.sin(x[1])
 
 
-triangle = numpy.array([[0.0, 0.0], [1.0, 0.0], [0.7, 0.5]])
+triangle = np.array([[0.0, 0.0], [1.0, 0.0], [0.7, 0.5]])
 
 # get a "good" scheme of degree 10
 scheme = quadpy.t2.get_good_scheme(10)
@@ -111,7 +111,7 @@ domains at once, you can provide them all in one `integrate()` call, e.g.,
 <!--exdown-skip-->
 ```python
 # shape (3, 5, 2), i.e., (corners, num_triangles, xy_coords)
-triangles = numpy.stack(
+triangles = np.stack(
     [
         [[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]],
         [[1.2, 0.6], [1.3, 0.7], [1.4, 0.8]],
@@ -125,7 +125,7 @@ triangles = numpy.stack(
 The same goes for functions with vectorized output, e.g.,
 ```python
 def f(x):
-    return [numpy.sin(x[0]), numpy.sin(x[1])]
+    return [np.sin(x[0]), np.sin(x[1])]
 ```
 
 More examples under [test/examples_test.py](test/examples_test.py).
@@ -162,12 +162,12 @@ for how to generate Gauss formulas for your own weight functions.
 
 Example:
 ```python
-import numpy
+import numpy as np
 import quadpy
 
 scheme = quadpy.c1.gauss_patterson(5)
 scheme.show()
-val = scheme.integrate(lambda x: numpy.exp(x), [0.0, 1.0])
+val = scheme.integrate(lambda x: np.exp(x), [0.0, 1.0])
 ```
 
 ### 1D half-space with weight function exp(-r) (_E<sub>1</sub><sup>r</sup>_)
@@ -206,12 +206,12 @@ val = scheme.integrate(lambda x: x ** 2)
 
 Example:
 ```python
-import numpy
+import numpy as np
 import quadpy
 
 scheme = quadpy.u2.get_good_scheme(7)
 scheme.show()
-val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0], 1.0)
+val = scheme.integrate(lambda x: np.exp(x[0]), [0.0, 0.0], 1.0)
 ```
 
 ### Triangle (_T<sub>2</sub>_)
@@ -254,12 +254,12 @@ Apart from the classical centroid, vertex, and seven-point schemes we have
 
 Example:
 ```python
-import numpy
+import numpy as np
 import quadpy
 
 scheme = quadpy.t2.get_good_scheme(12)
 scheme.show()
-val = scheme.integrate(lambda x: numpy.exp(x[0]), [[0.0, 0.0], [1.0, 0.0], [0.5, 0.7]])
+val = scheme.integrate(lambda x: np.exp(x[0]), [[0.0, 0.0], [1.0, 0.0], [0.5, 0.7]])
 ```
 
 ### Disk (_S<sub>2</sub>_)
@@ -285,12 +285,12 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [[0.0, 0.0], [1.0, 0.0], [0.5,
 
 Example:
 ```python
-import numpy
+import numpy as np
 import quadpy
 
 scheme = quadpy.s2.get_good_scheme(6)
 scheme.show()
-val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0], 1.0)
+val = scheme.integrate(lambda x: np.exp(x[0]), [0.0, 0.0], 1.0)
 ```
 
 ### Quadrilateral (_C<sub>2</sub>_)
@@ -324,12 +324,12 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0], 1.0)
 
 Example:
 ```python
-import numpy
+import numpy as np
 import quadpy
 
 scheme = quadpy.c2.get_good_scheme(7)
 val = scheme.integrate(
-    lambda x: numpy.exp(x[0]),
+    lambda x: np.exp(x[0]),
     [[[0.0, 0.0], [1.0, 0.0]], [[0.0, 1.0], [1.0, 1.0]]],
 )
 ```
@@ -398,23 +398,23 @@ val = scheme.integrate(lambda x: x[0] ** 2)
 
 Example:
 ```python
-import numpy
+import numpy as np
 import quadpy
 
 scheme = quadpy.u3.get_good_scheme(19)
 # scheme.show()
-val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0, 0.0], 1.0)
+val = scheme.integrate(lambda x: np.exp(x[0]), [0.0, 0.0, 0.0], 1.0)
 ```
 Integration on the sphere can also be done for functions defined in spherical
 coordinates:
 ```python
-import numpy
+import numpy as np
 import quadpy
 
 
 def f(theta_phi):
     theta, phi = theta_phi
-    return numpy.sin(phi) ** 2 * numpy.sin(theta)
+    return np.sin(phi) ** 2 * np.sin(theta)
 
 
 scheme = quadpy.u3.get_good_scheme(19)
@@ -432,12 +432,12 @@ val = scheme.integrate_spherical(f)
 
 Example:
 ```python
-import numpy
+import numpy as np
 import quadpy
 
 scheme = quadpy.s3.get_good_scheme(4)
 # scheme.show()
-val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0, 0.0], 1.0)
+val = scheme.integrate(lambda x: np.exp(x[0]), [0.0, 0.0, 0.0], 1.0)
 ```
 
 
@@ -466,13 +466,13 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), [0.0, 0.0, 0.0], 1.0)
 
 Example:
 ```python
-import numpy
+import numpy as np
 import quadpy
 
 scheme = quadpy.t3.get_good_scheme(5)
 # scheme.show()
 val = scheme.integrate(
-    lambda x: numpy.exp(x[0]),
+    lambda x: np.exp(x[0]),
     [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.5, 0.7, 0.0], [0.3, 0.9, 1.0]],
 )
 ```
@@ -494,13 +494,13 @@ val = scheme.integrate(
 
 Example:
 ```python
-import numpy
+import numpy as np
 import quadpy
 
 scheme = quadpy.c3.product(quadpy.c1.newton_cotes_closed(3))
 # scheme.show()
 val = scheme.integrate(
-    lambda x: numpy.exp(x[0]),
+    lambda x: np.exp(x[0]),
     quadpy.c3.cube_points([0.0, 1.0], [-0.3, 0.4], [1.0, 2.1]),
 )
 ```
@@ -512,13 +512,13 @@ val = scheme.integrate(
 
 Example:
 ```python
-import numpy
+import numpy as np
 import quadpy
 
 scheme = quadpy.p3.felippa_5()
 
 val = scheme.integrate(
-    lambda x: numpy.exp(x[0]),
+    lambda x: np.exp(x[0]),
     [
         [0.0, 0.0, 0.0],
         [1.0, 0.0, 0.0],
@@ -538,12 +538,12 @@ val = scheme.integrate(
 
 Example:
 ```python
-import numpy
+import numpy as np
 import quadpy
 
 scheme = quadpy.w3.felippa_3()
 val = scheme.integrate(
-    lambda x: numpy.exp(x[0]),
+    lambda x: np.exp(x[0]),
     [
         [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.5, 0.7, 0.0]],
         [[0.0, 0.0, 1.0], [1.0, 0.0, 1.0], [0.5, 0.7, 1.0]],
@@ -598,14 +598,14 @@ val = scheme.integrate(lambda x: x[0] ** 2)
 
 Example:
 ```python
-import numpy
+import numpy as np
 import quadpy
 
 dim = 4
 scheme = quadpy.tn.grundmann_moeller(dim, 3)
 val = scheme.integrate(
-    lambda x: numpy.exp(x[0]),
-    numpy.array(
+    lambda x: np.exp(x[0]),
+    np.array(
         [
             [0.0, 0.0, 0.0, 0.0],
             [1.0, 2.0, 0.0, 0.0],
@@ -627,12 +627,12 @@ val = scheme.integrate(
 
 Example:
 ```python
-import numpy
+import numpy as np
 import quadpy
 
 dim = 4
 scheme = quadpy.un.dobrodeev_1978(dim)
-val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
+val = scheme.integrate(lambda x: np.exp(x[0]), np.zeros(dim), 1.0)
 ```
 
 
@@ -650,12 +650,12 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
 
 Example:
 ```python
-import numpy
+import numpy as np
 import quadpy
 
 dim = 4
 scheme = quadpy.sn.dobrodeev_1970(dim)
-val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
+val = scheme.integrate(lambda x: np.exp(x[0]), np.zeros(dim), 1.0)
 ```
 
 ### n-Cube (_C<sub>n</sub>_)
@@ -675,13 +675,13 @@ val = scheme.integrate(lambda x: numpy.exp(x[0]), numpy.zeros(dim), 1.0)
 
 Example:
 ```python
-import numpy
+import numpy as np
 import quadpy
 
 dim = 4
 scheme = quadpy.cn.stroud_cn_3_3(dim)
 val = scheme.integrate(
-    lambda x: numpy.exp(x[0]),
+    lambda x: np.exp(x[0]),
     quadpy.cn.ncube_points([0.0, 1.0], [0.1, 0.9], [-1.0, 1.0], [-1.0, -0.5]),
 )
 ```

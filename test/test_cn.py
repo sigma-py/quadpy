@@ -67,7 +67,24 @@ def test_scheme(scheme):
     )
 
 
+# https://github.com/nschloe/quadpy/issues/401
+def test_multiple_cubes_volume():
+    val = quadpy.c2.schemes["stroud_c2_5_4"]().integrate(
+        lambda x: x[0],
+        np.stack(
+            [
+                quadpy.c2.rectangle_points([0.0, 1.0], [0.0, 1.0]),
+                quadpy.c2.rectangle_points([0.0, 1.0], [0.0, 1.0]),
+                quadpy.c2.rectangle_points([0.0, 1.0], [0.0, 1.0]),
+                quadpy.c2.rectangle_points([0.0, 1.0], [0.0, 1.0]),
+                quadpy.c2.rectangle_points([0.0, 1.0], [0.0, 1.0]),
+            ],
+            axis=-2,
+        ),
+    )
+    assert val.shape == (5,)
+    assert np.all(np.abs(val - 0.5) < 1.0e-13)
+
+
 if __name__ == "__main__":
-    n_ = 4
-    scheme_ = quadpy.cn.Stroud(n_, "Cn 7-1")
-    test_scheme(scheme_, 1.0e-14)
+    test_multiple_cubes_volume()

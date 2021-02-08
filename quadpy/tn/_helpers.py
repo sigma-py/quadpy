@@ -1,4 +1,5 @@
 import math
+from typing import Callable
 
 import numpy as np
 import sympy
@@ -21,14 +22,16 @@ class TnScheme(QuadratureScheme):
     def points_inside_or_boundary(self):
         return np.all((0 <= self.points) & (self.points <= 1))
 
-    def integrate(self, f, simplex, dot=np.dot):
+    def integrate(self, f: Callable, simplex, dot=np.dot):
         flt = np.vectorize(float)
         simplex = np.asarray(simplex)
-        if simplex.shape[0] != self.dim + 1:
+        if simplex.shape[0] != self.dim + 1 or simplex.shape[-1] < self.dim:
             string = ", ".join(str(val) for val in simplex.shape)
             raise QuadpyError(
-                f"Wrong domain shape. Expected ({self.dim + 1}, ...), got ({string})."
+                f"Wrong domain shape. Expected ({self.dim + 1}, ..., n >= {self.dim}), "
+                f"got ({string})."
             )
+
         x = transform(flt(self.points), simplex.T)
         vol = get_vol(simplex)
 
