@@ -1,5 +1,6 @@
-import numpy as np
 from typing import Optional
+
+import numpy as np
 
 from ._gauss_kronrod import _gauss_kronrod_integrate
 
@@ -15,13 +16,13 @@ class IntegrationError(Exception):
 def integrate_adaptive(
     f,
     intervals,
-    eps_abs: Optional[float]=1.0e-10,
-    eps_rel: Optional[float]=1.0e-10,
+    eps_abs: Optional[float] = 1.0e-10,
+    eps_rel: Optional[float] = 1.0e-10,
     criteria_connection=np.any,
     # Use 21-point Gauss-Kronrod like QUADPACK
     # <https://en.wikipedia.org/wiki/QUADPACK#General-purpose_routines>
-    kronrod_degree:int =10,
-    minimum_interval_length: float=0.0,
+    kronrod_degree: int = 10,
+    minimum_interval_length: float = 0.0,
     max_num_subintervals=np.inf,
     dot=np.dot,
     domain_shape=None,

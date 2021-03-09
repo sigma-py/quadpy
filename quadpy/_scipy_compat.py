@@ -1,5 +1,6 @@
-import numpy as np
 from typing import Callable
+
+import numpy as np
 
 from .c1 import integrate_adaptive
 
