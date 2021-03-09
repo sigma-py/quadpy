@@ -1,11 +1,20 @@
 import numpy as np
+from typing import Callable
 
 from .c1 import integrate_adaptive
 
 
 # compatibility for scipy.quad
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html
-def quad(f, a, b, args=(), epsabs=1.49e-08, epsrel=1.49e-08, limit=50):
+def quad(
+    f: Callable,
+    a,
+    b,
+    args=(),
+    epsabs: float = 1.49e-08,
+    epsrel: float = 1.49e-08,
+    limit: int = 50,
+):
     # See <https://www.gnu.org/software/gsl/doc/html/integration.html> for the
     # variable transformations
     if a == -np.inf and b == np.inf:
