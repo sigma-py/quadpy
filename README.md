@@ -9,7 +9,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/nschloe/quadpy.svg?style=flat-square&logo=github&label=Stars&logoColor=white)](https://github.com/nschloe/quadpy)
 [![PyPi downloads](https://img.shields.io/pypi/dm/quadpy.svg?style=flat-square)](https://pypistats.org/packages/quadpy)
 
-[![Slack](https://img.shields.io/static/v1?logo=slack&label=chat&message=on%20slack&color=4a154b&style=flat-square)](https://join.slack.com/t/nschloe/shared_invite/zt-cofhrwm8-BgdrXAtVkOjnDmADROKD7A)
+[![Discord](https://img.shields.io/static/v1?logo=discord&label=chat&message=on%20discord&color=7289da&style=flat-square)](https://discord.com/channels/818781969562599434/818781969562599438)
 [![awesome](https://img.shields.io/badge/awesome-yes-brightgreen.svg?style=flat-square)](https://github.com/nschloe/quadpy)
 
 [![gh-actions](https://img.shields.io/github/workflow/status/nschloe/quadpy/ci?style=flat-square)](https://github.com/nschloe/quadpy/actions?query=workflow%3Aci)
@@ -41,7 +41,7 @@ More than 1500 numerical integration schemes for
 [the 2D space with weight functions exp(-r<sup>2</sup>)](#2d-space-with-weight-function-exp-r2-e2r2),
 [the 3D space with weight functions exp(-r<sup>2</sup>)](#3d-space-with-weight-function-exp-r2-e3r2),
 and
-[the nD space with weight functions exp(-r<sup>2</sup>)](#nd-space-with-weight-function-exp-r2-enr3),
+[the nD space with weight functions exp(-r<sup>2</sup>)](#nd-space-with-weight-function-exp-r2-enr2),
 for fast integration of real-, complex-, and vector-valued functions.
 
 For example, to numerically integrate any function over any given interval, install
