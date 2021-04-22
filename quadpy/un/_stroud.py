@@ -90,7 +90,7 @@ def stroud_un_7_2(n):
     data = [(A, pm(n * [r])), (B, fsd(n, (s, 1), (t, n - 1)))]
 
     points, weights = untangle(data)
-    return UnScheme("Stroud Un 7-1", n, weights, points, degree, source)
+    return UnScheme("Stroud Un 7-2", n, weights, points, degree, source)
 
 
 __all__ = [
@@ -100,7 +100,7 @@ __all__ = [
     "stroud_un_5_2",
     "stroud_un_5_3",
     "stroud_un_5_4",
-    "stroud_un_7_2",
     "stroud_un_7_1",
+    "stroud_un_7_2",
     "stroud_un_11_1",
 ]
