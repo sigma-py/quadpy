@@ -43,7 +43,7 @@ class CnScheme(QuadratureScheme):
         if fx.shape[-len(x.shape[1:]) :] != x.shape[1:]:
             string = ", ".join(str(val) for val in x.shape[1:])
             raise QuadpyError(
-                f"Wrong return value shape {fx.shape}. " f"Expected (..., {string})."
+                f"Wrong return value shape {fx.shape}. Expected (..., {string})."
             )
 
         ref_vol = 2 ** np.prod(self.dim)
