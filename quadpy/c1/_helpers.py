@@ -66,7 +66,7 @@ def _find_shapes(fx, intervals, x, domain_shape=None, range_shape=None):
             f"Expected the function return value to be of shape {expected_shape_fx}, "
             f"but got shape {fx.shape} instead."
         )
-    return domain_shape, range_shape
+    return domain_shape, range_shape, interval_set_shape
 
 
 class C1Scheme(QuadratureScheme):
@@ -81,7 +81,7 @@ class C1Scheme(QuadratureScheme):
         x = np.multiply.outer(iv[0], x0) + np.multiply.outer(iv[1], x1)
         fx = np.asarray(f(x))
 
-        domain_shape, range_shape = _find_shapes(
+        domain_shape, range_shape, _ = _find_shapes(
             fx, iv, self.points, domain_shape=domain_shape, range_shape=range_shape
         )
 
