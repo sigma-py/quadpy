@@ -4,12 +4,25 @@ from ..helpers import QuadratureScheme, plot_disks_1d
 
 
 def _find_shapes(fx, intervals, x, domain_shape=None, range_shape=None):
-    # This following logic is based on the below assertions
+    # This following logic is based on the below requirements
     #
     # assert intervals.shape == (2,) + domain_shape + interval_set_shape
-    # assert fx_gk.shape == range_shape + interval_set_shape + gk.points.shape
+    # assert fx.shape == range_shape + interval_set_shape + x.shape
     #
     assert len(x.shape) == 1
+
+    if intervals.shape[0] != 2:
+        raise ValueError(
+            f"Expected intervals to bbe of shape (2, ...), "
+            f"but got shape {intervals.shape} instead."
+        )
+
+    if fx.shape[-1] != x.shape[0]:
+        raise ValueError(
+            f"Expected the function return value to be of shape (..., {x.shape[0]}), "
+            f"but got shape {fx.shape} instead."
+        )
+
     if domain_shape is not None and range_shape is not None:
         # Only needed for some assertions
         interval_set_shape = intervals.shape[1 + len(domain_shape) :]
@@ -23,7 +36,7 @@ def _find_shapes(fx, intervals, x, domain_shape=None, range_shape=None):
         else:
             domain_shape = intervals.shape[1 : -len(interval_set_shape)]
     else:
-        # find the common tail of fx_gk.shape[:-1] and intervals.shape. That is the
+        # Find the common tail of fx.shape[:-1] and intervals.shape. That is the
         # interval_set_shape unless the tails of domain_shape and range_shape coincide
         # to some degree. (For this case, one can specify domain_shape, range_shape
         # explicitly.)
@@ -35,22 +48,24 @@ def _find_shapes(fx, intervals, x, domain_shape=None, range_shape=None):
             interval_set_shape.append(d)
         interval_set_shape = tuple(reversed(interval_set_shape))
 
-        if len(interval_set_shape) == 0:
+        if interval_set_shape == ():
             domain_shape = intervals.shape[1:]
         else:
             domain_shape = intervals.shape[1 : -len(interval_set_shape)]
         range_shape = fx.shape[: -len(interval_set_shape) - 1]
 
     expected_shape_ivals = (2,) + domain_shape + interval_set_shape
-    assert intervals.shape == expected_shape_ivals, (
-        f"Expected intervals to be of shape {expected_shape_ivals}, "
-        f"but got shape {intervals.shape} instead."
-    )
+    if intervals.shape != expected_shape_ivals:
+        raise ValueError(
+            f"Expected intervals to be of shape {expected_shape_ivals}, "
+            f"but got shape {intervals.shape} instead."
+        )
     expected_shape_fx = range_shape + interval_set_shape + x.shape
-    assert fx.shape == expected_shape_fx, (
-        f"Expected the function return value to be of shape {expected_shape_fx}, "
-        f"but got shape {fx.shape} instead."
-    )
+    if fx.shape != expected_shape_fx:
+        raise ValueError(
+            f"Expected the function return value to be of shape {expected_shape_fx}, "
+            f"but got shape {fx.shape} instead."
+        )
     return domain_shape, range_shape, interval_set_shape
 
 
@@ -66,7 +81,7 @@ class C1Scheme(QuadratureScheme):
         x = np.multiply.outer(iv[0], x0) + np.multiply.outer(iv[1], x1)
         fx = np.asarray(f(x))
 
-        domain_shape, range_shape, interval_set_shape = _find_shapes(
+        domain_shape, range_shape, _ = _find_shapes(
             fx, iv, self.points, domain_shape=domain_shape, range_shape=range_shape
         )
 
