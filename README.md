@@ -86,7 +86,7 @@ Most domains have `get_good_scheme(degree)`. If you would like to use a particul
 scheme, you can pick one from the dictionary `quadpy.t2.schemes`.
 
 All schemes have
-<!--exdown-skip-->
+<!--pytest-codeblocks:skip-->
 ```python
 scheme.points
 scheme.weights
@@ -100,7 +100,7 @@ scheme.integrate(
 )
 ```
 and many have
-<!--exdown-skip-->
+<!--pytest-codeblocks:skip-->
 ```python
 scheme.points_symbolic
 scheme.weights_symbolic
@@ -108,7 +108,7 @@ scheme.weights_symbolic
 
 quadpy is fully vectorized, so if you like to compute the integral of a function on many
 domains at once, you can provide them all in one `integrate()` call, e.g.,
-<!--exdown-skip-->
+<!--pytest-codeblocks:skip-->
 ```python
 # shape (3, 5, 2), i.e., (corners, num_triangles, xy_coords)
 triangles = np.stack(
@@ -337,7 +337,7 @@ The points are specified in an array of shape (2, 2, ...) such that `arr[0][0]`
 is the lower left corner, `arr[1][1]` the upper right. If your c2
 has its sides aligned with the coordinate axes, you can use the convenience
 function
-<!--exdown-skip-->
+<!--pytest-codeblocks:skip-->
 ```python
 quadpy.c2.rectangle_points([x0, x1], [y0, y1])
 ```
