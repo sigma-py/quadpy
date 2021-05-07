@@ -43,7 +43,7 @@ jobs:
       run: sudo apt-get install -y libeigen3-dev libblas-dev
     - name: Test with tox
       run: |
-        pip install tox pytest-cov
+        pip install tox
         tox -- --cov quadpy --cov-report xml --cov-report term
     - uses: codecov/codecov-action@v1
       if: ${{ matrix.python-version == '3.8' }}
