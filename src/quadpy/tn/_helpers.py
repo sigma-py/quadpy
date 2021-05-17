@@ -1,5 +1,5 @@
 import math
-from typing import Callable
+from typing import Callable, List, Optional
 
 import numpy as np
 import sympy
@@ -10,7 +10,15 @@ from ..helpers import QuadratureScheme
 
 class TnScheme(QuadratureScheme):
     def __init__(
-        self, name, dim, weights, points, degree, source, tol=1.0e-14, comments=None
+        self,
+        name: str,
+        dim: int,
+        weights,
+        points,
+        degree: int,
+        source,
+        tol: float = 1.0e-14,
+        comments: Optional[List[str]] = None,
     ):
         self.domain = f"Tn (n={dim})"
         self.dim = dim

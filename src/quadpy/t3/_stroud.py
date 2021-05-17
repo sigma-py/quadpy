@@ -28,8 +28,8 @@ def stroud_t3_7_1():
     # ```
     # k = np.arange(8)
     # moments = 1 / (k**2 + 3*k + 2)
-    # alpha, beta = orthopy.line.chebyshev(moments)
-    # s, B = orthopy.line.schemes.custom(alpha, beta, mode='numpy')
+    # alpha, beta = orthopy.c1.chebyshev(moments)
+    # s, B = orthopy.c1.schemes.custom(alpha, beta, mode='numpy')
     # ```
     s = np.array(
         [
@@ -52,8 +52,8 @@ def stroud_t3_7_1():
     # ```
     # k = np.arange(8)
     # moments = 2 / (k**3 + 6*k**2 + 11*k + 6)
-    # alpha, beta = orthopy.line.chebyshev(moments)
-    # t, C = orthopy.line.schemes.custom(alpha, beta, mode='numpy')
+    # alpha, beta = orthopy.c1.chebyshev(moments)
+    # t, C = orthopy.c1.schemes.custom(alpha, beta, mode='numpy')
     # ```
     t = np.array(
         [

@@ -19,7 +19,7 @@ source = article(
 )
 
 
-def dobrodeev_1978(n):
+def dobrodeev_1978(n: int):
     # from sympy import sqrt, factorial as fact, Rational as fr
 
     assert 2 <= n <= 20
@@ -72,7 +72,7 @@ def dobrodeev_1978(n):
     return UnScheme("Dobrodeev 1978", n, weights, points, degree, source)
 
 
-def _generate_i(n, i):
+def _generate_i(n: int, i: int):
     L = fact(n) // fact(i) // fact(n - i) * 2 ** i
     G = frac(1, L)
     a = sqrt(frac(3, n + 2))

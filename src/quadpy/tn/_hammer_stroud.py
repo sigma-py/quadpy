@@ -18,7 +18,7 @@ source = article(
 )
 
 
-def hammer_stroud_1a(n):
+def hammer_stroud_1a(n: int):
     degree = 2
     r = (n + 2 - sqrt(n + 2)) / (n + 1) / (n + 2)
     s = (n + 2 + n * sqrt(n + 2)) / (n + 1) / (n + 2)
@@ -28,7 +28,7 @@ def hammer_stroud_1a(n):
     return TnScheme("Hammer-Stround 1a", n, weights, points, degree, source)
 
 
-def hammer_stroud_1b(n):
+def hammer_stroud_1b(n: int):
     degree = 2
     r = (n + 2 + sqrt(n + 2)) / (n + 1) / (n + 2)
     s = (n + 2 - n * sqrt(n + 2)) / (n + 1) / (n + 2)
@@ -38,7 +38,7 @@ def hammer_stroud_1b(n):
     return TnScheme("Hammer-Stround 1b", n, weights, points, degree, source)
 
 
-def hammer_stroud_2(n):
+def hammer_stroud_2(n: int):
     degree = 3
 
     B = -frac((n + 1) ** 2, 4 * (n + 2))

@@ -26,8 +26,8 @@
     Inverse Problems, 1987, Volume 3, Number 4,
     <https://doi.org/10.1088/0266-5611/3/4/010>.
 """
-
 import math
+from typing import Optional
 
 import numpy as np
 import sympy
@@ -93,7 +93,7 @@ def _sympy_tridiag(a, b):
     return sympy.Matrix(A)
 
 
-def scheme_from_rc(alpha, beta, int_1, mode=None):
+def scheme_from_rc(alpha, beta, int_1, mode: Optional[str] = None):
     alpha = np.asarray(alpha)
     beta = np.asarray(beta)
 
@@ -106,13 +106,13 @@ def scheme_from_rc(alpha, beta, int_1, mode=None):
                 'Please specify the `mode` ("sympy", "numpy", or "mpmath").'
             )
 
-    if mode == "sympy":
-        return _scheme_from_rc_sympy(alpha, beta, int_1)
-    elif mode == "numpy":
-        return _scheme_from_rc_numpy(alpha, beta, int_1)
+    fun = {
+        "sympy": _scheme_from_rc_sympy,
+        "numpy": _scheme_from_rc_numpy,
+        "mpmath": _scheme_from_rc_mpmath,
+    }[mode]
 
-    assert mode == "mpmath"
-    return _scheme_from_rc_mpmath(alpha, beta, int_1)
+    return fun(alpha, beta, int_1)
 
 
 # Compute the Gauss nodes and weights from the recurrence coefficients associated with a

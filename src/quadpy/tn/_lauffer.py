@@ -15,13 +15,13 @@ source = article(
 )
 
 
-def lauffer_1(n):
+def lauffer_1(n: int):
     data = [(frac(1, n + 1), rd(n + 1, [(1, 1)]))]
     points, weights = untangle(data)
     return TnScheme("Lauffer 1", n, weights, points, 1, source)
 
 
-def lauffer_2(n):
+def lauffer_2(n: int):
     B = frac(2 - n, (n + 1) * (n + 2))
     C = frac(4, (n + 1) * (n + 2))
     data = [(B, rd(n + 1, [(1, 1)])), (C, rd(n + 1, [(frac(1, 2), 2)]))]
@@ -30,7 +30,7 @@ def lauffer_2(n):
     return TnScheme("Lauffer 2", n, weights, points, 2, source)
 
 
-def lauffer_3(n):
+def lauffer_3(n: int):
     B = frac(n ** 2 - 4 * n + 6, (n + 1) * (n + 2) * (n + 3))
     C = frac(27 - 9 * n, 2 * (n + 1) * (n + 2) * (n + 3))
     D = frac(27, (n + 1) * (n + 2) * (n + 3))
@@ -48,7 +48,7 @@ def lauffer_3(n):
     return TnScheme("Lauffer 3", n, weights, points, 3, source)
 
 
-def lauffer_4(n):
+def lauffer_4(n: int):
     assert n >= 3
 
     nprod = (n + 1) * (n + 2) * (n + 3) * (n + 4)
@@ -75,7 +75,7 @@ def lauffer_4(n):
     return TnScheme("Lauffer 4", n, weights, points, 4, source)
 
 
-def lauffer_5(n):
+def lauffer_5(n: int):
     assert n >= 4
 
     nprod = (n + 1) * (n + 2) * (n + 3) * (n + 4) * (n + 5)
