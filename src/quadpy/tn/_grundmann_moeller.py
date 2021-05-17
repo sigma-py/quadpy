@@ -17,7 +17,7 @@ source = article(
 )
 
 
-def grundmann_moeller(n, s):
+def grundmann_moeller(n: int, s: int):
     d = 2 * s + 1
 
     exponents = get_all_exponents(n + 1, s)

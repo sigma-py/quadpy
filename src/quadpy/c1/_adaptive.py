@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Callable, Optional, Tuple
 
 import numpy as np
 
@@ -14,19 +14,19 @@ class IntegrationError(Exception):
 
 
 def integrate_adaptive(
-    f,
+    f: Callable,
     intervals,
     eps_abs: Optional[float] = 1.0e-10,
     eps_rel: Optional[float] = 1.0e-10,
-    criteria_connection=np.any,
+    criteria_connection: Callable = np.any,
     # Use 21-point Gauss-Kronrod like QUADPACK
     # <https://en.wikipedia.org/wiki/QUADPACK#General-purpose_routines>
     kronrod_degree: int = 10,
     minimum_interval_length: float = 0.0,
     max_num_subintervals=np.inf,
-    dot=np.dot,
-    domain_shape=None,
-    range_shape=None,
+    dot: Callable = np.dot,
+    domain_shape: Optional[Tuple] = None,
+    range_shape: Optional[Tuple] = None,
 ):
     intervals = np.asarray(intervals)
     assert intervals.shape[0] == 2

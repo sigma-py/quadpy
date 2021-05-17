@@ -16,7 +16,7 @@ _source = article(
 )
 
 
-def lether(n):
+def lether(n: int):
     assert n >= 1
     p, w = np.polynomial.legendre.leggauss(n)
 

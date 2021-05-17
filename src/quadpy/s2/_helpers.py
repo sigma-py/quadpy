@@ -18,12 +18,12 @@ def register(in_schemes):
 class S2Scheme(QuadratureScheme):
     def __init__(
         self,
-        name,
+        name: str,
         symmetry_data,
         degree: int,
         source=None,
-        tol=1.0e-14,
-        weight_factor=None,
+        tol: float = 1.0e-14,
+        weight_factor: Optional[float] = None,
     ):
         self.domain = "S2"
         self.symmetry_data = symmetry_data

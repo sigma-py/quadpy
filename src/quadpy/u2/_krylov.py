@@ -20,7 +20,7 @@ sin = np.vectorize(sympy.sin)
 pi = sympy.pi
 
 
-def krylov(n):
+def krylov(n: int):
     weights = np.full(n, frac(1, n))
     alpha = 2 * np.arange(n) * pi / n
     points = np.column_stack([cos(alpha), sin(alpha)])
