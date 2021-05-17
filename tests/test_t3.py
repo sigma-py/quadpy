@@ -1,10 +1,10 @@
+import ndim
 import numpy as np
 import pytest
 import sympy
 from helpers import check_degree
 
 import quadpy
-from quadpy.tn._helpers import integrate_monomial_over_unit_simplex
 
 
 def _integrate_exact(f, t3):
@@ -57,7 +57,7 @@ def test_scheme(scheme):
 
     degree, err = check_degree(
         lambda poly: scheme.integrate(poly, t3),
-        integrate_monomial_over_unit_simplex,
+        ndim.nsimplex.integrate_monomial,
         3,
         scheme.degree + 1,
         scheme.test_tolerance * 1.1,

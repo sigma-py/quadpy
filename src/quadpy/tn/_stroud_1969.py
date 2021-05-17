@@ -1,9 +1,10 @@
+import ndim
 import numpy as np
 from sympy import Rational as frac
 from sympy import sqrt
 
 from ..helpers import article, rd, untangle
-from ._helpers import TnScheme, integrate_monomial_over_unit_simplex
+from ._helpers import TnScheme
 
 source = article(
     authors=["A.H. Stroud"],
@@ -45,11 +46,9 @@ def stroud_1969(n):
         pts.append(rd(n + 1, [(u2, n - 1), (v2, 2)]))
         k_range.append(5)
 
-    b0 = integrate_monomial_over_unit_simplex(n * [0], symbolic=True)
+    b0 = ndim.nsimplex.integrate_monomial(n * [0], symbolic=True)
     b = [
-        integrate_monomial_over_unit_simplex(
-            np.array([k] + (n - 1) * [0]), symbolic=True
-        )
+        ndim.nsimplex.integrate_monomial(np.array([k] + (n - 1) * [0]), symbolic=True)
         / b0
         for k in k_range
     ]
