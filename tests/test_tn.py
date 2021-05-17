@@ -1,9 +1,9 @@
+import ndim
 import numpy as np
 import pytest
 from helpers import check_degree
 
 import quadpy
-from quadpy.tn._helpers import integrate_monomial_over_unit_simplex
 
 
 @pytest.mark.parametrize(
@@ -56,7 +56,7 @@ def test_scheme(scheme):
         simplex[k + 1, k] = 1
     degree, err = check_degree(
         lambda poly: scheme.integrate(poly, simplex),
-        integrate_monomial_over_unit_simplex,
+        ndim.nsimplex.integrate_monomial,
         n,
         scheme.degree + 1,
         tol=scheme.test_tolerance,
