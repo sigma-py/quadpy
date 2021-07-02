@@ -29,8 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # no vtk on python 3.9
-        python-version: [3.6, 3.7, 3.8]
+        python-version: [3.6, 3.7, 3.8, 3.9]
     steps:
     - uses: actions/setup-python@v2
       with:
@@ -46,4 +45,4 @@ jobs:
         pip install tox
         tox -- --cov quadpy --cov-report xml --cov-report term
     - uses: codecov/codecov-action@v1
-      if: ${{ matrix.python-version == '3.8' }}
+      if: ${{ matrix.python-version == '3.9' }}
