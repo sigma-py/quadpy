@@ -15,7 +15,7 @@ source = article(
     number="4",
     year="1978",
     pages="27-34",
-    url="https://doi.org/10.1016/0041-5553(78)90064-2",
+    url="https://doi.org/10.1016/0041-5553%2878%2990064-2",
 )
 
 

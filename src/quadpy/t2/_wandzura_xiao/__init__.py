@@ -12,7 +12,7 @@ source = article(
     month="jun",
     year="2003",
     pages="1829-1840",
-    url="https://doi.org/10.1016/S0898-1221(03)90004-6",
+    url="https://doi.org/10.1016/S0898-1221%2803%2990004-6",
 )
 # Note that in the above article, the authors present the coordinates in the symmetric
 # triangle [[-0.5, -sqrt(3)/2], [-0.5, +sqrt(3)/2], [1, 0]]. These have been transformed

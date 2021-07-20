@@ -18,7 +18,7 @@ c2 = article(
     journal="ACM Trans. Math. Softw.",
     month="sep",
     year="1992",
-    url="https://dl.acm.org/source.cfm?id=131772",
+    url="https://doi.org/10.1145/131766.131772",
 )
 
 this_dir = pathlib.Path(__file__).resolve().parent

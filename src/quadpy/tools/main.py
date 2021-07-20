@@ -4,7 +4,7 @@
     Mathematics of Computation,
     Vol. 23, No. 106 (Apr., 1969), pp. 221-230+s1-s10,
     <https://doi.org/10.1090/S0025-5718-69-99647-1>,
-    <https://www.semanticscholar.org/paper/Calculation-of-Gauss-Quadrature-Rules-*-By-Gene-Golub-Welsch/c715119d5464f614fd8ec590b732ccfea53e72c4?p2df>.
+    <https://www.semanticscholar.org/paper/Calculation-of-Gauss-Quadrature-Rules-%2A-By-Gene-Golub-Welsch/c715119d5464f614fd8ec590b732ccfea53e72c4?p2df>.
 
 [2] W. Gautschi,
     Algorithm 726: ORTHPOL–a package of routines for generating orthogonal polynomials

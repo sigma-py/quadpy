@@ -20,8 +20,7 @@ def _integrate_exact(f, t3):
     # and T0 being the reference t3 [(0.0, 0.0), (1.0, 0.0), (0.0,
     # 1.0)].
     # The determinant of the transformation matrix J equals twice the volume of
-    # the t3. (See, e.g.,
-    # <http://math2.uncc.edu/~shaodeng/TEACHING/math5172/Lectures/Lect_15.PDF>).
+    # the t3.
     #
     xi = sympy.DeferredVector("xi")
     x_xi = (

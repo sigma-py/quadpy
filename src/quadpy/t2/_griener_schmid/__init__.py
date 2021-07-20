@@ -10,7 +10,7 @@ source = article(
     volume="112",
     year="1999",
     pages="83-94",
-    url="https://doi.org/10.1016/S0377-0427(99)00215-0",
+    url="https://doi.org/10.1016/S0377-0427%2899%2900215-0",
 )
 
 # source2 = article(

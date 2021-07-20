@@ -13,7 +13,7 @@ source = article(
     number="1",
     year="1980",
     pages="17-27",
-    url="https://doi.org/10.1016/0010-4655(80)90102-2",
+    url="https://doi.org/10.1016/0010-4655%2880%2990102-2",
 )
 
 

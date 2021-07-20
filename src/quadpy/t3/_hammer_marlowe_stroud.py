@@ -30,7 +30,7 @@ source = article(
 #     publisher="Butterworth-Heinemann",
 #     year="2005",
 #     isbn="0750663200",
-#     url="http://www.sciencedirect.com/science/book/9780750664318",
+#     url="https://www.sciencedirect.com/book/9780750664318/the-finite-element-method-set",
 # )
 
 
