@@ -48,8 +48,7 @@ class U3Scheme(QuadratureScheme):
         from matplotlib import pyplot as plt
         from mpl_toolkits.mplot3d import Axes3D
 
-        fig = plt.figure()
-        ax = fig.gca(projection=Axes3D.name)
+        ax = plt.axes(projection=Axes3D.name)
         # ax.set_aspect("equal")
 
         for p, w in zip(self.points.T, self.weights):
@@ -60,6 +59,7 @@ class U3Scheme(QuadratureScheme):
             _plot_spherical_cap_mpl(ax, p, theta, color)
 
         ax.set_axis_off()
+        return plt
 
     def integrate(self, f, center, radius, dot=np.dot):
         """Quadrature where `f` is defined in Cartesian coordinates."""

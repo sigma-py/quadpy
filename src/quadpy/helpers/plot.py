@@ -83,8 +83,7 @@ def show_mpl(points, weights, volume, edges, balls=None):
 
     balls = [] if balls is None else balls
 
-    fig = plt.figure()
-    ax = fig.gca(projection=Axes3D.name)
+    ax = plt.axes(projection=Axes3D.name)
     # ax.set_aspect("equal")
     ax.set_axis_off()
 
@@ -105,7 +104,6 @@ def show_mpl(points, weights, volume, edges, balls=None):
         plot_spheres(plt, ax, [ball[0]], [ball[1]], ["#dddddd"])
 
     plt.show()
-    return
 
 
 # def show_mayavi(points, weights, volume, edges, balls=None):

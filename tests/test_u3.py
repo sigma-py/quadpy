@@ -2,7 +2,6 @@ import numpy as np
 import orthopy
 import pytest
 from helpers import find_best_scheme
-from matplotlib import pyplot as plt
 
 import quadpy
 
@@ -92,9 +91,10 @@ def test_scheme_spherical(scheme):
     )
 
 
-@pytest.mark.parametrize("scheme", [quadpy.u3.schemes["lebedev_007"]()])
-def test_show(scheme):
-    scheme.show()
+def test_show():
+    scheme = quadpy.u3.schemes["lebedev_007"]()
+    plt = scheme.plot()
+    plt.show()
     plt.close()
 
 
@@ -125,4 +125,4 @@ def test_get_good_scheme():
 
 
 if __name__ == "__main__":
-    test_get_good_scheme()
+    test_show()
