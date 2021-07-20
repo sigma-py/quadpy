@@ -9,7 +9,7 @@ source = article(
     volume="21",
     number="5",
     pages="881-885",
-    url="https://doi.org/10.1016/0045-7949(85)90198-1",
+    url="https://doi.org/10.1016/0045-7949%2885%2990198-1",
 )
 
 

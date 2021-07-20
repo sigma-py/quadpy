@@ -12,7 +12,7 @@ source = article(
     month="oct",
     year="1969",
     pages="765-779",
-    url="https://doi.org/10.2307/2004962",
+    url="https://doi.org/10.1090/S0025-5718-1969-0258281-4",
 )
 
 this_dir = pathlib.Path(__file__).resolve().parent

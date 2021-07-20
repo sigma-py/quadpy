@@ -129,7 +129,8 @@ def test_scheme(scheme):
 
 @pytest.mark.parametrize("scheme", [quadpy.w3.felippa_4()])
 def test_show(scheme):
-    scheme.show(backend="mpl")
+    plt = scheme.show(backend="mpl")
+    plt.close()
 
 
 if __name__ == "__main__":

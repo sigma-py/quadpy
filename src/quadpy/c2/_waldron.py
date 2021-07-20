@@ -10,7 +10,7 @@ source = techreport(
     note="CMS Technical Summary Report",
     month="oct",
     year="1994",
-    url="http://ftp.cs.wisc.edu/Approx/symmetries.pdf",
+    url="https://www.semanticscholar.org/paper/Symmetries-of-Linear-Functionals-Waldron/086b084bac739c4616a06cc503dfcbda9f3cc7e8",
 )
 
 

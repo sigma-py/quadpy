@@ -69,7 +69,7 @@ class U3Scheme(QuadratureScheme):
         if frr.shape[-len(rr.shape[1:]) :] != rr.shape[1:]:
             string = ", ".join(str(val) for val in rr.shape[1:])
             raise QuadpyError(
-                f"Wrong return value shape {frr.shape}. " f"Expected (..., {string})."
+                f"Wrong return value shape {frr.shape}. Expected (..., {string})."
             )
         return area(radius) * dot(frr, self.weights)
 

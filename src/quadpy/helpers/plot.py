@@ -104,6 +104,7 @@ def show_mpl(points, weights, volume, edges, balls=None):
         plot_spheres(plt, ax, [ball[0]], [ball[1]], ["#dddddd"])
 
     plt.show()
+    return plt
 
 
 # def show_mayavi(points, weights, volume, edges, balls=None):

@@ -787,7 +787,7 @@ def _get_weights(pts):
         T.N.L. Patterson,
         On some Gauss and Lobatto based integration formulae,
         Math. Comp. 22 (1968), 877-881,
-        https://doi.org/10.2307/2004589,
+        https://doi.org/10.1090/S0025-5718-68-99865-7,
 
     one can compute the corresponding weights. One reads there:
 

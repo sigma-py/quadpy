@@ -13,7 +13,7 @@ _source = article(
     volume="51",
     year="1994",
     pages="251-262",
-    url="https://doi.org/10.1016/0377-0427(92)00007-V",
+    url="https://doi.org/10.1016/0377-0427%2892%2900007-V",
 )
 
 

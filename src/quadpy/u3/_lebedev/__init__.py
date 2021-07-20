@@ -14,7 +14,7 @@ sources = [
         volume="15",
         year="1975",
         pages="44-51",
-        url="https://doi.org/10.1016/0041-5553(75)90133-0",
+        url="https://doi.org/10.1016/0041-5553%2875%2990133-0",
     ),
     article(
         authors=["V.I. Lebedev"],
@@ -24,7 +24,7 @@ sources = [
         volume="16",
         number="2",
         pages="293–306",
-        url="https://doi.org/10.1016/0041-5553(76)90100-2",
+        url="https://doi.org/10.1016/0041-5553%2876%2990100-2",
     ),
     article(
         authors=["V.I. Lebedev"],

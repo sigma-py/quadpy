@@ -12,7 +12,7 @@ source = article(
     journal="Journal of Computational and Applied Mathematics",
     year="1997",
     pages="15-21",
-    url="https://doi.org/10.1016/S0377-0427(97)00094-0",
+    url="https://doi.org/10.1016/S0377-0427%2897%2900094-0",
 )
 
 

@@ -15,7 +15,7 @@ source = article(
     pages="339-348",
     month="may",
     year="1986",
-    url="https://doi.org/10.1016/0045-7825(86)90059-9",
+    url="https://doi.org/10.1016/0045-7825%2886%2990059-9",
 )
 
 # https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_tet/quadrature_rules_tet.html

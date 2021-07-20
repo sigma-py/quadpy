@@ -94,7 +94,7 @@ def compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k, symbolic=False):
     respect to symmetric domains,
     USSR Computational Mathematics and Mathematical Physics,
     Volume 18, Issue 4, 1978, Pages 27-34,
-    <https://doi.org/10.1016/0041-5553(78)90064-2>.
+    <https://doi.org/10.1016/0041-5553%2878%2990064-2>.
     """
     t = 1 if pm_type == "I" else -1
 
