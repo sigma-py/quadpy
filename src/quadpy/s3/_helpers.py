@@ -23,7 +23,7 @@ class S3Scheme(QuadratureScheme):
 
     def show(self, backend="vtk", **kwargs):
         """Displays scheme for 3D ball quadrature."""
-        backend_to_function[backend](
+        return backend_to_function[backend](
             self.points,
             self.weights,
             volume=4.0 / 3.0 * pi,
@@ -41,7 +41,7 @@ class S3Scheme(QuadratureScheme):
         if ff.shape[-len(x.shape[1:]) :] != x.shape[1:]:
             string = ", ".join(str(val) for val in x.shape[1:])
             raise QuadpyError(
-                f"Wrong return value shape {ff.shape}. " f"Expected (..., {string})."
+                f"Wrong return value shape {ff.shape}. Expected (..., {string})."
             )
         return 4 / 3 * pi * np.asarray(radius) ** 3 * dot(ff, self.weights)
 

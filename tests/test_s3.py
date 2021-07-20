@@ -2,7 +2,6 @@ import ndim
 import numpy as np
 import pytest
 from helpers import check_degree, find_best_scheme
-from matplotlib import pyplot as plt
 
 import quadpy
 
@@ -32,14 +31,13 @@ def test_scheme(scheme):
 
 def test_show(backend="mpl"):
     scheme = quadpy.s3.schemes["hammer_stroud_11_3"]()
-    scheme.show(backend=backend)
+    plt = scheme.show(backend=backend)
     plt.close()
 
 
 def test_show_vtk():
     scheme = quadpy.s3.schemes["hammer_stroud_11_3"]()
     scheme.show(backend="vtk", render=False)
-    plt.close()
 
 
 def test_get_good_scheme():
