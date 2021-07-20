@@ -6,7 +6,7 @@ from .._helpers import _read, register
 _source = online(
     authors=["Alvise Sommariva"],
     year="2012",
-    url="http://www.math.unipd.it/~alvise/sets.html",
+    url="https://www.math.unipd.it/~alvise/sets.html",
 )
 
 this_dir = pathlib.Path(__file__).resolve().parent

@@ -14,7 +14,7 @@ _source = article(
     month="apr",
     year="1968",
     pages="271-274",
-    url="https://doi.org/10.2307/2004655",
+    url="https://doi.org/10.1090/S0025-5718-1968-0232541-4",
 )
 
 
