@@ -40,13 +40,12 @@ class W3Scheme(QuadratureScheme):
         )
         edges = np.moveaxis(edges, 1, 2)
 
-        backend_to_function[backend](
+        return backend_to_function[backend](
             _transform(self.points.T, wedge).T,
             self.weights,
-            self.integrate(lambda x: np.ones(1), wedge),
+            self.integrate(lambda _: np.ones(1), wedge),
             edges,
         )
-        return
 
 
 def _transform(xi, wedge):

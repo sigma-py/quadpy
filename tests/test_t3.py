@@ -80,7 +80,7 @@ def test_show(scheme):
             [0.0, 0.0, 1.0],
         ]
     )
-    scheme.show(tet, render=False)
+    scheme.show(tet, backend="vtk", render=False)
 
 
 @pytest.mark.skip()
