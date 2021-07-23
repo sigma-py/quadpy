@@ -1,5 +1,4 @@
 import math
-from distutils.version import LooseVersion
 
 import numpy as np
 import orthopy
@@ -7,6 +6,7 @@ import pytest
 import scipy
 import sympy
 from mpmath import mp
+from packaging import version
 
 import quadpy
 
@@ -66,7 +66,8 @@ def test_gauss_numpy():
 
 
 @pytest.mark.skipif(
-    LooseVersion(scipy.__version__) < LooseVersion("1.0.0"), reason="Requires SciPy 1.0"
+    version.parse(scipy.__version__) < version.parse("1.0.0"),
+    reason="requires scipy 1.0 or higher",
 )
 def test_jacobi_reconstruction(tol=1.0e-14):
     n = 4
@@ -139,7 +140,7 @@ def test_gautschi_how_to_and_how_not_to():
         [3.0 ** ((k - 2) / 3.0) * math.gamma((k + 1) / 3.0) for k in range(2 * n)]
     )
 
-    alpha, beta = quadpy.tools.coefficients_from_gauss(points, weights)
+    alpha, beta, _ = quadpy.tools.coefficients_from_gauss(points, weights)
     # alpha, beta = quadpy.tools.chebyshev(moments)
 
     errors_alpha, errors_beta = orthopy.tools.gautschi_test_3(moments, alpha, beta)
