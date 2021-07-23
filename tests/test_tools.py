@@ -1,5 +1,4 @@
 import math
-from distutils.version import LooseVersion
 
 import numpy as np
 import orthopy
@@ -7,6 +6,7 @@ import pytest
 import scipy
 import sympy
 from mpmath import mp
+from packaging import version
 
 import quadpy
 
@@ -65,9 +65,7 @@ def test_gauss_numpy():
     assert (abs(weights - [w, v, u, v, w]) < tol).all()
 
 
-@pytest.mark.skipif(
-    LooseVersion(scipy.__version__) < LooseVersion("1.0.0"), reason="Requires SciPy 1.0"
-)
+@pytest.mark.skipif(version.parse(scipy.__version__) < version.parse("1.0.0"))
 def test_jacobi_reconstruction(tol=1.0e-14):
     n = 4
     rc = orthopy.c1.jacobi.RecurrenceCoefficients(
