@@ -65,7 +65,10 @@ def test_gauss_numpy():
     assert (abs(weights - [w, v, u, v, w]) < tol).all()
 
 
-@pytest.mark.skipif(version.parse(scipy.__version__) < version.parse("1.0.0"))
+@pytest.mark.skipif(
+    version.parse(scipy.__version__) < version.parse("1.0.0"),
+    reason="requires scipy 1.0 or higher",
+)
 def test_jacobi_reconstruction(tol=1.0e-14):
     n = 4
     rc = orthopy.c1.jacobi.RecurrenceCoefficients(
@@ -137,7 +140,7 @@ def test_gautschi_how_to_and_how_not_to():
         [3.0 ** ((k - 2) / 3.0) * math.gamma((k + 1) / 3.0) for k in range(2 * n)]
     )
 
-    alpha, beta = quadpy.tools.coefficients_from_gauss(points, weights)
+    alpha, beta, _ = quadpy.tools.coefficients_from_gauss(points, weights)
     # alpha, beta = quadpy.tools.chebyshev(moments)
 
     errors_alpha, errors_beta = orthopy.tools.gautschi_test_3(moments, alpha, beta)
