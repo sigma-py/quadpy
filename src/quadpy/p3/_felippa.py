@@ -60,8 +60,8 @@ def felippa_5():
     degree = 2
     w1 = (11764 - 461 * sqrt(51)) / 15300
     w2 = frac(346, 225) - w1
-    g1, g2 = [sqrt(frac(2, 15) * (573 - i * 2 * sqrt(51))) / 15 for i in [+1, -1]]
-    g3, g4 = [-i * (2 * sqrt(51) + i * 13) / 35 for i in [+1, -1]]
+    g1, g2 = (sqrt(frac(2, 15) * (573 - i * 2 * sqrt(51))) / 15 for i in [+1, -1])
+    g3, g4 = (-i * (2 * sqrt(51) + i * 13) / 35 for i in [+1, -1])
     data = [(w1, _s4(g1, g3)), (w2, _s4(g2, g4))]
     points, weights = untangle(data)
     return P3Scheme("Felippa 5", weights, points, degree, source)
@@ -74,7 +74,7 @@ def felippa_6():
 
     g1 = 8 * sqrt((573 + 5 * sqrt(2865)) / (109825 + 969 * sqrt(2865)))
     g2 = sqrt(2 * (8025 + sqrt(2865)) / 35) / 37
-    g3, g4 = [-i * (+i * 87 + sqrt(2865)) / 168 for i in [+1, -1]]
+    g3, g4 = (-i * (+i * 87 + sqrt(2865)) / 168 for i in [+1, -1])
 
     data = [
         (w1, _s4(g1, g3)),

@@ -17,7 +17,7 @@ source = article(
 
 def maxwell():
     r = sqrt(frac(12, 35))
-    s, t = [sqrt((93 + i * 3 * sqrt(186)) / 155) for i in [+1, -1]]
+    s, t = (sqrt((93 + i * 3 * sqrt(186)) / 155) for i in [+1, -1])
 
     d = {
         "zero2": [[frac(1, 81)]],

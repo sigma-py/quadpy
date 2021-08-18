@@ -40,9 +40,9 @@ def felippa_3():
 
 def felippa_4():
     # roots of  135 x^4 - 240 x^3 + 120 x^2 - 20 x + 1
-    a1, a2 = [
+    a1, a2 = (
         (40 - 5 * sqrt(10) - i * sqrt(950 - 220 * sqrt(10))) / 90 for i in [+1, -1]
-    ]
+    )
     data = [
         (0.6205044157722541e-01, _s21_z(a2, sqrt(frac(3, 5)))),
         (0.3054215101536719e-01, _s21_z(a1, sqrt(frac(3, 5)))),
@@ -54,7 +54,7 @@ def felippa_4():
 
 
 def felippa_5():
-    a1, a2 = [(6 - i * sqrt(15)) / 21 for i in [+1, -1]]
+    a1, a2 = ((6 - i * sqrt(15)) / 21 for i in [+1, -1])
     data = [
         (0.3498310570689643e-01, _s21_z(a1, np.sqrt(3.0 / 5.0))),
         (0.3677615355236283e-01, _s21_z(a2, np.sqrt(3.0 / 5.0))),

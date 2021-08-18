@@ -54,7 +54,7 @@ def data_to_code(data, f):
         if len(item["data"][0]) > 0:
             print(8 * " " + "'s3': [")
             for d0 in item["data"][0]:
-                print(12 * " " + "[{:.16e}],".format(d0[0]))
+                print(12 * " " + f"[{d0[0]:.16e}],")
             print(12 * " " + "],")
 
         # for d1 in item['data'][1]:
@@ -85,7 +85,7 @@ def data_to_json(data, f):
             if len(item["data"][0]) > 0:
                 fh.write('  "s3": [')
                 for d0 in item["data"][0]:
-                    fh.write("    [{:+.16e}],\n".format(d0[0]))
+                    fh.write(f"    [{d0[0]:+.16e}],\n")
                 fh.write("  ],\n")
 
             if len(item["data"][1]) > 0:
@@ -96,7 +96,7 @@ def data_to_json(data, f):
                         alpha = d1[0]
                     else:
                         alpha = d1[2]
-                    fh.write("    [{:.16e}, {:.16e}],\n".format(d1[0], alpha))
+                    fh.write(f"    [{d1[0]:.16e}, {alpha:.16e}],\n")
                 fh.write("  ],\n")
 
             if len(item["data"][2]) > 0:

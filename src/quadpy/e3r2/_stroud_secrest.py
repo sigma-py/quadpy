@@ -23,7 +23,7 @@ def stroud_secrest_07():
     # B = 1/30
 
     # book:
-    nu, xi = [sqrt((5 - p_m * sqrt(5)) / 4) for p_m in [+1, -1]]
+    nu, xi = (sqrt((5 - p_m * sqrt(5)) / 4) for p_m in [+1, -1])
     A = frac(2, 5)
     B = frac(1, 20)
 
@@ -53,7 +53,7 @@ def stroud_secrest_08b():
 
 
 def stroud_secrest_09():
-    r, s = [sqrt((15 - p_m * 5 * sqrt(5)) / 12) for p_m in [+1, -1]]
+    r, s = (sqrt((15 - p_m * 5 * sqrt(5)) / 12) for p_m in [+1, -1])
     t = sqrt(frac(5, 6))
     d = {
         "zero3": [[frac(2, 5)]],

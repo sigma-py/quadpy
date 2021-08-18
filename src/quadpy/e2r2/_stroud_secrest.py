@@ -29,9 +29,9 @@ def stroud_secrest_5():
 def stroud_secrest_6():
     sqrt5 = sqrt(5)
     nu = sqrt(3)
-    xi, eta = [sqrt((9 - p_m * 3 * sqrt5) / 8) for p_m in [+1, -1]]
+    xi, eta = (sqrt((9 - p_m * 3 * sqrt5) / 8) for p_m in [+1, -1])
     A = frac(1, 36)
-    B, C = [(5 + p_m * 2 * sqrt5) / 45 for p_m in [+1, -1]]
+    B, C = ((5 + p_m * 2 * sqrt5) / 45 for p_m in [+1, -1])
 
     d = {"d4_a0": [[A], [nu]], "d4_aa": [[B, C], [xi, eta]]}
     return E2r2Scheme("Stroud-Secrest VI", d, 7, _source, 6.661e-16)

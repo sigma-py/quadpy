@@ -19,10 +19,10 @@ source = article(
 
 def phillips():
     c = 3 * sqrt(385)
-    r, s = [sqrt((105 + i * c) / 140) for i in [+1, -1]]
+    r, s = (sqrt((105 + i * c) / 140) for i in [+1, -1])
     t = sqrt(frac(3, 5))
 
-    B1, B2 = [(77 - i * c) / 891 for i in [+1, -1]]
+    B1, B2 = ((77 - i * c) / 891 for i in [+1, -1])
     B3 = frac(25, 324)
 
     d = {

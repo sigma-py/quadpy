@@ -17,7 +17,7 @@ source = article(
 
 
 def albrecht_collatz_1():
-    r, s = [sqrt((5 + t * sqrt(5)) / 10) for t in [+1, -1]]
+    r, s = (sqrt((5 + t * sqrt(5)) / 10) for t in [+1, -1])
     data = {"rs0": [frac(1, 12), r, s]}
     return U3Scheme("Albrecht-Collatz 1", data, 5, source)
 
@@ -33,7 +33,7 @@ def albrecht_collatz_3():
 
 
 def albrecht_collatz_4():
-    r, s = [sqrt((3 + t * sqrt(5)) / 6) for t in [+1, -1]]
+    r, s = (sqrt((3 + t * sqrt(5)) / 6) for t in [+1, -1])
     data = {"rs0": [frac(1, 20), r, s], "a3": [frac(1, 20)]}
     return U3Scheme("Albrecht-Collatz 4", data, 5, source)
 

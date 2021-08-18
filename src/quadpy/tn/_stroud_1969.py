@@ -25,12 +25,12 @@ def stroud_1969(n):
     sqrt15 = sqrt(15)
 
     t = frac(1, n + 1)
-    r1, r2 = [(n + 4 - pm * sqrt15) / (n ** 2 + 8 * n + 1) for pm in [+1, -1]]
-    s1, s2 = [(4 * n + 1 + pm * n * sqrt15) / (n ** 2 + 8 * n + 1) for pm in [+1, -1]]
-    u1, u2 = [(n + 7 + pm * 2 * sqrt15) / (n ** 2 + 14 * n - 11) for pm in [+1, -1]]
-    v1, v2 = [
+    r1, r2 = ((n + 4 - pm * sqrt15) / (n ** 2 + 8 * n + 1) for pm in [+1, -1])
+    s1, s2 = ((4 * n + 1 + pm * n * sqrt15) / (n ** 2 + 8 * n + 1) for pm in [+1, -1])
+    u1, u2 = ((n + 7 + pm * 2 * sqrt15) / (n ** 2 + 14 * n - 11) for pm in [+1, -1])
+    v1, v2 = (
         (4 * n - 2 - pm * (n - 1) * sqrt15) / (n ** 2 + 14 * n - 11) for pm in [+1, -1]
-    ]
+    )
 
     # Solve linear equation system for x^k, k={0, 2, 3, 4, 5}, for the
     # weights (the same is done in Stroud's article).

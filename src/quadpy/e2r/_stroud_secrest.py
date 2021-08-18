@@ -32,9 +32,9 @@ def stroud_secrest_6():
     sqrt74255 = sqrt(74255)
 
     nu = sqrt(42)
-    xi, eta = [sqrt((6615 - p_m * 21 * sqrt74255) / 454) for p_m in [+1, -1]]
+    xi, eta = (sqrt((6615 - p_m * 21 * sqrt74255) / 454) for p_m in [+1, -1])
     A = frac(5, 588)
-    B, C = [(5272105 + p_m * 18733 * sqrt74255) / 43661940 for p_m in [+1, -1]]
+    B, C = ((5272105 + p_m * 18733 * sqrt74255) / 43661940 for p_m in [+1, -1])
 
     d = {
         "d4_a0": [[A], [nu]],

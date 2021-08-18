@@ -17,7 +17,7 @@ def data_to_code(data, f):
         if len(item["data"][0]) > 0:
             print(8 * " " + "'s3': [")
             for d0 in item["data"][0]:
-                print(12 * " " + "[{:.16e}],".format(d0[0]))
+                print(12 * " " + f"[{d0[0]:.16e}],")
             print(12 * " " + "],")
 
         # for d1 in item['data'][1]:

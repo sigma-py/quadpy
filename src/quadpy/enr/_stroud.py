@@ -43,7 +43,7 @@ def stroud_enr_5_3(n):
         Bk = frac(2 ** (k - n) * (n + 1), (k + 1) * (k + 2) * (n + 3))
         arr = (k - 1) * [0] + [rk] + (n - k) * [s]
         data += [(Bk, pm(arr))]
-    B0 = 1 - sum([item[0] * len(item[1]) for item in data])
+    B0 = 1 - sum(item[0] * len(item[1]) for item in data)
     data += [(B0, np.full((1, n), 0))]
 
     points, weights = untangle(data)

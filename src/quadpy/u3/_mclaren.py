@@ -28,7 +28,7 @@ def mclaren_01():
 def mclaren_02():
     degree = 5
     r = frac(1, 2)
-    s, t = [(sqrt(5) + pm_) / 4 for pm_ in [+1, -1]]
+    s, t = ((sqrt(5) + pm_) / 4 for pm_ in [+1, -1])
     data = {"a1": [frac(1, 30)], "rst": [frac(1, 30), r, s, t]}
     return U3Scheme("McLaren 2", data, degree, source)
 
@@ -68,8 +68,8 @@ def mclaren_04():
 def mclaren_05():
     degree = 9
 
-    r, s = [sqrt((5 + pm_ * sqrt(5)) / 10) for pm_ in [+1, -1]]
-    u, v = [sqrt((3 - pm_ * sqrt(5)) / 6) for pm_ in [+1, -1]]
+    r, s = (sqrt((5 + pm_ * sqrt(5)) / 10) for pm_ in [+1, -1])
+    u, v = (sqrt((3 - pm_ * sqrt(5)) / 6) for pm_ in [+1, -1])
 
     B1 = frac(25, 840)
     B2 = frac(27, 840)
@@ -81,9 +81,9 @@ def mclaren_05():
 def mclaren_06():
     degree = 9
 
-    r, s = [sqrt((5 + pm_ * sqrt(5)) / 10) for pm_ in [+1, -1]]
+    r, s = (sqrt((5 + pm_ * sqrt(5)) / 10) for pm_ in [+1, -1])
     u = frac(1, 2)
-    v, w = [(sqrt(5) + pm_) / 4 for pm_ in [+1, -1]]
+    v, w = ((sqrt(5) + pm_) / 4 for pm_ in [+1, -1])
 
     B = frac(25, 1260)
     C = frac(32, 1260)
@@ -96,10 +96,10 @@ def mclaren_06():
 def mclaren_07():
     degree = 9
 
-    r, s = [sqrt((3 - pm_ * sqrt(5)) / 6) for pm_ in [+1, -1]]
+    r, s = (sqrt((3 - pm_ * sqrt(5)) / 6) for pm_ in [+1, -1])
     # ERR Stroud incorrectly gives sqrt(0.5)
     u = frac(1, 2)
-    v, w = [(sqrt(5) + pm_) / 4 for pm_ in [+1, -1]]
+    v, w = ((sqrt(5) + pm_) / 4 for pm_ in [+1, -1])
 
     B = -frac(9, 140)
     C = frac(16, 210)
@@ -128,11 +128,11 @@ def mclaren_09():
 
     sqrt5 = sqrt(5)
 
-    p, q = [sqrt((5 + pm_ * sqrt5) / 10) for pm_ in [+1, -1]]
-    r, s = [sqrt((3 - pm_ * sqrt5) / 6) for pm_ in [+1, -1]]
+    p, q = (sqrt((5 + pm_ * sqrt5) / 10) for pm_ in [+1, -1])
+    r, s = (sqrt((3 - pm_ * sqrt5) / 6) for pm_ in [+1, -1])
 
     u = frac(1, 2)
-    v, w = [(sqrt(5) + pm_) / 4 for pm_ in [+1, -1]]
+    v, w = ((sqrt(5) + pm_) / 4 for pm_ in [+1, -1])
 
     B = frac(625, 27720)
     C = frac(243, 27720)
@@ -145,7 +145,7 @@ def mclaren_09():
 def mclaren_10():
     degree = 14
 
-    r, s = [sqrt((5 - pm_ * sqrt(5)) / 10) for pm_ in [+1, -1]]
+    r, s = (sqrt((5 - pm_ * sqrt(5)) / 10) for pm_ in [+1, -1])
     B = frac(125, 10080)
     C = frac(143, 10080)
 

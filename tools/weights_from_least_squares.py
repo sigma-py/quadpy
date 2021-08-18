@@ -101,7 +101,7 @@ if __name__ == "__main__":
     factor = 1
     (x, _, rank, sv), res = e2r_compute_weights(scheme.points.T, 13)
 
-    print("num unknowns: {}".format(len(x)))
+    print(f"num unknowns: {len(x)}")
     print(f"rank A: {rank}")
     res_norm = np.sqrt(np.dot(res, res))
     print(f"res norm: {res_norm}")
@@ -113,7 +113,7 @@ if __name__ == "__main__":
     print()
     print("solution:")
     for val in x:
-        print("  {:.15e}".format(factor * val))
+        print(f"  {factor * val:.15e}")
 
     print()
     print("hardcoded weights:")

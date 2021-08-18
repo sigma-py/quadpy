@@ -74,9 +74,9 @@ def stroud_1967_7_4(n, symbolic=False):
     assert n >= 3
 
     sqrt2n2 = sqrt(2 * (n + 2))
-    r1, r2 = [sqrt((n + 2 - p_m * sqrt2n2) / 2) for p_m in [+1, -1]]
+    r1, r2 = (sqrt((n + 2 - p_m * sqrt2n2) / 2) for p_m in [+1, -1])
     g = gamma_n_2(n, symbolic)
-    A1, A2 = [(n + 2 + p_m * sqrt2n2) / 4 / (n + 2) * g for p_m in [+1, -1]]
+    A1, A2 = ((n + 2 + p_m * sqrt2n2) / 4 / (n + 2) * g for p_m in [+1, -1])
 
     s = un.stroud_1967(n)
 
