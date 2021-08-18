@@ -18,7 +18,7 @@ def get_symmetry_code_tri(pts):
     assert len(pts) == 6
     # Take the two largest value from a, b, c.
     pt0 = np.sort(pts[0])
-    return "_s111({:.15e}, {:.15e})".format(pt0[2], pt0[1])
+    return f"_s111({pt0[2]:.15e}, {pt0[1]:.15e})"
 
 
 def get_symmetry_code_tet(pts):
@@ -31,13 +31,13 @@ def get_symmetry_code_tet(pts):
         beta = pts[0] - pts[0][0]
         ct = np.count_nonzero(abs(beta) < tol)
         if ct == 1:
-            return "_s31({:.15e})".format(pts[0][1])
+            return f"_s31({pts[0][1]:.15e})"
         else:
             assert ct == 3
-            return "_s31({:.15e})".format(pts[0][0])
+            return f"_s31({pts[0][0]:.15e})"
     elif len(pts) == 6:
         # Symmetry group [[a, a, b, b], [a, b, b, a], ...].
-        return "_s22({:.15e})".format(pts[0][0])
+        return f"_s22({pts[0][0]:.15e})"
     elif len(pts) == 12:
         # Symmetry group [[a, a, b, c], [a, c, a, b], ...].
         # Find the double.
@@ -47,9 +47,9 @@ def get_symmetry_code_tet(pts):
             beta = pt0 - pt0[k]
             ct = np.count_nonzero(abs(beta) < tol)
             if ct == 2:
-                return "_s211({:.15e}, {:.15e})".format(pt0[k], pt0[k - 1])
+                return f"_s211({pt0[k]:.15e}, {pt0[k - 1]:.15e})"
 
     print(len(pts))
     assert len(pts) == 24
     pt0 = np.sort(pts[0])
-    return "_s1111({:.15e}, {:.15e}, {:.15e})".format(pt0[-1], pt0[-2], pt0[-3])
+    return f"_s1111({pt0[-1]:.15e}, {pt0[-2]:.15e}, {pt0[-3]:.15e})"

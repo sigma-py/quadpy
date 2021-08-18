@@ -34,7 +34,7 @@ def fsd(n, *tuples):
     times the number `value`.
     """
     pm_tuples = [((+val, -val), count) for val, count in tuples]
-    total_count = sum([item[1] for item in tuples])
+    total_count = sum(item[1] for item in tuples)
     assert total_count <= n
     pm_tuples += [((0,), n - total_count)]
     return combine(*pm_tuples)

@@ -20,7 +20,7 @@ source = article(
 
 def cohen_gismalla_1():
     B = frac(5, 28)
-    u, v = [sqrt((frac(1, 3) + i * sqrt(frac(2, 63))) / frac(5, 7)) for i in [+1, -1]]
+    u, v = (sqrt((frac(1, 3) + i * sqrt(frac(2, 63))) / frac(5, 7)) for i in [+1, -1])
     d = {"zero2": [[frac(2, 7)]], "c2": [[B, B], [u, v], [-v, u]]}
     # This scheme is of order 5 for symmetric integrands
     return C2Scheme("Cohen-Gismalla 1", d, 3, source, 4.996e-16)

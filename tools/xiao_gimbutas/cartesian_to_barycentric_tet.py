@@ -156,9 +156,9 @@ for i, scheme_data in enumerate(data):
             8 * " "
             + "[\n"
             + 12 * " "
-            + "{}, {},\n".format(lmbda[0], lmbda[1])
+            + f"{lmbda[0]}, {lmbda[1]},\n"
             + 12 * " "
-            + "{}, {},\n".format(lmbda[2], lmbda[3])
+            + f"{lmbda[2]}, {lmbda[3]},\n"
             + 8 * " "
             + "],"
         )

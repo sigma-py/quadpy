@@ -47,8 +47,8 @@ def hammer_marlowe_stroud_4():
 
 
 def hammer_marlowe_stroud_5():
-    w1, w2 = [(155 - i * sqrt(15)) / 1200 for i in [+1, -1]]
-    x1, x2 = [(1 + i * sqrt(15)) / 7 for i in [+1, -1]]
+    w1, w2 = ((155 - i * sqrt(15)) / 1200 for i in [+1, -1])
+    x1, x2 = ((1 + i * sqrt(15)) / 7 for i in [+1, -1])
     b1 = (1 - x1) / 3
     b2 = (1 - x2) / 3
     d = {"centroid": [[frac(9, 40)]], "d3_aa": [[w1, w2], [b1, b2]]}

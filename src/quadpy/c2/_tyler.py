@@ -26,9 +26,9 @@ def tyler_1():
 
 def tyler_2():
     r = sqrt(frac(6, 7))
-    s, t = [sqrt((114 - i * 3 * sqrt(583)) / 287) for i in [+1, -1]]
+    s, t = (sqrt((114 - i * 3 * sqrt(583)) / 287) for i in [+1, -1])
     B1 = frac(49, 810)
-    B2, B3 = [(178981 + i * 2769 * sqrt(583)) / 1888920 for i in [+1, -1]]
+    B2, B3 = ((178981 + i * 2769 * sqrt(583)) / 1888920 for i in [+1, -1])
     d = {"d4_a0": [[B1], [r]], "d4_aa": [[B2, B3], [s, t]]}
     return C2Scheme("Tyler 2", d, 7, source, 3.331e-16)
 

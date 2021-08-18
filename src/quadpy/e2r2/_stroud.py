@@ -43,8 +43,8 @@ def stroud_5_2():
 def stroud_7_2():
     # Cartesian product Gauss formula
     sqrt6 = sqrt(6)
-    r, s = [sqrt((3 + p_m * sqrt6) / 2) for p_m in [+1, -1]]
-    A, B = [(5 - p_m * 2 * sqrt6) / 48 for p_m in [+1, -1]]
+    r, s = (sqrt((3 + p_m * sqrt6) / 2) for p_m in [+1, -1])
+    A, B = ((5 - p_m * 2 * sqrt6) / 48 for p_m in [+1, -1])
     C = frac(1, 48)
 
     d = {"d4_a0": [[A, B], [r, s]], "d4_ab": [[C], [r], [s]]}

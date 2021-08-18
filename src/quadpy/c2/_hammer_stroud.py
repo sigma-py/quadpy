@@ -32,7 +32,7 @@ def hammer_stroud_2_2():
 
 
 def hammer_stroud_3_2():
-    xi1, xi2 = [sqrt(frac(3, 287) * (38 - i * sqrt(583))) for i in [+1, -1]]
+    xi1, xi2 = (sqrt(frac(3, 287) * (38 - i * sqrt(583))) for i in [+1, -1])
     d = {
         "d4_a0": [[frac(98, 4 * 405)], [sqrt(frac(6, 7))]],
         "d4_aa": [[0.5205929166673945 / 4, 0.2374317746906302 / 4], [xi1, xi2]],

@@ -27,14 +27,14 @@ def stroud_1967():
     sqrt19 = sqrt(19)
     t = sqrt(71440 + 6802 * sqrt19)
 
-    lmbd, gmma = [sqrt((1919 - 148 * sqrt19 + i * 4 * t) / 3285) for i in [+1, -1]]
-    xi, mu = [-sqrt((1121 + 74 * sqrt19 - i * 2 * t) / 3285) for i in [+1, -1]]
+    lmbd, gmma = (sqrt((1919 - 148 * sqrt19 + i * 4 * t) / 3285) for i in [+1, -1])
+    xi, mu = (-sqrt((1121 + 74 * sqrt19 - i * 2 * t) / 3285) for i in [+1, -1])
     mu *= -1
 
-    B, C = [
+    B, C = (
         133225 / (260072 - 1520 * sqrt19 + i * (133 - 37 * sqrt19) * t)
         for i in [+1, -1]
-    ]
+    )
 
     d = {
         "zero3": [[frac(32, 19) / 8]],

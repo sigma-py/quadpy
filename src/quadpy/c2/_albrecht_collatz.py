@@ -39,7 +39,7 @@ def albrecht_collatz_2():
 
 def albrecht_collatz_3():
     r = sqrt(frac(7, 15))
-    s, t = [sqrt((7 + i * sqrt(24)) / 15) for i in [+1, -1]]
+    s, t = (sqrt((7 + i * sqrt(24)) / 15) for i in [+1, -1])
     d = {
         "zero2": [[frac(2, 7)]],
         "c2": [[frac(25, 168), frac(5, 48), frac(5, 48)], [r, s, t], [r, -t, -s]],

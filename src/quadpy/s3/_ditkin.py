@@ -22,7 +22,7 @@ def ditkin_1(alpha=0):
     B0 = frac(4, (alpha + 5) ** 2)
     B1 = frac((alpha + 3) * (alpha + 7), 12 * (alpha + 5) ** 2)
 
-    r, s = [sqrt((alpha + 5) * (5 + i * sqrt(5)) / 10 / (alpha + 7)) for i in [+1, -1]]
+    r, s = (sqrt((alpha + 5) * (5 + i * sqrt(5)) / 10 / (alpha + 7)) for i in [+1, -1])
 
     d = {"zero3": [[B0]], "symm_rs0_roll": [[B1], [r], [s]]}
     return S3Scheme("Ditkin 1", d, 5, _source)
@@ -32,7 +32,7 @@ def ditkin_2():
     B0 = frac(4, 25)
     B1 = frac(21, 500)
 
-    r, s = [sqrt((15 + i * 5 * sqrt(5)) / 42) for i in [+1, -1]]
+    r, s = (sqrt((15 + i * 5 * sqrt(5)) / 42) for i in [+1, -1])
     t = sqrt(frac(5, 21))
 
     d = {
@@ -49,9 +49,9 @@ def ditkin_3():
     B2 = frac(3, 280)
 
     sqrt5 = sqrt(5)
-    r, s = [sqrt((5 + i * sqrt5) / 18) for i in [+1, -1]]
+    r, s = (sqrt((5 + i * sqrt5) / 18) for i in [+1, -1])
     t = sqrt(frac(1, 3))
-    u, v = [sqrt((3 - i * sqrt5) / 6) for i in [+1, -1]]
+    u, v = (sqrt((3 - i * sqrt5) / 6) for i in [+1, -1])
 
     d = {
         "zero3": [[B0]],

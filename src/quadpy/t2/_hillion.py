@@ -35,13 +35,13 @@ def hillion_03():
 
 
 def hillion_04():
-    a0, a1 = [(3 + i * sqrt(3)) / 8 for i in [+1, -1]]
+    a0, a1 = ((3 + i * sqrt(3)) / 8 for i in [+1, -1])
     d = {"s2_static": [[frac(1, 9)], [0]], "swap_ab": [[frac(4, 9)], [a0], [a1]]}
     return T2Scheme("Hillion 4", d, 2, source)
 
 
 def hillion_05():
-    a0, a1 = [(3 + i * sqrt(3)) / 8 for i in [+1, -1]]
+    a0, a1 = ((3 + i * sqrt(3)) / 8 for i in [+1, -1])
     d = {
         "s2_static": [[frac(1, 9)], [frac(2, 3)]],
         "swap_ab": [[frac(4, 9)], [frac(2, 3) - a0], [frac(2, 3) - a1]],
@@ -50,7 +50,7 @@ def hillion_05():
 
 
 def hillion_06():
-    lm, mu = [(2 + i * sqrt(2 + i * sqrt(3))) / 6 for i in [+1, -1]]
+    lm, mu = ((2 + i * sqrt(2 + i * sqrt(3))) / 6 for i in [+1, -1])
     d = {
         "swap_ab": [
             [frac(1, 4), frac(1, 4)],
@@ -74,8 +74,8 @@ def hillion_07():
 
 
 def hillion_08():
-    lambda2, lambda3 = [(32 + i * 2 * sqrt(46)) / 105 for i in [+1, -1]]
-    w1, w2 = [2 * (3266 + i * 19 * sqrt(46)) / 17664 for i in [+1, -1]]
+    lambda2, lambda3 = ((32 + i * 2 * sqrt(46)) / 105 for i in [+1, -1])
+    w1, w2 = (2 * (3266 + i * 19 * sqrt(46)) / 17664 for i in [+1, -1])
     d = {
         "swap_ab": [[2 * frac(25, 384)], [0], [frac(4, 5)]],
         "s2_static": [[w1, w2], [lambda2, lambda3]],
@@ -90,8 +90,8 @@ def hillion_09():
 
 
 def hillion_10():
-    lambda1, lambda2 = [(16 + i * 2 * sqrt(14)) / 25 for i in [+1, -1]]
-    w1, w2 = [2 * (161 + i * 17 * sqrt(14)) / 2688 for i in [+1, -1]]
+    lambda1, lambda2 = ((16 + i * 2 * sqrt(14)) / 25 for i in [+1, -1])
+    w1, w2 = (2 * (161 + i * 17 * sqrt(14)) / 2688 for i in [+1, -1])
     d = {
         "swap_ab": [[w2, w1], [lambda1, 0], [0, lambda2]],
         "s2_static": [[frac(25, 48)], [frac(2, 5)]],

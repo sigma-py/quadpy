@@ -14,7 +14,7 @@ def product(scheme1d):
     y, z, x = np.meshgrid(schemes[0].points, schemes[1].points, schemes[2].points)
     points = np.array([x.flatten(), y.flatten(), z.flatten()])
 
-    degree = min([s.degree for s in schemes])
+    degree = min(s.degree for s in schemes)
     weights /= 8
 
     d = {"plain": [weights, points[0], points[1], points[2]]}

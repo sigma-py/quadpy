@@ -14,8 +14,8 @@ source = techreport(
 
 
 def walkington_p5():
-    a1, a2 = [(155 + i * sqrt(15)) / 1200 for i in [+1, -1]]
-    x1, x2 = [(6 + i * sqrt(15)) / 21 for i in [+1, -1]]
+    a1, a2 = ((155 + i * sqrt(15)) / 1200 for i in [+1, -1])
+    x1, x2 = ((6 + i * sqrt(15)) / 21 for i in [+1, -1])
     d = {"centroid": [[frac(9, 40)]], "d3_aa": [[a1, a2], [x1, x2]]}
     return T2Scheme("Walkington p5", d, 5, source, 2.637e-16)
 

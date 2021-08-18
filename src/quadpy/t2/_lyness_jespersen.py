@@ -51,7 +51,7 @@ def lyness_jespersen_05():
 
 
 def lyness_jespersen_06():
-    a0, a1 = [(3 + i * sqrt(3)) / 6 for i in [+1, -1]]
+    a0, a1 = ((3 + i * sqrt(3)) / 6 for i in [+1, -1])
     d = {
         "centroid": [frac(9, 20)],
         "vertex": [[-frac(1, 60)]],
@@ -74,8 +74,8 @@ def lyness_jespersen_07():
 
 def lyness_jespersen_08():
     sqrt15 = sqrt(15)
-    b1, b2 = [(155 - i * sqrt15) / 1200 for i in [+1, -1]]
-    r1, r2 = [(6 - i * sqrt15) / 21 for i in [+1, -1]]
+    b1, b2 = ((155 - i * sqrt15) / 1200 for i in [+1, -1])
+    r1, r2 = ((6 - i * sqrt15) / 21 for i in [+1, -1])
 
     d = {"centroid": [[frac(9, 40)]], "d3_aa": [[b1, b2], [r1, r2]]}
     return T2Scheme("Lyness-Jespersen 8", d, 5, source)
@@ -91,7 +91,7 @@ def lyness_jespersen_09():
 
 
 def lyness_jespersen_11():
-    c, d = [(3 + i * sqrt(6)) / 6 for i in [+1, -1]]
+    c, d = ((3 + i * sqrt(6)) / 6 for i in [+1, -1])
     d = {
         "centroid": [[-frac(81, 140)]],
         "vertex": [[-frac(5, 252)]],

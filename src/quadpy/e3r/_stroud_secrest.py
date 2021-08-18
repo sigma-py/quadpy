@@ -16,7 +16,7 @@ source = article(
 
 
 def stroud_secrest_07():
-    nu, xi = [sqrt(15 - p_m * 3 * sqrt(5)) for p_m in [+1, -1]]
+    nu, xi = (sqrt(15 - p_m * 3 * sqrt(5)) for p_m in [+1, -1])
     A = frac(3, 5)
     B = frac(1, 30)
 
@@ -44,7 +44,7 @@ def stroud_secrest_08():
 
 def stroud_secrest_09():
     eta = sqrt(10)
-    xi, nu = [sqrt(15 - p_m * 5 * sqrt(5)) for p_m in [+1, -1]]
+    xi, nu = (sqrt(15 - p_m * 5 * sqrt(5)) for p_m in [+1, -1])
     A = frac(3, 5)
     B = frac(1, 50)
 
@@ -82,14 +82,14 @@ def stroud_secrest_11():
     sqrt39 = sqrt(39)
     sqrt195 = sqrt(195)
 
-    nu, xi = [
+    nu, xi = (
         sqrt(-50 + p_m * 10 * sqrt5 + 10 * sqrt39 - p_m * 2 * sqrt195)
         for p_m in [+1, -1]
-    ]
+    )
     eta = sqrt(36 + 4 * sqrt39)
-    mu, lmbda = [
+    mu, lmbda = (
         sqrt(54 + p_m * 18 * sqrt5 + 6 * sqrt39 + p_m * 2 * sqrt195) for p_m in [+1, -1]
-    ]
+    )
     A = (1725 - 26 * sqrt39) / 2940
     B = (1065 + 171 * sqrt39) / 54880
     C = (297 - 47 * sqrt39) / 32928
