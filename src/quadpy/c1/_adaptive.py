@@ -32,7 +32,6 @@ def integrate_adaptive(
     assert intervals.shape[0] == 2
     assert np.all(intervals > -np.inf)
     assert np.all(intervals < np.inf)
-    assert np.all(intervals[0] <= intervals[1])
 
     assert (
         eps_abs is not None or eps_rel is not None

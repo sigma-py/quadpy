@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from numpy import cos, pi, sin
+from numpy import cos, linspace, pi, sin, sqrt
 
 import quadpy
 
@@ -155,6 +155,19 @@ def test_245():
 
     val, err = quadpy.quad(f, 0, 1)
     assert err < 1.0e-9
+
+
+def test_arbitrary_orientation():
+    # test that arbitrary orientation of integration interval (in 2d) works
+    alpha = 10.31
+    exact = -1 / alpha * (cos(alpha * 1.0) - cos(alpha * 0.0))
+    for theta in linspace(0, 2 * pi, 64):
+        val, err = quadpy.c1.integrate_adaptive(
+            lambda x: sin(alpha * sqrt(x[0] ** 2 + x[1] ** 2)),
+            [[0.0, 0.0], [cos(theta), sin(theta)]],
+        )
+        assert err < 1.0e-10
+        assert abs(val - exact) < 1.0e-10
 
 
 if __name__ == "__main__":
