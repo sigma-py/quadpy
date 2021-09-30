@@ -26,8 +26,9 @@
     Inverse Problems, 1987, Volume 3, Number 4,
     <https://doi.org/10.1088/0266-5611/3/4/010>.
 """
+from __future__ import annotations
+
 import math
-from typing import Optional
 
 import numpy as np
 import sympy
@@ -93,7 +94,7 @@ def _sympy_tridiag(a, b):
     return sympy.Matrix(A)
 
 
-def scheme_from_rc(alpha, beta, int_1, mode: Optional[str] = None):
+def scheme_from_rc(alpha, beta, int_1, mode: str | None = None):
     alpha = np.asarray(alpha)
     beta = np.asarray(beta)
 
