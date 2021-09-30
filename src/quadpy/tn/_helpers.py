@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 import math
-from typing import Callable, List, Optional
+from typing import Callable
 
 import numpy as np
 
@@ -17,7 +19,7 @@ class TnScheme(QuadratureScheme):
         degree: int,
         source,
         tol: float = 1.0e-14,
-        comments: Optional[List[str]] = None,
+        comments: list[str] | None = None,
     ):
         self.domain = f"Tn (n={dim})"
         self.dim = dim

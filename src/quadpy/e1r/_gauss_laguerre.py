@@ -1,4 +1,4 @@
-from typing import Union
+from __future__ import annotations
 
 import numpy as np
 import orthopy
@@ -7,7 +7,7 @@ from ..tools import scheme_from_rc
 from ._helpers import E1rScheme
 
 
-def gauss_laguerre(n: int, alpha: Union[int, float] = 0, mode: str = "numpy"):
+def gauss_laguerre(n: int, alpha: int | float = 0, mode: str = "numpy"):
     """
     Gauss-Laguerre quadrature for integrals of the form
 

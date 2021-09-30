@@ -23,7 +23,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: ["3.7", "3.8", "3.9"]
+        # VTK is still missing for 3.10
+        # "3.10-dev"
     steps:
       - uses: actions/setup-python@v2
         with:

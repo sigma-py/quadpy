@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 import json
-from typing import Optional
 
 import numpy as np
 
@@ -19,7 +20,13 @@ def register(in_schemes):
 
 class C2Scheme(CnScheme):
     def __init__(
-        self, name, symmetry_data, degree, source=None, tol=1.0e-14, comments=None
+        self,
+        name: str,
+        symmetry_data,
+        degree: int,
+        source=None,
+        tol: float = 1.0e-14,
+        comments: list[str] | None = None,
     ):
         self.symmetry_data = symmetry_data
         points, weights = expand_symmetries(symmetry_data, dim=2)
@@ -89,7 +96,7 @@ def _scheme_from_dict(content, source=None):
     )
 
 
-def get_good_scheme(degree: int) -> Optional[C2Scheme]:
+def get_good_scheme(degree: int) -> C2Scheme | None:
     if degree <= 22:
         return {
             0: schemes["dunavant_00"],

@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 import json
-from typing import Optional
 
 import numpy as np
 
@@ -17,13 +18,13 @@ def register(in_schemes):
 class T2Scheme(TnScheme):
     def __init__(
         self,
-        name,
+        name: str,
         symmetry_data,
-        degree,
+        degree: int,
         source=None,
-        tol=1.0e-14,
-        comments=None,
-        weight_factor=None,
+        tol: float = 1.0e-14,
+        comments: list[str] | None = None,
+        weight_factor: float | None = None,
     ):
         self.symmetry_data = symmetry_data
 
@@ -38,7 +39,7 @@ class T2Scheme(TnScheme):
     def plot(
         self,
         triangle=np.array([[-0.5, 0.0], [+0.5, 0.0], [0, 0.5 * (np.sqrt(3))]]),
-        show_axes=False,
+        show_axes: bool = False,
     ):
         """Shows the quadrature points on a given triangle. The size of the circles
         around the points coincides with their weights.
@@ -90,7 +91,7 @@ def _scheme_from_dict(content, source=None):
     )
 
 
-def get_good_scheme(degree: int) -> Optional[T2Scheme]:
+def get_good_scheme(degree: int) -> T2Scheme | None:
     if degree <= 50:
         return {
             0: schemes["centroid"],

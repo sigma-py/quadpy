@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from math import pi
-from typing import Callable, Optional
+from typing import Callable
 
 import numpy as np
 
@@ -46,7 +48,7 @@ class S3Scheme(QuadratureScheme):
         return 4 / 3 * pi * np.asarray(radius) ** 3 * dot(ff, self.weights)
 
 
-def get_good_scheme(degree: int) -> Optional[S3Scheme]:
+def get_good_scheme(degree: int) -> S3Scheme | None:
     if degree <= 7:
         return {
             0: schemes["midpoint"],

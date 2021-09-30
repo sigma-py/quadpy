@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import warnings
 
 import numpy as np
@@ -5,7 +7,14 @@ import numpy as np
 
 class QuadratureScheme:
     def __init__(
-        self, name, weights, points, degree, source, tol=1.0e-14, comments=None
+        self,
+        name: str,
+        weights,
+        points,
+        degree: int,
+        source,
+        tol: float = 1.0e-14,
+        comments: list[str] | None = None,
     ):
         if tol > 1.0e-12:
             warnings.warn(f"{name} ({self.domain}) has low precision ({tol:.3e}).")

@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 import json
 import warnings
-from typing import Optional
 
 import numpy as np
 
@@ -23,7 +24,7 @@ class S2Scheme(QuadratureScheme):
         degree: int,
         source=None,
         tol: float = 1.0e-14,
-        weight_factor: Optional[float] = None,
+        weight_factor: float | None = None,
     ):
         self.domain = "S2"
         self.symmetry_data = symmetry_data
@@ -100,7 +101,7 @@ def _scheme_from_dict(content, source=None):
     )
 
 
-def get_good_scheme(degree: int) -> Optional[S2Scheme]:
+def get_good_scheme(degree: int) -> S2Scheme | None:
     if degree <= 19:
         return {
             0: schemes["midpoint"],
