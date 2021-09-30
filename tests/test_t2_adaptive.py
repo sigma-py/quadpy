@@ -14,7 +14,6 @@ def test_simple(k):
     exact = (2 - pi * k * sin(pi * k) - 2 * cos(pi * k)) / (2 * pi ** 2 * k ** 2)
 
     assert abs(exact - val) < 1.0e-10
-    return
 
 
 def test_vector(k=1):
@@ -39,7 +38,6 @@ def test_vector(k=1):
     ]
 
     assert (abs(exact - val) < 1.0e-10).all()
-    return
 
 
 if __name__ == "__main__":
