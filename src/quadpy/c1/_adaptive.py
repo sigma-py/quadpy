@@ -25,7 +25,7 @@ def integrate_adaptive(
     # <https://en.wikipedia.org/wiki/QUADPACK#General-purpose_routines>
     kronrod_degree: int = 10,
     minimum_interval_length: float = 0.0,
-    max_num_subintervals=np.inf,
+    max_num_subintervals: float = np.inf,
     dot: Callable = np.dot,
     domain_shape: tuple | None = None,
     range_shape: tuple | None = None,

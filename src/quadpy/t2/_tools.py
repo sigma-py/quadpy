@@ -65,10 +65,10 @@ def integrate_adaptive(
                     [triangles[0], triangles[1], triangles[2], midpoints[0]]
                 ),
                 np.concatenate(
-                    [midpoints[1], midpoints[2], midpoints[0], midpoints[1]]
+                    [midpoints[2], midpoints[0], midpoints[1], midpoints[1]]
                 ),
                 np.concatenate(
-                    [midpoints[2], midpoints[0], midpoints[1], midpoints[2]]
+                    [midpoints[1], midpoints[2], midpoints[0], midpoints[2]]
                 ),
             ]
         )

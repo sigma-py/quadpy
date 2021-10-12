@@ -69,20 +69,21 @@ def _get_data(dim, n, point_fun, symbolic):
 def silvester(dim, variant, n, symbolic=False):
     frac = np.vectorize(sympy.Rational) if symbolic else lambda a, b: a / b
 
+    def points1d_closed(k):
+        return frac(k, n)
+
+    def points1d_open(k):
+        return frac(k + 1, n + 1 + dim)
+
     if variant == "closed":
         degree = n
         tol = 1.034e-14
-
-        def points1d(k):
-            return frac(k, n)
-
+        points1d = points1d_closed
     else:
         assert variant == "open"
         degree = 1 if n == 0 else n
         tol = 1.040e-13
-
-        def points1d(k):
-            return frac(k + 1, n + 1 + dim)
+        points1d = points1d_open
 
     weights, points = _get_data(dim, n, points1d, symbolic)
     points = np.ascontiguousarray(points.T)

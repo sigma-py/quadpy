@@ -30,9 +30,8 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: actions/checkout@v2
-        with:
-          lfs: true
+      - name: Checkout code
+        uses: nschloe/action-checkout-with-lfs-cache@v1
       # eigen for accupy, blas for numpy
       - name: Install system dependencies
         run: sudo apt-get install -y libeigen3-dev libblas-dev
