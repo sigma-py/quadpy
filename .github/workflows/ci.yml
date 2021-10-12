@@ -30,24 +30,8 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-
       - name: Checkout code
-        uses: actions/checkout@v2
-        # Don't use lfs directly, but cache the lfs results.
-        # See <https://github.com/actions/checkout/issues/165#issuecomment-657673315>.
-        # with:
-        #   lfs: true
-      - name: Create LFS file list
-        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
-      - name: Restore LFS cache
-        uses: actions/cache@v2
-        id: lfs-cache
-        with:
-          path: .git/lfs
-          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}-v1
-      - name: Git LFS Pull
-        run: git lfs pull
-
+        uses: nschloe/action-checkout-with-lfs-cache@v1
       # eigen for accupy, blas for numpy
       - name: Install system dependencies
         run: sudo apt-get install -y libeigen3-dev libblas-dev
