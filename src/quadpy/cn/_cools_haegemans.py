@@ -8,7 +8,7 @@ from ._helpers import CnScheme
 
 _source = article(
     authors=["Ronald Cools", "Ann Haegemans"],
-    title="An embedded family of cubature formulae for n-dimensional product regions",
+    title="An imbedded family of cubature formulae for n-dimensional product regions",
     journal="Journal of Computational and Applied Mathematics",
     volume="51",
     year="1994",
