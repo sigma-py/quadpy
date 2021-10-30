@@ -160,7 +160,7 @@ def _gauss_kronrod_integrate(
     I_tilde = 0.5 * interval_lengths * dot(fx_avg_abs, gk.weights)
 
     # The exponent 1.5 is chosen such that (200*x)**1.5 is approximately x at 1.0e-6,
-    # the machine precision on IEEE 754 32-bit floating point arithmentic. This could be
+    # the machine precision on IEEE 754 32-bit floating point arithmetic. This could be
     # adapted to
     #
     #   eps = np.finfo(float).eps

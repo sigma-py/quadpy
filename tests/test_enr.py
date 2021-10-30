@@ -13,7 +13,7 @@ import quadpy
     + [quadpy.enr.mcnamee_stenger_5(n) for n in range(2, 6)]
     + [quadpy.enr.mcnamee_stenger_7a(n) for n in range(3, 6)]
     + [quadpy.enr.mcnamee_stenger_7b(n) for n in range(3, 6)]
-    # The condition of the degree-9 schemes is so bad that the tolerence had to be
+    # The condition of the degree-9 schemes is so bad that the tolerance had to be
     # 1.0e-2
     # + [quadpy.enr.mcnamee_stenger_9a(n) for n in range(4, 6)]
     # + [quadpy.enr.mcnamee_stenger_9b(n) for n in range(4, 6)]
