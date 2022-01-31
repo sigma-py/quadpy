@@ -22,7 +22,7 @@ def stroud_1967(n):
     s = sqrt(frac(1, n))
     t = sqrt(frac(1, 2))
     B = frac(8 - n, n * (n + 2) * (n + 4))
-    C = frac(n ** 3, 2 ** n * n * (n + 2) * (n + 4))
+    C = frac(n**3, 2**n * n * (n + 2) * (n + 4))
     D = frac(4, n * (n + 2) * (n + 4))
 
     data = [

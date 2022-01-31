@@ -134,7 +134,7 @@ def _gauss_kronrod_integrate(
     fx_gl = fx_gk[..., 1::2]
 
     diff = intervals[1] - intervals[0]
-    interval_lengths = np.sqrt(np.sum(diff ** 2, axis=tuple(range(len(domain_shape)))))
+    interval_lengths = np.sqrt(np.sum(diff**2, axis=tuple(range(len(domain_shape)))))
     assert interval_lengths.shape == interval_set_shape
 
     # integrate

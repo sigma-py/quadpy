@@ -68,8 +68,8 @@ def liu_vinokur_08():
     d = {
         "s31": [
             [
-                (17 * alpha2 - 7) / (420 * alpha1 ** 2 * (alpha2 - alpha1)),
-                (17 * alpha1 - 7) / (420 * alpha2 ** 2 * (alpha1 - alpha2)),
+                (17 * alpha2 - 7) / (420 * alpha1**2 * (alpha2 - alpha1)),
+                (17 * alpha1 - 7) / (420 * alpha2**2 * (alpha1 - alpha2)),
             ],
             [(1 - alpha1) / 4, (1 - alpha2) / 4],
         ],
@@ -124,17 +124,17 @@ def liu_vinokur_12():
     lmbda = frac(4, 27) * (
         4 * sqrt(79) * cos((acos(67 * sqrt(79) / 24964) + 2 * pi) / 3) + 71
     )
-    alpha1 = (+sqrt(9 * lmbda ** 2 - 248 * lmbda + 1680) + 28 - 3 * lmbda) / (
+    alpha1 = (+sqrt(9 * lmbda**2 - 248 * lmbda + 1680) + 28 - 3 * lmbda) / (
         112 - 10 * lmbda
     )
-    alpha2 = (-sqrt(9 * lmbda ** 2 - 248 * lmbda + 1680) + 28 - 3 * lmbda) / (
+    alpha2 = (-sqrt(9 * lmbda**2 - 248 * lmbda + 1680) + 28 - 3 * lmbda) / (
         112 - 10 * lmbda
     )
-    w1 = ((21 - lmbda) * alpha2 - 7) / (420 * alpha1 ** 2 * (alpha2 - alpha1))
-    w2 = ((21 - lmbda) * alpha1 - 7) / (420 * alpha2 ** 2 * (alpha1 - alpha2))
+    w1 = ((21 - lmbda) * alpha2 - 7) / (420 * alpha1**2 * (alpha2 - alpha1))
+    w2 = ((21 - lmbda) * alpha1 - 7) / (420 * alpha2**2 * (alpha1 - alpha2))
     d = {
         "s31": [[w1, w2], [(1 - alpha1) / 4, (1 - alpha2) / 4]],
-        "s22": [[lmbda ** 2 / 840], [(1 - 2 / sqrt(lmbda)) / 4]],
+        "s22": [[lmbda**2 / 840], [(1 - 2 / sqrt(lmbda)) / 4]],
     }
     degree = 5
     return T3Scheme("Liu-Vinokur 12", d, degree, source)

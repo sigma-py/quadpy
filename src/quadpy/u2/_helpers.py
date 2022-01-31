@@ -39,7 +39,7 @@ class U2Scheme(QuadratureScheme):
         # The total area is used to gauge the disk radii. This is only meaningful for 2D
         # manifolds, not for the circle. What we do instead is choose the total_area
         # such that the sum of the disk radii equals pi.
-        total_area = np.pi ** 3 / len(self.weights)
+        total_area = np.pi**3 / len(self.weights)
         plot_disks(plt, self.points, self.weights, total_area)
 
     def integrate(self, f, center, radius, dot=np.dot):

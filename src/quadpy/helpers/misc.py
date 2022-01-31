@@ -101,12 +101,12 @@ def compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k, symbolic=False):
     fact = sympy.factorial if symbolic else math.factorial
     sqrt = sympy.sqrt if symbolic else np.sqrt
 
-    L = comb(n, i) * 2 ** i
+    L = comb(n, i) * 2**i
     M = fact(n) // (fact(j) * fact(k) * fact(n - j - k)) * 2 ** (j + k)
     N = L + M
-    F = I22 / I0 - I2 ** 2 / I0 ** 2 + (I4 / I0 - I22 / I0) / n
+    F = I22 / I0 - I2**2 / I0**2 + (I4 / I0 - I22 / I0) / n
     R = (
-        -(j + k - i) / i * I2 ** 2 / I0 ** 2
+        -(j + k - i) / i * I2**2 / I0**2
         + (j + k - 1) / n * I4 / I0
         - (n - 1) / n * I22 / I0
     )
@@ -114,7 +114,7 @@ def compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k, symbolic=False):
         1
         / i
         * (
-            (j + k - i) * I2 ** 2 / I0 ** 2
+            (j + k - i) * I2**2 / I0**2
             + (j + k) / n * ((i - 1) * I4 / I0 - (n - 1) * I22 / I0)
         )
     )
@@ -168,4 +168,4 @@ def gamma_n_2(n, symbolic):
         return math.factorial(n // 2 - 1)
 
     n2 = n // 2
-    return frac(math.factorial(2 * n2), 4 ** n2 * math.factorial(n2)) * sqrt(pi)
+    return frac(math.factorial(2 * n2), 4**n2 * math.factorial(n2)) * sqrt(pi)

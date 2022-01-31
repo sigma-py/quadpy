@@ -36,8 +36,8 @@ def test_vector_valued(k):
         lambda x: [x * sin(k * x), x * cos(k * x)], [0.0, pi], 1.0e-10, eps_rel=None
     )
     exact = [
-        (sin(pi * k) - pi * k * cos(pi * k)) / k ** 2,
-        (cos(pi * k) + pi * k * sin(pi * k) - 1.0) / k ** 2,
+        (sin(pi * k) - pi * k * cos(pi * k)) / k**2,
+        (cos(pi * k) + pi * k * sin(pi * k) - 1.0) / k**2,
     ]
     assert np.all(err < 1.0e-10)
     assert np.all(np.abs(exact - val) < 1.0e-9)
@@ -127,7 +127,7 @@ def test_sink(k):
 def test_236():
     # https://github.com/nschloe/quadpy/issues/236
     def f(x):
-        return np.exp(-1.0 / (1 - x ** 2))
+        return np.exp(-1.0 / (1 - x**2))
 
     val, err = quadpy.quad(f, -1, 1)
     assert err < 1.0e-9
@@ -135,7 +135,7 @@ def test_236():
 
 def test_infinite_limits():
     tol = 1.0e-7
-    val, err = quadpy.quad(lambda x: np.exp(-(x ** 2)), -np.inf, np.inf)
+    val, err = quadpy.quad(lambda x: np.exp(-(x**2)), -np.inf, np.inf)
     assert abs(val - np.sqrt(np.pi)) < tol
     assert err < tol
 

@@ -216,7 +216,7 @@ def _pq0(vals):
 def _pq02(vals):
     if len(vals) == 1:
         a = vals[0]
-        b = np.sqrt(1 - a ** 2)
+        b = np.sqrt(1 - a**2)
     else:
         assert len(vals) == 2
         a, b = vals
@@ -266,7 +266,7 @@ def _pq02(vals):
 def _rs0(vals):
     if len(vals) == 1:
         a = vals[0]
-        b = np.sqrt(1 - a ** 2)
+        b = np.sqrt(1 - a**2)
     else:
         assert len(vals) == 2
         a, b = vals
@@ -309,7 +309,7 @@ def _llm(vals):
 def _llm2(vals):
     if len(vals) == 1:
         L = vals[0]
-        m = np.sqrt(1 - 2 * L ** 2)
+        m = np.sqrt(1 - 2 * L**2)
     else:
         assert len(vals) == 2
         L, m = vals
@@ -361,7 +361,7 @@ def _rsw(vals):
 def _rsw2(vals):
     if len(vals) == 2:
         r, s = vals
-        w = np.sqrt(1 - r ** 2 - s ** 2)
+        w = np.sqrt(1 - r**2 - s**2)
     else:
         assert len(vals) == 3
         r, s, w = vals
@@ -432,7 +432,7 @@ def _rsw2(vals):
 def _rst(vals):
     if len(vals) == 2:
         r, s = vals
-        w = np.sqrt(1 - r ** 2 - s ** 2)
+        w = np.sqrt(1 - r**2 - s**2)
     else:
         assert len(vals) == 3
         r, s, w = vals
@@ -479,7 +479,7 @@ def _rst(vals):
 def _rst_weird(vals):
     if len(vals) == 2:
         r, s = vals
-        t = np.sqrt(1 - r ** 2 - s ** 2)
+        t = np.sqrt(1 - r**2 - s**2)
     else:
         assert len(vals) == 3
         r, s, t = vals

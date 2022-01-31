@@ -61,8 +61,8 @@ def stroud_7_4():
         """
         return np.multiply.outer(np.multiply.outer(a, b), c)
 
-    r = outer3(rho, sqrt(1 - u ** 2), sqrt(1 - v ** 2))
-    s = outer3(rho, sqrt(1 - u ** 2), v)
+    r = outer3(rho, sqrt(1 - u**2), sqrt(1 - v**2))
+    s = outer3(rho, sqrt(1 - u**2), v)
     t = outer3(rho, u, 4 * [1])
 
     data = [

@@ -87,7 +87,7 @@ class C1Scheme(QuadratureScheme):
 
         # np.sum is slower than dot() and friends, but allows for scalar input.
         diff = iv[1] - iv[0]
-        len_intervals = np.sqrt(np.sum(diff ** 2, axis=tuple(range(len(domain_shape)))))
+        len_intervals = np.sqrt(np.sum(diff**2, axis=tuple(range(len(domain_shape)))))
         # The factor 0.5 is from the length of the reference line [-1, 1].
         return 0.5 * len_intervals * dot(fx, self.weights)
 

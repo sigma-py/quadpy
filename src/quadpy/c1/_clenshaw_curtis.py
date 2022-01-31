@@ -34,7 +34,7 @@ def clenshaw_curtis(n):
     g0 = -np.ones(n)
     g0[length] += n
     g0[m] += n
-    g = g0 / (n ** 2 - 1 + (n % 2))
+    g = g0 / (n**2 - 1 + (n % 2))
 
     w = np.fft.ihfft(v2 + g)
     assert max(w.imag) < 1.0e-15

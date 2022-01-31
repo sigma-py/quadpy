@@ -15,9 +15,9 @@ source = techreport(
 
 
 def waldron(r=1, alpha=0):
-    assert r ** 2 >= 1 / 3
+    assert r**2 >= 1 / 3
 
-    R = r / np.sqrt(3 * r ** 2 - 1)
+    R = r / np.sqrt(3 * r**2 - 1)
 
     beta = alpha + np.pi / 2
 
@@ -28,7 +28,7 @@ def waldron(r=1, alpha=0):
 
     d = {
         "plain": [
-            [1 / 6 / r ** 2, 1 / 6 / r ** 2, 1 / 6 / R ** 2, 1 / 6 / R ** 2],
+            [1 / 6 / r**2, 1 / 6 / r**2, 1 / 6 / R**2, 1 / 6 / R**2],
             [+r * cos_alpha, -r * cos_alpha, +R * cos_beta, -R * cos_beta],
             [+r * sin_alpha, -r * sin_alpha, +R * sin_beta, -R * sin_beta],
         ]

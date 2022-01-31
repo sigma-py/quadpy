@@ -25,10 +25,10 @@ def stroud_1966_a(n, symbolic=False):
     a = sqrt(2 * (n + 4))
 
     r2 = (n + 4 - a) / (n + 4)
-    s2 = (n * (n + 4) + 2 * a) / (n ** 2 + 2 * n - 4) / (n + 4)
+    s2 = (n * (n + 4) + 2 * a) / (n**2 + 2 * n - 4) / (n + 4)
 
-    B1 = 1 / r2 ** 2 / (n + 2) / (n + 4)
-    B2 = 1 / s2 ** 2 / 2 ** n / (n + 2) / (n + 4)
+    B1 = 1 / r2**2 / (n + 2) / (n + 4)
+    B2 = 1 / s2**2 / 2**n / (n + 2) / (n + 4)
 
     r = sqrt(r2)
     s = sqrt(s2)
@@ -78,7 +78,7 @@ def stroud_1966_c(n, symbolic=False):
     s = sqrt((n + 2 - a) / (n * (n + 4)))
 
     B0 = frac(4, (n + 2) ** 2)
-    B1 = frac(n + 4, 2 ** n * (n + 2) ** 2)
+    B1 = frac(n + 4, 2**n * (n + 2) ** 2)
 
     data = [(B0, z(n)), (B1, combine(((+r, -r), 1), ((+s, -s), (n - 1))))]
 
@@ -98,7 +98,7 @@ def stroud_1966_d(n, symbolic=False):
     s = sqrt((n * (n + 4) + a - b) / (n * (n + 2) * (n + 4)))
     t = sqrt((n + 4 - a) / ((n + 2) * (n + 4)))
 
-    B = frac(1, 2 ** n * (n + 1))
+    B = frac(1, 2**n * (n + 1))
 
     # The data is given symbolically, and for large n, those are thousands of points and
     # weights. Converting them to float takes a long time. A better approach would be to

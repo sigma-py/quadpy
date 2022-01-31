@@ -192,7 +192,7 @@ def test_xk(k):
 
     evaluator = orthopy.c1.legendre.Eval(x, "monic", symbolic=True)
     moments = [
-        sympy.integrate(x ** k * next(evaluator), (x, -1, 1)) for _ in range(2 * n)
+        sympy.integrate(x**k * next(evaluator), (x, -1, 1)) for _ in range(2 * n)
     ]
     rc = orthopy.c1.legendre.RecurrenceCoefficients("monic", symbolic=True)
 

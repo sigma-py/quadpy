@@ -55,7 +55,7 @@ def test_gh255a():
     a = 3.15
     val, err = quadpy.quad(ex1, 0.0, a, epsabs=1.0e-13)
 
-    ref = 0.5 * np.pi ** 2 + (a - np.pi) * np.pi
+    ref = 0.5 * np.pi**2 + (a - np.pi) * np.pi
 
     assert abs(val - ref) < 1.0e-8 * abs(ref), "\n" + "\n".join(
         [f"reference = {ref}", f"computed  = {val}", f"error     = {abs(val-ref)}"]
@@ -73,7 +73,7 @@ def test_gh255b():
     val, err = quadpy.quad(ex1, 0.0, a, epsabs=1.0e-13, limit=100)
 
     # ref = 14.804547973620716
-    ref = 1.5 * np.pi ** 2 + (a - 2 * np.pi) ** 2 / 2
+    ref = 1.5 * np.pi**2 + (a - 2 * np.pi) ** 2 / 2
     assert abs(val - ref) < 1.0e-8 * abs(ref), "\n" + "\n".join(
         [f"reference = {ref}", f"computed  = {val}", f"error     = {abs(val-ref)}"]
     )

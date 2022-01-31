@@ -21,7 +21,7 @@ def mustard_lyness_blatt(n):
     d = {
         "0": [[frac(8 - 5 * n, 9)]],
         "a0": [[frac(5, 18)], [r]],
-        "a": [[frac(1, 9 * 2 ** n)], [1]],
+        "a": [[frac(1, 9 * 2**n)], [1]],
     }
     points, weights = expand_symmetries(d, n)
     return CnScheme("Mustard-Lyness-Blatt", n, weights, points, 5, _source, 6.312e-14)

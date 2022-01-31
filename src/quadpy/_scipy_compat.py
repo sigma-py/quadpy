@@ -25,7 +25,7 @@ def quad(
         b = 1.0
 
         def g(t):
-            return (f((1 - t) / t, *args) + f(-(1 - t) / t)) / t ** 2
+            return (f((1 - t) / t, *args) + f(-(1 - t) / t)) / t**2
 
     elif b == np.inf:
         a_orig = a
@@ -33,7 +33,7 @@ def quad(
         b = 1.0
 
         def g(t):
-            return f(a_orig + (1 - t) / t, *args) / t ** 2
+            return f(a_orig + (1 - t) / t, *args) / t**2
 
     elif a == -np.inf:
         b_orig = b
@@ -41,7 +41,7 @@ def quad(
         b = 1.0
 
         def g(t):
-            return f(b_orig - (1 - t) / t, *args) / t ** 2
+            return f(b_orig - (1 - t) / t, *args) / t**2
 
     else:
 

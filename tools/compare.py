@@ -19,7 +19,7 @@ schemes = (
     + [quadrature.triangle.LynessJespersen(6)]
 )
 
-sample_sizes = [0.5 ** k for k in range(10)]
+sample_sizes = [0.5**k for k in range(10)]
 errors = np.empty((len(schemes), len(sample_sizes)))
 
 for i, scheme in enumerate(schemes):

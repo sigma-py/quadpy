@@ -39,13 +39,13 @@ def cohen_gismalla_2():
 
     g1 = alpha / B / 2
     g2 = X * (Y / 9 - 2 / 15) / (Y - X) / alpha
-    u = math.sqrt(g1 + math.sqrt(g1 ** 2 - g2))
-    v = math.sqrt(g1 - math.sqrt(g1 ** 2 - g2))
+    u = math.sqrt(g1 + math.sqrt(g1**2 - g2))
+    v = math.sqrt(g1 - math.sqrt(g1**2 - g2))
 
     h1 = beta / C / 2
     h2 = Y * (2 / 15 - X / 9) / (Y - X) / beta
-    r = math.sqrt(h1 - math.sqrt(h1 ** 2 - h2))
-    s = math.sqrt(h1 + math.sqrt(h1 ** 2 - h2))
+    r = math.sqrt(h1 - math.sqrt(h1**2 - h2))
+    s = math.sqrt(h1 + math.sqrt(h1**2 - h2))
 
     d = {"zero2": [[A]], "c2": [[B, B, C, C], [u, v, r, r], [-v, u, -s, s]]}
     # ERR this scheme only has order 1

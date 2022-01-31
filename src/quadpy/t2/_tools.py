@@ -30,7 +30,7 @@ def integrate_adaptive(
     total_area = sumfun(areas)
 
     if minimum_triangle_area is None:
-        minimum_triangle_area = total_area * 0.25 ** 10
+        minimum_triangle_area = total_area * 0.25**10
 
     val1 = scheme1.integrate(f, triangles, dot=dot)
     val2 = scheme2.integrate(f, triangles, dot=dot)

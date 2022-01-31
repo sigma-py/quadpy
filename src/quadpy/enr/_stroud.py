@@ -55,7 +55,7 @@ def stroud_enr_5_4(n):
     r = sqrt(((n + 2) * (n + 3) + (n - 1) * (n + 3) * sqrt(2 * (n + 2))) / n)
     s = sqrt(((n + 2) * (n + 3) - (n + 3) * sqrt(2 * (n + 2))) / n)
     A = frac(4 * n + 6, (n + 2) * (n + 3))
-    B = frac(n + 1, (n + 2) * (n + 3) * 2 ** n)
+    B = frac(n + 1, (n + 2) * (n + 3) * 2**n)
     data = [(A, np.full((1, n), 0)), (B, fsd(n, (r, 1), (s, n - 1)))]
 
     points, weights = untangle(data)

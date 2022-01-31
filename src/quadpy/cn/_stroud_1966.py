@@ -23,7 +23,7 @@ def stroud_1966_a(n):
     s = sqrt(frac(5 * n + 4, 15 * n - 12))
     d = {
         "a0": [[frac(40, (5 * n + 4) ** 2)], [r]],
-        "a": [[frac(5 * n - 4, (5 * n + 4)) ** 2 / 2 ** n], [s]],
+        "a": [[frac(5 * n - 4, (5 * n + 4)) ** 2 / 2**n], [s]],
     }
     points, weights = expand_symmetries(d, n)
     return CnScheme("Stroud 1966a", n, weights, points, 5, _source, 2.432e-14)
@@ -49,7 +49,7 @@ def stroud_1966_b(n):
 def stroud_1966_c(n):
     r = sqrt((5 * n + 4 + 2 * (n - 1) * sqrt(5 * n + 4)) / (15 * n))
     s = sqrt((5 * n + 4 - 2 * sqrt(5 * n + 4)) / (15 * n))
-    data = [(frac(4, 5 * n + 4), z(n)), (frac(5, (5 * n + 4) * 2 ** n), _fs11(n, r, s))]
+    data = [(frac(4, 5 * n + 4), z(n)), (frac(5, (5 * n + 4) * 2**n), _fs11(n, r, s))]
     points, weights = untangle(data)
     points = np.ascontiguousarray(points.T)
     return CnScheme("Stroud 1966c", n, weights, points, 5, _source, 2.097e-13)
@@ -60,7 +60,7 @@ def stroud_1966_d(n):
     # This sqrt() is imaginary for negative for n=2.
     s = sqrt((5 * n - 2 * sqrt(5) - 2 * sqrt(5 * n + 5)) / (15 * n))
     t = sqrt((5 + 2 * sqrt(5)) / 15)
-    w = frac(1, 2 ** n * (n + 1))
+    w = frac(1, 2**n * (n + 1))
     data = [(w, _fs11(n, r, s)), (w, pm(n * [t]))]
 
     points, weights = untangle(data)

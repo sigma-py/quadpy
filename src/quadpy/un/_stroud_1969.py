@@ -23,14 +23,14 @@ def stroud_1969(n):
     sqrt3 = sqrt(3)
 
     t = sqrt(1 / n)
-    r1, r2 = (sqrt((n + 6 - i * 4 * sqrt3) / (n ** 2 + 12 * n - 12)) for i in [+1, -1])
+    r1, r2 = (sqrt((n + 6 - i * 4 * sqrt3) / (n**2 + 12 * n - 12)) for i in [+1, -1])
     s1, s2 = (
-        sqrt((7 * n - 6 + i * 4 * (n - 1) * sqrt3) / (n ** 2 + 12 * n - 12))
+        sqrt((7 * n - 6 + i * 4 * (n - 1) * sqrt3) / (n**2 + 12 * n - 12))
         for i in [+1, -1]
     )
-    u1, u2 = (sqrt((n + 12 + i * 8 * sqrt3) / (n ** 2 + 24 * n - 48)) for i in [+1, -1])
+    u1, u2 = (sqrt((n + 12 + i * 8 * sqrt3) / (n**2 + 24 * n - 48)) for i in [+1, -1])
     v1, v2 = (
-        sqrt((7 * n - 12 - i * 4 * (n - 2) * sqrt3) / (n ** 2 + 24 * n - 48))
+        sqrt((7 * n - 12 - i * 4 * (n - 2) * sqrt3) / (n**2 + 24 * n - 48))
         for i in [+1, -1]
     )
 

@@ -54,7 +54,7 @@ def find_equal(schemes):
             is_equal = True
             for x_i in x:
                 diff = y - x_i
-                diff = np.min(np.sum(diff ** 2, axis=-1))
+                diff = np.min(np.sum(diff**2, axis=-1))
                 if diff > tol:
                     is_equal = False
                     break

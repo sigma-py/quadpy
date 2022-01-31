@@ -45,7 +45,7 @@ def lu_darmofal_1(n):
     points = np.ascontiguousarray(points.T)
 
     p = frac(2, n + 2)
-    A = frac(n ** 2 * (7 - n), 2 * (n + 1) ** 2 * (n + 2) ** 2)
+    A = frac(n**2 * (7 - n), 2 * (n + 1) ** 2 * (n + 2) ** 2)
     B = frac(2 * (n - 1) ** 2, (n + 1) ** 2 * (n + 2) ** 2)
     weights = np.concatenate(
         [

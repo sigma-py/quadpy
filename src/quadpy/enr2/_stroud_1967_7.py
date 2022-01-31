@@ -35,10 +35,10 @@ def _stroud_1967_7_2(n, variant_a, symbolic):
     r2 = (3 * (8 - n) - p_m * (n - 2) * sqrt38n) / 2 / (5 - n)
     s2 = (3 * n - p_m * 2 * sqrt38n) / 2 / (3 * n - 8)
     t2 = (6 + p_m * sqrt38n) / 2
-    B = (8 - n) / r2 ** 3 / 8
-    C = 1 / s2 ** 3 / 2 ** (n + 3)
-    D = 1 / t2 ** 3 / 16
-    A = 1 - 2 * n * B - 2 ** n * C - 2 * n * (n - 1) * D
+    B = (8 - n) / r2**3 / 8
+    C = 1 / s2**3 / 2 ** (n + 3)
+    D = 1 / t2**3 / 16
+    A = 1 - 2 * n * B - 2**n * C - 2 * n * (n - 1) * D
 
     r = sqrt(r2)
     s = sqrt(s2)

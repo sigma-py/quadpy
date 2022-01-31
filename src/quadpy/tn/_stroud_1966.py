@@ -26,7 +26,7 @@ def stroud_1966_1(n):
     s = 1 - n * r
 
     B = (1 - sqrt4n13) / 2 / (n + 1) / (n + 2) / (n + 3)
-    C = (2 * n ** 2 + 10 * n + 11 + sqrt4n13) / 2 / (n + 1) / (n + 2) / (n + 3)
+    C = (2 * n**2 + 10 * n + 11 + sqrt4n13) / 2 / (n + 1) / (n + 2) / (n + 3)
 
     data = [(B, rd(n + 1, [(1, 1)])), (C, rd(n + 1, [(r, n), (s, 1)]))]
 
@@ -39,14 +39,14 @@ def stroud_1966_2(n):
     degree = 3
     # r is a smallest real-valued root of a polynomial of degree 3
     rts = np.roots(
-        [2 * (n - 2) * (n + 1) * (n + 3), -(5 * n ** 2 + 5 * n - 18), 4 * n, -1]
+        [2 * (n - 2) * (n + 1) * (n + 3), -(5 * n**2 + 5 * n - 18), 4 * n, -1]
     )
     r = np.min([r.real for r in rts if abs(r.imag) < 1.0e-15])
 
     s = 1 - n * r
     t = 0.5
 
-    B = (n - 2) / (1 - 2 * n * r ** 2 - 2 * (1 - n * r) ** 2) / (n + 1) / (n + 2)
+    B = (n - 2) / (1 - 2 * n * r**2 - 2 * (1 - n * r) ** 2) / (n + 1) / (n + 2)
     C = 2 * (1 / (n + 1) - B) / n
 
     data = [(B, rd(n + 1, [(r, n), (s, 1)])), (C, rd(n + 1, [(t, 2)]))]
@@ -66,7 +66,7 @@ def stroud_1966_3(n):
     prod = (n + 1) * (n + 2) * (n + 3)
     B = frac(6 - n, prod)
     C = frac(8 * (n - 3), (n - 2) * prod)
-    D = frac(n ** 3, (n - 2) * prod)
+    D = frac(n**3, (n - 2) * prod)
 
     data = [
         (B, rd(n + 1, [(1, 1)])),
@@ -106,8 +106,8 @@ def stroud_1966_5(n):
     s = frac(1, 3)
 
     prod = (n + 1) * (n + 2) * (n + 3)
-    A = frac(-(n ** 2) + 11 * n - 12, 2 * (n - 1) * prod)
-    B = frac(n ** 3, (n - 1) * prod)
+    A = frac(-(n**2) + 11 * n - 12, 2 * (n - 1) * prod)
+    B = frac(n**3, (n - 1) * prod)
     C = frac(27, (n - 1) * prod)
 
     data = [

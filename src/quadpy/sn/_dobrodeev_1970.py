@@ -20,10 +20,10 @@ source = article(
 def dobrodeev_1970(n):
     A = frac(1, 8)
     B = frac(5 - n, 4)
-    C = frac((6 - n) * (1 - n ** 2) + 36, 4 * (n + 3))
+    C = frac((6 - n) * (1 - n**2) + 36, 4 * (n + 3))
     D = frac(81, (n + 3) * (n + 6) ** 2)
-    E = frac(45 * n ** 2 + 324 * n + 216, n ** 2 + 12 * n + 36) - frac(
-        n * (n ** 2 - 12 * n + 65), 6
+    E = frac(45 * n**2 + 324 * n + 216, n**2 + 12 * n + 36) - frac(
+        n * (n**2 - 12 * n + 65), 6
     )
 
     r = sqrt(frac(3, n + 6))

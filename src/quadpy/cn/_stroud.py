@@ -36,7 +36,7 @@ def stroud_cn_1_1(n):
 
 def stroud_cn_1_2(n):
     # product trapezoidal scheme
-    weights = np.full(2 ** n, frac(1, 2 ** n))
+    weights = np.full(2**n, frac(1, 2**n))
     points = pm(n * [1])
     points = np.ascontiguousarray(points.T)
     return CnScheme("Stroud Cn 1-2", n, weights, points, 1, _source, 1.777e-15)
@@ -51,7 +51,7 @@ def stroud_cn_3_2(n):
 
 
 def stroud_cn_3_4(n):
-    weights = np.full(2 ** n, frac(1, 2 ** n))
+    weights = np.full(2**n, frac(1, 2**n))
     r = sqrt(3) / 3
     points = pm(n * [r])
     points = np.ascontiguousarray(points.T)
@@ -61,7 +61,7 @@ def stroud_cn_3_4(n):
 def stroud_cn_3_6(n):
     lst = n * [[frac(1, 3), frac(4, 3), frac(1, 3)]]
     weights = np.product(np.array(np.meshgrid(*lst)).T.reshape(-1, n), axis=-1)
-    weights /= 2 ** n
+    weights /= 2**n
     lst = n * [[-1, 0, +1]]
     points = np.array(np.meshgrid(*lst)).T.reshape(-1, n)
     points = np.ascontiguousarray(points.T)
@@ -71,7 +71,7 @@ def stroud_cn_3_6(n):
 def stroud_cn_5_9(n):
     lst = n * [[frac(5, 9), frac(8, 9), frac(5, 9)]]
     weights = np.product(np.array(np.meshgrid(*lst)).T.reshape(-1, n), axis=-1)
-    weights /= 2 ** n
+    weights /= 2**n
     sqrt35 = sqrt(frac(3, 5))
     lst = n * [[-sqrt35, 0, sqrt35]]
     points = np.array(np.meshgrid(*lst)).T.reshape(-1, n)

@@ -87,8 +87,8 @@ def stoyanova(n, delta=None, variant_v_plus=True, symbolic=False):
     s1 = (n - 2) ** 5 + 243
     s2 = (n - 1) ** 5 + 32
     s3 = (3 * n - 1) ** 6 + (n - 3) ** 6 + 4096 * (n - 1)
-    s4 = n ** 5 + 1
-    s5 = n ** 2 + 4 * n - 8
+    s4 = n**5 + 1
+    s5 = n**2 + 4 * n - 8
     s6 = (n + 1) * (n + 2) * (n + 4)
     s7 = n * (n - 1)
     s8 = n * (n - 2)
@@ -96,30 +96,30 @@ def stoyanova(n, delta=None, variant_v_plus=True, symbolic=False):
     s10 = (n + 1) * (n + 6) * s6
     s11 = (5 * n - 3) ** 3
     s12 = (n - 1) * (n - 3)
-    s13 = n ** 2 - 7 * n + 19
-    s14 = n ** 2 - n + 1
+    s13 = n**2 - 7 * n + 19
+    s14 = n**2 - n + 1
     s15 = 2 * (n - 3) * (n + 1) ** 2
-    s16 = n ** 3 - 9 * n ** 2 + 33 * n - 38
+    s16 = n**3 - 9 * n**2 + 33 * n - 38
     s17 = 3 * (n - 2)
     q1 = (
         9
         * (n + 1)
         * (
-            10 * n ** 5 * (n + 1) ** 2 * s17
-            - n ** 3 * s2 * s5
+            10 * n**5 * (n + 1) ** 2 * s17
+            - n**3 * s2 * s5
             + 4 * (n - 1) * s4 * s5 * s7
             - 2 * s4 * s6 * s8
         )
-        - n ** 2 * s3 * s8
+        - n**2 * s3 * s8
         + 8 * s4 * s8 * s11
-        + 108 * n * s2 * s7 ** 2
+        + 108 * n * s2 * s7**2
         - 432 * (n - 1) ** 3 * s4 * s7
     )
     q2 = (
         n * s1 * s7
         - 3 * s4 * s9 * s17
         + 12 * (n - 1) * s4 * s12
-        - 3 * n ** 2 * (n - 3) * s2
+        - 3 * n**2 * (n - 3) * s2
     )
     b1 = frac(
         2
@@ -130,20 +130,20 @@ def stoyanova(n, delta=None, variant_v_plus=True, symbolic=False):
     c1 = frac(s9 * q1, 2 * s10 * q2)
     e1 = frac(4 * n * s11, 9 * s10)
     a1 = frac(n, n + 6) - b1 - c1 - e1
-    y1 = frac(n, n + 2) - frac(e1, delta ** 4)
-    y2 = frac(n, n + 4) - frac(e1, delta ** 2)
-    y3 = frac(3 * n ** 2, (n + 2) * (n + 4)) - frac(
-        e1 * (41 * n ** 3 - 101 * n ** 2 + 155 * n - 87),
-        2 * (5 * n - 3) ** 2 * delta ** 2,
+    y1 = frac(n, n + 2) - frac(e1, delta**4)
+    y2 = frac(n, n + 4) - frac(e1, delta**2)
+    y3 = frac(3 * n**2, (n + 2) * (n + 4)) - frac(
+        e1 * (41 * n**3 - 101 * n**2 + 155 * n - 87),
+        2 * (5 * n - 3) ** 2 * delta**2,
     )
     w0 = frac(s17 * (y3 * (s15 - s14 * s17) + s13 * s14 * y2), s13 * s15 * c1)
     u0 = frac(n * (s17 * y3 - s13 * y2), s15 * a1)
     p1 = frac(n * (n - 4) * b1, 4 * s12 * a1)
     p2 = frac(s16 * s17 * b1, 4 * s12 * s13 * c1)
-    d1 = a1 * p1 ** 2 + c1 * p2 ** 2 + b1
+    d1 = a1 * p1**2 + c1 * p2**2 + b1
     d2 = a1 * p1 * u0 + c1 * p2 * w0
-    d3 = a1 * u0 ** 2 + c1 * w0 ** 2 - y1
-    d0 = d2 ** 2 - d1 * d3
+    d3 = a1 * u0**2 + c1 * w0**2 - y1
+    d0 = d2**2 - d1 * d3
     if variant_v_plus:
         v = (d2 + sqrt(d0)) / d1
     else:
@@ -153,12 +153,12 @@ def stoyanova(n, delta=None, variant_v_plus=True, symbolic=False):
     lmbda2 = 1 / u
     beta2 = 1 / v
     gamma2 = 1 / w
-    delta2 = delta ** 2
+    delta2 = delta**2
 
-    lmbda6 = lmbda2 ** 3
-    beta6 = beta2 ** 3
-    gamma6 = gamma2 ** 3
-    delta6 = delta2 ** 3
+    lmbda6 = lmbda2**3
+    beta6 = beta2**3
+    gamma6 = gamma2**3
+    delta6 = delta2**3
 
     a = a1 / n1 / lmbda6
     b = b1 / n2 / beta6

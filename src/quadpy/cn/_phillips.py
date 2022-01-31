@@ -35,7 +35,7 @@ def phillips(n):
     else:
         assert n >= 5
         p1 = 1
-        En = frac(25 * n ** 2 - 165 * n + 302, 972)
+        En = frac(25 * n**2 - 165 * n + 302, 972)
         p2 = 1 / (frac(3, 5) - frac(1, 35 * En))
         q = frac(5, 3)
         r = frac(5, 3)
@@ -44,7 +44,7 @@ def phillips(n):
     delta = frac((n - 1) * (n - 2), 108)
 
     a1 = frac(23 - 5 * n, 180) - gamma * q / 2
-    a2 = frac(35 * n ** 2 - 231 * n + 466, 3780)
+    a2 = frac(35 * n**2 - 231 * n + 466, 3780)
     beta1 = (a1 - a2 * p2) / (p1 - p2)
     beta2 = (a1 - a2 * p1) / (p2 - p1)
 
@@ -52,16 +52,16 @@ def phillips(n):
     lambda2 = 1 / sqrt(p2)
     mu = 1 / sqrt(q)
 
-    b1 = beta1 / lambda1 ** 6
-    b2 = beta2 / lambda2 ** 6
+    b1 = beta1 / lambda1**6
+    b2 = beta2 / lambda2**6
 
-    c = gamma / (2 * (n - 1) * mu ** 6)
+    c = gamma / (2 * (n - 1) * mu**6)
 
     a = 1 - 2 * n * (b1 + b2) - 4 * comb(n, 2) * c
 
     if n > 2:
         nu = 1 / sqrt(r)
-        d = delta / (4 * comb(n - 1, 2) * nu ** 6)
+        d = delta / (4 * comb(n - 1, 2) * nu**6)
         a -= 8 * comb(n, 3) * d
 
     data = [

@@ -85,5 +85,5 @@ def get_vol(simplex):
     a = np.moveaxis(a, (0, 1), (-2, -1))
     det = np.linalg.det(a)
 
-    vol = np.sqrt((-1.0) ** (j + 1) / 2 ** j / math.factorial(j) ** 2 * det)
+    vol = np.sqrt((-1.0) ** (j + 1) / 2**j / math.factorial(j) ** 2 * det)
     return vol

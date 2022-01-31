@@ -26,7 +26,7 @@ def stroud_1961(n):
     prod = (n + 1) * (n + 2) * (n + 3)
     A = frac((3 - n) * (n + 1) ** 3, prod)
     B = frac(3, prod)
-    C = frac(n ** 3, prod)
+    C = frac(n**3, prod)
 
     data = [(A, [(n + 1) * [r]]), (B, rd(n + 1, [(1, 1)])), (C, rd(n + 1, [(s, n)]))]
 

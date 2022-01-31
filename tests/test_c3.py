@@ -26,7 +26,7 @@ def test_scheme(scheme, print_degree=False):
     k = 0
     while True:
         approximate = scheme.integrate(lambda x: next(evaluator), hexa)
-        exact = evaluator.int_p0 * 2 ** 3 if k == 0 else 0.0
+        exact = evaluator.int_p0 * 2**3 if k == 0 else 0.0
         err = np.abs(approximate - exact)
         if np.any(err > scheme.test_tolerance):
             break

@@ -30,7 +30,7 @@ def cools_haegemans_1(n, delta2=1, symbolic=False):
     m = 1
 
     w0 = frac(3 * delta2 - 1, 3 * delta2)
-    w = frac(1, 3) ** m / (2 ** n * delta2 ** m)
+    w = frac(1, 3) ** m / (2**n * delta2**m)
 
     d = {"0": [[w0]], "a": [[w], [sqrt(delta2)]]}
     points, weights = expand_symmetries(d, n)
@@ -46,10 +46,10 @@ def cools_haegemans_2(n, delta2=1, symbolic=False):
     lmbdas2 = _gener(delta2, 1, _mu, symbolic)
     w0 = frac(
         -(15 * delta2 * n - 12 * delta2 - 5 * n - 4) * (3 * delta2 - 1),
-        36 * delta2 ** 2,
+        36 * delta2**2,
     )
     w1 = frac(5 * (3 * delta2 - 1) ** 2, 72 * delta2)
-    w = frac(1, 3) ** m / (2 ** n * delta2 ** m)
+    w = frac(1, 3) ** m / (2**n * delta2**m)
 
     lmbdas = [sqrt(lmbda2) for lmbda2 in lmbdas2]
 

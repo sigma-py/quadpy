@@ -29,7 +29,7 @@ def fejer_1(n):
 
     v0 = np.concatenate(
         [
-            2 * np.exp(1j * np.pi * K / n) / (1 - 4 * K ** 2),
+            2 * np.exp(1j * np.pi * K / n) / (1 - 4 * K**2),
             np.zeros(length + 1),
         ]
     )

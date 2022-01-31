@@ -36,7 +36,7 @@ def stroud_enr2_5_3(n, symbolic=False):
     r = sqrt(frac(n + 2, 4))
     s = sqrt(frac(n + 2, 2 * (n - 2)))
     A = frac(4, (n + 2) ** 2)
-    B = frac((n - 2) ** 2, 2 ** n * (n + 2) ** 2)
+    B = frac((n - 2) ** 2, 2**n * (n + 2) ** 2)
 
     data = [(A, fsd(n, (r, 1))), (B, pm(n * [s]))]
     points, weights = untangle(data)
@@ -71,7 +71,7 @@ def _stroud_5_5(n, variant_a, symbolic=False):
     r = sqrt((n + 2 + p_m * (n - 1) * sqrt(2 * (n + 2))) / (2 * n))
     s = sqrt((n + 2 - p_m * sqrt(2 * (n + 2))) / (2 * n))
     A = frac(2, n + 2)
-    B = frac(1, 2 ** n * (n + 2))
+    B = frac(1, 2**n * (n + 2))
 
     data = [(A, [n * [0]]), (B, fsd(n, (r, 1), (s, n - 1)))]
 
@@ -99,7 +99,7 @@ def stroud_enr2_5_6(n, symbolic=False):
     r = sqrt((n - sqrt2 + (n - 1) * sqrt2n1) / (2 * n))
     s = sqrt((n - sqrt2 - sqrt2n1) / (2 * n))
     t = sqrt((1 + sqrt2) / 2)
-    A = frac(1, 2 ** n * (n + 1))
+    A = frac(1, 2**n * (n + 1))
 
     data = [(A, fsd(n, (r, 1), (s, n - 1))), (A, pm(n * [t]))]
 

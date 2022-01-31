@@ -22,7 +22,7 @@ def stroud_1968(n):
     r = sqrt(frac(7, 15))
     s, t = (sqrt((7 + i * sqrt(24)) / 15) for i in [+1, -1])
     data = [
-        (frac(5 * n ** 2 - 15 * n + 14, 14), z(n)),
+        (frac(5 * n**2 - 15 * n + 14, 14), z(n)),
         (frac(25, 168), _s2(n, +r)),
         (frac(25, 168), _s2(n, -r)),
         (frac(-25 * (n - 2), 168), fsd(n, (r, 1))),

@@ -25,7 +25,7 @@ def hammer_stroud_1n(n):
 def hammer_stroud_2n(n):
     r = sqrt(frac(3, 5))
     data = [
-        (frac(25 * n ** 2 - 115 * n + 162, 162), z(n)),
+        (frac(25 * n**2 - 115 * n + 162, 162), z(n)),
         (frac(70 - 25 * n, 162), fsd(n, (r, 1))),
         (frac(25, 324), fsd(n, (r, 2))),
     ]

@@ -134,7 +134,7 @@ def _scheme_from_rc_sympy(alpha, beta, int_1):
         assert len(vec) == 1
         vec = vec[0]
         x.append(val)
-        norm2 = sum(v ** 2 for v in vec)
+        norm2 = sum(v**2 for v in vec)
         # simplifiction takes really long
         # w.append(sympy.simplify(beta[0] * vec[0]**2 / norm2))
         w.append(beta[0] * vec[0] ** 2 / norm2)

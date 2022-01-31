@@ -18,7 +18,7 @@ source = article(
 def gauss_patterson(index):
     # Gauss-Patterson quadrature.
     # <https://people.sc.fsu.edu/~jburkardt/datasets/quadrature_rules_patterson/quadrature_rules_patterson.html>
-    degree = 3 * 2 ** index - 1 if index > 0 else 1
+    degree = 3 * 2**index - 1 if index > 0 else 1
 
     points = np.sort(_get_points(index))
 

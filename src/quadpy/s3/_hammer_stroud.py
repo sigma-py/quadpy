@@ -59,9 +59,9 @@ def _hammer_stroud_15_3(variant_a):
     eta2 = 7 / (27 + t * 2 * sqrt30)
 
     # The extract expressions are from Stroud's book.
-    a1 = 1 / nu2 ** 3 / 63
-    b1 = 1 / xi2 ** 3 / 630
-    c1 = 1 / eta2 ** 3 / 2520
+    a1 = 1 / nu2**3 / 63
+    b1 = 1 / xi2**3 / 630
+    c1 = 1 / eta2**3 / 2520
     a0 = 1 - 6 * a1 - 12 * b1 - 8 * c1
 
     d = {

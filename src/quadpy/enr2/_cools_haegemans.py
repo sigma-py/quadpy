@@ -35,7 +35,7 @@ def cools_haegemans_1(n, delta2=1, symbolic=False):
     m = 1
 
     w0 = frac(2 * delta2 - 1, 2 * delta2)
-    w = frac(_mu(2, symbolic) ** m * _mu(0, symbolic) ** (n - m), 2 ** n * delta2 ** m)
+    w = frac(_mu(2, symbolic) ** m * _mu(0, symbolic) ** (n - m), 2**n * delta2**m)
 
     data = [
         (w0, z(n)),
@@ -59,10 +59,10 @@ def cools_haegemans_2(n, delta2=1, symbolic=False):
     lmbdas2 = _gener(delta2, 1, _mu, symbolic)
 
     w0 = frac(
-        -(2 * delta2 - 1) * (2 * delta2 * n - 4 * delta2 - n - 2), 8 * delta2 ** 2
+        -(2 * delta2 - 1) * (2 * delta2 * n - 4 * delta2 - n - 2), 8 * delta2**2
     )
-    w1 = frac((2 * delta2 - 1) ** 2, 16 * delta2 ** 2)
-    w = frac(_mu(2, symbolic) ** m * _mu(0, symbolic) ** (n - m), 2 ** n * delta2 ** m)
+    w1 = frac((2 * delta2 - 1) ** 2, 16 * delta2**2)
+    w = frac(_mu(2, symbolic) ** m * _mu(0, symbolic) ** (n - m), 2**n * delta2**m)
 
     lmbdas = [sqrt(lmbda2) for lmbda2 in lmbdas2]
 
@@ -89,15 +89,15 @@ def cools_haegemans_3(n, delta2=(2, 3), symbolic=False):
 
     lmbdas2 = _gener(delta2, 2, _mu, symbolic)
 
-    delta4 = delta2 ** 2
-    delta6 = delta2 ** 3
+    delta4 = delta2**2
+    delta6 = delta2**3
 
     w0 = frac(
         (
-            delta6 * (16 * n ** 2 - 72 * n + 128)
-            + delta4 * (-28 * n ** 2 + 48 * n - 32)
-            + delta2 * (16 * n ** 2 + 30 * n - 16)
-            + (-3 * n ** 2 - 18 * n - 24)
+            delta6 * (16 * n**2 - 72 * n + 128)
+            + delta4 * (-28 * n**2 + 48 * n - 32)
+            + delta2 * (16 * n**2 + 30 * n - 16)
+            + (-3 * n**2 - 18 * n - 24)
         )
         * (2 * delta2 - 1),
         64 * (4 * delta2 - 3) * delta6,
@@ -110,7 +110,7 @@ def cools_haegemans_3(n, delta2=(2, 3), symbolic=False):
     w2 = frac((2 * delta2 - 1) * (2 * delta2 - 3) ** 3, 384 * (4 * delta2 - 3) * delta6)
     w11 = frac((2 * delta2 - 1) ** 3, 128 * delta6)
 
-    w = frac(_mu(2, symbolic) ** m * _mu(0, symbolic) ** (n - m), 2 ** n * delta2 ** m)
+    w = frac(_mu(2, symbolic) ** m * _mu(0, symbolic) ** (n - m), 2**n * delta2**m)
 
     delta = sqrt(delta2)
     lmbdas = [sqrt(lmbda2) for lmbda2 in lmbdas2]

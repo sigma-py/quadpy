@@ -23,7 +23,7 @@ def stroud_un_3_1(n):
 
 def stroud_un_3_2(n):
     degree = 3
-    data = [(frac(1, 2 ** n), pm(n * [sqrt(frac(1, n))]))]
+    data = [(frac(1, 2**n), pm(n * [sqrt(frac(1, n))]))]
     points, weights = untangle(data)
     return UnScheme("Stroud Un 3-2", n, weights, points, degree, source)
 
@@ -44,7 +44,7 @@ def stroud_un_5_2(n):
     degree = 5
 
     B1 = frac(1, n * (n + 2))
-    B2 = frac(n, 2 ** n * (n + 2))
+    B2 = frac(n, 2**n * (n + 2))
 
     data = [(B1, fsd(n, (1, 1))), (B2, pm(n * [sqrt(frac(1, n))]))]
 
@@ -71,7 +71,7 @@ def stroud_un_5_4(n):
     u = sqrt((n + 2 + (n - 1) * s) / n / (n + 2))
     v = sqrt((n + 2 - s) / n / (n + 2))
 
-    data = [(frac(1, 2 ** n * n), fsd(n, (u, 1), (v, n - 1)))]
+    data = [(frac(1, 2**n * n), fsd(n, (u, 1), (v, n - 1)))]
 
     points, weights = untangle(data)
     return UnScheme("Stroud Un 5-4", n, weights, points, degree, source)
@@ -80,7 +80,7 @@ def stroud_un_5_4(n):
 def stroud_un_7_2(n):
     degree = 7
 
-    A = frac(-(n ** 2), 2 ** (n + 3) * (n + 2))
+    A = frac(-(n**2), 2 ** (n + 3) * (n + 2))
     B = frac((n + 4) ** 2, 2 ** (n + 3) * n * (n + 2))
 
     r = sqrt(frac(1, n))

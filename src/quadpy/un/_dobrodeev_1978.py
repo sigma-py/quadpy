@@ -73,7 +73,7 @@ def dobrodeev_1978(n: int):
 
 
 def _generate_i(n: int, i: int):
-    L = fact(n) // fact(i) // fact(n - i) * 2 ** i
+    L = fact(n) // fact(i) // fact(n - i) * 2**i
     G = frac(1, L)
     a = sqrt(frac(3, n + 2))
     return G, a
@@ -96,16 +96,16 @@ def _compute_dobrodeev(n, I0, I2, I22, I4, pm_type, i, j, k):
     # TODO prove F==0 analytically
     t = 1 if pm_type == "I" else -1
 
-    L = fact(n) // (fact(i) * fact(n - i)) * 2 ** i
+    L = fact(n) // (fact(i) * fact(n - i)) * 2**i
     M = fact(n) // (fact(j) * fact(k) * fact(n - j - k)) * 2 ** (j + k)
     N = L + M
     R = (
-        -frac(j + k - i, i) * I2 ** 2 / I0 ** 2
+        -frac(j + k - i, i) * I2**2 / I0**2
         + frac(j + k - 1, n) * I4 / I0
         - frac(n - 1, n) * I22 / I0
     )
     H = frac(1, i) * (
-        +(j + k - i) * I2 ** 2 / I0 ** 2
+        +(j + k - i) * I2**2 / I0**2
         + frac(j + k, n) * ((i - 1) * I4 / I0 - (n - 1) * I22 / I0)
     )
     Q = L / M * R + H

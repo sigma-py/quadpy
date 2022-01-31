@@ -54,7 +54,7 @@ def test_scheme(scheme):
     k = 0
     while True:
         approximate = scheme.integrate(lambda x: next(evaluator), cn)
-        exact = evaluator.int_p0 * 2 ** n if k == 0 else 0.0
+        exact = evaluator.int_p0 * 2**n if k == 0 else 0.0
         err = np.abs(approximate - exact)
         if np.any(err > scheme.test_tolerance * 1.1):
             break

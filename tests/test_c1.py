@@ -113,8 +113,8 @@ def test_integrate_split():
     scheme = quadpy.c1.trapezoidal()
     val = scheme.integrate(
         lambda r: 0.5108
-        / r ** 2
-        / np.sqrt(2 * 1.158 + 2 / r - 0.5108 ** 2 / (2 * r ** 2)),
+        / r**2
+        / np.sqrt(2 * 1.158 + 2 / r - 0.5108**2 / (2 * r**2)),
         intervals,
     )
     val = np.sum(val)

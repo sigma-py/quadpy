@@ -37,7 +37,7 @@ def stroud_secrest_2(n):
 
 def stroud_secrest_3(n):
     nu = sqrt(frac(1, 2))
-    data = [(frac(1, 2 ** n), pm(n * [nu]))]
+    data = [(frac(1, 2**n), pm(n * [nu]))]
     points, weights = untangle(data)
     points = np.ascontiguousarray(points.T)
     return Enr2Scheme("Stroud-Secrest III", n, weights, points, 3, source)

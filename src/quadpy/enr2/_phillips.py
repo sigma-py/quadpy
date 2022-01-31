@@ -19,7 +19,7 @@ source = article(
 
 def phillips(n):
     lmbda = sqrt(frac(3, 2))
-    w1 = frac(n ** 2 - 7 * n + 18, 18)
+    w1 = frac(n**2 - 7 * n + 18, 18)
     w2 = frac(4 - n, 18)
     w3 = frac(1, 36)
 
