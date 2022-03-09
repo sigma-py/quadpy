@@ -143,7 +143,7 @@ def f(x):
     return [np.sin(x[0]), np.sin(x[1])]
 ```
 
-More examples under [test/examples_test.py](test/examples_test.py).
+More examples under [tests/examples_test.py](tests/examples_test.py).
 
 Read more about the dimensionality of the input/output arrays [in the
 wiki](https://github.com/nschloe/quadpy/wiki#dimensionality-of-input-and-output-arrays).
