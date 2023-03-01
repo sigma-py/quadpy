@@ -38,14 +38,32 @@ and
 [the nD space with weight functions exp(-r<sup>2</sup>)](#nd-space-with-weight-function-exp-r2-enr2),
 for fast integration of real-, complex-, and vector-valued functions.
 
-For example, to numerically integrate any function over any given interval, install
-quadpy [from the Python Package Index](https://pypi.org/project/quadpy/) with
+### Installation
+
+Install orthopy [from PyPI](https://pypi.org/project/orthopy/) with
 
 ```
-pip install quadpy
+pip install orthopy
 ```
 
-and do
+### How to get a license
+
+Licenses for personal and academic use can be purchased
+[here](https://buy.stripe.com/aEUg1H38OgDw5qMfZ3).
+You'll receive a confirmation email with a license key.
+Install the key with
+
+```
+plm add <your-license-key>
+```
+
+on your machine and you're good to go.
+
+For commerical use, please contact support@mondaytech.com.
+
+### Using quadpy
+
+For example, to numerically integrate any function over any given interval, do
 
 ```python
 import numpy as np
