@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/sigma-py/quadpy"><img alt="quadpy" src="https://raw.githubusercontent.com/sigma-py/ndim/main/logo/logo-with-text.svg" width="60%"></a>
+  <a href="https://github.com/sigma-py/quadpy"><img alt="quadpy" src="https://raw.githubusercontent.com/sigma-py/quadpy/main/logo/logo-with-text.svg" width="60%"></a>
   <p align="center">Your one-stop shop for numerical integration in Python.</p>
 </p>
 
